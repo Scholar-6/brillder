@@ -70,11 +70,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   checkAttemptAnswer(answer: ShortAnswerItem, index: number) {
     const answerValue = stripHtml(answer.value);
     if (this.props.attempt.answer) {
-      let attepmtValue = this.props.attempt.answer[index];
-
-      if (this.props.isBookPreview) {
-        attepmtValue = stripHtml(attepmtValue);
-      }
+      let attepmtValue = stripHtml(this.props.attempt.answer[index]);
 
       if (
         this.props.attempt &&
@@ -114,7 +110,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
 
   renderAnswer(answer: ShortAnswerItem, width: number, index: number) {
     let isCorrect = false;
-    if (this.props.attempt) {
+    if (this.props.isReview || this.props.isBookPreview) {
       isCorrect = this.checkAttemptAnswer(answer, index);
     }
 

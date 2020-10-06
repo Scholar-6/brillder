@@ -122,7 +122,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
 
     return (
       <Card className={className} key={i}>
-        <div style={{display: "block"}}>
+        <div style={{display: "block"}} className="answer">
           <MathInHtml value={answer.value} />
         </div>
         <div style={{display: "block"}}>
