@@ -5,16 +5,74 @@ import {  Hidden, Grid } from '@material-ui/core';
 import './PhoneQuestionPreview.scss';
 import QuestionPlay from "components/play/questionPlay/QuestionPlay";
 import { isHintEmpty } from 'components/build/questionService/ValidateQuestionService';
+import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from 'model/question';
+import { SortCategory } from 'components/interfaces/sort';
+import EmptyQP1 from './EmptyQP1';
 
 
 export interface PhonePreviewProps {
-  question: any
+  getQuestionIndex(question: Question): number;
+  question: Question;
 }
 
-const PhonePreview: React.FC<PhonePreviewProps> = ({ question }) => {
+const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex }) => {
+  const areComponentsEmpty = () => {
+    for (const component of question.components) {
+      const {type} = component;
+      if (
+        type === QuestionComponentTypeEnum.Text ||
+        type === QuestionComponentTypeEnum.Quote ||
+        type === QuestionComponentTypeEnum.Image ||
+        type === QuestionComponentTypeEnum.Sound
+      ) {
+        if (component.value) {
+          return false;
+        }
+      } else if (type === QuestionComponentTypeEnum.Graph) {
+        if (component.graphSettings || component.graphState) {
+          return false;
+        }
+      }
+      
+      // unique question component
+      if (type === QuestionComponentTypeEnum.Component) {
+        if (
+          question.type === QuestionTypeEnum.ShortAnswer ||
+          question.type === QuestionTypeEnum.VerticalShuffle ||
+          question.type === QuestionTypeEnum.HorizontalShuffle
+        ) {
+          const res = component.list?.find((el:any) => el.value);
+          if (res) { return false; }
+        } else if (
+          question.type === QuestionTypeEnum.ChooseOne ||
+          question.type === QuestionTypeEnum.ChooseSeveral
+        ) {
+          const res = component.list?.find((el:any) => el.value || el.valueFile);
+          if (res) { return false; }
+        } else if (question.type === QuestionTypeEnum.MissingWord) {
+          const res = component.choices?.find((el: any) => el.answers.find((a: any) => a.value))
+          if (res) {
+            return false;
+          }
+        } else if (question.type === QuestionTypeEnum.PairMatch) {
+          const res = component.list?.find((el:any) => el.value || el.option || el.valueFile || el.optionFile);
+          if (res) { return false; }
+        } else if (question.type === QuestionTypeEnum.Sort) {
+          const res = component.categories?.find((cat: SortCategory) => cat.name || cat.answers.find(a => a.value || a.valueFile));
+          if (res) { return false; }
+        } else if (question.type === QuestionTypeEnum.LineHighlighting) {
+          if (component.text || component.lines) { return false; }
+        } else if (question.type === QuestionTypeEnum.WordHighlighting) {
+          if (component.text || component.words) { return false; }
+        }
+      }
+    }
+    return true;
+  }
   const renderInnerComponent = () => {
-    if (!question.firstComponent?.value && isHintEmpty(question.hint)) {
-      return <div>empty</div>;
+    const questionIndex = getQuestionIndex(question);
+    if (questionIndex === 0 && !question.firstComponent?.value && isHintEmpty(question.hint) && areComponentsEmpty()) {
+      return <EmptyQP1 />;
     }
     return <QuestionPlay question={question} isPhonePreview={true} answers={[]} />;
   }

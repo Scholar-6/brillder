@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 import "./ExpandedAssignment.scss";
 import { Subject } from "model/brick";
-import { UserBase } from "model/user";
 import { Assignment, StudentStatus, TeachClassroom, TeachStudent } from "model/classroom";
 import { getSubjectColor } from "components/services/subject";
 
@@ -81,7 +80,7 @@ class ExpandedAssignment extends Component<
 
   sort(sortBy: SortBy) {
     let students = this.state.students;
-    if (sortBy == SortBy.AvgDecreasing) {
+    if (sortBy === SortBy.AvgDecreasing) {
       students = this.state.students.sort((a, b) => {
         if (!a.studentStatus) { return 1; }
         if (!b.studentStatus) { return -1; }
