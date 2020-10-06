@@ -53,6 +53,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                   'mathType', 'chemType', 'insertTable', 'alignment',
                   'bulletedList', 'numberedList', 'uploadImageCustom', 'addComment'
                 ]}
+                blockQuote={true}
                 defaultAlignment="justify"
                 onBlur={() => { }}
                 onChange={this.onSynthesisChange.bind(this)}
