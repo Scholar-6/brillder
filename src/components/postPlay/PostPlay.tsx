@@ -437,8 +437,8 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
         >
           <Grid className="main-text-container">
             <h1>This book is yours.</h1>
-            <h2>Hover your mouse over the cover to see</h2>
-            <h2>a summary of your results.</h2>
+            <h2>Hover your mouse over the cover to</h2>
+            <h2>see a summary of your results.</h2>
           </Grid>
           <div className={bookClass}>
             <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>
