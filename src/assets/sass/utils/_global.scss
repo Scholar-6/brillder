@@ -226,7 +226,7 @@ h3 {
   @extend %textCenter;
   text-transform: none !important;
   width: 100%;
-  border-radius: 0.4vw !important;
+  border-radius: 0.6vw !important;
   background-color: var(--tab-gray) !important;
   opacity: 1;
   @include phone_and_tabletP {
@@ -236,7 +236,7 @@ h3 {
   }
   @include tabletP {
     margin: 0 0 0.5vw 0 !important;
-    padding: 0.3vw !important;
+    padding: 0 !important;
   }
   .MuiGrid-root {
     margin: 0 !important;
@@ -271,11 +271,42 @@ h3 {
   &.correct {
     background: var(--theme-green) !important;
     .question-hint {
-      background: var(--white) !important;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      background: var(--off-white) !important;
     }
   }
   &.wrong {
     background: var(--theme-orange);
+  }
+}
+.short-answer-input.correct {
+  $border-radius: 1vw;
+  .ck-editor {
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    padding-left: $border-radius;
+    background: var(--theme-green) !important;
+  }
+
+  .question-hint {
+    padding-left: 1vw;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+  }
+  @include phone_and_tabletP {
+    $border-radius: 2vw;
+    .ck-editor {
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+      padding-left: $border-radius;
+    }
+  
+    .question-hint {
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
   }
 }
 
