@@ -129,7 +129,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
             @include phone_and_tabletP {
               align-items: flex-start;
               padding: 3vw;
-              background-color: var(--light-gray);
+              background-color: var(--solitude-light);
               height: 86px;
             }
 
@@ -394,7 +394,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
       }
 
       .introduction-info {
-        background-color: var(--light-gray);
+        background-color: var(--solitude-light);
         position: relative;
 
         @include phone_and_tabletP {
@@ -721,7 +721,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
         .introduction-page {
           h1 {
             @include phone_and_tabletP {
-              background-color: var(--light-gray) !important;
+              background-color: var(--solitude-light) !important;
             }
           }
 
@@ -729,7 +729,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
             .stepper {
               @include phone_and_tabletP {
                 flex-direction: row !important;
-                background-color: var(--light-gray) !important;
+                background-color: var(--solitude-light) !important;
                 padding: 2vw;
               }
 
