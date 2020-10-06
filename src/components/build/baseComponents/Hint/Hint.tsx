@@ -105,7 +105,7 @@ const HintComponent: React.FC<HintProps> = ({
   };
 
   const renderHintInputs = () => {
-    if (state.status === HintStatus.All || !props.count || props.count === 1) {
+    if (state.status === HintStatus.All) {
       return (
         <div className="hint-container">
           <DocumentWirisCKEditor
@@ -125,6 +125,10 @@ const HintComponent: React.FC<HintProps> = ({
       );
     }
     const answerHints: any[] = [];
+
+    if (!props.count) {
+      return <PageLoader content="...Preparing hints..." />;
+    }
 
     if (state.list.length < props.count) {
       let list = state.list;

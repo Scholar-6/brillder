@@ -4,6 +4,7 @@ import {  Hidden, Grid } from '@material-ui/core';
 
 import './PhoneQuestionPreview.scss';
 import QuestionPlay from "components/play/questionPlay/QuestionPlay";
+import { isHintEmpty } from 'components/build/questionService/ValidateQuestionService';
 
 
 export interface PhonePreviewProps {
@@ -11,6 +12,12 @@ export interface PhonePreviewProps {
 }
 
 const PhonePreview: React.FC<PhonePreviewProps> = ({ question }) => {
+  const renderInnerComponent = () => {
+    if (!question.firstComponent?.value && isHintEmpty(question.hint)) {
+      return <div>empty</div>;
+    }
+    return <QuestionPlay question={question} isPhonePreview={true} answers={[]} />;
+  }
   return (
     <Hidden only={['xs', 'sm']}>
       <div className="phone-question-preview-box">
@@ -24,7 +31,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question }) => {
                 <div className="sleep"></div>
                 <div className="screen">
                   <div className="custom-component mobile-question-component" style={{background: "white"}}>
-                    <QuestionPlay question={question} isPhonePreview={true} answers={[]} />
+                    {renderInnerComponent()}
                   </div>
                 </div>
               </div>
