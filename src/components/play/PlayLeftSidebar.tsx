@@ -3,12 +3,12 @@ import { Grid } from "@material-ui/core";
 import { connect } from 'react-redux';
 
 import { ReduxCombinedState } from 'redux/reducers';
-import sprite from "assets/img/icons-sprite.svg";
 import { PlayMode } from './model';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
 import { checkTeacherOrAdmin } from "components/services/brickService";
 import { User } from "model/user";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface SidebarProps {
@@ -58,19 +58,13 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     if (this.props.sidebarRolledUp) {
       return (
         <div className="minimize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#maximize"} />
-          </svg>
+          <SpriteIcon name="maximize" className="active" />
         </div>
       );
     }
     return (
       <div className="maximize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#minimize"} />
-        </svg>
+        <SpriteIcon name="minimize" className="active" />
       </div>
     );
   }
@@ -99,10 +93,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return (
       <div className={className} onClick={() => this.setHighlightMode()}>
         {this.renderHightlightText()}
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + icon} />
-        </svg>
+        <SpriteIcon name={icon} className="active" />
       </div>
     );
   };
@@ -124,10 +115,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return (
       <div className="annotate-button svgOnHover" onClick={() => this.setAnotateMode()}>
         {!this.props.sidebarRolledUp ? <span>Annotate Text</span> : <span></span>}
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#pen-tool"} />
-        </svg>
+        <SpriteIcon name="pen-tool" className="active" />
       </div>
     );
   };
@@ -149,10 +137,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return (
       <button onClick={openAssignDialog} className="assign-class-button svgOnHover">
         <span></span>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#file-plus"} />
-        </svg>
+        <SpriteIcon name="file-plus" className="active" />
       </button>
     );
   }
@@ -163,9 +148,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         return (
           <div className="back-hover-area" onClick={() => this.moveToBuild()}>
             <div className="create-icon create-icon-small svgOnHover">
-              <svg className="svg w100 h100 active">
-                <use href={sprite + "#trowel"} />
-              </svg>
+              <SpriteIcon name="trowel" className="w100 h100 active" />
             </div>
           </div>
         );
@@ -173,9 +156,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         return (
           <div className="back-hover-area" onClick={() => this.moveToBuild()}>
             <div className="create-icon svgOnHover">
-              <svg className="svg w100 h100 active">
-                <use href={sprite + "#trowel"} />
-              </svg>
+              <SpriteIcon name="trowel" className="w100 h100 active" />
             </div>
             <h3>BACK<br />TO<br />BUILD</h3>
           </div>

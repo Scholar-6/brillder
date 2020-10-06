@@ -14,7 +14,7 @@
 
   $base: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh);
 
-  
+
   .first-part  {
     display: flex;
     @extend %flexCenter;
@@ -44,9 +44,11 @@
 
   .short-brick-info {
     font-size: 0.8vw;
-    padding-left: 3.5vw;
+    padding-left: 2.5vw;
     width: 30vw;
     padding-top: 0;
+    @extend %flexToXCenter;
+    flex-direction: column;
     .link-info {
       width: 100%;
     }

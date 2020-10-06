@@ -15,6 +15,7 @@ import { PlayMode } from "../model";
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/proposal/model';
 import queryString from 'query-string';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 const moment = require("moment");
 
@@ -160,14 +161,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             className={state.prepExpanded ? "play-preview svgOnHover play-green" : "play-preview svgOnHover play-gray"}
             onClick={startBrick}
           >
-            <svg className="svg w80 h80 svg-default">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#play-thin"} />
-            </svg>
-            <svg className="svg w80 h80 colored">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#play-thick"} />
-            </svg>
+            <SpriteIcon name="play-thin" className="w80 h80 svg-default" />
+            <SpriteIcon name="play-thick" className="w80 h80 colored" />
           </button>
         </div>
       </div>
@@ -187,7 +182,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   ? sprite + "#arrow-down"
                   : sprite + "#arrow-right"
               }
-              className="text-theme-dark-blue"
+              className="text-theme-orange"
             />
           </svg>
         </div>
@@ -208,7 +203,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   ? sprite + "#arrow-down"
                   : sprite + "#arrow-right"
               }
-              className="text-theme-dark-blue"
+              className="text-theme-orange"
             />
           </svg>
         </div>

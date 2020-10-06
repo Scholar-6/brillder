@@ -10,6 +10,7 @@ import {ComponentAttempt} from 'components/play/model';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
+import { getValidationClassName } from '../service';
 
 
 enum DragAndDropStatus {
@@ -51,6 +52,14 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     }
 
     this.state = { status: DragAndDropStatus.None, userAnswers };
+  }
+
+  componentDidUpdate(prevProp: VerticalShuffleProps) {
+    if (this.props.isBookPreview) {
+      if (this.props.answers !== prevProp.answers) {
+        this.setState({userAnswers: this.props.answers as any});
+      }
+    }
   }
 
   UNSAFE_componentWillUpdate(props: VerticalShuffleProps) {
@@ -103,17 +112,17 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     let className = "horizontal-shuffle-answer";
     if (!this.props.isPreview && this.props.attempt && this.props.isReview) {
       if (this.state.status !== DragAndDropStatus.Changed) {
-        if (isCorrect) {
-          className += " correct";
-        } else {
-          className += " wrong";
-        }
+        className += getValidationClassName(isCorrect);
       }
+    }
+
+    if (this.props.isBookPreview) {
+      className += getValidationClassName(isCorrect);
     }
 
     return (
       <Card className={className} key={i}>
-        <div style={{display: "block"}}>
+        <div style={{display: "block"}} className="answer">
           <MathInHtml value={answer.value} />
         </div>
         <div style={{display: "block"}}>
@@ -129,18 +138,26 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     );
   }
 
+  renderAnswers() {
+    return this.state.userAnswers.map((answer, i) => this.renderAnswer(answer, i));
+  }
+
   render() {
     return (
       <div className="question-unique-play horizontal-shuffle-play">
         <p className="help-text">Drag to rearrange.</p>
-        <ReactSortable
-          list={this.state.userAnswers}
-          animation={150}
-          direction="horizontal"
-          setList={(choices) => this.setUserAnswers(choices)}
-        >
-          { this.state.userAnswers.map((answer, i) => this.renderAnswer(answer, i)) }
-        </ReactSortable>
+        {this.props.isBookPreview ? (
+          <div>{this.renderAnswers()}</div>
+        ) : (
+          <ReactSortable
+            list={this.state.userAnswers}
+            animation={150}
+            direction="horizontal"
+            setList={(choices) => this.setUserAnswers(choices)}
+          >
+            {this.renderAnswers()}
+          </ReactSortable>
+        ) }
         <ReviewGlobalHint
           isReview={this.props.isReview}
           attempt={this.props.attempt}

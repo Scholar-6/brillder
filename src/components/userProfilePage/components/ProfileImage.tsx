@@ -4,8 +4,8 @@ import DropNCrop from '@synapsestudios/react-drop-n-crop';
 import Dialog from "@material-ui/core/Dialog";
 import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
 
-import sprite from "assets/img/icons-sprite.svg";
 import { uploadFile } from "components/services/uploadFile";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ProfileImageProps {
   profileImage: string;
@@ -92,12 +92,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
         />
       );
     }
-    return (
-      <svg className="svg active">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#user"} className="text-dark-gray" />
-      </svg>
-    );
+    return <SpriteIcon name="user" className="active text-dark-gray" />;
   };
 
   let className = "add-image-button"
@@ -110,17 +105,11 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
       <div className="profile-image svgOnHover">
         {renderImage()}
         <div className={"svgOnHover " + className} onClick={handleClick}>
-          <svg className="svg svg-plus active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#plus"} className="text-white" />
-          </svg>
+          <SpriteIcon name="plus" className="svg-plus active text-white" />
         </div>
       </div>
       <div className="status-container svgOnHover">
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#circle-filled"} className="text-theme-green" />
-        </svg>
+        <SpriteIcon name="circle-filled" className="active text-theme-green" />
         <span>Active</span>
       </div>
       <Dialog

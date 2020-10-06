@@ -46,6 +46,15 @@
     grid-auto-rows: 1fr;
     flex-wrap: wrap;
     width: 50%;
+    .pair-match-play-choice {
+      .MuiListItem-root {
+        padding-top:4px !important;
+        padding-bottom:4px !important;
+        p {
+          font-size: 1.25vw !important;
+        }
+      }
+    }
   }
 
   .pair-match-play-choice {

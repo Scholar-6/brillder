@@ -4,10 +4,10 @@ import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import actions from 'redux/actions/brickActions';
-import sprite from "assets/img/icons-sprite.svg";
 import { Brick, Editor } from 'model/brick';
 import { getUserByUserName } from 'components/services/axios/user';
 import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface InviteProps {
   canEdit: boolean;
@@ -71,10 +71,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
         onClick={onNext}
       >
         Send Invite
-        <svg className="svg active send-icon" onClick={props.close}>
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#send"} />
-        </svg>
+        <SpriteIcon name="send" className="active send-icon" onClick={props.close} />
       </button>
     );
   }
@@ -86,10 +83,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
       className="dialog-box light-blue unlimited"
     >
       <div className="close-button svgOnHover" onClick={props.close}>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#cancel-thick"} />
-        </svg>
+        <SpriteIcon name="cancel-thick" className="active" />
       </div>
       <div className="dialog-header" style={{ minWidth: '30vw' }}>
         <div className="title left">

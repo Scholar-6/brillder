@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 
 import './SaveProfileButton.scss';
-import sprite from "assets/img/icons-sprite.svg";
-
 import {isValid} from '../service';
 import { UserProfile } from "model/user";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface SaveProfileProps {
   user: UserProfile;
@@ -66,10 +65,7 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
     }
     return (
       <button type="button" className={className} onClick={this.props.onClick}>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#save-icon"} />
-        </svg>
+        <SpriteIcon name="save-icon" className="active" />
       </button>
     );
   }

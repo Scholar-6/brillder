@@ -1,7 +1,7 @@
 import React from "react";
 
-import sprite from "assets/img/icons-sprite.svg";
 import './PrivateCoreToggle.scss';
+import SpriteIcon from "./SpriteIcon";
 
 interface ToggleProps {
   notVisible?: boolean;
@@ -17,12 +17,7 @@ const PrivateCoreToggle: React.FC<ToggleProps> = props => {
     if (isCore) {
       className += " selected";
     }
-    return (
-      <svg className={className}>
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#box"} />
-      </svg>
-    );
+    return <SpriteIcon name="globe" className={className} />;
   }
 
   const renderPrivateIcon = () => {
@@ -30,12 +25,7 @@ const PrivateCoreToggle: React.FC<ToggleProps> = props => {
     if (!isCore) {
       className += " selected";
     }
-    return (
-      <svg className={className}>
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#user"} />
-      </svg>
-    );
+    return <SpriteIcon name="key" className={className} />;
   }
 
   if (props.notVisible) {

@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import sprite from "assets/img/icons-sprite.svg";
 import "./PostPlay.scss";
 import { ReduxCombinedState } from "redux/reducers";
-import { Brick } from "model/brick";
+import { Brick, Subject } from "model/brick";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 
@@ -24,9 +24,11 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { getHours, getMinutes, getFormattedDate } from "components/services/brickService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Redirect } from "react-router-dom";
+import { loadSubjects } from "components/services/subject";
 
 enum BookState {
   Titles,
+  Attempts,
   QuestionPage,
 }
 
@@ -42,11 +44,17 @@ interface ProposalProps {
 }
 
 interface ProposalState {
+  isFirstHover: boolean;
+  firstHoverTimeout: number;
   closeTimeout: number;
   bookHovered: boolean;
   bookState: BookState;
   questionIndex: number;
   animationRunning: boolean;
+  activeAttemptIndex: number;
+  pageFlipDelay: number;
+  subjects: Subject[];
+  attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
   mode: boolean; // live - false, review - true
 }
@@ -59,20 +67,44 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       questionIndex: 0,
       animationRunning: false,
       mode: false,
+      activeAttemptIndex: 0,
       attempt: null,
       closeTimeout: -1,
-      bookHovered: false
+      bookHovered: false,
+      isFirstHover: true,
+      pageFlipDelay: 1200,
+      attempts: [],
+      subjects: [],
+      firstHoverTimeout: -1
     };
-
     this.loadData();
+  }
+
+  prepareAttempt(attempt:  PlayAttempt) {
+    attempt.brick.questions = attempt.brick.questions.sort((a, b) => a.order - b.order);
   }
 
   async loadData() {
     const {userId, brickId} = this.props.match.params;
+    const subjects = await loadSubjects();
     let attempts = await getAttempts(brickId, userId);
-    if (attempts) {
-      this.setState({attempt: attempts[attempts.length - 1]})
+    if (subjects && attempts && attempts.length > 0) {
+      const attempt = attempts[this.state.activeAttemptIndex];
+      this.prepareAttempt(attempt);
+      this.setState({attempt: attempt, attempts, subjects});
     }
+  }
+
+  setActiveAttempt(attempt: PlayAttempt, i: number) {
+    try {
+      this.prepareAttempt(attempt);
+      this.setState({attempt, activeAttemptIndex: i});
+    } catch {}
+  }
+
+  componentDidCatch(error: any, info: any) {
+    console.log(error, info);
+    this.props.history.push('/home');
   }
 
   openDialog = () => this.setState({});
@@ -80,8 +112,18 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   onBookHover() { 
     clearTimeout(this.state.closeTimeout);
-    if (!this.state.bookHovered) {
-      this.setState({ bookHovered: true });
+    if (this.state.isFirstHover) {
+      if (this.state.firstHoverTimeout === -1) {
+        const firstHoverTimeout = setTimeout(() => {
+          this.setState({firstHoverTimeout: -1, isFirstHover: false, bookHovered: true });
+        }, 600);
+        this.setState({ firstHoverTimeout });
+      }
+    } else {
+      if (!this.state.bookHovered) {
+        this.setState({ bookHovered: true, animationRunning: true });
+        setTimeout(() => { this.setState({animationRunning: false}) }, this.state.pageFlipDelay);
+      }
     }
   }
 
@@ -92,32 +134,112 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.setState({ closeTimeout });
   }
 
+  
+  animationFlipRelease() {
+    setTimeout(() => this.setState({ animationRunning: false }), this.state.pageFlipDelay);
+  }
+
+  moveToTitles() {
+    if (this.state.animationRunning) { return; }
+    this.setState({ bookState: BookState.Titles, animationRunning: true });
+    this.animationFlipRelease();
+  }
+
+  moveToAttempts() {
+    if (this.state.animationRunning) { return; }
+    this.setState({ bookState: BookState.Attempts, animationRunning: true });
+    this.animationFlipRelease();
+  }
+
   moveToQuestions() {
-    this.setState({ bookState: BookState.QuestionPage, questionIndex: 0 });
+    if (this.state.animationRunning) { return; }
+    this.setState({ bookState: BookState.QuestionPage, questionIndex: 0, animationRunning: true });
+    this.animationFlipRelease();
   }
 
   nextQuestion(brick: Brick) {
-    if (this.state.animationRunning) {
-      return;
-    }
+    if (this.state.animationRunning) { return; }
     if (this.state.questionIndex < brick.questions.length - 1) {
       this.setState({ questionIndex: this.state.questionIndex + 1, animationRunning: true });
-      setTimeout(() => this.setState({ animationRunning: false }), 1200);
+      this.animationFlipRelease();
     }
   }
 
   prevQuestion() {
-    if (this.state.animationRunning) {
-      return;
+    if (this.state.animationRunning) { return; }
+    if (this.state.questionIndex === 0) {
+      this.setState({ bookState: BookState.Attempts});
     }
     if (this.state.questionIndex > 0) {
       this.setState({ questionIndex: this.state.questionIndex - 1, animationRunning: true });
-      setTimeout(() => this.setState({ animationRunning: false }), 1200);
+      this.animationFlipRelease();
     }
   }
 
   getAttemptStatus(answers: AttemptAnswer[]) {
     return !answers.find(a => a.correct === false);
+  }
+
+  renderFirstPage(brick: Brick, color: string) {
+    return (
+      <div className="page1">
+        <div className="flipped-page">
+          <Grid container justify="center">
+            <div className="circle-icon" style={{ background: color }} />
+          </Grid>
+          <div className="proposal-titles">
+            <div className="title">{brick.title}</div>
+            <div>{brick.subTopic}</div>
+            <div>{brick.alternativeTopics}</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderSecondPage() {
+    return (
+      <div className="page2">
+        <div className="normal-page">
+          <div className="normal-page-container">
+            <h2>OVERALL</h2>
+            <h2>STATS, AVGs</h2>
+            <h2>etc.</h2>
+            <div className="bottom-button" onClick={this.moveToAttempts.bind(this)}>
+              View Questions
+              <SpriteIcon name="arrow-right" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderThirdPage() {
+    return <div className="page3-empty" onClick={this.moveToTitles.bind(this)}></div>;
+  }
+
+  renderFourthPage() {
+    return (
+      <div className="page4-attempts" onClick={this.moveToQuestions.bind(this)}>
+        {this.state.attempts.map((a, i) =>
+          {
+            const percentages = Math.round(a.score * 100 / a.maxScore);
+            return (
+              <div
+                className={`attempt-info ${i === this.state.activeAttemptIndex ? 'active' : ''}`}
+                onClick={e => {
+                  e.stopPropagation();
+                  this.setActiveAttempt(a, i);
+                }}
+              >
+                <div className="percentage">{percentages}</div> Attempt {i + 1}
+              </div>
+            );
+          }
+        )}
+      </div>
+    );
   }
 
   render() {
@@ -151,14 +273,19 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     };
 
     let color = "#B0B0AD";
-    if (brick.subject) {
-      color = brick.subject.color;
+    if (brick.subjectId) {
+      const subject = this.state.subjects.find(s => s.id === brick.subjectId);
+      if (subject) {
+        color = subject.color;
+      }
     }
 
     let bookClass = "book-main-container";
     if (this.state.bookHovered) {
       if (this.state.bookState === BookState.Titles) {
         bookClass += " expanded hovered";
+      } else if (this.state.bookState === BookState.Attempts) {
+        bookClass += " expanded attempts-list";
       } else if (this.state.bookState === BookState.QuestionPage) {
         bookClass += ` expanded question-attempt`;
       }
@@ -175,6 +302,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
         parsedAnswers = JSON.parse(JSON.parse(answers[i].answer));
       } catch {}
 
+      let attempt = Object.assign({}, this.state.attempt) as any;
+      attempt.answer = parsedAnswers;
+
       return (
         <div
           className={`page3 ${i === 0 ? 'first' : ''}`}
@@ -190,7 +320,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <h2>Investigation</h2>
                 <QuestionPlay
                   question={question}
-                  attempt={this.state.attempt as any}
+                  attempt={attempt}
                   isBookPreview={true}
                   answers={parsedAnswers}
                 />
@@ -307,44 +437,23 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
         >
           <Grid className="main-text-container">
             <h1>This book is yours.</h1>
-            <h2>Hover your mouse over the cover to see</h2>
-            <h2>a summary of your results.</h2>
+            <h2>Hover your mouse over the cover to</h2>
+            <h2>see a summary of your results.</h2>
           </Grid>
           <div className={bookClass}>
             <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>
               <div className="book" onMouseOver={this.onBookHover.bind(this)}>
                 <div className="back"></div>
-                <div className="page1">
-                  <div className="flipped-page">
-                    <Grid container justify="center">
-                      <div className="circle-icon" style={{ background: color }} />
-                    </Grid>
-                    <div className="proposal-titles">
-                      <div className="title">{brick.title}</div>
-                      <div>{brick.subTopic}</div>
-                      <div>{brick.alternativeTopics}</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="page2">
-                  <div className="normal-page">
-                    <div className="normal-page-container">
-                      <h2>OVERALL</h2>
-                      <h2>STATS, AVGs</h2>
-                      <h2>etc.</h2>
-                      <div
-                        className="bottom-button"
-                        onClick={this.moveToQuestions.bind(this)}
-                      >
-                        View Questions
-                        <svg>
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#arrow-right"} />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {this.renderFirstPage(brick, color)}
+                {this.renderSecondPage()}
+                {this.renderThirdPage()}
+                {this.state.bookHovered && this.state.bookState === BookState.QuestionPage &&
+                  <SpriteIcon
+                    name="custom-bookmark"
+                    className={`bookmark ${this.state.animationRunning ? "hidden" : ""}`}
+                  />
+                }
+                {this.renderFourthPage()}
                 {questions.map((q, i) => {
                   if (i <= this.state.questionIndex + 1 && i >= this.state.questionIndex - 1) {
                     return (

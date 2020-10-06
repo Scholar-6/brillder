@@ -1,0 +1,51 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.empty-QP1 {
+  padding-left: 1.5vh !important;
+  padding-right: 1.5vh !important;
+  color: var(--theme-dark-blue);
+  h2 {
+    text-align: center;
+    font-family: $font-family-black;
+    padding: 2.5vh 0 3vh 0;
+    font-size: 4.5vh;
+  }
+
+  p {
+    font-size: 1.9vh !important;
+    font-family: $font-family-regular-italic;
+  }
+
+  table {
+    margin-top: 5vh;
+    height: 38vh;
+    width: 100%;
+    tr {
+      td {
+        width: 50%;
+        text-align: center;
+        font-size: 2.5vh;
+
+        .centered {
+          height: 100%;
+          width: 100%;
+          
+          img {
+            height: 5vh;
+          }
+        }
+      }
+      td:first-child {
+        font-family: $font-family-bold;
+        font-size: 4.5vh;
+
+        &.graph-box {
+          font-size: 4vh;
+          font-family: $font-family-bold-italic;
+        }
+      }
+    }
+  }
+}

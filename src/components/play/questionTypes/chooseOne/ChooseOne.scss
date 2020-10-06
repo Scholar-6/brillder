@@ -5,8 +5,12 @@
 .choose-one-live {
   .image-choice {
     background: inherit;
-    padding: 1vh 1vw !important;
+    padding: 0 !important;
     background-color: var(--light-gray);
     width: 100%;
+  }
+  .question-hint {
+    width: 100%;
+    margin: 0;
   }
 }

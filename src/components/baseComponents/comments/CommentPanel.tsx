@@ -3,7 +3,6 @@ import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 import './CommentPanel.scss';
-import sprite from "assets/img/icons-sprite.svg";
 import { ReduxCombinedState } from 'redux/reducers';
 import comments from 'redux/actions/comments';
 import { Comment } from 'model/comments';
@@ -15,6 +14,7 @@ import CommentItem from './CommentItem';
 import CommentChild from './CommentChild';
 import NewCommentPanel from './NewCommentPanel';
 import CommentDeleteDialog from './CommentDeleteDialog';
+import SpriteIcon from '../SpriteIcon';
 
 
 interface CommentPanelProps {
@@ -85,12 +85,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
 
   const renderBackButton = () => {
     if (!props.haveBackButton) { return; }
-    return (
-      <svg className="svg active" onClick={hideComments}>
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#arrow-left"} />
-      </svg>
-    );
+    return <SpriteIcon name="arrow-left" className="active" onClick={hideComments} />;
   }
 
   return (

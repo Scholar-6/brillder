@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Grid, Input, Hidden } from "@material-ui/core";
 
-import sprite from "assets/img/icons-sprite.svg";
 import './brickTitle.scss';
 import { ProposalStep, PlayButtonStatus } from "../../model";
 import { Brick } from "model/brick";
@@ -14,6 +13,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/proposal/components/navigation/Navigation';
 
 import map from 'components/map';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
@@ -52,10 +52,7 @@ const BrickTitlePreviewComponent: React.FC<any> = (props) => {
   if (!title && !subTopic && !alternativeTopics) {
     return (
       <Grid container alignContent="flex-start" className="phone-preview-component">
-        <svg className="svg active titles-image big">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#search-flip"} />
-        </svg>
+        <SpriteIcon name="search-flip" className="active titles-image big" />
       </Grid>
     );
   }
@@ -63,10 +60,7 @@ const BrickTitlePreviewComponent: React.FC<any> = (props) => {
   return (
     <Grid container alignContent="flex-start" className="phone-preview-component title">
       <Grid container justify="center">
-        <svg className="svg active titles-image">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#search-flip"} />
-        </svg>
+        <SpriteIcon name="search-flip" className="active titles-image" />
       </Grid>
       <div className="brick-preview-container">
         <div className={"brick-title uppercase " + (title ? 'topic-filled' : '')}>

@@ -4,6 +4,7 @@ import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
 import './ShortBrickDescription.scss';
 import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "./SpriteIcon";
 
 interface ShortDescriptionProps {
   brick: Brick;
@@ -48,10 +49,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     if (circleIcon) {
       return (
         <div className="round-button-icon">
-          <svg className={svgClass}>
-            {/*eslint-disable-next-line*/}
-            <use href={`${sprite}#${circleIcon}`} />
-          </svg>
+          <SpriteIcon name={circleIcon} className={svgClass} />
         </div>
       );
     }
@@ -59,8 +57,14 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   }
 
   renderCircle(color: string) {
+    let className="left-brick-circle";
+    if (color === "color3") {
+      className += ' skip-top-left-border';
+    } else if (color === "color2") {
+      className += ' skip-top-right-border';
+    }
     return (
-      <div className="left-brick-circle">
+      <div className={className}>
         <div className="round-button" style={{ background: `${color}` }}>
           {this.renderIcon()}
         </div>
@@ -71,20 +75,17 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   renderPlayButton() {
     return (
       <div className="play-button-link svgOnHover" onClick={() => this.props.move ? this.props.move() : {}}>
-        <svg className="svg w100 h100 svg-default">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#play-thin"} className="text-gray" />
-        </svg>
-        <svg className="svg w100 h100 colored">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#play-thick"} className="text-gray" />
-        </svg>
+        <SpriteIcon name="play-thin" className="w100 h100 svg-default text-gray" />
+        <SpriteIcon name="play-thick" className="w100 h100 colored text-gray" />
       </div>
     )
   }
-
+  
   render() {
     const { color, brick, isMobile, isExpanded, index } = this.props;
+    if (color === "color3") {
+      console.log(color, brick.title, brick)
+    }
     let className = "short-description";
 
     if (isMobile && isExpanded) {

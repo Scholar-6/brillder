@@ -2,6 +2,7 @@ import React from "react";
 
 import sprite from "assets/img/icons-sprite.svg";
 import { Question } from "model/question";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ButtonProps {
   activeStep: number;
@@ -20,10 +21,7 @@ const LiveSubmitButton: React.FC<ButtonProps> = ({
         className="play-preview svgOnHover play-green"
         onClick={next}
       >
-        <svg className="svg w80 h80 active m-l-02">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#arrow-right"} />
-        </svg>
+        <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
       </button>
     );
   }

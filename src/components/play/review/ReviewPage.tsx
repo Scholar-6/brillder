@@ -12,6 +12,7 @@ import { Question } from "model/question";
 import { PlayStatus } from "../model";
 import { PlayMode } from "../model";
 import { BrickLengthEnum } from "model/brick";
+import { getPlayPath, getAssignQueryString } from "../service";
 
 import ReviewStepper from "./ReviewStepper";
 import QuestionLive from "../questionPlay/QuestionPlay";
@@ -19,7 +20,7 @@ import TabPanel from "../baseComponents/QuestionTabPanel";
 import CountDown from "../baseComponents/CountDown";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers";
-import { getPlayPath, getAssignQueryString } from "../service";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -186,14 +187,8 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     }
     return (
       <button className="play-preview svgOnHover play-white" onClick={prev}>
-        <svg className="svg w80 h80 svg-default m-0">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#arrow-left"} className="text-gray" />
-        </svg>
-        <svg className="svg w80 h80 colored m-0">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#arrow-left"} className="text-white" />
-        </svg>
+        <SpriteIcon name="arrow-left" className="w80 h80 svg-default m-0 text-gray" />
+        <SpriteIcon name="arrow-left" className="svg w80 h80 colored m-0 text-white" />
       </button>
     );
   };
@@ -219,10 +214,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     if (questions.length - 1 > activeStep) {
       return (
         <button type="button" className="play-preview svgOnHover play-green" onClick={next}>
-          <svg className="svg w80 h80 active m-l-02">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#arrow-right"} />
-          </svg>
+          <SpriteIcon name="arrow-right" className="svg w80 h80 active m-l-02" />
         </button>
       );
     }
@@ -248,10 +240,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         className="play-preview svgOnHover play-green mobile-next"
         onClick={() => setSubmitAnswers(true)}
       >
-        <svg className="svg w80 h80 active m-l-02">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#arrow-right"} />
-        </svg>
+        <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
       </button>
     );
   }

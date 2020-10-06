@@ -26,9 +26,25 @@ class WordHighlighting extends CompComponent<
     super(props);
     this.state = { userAnswers: [], words: props.component.words };
   }
-  
-  UNSAFE_componentWillReceiveProps(props: WordHighlightingProps) {
-    this.setState({ words: props.component.words });
+
+  componentDidUpdate(prevProp: WordHighlightingProps) {
+    if (this.props.isBookPreview) {
+      if (this.props.answers !== prevProp.answers) {
+        const words = this.props.component.words.map((w, i) => {
+          this.props.answers.forEach(a => {
+            if (a === i) {
+              w.selected = true;
+            }
+          });
+          return w;
+        })
+        this.setState({ words });
+      }
+    } else {
+      if (this.state.words !== this.props.component.words) {
+        this.setState({ words: this.props.component.words });
+      }
+    }
   }
 
   getAnswer(): number[] {
@@ -75,6 +91,14 @@ class WordHighlighting extends CompComponent<
         } else {
           className += " wrong";
         }
+      }
+    }
+
+    if (this.props.isBookPreview && word.selected) {
+      if (word.checked === true) {
+        className += " correct";
+      } else {
+        className += " wrong";
       }
     }
 

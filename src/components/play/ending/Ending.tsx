@@ -42,7 +42,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
 
     const oldScoreNumber = oldScore ? oldScore : 0;
 
-    const currentPScore = Math.round(((score + oldScoreNumber) * 50) / maxScore);
+    const currentPScore = 0;
     const minPScore = Math.round((oldScoreNumber * 100) / maxScore);
     const maxPScore = Math.round((score * 100) / maxScore);
 
@@ -152,7 +152,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
             className="score-circle"
           >
             <div>
-              <div className="score-precentage">{this.state.currentPScore}%</div>
+              <div className="score-precentage">{this.state.currentScore}%</div>
               <div className="score-number">
                 {this.state.oldScore}/{maxScore}
               </div>
