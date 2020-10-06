@@ -13,6 +13,8 @@
 
         border-radius: $main-panel-radius;
 
+        position: relative;
+
         .MuiRadio-root {
             color: rgba(0, 0, 0, 0.54);
             color: var(--theme-dark-blue) !important;
@@ -39,7 +41,7 @@
             display: block !important;
             padding: 0 !important;
             width: 100%;
-            font-size: 4.1vw !important;
+            font-size: 3.1vw !important;
             margin-top: -1vw;
             font-family: $font-family-bold !important;
         }
@@ -83,6 +85,14 @@
                     font-family: $font-family-bold-italic;
                 }
             }
+        }
+
+        .user-preference-next {
+            position: absolute;
+            bottom: 3vw;
+            right: 3vw;
+            left: auto;
+            display: inline;
         }
     }
 }

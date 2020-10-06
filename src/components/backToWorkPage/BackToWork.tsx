@@ -9,7 +9,7 @@ import actions from 'redux/actions/requestFailed';
 
 import "./BackToWork.scss";
 import map from 'components/map';
-import { User } from "model/user";
+import { User, UserType } from "model/user";
 import { Subject } from "model/brick";
 import { checkTeacher } from "components/services/brickService";
 import { loadSubjects, getGeneralSubject } from 'components/services/subject';
@@ -75,7 +75,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   getActiveTab(isTeach: boolean) {
     let activeTab = ActiveTab.Play;
-    if (isTeach) {
+    if (this.props.user.rolePreference?.roleId === UserType.Builder) {
+      activeTab = ActiveTab.Build;
+    } else if (isTeach) {
       activeTab = ActiveTab.Teach;
     }
     const values = queryString.parse(this.props.location.search);
@@ -85,7 +87,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         if (queryTab === ActiveTab.Build || queryTab === ActiveTab.Play || queryTab === ActiveTab.Teach) {
           activeTab = queryTab;
         }
-      } catch {}
+      } catch { }
     }
     return activeTab;
   }
