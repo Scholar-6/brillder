@@ -30,7 +30,7 @@
 
   .profile-block {
     position: relative;
-    background: var(--light-gray);
+    background: var(--solitude-light);
     height: 85.9vh;
     margin-top: 3.6vh;
     width: 72.5vw;
@@ -110,7 +110,7 @@
           height: 11vw;
           width: 11vw;
           background: var(--tab-gray) 0% 0% no-repeat padding-box;
-          border: 0.25vw solid var(--light-gray);
+          border: 0.25vw solid var(--solitude-light);
           box-shadow: $base-shadow;
           border-radius: 50%;
 
@@ -303,7 +303,7 @@
       textarea {
         width: 100%;
         height: 15vh;
-        background: var(--light-gray);
+        background: var(--solitude-light);
         color: var(--theme-dark-blue);
         border: none;
         border-radius: 0.5vw;
