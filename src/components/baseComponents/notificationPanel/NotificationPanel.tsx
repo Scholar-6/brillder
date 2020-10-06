@@ -13,6 +13,7 @@ import actions from 'redux/actions/brickActions';
 import { isMobile } from 'react-device-detect';
 import { checkTeacherEditorOrAdmin } from 'components/services/brickService';
 import { User } from 'model/user';
+import SpriteIcon from '../SpriteIcon';
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -59,9 +60,13 @@ class NotificationPanel extends Component<NotificationPanelProps> {
           history.push(map.playIntro(brick.id));
         } else if (notification.type === NotificationType.BrickAttemptSaved) {
           history.push(map.postPlay(brick.id, this.props.user.id));
-        } else if (notification.type === NotificationType.ReturnedToAuthor) {
+        } else if (notification.type === NotificationType.ReturnedToEditor) {
           history.push(map.InvestigationBuild(brick.id));
         } else if (notification.type === NotificationType.AssignedToEdit) {
+          this.props.forgetBrick();
+          await this.props.fetchBrick(notification.brick.id);
+          history.push(map.ProposalReview);
+        } else if (notification.type === NotificationType.ReturnedToAuthor) {
           this.props.forgetBrick();
           await this.props.fetchBrick(notification.brick.id);
           history.push(map.ProposalReview);
@@ -126,28 +131,16 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                     onClick={() => this.move(notification)}
                   >
                     {notification.type === NotificationType.BrickSubmittedForReview &&
-                      <svg className="svg w60 h60 active text-theme-dark-blue">
-                        {/*eslint-disable-next-line*/}
-                        <use href={sprite + "#message-square"} />
-                      </svg>
+                      <SpriteIcon name="message-square" className="w60 h60 active text-theme-dark-blue" />
                     }
                     {notification.type === NotificationType.AssignedToEdit &&
-                      <svg className="svg w60 h60 active text-theme-dark-blue">
-                        {/*eslint-disable-next-line*/}
-                        <use href={sprite + "#edit-outline"}/>
-                      </svg>
+                      <SpriteIcon name="edit-outline" className="w60 h60 active text-theme-dark-blue" />
                     }
                     {notification.type === NotificationType.BrickPublished &&
-                      <svg className="svg w60 h60 active text-theme-dark-blue">
-                        {/*eslint-disable-next-line*/}
-                        <use href={sprite + "#award"} style={{strokeWidth: 2}} />
-                      </svg>
+                      <SpriteIcon name="award" className="w60 h60 active text-theme-dark-blue stroke-2" />
                     }
                     {notification.type === NotificationType.NewCommentOnBrick &&
-                      <svg className="svg w60 h60 active text-theme-dark-blue">
-                        {/*eslint-disable-next-line*/}
-                        <use href={sprite + "#message-square-thick"} />
-                      </svg>
+                      <SpriteIcon name="message-square-thick" className="w60 h60 active text-theme-dark-blue" />
                     }
                     {notification.type === NotificationType.InvitedToPlayBrick &&
                       <svg className="svg w60 h60 active text-theme-dark-blue" style={{marginLeft: '0.2vw'}}>
@@ -156,13 +149,19 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                       </svg>
                     }
                     {notification.type === NotificationType.BrickAttemptSaved &&
-                      <svg className="svg w60 h60 active text-theme-dark-blue" style={{marginRight: '0vw', strokeWidth: 2}}>
+                      <svg className="svg w60 h60 active text-theme-dark-blue stroke-2" style={{marginRight: '0vw'}}>
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#book-open"} />
                       </svg>
                     }
                     {notification.type === NotificationType.ReturnedToAuthor &&
-                      <svg className="svg w60 h60 active text-theme-dark-blue" style={{marginRight: '0vw', strokeWidth: 2}}>
+                      <svg className="svg w60 h60 active text-theme-dark-blue stroke-2" style={{marginRight: '0vw'}}>
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#repeat"} />
+                      </svg>
+                    }
+                    {notification.type === NotificationType.ReturnedToEditor &&
+                      <svg className="svg w60 h60 active text-theme-dark-blue stroke-2" style={{marginRight: '0vw'}}>
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#repeat"} />
                       </svg>
@@ -176,10 +175,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                     <div className="actions">
                       <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>
                       <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={() => this.markAsRead(notification.id)}>
-                        <svg className="svg w80 h80 active">
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#cancel"} />
-                        </svg>
+                        <SpriteIcon name="cancel" className="w80 h80 active" />
                       </button>
                     </div>
                   </div>
@@ -202,10 +198,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
               <div className="bold">Clear All</div>
               <IconButton aria-label="clear-all" onClick={() => this.markAllAsRead()}>
                 <SvgIcon>
-                  <svg className="svg text-white">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#circle-cancel"} />
-                  </svg>
+                  <SpriteIcon name="circle-cancel" className="text-white" />
                 </SvgIcon>
               </IconButton>
             </div>

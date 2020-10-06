@@ -6,11 +6,11 @@ import 'react-circular-progressbar/dist/styles.css';
 import './ProvisionalScore.scss';
 import { Brick } from 'model/brick';
 import { PlayStatus } from '../model';
-import sprite from "assets/img/icons-sprite.svg";
 import { getPlayPath, getAssignQueryString } from '../service';
 
 import ReviewStepper from '../review/ReviewStepper';
 import Clock from '../baseComponents/Clock';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface ProvisionalScoreState {
   value: number;
@@ -113,10 +113,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
         </div>
         <div>
           <button type="button" className="play-preview svgOnHover play-green" onClick={this.moveToSynthesis.bind(this)}>
-            <svg className="svg w80 h80 active m-l-02">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#arrow-right"} />
-            </svg>
+            <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
           </button>
         </div>
       </div>

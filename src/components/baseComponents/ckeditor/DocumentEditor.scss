@@ -22,7 +22,7 @@
         @extend %textCenter;
         border: 0 !important;
         color: var(--theme-dark-blue);
-        background: var(--light-gray) !important;
+        background: var(--solitude-light) !important;
         font-size: 1.05vw;
         @include tabletP {
           font-size: $answer-input-text-size;

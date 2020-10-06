@@ -1,8 +1,8 @@
 import React from 'react';
 import Dialog from "@material-ui/core/Dialog";
-import sprite from "assets/img/icons-sprite.svg";
 
 import './PolicyDialog.scss';
+import SpriteIcon from '../SpriteIcon';
 
 interface PolicyDialogProps {
   isOpen: boolean;
@@ -18,10 +18,7 @@ const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
     <Dialog open={props.isOpen} onClose={() => props.close()} className="dialog-box privacy-policy-dialog">
       <div className="private-policy-content">
         <div className="close-button svgOnHover" onClick={props.close}>
-          <svg className="svg w100 h100 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#cancel"} />
-          </svg>
+          <SpriteIcon name="cancel" className="w100 h100 active" />
         </div>
         <h1 className="private-policy-title">Privacy Policy</h1>
         <p>

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import actions from "redux/actions/brickActions";
 
-import sprite from "assets/img/icons-sprite.svg";
 import { User } from "model/user";
 import { PageEnum } from "./PageHeadWithMenu";
 import { clearProposal } from 'localStorage/proposal';
@@ -13,6 +12,7 @@ import { clearProposal } from 'localStorage/proposal';
 
 import { ProposalSubject } from "components/map";
 import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
+import SpriteIcon from "../SpriteIcon";
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(actions.forgetBrick())
@@ -50,10 +50,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         >
           <span className="menu-text">View All Bricks</span>
           <div className="btn btn-transparent svgOnHover">
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#glasses"} className="text-white" />
-            </svg>
+            <SpriteIcon name="glasses" className="active text-white" />
           </div>
         </MenuItem>
       );
@@ -67,10 +64,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         <MenuItem className="menu-item" onClick={creatingBrick}>
           <span className="menu-text">Start Building</span>
           <div className="btn btn-transparent svgOnHover">
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#trowel"} className="text-white" />
-            </svg>
+            <SpriteIcon name="trowel" className="active text-white" />
           </div>
         </MenuItem>
       );
@@ -101,10 +95,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         >
           <span className="menu-text">Back To Work</span>
           <div className="btn btn-transparent svgOnHover">
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#roller"} className="text-white" />
-            </svg>
+            <SpriteIcon name="roller" className="active text-white" />
           </div>
         </MenuItem>
       );
@@ -123,10 +114,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         >
           <span className="menu-text">Manage Users</span>
           <div className="btn btn-transparent svgOnHover">
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#users"} className="text-white" />
-            </svg>
+            <SpriteIcon name="users" className="active text-white" />
           </div>
         </MenuItem>
       );
@@ -143,10 +131,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         >
           <span className="menu-text">View Profile</span>
           <div className="btn btn-transparent svgOnHover">
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#user"} className="text-white" />
-            </svg>
+            <SpriteIcon name="user" className="active text-white" />
           </div>
         </MenuItem>
       );
@@ -169,10 +154,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       <MenuItem className="menu-item" onClick={props.onLogout}>
         <span className="menu-text">Logout</span>
         <div className="btn btn-transparent svgOnHover">
-          <svg className="svg active logout-icon">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#logout"} className="text-white" />
-          </svg>
+          <SpriteIcon name="logout" className="active logout-icon text-white" />
         </div>
       </MenuItem>
     </Menu>

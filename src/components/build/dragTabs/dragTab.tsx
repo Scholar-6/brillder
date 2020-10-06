@@ -1,6 +1,5 @@
 import React from 'react'
-
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 export interface DragTabProps {
   id: any
@@ -32,9 +31,7 @@ const DragTab: React.FC<DragTabProps> = ({
     }
     return (
       <div className="remove-icon svgOnHover active" onClick={removeTab}>
-        <svg className="svg w100 h100 active">
-          <use href={sprite + "#cancel"} className={color} />
-        </svg>
+        <SpriteIcon name="cancel" className={`w100 h100 active ${color}`} />
       </div>
     );
   }

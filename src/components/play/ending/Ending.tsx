@@ -7,9 +7,9 @@ import { Brick } from "model/brick";
 import { PlayStatus } from "../model";
 import { BrickAttempt } from "../model";
 import EndingStepper from "./EndingStepper";
-import sprite from "assets/img/icons-sprite.svg";
 import Clock from "../baseComponents/Clock";
 import { getPlayPath, getAssignQueryString } from "../service";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface EndingState {
   oldScore: number;
@@ -179,10 +179,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
             className="play-preview svgOnHover play-green"
             onClick={this.props.saveAttempt}
           >
-            <svg className="svg w80 h80 active m-l-02">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#arrow-right"} />
-            </svg>
+            <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
           </button>
         </div>
       </div>

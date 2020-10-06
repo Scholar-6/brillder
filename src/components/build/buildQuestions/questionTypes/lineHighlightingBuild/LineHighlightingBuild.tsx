@@ -3,8 +3,8 @@ import React, { useEffect } from 'react'
 import './LineHighlightingBuild.scss'
 import { UniqueComponentProps } from '../types';
 
-import sprite from "assets/img/icons-sprite.svg";
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 enum LineMode {
   Input,
@@ -115,10 +115,10 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
         <div>Use Highlighter Icon to click correct line(s).</div>
       </div>
       <div className="pencil-icon-container svgOnHover" onClick={switchMode}>
-        <svg className="svg w100 h100 active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#highlighter"} className={state.mode ? "text-theme-green" : "text-theme-dark-blue"} />
-        </svg>
+        <SpriteIcon
+          name="highlighter"
+          className={`w100 h100 active ${state.mode ? "text-theme-green" : "text-theme-dark-blue"}`}
+        />
       </div>
       <div className="input-container">
         {renderBox()}

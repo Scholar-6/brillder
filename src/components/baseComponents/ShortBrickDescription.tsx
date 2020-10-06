@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
 import './ShortBrickDescription.scss';
-import sprite from "assets/img/icons-sprite.svg";
 import SpriteIcon from "./SpriteIcon";
 
 interface ShortDescriptionProps {
@@ -29,10 +28,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     return (
       <div className="left-brick-roller">
         <div className="btn btn-transparent roller-button svgOnHover">
-          <svg className="svg w100 h100 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#award"} className="text-theme-green" style={{strokeWidth: 2}} />
-          </svg>
+          <SpriteIcon name="award" className="w100 h100 active text-theme-green stroke-2" />
         </div>
       </div>
     );
@@ -83,9 +79,6 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   
   render() {
     const { color, brick, isMobile, isExpanded, index } = this.props;
-    if (color === "color3") {
-      console.log(color, brick.title, brick)
-    }
     let className = "short-description";
 
     if (isMobile && isExpanded) {

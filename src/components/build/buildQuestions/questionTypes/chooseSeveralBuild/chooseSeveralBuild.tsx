@@ -86,7 +86,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
 
   return (
     <div className="choose-several-build unique-component">
-      <div className="component-title">Tick Correct Answers</div>
+      <div className="component-title unselectable">Tick Correct Answers</div>
       {
         state.list.map((answer:any, i:number) => {
           return <ChooseOneAnswerComponent
