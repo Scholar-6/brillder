@@ -16,6 +16,10 @@ import map from 'components/map';
 import PlayButton from "components/build/baseComponents/PlayButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
+enum BookState {
+  TitlesPage,
+  PrepPage
+}
 
 interface ProposalProps {
   brick: Brick;
@@ -28,6 +32,7 @@ interface ProposalProps {
 }
 
 interface ProposalState {
+  bookState: BookState;
   bookHovered: boolean;
   closeTimeout: number;
   mode: boolean; // true - edit mode, false - view mode
@@ -39,6 +44,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     this.state = {
       mode: false,
       bookHovered: false,
+      bookState: BookState.TitlesPage,
       closeTimeout: -1
     }
   }
@@ -59,7 +65,8 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     this.setState({ closeTimeout });
   }
 
-  switchMode() {
+  switchMode(e: React.MouseEvent<SVGSVGElement, MouseEvent>) {
+    e.stopPropagation();
     if (this.props.canEdit) {
       this.setState({ mode: !this.state.mode });
     }
@@ -70,13 +77,21 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     if (this.state.mode) {
       className += " active";
     }
-    return <SpriteIcon onClick={() => this.switchMode()} name="edit-outline" className={className} />;
+    return <SpriteIcon onClick={e => this.switchMode(e)} name="edit-outline" className={className} />;
   }
 
   renderEditableField(name: BrickFieldNames) {
     const { brick } = this.props;
     if (this.state.mode) {
-      return <input onChange={e => this.props.setBrickField(name, e.target.value)} value={brick[name]} />;
+      return (
+        <input
+          onChange={e => {
+            e.stopPropagation();
+            this.props.setBrickField(name, e.target.value)
+          }}
+          value={brick[name]}
+        />
+      );
     }
     return brick[name];
   }
@@ -165,47 +180,73 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       );
     }
 
+    const renderFirstPage = () => {
+      return (
+        <div className="page5">
+          <div className="flipped-page">
+            <Grid container justify="center">
+              <FiberManualRecordIcon className="circle-icon" />
+            </Grid>
+            <div className="proposal-titles">
+              <div className="title">{this.renderEditableField(BrickFieldNames.title)}</div>
+              <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
+              <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
+              <p className="text-title m-t-3">1. Ideally, every brick should point to a bigger question.</p>
+              <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
+                {this.renderEditableField(BrickFieldNames.openQuestion)}
+              </div>
+              <p className="text-title brick-length">
+                2. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    const renderSecondPage = () => {
+      return (
+        <div className="page6" onClick={() => {
+          if (this.state.bookState === BookState.TitlesPage) {
+            this.setState({bookState: BookState.PrepPage});
+          }
+        }}>
+          <div className="normal-page">
+            <div className="normal-page-container">
+              <Grid container justify="center">
+                {this.renderEditButton()}
+              </Grid>
+              <p className="text-title">3. Outline the purpose of your brick.</p>
+              <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
+                {this.renderMathField(BrickFieldNames.brief)}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     const renderBook = () => {
       return (
         <div className={`book ${this.state.mode === true ? 'flat' : ''}`} onMouseOver={() => this.onBookHover()}>
           <div className="back"></div>
-          <div className="page6">
+          <div className="page6-cover" onClick={() => {
+            if (this.state.bookState === BookState.PrepPage) {
+              this.setState({bookState: BookState.TitlesPage});
+            }
+          }}></div>
+          {renderSecondPage()}
+          {renderFirstPage()}
+          <div className="page4">
             <div className="normal-page">
               <div className="normal-page-container">
-                <Grid container justify="center">
-                  {this.renderEditButton()}
-                </Grid>
-                <p className="text-title">2. Ideally, every brick should point to a bigger question.</p>
-                <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
-                  {this.renderEditableField(BrickFieldNames.openQuestion)}
-                </div>
-                <p className="text-title">3. Outline the purpose of your brick.</p>
-                <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
-                  {this.renderMathField(BrickFieldNames.brief)}
-                </div>
-                <p className="text-title">4. Create an engaging and relevant preparatory task.</p>
+                <p className="text-title" style={{marginTop: '5vh'}}>4. Create an engaging and relevant preparatory task.</p>
                 <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
                   {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
                 </div>
-                <p className="text-title brick-length">
-                  5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span>
-                </p>
               </div>
             </div>
           </div>
-          <div className="page5">
-            <div className="flipped-page">
-              <Grid container justify="center">
-                <FiberManualRecordIcon className="circle-icon" />
-              </Grid>
-              <div className="proposal-titles">
-                <div className="title">{this.renderEditableField(BrickFieldNames.title)}</div>
-                <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
-                <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
-              </div>
-            </div>
-          </div>
-          <div className="page4"></div>
           <div className="page3"></div>
           <div className="page2"></div>
           <div className="front">
@@ -228,6 +269,15 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       );
     }
 
+    let bookClass = 'book-main-container';
+    if (this.state.bookHovered) {
+      if (this.state.bookState === BookState.TitlesPage) {
+        bookClass += ' hovered';
+      } else {
+        bookClass += ' prep-page';
+      }
+    }
+
     return (
       <div className="proposal-page">
         {renderPlayButton()}
@@ -245,7 +295,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             <div className="text-line-2"></div>
             <h2>When you're ready, start building!</h2>
           </Grid>
-          <div className={`book-main-container ${this.state.bookHovered ? 'hovered' : ''}`}>
+          <div className={bookClass}>
             <div className="book-container" onMouseOut={() => this.onBookClose()}>
               {renderBook()}
             </div>
