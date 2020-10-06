@@ -60,6 +60,8 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     let className="left-brick-circle";
     if (color === "color3") {
       className += ' skip-top-left-border';
+    } else if (color === "color2") {
+      className += ' skip-top-right-border';
     }
     return (
       <div className={className}>
