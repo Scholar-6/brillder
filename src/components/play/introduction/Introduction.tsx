@@ -182,7 +182,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   ? sprite + "#arrow-down"
                   : sprite + "#arrow-right"
               }
-              className="text-theme-dark-blue"
+              className="text-theme-orange"
             />
           </svg>
         </div>
@@ -203,7 +203,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   ? sprite + "#arrow-down"
                   : sprite + "#arrow-right"
               }
-              className="text-theme-dark-blue"
+              className="text-theme-orange"
             />
           </svg>
         </div>
