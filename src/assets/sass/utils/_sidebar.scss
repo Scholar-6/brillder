@@ -653,10 +653,21 @@
                   }
                 }
                 &.skip-top-left-border {
-                  background: red;
+                  background: var(--theme-orange);
                   border-radius: 50%;
                   padding: 0.15vw;
                   border-top-left-radius: 0;
+
+                  > div {
+                    height: 1.8vw;
+                    width: 1.8vw;
+                  }
+                }
+                &.skip-top-right-border {
+                  background: var(--theme-green);
+                  border-radius: 50%;
+                  padding: 0.15vw;
+                  border-top-right-radius: 0;
 
                   > div {
                     height: 1.8vw;
