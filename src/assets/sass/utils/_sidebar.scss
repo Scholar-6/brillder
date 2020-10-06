@@ -164,7 +164,7 @@
       }
 
       .subject-indexes-box {
-        margin: $sidebar-gutter;
+        margin: 0.2vw 1.2vw !important;
         width: calc(100% - #{$sidebar-gutter * 2});
 
         .index-box {
@@ -198,7 +198,8 @@
       .filter-header {
         position: relative;
         text-transform: uppercase;
-        background: var(--theme-light-blue) 0% 0% no-repeat padding-box;
+        // background: var(--theme-light-blue) 0% 0% no-repeat padding-box;
+        background: var(--light-blue-alpha5);
         padding: 0.3vw 1.4vw;
         font-size: 1.2vw;
         letter-spacing: 0.22vw;

@@ -113,4 +113,13 @@
 .question-unique-play {
   margin-top: 1vw !important;
   margin-bottom: 1vw !important;
+  .document-editor {
+    .ck-editor {
+      .ck-editor__main {
+        .ck-content {
+          min-height: auto;
+        }
+      }
+    }
+  }
 }
