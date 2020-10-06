@@ -17,7 +17,7 @@ const BackPagePaginationV2: React.FC<BackPageTitleProps> = ({
 }) => {
   pageSize = pageSize / 3;
   const showPrev = sortedIndex >= pageSize;
-  const showNext = sortedIndex + pageSize <= longestColumn;
+  const showNext = sortedIndex + pageSize < longestColumn;
 
   return (
     <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
