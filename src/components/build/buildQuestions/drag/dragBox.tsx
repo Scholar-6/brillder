@@ -36,7 +36,7 @@ export interface BoxProps {
 }
 
 const DragBox: React.FC<BoxProps> = ({
-  name, fontSize, isImage, src, label, marginTop, marginLeft, hoverMarginTop, fontFamily, letterSpacing, className, onClick
+  name, isImage, src, label, hoverMarginTop, className, onClick
 }) => {
   const renderContent = () => {
     if (isImage) {
@@ -54,7 +54,7 @@ const DragBox: React.FC<BoxProps> = ({
   }
 
   return (
-    <div onClick={onClick} className="drag-box-item">
+    <div onClick={onClick} className="drag-box-item unselectable">
       {renderContent()}
     </div>
   )
