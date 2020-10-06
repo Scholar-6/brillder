@@ -496,7 +496,7 @@
   @extend %flexCenter;
   flex-direction: column;
   @include phone_and_tabletL {
-    background-color: var(--light-gray);
+    background-color: var(--solitude-light);
     border-radius: 5.1vw;
     padding: 1vh 2vh 0;
     margin: 4vh auto;
