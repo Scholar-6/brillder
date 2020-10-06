@@ -111,7 +111,7 @@ textarea {
         opacity: 1;
       }
       &.svg-default {
-        color: var(--light-gray);
+        color: var(--solitude-light);
       }
       &.svg-blue {
         color: var(--blue);
@@ -302,7 +302,7 @@ h3 {
       border-top-right-radius: $border-radius;
       padding-left: $border-radius;
     }
-  
+
     .question-hint {
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
