@@ -1,6 +1,6 @@
 import React from 'react'
 import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 export interface LastTabProps {
   tutorialStep: TutorialStep;
@@ -13,9 +13,7 @@ const LastTab: React.FC<LastTabProps> = ({ tutorialStep }) => {
   }
   return (
     <div className={`svgOnHover ${className}`}>
-      <svg className="svg w100 h100 active">
-        <use href={sprite + "#plus"} className="text-theme-dark-blue" />
-      </svg>
+      <SpriteIcon name="plus" className="w100 h100 active text-theme-dark-blue"/>
     </div>
   );
 }

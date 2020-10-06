@@ -2,8 +2,8 @@ import React from 'react'
 import { Grid, Button } from '@material-ui/core';
 
 import './SynthesisPanel.scss';
-import sprite from "assets/img/icons-sprite.svg";
 import { TutorialStep } from './TutorialPanelWorkArea';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 export interface TutorialProps {
@@ -17,10 +17,7 @@ const SynthesisPanel: React.FC<TutorialProps> = (props) => {
       <div className="tutorial-step-1">
         <Grid container justify="center">
           <div className="editor-border svgOnHover border-animation">
-            <svg className="svg w60 h60 active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#list"} className="text-theme-dark-blue" />
-            </svg>
+            <SpriteIcon name="list" className="w60 h60 active text-theme-dark-blue" />
           </div>
         </Grid>
         <p className="center">

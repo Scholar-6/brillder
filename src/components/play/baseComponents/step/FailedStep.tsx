@@ -1,6 +1,6 @@
 import React from "react";
 
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface StepProps {
   index: number;
@@ -11,10 +11,7 @@ const FailedStep: React.FC<StepProps> = ({ index, handleStep }) => {
   return (
     <div className="step" onClick={() => handleStep(index - 1)}>
       <span className="blue">{index}</span>
-      <svg className="svg active">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#cancel"} className="text-theme-orange" />
-      </svg>
+      <SpriteIcon name="cancel" className="active text-theme-orange" />
     </div>
   );
 };

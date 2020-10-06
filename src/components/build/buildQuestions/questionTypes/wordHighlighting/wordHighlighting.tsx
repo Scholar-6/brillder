@@ -3,8 +3,8 @@ import React, { useEffect } from 'react'
 import './wordHighlighting.scss'
 import { UniqueComponentProps } from '../types';
 import { BuildWord, SpecialSymbols } from 'components/interfaces/word';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
-import sprite from "assets/img/icons-sprite.svg";
 
 export enum WordMode {
   Input,
@@ -215,9 +215,10 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         <div>Use Highlighter Icon to click correct word(s).</div>
       </div>
       <div className="pencil-icon-container svgOnHover" onClick={switchMode}>
-        <svg className="svg w100 h100 active">
-          <use href={sprite + "#highlighter"} className={state.mode ? "text-theme-green" : "text-theme-dark-blue"} />
-        </svg>
+        <SpriteIcon
+          name="highlighter"
+          className={`w100 h100 active ${state.mode ? "text-theme-green" : "text-theme-dark-blue"}`}
+        />
       </div>
       <div className="input-container">
         {renderBox()}
