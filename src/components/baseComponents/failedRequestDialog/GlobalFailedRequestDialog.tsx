@@ -30,7 +30,7 @@ const FailedRequestDialog: React.FC<FailedRequestProps> = props => {
           <ListItemText primary="Sorry, we've run into a brick wall" className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="circle-check alert-icon">
-              <svg className="svg active" style={{strokeWidth: 2, marginBottom: '0.3vw'}}>
+              <svg className="svg active stroke-2" style={{marginBottom: '0.3vw'}}>
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#alert-triangle"} />
               </svg>

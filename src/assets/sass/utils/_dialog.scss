@@ -75,6 +75,16 @@
       width: auto !important;
       margin-bottom: 3vh !important;
     }
+    .circle-orange {
+      $circle-size: 5vw;
+      height: $circle-size;
+      width: $circle-size;
+      background: var(--theme-orange);
+      svg {
+        height: 4vw;
+        width: 4vw;
+      }
+    }
     .circle-check {
       $circle-size: 3.5vw;
       cursor: pointer;

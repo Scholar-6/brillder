@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Grid, Hidden } from '@material-ui/core';
-import sprite from "assets/img/icons-sprite.svg";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import './PageHeader.scss';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -9,6 +8,7 @@ import { connect } from 'react-redux'
 import { Notification } from 'model/notifications';
 import BellButton from './bellButton/BellButton';
 import MoreButton from './MoreButton';
+import SpriteIcon from '../SpriteIcon';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -76,10 +76,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
 
               {!searchVisible &&
                 <div className="header-btn help-button svgOnHover">
-                  <svg className="svg svg-default">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#help-thin"} />
-                  </svg>
+                  <SpriteIcon name="help-thin" className="svg-default" />
                 </div>
               }
               {
@@ -97,17 +94,11 @@ class PageHeader extends Component<UsersListProps, MyState> {
                 </div>
                 {searchVisible ?
                   <div className="btn btn-transparent close-search svgOnHover" onClick={() => this.toggleSearch()}>
-                    <svg className="svg w100 h100">
-                      {/*eslint-disable-next-line*/}
-                      <use href={sprite + "#arrow-right"} className="text-tab-gray" />
-                    </svg>
+                    <SpriteIcon name="arrow-right" className="w100 h100 text-tab-gray" />
                   </div>
                   :
                   <div className="btn btn-transparent open-search svgOnHover" onClick={() => this.renderSearch()}>
-                    <svg className="svg w100 h100 active">
-                      {/*eslint-disable-next-line*/}
-                      <use href={sprite + "#search"} className="text-theme-orange" />
-                    </svg>
+                    <SpriteIcon name="search" className="w100 h100 active text-theme-orange" />
                   </div>
                 }
               </div>
@@ -129,9 +120,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
             <div className="logout-container">
               <div className="search-container">
                 <div className="header-btn search-button svgOnHover" onClick={() => this.props.search()}>
-                  <svg className="svg active">
-                    <use href={sprite + "#search"} />
-                  </svg>
+                  <SpriteIcon name="search" className="active" />
                 </div>
                 <div className="search-area">
                   <input

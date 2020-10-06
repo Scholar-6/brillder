@@ -375,7 +375,7 @@
     }
 
     @include tabletP {
-      background: var(--light-gray);
+      background: var(--solitude-light);
       width: calc(100vw - #{$filter-sidebar-size} - #{$filter-sidebar-margin * 2});
       height: $height-desktop-view;
       overflow: hidden;
@@ -391,7 +391,7 @@
         font-family: $font-family-bold;
         padding: 3vw;
         margin-bottom: 0.5vh;
-        border-bottom: 0.2vh solid var(--light-gray);
+        border-bottom: 0.2vh solid var(--solitude-light);
         z-index: 10;
         display: flex;
         align-items: center;
@@ -595,7 +595,7 @@
           }
 
           .MuiExpansionPanel-root {
-            background: var(--light-gray);
+            background: var(--solitude-light);
           }
 
           .MuiExpansionPanel-root.Mui-expanded {
