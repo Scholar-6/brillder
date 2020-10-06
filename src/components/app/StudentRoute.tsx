@@ -28,6 +28,10 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, inner
       return <PageLoader content="...Getting User..." />;
     }
 
+    if (!user.rolePreference) {
+      return <Redirect to="/user/preference" />
+    }
+
     if (!rest.isRedirectedToProfile) {
       if (!user.firstName || !user.lastName) {
         return <Redirect to="/user-profile" />

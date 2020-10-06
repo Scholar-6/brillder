@@ -99,7 +99,7 @@ const App: React.FC = () => {
         <BuildRoute path="/users" component={UsersListPage} location={location} />
         <BuildRoute path="/user-profile/:userId" component={UserProfilePage} location={location} />
         <AllUsersRoute path="/user-profile" component={UserProfilePage} />
-        <AllUsersRoute path="/user/preference" component={UserPreferencePage} />
+        <AllUsersRoute path="/user/preference" component={UserPreferencePage} isPreferencePage={true} />
         <BuildRoute path="/home" component={MainPage} location={location} />
 
         <AuthRoute path="/login/:privacy" component={LoginPage} />

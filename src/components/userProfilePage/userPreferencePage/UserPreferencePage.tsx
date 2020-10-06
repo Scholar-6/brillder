@@ -3,6 +3,8 @@ import React from 'react';
 import { User, UserType } from 'model/user';
 import { connect } from 'react-redux';
 import { ReduxCombinedState } from 'redux/reducers';
+import { Dispatch } from 'redux';
+import userActions from 'redux/actions/user';
 
 import './UserPreferencePage.scss';
 import { Grid, Radio } from '@material-ui/core';
@@ -12,6 +14,7 @@ import { useHistory } from 'react-router-dom';
 
 interface UserPreferencePageProps {
     user: User;
+    getUser(): void;
 }
 
 const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
@@ -20,6 +23,13 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
 
     const handleChange = (roleId: UserType) => {
         setPreference(roleId);
+        axios.put(`${process.env.REACT_APP_BACKEND_HOST}/user/rolePreference/${roleId}`, {}, { withCredentials: true })
+            .then(() => {
+                props.getUser();
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     }
 
     const renderRadioButton = (roleId: UserType) =>
@@ -29,14 +39,8 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
         />;
 
     const moveNext = () => {
-        if (preference) {
-            axios.put(`${process.env.REACT_APP_BACKEND_HOST}/user/rolePreference/${preference.toString()}`, {}, { withCredentials: true })
-                .then(() => {
-                    history.push("/home");
-                })
-                .catch((e) => {
-                    console.log(e);
-                });
+        if (preference && props.user.rolePreference) {
+            history.push("/home");
         }
     }
 
@@ -89,6 +93,10 @@ const mapState = (state: ReduxCombinedState) => ({
     user: state.user.user
 });
 
-const connector = connect(mapState);
+const mapDispatch = (dispatch: any) => ({
+    getUser: () => dispatch(userActions.getUser())
+});
+
+const connector = connect(mapState, mapDispatch);
 
 export default connector(UserPreferencePage);
