@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { ReduxCombinedState } from 'redux/reducers';
 
 import './UserPreferencePage.scss';
-import { FormControl, Grid, Radio } from '@material-ui/core';
+import { Grid, Radio } from '@material-ui/core';
 
 interface UserPreferencePageProps {
     user: User;

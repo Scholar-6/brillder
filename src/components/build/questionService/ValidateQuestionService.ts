@@ -40,6 +40,15 @@ const validateHint = (hint: Hint) => {
   }
 }
 
+export const isHintEmpty = (hint: Hint) => {
+  if (hint.status === HintStatus.Each) {
+    const emptyHint = !hint.list.some(h => h !== "");
+    return emptyHint;
+  } else {
+    return !hint.value;
+  }
+}
+
 export function validateQuestion(question: Question) {
   const {type, hint, components} = question;
 

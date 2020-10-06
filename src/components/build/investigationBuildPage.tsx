@@ -658,7 +658,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <Redirect to={`/build/brick/${brick.id}/investigation/question`} />
           </Route>
           <Route path="/build/brick/:brickId/investigation/question-component">
-            <PhoneQuestionPreview question={activeQuestion} />
+            <PhoneQuestionPreview question={activeQuestion} getQuestionIndex={getQuestionIndex} />
           </Route>
           <Route path="/build/brick/:brickId/investigation/question">
             {renderQuestionTypePreview()}
