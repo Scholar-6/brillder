@@ -89,6 +89,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             e.stopPropagation();
             this.props.setBrickField(name, e.target.value)
           }}
+          placeholder="Please fill in.."
           value={brick[name]}
         />
       );
@@ -196,7 +197,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 {this.renderEditableField(BrickFieldNames.openQuestion)}
               </div>
               <p className="text-title brick-length m-t-3">
-                Brick Length: <span className="brickLength">{brick.brickLength} mins.</span>
+                <span className="bold">Brick Length:</span> <span className="brickLength">{brick.brickLength} mins.</span>
               </p>
             </div>
           </div>
@@ -218,7 +219,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               </Grid>
               <p className="text-title">Outline the purpose of your brick.</p>
               <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
-                {this.renderMathField(BrickFieldNames.brief)}
+                {this.renderMathField(BrickFieldNames.brief)} 
               </div>
             </div>
           </div>
@@ -240,7 +241,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 {this.renderEditButton()}
               </Grid>
               <p className="text-title text-theme-dark-blue">Create an engaging and relevant preparatory task.</p>
-              <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`}>
+              <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
                 {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
               </div>
             </div>
