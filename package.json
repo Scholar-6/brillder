@@ -45,7 +45,7 @@
     "@vx/axis": "0.0.198",
     "@vx/grid": "0.0.198",
     "@vx/stats": "0.0.198",
-    "@wiris/mathtype-ckeditor5": "^7.20.0",
+    "@wiris/mathtype-ckeditor5": "^7.24.0",
     "axios": "^0.19.1",
     "dot-prop": "^4.2.1",
     "dotenv": "^8.2.0",
