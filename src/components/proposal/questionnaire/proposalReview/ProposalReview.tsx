@@ -29,6 +29,7 @@ interface ProposalProps {
   playStatus: PlayButtonStatus;
   saveBrick(): void;
   setBrickField(name: BrickFieldNames, value: string): void;
+  saveAndPreview(): void;
 }
 
 interface ProposalState {
@@ -175,7 +176,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             isValid={playStatus === PlayButtonStatus.Valid}
             tutorialStep={-1}
             isTutorialSkipped={true}
-            onClick={moveToPlay}
+            onClick={this.props.saveAndPreview}
           />
         </div>
       );

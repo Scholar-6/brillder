@@ -18,6 +18,7 @@ interface BriefProps {
   playStatus: PlayButtonStatus;
   canEdit: boolean;
   saveBrief(brief: string): void;
+  saveAndPreview(): void;
 }
 
 const BriefPreviewComponent: React.FC<any> = ({ data }) => {
@@ -31,14 +32,15 @@ const BriefPreviewComponent: React.FC<any> = ({ data }) => {
   );
 }
 
-const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, playStatus, saveBrief }) => {
-  const setBriefText = (value: string) => {
-    saveBrief(value)
-  }
-
+const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief, ...props }) => {
   return (
     <div className="tutorial-page brief-page">
-      <Navigation step={ProposalStep.Brief} playStatus={playStatus} onMove={() => saveBrief(parentBrief)} />
+      <Navigation
+        step={ProposalStep.Brief}
+        playStatus={props.playStatus}
+        saveAndPreview={props.saveAndPreview}
+        onMove={() => saveBrief(parentBrief)}
+      />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid className="left-block">
           <div className="mobile-view-image">
@@ -54,7 +56,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, playStatus
               'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
             ]}
             onBlur={() => { }}
-            onChange={setBriefText}
+            onChange={saveBrief}
           />
           <NavigationButtons
             step={ProposalStep.Brief}
