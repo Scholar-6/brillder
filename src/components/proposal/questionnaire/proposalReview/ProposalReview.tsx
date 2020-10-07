@@ -234,19 +234,20 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             if (this.state.bookState === BookState.PrepPage) {
               this.setState({bookState: BookState.TitlesPage});
             }
-          }}></div>
-          {renderSecondPage()}
-          {renderFirstPage()}
-          <div className="page4">
-            <div className="normal-page">
-              <div className="normal-page-container">
-                <p className="text-title" style={{marginTop: '5vh'}}>4. Create an engaging and relevant preparatory task.</p>
-                <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
-                  {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
-                </div>
+          }}>
+            <div className="flipped-page">
+              <Grid container justify="center">
+                {this.renderEditButton()}
+              </Grid>
+              <p className="text-title text-theme-dark-blue">Create an engaging and relevant preparatory task.</p>
+              <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`}>
+                {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
               </div>
             </div>
           </div>
+          {renderSecondPage()}
+          {renderFirstPage()}
+          <div className="page4"></div>
           <div className="page3"></div>
           <div className="page2"></div>
           <div className="front">

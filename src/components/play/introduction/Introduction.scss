@@ -611,10 +611,6 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
           }
         }
         .introduction-page {
-          .open-question {
-            font-family: $font-family-regular-italic;
-          }
-
           padding: 0;
           overflow-y: hidden;
           @include phone_and_tabletP {
@@ -1154,6 +1150,9 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
         }
       }
     }
+  }
+  .open-question {
+    font-family: $font-family-regular-italic;
   }
 }
 
