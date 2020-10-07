@@ -1,6 +1,5 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
-import sprite from "assets/img/icons-sprite.svg";
 import { isMobile } from "react-device-detect";
 
 import "./Introduction.scss";
@@ -163,18 +162,12 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     return (
       <div className="expand-title">
         <span>Brief</span>
-        <div className="arrow svgOnHover" onClick={toggleBrief}>
-          <svg className="svg w100 h100 active">
-            {/*eslint-disable-next-line*/}
-            <use
-              href={
-                state.briefExpanded
-                  ? sprite + "#arrow-down"
-                  : sprite + "#arrow-right"
-              }
-              className="text-theme-orange"
-            />
-          </svg>
+        <div className="centered text-white" onClick={toggleBrief}>
+          {
+            state.briefExpanded
+              ? <SpriteIcon name="arrow-down" className="arrow b-green" />
+              : <SpriteIcon name="arrow-right" className="arrow b-yellow" />
+          }
         </div>
       </div>
     );
@@ -184,23 +177,16 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     return (
       <div className="expand-title">
         <span>Prep</span>
-        <div className="arrow svgOnHover" onClick={togglePrep}>
-          <svg className="svg w100 h100 active">
-            {/*eslint-disable-next-line*/}
-            <use
-              href={
-                state.prepExpanded
-                  ? sprite + "#arrow-down"
-                  : sprite + "#arrow-right"
-              }
-              className="text-theme-orange"
-            />
-          </svg>
+        <div className="centered text-white" onClick={togglePrep}>
+          {
+            state.prepExpanded
+              ? <SpriteIcon name="arrow-down" className="arrow b-green" />
+              : <SpriteIcon name="arrow-right" className="arrow b-yellow" />
+          }
         </div>
         {!state.prepExpanded && !isMobile &&
           <em className="help-prep">
-            Expand to start the timer. Aim to spend around {timeToSpend} minutes
-            on this section.
+            Expand to start the timer. Aim to spend around {timeToSpend} minutes on this section.
           </em>
         }
       </div>
@@ -309,6 +295,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <Grid item sm={8} xs={12}>
             <div className="introduction-page">
               {renderHeader()}
+              <p className="open-question">{brick.openQuestion}</p>
               <div className="intro-content">
                 {renderBriefTitle()}
                 {renderBriefExpandText()}
