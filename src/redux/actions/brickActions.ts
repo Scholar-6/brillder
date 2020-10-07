@@ -62,6 +62,7 @@ const saveBrick = (brick:any) => {
       return savedBrick;
     }).catch(error => {
       dispatch(saveBrickFailure(error.message))
+      return null;
     });
   }
 }

@@ -17,6 +17,7 @@ interface OpenQuestionProps {
   playStatus: PlayButtonStatus;
   history: any;
   saveOpenQuestion(v: string): void;
+  saveAndPreview(): void;
 }
 
 const HeadComponent: React.FC<any> = ({ data }) => {
@@ -31,32 +32,39 @@ const HeadComponent: React.FC<any> = ({ data }) => {
 }
 
 const OpenQuestion: React.FC<OpenQuestionProps> = ({
-  selectedQuestion, history, canEdit, playStatus, saveOpenQuestion
+  selectedQuestion, saveOpenQuestion, ...props
 }) => {
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    saveOpenQuestion(event.target.value as string);
+  const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
+    saveOpenQuestion(event.target.value);
   };
 
   return (
     <div className="tutorial-page open-question-page">
-      <Navigation step={ProposalStep.OpenQuestion} playStatus={playStatus} onMove={() => saveOpenQuestion(selectedQuestion)} />
+      <Navigation
+        step={ProposalStep.OpenQuestion}
+        playStatus={props.playStatus}
+        saveAndPreview={props.saveAndPreview}
+        onMove={() => saveOpenQuestion(selectedQuestion)}
+      />
       <Grid container direction="row">
         <Grid item className="left-block">
           <div className="mobile-view-image">
             <img alt="titles" className="size2" src="/images/new-brick/head.png" />
           </div>
           <h1 className="tutorial-header">Ideally, every brick should <br /> point to a bigger question.</h1>
-          <p className="sub-header">Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.</p>
+          <p className="sub-header">
+            Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.
+          </p>
           <Grid item className="input-container">
             <div className="audience-inputs">
               <textarea
                 autoFocus={true}
                 onKeyUp={e => {
                   if (enterPressed(e)) {
-                    history.push(map.ProposalLength);
+                    props.history.push(map.ProposalLength);
                   }
                 }}
-                disabled={!canEdit}
+                disabled={!props.canEdit}
                 value={selectedQuestion}
                 onChange={handleChange}
                 placeholder="Enter Open Question(s)..."
