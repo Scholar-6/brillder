@@ -144,6 +144,24 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
     const size: 5 | 3 = canPublish ? 3 : 5;
 
+    if (isAuthor && brick.status === BrickStatus.Draft) {
+      if (brick.editors) {
+        return (
+          <Grid className="share-row" container direction="row" justify="center">
+            { !brick.isCore && <ShareColumn size={size} onClick={() => setShare(true)} /> }
+            {renderInviteColumn(size)}
+          </Grid>
+        );
+      } else {
+        return (
+          <Grid className="share-row" container direction="row" justify="center">
+            { !brick.isCore && <ShareColumn size={size} onClick={() => setShare(true)} /> }
+            {renderInviteColumn(size)}
+          </Grid>
+        );
+      }
+    }
+
     if (canPublish) {
       return (
         <Grid className="share-row" container direction="row" justify="center">

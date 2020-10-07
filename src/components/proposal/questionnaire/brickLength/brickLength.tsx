@@ -50,24 +50,30 @@ const BrickLengthPreviewComponent: React.FC<any> = ({ data }) => {
 }
 
 interface BrickLengthProps {
-  length: any;
+  length: BrickLengthEnum;
   canEdit: boolean;
   playStatus: PlayButtonStatus;
   saveLength(value: BrickLengthEnum): any;
   saveBrick(data: any): void;
+  saveAndPreview(): void;
 }
 
 const BrickLength: React.FC<BrickLengthProps> = (
-  { length, playStatus, canEdit, saveLength, saveBrick }
+  { length, ...props }
 ) => {
   const setBrickLength = (brickLength: BrickLengthEnum) => {
-    if (!canEdit) { return; }
-    saveLength(brickLength);
+    if (!props.canEdit) { return; }
+    props.saveLength(brickLength);
   }
 
   return (
     <div className="tutorial-page brick-length-page">
-      <Navigation step={ProposalStep.BrickLength} playStatus={playStatus} onMove={() => { }} />
+      <Navigation
+        step={ProposalStep.BrickLength}
+        playStatus={props.playStatus}
+        saveAndPreview={props.saveAndPreview}
+        onMove={() => { }}
+      />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid className="left-block">
           <h1>20 minutes are a taster,<br />60 minutes are a feast.</h1>
@@ -104,7 +110,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
           <NavigationButtons
             step={ProposalStep.BrickLength}
             canSubmit={length !== BrickLengthEnum.None}
-            onSubmit={saveBrick}
+            onSubmit={props.saveBrick}
             data={length}
             backLink={map.ProposalOpenQuestion}
           />

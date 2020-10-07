@@ -15,20 +15,15 @@ interface NextButtonProps {
   playStatus: PlayButtonStatus;
   brickId?: number;
   onMove(): void;
+  saveAndPreview(): void;
 }
 
-const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatus, onMove }) => {
+const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatus, ...props }) => {
   const history = useHistory()
 
   const move = (route: string) => {
-    onMove();
+    props.onMove();
     history.push(route);
-  }
-
-  const moveToPlay = () => {
-    if (brickId && playStatus === PlayButtonStatus.Valid) {
-      history.push(map.playPreviewIntro(brickId));
-    }
   }
 
   const renderButtons = () => {
@@ -87,7 +82,7 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatu
               isValid={playStatus === PlayButtonStatus.Valid}
               tutorialStep={-1}
               isTutorialSkipped={true}
-              onClick={moveToPlay}
+              onClick={props.saveAndPreview}
             />
           </div>
           <div className="navigation-left">

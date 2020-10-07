@@ -26,6 +26,7 @@ interface BrickTitleProps {
   canEdit: boolean;
   playStatus: PlayButtonStatus;
   saveTitles(data: any): void;
+  saveAndPreview(): void;
 }
 
 interface BrickTitleState {
@@ -113,7 +114,12 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
 
     return (
       <div className="tutorial-page brick-title-page">
-        <Navigation step={ProposalStep.BrickTitle} playStatus={this.props.playStatus} onMove={() => saveTitles(parentState)} />
+        <Navigation
+          step={ProposalStep.BrickTitle}
+          playStatus={this.props.playStatus}
+          saveAndPreview={this.props.saveAndPreview}
+          onMove={() => saveTitles(parentState)}
+        />
         <Grid container direction="row">
           <Grid item className="left-block">
             <div className="mobile-view-image">

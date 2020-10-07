@@ -19,6 +19,7 @@ interface PrepProps {
   playStatus: PlayButtonStatus;
   savePrep(prep: string): void;
   saveBrick(prep: string): void;
+  saveAndPreview(): void;
 }
 
 const PrepPreviewComponent: React.FC<any> = ({ data }) => {
@@ -32,10 +33,15 @@ const PrepPreviewComponent: React.FC<any> = ({ data }) => {
   );
 }
 
-const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, playStatus, savePrep, saveBrick }) => {
+const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) => {
   return (
     <div className="tutorial-page prep-page">
-      <Navigation step={ProposalStep.Prep} playStatus={playStatus} onMove={() => savePrep(parentPrep)} />
+      <Navigation
+        step={ProposalStep.Prep}
+        playStatus={props.playStatus}
+        saveAndPreview={props.saveAndPreview}
+        onMove={() => savePrep(parentPrep)}
+      />
       <Grid container direction="row" alignItems="flex-start">
         <Grid className="left-block">
           <div className="mobile-view-image">
@@ -43,7 +49,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, playStatus, s
           </div>
           <h1>Add engaging and relevant <br /> preparatory material.</h1>
           <DocumentWirisCKEditor
-            disabled={!canEdit}
+            disabled={!props.canEdit}
             data={parentPrep}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
             mediaEmbed={true}
@@ -58,7 +64,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, playStatus, s
             step={ProposalStep.Prep}
             canSubmit={true}
             data={parentPrep}
-            onSubmit={saveBrick}
+            onSubmit={props.saveBrick}
             backLink={map.ProposalBrief}
           />
           <h2 className="pagination-text">4 of 4</h2>
