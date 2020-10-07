@@ -102,7 +102,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
             font-size: 4.5vw;
           }
           @include tabletP {
-            font-size: 1.25vw;
+            font-size: 1.25vw !important;
           }
         }
         .intro-header {
@@ -619,6 +619,9 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
           @include tabletP {
             height: $introduction-desktop-height;
             padding-left: 1vw;
+          }
+          .sort-category {
+            font-size: 1.25vw !important;
           }
           .question-index-container ~ h1 {
             @include tabletP {
