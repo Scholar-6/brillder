@@ -31,7 +31,7 @@ export interface SortComponent {
 interface SortProps extends CompQuestionProps {
   question: Question;
   component: SortComponent;
-  attempt?: ComponentAttempt<any>;
+  attempt: ComponentAttempt<any>;
   answers: number;
   isPreview?: boolean;
 }
@@ -50,22 +50,25 @@ class Sort extends CompComponent<SortProps, SortState> {
     let userCats:UserCategory[] = [];
     let choices:SortAnswer[] = [];
 
+    let catIndex = 0;
     for (let cat of props.component.categories) {
-      choices = choices.concat(cat.answers);
+      cat.answers.forEach((a, i) => {
+        let choice = Object.assign({}, a) as any;
+        choice.text = choice.value;
+        choice.value = this.getChoiceIndex(catIndex, i);
+        choices.push(choice as SortAnswer);
+      });
       userCats.push({choices: [], name: cat.name});
+      catIndex++;
     }
 
     choices = this.shuffle(choices);
 
-    if (!props.attempt) {
+    if (!props.isReview) {
       userCats.push({choices: choices, name: 'Unsorted'});
     } else {
       userCats.push({ choices: [], name: "Unsorted" });
-      Object.keys(props.attempt.answer).forEach((value) => {
-        if (props.attempt) {
-          userCats[props.attempt.answer[value]].choices.push({value} as SortAnswer);
-        }
-      });
+      this.prepareChoices(userCats);
     }
 
     this.state = { status: DragAndDropStatus.None, userCats, choices: this.getChoices() };
@@ -81,13 +84,28 @@ class Sort extends CompComponent<SortProps, SortState> {
         }
     
         userCats.push({ choices: [], name: "Unsorted" });
-        const {answer} = this.props.attempt;
-        Object.keys(answer).forEach(value => {
-          userCats[answer[value]].choices.push({value} as SortAnswer);
-        });
+        this.prepareChoices(userCats);
         this.setState({userCats});
       }
     }
+  }
+
+  prepareChoices(userCats: UserCategory[]) {
+    const {answer} = this.props.attempt;
+    Object.keys(answer).forEach(value => {
+      let keys = value.split('_');
+
+      let catIndex = parseInt(keys[0]);
+      let answerIndex = parseInt(keys[1]);
+
+      let catAnswer = this.props.component.categories[catIndex].answers[answerIndex];
+
+      let choice = Object.assign({}, catAnswer) as SortAnswer;
+      choice.text = choice.value;
+      choice.value = value;
+  
+      userCats[answer[value]].choices.push(choice as SortAnswer);
+    });
   }
 
   UNSAFE_componentWillReceiveProps(props: SortProps) {
@@ -132,10 +150,14 @@ class Sort extends CompComponent<SortProps, SortState> {
     return a;
   }
 
+  getChoiceIndex(catIndex:number, answerIndex: number) {
+    return catIndex + '_' + answerIndex;
+  }
+
   getChoices() {
     let choices:any = {};
     this.props.component.categories.forEach((cat, index) => {
-      cat.answers.forEach(choice => choices[choice.value] = index);
+      cat.answers.forEach((choice, i) => choices[this.getChoiceIndex(index, i)] = index);
     });
 
     choices = this.shuffle(choices);
@@ -175,7 +197,7 @@ class Sort extends CompComponent<SortProps, SortState> {
         />
       );
     }
-    return <div dangerouslySetInnerHTML={{ __html: choice.value}} />;
+    return <div dangerouslySetInnerHTML={{ __html: choice.text}} />;
   }
 
   renderChoice(choice: SortAnswer, i: number, choiceIndex: number) {
