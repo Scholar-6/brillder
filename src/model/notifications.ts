@@ -15,8 +15,8 @@ export enum NotificationType {
   NewCommentOnBrick,
   InvitedToPlayBrick,
   BrickAttemptSaved,
-  ReturnedToEditor,
   ReturnedToAuthor,
+  ReturnedToEditor,
 }
 
 export interface Notification {
@@ -39,6 +39,6 @@ export const notificationTypeColors = {
   [NotificationType.NewCommentOnBrick]: "new-comment",
   [NotificationType.InvitedToPlayBrick]: "invited-to-play",
   [NotificationType.BrickAttemptSaved]: "published",
-  [NotificationType.ReturnedToEditor]: "returned-to-editor",
+  [NotificationType.ReturnedToEditor]: "red",
   [NotificationType.ReturnedToAuthor]: "red"
 };

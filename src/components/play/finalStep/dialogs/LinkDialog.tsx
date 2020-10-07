@@ -1,7 +1,7 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface InviteProps {
   isOpen: boolean;
@@ -25,10 +25,7 @@ const LinkDialog: React.FC<InviteProps> = props => {
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue unlimited">
       <div className="close-button svgOnHover" onClick={props.close}>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#cancel-thick"} />
-        </svg>
+        <SpriteIcon name="cancel-thick" className="active" />
       </div>
       <div className="dialog-header">
         <div className="link">{props.link}</div>

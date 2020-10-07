@@ -1,8 +1,8 @@
 import React from 'react'
 import { Grid, Button } from '@material-ui/core';
-import sprite from "assets/img/icons-sprite.svg";
 import './PlayPanel.scss';
 import { TutorialStep } from './TutorialPanelWorkArea';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 export interface TutorialProps {
@@ -22,10 +22,7 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
   const renderArrow = () => {
     return (
       <div className="icon-container arrow-icon svgOnHover">
-        <svg className="svg w100 h100 active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#arrow-right"} className="text-gray" />
-        </svg>
+        <SpriteIcon name="arrow-right" className="w100 h100 active text-gray" />
       </div>
     );
   }
@@ -35,38 +32,26 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
       <div className="tutorial-step-1">
         <div className="icons-row">
           <div className="icon-container svgOnHover">
-            <svg className="svg w80 h80 active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#edit-outline"} className="text-theme-dark-blue" />
-            </svg>
+            <SpriteIcon
+              name="edit-outline"
+              className="w80 h80 active text-theme-dark-blue"
+            />
           </div>
           {renderDashedLine()}
           {renderArrow()}
           <div className="icon-container svgOnHover">
-            <svg className="svg w80 h80 active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#plus"} className="text-theme-dark-blue" />
-            </svg>
+            <SpriteIcon name="plus" className="w80 h80 active text-theme-dark-blue" />
           </div>
           {renderDashedLine()}
           {renderArrow()}
           <div className="icon-container svgOnHover">
-            <svg className="svg w80 h80 active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#list"} className="text-theme-dark-blue" />
-            </svg>
+            <SpriteIcon name="list" className="w80 h80 active text-theme-dark-blue" />
           </div>
           {renderDashedLine()}
           {renderArrow()}
           <div className="icon-container play-icon svgOnHover">
-            <svg className="svg w80 h80 svg-default">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#play-thin"} className="text-white" />
-            </svg>
-            <svg className="svg w80 h80 colored">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#play-thick"} className="text-white" />
-            </svg>
+            <SpriteIcon name="play-thin" className="w80 h80 svg-default text-white" />
+            <SpriteIcon name="play-thick" className="w80 h80 colored text-white" />
           </div>
         </div>
         <p className="center">The Play Preview button will turn green once every required field has been filled.</p>

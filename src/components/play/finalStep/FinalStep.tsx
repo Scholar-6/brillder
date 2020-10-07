@@ -2,7 +2,6 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import "./FinalStep.scss";
-import sprite from "assets/img/icons-sprite.svg";
 import { Brick } from "model/brick";
 
 import Clock from "../baseComponents/Clock";
@@ -17,6 +16,7 @@ import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
 import { User } from "model/user";
 import { checkAdmin } from "components/services/brickService";
 import map from "components/map";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface FinalStepProps {
   brick: Brick;
@@ -80,10 +80,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 <div className="intro-header">
                   <div className="left-brick-circle">
                     <div className="round-button">
-                      <svg className="svg active">
-                        {/*eslint-disable-next-line*/}
-                        <use href={sprite + "#check-icon-thin"} />
-                      </svg>
+                      <SpriteIcon name="check-icon-thin" className="active" />
                     </div>
                   </div>
                   <h2>All done!</h2>

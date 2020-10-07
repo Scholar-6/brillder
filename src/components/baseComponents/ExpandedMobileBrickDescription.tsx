@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
 import './ExpandedMobileBrickDescription.scss';
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "./SpriteIcon";
 
 
 interface ExpandedDescriptionProps {
@@ -26,14 +26,8 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
       <div className="expanded-mobile-brick-info">
         <div className="brick-icons">
           <div className="round-button svgOnHover" style={{ background: `${color}` }} onClick={() => this.props.move(brick.id)}>
-            <svg className="svg w80 h80 svg-default">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#play-thin"} className="text-white" />
-            </svg>
-            <svg className="svg w80 h80 colored">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#play-thick"} className="text-white" />
-            </svg>
+            <SpriteIcon name="play-thin" className="w80 h80 svg-default text-white" />
+            <SpriteIcon name="play-thick" className="w80 h80 colored text-white" />
           </div>
         </div>
         <div className="brick-description">

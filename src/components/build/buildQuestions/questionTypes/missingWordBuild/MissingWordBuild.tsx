@@ -1,16 +1,14 @@
-
-
 import React, { useEffect } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import './MissingWordBuild.scss'
-import sprite from "assets/img/icons-sprite.svg";
 import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
 import { showSameAnswerPopup } from '../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 interface Answer {
@@ -141,10 +139,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
         {
           (state.choices.length > 1)
             ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeChoice(key)}>
-              <svg className="svg active back-button">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#trash-outline"} className="theme-orange" />
-              </svg>
+              <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
             </button>
             : ""
         }

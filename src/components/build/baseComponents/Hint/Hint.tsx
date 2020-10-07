@@ -167,7 +167,7 @@ const HintComponent: React.FC<HintProps> = ({
   return (
     <div className="hint-component">
       <div className="hint-header">
-        <div>
+        <div className="unselectable">
           <div className="hint-type-text">
             <span>HINT<br />TYPE</span>
           </div>
@@ -182,7 +182,7 @@ const HintComponent: React.FC<HintProps> = ({
             </ToggleButton>
           </ToggleButtonGroup>
         </div>
-        <div>
+        <div className="unselectable">
           <div className="hint-question-circle">
             <HtmlTooltip
               title={

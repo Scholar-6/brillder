@@ -32,6 +32,12 @@
 .text-yellow {
   color: var(--theme-yellow) !important;
 }
+.b-yellow {
+  background: var(--theme-yellow) !important;
+}
+.b-green {
+  background: var(--theme-green) !important;
+}
 
 .MuiButtonBase-root.MuiIconButton-root.MuiRadio-root.white {
   color: white;

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Grid, Button } from '@material-ui/core';
-import sprite from "assets/img/icons-sprite.svg";
 import './ProposalPanel.scss';
 import { TutorialStep } from './TutorialPanelWorkArea';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 export interface TutorialProps {
@@ -17,10 +17,7 @@ const ProposalPanel: React.FC<TutorialProps> = (props) => {
         <h1>There are 4 steps to the build process.</h1>
         <Grid container justify="center">
           <div className="editor-border svgOnHover border-animation">
-            <svg className="svg w80 h80 active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#edit-outline"} className="text-theme-dark-blue" />
-            </svg>
+            <SpriteIcon name="edit-outline" className="w80 h80 active text-theme-dark-blue" />
           </div>
         </Grid>
         <p className="center">

@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "../SpriteIcon";
 
 interface ProfileSavedProps {
   isOpen: boolean;
@@ -25,10 +25,7 @@ const PublishSuccessDialog: React.FC<ProfileSavedProps> = props => {
           <ListItemText primary="Publish Successful!" className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="circle-check">
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#award"} className="text-white" style={{strokeWidth: 2}} />
-              </svg>
+              <SpriteIcon name="award" className="active stroke-2 text-white" />
             </Avatar>
           </ListItemAvatar>
         </ListItem>

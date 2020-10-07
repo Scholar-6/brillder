@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 
 import './verticalShuffleBuild.scss'
-import sprite from "assets/img/icons-sprite.svg";
 import { UniqueComponentProps } from '../types';
 import { showSameAnswerPopup } from '../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
@@ -71,10 +71,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
         {
           (state.list.length > 3)
             ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(i)}>
-              <svg className="svg active back-button">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#trash-outline"} className="theme-orange" />
-              </svg>
+              <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
             </button>
             : ""
         }

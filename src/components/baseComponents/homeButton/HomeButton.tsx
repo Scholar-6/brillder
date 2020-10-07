@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 
-import sprite from "assets/img/icons-sprite.svg";
 import './HomeButton.scss';
+import SpriteIcon from '../SpriteIcon';
 
 
 export interface HomeButtonProps {
@@ -23,15 +23,9 @@ const HomeButtonComponent: React.FC<HomeButtonProps> = (props) => {
       return (
         <div className="home-button-container">
           <button type="button" className="btn btn-transparent svgOnHover home-button" onClick={() => onClick()}>
-            <svg className="svg w100 h100 active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#logo"} className="text-theme-orange" />
-            </svg>
+            <SpriteIcon name="logo" className="w100 h100 active text-theme-orange" />
             <div className="roof svgOnHover">
-              <svg className="svg w100 h100 active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#roof"} className="text-theme-orange" />
-              </svg>
+              <SpriteIcon name="roof" className="w100 h100 active text-theme-orange" />
             </div>
             <div className="smoke-container">
               <svg width="2vw" height="2vw">
