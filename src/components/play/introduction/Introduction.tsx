@@ -197,14 +197,12 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             />
           </svg>
         </div>
-        {!state.prepExpanded && !isMobile ? (
+        {!state.prepExpanded && !isMobile &&
           <em className="help-prep">
             Expand to start the timer. Aim to spend around {timeToSpend} minutes
             on this section.
           </em>
-        ) : (
-            ""
-          )}
+        }
       </div>
     );
   };
@@ -333,16 +331,14 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <div className="introduction-page">
           {renderMobileHeader()}
           <div className="introduction-info">
-            {!state.prepExpanded ? (
+            {!state.prepExpanded &&
               <div>
                 <Hidden only={["sm", "md", "lg", "xl"]}>
                   {renderTimer()}
                 </Hidden>
                 <IntroductionDetails brickLength={brick.brickLength} />
               </div>
-            ) : (
-                ""
-              )}
+            }
             {renderPlayButton()}
           </div>
           <div className="intro-content">

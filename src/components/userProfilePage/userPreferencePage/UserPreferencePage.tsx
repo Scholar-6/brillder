@@ -3,7 +3,6 @@ import React from 'react';
 import { User, UserType } from 'model/user';
 import { connect } from 'react-redux';
 import { ReduxCombinedState } from 'redux/reducers';
-import { Dispatch } from 'redux';
 import userActions from 'redux/actions/user';
 
 import './UserPreferencePage.scss';
