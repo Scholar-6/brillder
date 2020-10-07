@@ -714,6 +714,11 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
             margin: 12vh 3vw 1vw 4vw;
           }
         }
+        &.mobile-synthesis-page {
+          .direction-info {
+            display: none;
+          }
+        }
       }
       &.mobile-synthesis-page,
       &.mobile-provisional-score,
@@ -984,7 +989,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
       margin: 0 1.8vw 0 1vw;
       width: 2vw;
       height: 2vw;
-  
+
       @include phone_and_tabletP {
         width: 6.9vw;
         height: 6.9vw;
