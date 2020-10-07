@@ -137,7 +137,7 @@ input {
 .MuiButton-label,
 .MuiTypography-body1,
 .MuiTypography-body2 {
-  font-family: $font-family-regular;
+  font-family: $font-family-regular !important;
   font-weight: normal !important;
 }
 
