@@ -52,7 +52,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   const renderSynthesisContent = () => {
     return (
       <div className="synthesis-content">
-        <HighlightHtml mode={props.mode} value={brick.synthesis} onHighlight={
+        <HighlightHtml mode={props.mode} value={brick.synthesis} isSynthesis={true} onHighlight={
           value => {
             if (props.onHighlight) {
               props.onHighlight(BrickFieldNames.synthesis, value);

@@ -9,6 +9,14 @@ export function parseDataToArray(value: string): Array<string> {
   }
 }
 
+export function parseSynthesisDataToArray(value: string): Array<string> {
+  try {
+    return value.match(/<(.+)>.*?<\/(.+)>/g) || [];
+  } catch {
+    return [];
+  }
+}
+
 function isMathType(el: string) {
   return el.indexOf('<math xmlns="http://www.w3.org/1998/Math/MathML">') >= 0;
 }
