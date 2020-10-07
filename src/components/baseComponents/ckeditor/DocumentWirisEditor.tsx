@@ -36,6 +36,10 @@ import Table from "@ckeditor/ckeditor5-table/src/table";
 // @ts-ignore
 import TableToolbar from "@ckeditor/ckeditor5-table/src/tabletoolbar";
 // @ts-ignore
+import BlockQuote from "@ckeditor/ckeditor5-block-quote/src/blockquote";
+// @ts-ignore
+import BlockQuoteUI from "@ckeditor/ckeditor5-block-quote/src/blockquoteui";
+// @ts-ignore
 import Image from "@ckeditor/ckeditor5-image/src/image";
 // @ts-ignore
 import UpcastWriter from "@ckeditor/ckeditor5-engine/src/view/upcastwriter";
@@ -50,6 +54,7 @@ export interface DocumentWEditorProps {
   placeholder?: string;
   mediaEmbed?: boolean;
   link?: boolean;
+  blockQuote?: boolean;
   defaultAlignment?: string;
   validationRequired?: boolean;
   onBlur(): void;
@@ -244,6 +249,11 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
 
     if (this.props.toolbar) {
       config.toolbar = this.props.toolbar;
+    }
+    if (this.props.blockQuote) {
+      config.plugins.push(BlockQuote);
+      config.plugins.push(BlockQuoteUI);
+      config.toolbar.push("blockQuote");
     }
     if (this.props.placeholder) {
       config.placeholder = this.props.placeholder;

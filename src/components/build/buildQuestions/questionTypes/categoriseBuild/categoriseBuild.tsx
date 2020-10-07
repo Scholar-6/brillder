@@ -8,6 +8,7 @@ import { SortCategory, QuestionValueType, SortAnswer } from 'components/interfac
 import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import sprite from "assets/img/icons-sprite.svg";
 import { showSameAnswerPopup } from '../service/questionBuild';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 export interface CategoriseData {
   categories: SortCategory[];
@@ -154,10 +155,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           {
             (state.categories.length > 2)
               ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeCategory(key)}>
-                <svg className="svg active back-button">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#trash-outline"} className="theme-orange" />
-                </svg>
+                <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
               </button>
               : ""
           }

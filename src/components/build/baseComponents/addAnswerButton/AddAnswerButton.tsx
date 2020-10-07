@@ -13,7 +13,7 @@ export interface AddAnswerButtonProps {
 
 const AddAnswerButton: React.FC<AddAnswerButtonProps> = ({ label, locked, height, addAnswer }) => {
   return (
-    <AnimateHeight className={"add-button-container " + (locked ? 'hide' : '')} duration={500} height={height}>
+    <AnimateHeight className={"add-button-container unselectable " + (locked ? 'hide' : '')} duration={500} height={height}>
       <div className="button-box">
         <button className="btn btn-xl btn-block bg-light-blue"  onClick={addAnswer}>
           <span>{label}</span>

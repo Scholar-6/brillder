@@ -1,5 +1,5 @@
 import React from "react";
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "../SpriteIcon";
 
 interface MoreButtonProps {
   onClick(): void;
@@ -8,10 +8,7 @@ interface MoreButtonProps {
 const MoreButton: React.FC<MoreButtonProps> = (props) => {
   return (
     <div className="header-btn more-button svgOnHover" onClick={props.onClick}>
-      <svg className="svg active">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#more"} />
-      </svg>
+      <SpriteIcon name="more" className="active" />
     </div>
   );
 };

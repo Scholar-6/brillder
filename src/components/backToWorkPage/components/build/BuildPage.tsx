@@ -202,6 +202,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     filters.isCore = !filters.isCore;
     const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id, this.props.generalSubjectId);
     const threeColumns = prepareTreeRows(this.state.rawBricks, this.state.filters, this.props.user.id, this.props.generalSubjectId);
+    console.log(threeColumns);
     this.setState({ ...this.state, threeColumns, filters, finalBricks });
   }
 

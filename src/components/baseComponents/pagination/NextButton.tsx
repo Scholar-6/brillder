@@ -1,6 +1,6 @@
 import React from "react";
 
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "../SpriteIcon";
 
 interface NextButtonProps {
   isShown: boolean;
@@ -14,10 +14,7 @@ const NextButton: React.FC<NextButtonProps> = props => {
       className={"btn btn-transparent next-button svgOnHover active"}
       onClick={props.onClick}
     >
-      <svg className="svg w100 h100 active">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#arrow-down"} />
-      </svg>
+      <SpriteIcon name="arrow-down" className="w100 h100 active" />
     </button>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "../SpriteIcon";
 
 interface PrevButtonProps {
   isShown: boolean;
@@ -14,10 +14,7 @@ const PrevButton: React.FC<PrevButtonProps> = props => {
       className={"btn btn-transparent prev-button svgOnHover active"}
       onClick={props.onClick}
     >
-      <svg className="svg w100 h100 active">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#arrow-up"} />
-      </svg>
+      <SpriteIcon name="arrow-up" className="w100 h100 active" />
     </button>
   );
 }

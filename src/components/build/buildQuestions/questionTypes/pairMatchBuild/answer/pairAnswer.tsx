@@ -1,10 +1,10 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import sprite from "assets/img/icons-sprite.svg";
 import { QuestionValueType } from '../../types';
 import { Answer } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/QuestionImageDropzone';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 export interface PairAnswerProps {
@@ -45,10 +45,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     if (answer.answerType === QuestionValueType.Image) {
       return (
         <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeImage()}>
-          <svg className="svg active back-button">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#trash-outline"} className="theme-orange" />
-          </svg>
+          <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
         </button>
       );
     }
@@ -56,10 +53,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     if (length > 3) {
       return (
         <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(index)}>
-          <svg className="svg active back-button">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#trash-outline"} className="theme-orange" />
-          </svg>
+          <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
         </button>
       );
     }

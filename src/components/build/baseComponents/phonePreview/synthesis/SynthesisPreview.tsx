@@ -3,8 +3,7 @@ import React from "react";
 // @ts-ignore
 import MathJax from "react-mathjax-preview";
 import {
-  parseDataToArray,
-  isMathJax,
+  isMathJax, parseSynthesisDataToArray
 } from "components/services/mathJaxService";
 import "./SynthesisPreview.scss";
 
@@ -15,7 +14,7 @@ interface SynthesisPreviewProps {
 const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
   data,
 }) => {
-  var arr = parseDataToArray(data);
+  var arr = parseSynthesisDataToArray(data);
 
   const renderMath = (data: string, i: number) => {
     return <MathJax math={data} key={i} />;
