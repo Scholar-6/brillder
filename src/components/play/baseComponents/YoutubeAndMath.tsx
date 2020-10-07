@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 // @ts-ignore
 import MathJax from 'react-mathjax-preview'
 
-import {parseDataToArray, isMathJax} from 'components/services/mathJaxService';
+import {parseDataToArray, isMathJax, parseSynthesisDataToArray} from 'components/services/mathJaxService';
 import YoutubeLink from './YoutubeLink';
 import './YoutubeAndMath.scss'
 
 interface MathHtmlProps {
   value: string;
+  isSynthesisParser?: boolean;
 }
 
 class YoutubeAndMathInHtml extends Component<MathHtmlProps> {
@@ -21,7 +22,12 @@ class YoutubeAndMathInHtml extends Component<MathHtmlProps> {
   }
 
   render() {
-    var arr = parseDataToArray(this.props.value);
+    let arr = [];
+    if (this.props.isSynthesisParser) {
+      arr = parseSynthesisDataToArray(this.props.value);
+    } else {
+      arr = parseDataToArray(this.props.value);
+    }
 
     const renderMath = (data: string, i: number) => {
       return <MathJax math={data} key={i} />;

@@ -67,6 +67,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [liveEndTime, setLiveEndTime] = React.useState(null as any);
   const location = useLocation();
   const finalStep = location.pathname.search("/finalStep") >= 0;
+  const [headerHidden, setHeader] = React.useState(false);
 
   setBrillderTitle(brick.title);
 
@@ -142,6 +143,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (values.assignmentId) {
       query.assignmentId = values.assignmentId;
     }
+    if (isMobile) {
+      setHeader(true);
+    }
     props.history.push(liveLink + "?" + queryString.stringify(query));
     setSidebar(true);
   }
@@ -163,6 +167,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
     if (!isMobile && sidebarRolledUp) {
       return <HomeButton link="/home" />;
+    }
+    if (headerHidden) {
+      return <div></div>;
     }
     return (
       <PageHeadWithMenu

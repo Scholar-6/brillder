@@ -89,6 +89,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             e.stopPropagation();
             this.props.setBrickField(name, e.target.value)
           }}
+          placeholder="Please fill in.."
           value={brick[name]}
         />
       );
@@ -191,12 +192,12 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               <div className="title">{this.renderEditableField(BrickFieldNames.title)}</div>
               <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
               <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
-              <p className="text-title m-t-3">1. Ideally, every brick should point to a bigger question.</p>
+              <p className="text-title m-t-3 bold">Open Question.</p>
               <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
                 {this.renderEditableField(BrickFieldNames.openQuestion)}
               </div>
-              <p className="text-title brick-length">
-                2. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span>
+              <p className="text-title brick-length m-t-3">
+                <span className="bold">Brick Length:</span> <span className="brickLength">{brick.brickLength} mins.</span>
               </p>
             </div>
           </div>
@@ -216,9 +217,9 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               <Grid container justify="center">
                 {this.renderEditButton()}
               </Grid>
-              <p className="text-title">3. Outline the purpose of your brick.</p>
+              <p className="text-title">Outline the purpose of your brick.</p>
               <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
-                {this.renderMathField(BrickFieldNames.brief)}
+                {this.renderMathField(BrickFieldNames.brief)} 
               </div>
             </div>
           </div>
@@ -234,19 +235,20 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             if (this.state.bookState === BookState.PrepPage) {
               this.setState({bookState: BookState.TitlesPage});
             }
-          }}></div>
-          {renderSecondPage()}
-          {renderFirstPage()}
-          <div className="page4">
-            <div className="normal-page">
-              <div className="normal-page-container">
-                <p className="text-title" style={{marginTop: '5vh'}}>4. Create an engaging and relevant preparatory task.</p>
-                <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
-                  {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
-                </div>
+          }}>
+            <div className="flipped-page">
+              <Grid container justify="center">
+                {this.renderEditButton()}
+              </Grid>
+              <p className="text-title text-theme-dark-blue">Create an engaging and relevant preparatory task.</p>
+              <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
+                {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
               </div>
             </div>
           </div>
+          {renderSecondPage()}
+          {renderFirstPage()}
+          <div className="page4"></div>
           <div className="page3"></div>
           <div className="page2"></div>
           <div className="front">

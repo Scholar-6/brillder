@@ -102,7 +102,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
             font-size: 4.5vw;
           }
           @include tabletP {
-            font-size: 1.25vw;
+            font-size: 1.25vw !important;
           }
         }
         .intro-header {
@@ -620,6 +620,9 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
             height: $introduction-desktop-height;
             padding-left: 1vw;
           }
+          .sort-category {
+            font-size: 1.25vw !important;
+          }
           .question-index-container ~ h1 {
             @include tabletP {
               text-align: center;
@@ -712,6 +715,11 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
           }
           @include tabletP {
             margin: 12vh 3vw 1vw 4vw;
+          }
+        }
+        &.mobile-synthesis-page {
+          .direction-info {
+            display: none;
           }
         }
       }
@@ -953,6 +961,10 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
     @include phone_and_tabletP {
       margin-top: 2vh;
       font: 6vw $font-family-bold;
+
+      .centered {
+        width: 20vw;
+      }
     }
 
     @include tabletP {
@@ -975,20 +987,27 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
     }
 
     .arrow {
+      cursor: pointer;
+      border-radius: 50%;
+      margin: 0 1.8vw 0 1vw;
+      width: 2vw;
+      height: 2vw;
+
       @include phone_and_tabletP {
-        width: 10vw;
-        height: 10vw;
+        width: 6.9vw;
+        height: 6.9vw;
         margin-left: 5vw;
       }
 
-      @include tabletP {
-        margin: 0 1.5vw 0 0;
-        width: 3vw;
-        height: 3vw;
-      }
-
       .svg {
-        height: 2.1vw;
+        height: 2vw;
+      }
+      &:hover {
+        animation-duration: 1s;
+        animation-delay: 0s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease;
+        animation-name: pulse-green;
       }
     }
 
@@ -1139,6 +1158,9 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
         }
       }
     }
+  }
+  .open-question {
+    font-family: $font-family-regular-italic;
   }
 }
 
