@@ -98,7 +98,9 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
 
   async loadData() {
     const subjects = await getSubjects();
+
     if(subjects) {
+      subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
       this.setState({ ...this.state, subjects });
     } else {
       this.setState({ ...this.state, failedRequest: true });

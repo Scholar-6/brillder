@@ -247,58 +247,94 @@
 
     .page5 {
       background: #fafafa;
+    }
+
+    .page6-cover {
+      background: #fafafa;
       .flipped-page {
-        height: 100%;
-        width: 100%;
+        width: calc(100% - 4vw);
+        padding-top: 0 !important;
+        margin-left: 2vw;
+        margin-right: 2vw;
 
-        -moz-transform: scale(-1, 1);
-        -webkit-transform: scale(-1, 1);
-        -o-transform: scale(-1, 1);
-        -ms-transform: scale(-1, 1);
-        transform: scale(-1, 1);
-
-        padding-top: 3.5vh;
-        color: var(--theme-orange);
-
-        .circle-icon {
-          font-size: 7.3vw;
-        }
-
-        .proposal-titles {
-          font-weight: normal;
-          margin-left: 3vw;
-          margin-right: 3vw;
-          margin-top: 3vh;
-          font-family: $font-family-regular;
-          text-align: left;
-          margin-left: 3.1vw;
-          font-size: 1.3vw;
-
-          .title {
-            text-transform: uppercase;
-            font-family: $font-family-bold;
-            height: 10vh;
-
-            input {
-              text-transform: uppercase;
-              font-family: $font-family-bold !important;
+        .document-editor {
+          width: 100%;
+          .ck-toolbar {
+            .ck-toolbar__items {
+              background-color: var(--solitude-light) !important;
             }
           }
-
-          .m-t-3 {
-            margin-top: 3vh;
-          }
-
-          input {
-            width: 100%;
-            color: var(--theme-orange) !important;
+          .ck-editor {
+            width: 100% !important;
+            .ck-content {
+              background-color: var(--tab-gray);
+              padding: 1vw;
+            }
           }
         }
       }
     }
 
-    .page6-cover {
-      background: #fafafa;
+    .flipped-page {
+      height: 100%;
+      width: 100%;
+
+      -moz-transform: scale(-1, 1);
+      -webkit-transform: scale(-1, 1);
+      -o-transform: scale(-1, 1);
+      -ms-transform: scale(-1, 1);
+      transform: scale(-1, 1);
+
+      padding-top: 3.5vh;
+      color: var(--theme-dark-blue);
+
+      .circle-icon {
+        font-size: 7.3vw;
+        color: var(--theme-orange);
+      }
+
+      .proposal-titles {
+        font-weight: normal;
+        margin-left: 3vw;
+        margin-right: 3vw;
+        margin-top: 3vh;
+        font-family: $font-family-regular;
+        text-align: left;
+        margin-left: 3.1vw;
+        font-size: 1.3vw;
+
+        .title {
+          text-transform: uppercase;
+          font-family: $font-family-bold;
+          height: 10vh;
+
+          input {
+            text-transform: uppercase;
+            font-family: $font-family-bold !important;
+          }
+        }
+
+        .m-t-3 {
+          margin-top: 3vh;
+        }
+
+        input {
+          width: 100%;
+          color: var(--theme-dark-blue) !important;
+        }
+      }
+    }
+
+    .edit-icon {
+      cursor: pointer;
+      margin-top: 4%;
+      margin-bottom: 4%;
+      height: 3.5vw;
+      width: 3.5vw;
+      color: var(--theme-dark-blue);
+      &.active {
+        color: var(--theme-orange);
+      }
     }
 
     .normal-page {
@@ -314,18 +350,6 @@
         margin-right: 2vw;
         iframe {
           width: 100%;
-        }
-      }
-
-      .edit-icon {
-        cursor: pointer;
-        margin-top: 4%;
-        margin-bottom: 4%;
-        height: 3.5vw;
-        width: 3.5vw;
-        color: var(--theme-dark-blue);
-        &.active {
-          color: var(--theme-orange);
         }
       }
 

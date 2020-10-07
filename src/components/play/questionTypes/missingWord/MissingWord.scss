@@ -11,11 +11,13 @@
     font-family: $font-family-regular;
     display: inline;
     color: var(--theme-dark-blue);
+    font-size: 1.25vw;
     .missing-select {
       margin-left: 10px;
       margin-right: 10px;
       margin-top: -3px;
       font-family: $font-family-regular;
+      font-size: 1.25vw;
       color: var(--theme-dark-blue);
     }
   }

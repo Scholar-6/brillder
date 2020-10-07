@@ -50,7 +50,7 @@ export const filterByCurretUser = (bricks: Brick[], userId: number) => {
 }
 
 export const checkPrivateBrick = (b: Brick, userId: number, generalSubjectId: number) => {
-  return b.author.id === userId || b.subjectId === generalSubjectId || b.isCore === false;
+  return (b.author.id === userId || b.subjectId === generalSubjectId) && !b.isCore;
 }
 
 export const filterByPrivate = (bricks: Brick[], userId: number, generalSubjectId: number) => {

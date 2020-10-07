@@ -75,6 +75,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
   const [startTime, setStartTime] = React.useState(undefined);
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
+  const [headerHidden, hideMobileHeader] = React.useState(false);
 
   useEffect(() => {
     if (props.brick) {
@@ -154,6 +155,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
+  const moveToLive = () => {
+    if (isMobile) {
+      hideMobileHeader(true);
+    }
+    history.push(`/play-preview/brick/${brick.id}/live`);
+  }
+
   const moveToBuild = () => {
     history.push(`/build/brick/${brickId}/investigation/question`);
   }
@@ -203,6 +211,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (!isMobile && sidebarRolledUp) {
       return <HomeButton link="/home" />;
     }
+    if (isMobile && headerHidden) {
+      return <div></div>;
+    }
     return (
       <PageHeadWithMenu
         isMobileHidden={isMobileHidden}
@@ -239,6 +250,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 isPlayPreview={true}
                 startTime={startTime}
                 setStartTime={setStartTime}
+                moveNext={moveToLive}
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/live">

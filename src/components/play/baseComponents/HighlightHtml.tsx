@@ -8,6 +8,7 @@ import YoutubeAndMathInHtml from "./YoutubeAndMath";
 interface SelectableProps {
   value: string;
   mode?: PlayMode;
+  isSynthesis?: boolean;
   onHighlight(value: string): void;
 }
 
@@ -16,7 +17,7 @@ const HighlightHtml: React.FC<SelectableProps> = (props) => {
   if ((mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) && props.onHighlight) {
     return <DocumentHighlight onChange={props.onHighlight} mode={mode} data={props.value} />;
   }
-  return <YoutubeAndMathInHtml value={props.value} />;
+  return <YoutubeAndMathInHtml isSynthesisParser={props.isSynthesis} value={props.value} />;
 };
 
 export default HighlightHtml;
