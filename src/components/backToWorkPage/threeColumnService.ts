@@ -65,7 +65,7 @@ export const prepareTreeRows = (bricks: Brick[], filters: Filters, userId: numbe
   return threeColumns;
 }
 
-export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: number, threeColumns: ThreeColumns) => {
+export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: number, threeColumns: ThreeColumns, loaded: boolean) => {
   let data: any[] = [];
   let count = 0;
 
@@ -80,7 +80,7 @@ export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: n
     if (brick) {
       prepareBrickData(data, brick, i, count, row);
     } else {
-      if (isFirstEmpty && count === 0) {
+      if (isFirstEmpty && count === 0 && loaded) {
         prepareBrickData(data, { isEmptyColumn: true, columnStatus: BrickStatus.Draft } as Brick, i, count, row);
       } else {
         prepareBrickData(data, {} as Brick, i, count, row);
@@ -91,7 +91,7 @@ export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: n
     if (brick) {
       prepareBrickData(data, brick, i, count, row);
     } else {
-      if (isSecondEmpty && count === 1) {
+      if (isSecondEmpty && count === 1 && loaded) {
         prepareBrickData(data, {isEmptyColumn: true, columnStatus: BrickStatus.Build } as Brick, i, count, row);
       } else {
         prepareBrickData(data, {} as Brick, i, count, row);
@@ -102,7 +102,7 @@ export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: n
     if (brick) {
       prepareBrickData(data, brick, i, count, row);
     } else {
-      if (isThiredEmpty && count === 2) {
+      if (isThiredEmpty && count === 2 && loaded) {
         prepareBrickData(data, {isEmptyColumn: true, columnStatus: BrickStatus.Review } as Brick, i, count, row);
       } else {
         prepareBrickData(data, {} as Brick, i, count, row);
