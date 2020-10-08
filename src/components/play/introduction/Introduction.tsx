@@ -160,7 +160,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
   const renderBriefTitle = () => {
     return (
-      <div className="expand-title">
+      <div className="expand-title" style={{marginTop: '4vh'}}>
         <span>Brief</span>
         <div className="centered text-white" onClick={toggleBrief}>
           {
@@ -255,7 +255,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             style={{ background: `${color}` }}
           ></div>
         </div>
-        <h1>{brick.title}</h1>
+        <h1 style={{ justifyContent: 'flex-start', marginTop: '2.4vh', marginBottom: '3vh', textAlign:'left'}}>{brick.title}</h1>
       </div>
     );
   };
@@ -263,7 +263,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderMobileHeader = () => {
     if (state.prepExpanded) {
       return (
-        <div className="intro-header expanded-intro-header">
+        <div className="intro-header expanded-intro-header" style={{height: '6vw'}}>
           <Hidden only={["sm", "md", "lg", "xl"]}>
             {renderTimer()}
             <div className="flex f-align-center">
@@ -293,7 +293,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <Hidden only={["xs"]}>
         <Grid container direction="row">
           <Grid item sm={8} xs={12}>
-            <div className="introduction-page">
+            <div className="introduction-page" style={{paddingTop: '2.4vh'}}>
               {renderHeader()}
               <p className="open-question">{brick.openQuestion}</p>
               <div className="intro-content">
