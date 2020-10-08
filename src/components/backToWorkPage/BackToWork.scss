@@ -80,7 +80,8 @@
       }
 
       &.empty-description:last-child {
-        padding-right: $padding2;
+        padding-left: 1vw;
+        padding-right: 1.2vw;
 
         .last-text {
           margin-top: 3vh;
