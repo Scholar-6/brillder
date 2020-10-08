@@ -126,9 +126,17 @@
         margin-left: 6vw;
         margin-right: 3vw;
         font-size: 1.6vw;
+        @extend %transitionAll150;
         svg {
+          @extend %transitionAll150;
           height: 6vw;
           width: 6vw;
+        }
+        &:hover {
+          color: var(--tab-gray);
+          .svg {
+            transform: rotate(10deg);
+          }
         }
       }
     }
