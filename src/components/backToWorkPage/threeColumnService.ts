@@ -36,9 +36,9 @@ export const getLongestColumn = (threeColumns: ThreeColumns) => {
 
 export const getThreeColumnName = (status: BrickStatus) => {
   let name = ThreeColumnNames.Red;
-  if (status === BrickStatus.Publish) {
+  if (status === BrickStatus.Review) {
     name = ThreeColumnNames.Green;
-  } else if (status === BrickStatus.Review || status === BrickStatus.Build) {
+  } else if (status === BrickStatus.Build) {
     name = ThreeColumnNames.Yellow;
   }
   return name;
