@@ -113,7 +113,7 @@ class BuildBricks extends Component<BuildBricksProps> {
 
   renderEmptyPage() {
     return (
-      <div className="bricks-list-container">
+      <div className="bricks-list-container no-top-padding">
         <h1>ALL PROJECTS</h1>
         <div className="bricks-list">
           <div className="main-brick-container empty-description">
