@@ -160,7 +160,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
   const renderBriefTitle = () => {
     return (
-      <div className="expand-title">
+      <div className="expand-title" style={{marginTop: '4vh'}}>
         <span>Brief</span>
         <div className="centered text-white" onClick={toggleBrief}>
           {
