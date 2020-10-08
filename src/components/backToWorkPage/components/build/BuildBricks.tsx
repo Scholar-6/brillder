@@ -14,6 +14,7 @@ interface BuildBricksProps {
   finalBricks: Brick[];
   threeColumns: ThreeColumns;
 
+  loaded: boolean;
   shown: boolean;
 
   pageSize: number;
@@ -110,7 +111,7 @@ class BuildBricks extends Component<BuildBricksProps> {
   }
 
   renderBuildGroupedBricks = () => {
-    const data = prepareVisibleThreeColumnBricks(this.props.pageSize, this.props.sortedIndex, this.props.threeColumns);
+    const data = prepareVisibleThreeColumnBricks(this.props.pageSize, this.props.sortedIndex, this.props.threeColumns, this.props.loaded);
     return this.renderGroupedBricks(data);
   }
 
@@ -197,7 +198,7 @@ class BuildBricks extends Component<BuildBricksProps> {
       isEmpty = true;
     }
 
-    if (isEmpty) {
+    if (isEmpty && this.props.loaded) {
       return this.renderEmptyPage();
     }
 
