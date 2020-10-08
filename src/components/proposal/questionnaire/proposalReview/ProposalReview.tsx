@@ -236,7 +236,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               </Grid>
               <p className="text-title text-theme-dark-blue">Create an engaging and relevant preparatory task.</p>
               <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
-                {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
+                {this.state.bookState === BookState.PrepPage && this.renderYoutubeAndMathField(BrickFieldNames.prep)}
               </div>
             </div>
           </div>
