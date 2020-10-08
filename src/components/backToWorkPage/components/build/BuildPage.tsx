@@ -62,6 +62,7 @@ interface BuildState {
   deleteBrickId: number;
 
   bricksLoaded: boolean;
+  hoverTimeout: number;
 }
 
 class BuildPage extends Component<BuildProps, BuildState> {
@@ -106,6 +107,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
       deleteBrickId: -1,
 
       bricksLoaded: false,
+
+      hoverTimeout: -1,
 
       filters: {
         viewAll: true,
@@ -307,14 +310,15 @@ class BuildPage extends Component<BuildProps, BuildState> {
     hideBricks(this.state.rawBricks);
     hideBricks(this.state.finalBricks);
 
-    this.setState({ ...this.state });
+    clearTimeout(this.state.hoverTimeout);
 
-    setTimeout(() => {
+    const hoverTimeout = setTimeout(() => {
       hideBricks(this.state.rawBricks);
       let name = getThreeColumnName(status);
       expandThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
       this.setState({ ...this.state });
     }, 400);
+    this.setState({ ...this.state, hoverTimeout });
   }
 
   onThreeColumnsMouseLeave(index: number, status: BrickStatus) {
