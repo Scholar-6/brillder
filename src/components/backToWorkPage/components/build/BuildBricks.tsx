@@ -124,7 +124,7 @@ class BuildBricks extends Component<BuildBricksProps> {
 
   renderFirstEmptyColumn() {
     return (
-      <div className="main-brick-container empty-description first">
+      <div className="main-brick-container empty-description first" key={-2}>
         <div>
           <div className="centered">
             <div className="circle b-red"></div>
@@ -142,7 +142,7 @@ class BuildBricks extends Component<BuildBricksProps> {
 
   renderSecondEmptyColumn() {
     return (
-      <div className="main-brick-container empty-description second">
+      <div className="main-brick-container empty-description second" key={-3}>
         <div>
           <div className="centered">
             <div className="circle b-yellow"></div>
@@ -160,7 +160,7 @@ class BuildBricks extends Component<BuildBricksProps> {
 
   renderThirdEmptyColumn() {
     return (
-      <div className="main-brick-container empty-description third">
+      <div className="main-brick-container empty-description third" key={-4}>
         <div>
           <div className="centered">
             <div className="circle yellow-in-green centered">
