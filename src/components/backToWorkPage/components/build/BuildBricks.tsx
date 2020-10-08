@@ -14,6 +14,7 @@ interface BuildBricksProps {
   finalBricks: Brick[];
   threeColumns: ThreeColumns;
 
+  loaded: boolean;
   shown: boolean;
 
   pageSize: number;
@@ -110,7 +111,7 @@ class BuildBricks extends Component<BuildBricksProps> {
   }
 
   renderBuildGroupedBricks = () => {
-    const data = prepareVisibleThreeColumnBricks(this.props.pageSize, this.props.sortedIndex, this.props.threeColumns);
+    const data = prepareVisibleThreeColumnBricks(this.props.pageSize, this.props.sortedIndex, this.props.threeColumns, this.props.loaded);
     return this.renderGroupedBricks(data);
   }
 
@@ -123,7 +124,7 @@ class BuildBricks extends Component<BuildBricksProps> {
 
   renderFirstEmptyColumn() {
     return (
-      <div className="main-brick-container empty-description first">
+      <div className="main-brick-container empty-description first" key={-2}>
         <div>
           <div className="centered">
             <div className="circle b-red"></div>
@@ -141,7 +142,7 @@ class BuildBricks extends Component<BuildBricksProps> {
 
   renderSecondEmptyColumn() {
     return (
-      <div className="main-brick-container empty-description second">
+      <div className="main-brick-container empty-description second" key={-3}>
         <div>
           <div className="centered">
             <div className="circle b-yellow"></div>
@@ -159,11 +160,11 @@ class BuildBricks extends Component<BuildBricksProps> {
 
   renderThirdEmptyColumn() {
     return (
-      <div className="main-brick-container empty-description third">
+      <div className="main-brick-container empty-description third" key={-4}>
         <div>
           <div className="centered">
-            <div className="circle skip-top-right yellow-in-green centered">
-              <div className="circle b-yellow"></div>
+            <div className="circle yellow-in-green centered">
+              <div className="circle b-white"></div>
             </div>
           </div>
           <div className="bold empty-title">Bricks in this column are with publishers.</div>
@@ -181,7 +182,6 @@ class BuildBricks extends Component<BuildBricksProps> {
   renderEmptyPage() {
     return (
       <div className="bricks-list-container no-top-padding">
-        <h1>ALL PROJECTS</h1>
         <div className="bricks-list">
           {this.renderFirstEmptyColumn()}
           {this.renderSecondEmptyColumn()}
@@ -198,7 +198,7 @@ class BuildBricks extends Component<BuildBricksProps> {
       isEmpty = true;
     }
 
-    if (isEmpty) {
+    if (isEmpty && this.props.loaded) {
       return this.renderEmptyPage();
     }
 

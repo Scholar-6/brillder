@@ -251,10 +251,12 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
             align-items: center;
             justify-content: center;
             margin: 1vw 0;
-            min-height: 10.3vh;
-            font-size: 2.5vw;
+            min-height: 5vw;
+            height: 5vw;
+            font-size: 1.95vw;
             text-align: left;
             padding-left: 7vw;
+            white-space: nowrap;
           }
         }
 
@@ -1160,6 +1162,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
     }
   }
   .open-question {
+    margin-top: calc(5vw + 3vh);
     font-family: $font-family-regular-italic;
   }
 }

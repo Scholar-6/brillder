@@ -62,6 +62,7 @@ interface BuildState {
   deleteBrickId: number;
 
   bricksLoaded: boolean;
+  hoverTimeout: number;
 }
 
 class BuildPage extends Component<BuildProps, BuildState> {
@@ -107,6 +108,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
       bricksLoaded: false,
 
+      hoverTimeout: -1,
+
       filters: {
         viewAll: true,
         buildAll: false,
@@ -137,10 +140,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
     if (nextProps.isSearching) {
       searchBricks(nextProps.searchString).then(bricks => {
         if (bricks) {
-          this.setState({ finalBricks: [], shown: false });
+          this.setState({ finalBricks: [], shown: false, bricksLoaded: false });
           const threeColumns = prepareTreeRows(bricks, this.state.filters, this.props.user.id, this.props.generalSubjectId);
           setTimeout(() => {
-            this.setState({ ...this.state, finalBricks: bricks, shown: true, threeColumns });
+            this.setState({ ...this.state, finalBricks: bricks, shown: true, threeColumns, bricksLoaded: true });
           }, 1400);
         } else {
           this.props.requestFailed('Can`t get bricks by search');
@@ -307,14 +310,15 @@ class BuildPage extends Component<BuildProps, BuildState> {
     hideBricks(this.state.rawBricks);
     hideBricks(this.state.finalBricks);
 
-    this.setState({ ...this.state });
+    clearTimeout(this.state.hoverTimeout);
 
-    setTimeout(() => {
+    const hoverTimeout = setTimeout(() => {
       hideBricks(this.state.rawBricks);
       let name = getThreeColumnName(status);
       expandThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
       this.setState({ ...this.state });
     }, 400);
+    this.setState({ ...this.state, hoverTimeout });
   }
 
   onThreeColumnsMouseLeave(index: number, status: BrickStatus) {
@@ -421,24 +425,23 @@ class BuildPage extends Component<BuildProps, BuildState> {
             setTab={this.props.setTab}
           />
             <div className="tab-content">
-              { this.state.bricksLoaded &&
-                <BuildBricks
-                  user={this.props.user}
-                  finalBricks={this.state.finalBricks}
-                  threeColumns={this.state.threeColumns}
-                  shown={this.state.shown}
-                  pageSize={this.state.pageSize}
-                  sortedIndex={this.state.sortedIndex}
-                  history={this.props.history}
-                  filters={this.state.filters}
-                  toggleCore={() => this.toggleCore()}
-                  handleDeleteOpen={this.handleDeleteOpen.bind(this)}
-                  handleMouseHover={this.handleMouseHover.bind(this)}
-                  handleMouseLeave={this.handleMouseLeave.bind(this)}
-                  onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
-                  onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
-                />
-              }
+              <BuildBricks
+                user={this.props.user}
+                finalBricks={this.state.finalBricks}
+                threeColumns={this.state.threeColumns}
+                shown={this.state.shown}
+                pageSize={this.state.pageSize}
+                sortedIndex={this.state.sortedIndex}
+                history={this.props.history}
+                filters={this.state.filters}
+                loaded={this.state.bricksLoaded}
+                toggleCore={() => this.toggleCore()}
+                handleDeleteOpen={this.handleDeleteOpen.bind(this)}
+                handleMouseHover={this.handleMouseHover.bind(this)}
+                handleMouseLeave={this.handleMouseLeave.bind(this)}
+                onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
+                onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
+              />
               {this.renderPagination()}
           </div>
         </Grid>

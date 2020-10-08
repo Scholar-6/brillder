@@ -60,7 +60,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     { id: 4, type: QuestionComponentTypeEnum.Graph }
   ]);
   const [isCommingSoonOpen, setCommingSoon] = React.useState(false);
-  const [scrollShown, setScroll] = React.useState(false);
   const [commentsShown, setCommentsShown] = React.useState(props.initSuggestionExpanded);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const { type } = question;
@@ -82,9 +81,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   if (index === 0 && props.isAuthor) {
     showHelpArrow = getNonEmptyComponent(question.components);
   }
-
-  const showScrollArrows = () => setScroll(true);
-  const hideScrollArrows = () => setScroll(false);
 
   const scrollUp = () => {
     if (workarea.current) {
@@ -158,11 +154,9 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
         { showHelpArrow && <img alt="arrow" className="help-arrow" src="/images/investigation-arrow.png" /> }
         <div className="top-scroll-area">
           <div className="top-button-container">
-            {
-              scrollShown ? <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
-                <SpriteIcon name="arrow-up" className="active text-theme-orange" />
-              </button> : ""
-            }
+            <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
+              <SpriteIcon name="arrow-up" className="active text-theme-orange" />
+            </button>
           </div>
         </div>
         <Grid container direction="row" className="build-question-column">
@@ -270,29 +264,11 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
           </Grid>
         </Grid>
         <div className="bottom-scroll-area">
-          {
-            scrollShown
-              ? <div className="bottom-button-container">
-                <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
-                  <SpriteIcon name="arrow-down" className="active text-theme-orange" />
-                </button>
-                <div className="scroll-text">
-                  <span>Click again to hide</span>
-                  <button className="btn btn-transparent svgOnHover" onClick={hideScrollArrows}>
-                    <SpriteIcon name="eye-on" className="active text-theme-orange" />
-                  </button>
-                </div>
-              </div>
-              :
-              <div className="bottom-button-container">
-                <div className="scroll-text">
-                  <span>Trouble scrolling? Click the eye to show up/down arrows</span>
-                  <button className="btn btn-transparent svgOnHover" onClick={showScrollArrows}>
-                    <SpriteIcon name="eye-off" className="active text-gray" />
-                  </button>
-                </div>
-              </div>
-          }
+          <div className="bottom-button-container">
+            <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
+              <SpriteIcon name="arrow-down" className="active text-theme-orange" />
+            </button>
+          </div>
         </div>
         <CommingSoonDialog isOpen={isCommingSoonOpen} close={() => setCommingSoon(false)} />
       </div>

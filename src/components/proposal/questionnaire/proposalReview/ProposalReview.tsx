@@ -73,6 +73,18 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
+  toFirstPage() {
+    if (this.state.bookState === BookState.PrepPage) {
+      this.setState({bookState: BookState.TitlesPage});
+    }
+  }
+
+  toSecondPage() {
+    if (this.state.bookState === BookState.TitlesPage) {
+      this.setState({bookState: BookState.PrepPage});
+    }
+  }
+
   renderEditButton() {
     let className = "edit-icon";
     if (this.state.mode) {
@@ -95,7 +107,11 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         />
       );
     }
-    return brick[name];
+    const value = brick[name];
+    if (value) {
+      return value;
+    }
+    return <span style={{color: "#757575"}}>Please fill in..</span>;
   }
 
   renderMathField(name: BrickFieldNames) {
@@ -114,7 +130,11 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         />
       );
     }
-    return <MathInHtml value={brick[name]} />;
+    const value = brick[name];
+    if (value) {
+      return <MathInHtml value={brick[name]} />;
+    }
+    return <span style={{color: "#757575"}}>Please fill in..</span>;
   }
 
   renderYoutubeAndMathField(name: BrickFieldNames) {
@@ -134,7 +154,11 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         />
       );
     }
-    return <YoutubeAndMathInHtml value={brick[name]} />;
+    const value = brick[name];
+    if (value) {
+      return <YoutubeAndMathInHtml value={brick[name]} />;
+    }
+    return <span style={{color: "#757575"}}>Please fill in..</span>;
   }
 
   render() {
@@ -186,7 +210,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               <div className="title">{this.renderEditableField(BrickFieldNames.title)}</div>
               <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
               <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
-              <p className="text-title m-t-3 bold">Open Question.</p>
+              <p className="text-title m-t-3 bold">Open Question:</p>
               <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
                 {this.renderEditableField(BrickFieldNames.openQuestion)}
               </div>
@@ -201,11 +225,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
     const renderSecondPage = () => {
       return (
-        <div className="page6" onClick={() => {
-          if (this.state.bookState === BookState.TitlesPage) {
-            this.setState({bookState: BookState.PrepPage});
-          }
-        }}>
+        <div className="page6" onClick={this.toSecondPage.bind(this)}>
           <div className="normal-page">
             <div className="normal-page-container">
               <Grid container justify="center">
@@ -223,26 +243,24 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
     const renderBook = () => {
       return (
-        <div className={`book ${this.state.mode === true ? 'flat' : ''}`} onMouseOver={() => this.onBookHover()}>
+        <div className={`book ${this.state.mode === true ? 'flat' : ''}`} onMouseOver={this.onBookHover.bind(this)}>
           <div className="back"></div>
-          <div className="page6-cover" onClick={() => {
-            if (this.state.bookState === BookState.PrepPage) {
-              this.setState({bookState: BookState.TitlesPage});
-            }
-          }}>
-            <div className="flipped-page">
+          <div className="page6-cover" onClick={this.toFirstPage.bind(this)} />
+          {renderSecondPage()}
+          {renderFirstPage()}
+          <div className="page4">
+          <div className="normal-page">
+            <div className="normal-page-container">
               <Grid container justify="center">
                 {this.renderEditButton()}
               </Grid>
-              <p className="text-title text-theme-dark-blue">Create an engaging and relevant preparatory task.</p>
+              <p className="text-title text-theme-dark-blue bold">Create an engaging and relevant preparatory task.</p>
               <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
                 {this.state.bookHovered && this.state.bookState === BookState.PrepPage && this.renderYoutubeAndMathField(BrickFieldNames.prep)}
               </div>
+              </div>
             </div>
           </div>
-          {renderSecondPage()}
-          {renderFirstPage()}
-          <div className="page4"></div>
           <div className="page3"></div>
           <div className="page2"></div>
           <div className="front">
@@ -279,7 +297,21 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         {renderPlayButton()}
         <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
           <Grid className="back-button-container" container alignContent="center">
-            <div className="back-button" onClick={() => this.props.history.push(map.ProposalPrep)} />
+            {this.state.bookHovered && this.state.bookState === BookState.PrepPage
+              ? <div
+                  className="back-button text-button"
+                  onClick={this.toFirstPage.bind(this)}
+                  onMouseOver={this.onBookHover.bind(this)}
+                  onMouseOut={this.onBookClose.bind(this)}
+                >
+                  Click on the left-hand page to go back
+                </div>
+              : <div
+                  className="back-button arrow-button"
+                  onClick={() => this.props.history.push(map.ProposalPrep)}
+                  onMouseOut={this.onBookClose.bind(this)}
+                />
+            }
           </Grid>
           <Grid className="main-text-container" style={{opacity: this.state.mode === true ? '0' : '1'}}>
             <h1>Your proposal has been saved!</h1>
@@ -292,16 +324,26 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             <h2>When you're ready, start building!</h2>
           </Grid>
           <div className={bookClass}>
-            <div className="book-container" onMouseOut={() => this.onBookClose()}>
+            <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>
               {renderBook()}
             </div>
-            <Grid className="next-button-container" container onMouseOver={() => this.onBookHover()} alignContent="center">
+            <Grid className="next-button-container" container onMouseOver={this.onBookHover.bind(this)} alignContent="center">
               {
-                this.state.bookHovered ? (
+                this.state.bookHovered && (
                   <div>
-                    <div className="next-button" onClick={() => this.props.saveBrick()}></div>
+                    {this.state.bookState === BookState.TitlesPage && (
+                      <div className="next-button text-button" onClick={this.toSecondPage.bind(this)}>
+                        Click on the right-hand page to view Prep
+                      </div>
+                    )}
+                    {this.state.bookState === BookState.PrepPage && (
+                      <div className="next-button text-with-button" onClick={() => this.props.saveBrick()}>
+                        Start Building!
+                        <SpriteIcon name="trowel-home" />
+                      </div>
+                    )}
                   </div>
-                ) : ""
+                )
               }
             </Grid>
           </div>

@@ -98,8 +98,8 @@
         width: 5.2vw;
         border-radius: 50%;
 
-        &.skip-top-right {
-         border-top-right-radius: 0;
+        &.yellow-in-green {
+          background-color: var(--theme-green);
 
          .circle {
            width: 4.6vw;
@@ -109,9 +109,6 @@
       }
       .red {
         background: var(--theme-orange);
-      }
-      .yellow-in-green {
-        background-color: var(--theme-green);
       }
     }
 

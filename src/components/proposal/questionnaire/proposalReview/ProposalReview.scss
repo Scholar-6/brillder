@@ -69,13 +69,22 @@
       width: 2vw;
       margin-left: 5.5vw;
       color: var(--theme-orange);
-      transition: all 0.2s ease-in-out;
-      transform-origin: 200% 50%;
 
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url(/feathericons/big-chevron-left-orange.png);
+      &.arrow-button {
+        transform-origin: 200% 50%;
+
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/feathericons/big-chevron-left-orange.png);
+      }
+
+      &.text-button {
+        height: 5vw;
+        margin-left: 3vw;
+        width: 7vw;
+        font-size: 1.2vw;
+      }
     }
   }
 
@@ -94,12 +103,42 @@
       width: 2vw;
       margin-left: 8vw;
       transition: all 0.2s ease-in-out;
-      transform-origin: -100% 50%;
+      color: var(--theme-dark-blue);
 
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url(/feathericons/big-chevron-right-blue.png);
+
+      &.arrow-button {
+        transform-origin: -100% 50%;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/feathericons/big-chevron-right-blue.png);
+      }
+
+      &.text-button {
+        height: 6.5vw;
+        width: 8vw;
+        margin-left: 5vw;
+        font-size: 1.2vw;
+      }
+      &.text-with-button {
+        height: 11vw;
+        width: 6.8vw;
+        margin-left: 6vw;
+        margin-right: 3vw;
+        font-size: 1.6vw;
+        @extend %transitionAll150;
+        svg {
+          @extend %transitionAll150;
+          height: 6vw;
+          width: 6vw;
+        }
+        &:hover {
+          color: var(--tab-gray);
+          .svg {
+            transform: rotate(10deg);
+          }
+        }
+      }
     }
   }
 
@@ -406,6 +445,7 @@
     }
   }
   $scale: 1.15;
+  $width: 122%;
 
   .book-main-container {
     &.hovered {
@@ -466,25 +506,25 @@
       .book.flat {
         .front,
         .page3 {
-          width: 135%;
+          width: $width;
           transform: rotateY(-180deg) scale($scale);
         }
         .page5 {
-          width: 135%;
+          width: $width;
           transform: rotateY(-178deg) scale($scale);
         }
         .page6 {
-          width: 135%;
+          width: $width;
           transform: rotateY(-4deg) scale($scale);
         }
         .page6-cover {
-          width: 135%;
+          width: $width;
           transform: rotateY(-2deg) scale($scale);
         }
         .page4,
         .page2,
         .back {
-          width: 135%;
+          width: $width;
           transform: rotateY(0deg) scale($scale);
         }
       }
@@ -545,28 +585,28 @@
       .book.flat {
         .front,
         .page3 {
-          width: 135%;
+          width: $width;
           transform: rotateY(-180deg) scale($scale);
         }
         .page5 {
-          width: 135%;
+          width: $width;
           transform: rotateY(-179deg) scale($scale);
         }
         .page6 {
-          width: 135%;
+          width: $width;
           transform: rotateY(-178.5deg) scale($scale);
         }
         .page6-cover {
-          width: 135%;
+          width: $width;
           transform: rotateY(-178deg) scale($scale);
         }
         .page4 {
-          width: 135%;
+          width: $width;
           transform: rotateY(-4deg) scale($scale);
         }
         .page2,
         .back {
-          width: 135%;
+          width: $width;
           transform: rotateY(0deg) scale($scale);
         }
       }

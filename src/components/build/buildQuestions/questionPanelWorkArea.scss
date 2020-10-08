@@ -137,7 +137,7 @@
         @extend %floatToCenter;
 
         svg {
-          $scroll-button-size: 1vw;
+          $scroll-button-size: 2vw;
           height: $scroll-button-size;
           width: $scroll-button-size;
         }
