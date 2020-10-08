@@ -255,7 +255,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             style={{ background: `${color}` }}
           ></div>
         </div>
-        <h1 style={{marginTop: '2.4vh'}}>{brick.title}</h1>
+        <h1 style={{marginTop: '2.4vh', marginBottom: '3vh'}}>{brick.title}</h1>
       </div>
     );
   };
@@ -263,7 +263,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderMobileHeader = () => {
     if (state.prepExpanded) {
       return (
-        <div className="intro-header expanded-intro-header">
+        <div className="intro-header expanded-intro-header" style={{height: '6vw'}}>
           <Hidden only={["sm", "md", "lg", "xl"]}>
             {renderTimer()}
             <div className="flex f-align-center">
