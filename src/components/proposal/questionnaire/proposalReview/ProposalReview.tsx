@@ -158,13 +158,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       );
     }
 
-    const moveToPlay = () => {
-      const {brick, playStatus} = this.props;
-      if (brick.id && playStatus === PlayButtonStatus.Valid) {
-        this.props.history.push(map.playPreviewIntro(brick.id));
-      }
-    }
-
     const renderPlayButton = () => {
       const { playStatus } = this.props;
       if (playStatus === PlayButtonStatus.Hidden) {
@@ -243,7 +236,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               </Grid>
               <p className="text-title text-theme-dark-blue">Create an engaging and relevant preparatory task.</p>
               <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
-                {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
+                {this.state.bookHovered && this.state.bookState === BookState.PrepPage && this.renderYoutubeAndMathField(BrickFieldNames.prep)}
               </div>
             </div>
           </div>

@@ -8,6 +8,14 @@ const mark = (component: SortComponent, attempt: ComponentAttempt<any>) => {
     attempt.maxMarks = 0;
 
     const unsortedCategory = component.categories.length;
+
+    /**
+     * @param value category index and answer index in category example: 1_0
+     */
+    const findAnswerIndex = (value: string) => {
+      const keys = value.split('_');
+      return parseInt(keys[1]);
+    }
     
     Object.keys(attempt.answer).forEach(key => {
         attempt.maxMarks += markIncrement;
@@ -15,7 +23,7 @@ const mark = (component: SortComponent, attempt: ComponentAttempt<any>) => {
             attempt.correct = false;
         } else {
             const assignedCategory = component.categories[attempt.answer[key]];
-            if(assignedCategory.answers.find(answer => (answer.value ?? answer.valueFile) === key)) {
+            if(assignedCategory.answers.find((answer, i) => i === findAnswerIndex(key))) {
                 attempt.marks += markIncrement;
             } else {
                 attempt.marks += 0.25;

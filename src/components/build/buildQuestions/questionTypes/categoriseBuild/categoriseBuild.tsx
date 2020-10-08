@@ -23,7 +23,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
 }) => {
   const [categoryHeight, setCategoryHeight] = React.useState('0%');
 
-  const newAnswer = () => ({ value: "", valueFile: "", answerType: QuestionValueType.String });
+  const newAnswer = () => ({ value: "", text: "", valueFile: "", answerType: QuestionValueType.String });
   const newCategory = () => ({ name: "", answers: [newAnswer()], height: '0%' })
 
   if (!data.categories) {

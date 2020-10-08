@@ -61,9 +61,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     }
   }
 
-  getAnswer(): number {
-    return this.state.activeItem;
-  }
+  getAnswer() { return this.state.activeItem; }
 
   renderData(answer: ChooseOneChoice) {
     if (answer.answerType === QuestionValueType.Image) {
