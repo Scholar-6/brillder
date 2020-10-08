@@ -69,32 +69,46 @@ export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: n
   let data: any[] = [];
   let count = 0;
 
+  const isFirstEmpty = threeColumns.red.finalBricks.length === 0;
+  const isSecondEmpty = threeColumns.yellow.finalBricks.length === 0;
+  const isThiredEmpty = threeColumns.green.finalBricks.length === 0;
+
   for (let i = 0 + sortedIndex; i < (pageSize / 3) + sortedIndex; i++) {
     let brick = threeColumns.red.finalBricks[i];
     let row = i - sortedIndex;
+    
     if (brick) {
       prepareBrickData(data, brick, i, count, row);
-      count++;
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
-      count++;
+      if (isFirstEmpty) {
+        prepareBrickData(data, {} as Brick, i, count, row);
+      } else {
+        prepareBrickData(data, {} as Brick, i, count, row);
+      }
     }
+    count++;
     brick = threeColumns.yellow.finalBricks[i];
     if (brick) {
       prepareBrickData(data, brick, i, count, row);
-      count++;
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
-      count++;
+      if (isSecondEmpty) {
+        prepareBrickData(data, {} as Brick, i, count, row);
+      } else {
+        prepareBrickData(data, {} as Brick, i, count, row);
+      }
     }
+    count++;
     brick = threeColumns.green.finalBricks[i];
     if (brick) {
       prepareBrickData(data, brick, i, count, row);
-      count++;
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
-      count++;
+      if (isThiredEmpty) {
+        prepareBrickData(data, {} as Brick, i, count, row);
+      } else {
+        prepareBrickData(data, {} as Brick, i, count, row);
+      }
     }
+    count++;
   }
   return data;
 }
