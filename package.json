@@ -1,6 +1,6 @@
 {
   "name": "brillder",
-  "version": "6.3.0",
+  "version": "6.4.0",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-alignment": "^22.0.0",
