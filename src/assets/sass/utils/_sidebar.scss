@@ -552,7 +552,7 @@
           &.color2 {
             .round-button,
             .right-index {
-              background: var(--theme-yellow) !important;
+              background: var(--white) !important;
             }
 
             svg {
@@ -668,9 +668,9 @@
                   background: var(--theme-green);
                   border-radius: 50%;
                   padding: 0.15vw;
-                  border-top-right-radius: 0;
 
                   > div {
+                    background-color: var(--white);
                     height: 1.8vw;
                     width: 1.8vw;
                   }
