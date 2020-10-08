@@ -210,7 +210,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               <div className="title">{this.renderEditableField(BrickFieldNames.title)}</div>
               <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
               <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
-              <p className="text-title m-t-3 bold">Open Question.</p>
+              <p className="text-title m-t-3 bold">Open Question:</p>
               <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
                 {this.renderEditableField(BrickFieldNames.openQuestion)}
               </div>
