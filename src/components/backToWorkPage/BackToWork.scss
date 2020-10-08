@@ -60,7 +60,62 @@
     height: $backwork-bricks-height !important;
 
     .main-brick-container {
-      // height: calc(#{$backwork-bricks-height-2} / 6) !important;
+      $padding2: 4vw;
+      $padding: 2vw;
+      &.empty-description {
+        color: var(--theme-dark-blue);
+        padding-left: $padding;
+        padding-right: $padding;
+        font-size: 1.1vw;
+        .empty-title {
+          margin-top: 3vh;
+          margin-bottom: 3vh;
+        }
+        .italic {
+          font-family: $font-family-regular-italic;
+        }
+      }
+      &.empty-description:first-child {
+        padding-left: $padding2;
+      }
+
+      &.empty-description:last-child {
+        padding-right: $padding2;
+
+        .last-text {
+          margin-top: 3vh;
+        }
+      }
+
+      .circle {
+        height: 5vw;
+        width: 5vw;
+        border-radius: 50%;
+
+        &.skip-top-right {
+         border-top-right-radius: 0;
+
+         .circle {
+           width: 4.4vw;
+           height: 4.4vw;
+         }
+        }
+      }
+      .red {
+        background: var(--theme-orange);
+      }
+      .yellow-in-green {
+        background-color: var(--theme-green);
+      }
+    }
+
+    h1 {
+      margin-left: 1vw;
+      margin-bottom: 1vh;
+      font-size: 3.5vw;
+      letter-spacing: 0.7vw;
+      font-family: $font-family-black;
+      color: var(--theme-dark-blue);
     }
   }
   .tab-content {
