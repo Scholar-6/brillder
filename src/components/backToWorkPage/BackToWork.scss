@@ -70,7 +70,7 @@
         color: var(--theme-dark-blue);
         padding-left: $padding;
         padding-right: $padding;
-        font-size: 1.05vw;
+        font-size: 1.02vw;
 
         .empty-title {
           margin-top: 5vh;
@@ -80,17 +80,17 @@
           font-family: $font-family-regular-italic;
         }
       }
-      &.empty-description:first-child {
+      &.empty-description:first {
         padding-left: $padding2;
       }
 
-      &.empty-description:last-child {
+      &.empty-description.third {
         padding-left: 1.2vw;
         padding-right: 2vw;
+      }
 
-        .last-text {
-          margin-top: 3vh;
-        }
+      .last-text {
+        margin-top: 3vh;
       }
 
       .circle {
