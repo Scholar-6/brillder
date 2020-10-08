@@ -163,8 +163,8 @@ class BuildBricks extends Component<BuildBricksProps> {
       <div className="main-brick-container empty-description third">
         <div>
           <div className="centered">
-            <div className="circle skip-top-right yellow-in-green centered">
-              <div className="circle b-yellow"></div>
+            <div className="circle yellow-in-green centered">
+              <div className="circle b-white"></div>
             </div>
           </div>
           <div className="bold empty-title">Bricks in this column are with publishers.</div>
