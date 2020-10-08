@@ -95,7 +95,11 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         />
       );
     }
-    return brick[name];
+    const value = brick[name];
+    if (value) {
+      return value;
+    }
+    return <span style={{color: "#757575"}}>Please fill in..</span>;
   }
 
   renderMathField(name: BrickFieldNames) {
@@ -114,7 +118,11 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         />
       );
     }
-    return <MathInHtml value={brick[name]} />;
+    const value = brick[name];
+    if (value) {
+      return <MathInHtml value={brick[name]} />;
+    }
+    return <span style={{color: "#757575"}}>Please fill in..</span>;
   }
 
   renderYoutubeAndMathField(name: BrickFieldNames) {
@@ -134,7 +142,11 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         />
       );
     }
-    return <YoutubeAndMathInHtml value={brick[name]} />;
+    const value = brick[name];
+    if (value) {
+      return <YoutubeAndMathInHtml value={brick[name]} />;
+    }
+    return <span style={{color: "#757575"}}>Please fill in..</span>;
   }
 
   render() {
@@ -239,7 +251,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               <Grid container justify="center">
                 {this.renderEditButton()}
               </Grid>
-              <p className="text-title text-theme-dark-blue">Create an engaging and relevant preparatory task.</p>
+              <p className="text-title text-theme-dark-blue bold">Create an engaging and relevant preparatory task.</p>
               <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
                 {this.state.bookHovered && this.state.bookState === BookState.PrepPage && this.renderYoutubeAndMathField(BrickFieldNames.prep)}
               </div>
@@ -282,7 +294,12 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         {renderPlayButton()}
         <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
           <Grid className="back-button-container" container alignContent="center">
-            <div className="back-button" onClick={() => this.props.history.push(map.ProposalPrep)} />
+            {this.state.bookHovered && this.state.bookState === BookState.PrepPage
+              ? <div className="back-button text-button" onClick={() => this.props.history.push(map.ProposalPrep)}>
+                  Click on the left-hand page to go back
+                </div>
+              : <div className="back-button arrow-button" onClick={() => this.props.history.push(map.ProposalPrep)} />
+            }
           </Grid>
           <Grid className="main-text-container" style={{opacity: this.state.mode === true ? '0' : '1'}}>
             <h1>Your proposal has been saved!</h1>
@@ -302,7 +319,17 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               {
                 this.state.bookHovered && (
                   <div>
-                    <div className="next-button" onClick={() => this.props.saveBrick()}></div>
+                    {this.state.bookState === BookState.TitlesPage && (
+                      <div className="next-button text-button" onClick={() => this.props.saveBrick()}>
+                        Click on the right-hand page to view Prep
+                      </div>
+                    )}
+                    {this.state.bookState === BookState.PrepPage && (
+                      <div className="next-button text-with-button" onClick={() => this.props.saveBrick()}>
+                        Start Building!
+                        <SpriteIcon name="trowel-home" />
+                      </div>
+                    )}
                   </div>
                 )
               }
