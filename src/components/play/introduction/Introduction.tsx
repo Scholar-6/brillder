@@ -255,7 +255,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             style={{ background: `${color}` }}
           ></div>
         </div>
-        <h1 style={{marginTop: '2.4vh', marginBottom: '3vh'}}>{brick.title}</h1>
+        <h1 style={{ justifyContent: 'flex-start', marginTop: '2.4vh', marginBottom: '3vh', textAlign:'left'}}>{brick.title}</h1>
       </div>
     );
   };
