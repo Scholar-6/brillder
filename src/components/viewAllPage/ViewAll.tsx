@@ -470,7 +470,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
         <BrickBlock
           brick={item.brick}
           index={item.index}
-          row={item.row}
+          row={item.row + 1}
           user={this.props.user}
           key={item.index}
           shown={this.state.shown}
