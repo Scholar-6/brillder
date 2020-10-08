@@ -243,7 +243,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
     const renderBook = () => {
       return (
-        <div className={`book ${this.state.mode === true ? 'flat' : ''}`} onMouseOver={() => this.onBookHover()}>
+        <div className={`book ${this.state.mode === true ? 'flat' : ''}`} onMouseOver={this.onBookHover.bind(this)}>
           <div className="back"></div>
           <div className="page6-cover" onClick={this.toFirstPage.bind(this)} />
           {renderSecondPage()}
@@ -298,10 +298,19 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
           <Grid className="back-button-container" container alignContent="center">
             {this.state.bookHovered && this.state.bookState === BookState.PrepPage
-              ? <div className="back-button text-button" onClick={this.toFirstPage.bind(this)}>
+              ? <div
+                  className="back-button text-button"
+                  onClick={this.toFirstPage.bind(this)}
+                  onMouseOver={this.onBookHover.bind(this)}
+                  onMouseOut={this.onBookClose.bind(this)}
+                >
                   Click on the left-hand page to go back
                 </div>
-              : <div className="back-button arrow-button" onClick={() => this.props.history.push(map.ProposalPrep)} />
+              : <div
+                  className="back-button arrow-button"
+                  onClick={() => this.props.history.push(map.ProposalPrep)}
+                  onMouseOut={this.onBookClose.bind(this)}
+                />
             }
           </Grid>
           <Grid className="main-text-container" style={{opacity: this.state.mode === true ? '0' : '1'}}>
@@ -315,10 +324,10 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             <h2>When you're ready, start building!</h2>
           </Grid>
           <div className={bookClass}>
-            <div className="book-container" onMouseOut={() => this.onBookClose()}>
+            <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>
               {renderBook()}
             </div>
-            <Grid className="next-button-container" container onMouseOver={() => this.onBookHover()} alignContent="center">
+            <Grid className="next-button-container" container onMouseOver={this.onBookHover.bind(this)} alignContent="center">
               {
                 this.state.bookHovered && (
                   <div>
