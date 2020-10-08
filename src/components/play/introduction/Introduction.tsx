@@ -255,7 +255,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             style={{ background: `${color}` }}
           ></div>
         </div>
-        <h1>{brick.title}</h1>
+        <h1 style={{marginTop: '2.4vh'}}>{brick.title}</h1>
       </div>
     );
   };
@@ -293,7 +293,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <Hidden only={["xs"]}>
         <Grid container direction="row">
           <Grid item sm={8} xs={12}>
-            <div className="introduction-page">
+            <div className="introduction-page" style={{paddingTop: '2.4vh'}}>
               {renderHeader()}
               <p className="open-question">{brick.openQuestion}</p>
               <div className="intro-content">
