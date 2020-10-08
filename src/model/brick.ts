@@ -67,6 +67,10 @@ export interface Brick {
   hasNotifications?: boolean;
 
   assignments?: Assignment[];
+
+  // for back to work page
+  isEmptyColumn?: boolean;
+  columnStatus?: BrickStatus;
 }
 
 export enum isAuthenticated {

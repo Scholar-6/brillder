@@ -41,6 +41,16 @@ class BuildBricks extends Component<BuildBricksProps> {
         circleIcon="edit-outline";
         iconColor = 'text-theme-dark-blue';
       }
+      if (brick.isEmptyColumn) {
+        switch(brick.columnStatus) {
+          case BrickStatus.Draft:
+            return this.renderFirstEmptyColumn();
+          case BrickStatus.Build:
+            return this.renderSecondEmptyColumn();
+          case BrickStatus.Review:
+            return this.renderThirdEmptyColumn();
+        }
+      }
       return <BrickBlock
         brick={brick}
         index={item.key}
@@ -111,53 +121,71 @@ class BuildBricks extends Component<BuildBricksProps> {
     return this.renderSortedBricks();
   }
 
+  renderFirstEmptyColumn() {
+    return (
+      <div className="main-brick-container empty-description">
+        <div>
+          <div className="centered">
+            <div className="circle b-red"></div>
+          </div>
+          <div className="bold empty-title">Bricks in this column are draft bricks.</div>
+          <div className="italic">
+            They will appear here once you have begun a
+            proposal, or when an editor has reviewed and
+            returned your brick to you.
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderSecondEmptyColumn() {
+    return (
+      <div className="main-brick-container empty-description">
+        <div>
+          <div className="centered">
+            <div className="circle b-yellow"></div>
+          </div>
+          <div className="bold empty-title">Bricks in this column are with editors.</div>
+          <div>
+            They will appear here once you have played a
+            preview of your brick and invited an editor to
+            suggest changes to it.
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderThirdEmptyColumn() {
+    return (
+      <div className="main-brick-container empty-description">
+        <div>
+          <div className="centered">
+            <div className="circle skip-top-right yellow-in-green centered">
+              <div className="circle b-yellow"></div>
+            </div>
+          </div>
+          <div className="bold empty-title">Bricks in this column are with publishers.</div>
+          <div className="smaller">
+            They will appear here once your editor(s) approve(s) your brick and sends it to the Publisher.
+          </div>
+          <div className="last-text">
+            You will receive a notification if your brick is published, and it will appear in the Public Library.
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   renderEmptyPage() {
     return (
       <div className="bricks-list-container no-top-padding">
         <h1>ALL PROJECTS</h1>
         <div className="bricks-list">
-          <div className="main-brick-container empty-description">
-            <div>
-              <div className="centered">
-                <div className="circle b-red"></div>
-              </div>
-              <div className="bold empty-title">Bricks in this column are draft bricks.</div>
-              <div className="italic">
-                They will appear here once you have begun a
-                proposal, or when an editor has reviewed and
-                returned your brick to you.
-              </div>
-            </div>
-          </div>
-          <div className="main-brick-container empty-description">
-            <div>
-              <div className="centered">
-                <div className="circle b-yellow"></div>
-              </div>
-              <div className="bold empty-title">Bricks in this column are with editors.</div>
-              <div>
-                They will appear here once you have played a
-                preview of your brick and invited an editor to
-                suggest changes to it.
-              </div>
-            </div>
-          </div>
-          <div className="main-brick-container empty-description">
-            <div>
-              <div className="centered">
-                <div className="circle skip-top-right yellow-in-green centered">
-                  <div className="circle b-yellow"></div>
-                </div>
-              </div>
-              <div className="bold empty-title">Bricks in this column are with publishers.</div>
-              <div className="smaller">
-                They will appear here once your editor(s) approve(s) your brick and sends it to the Publisher.
-              </div>
-              <div className="last-text">
-                You will receive a notification if your brick is published, and it will appear in the Public Library.
-              </div>
-            </div>
-          </div>
+          {this.renderFirstEmptyColumn()}
+          {this.renderSecondEmptyColumn()}
+          {this.renderThirdEmptyColumn()}
         </div>
       </div>
     );
@@ -165,9 +193,8 @@ class BuildBricks extends Component<BuildBricksProps> {
 
   render() {
     let isEmpty = false;
-    if (this.props.filters.viewAll) {
-      isEmpty = this.isThreeColumnsEmpty();
-    } else if (this.props.finalBricks.length === 0) {
+
+    if (this.props.finalBricks.length === 0) {
       isEmpty = true;
     }
 
