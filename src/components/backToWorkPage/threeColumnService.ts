@@ -59,8 +59,8 @@ export const prepareTreeRows = (bricks: Brick[], filters: Filters, userId: numbe
   let threeColumns = {} as ThreeColumns;
   if (filters) {
     setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Red, bricks, BrickStatus.Draft);
-    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Yellow, bricks, BrickStatus.Review);
-    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Green, bricks, BrickStatus.Publish);
+    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Yellow, bricks, BrickStatus.Build);
+    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Green, bricks, BrickStatus.Review);
   }
   return threeColumns;
 }
@@ -69,32 +69,46 @@ export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: n
   let data: any[] = [];
   let count = 0;
 
+  const isFirstEmpty = threeColumns.red.finalBricks.length === 0;
+  const isSecondEmpty = threeColumns.yellow.finalBricks.length === 0;
+  const isThiredEmpty = threeColumns.green.finalBricks.length === 0;
+
   for (let i = 0 + sortedIndex; i < (pageSize / 3) + sortedIndex; i++) {
     let brick = threeColumns.red.finalBricks[i];
     let row = i - sortedIndex;
+    
     if (brick) {
       prepareBrickData(data, brick, i, count, row);
-      count++;
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
-      count++;
+      if (isFirstEmpty && count === 0) {
+        prepareBrickData(data, { isEmptyColumn: true, columnStatus: BrickStatus.Draft } as Brick, i, count, row);
+      } else {
+        prepareBrickData(data, {} as Brick, i, count, row);
+      }
     }
+    count++;
     brick = threeColumns.yellow.finalBricks[i];
     if (brick) {
       prepareBrickData(data, brick, i, count, row);
-      count++;
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
-      count++;
+      if (isSecondEmpty && count === 1) {
+        prepareBrickData(data, {isEmptyColumn: true, columnStatus: BrickStatus.Build } as Brick, i, count, row);
+      } else {
+        prepareBrickData(data, {} as Brick, i, count, row);
+      }
     }
+    count++;
     brick = threeColumns.green.finalBricks[i];
     if (brick) {
       prepareBrickData(data, brick, i, count, row);
-      count++;
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
-      count++;
+      if (isThiredEmpty && count === 2) {
+        prepareBrickData(data, {isEmptyColumn: true, columnStatus: BrickStatus.Review } as Brick, i, count, row);
+      } else {
+        prepareBrickData(data, {} as Brick, i, count, row);
+      }
     }
+    count++;
   }
   return data;
 }

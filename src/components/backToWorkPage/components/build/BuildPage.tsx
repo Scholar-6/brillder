@@ -60,6 +60,8 @@ interface BuildState {
 
   deleteDialogOpen: boolean;
   deleteBrickId: number;
+
+  bricksLoaded: boolean;
 }
 
 class BuildPage extends Component<BuildProps, BuildState> {
@@ -102,6 +104,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
       sortedIndex: 0,
       deleteDialogOpen: false,
       deleteBrickId: -1,
+
+      bricksLoaded: false,
 
       filters: {
         viewAll: true,
@@ -194,7 +198,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
   setBricks(rawBricks: Brick[]) {
     const threeColumns = prepareTreeRows(rawBricks, this.state.filters, this.props.user.id, this.props.generalSubjectId);
-    this.setState({ ...this.state, finalBricks: rawBricks, rawBricks, threeColumns });
+    this.setState({ ...this.state, finalBricks: rawBricks, rawBricks, threeColumns, bricksLoaded: true });
   }
 
   toggleCore() {
@@ -202,7 +206,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     filters.isCore = !filters.isCore;
     const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id, this.props.generalSubjectId);
     const threeColumns = prepareTreeRows(this.state.rawBricks, this.state.filters, this.props.user.id, this.props.generalSubjectId);
-    console.log(threeColumns);
     this.setState({ ...this.state, threeColumns, filters, finalBricks });
   }
 
@@ -418,22 +421,24 @@ class BuildPage extends Component<BuildProps, BuildState> {
             setTab={this.props.setTab}
           />
             <div className="tab-content">
-              <BuildBricks
-                user={this.props.user}
-                finalBricks={this.state.finalBricks}
-                threeColumns={this.state.threeColumns}
-                shown={this.state.shown}
-                pageSize={this.state.pageSize}
-                sortedIndex={this.state.sortedIndex}
-                history={this.props.history}
-                filters={this.state.filters}
-                toggleCore={() => this.toggleCore()}
-                handleDeleteOpen={this.handleDeleteOpen.bind(this)}
-                handleMouseHover={this.handleMouseHover.bind(this)}
-                handleMouseLeave={this.handleMouseLeave.bind(this)}
-                onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
-                onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
-              />
+              { this.state.bricksLoaded &&
+                <BuildBricks
+                  user={this.props.user}
+                  finalBricks={this.state.finalBricks}
+                  threeColumns={this.state.threeColumns}
+                  shown={this.state.shown}
+                  pageSize={this.state.pageSize}
+                  sortedIndex={this.state.sortedIndex}
+                  history={this.props.history}
+                  filters={this.state.filters}
+                  toggleCore={() => this.toggleCore()}
+                  handleDeleteOpen={this.handleDeleteOpen.bind(this)}
+                  handleMouseHover={this.handleMouseHover.bind(this)}
+                  handleMouseLeave={this.handleMouseLeave.bind(this)}
+                  onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
+                  onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
+                />
+              }
               {this.renderPagination()}
           </div>
         </Grid>
