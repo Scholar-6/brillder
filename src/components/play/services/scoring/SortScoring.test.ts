@@ -25,10 +25,10 @@ describe("sort scoring", () => {
         // arrange
         const mockAttempt = {
             answer: {
-                "A": 0,
-                "B": 1,
-                "C": 2,
-                "D": 2,
+                "0_0": 0,
+                "1_0": 1,
+                "2_0": 2,
+                "2_1": 2,
             }
         } as ComponentAttempt<any>;
 
@@ -44,10 +44,10 @@ describe("sort scoring", () => {
     it("should mark an incorrect answer with 0.25 each", () => {
         const mockAttempt = {
             answer: {
-                "A": 1,
-                "B": 2,
-                "C": 1,
-                "D": 0
+                "2_1": 1,
+                "1_4": 2,
+                "2_2": 1,
+                "2_3": 0
             }
         } as ComponentAttempt<any>;
 
