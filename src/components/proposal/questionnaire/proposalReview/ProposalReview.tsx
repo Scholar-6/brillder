@@ -73,6 +73,18 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
+  toFirstPage() {
+    if (this.state.bookState === BookState.PrepPage) {
+      this.setState({bookState: BookState.TitlesPage});
+    }
+  }
+
+  toSecondPage() {
+    if (this.state.bookState === BookState.TitlesPage) {
+      this.setState({bookState: BookState.PrepPage});
+    }
+  }
+
   renderEditButton() {
     let className = "edit-icon";
     if (this.state.mode) {
@@ -213,11 +225,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
     const renderSecondPage = () => {
       return (
-        <div className="page6" onClick={() => {
-          if (this.state.bookState === BookState.TitlesPage) {
-            this.setState({bookState: BookState.PrepPage});
-          }
-        }}>
+        <div className="page6" onClick={this.toSecondPage.bind(this)}>
           <div className="normal-page">
             <div className="normal-page-container">
               <Grid container justify="center">
@@ -237,12 +245,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       return (
         <div className={`book ${this.state.mode === true ? 'flat' : ''}`} onMouseOver={() => this.onBookHover()}>
           <div className="back"></div>
-          <div className="page6-cover" onClick={() => {
-            if (this.state.bookState === BookState.PrepPage) {
-              this.setState({bookState: BookState.TitlesPage});
-            }
-          }}>
-          </div>
+          <div className="page6-cover" onClick={this.toFirstPage.bind(this)} />
           {renderSecondPage()}
           {renderFirstPage()}
           <div className="page4">
@@ -295,7 +298,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
           <Grid className="back-button-container" container alignContent="center">
             {this.state.bookHovered && this.state.bookState === BookState.PrepPage
-              ? <div className="back-button text-button" onClick={() => this.props.history.push(map.ProposalPrep)}>
+              ? <div className="back-button text-button" onClick={this.toFirstPage.bind(this)}>
                   Click on the left-hand page to go back
                 </div>
               : <div className="back-button arrow-button" onClick={() => this.props.history.push(map.ProposalPrep)} />
@@ -320,7 +323,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 this.state.bookHovered && (
                   <div>
                     {this.state.bookState === BookState.TitlesPage && (
-                      <div className="next-button text-button" onClick={() => this.props.saveBrick()}>
+                      <div className="next-button text-button" onClick={this.toSecondPage.bind(this)}>
                         Click on the right-hand page to view Prep
                       </div>
                     )}
