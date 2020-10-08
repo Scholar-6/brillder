@@ -230,7 +230,12 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               this.setState({bookState: BookState.TitlesPage});
             }
           }}>
-            <div className="flipped-page">
+          </div>
+          {renderSecondPage()}
+          {renderFirstPage()}
+          <div className="page4">
+          <div className="normal-page">
+            <div className="normal-page-container">
               <Grid container justify="center">
                 {this.renderEditButton()}
               </Grid>
@@ -238,11 +243,9 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
                 {this.state.bookHovered && this.state.bookState === BookState.PrepPage && this.renderYoutubeAndMathField(BrickFieldNames.prep)}
               </div>
+              </div>
             </div>
           </div>
-          {renderSecondPage()}
-          {renderFirstPage()}
-          <div className="page4"></div>
           <div className="page3"></div>
           <div className="page2"></div>
           <div className="front">
@@ -297,11 +300,11 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             </div>
             <Grid className="next-button-container" container onMouseOver={() => this.onBookHover()} alignContent="center">
               {
-                this.state.bookHovered ? (
+                this.state.bookHovered && (
                   <div>
                     <div className="next-button" onClick={() => this.props.saveBrick()}></div>
                   </div>
-                ) : ""
+                )
               }
             </Grid>
           </div>
