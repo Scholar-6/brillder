@@ -59,8 +59,8 @@ export const prepareTreeRows = (bricks: Brick[], filters: Filters, userId: numbe
   let threeColumns = {} as ThreeColumns;
   if (filters) {
     setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Red, bricks, BrickStatus.Draft);
-    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Yellow, bricks, BrickStatus.Review);
-    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Green, bricks, BrickStatus.Publish);
+    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Yellow, bricks, BrickStatus.Build);
+    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Green, bricks, BrickStatus.Review);
   }
   return threeColumns;
 }
