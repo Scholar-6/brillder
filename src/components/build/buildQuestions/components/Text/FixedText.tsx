@@ -23,7 +23,7 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
   }
 
   return (
-    <div className="question-build-text-editor">
+    <div className="question-build-text-editor first">
       <DocumentWirisCKEditor
         disabled={locked}
         editOnly={editOnly}
