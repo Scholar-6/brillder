@@ -58,6 +58,7 @@ import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialo
 import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { TextComponentObj } from "./buildQuestions/components/Text/interface";
+import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
@@ -107,6 +108,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [activeQuestionType, setActiveType] = React.useState(QuestionTypeEnum.None);
   const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
   const [isSaving, setSavingStatus] = React.useState(false);
+  const [skipTutorialOpen, setSkipDialog] = React.useState(false);
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
   const [tooltipsOn, setTooltips] = React.useState(true);
@@ -234,6 +236,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   /* Changing question in build */
 
   const createNewQuestion = () => {
+    if (!tutorialSkipped) {
+      setSkipDialog(true);
+      return;
+    }
     if (!canEdit) { return; }
     const updatedQuestions = questions.slice();
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, false));
@@ -648,6 +654,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   questions={questions}
                   synthesis={synthesis}
                   validationRequired={validationRequired}
+                  tutorialSkipped={tutorialSkipped}
                   tutorialStep={isTutorialPassed() ? TutorialStep.None : step}
                   isSynthesisPage={isSynthesisPage}
                   moveToSynthesis={moveToSynthesis}
@@ -690,6 +697,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           index={deleteQuestionIndex}
           setDialog={setDeleteDialog}
           deleteQuestion={deleteQuestionByIndex}
+        />
+        <SkipTutorialDialog
+          open={skipTutorialOpen}
+          close={() => setSkipDialog(false)}
+          skip={() => {
+            skipTutorial(true);
+            setSkipDialog(false);
+          }}
         />
       </Hidden>
       <Hidden only={['md', 'lg', 'xl']}>
