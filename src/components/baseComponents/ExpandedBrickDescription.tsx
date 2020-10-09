@@ -4,6 +4,7 @@ import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
 import './ExpandedBrickDescription.scss';
 import SpriteIcon from "./SpriteIcon";
+import brick from "components/services/axios/brick";
 
 
 interface ExpandedDescriptionProps {
@@ -19,10 +20,23 @@ interface ExpandedDescriptionProps {
 }
 
 class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
+  getEditors(brick: Brick) {
+    let text = "";
+    const {editors} = brick;
+    if (editors) {
+      let i = 0;
+      for (let editor of editors) {
+        if (i > 0) { text += ', '; }
+        text += editor.firstName + ' ' + editor.lastName;
+        i++;
+      }
+    }
+    return text;
+  }
+
   getSubjectRow(brick: Brick) {
-    return `${brick.subject ? brick.subject.name : "SUBJECT Code"} | No. ${
-      brick.attemptsCount
-    } of Plays`;
+    const subject = brick.subject ? brick.subject.name : "SUBJECT Code";
+    return `${subject} | Number of Plays: ${brick.attemptsCount}`;
   }
 
   renderDeleteButton(brick: Brick) {
@@ -71,7 +85,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
             {brick.openQuestion}
           </div>
           <div className="link-info">{this.getSubjectRow(brick)}</div>
-          <div className="link-info">Editor: Name Surname</div>
+          <div className="link-info">Editor(s): {this.getEditors(brick)}</div>
         </div>
         <div className="hover-icons-row">
           <div>
