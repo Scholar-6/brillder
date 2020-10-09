@@ -31,8 +31,9 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, d
         placeholder=""
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-          'mathType', 'chemType', 'insertTable', 'bulletedList', 'numberedList', 'addComment'
+          'mathType', 'chemType', 'insertTable', 'bulletedList', 'numberedList', 'addComment',
         ]}
+        blockQuote={true}
         validationRequired={props.validationRequired}
         onBlur={() => props.save()}
         onChange={onChange}
