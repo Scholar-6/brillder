@@ -477,6 +477,10 @@
         @include phone_and_tabletP {
         }
 
+        .title {
+          font-size: 1.5vw;
+        }
+
         @include tabletP {
           padding: 0.8vw 0 0 0.8vw;
           height: calc(#{$bricks-height / 6.35});
