@@ -168,6 +168,16 @@
               color: var(--theme-green);
               padding: 0.1vw 0.4vw;
             }
+            .MuiIconButton-label {
+              > div {
+                > svg {
+                  color: var(--white);
+                }
+                > svg:first-child {
+                  color: var(--theme-green);
+                }
+              }
+            }
           }
         }
       }
