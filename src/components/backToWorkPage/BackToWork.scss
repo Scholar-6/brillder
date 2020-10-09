@@ -27,14 +27,14 @@
         padding-left: 1.5vw;
         border-top-right-radius: 0.5vw;
         margin-right: $tabs-margin-between;
-        > span {
+        > div {
           opacity: 0.2;
         }
       }
 
       > div.active {
         background: var(--white);
-        > span {
+        > div {
           opacity: 1;
         }
       }
@@ -148,7 +148,6 @@
   }
 
   .private-core-toggle {
-    top: 7.7vh;
     transform: scale(0.8);
   }
 

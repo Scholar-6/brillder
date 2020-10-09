@@ -7,7 +7,6 @@ import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
 import { AssignmentBrickStatus, AssignmentBrick } from "model/assignment";
 
 import BrickBlock from "components/baseComponents/BrickBlock";
-import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 
 interface AssignedBricksProps {
   user: User;
@@ -18,9 +17,6 @@ interface AssignedBricksProps {
   assignments: AssignmentBrick[];
   threeColumns: ThreeAssignmentColumns;
   history: any;
-
-  isCore: boolean;
-  toggleCore(): void;
 
   handleDeleteOpen(brickId: number): void;
   onMouseHover(key: number): void;
@@ -113,7 +109,6 @@ class AssignedBricks extends Component<AssignedBricksProps> {
   render() {
     return (
       <div className="bricks-list-container">
-        <PrivateCoreToggle isCore={this.props.isCore} onSwitch={this.props.toggleCore} />
         <div className="bricks-list">
           {this.renderAssignedBricks()}
         </div>
