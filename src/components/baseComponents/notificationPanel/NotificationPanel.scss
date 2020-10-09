@@ -20,7 +20,7 @@
     }
     @include tabletP {
       border-radius: 0 0 0 2.5vw;
-      left: calc(100% - 37vw) !important;
+      left: calc(100% - 30vw) !important;
     }
     @include tabletL {
       left: calc(100% - 30vw) !important;
@@ -38,10 +38,10 @@
       }
       @include tabletP {
         border-radius: 0 0 0 2.5vw;
-        width: 37vw;
+        width: $notification-width;
       }
       @include tabletL {
-        width: 30vw;
+        width: $notification-width;
       }
       @include desktop {
         width: $notification-width;
