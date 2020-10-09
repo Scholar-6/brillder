@@ -163,11 +163,9 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <div className="expand-title" style={{marginTop: '4vh'}}>
         <span>Brief</span>
         <div className="centered text-white" onClick={toggleBrief}>
-          {
-            state.briefExpanded
-              ? <SpriteIcon name="arrow-down" className="arrow b-green" />
-              : <SpriteIcon name="arrow-right" className="arrow b-yellow" />
-          }
+          <div className={state.briefExpanded ? "round-icon b-green": "round-icon b-yellow"}>
+            <SpriteIcon name="arrow-down" className="arrow" />
+          </div>
         </div>
       </div>
     );
@@ -178,11 +176,9 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <div className="expand-title">
         <span>Prep</span>
         <div className="centered text-white" onClick={togglePrep}>
-          {
-            state.prepExpanded
-              ? <SpriteIcon name="arrow-down" className="arrow b-green" />
-              : <SpriteIcon name="arrow-right" className="arrow b-yellow" />
-          }
+          <div className={state.prepExpanded ? "round-icon b-green": "round-icon b-yellow"}>
+            <SpriteIcon name="arrow-down" className="arrow" />
+          </div>
         </div>
         {!state.prepExpanded && !isMobile &&
           <em className="help-prep">
