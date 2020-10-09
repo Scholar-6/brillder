@@ -141,6 +141,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const [currentBrick, setCurrentBrick] = React.useState(props.brick);
 
+  const openSkipTutorial = () => {
+    setSkipDialog(true);
+  }
+
   // update on socket when things change.
   useEffect(() => {
     if (props.brick && !locked) {
@@ -699,6 +703,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   synthesis={synthesis}
                   validationRequired={validationRequired}
                   tutorialSkipped={tutorialSkipped}
+                  openSkipTutorial={openSkipTutorial}
                   tutorialStep={isTutorialPassed() ? TutorialStep.None : step}
                   isSynthesisPage={isSynthesisPage}
                   moveToSynthesis={moveToSynthesis}
