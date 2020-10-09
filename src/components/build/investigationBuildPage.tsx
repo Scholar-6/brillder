@@ -59,6 +59,8 @@ import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { TextComponentObj } from "./buildQuestions/components/Text/interface";
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
+import { useSocket } from "socket/socket";
+import { applyBrickDiff, getBrickDiff } from "components/services/diff";
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
@@ -72,7 +74,7 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const { params } = props.match;
   const brickId = parseInt(params.brickId);
-  
+
   const values = queryString.parse(props.location.search);
   let initSuggestionExpanded = false;
   if (values.suggestionsExpanded) {
@@ -130,44 +132,80 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let isAuthor = false;
   try {
     isAuthor = props.brick.author.id === props.user.id;
-  } catch {}
+  } catch { }
 
   // start editing on socket on load.
   useEffect(() => {
     startEditing(brickId)
   }, [brickId, startEditing]);
 
+  const [currentBrick, setCurrentBrick] = React.useState(props.brick);
+
   // update on socket when things change.
   useEffect(() => {
     if (props.brick && !locked) {
       let brick = props.brick;
       prepareBrickToSave(brick, questions, synthesis);
-      updateBrick(brick);
     }
   }, [questions, synthesis, locked, updateBrick, props.brick]);
 
   // parse questions on socket update
-  useEffect(() => {
-    if (props.brick && props.brick.questions && locked) {
-      const parsedQuestions: Question[] = [];
-      for (const question of props.brick.questions) {
-        try {
-          parseQuestion(question, parsedQuestions);
-        } catch (e) { }
-      }
-      if (parsedQuestions.length > 0) {
-        let buildQuestion = GetCashedBuildQuestion();
-        if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
-          parsedQuestions[buildQuestion.questionNumber].active = true;
-        } else {
-          parsedQuestions[0].active = true;
+  useSocket('brick_update', (diff: any) => {
+    console.log(diff);
+    if (!diff) return;
+    if (currentBrick && locked) {
+      const brick = applyBrickDiff(currentBrick, diff);
+      console.log(brick);
+      const parsedQuestions: Question[] = questions;
+
+
+      if (diff.questions) {
+        for (const questionKey of Object.keys(diff.questions)) {
+          try {
+            console.log(questionKey);
+            console.log(brick.questions);
+            parseQuestion(brick.questions[questionKey as any], parsedQuestions);
+          } catch (e) {
+            console.log(e);
+          }
         }
-        setQuestions(q => update(q, { $set: parsedQuestions }));
-        setStatus(s => update(s, { $set: true }));
+        if (parsedQuestions.length > 0) {
+          let buildQuestion = GetCashedBuildQuestion();
+          if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
+            parsedQuestions[buildQuestion.questionNumber].active = true;
+          } else {
+            parsedQuestions[0].active = true;
+          }
+          setQuestions(q => update(q, { $set: parsedQuestions }));
+        }
       }
-      setSynthesis(props.brick.synthesis);
+
+      if (diff.synthesis) {
+        setSynthesis(brick.synthesis);
+      }
+
+      setCurrentBrick(brick);
     }
-  }, [props.brick, loaded, locked])
+    // if (props.brick && props.brick.questions && locked) {
+    //   const parsedQuestions: Question[] = [];
+    //   for (const question of props.brick.questions) {
+    //     try {
+    //       parseQuestion(question, parsedQuestions);
+    //     } catch (e) { }
+    //   }
+    //   if (parsedQuestions.length > 0) {
+    //     let buildQuestion = GetCashedBuildQuestion();
+    //     if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
+    //       parsedQuestions[buildQuestion.questionNumber].active = true;
+    //     } else {
+    //       parsedQuestions[0].active = true;
+    //     }
+    //     setQuestions(q => update(q, { $set: parsedQuestions }));
+    //     setStatus(s => update(s, { $set: true }));
+    //   }
+    //   setSynthesis(props.brick.synthesis);
+    // }
+  })
 
   if (!props.brick) {
     return <PageLoader content="...Loading..." />;
@@ -191,14 +229,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   if (isSynthesisPage === true) {
     if (activeQuestion) {
       unselectQuestions();
-      props.changeQuestion(undefined); // change to synthesis page on socket.
       return <PageLoader content="...Loading..." />;
     }
   } else if (!activeQuestion) {
     console.log("Can`t find active question");
     activeQuestion = {} as Question;
-  } else {
-    props.changeQuestion(activeQuestion.id);
   }
 
   /* Changing question number by tabs in build */
@@ -431,6 +466,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       prepareBrickToSave(brick, updatedQuestions, synthesis);
 
       console.log('save brick questions');
+      const diff = getBrickDiff(currentBrick, brick);
+      updateBrick(diff);
+      setCurrentBrick(brick);
       props.saveBrick(brick).then((res: any) => {
         if (callback) {
           callback(res);
@@ -444,6 +482,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     prepareBrickToSave(brick, questions, synthesis);
     if (canEdit === true) {
       console.log('save brick')
+      const diff = getBrickDiff(currentBrick, brick);
+      updateBrick(diff);
+      setCurrentBrick(brick);
       props.saveBrick(brick);
     }
   };
@@ -463,6 +504,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
       if (time - lastAutoSave >= delay) {
         console.log('auto save brick')
+        const diff = getBrickDiff(currentBrick, brick);
+        updateBrick(diff);
+        setCurrentBrick(brick);
         setLastAutoSave(time);
         props.saveBrick(brick);
       }
