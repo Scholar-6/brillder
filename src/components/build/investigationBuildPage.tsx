@@ -61,6 +61,7 @@ import { TextComponentObj } from "./buildQuestions/components/Text/interface";
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import { useSocket } from "socket/socket";
 import { applyBrickDiff, getBrickDiff } from "components/services/diff";
+import SaveDialog from "./baseComponents/dialogs/SaveDialog";
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
@@ -102,6 +103,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   ] as Question[]);
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
+  const [saveDialogOpen, setSaveDialog] = React.useState(false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
   const [proposalResult, setProposalResult] = React.useState({ isOpen: false, isValid: proposalRes.isValid, url: proposalRes.url });
@@ -658,7 +660,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   return (
     <div className="investigation-build-page">
-      <HomeButton onClick={exitAndSave} />
+      <HomeButton onClick={() => setSaveDialog(true)} />
       <PlayButton
         tutorialStep={step}
         isTutorialSkipped={isTutorialPassed()}
@@ -755,6 +757,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             setSkipDialog(false);
           }}
         />
+        <SaveDialog open={saveDialogOpen} close={()=> setSaveDialog(false)} save={exitAndSave} />
       </Hidden>
       <Hidden only={['md', 'lg', 'xl']}>
         <div className="blue-page">
