@@ -299,13 +299,14 @@ class PlayPage extends Component<PlayProps, PlayState> {
           <Tab
             isTeach={this.state.isTeach || this.state.isAdmin}
             activeTab={ActiveTab.Play}
+            isCore={this.state.isCore}
+            onCoreSwitch={this.toggleCore.bind(this)}
             setTab={t => this.props.setTab(t)}
           />
           <div className="tab-content">
             <AssignedBricks
               user={this.props.user}
               shown={true}
-              isCore={this.state.isCore}
               filters={this.state.filters}
               pageSize={this.state.pageSize}
               sortedIndex={this.state.sortedIndex}
@@ -313,7 +314,6 @@ class PlayPage extends Component<PlayProps, PlayState> {
               threeColumns={this.state.threeColumns}
               history={this.props.history}
               handleDeleteOpen={() => {}}
-              toggleCore={this.toggleCore.bind(this)}
               onMouseHover={this.onMouseHover.bind(this)}
               onMouseLeave={this.onMouseLeave.bind(this)}
               onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}

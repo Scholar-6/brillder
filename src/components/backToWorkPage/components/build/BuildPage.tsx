@@ -27,6 +27,7 @@ import FilterSidebar from './FilterSidebar';
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import BackPagePagination from '../BackPagePagination';
 import BackPagePaginationV2 from '../BackPagePaginationV2';
+import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
 
 interface BuildProps {
   searchString: string;
@@ -422,6 +423,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
           <Tab
             isTeach={this.state.isTeach || this.state.isAdmin}
             activeTab={ActiveTab.Build}
+            isCore={this.state.filters.isCore}
+            onCoreSwitch={this.toggleCore.bind(this)}
             setTab={this.props.setTab}
           />
             <div className="tab-content">
@@ -435,7 +438,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 history={this.props.history}
                 filters={this.state.filters}
                 loaded={this.state.bricksLoaded}
-                toggleCore={() => this.toggleCore()}
                 handleDeleteOpen={this.handleDeleteOpen.bind(this)}
                 handleMouseHover={this.handleMouseHover.bind(this)}
                 handleMouseLeave={this.handleMouseLeave.bind(this)}

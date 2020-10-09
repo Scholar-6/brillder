@@ -5,7 +5,6 @@ import { User } from "model/user";
 import { ThreeColumns } from '../../model';
 import { prepareVisibleThreeColumnBricks } from '../../threeColumnService';
 import { prepareVisibleBricks } from '../../service';
-import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
 
 import BrickBlock from "components/baseComponents/BrickBlock";
 
@@ -22,7 +21,6 @@ interface BuildBricksProps {
 
   history: any;
   filters: any;
-  toggleCore(): void;
 
   // brick events
   handleDeleteOpen(brickId: number): void;
@@ -204,10 +202,6 @@ class BuildBricks extends Component<BuildBricksProps> {
 
     return (
       <div className="bricks-list-container">
-        <PrivateCoreToggle
-          isCore={this.props.filters.isCore}
-          onSwitch={() => this.props.toggleCore()}
-        />
         <div className="bricks-list">
           {this.renderBricks()}
         </div>
