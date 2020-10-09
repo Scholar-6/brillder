@@ -20,10 +20,10 @@
     }
     @include tabletP {
       border-radius: 0 0 0 2.5vw;
-      left: calc(100% - 30vw) !important;
+      left: calc(100% - #{$notification-width}) !important;
     }
     @include tabletL {
-      left: calc(100% - 30vw) !important;
+      left: calc(100% - #{$notification-width}) !important;
     }
     @include desktop {
       box-shadow: none;
