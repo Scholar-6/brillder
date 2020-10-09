@@ -284,7 +284,7 @@
   }
 }
 .teach-sort-box {
-  $filter-height: 52vh;
+  $filter-height: 50vh;
   $expanded-filter-height: 62vh;
   $classes-label-height: 7.7vh;
   margin-bottom: 1vh;
@@ -359,12 +359,8 @@
   }
 }
 .teach-sort-box ~ .sort-box {
-
   .subject-indexes-box {
     margin-top: 2.5vh !important;
-    .index-box {
-      margin-bottom: 1vh !important;
-    }
   }
 }
 

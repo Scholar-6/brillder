@@ -173,11 +173,13 @@
       }
 
       .subject-indexes-box {
-        margin: 0.2vw 1.2vw !important;
+        margin: 0 1.2vw !important;
         width: calc(100% - #{$sidebar-gutter * 2});
 
         .index-box {
-          margin: 0 0 0.4vw 0;
+          margin: 0 0 0.5vw 0;
+          height: auto !important;
+          min-height: 3.4vh;
 
           .right-index {
             right: 0;
@@ -207,7 +209,6 @@
       .filter-header {
         position: relative;
         text-transform: uppercase;
-        // background: var(--theme-light-blue) 0% 0% no-repeat padding-box;
         background: var(--light-blue-alpha5);
         padding: 0.3vw 1.4vw;
         font-size: 1.2vw;
@@ -216,6 +217,7 @@
         align-items: center;
         justify-content: space-between;
         font-family: $font-family-regular;
+        margin-bottom: 1vh;
         .filter-control {
           height: 100%;
           vertical-align: middle;
