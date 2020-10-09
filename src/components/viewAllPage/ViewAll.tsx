@@ -664,6 +664,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             <Hidden only={["xs"]}>
               <div className="brick-row-title">ALL BRICKS</div>
               <PrivateCoreToggle
+                isViewAll={true}
                 isCore={this.state.isCore}
                 onSwitch={() => this.toggleCore()}
               />

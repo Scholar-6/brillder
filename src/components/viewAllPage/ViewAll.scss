@@ -8,6 +8,10 @@
   height: 100%;
   width: 100%;
   font-family: $font-family-regular;
+
+  .view-all-toggle {
+    position: absolute;
+  }
 }
 
 .mobile-category {
