@@ -134,7 +134,12 @@ export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]
         parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
       components: parsedQuestion.components
     } as Question;
-    parsedQuestions.push(q);
+    const index = parsedQuestions.findIndex(question => question.id === q.id);
+    if (index >= 0) {
+      parsedQuestions[index] = q; // question was only updated
+    } else {
+      parsedQuestions.push(q); // question was loaded
+    }
   }
 }
 

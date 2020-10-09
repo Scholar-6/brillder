@@ -10,7 +10,7 @@ export const getDiff = (oldObj: any, newObj: any) => {
 
     for (let key of _.union(Object.keys(oldObj), Object.keys(newObj))) {
         if (oldObj[key] !== newObj[key]) { // if the properties aren't the same
-            if (oldObj[key] && !newObj[key]) { // the property was removed...
+            if (typeof oldObj[key] !== "undefined" && typeof newObj[key] === "undefined") { // the property was removed...
                 diffObj[key] = undefined;
             } else if (typeof oldObj[key] === "object" && typeof newObj[key] === "object") {
                 diffObj[key] = getDiff(oldObj[key], newObj[key]);
@@ -28,6 +28,8 @@ export const applyBrickDiff = (brick: Brick, diff: any) => {
 };
 
 export const applyDiff = (obj: any, diff: any) => {
+    if (!diff) return obj;
+
     let newObj;
     if (Array.isArray(obj)) {
         newObj = [...obj];
