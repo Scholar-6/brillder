@@ -27,7 +27,6 @@ import FilterSidebar from './FilterSidebar';
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import BackPagePagination from '../BackPagePagination';
 import BackPagePaginationV2 from '../BackPagePaginationV2';
-import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
 
 interface BuildProps {
   searchString: string;

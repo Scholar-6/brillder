@@ -376,3 +376,21 @@
   height: 30% !important;
   overflow: hidden !important;
 }
+
+.publish-toggle {
+  position: absolute;
+  right: 2vw;
+  top: 9vh;
+  letter-spacing: 0.1vw;
+  font-family: $font-family-bold;
+  font-size: 0.9vw;
+  > span {
+    cursor: pointer;
+    margin-left: 1vw;
+    color: var(--tab-gray);
+
+    &.active {
+      color: var(--theme-dark-blue);
+    }
+  }
+}
