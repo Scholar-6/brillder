@@ -33,7 +33,9 @@ const TabComponent: React.FC<TabProps> = ({ isTeach, isCore, activeTab, setTab, 
       >
         <div style={{display: 'flex'}}>
           <span>Build</span>
-          <PrivateCoreToggle isCore={isCore} onSwitch={onCoreSwitch} />
+          <div className={!isTeach ? 'long toggle-button' : 'centered'}>
+            <PrivateCoreToggle isCore={isCore} onSwitch={onCoreSwitch} />
+          </div>
         </div>
       </div>
       <div
@@ -42,7 +44,9 @@ const TabComponent: React.FC<TabProps> = ({ isTeach, isCore, activeTab, setTab, 
       >
         <div style={{display: 'flex'}}>
           <span>Learn</span>
-          <PrivateCoreToggle isCore={isCore} onSwitch={onCoreSwitch} />
+          <div className={!isTeach ? 'long toggle-button': 'centered'}>
+            <PrivateCoreToggle isCore={isCore} onSwitch={onCoreSwitch} />
+          </div>
         </div>
       </div>
     </div>
