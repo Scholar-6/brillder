@@ -43,6 +43,7 @@ export interface Filters {
   editAll: boolean;
 
   draft: boolean;
+  build: boolean;
   review: boolean;
   publish: boolean;
 

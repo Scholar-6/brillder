@@ -8,6 +8,7 @@ import { clearStatusFilters } from '../../service';
 
 enum FilterFields {
   Draft = 'draft',
+  Build = 'build',
   Review = 'review',
   Publish = 'publish'
 }
@@ -54,8 +55,8 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   }
 
   filterClear() {
-    let { draft, review, publish } = this.props.filters
-    if (draft || review || publish) {
+    let { draft, review, build } = this.props.filters
+    if (draft || review || build) {
       this.setState({ isClearFilter: true })
     } else {
       this.setState({ isClearFilter: false })
@@ -150,15 +151,15 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             </div>
             <div className="index-box color2">
               <FormControlLabel
-                checked={this.props.filters.review}
-                control={<Radio onClick={() => this.toggleFilter(FilterFields.Review)} className={"filter-radio custom-color"} />}
+                checked={this.props.filters.build}
+                control={<Radio onClick={() => this.toggleFilter(FilterFields.Build)} className={"filter-radio custom-color"} />}
                 label="Submitted for Review" />
               <div className="right-index">{build}</div>
             </div>
             <div className="index-box color5">
               <FormControlLabel
-                checked={this.props.filters.publish}
-                control={<Radio onClick={e => this.toggleFilter(FilterFields.Publish)} className={"filter-radio custom-color"} />}
+                checked={this.props.filters.review}
+                control={<Radio onClick={e => this.toggleFilter(FilterFields.Review)} className={"filter-radio custom-color"} />}
                 label="Pending Publication" />
               <div className="right-index">{review}</div>
             </div>
