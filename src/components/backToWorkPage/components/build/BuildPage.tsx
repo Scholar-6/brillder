@@ -117,7 +117,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
         draft: true,
         review: true,
-        publish: true,
+        build: true,
+        publish: false,
         isCore
       }
     }
@@ -219,11 +220,27 @@ class BuildPage extends Component<BuildProps, BuildState> {
     this.setState({ ...state, finalBricks: bricks, sortBy });
   };
 
+  switchPublish() {
+    const { filters} = this.state;
+    if (!filters.publish) {
+      removeAllFilters(filters);
+      filters.publish = true;
+      const bricks = filterByStatus(this.state.rawBricks, BrickStatus.Publish);
+      this.setState({ ...this.state, filters, sortedIndex: 0, finalBricks: bricks });
+    } else {
+      removeAllFilters(filters);
+      filters.build = true;
+      filters.review= true;
+      filters.draft = true;
+      filters.viewAll = true;
+      this.setState({ ...this.state, filters, sortedIndex: 0 });
+    }
+  }
+
   showAll() {
     const { filters } = this.state;
     removeAllFilters(filters);
     filters.viewAll = true;
-    filters.publish = true;
     filters.review = true;
     filters.draft = true;
     this.setState({ ...this.state, filters, sortedIndex: 0, finalBricks: this.state.rawBricks });
@@ -233,7 +250,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const { filters } = this.state;
     removeAllFilters(filters);
     filters.editAll = true;
-    filters.publish = true;
     filters.review = true;
     let bricks = filterByStatus(this.state.rawBricks, BrickStatus.Review);
     bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Publish));
@@ -243,6 +259,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   showBuildAll() {
     const { filters } = this.state;
     removeAllFilters(filters);
+    filters.build = true;
     filters.buildAll = true;
     filters.draft = true;
     let bricks = filterByStatus(this.state.rawBricks, BrickStatus.Draft);
@@ -251,15 +268,16 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
   filterUpdated(newFilters: Filters) {
     const { filters } = this.state;
+    filters.build = newFilters.build;
     filters.publish = newFilters.publish;
     filters.review = newFilters.review;
     filters.draft = newFilters.draft;
     removeInboxFilters(filters);
-    if (filters.publish && filters.review && filters.draft) {
+    if (filters.build && filters.review && filters.draft) {
       filters.viewAll = true;
-    } else if (filters.draft && filters.review) {
+    } else if (filters.draft && filters.build) {
       filters.editAll = true;
-    } else if (filters.draft && !filters.publish) {
+    } else if (filters.draft && !filters.review) {
       filters.buildAll = true;
     }
     const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id, this.props.generalSubjectId);
@@ -437,6 +455,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 history={this.props.history}
                 filters={this.state.filters}
                 loaded={this.state.bricksLoaded}
+                switchPublish={this.switchPublish.bind(this)}
                 handleDeleteOpen={this.handleDeleteOpen.bind(this)}
                 handleMouseHover={this.handleMouseHover.bind(this)}
                 handleMouseLeave={this.handleMouseLeave.bind(this)}
