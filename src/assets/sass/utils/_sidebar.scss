@@ -198,7 +198,6 @@
       .filter-header {
         position: relative;
         text-transform: uppercase;
-        // background: var(--theme-light-blue) 0% 0% no-repeat padding-box;
         background: var(--light-blue-alpha5);
         padding: 0.3vw 1.4vw;
         font-size: 1.2vw;
@@ -207,6 +206,7 @@
         align-items: center;
         justify-content: space-between;
         font-family: $font-family-regular;
+        margin-bottom: 1vh;
         .filter-control {
           height: 100%;
           vertical-align: middle;
