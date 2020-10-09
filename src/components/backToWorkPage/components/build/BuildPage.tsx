@@ -100,7 +100,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       isEditor,
 
       shown: true,
-      pageSize: 18,
+      pageSize: 15,
 
       sortBy: SortBy.None,
       sortedIndex: 0,

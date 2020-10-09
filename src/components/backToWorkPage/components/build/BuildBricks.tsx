@@ -7,6 +7,7 @@ import { prepareVisibleThreeColumnBricks } from '../../threeColumnService';
 import { prepareVisibleBricks } from '../../service';
 
 import BrickBlock from "components/baseComponents/BrickBlock";
+import BrickColDescription from "./BrickColDescription";
 
 interface BuildBricksProps {
   user: User;
@@ -32,7 +33,7 @@ interface BuildBricksProps {
 
 class BuildBricks extends Component<BuildBricksProps> {
   renderGroupedBricks = (data: any[]) => {
-    return data.map(item => {
+    return data.map((item, i) => {
       const {brick}: {brick: Brick} = item;
       let circleIcon = '';
       let iconColor = '';
@@ -40,6 +41,7 @@ class BuildBricks extends Component<BuildBricksProps> {
         circleIcon="edit-outline";
         iconColor = 'text-theme-dark-blue';
       }
+
       if (brick.isEmptyColumn) {
         switch(brick.columnStatus) {
           case BrickStatus.Draft:
@@ -50,6 +52,18 @@ class BuildBricks extends Component<BuildBricksProps> {
             return this.renderThirdEmptyColumn();
         }
       }
+
+      // render first row as description
+      if (this.props.loaded) {
+        if (i === 0 ) {
+          return <BrickColDescription label="Draft Bricks" color="color1" number={4} />;
+        } else if (i === 1) {
+          return <BrickColDescription label="Review" color="color3" number={4} />;
+        } else if (i == 2) {
+          return <BrickColDescription label="Public" color="color2" number={4} isGreen={true} />;
+        }
+      }
+
       return <BrickBlock
         brick={brick}
         index={item.key}

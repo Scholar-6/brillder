@@ -89,6 +89,21 @@
         padding-right: 2vw;
       }
 
+      &.description {
+        .round-button {
+          @extend %flexCenter;
+          color: white;
+        }
+        .short-brick-info {
+          top: 1.3vh !important;
+          @extend %flexCenter;
+          font-size: 1.35vw;
+          height: 2.1vw;
+          line-height: 1;
+          font-family: $font-family-bold;
+        }
+      }
+
       .last-text {
         margin-top: 3vh;
       }
