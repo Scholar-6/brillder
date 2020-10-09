@@ -55,12 +55,13 @@ class BuildBricks extends Component<BuildBricksProps> {
 
       // render first row as description
       if (this.props.loaded) {
+        const {threeColumns} = this.props;
         if (i === 0 ) {
-          return <BrickColDescription label="Draft Bricks" color="color1" number={4} />;
+          return <BrickColDescription label="Draft Bricks" color="color1" number={threeColumns.red.finalBricks.length} />;
         } else if (i === 1) {
-          return <BrickColDescription label="Review" color="color3" number={4} />;
+          return <BrickColDescription label="Submitted to Editor(s)" color="color3" number={threeColumns.yellow.finalBricks.length} />;
         } else if (i == 2) {
-          return <BrickColDescription label="Public" color="color2" number={4} isGreen={true} />;
+          return <BrickColDescription label="Pending Publication" color="color2" number={threeColumns.green.finalBricks.length} isGreen={true}/>;
         }
       }
 
