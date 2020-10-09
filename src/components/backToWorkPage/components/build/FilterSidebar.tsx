@@ -129,35 +129,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
     return (
       <div className="sort-box">
-        <div className="filter-container sort-by-box">
-          <div className="sort-header">SORT BY</div>
-          <RadioGroup className="sort-group"
-            aria-label="SortBy"
-            name="SortBy"
-            value={this.props.sortBy}
-            onChange={this.props.handleSortChange}>
-            <Grid container direction="row">
-              <Grid item xs={4}>
-                <FormControlLabel
-                  value={SortBy.Status}
-                  control={<Radio className="sortBy" />}
-                  label="Status" />
-              </Grid>
-              <Grid item xs={4}>
-                <FormControlLabel
-                  value={SortBy.Popularity}
-                  control={<Radio className="sortBy" />}
-                  label="Popularity" />
-              </Grid>
-              <Grid item xs={4}>
-                <FormControlLabel
-                  value={SortBy.Date}
-                  control={<Radio className="sortBy" />}
-                  label="Last Edit" />
-              </Grid>
-            </Grid>
-          </RadioGroup>
-        </div>
         <div className="filter-header">
           <span>Filter</span>
           <button
