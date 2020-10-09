@@ -63,7 +63,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     this.state = {
       yourBricks: [],
       bricks: [],
-      sortBy: SortBy.None,
+      sortBy: SortBy.Date,
       subjects: [],
       sortedIndex: 0,
       deleteDialogOpen: false,
