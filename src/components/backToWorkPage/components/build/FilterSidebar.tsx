@@ -104,31 +104,23 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
   renderSortAndFilterBox = () => {
     let draft = 0;
+    let build = 0;
     let review = 0;
-    let publish = 0;
 
     for (let b of this.props.rawBricks) {
       if (b.status === BrickStatus.Draft) {
         draft += 1;
-      }
-    }
-
-    for (let b of this.props.rawBricks) {
-      if (b.status === BrickStatus.Review || b.status === BrickStatus.Build) {
+      } else if (b.status === BrickStatus.Build) {
+        build += 1;
+      } else if (b.status === BrickStatus.Publish) {
         review += 1;
-      }
-    }
-
-    for (let b of this.props.rawBricks) {
-      if (b.status === BrickStatus.Publish) {
-        publish += 1;
       }
     }
 
     return (
       <div className="sort-box">
-        <div className="filter-header">
-          <span>Filter</span>
+        <div className="filter-header" style={{marginTop: '5vh', marginBottom: '3vh'}}>
+          <span>LIVE OVERVIEW</span>
           <button
             className={
               "btn-transparent filter-icon " +
@@ -161,14 +153,14 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
                 checked={this.props.filters.review}
                 control={<Radio onClick={() => this.toggleFilter(FilterFields.Review)} className={"filter-radio custom-color"} />}
                 label="Submitted for Review" />
-              <div className="right-index">{review}</div>
+              <div className="right-index">{build}</div>
             </div>
-            <div className="index-box color4">
+            <div className="index-box color5">
               <FormControlLabel
                 checked={this.props.filters.publish}
                 control={<Radio onClick={e => this.toggleFilter(FilterFields.Publish)} className={"filter-radio custom-color"} />}
-                label="Published" />
-              <div className="right-index">{publish}</div>
+                label="Pending Publication" />
+              <div className="right-index">{review}</div>
             </div>
           </div>
         ) : (
