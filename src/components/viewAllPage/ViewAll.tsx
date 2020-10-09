@@ -631,6 +631,14 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     }, 1400);
   }
 
+  renderTitle() {
+    const {length} = this.state.finalBricks;
+    if (length === 1) {
+      return '1 Brick found';
+    }
+    return length + ' Bricks found';
+  }
+
   render() {
     const { history } = this.props;
     return (
@@ -662,7 +670,9 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
-              <div className="brick-row-title">ALL BRICKS</div>
+              <div className="brick-row-title">
+                ALL BRICKS
+              </div>
               <PrivateCoreToggle
                 isViewAll={true}
                 isCore={this.state.isCore}
@@ -682,7 +692,14 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
               <Hidden only={["xs"]}>
-                <div className="bricks-list">{this.renderYourBrickRow()}</div>
+                {!this.state.isSearching ?
+                  <div className="bricks-list">{this.renderYourBrickRow()}</div>
+                : (<div className="main-brick-container">
+                    <div className="centered text-theme-dark-blue title">
+                      {this.renderTitle()}
+                    </div>
+                  </div>)
+                }
                 <div className="bricks-list">{this.renderSortedBricks()}</div>
               </Hidden>
               <Hidden only={["sm", "md", "lg", "xl"]}>
