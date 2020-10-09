@@ -4,7 +4,6 @@ import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
 import './ExpandedBrickDescription.scss';
 import SpriteIcon from "./SpriteIcon";
-import brick from "components/services/axios/brick";
 
 
 interface ExpandedDescriptionProps {

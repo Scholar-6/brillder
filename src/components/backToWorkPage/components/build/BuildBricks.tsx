@@ -8,6 +8,7 @@ import { prepareVisibleBricks } from '../../service';
 
 import BrickBlock from "components/baseComponents/BrickBlock";
 import BrickColDescription from "./BrickColDescription";
+import PublishToggle from "./PublishToggle";
 
 interface BuildBricksProps {
   user: User;
@@ -60,7 +61,7 @@ class BuildBricks extends Component<BuildBricksProps> {
           return <BrickColDescription label="Draft Bricks" color="color1" number={threeColumns.red.finalBricks.length} />;
         } else if (i === 1) {
           return <BrickColDescription label="Submitted to Editor(s)" color="color3" number={threeColumns.yellow.finalBricks.length} />;
-        } else if (i == 2) {
+        } else if (i === 2) {
           return <BrickColDescription label="Pending Publication" color="color2" number={threeColumns.green.finalBricks.length} isGreen={true}/>;
         }
       }
@@ -217,6 +218,7 @@ class BuildBricks extends Component<BuildBricksProps> {
 
     return (
       <div className="bricks-list-container">
+        <PublishToggle isPublish={false} publishedCount={3} onSwitch={()=>{}} />
         <div className="bricks-list">
           {this.renderBricks()}
         </div>
