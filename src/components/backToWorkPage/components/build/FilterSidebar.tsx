@@ -139,7 +139,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             }}>
           </button>
         </div>
-        {this.state.filterExpanded === true ? (
+        {this.state.filterExpanded === true && (
           <div className="filter-container subject-indexes-box">
             <div className="index-box color1">
               <FormControlLabel
@@ -163,9 +163,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
               <div className="right-index">{review}</div>
             </div>
           </div>
-        ) : (
-            ""
-          )}
+        )}
       </div>
     );
   };

@@ -18,13 +18,14 @@ const setColumnBricksByStatus = (
   name: ThreeColumnNames, bricks: Brick[], status: BrickStatus
 ) => {
   let bs = filterByStatus(bricks, status);
+  let finalBs = [];
   if (!filters.isCore) {
-    bs = filterByPrivate(bs, userId, generalSubjectId);
+    finalBs = filterByPrivate(bs, userId, generalSubjectId);
   } else {
-    bs = filterByCore(bs, generalSubjectId);
+    finalBs = filterByCore(bs, generalSubjectId);
   }
-  bs = bs.sort(b => (b.editors && b.editors.find(e => e.id === userId)) ? -1 : 1);
-  res[name] = { rawBricks: bs, finalBricks: bs };
+  finalBs = finalBs.sort(b => (b.editors && b.editors.find(e => e.id === userId)) ? -1 : 1);
+  res[name] = { rawBricks: bs, finalBricks: finalBs };
 }
 
 export const getLongestColumn = (threeColumns: ThreeColumns) => {
@@ -92,7 +93,6 @@ export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: n
       prepareBrickData(data, { } as Brick, 0, 0, 0);
     }
   }
-  
 
   for (let i = 0 + sortedIndex; i < (pageSize / 3) + sortedIndex; i++) {
     let brick = threeColumns.red.finalBricks[i];
