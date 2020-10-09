@@ -53,6 +53,7 @@ interface DragTabsProps {
   validationRequired: boolean;
   tutorialStep: TutorialStep;
   tutorialSkipped: boolean;
+  openSkipTutorial(): void;
   createNewQuestion(): void;
   moveToSynthesis(): void;
   setQuestions(questions: any): void;
@@ -170,7 +171,13 @@ const DragableTabs: React.FC<DragTabsProps> = ({
         {
           (isSynthesisPresent || isSynthesisPage) ?
             <GridListTile
-              onClick={props.moveToSynthesis}
+              onClick={() => {
+                if (props.tutorialSkipped) {
+                  props.moveToSynthesis();
+                } else {
+                  props.openSkipTutorial();
+                }
+              }}
               className={"drag-tile-container " + (isSynthesisPage ? "synthesis-tab" : "")}
               cols={1.5555}
             >
