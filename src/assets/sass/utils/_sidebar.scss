@@ -164,11 +164,13 @@
       }
 
       .subject-indexes-box {
-        margin: 0.2vw 1.2vw !important;
+        margin: 0 1.2vw !important;
         width: calc(100% - #{$sidebar-gutter * 2});
 
         .index-box {
-          margin: 0 0 0.4vw 0;
+          margin: 0 0 0.5vw 0;
+          height: auto !important;
+          min-height: 3.4vh;
 
           .right-index {
             right: 0;
