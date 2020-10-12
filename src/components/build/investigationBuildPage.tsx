@@ -62,8 +62,6 @@ import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import { useSocket } from "socket/socket";
 import { applyBrickDiff, getBrickDiff } from "components/services/diff";
 import SaveDialog from "./baseComponents/dialogs/SaveDialog";
-import { Brick } from "model/brick";
-import Editor from "@ckeditor/ckeditor5-react";
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
