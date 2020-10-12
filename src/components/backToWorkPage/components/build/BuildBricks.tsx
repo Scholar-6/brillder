@@ -24,7 +24,6 @@ interface BuildBricksProps {
   history: any;
   filters: any;
 
-  isSearching: boolean;
   searchString: string;
 
   switchPublish(): void;
@@ -81,9 +80,7 @@ class BuildBricks extends Component<BuildBricksProps> {
         user={this.props.user}
         shown={this.props.shown}
         history={this.props.history}
-
         searchString={this.props.searchString}
-
         handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
         handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, brick.status)}
         handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, brick.status)}
