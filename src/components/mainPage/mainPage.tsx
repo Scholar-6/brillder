@@ -117,6 +117,20 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     );
   }
 
+  renderLibraryButton() {
+    let isActive = false;
+    return (
+      <div className="back-item-container" onClick={() => {
+        if (isActive) { }
+      }}>
+        <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover' : ''}`}>
+          <SpriteIcon name="library-book" className="active text-theme-orange" />
+          <span className="item-description">Back To Work</span>
+        </button>
+      </div>
+    );
+  }
+
   renderStudentWorkButton() {
     let isActive = false;
     return (
@@ -139,6 +153,14 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       return this.renderStudentWorkButton();
     }
     return this.renderCreateButton();
+  }
+
+  renderThirdButton() {
+    const {rolePreference} = this.props.user;
+    if (rolePreference && rolePreference.roleId === UserType.Student) {
+      return this.renderLibraryButton();
+    }
+    return this.renderWorkButton();
   }
 
   renderWorkButton() {
@@ -206,7 +228,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           <div className="first-item">
             {this.renderViewAllButton()}
             {this.renderSecondButton()}
-            {this.renderWorkButton()}
+            {this.renderThirdButton()}
           </div>
           <div className="second-item"></div>
         </div>
