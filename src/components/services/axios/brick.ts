@@ -2,13 +2,9 @@ import { Brick, BrickStatus } from 'model/brick';
 
 import {get, put, post, axiosDelete} from './index';
 
-/**
- * Get brick by Id
- * return brick or null if failed
- */
-export const getBrickById = async (id: number) => {
+export const getPublicBrickById = async (id: number) => {
   try {
-    return await get<Brick[]>("/bricks");
+    return await get<Brick>("/brick/public/" + id);
   } catch {
     return null;
   }

@@ -36,6 +36,7 @@ import { setBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'components/services/zendesk';
 import map from 'components/map';
 import UserPreferencePage from 'components/userProfilePage/userPreferencePage/UserPreferencePage';
+import UnauthorizedRoute from './UnauthorizedRoute';
 
 
 const App: React.FC = () => {
@@ -48,8 +49,12 @@ const App: React.FC = () => {
     return response;
   }, function (error) {
     let { url } = error.response.config;
-    if (url.search('/auth/login/') === -1 && error.response.status === 401) {
-      history.push("/login");
+
+    // exception for login page and view all page
+    if (error.response.status === 401) {
+      if (url.search('/auth/login/') === -1 && location.pathname.search('/play/brick/') === -1) {
+        history.push("/login");
+      }
     }
     return Promise.reject(error);
   });
@@ -84,7 +89,7 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       {/* all page routes are here order of routes is important */}
       <Switch>
-        <StudentRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
+        <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <StudentRoute path={map.ViewAllPage} component={ViewAll} />
 
