@@ -13,7 +13,7 @@ import Clock from "components/play/baseComponents/Clock";
 import { Redirect } from "react-router-dom";
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { checkEditor } from "components/services/brickService";
+import { checkAdmin, checkEditor } from "components/services/brickService";
 
 
 interface BuildCompleteProps {
@@ -69,11 +69,21 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
 
   render() {
     const {brick, user} = this.props;
+    const isAdmin = checkAdmin(user.roles);
+    let isAuthor = false;
+    try {
+      isAuthor = brick.author.id === user.id;
+    } catch {}
     const isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
     const isEditor = checkEditor(user.roles);
-    if (isCurrentEditor || isEditor) {
-      return <Redirect to={`/play-preview/brick/${brick.id}/finalStep`} />;
+    
+    // show page for admins and authors
+    if (!isAdmin && !isAuthor) {
+      if (isCurrentEditor || isEditor) {
+        return <Redirect to={`/play-preview/brick/${brick.id}/finalStep`} />;
+      }
     }
+
     return (
       <div className="brick-container build-complete-page">
         <Grid container direction="row">
