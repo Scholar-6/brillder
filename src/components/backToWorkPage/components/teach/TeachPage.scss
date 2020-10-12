@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .back-to-work-teach {
   .right-index {
@@ -10,11 +10,11 @@
   .index-box,
   classes-box {
     @extend %flexToYCenter;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    // padding-top: 0 !important;
+    // padding-bottom: 0 !important;
     height: 4.7vh !important;
     font-size: 2vh !important;
-    font-family: $font-family-light !important;
+    font-family: $font-family-regular;
   }
   .white-box {
     margin-left: 0.3vw;
