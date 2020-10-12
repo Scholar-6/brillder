@@ -277,7 +277,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   /* Changing question in build */
 
   const createNewQuestion = () => {
-    if (!tutorialSkipped) {
+    if (!isTutorialPassed()) {
       setSkipDialog(true);
       return;
     }
@@ -597,6 +597,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const isTutorialPassed = () => {
+    const isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
+    if (isCurrentEditor) {
+      return true;
+    }
     if (props.user.tutorialPassed) {
       return true;
     }
@@ -704,7 +708,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   questions={questions}
                   synthesis={synthesis}
                   validationRequired={validationRequired}
-                  tutorialSkipped={tutorialSkipped}
+                  tutorialSkipped={isTutorialPassed()}
                   openSkipTutorial={openSkipTutorial}
                   tutorialStep={isTutorialPassed() ? TutorialStep.None : step}
                   isSynthesisPage={isSynthesisPage}
