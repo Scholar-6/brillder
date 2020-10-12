@@ -50,8 +50,9 @@ class Sort extends CompComponent<SortProps, SortState> {
     let userCats:UserCategory[] = [];
     let choices:SortAnswer[] = [];
 
-    let catIndex = 0;
-    for (let cat of props.component.categories) {
+    for (let [catIndex, category] of (props.component.categories as any).entries()) {
+      const cat = category as SortCategory;
+      /* eslint-disable-next-line */
       cat.answers.forEach((a, i) => {
         let choice = Object.assign({}, a) as any;
         choice.text = choice.value;
