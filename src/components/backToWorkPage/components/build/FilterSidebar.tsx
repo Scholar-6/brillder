@@ -173,7 +173,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
         {this.renderIndexesBox()}
-        {this.renderSortAndFilterBox()}
+        {!this.props.filters.publish && this.renderSortAndFilterBox()}
       </Grid>
     );
   }
