@@ -47,6 +47,7 @@
     font-size: 2vh;
 
     &.active {
+      font-family: $font-family-bold;
       color: var(--theme-dark-blue);
       svg {
         color: var(--theme-dark-blue);
