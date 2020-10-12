@@ -223,6 +223,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
           <Tab
             isTeach={this.state.isTeach || this.state.isAdmin}
             activeTab={ActiveTab.Teach}
+            isCore={true}
+            onCoreSwitch={()=>{}}
             setTab={t => this.props.setTab(t)}
           />
           <div className="tab-content">

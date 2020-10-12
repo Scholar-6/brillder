@@ -5,9 +5,10 @@ import { User } from "model/user";
 import { ThreeColumns } from '../../model';
 import { prepareVisibleThreeColumnBricks } from '../../threeColumnService';
 import { prepareVisibleBricks } from '../../service';
-import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
 
 import BrickBlock from "components/baseComponents/BrickBlock";
+import BrickColDescription from "./BrickColDescription";
+import PublishToggle from "./PublishToggle";
 
 interface BuildBricksProps {
   user: User;
@@ -22,7 +23,10 @@ interface BuildBricksProps {
 
   history: any;
   filters: any;
-  toggleCore(): void;
+
+  searchString: string;
+
+  switchPublish(): void;
 
   // brick events
   handleDeleteOpen(brickId: number): void;
@@ -34,7 +38,7 @@ interface BuildBricksProps {
 
 class BuildBricks extends Component<BuildBricksProps> {
   renderGroupedBricks = (data: any[]) => {
-    return data.map(item => {
+    return data.map((item, i) => {
       const {brick}: {brick: Brick} = item;
       let circleIcon = '';
       let iconColor = '';
@@ -42,6 +46,7 @@ class BuildBricks extends Component<BuildBricksProps> {
         circleIcon="edit-outline";
         iconColor = 'text-theme-dark-blue';
       }
+
       if (brick.isEmptyColumn) {
         switch(brick.columnStatus) {
           case BrickStatus.Draft:
@@ -52,6 +57,19 @@ class BuildBricks extends Component<BuildBricksProps> {
             return this.renderThirdEmptyColumn();
         }
       }
+
+      // render first row as description
+      if (this.props.loaded) {
+        const {threeColumns} = this.props;
+        if (i === 0 ) {
+          return <BrickColDescription key={item.key} label="Draft Bricks" color="color1" number={threeColumns.red.finalBricks.length} />;
+        } else if (i === 1) {
+          return <BrickColDescription key={item.key} label="Submitted to Editor(s)" color="color3" number={threeColumns.yellow.finalBricks.length} />;
+        } else if (i === 2) {
+          return <BrickColDescription key={item.key} label="Pending Publication" color="color2" number={threeColumns.green.finalBricks.length} isGreen={true}/>;
+        }
+      }
+
       return <BrickBlock
         brick={brick}
         index={item.key}
@@ -62,6 +80,7 @@ class BuildBricks extends Component<BuildBricksProps> {
         user={this.props.user}
         shown={this.props.shown}
         history={this.props.history}
+        searchString={this.props.searchString}
         handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
         handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, brick.status)}
         handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, brick.status)}
@@ -91,6 +110,7 @@ class BuildBricks extends Component<BuildBricksProps> {
         history={this.props.history}
         circleIcon={circleIcon}
         iconColor={iconColor}
+        searchString={this.props.searchString}
         handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
         handleMouseHover={() => this.props.handleMouseHover(item.key)}
         handleMouseLeave={() => this.props.handleMouseLeave(item.key)}
@@ -148,7 +168,7 @@ class BuildBricks extends Component<BuildBricksProps> {
             <div className="circle b-yellow"></div>
           </div>
           <div className="bold empty-title">Bricks in this column are with editors.</div>
-          <div>
+          <div className="italic">
             They will appear here once you have played a
             preview of your brick and invited an editor to
             suggest changes to it.
@@ -168,10 +188,10 @@ class BuildBricks extends Component<BuildBricksProps> {
             </div>
           </div>
           <div className="bold empty-title">Bricks in this column are with publishers.</div>
-          <div className="smaller">
+          <div className="italic">
             They will appear here once your editor(s) approve(s) your brick and sends it to the Publisher.
           </div>
-          <div className="last-text">
+          <div className="last-text italic">
             You will receive a notification if your brick is published, and it will appear in the Public Library.
           </div>
         </div>
@@ -202,11 +222,19 @@ class BuildBricks extends Component<BuildBricksProps> {
       return this.renderEmptyPage();
     }
 
+    let published = 0;
+    for (let b of this.props.finalBricks) {
+      if (b.status === BrickStatus.Publish) {
+        published++;
+      }
+    }
+
     return (
       <div className="bricks-list-container">
-        <PrivateCoreToggle
-          isCore={this.props.filters.isCore}
-          onSwitch={() => this.props.toggleCore()}
+        <PublishToggle
+          isPublish={this.props.filters.publish}
+          publishedCount={published}
+          onSwitch={this.props.switchPublish}
         />
         <div className="bricks-list">
           {this.renderBricks()}

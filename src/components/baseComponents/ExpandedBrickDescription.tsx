@@ -1,28 +1,52 @@
 import React, { Component } from "react";
 
-import { getAuthorRow } from "components/services/brickService";
-import { Brick } from "model/brick";
 import './ExpandedBrickDescription.scss';
+import { Brick } from "model/brick";
+
 import SpriteIcon from "./SpriteIcon";
+import SearchText from "./SearchText";
+import AuthorSearchRow from "./AuthorRow";
 
 
 interface ExpandedDescriptionProps {
   userId: number;
   isAdmin: boolean;
   brick: Brick;
+
   color: string;
   circleIcon?: string;
   iconColor?: string;
+
+  searchString: string;
   
   move(brickId: number): void;
   onDelete(brickId: number): void;
 }
 
 class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
+  getEditors(brick: Brick, searchString: string) {
+    let text = "";
+    const {editors} = brick;
+    if (editors) {
+      let i = 0;
+      let res = [];
+      for (let editor of editors) {
+        if (i > 0) {
+          res.push(<span key={1}>, </span>)
+        }
+        res.push(<SearchText key={2} searchString={searchString} text={editor.firstName} />);
+        res.push(<span key={3}> </span>);
+        res.push(<SearchText key={4} searchString={searchString} text={editor.lastName} />);
+        i++;
+      }
+      return res;
+    }
+    return text;
+  }
+
   getSubjectRow(brick: Brick) {
-    return `${brick.subject ? brick.subject.name : "SUBJECT Code"} | No. ${
-      brick.attemptsCount
-    } of Plays`;
+    const subject = brick.subject ? brick.subject.name : "SUBJECT Code";
+    return `${subject} | Number of Plays: ${brick.attemptsCount}`;
   }
 
   renderDeleteButton(brick: Brick) {
@@ -55,23 +79,27 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
   }
 
   render() {
-    const { color, brick } = this.props;
+    const { color, brick, searchString } = this.props;
 
     return (
       <div className="expanded-brick-info">
         <div className="hover-text">
           <div className="link-description">
-            <span>{brick.title}</span>
+            <SearchText searchString={searchString} text={brick.title} />
           </div>
           <div className="link-info">
-            {brick.subTopic} | {brick.alternativeTopics}
+            <SearchText searchString={searchString} text={brick.subTopic} />
+            |
+            <SearchText searchString={searchString} text={brick.alternativeTopics} />
           </div>
-          <div className="link-info">{getAuthorRow(brick)}</div>
+          <div className="link-info">
+            <AuthorSearchRow searchString={searchString} brick={brick} />
+          </div>
           <div className="hovered-open-question link-info">
-            {brick.openQuestion}
+            <SearchText searchString={searchString} text={brick.openQuestion} />
           </div>
           <div className="link-info">{this.getSubjectRow(brick)}</div>
-          <div className="link-info">Editor: Name Surname</div>
+          <div className="link-info">Editor(s): {this.getEditors(brick, searchString)}</div>
         </div>
         <div className="hover-icons-row">
           <div>

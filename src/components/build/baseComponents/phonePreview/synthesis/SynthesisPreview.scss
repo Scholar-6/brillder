@@ -22,6 +22,39 @@
     font-family: $font-family-black;
   }
 
+  .preview-text {
+    margin-left: 2vh;
+    margin-right: 2vh;
+    font-size: 2vh;
+  }
+
+  .clock-container {
+    width: 100%;
+    margin-top: 4vh;
+    margin-bottom: 5vh;
+    @extend %flexCenter;
+    .clock {
+      width: 6vh;
+      height: 6vh;
+      stroke-width: 1.5;
+    }
+  }
+  .radio-container {
+    display: flex;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    color: #ACACAC;
+    font-size: 2vh;
+
+    &.active {
+      font-family: $font-family-bold;
+      color: var(--theme-dark-blue);
+      svg {
+        color: var(--theme-dark-blue);
+      }
+    }
+  }
+
   .synthesis-text {
     margin-left: 0.6vw;
     margin-right: 0.6vw;
@@ -31,7 +64,7 @@
     font-family: $font-family-regular;
 
     blockquote {
-      border-left: 5px solid #ccc;
+      border-left: 5px solid var(--tab-gray);
       padding-left: 1.8vh;
     }
   }

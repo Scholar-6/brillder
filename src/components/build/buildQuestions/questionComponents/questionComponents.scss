@@ -21,7 +21,7 @@
   > div {
     display: flex;
     flex-direction: column;
-    >.drop-box  {
+    > .drop-box {
       &:last-child {
         order: 1;
       }
@@ -29,6 +29,17 @@
   }
   .add-dropbox {
     margin-bottom: 0.2vw;
+  }
+  .question-build-text-editor {
+    &.first {
+      .ck-editor {
+        .ck-content {
+          p {
+            @extend %fw-6;
+          }
+        }
+      }
+    }
   }
 }
 

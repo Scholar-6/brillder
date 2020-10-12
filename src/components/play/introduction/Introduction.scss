@@ -597,6 +597,10 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
           //#1684 bug fix - overflow: auto;
           margin-top: 5px;
           margin-bottom: 5px;
+          blockquote {
+            border-left: 0.3vw solid var(--tab-gray);
+            padding-left: 1.8vw;
+          }
         }
         .MuiBox-root {
           padding: 0;
@@ -987,29 +991,41 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
         }
       }
     }
-
-    .arrow {
-      cursor: pointer;
-      border-radius: 50%;
-      margin: 0 1.8vw 0 1vw;
+    .round-icon {
       width: 2vw;
+      border-radius: 50%;
       height: 2vw;
-
+      margin: 0 1.8vw 0 1vw;
+      overflow: hidden;
+      position: relative;
+      transition: 500ms transform ease-in-out;
       @include phone_and_tabletP {
         width: 6.9vw;
         height: 6.9vw;
         margin-left: 5vw;
+        cursor: pointer;
       }
-
-      .svg {
-        height: 2vw;
+      &.b-yellow {
+        transform:rotate(-90deg);
       }
-      &:hover {
-        animation-duration: 1s;
-        animation-delay: 0s;
-        animation-iteration-count: infinite;
-        animation-timing-function: ease;
-        animation-name: pulse-green;
+      .arrow {
+        height: 80%;
+        width: 80%;
+        @extend %posAbsolute;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      &:not(.b-green) {
+        &:hover {
+          @include tabletP {
+            animation-duration: 1s;
+            animation-delay: 0s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease;
+            animation-name: pulse-yellow;
+          }
+        }
       }
     }
 

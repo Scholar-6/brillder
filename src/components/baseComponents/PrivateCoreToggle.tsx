@@ -4,6 +4,7 @@ import './PrivateCoreToggle.scss';
 import SpriteIcon from "./SpriteIcon";
 
 interface ToggleProps {
+  isViewAll?: boolean;
   notVisible?: boolean;
   isCore: boolean;
   onSwitch(): void;
@@ -33,7 +34,7 @@ const PrivateCoreToggle: React.FC<ToggleProps> = props => {
   }
 
   return (
-    <div className="private-core-toggle">
+    <div className={`private-core-toggle ${props.isViewAll ? 'view-all-toggle' : ''}`}>
       <button className="btn btn btn-transparent ">
         <span className={isCore ? 'bold' : 'regular'}>Public</span>
         <div className="svgOnHover" onClick={props.onSwitch}>

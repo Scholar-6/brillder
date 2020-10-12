@@ -22,6 +22,8 @@ interface BrickBlockProps {
   circleIcon?: string;
   iconColor?: string;
 
+  searchString: string;
+
   handleDeleteOpen(brickId: number): void;
   handleMouseHover(e: any): void;
   handleMouseLeave(e: any): void;
@@ -87,6 +89,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
                 isAdmin={isAdmin}
                 color={color}
                 brick={brick}
+                searchString={props.searchString}
                 circleIcon={props.circleIcon}
                 iconColor={props.iconColor}
                 move={move}
@@ -94,6 +97,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
               />
             ) : (
               <ShortBrickDescription
+                searchString={props.searchString}
                 circleIcon={props.circleIcon}
                 iconColor={props.iconColor}
                 color={color}

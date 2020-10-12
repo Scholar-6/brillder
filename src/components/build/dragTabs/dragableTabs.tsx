@@ -3,12 +3,11 @@ import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridList from '@material-ui/core/GridList';
 import { ReactSortable } from "react-sortablejs";
-import { Grid } from '@material-ui/core';
 
 import './DragableTabs.scss';
 import { validateQuestion } from '../questionService/ValidateQuestionService';
 import DragTab from './dragTab';
-import LastTab from './lastTab';
+import PlusTab from './plusTab';
 import SynthesisTab from './SynthesisTab';
 import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
 import { Comment } from 'model/comments';
@@ -53,6 +52,8 @@ interface DragTabsProps {
   isSynthesisPage: boolean;
   validationRequired: boolean;
   tutorialStep: TutorialStep;
+  tutorialSkipped: boolean;
+  openSkipTutorial(): void;
   createNewQuestion(): void;
   moveToSynthesis(): void;
   setQuestions(questions: any): void;
@@ -116,19 +117,17 @@ const DragableTabs: React.FC<DragTabsProps> = ({
 
     return (
       <GridListTile className={titleClassNames} key={index} cols={cols} style={{ display: 'inline-block', width: `${width}%` }}>
-        <div className={isValid ? "drag-tile valid" : "drag-tile invalid"}>
-          <DragTab
-            index={index}
-            id={question.id}
-            active={question.active}
-            isValid={isValid}
-            getHasReplied={getHasReplied}
-            selectQuestion={props.selectQuestion}
-            removeQuestion={props.removeQuestion}
-          />
-        </div>
+        <DragTab
+          index={index}
+          id={question.id}
+          active={question.active}
+          isValid={isValid}
+          getHasReplied={getHasReplied}
+          selectQuestion={props.selectQuestion}
+          removeQuestion={props.removeQuestion}
+        />
       </GridListTile>
-    )
+    );
   }
 
   const classes = useStyles();
@@ -167,14 +166,18 @@ const DragableTabs: React.FC<DragTabsProps> = ({
           className={"drag-tile-container"}
           cols={(isSynthesisPresent || isSynthesisPage) ? 1.5555 : 2}
         >
-          <Grid className={"drag-tile"} container alignContent="center" justify="center">
-            <LastTab tutorialStep={props.tutorialStep} />
-          </Grid>
+          <PlusTab tutorialStep={props.tutorialStep} />
         </GridListTile>
         {
           (isSynthesisPresent || isSynthesisPage) ?
             <GridListTile
-              onClick={props.moveToSynthesis}
+              onClick={() => {
+                if (props.tutorialSkipped) {
+                  props.moveToSynthesis();
+                } else {
+                  props.openSkipTutorial();
+                }
+              }}
               className={"drag-tile-container " + (isSynthesisPage ? "synthesis-tab" : "")}
               cols={1.5555}
             >
