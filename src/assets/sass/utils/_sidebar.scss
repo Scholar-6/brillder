@@ -565,19 +565,14 @@
             line-height: 28px;
           }
 
-          &.color1,
-          &.color2,
-          &.color3,
-          &.color4 {
-            > div {
-              border-radius: $brick-radius;
-              color: var(--theme-dark-blue);
-              text-align: left;
-              @include tabletP {
-                height: $min-brick-height;
-                position: absolute;
-                width: 95%;
-              }
+          .absolute-container {
+            border-radius: $brick-radius;
+            color: var(--theme-dark-blue);
+            text-align: left;
+            @include tabletP {
+              height: $min-brick-height;
+              position: absolute;
+              width: 95%;
             }
             .short-description {
               display: flex;
