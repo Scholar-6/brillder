@@ -424,6 +424,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   render() {
+    let searchString = '';
+    if (this.props.isSearching) {
+      searchString = this.props.searchString;
+    }
     return (
       <Grid container direction="row" className="sorted-row">
         <FilterSidebar
@@ -456,8 +460,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 filters={this.state.filters}
                 loaded={this.state.bricksLoaded}
 
-                searchString={this.props.searchString}
-                isSearching={this.props.isSearching}
+                searchString={searchString}
 
                 switchPublish={this.switchPublish.bind(this)}
                 handleDeleteOpen={this.handleDeleteOpen.bind(this)}
