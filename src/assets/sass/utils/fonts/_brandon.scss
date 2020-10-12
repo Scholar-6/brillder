@@ -89,3 +89,7 @@
 	src: local('Brandon Grotesque Black Italic'),
 		url('../../../fonts/BrandonGrotesque/Brandon_blk_it.woff') format('woff');
 }
+
+.italic {
+  font-family: $font-family-regular-italic;
+}
