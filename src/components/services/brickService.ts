@@ -61,6 +61,14 @@ export function getAuthorRow(brick: Brick) {
   return row;
 }
 
+export function getDateString(inputDateString: string) {
+  const dateObj = new Date(inputDateString);
+  const year = getYear(dateObj);
+  const month = getMonth(dateObj);
+  const date = getDate(dateObj);
+  return `${date}.${month}.${year}`;
+}
+
 export function checkBuilder(roles: UserRole[]) {
   return roles.some(role => role.roleId === UserType.Builder);
 }
