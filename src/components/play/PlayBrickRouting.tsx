@@ -4,8 +4,10 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
 import { isMobile } from "react-device-detect";
+import queryString from 'query-string';
 
 import "./brick.scss";
+
 import Introduction from "./introduction/Introduction";
 import Live from "./live/Live";
 import ProvisionalScore from "./provisionalScore/ProvisionalScore";
@@ -13,7 +15,10 @@ import Synthesis from "./synthesis/Synthesis";
 import Review from "./review/ReviewPage";
 import Ending from "./ending/Ending";
 import FinalStep from "./finalStep/FinalStep";
-import queryString from 'query-string';
+import HomeButton from "components/baseComponents/homeButton/HomeButton";
+import PageHeadWithMenu, {
+  PageEnum,
+} from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 import { Brick } from "model/brick";
 import { PlayStatus, BrickAttempt } from "./model";
@@ -26,15 +31,13 @@ import {
 import { calcBrickLiveAttempt, calcBrickReviewAttempt } from './services/scoring';
 import { setBrillderTitle } from "components/services/titleService";
 import { prefillAttempts } from "components/services/PlayService";
-import PageHeadWithMenu, {
-  PageEnum,
-} from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import PlayLeftSidebar from './PlayLeftSidebar';
 import { PlayMode } from './model';
 import { ReduxCombinedState } from "redux/reducers";
-import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import { BrickFieldNames } from "components/proposal/model";
 import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
+import { getAssignQueryString, getPlayPath } from "./service";
+import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";
 
 
 function shuffle(a: any[]) {
@@ -62,12 +65,18 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
   const [startTime, setStartTime] = React.useState(undefined);
-  const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [mode, setMode] = React.useState(PlayMode.Normal);
   const [liveEndTime, setLiveEndTime] = React.useState(null as any);
   const location = useLocation();
   const finalStep = location.pathname.search("/finalStep") >= 0;
   const [headerHidden, setHeader] = React.useState(false);
+  const [unauthorizedOpen, setUnauthorized] = React.useState(false);
+
+  let initSidebar = false;
+  if (!props.user) {
+    initSidebar = true;
+  }
+  const [sidebarRolledUp, toggleSideBar] = React.useState(initSidebar);
 
   setBrillderTitle(brick.title);
 
@@ -150,6 +159,31 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setSidebar(true);
   }
 
+  const moveToReview = () => {
+    if (props.user) {
+      const playPath = getPlayPath(false, brick.id);
+      props.history.push(`${playPath}/review${getAssignQueryString(location)}`);
+    } else {
+      // unauthorized users finish it here. show popup
+      setUnauthorized(true);
+    }
+  }
+
+  const again = () => {
+    setUnauthorized(false);
+    const parsedBrick = parseAndShuffleQuestions(props.brick);
+    setBrick(parsedBrick);
+    const initAttempts = prefillAttempts(brick.questions);
+    setStatus(PlayStatus.Live);
+    setBrickAttempt({} as BrickAttempt);
+    setAttempts(initAttempts);
+    setReviewAttempts(initAttempts);
+    setStartTime(undefined);
+    setMode(PlayMode.Normal);
+    setLiveEndTime(null as any);
+    props.history.push(`/play/brick/${brick.id}/intro`);
+  }
+
   const onHighlight = (name: BrickFieldNames, value: string) => {
     brick[name] = value;
     setBrick(brick);
@@ -223,7 +257,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
         </Route>
         <Route exac path="/play/brick/:brickId/synthesis">
-          <Synthesis mode={mode} status={status} brick={brick} />
+          <Synthesis mode={mode} status={status} brick={brick} moveNext={moveToReview} />
         </Route>
         <Route exac path="/play/brick/:brickId/review">
           <Review
@@ -273,6 +307,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {renderRouter()}
         </div>
       </div>
+      <UnauthorizedUserDialog
+        isOpen={unauthorizedOpen}
+        login={() => props.history.push('/')}
+        again={again}
+        close={() => setUnauthorized(false)}
+      />
     </div>
   );
 };

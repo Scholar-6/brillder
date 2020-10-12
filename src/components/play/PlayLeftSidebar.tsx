@@ -121,6 +121,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   };
 
   renderAssignButton() {
+    if (!this.props.user) { return ""; }
     let canSee = checkTeacherOrAdmin(this.props.user.roles);
     if (!canSee) { return ""; }
     const openAssignDialog = () => {
@@ -174,7 +175,12 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   renderDialogs() {
     if (this.props.isPreview) { return ""; }
-    let canSee = checkTeacherOrAdmin(this.props.user.roles);
+
+    let canSee = false;
+    try {
+      canSee = checkTeacherOrAdmin(this.props.user.roles);
+    } catch {}
+
     return (
       <div>
         <CommingSoonDialog isOpen={this.state.isCoomingSoonOpen} close={() => this.toggleCommingSoon()} />

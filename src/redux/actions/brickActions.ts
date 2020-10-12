@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Action, Dispatch } from 'redux';
 import { Brick } from 'model/brick';
 import comments from './comments';
-import service from 'components/services/axios/brick';
+import service, { getPublicBrickById } from 'components/services/axios/brick';
 
 const fetchBrickSuccess = (data:any) => {
   return {
@@ -32,6 +32,20 @@ const fetchBrick = (id: number) => {
       .catch(error => {
         dispatch(fetchBrickFailure(error.message));
       });
+  }
+}
+
+const fetchPublicBrick = (id: number) => {
+  return function (dispatch: any) {
+    return getPublicBrickById(id).then(brick => {
+      if (brick) {
+        brick.questions.sort((q1, q2) => q1.order - q2.order);
+        console.log('fetch publish brick success');
+        dispatch(fetchBrickSuccess(brick));
+      } else {
+        dispatch(fetchBrickFailure("failed to load"));
+      }
+    });
   }
 }
 
@@ -147,4 +161,8 @@ const sendToPublisherConfirmed = () => {
   }
 }
 
-export default { fetchBrick, createBrick, saveBrick, forgetBrick, assignEditor, sendToPublisher, sendToPublisherConfirmed }
+export default {
+  fetchBrick, fetchPublicBrick, forgetBrick,
+  createBrick, saveBrick,
+  assignEditor, sendToPublisher, sendToPublisherConfirmed
+}
