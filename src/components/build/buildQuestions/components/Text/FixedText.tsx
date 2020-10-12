@@ -23,7 +23,7 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
   }
 
   return (
-    <div className="question-build-text-editor">
+    <div className="question-build-text-editor first">
       <DocumentWirisCKEditor
         disabled={locked}
         editOnly={editOnly}
@@ -33,6 +33,7 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
           'mathType', 'chemType', 'insertTable', 'bulletedList', 'numberedList', 'addComment'
         ]}
+        blockQuote={true}
         validationRequired={props.validationRequired}
         onBlur={() => props.save()}
         onChange={onChange}

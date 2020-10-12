@@ -234,6 +234,18 @@
     }
     .custom-component {
       border-radius: 1.6vw;
+      &.mobile-question-component {
+        div {
+          > .text-play {
+            &:first-child {
+              p {
+                @extend %fw-6;
+                font-size: 1.05vw;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

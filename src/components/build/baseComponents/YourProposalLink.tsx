@@ -24,12 +24,9 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
   const history = useHistory();
 
   const editProposal = () => {
-    if (!isTutorialPassed()) {
-    } else {
-      clearProposal();
-      saveBrick();
-      history.push(map.ProposalReview);
-    }
+    clearProposal();
+    saveBrick();
+    history.push(map.ProposalReview);
   }
 
   const renderZapTooltip = () => {

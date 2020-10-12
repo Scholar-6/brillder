@@ -45,6 +45,7 @@ interface FinalStepProps {
   sendedToPublisher: boolean;
   publisherConfirmed: boolean;
 
+  returnToEditors(brick: Brick): Promise<void>;
   fetchBrick(brickId: number): void;
   sendToPublisherConfirmed(): void;
   sendToPublisher(brickId: number): void;
@@ -98,6 +99,21 @@ const FinalStep: React.FC<FinalStepProps> = ({
     );
   }
 
+  const renderReturnToEditorsColumn = (size: 5 | 3) => {
+    return (
+      <CustomColumn
+        icon="repeat"
+        title="Return to editors"
+        label="for futher changes"
+        size={size}
+        onClick={async () => {
+          await props.returnToEditors(brick);
+          props.fetchBrick(brick.id);
+        }}
+      />
+    );
+  }
+
   const renderReturnToAuthorColumn = (size: 5 | 3) => {
     return (
       <CustomColumn
@@ -107,7 +123,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         size={size}
         onClick={async () => {
           await returnToAuthor(brick.id);
-          props.fetchBrick(brick.id);
+          history.push(map.BackToWorkBuildTab);
         }}
       />
     );
@@ -145,11 +161,12 @@ const FinalStep: React.FC<FinalStepProps> = ({
     const size: 5 | 3 = canPublish ? 3 : 5;
 
     if (isAuthor && brick.status === BrickStatus.Draft) {
-      if (brick.editors) {
+      if (brick.editors && brick.editors.length > 0) {
         return (
           <Grid className="share-row" container direction="row" justify="center">
-            { !brick.isCore && <ShareColumn size={size} onClick={() => setShare(true)} /> }
-            {renderInviteColumn(size)}
+            { !brick.isCore && <ShareColumn size={3} onClick={() => setShare(true)} /> }
+            {renderInviteColumn(3)}
+            {renderReturnToEditorsColumn(3)}
           </Grid>
         );
       } else {
@@ -285,6 +302,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
+  returnToEditors: (brick: Brick) => dispatch(brickActions.assignEditor(brick, {})),
   fetchBrick: (brickId: number) => dispatch(brickActions.fetchBrick(brickId)),
   sendToPublisher: (brickId: number) => dispatch(brickActions.sendToPublisher(brickId)),
   sendToPublisherConfirmed: () => dispatch(brickActions.sendToPublisherConfirmed()),

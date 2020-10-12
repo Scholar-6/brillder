@@ -152,6 +152,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 isMobile={true}
                 circleIcon={circleIcon}
                 isExpanded={brick.expanded}
+                searchString=""
                 move={() => this.move(brick.id)}
               />
             </div>
@@ -210,7 +211,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       if (brick) {
         const color = this.getBrickColor(brick);
         const circleIcon = getAssignmentIcon(brick);
-        bricksList.push(<ShortBrickDescription circleIcon={circleIcon}  brick={brick} index={i} color={color} />);
+        bricksList.push(<ShortBrickDescription circleIcon={circleIcon} searchString="" brick={brick} index={i} color={color} />);
       }
     }
 

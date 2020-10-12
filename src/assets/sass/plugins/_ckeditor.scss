@@ -4,6 +4,13 @@
     > p {
       font-family: $font-family-regular !important;
     }
+
+    span {
+      border-radius: 0.18vw;
+    }
+    @include phone_and_tabletP {
+      border-radius: 0;
+    }
   }
 }
 .hint-component {

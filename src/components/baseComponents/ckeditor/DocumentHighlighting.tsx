@@ -85,7 +85,7 @@ class DocumentHighlightComponent extends React.Component<
       if(newSelection.isBackward) {
         editor.execute( 'fontBackgroundColor' );
       } else {
-        editor.execute( 'fontBackgroundColor', { value: '#F6B72D' } );
+        editor.execute( 'fontBackgroundColor', { value: '#FFBF00' } );
       }
     });
 

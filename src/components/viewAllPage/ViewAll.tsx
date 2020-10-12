@@ -63,7 +63,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     this.state = {
       yourBricks: [],
       bricks: [],
-      sortBy: SortBy.None,
+      sortBy: SortBy.Date,
       subjects: [],
       sortedIndex: 0,
       deleteDialogOpen: false,
@@ -405,6 +405,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       <ExpandedBrickDescription
         userId={this.props.user.id}
         isAdmin={this.state.isAdmin}
+        searchString=""
         color={color}
         brick={brick}
         move={(brickId) => this.move(brickId)}
@@ -429,7 +430,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             {brick.expanded ? (
               this.renderExpandedBrick(color, brick)
             ) : (
-                <ShortBrickDescription brick={brick} />
+                <ShortBrickDescription searchString="" brick={brick} />
               )}
           </div>
         </Box>
@@ -466,6 +467,12 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       if (item.brick.editor?.id === this.props.user.id) {
         circleIcon = 'award';
       }
+
+      let searchString = ''
+      if (this.state.isSearching) {
+        searchString = this.state.searchString;
+      }
+
       return (
         <BrickBlock
           brick={item.brick}
@@ -473,6 +480,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           row={item.row + 1}
           user={this.props.user}
           key={item.index}
+          searchString={searchString}
           shown={this.state.shown}
           history={this.props.history}
           circleIcon={circleIcon}
@@ -520,6 +528,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
               color={color}
               circleIcon={circleIcon}
               isMobile={true}
+              searchString=""
               isExpanded={brick.expanded}
               move={() => this.move(brick.id)}
             />
@@ -570,6 +579,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       bricksList.push(
         <ShortBrickDescription
           brick={brick}
+          searchString=""
           onClick={() => this.handleYourMobileClick(brick)}
         />
       );
@@ -631,6 +641,14 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     }, 1400);
   }
 
+  renderTitle() {
+    const {length} = this.state.finalBricks;
+    if (length === 1) {
+      return '1 Brick found';
+    }
+    return length + ' Bricks found';
+  }
+
   render() {
     const { history } = this.props;
     return (
@@ -662,8 +680,11 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
-              <div className="brick-row-title">ALL BRICKS</div>
+              <div className="brick-row-title">
+                ALL BRICKS
+              </div>
               <PrivateCoreToggle
+                isViewAll={true}
                 isCore={this.state.isCore}
                 onSwitch={() => this.toggleCore()}
               />
@@ -681,7 +702,14 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
               <Hidden only={["xs"]}>
-                <div className="bricks-list">{this.renderYourBrickRow()}</div>
+                {!this.state.isSearching ?
+                  <div className="bricks-list">{this.renderYourBrickRow()}</div>
+                : (<div className="main-brick-container">
+                    <div className="centered text-theme-dark-blue title">
+                      {this.renderTitle()}
+                    </div>
+                  </div>)
+                }
                 <div className="bricks-list">{this.renderSortedBricks()}</div>
               </Hidden>
               <Hidden only={["sm", "md", "lg", "xl"]}>
