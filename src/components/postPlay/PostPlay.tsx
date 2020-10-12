@@ -227,6 +227,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             const percentages = Math.round(a.score * 100 / a.maxScore);
             return (
               <div
+                key={i}
                 className={`attempt-info ${i === this.state.activeAttemptIndex ? 'active' : ''}`}
                 onClick={e => {
                   e.stopPropagation();

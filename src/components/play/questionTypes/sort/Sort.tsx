@@ -99,13 +99,15 @@ class Sort extends CompComponent<SortProps, SortState> {
       let catIndex = parseInt(keys[0]);
       let answerIndex = parseInt(keys[1]);
 
-      let catAnswer = this.props.component.categories[catIndex].answers[answerIndex];
+      try {
+        let catAnswer = this.props.component.categories[catIndex].answers[answerIndex];
 
-      let choice = Object.assign({}, catAnswer) as SortAnswer;
-      choice.text = choice.value;
-      choice.value = value;
+        let choice = Object.assign({}, catAnswer) as SortAnswer;
+        choice.text = choice.value;
+        choice.value = value;
   
-      userCats[answer[value]].choices.push(choice as SortAnswer);
+        userCats[answer[value]].choices.push(choice as SortAnswer);
+      } catch {}
     });
   }
 

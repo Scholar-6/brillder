@@ -115,10 +115,16 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   getExistedUserState(user: User, isAdmin: boolean) {
-    const isBuilder = canBuild(user);
-    const isEditor = canEdit(user);
+    let isBuilder = canBuild(user);
+    let isEditor = canEdit(user);
+    let isStudent = isBuilder;
 
-    const isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
+    let isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
+    if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
+      isBuilder = false;
+      isEditor = false;
+      isStudent = true;
+    }
 
     return {
       user: {
@@ -140,7 +146,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       isStudent: isOnlyStudent,
       isAdmin,
       roles: [
-        { roleId: UserType.Student, name: "Student", disabled: !isBuilder },
+        { roleId: UserType.Student, name: "Student", disabled: !isStudent },
         { roleId: UserType.Teacher, name: "Teacher", disabled: !isAdmin },
         { roleId: UserType.Builder, name: "Builder", disabled: !isBuilder },
         { roleId: UserType.Publisher, name: "Publisher", disabled: !isEditor },
@@ -306,6 +312,11 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   checkUserRole(roleId: number) {
+    if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
+      if (roleId !== UserType.Student) {
+        return false;
+      }
+    }
     return this.state.user.roles.some((id) => id === roleId);
   }
 
