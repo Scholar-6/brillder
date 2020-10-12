@@ -7,7 +7,7 @@ import 'swiper/swiper.scss';
 import "./mainPage.scss";
 import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
-import { User } from "model/user";
+import { User, UserType } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { clearProposal } from "localStorage/proposal";
 import map from 'components/map';
@@ -74,6 +74,10 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderViewAllLabel() {
+    const {rolePreference} = this.props.user;
+    if (rolePreference && rolePreference.roleId === UserType.Student) {
+      return "View & Play";
+    }
     return this.state.isTeacher ? "View & Assign Bricks" : "View All Bricks";
   }
 
@@ -111,6 +115,30 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         </button>
       </div>
     );
+  }
+
+  renderStudentWorkButton() {
+    let isActive = false;
+    return (
+      <div className="back-item-container" onClick={() => {
+        if (isActive) {
+          this.props.history.push("/back-to-work");
+        }
+      }}>
+        <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover' : ''}`}>
+          <SpriteIcon name="student-back-to-work" className="active text-theme-orange" />
+          <span className="item-description">Back To Work</span>
+        </button>
+      </div>
+    );
+  }
+
+  renderSecondButton() {
+    const {rolePreference} = this.props.user;
+    if (rolePreference && rolePreference.roleId === UserType.Student) {
+      return this.renderStudentWorkButton();
+    }
+    return this.renderCreateButton();
   }
 
   renderWorkButton() {
@@ -164,42 +192,47 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     );
   }
 
+  renderDesktopPage() {
+    return (
+      <Hidden only={["xs"]}>
+        <div className="welcome-col">
+          <WelcomeComponent
+            user={this.props.user}
+            notifications={this.props.notifications}
+            notificationClicked={() => this.setState({ notificationExpanded: true })}
+          />
+        </div>
+        <div className="first-col">
+          <div className="first-item">
+            {this.renderViewAllButton()}
+            {this.renderSecondButton()}
+            {this.renderWorkButton()}
+          </div>
+          <div className="second-item"></div>
+        </div>
+        <div className="second-col">
+          {this.state.isTeacher &&
+            <div onClick={() => this.props.history.push('/manage-classrooms')}>
+              Manage Classes
+          </div>}
+        </div>
+        <MainPageMenu
+          user={this.props.user}
+          history={this.props.history}
+          notificationExpanded={this.state.notificationExpanded}
+          toggleNotification={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
+        />
+        <div className="policy-text">
+          <span onClick={() => this.setPolicyDialog(true)}>Privacy Policy</span>
+        </div>
+      </Hidden>
+    );
+  }
+
   render() {
     return (
       <Grid container direction="row" className="mainPage">
-        <Hidden only={["xs"]}>
-          <div className="welcome-col">
-            <WelcomeComponent
-              user={this.props.user}
-              notifications={this.props.notifications}
-              notificationClicked={() => this.setState({ notificationExpanded: true })}
-            />
-          </div>
-          <div className="first-col">
-            <div className="first-item">
-              {this.renderViewAllButton()}
-              {this.renderCreateButton()}
-              {this.renderWorkButton()}
-            </div>
-            <div className="second-item"></div>
-          </div>
-          <div className="second-col">
-            {this.state.isTeacher ?
-              <div onClick={() => this.props.history.push('/manage-classrooms')}>
-                Manage Classes
-            </div>
-              : ""}
-          </div>
-          <MainPageMenu
-            user={this.props.user}
-            history={this.props.history}
-            notificationExpanded={this.state.notificationExpanded}
-            toggleNotification={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
-          />
-          <div className="policy-text">
-            <span onClick={() => this.setPolicyDialog(true)}>Privacy Policy</span>
-          </div>
-        </Hidden>
+        {this.renderDesktopPage()}
         {this.renderMobilePage()}
         <PolicyDialog isOpen={this.state.isPolicyOpen} close={() => this.setPolicyDialog(false)} />
       </Grid>
