@@ -62,6 +62,8 @@ import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import { useSocket } from "socket/socket";
 import { applyBrickDiff, getBrickDiff } from "components/services/diff";
 import SaveDialog from "./baseComponents/dialogs/SaveDialog";
+import { Brick } from "model/brick";
+import Editor from "@ckeditor/ckeditor5-react";
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
@@ -597,7 +599,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const isTutorialPassed = () => {
-    const isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
+    const isCurrentEditor = (props.brick.editors?.findIndex((e:any) => e.id === props.user.id) ?? -1) >= 0;
     if (isCurrentEditor) {
       return true;
     }

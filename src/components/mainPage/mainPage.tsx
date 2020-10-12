@@ -184,7 +184,14 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     }
     const {rolePreference} = this.props.user;
     if (rolePreference && rolePreference.roleId === UserType.Student) {
-      return "";
+      return (
+        <div className="create-item-container" onClick={() => this.creatingBrick()}>
+          <button className="btn btn-transparent zoom-item svgOnHover">
+            <SpriteIcon name="trowel-home" className="active text-theme-orange" />
+            <span className="item-description">Start Building</span>
+          </button>
+        </div>
+      );
     }
     return "";
   }
