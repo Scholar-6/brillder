@@ -17,8 +17,7 @@ interface ExpandedDescriptionProps {
   circleIcon?: string;
   iconColor?: string;
 
-  isSearching?: boolean;
-  searchString?: string;
+  searchString: string;
   
   move(brickId: number): void;
   onDelete(brickId: number): void;
@@ -80,13 +79,8 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
   }
 
   render() {
-    const { color, brick } = this.props;
+    const { color, brick, searchString } = this.props;
 
-    let searchString = '';
-    if (this.props.isSearching) {
-      searchString = this.props.searchString ? this.props.searchString : '';
-    }
-  
     return (
       <div className="expanded-brick-info">
         <div className="hover-text">

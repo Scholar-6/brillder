@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-import { getAuthorRow } from "components/services/brickService";
-import { Brick } from "model/brick";
 import './ShortBrickDescription.scss';
+import { Brick } from "model/brick";
+
 import SpriteIcon from "./SpriteIcon";
 import SearchText from "./SearchText";
 import AuthorSearchRow from "./AuthorRow";
@@ -13,8 +13,7 @@ interface ShortDescriptionProps {
   circleIcon?: string;
   iconColor?: string;
 
-  isSearching?: boolean;
-  searchString?: string;
+  searchString: string;
 
   // mobile
   isMobile?: boolean;
@@ -85,7 +84,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   }
   
   render() {
-    const { color, brick, isMobile, isExpanded, index } = this.props;
+    const { color, brick, isMobile, isExpanded, searchString, index } = this.props;
     let className = "short-description";
 
     if (isMobile && isExpanded) {
@@ -93,11 +92,6 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     }
     if (index !== undefined && index >= 0) {
       className += " mobile-short-" + index;
-    }
-
-    let searchString = '';
-    if (this.props.isSearching) {
-      searchString = this.props.searchString ? this.props.searchString : '';
     }
 
     return (

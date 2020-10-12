@@ -53,6 +53,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       history={this.props.history}
       color={color}
       circleIcon={circleIcon}
+      searchString=""
       handleDeleteOpen={this.props.handleDeleteOpen}
       handleMouseHover={() => this.props.onMouseHover(item.key)}
       handleMouseLeave={() => this.props.onMouseLeave(item.key)}
@@ -78,6 +79,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       isAssignment={true}
       assignmentId={item.assignmentId}
       history={this.props.history}
+      searchString=""
       handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
       handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, item.status)}
       handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, item.status)}

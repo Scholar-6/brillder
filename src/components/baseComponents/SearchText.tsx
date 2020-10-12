@@ -20,13 +20,13 @@ const SearchText: React.FC<ShortDescriptionProps> = (props) => {
     const res = [];
     let start = 0;
     for (let match of matches) {
-      let part = text.substr(start, match.index);
-      res.push(<span>{part}</span>);
-      res.push(<span className="search-highlight">{match[0]}</span>)
+      let part = text.substr(start, match.index - start);
+      res.push(<span key={start}>{part}</span>);
+      res.push(<span key={start+1} className="search-highlight">{match[0]}</span>)
       start = match.index + match[0].length;
     }
-    const lastPart = text.substr(start, text.length - 1);
-    res.push(<span>{lastPart}</span>);
+    const lastPart = text.substr(start, text.length);
+    res.push(<span key={text.length}>{lastPart}</span>);
     return res;
   }
 
