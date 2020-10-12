@@ -728,7 +728,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             {renderQuestionTypePreview()}
           </Route>
           <Route path="/build/brick/:brickId/investigation/synthesis">
-            <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
+            <PhonePreview Component={SynthesisPreviewComponent} data={{synthesis: synthesis, brickLength: brick.brickLength}} />
           </Route>
         </Grid>
         <QuestionInvalidDialog
