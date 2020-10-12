@@ -174,6 +174,21 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     );
   }
 
+  renderRightButton() {
+    if (this.state.isTeacher) {
+      return (
+        <div onClick={() => this.props.history.push('/manage-classrooms')}>
+          Manage Classes
+        </div>
+      );
+    }
+    const {rolePreference} = this.props.user;
+    if (rolePreference && rolePreference.roleId === UserType.Student) {
+      return "";
+    }
+    return "";
+  }
+
   swipeNext() {
     if (this.state.swiper) {
       this.state.swiper.slideNext();
@@ -233,10 +248,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           <div className="second-item"></div>
         </div>
         <div className="second-col">
-          {this.state.isTeacher &&
-            <div onClick={() => this.props.history.push('/manage-classrooms')}>
-              Manage Classes
-          </div>}
+          {this.renderRightButton()}
         </div>
         <MainPageMenu
           user={this.props.user}
