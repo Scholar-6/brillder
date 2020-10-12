@@ -2,7 +2,7 @@ import React from 'react';
 
 // @ts-ignore
 import MathJax from 'react-mathjax-preview'
-import {parseDataToArray, isMathJax, parseSynthesisDataToArray} from 'components/services/mathJaxService';
+import {isMathJax, parseSynthesisDataToArray} from 'components/services/mathJaxService';
 import './TextLive.scss';
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
