@@ -405,6 +405,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       <ExpandedBrickDescription
         userId={this.props.user.id}
         isAdmin={this.state.isAdmin}
+        searchString=""
         color={color}
         brick={brick}
         move={(brickId) => this.move(brickId)}
@@ -429,7 +430,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             {brick.expanded ? (
               this.renderExpandedBrick(color, brick)
             ) : (
-                <ShortBrickDescription brick={brick} />
+                <ShortBrickDescription searchString="" brick={brick} />
               )}
           </div>
         </Box>
@@ -466,6 +467,12 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       if (item.brick.editor?.id === this.props.user.id) {
         circleIcon = 'award';
       }
+
+      let searchString = ''
+      if (this.state.isSearching) {
+        searchString = this.state.searchString;
+      }
+
       return (
         <BrickBlock
           brick={item.brick}
@@ -473,8 +480,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           row={item.row + 1}
           user={this.props.user}
           key={item.index}
-          isSearching={this.state.isSearching}
-          searchString={this.state.searchString}
+          searchString={searchString}
           shown={this.state.shown}
           history={this.props.history}
           circleIcon={circleIcon}
@@ -522,6 +528,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
               color={color}
               circleIcon={circleIcon}
               isMobile={true}
+              searchString=""
               isExpanded={brick.expanded}
               move={() => this.move(brick.id)}
             />
@@ -572,6 +579,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       bricksList.push(
         <ShortBrickDescription
           brick={brick}
+          searchString=""
           onClick={() => this.handleYourMobileClick(brick)}
         />
       );

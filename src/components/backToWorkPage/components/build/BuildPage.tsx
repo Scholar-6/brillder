@@ -455,6 +455,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 history={this.props.history}
                 filters={this.state.filters}
                 loaded={this.state.bricksLoaded}
+
+                searchString={this.props.searchString}
+                isSearching={this.props.isSearching}
+
                 switchPublish={this.switchPublish.bind(this)}
                 handleDeleteOpen={this.handleDeleteOpen.bind(this)}
                 handleMouseHover={this.handleMouseHover.bind(this)}

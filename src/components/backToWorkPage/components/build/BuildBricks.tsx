@@ -24,6 +24,9 @@ interface BuildBricksProps {
   history: any;
   filters: any;
 
+  isSearching: boolean;
+  searchString: string;
+
   switchPublish(): void;
 
   // brick events
@@ -60,11 +63,11 @@ class BuildBricks extends Component<BuildBricksProps> {
       if (this.props.loaded) {
         const {threeColumns} = this.props;
         if (i === 0 ) {
-          return <BrickColDescription label="Draft Bricks" color="color1" number={threeColumns.red.finalBricks.length} />;
+          return <BrickColDescription key={item.key} label="Draft Bricks" color="color1" number={threeColumns.red.finalBricks.length} />;
         } else if (i === 1) {
-          return <BrickColDescription label="Submitted to Editor(s)" color="color3" number={threeColumns.yellow.finalBricks.length} />;
+          return <BrickColDescription key={item.key} label="Submitted to Editor(s)" color="color3" number={threeColumns.yellow.finalBricks.length} />;
         } else if (i === 2) {
-          return <BrickColDescription label="Pending Publication" color="color2" number={threeColumns.green.finalBricks.length} isGreen={true}/>;
+          return <BrickColDescription key={item.key} label="Pending Publication" color="color2" number={threeColumns.green.finalBricks.length} isGreen={true}/>;
         }
       }
 
@@ -78,6 +81,9 @@ class BuildBricks extends Component<BuildBricksProps> {
         user={this.props.user}
         shown={this.props.shown}
         history={this.props.history}
+
+        searchString={this.props.searchString}
+
         handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
         handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, brick.status)}
         handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, brick.status)}
@@ -107,6 +113,7 @@ class BuildBricks extends Component<BuildBricksProps> {
         history={this.props.history}
         circleIcon={circleIcon}
         iconColor={iconColor}
+        searchString={this.props.searchString}
         handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
         handleMouseHover={() => this.props.handleMouseHover(item.key)}
         handleMouseLeave={() => this.props.handleMouseLeave(item.key)}

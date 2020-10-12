@@ -76,21 +76,21 @@ export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: n
 
   if (loaded) {
     if (isFirstEmpty) {
-      prepareBrickData(data, { isEmptyColumn: true, columnStatus: BrickStatus.Draft } as Brick, 0, 0, 0);
+      prepareBrickData(data, { isEmptyColumn: true, columnStatus: BrickStatus.Draft } as Brick, 0, -5, 0);
     } else {
-      prepareBrickData(data, { } as Brick, 0, 0, 0);
+      prepareBrickData(data, { } as Brick, 0, -5, 0);
     }
 
     if (isSecondEmpty) {
-      prepareBrickData(data, {isEmptyColumn: true, columnStatus: BrickStatus.Build } as Brick, 0, 0, 0);
+      prepareBrickData(data, {isEmptyColumn: true, columnStatus: BrickStatus.Build } as Brick, 0, -6, 0);
     } else {
-      prepareBrickData(data, { } as Brick, 0, 0, 0);
+      prepareBrickData(data, { } as Brick, 0, -6, 0);
     }
 
     if (isThirdEmpty) {
-      prepareBrickData(data, {isEmptyColumn: true, columnStatus: BrickStatus.Review } as Brick, 0, 0, 0);
+      prepareBrickData(data, {isEmptyColumn: true, columnStatus: BrickStatus.Review } as Brick, 0, -7, 0);
     } else {
-      prepareBrickData(data, { } as Brick, 0, 0, 0);
+      prepareBrickData(data, { } as Brick, 0, -7, 0);
     }
   }
 

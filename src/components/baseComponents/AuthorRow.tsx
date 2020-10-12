@@ -18,23 +18,23 @@ const AuthorSearchRow: React.FC<ShortDescriptionProps> = ({
     const { author } = brick;
     if (author.firstName) {
       res.push(
-        <SearchText searchString={searchString} text={author.firstName} />
+        <SearchText key={0} searchString={searchString} text={author.firstName} />
       );
-      res.push(<span> </span>);
+      res.push(<span key={1}> </span>);
     }
     if (author.lastName) {
       res.push(
-        <SearchText searchString={searchString} text={author.lastName} />
+        <SearchText key={2} searchString={searchString} text={author.lastName} />
       );
     }
-    res.push(<span> | </span>);
+    res.push(<span key={3}> | </span>);
   }
   if (brick.created) {
-    res.push(<span>{getDateString(brick.created)}</span>);
+    res.push(<span key={4}>{getDateString(brick.created)}</span>);
   }
-  res.push(<span> | </span>);
-  res.push(<span>{brick.brickLength} mins</span>);
-  return <span>{res}</span>;
+  res.push(<span key={5}> | </span>);
+  res.push(<span key={6}>{brick.brickLength} mins</span>);
+  return <span key={7}>{res}</span>;
 };
 
 export default AuthorSearchRow;
