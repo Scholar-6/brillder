@@ -78,6 +78,20 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
     return "";
   }
 
+  renderCircle(color: string) {
+    let className="";
+    if (color === "color2") {
+      className += 'skip-top-right-border';
+    }
+    return (
+      <div className={className}>
+        <div className="round-button" style={{ background: `${color}` }}>
+          {this.renderIcon()}
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { color, brick, searchString } = this.props;
 
@@ -102,11 +116,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           <div className="link-info">Editor(s): {this.getEditors(brick, searchString)}</div>
         </div>
         <div className="hover-icons-row">
-          <div>
-            <div className="round-button" style={{ background: `${color}` }}>
-              {this.renderIcon()}
-            </div>
-          </div>
+          {this.renderCircle(color)}
           {this.renderDeleteButton(brick)}
           <div>
             <button className="btn btn-transparent svgOnHover play-button" onClick={() => this.props.move(brick.id)}>
