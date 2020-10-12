@@ -90,6 +90,8 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
                 isAdmin={isAdmin}
                 color={color}
                 brick={brick}
+                isSearching={props.isSearching}
+                searchString={props.searchString}
                 circleIcon={props.circleIcon}
                 iconColor={props.iconColor}
                 move={move}

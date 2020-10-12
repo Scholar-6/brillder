@@ -113,9 +113,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
             <SearchText searchString={searchString} text={brick.alternativeTopics} />
           </div>
           <div className="link-info">
-            {searchString
-              ? <AuthorSearchRow searchString={searchString} brick={brick} />
-              : getAuthorRow(brick)}
+            <AuthorSearchRow searchString={searchString} brick={brick} />
           </div>
         </div>
         {isExpanded ? this.renderPlayButton() : ""}
