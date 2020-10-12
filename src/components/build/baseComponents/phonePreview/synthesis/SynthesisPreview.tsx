@@ -11,7 +11,7 @@ import { Radio } from "@material-ui/core";
 import { BrickLengthEnum } from "model/brick";
 
 interface SynthesisPreviewData {
-  data: string;
+  synthesis: string;
   brickLength: BrickLengthEnum;
 }
 
@@ -22,7 +22,7 @@ interface SynthesisPreviewProps {
 const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
   data
 }) => {
-  if (!data.data) {
+  if (!data.synthesis) {
     const {brickLength} = data;
     console.log(brickLength);
     return (
@@ -64,7 +64,7 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
     );
   }
 
-  var arr = parseSynthesisDataToArray(data.data);
+  var arr = parseSynthesisDataToArray(data.synthesis);
 
   const renderMath = (data: string, i: number) => {
     return <MathJax math={data} key={i} />;
