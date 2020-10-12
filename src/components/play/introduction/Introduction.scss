@@ -597,6 +597,10 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
           //#1684 bug fix - overflow: auto;
           margin-top: 5px;
           margin-bottom: 5px;
+          blockquote {
+            border-left: 0.3vw solid #ccc;
+            padding-left: 1.8vw;
+          }
         }
         .MuiBox-root {
           padding: 0;
