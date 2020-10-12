@@ -2,7 +2,7 @@ import React from 'react';
 
 // @ts-ignore
 import MathJax from 'react-mathjax-preview'
-import {parseDataToArray, isMathJax} from 'components/services/mathJaxService';
+import {parseDataToArray, isMathJax, parseSynthesisDataToArray} from 'components/services/mathJaxService';
 import './TextLive.scss';
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
@@ -22,7 +22,7 @@ const TextLive: React.FC<TextProps> = ({ mode, component }) => {
     );
   }
 
-  var arr = parseDataToArray(component.value);
+  var arr = parseSynthesisDataToArray(component.value);
 
   const renderMath = (data: string, i: number) => {
     return <MathJax math={data} key={i} />;
