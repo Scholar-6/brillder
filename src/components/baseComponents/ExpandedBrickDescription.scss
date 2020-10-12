@@ -35,4 +35,30 @@
       margin-bottom: 1.3vh;
     }
   }
+  .hover-icons-row {
+    .left-brick-circle {
+      height: 2.1vw;
+      width: 2.1vw;
+      border-radius: 50%;
+      > div {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        background: var(--gray);
+      }
+      &.skip-top-left-border,
+      &.skip-top-right-border {
+        padding: 3px;
+        > div {
+          background: var(--tab-gray) !important;
+        }
+      }
+      &.skip-top-left-border {
+        background: var(--theme-orange);
+      }
+      &.skip-top-right-border {
+        background: var(--theme-green);
+      }
+    }
+  }
 }

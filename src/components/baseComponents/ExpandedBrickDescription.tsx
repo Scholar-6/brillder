@@ -18,7 +18,7 @@ interface ExpandedDescriptionProps {
   iconColor?: string;
 
   searchString: string;
-  
+
   move(brickId: number): void;
   onDelete(brickId: number): void;
 }
@@ -26,7 +26,7 @@ interface ExpandedDescriptionProps {
 class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
   getEditors(brick: Brick, searchString: string) {
     let text = "";
-    const {editors} = brick;
+    const { editors } = brick;
     if (editors) {
       let i = 0;
       let res = [];
@@ -61,7 +61,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
   }
 
   renderIcon() {
-    const {circleIcon, iconColor} = this.props;
+    const { circleIcon, iconColor } = this.props;
     let svgClass = 'svg active ';
     if (iconColor) {
       svgClass += iconColor;
@@ -79,12 +79,12 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
   }
 
   renderCircle(color: string) {
-    let className="";
+    let className = "";
     if (color === "color2") {
       className += 'skip-top-right-border';
     }
     return (
-      <div className={className}>
+      <div className={"left-brick-circle " + className}>
         <div className="round-button" style={{ background: `${color}` }}>
           {this.renderIcon()}
         </div>
