@@ -4,14 +4,21 @@ import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
 import './ShortBrickDescription.scss';
 import SpriteIcon from "./SpriteIcon";
+import SearchText from "./SearchText";
+import AuthorSearchRow from "./AuthorRow";
 
 interface ShortDescriptionProps {
   brick: Brick;
   index?: number;
-  isMobile?: boolean;
-  isExpanded?: boolean;
   circleIcon?: string;
   iconColor?: string;
+
+  isSearching?: boolean;
+  searchString?: string;
+
+  // mobile
+  isMobile?: boolean;
+  isExpanded?: boolean;
 
   // only for play tab in back to work
   color?: string;
@@ -67,6 +74,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     );
   }
 
+  // mobile only
   renderPlayButton() {
     return (
       <div className="play-button-link svgOnHover" onClick={() => this.props.move ? this.props.move() : {}}>
@@ -87,17 +95,28 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
       className += " mobile-short-" + index;
     }
 
+    let searchString = '';
+    if (this.props.isSearching) {
+      searchString = this.props.searchString ? this.props.searchString : '';
+    }
+
     return (
       <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
         {color ? this.renderCircle(color) : this.renderRoler()}
         <div className="short-brick-info">
           <div className="link-description">
-            <span>{brick.title}</span>
+            <SearchText searchString={searchString} text={brick.title} />
           </div>
           <div className="link-info">
-            {brick.subTopic} | {brick.alternativeTopics}
+            <SearchText searchString={searchString} text={brick.subTopic} />
+            |
+            <SearchText searchString={searchString} text={brick.alternativeTopics} />
           </div>
-          <div className="link-info">{getAuthorRow(brick)}</div>
+          <div className="link-info">
+            {searchString
+              ? <AuthorSearchRow searchString={searchString} brick={brick} />
+              : getAuthorRow(brick)}
+          </div>
         </div>
         {isExpanded ? this.renderPlayButton() : ""}
       </div>

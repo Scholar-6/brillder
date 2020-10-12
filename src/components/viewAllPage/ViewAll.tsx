@@ -473,6 +473,8 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           row={item.row + 1}
           user={this.props.user}
           key={item.index}
+          isSearching={this.state.isSearching}
+          searchString={this.state.searchString}
           shown={this.state.shown}
           history={this.props.history}
           circleIcon={circleIcon}
