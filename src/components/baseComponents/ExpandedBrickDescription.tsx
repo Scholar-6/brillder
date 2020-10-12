@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-import { getAuthorRow } from "components/services/brickService";
-import { Brick } from "model/brick";
 import './ExpandedBrickDescription.scss';
+import { Brick } from "model/brick";
+
 import SpriteIcon from "./SpriteIcon";
 import SearchText from "./SearchText";
 import AuthorSearchRow from "./AuthorRow";
