@@ -120,7 +120,6 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
 
 const mapState = (state: ReduxCombinedState) => ({
   comments: state.comments.comments,
-  currentBrick: state.brick.brick,
   currentUser: state.user.user
 });
 

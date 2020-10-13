@@ -5,9 +5,13 @@ import './SynthesisPage.scss';
 import { Grid } from '@material-ui/core';
 import CommentPanel from 'components/baseComponents/comments/CommentPanel';
 import { CommentLocation } from "model/comments";
+import { ReduxCombinedState } from 'redux/reducers';
+import { connect } from 'react-redux';
+import { Brick } from 'model/brick';
 
 
 export interface SynthesisProps {
+  currentBrick: Brick;
   locked: boolean;
   editOnly: boolean;
   synthesis: string;
@@ -61,7 +65,10 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
               />
             </Grid>
             <Grid className="comment-panel-container" item>
-              <CommentPanel currentLocation={CommentLocation.Synthesis} />
+              <CommentPanel
+                currentLocation={CommentLocation.Synthesis}
+                currentBrick={this.props.currentBrick}
+              />
             </Grid>
           </Grid>
         </div>
@@ -70,4 +77,10 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
   }
 }
 
-export default SynthesisPage
+const mapState = (state: ReduxCombinedState) => ({
+  currentBrick: state.brick.brick
+});
+
+const connector = connect(mapState);
+
+export default connector(SynthesisPage);
