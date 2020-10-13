@@ -15,6 +15,8 @@ import { BrickFieldNames, PlayButtonStatus } from '../../model';
 import map from 'components/map';
 import PlayButton from "components/build/baseComponents/PlayButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { CommentLocation } from "model/comments";
+import CommentPanel from "components/baseComponents/comments/CommentPanel";
 
 enum BookState {
   TitlesPage,
@@ -54,7 +56,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     clearInterval(this.state.closeTimeout);
   }
 
-  onBookHover() { 
+  onBookHover() {
     clearTimeout(this.state.closeTimeout);
     this.setState({ bookHovered: true });
   }
@@ -75,13 +77,13 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
   toFirstPage() {
     if (this.state.bookState === BookState.PrepPage) {
-      this.setState({bookState: BookState.TitlesPage});
+      this.setState({ bookState: BookState.TitlesPage });
     }
   }
 
   toSecondPage() {
     if (this.state.bookState === BookState.TitlesPage) {
-      this.setState({bookState: BookState.PrepPage});
+      this.setState({ bookState: BookState.PrepPage });
     }
   }
 
@@ -111,7 +113,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     if (value) {
       return value;
     }
-    return <span style={{color: "#757575"}}>Please fill in..</span>;
+    return <span style={{ color: "#757575" }}>Please fill in..</span>;
   }
 
   renderMathField(name: BrickFieldNames) {
@@ -134,7 +136,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     if (value) {
       return <MathInHtml value={brick[name]} />;
     }
-    return <span style={{color: "#757575"}}>Please fill in..</span>;
+    return <span style={{ color: "#757575" }}>Please fill in..</span>;
   }
 
   renderYoutubeAndMathField(name: BrickFieldNames) {
@@ -158,7 +160,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     if (value) {
       return <YoutubeAndMathInHtml value={brick[name]} />;
     }
-    return <span style={{color: "#757575"}}>Please fill in..</span>;
+    return <span style={{ color: "#757575" }}>Please fill in..</span>;
   }
 
   render() {
@@ -233,7 +235,13 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               </Grid>
               <p className="text-title">Outline the purpose of your brick.</p>
               <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
-                {this.renderMathField(BrickFieldNames.brief)} 
+                {this.renderMathField(BrickFieldNames.brief)}
+              </div>
+              <div className="proposal-comments-panel brief" onClick={e => e.stopPropagation()}>
+                <CommentPanel
+                  currentLocation={CommentLocation.Brief}
+                  currentBrick={this.props.brick}
+                />
               </div>
             </div>
           </div>
@@ -249,15 +257,15 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           {renderSecondPage()}
           {renderFirstPage()}
           <div className="page4">
-          <div className="normal-page">
-            <div className="normal-page-container">
-              <Grid container justify="center">
-                {this.renderEditButton()}
-              </Grid>
-              <p className="text-title text-theme-dark-blue bold">Create an engaging and relevant preparatory task.</p>
-              <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
-                {this.state.bookHovered && this.state.bookState === BookState.PrepPage && this.renderYoutubeAndMathField(BrickFieldNames.prep)}
-              </div>
+            <div className="normal-page">
+              <div className="normal-page-container">
+                <Grid container justify="center">
+                  {this.renderEditButton()}
+                </Grid>
+                <p className="text-title text-theme-dark-blue bold">Create an engaging and relevant preparatory task.</p>
+                <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
+                  {this.state.bookHovered && this.state.bookState === BookState.PrepPage && this.renderYoutubeAndMathField(BrickFieldNames.prep)}
+                </div>
               </div>
             </div>
           </div>
@@ -299,21 +307,21 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           <Grid className="back-button-container" container alignContent="center">
             {this.state.bookHovered && this.state.bookState === BookState.PrepPage
               ? <div
-                  className="back-button text-button"
-                  onClick={this.toFirstPage.bind(this)}
-                  onMouseOver={this.onBookHover.bind(this)}
-                  onMouseOut={this.onBookClose.bind(this)}
-                >
-                  Click on the left-hand page to go back
+                className="back-button text-button"
+                onClick={this.toFirstPage.bind(this)}
+                onMouseOver={this.onBookHover.bind(this)}
+                onMouseOut={this.onBookClose.bind(this)}
+              >
+                Click on the left-hand page to go back
                 </div>
               : <div
-                  className="back-button arrow-button"
-                  onClick={() => this.props.history.push(map.ProposalPrep)}
-                  onMouseOut={this.onBookClose.bind(this)}
-                />
+                className="back-button arrow-button"
+                onClick={() => this.props.history.push(map.ProposalPrep)}
+                onMouseOut={this.onBookClose.bind(this)}
+              />
             }
           </Grid>
-          <Grid className="main-text-container" style={{opacity: this.state.mode === true ? '0' : '1'}}>
+          <Grid className="main-text-container" style={{ opacity: this.state.mode === true ? '0' : '1' }}>
             <h1>Your proposal has been saved!</h1>
             <h1>We've made a booklet for you</h1>
             <h1>to check all is in order.</h1>
