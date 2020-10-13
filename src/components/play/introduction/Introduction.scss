@@ -702,15 +702,17 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
         }
       }
       &.synthesis-page {
-        .introduction-info .intro-text-row {
-          @include phone_and_tabletP {
-            padding-top: 3vw !important;
+        .introduction-info {
+          .intro-text-row {
+            @include phone_and_tabletP {
+              padding-top: 3vw !important;
+            }
           }
         }
         .introduction-page {
           h1 {
             text-transform: capitalize;
-            margin: 0;
+            margin: 0.4vw 0 0 0;
           }
         }
         .question-live-play {
@@ -1006,7 +1008,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
         cursor: pointer;
       }
       &.b-yellow {
-        transform:rotate(-90deg);
+        transform: rotate(-90deg);
       }
       .arrow {
         height: 80%;

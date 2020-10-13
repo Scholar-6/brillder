@@ -68,7 +68,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     return (
       <div className="action-footer">
         <div></div>
-        <div className="direction-info">
+        <div className="direction-info text-center">
           <h2>Review</h2>
         </div>
         <div>
@@ -102,7 +102,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
               <div className="left-brick-circle">
                 <div className="round-button" style={{ background: `${color}` }}></div>
               </div>
-              <h1 style={{textTransform: 'uppercase'}}>Synthesis</h1>
+              <h1 style={{ textTransform: 'uppercase' }}>Synthesis</h1>
             </div>
             <span>{renderSpendTime()}</span>
           </div>
@@ -114,7 +114,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   }
 
   return (
-    <div style={{height: '100%'}}>
+    <div style={{ height: '100%' }}>
       <Hidden only={['xs']}>
         <div className="brick-container play-preview-panel synthesis-page">
           <Grid container direction="row">
