@@ -25,6 +25,7 @@ import { getHours, getMinutes, getFormattedDate } from "components/services/bric
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Redirect } from "react-router-dom";
 import { loadSubjects } from "components/services/subject";
+// eslint-disable-next-line
 import IntroductionPage from "components/play/introduction/Introduction";
 import IntroPage from "./IntroPage";
 

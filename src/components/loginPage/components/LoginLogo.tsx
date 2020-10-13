@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import LogoImg from "public/images/choose-login/logo.png";
-import WhiteText from "public/images/choose-user/brillder-white-text.svg";
+import LogoImg from "assets/img/choose-login/logo.png";
+import WhiteText from "assets/img/choose-user/brillder-white-text.svg";
 
 const LoginLogo: React.FC<any> = () => {
   return (

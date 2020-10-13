@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import { History } from "history";
 
 import sprite from "assets/img/icons-sprite.svg";
+import WhiteText from "assets/img/choose-user/brillder-white-text.svg"
 import map from "components/map";
 
 import GoogleButton from "./components/GoogleButton";
@@ -154,7 +155,7 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
               <img
                 className="logo-text-image"
                 alt="text"
-                src="/images/choose-user/brillder-white-text.svg"
+                src={WhiteText}
               />
             </div>
           </div>
