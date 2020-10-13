@@ -38,7 +38,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   constructor(props: EndingProps) {
     super(props);
 
-    const {oldScore, maxScore, score} = this.props.brickAttempt;
+    const { oldScore, maxScore, score } = this.props.brickAttempt;
 
     const oldScoreNumber = oldScore ? oldScore : 0;
 
@@ -63,8 +63,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
 
   componentDidMount() {
     let step = 3;
-    const {oldScore} = this.state;
-    const {score, maxScore} = this.props.brickAttempt;
+    const { oldScore } = this.state;
+    const { score, maxScore } = this.props.brickAttempt;
     let liveScore = Math.round((oldScore * 100) / maxScore);
     let reviewScore = Math.round((score * 100) / maxScore);
     let currentScore = Math.round(((oldScore + score) * 50) / maxScore);
@@ -90,13 +90,13 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
         tempCurrentScore = currentScore;
       }
 
-      this.setState({liveScore: tempLiveScore, reviewScore: tempReviewScore, currentScore: tempCurrentScore});
-      
-      if( liveScore === this.state.liveScore && reviewScore === tempReviewScore && currentScore === tempCurrentScore) {
+      this.setState({ liveScore: tempLiveScore, reviewScore: tempReviewScore, currentScore: tempCurrentScore });
+
+      if (liveScore === this.state.liveScore && reviewScore === tempReviewScore && currentScore === tempCurrentScore) {
         clearInterval(interval);
       }
     }, 100);
-    this.setState({interval});
+    this.setState({ interval });
   }
 
   componentWillUnmount() {
@@ -104,7 +104,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   }
 
   renderProgressBars() {
-    const {score, maxScore} = this.props.brickAttempt;
+    const { score, maxScore } = this.props.brickAttempt;
     return (
       <div className="question-live-play">
         <Grid
@@ -170,7 +170,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     return (
       <div className="action-footer">
         <div></div>
-        <div className="direction-info">
+        <div className="direction-info text-center">
           <h2>Summary</h2>
         </div>
         <div>
@@ -191,7 +191,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       <EndingStepper
         questions={this.props.brick.questions}
         attempts={this.props.brickAttempt.answers}
-        handleStep={() => {}}
+        handleStep={() => { }}
       />
     );
   }
