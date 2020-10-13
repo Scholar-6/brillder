@@ -89,6 +89,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           showDropdown={() => this.showDropdown()}
           showNotifications={() => this.showNotifications()}
         />
+        {this.props.user &&
         <MenuDropdown
           dropdownShown={this.state.dropdownShown}
           hideDropdown={() => this.hideDropdown()}
@@ -96,18 +97,20 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           page={this.props.page}
           history={this.props.history}
           onLogout={() => this.handleLogoutOpen()}
-        />
+        />}
+        {this.props.user &&
         <NotificationPanel
           history={this.props.history}
           shown={this.state.notificationsShown}
           handleClose={() => this.hideNotifications()}
           anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
-        />
+        />}
+        {this.props.user &&
         <LogoutDialog
           isOpen={this.state.logoutOpen}
           close={() => this.handleLogoutClose()}
           history={this.props.history}
-        />
+        />}
       </div>
     );
   }
