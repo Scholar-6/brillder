@@ -253,7 +253,16 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       return (
         <div className={`book ${this.state.mode === true ? 'flat' : ''}`} onMouseOver={this.onBookHover.bind(this)}>
           <div className="back"></div>
-          <div className="page6-cover" onClick={this.toFirstPage.bind(this)} />
+          <div className="page6-cover" onClick={this.toFirstPage.bind(this)}>
+            <div className="flipped-page">
+              <div className="proposal-comments-panel prep" onClick={e => e.stopPropagation()}>
+                <CommentPanel
+                  currentLocation={CommentLocation.Prep}
+                  currentBrick={this.props.brick}
+                />
+              </div>
+            </div>
+          </div>
           {renderSecondPage()}
           {renderFirstPage()}
           <div className="page4">
