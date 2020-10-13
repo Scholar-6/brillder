@@ -297,7 +297,7 @@
   $filter-height: 50vh;
   $expanded-filter-height: 62vh;
   $classes-label-height: 7.7vh;
-  margin-bottom: 1vh;
+  // margin-bottom: 1vh;
   .classrooms-filter {
     height: $filter-height;
     // height: calc(#{$filter-height} + #{$classes-label-height});
@@ -309,21 +309,20 @@
         align-items: center;
         .classroom-name {
           text-transform: capitalize;
-          svg {
+          .svg {
             @extend %removePosition;
-            width: 1.5vw;
-            height: 1.5vw;
+            @extend %radCircle;
+            padding: 0.05vw;
+            width: 0.8vw;
+            height: 0.8vw;
+            background-color: var(--white);
+            color: var(--theme-dark-blue);
           }
         }
       }
       &.active {
         .index-box {
           background: var(--theme-orange) !important;
-          .classroom-name {
-            .svg {
-              @extend %transitionAll300;
-            }
-          }
         }
       }
     }
@@ -332,6 +331,7 @@
       padding: 0.53vw 1.4vw;
       .student-name {
         text-transform: capitalize;
+        font-family: $font-family-light;
       }
     }
     .right-index {
