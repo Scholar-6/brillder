@@ -22,6 +22,7 @@ interface SynthesisProps {
 
   // only for real play
   mode?: PlayMode;
+  moveNext(): void;
   onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
@@ -36,7 +37,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   }
 
   const reviewBrick = () => {
-    history.push(`${playPath}/review${getAssignQueryString(location)}`);
+    props.moveNext();
   }
 
   const getSpendTime = () => {

@@ -7,6 +7,7 @@ import configureMockStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk';
 
 import { NotificationType } from 'model/notifications';
+import { isAuthenticated } from 'model/assignment';
 
 const middlewares = [thunkMiddleware];
 const mockStore = configureMockStore(middlewares);
@@ -30,6 +31,9 @@ describe("notification panel", () => {
     const store = mockStore({
       notifications: {
         notifications: [mockNotification]
+      },
+      auth: {
+        isAuthenticated: isAuthenticated.True
       }
     });
 

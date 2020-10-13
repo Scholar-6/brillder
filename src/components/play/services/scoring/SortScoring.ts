@@ -12,18 +12,19 @@ const mark = (component: SortComponent, attempt: ComponentAttempt<any>) => {
     /**
      * @param value category index and answer index in category example: 1_0
      */
-    const findAnswerIndex = (value: string) => {
+
+    const findCategoryIndex = (value: string) => {
       const keys = value.split('_');
-      return parseInt(keys[1]);
+      return parseInt(keys[0]);
     }
     
     Object.keys(attempt.answer).forEach(key => {
         attempt.maxMarks += markIncrement;
-        if (attempt.answer[key] === unsortedCategory) {
+        let assignedCategoryIndex = attempt.answer[key];
+        if (assignedCategoryIndex === unsortedCategory) {
             attempt.correct = false;
         } else {
-            const assignedCategory = component.categories[attempt.answer[key]];
-            if(assignedCategory.answers.find((answer, i) => i === findAnswerIndex(key))) {
+            if(assignedCategoryIndex === findCategoryIndex(key)) {
                 attempt.marks += markIncrement;
             } else {
                 attempt.marks += 0.25;

@@ -10,10 +10,18 @@ export interface Author {
     profileImage: string;
 }
 
+export enum CommentLocation {
+    Brief = 1,
+    Prep,
+    Question,
+    Synthesis
+}
+
 export interface Comment {
     id: number;
     text: string;
     brick: Brick;
+    location: CommentLocation;
     question?: Question;
     children: Comment[];
     author: Author;

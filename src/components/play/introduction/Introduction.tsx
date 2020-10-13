@@ -1,18 +1,19 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 import { isMobile } from "react-device-detect";
+import { Moment } from "moment";
+import queryString from 'query-string';
 
 import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";
-import TimerWithClock from "../baseComponents/TimerWithClock";
-import { Moment } from "moment";
-import PrepareText from './PrepareText';
-import IntroductionDetails from "./IntroductionDetails";
-import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
 import { PlayMode } from "../model";
-import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/proposal/model';
-import queryString from 'query-string';
+
+import TimerWithClock from "../baseComponents/TimerWithClock";
+import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
+import HighlightHtml from '../baseComponents/HighlightHtml';
+import IntroductionDetails from "./IntroductionDetails";
+import PrepareText from './PrepareText';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 const moment = require("moment");
@@ -32,7 +33,7 @@ interface IntroductionProps {
   onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
-interface IntroductionState {
+export interface IntroductionState {
   isStopped: boolean;
   prepExpanded: boolean;
   briefExpanded: boolean;
