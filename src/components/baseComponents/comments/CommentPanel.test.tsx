@@ -6,14 +6,14 @@ import CommentPanel from './CommentPanel';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk';
-import { Comment } from 'model/comments';
+import { Comment, CommentLocation } from 'model/comments';
 import { Brick } from 'model/brick';
 
 import CommentItem from './CommentItem';
 jest.mock('./CommentItem');
 const MockCommentItem = CommentItem as jest.MockedFunction<typeof CommentItem>;
 
-const middlewares = [ thunkMiddleware ];
+const middlewares = [thunkMiddleware];
 const mockStore = configureMockStore(middlewares);
 
 const mockBrick: Brick = {
@@ -51,7 +51,7 @@ describe("comments panel", () => {
     it("should display a list of comments", () => {
         const store = mockStore({
             comments: {
-                comments: [ mockComment ]
+                comments: [mockComment]
             },
             brick: {
                 brick: mockBrick
@@ -69,7 +69,7 @@ describe("comments panel", () => {
 
         render(
             <Provider store={store}>
-                <CommentPanel />
+                <CommentPanel currentLocation={CommentLocation.Brief} currentBrick={mockBrick} />
             </Provider>
         );
     });
