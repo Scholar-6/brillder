@@ -32,6 +32,9 @@
         border-radius: 0;
       }
     }
+    .MuiInputBase-input {
+      font-family: $font-family-regular !important;
+    }
   }
 
   .audience-inputs.border-rounded .MuiInputBase-root.MuiInput-root {
