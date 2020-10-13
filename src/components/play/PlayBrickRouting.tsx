@@ -38,6 +38,7 @@ import { BrickFieldNames } from "components/proposal/model";
 import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
 import { getAssignQueryString, getPlayPath } from "./service";
 import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";
+import map from "components/map";
 
 
 function shuffle(a: any[]) {
@@ -71,12 +72,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const finalStep = location.pathname.search("/finalStep") >= 0;
   const [headerHidden, setHeader] = React.useState(false);
   const [unauthorizedOpen, setUnauthorized] = React.useState(false);
-
-  let initSidebar = false;
-  if (!props.user) {
-    initSidebar = true;
-  }
-  const [sidebarRolledUp, toggleSideBar] = React.useState(initSidebar);
+  const [sidebarRolledUp, toggleSideBar] = React.useState(false);
+  const [searchString, setSearchString] = React.useState("");
 
   setBrillderTitle(brick.title);
 
@@ -189,6 +186,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setBrick(brick);
   }
 
+  const search = () => {
+    props.history.push(map.ViewAllPage + '?searchString=' + searchString);
+  }
+
+  const searching = (v: string) => {
+    setSearchString(v);
+  }
+
   const renderHead = () => {
     let isMobileHidden = false;
     const live = location.pathname.search("/live");
@@ -211,8 +216,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         page={PageEnum.Play}
         user={props.user}
         history={props.history}
-        search={() => { }}
-        searching={() => { }}
+        search={search}
+        searching={searching}
       />
     );
   };

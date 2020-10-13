@@ -31,18 +31,18 @@ interface ClassroomListProps {
         <div style={{width: '23.8vw'}}>{student.firstName} {student.lastName}</div>
         <div className="teach-circles-container">
           <div className="teach-circle-flex-container">
-            { !studentStatus ?
+            { !studentStatus &&
               <div className="teach-circle-container">
                 <div className="teach-circle student-circle red" />
-              </div> : ""}
+              </div>}
           </div>
           <div className="teach-circle-flex-container">
-            { studentStatus ?
+            { studentStatus &&
               <div className="teach-circle-container">
                 <div className="teach-circle student-circle green">
                   {Math.round(studentStatus.avgScore)}
                 </div>
-              </div> : ""}
+              </div>}
           </div>
         </div>
       </div>

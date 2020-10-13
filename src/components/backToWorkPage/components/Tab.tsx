@@ -19,13 +19,13 @@ interface TabProps {
 const TabComponent: React.FC<TabProps> = ({ isTeach, isCore, activeTab, setTab, onCoreSwitch }) => {
   return (
     <div className="tab-container">
-      {isTeach ?
+      {isTeach &&
         <div
           className={activeTab === ActiveTab.Teach ? 'active' : ''}
           onClick={() => setTab(ActiveTab.Teach)}
         >
           <span>Teach</span>
-        </div> : ""
+        </div>
       }
       <div
         className={activeTab === ActiveTab.Build ? 'active' : ''}

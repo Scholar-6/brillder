@@ -73,7 +73,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   };
 
   const renderManageClassesItem = () => {
-    if (page !== PageEnum.ManageClasses && page !== PageEnum.MainPage) {
+    if (page !== PageEnum.ManageClasses && page !== PageEnum.MainPage && props.user) {
       const canSee = checkTeacherOrAdmin(props.user.roles);
       if (canSee) {
         return (
@@ -104,9 +104,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   };
 
   const renderManageUsersItem = () => {
-    let isAdmin = checkAdmin(props.user.roles);
-
-    if (isAdmin && props.page !== PageEnum.ManageUsers) {
+    if (props.user && checkAdmin(props.user.roles) && props.page !== PageEnum.ManageUsers) {
       return (
         <MenuItem
           className="menu-item"

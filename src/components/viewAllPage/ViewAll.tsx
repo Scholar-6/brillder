@@ -3,6 +3,7 @@ import { Box, Grid, Hidden } from "@material-ui/core";
 import { Category } from "./interface";
 import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
+import queryString from 'query-string';
 import "swiper/swiper.scss";
 
 import "./ViewAll.scss";
@@ -31,6 +32,7 @@ interface BricksListProps {
   user: User;
   notifications: Notification[] | null;
   history: any;
+  location: any;
 }
 
 interface BricksListState {
@@ -60,6 +62,11 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props);
 
+    let isAdmin = false;
+    if (this.props.user) {
+      isAdmin = checkAdmin(this.props.user.roles);
+    }
+
     this.state = {
       yourBricks: [],
       bricks: [],
@@ -77,12 +84,22 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
 
       isClearFilter: false,
       failedRequest: false,
-      isAdmin: checkAdmin(this.props.user.roles),
+      isAdmin,
       isCore: true,
       shown: false,
     };
 
-    this.loadData();
+    if (this.props.user) {
+      this.loadData();
+    } else {
+      // for unauthorized user parse search string from play
+      const values = queryString.parse(props.location.search)
+      if (values.searchString) {
+        console.log(values.searchString);
+        this.searching(values.searchString as string);
+        this.search();
+      }
+    }
   }
 
   // load bricks when notification come
@@ -669,6 +686,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
         </Hidden>
         <Grid container direction="row" className="sorted-row">
           <Grid container item xs={3} className="sort-and-filter-container">
+            {this.props.user &&
             <ViewAllFilter
               sortBy={this.state.sortBy}
               subjects={this.state.subjects}
@@ -676,18 +694,19 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
               handleSortChange={e => this.handleSortChange(e)}
               clearSubjects={() => this.clearSubjects()}
               filterBySubject={index => this.filterBySubject(index)}
-            />
+            />}
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
               <div className="brick-row-title">
-                ALL BRICKS
+                {this.state.finalBricks.length > 0 && 'ALL BRICKS'}
               </div>
-              <PrivateCoreToggle
-                isViewAll={true}
-                isCore={this.state.isCore}
-                onSwitch={() => this.toggleCore()}
-              />
+              {this.props.user &&
+                <PrivateCoreToggle
+                  isViewAll={true}
+                  isCore={this.state.isCore}
+                  onSwitch={() => this.toggleCore()}
+                />}
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div
@@ -702,13 +721,13 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
               <Hidden only={["xs"]}>
-                {!this.state.isSearching ?
-                  <div className="bricks-list">{this.renderYourBrickRow()}</div>
-                : (<div className="main-brick-container">
-                    <div className="centered text-theme-dark-blue title">
-                      {this.renderTitle()}
+                {!this.state.isSearching
+                  ? <div className="bricks-list">{this.renderYourBrickRow()}</div>
+                  : <div className="main-brick-container">
+                      <div className="centered text-theme-dark-blue title">
+                        {this.renderTitle()}
+                      </div>
                     </div>
-                  </div>)
                 }
                 <div className="bricks-list">{this.renderSortedBricks()}</div>
               </Hidden>
