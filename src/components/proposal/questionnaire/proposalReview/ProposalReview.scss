@@ -181,12 +181,14 @@
       margin: 0;
       .comments-panel {
         flex-wrap: nowrap;
-        border-radius: $editor-radius;
+        border-radius: $editor-radius $editor-radius 0 0;
         width: 100%;
         margin: auto;
 
         .comment-text-entry {
           height: 2vw;
+          width: 100%;
+          padding: 0.5vw;
         }
 
         .comments-column-wrapper {
