@@ -25,25 +25,26 @@ const ReplyCommentPanel: React.FC<ReplyCommentPanelProps> = props => {
 			text,
 			brickId: props.currentBrick.id,
 			parentId: props.parentComment.id,
-			questionId: props.currentQuestionId
+			location: props.parentComment.location,
+			questionId: props.currentQuestionId,
 		});
 		setText("");
 		props.collapsePanel();
 	}
 
 	return (
-	<Grid className="comment-reply-panel" container direction="column" alignItems="stretch">
-		<Grid item>
-			<form className="comment-reply-text-form">
-				<Input placeholder="Add Reply..." value={text} multiline fullWidth disableUnderline
-					onChange={(evt) => setText(evt.target.value)} />
-			</form>
+		<Grid className="comment-reply-panel" container direction="column" alignItems="stretch">
+			<Grid item>
+				<form className="comment-reply-text-form">
+					<Input placeholder="Add Reply..." value={text} multiline fullWidth disableUnderline
+						onChange={(evt) => setText(evt.target.value)} />
+				</form>
+			</Grid>
+			<Grid item container direction="row" justify="center">
+				<Button className="comment-action-button in-child post" onClick={() => handlePostComment()} disabled={text === ""}>POST</Button>
+				<Button className="comment-action-button in-child cancel" onClick={() => props.collapsePanel()} disabled={text === ""}>CANCEL</Button>
+			</Grid>
 		</Grid>
-		<Grid item container direction="row" justify="center">
-			<Button className="comment-action-button in-child post" onClick={() => handlePostComment()} disabled={text === ""}>POST</Button>
-			<Button className="comment-action-button in-child cancel" onClick={() => props.collapsePanel()} disabled={text === ""}>CANCEL</Button>
-		</Grid>
-	</Grid>
 	);
 };
 

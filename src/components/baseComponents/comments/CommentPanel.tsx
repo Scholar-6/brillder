@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import './CommentPanel.scss';
 import { ReduxCombinedState } from 'redux/reducers';
 import comments from 'redux/actions/comments';
-import { Comment } from 'model/comments';
+import { Comment, CommentLocation } from 'model/comments';
 import { Brick } from 'model/brick';
 import { User } from 'model/user';
 import { deleteComment } from 'components/services/axios/brick';
@@ -21,6 +21,7 @@ interface CommentPanelProps {
   comments: Comment[] | null;
   currentBrick: Brick;
   currentQuestionId?: number;
+  currentLocation: CommentLocation;
   currentUser: User;
   haveBackButton?: boolean;
   getComments(brickId: number): void;
@@ -49,7 +50,9 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
       <div className="comments-column-wrapper">
         <Grid container direction="column" className="comments-column">
           {props.comments ? props.comments.map(comment => (
-            (comment.question?.id ?? -1) === (props.currentQuestionId ?? -1)
+            comment.location === props.currentLocation &&
+            (comment.location !== CommentLocation.Question ||
+              comment.question?.id === props.currentQuestionId)
             &&
             <CommentItem
               key={comment.id}
@@ -100,7 +103,8 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
         <NewCommentPanel
           currentQuestionId={props.currentQuestionId}
           currentBrick={props.currentBrick}
-          createComment={props.createComment} />
+          createComment={props.createComment}
+          currentLocation={props.currentLocation} />
       </Grid>
       {renderComments()}
       <CommentDeleteDialog
@@ -116,7 +120,6 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
 
 const mapState = (state: ReduxCombinedState) => ({
   comments: state.comments.comments,
-  currentBrick: state.brick.brick,
   currentUser: state.user.user
 });
 

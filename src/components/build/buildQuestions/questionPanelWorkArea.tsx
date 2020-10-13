@@ -13,12 +13,13 @@ import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import LockComponent from './lock/Lock';
 import CommentPanel from 'components/baseComponents/comments/CommentPanel';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
-import { Comment } from 'model/comments';
+import { Comment, CommentLocation } from 'model/comments';
 import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { User } from 'model/user';
 import { TextComponentObj } from './components/Text/interface';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { Brick } from 'model/brick';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -27,6 +28,7 @@ function SplitByCapitalLetters(element: string): string {
 
 export interface QuestionProps {
   brickId: number;
+  currentBrick: Brick;
   canEdit: boolean;
   question: Question;
   history: any;
@@ -223,7 +225,13 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
           <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="center">
             {commentsShown ?
               <Grid className="question-comments-panel" item container direction="row" justify="flex-start" xs>
-                <CommentPanel setCommentsShown={setCommentsShown} haveBackButton={true} currentQuestionId={question.id} />
+                <CommentPanel
+                  currentLocation={CommentLocation.Question}
+                  currentBrick={props.currentBrick}
+                  setCommentsShown={setCommentsShown}
+                  haveBackButton={true}
+                  currentQuestionId={question.id}
+                />
               </Grid> :
               <Grid container item alignItems="center" style={{ height: '100%' }}>
                 <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
@@ -278,6 +286,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
 
 const mapState = (state: ReduxCombinedState) => ({
   currentUser: state.user.user,
+  currentBrick: state.brick.brick,
   comments: state.comments.comments
 });
 

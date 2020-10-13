@@ -25,6 +25,8 @@ import { getHours, getMinutes, getFormattedDate } from "components/services/bric
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Redirect } from "react-router-dom";
 import { loadSubjects } from "components/services/subject";
+import IntroductionPage from "components/play/introduction/Introduction";
+import IntroPage from "./IntroPage";
 
 enum BookState {
   Titles,
@@ -199,13 +201,13 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   renderSecondPage() {
     return (
-      <div className="page2">
+      <div className="page2" onClick={this.moveToAttempts.bind(this)}>
         <div className="normal-page">
           <div className="normal-page-container">
             <h2>OVERALL</h2>
             <h2>STATS, AVGs</h2>
             <h2>etc.</h2>
-            <div className="bottom-button" onClick={this.moveToAttempts.bind(this)}>
+            <div className="bottom-button">
               View Questions
               <SpriteIcon name="arrow-right" />
             </div>
@@ -215,8 +217,8 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     );
   }
 
-  renderThirdPage() {
-    return <div className="page3-empty" onClick={this.moveToTitles.bind(this)}></div>;
+  renderThirdPage(brick: Brick, color: string) {  
+    return <IntroPage brick={brick} color={color} moveToTitles={this.moveToTitles.bind(this)} />
   }
 
   renderFourthPage() {
@@ -447,7 +449,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <div className="back"></div>
                 {this.renderFirstPage(brick, color)}
                 {this.renderSecondPage()}
-                {this.renderThirdPage()}
+                {this.renderThirdPage(brick, color)}
                 {this.state.bookHovered && this.state.bookState === BookState.QuestionPage &&
                   <SpriteIcon
                     name="custom-bookmark"
