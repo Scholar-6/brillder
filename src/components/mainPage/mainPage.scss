@@ -130,6 +130,8 @@
       }
       span {
         font-family: $font-family-bold;
+        @extend %transitionAll300;
+        letter-spacing: 0.4vw;
       }
     }
   }
