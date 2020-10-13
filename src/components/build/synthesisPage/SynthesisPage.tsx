@@ -4,6 +4,7 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 import './SynthesisPage.scss';
 import { Grid } from '@material-ui/core';
 import CommentPanel from 'components/baseComponents/comments/CommentPanel';
+import { CommentLocation } from "model/comments";
 
 
 export interface SynthesisProps {
@@ -26,13 +27,13 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
   }
 
   UNSAFE_componentWillReceiveProps(props: SynthesisProps) {
-    if(props.locked) {
+    if (props.locked) {
       this.setState({ ...this.state, synthesis: props.synthesis });
     }
   }
 
   onSynthesisChange(text: string) {
-    this.setState({synthesis: text});
+    this.setState({ synthesis: text });
     this.props.onSynthesisChange(text);
   }
 
@@ -60,7 +61,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
               />
             </Grid>
             <Grid className="comment-panel-container" item>
-              <CommentPanel />
+              <CommentPanel currentLocation={CommentLocation.Synthesis} />
             </Grid>
           </Grid>
         </div>

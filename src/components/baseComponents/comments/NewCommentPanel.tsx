@@ -3,10 +3,12 @@ import { Grid, Button } from '@material-ui/core';
 import './NewCommentPanel.scss';
 
 import { Brick } from 'model/brick';
+import { CommentLocation } from 'model/comments';
 
 interface NewCommentPanelProps {
   currentBrick: Brick;
   currentQuestionId?: number;
+  currentLocation: CommentLocation;
   createComment(comment: any): void;
 }
 
@@ -17,7 +19,8 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
     props.createComment({
       text,
       brickId: props.currentBrick.id,
-      questionId: props.currentQuestionId
+      questionId: props.currentQuestionId,
+      location: props.currentLocation
     });
     setText("");
   }
