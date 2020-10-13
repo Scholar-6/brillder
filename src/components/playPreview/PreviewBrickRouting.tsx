@@ -162,6 +162,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     history.push(`/play-preview/brick/${brick.id}/live`);
   }
 
+  const moveToReview = () => {
+    history.push(`/play-preview/brick/${brick.id}/review`);
+  }
+
   const moveToBuild = () => {
     history.push(`/build/brick/${brickId}/investigation/question`);
   }
@@ -278,7 +282,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/synthesis">
-              <Synthesis status={status} brick={brick} isPlayPreview={true} />
+              <Synthesis status={status} brick={brick} isPlayPreview={true} moveNext={moveToReview} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/review">
               <Review

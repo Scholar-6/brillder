@@ -36,6 +36,7 @@ import { setBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'components/services/zendesk';
 import map from 'components/map';
 import UserPreferencePage from 'components/userProfilePage/userPreferencePage/UserPreferencePage';
+import UnauthorizedRoute from './UnauthorizedRoute';
 
 
 const App: React.FC = () => {
@@ -48,8 +49,16 @@ const App: React.FC = () => {
     return response;
   }, function (error) {
     let { url } = error.response.config;
-    if (url.search('/auth/login/') === -1 && error.response.status === 401) {
-      history.push("/login");
+
+    // exception for login, play and view all pages
+    if (error.response.status === 401) {
+      if (
+        url.search('/auth/login/') === -1
+        && location.pathname.search('/play/brick/') === -1
+        && location.pathname.search('/play/dashboard') === - 1
+      ) {
+        history.push("/login");
+      }
     }
     return Promise.reject(error);
   });
@@ -84,9 +93,11 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       {/* all page routes are here order of routes is important */}
       <Switch>
-        <StudentRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
+        <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
+        <UnauthorizedRoute path={map.ViewAllPage} component={ViewAll} />
+
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
-        <StudentRoute path={map.ViewAllPage} component={ViewAll} />
+        <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
 
         <BuildRoute path="/manage-classrooms" component={ManageClassrooms} location={location} />
         <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
@@ -98,13 +109,13 @@ const App: React.FC = () => {
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
         <BuildRoute path="/users" component={UsersListPage} location={location} />
         <BuildRoute path="/user-profile/:userId" component={UserProfilePage} location={location} />
+        <BuildRoute path="/home" component={MainPage} location={location} />
+
         <AllUsersRoute path="/user-profile" component={UserProfilePage} />
         <AllUsersRoute path="/user/preference" component={UserPreferencePage} isPreferencePage={true} />
-        <BuildRoute path="/home" component={MainPage} location={location} />
 
         <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path={map.Login} component={LoginPage} />
-        <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
 
         <Route component={AuthRedirectRoute} />
       </Switch>

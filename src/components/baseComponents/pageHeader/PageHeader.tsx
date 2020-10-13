@@ -9,9 +9,11 @@ import { Notification } from 'model/notifications';
 import BellButton from './bellButton/BellButton';
 import MoreButton from './MoreButton';
 import SpriteIcon from '../SpriteIcon';
+import { isAuthenticated } from 'model/assignment';
 
 
 const mapState = (state: ReduxCombinedState) => ({
+  isAuthenticated: state.auth.isAuthenticated,
   notifications: state.notifications.notifications
 });
 
@@ -26,9 +28,12 @@ interface UsersListProps {
   searchPlaceholder: string;
   search(): void;
   searching(value: string): void;
-  notifications: Notification[];
   showDropdown(): void;
   showNotifications(event: any): void;
+
+  // redux
+  notifications: Notification[];
+  isAuthenticated: isAuthenticated;
   getNotifications(): void
 }
 interface MyState {
@@ -103,14 +108,14 @@ class PageHeader extends Component<UsersListProps, MyState> {
                 }
               </div>
               {
-                !searchVisible &&
+                !searchVisible && this.props.isAuthenticated === isAuthenticated.True &&
                 <BellButton
                   notificationCount={notificationCount}
                   onClick={evt => this.props.showNotifications(evt)}
                 />
               }
               {
-                !searchVisible &&
+                !searchVisible && this.props.isAuthenticated === isAuthenticated.True &&
                 <MoreButton onClick={() => this.props.showDropdown()} />
               }
             </div>
@@ -131,13 +136,15 @@ class PageHeader extends Component<UsersListProps, MyState> {
                   />
                 </div>
               </div>
-              <Grid container direction="row" className="action-container">
-                <BellButton
-                  notificationCount={notificationCount}
-                  onClick={evt => this.props.showNotifications(evt)}
-                />
-                <MoreButton onClick={() => this.props.showDropdown()} />
-              </Grid>
+              {this.props.isAuthenticated === isAuthenticated.True &&
+                <Grid container direction="row" className="action-container">
+                  <BellButton
+                    notificationCount={notificationCount}
+                    onClick={evt => this.props.showNotifications(evt)}
+                  />
+                  <MoreButton onClick={() => this.props.showDropdown()} />
+                </Grid>
+              }
             </div >
           </Hidden>
         </div>

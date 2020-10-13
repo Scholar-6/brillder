@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { History } from "history";
 
 import actions from "redux/actions/brickActions";
+import * as socketActions from "redux/actions/socket";
 import "./Proposal.scss";
 import SubjectPage from "./questionnaire/subject/Subject";
 import BrickTitle from "./questionnaire/brickTitle/brickTitle";
@@ -41,6 +42,7 @@ interface ProposalProps {
   user: User;
   saveBrick(brick: Brick): Promise<Brick | null>;
   createBrick(brick: Brick): void;
+  socketStartEditing(brickId: number): void;
 }
 
 interface ProposalState {
@@ -86,6 +88,10 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     if (brick) {
       initBrick = brick;
       setLocalBrick(brick);
+    }
+
+    if (initBrick.id) {
+      this.props.socketStartEditing(initBrick.id); // start editing in socket as well.
     }
 
     this.state = {
@@ -202,7 +208,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       for (const question of brick.questions) {
         try {
           parseQuestion(question as ApiQuestion, parsedQuestions);
-        } catch (e) {}
+        } catch (e) { }
       }
       parsedQuestions.forEach((q) => {
         let isQuestionValid = validateQuestion(q as any);
@@ -309,6 +315,7 @@ const mapState = (state: ReduxCombinedState) => ({
 const mapDispatch = (dispatch: any) => ({
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
+  socketStartEditing: (brickId: number) => dispatch(socketActions.socketStartEditing(brickId)),
 });
 
 const connector = connect(mapState, mapDispatch);

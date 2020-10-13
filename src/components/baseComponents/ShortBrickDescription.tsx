@@ -4,6 +4,7 @@ import './ShortBrickDescription.scss';
 import { Brick } from "model/brick";
 
 import SpriteIcon from "./SpriteIcon";
+import sprite from 'assets/img/icons-sprite.svg';
 import SearchText from "./SearchText";
 import AuthorSearchRow from "./AuthorRow";
 
@@ -34,7 +35,10 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     return (
       <div className="left-brick-roller">
         <div className="btn btn-transparent roller-button svgOnHover">
-          <SpriteIcon name="award" className="w100 h100 active text-theme-green stroke-2" />
+          <svg className="svg w100 h100 active stroke-2">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#award"} className="text-theme-green" />
+          </svg>
         </div>
       </div>
     );
@@ -59,7 +63,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   }
 
   renderCircle(color: string) {
-    let className="left-brick-circle";
+    let className = "left-brick-circle";
     if (color === "color3") {
     } else if (color === "color2") {
       className += ' skip-top-right-border';
@@ -82,7 +86,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
       </div>
     )
   }
-  
+
   render() {
     const { color, brick, isMobile, isExpanded, searchString, index } = this.props;
     let className = "short-description";
