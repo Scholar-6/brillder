@@ -67,7 +67,8 @@ input {
       font-size: 1.5vw;
     }
   }
-  input[type='email']::placeholder, input[type='password']::placeholder {
+  input[type='email']::placeholder,
+  input[type='password']::placeholder {
     color: rgb(141, 154, 180);
   }
   .hide-password-icon-container {
@@ -95,11 +96,18 @@ input {
 /* Material UI Overwrite */
 
 .MuiAutocomplete-popper {
+  z-index: 999999 !important;
   .MuiAutocomplete-option {
-    font-family: $font-family-regular;
     color: var(--theme-dark-blue);
   }
+  * {
+    font-family: $font-family-regular !important;
+    @include placeholder {
+      font-family: $font-family-regular !important;
+    }
+  }
 }
+
 .MuiAutocomplete-root {
   width: 100%;
   margin: 0 !important;
