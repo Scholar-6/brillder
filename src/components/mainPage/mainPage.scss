@@ -99,6 +99,41 @@
     }
   }
 
+  .manage-classes {
+    flex-direction: column;
+    .svg {
+      width: 10vw;
+      height: 7vw;
+      @extend %removePosition;
+      .left-class-icon,
+      .right-class-icon {
+        @extend %transitionAll300;
+      }
+      .left-class-icon {
+        transform: translateX(-0.1vw);
+      }
+      .right-class-icon {
+        transform: translateX(0.1vw);
+      }
+    }
+    span {
+      @extend %transitionAll300;
+    }
+    &:hover {
+      .svg {
+        .left-class-icon {
+          transform: translateX(0.5vw);
+        }
+        .right-class-icon {
+          transform: translateX(-0.5vw);
+        }
+      }
+      span {
+        font-family: $font-family-bold;
+      }
+    }
+  }
+
   .view-item-container,
   .create-item-container,
   .back-item-container {
