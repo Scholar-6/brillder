@@ -174,7 +174,10 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                     </div>
                     <div className="actions">
                       <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>
-                      <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={() => this.markAsRead(notification.id)}>
+                      <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={(e) => {
+                        this.markAsRead(notification.id);
+                        e.stopPropagation();
+                      }}>
                         <SpriteIcon name="cancel" className="w80 h80 active" />
                       </button>
                     </div>
