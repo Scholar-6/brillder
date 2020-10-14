@@ -7,7 +7,7 @@ import axios from "axios";
 import actions from "redux/actions/auth";
 import "./loginPage.scss";
 
-import LoginLogo from '@bit/scholar-6.brillder.login-logo';
+import LoginLogo from './components/LoginLogo';
 import GoogleButton from "./components/GoogleButton";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import RegisterButton from "./components/RegisterButton";

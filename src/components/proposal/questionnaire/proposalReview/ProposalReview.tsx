@@ -7,7 +7,6 @@ import './ProposalReview.scss';
 import { Brick } from "model/brick";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
-import Logo from "assets/img/choose-login/logo.png";
 
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
@@ -18,7 +17,6 @@ import PlayButton from "components/build/baseComponents/PlayButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { CommentLocation } from "model/comments";
 import CommentPanel from "components/baseComponents/comments/CommentPanel";
-
 
 enum BookState {
   TitlesPage,
@@ -292,7 +290,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             </div>
             <Grid container justify="center" alignContent="center" style={{ height: '100%' }}>
               <div>
-                <img alt="" src={Logo} />
+                <img alt="" src="/images/choose-login/logo.png" />
                 <div className="white-text">PROPOSAL</div>
                 {renderAuthorRow()}
               </div>
