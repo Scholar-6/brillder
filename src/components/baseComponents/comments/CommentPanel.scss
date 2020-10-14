@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .comments-panel {
   background-color: var(--tab-gray);
@@ -35,7 +35,7 @@
     margin-left: 5%;
     margin-right: 5%;
     padding: 0.7vh;
-    padding-left:0.1vh;
+    padding-left: 0.1vh;
     width: 90%;
     border-radius: 1.2vh;
     background-color: #ffffff;
@@ -55,7 +55,8 @@
         border-radius: 50%;
         overflow: hidden;
 
-        svg, img {
+        svg,
+        img {
           height: 1.8vw;
           width: 1.8vw;
           border-radius: 50%;
@@ -91,7 +92,6 @@
           @extend %removePosition;
           height: 1.3vw;
           width: 1.3vw;
-
         }
         &.message-button {
           .svg {
@@ -117,7 +117,6 @@
       border-top: 1px solid lightgrey;
       padding-top: 1vh;
       margin-top: 1vh;
-
 
       .comment-child-container {
         position: relative;
@@ -174,13 +173,13 @@
   .comments-panel {
     .comments-column-wrapper {
       bottom: 0;
-      width: 92%;
-      position: absolute;
-      height: 60.5vh;
-      overflow: hidden;
-    }
-    .comments-column {
-      height: inherit;
+      width: 100%;
+      overflow: scroll;
+      flex-grow: 1;
+      align-items: center;
+      .comments-column {
+        height: 100%;
+      }
     }
   }
 }

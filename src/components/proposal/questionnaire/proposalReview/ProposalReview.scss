@@ -202,8 +202,8 @@
         margin: auto;
 
         .comment-text-entry {
-          height: 2vw;
-          width: 100%;
+          min-height: 2vw;
+          max-height: 6vw;
           padding: 0.5vw;
         }
 
