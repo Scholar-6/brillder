@@ -1,40 +1,49 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
-.comment-text-form {
-  background-color: var(--white);
-  margin: 0;
-  padding: 0;
-  margin-left: 5%;
-  margin-right: 5%;
-  border-radius: 0.25vw;
-
-  .comment-text-entry {
-    padding: 0;
-    font-size: 2vh;
-    width: 84%;
-    min-height: 1.5vw;
-    max-height: 6vw;
-    padding-top: 0.8vh;
-    padding-bottom: 0.8vh;
-    padding-left: 8%;
-    padding-right: 8%;
-    border: none;
-    resize: none;
-  }
-
+.comment-text-container {
+  @extend %flexCenter;
+  flex-direction: column;
+  width: 92%;
+  position: absolute;
+  top: 60px;
+  background-color: var(--tab-gray);
+  z-index: 4;
   > div {
-    padding: 0;
-    margin: 0;
+    width: 90%;
   }
-
-  input {
-    font-size: 2vh;
-    letter-spacing: 0.1vh;
-    height: 2.7vh;
+  .comment-text-form {
+    background-color: var(--white);
     margin: 0;
     padding: 0;
+    border-radius: 0.25vw;
+    .comment-text-entry {
+      padding: 0;
+      font-size: 2vh;
+      width: 84%;
+      min-height: 1.5vw;
+      max-height: 40vh;
+      padding-top: 0.8vh;
+      padding-bottom: 0.8vh;
+      padding-left: 8%;
+      padding-right: 8%;
+      border: none;
+      resize: none;
+    }
+
+    > div {
+      padding: 0;
+      margin: 0;
+    }
+
+    input {
+      font-size: 2vh;
+      letter-spacing: 0.1vh;
+      height: 2.7vh;
+      margin: 0;
+      padding: 0;
+    }
   }
 }
 

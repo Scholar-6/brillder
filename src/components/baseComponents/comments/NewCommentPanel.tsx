@@ -31,20 +31,20 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
   }
 
   return (
-    <Grid container direction="column" alignItems="stretch">
-      <Grid item>
+    <div className="comment-text-container">
+      <div>
         <form className="comment-text-form" onSubmit={e => { e.preventDefault(); }}>
           <textarea
             className="comment-text-entry" placeholder="Add Suggestion..." value={text}
             onChange={(evt) => setText(evt.target.value)} onInput={autoResize}
           />
         </form>
-      </Grid>
-      <Grid item container direction="row" justify="space-evenly">
+      </div>
+      <div>
         <Button className="comment-action-button post" onClick={() => handlePostComment()} disabled={text === ""}>POST</Button>
         <Button className="comment-action-button cancel" onClick={() => setText("")} disabled={text === ""}>CLEAR</Button>
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 };
 

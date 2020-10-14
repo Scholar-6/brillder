@@ -309,14 +309,36 @@
         align-items: center;
         .classroom-name {
           text-transform: capitalize;
-          .svg {
-            @extend %removePosition;
-            @extend %radCircle;
-            padding: 0.05vw;
-            width: 0.8vw;
-            height: 0.8vw;
+          // width: 100%;
+          // justify-content: flex-start;
+          .classroom-icon {
             background-color: var(--white);
             color: var(--theme-dark-blue);
+            @extend %transitionAll300;
+            @extend %radCircle;
+            width: 1vw;
+            height: 1vw;
+            .svg {
+              width: 100%;
+              @extend %flexCenter;
+              height: 100%;
+              margin: 0;
+            }
+          }
+          &:hover {
+            .classroom-icon {
+              animation-name: pulse-white;
+              animation-duration: 2s;
+              animation-delay: 0s;
+              animation-iteration-count: 5;
+              animation-timing-function: ease;
+            }
+          }
+          &.icon-animated {
+            .classroom-icon {
+              @extend %transitionAll300;
+              @include rotate(90deg);
+            }
           }
         }
       }
