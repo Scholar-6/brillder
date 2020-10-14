@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .comment-text-form {
   background-color: var(--white);
@@ -14,12 +14,14 @@
     padding: 0;
     font-size: 2vh;
     width: 84%;
-    height: 1.5vw;
+    min-height: 1.5vw;
+    max-height: 6vw;
     padding-top: 0.8vh;
     padding-bottom: 0.8vh;
     padding-left: 8%;
     padding-right: 8%;
     border: none;
+    resize: none;
   }
 
   > div {

@@ -25,13 +25,18 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
     setText("");
   }
 
+  const autoResize = ({ target }: any) => {
+    target.style.height = "2vw";
+    target.style.height = target.scrollHeight + "px";
+  }
+
   return (
     <Grid container direction="column" alignItems="stretch">
       <Grid item>
         <form className="comment-text-form" onSubmit={e => { e.preventDefault(); }}>
           <textarea
             className="comment-text-entry" placeholder="Add Suggestion..." value={text}
-            onChange={(evt) => setText(evt.target.value)}
+            onChange={(evt) => setText(evt.target.value)} onInput={autoResize}
           />
         </form>
       </Grid>
