@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .proposal-page {
   height: 100% !important;
@@ -210,9 +210,6 @@
         .comments-column-wrapper {
           overflow: scroll;
           flex-grow: 1;
-          .comments-column {
-            height: 100%;
-          }
         }
       }
     }
