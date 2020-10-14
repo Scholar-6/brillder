@@ -210,6 +210,9 @@
         .comments-column-wrapper {
           overflow: scroll;
           flex-grow: 1;
+          .comments-column {
+            height: 100%;
+          }
         }
       }
     }

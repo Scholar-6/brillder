@@ -2,6 +2,8 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
+$margin-left: 21%;
+
 .comments-panel {
   background-color: var(--tab-gray);
   height: 100%;
@@ -31,18 +33,13 @@
   }
 
   .comment-item-container {
-    margin: 1.5vh;
-    margin-left: 5%;
-    margin-right: 5%;
     padding: 0.7vh;
     padding-left: 0.1vh;
-    width: 90%;
+    width: 100%;
+    margin-bottom: 1.5vh;
     border-radius: 1.2vh;
     background-color: #ffffff;
     font-size: 1vw;
-
-    $margin-left: 21%;
-
     .profile-image-container {
       @extend %flexCenter;
       width: $margin-left;
@@ -162,6 +159,11 @@
     overflow: scroll;
     display: block !important;
     height: 54vh;
+    position: absolute;
+    top: 21vh;
+    z-index: 3;
+    width: 82%;
+    margin: 0 5%;
   }
 }
 
