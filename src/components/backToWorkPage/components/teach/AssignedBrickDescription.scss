@@ -48,18 +48,15 @@
     padding-top: 0;
     @extend %flexToXCenter;
     flex-direction: column;
-    .link-info {
-      width: 100%;
-    }
     @extend %linkDescription;
     padding-right: 0;
-
     .link-description {
       width: 100% !important;
       font-size: 1.2vw;
       margin-bottom: 0;
     }
     .link-info {
+      width: 100%;
       font-size: 0.9vw;
       text-align: justify;
     }
