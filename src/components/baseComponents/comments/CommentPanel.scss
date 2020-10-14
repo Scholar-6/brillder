@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .comments-panel {
   background-color: var(--tab-gray);
@@ -177,9 +177,6 @@
       overflow: scroll;
       flex-grow: 1;
       align-items: center;
-      .comments-column {
-        height: 100%;
-      }
     }
   }
 }
