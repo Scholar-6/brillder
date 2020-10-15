@@ -65,7 +65,7 @@ interface ProposalState {
   subjects: Subject[];
   attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
-  mode: boolean; // live - false, review - true
+  mode?: boolean; // live - false, review - true, undefined - default
 }
 
 class PostPlay extends React.Component<ProposalProps, ProposalState> {
@@ -75,7 +75,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       bookState: BookState.Titles,
       questionIndex: 0,
       animationRunning: false,
-      mode: false,
       activeAttemptIndex: 0,
       attempt: null,
       closeTimeout: -1,
@@ -201,10 +200,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
-  getAttemptStatus(answers: AttemptAnswer[]) {
-    return !answers.find(a => a.correct === false);
-  }
-
   render() {
     if (!this.state.attempt) {
       return <PageLoader content="...Getting Attempt..." />;
@@ -213,11 +208,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     if (!this.state.attempt.liveAnswers) {
       return <Redirect to="/home" />;
-    }
-
-    let answers = this.state.attempt.liveAnswers;
-    if (this.state.mode) {
-      answers = this.state.attempt.answers;
     }
 
     if (brick.title) {
@@ -307,16 +297,17 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                     return (
                       <div key={i}>
                         {i === 0 ? <div className="page3-cover first" style={getQuestionCoverStyle(i)}></div> : ""}
+                        {this.state.attempt &&
                         <QuestionPage
                           i={i}
                           question={q}
                           questionIndex={this.state.questionIndex}
                           activeAttempt={this.state.attempt}
-                          answers={answers}
+                          mode={this.state.mode}
                           bookHovered={this.state.bookHovered}
                           bookState={this.state.bookState}
                           prevQuestion={this.prevQuestion.bind(this)}
-                        />
+                        />}
                         <AnswersPage
                           i={i}
                           mode={this.state.mode}
