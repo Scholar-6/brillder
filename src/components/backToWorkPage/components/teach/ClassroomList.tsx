@@ -24,31 +24,6 @@ interface ClassroomListProps {
 }
 
 class ClassroomList extends Component<ClassroomListProps> {
-  renderStudent(student: UserBase, i: number, studentsStatus: StudentStatus[]) {
-    const studentStatus = studentsStatus.find(s => s.studentId === student.id);
-    return (
-      <div key={i} style={{display: 'flex', paddingTop: '0.5vh', paddingBottom: '0.5vh'}} >
-        <div style={{width: '23.8vw'}}>{student.firstName} {student.lastName}</div>
-        <div className="teach-circles-container">
-          <div className="teach-circle-flex-container">
-            { !studentStatus &&
-              <div className="teach-circle-container">
-                <div className="teach-circle student-circle red" />
-              </div>}
-          </div>
-          <div className="teach-circle-flex-container">
-            { studentStatus &&
-              <div className="teach-circle-container">
-                <div className="teach-circle student-circle green">
-                  {Math.round(studentStatus.avgScore)}
-                </div>
-              </div>}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   renderTeachListItem(c: TeachListItem, i: number) {
     if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
       if (c.assignment && c.classroom) {
