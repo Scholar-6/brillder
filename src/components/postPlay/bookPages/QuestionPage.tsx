@@ -29,8 +29,6 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
     answers = activeAttempt.liveAnswers;
   }
 
-  console.log(answers);
-
   try {
     parsedAnswers = JSON.parse(JSON.parse(answers[i].answer));
   } catch {}
@@ -52,6 +50,22 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
     return {};
   }
 
+  const renderTitle = () => {
+    if (mode === undefined) {
+      return "Investigation";
+    } else if (mode === true) {
+      if (activeAttempt.answers[i].correct) {
+        return "Correct!"
+      }
+      return "Not quite - try again!";
+    } else if (mode === false) {
+      if (activeAttempt.liveAnswers[i].correct) {
+        return "Correct!"
+      }
+      return "Not quite - try again!";
+    }
+  }
+
   return (
     <div
       className={`page3 ${i === 0 ? 'first' : ''}`}
@@ -64,7 +78,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
             <div>{i + 1}</div>
           </div>
           <div>
-            <h2>Investigation</h2>
+            <h2>{renderTitle()}</h2>
             {mode === undefined
               ? <QuestionPlay question={question} isPhonePreview={true} answers={[]} />
               : 
