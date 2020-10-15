@@ -18,6 +18,7 @@ import WelcomeComponent from './WelcomeComponent';
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { getAssignedBricks } from "components/services/axios/brick";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -47,6 +48,9 @@ interface MainPageState {
   isPolicyOpen: boolean;
   notificationExpanded: boolean;
   isTeacher: boolean;
+
+  // for students
+  backWorkActive: boolean;
 }
 
 class MainPage extends Component<MainPageProps, MainPageState> {
@@ -61,6 +65,17 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       notificationExpanded: false,
       isTeacher: checkTeacherOrAdmin(props.user.roles)
     } as any;
+
+    if (props.user.rolePreference && props.user.rolePreference.roleId === UserType.Student) {
+      this.preparationForStudent();
+    }
+  }
+
+  async preparationForStudent() {
+    let bricks = await getAssignedBricks();
+    if (bricks && bricks.length > 0) {
+      this.setState({backWorkActive: true});
+    }
   }
 
   setPolicyDialog(isPolicyOpen: boolean) {
@@ -125,7 +140,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover' : ''}`}>
           <SpriteIcon name="library-book" className="active text-theme-orange" />
-          <span className="item-description">Back To Work</span>
+          <span className={`item-description ${isActive ? '' : 'disabled'}`}>My Library</span>
         </button>
       </div>
     );
@@ -133,15 +148,18 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   renderStudentWorkButton() {
     let isActive = false;
+    if (this.state.backWorkActive) {
+      isActive = true;
+    }
     return (
       <div className="back-item-container" onClick={() => {
         if (isActive) {
           this.props.history.push("/back-to-work");
         }
       }}>
-        <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover' : ''}`}>
-          <SpriteIcon name="student-back-to-work" className="active text-theme-orange" />
-          <span className="item-description">Back To Work</span>
+        <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover text-theme-orange' : 'text-theme-dark-blue'}`}>
+          <SpriteIcon name="student-back-to-work" className="active"/>
+          <span className={`item-description ${isActive ? '' : 'disabled'}`}>Back To Work</span>
         </button>
       </div>
     );
@@ -236,8 +254,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       return (
         <div className="create-item-container" onClick={() => this.creatingBrick()}>
           <button className={`btn btn-transparent ${isActive ? 'zoom-item svgOnHover text-theme-orange active' : 'text-theme-light-blue'}`}>
-            <SpriteIcon name="trowel-home" className="active" />
-            <span className="item-description">Try building?</span>
+            <SpriteIcon name="trowel-home" />
+            <span className={`item-description ${isActive ? '' : 'disabled'}`}>Try building?</span>
           </button>
         </div>
       );

@@ -205,6 +205,9 @@
     &:hover {
       .item-description {
         font-family: $font-family-bold;
+        &.disabled {
+          font-family: $font-family-light !important;
+        }
       }
     }
   }
