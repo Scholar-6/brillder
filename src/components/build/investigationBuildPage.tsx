@@ -160,6 +160,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     console.log(diff);
     if (!diff) return;
     if (currentBrick && locked) {
+      console.log(diff);
       const brick = applyBrickDiff(currentBrick, diff);
       console.log(brick);
       const parsedQuestions: Question[] = questions;
