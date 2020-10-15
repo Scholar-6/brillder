@@ -14,7 +14,7 @@ interface AnswersPageProps {
   activeAttempt: PlayAttempt | null;
   bookHovered: boolean;
   bookState: BookState;
-  setMode(mode: boolean): void;
+  setMode(mode: boolean | undefined): void;
   nextQuestion(): void;
 }
 
@@ -71,7 +71,10 @@ const AnswersPage: React.FC<AnswersPageProps> = ({
                     e.stopPropagation();
                     setMode(false);
                   }} />
-                : <SpriteIcon name="eye-on" className="text-theme-dark-blue" />
+                : <SpriteIcon name="eye-on" className="text-theme-dark-blue active" onClick={e => {
+                  e.stopPropagation();
+                  setMode(undefined);
+                }} />
             }
           </div>
         </div>
@@ -84,7 +87,10 @@ const AnswersPage: React.FC<AnswersPageProps> = ({
             }
             {
               mode === true
-                ? <SpriteIcon name="eye-on" className="text-theme-dark-blue" />
+                ? <SpriteIcon name="eye-on" className="text-theme-dark-blue active" onClick={e => {
+                  e.stopPropagation();
+                  setMode(undefined);
+                }} />
                 : <SpriteIcon name="eye-off" className="text-dark-gray active" onClick={e => {
                     e.stopPropagation();
                     setMode(true);
