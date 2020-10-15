@@ -96,7 +96,7 @@ export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: n
 
   for (let i = 0 + sortedIndex; i < (pageSize / 3) + sortedIndex; i++) {
     let brick = threeColumns.red.finalBricks[i];
-    let row = i - sortedIndex;
+    let row = i - sortedIndex + 1;
     
     if (brick) {
       prepareBrickData(data, brick, i, count, row);
