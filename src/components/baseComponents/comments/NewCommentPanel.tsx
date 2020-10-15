@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import './NewCommentPanel.scss';
 
 import { Brick } from 'model/brick';

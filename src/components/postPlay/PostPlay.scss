@@ -152,6 +152,7 @@
     .front,
     .front-cover,
     .back,
+    .book-page,
     .page1,
     .page1-cover,
     .page2,
@@ -174,6 +175,21 @@
       transition: transform 1s ease-in-out, box-shadow 0.7s ease-in-out;
       border-bottom-right-radius: $book-radius;
       border-top-right-radius: $book-radius;
+    }
+
+    .book-page {
+      background: #fafafa;
+      border-bottom-left-radius: $book-radius !important;
+      border-top-left-radius: $book-radius !important;
+      > div {
+        border-bottom-right-radius: $book-radius !important;
+        border-top-right-radius: $book-radius !important;
+      }
+
+      > .flipped-page {
+        border-bottom-left-radius: $book-radius !important;
+        border-top-left-radius: $book-radius !important;
+      }
     }
 
     .front,
@@ -472,6 +488,49 @@
       .page1 {
         transform: rotateY(-159.5deg) scale($scale);
       }
+      .introduction-brief {
+        transform: rotateY(-49.5deg) scale($scale);
+      }
+      .introduction-prep {
+        transform: rotateY(-30deg) scale($scale);
+      }
+      .page6 {
+        transform: rotateY(-30deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 8;
+      }
+    }
+
+    &.introduction {
+      .page2 {
+        transform: rotateY(-179.2deg) scale($scale);
+      }
+      .page3-empty {
+        transform: rotateY(-179deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 5;
+      }
+
+      .introduction-brief {
+        transform: rotateY(-130deg) scale($scale);
+      }
+
+      .introduction-prep {
+        transform: rotateY(-50deg) scale($scale);
+      }
+
+      .page4-attempts {
+        transform: rotateY(-130.5deg) scale($scale);
+      }
+      .front {
+        transform: rotateY(-180deg) scale($scale);
+      }
+      .page1-cover {
+        transform: rotateY(-180deg) scale($scale);
+      }
+      .page1 {
+        transform: rotateY(-180deg) scale($scale);
+      }
 
       .page3 {
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
@@ -560,6 +619,12 @@
 
       .back {
         transform: rotateY(0.5deg) scale($scale);
+      }
+      .introduction-brief {
+        transform: rotateY(-178.3deg) scale($scale);
+      }
+      .introduction-prep {
+        transform: rotateY(-178.3deg) scale($scale);
       }
     }
     .wrong {
