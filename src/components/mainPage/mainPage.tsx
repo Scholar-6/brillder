@@ -57,16 +57,25 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   constructor(props: MainPageProps) {
     super(props);
 
+    let backWorkActive = false;
+    if (props.user.hasPlayedBrick) {
+      backWorkActive = true;
+    }
+
     this.state = {
       createHober: false,
       backHober: false,
       swiper: null,
       isPolicyOpen: false,
       notificationExpanded: false,
+      backWorkActive,
       isTeacher: checkTeacherOrAdmin(props.user.roles)
     } as any;
 
-    if (props.user.rolePreference && props.user.rolePreference.roleId === UserType.Student) {
+    console.log(this.props.user);
+
+    const {rolePreference} = props.user;
+    if (rolePreference?.roleId === UserType.Student) {
       this.preparationForStudent();
     }
   }
@@ -133,10 +142,12 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderLibraryButton() {
-    let isActive = false;
+    let isActive = this.props.user.hasPlayedBrick;
     return (
       <div className="back-item-container" onClick={() => {
-        if (isActive) { }
+        if (isActive) { 
+          this.props.history.push(map.BackToWorkLearnTab);
+        }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover' : ''}`}>
           <SpriteIcon name="library-book" className="active text-theme-orange" />
@@ -147,10 +158,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderStudentWorkButton() {
-    let isActive = false;
-    if (this.state.backWorkActive) {
-      isActive = true;
-    }
+    let isActive = this.state.backWorkActive;
     return (
       <div className="back-item-container" onClick={() => {
         if (isActive) {
@@ -249,7 +257,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       );
     }
     const { rolePreference } = this.props.user;
-    let isActive = false;
+    let isActive = this.props.user.hasPlayedBrick;
     if (rolePreference && rolePreference.roleId === UserType.Student) {
       return (
         <div className="create-item-container" onClick={() => {
@@ -257,7 +265,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             this.creatingBrick()
           }
         }}>
-          <button className={`btn btn-transparent ${isActive ? 'zoom-item svgOnHover text-theme-orange active' : 'text-theme-light-blue'}`}>
+          <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
             <SpriteIcon name="trowel-home" />
             <span className={`item-description ${isActive ? '' : 'disabled'}`}>Try building?</span>
           </button>
