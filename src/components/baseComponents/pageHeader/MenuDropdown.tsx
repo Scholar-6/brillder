@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import actions from "redux/actions/brickActions";
 
-import { User } from "model/user";
+import { User, UserType } from "model/user";
 import { PageEnum } from "./PageHeadWithMenu";
 import { clearProposal } from 'localStorage/proposal';
 
@@ -32,6 +32,12 @@ interface MenuDropdownProps {
 
 const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const { page } = props;
+  const {hasPlayedBrick} = props.user;
+
+  let isStudent = false;
+  if (props.user.rolePreference?.roleId === UserType.Student) {
+    isStudent = true;
+  }
 
   const move = (link: string) => props.history.push(link);
 
@@ -58,16 +64,27 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     return "";
   };
 
+  const renderBuildingButton = () => {
+    return (
+      <MenuItem className="menu-item" onClick={creatingBrick}>
+        <span className="menu-text">Start Building</span>
+        <div className="btn btn-transparent svgOnHover">
+          <SpriteIcon name="trowel" className="active text-white" />
+        </div>
+      </MenuItem>
+    );
+  }
+
   const renderStartBuildItem = () => {
     if (page !== PageEnum.MainPage) {
-      return (
-        <MenuItem className="menu-item" onClick={creatingBrick}>
-          <span className="menu-text">Start Building</span>
-          <div className="btn btn-transparent svgOnHover">
-            <SpriteIcon name="trowel" className="active text-white" />
-          </div>
-        </MenuItem>
-      );
+      if (isStudent) {
+        if (hasPlayedBrick) {
+          return renderBuildingButton();
+        } else {
+          return "";
+        }
+      }
+      return renderBuildingButton();
     }
     return "";
   };
@@ -95,7 +112,10 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         >
           <span className="menu-text">Back To Work</span>
           <div className="btn btn-transparent svgOnHover">
-            <SpriteIcon name="roller" className="active text-white" />
+            {isStudent
+              ? <SpriteIcon name="student-back-to-work" className="active text-white" />
+              : <SpriteIcon name="roller" className="active text-white" />
+            }
           </div>
         </MenuItem>
       );
