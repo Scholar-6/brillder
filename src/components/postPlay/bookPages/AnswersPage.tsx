@@ -8,6 +8,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface AnswersPageProps {
   i: number;
+  isLast: boolean;
   mode: boolean;
   questionIndex: number;
   activeAttempt: PlayAttempt | null;
@@ -18,7 +19,7 @@ interface AnswersPageProps {
 }
 
 const AnswersPage: React.FC<AnswersPageProps> = ({
-  i, mode, activeAttempt, questionIndex, bookHovered, bookState, nextQuestion, setMode
+  i, isLast, mode, activeAttempt, questionIndex, bookHovered, bookState, nextQuestion, setMode
 }) => {
   const getResultStyle = (index: number) => {
     const scale = 1.15;
@@ -36,9 +37,17 @@ const AnswersPage: React.FC<AnswersPageProps> = ({
 
   const timestamp = activeAttempt ? activeAttempt.timestamp : '';
 
+  let className = 'page4 result-page';
+  if (i === 0) {
+    className += ' first';
+  }
+  if (isLast) {
+    className += ' last-question-result';
+  }
+
   return (
     <div
-      className={`page4 result-page ${i === 0 ? 'first' : ''}`}
+      className={className}
       style={getResultStyle(i)}
       onClick={nextQuestion}
     >

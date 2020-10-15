@@ -31,6 +31,7 @@ import OverallPage from "./bookPages/OverallPage";
 import AttemptsPage from "./bookPages/AttemptsPage";
 import QuestionPage from "./bookPages/QuestionPage";
 import AnswersPage from "./bookPages/AnswersPage";
+import SynthesisPage from "./bookPages/SynthesisPage";
 
 export enum BookState {
   Titles,
@@ -165,6 +166,12 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.animationFlipRelease();
   }
 
+  moveBackToQuestions() {
+    if (this.state.animationRunning) { return; }
+    this.setState({ bookState: BookState.QuestionPage, animationRunning: true });
+    this.animationFlipRelease();
+  }
+
   moveToIntroduction() {
     if (this.state.animationRunning) { return; }
     this.setState({ bookState: BookState.Introduction, questionIndex: 0, animationRunning: true });
@@ -237,7 +244,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       } else if (bookState === BookState.QuestionPage) {
         bookClass += ` expanded question-attempt`;
       } else if (bookState === BookState.Synthesis) {
-        bookClass += ` expanded question-attempt`;
+        bookClass += ` expanded synthesis`;
       }
     }
 
@@ -313,6 +320,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                         <AnswersPage
                           i={i}
                           mode={this.state.mode}
+                          isLast={questions.length - 1 === i}
                           questionIndex={this.state.questionIndex}
                           activeAttempt={this.state.attempt}
                           bookHovered={this.state.bookHovered}
@@ -330,6 +338,8 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <div className="page6"></div>
                 <div className="page5"></div>
                 <div className="front-cover"></div>
+                <div className="book-page last-question-cover" onClick={this.moveBackToQuestions.bind(this)}></div>
+                <SynthesisPage synthesis={brick.synthesis} />
                 <FrontPage brick={brick} student={student} color={color} />
                </div>
             </div>
