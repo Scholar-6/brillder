@@ -32,6 +32,7 @@
       > span {
         margin: 0 0.5vw;
         @extend %ellipsis;
+        height: 1.35vw;
         &:first-child {
           margin-left: 0;
         }
