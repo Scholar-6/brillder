@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AttemptAnswer, PlayAttempt } from "model/attempt";
+import { PlayAttempt } from "model/attempt";
 import { Question } from "model/question";
 import { BookState } from "../PostPlay";
 
@@ -8,19 +8,29 @@ import QuestionPlay from "components/play/questionPlay/QuestionPlay";
 
 interface QuestionPageProps {
   i: number;
+  mode?: boolean;
   questionIndex: number;
   question: Question;
-  activeAttempt: PlayAttempt | null;
-  answers: AttemptAnswer[];
+  activeAttempt: PlayAttempt;
   bookHovered: boolean;
   bookState: BookState;
   prevQuestion(): void;
 }
 
 const QuestionPage: React.FC<QuestionPageProps> = ({
-  i, answers, activeAttempt, questionIndex, question, bookHovered, bookState, prevQuestion
+  i, mode, activeAttempt, questionIndex, question, bookHovered, bookState, prevQuestion
 }) => {
   let parsedAnswers = null;
+
+  let answers:any[] = [];
+  if (mode) {
+    answers = activeAttempt.answers;
+  } else if (mode === false) {
+    answers = activeAttempt.liveAnswers;
+  }
+
+  console.log(answers);
+
   try {
     parsedAnswers = JSON.parse(JSON.parse(answers[i].answer));
   } catch {}
@@ -55,12 +65,16 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
           </div>
           <div>
             <h2>Investigation</h2>
-            <QuestionPlay
-              question={question}
-              attempt={attempt}
-              isBookPreview={true}
-              answers={parsedAnswers}
-            />
+            {mode === undefined
+              ? <QuestionPlay question={question} isPhonePreview={true} answers={[]} />
+              : 
+              <QuestionPlay
+                question={question}
+                attempt={attempt}
+                isBookPreview={true}
+                answers={parsedAnswers}
+              />
+            }
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 interface AnswersPageProps {
   i: number;
   isLast: boolean;
-  mode: boolean;
+  mode?: boolean;
   questionIndex: number;
   activeAttempt: PlayAttempt | null;
   bookHovered: boolean;
@@ -66,8 +66,8 @@ const AnswersPage: React.FC<AnswersPageProps> = ({
               : <SpriteIcon name="cancel" className="text-theme-orange" />
             }
             {
-              mode
-                ? <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={e => {
+              mode === true || mode === undefined
+                ? <SpriteIcon name="eye-off" className="text-dark-gray active" onClick={e => {
                     e.stopPropagation();
                     setMode(false);
                   }} />
@@ -83,9 +83,9 @@ const AnswersPage: React.FC<AnswersPageProps> = ({
               : <SpriteIcon name="cancel" className="text-theme-orange" />
             }
             {
-              mode
+              mode === true
                 ? <SpriteIcon name="eye-on" className="text-theme-dark-blue" />
-                : <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={e => {
+                : <SpriteIcon name="eye-off" className="text-dark-gray active" onClick={e => {
                     e.stopPropagation();
                     setMode(true);
                   }} />

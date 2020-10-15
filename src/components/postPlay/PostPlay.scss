@@ -193,6 +193,11 @@
       }
     }
 
+    .synthesis-page {
+      border-bottom-left-radius: 0 !important;
+      border-top-left-radius: 0 !important;
+    }
+
     .front,
     .front-cover,
     .back {
@@ -280,6 +285,10 @@
 
     .page3-empty, .page4-attempts {
       color: #d3d4d5;
+    }
+
+    .front-cover {
+      background: #efefef;
     }
 
     .page4-attempts {
@@ -370,7 +379,7 @@
             bottom: 0;
             font-size: 1.2vw;
             letter-spacing: 0.1vw;
-            margin-left: 4vw;
+            margin-left: 6vw;
             @extend %flexCenter;
 
             svg {
@@ -633,6 +642,9 @@
       }
       .introduction-prep {
         transform: rotateY(-178.3deg) scale($scale);
+      }
+      .synthesis-page {
+        transform: rotateY(-4deg) scale($scale);
       }
     }
     &.synthesis {
