@@ -541,9 +541,21 @@
               }
               > span {
                 margin: 0 0.5vw;
+                height: 1.35vw;
                 @extend %ellipsis;
                 &:first-child {
                   margin-left: 0;
+                }
+                > span {
+                  margin: 0 0.5vw;
+                  height: 1.35vw;
+                  @extend %ellipsis;
+                  &:nth-child(1) {
+                    margin: 0;
+                  }
+                  &:nth-child(2) {
+                    margin-left: 0;
+                  }
                 }
               }
             }
