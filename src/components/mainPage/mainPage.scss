@@ -179,6 +179,22 @@
         }
       }
     }
+    &.student-back-work {
+      .btn .svg {
+        @include laptop {
+          width: 8.7vw;
+          height: 7vw;
+        }
+      }
+    }
+    &.my-library {
+      .btn .svg {
+        @include laptop {
+          width: 8.7vw;
+          height: 7vw;
+        }
+      }
+    }
     .item-description {
       padding: 0;
       @extend %textCenter;

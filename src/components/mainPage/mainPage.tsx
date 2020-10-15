@@ -19,6 +19,7 @@ import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getAssignedBricks } from "components/services/axios/brick";
+import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -51,16 +52,14 @@ interface MainPageState {
 
   // for students
   backWorkActive: boolean;
+  isMyLibraryOpen: boolean;
+  isBackToWorkOpen: boolean;
+  isTryBuildOpen: boolean;
 }
 
 class MainPage extends Component<MainPageProps, MainPageState> {
   constructor(props: MainPageProps) {
     super(props);
-
-    let backWorkActive = false;
-    if (props.user.hasPlayedBrick) {
-      backWorkActive = true;
-    }
 
     this.state = {
       createHober: false,
@@ -68,11 +67,12 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       swiper: null,
       isPolicyOpen: false,
       notificationExpanded: false,
-      backWorkActive,
+      backWorkActive: false,
+      isMyLibraryOpen: false,
+      isBackToWorkOpen: false,
+      isTryBuildOpen: false,
       isTeacher: checkTeacherOrAdmin(props.user.roles)
     } as any;
-
-    console.log(this.props.user);
 
     const {rolePreference} = props.user;
     if (rolePreference?.roleId === UserType.Student) {
@@ -144,13 +144,15 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   renderLibraryButton() {
     let isActive = this.props.user.hasPlayedBrick;
     return (
-      <div className="back-item-container" onClick={() => {
+      <div className="back-item-container my-library" onClick={() => {
         if (isActive) { 
           this.props.history.push(map.BackToWorkLearnTab);
+        } else {
+          this.setState({isMyLibraryOpen: true});
         }
       }}>
-        <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover' : ''}`}>
-          <SpriteIcon name="library-book" className="active text-theme-orange" />
+        <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover' : 'text-theme-dark-blue'}`}>
+          <SpriteIcon name="library-book" className="active" />
           <span className={`item-description ${isActive ? '' : 'disabled'}`}>My Library</span>
         </button>
       </div>
@@ -160,9 +162,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   renderStudentWorkButton() {
     let isActive = this.state.backWorkActive;
     return (
-      <div className="back-item-container" onClick={() => {
+      <div className="back-item-container student-back-work" onClick={() => {
         if (isActive) {
           this.props.history.push("/back-to-work");
+        } else {
+          this.setState({isBackToWorkOpen: true});
         }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover text-theme-orange' : 'text-theme-dark-blue'}`}>
@@ -263,6 +267,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         <div className="create-item-container" onClick={() => {
           if (isActive) {
             this.creatingBrick()
+          } else {
+            this.setState({isTryBuildOpen: true});
           }
         }}>
           <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
@@ -355,6 +361,18 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         {this.renderDesktopPage()}
         {this.renderMobilePage()}
         <PolicyDialog isOpen={this.state.isPolicyOpen} close={() => this.setPolicyDialog(false)} />
+        <LockedDialog
+          label="Play a brick to unlock this"
+          isOpen={this.state.isMyLibraryOpen}
+          close={() => this.setState({isMyLibraryOpen: false})} />
+        <LockedDialog
+          label="To unlock this, a brick needs to have been assigned to you"
+          isOpen={this.state.isBackToWorkOpen}
+          close={() => this.setState({isBackToWorkOpen: false})} />
+        <LockedDialog
+          label="Play a brick to unlock this"
+          isOpen={this.state.isTryBuildOpen}
+          close={() => this.setState({isTryBuildOpen: false})} />
       </Grid>
     );
   }
