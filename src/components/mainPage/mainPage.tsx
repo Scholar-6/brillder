@@ -151,7 +151,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           this.setState({isMyLibraryOpen: true});
         }
       }}>
-        <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover' : 'text-theme-dark-blue'}`}>
+        <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange svgOnHover' : 'text-theme-dark-blue'}`}>
           <SpriteIcon name="library-book" className="active" />
           <span className={`item-description ${isActive ? '' : 'disabled'}`}>My Library</span>
         </button>
