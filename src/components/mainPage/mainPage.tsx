@@ -252,7 +252,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     let isActive = false;
     if (rolePreference && rolePreference.roleId === UserType.Student) {
       return (
-        <div className="create-item-container" onClick={() => this.creatingBrick()}>
+        <div className="create-item-container" onClick={() => {
+          if (isActive) {
+            this.creatingBrick()
+          }
+        }}>
           <button className={`btn btn-transparent ${isActive ? 'zoom-item svgOnHover text-theme-orange active' : 'text-theme-light-blue'}`}>
             <SpriteIcon name="trowel-home" />
             <span className={`item-description ${isActive ? '' : 'disabled'}`}>Try building?</span>
