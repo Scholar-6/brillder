@@ -62,6 +62,7 @@ import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import { useSocket } from "socket/socket";
 import { applyBrickDiff, getBrickDiff } from "components/services/diff";
 import SaveDialog from "./baseComponents/dialogs/SaveDialog";
+import UndoRedoService from "components/services/UndoRedoService";
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
@@ -160,58 +161,60 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     console.log(diff);
     if (!diff) return;
     if (currentBrick && locked) {
-      const brick = applyBrickDiff(currentBrick, diff);
-      console.log(brick);
-      const parsedQuestions: Question[] = questions;
-
-
-      if (diff.questions) {
-        for (const questionKey of Object.keys(diff.questions)) {
-          try {
-            console.log(questionKey);
-            console.log(brick.questions);
-            parseQuestion(brick.questions[questionKey as any], parsedQuestions);
-          } catch (e) {
-            console.log(e);
-          }
-        }
-        if (parsedQuestions.length > 0) {
-          let buildQuestion = GetCashedBuildQuestion();
-          if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
-            parsedQuestions[buildQuestion.questionNumber].active = true;
-          } else {
-            parsedQuestions[0].active = true;
-          }
-          setQuestions(q => update(q, { $set: parsedQuestions }));
-        }
-      }
-
-      if (diff.synthesis) {
-        setSynthesis(brick.synthesis);
-      }
-
-      setCurrentBrick(brick);
+      console.log(diff);
+      applyDiff(diff);
     }
-    // if (props.brick && props.brick.questions && locked) {
-    //   const parsedQuestions: Question[] = [];
-    //   for (const question of props.brick.questions) {
-    //     try {
-    //       parseQuestion(question, parsedQuestions);
-    //     } catch (e) { }
-    //   }
-    //   if (parsedQuestions.length > 0) {
-    //     let buildQuestion = GetCashedBuildQuestion();
-    //     if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
-    //       parsedQuestions[buildQuestion.questionNumber].active = true;
-    //     } else {
-    //       parsedQuestions[0].active = true;
-    //     }
-    //     setQuestions(q => update(q, { $set: parsedQuestions }));
-    //     setStatus(s => update(s, { $set: true }));
-    //   }
-    //   setSynthesis(props.brick.synthesis);
-    // }
   })
+
+  const applyDiff = (diff: any) => {
+    const brick = applyBrickDiff(currentBrick, diff);
+    console.log(brick);
+    const parsedQuestions: Question[] = questions;
+
+
+    if (diff.questions) {
+      for (const questionKey of Object.keys(diff.questions)) {
+        try {
+          console.log(questionKey);
+          console.log(brick.questions);
+          parseQuestion(brick.questions[questionKey as any], parsedQuestions);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+      if (parsedQuestions.length > 0) {
+        let buildQuestion = GetCashedBuildQuestion();
+        if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
+          parsedQuestions[buildQuestion.questionNumber].active = true;
+        } else {
+          parsedQuestions[0].active = true;
+        }
+        setQuestions(q => update(q, { $set: parsedQuestions }));
+      }
+    }
+
+    if (diff.synthesis) {
+      setSynthesis(brick.synthesis);
+    }
+
+    setCurrentBrick(brick);
+  }
+
+  const undo = () => {
+    const diff = UndoRedoService.instance.undo();
+    if(diff) {
+      applyDiff(diff);
+      updateBrick(diff);
+    }
+  }
+
+  const redo = () => {
+    const diff = UndoRedoService.instance.redo();
+    if(diff) {
+      applyDiff(diff);
+      updateBrick(diff);
+    }
+  }
 
   if (!props.brick) {
     return <PageLoader content="...Loading..." />;
@@ -489,6 +492,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (canEdit === true) {
       console.log('save brick')
       const diff = getBrickDiff(currentBrick, brick);
+      const backwardDiff = getBrickDiff(brick, currentBrick);
+      UndoRedoService.instance.push({
+        forward: diff,
+        backward: backwardDiff
+      });
       updateBrick(diff);
       setCurrentBrick(brick);
       props.saveBrick(brick);
