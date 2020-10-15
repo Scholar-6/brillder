@@ -666,7 +666,19 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     return length + ' Bricks found';
   }
 
+  renderMainTitle(filterSubjects: number[]) {
+    if (filterSubjects.length === 1) {
+      const subjectId = filterSubjects[0];
+      const subject = this.state.subjects.find(s => s.id == subjectId);
+      return subject.name;
+    } else if (filterSubjects.length > 1) {
+      return "Filtered";
+    }
+    return "ALL BRICKS";
+  }
+
   render() {
+    const filterSubjects = this.getCheckedSubjectIds();
     const { history } = this.props;
     return (
       <div className="main-listing dashboard-page">
@@ -698,8 +710,8 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
-              <div className="brick-row-title">
-                {this.state.finalBricks.length > 0 && 'ALL BRICKS'}
+              <div className="brick-row-title uppercase">
+                {this.state.finalBricks.length > 0 && this.renderMainTitle(filterSubjects)}
               </div>
               {this.props.user &&
                 <PrivateCoreToggle
@@ -721,7 +733,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
               <Hidden only={["xs"]}>
-                {!this.state.isSearching
+                {!this.state.isSearching && filterSubjects.length === 0
                   ? <div className="bricks-list">{this.renderYourBrickRow()}</div>
                   : <div className="main-brick-container">
                       <div className="centered text-theme-dark-blue title">
