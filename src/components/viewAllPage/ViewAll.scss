@@ -12,6 +12,37 @@
   .view-all-toggle {
     position: absolute;
   }
+
+  .no-found {
+    margin-bottom: 0 !important;
+  }
+
+  .create-button, .recomend-button {
+    color: var(--theme-dark-blue);
+    font-size: 1.5vw;
+    font-family: $font-family-bold;
+    @extend %flexCenter;
+    svg {
+      color: var(--theme-orange);
+      width: 4vw;
+    }
+  }
+
+  .create-button {
+    margin-left: 12vw;
+    svg {
+      margin-top: calc(#{$bricks-height / 90});
+      max-height: calc(#{$bricks-height / 12});
+    }
+  }
+  .recomend-button {
+    margin-left: 10vw;
+    svg {
+      stroke-width: 2;
+      margin-top: calc(#{$bricks-height / 90});
+      max-height: calc(#{$bricks-height / 15});
+    }
+  }
 }
 
 .mobile-category {
