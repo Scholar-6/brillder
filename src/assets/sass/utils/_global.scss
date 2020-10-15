@@ -348,6 +348,12 @@ h3 {
   text-transform: uppercase;
 }
 
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .dropzone {
   margin: 0;
   border: 2px dashed var(--gray-alpha5) !important;

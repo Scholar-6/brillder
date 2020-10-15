@@ -27,6 +27,15 @@
       max-height: 1.9vh;
       // overflow-y: hidden;
       margin-bottom: 0.5vh;
+      width: 100%;
+      display: flex;
+      > span {
+        margin: 0 0.5vw;
+        @extend %ellipsis;
+        &:first-child {
+          margin-left: 0;
+        }
+      }
     }
     .hovered-open-question {
       font-family: $font-family-regular-italic;
