@@ -677,6 +677,36 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     return "ALL BRICKS";
   }
 
+  renderFirstRow(filterSubjects: number[]) {
+    if (this.state.finalBricks.length === 0) {
+      return (
+        <div className="main-brick-container">
+          <div className="centered text-theme-dark-blue title no-found">
+            Sorry, no bricks found
+          </div>
+          <div className="create-button">
+            <SpriteIcon name="trowel" />
+            Create One
+          </div>
+          <div className="recomend-button">
+            <SpriteIcon name="user-plus"/>
+            Recommend a Builder
+          </div>
+        </div>
+      );
+    }
+    if (this.state.isSearching || filterSubjects.length !== 0) {
+      return (
+        <div className="main-brick-container">
+          <div className="centered text-theme-dark-blue title">
+            {this.renderTitle()}
+          </div>
+        </div>
+      );
+    }
+    return <div className="bricks-list">{this.renderYourBrickRow()}</div>;
+  }
+
   render() {
     const filterSubjects = this.getCheckedSubjectIds();
     const { history } = this.props;
@@ -711,7 +741,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
               <div className="brick-row-title uppercase">
-                {this.state.finalBricks.length > 0 && this.renderMainTitle(filterSubjects)}
+                {this.renderMainTitle(filterSubjects)}
               </div>
               {this.props.user &&
                 <PrivateCoreToggle
@@ -733,14 +763,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
               <Hidden only={["xs"]}>
-                {!this.state.isSearching && filterSubjects.length === 0
-                  ? <div className="bricks-list">{this.renderYourBrickRow()}</div>
-                  : <div className="main-brick-container">
-                      <div className="centered text-theme-dark-blue title">
-                        {this.renderTitle()}
-                      </div>
-                    </div>
-                }
+                {this.renderFirstRow(filterSubjects)}
                 <div className="bricks-list">{this.renderSortedBricks()}</div>
               </Hidden>
               <Hidden only={["sm", "md", "lg", "xl"]}>
