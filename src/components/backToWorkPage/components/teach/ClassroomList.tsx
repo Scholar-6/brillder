@@ -49,15 +49,6 @@ interface ClassroomListProps {
     );
   }
 
-  renderStudentsList(c: TeachClassroom, a: Assignment) {
-    if (!this.props.activeClassroom) return "";
-    return (
-      <div>
-        {c.students.map((s, i) => this.renderStudent(s, i, a.studentStatus))}
-      </div>
-    );
-  }
-
   renderTeachListItem(c: TeachListItem, i: number) {
     if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
       if (c.assignment && c.classroom) {
@@ -68,7 +59,6 @@ interface ClassroomListProps {
               expand={this.props.expand.bind(this)}
               key={i} classroom={c.classroom} assignment={c.assignment}
             />
-            {this.renderStudentsList(c.classroom, c.assignment)}
           </div>
         );
       }
