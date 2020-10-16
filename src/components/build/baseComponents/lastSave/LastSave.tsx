@@ -12,7 +12,6 @@ interface LastSaveProps {
 }
 
 const LastSave: React.FC<LastSaveProps> = (props) => {
-  const updated = new Date(props.updated);
   const [isSaving, setSaving] = React.useState(props.isSaving);
   // eslint-disable-next-line
   const [saveTimeout, setSaveTimeout] = React.useState(null as any);

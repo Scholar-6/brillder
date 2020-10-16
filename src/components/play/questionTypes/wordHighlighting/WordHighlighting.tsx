@@ -108,7 +108,9 @@ class WordHighlighting extends CompComponent<
         className={className}
         onClick={() => this.highlighting(index)}
       >
-        {word.text} </span>
+        {word.text}
+        {word.isBreakLine ? <br/> : ""}
+      </span>
     );
   }
 
