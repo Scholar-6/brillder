@@ -7,7 +7,7 @@ interface ShortDescriptionProps {
 
 const SearchText: React.FC<ShortDescriptionProps> = (props) => {
   const getMatches = (text: string, searchString: string) => {
-    const matches:RegExpExecArray[] = [];
+    const matches: RegExpExecArray[] = [];
     const re = new RegExp(searchString, 'gi');
     let match = null;
     while ((match = re.exec(text)) != null) {
@@ -22,7 +22,7 @@ const SearchText: React.FC<ShortDescriptionProps> = (props) => {
     for (let match of matches) {
       let part = text.substr(start, match.index - start);
       res.push(<span key={start}>{part}</span>);
-      res.push(<span key={start+1} className="search-highlight">{match[0]}</span>)
+      res.push(<span key={start + 1} className="search-highlight">{match[0]}</span>)
       start = match.index + match[0].length;
     }
     const lastPart = text.substr(start, text.length);

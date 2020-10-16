@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
-import { TeachClassroom } from "model/classroom";
+import { TeachClassroom, TeachStudent } from "model/classroom";
 import { TeachFilters } from '../../model';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
@@ -13,6 +13,7 @@ enum TeachFilterFields {
 interface FilterSidebarProps {
   classrooms: TeachClassroom[];
   activeClassroom: TeachClassroom | null;
+  setActiveStudent(s: TeachStudent): void;
   setActiveClassroom(id: number | null): void;
   filterChanged(filters: TeachFilters): void;
 }
@@ -93,9 +94,11 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             </div>
           </div>
         </div>
-        {c.active ? c.students.map((s, i2) =>
-          <div className="student-row" key={i2}><span className="student-name">{s.firstName} {s.lastName}</span></div>
-        ) : ""}
+        {c.active && c.students.map((s, i2) =>
+          <div className="student-row" key={i2} onClick={() => this.props.setActiveStudent(s)}>
+            <span className="student-name">{s.firstName} {s.lastName}</span>
+          </div>
+        )}
       </div>
     );
   }
@@ -174,7 +177,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             }}>
           </button>
         </div>
-        {this.state.filterExpanded === true ? (
+        {this.state.filterExpanded === true && (
           <div className="filter-container subject-indexes-box">
             <div className="index-box color1">
               <FormControlLabel
@@ -193,9 +196,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
               <div className="right-index" style={{ height: 'auto' }}>{completedCount}</div>
             </div>
           </div>
-        ) : (
-            ""
-          )}
+        )}
       </div>
     );
   };

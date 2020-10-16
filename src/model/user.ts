@@ -33,6 +33,7 @@ export interface UserBase {
 export interface User extends UserBase {
   roles: UserRole[];
   rolePreference?: UserRole;
+  hasPlayedBrick: boolean;
 }
 
 export interface UserProfile extends UserBase {
