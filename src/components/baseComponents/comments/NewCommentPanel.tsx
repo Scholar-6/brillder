@@ -40,7 +40,7 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
           />
         </form>
       </div>
-      <div>
+      <div className="comment-action-buttons">
         <Button className="comment-action-button post" onClick={() => handlePostComment()} disabled={text === ""}>POST</Button>
         <Button className="comment-action-button cancel" onClick={() => setText("")} disabled={text === ""}>CLEAR</Button>
       </div>
