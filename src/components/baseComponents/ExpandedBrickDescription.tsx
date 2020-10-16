@@ -32,10 +32,9 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
       let res = [];
       for (let editor of editors) {
         if (i > 0) {
-          res.push(<span key={1}>, </span>)
+          res.push(<span key={1}>,</span>)
         }
         res.push(<SearchText key={2} searchString={searchString} text={editor.firstName} />);
-        res.push(' ');
         res.push(<SearchText key={3} searchString={searchString} text={editor.lastName} />);
         i++;
       }
