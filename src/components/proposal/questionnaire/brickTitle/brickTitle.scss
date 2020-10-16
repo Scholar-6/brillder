@@ -23,7 +23,14 @@
 
       @include tabletL {
         font-size: 3.6vw;
-        margin: 4.7vh 0;
+        padding: 4.7vh 0;
+      }
+
+      .subject-text {
+        color: var(--theme-orange);
+        margin-left: 18vw;
+        font-size: 3vh;
+        text-align: left;
       }
     }
 
