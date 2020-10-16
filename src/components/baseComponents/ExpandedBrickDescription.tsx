@@ -35,8 +35,8 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           res.push(<span key={1}>, </span>)
         }
         res.push(<SearchText key={2} searchString={searchString} text={editor.firstName} />);
-        res.push(<span key={3}> </span>);
-        res.push(<SearchText key={4} searchString={searchString} text={editor.lastName} />);
+        res.push(' ');
+        res.push(<SearchText key={3} searchString={searchString} text={editor.lastName} />);
         i++;
       }
       return res;
@@ -113,7 +113,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
             <SearchText searchString={searchString} text={brick.openQuestion} />
           </div>
           <div className="link-info">{this.getSubjectRow(brick)}</div>
-          <div className="link-info">Editor(s): {this.getEditors(brick, searchString)}</div>
+          <div className="link-info">Editor(s): &nbsp; {this.getEditors(brick, searchString)}</div>
         </div>
         <div className="hover-icons-row">
           {this.renderCircle(color)}
