@@ -20,7 +20,7 @@ interface AssignedDescriptionProps {
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   renderVertical(assignmentId: number, color: string) {
-    const {isExpanded} = this.props;
+    const { isExpanded } = this.props;
     return (
       <div
         className="vertical-brick"
@@ -37,20 +37,20 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
         }}
       >
         <div>
-        <div className="brick-top" style={{ background: color }}></div>
-        <div className="brick-top-middle" style={{ background: color }}></div>
-        <div className="brick-middle" style={{ background: color }}>
-          <SpriteIcon name={isExpanded ? "minimize" : "maximize"} className="active" />
-        </div>
-        <div className="brick-bottom-middle" style={{ background: color }}></div>
-        <div className="brick-bottom" style={{ background: color }}></div>
+          <div className="brick-top" style={{ background: color }}></div>
+          <div className="brick-top-middle" style={{ background: color }}></div>
+          <div className="brick-middle" style={{ background: color }}>
+            <SpriteIcon name={isExpanded ? "minimize" : "maximize"} className="active" />
+          </div>
+          <div className="brick-bottom-middle" style={{ background: color }}></div>
+          <div className="brick-bottom" style={{ background: color }}></div>
         </div>
       </div>
     );
   }
 
   renderStatus(studentStatus: StudentStatus[]) {
-    let {length} = this.props.classroom.students;
+    let { length } = this.props.classroom.students;
     if (length !== studentStatus.length) {
       return <SpriteIcon name="reminder" className="active reminder-icon" />;
     }
@@ -89,7 +89,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)}
           </div>
           <div className="link-info">
-            { assignment.deadline ? <span> Deadline: {getFormattedDate(assignment.deadline)}</span> : "" }
+            {assignment.deadline ? <span> Deadline: {getFormattedDate(assignment.deadline)}</span> : ""}
           </div>
         </div>
         <div className="reminder-container">

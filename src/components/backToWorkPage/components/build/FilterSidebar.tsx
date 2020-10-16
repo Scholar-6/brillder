@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
 import { Brick, BrickStatus } from "model/brick";
-import { SortBy, Filters } from '../../model';
+import { SortBy, Filters, ThreeColumns } from '../../model';
 import { clearStatusFilters } from '../../service';
 
 
@@ -14,7 +14,8 @@ enum FilterFields {
 }
 
 interface FilterSidebarProps {
-  rawBricks: Brick[];
+  finalBricks: Brick[];
+  threeColumns: ThreeColumns;
   filters: Filters;
   sortBy: SortBy;
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
@@ -63,20 +64,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     }
   }
 
-  renderIndexesBox = () => {
-    let build = 0;
-    let edit = 0;
-    for (let b of this.props.rawBricks) {
-      if (b.status === BrickStatus.Draft) {
-        build += 1;
-      }
-    }
-
-    for (let b of this.props.rawBricks) {
-      if (b.status !== BrickStatus.Draft) {
-        edit += 1;
-      }
-    }
+  renderIndexesBox = (viewAll: number, build: number, edit: number) => {
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box">
@@ -86,7 +74,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
           <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")}
             onClick={this.props.showAll}>
             View All
-					<div className="right-index">{this.props.rawBricks.length}</div>
+					<div className="right-index">{viewAll}</div>
           </div>
           <div className={"index-box " + (this.props.filters.buildAll ? "active" : "")}
             onClick={this.props.showBuildAll}>
@@ -103,21 +91,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     );
   };
 
-  renderSortAndFilterBox = () => {
-    let draft = 0;
-    let build = 0;
-    let review = 0;
-
-    for (let b of this.props.rawBricks) {
-      if (b.status === BrickStatus.Draft) {
-        draft += 1;
-      } else if (b.status === BrickStatus.Build) {
-        build += 1;
-      } else if (b.status === BrickStatus.Publish) {
-        review += 1;
-      }
-    }
-
+  renderSortAndFilterBox = (draft: number, build: number, review: number) => {
     return (
       <div className="sort-box">
         <div className="filter-header" style={{marginTop: '5vh', marginBottom: '3vh'}}>
@@ -170,10 +144,43 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   };
 
   render() {
+    let draft = 0;
+    let build = 0;
+    let publication = 0;
+    let viewAll = 0;
+
+    const {threeColumns, finalBricks} = this.props;
+
+    if (this.props.filters.viewAll) {
+      draft = threeColumns.red.finalBricks.length;
+      build = threeColumns.yellow.finalBricks.length;
+      publication = threeColumns.green.finalBricks.length;
+      viewAll = draft + build + publication;
+    } else {
+      for (let b of finalBricks) {
+        if (b.status === BrickStatus.Draft) {
+          draft += 1;
+        } else if (b.status === BrickStatus.Build) {
+          build += 1;
+        } else if (b.status === BrickStatus.Review) {
+          publication += 1;
+        }
+      }
+      viewAll = draft + build + publication;
+    }
+
+    if (this.props.filters.publish) {
+      for (let b of finalBricks) {
+        if (b.status === BrickStatus.Publish) {
+          viewAll += 1;
+        }
+      }
+    }
+
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
-        {this.renderIndexesBox()}
-        {!this.props.filters.publish && this.renderSortAndFilterBox()}
+        {this.renderIndexesBox(viewAll, draft + build, draft)}
+        {!this.props.filters.publish && this.renderSortAndFilterBox(draft, build, publication)}
       </Grid>
     );
   }

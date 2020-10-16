@@ -132,11 +132,15 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       }
     }
     if (this.props.isBookPreview) {
-      let state = this.getBookState(answer.index);
-      if (state === 1) {
-        className += " correct";
-      } else {
-        className += " wrong";
+      try {
+        let state = this.getBookState(answer.index);
+        if (state === 1) {
+          className += " correct";
+        } else {
+          className += " wrong";
+        }
+      } catch {
+        console.log('can`t find pair match answer');
       }
     }
     return (
@@ -176,7 +180,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
           }
           </List>
           {
-            this.props.isBookPreview ? 
+            this.props.isBookPreview || this.props.isPreview ? 
             <div className="answers-list">
               {this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))}
             </div>

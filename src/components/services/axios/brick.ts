@@ -1,3 +1,4 @@
+import { AssignmentBrick } from 'model/assignment';
 import { Brick, BrickStatus } from 'model/brick';
 
 import {get, put, post, axiosDelete} from './index';
@@ -48,7 +49,7 @@ export const getCurrentUserBricks = async () => {
 
 export const getAssignedBricks = async () => {
   try {
-    return await get<any[]>("/bricks/assigned"); 
+    return await get<AssignmentBrick[]>("/bricks/assigned"); 
   } catch (e) {
     return null;
   }

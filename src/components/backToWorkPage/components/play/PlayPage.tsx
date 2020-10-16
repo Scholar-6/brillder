@@ -36,6 +36,8 @@ interface PlayState {
   threeColumns: ThreeAssignmentColumns;
   finalAssignments: AssignmentBrick[];
   rawAssignments: AssignmentBrick[];
+  activeClassroomId: number;
+  classrooms: any[];
   sortedIndex: number;
   pageSize: number;
   isAdmin: boolean;
@@ -75,6 +77,8 @@ class PlayPage extends Component<PlayProps, PlayState> {
       finalAssignments: [],
       rawAssignments: [],
       threeColumns,
+      classrooms: [],
+      activeClassroomId: -1,
 
       isCore,
       
@@ -110,9 +114,19 @@ class PlayPage extends Component<PlayProps, PlayState> {
   }
 
   setAssignments(assignments: AssignmentBrick[]) {
+    let classrooms:any[] = [];
+    for (let assignment of assignments) {
+      if (assignment.classroom) {
+        const found = classrooms.find(c => c.id === assignment.classroom.id);
+        if (!found) {
+          classrooms.push(assignment.classroom);
+        }
+      }
+    }
+
     const finalAssignments = this.getFilteredAssignemnts(assignments, this.state.isCore);
     const threeColumns = service.prepareThreeAssignmentRows(finalAssignments);
-    this.setState({ ...this.state, finalAssignments: finalAssignments, rawAssignments: assignments, threeColumns });
+    this.setState({ ...this.state, classrooms, finalAssignments, rawAssignments: assignments, threeColumns });
   }
 
   onThreeColumnsMouseHover(index: number, status: AssignmentBrickStatus) {
@@ -287,12 +301,32 @@ class PlayPage extends Component<PlayProps, PlayState> {
   }
   //#endregion
 
+  setActiveClassroom(classroomId: number) {
+    let {filters} = this.state;
+    let assignments = this.state.rawAssignments;
+    if (classroomId > 0) {
+      assignments = this.state.rawAssignments.filter(s => s.classroom?.id === classroomId);
+      filters.submitted = false;
+      filters.completed = false;
+      filters.checked = false;
+    } else {
+      filters.viewAll = true;
+    }
+    const finalAssignments = this.getFilteredAssignemnts(assignments, this.state.isCore);
+    const threeColumns = service.prepareThreeAssignmentRows(finalAssignments);
+
+    this.setState({activeClassroomId: classroomId, finalAssignments, threeColumns, filters});
+  }
+
   render() {
     return (
       <Grid container direction="row" className="sorted-row">
         <PlayFilterSidebar
           filters={this.state.filters}
+          activeClassroomId={this.state.activeClassroomId}
           assignments={this.state.finalAssignments}
+          setActiveClassroom={this.setActiveClassroom.bind(this)}
+          classrooms={this.state.classrooms}
           filterChanged={this.playFilterUpdated.bind(this)}
         />
         <Grid item xs={9} className="brick-row-container">

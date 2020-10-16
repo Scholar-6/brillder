@@ -6,7 +6,7 @@ import './TeachPage.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
-import { TeachClassroom } from "model/classroom";
+import { TeachClassroom, TeachStudent } from "model/classroom";
 import { getAllClassrooms } from "components/teach/service";
 import { User } from "model/user";
 import { Subject } from "model/brick";
@@ -21,6 +21,7 @@ import ClassroomList from './ClassroomList';
 import ExpandedAssignment from './ExpandedAssignment';
 import { getAssignmentStats } from "components/services/axios/stats";
 import { ApiAssignemntStats } from "model/stats";
+import ActiveStudentBricks from "./ActiveStudentBricks";
 
 interface TeachProps {
   history: any;
@@ -45,6 +46,7 @@ interface TeachState {
   classrooms: TeachClassroom[];
   activeClassroom: TeachClassroom | null;
   activeAssignment: Assignment | null;
+  activeStudent: TeachStudent | null;
   assignmentStats: ApiAssignemntStats | null;
   totalCount: number;
 
@@ -73,6 +75,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       activeClassroom: null,
       activeAssignment: null,
       assignmentStats: null,
+      activeStudent: null,
 
       totalCount: 0,
 
@@ -103,15 +106,19 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
+  setActiveStudent(activeStudent: TeachStudent) {
+    this.setState({activeStudent});
+  }
+
   setActiveClassroom(id: number | null) {
     this.collapseClasses();
     const { classrooms } = this.state;
     let classroom = classrooms.find(c => c.id === id);
     if (classroom) {
       classroom.active = true;
-      this.setState({ sortedIndex: 0, classrooms, activeClassroom: classroom, activeAssignment: null, assignmentStats: null });
+      this.setState({ sortedIndex: 0, classrooms, activeClassroom: classroom, activeAssignment: null, activeStudent: null, assignmentStats: null });
     } else {
-      this.setState({ sortedIndex: 0, activeClassroom: null, activeAssignment: null, assignmentStats: null });
+      this.setState({ sortedIndex: 0, activeClassroom: null, activeStudent: null, activeAssignment: null, assignmentStats: null });
     }
   }
 
@@ -217,6 +224,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           classrooms={this.state.classrooms}
           activeClassroom={this.state.activeClassroom}
           setActiveClassroom={this.setActiveClassroom.bind(this)}
+          setActiveStudent={this.setActiveStudent.bind(this)}
           filterChanged={this.teachFilterUpdated.bind(this)}
         />
         <Grid item xs={9} className="brick-row-container">
@@ -232,7 +240,10 @@ class TeachPage extends Component<TeachProps, TeachState> {
               {this.renderLiveBricksButton()}
               {this.renderArchiveButton()}
             </div>
-            {this.state.activeAssignment && this.state.assignmentStats && this.state.activeClassroom ?
+            {this.state.activeStudent &&
+              <ActiveStudentBricks activeStudent={this.state.activeStudent} />
+            }
+            {this.state.activeAssignment && this.state.assignmentStats && this.state.activeClassroom && !this.state.activeStudent ?
               <ExpandedAssignment
                 classroom={this.state.activeClassroom}
                 assignment={this.state.activeAssignment}

@@ -152,6 +152,7 @@
     .front,
     .front-cover,
     .back,
+    .book-page,
     .page1,
     .page1-cover,
     .page2,
@@ -174,6 +175,27 @@
       transition: transform 1s ease-in-out, box-shadow 0.7s ease-in-out;
       border-bottom-right-radius: $book-radius;
       border-top-right-radius: $book-radius;
+    }
+
+    .book-page {
+      background: #fafafa;
+      border-bottom-left-radius: $book-radius !important;
+      border-top-left-radius: $book-radius !important;
+      overflow-y: auto;
+      > div {
+        border-bottom-right-radius: $book-radius !important;
+        border-top-right-radius: $book-radius !important;
+      }
+
+      > .flipped-page {
+        border-bottom-left-radius: $book-radius !important;
+        border-top-left-radius: $book-radius !important;
+      }
+    }
+
+    .synthesis-page {
+      border-bottom-left-radius: 0 !important;
+      border-top-left-radius: 0 !important;
     }
 
     .front,
@@ -265,18 +287,23 @@
       color: #d3d4d5;
     }
 
+    .front-cover {
+      background: #efefef;
+    }
+
     .page4-attempts {
       padding-top: 5vh;
       overflow-y: auto;
       .attempt-info {
         cursor: pointer;
+        width: 24.5vw;
         padding-top: 0.5vh;
         padding-bottom: 0.5vh;
         margin-left: 3vw;
         display: flex;
         align-items: center;
         line-height: 1;
-        font-size: 2vw;
+        font-size: 1.3vw;
 
         .percentage {
           @extend %flexCenter;
@@ -352,7 +379,7 @@
             bottom: 0;
             font-size: 1.2vw;
             letter-spacing: 0.1vw;
-            margin-left: 4vw;
+            margin-left: 6vw;
             @extend %flexCenter;
 
             svg {
@@ -373,12 +400,25 @@
       background: #efefef;
     }
 
+    .introduction-brief {
+      .intro-header {
+        text-transform: uppercase;
+        font-family: $font-family-black;
+      }
+    }
+
     .page3, .page3-cover {
       background: #f5f5f5;
     }
 
     .page4 {
       background: #f5f5f5;
+    }
+    .synthesis-page {
+      color: var(--theme-dark-blue);
+      h2 {
+        text-align: center;
+      }
     }
   }
   $scale: 1.15;
@@ -472,29 +512,70 @@
       .page1 {
         transform: rotateY(-159.5deg) scale($scale);
       }
+      .introduction-brief {
+        transform: rotateY(-49.5deg) scale($scale);
+      }
+      .introduction-prep {
+        transform: rotateY(-30deg) scale($scale);
+      }
+      .page6 {
+        transform: rotateY(-30deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 8;
+      }
+    }
+
+    &.introduction {
+      .page2 {
+        transform: rotateY(-179.2deg) scale($scale);
+      }
+      .page3-empty {
+        transform: rotateY(-179deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 5;
+      }
+
+      .page4-attempts {
+        transform: rotateY(-176.5deg) scale($scale);
+      }
+
+      .introduction-brief {
+        transform: rotateY(-176deg) scale($scale);
+      }
+
+      .introduction-prep {
+        transform: rotateY(-4deg) scale($scale);
+      }
 
       .page3 {
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 6;
         &.first {
-          transform: rotateY(-49.6deg) scale($scale);
+          transform: rotateY(-3.5deg) scale($scale);
         }
       }
 
+      .front, .front-cover, .page1-cover, .page1 {
+        transform: rotateY(-180deg) scale($scale);
+      }
+
       .page3-cover.first {
-        transform: rotateY(-49.9deg) scale($scale);
+        transform: rotateY(-3.5 deg) scale($scale);
       }
 
       .page4 {
         &.first {
-          transform: rotateY(-31deg) scale($scale);
+          transform: rotateY(-3.5deg) scale($scale);
         }
       }
 
       .page6 {
-        transform: rotateY(-30deg) scale($scale);
+        transform: rotateY(-3deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 8;
+      }
+      .back {
+        transform: rotateY(0.5deg) scale($scale);
       }
     }
 
@@ -560,6 +641,95 @@
 
       .back {
         transform: rotateY(0.5deg) scale($scale);
+      }
+      .introduction-brief {
+        transform: rotateY(-178.3deg) scale($scale);
+      }
+      .introduction-prep {
+        transform: rotateY(-178.3deg) scale($scale);
+      }
+      .synthesis-page {
+        transform: rotateY(-2deg) scale($scale);
+      }
+    }
+    &.synthesis {
+      .front {
+        transform: rotateY(-181deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 10;
+      }
+
+      .front-cover {
+        transform: rotateY(-180deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        background: #efefef;
+      }
+
+      .page3-empty, .page4-attempts {
+        transform: rotateY(-180deg) scale($scale);
+      }
+
+      .back {
+        transform: rotateY(0.4deg) scale($scale);
+      }
+
+      .page1 {
+        transform: rotateY(-180deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 5;
+      }
+
+      .page2 {
+        transform: rotateY(-180deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 4;
+      }
+
+      .page3 {
+        transform: rotateY(-178deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 6;
+        color: var(--theme-dark-blue);
+      }
+
+      .page3-cover {
+        transform: rotateY(-180deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 6;
+      }
+
+      .page4 {
+        transform: rotateY(-180deg) scale($scale);
+      }
+
+      .last-question-result {
+        transform: rotateY(-131deg) scale($scale);
+        box-shadow: none;
+        z-index: 7;
+        color: var(--theme-dark-blue);
+      }
+
+      .page6 {
+        transform: rotateY(0.5deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 8;
+      }
+
+      .back {
+        transform: rotateY(0.5deg) scale($scale);
+      }
+      .introduction-brief {
+        transform: rotateY(-178.3deg) scale($scale);
+      }
+      .introduction-prep {
+        transform: rotateY(-178.3deg) scale($scale);
+      }
+      .last-question-cover {
+        transform: rotateY(-130deg) scale($scale);
+      }
+      .synthesis-page {
+        transform: rotateY(-50deg) scale($scale);
       }
     }
     .wrong {

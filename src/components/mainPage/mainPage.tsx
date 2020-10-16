@@ -18,6 +18,8 @@ import WelcomeComponent from './WelcomeComponent';
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { getAssignedBricks } from "components/services/axios/brick";
+import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -47,6 +49,12 @@ interface MainPageState {
   isPolicyOpen: boolean;
   notificationExpanded: boolean;
   isTeacher: boolean;
+
+  // for students
+  backWorkActive: boolean;
+  isMyLibraryOpen: boolean;
+  isBackToWorkOpen: boolean;
+  isTryBuildOpen: boolean;
 }
 
 class MainPage extends Component<MainPageProps, MainPageState> {
@@ -59,8 +67,24 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       swiper: null,
       isPolicyOpen: false,
       notificationExpanded: false,
+      backWorkActive: false,
+      isMyLibraryOpen: false,
+      isBackToWorkOpen: false,
+      isTryBuildOpen: false,
       isTeacher: checkTeacherOrAdmin(props.user.roles)
     } as any;
+
+    const {rolePreference} = props.user;
+    if (rolePreference?.roleId === UserType.Student) {
+      this.preparationForStudent();
+    }
+  }
+
+  async preparationForStudent() {
+    let bricks = await getAssignedBricks();
+    if (bricks && bricks.length > 0) {
+      this.setState({backWorkActive: true});
+    }
   }
 
   setPolicyDialog(isPolicyOpen: boolean) {
@@ -118,30 +142,36 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderLibraryButton() {
-    let isActive = false;
+    let isActive = this.props.user.hasPlayedBrick;
     return (
-      <div className="back-item-container" onClick={() => {
-        if (isActive) { }
+      <div className="back-item-container my-library" onClick={() => {
+        if (isActive) { 
+          this.props.history.push(map.BackToWorkLearnTab);
+        } else {
+          this.setState({isMyLibraryOpen: true});
+        }
       }}>
-        <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover' : ''}`}>
-          <SpriteIcon name="library-book" className="active text-theme-orange" />
-          <span className="item-description">Back To Work</span>
+        <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange svgOnHover' : 'text-theme-dark-blue'}`}>
+          <SpriteIcon name="library-book" className="active" />
+          <span className={`item-description ${isActive ? '' : 'disabled'}`}>My Library</span>
         </button>
       </div>
     );
   }
 
   renderStudentWorkButton() {
-    let isActive = false;
+    let isActive = this.state.backWorkActive;
     return (
-      <div className="back-item-container" onClick={() => {
+      <div className="back-item-container student-back-work" onClick={() => {
         if (isActive) {
           this.props.history.push("/back-to-work");
+        } else {
+          this.setState({isBackToWorkOpen: true});
         }
       }}>
-        <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover' : ''}`}>
-          <SpriteIcon name="student-back-to-work" className="active text-theme-orange" />
-          <span className="item-description">Back To Work</span>
+        <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover text-theme-orange' : 'text-theme-dark-blue'}`}>
+          <SpriteIcon name="student-back-to-work" className="active"/>
+          <span className={`item-description ${isActive ? '' : 'disabled'}`}>Back To Work</span>
         </button>
       </div>
     );
@@ -231,13 +261,19 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       );
     }
     const { rolePreference } = this.props.user;
-    let isActive = false;
+    let isActive = this.props.user.hasPlayedBrick;
     if (rolePreference && rolePreference.roleId === UserType.Student) {
       return (
-        <div className="create-item-container" onClick={() => this.creatingBrick()}>
-          <button className={`btn btn-transparent ${isActive ? 'zoom-item svgOnHover text-theme-orange active' : 'text-theme-light-blue'}`}>
-            <SpriteIcon name="trowel-home" className="active" />
-            <span className="item-description">Try building?</span>
+        <div className="create-item-container" onClick={() => {
+          if (isActive) {
+            this.creatingBrick()
+          } else {
+            this.setState({isTryBuildOpen: true});
+          }
+        }}>
+          <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
+            <SpriteIcon name="trowel-home" />
+            <span className={`item-description ${isActive ? '' : 'disabled'}`}>Try building?</span>
           </button>
         </div>
       );
@@ -325,6 +361,18 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         {this.renderDesktopPage()}
         {this.renderMobilePage()}
         <PolicyDialog isOpen={this.state.isPolicyOpen} close={() => this.setPolicyDialog(false)} />
+        <LockedDialog
+          label="Play a brick to unlock this"
+          isOpen={this.state.isMyLibraryOpen}
+          close={() => this.setState({isMyLibraryOpen: false})} />
+        <LockedDialog
+          label="To unlock this, a brick needs to have been assigned to you"
+          isOpen={this.state.isBackToWorkOpen}
+          close={() => this.setState({isBackToWorkOpen: false})} />
+        <LockedDialog
+          label="Play a brick to unlock this"
+          isOpen={this.state.isTryBuildOpen}
+          close={() => this.setState({isTryBuildOpen: false})} />
       </Grid>
     );
   }

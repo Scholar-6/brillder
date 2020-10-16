@@ -3,15 +3,11 @@ import Grid from "@material-ui/core/Grid";
 import { History } from "history";
 import { connect } from "react-redux";
 
-import sprite from "assets/img/icons-sprite.svg";
 import "./PostPlay.scss";
 import { ReduxCombinedState } from "redux/reducers";
 import { Brick, Subject } from "model/brick";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
-
-import HomeButton from "components/baseComponents/homeButton/HomeButton";
-import QuestionPlay from "components/play/questionPlay/QuestionPlay";
 import { BrickFieldNames, PlayButtonStatus } from "../proposal/model";
 import {
   ApiQuestion,
@@ -19,19 +15,30 @@ import {
 } from "components/build/questionService/QuestionService";
 import { Question } from "model/question";
 import { getAttempts } from "components/services/axios/attempt";
-import { AttemptAnswer, PlayAttempt } from "model/attempt";
-import PageLoader from "components/baseComponents/loaders/pageLoader";
-import { getHours, getMinutes, getFormattedDate } from "components/services/brickService";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { PlayAttempt } from "model/attempt";
 import { Redirect } from "react-router-dom";
 import { loadSubjects } from "components/services/subject";
-import IntroductionPage from "components/play/introduction/Introduction";
-import IntroPage from "./IntroPage";
 
-enum BookState {
+import HomeButton from "components/baseComponents/homeButton/HomeButton";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
+
+import IntroBriefPage from "./bookPages/IntroBriefPage";
+import IntroPrepPage from "./bookPages/IntroPrepPage";
+import FrontPage from "./bookPages/FrontPage";
+import TitlePage from "./bookPages/TitlePage";
+import OverallPage from "./bookPages/OverallPage";
+import AttemptsPage from "./bookPages/AttemptsPage";
+import QuestionPage from "./bookPages/QuestionPage";
+import AnswersPage from "./bookPages/AnswersPage";
+import SynthesisPage from "./bookPages/SynthesisPage";
+
+export enum BookState {
   Titles,
   Attempts,
+  Introduction,
   QuestionPage,
+  Synthesis
 }
 
 interface ProposalProps {
@@ -58,7 +65,7 @@ interface ProposalState {
   subjects: Subject[];
   attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
-  mode: boolean; // live - false, review - true
+  mode?: boolean; // live - false, review - true, undefined - default
 }
 
 class PostPlay extends React.Component<ProposalProps, ProposalState> {
@@ -68,7 +75,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       bookState: BookState.Titles,
       questionIndex: 0,
       animationRunning: false,
-      mode: false,
       activeAttemptIndex: 0,
       attempt: null,
       closeTimeout: -1,
@@ -159,18 +165,34 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.animationFlipRelease();
   }
 
-  nextQuestion(brick: Brick) {
+  moveBackToQuestions() {
+    if (this.state.animationRunning) { return; }
+    this.setState({ bookState: BookState.QuestionPage, animationRunning: true });
+    this.animationFlipRelease();
+  }
+
+  moveToIntroduction() {
+    if (this.state.animationRunning) { return; }
+    this.setState({ bookState: BookState.Introduction, questionIndex: 0, animationRunning: true });
+    this.animationFlipRelease();
+  }
+
+  nextQuestion() {
+    if (!this.state.attempt) { return; }
+    const {brick} = this.state.attempt;
     if (this.state.animationRunning) { return; }
     if (this.state.questionIndex < brick.questions.length - 1) {
       this.setState({ questionIndex: this.state.questionIndex + 1, animationRunning: true });
       this.animationFlipRelease();
+    } else {
+      this.setState({ bookState: BookState.Synthesis});
     }
   }
 
   prevQuestion() {
     if (this.state.animationRunning) { return; }
     if (this.state.questionIndex === 0) {
-      this.setState({ bookState: BookState.Attempts});
+      this.setState({ bookState: BookState.Introduction});
     }
     if (this.state.questionIndex > 0) {
       this.setState({ questionIndex: this.state.questionIndex - 1, animationRunning: true });
@@ -178,102 +200,20 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
-  getAttemptStatus(answers: AttemptAnswer[]) {
-    return !answers.find(a => a.correct === false);
-  }
-
-  renderFirstPage(brick: Brick, color: string) {
-    return (
-      <div className="page1">
-        <div className="flipped-page">
-          <Grid container justify="center">
-            <div className="circle-icon" style={{ background: color }} />
-          </Grid>
-          <div className="proposal-titles">
-            <div className="title">{brick.title}</div>
-            <div>{brick.subTopic}</div>
-            <div>{brick.alternativeTopics}</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  renderSecondPage() {
-    return (
-      <div className="page2" onClick={this.moveToAttempts.bind(this)}>
-        <div className="normal-page">
-          <div className="normal-page-container">
-            <h2>OVERALL</h2>
-            <h2>STATS, AVGs</h2>
-            <h2>etc.</h2>
-            <div className="bottom-button">
-              View Questions
-              <SpriteIcon name="arrow-right" />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  renderThirdPage(brick: Brick, color: string) {  
-    return <IntroPage brick={brick} color={color} moveToTitles={this.moveToTitles.bind(this)} />
-  }
-
-  renderFourthPage() {
-    return (
-      <div className="page4-attempts" onClick={this.moveToQuestions.bind(this)}>
-        {this.state.attempts.map((a, i) =>
-          {
-            const percentages = Math.round(a.score * 100 / a.maxScore);
-            return (
-              <div
-                key={i}
-                className={`attempt-info ${i === this.state.activeAttemptIndex ? 'active' : ''}`}
-                onClick={e => {
-                  e.stopPropagation();
-                  this.setActiveAttempt(a, i);
-                }}
-              >
-                <div className="percentage">{percentages}</div> Attempt {i + 1}
-              </div>
-            );
-          }
-        )}
-      </div>
-    );
-  }
-
   render() {
     if (!this.state.attempt) {
       return <PageLoader content="...Getting Attempt..." />;
     }
-    const { brick, student, timestamp } = this.state.attempt;
+    const { brick, student } = this.state.attempt;
 
     if (!this.state.attempt.liveAnswers) {
+      console.log('redirect has no live answers');
       return <Redirect to="/home" />;
-    }
-
-    let answers = this.state.attempt.liveAnswers;
-    if (this.state.mode) {
-      answers = this.state.attempt.answers;
     }
 
     if (brick.title) {
       setBrillderTitle(brick.title);
     }
-
-    const renderUserRow = () => {
-      const { firstName, lastName } = student;
-
-      return (
-        <div className="names-row">
-          {firstName ? firstName + " " : ""}
-          {lastName ? lastName : ""}
-        </div>
-      );
-    };
 
     let color = "#B0B0AD";
     if (brick.subjectId) {
@@ -285,120 +225,23 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     let bookClass = "book-main-container";
     if (this.state.bookHovered) {
-      if (this.state.bookState === BookState.Titles) {
+      const {bookState} = this.state;
+      if (bookState === BookState.Titles) {
         bookClass += " expanded hovered";
-      } else if (this.state.bookState === BookState.Attempts) {
+      } else if (bookState === BookState.Attempts) {
         bookClass += " expanded attempts-list";
-      } else if (this.state.bookState === BookState.QuestionPage) {
+      } else if (bookState === BookState.Introduction) {
+        bookClass += " expanded introduction";
+      } else if (bookState === BookState.QuestionPage) {
         bookClass += ` expanded question-attempt`;
+      } else if (bookState === BookState.Synthesis) {
+        bookClass += ` expanded synthesis`;
       }
     }
 
     let questions: Question[] = [];
     for (let question of brick.questions) {
       parseQuestion(question as ApiQuestion, questions);
-    }
-
-    const renderQuestionPage = (question: Question, i: number) => {
-      let parsedAnswers = null;
-      try {
-        parsedAnswers = JSON.parse(JSON.parse(answers[i].answer));
-      } catch {}
-
-      let attempt = Object.assign({}, this.state.attempt) as any;
-      attempt.answer = parsedAnswers;
-
-      return (
-        <div
-          className={`page3 ${i === 0 ? 'first' : ''}`}
-          style={getQuestionStyle(i)}
-          onClick={this.prevQuestion.bind(this)}
-        >
-          <div className="flipped-page question-page">
-            <div style={{ display: "flex" }}>
-              <div className="question-number">
-                <div>{i + 1}</div>
-              </div>
-              <div>
-                <h2>Investigation</h2>
-                <QuestionPlay
-                  question={question}
-                  attempt={attempt}
-                  isBookPreview={true}
-                  answers={parsedAnswers}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    const renderAnswersPage = (i: number) => {
-      return (
-        <div
-          className={`page4 result-page ${i === 0 ? 'first' : ''}`}
-          style={getResultStyle(i)}
-          onClick={() => this.nextQuestion(brick)}
-        >
-          <h2>My Answer(s)</h2>
-          <div style={{ display: "flex" }}>
-            <div className="col">
-              <h3>Attempt1</h3>
-              <div className="bold">{getFormattedDate(timestamp)}</div>
-              <div>{getHours(timestamp)}:{getMinutes(timestamp)}</div>
-            </div>
-            <div className="col">
-              <h3 className="centered">Investigation</h3>
-              <div className="centered">
-                {this.state.attempt?.liveAnswers[i].correct
-                  ? <SpriteIcon name="ok" className="text-theme-green" />
-                  : <SpriteIcon name="cancel" className="text-theme-orange" />
-                }
-                {
-                  this.state.mode
-                    ? <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={e => {
-                        e.stopPropagation();
-                        this.setState({mode: false});
-                      }} />
-                    : <SpriteIcon name="eye-on" className="text-theme-dark-blue" />
-                }
-              </div>
-            </div>
-            <div className="col">
-              <h3 className="centered">Review</h3>
-              <div className="centered">
-                {this.state.attempt?.answers[i].correct
-                  ? <SpriteIcon name="ok" className="text-theme-green" />
-                  : <SpriteIcon name="cancel" className="text-theme-orange" />
-                }
-                {
-                  this.state.mode
-                    ? <SpriteIcon name="eye-on" className="text-theme-dark-blue" />
-                    : <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={e => {
-                        e.stopPropagation();
-                        this.setState({mode: true})
-                      }} />
-                }
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    const getQuestionStyle = (index: number) => {
-      const scale = 1.15;
-      if (this.state.bookHovered && this.state.bookState === BookState.QuestionPage) {
-        if (index === this.state.questionIndex) {
-          return { transform: `rotateY(-178deg) scale(${scale})` }
-        } else if (index < this.state.questionIndex) {
-          return { transform: `rotateY(-178.2deg) scale(${scale})` };
-        } else if (index > this.state.questionIndex) {
-          return { transform: `rotateY(-3deg) scale(${scale})` };
-        }
-      }
-      return {};
     }
 
     const getQuestionCoverStyle = (index: number) => {
@@ -410,20 +253,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
           return { transform: `rotateY(-178.2deg) scale(${scale})` };
         } else if (index > this.state.questionIndex) {
           return { transform: `rotateY(-3.7deg) scale(${scale})` };
-        }
-      }
-      return {};
-    }
-
-    const getResultStyle = (index: number) => {
-      const scale = 1.15;
-      if (this.state.bookHovered && this.state.bookState === BookState.QuestionPage) {
-        if (index === this.state.questionIndex) {
-          return { transform: `rotateY(-4deg) scale(${scale})` }
-        } else if (index < this.state.questionIndex) {
-          return { transform: `rotateY(-178.3deg) scale(${scale})` };
-        } else if (index > this.state.questionIndex) {
-          return { transform: `rotateY(-3deg) scale(${scale})` };
         }
       }
       return {};
@@ -447,23 +276,50 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>
               <div className="book" onMouseOver={this.onBookHover.bind(this)}>
                 <div className="back"></div>
-                {this.renderFirstPage(brick, color)}
-                {this.renderSecondPage()}
-                {this.renderThirdPage(brick, color)}
+                <TitlePage brick={brick} color={color} />
+                <OverallPage onClick={this.moveToAttempts.bind(this)} />
+                <IntroBriefPage brick={brick} color={color} onClick={this.moveToAttempts.bind(this)} />
+                <IntroPrepPage brick={brick} color={color} onClick={this.moveToQuestions.bind(this)} />
+                <div className="page3-empty" onClick={this.moveToTitles.bind(this)}></div>
                 {this.state.bookHovered && this.state.bookState === BookState.QuestionPage &&
                   <SpriteIcon
                     name="custom-bookmark"
                     className={`bookmark ${this.state.animationRunning ? "hidden" : ""}`}
                   />
                 }
-                {this.renderFourthPage()}
+                <AttemptsPage
+                  attempts={this.state.attempts}
+                  index={this.state.activeAttemptIndex}
+                  setActiveAttempt={this.setActiveAttempt.bind(this)}
+                  onClick={this.moveToIntroduction.bind(this)}
+                />
                 {questions.map((q, i) => {
                   if (i <= this.state.questionIndex + 1 && i >= this.state.questionIndex - 1) {
                     return (
                       <div key={i}>
                         {i === 0 ? <div className="page3-cover first" style={getQuestionCoverStyle(i)}></div> : ""}
-                        {renderQuestionPage(q, i)}
-                        {renderAnswersPage(i)}
+                        {this.state.attempt &&
+                        <QuestionPage
+                          i={i}
+                          question={q}
+                          questionIndex={this.state.questionIndex}
+                          activeAttempt={this.state.attempt}
+                          mode={this.state.mode}
+                          bookHovered={this.state.bookHovered}
+                          bookState={this.state.bookState}
+                          prevQuestion={this.prevQuestion.bind(this)}
+                        />}
+                        <AnswersPage
+                          i={i}
+                          mode={this.state.mode}
+                          isLast={questions.length - 1 === i}
+                          questionIndex={this.state.questionIndex}
+                          activeAttempt={this.state.attempt}
+                          bookHovered={this.state.bookHovered}
+                          bookState={this.state.bookState}
+                          setMode={mode => this.setState({mode})}
+                          nextQuestion={this.nextQuestion.bind(this)}
+                        />
                       </div>
                     );
                   } else {
@@ -474,35 +330,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <div className="page6"></div>
                 <div className="page5"></div>
                 <div className="front-cover"></div>
-                <div className="front">
-                  <div className="page-stitch" style={{ background: color }}>
-                    <div className="vertical-line"></div>
-                    <div className="horizontal-line top-line-1"></div>
-                    <div className="horizontal-line top-line-2"></div>
-                    <div className="horizontal-line bottom-line-1"></div>
-                    <div className="horizontal-line bottom-line-2"></div>
-                  </div>
-                  <Grid
-                    container
-                    justify="center"
-                    alignContent="center"
-                    style={{ height: "100%" }}
-                  >
-                    <div style={{ width: "100%" }}>
-                      <div className="image-background-container">
-                        <div className="book-image-container">
-                          <svg style={{ color: color }}>
-                            {/*eslint-disable-next-line*/}
-                            <use href={sprite + "#brick-icon"} />
-                          </svg>
-                        </div>
-                      </div>
-                      <div className="brick-title">{brick.title}</div>
-                      {renderUserRow()}
-                    </div>
-                  </Grid>
-                </div>
-              </div>
+                <div className="book-page last-question-cover" onClick={this.moveBackToQuestions.bind(this)}></div>
+                <SynthesisPage synthesis={brick.synthesis} />
+                <FrontPage brick={brick} student={student} color={color} />
+               </div>
             </div>
           </div>
         </Grid>

@@ -1,4 +1,4 @@
-import { applyDiff, getDiff } from './diff';
+import { applyDiff, Diff, getDiff } from './diff';
 
 const lhs = {
   foo: {
@@ -24,19 +24,21 @@ const rhs = {
   buzz: 'fizz' // updated
 };
 
-const objDiff = {
+type MockData = typeof lhs | typeof rhs;
+
+const objDiff: Diff<MockData> = {
   foo: {
     bar: {
       a: {
         '0': 'b',
-        '1': undefined
+        '1': null
       },
       c: {
         '2': 'z',
         '3': { g: 2, h: 2 }
       },
       d: 'Hello, world!',
-      e: undefined
+      e: null
     }
   },
   buzz: 'fizz'
@@ -57,7 +59,7 @@ describe('diff functionality', () => {
     // arrange
 
     // act
-    const result = getDiff(lhs, rhs);
+    const result = getDiff<MockData>(lhs, rhs);
 
     // assert
     expect(result).toStrictEqual(objDiff);

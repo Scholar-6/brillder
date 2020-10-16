@@ -89,7 +89,7 @@ class BuildBricks extends Component<BuildBricksProps> {
   }
 
   renderSortedBricks = () => {
-    const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize, this.props.finalBricks)
+    const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize + 3, this.props.finalBricks)
 
     return data.map(item => {
       const {brick} = item;

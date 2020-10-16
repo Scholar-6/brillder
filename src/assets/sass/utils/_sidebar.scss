@@ -170,11 +170,11 @@
             .MuiIconButton-label {
               > div {
                 > svg {
-                  color: var(--white);
-                }
-                > svg:first-child {
                   color: var(--theme-green);
+                  // color: var(--white);
                 }
+                // > svg:first-child {
+                // }
               }
             }
           }
@@ -529,7 +529,8 @@
               color: var(--theme-light-blue);
               font-family: $font-family-regular;
               margin-bottom: 0.1vh;
-              @extend %ellipsis;
+              width: 100%;
+              display: flex;
               @include phone_and_tabletP {
                 font-size: 3.8vw;
                 width: 75vw;
@@ -537,6 +538,25 @@
               @include tabletP {
                 font-size: 0.9vw;
                 width: 19vw;
+              }
+              > span {
+                margin: 0 0.3vw;
+                height: 1.35vw;
+                @extend %ellipsis;
+                &:first-child {
+                  margin-left: 0;
+                }
+                > span {
+                  margin: 0 0.3vw;
+                  height: 1.35vw;
+                  @extend %ellipsis;
+                  &:nth-child(1) {
+                    margin: 0;
+                  }
+                  &:nth-child(2) {
+                    margin-left: 0;
+                  }
+                }
               }
             }
           }

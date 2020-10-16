@@ -3,10 +3,9 @@ import { connect } from "react-redux";
 
 import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
-import { TeachClassroom, Assignment, StudentStatus } from "model/classroom";
+import { TeachClassroom, Assignment } from "model/classroom";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
-import { UserBase } from "model/user";
 
 interface TeachListItem {
   classroom: TeachClassroom;
@@ -23,41 +22,7 @@ interface ClassroomListProps {
   expand(classroomId: number, assignmentId: number): void;
 }
 
-  class ClassroomList extends Component<ClassroomListProps> {
-  renderStudent(student: UserBase, i: number, studentsStatus: StudentStatus[]) {
-    const studentStatus = studentsStatus.find(s => s.studentId === student.id);
-    return (
-      <div key={i} style={{display: 'flex', paddingTop: '0.5vh', paddingBottom: '0.5vh'}} >
-        <div style={{width: '23.8vw'}}>{student.firstName} {student.lastName}</div>
-        <div className="teach-circles-container">
-          <div className="teach-circle-flex-container">
-            { !studentStatus &&
-              <div className="teach-circle-container">
-                <div className="teach-circle student-circle red" />
-              </div>}
-          </div>
-          <div className="teach-circle-flex-container">
-            { studentStatus &&
-              <div className="teach-circle-container">
-                <div className="teach-circle student-circle green">
-                  {Math.round(studentStatus.avgScore)}
-                </div>
-              </div>}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  renderStudentsList(c: TeachClassroom, a: Assignment) {
-    if (!this.props.activeClassroom) return "";
-    return (
-      <div>
-        {c.students.map((s, i) => this.renderStudent(s, i, a.studentStatus))}
-      </div>
-    );
-  }
-
+class ClassroomList extends Component<ClassroomListProps> {
   renderTeachListItem(c: TeachListItem, i: number) {
     if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
       if (c.assignment && c.classroom) {
@@ -68,7 +33,6 @@ interface ClassroomListProps {
               expand={this.props.expand.bind(this)}
               key={i} classroom={c.classroom} assignment={c.assignment}
             />
-            {this.renderStudentsList(c.classroom, c.assignment)}
           </div>
         );
       }
