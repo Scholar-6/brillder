@@ -69,7 +69,6 @@ const TabComponent: React.FC<TabProps> = ({ isTeach, isCore, activeTab, user, se
   if (isTeach) {
     tabs.push(getTeachTab());
   }
-  console.log(user.rolePreference);
   if (user.rolePreference?.roleId === UserType.Student) {
     tabs.push(getLearnTab());
     tabs.push(getBuildTab());
