@@ -124,12 +124,11 @@ class ExpandedAssignment extends Component<
 
   renderBookIcon(studentId: number) {
     const {history, assignment} = this.props;
+    const moveToPostPlay = () => history.push(map.postPlay(assignment.brick.id, studentId));
     return (
-      <SpriteIcon
-        name="book-open"
-        className="active book-open-icon"
-        onClick={() => history.push(map.postPlay(assignment.brick.id, studentId))}
-      />
+      <div className="round b-green centered">
+        <SpriteIcon name="book-open" className="active book-open-icon" onClick={moveToPostPlay} />
+      </div>
     );
   }
 
@@ -139,21 +138,25 @@ class ExpandedAssignment extends Component<
     questionNumber: number
   ) {
     if (studentResult && studentStatus) {
-      const attempt = studentResult.attempts[0].answers[questionNumber];
-      const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
-
-      // yellow tick
-      if (attempt.correct === true && liveAttempt.correct === false) {
-        return <SpriteIcon name="check-icon-thin" className="text-yellow" />;
-      } else if (attempt.correct === false && liveAttempt.correct === true) {
-        return <SpriteIcon name="check-icon-thin" className="text-yellow" />;
+      try {
+        const attempt = studentResult.attempts[0].answers[questionNumber];
+        const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
+  
+        // yellow tick
+        if (attempt.correct === true && liveAttempt.correct === false) {
+          return <SpriteIcon name="check-icon" className="text-yellow" />;
+        } else if (attempt.correct === false && liveAttempt.correct === true) {
+          return <SpriteIcon name="check-icon" className="text-yellow" />;
+        }
+  
+        if (attempt.correct === true && liveAttempt.correct === true) {
+          return <SpriteIcon name="check-icon" className="text-theme-green" />;
+        }
+  
+        return <SpriteIcon name="cancel" className="text-theme-orange smaller stroke-2" />;
+      } catch {
+        console.log('can`t parse attempt');
       }
-
-      if (attempt.correct === true && liveAttempt.correct === true) {
-        return <SpriteIcon name="check-icon-thin" className="text-theme-green" />;
-      }
-
-      return <SpriteIcon name="cancel" className="text-theme-orange stroke-2" />;
     }
     return "";
   }
