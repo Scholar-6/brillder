@@ -137,7 +137,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     }
     return (
       <button onClick={openAssignDialog} className="assign-class-button svgOnHover">
-        <span></span>
         <SpriteIcon name="file-plus" className="active" />
       </button>
     );
@@ -179,7 +178,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     let canSee = false;
     try {
       canSee = checkTeacherOrAdmin(this.props.user.roles);
-    } catch {}
+    } catch { }
 
     return (
       <div>
