@@ -32,6 +32,10 @@ export function getHours(date: string) {
   return formatTwoLastDigits(hours);
 }
 
+export function getTime(date: string) {
+  return `${getHours(date)}:${getMinutes(date)}`;
+}
+
 export function getMinutes(date: string) {
   const minutes = new Date(date).getMinutes();
   return formatTwoLastDigits(minutes);
