@@ -6,8 +6,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import LockIcon from '@material-ui/icons/Lock';
 
-import SpriteIcon from "components/baseComponents/SpriteIcon";
-
 interface LockedProps {
   isOpen: boolean;
   label: string;
