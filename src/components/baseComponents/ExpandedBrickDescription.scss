@@ -32,13 +32,13 @@
       > span {
         margin: 0 0.5vw;
         @extend %ellipsis;
-        height: 1.35vw;
+        height: 1.15vw;
         &:first-child {
           margin-left: 0;
         }
         > span {
           margin: 0 0.5vw;
-          height: 1.35vw;
+          height: 1.15vw;
           @extend %ellipsis;
           &:nth-child(1) {
             margin: 0;
