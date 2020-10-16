@@ -30,15 +30,15 @@
       width: 100%;
       display: flex;
       > span {
-        margin: 0 0.5vw;
+        margin: 0 0.3vw;
         @extend %ellipsis;
-        height: 1.15vw;
+        height: 1.35vw;
         &:first-child {
           margin-left: 0;
         }
         > span {
-          margin: 0 0.5vw;
-          height: 1.15vw;
+          margin: 0 0.3vw;
+          height: 1.35vw;
           @extend %ellipsis;
           &:nth-child(1) {
             margin: 0;
