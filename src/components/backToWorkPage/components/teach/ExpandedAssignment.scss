@@ -74,13 +74,22 @@
       padding-left: 0 !important;
       text-transform: capitalize;
 
+      .round {
+        border-radius: 50%;
+        width: 2.2vw;
+        height: 2.2vw;
+      }
+
       .reminder-icon, .book-open-icon {
         color: white;
-        border-radius: 50%;
-        padding: 0.25vw;
         stroke-width: 1.5;
         width: 1.7vw;
         height: 1.7vw;
+      }
+
+      .book-open-icon {
+        padding-top: 0.2vw;
+        cursor: pointer;
       }
 
       .comment-icon {
@@ -94,11 +103,9 @@
       }
 
       .reminder-icon {
+        padding: 0.25vw;
+        border-radius: 50%;
         background: var(--theme-yellow);
-      }
-
-      .book-open-icon {
-        background: var(--theme-green);
       }
 
       .circle {
@@ -118,6 +125,10 @@
         svg {
           width: 2vw;
           height: 2vw;
+        }
+        .smaller {
+          width: 1.8vw;
+          height: 1.8vw;
         }
       }
     }
