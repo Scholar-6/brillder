@@ -169,6 +169,14 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
       viewAll = draft + build + publication;
     }
 
+    if (this.props.filters.publish) {
+      for (let b of finalBricks) {
+        if (b.status === BrickStatus.Publish) {
+          viewAll += 1;
+        }
+      }
+    }
+
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
         {this.renderIndexesBox(viewAll, draft + build, draft)}
