@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-
 import './LastSave.scss'
 import { Grid } from "@material-ui/core";
 import { TutorialStep } from "components/build/tutorial/TutorialPanelWorkArea";
+import { getTime } from "components/services/brickService";
 
 
 interface LastSaveProps {
@@ -29,26 +29,11 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
     }
   }, [props]);
 
-  const formatTwoDigits = (number: Number) => {
-    let str = number.toString();
-    // eslint-disable-next-line
-    if (str.length < 2) {
-      return '0' + str;
-    }
-    return str;
-  }
-
-  const getTime = (updated: Date) => {
-    let hours = formatTwoDigits(updated.getHours());
-    let minutes = formatTwoDigits(updated.getMinutes());
-    return hours + ":" + minutes;
-  }
-
   const renderText = () => {
     if (isSaving) {
       return "Saving...";
     } else {
-      return `Last Saved at ${getTime(updated)}`;
+      return `Last Saved at ${getTime(props.updated)}`;
     }
   }
 

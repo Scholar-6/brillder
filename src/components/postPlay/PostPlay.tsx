@@ -207,6 +207,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     const { brick, student } = this.state.attempt;
 
     if (!this.state.attempt.liveAnswers) {
+      console.log('redirect has no live answers');
       return <Redirect to="/home" />;
     }
 

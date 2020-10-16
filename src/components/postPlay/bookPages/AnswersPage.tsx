@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getHours, getMinutes, getFormattedDate } from "components/services/brickService";
+import { getHours, getMinutes, getFormattedDate, getTime } from "components/services/brickService";
 import { PlayAttempt } from "model/attempt";
 import { BookState } from "../PostPlay";
 
@@ -56,7 +56,7 @@ const AnswersPage: React.FC<AnswersPageProps> = ({
         <div className="col">
           <h3>Attempt1</h3>
           <div className="bold">{getFormattedDate(timestamp)}</div>
-          <div>{getHours(timestamp)}:{getMinutes(timestamp)}</div>
+          <div>{getTime(timestamp)}</div>
         </div>
         <div className="col">
           <h3 className="centered">Investigation</h3>
