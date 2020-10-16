@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 
-import { TeachClassroom, Assignment, StudentStatus, TeachStudent } from "model/classroom";
+import { TeachStudent } from "model/classroom";
 
-
-interface TeachListItem {
-  classroom: TeachClassroom;
-  assignment: Assignment | null;
-}
 
 interface ActiveStudentBricksProps {
   activeStudent: TeachStudent;

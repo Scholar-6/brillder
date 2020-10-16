@@ -669,7 +669,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   renderMainTitle(filterSubjects: number[]) {
     if (filterSubjects.length === 1) {
       const subjectId = filterSubjects[0];
-      const subject = this.state.subjects.find(s => s.id == subjectId);
+      const subject = this.state.subjects.find(s => s.id === subjectId);
       return subject.name;
     } else if (filterSubjects.length > 1) {
       return "Filtered";

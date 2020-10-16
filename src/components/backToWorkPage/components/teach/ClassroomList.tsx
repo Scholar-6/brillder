@@ -3,10 +3,9 @@ import { connect } from "react-redux";
 
 import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
-import { TeachClassroom, Assignment, StudentStatus } from "model/classroom";
+import { TeachClassroom, Assignment } from "model/classroom";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
-import { UserBase } from "model/user";
 
 interface TeachListItem {
   classroom: TeachClassroom;
