@@ -35,7 +35,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           res.push(<span key={1}>, </span>)
         }
         res.push(<SearchText key={2} searchString={searchString} text={editor.firstName} />);
-        res.push(<span key={3}> </span>);
+        res.push(' ');
         res.push(<SearchText key={4} searchString={searchString} text={editor.lastName} />);
         i++;
       }
