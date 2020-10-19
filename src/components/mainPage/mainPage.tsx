@@ -330,7 +330,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         {this.renderMobilePage()}
         <PolicyDialog isOpen={this.state.isPolicyOpen} close={() => this.setPolicyDialog(false)} />
         <LockedDialog
-          label="Play a brick to unlock this"
+          label="Play a brick to unlock this feature"
           isOpen={this.state.isMyLibraryOpen}
           close={() => this.setState({isMyLibraryOpen: false})} />
         <LockedDialog
@@ -338,7 +338,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           isOpen={this.state.isBackToWorkOpen}
           close={() => this.setState({isBackToWorkOpen: false})} />
         <LockedDialog
-          label="Play a brick to unlock this"
+          label="Play a brick to unlock this feature"
           isOpen={this.state.isTryBuildOpen}
           close={() => this.setState({isTryBuildOpen: false})} />
       </Grid>
