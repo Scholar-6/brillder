@@ -27,6 +27,7 @@ import FilterSidebar from './FilterSidebar';
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import BackPagePagination from '../BackPagePagination';
 import BackPagePaginationV2 from '../BackPagePaginationV2';
+import PersonalBuild from "../personalBuild/PersonalBuild";
 
 interface BuildProps {
   searchString: string;
@@ -210,7 +211,11 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
   setBricks(rawBricks: Brick[]) {
     const threeColumns = prepareTreeRows(rawBricks, this.state.filters, this.props.user.id, this.props.generalSubjectId);
-    this.setState({ ...this.state, finalBricks: rawBricks, rawBricks, threeColumns, bricksLoaded: true });
+    let finalBricks = rawBricks
+    if (!this.state.filters.isCore) {
+      finalBricks = rawBricks.filter(b => !b.isCore);
+    }
+    this.setState({ ...this.state, finalBricks, rawBricks, threeColumns, bricksLoaded: true });
   }
 
   toggleCore() {
@@ -442,6 +447,29 @@ class BuildPage extends Component<BuildProps, BuildState> {
     if (this.props.isSearching) {
       finalBricks = this.state.searchBricks;
       threeColumns = this.state.searchThreeColumns;
+    }
+    if (!this.state.filters.isCore) {
+      return <PersonalBuild
+        user={this.props.user}
+        finalBricks={this.state.finalBricks}
+        loaded={this.state.bricksLoaded}
+        shown={this.state.shown}
+        pageSize={this.state.pageSize}
+        sortedIndex={this.state.sortedIndex}
+        history={this.props.history}
+        isTeach={this.state.isTeach || this.state.isAdmin}
+        deleteDialogOpen={this.state.deleteDialogOpen}
+        deleteBrickId={this.state.deleteBrickId}
+        delete={this.delete.bind(this)}
+        handleDeleteClose={this.handleDeleteClose.bind(this)}
+        toggleCore={this.toggleCore.bind(this)}
+        setTab={this.props.setTab.bind(this)}
+        moveAllNext={this.moveAllNext.bind(this)}
+        moveAllBack={this.moveAllBack.bind(this)}
+        handleDeleteOpen={this.handleDeleteOpen.bind(this)}
+        handleMouseHover={this.handleMouseHover.bind(this)}
+        handleMouseLeave={this.handleMouseLeave.bind(this)}
+      />
     }
     return (
       <Grid container direction="row" className="sorted-row">
