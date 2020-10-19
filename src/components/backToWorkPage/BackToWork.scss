@@ -140,7 +140,6 @@
             height: 4.6vw;
           }
         }
-
       }
       .red {
         background: var(--theme-orange);
@@ -320,10 +319,13 @@
         .classroom-name {
           text-transform: capitalize;
           // width: 100%;
-          // justify-content: flex-start;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
           .classroom-icon {
             background-color: var(--white);
             color: var(--theme-dark-blue);
+            margin-left: 0.3vw;
             @extend %transitionAll300;
             @extend %radCircle;
             width: 1vw;

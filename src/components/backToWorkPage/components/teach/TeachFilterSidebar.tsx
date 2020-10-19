@@ -80,9 +80,9 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     return (
       <div key={i} className="classes-box">
         <div className={"index-box " + (c.active ? "active" : "")} onClick={() => this.toggleClassroom(c)}>
-          <div className={"classroom-name svgOnHover " + (c.active ? "icon-animated" : "")}>
+          <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
             <span>{c.name}</span>
-            <div className="classroom-icon">
+            <div className="classroom-icon svgOnHover">
               <SpriteIcon name="arrow-right" className="active" />
             </div>
           </div>
