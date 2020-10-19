@@ -14,6 +14,7 @@
     height: 21vh;
     font-family: $font-family-regular;
     overflow: hidden;
+    overflow-y: auto;
     font-size: 1.7vh;
     @extend %linkDescription;
     .link-description {
@@ -24,8 +25,8 @@
       // line-height: 1.3;
       // font-size: 1.6vh;
       font-family: $font-family-regular;
-      max-height: 1.9vh;
-      overflow-y: hidden;
+      // max-height: 1.9vh;
+      // overflow-y: hidden;
       margin-bottom: 0.5vh;
       width: 100%;
       display: flex;
@@ -51,10 +52,9 @@
     }
     .hovered-open-question {
       font-family: $font-family-regular-italic;
-      margin-top: 2.1vh;
       max-height: 4.4vh;
-      overflow: hidden;
-      margin-bottom: 1.3vh;
+      margin-bottom: 1.5vh 0 1vh 0;
+      @extend %ellipsis;
     }
   }
   .hover-icons-row {

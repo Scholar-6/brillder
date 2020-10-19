@@ -17,50 +17,52 @@ interface InviteProps {
   title?: string;
   submit(name: string): void;
   close(): void;
-  assignEditor(brick: Brick, editor: Editor): void;
+  assignEditor(brick: Brick, editorIds: number[]): void;
 }
 
 const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [isValid, setValid] = React.useState(false);
-  const [editorUsername, setEditorUsername] = React.useState("");
-  const [editor, setEditor] = React.useState<Editor>();
+  const [editors, setEditors] = React.useState<Editor[]>(brick.editors ?? []);
   const [editorError, setEditorError] = React.useState("");
   const [locked, setLock] = React.useState(false);
 
-  const saveEditor = (editorId: number, fullName: string) => {
-    props.assignEditor(brick, { id: editorId } as Editor);
-    props.submit(fullName);
+  const saveEditors = (editorIds: number[]) => {
+    props.assignEditor(brick, editorIds);
+    props.submit(getNameText());
   }
 
   const onNext = () => {
-    if (isValid && editor) {
-      saveEditor(editor.id, editor.firstName);
+    if (isValid && editors) {
+      saveEditors(editors.map(editor => editor.id));
       props.close();
     }
   };
 
   const onBlur = React.useCallback(async () => {
-    if (editorUsername !== "") {
-      setLock(true);
-      let data = await getUserByUserName(editorUsername);
-      if (data.user) {
-        setValid(true);
-        setEditor(data.user);
-        setEditorError("");
-      } else {
-        setValid(false);
-        setEditorError(data.message);
-      }
-      setLock(false);
+    if (editors.length > 0) {
+      setValid(true);
+      setEditorError("");
     } else {
       setValid(false);
-      setEditorError("No username input.");
+      setEditorError("No editors assigned.");
     }
-  }, [editorUsername]);
+  }, [editors]);
 
   useEffect(() => {
     onBlur();
   }, [brick, onBlur]);
+
+  const getNameText = () => {
+    return editors.reduce((prev, current, idx, array) => {
+      if (idx === 0) {
+        return `${prev}${current.firstName} ${current.lastName}`;
+      } else if(idx === array.length - 1) {
+        return `${prev} and ${current.firstName} ${current.lastName}`;
+      } else {
+        return `${prev}, ${current.firstName} ${current.lastName}`;
+      }
+    }, "")
+  }
 
   const renderSendButton = () => {
     return (
@@ -98,8 +100,8 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
               editorError={editorError}
               placeholder="Enter editor's username here..."
               onBlur={onBlur}
-              username={editorUsername}
-              setUsername={setEditorUsername}
+              users={editors}
+              setUsers={setEditors}
             />
           </div>
         </Grid>

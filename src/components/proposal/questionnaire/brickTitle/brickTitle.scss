@@ -10,11 +10,16 @@
 
 .brick-title-page {
   .left-block {
+    $margin-desktop-left: 11vw;
+
     @include tabletL {
       margin-top: 10.5vh;
     }
 
     h1 {
+      position: relative;
+      margin-left: $margin-desktop-left;
+      text-align: left;
       font-family: $font-family-black;
       @include phone_and_tabletL {
         font-size: 9vw !important;
@@ -22,15 +27,17 @@
       }
 
       @include tabletL {
-        font-size: 3.6vw;
+        font-size: 4.8vw;
         padding: 4.7vh 0;
       }
 
       .subject-text {
         color: var(--theme-orange);
-        margin-left: 18vw;
-        font-size: 3vh;
+        font-size: 3.6vh;
         text-align: left;
+        @include phone_and_tabletL {
+          font-size: 3.5vw;
+        }
       }
     }
 
@@ -43,7 +50,7 @@
       @extend %flexCenter;
       flex-direction: column;
       @include tabletL {
-        margin: 6vw auto;
+        margin: 3vh 0 8.5vh $margin-desktop-left;
         width: 43vw;
         font-size: 1.4vw;
         border: transparent;

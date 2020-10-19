@@ -21,26 +21,33 @@ interface InviteProps {
   submit(name: string, accessGranted: boolean): void;
   close(): void;
 
-  assignEditor(brick: Brick, editor: Editor): void;
+  assignEditor(brick: Brick, editors: number[]): void;
 }
 
 const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [accessGranted, setAccess] = React.useState(null as boolean | null);
 
   const [isValid, setValid] = React.useState(false);
-  const [editorUsername, setEditorUsername] = React.useState("");
-  const [editor, setEditor] = React.useState<Editor>();
+  const [editors, setEditors] = React.useState<Editor[]>([]);
   const [editorError, setEditorError] = React.useState("");
 
-  const saveEditor = (editorId: number, fullName: string) => {
-    props.assignEditor(brick, { id: editorId } as Editor);
-    props.submit(fullName, accessGranted || false);
+  React.useEffect(() => {
+    if(accessGranted) {
+      setEditors(brick.editors ?? []);
+    } else {
+      setEditors([]);
+    }
+  }, [accessGranted])
+
+  const saveEditor = (editorIds: number[]) => {
+    props.assignEditor(brick, editorIds);
+    props.submit(getNameText(), accessGranted || false);
   }
 
   const inviteUserById = async (userId: number, fullName: string) => {
     let success = await inviteUser(brick.id, userId);
     if (success) {
-      props.submit(fullName, accessGranted || false);
+      props.submit(getNameText(), accessGranted || false);
     } else {
       // failed
     }
@@ -48,41 +55,49 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   }
 
   const onNext = () => {
-    if (isValid && editor) {
+    if (isValid && editors) {
       if (accessGranted) {
-        saveEditor(editor.id, editor.firstName);
+        saveEditor(editors.map(editor => editor.id));
         props.close();
       } else {
-        inviteUserById(editor.id, editor.firstName);
+        editors.forEach(editor => {
+          inviteUserById(editor.id, editor.firstName);
+        });
+        setEditors([]);
       }
     }
   };
 
   const onBlur = React.useCallback(async () => {
-    if (editorUsername !== "") {
-      let data = await getUserByUserName(editorUsername);
-      if (data.user) {
-        setValid(true);
-        setEditor(data.user);
-        setEditorError("");
-      } else {
-        setValid(false);
-        setEditorError(data.message);
-      }
+    if (editors.length > 0) {
+      setValid(true);
+      setEditorError("");
     } else {
       setValid(false);
-      setEditorError("No username input.");
+      setEditorError("No-one assigned.");
     }
-  }, [editorUsername]);
+  }, [editors]);
 
   useEffect(() => {
     onBlur();
   }, [brick, onBlur]);
 
+  const getNameText = () => {
+    return editors.reduce((prev, current, idx, array) => {
+      if (idx === 0) {
+        return `${prev}${current.firstName} ${current.lastName}`;
+      } else if(idx === array.length - 1) {
+        return `${prev}, ${current.firstName} ${current.lastName}`;
+      } else {
+        return `${prev}, and ${current.firstName} ${current.lastName}`;
+      }
+    }, "")
+  }
+
   const renderCustomText = () => {
-    let name = 'Name';
-    if (editor) {
-      name = editor.firstName;
+    let name = getNameText();
+    if(!name) {
+      name = 'Name';
     }
     return `Allow ${name} to comment on the build panels of your brick`;
   }
@@ -120,10 +135,10 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
               canEdit={props.canEdit}
               brick={brick}
               editorError={editorError}
-              placeholder="Enter editor's username here..."
+              placeholder={`Enter ${accessGranted ? "editor" : "user"}'s username here...`}
               onBlur={onBlur}
-              username={editorUsername}
-              setUsername={setEditorUsername}
+              users={editors}
+              setUsers={setEditors}
             />
           </div>
         </Grid>
@@ -147,7 +162,7 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
 }
 
 const mapDispatch = (dispatch: any) => ({
-  assignEditor: (brick: any, editor: any) => dispatch(actions.assignEditor(brick, editor))
+  assignEditor: (brick: any, editors: number[]) => dispatch(actions.assignEditor(brick, editors))
 });
 
 const connector = connect(null, mapDispatch);
