@@ -18,26 +18,12 @@ export interface ShortAnswerBuildProps extends UniqueComponentProps {
 const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
   locked, editOnly, data, save, ...props
 }) => {
-  const [height, setHeight] = React.useState("0%");
-
-  useEffect(() => calculateHeight());
-
   if (!data.list) data.list = [{ value: "" }];
 
   const [state, setState] = React.useState(data);
   const [limitOverflow, setLimitOverflow] = React.useState(false);
 
   useEffect(() => setState(data), [data]);
-
-  const calculateHeight = () => {
-    let showButton = true;
-    for (let answer of state.list) {
-      if (answer.value === "") {
-        showButton = false;
-      }
-    }
-    showButton === true ? setHeight("auto") : setHeight("0%");
-  };
 
   const update = () => {
     setState(Object.assign({}, state));
@@ -106,7 +92,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
       <AddAnswerButton
         locked={locked}
         addAnswer={addShortAnswer}
-        height={height}
+        height="auto"
         label="+ SHORT ANSWER"
       />
       <Snackbar
