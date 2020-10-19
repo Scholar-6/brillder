@@ -89,7 +89,7 @@ class PersonalBuild extends Component<BuildBricksProps> {
   renderSecondEmptyColumn() {
     return (
       <div className="main-brick-container empty-description second" key={-3}>
-        <div className="centered">
+        <div>
           <div className="circle white-in-yellow centered">
             <div className="circle b-white"></div>
           </div>
@@ -133,8 +133,8 @@ class PersonalBuild extends Component<BuildBricksProps> {
     }
 
     return (
-      <Grid container direction="row" className="sorted-row">
-        <FilterSidebar />
+      <Grid container direction="row" className="sorted-row personal-build">
+        <FilterSidebar bricks={this.props.finalBricks} />
         <Grid item xs={9} className="brick-row-container">
           <Tab
             isTeach={this.props.isTeach}
