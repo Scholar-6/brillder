@@ -12,7 +12,7 @@ import { Notification } from 'model/notifications';
 import { Brick, BrickStatus } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin, getAssignmentIcon } from "components/services/brickService";
-import { getCurrentUserBricks, getPublishedBricks, searchBricks } from "services/axios/brick";
+import { getCurrentUserBricks, getPublishedBricks, searchBricks, searchPublicBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
@@ -89,16 +89,14 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       shown: false,
     };
 
-    if (this.props.user) {
+    const values = queryString.parse(props.location.search)
+    if (values.searchString) {
+      this.searching(values.searchString as string);
+      this.search();
+    } else if (this.props.user) {
       this.loadData();
     } else {
-      // for unauthorized user parse search string from play
-      const values = queryString.parse(props.location.search)
-      if (values.searchString) {
-        console.log(values.searchString);
-        this.searching(values.searchString as string);
-        this.search();
-      }
+      // load bricks for unauthorized users
     }
   }
 
@@ -385,7 +383,13 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   async search() {
     const { searchString } = this.state;
     this.setState({shown: false});
-    const bricks = await searchBricks(searchString);
+    let bricks: Brick[] | null = [];
+    if (this.props.user) {
+      bricks = await searchBricks(searchString);
+    } else {
+      bricks = await searchPublicBricks(searchString);
+    }
+    console.log(bricks);
 
     setTimeout(() => {
       try {
@@ -480,9 +484,12 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       this.state.finalBricks
     );
     return data.map(item => {
-      let circleIcon = getAssignmentIcon(item.brick);
-      if (item.brick.editor?.id === this.props.user.id) {
-        circleIcon = 'award';
+      let circleIcon = '';
+      if (this.props.user) {
+        circleIcon = getAssignmentIcon(item.brick);
+        if (item.brick.editor?.id === this.props.user.id) {
+          circleIcon = 'award';
+        }
       }
 
       let searchString = ''

@@ -63,6 +63,14 @@ export const searchBricks = async (searchString: string = '') => {
   }
 }
 
+export const searchPublicBricks = async (searchString: string = '') => {
+  try {
+    return await post<Brick[]>("/bricks/search/public", {searchString});
+  } catch {
+    return null;
+  }
+}
+
 export const publishBrick = async (brickId: number) => {
   try {
     const brick = await post<Brick>(`/brick/publish/${brickId}`, {});
