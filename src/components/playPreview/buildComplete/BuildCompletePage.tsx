@@ -7,7 +7,7 @@ import { Brick } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from 'redux/actions/brickActions';
 import actions from 'redux/actions/requestFailed';
-import {setCoreLibrary} from 'components/services/axios/brick';
+import {setCoreLibrary} from 'services/axios/brick';
 
 import Clock from "components/play/baseComponents/Clock";
 import { Redirect } from "react-router-dom";

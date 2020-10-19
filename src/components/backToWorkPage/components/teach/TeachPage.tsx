@@ -19,7 +19,7 @@ import BackPagePagination from '../BackPagePagination';
 import TeachFilterSidebar from './TeachFilterSidebar';
 import ClassroomList from './ClassroomList';
 import ExpandedAssignment from './ExpandedAssignment';
-import { getAssignmentStats } from "components/services/axios/stats";
+import { getAssignmentStats } from "services/axios/stats";
 import { ApiAssignemntStats } from "model/stats";
 import ActiveStudentBricks from "./ActiveStudentBricks";
 

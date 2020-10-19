@@ -12,8 +12,8 @@ import { Notification } from 'model/notifications';
 import { Brick, BrickStatus } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin, getAssignmentIcon } from "components/services/brickService";
-import { getCurrentUserBricks, getPublishedBricks, searchBricks } from "components/services/axios/brick";
-import { getSubjects } from "components/services/axios/subject";
+import { getCurrentUserBricks, getPublishedBricks, searchBricks } from "services/axios/brick";
+import { getSubjects } from "services/axios/subject";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
