@@ -42,7 +42,7 @@ interface ProposalProps {
   brick: Brick;
   user: User;
   saveBrick(brick: Brick): Promise<Brick | null>;
-  createBrick(brick: Brick): void;
+  createBrick(brick: Brick): Promise<Brick | null>;
   socketStartEditing(brickId: number): void;
 }
 
@@ -113,15 +113,15 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
-  saveBrick(tempBrick: Brick) {
+  async saveBrick(tempBrick: Brick) {
     const { brick } = this.props;
     if (tempBrick.id) {
-      this.props.saveBrick(tempBrick);
+      await this.props.saveBrick(tempBrick);
     } else if (brick && brick.id) {
       tempBrick.id = brick.id;
-      this.props.saveBrick(tempBrick);
+      await this.props.saveBrick(tempBrick);
     } else {
-      this.props.createBrick(tempBrick);
+      await this.props.createBrick(tempBrick);
     }
   }
 
@@ -177,8 +177,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.saveBrick(brick);
   };
 
-  saveAndMove = () => {
-    this.saveBrick(this.state.brick);
+  saveAndMove = async () => {
+    await this.saveBrick(this.state.brick);
     this.setState({ saved: true });
   };
 
