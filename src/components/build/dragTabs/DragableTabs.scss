@@ -78,7 +78,7 @@ $tile-height: 100%;
       position: absolute;
       left: 0.3vw;
       top: 0.3vw;
-      svg {
+      .svg {
         .outer-circle {
           color: var(--theme-orange-alpha5);
         }
@@ -87,7 +87,7 @@ $tile-height: 100%;
         }
       }
       &.has-replied {
-        svg {
+        .svg {
           .outer-circle {
             color: var(--theme-yellow-alpha5);
           }
