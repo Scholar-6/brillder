@@ -86,10 +86,7 @@ export const inviteUser = async (brickId: number, userId: number) => {
 
 export const setCoreLibrary = async (brickId: number, isCore?: boolean) => {
   try {
-    let core = false;
-    if (isCore) {
-      core = true;
-    }
+    const core = isCore ? true : false;
     await put<Brick>(`/brick/setCoreLibrary/${brickId}/${core}`, {});
     return true;
   } catch {

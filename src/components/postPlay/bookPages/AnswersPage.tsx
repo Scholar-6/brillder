@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getHours, getMinutes, getFormattedDate, getTime } from "components/services/brickService";
+import { getFormattedDate, getTime } from "components/services/brickService";
 import { PlayAttempt } from "model/attempt";
 import { BookState } from "../PostPlay";
 
