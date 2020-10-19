@@ -26,6 +26,7 @@ import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import BrickBlock from "components/baseComponents/BrickBlock";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 
 interface BricksListProps {
@@ -45,6 +46,7 @@ interface BricksListState {
   subjects: any[];
   sortedIndex: number;
   finalBricks: Brick[];
+  isLoading: boolean;
 
   dropdownShown: boolean;
   deleteDialogOpen: boolean;
@@ -67,6 +69,10 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       isAdmin = checkAdmin(this.props.user.roles);
     }
 
+    const values = queryString.parse(props.location.search)
+    const searchString = values.searchString as string || '';
+    console.log(searchString);
+
     this.state = {
       yourBricks: [],
       bricks: [],
@@ -78,9 +84,10 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       finalBricks: [],
       dropdownShown: false,
       searchBricks: [],
-      searchString: "",
+      searchString,
       isSearching: false,
       pageSize: 15,
+      isLoading: true,
 
       isClearFilter: false,
       failedRequest: false,
@@ -89,15 +96,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       shown: false,
     };
 
-    const values = queryString.parse(props.location.search)
-    if (values.searchString) {
-      this.searching(values.searchString as string);
-      this.search();
-    } else if (this.props.user) {
-      this.loadData();
-    } else {
-      // load bricks for unauthorized users
-    }
+    this.loadData(values);
   }
 
   // load bricks when notification come
@@ -111,7 +110,21 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  async loadData() {
+  async loadData(values: queryString.ParsedQuery<string>) {
+    if (this.props.user) {
+      await this.loadSubjects();
+    }
+
+    if (values.searchString) {
+      this.search();
+    } else if (this.props.user) {
+      this.loadBricks();
+    } else {
+      // load bricks for unauthorized users
+    }
+  }
+
+  async loadSubjects() {
     const subjects = await getSubjects();
 
     if(subjects) {
@@ -120,8 +133,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     } else {
       this.setState({ ...this.state, failedRequest: true });
     }
-
-    this.loadBricks();
   }
 
   async loadBricks() {
@@ -139,9 +150,9 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
       bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
       const finalBricks = this.filter(bs);
-      this.setState({ ...this.state, bricks, finalBricks, shown: true });
+      this.setState({ ...this.state, bricks, isLoading: false, finalBricks, shown: true });
     } else {
-      this.setState({ ...this.state, failedRequest: true });
+      this.setState({ ...this.state, isLoading: false, failedRequest: true });
     }
   }
 
@@ -389,7 +400,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     } else {
       bricks = await searchPublicBricks(searchString);
     }
-    console.log(bricks);
 
     setTimeout(() => {
       try {
@@ -401,12 +411,15 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             searchBricks: bricks,
             finalBricks,
             shown: true,
+            isLoading: false,
             isSearching: true,
           });
         } else {
-          this.setState({ ...this.state, failedRequest: true });
+          this.setState({ ...this.state, isLoading: false, failedRequest: true });
         }
-      } catch {}
+      } catch {
+        this.setState({isLoading: false, failedRequest: true});
+      }
     }, 1400);
   }
 
@@ -715,6 +728,9 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return <PageLoader content="...Getting Bricks..." />;
+    }
     const filterSubjects = this.getCheckedSubjectIds();
     const { history } = this.props;
     return (
