@@ -3,7 +3,7 @@ import { Avatar, Chip, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import { Brick } from "model/brick";
-import { suggestUsername } from "components/services/axios/user";
+import { suggestUsername } from "services/axios/user";
 import { UserBase } from "model/user";
 
 interface AutocompleteProps {

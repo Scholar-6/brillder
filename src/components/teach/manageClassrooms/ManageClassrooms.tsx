@@ -6,7 +6,7 @@ import './ManageClassrooms.scss';
 
 import { User } from "model/user";
 import { MUser } from "../interface";
-import { deleteClassroom, getStudents } from 'components/services/axios/classroom';
+import { deleteClassroom, getStudents } from 'services/axios/classroom';
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import {

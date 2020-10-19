@@ -10,7 +10,7 @@ import { User } from "model/user";
 import { Brick, BrickStatus } from "model/brick";
 import { PlayStatus } from "components/play/model";
 import { checkAdmin, checkPublisher } from "components/services/brickService";
-import { publishBrick, returnToAuthor, returnToEditor } from "components/services/axios/brick";
+import { publishBrick, returnToAuthor, returnToEditor } from "services/axios/brick";
 
 import Clock from "components/play/baseComponents/Clock";
 import ShareDialog from 'components/play/finalStep/dialogs/ShareDialog';
@@ -64,7 +64,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     isOpen: false,
     name: ''
   });
-
+  
   let isAuthor = false;
   try {
     isAuthor = brick.author.id === user.id;
@@ -75,7 +75,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   let isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
   const link = `/play/brick/${brick.id}/intro`;
 
-  if (!isAuthor && !isCurrentEditor && !isPublisher) {
+  if (!isAuthor && !isCurrentEditor && !isPublisher && !isAdmin) {
     return <Redirect to={map.BackToWorkBuildTab} />;
   }
 
@@ -164,11 +164,24 @@ const FinalStep: React.FC<FinalStepProps> = ({
     );
   }
 
+  const renderAdminColumns = () => {
+    return (
+      <Grid className="share-row" container direction="row" justify="center">
+        {renderInviteColumn(3)}
+        {brick.status !== BrickStatus.Publish && <PublishColumn onClick={() => publish(brick.id)} />}
+      </Grid>
+    );
+  }
+
   const renderActionColumns = () => {
     const canPublish = isPublisher && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published;
 
     if (!brick.isCore) {
       return renderPersonalColumns();
+    }
+
+    if (isAdmin) {
+      return renderAdminColumns();
     }
 
     if (isAuthor && brick.status === BrickStatus.Draft) {

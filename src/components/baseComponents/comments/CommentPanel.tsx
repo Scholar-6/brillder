@@ -8,7 +8,7 @@ import comments from 'redux/actions/comments';
 import { Comment, CommentLocation } from 'model/comments';
 import { Brick } from 'model/brick';
 import { User } from 'model/user';
-import { deleteComment } from 'components/services/axios/brick';
+import { deleteComment } from 'services/axios/brick';
 
 import CommentItem from './CommentItem';
 import CommentChild from './CommentChild';
