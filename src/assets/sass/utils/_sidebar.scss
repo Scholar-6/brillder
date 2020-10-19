@@ -138,6 +138,23 @@
             }
           }
 
+          &.color7 {
+            .round-button,
+            .right-index {
+              border: 0.15vw solid var(--theme-yellow);
+              padding: 0.1vw 0.4vw;
+              color: var(--theme-yellow);
+              background: inherit;
+            }
+
+            svg {
+              color: var(--white);
+            }
+            svg:first-child {
+              color: var(--theme-yellow);
+            }
+          }
+
           &.color3 {
             .round-button,
             .right-index {

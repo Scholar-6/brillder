@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Brick } from "model/brick";
+import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { prepareVisibleBricks } from '../../service';
 
@@ -10,8 +10,9 @@ import FilterSidebar from "./FilterSidebar";
 import Tab, { ActiveTab } from "../Tab";
 import BackPagePagination from "../BackPagePagination";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
+import { PersonalFilters } from "./model";
 
-interface BuildBricksProps {
+interface PersonalBuildProps {
   user: User;
   finalBricks: Brick[];
   loaded: boolean;
@@ -38,19 +39,33 @@ interface BuildBricksProps {
   handleMouseLeave(brickId: number): void;
 }
 
-class PersonalBuild extends Component<BuildBricksProps> {
-  renderSortedBricks = () => {
-    const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize + 3, this.props.finalBricks)
+
+interface PersonalState {
+  bricks: Brick[];
+  filters: PersonalFilters;
+}
+
+class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
+  constructor(props: PersonalBuildProps) {
+    super(props);
+
+    this.state = {
+      bricks: this.props.finalBricks,
+      filters: {
+        draft: true,
+        selfPublish: true
+      }
+    };
+  }
+
+  setFilters(filters: PersonalFilters) {
+    this.setState({filters});
+  }
+
+  renderBricks = (bricks: Brick[]) => {
+    const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize, bricks);
 
     return data.map(item => {
-      const {brick} = item;
-      let circleIcon = '';
-      let iconColor = '';
-      if (brick.editor && brick.editor.id === this.props.user.id) {
-        circleIcon="edit-outline";
-        iconColor = 'text-theme-dark-blue';
-      }
-      
       return <BrickBlock
         brick={item.brick}
         index={item.index}
@@ -59,18 +74,14 @@ class PersonalBuild extends Component<BuildBricksProps> {
         key={item.index}
         shown={this.props.shown}
         history={this.props.history}
-        circleIcon={circleIcon}
-        iconColor={iconColor}
+        circleIcon=''
+        iconColor=''
         searchString=''
         handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
         handleMouseHover={() => this.props.handleMouseHover(item.key)}
         handleMouseLeave={() => this.props.handleMouseLeave(item.key)}
       />
     });
-  }
-
-  renderBricks = () => {
-    return this.renderSortedBricks();
   }
 
   renderFirstEmptyColumn() {
@@ -116,7 +127,7 @@ class PersonalBuild extends Component<BuildBricksProps> {
     return (
       <BackPagePagination
         sortedIndex={sortedIndex}
-        pageSize={pageSize+3}
+        pageSize={pageSize}
         bricksLength={finalBricks.length}
         moveNext={() => this.props.moveAllNext()}
         moveBack={() => this.props.moveAllBack()}
@@ -125,16 +136,34 @@ class PersonalBuild extends Component<BuildBricksProps> {
   }
 
   render() {
-    const {finalBricks} = this.props;
     let isEmpty = false;
 
     if (this.props.finalBricks.length === 0) {
       isEmpty = true;
     }
 
+    let draft = 0;
+    let selfPublish = 0;
+    let bricks:Brick[] = [];
+    if (this.state.filters.draft) {
+      const draftBricks = this.props.finalBricks.filter(b => b.status === BrickStatus.Draft || b.status === BrickStatus.Review || b.status === BrickStatus.Build);
+      draft = draftBricks.length;
+      bricks.push(...draftBricks);
+    } else if (this.state.filters.selfPublish) {
+      const selfPublishBricks = this.props.finalBricks.filter(b => b.status === BrickStatus.Publish);
+      selfPublish = selfPublishBricks.length;
+      bricks.push(...selfPublishBricks);
+    }
+
     return (
       <Grid container direction="row" className="sorted-row personal-build">
-        <FilterSidebar bricks={this.props.finalBricks} />
+        <FilterSidebar
+          draft={draft}
+          selfPublish={selfPublish}
+          bricks={bricks}
+          filters={this.state.filters}
+          setFilters={this.setFilters.bind(this)}
+        />
         <Grid item xs={9} className="brick-row-container">
           <Tab
             isTeach={this.props.isTeach}
@@ -148,10 +177,10 @@ class PersonalBuild extends Component<BuildBricksProps> {
                 ? this.renderEmptyPage()
                 : <div className="bricks-list-container">
                     <div className="bricks-list">
-                      {this.renderBricks()}
+                      {this.renderBricks(bricks)}
                     </div>
                   </div>}
-            {this.renderPagination(finalBricks)}
+            {this.renderPagination(bricks)}
             </div>
           </Grid>
         <DeleteBrickDialog

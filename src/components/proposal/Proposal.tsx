@@ -42,12 +42,13 @@ interface ProposalProps {
   brick: Brick;
   user: User;
   saveBrick(brick: Brick): Promise<Brick | null>;
-  createBrick(brick: Brick): void;
+  createBrick(brick: Brick): Promise<Brick | null>;
   socketStartEditing(brickId: number): void;
 }
 
 interface ProposalState {
   brick: Brick;
+  saving: boolean;
   saved: boolean;
   subjects: Subject[];
   isDialogOpen: boolean;
@@ -99,6 +100,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.state = {
       brick: initBrick,
       saved: false,
+      saving: false,
       isDialogOpen: false,
       subjects: []
     };
@@ -113,16 +115,19 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
-  saveBrick(tempBrick: Brick) {
+  async saveBrick(tempBrick: Brick) {
+    if (this.state.saving === true) { return; }
+    this.setState({saving: true});
     const { brick } = this.props;
     if (tempBrick.id) {
-      this.props.saveBrick(tempBrick);
+      await this.props.saveBrick(tempBrick);
     } else if (brick && brick.id) {
       tempBrick.id = brick.id;
-      this.props.saveBrick(tempBrick);
+      await this.props.saveBrick(tempBrick);
     } else {
-      this.props.createBrick(tempBrick);
+      await this.props.createBrick(tempBrick);
     }
+    this.setState({saving: false});
   }
 
   openDialog = () => this.setState({ isDialogOpen: true });
@@ -177,9 +182,11 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.saveBrick(brick);
   };
 
-  saveAndMove = () => {
-    this.saveBrick(this.state.brick);
-    this.setState({ saved: true });
+  saveAndMove = async () => {
+    if (this.state.saving === true) { return; }
+    this.setState({ saving: true });
+    await this.saveBrick(this.state.brick);
+    this.setState({ saved: true, saving: false });
   };
 
   async saveAndPreview(playStatus: PlayButtonStatus) {

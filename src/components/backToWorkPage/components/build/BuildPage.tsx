@@ -10,7 +10,7 @@ import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ThreeColumns, Filters, SortBy } from '../../model';
-import { getBricks, searchBricks, getCurrentUserBricks } from "components/services/axios/brick";
+import { getBricks, searchBricks, getCurrentUserBricks } from "services/axios/brick";
 import { Notification } from 'model/notifications';
 import {
   filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,

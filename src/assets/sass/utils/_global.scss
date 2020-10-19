@@ -65,7 +65,13 @@ textarea {
 .svg {
   @extend %noUserSelect;
   fill: currentColor;
-  // stroke: currentColor;
+  stroke: currentColor;
+  // @media not all and (min-resolution: 0.001dpcm) {
+  //   @supports (-webkit-appearance: none) {
+  //     fill: currentColor;
+  //     stroke: currentColor;
+  //   }
+  // }
 }
 
 .svgOnHover {
