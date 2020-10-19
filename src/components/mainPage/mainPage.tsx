@@ -18,7 +18,7 @@ import WelcomeComponent from './WelcomeComponent';
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { getAssignedBricks } from "components/services/axios/brick";
+import { getAssignedBricks } from "services/axios/brick";
 import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
 
 

@@ -6,7 +6,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { PlayFilters, ThreeAssignmentColumns } from '../../model';
 import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 import actions from 'redux/actions/requestFailed';
-import { getAssignedBricks } from "components/services/axios/brick";
+import { getAssignedBricks } from "services/axios/brick";
 import service, { getLongestColumn, hideAssignments } from './service';
 import { checkAdmin, checkEditor, checkTeacher } from "components/services/brickService";
 

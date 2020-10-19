@@ -14,7 +14,7 @@ import {
   parseQuestion,
 } from "components/build/questionService/QuestionService";
 import { Question } from "model/question";
-import { getAttempts } from "components/services/axios/attempt";
+import { getAttempts } from "services/axios/attempt";
 import { PlayAttempt } from "model/attempt";
 import { Redirect } from "react-router-dom";
 import { loadSubjects } from "components/services/subject";

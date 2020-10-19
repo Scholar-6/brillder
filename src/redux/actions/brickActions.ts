@@ -1,9 +1,9 @@
 import types from '../types';
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
-import { Brick, Editor } from 'model/brick';
+import { Brick } from 'model/brick';
 import comments from './comments';
-import service, { getPublicBrickById } from 'components/services/axios/brick';
+import service, { getPublicBrickById } from 'services/axios/brick';
 
 const fetchBrickSuccess = (data:any) => {
   return {
