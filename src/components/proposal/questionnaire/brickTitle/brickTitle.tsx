@@ -134,8 +134,8 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <div className="mobile-view-image">
               <img alt="titles" src="/images/new-brick/titles.png" />
             </div>
-            <h1 style={{position: 'relative'}}>
-             {subjectName && <div className="subject-text">This wil be a {subjectName} brick</div>}
+            <h1>
+             {subjectName && <div className="subject-text">This will be a {subjectName} brick</div>}
               What is it about?
             </h1>
             <form>
