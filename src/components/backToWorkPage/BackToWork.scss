@@ -132,6 +132,7 @@
           }
         }
         &.white-in-yellow {
+          margin: auto;
           background-color: var(--theme-yellow);
 
           .circle {
@@ -428,6 +429,13 @@
 
     &.active {
       color: var(--theme-dark-blue);
+    }
+  }
+}
+.personal-build {
+  .color2 {
+    .left-brick-circle {
+      background: var(--theme-yellow) !important;
     }
   }
 }
