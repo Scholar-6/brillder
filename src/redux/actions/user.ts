@@ -28,10 +28,9 @@ const getUser = () => {
       const {data} = response;
       dispatch(getUserSuccess(data));
       dispatch(socketLogin(data.id));
-    })
-    .catch(error => {
+    }).catch(error => {
       dispatch(getUserFailure(error.message));
-    })
+    });
   }
 }
 
