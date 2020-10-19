@@ -4,7 +4,6 @@ import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/Add
 import './chooseSeveralBuild.scss';
 import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 import {ChooseOneAnswer} from '../chooseOneBuild/types';
-import { QuestionValueType } from '../types';
 import validator from '../../../questionService/UniqueValidator';
 import { showSameAnswerPopup } from '../service/questionBuild';
 

@@ -39,6 +39,8 @@ import { maximizeZendeskButton, minimizeZendeskButton } from 'components/service
 import { getAssignQueryString, getPlayPath } from "./service";
 import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";
 import map from "components/map";
+import userActions from 'redux/actions/user';
+import { User } from "model/user";
 
 
 function shuffle(a: any[]) {
@@ -50,11 +52,14 @@ function shuffle(a: any[]) {
 }
 
 interface BrickRoutingProps {
-  brick: Brick;
   match: any;
-  user: any;
   history: any;
   location: any;
+
+  // redux
+  brick: Brick;
+  user: User;
+  getUser(): Promise<any>;
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
@@ -112,7 +117,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
       brickAttempt,
       { withCredentials: true }
-    ).then(() => {
+    ).then(async () => {
+      if (!props.user.hasPlayedBrick) {
+        await props.getUser();
+      }
       props.history.push(`/play/brick/${brick.id}/finalStep`);
     }).catch(() => {
       alert("Can`t save your attempt");
@@ -407,6 +415,10 @@ const mapState = (state: ReduxCombinedState) => ({
   brick: state.brick.brick
 });
 
-const connector = connect(mapState);
+const mapDispatch = (dispatch: any) => ({
+  getUser: () => dispatch(userActions.getUser()),
+});
+
+const connector = connect(mapState, mapDispatch);
 
 export default connector(BrickRouting);
