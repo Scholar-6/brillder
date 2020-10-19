@@ -3,6 +3,7 @@ import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
 import { PlayFilters } from '../../model';
 import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
+import { ClassroomApi } from "components/teach/service";
 
 enum PlayFilterFields {
   Completed = 'completed',
@@ -13,7 +14,10 @@ enum PlayFilterFields {
 interface FilterSidebarProps {
   filters: PlayFilters;
   assignments: AssignmentBrick[];
+  classrooms: ClassroomApi[];
+  activeClassroomId: number;
   filterChanged(filters: PlayFilters): void;
+  setActiveClassroom(classroom: number): void;
 }
 
 interface FilterSidebarState {
@@ -64,18 +68,24 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
   }
 
   renderIndexesBox = () => {
+    const {activeClassroomId} = this.props;
+    
     return (
       <div className="sort-box teach-sort-box play-index-box">
         <div className="filter-container sort-by-box">
           <div className="sort-header">INBOX</div>
         </div>
         <div className="filter-container indexes-box classrooms-filter">
-          <div className={"index-box active"}>
+          <div className={`index-box ${activeClassroomId > 0 ? '' : 'active'}`} onClick={() => this.props.setActiveClassroom(-1)}>
             View All
             <div className="right-index">
               <div className="white-box">{0}</div>
             </div>
           </div>
+          {this.props.classrooms.map((c, i) => 
+            <div className={`index-box ${activeClassroomId === c.id ? 'active' : ''}`} key={i} onClick={() => this.props.setActiveClassroom(c.id)}>
+              {c.name}
+            </div>)}
         </div>
       </div>
     );
@@ -119,7 +129,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
             }}>
           </button>
         </div>
-        {this.state.filterExpanded === true ? (
+        {this.state.filterExpanded === true && (
           <div className="filter-container subject-indexes-box">
             <div className="index-box color1">
               <FormControlLabel
@@ -149,9 +159,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
               <div className="right-index">{checkedCount}</div>
             </div>
           </div>
-        ) : (
-            ""
-          )}
+        )}
       </div>
     );
   };
