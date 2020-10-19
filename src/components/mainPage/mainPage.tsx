@@ -170,7 +170,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           this.setState({isBackToWorkOpen: true});
         }
       }}>
-        <button className={`btn btn-transparent ${isActive ? 'active zoom-item svgOnHover text-theme-orange' : 'text-theme-dark-blue'}`}>
+        <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : 'text-theme-dark-blue'}`}>
           <SpriteIcon name="student-back-to-work"/>
           <span className={`item-description ${isActive ? '' : 'disabled'}`}>Back To Work</span>
         </button>
