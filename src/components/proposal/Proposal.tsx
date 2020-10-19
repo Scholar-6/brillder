@@ -10,7 +10,7 @@ import "./Proposal.scss";
 import SubjectPage from "./questionnaire/subject/Subject";
 import BrickTitle from "./questionnaire/brickTitle/brickTitle";
 import OpenQuestion from "./questionnaire/openQuestion/openQuestion";
-import { BrickLengthEnum } from "model/brick";
+import { BrickLengthEnum, Subject } from "model/brick";
 import BrickLength from "./questionnaire/brickLength/brickLength";
 import Brief from "./questionnaire/brief/brief";
 import Prep from "./questionnaire/prep/prep";
@@ -33,6 +33,7 @@ import map from "components/map";
 
 import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
 import { Question } from "model/question";
+import { loadSubjects } from "components/services/subject";
 
 interface ProposalProps {
   history: History;
@@ -48,6 +49,7 @@ interface ProposalProps {
 interface ProposalState {
   brick: Brick;
   saved: boolean;
+  subjects: Subject[];
   isDialogOpen: boolean;
 }
 
@@ -98,7 +100,17 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       brick: initBrick,
       saved: false,
       isDialogOpen: false,
+      subjects: []
     };
+
+    this.getSubject();
+  }
+
+  async getSubject() {
+    const subjects = await loadSubjects();
+    if (subjects) {
+      this.setState({subjects});
+    }
   }
 
   saveBrick(tempBrick: Brick) {
@@ -239,6 +251,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 playStatus={playStatus}
                 parentState={localBrick}
                 canEdit={canEdit}
+                subjects={this.state.subjects}
                 saveTitles={this.setTitles}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />

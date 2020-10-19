@@ -20,4 +20,5 @@ export interface AssignmentBrick {
   expanded?: boolean;
   expandFinished?: boolean;
   isInvitation: boolean;
+  classroom?: any;
 }

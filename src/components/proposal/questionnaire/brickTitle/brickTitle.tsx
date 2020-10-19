@@ -3,7 +3,7 @@ import { Grid, Input, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep, PlayButtonStatus } from "../../model";
-import { Brick } from "model/brick";
+import { Brick, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
 import { enterPressed } from "components/services/key";
@@ -25,6 +25,7 @@ interface BrickTitleProps {
   parentState: Brick;
   canEdit: boolean;
   playStatus: PlayButtonStatus;
+  subjects: Subject[];
   saveTitles(data: any): void;
   saveAndPreview(): void;
 }
@@ -112,6 +113,14 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
       setBrillderTitle(parentState.title);
     }
 
+    let subjectName = '';
+    try {
+      const subject = this.props.subjects.find(s => s.id === parentState.subjectId)
+      if (subject) {
+        subjectName = subject.name;
+      }
+    } catch {}
+
     return (
       <div className="tutorial-page brick-title-page">
         <Navigation
@@ -125,7 +134,10 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <div className="mobile-view-image">
               <img alt="titles" src="/images/new-brick/titles.png" />
             </div>
-            <h1>What is your brick about?</h1>
+            <h1>
+             {subjectName && <div className="subject-text">This will be a {subjectName} brick</div>}
+              What is it about?
+            </h1>
             <form>
               <Grid item className="input-container">
                 <div className="audience-inputs">

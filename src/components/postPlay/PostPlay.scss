@@ -296,14 +296,14 @@
       overflow-y: auto;
       .attempt-info {
         cursor: pointer;
-        width: 55%;
+        width: 24.5vw;
         padding-top: 0.5vh;
         padding-bottom: 0.5vh;
         margin-left: 3vw;
         display: flex;
         align-items: center;
         line-height: 1;
-        font-size: 2vw;
+        font-size: 1.3vw;
 
         .percentage {
           @extend %flexCenter;
