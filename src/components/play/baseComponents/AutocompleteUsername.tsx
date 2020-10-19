@@ -1,9 +1,10 @@
 import React from "react";
-import { TextField } from "@material-ui/core";
+import { Avatar, Chip, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import { Brick } from "model/brick";
 import { suggestUsername } from "components/services/axios/user";
+import { UserBase } from "model/user";
 
 interface AutocompleteProps {
   brick: Brick;
@@ -12,25 +13,26 @@ interface AutocompleteProps {
   placeholder: string;
   onBlur(): void;
 
-  username: string;
-  setUsername(name: string): void;
+  users: UserBase[];
+  setUsers(users: UserBase[]): void;
 }
 
 const AutocompleteUsername: React.FC<AutocompleteProps> = ({
-  brick, username, setUsername,
+  brick, users, setUsers,
   ...props
 }) => {
-  const [suggestions, setSuggestions] = React.useState([] as string[]);
+  const [suggestions, setSuggestions] = React.useState([] as UserBase[]);
 
   return (
-    <Autocomplete
+    <Autocomplete<UserBase>
+      multiple
       disabled={!props.canEdit}
-      value={username}
+      value={users}
       options={suggestions}
       style={{ background: "inherit" }}
-      onChange={(e: any, value: string | null) => {
+      onChange={(e: any, value: UserBase[]) => {
         if (value) {
-          setUsername(value);
+          setUsers(value);
         }
       }}
       renderInput={(params) => (
@@ -42,7 +44,6 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
           onBlur={() => props.onBlur()}
           onChange={(evt) => {
             const { value } = evt.target;
-            setUsername(value);
             if (value.length >= 3) {
               suggestUsername(value).then((res) => {
                 if (res && res.length > 0) {
@@ -59,6 +60,18 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
           variant="outlined"
         />
       )}
+      renderTags={(value: UserBase[], getTagProps) => {
+        return <>
+        {value.map((user, idx) => (
+          <Chip
+            label={`${user.firstName} ${user.lastName}`}
+            avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${user.profileImage}`} />}
+            {...getTagProps({ index: idx })}
+          />
+        ))}
+        </>;
+      }}
+      getOptionLabel={(option) => `${option.firstName} ${option.lastName}`}
     />
   );
 };

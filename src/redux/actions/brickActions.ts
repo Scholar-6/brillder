@@ -1,7 +1,7 @@
 import types from '../types';
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
-import { Brick } from 'model/brick';
+import { Brick, Editor } from 'model/brick';
 import comments from './comments';
 import service, { getPublicBrickById } from 'components/services/axios/brick';
 
@@ -129,12 +129,12 @@ const assignEditorFailure = (errorMessage:string) => {
   } as Action
 }
 
-const assignEditor = (brick: any, editor: any) => {
+const assignEditor = (brick: any, editorIds?: number[]) => {
   return function (dispatch: Dispatch) {
     brick.type = 1;
     return axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignEditor`,
-      { brickId: brick.id, editorId: editor.id }, {withCredentials: true}
+      { brickId: brick.id, editorIds }, {withCredentials: true}
     ).then(response => {
       const brick = response.data as Brick;
       dispatch(assignEditorSuccess(brick));
