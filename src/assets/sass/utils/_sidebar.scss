@@ -187,11 +187,11 @@
             .MuiIconButton-label {
               > div {
                 > svg {
-                  color: var(--theme-green);
-                  // color: var(--white);
+                  color: var(--white);
                 }
-                // > svg:first-child {
-                // }
+                > svg:first-child {
+                  color: var(--theme-green);
+                }
               }
             }
           }
