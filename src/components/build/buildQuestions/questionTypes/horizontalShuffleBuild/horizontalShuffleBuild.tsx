@@ -13,8 +13,6 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
   locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
-  const [height, setHeight] = React.useState('0%');
-  useEffect(() => calculateHeight());
   const newAnswer = () => ({ value: "" });
 
   if (!data.list) {
@@ -29,7 +27,6 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
   const update = () => {
     setState(Object.assign({}, state));
     updateComponent(state);
-    calculateHeight();
   }
 
   const changed = (shortAnswer: any, value: string) => {
@@ -82,16 +79,6 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
     );
   }
 
-  const calculateHeight = () => {
-    let showButton = true;
-    for (let answer of state.list) {
-      if (answer.value === "") {
-        showButton = false;
-      }
-    }
-    showButton === true ? setHeight('auto') : setHeight('0%');
-  }
-
   return (
     <div className="horizontal-shuffle-build">
       <div className="component-title">
@@ -106,7 +93,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
       <AddAnswerButton
         locked={locked}
         addAnswer={addAnswer}
-        height={height}
+        height="auto"
         label="+ ANSWER" />
     </div>
   )
