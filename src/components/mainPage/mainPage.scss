@@ -350,7 +350,7 @@
     right: 0;
     position: fixed;
     background: var(--theme-light-blue);
-    transition: all 150ms;
+    @extend %transitionAll300;
     border-bottom-left-radius: 2vw;
 
     &.menu-expanded {
@@ -361,6 +361,7 @@
     &.notification-expanded {
       width: $notification-width;
       border-bottom-left-radius: 0;
+      @extend %transitionAll300;
     }
   }
 

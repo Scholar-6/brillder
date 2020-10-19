@@ -198,7 +198,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       );
     }
 
-    if (isCurrentEditor && !brick.publisher) {
+    if (isCurrentEditor && brick.status === BrickStatus.Build) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
           { renderReturnToAuthorColumn(3) }
@@ -299,7 +299,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  returnToEditors: (brick: Brick) => dispatch(brickActions.assignEditor(brick, {})),
+  returnToEditors: (brick: Brick) => dispatch(brickActions.assignEditor(brick)),
   fetchBrick: (brickId: number) => dispatch(brickActions.fetchBrick(brickId)),
   sendToPublisher: (brickId: number) => dispatch(brickActions.sendToPublisher(brickId)),
   sendToPublisherConfirmed: () => dispatch(brickActions.sendToPublisherConfirmed()),
