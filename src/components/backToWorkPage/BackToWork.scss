@@ -131,6 +131,15 @@
             height: 4.6vw;
           }
         }
+        &.white-in-yellow {
+          background-color: var(--theme-yellow);
+
+          .circle {
+            width: 4.6vw;
+            height: 4.6vw;
+          }
+        }
+
       }
       .red {
         background: var(--theme-orange);

@@ -155,16 +155,26 @@ const FinalStep: React.FC<FinalStepProps> = ({
     );
   }
 
+  const renderPersonalColumns = () => {
+    return (
+      <Grid className="share-row" container direction="row" justify="center">
+        <ShareColumn size={3} onClick={() => setShare(true)} />
+        <PublishColumn onClick={() => publish(brick.id)} />
+      </Grid>
+    );
+  }
+
   const renderActionColumns = () => {
     const canPublish = isPublisher && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published;
 
-    const size: 5 | 3 = canPublish ? 3 : 5;
+    if (!brick.isCore) {
+      return renderPersonalColumns();
+    }
 
     if (isAuthor && brick.status === BrickStatus.Draft) {
       if (brick.editors && brick.editors.length > 0) {
         return (
           <Grid className="share-row" container direction="row" justify="center">
-            { !brick.isCore && <ShareColumn size={3} onClick={() => setShare(true)} /> }
             {renderInviteColumn(3)}
             {renderReturnToEditorsColumn(3)}
           </Grid>
@@ -172,8 +182,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       } else {
         return (
           <Grid className="share-row" container direction="row" justify="center">
-            { !brick.isCore && <ShareColumn size={size} onClick={() => setShare(true)} /> }
-            {renderInviteColumn(size)}
+            {renderInviteColumn(3)}
           </Grid>
         );
       }
@@ -182,10 +191,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
     if (canPublish) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
-          {isAdmin && renderInviteColumn(size)}
-          {
-            canPublish && renderReturnToEditorColumn(size)
-          }
+          {isAdmin && renderInviteColumn(3)}
+          {canPublish && renderReturnToEditorColumn(3)}
           {canPublish && <PublishColumn onClick={() => publish(brick.id)} />}
         </Grid>
       );
@@ -194,26 +201,16 @@ const FinalStep: React.FC<FinalStepProps> = ({
     if (isCurrentEditor && !brick.publisher) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
-          { renderReturnToAuthorColumn(size) }
-          { renderSendToPublisherColumn(size) }
+          { renderReturnToAuthorColumn(3) }
+          { renderSendToPublisherColumn(3) }
         </Grid>
       );
     }
 
-    if (!brick.isCore) {
-      return (
-        <Grid className="share-row" container direction="row" justify="center">
-          <ShareColumn size={size} onClick={() => setShare(true)} />
-          {renderInviteColumn(size)}
-          { canPublish && renderReturnToEditorColumn(size) }
-          {canPublish && <PublishColumn onClick={() => publish(brick.id)} />}
-        </Grid>
-      );
-    }
     return (
       <Grid className="share-row" container direction="row" justify="center">
-        {renderInviteColumn(size)}
-        { canPublish && renderReturnToEditorColumn(size) }
+        {renderInviteColumn(3)}
+        { canPublish && renderReturnToEditorColumn(3) }
       </Grid>
     );
   }
