@@ -12,7 +12,7 @@ import actions from 'redux/actions/requestFailed';
 import { UserBase } from 'model/user';
 import { Classroom } from 'model/classroom';
 import { Brick } from 'model/brick';
-import { getClassrooms, getStudents } from 'components/services/axios/classroom';
+import { getClassrooms, getStudents } from 'services/axios/classroom';
 
 interface AssignPersonOrClassProps {
   brick: Brick;

@@ -6,8 +6,7 @@ import { connect } from "react-redux";
 
 import actions from 'redux/actions/brickActions';
 import { Brick, Editor } from 'model/brick';
-import { getUserByUserName } from 'components/services/axios/user';
-import { inviteUser } from 'components/services/axios/brick';
+import { inviteUser } from 'services/axios/brick';
 import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 

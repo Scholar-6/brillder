@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 
 import actions from 'redux/actions/brickActions';
 import { Brick, Editor } from 'model/brick';
-import { getUserByUserName } from 'components/services/axios/user';
 import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
@@ -24,7 +23,6 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [isValid, setValid] = React.useState(false);
   const [editors, setEditors] = React.useState<Editor[]>(brick.editors ?? []);
   const [editorError, setEditorError] = React.useState("");
-  const [locked, setLock] = React.useState(false);
 
   const saveEditors = (editorIds: number[]) => {
     props.assignEditor(brick, editorIds);
@@ -67,7 +65,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const renderSendButton = () => {
     return (
       <button
-        disabled={locked}
+        disabled={false}
         className={`btn bold btn-md yes-button bg-theme-orange`}
         style={{ width: 'auto', paddingLeft: '4vw' }}
         onClick={onNext}
