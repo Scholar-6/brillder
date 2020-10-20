@@ -7,9 +7,9 @@ import { ComponentAttempt } from 'components/play/model';
 const mockComponent: ChooseOneComponent = {
     type: 127,
     list: [
-        { value: "A", valueFile: "", checked: false, answerType: QuestionValueType.String },
-        { value: "B", valueFile: "", checked: true,  answerType: QuestionValueType.String },
-        { value: "C", valueFile: "", checked: false, answerType: QuestionValueType.String }
+        { value: "A", valueFile: "", checked: false, index: 0, answerType: QuestionValueType.String },
+        { value: "B", valueFile: "", checked: true, index: 1,  answerType: QuestionValueType.String },
+        { value: "C", valueFile: "", checked: false, index: 2, answerType: QuestionValueType.String }
     ],
 }
 
@@ -18,7 +18,7 @@ describe("choose one scoring", () => {
     it("should mark a correct answer with 6 marks", () => {
         // arrange
         const mockAttempt: ComponentAttempt<ChooseOneAnswer> = {
-            answer: 1
+            answer: {shuffleIndex: 1, realIndex: 1 }
         } as ComponentAttempt<ChooseOneAnswer>;
 
         // act
@@ -33,7 +33,7 @@ describe("choose one scoring", () => {
     it("should mark an incorrect answer with 0.5 marks", () => {
         // arrange
         const mockAttempt: ComponentAttempt<ChooseOneAnswer> = {
-            answer: 0
+            answer: { realIndex: 0, shuffleIndex: 0 }
         } as ComponentAttempt<ChooseOneAnswer>;
 
         // act
@@ -48,7 +48,7 @@ describe("choose one scoring", () => {
     it("should mark a blank answer with 0 marks", () => {
         // arrange
         const mockAttempt: ComponentAttempt<ChooseOneAnswer> = {
-            answer: -1
+            answer: { realIndex: -1, shuffleIndex: -1 }
         } as ComponentAttempt<ChooseOneAnswer>;
 
         // act
