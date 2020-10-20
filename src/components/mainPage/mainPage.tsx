@@ -56,6 +56,9 @@ interface MainPageState {
   isMyLibraryOpen: boolean;
   isBackToWorkOpen: boolean;
   isTryBuildOpen: boolean;
+
+  // for builder
+  isBuilderBackWorkOpen: boolean;
 }
 
 class MainPage extends Component<MainPageProps, MainPageState> {
@@ -72,6 +75,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isMyLibraryOpen: false,
       isBackToWorkOpen: false,
       isTryBuildOpen: false,
+      isBuilderBackWorkOpen: false,
       isTeacher: checkTeacherOrAdmin(props.user.roles)
     } as any;
 
@@ -202,7 +206,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         if (isActive) {
           this.props.history.push("/back-to-work");
         } else {
-          this.setState({isTryBuildOpen: true});
+          this.setState({isBuilderBackWorkOpen: true});
         }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'text-theme-orange zoom-item' : 'text-theme-dark-blue'}`}>
@@ -341,6 +345,10 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           label="Play a brick to unlock this feature"
           isOpen={this.state.isTryBuildOpen}
           close={() => this.setState({isTryBuildOpen: false})} />
+        <LockedDialog
+          label="Start Building to unlock this feature"
+          isOpen={this.state.isBuilderBackWorkOpen}
+          close={() => this.setState({isBuilderBackWorkOpen: false})} />
       </Grid>
     );
   }
