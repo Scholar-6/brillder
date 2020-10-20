@@ -10,11 +10,11 @@ import { PlayMode } from "../model";
 import { BrickFieldNames } from 'components/proposal/model';
 
 import TimerWithClock from "../baseComponents/TimerWithClock";
-import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import IntroductionDetails from "./IntroductionDetails";
 import PrepareText from './PrepareText';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import MathInHtml from "../baseComponents/MathInHtml";
 
 const moment = require("moment");
 
@@ -38,7 +38,6 @@ export interface IntroductionState {
   prepExpanded: boolean;
   briefExpanded: boolean;
   otherExpanded: boolean;
-  isPrepDialogOpen: boolean;
   duration: any;
 }
 
@@ -57,7 +56,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     isStopped: false,
     briefExpanded: true,
     otherExpanded: false,
-    isPrepDialogOpen: false,
     duration: null,
   } as IntroductionState);
 
@@ -85,7 +83,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       setState({
         ...state,
         isStopped: false,
-        isPrepDialogOpen: false,
         prepExpanded: !state.prepExpanded,
       });
     }
@@ -93,7 +90,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
   const startBrick = () => {
     if (!state.prepExpanded) {
-      setState({ ...state, isPrepDialogOpen: true });
+      togglePrep();
       return;
     }
     if (!props.startTime) {
@@ -292,7 +289,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <Grid item sm={8} xs={12}>
             <div className="introduction-page" style={{paddingTop: '2.4vh'}}>
               {renderHeader()}
-              <p className="open-question">{brick.openQuestion}</p>
+              <p className="open-question"><MathInHtml value={brick.openQuestion} /></p>
               <div className="intro-content">
                 {renderBriefTitle()}
                 {renderBriefExpandText()}
@@ -333,11 +330,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           </div>
         </div>
       </Hidden>
-      <PrepExpandedDialog
-        isOpen={state.isPrepDialogOpen}
-        close={() => setState({ ...state, isPrepDialogOpen: false })}
-        onSubmit={() => togglePrep()}
-      />
     </div>
   );
 };

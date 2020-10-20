@@ -10,7 +10,7 @@ import { User } from "model/user";
 import { Brick, BrickStatus } from "model/brick";
 import { PlayStatus } from "components/play/model";
 import { checkAdmin, checkPublisher } from "components/services/brickService";
-import { publishBrick, returnToAuthor, returnToEditor } from "components/services/axios/brick";
+import { publishBrick, returnToAuthor, returnToEditor } from "services/axios/brick";
 
 import Clock from "components/play/baseComponents/Clock";
 import ShareDialog from 'components/play/finalStep/dialogs/ShareDialog';
@@ -64,7 +64,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     isOpen: false,
     name: ''
   });
-
+  
   let isAuthor = false;
   try {
     isAuthor = brick.author.id === user.id;
@@ -75,7 +75,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   let isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
   const link = `/play/brick/${brick.id}/intro`;
 
-  if (!isAuthor && !isCurrentEditor && !isPublisher) {
+  if (!isAuthor && !isCurrentEditor && !isPublisher && !isAdmin) {
     return <Redirect to={map.BackToWorkBuildTab} />;
   }
 
@@ -155,16 +155,39 @@ const FinalStep: React.FC<FinalStepProps> = ({
     );
   }
 
+  const renderPersonalColumns = () => {
+    return (
+      <Grid className="share-row" container direction="row" justify="center">
+        <ShareColumn size={3} onClick={() => setShare(true)} />
+        <PublishColumn onClick={() => publish(brick.id)} />
+      </Grid>
+    );
+  }
+
+  const renderAdminColumns = () => {
+    return (
+      <Grid className="share-row" container direction="row" justify="center">
+        {renderInviteColumn(3)}
+        {brick.status !== BrickStatus.Publish && <PublishColumn onClick={() => publish(brick.id)} />}
+      </Grid>
+    );
+  }
+
   const renderActionColumns = () => {
     const canPublish = isPublisher && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published;
 
-    const size: 5 | 3 = canPublish ? 3 : 5;
+    if (!brick.isCore) {
+      return renderPersonalColumns();
+    }
+
+    if (isAdmin) {
+      return renderAdminColumns();
+    }
 
     if (isAuthor && brick.status === BrickStatus.Draft) {
       if (brick.editors && brick.editors.length > 0) {
         return (
           <Grid className="share-row" container direction="row" justify="center">
-            { !brick.isCore && <ShareColumn size={3} onClick={() => setShare(true)} /> }
             {renderInviteColumn(3)}
             {renderReturnToEditorsColumn(3)}
           </Grid>
@@ -172,8 +195,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       } else {
         return (
           <Grid className="share-row" container direction="row" justify="center">
-            { !brick.isCore && <ShareColumn size={size} onClick={() => setShare(true)} /> }
-            {renderInviteColumn(size)}
+            {renderInviteColumn(3)}
           </Grid>
         );
       }
@@ -182,39 +204,45 @@ const FinalStep: React.FC<FinalStepProps> = ({
     if (canPublish) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
-          {isAdmin && renderInviteColumn(size)}
-          {
-            canPublish && renderReturnToEditorColumn(size)
-          }
+          {isAdmin && renderInviteColumn(3)}
+          {canPublish && renderReturnToEditorColumn(3)}
           {canPublish && <PublishColumn onClick={() => publish(brick.id)} />}
         </Grid>
       );
     }
 
-    if (isCurrentEditor && !brick.publisher) {
+    if (isCurrentEditor && brick.status === BrickStatus.Build) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
-          { renderReturnToAuthorColumn(size) }
-          { renderSendToPublisherColumn(size) }
+          { renderReturnToAuthorColumn(3) }
+          { renderSendToPublisherColumn(3) }
         </Grid>
       );
     }
 
-    if (!brick.isCore) {
-      return (
-        <Grid className="share-row" container direction="row" justify="center">
-          <ShareColumn size={size} onClick={() => setShare(true)} />
-          {renderInviteColumn(size)}
-          { canPublish && renderReturnToEditorColumn(size) }
-          {canPublish && <PublishColumn onClick={() => publish(brick.id)} />}
-        </Grid>
-      );
-    }
     return (
       <Grid className="share-row" container direction="row" justify="center">
-        {renderInviteColumn(size)}
-        { canPublish && renderReturnToEditorColumn(size) }
+        {renderInviteColumn(3)}
+        { canPublish && renderReturnToEditorColumn(3) }
       </Grid>
+    );
+  }
+
+  const renderEditorsRow = () => {
+    return (
+      <p>
+        {brick.editors && brick.editors.length > 0
+          ? brick.editors.length === 1
+            ? <span>{brick.editors[0].firstName} is editing this brick</span>
+            : <span>{brick.editors.map((e, i, editors) => {
+              if (i < editors.length - 1) {
+                return e.firstName + ' ' + e.lastName + ' and ';
+              }
+              return e.firstName + ' ' + e.lastName + ' ';
+            })} are editing this brick</span>
+          : 'Invite an editor to begin the publication process'
+        }
+      </p>
     );
   }
 
@@ -238,7 +266,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                     :
                     <div>
                       <h2>Submit for Review?</h2>
-                      <p>Invite an editor to begin the publication process</p>
+                      {renderEditorsRow()}
                     </div>}
                   {renderActionColumns()}
                 </div>
@@ -302,7 +330,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  returnToEditors: (brick: Brick) => dispatch(brickActions.assignEditor(brick, {})),
+  returnToEditors: (brick: Brick) => dispatch(brickActions.assignEditor(brick)),
   fetchBrick: (brickId: number) => dispatch(brickActions.fetchBrick(brickId)),
   sendToPublisher: (brickId: number) => dispatch(brickActions.sendToPublisher(brickId)),
   sendToPublisherConfirmed: () => dispatch(brickActions.sendToPublisherConfirmed()),

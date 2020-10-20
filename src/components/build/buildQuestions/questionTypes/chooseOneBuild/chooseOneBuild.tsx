@@ -4,7 +4,7 @@ import './chooseOneBuild.scss';
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import ChooseOneAnswerComponent from './ChooseOneAnswer';
 import { ChooseOneAnswer } from './types';
-import { QuestionValueType, UniqueComponentProps } from '../types';
+import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
 import { showSameAnswerPopup } from '../service/questionBuild';
 
@@ -19,8 +19,6 @@ export interface ChooseOneBuildProps extends UniqueComponentProps {
 const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
-  const [height, setHeight] = React.useState('0%');
-  useEffect(() => calculateHeight());
   const newAnswer = () => ({ value: "", checked: false, valueFile: "" });
 
   if (!data.list) {
@@ -35,7 +33,6 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   const update = () => {
     setState(Object.assign({}, state));
     updateComponent(state);
-    calculateHeight();
   }
 
   const addAnswer = () => {
@@ -61,18 +58,6 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
     state.list.splice(index, 1);
     update();
     save();
-  }
-
-  const calculateHeight = () => {
-    let showButton = true;
-    for (let answer of state.list) {
-      if (answer.answerType !== QuestionValueType.Image) {
-        if (answer.value === "") {
-          showButton = false;
-        }
-      }
-    }
-    showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
   let checkBoxValid = !!validator.getChecked(state.list);
@@ -102,7 +87,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
       <AddAnswerButton
         locked={locked}
         addAnswer={addAnswer}
-        height={height}
+        height="auto"
         label="+ ANSWER"
       />
     </div>

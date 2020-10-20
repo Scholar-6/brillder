@@ -178,15 +178,19 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
               </Grid>
             </form>
             <div className="tutorial-pagination">
-              <NextButton
-                isActive={true}
-                step={ProposalStep.BrickTitle}
-                canSubmit={true}
-                onSubmit={saveTitles}
-                data={parentState}
-              />
+              <div className="centered text-theme-dark-blue bold" style={{fontSize: '2vw', marginRight: '2vw'}}>
+                Next
+              </div>
+              <div className="centered">
+                <NextButton
+                  isActive={true}
+                  step={ProposalStep.BrickTitle}
+                  canSubmit={true}
+                  onSubmit={saveTitles}
+                  data={parentState}
+                />
+              </div>
             </div>
-            <h2 className="pagination-text">1 of 4</h2>
           </Grid>
           <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
           <Hidden only={['xs', 'sm']}>

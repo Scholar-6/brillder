@@ -23,6 +23,14 @@ export const getBricks = async () => {
   }
 }
 
+export const getPublicBricks = async () => {
+  try {
+    return await get<Brick[]>('/bricks/public');
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Get bricks by status
  * return list of bricks if success or null if failed
@@ -55,10 +63,26 @@ export const getAssignedBricks = async () => {
   }
 }
 
+export const getStudentAssignments = async (studentId: number) => {
+  try {
+    return await get<AssignmentBrick[]>("/bricks/assignedTo/" + studentId);
+  } catch {
+    return null;
+  }
+}
+
 export const searchBricks = async (searchString: string = '') => {
   try {
     return await post<Brick[]>("/bricks/search", { searchString });
   } catch (e) {
+    return null;
+  }
+}
+
+export const searchPublicBricks = async (searchString: string = '') => {
+  try {
+    return await post<Brick[]>("/bricks/search/public", {searchString});
+  } catch {
     return null;
   }
 }
@@ -86,10 +110,7 @@ export const inviteUser = async (brickId: number, userId: number) => {
 
 export const setCoreLibrary = async (brickId: number, isCore?: boolean) => {
   try {
-    let core = false;
-    if (isCore) {
-      core = true;
-    }
+    const core = isCore ? true : false;
     await put<Brick>(`/brick/setCoreLibrary/${brickId}/${core}`, {});
     return true;
   } catch {

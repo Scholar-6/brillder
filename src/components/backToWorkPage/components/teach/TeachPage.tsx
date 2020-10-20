@@ -6,22 +6,22 @@ import './TeachPage.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
-import { TeachClassroom, TeachStudent } from "model/classroom";
-import { getAllClassrooms } from "components/teach/service";
 import { User } from "model/user";
 import { Subject } from "model/brick";
+import { TeachClassroom, TeachStudent } from "model/classroom";
+import { getAllClassrooms } from "components/teach/service";
 import { checkAdmin, checkTeacher } from "components/services/brickService";
 import { TeachFilters } from '../../model';
 import { Assignment } from "model/classroom";
+import { getAssignmentStats } from "services/axios/stats";
+import { ApiAssignemntStats } from "model/stats";
 
 import Tab, { ActiveTab } from '../Tab';
 import BackPagePagination from '../BackPagePagination';
-import TeachFilterSidebar from './TeachFilterSidebar';
-import ClassroomList from './ClassroomList';
-import ExpandedAssignment from './ExpandedAssignment';
-import { getAssignmentStats } from "components/services/axios/stats";
-import { ApiAssignemntStats } from "model/stats";
-import ActiveStudentBricks from "./ActiveStudentBricks";
+import TeachFilterSidebar from './components/TeachFilterSidebar';
+import ClassroomList from './components/ClassroomList';
+import ActiveStudentBricks from "./components/ActiveStudentBricks";
+import ExpandedAssignment from './components/ExpandedAssignment';
 
 interface TeachProps {
   history: any;
@@ -200,7 +200,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
   renderTeachPagination = () => {
     let itemsCount = 0;
     const {pageSize, activeClassroom} = this.state;
-    if (activeClassroom && this.state.activeAssignment) {
+    if (this.state.activeStudent) {
+      return "";
+    } else if (activeClassroom && this.state.activeAssignment) {
       return this.renderAssignmentPagination(activeClassroom);
     } else if (activeClassroom) {
       itemsCount = activeClassroom.assignments.length;
@@ -240,29 +242,32 @@ class TeachPage extends Component<TeachProps, TeachState> {
               {this.renderLiveBricksButton()}
               {this.renderArchiveButton()}
             </div>
-            {this.state.activeStudent &&
-              <ActiveStudentBricks activeStudent={this.state.activeStudent} />
-            }
-            {this.state.activeAssignment && this.state.assignmentStats && this.state.activeClassroom && !this.state.activeStudent ?
-              <ExpandedAssignment
+            { this.state.activeStudent ?
+              <ActiveStudentBricks
+                subjects={this.props.subjects}
                 classroom={this.state.activeClassroom}
-                assignment={this.state.activeAssignment}
-                stats={this.state.assignmentStats}
-                subjects={this.props.subjects}
-                startIndex={this.state.sortedIndex}
-                pageSize={this.state.assignmentPageSize}
-                history={this.props.history}
-                minimize={() => this.unselectAssignment()}
+                activeStudent={this.state.activeStudent}
               />
-              :
-              <ClassroomList
-                subjects={this.props.subjects}
-                expand={this.setActiveAssignment.bind(this)}
-                startIndex={this.state.sortedIndex}
-                classrooms={this.state.classrooms}
-                activeClassroom={this.state.activeClassroom}
-                pageSize={this.state.pageSize}
-              />
+              : this.state.activeAssignment && this.state.assignmentStats && this.state.activeClassroom ?
+                <ExpandedAssignment
+                  classroom={this.state.activeClassroom}
+                  assignment={this.state.activeAssignment}
+                  stats={this.state.assignmentStats}
+                  subjects={this.props.subjects}
+                  startIndex={this.state.sortedIndex}
+                  pageSize={this.state.assignmentPageSize}
+                  history={this.props.history}
+                  minimize={() => this.unselectAssignment()}
+                />
+                :
+                <ClassroomList
+                  subjects={this.props.subjects}
+                  expand={this.setActiveAssignment.bind(this)}
+                  startIndex={this.state.sortedIndex}
+                  classrooms={this.state.classrooms}
+                  activeClassroom={this.state.activeClassroom}
+                  pageSize={this.state.pageSize}
+                />
             }
             {this.renderTeachPagination()}
           </div>

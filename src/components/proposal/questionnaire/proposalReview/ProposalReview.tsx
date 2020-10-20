@@ -45,7 +45,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
     this.state = {
-      mode: false,
+      mode: true,
       bookHovered: false,
       bookState: BookState.TitlesPage,
       closeTimeout: -1
@@ -63,7 +63,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
   onBookClose() {
     const closeTimeout = setTimeout(() => {
-      this.setState({ bookHovered: false, mode: false });
+      this.setState({ bookHovered: false });
     }, 400);
     this.setState({ closeTimeout });
   }
@@ -95,16 +95,17 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     return <SpriteIcon onClick={e => this.switchMode(e)} name="edit-outline" className={className} />;
   }
 
-  renderEditableField(name: BrickFieldNames) {
+  renderEditableField(name: BrickFieldNames, placeholder: string = "Please fill in..", color?: string) {
     const { brick } = this.props;
     if (this.state.mode) {
       return (
         <input
+          disabled={!this.props.canEdit}
           onChange={e => {
             e.stopPropagation();
             this.props.setBrickField(name, e.target.value)
           }}
-          placeholder="Please fill in.."
+          placeholder={placeholder}
           value={brick[name]}
         />
       );
@@ -113,7 +114,37 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     if (value) {
       return value;
     }
-    return <span style={{ color: "#757575" }}>Please fill in..</span>;
+    if (color) {
+      return <span className={color}>{placeholder}</span>;
+    }
+    return <span style={{ color: "#757575" }}>{placeholder}</span>;
+  }
+
+  renderOpenQuestionField() {
+    const name = BrickFieldNames.openQuestion;
+    const placeholder = "Please fill in this field if you'd like to publish your brick";
+    const { brick } = this.props;
+    if (this.state.mode) {
+      return (
+        <DocumentWirisCKEditor
+          disabled={!this.props.canEdit}
+          placeholder={placeholder}
+          data={brick[name]}
+          toolbar={[
+            'bold', 'italic', 'mathType', 'chemType'
+          ]}
+          onBlur={() => { }}
+          onChange={v => {
+            this.props.setBrickField(name, v);
+          }}
+        />
+      );
+    }
+    const value = brick[name];
+    if (value) {
+      return  <MathInHtml value={value} />;
+    }
+    return <span className="text-theme-orange">{placeholder}</span>;
   }
 
   renderMathField(name: BrickFieldNames) {
@@ -210,12 +241,10 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             </Grid>
             <div className="proposal-titles">
               <div className="title">{this.renderEditableField(BrickFieldNames.title)}</div>
-              <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
+                <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
               <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
               <p className="text-title m-t-3 bold">Open Question:</p>
-              <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
-                {this.renderEditableField(BrickFieldNames.openQuestion)}
-              </div>
+              {this.renderOpenQuestionField()}
               <p className="text-title brick-length m-t-3">
                 <span className="bold">Brick Length:</span> <span className="brickLength">{brick.brickLength} mins.</span>
               </p>
@@ -291,7 +320,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             <Grid container justify="center" alignContent="center" style={{ height: '100%' }}>
               <div>
                 <img alt="" src="/images/choose-login/logo.png" />
-                <div className="white-text">PROPOSAL</div>
+                <div className="white-text">PLAN</div>
                 {renderAuthorRow()}
               </div>
             </Grid>
@@ -330,7 +359,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               />
             }
           </Grid>
-          <Grid className="main-text-container" style={{ opacity: this.state.mode === true ? '0' : '1' }}>
+          <Grid className="main-text-container">
             <h1>Your proposal has been saved!</h1>
             <h1>We've made a booklet for you</h1>
             <h1>to check all is in order.</h1>

@@ -6,14 +6,14 @@ const mark: ScoreFunction<ChooseOneComponent, ChooseOneAnswer> = (component, att
 
     // set attempt.correct to true by answer index.
     attempt.correct = false;
-    if(attempt.answer >= 0 && attempt.answer !== -1 && component.list[attempt.answer].checked === true) {
+    if(attempt.answer?.shuffleIndex >= 0 && attempt.answer?.shuffleIndex !== -1 && component.list[attempt.answer?.shuffleIndex].checked === true) {
       attempt.correct = true;
     }
 
     if (attempt.correct) {
         // if the attempt is correct, then add the marks.
         attempt.marks = attempt.maxMarks;
-    } else if (attempt.answer !== null && attempt.answer !== -1) {
+    } else if (attempt.answer && attempt.answer?.shuffleIndex !== -1) {
         // if there is an answer given, give the student an extra half a mark.
         attempt.marks = 0.5;
     } else {

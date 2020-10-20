@@ -4,6 +4,7 @@ import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
 import './ExpandedMobileBrickDescription.scss';
 import SpriteIcon from "./SpriteIcon";
+import MathInHtml from "components/play/baseComponents/MathInHtml";
 
 
 interface ExpandedDescriptionProps {
@@ -37,7 +38,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           <div className="link-info">
             <div>{brick.subTopic} | {brick.alternativeTopics}</div>
             <div>{getAuthorRow(brick)}</div>
-            <div>{brick.openQuestion}</div>
+            <div><MathInHtml value={brick.openQuestion} /></div>
             <div>{this.getSubjectRow(brick)}</div>
             <div>Editor: Name Surname</div>
           </div>

@@ -19,14 +19,15 @@ const SearchText: React.FC<ShortDescriptionProps> = (props) => {
   const prepareListOfTags = (text: string, matches: RegExpExecArray[]) => {
     const res = [];
     let start = 0;
+    let i = 0;
     for (let match of matches) {
       let part = text.substr(start, match.index - start);
-      res.push(<span key={start}>{part}</span>);
-      res.push(<span key={start + 1} className="search-highlight">{match[0]}</span>)
+      res.push(<span key={i++}>{part}</span>);
+      res.push(<span key={i++} className="search-highlight">{match[0]}</span>)
       start = match.index + match[0].length;
     }
     const lastPart = text.substr(start, text.length);
-    res.push(<span key={text.length}>{lastPart}</span>);
+    res.push(<span key={i++}>{lastPart}</span>);
     return res;
   }
 

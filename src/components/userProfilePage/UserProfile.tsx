@@ -13,7 +13,7 @@ import "./UserProfile.scss";
 
 import { getGeneralSubject, loadSubjects } from 'components/services/subject';
 import { UpdateUserStatus, UserProfileField, UserRoleItem } from './model';
-import { getUserById, createUser, updateUser, saveProfileImageName } from 'components/services/axios/user';
+import { getUserById, createUser, updateUser, saveProfileImageName } from 'services/axios/user';
 import { isValid, getUserProfile, newStudentProfile } from './service';
 import { User, UserType, UserStatus, UserProfile } from "model/user";
 import { Subject } from "model/brick";

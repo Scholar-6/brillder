@@ -17,6 +17,12 @@
     z-index: -1;
   }
 
+  .ck-editor {
+    .ck-content {
+      text-align: left !important;
+    }
+  }
+
   .beta-text {
     color: var(--theme-dark-blue);
   }
@@ -148,6 +154,24 @@
     height: 100%;
     top: 0;
     transition: all 0.8s ease-in-out;
+
+    &.hovered, &.prep-page {
+      .flat {
+        height: 80vh !important;
+        margin-top: 10vh;
+        width: 50vw;
+
+        .front {
+          height: 80vh;
+        }
+        .back, .page6, .page4 {
+          height: 100% !important;
+        }
+        .normal-page-container { 
+          height: 100% !important;
+        }
+      }
+    }
   }
 
   .book-container {
@@ -165,11 +189,6 @@
       height: 63.6vh;
       backface-visibility: visible;
       transition: all 1s ease-in-out;
-
-      &.flat {
-        margin-top: 10vh;
-        height: 80vh;
-      }
     }
 
     .proposal-comments-panel {
@@ -333,7 +352,7 @@
       background: #fafafa;
     }
 
-    .page6-cover {
+    .page5, .page6-cover {
       background: #fafafa;
       .flipped-page {
         width: calc(100% - 4vw);
@@ -356,6 +375,12 @@
             }
           }
         }
+      }
+    }
+
+    .page5 {
+      .flipped-page {
+        padding-top: 3.5vh !important;
       }
     }
 
@@ -392,7 +417,6 @@
         .title {
           text-transform: uppercase;
           font-family: $font-family-bold;
-          height: 10vh;
 
           input {
             text-transform: uppercase;
@@ -490,7 +514,7 @@
     }
   }
   $scale: 1.15;
-  $width: 122%;
+  $width: 32vw;
 
   .book-main-container {
     &.hovered {
@@ -656,6 +680,20 @@
           transform: rotateY(0deg) scale($scale);
         }
       }
+    }
+  }
+
+  .open-question-text {
+    width: 100%;
+    border:none;
+    background-color: inherit;
+    color: var(--theme-dark-blue);
+    padding: 0;
+    margin: 0;
+    height: auto;
+
+    &::placeholder {
+      color: var(--theme-orange) !important;
     }
   }
 }
