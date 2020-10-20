@@ -26,7 +26,6 @@
     width: 100%;
     .tut-next,
     .tut-prev {
-      margin-bottom: 1.3vh;
       @include phone_and_tabletL {
         height: 8vw;
         width: 8vw;
@@ -109,6 +108,7 @@
 }
 
 .brief-page,
+.open-question-page,
 .prep-page {
   .left-block {
     > h1 {

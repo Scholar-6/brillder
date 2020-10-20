@@ -53,7 +53,10 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     }
   }
 
-  const isAdmin = props.user.roles.some(role => role.roleId === UserType.Admin);
+  let isAdmin = false;
+  if (props.user) {
+    isAdmin = props.user.roles.some(role => role.roleId === UserType.Admin);
+  }
 
   const move = () => {
     if (props.isPlay) {
@@ -85,7 +88,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
           <div className={`absolute-container brick-row-${row} ${brick.expanded ? "brick-hover" : ""}`}>
             {brick.expanded ? (
               <ExpandedBrickDecsiption
-                userId={props.user.id}
+                userId={props.user ? props.user.id : -1}
                 isAdmin={isAdmin}
                 color={color}
                 brick={brick}

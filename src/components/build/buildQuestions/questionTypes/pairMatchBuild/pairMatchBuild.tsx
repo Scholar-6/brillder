@@ -16,8 +16,6 @@ export interface PairMatchBuildProps extends UniqueComponentProps { }
 const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
-  const [height, setHeight] = React.useState('0%');
-  useEffect(() => calculateHeight());
   const newAnswer = () => ({ option: "", value: "" });
 
   if (!data.list) {
@@ -33,7 +31,6 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   const update = () => {
     setState(Object.assign({}, state));
     updateComponent(state);
-    calculateHeight();
   }
 
   const addAnswer = () => {
@@ -48,19 +45,6 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
     state.list.splice(index, 1);
     update();
     save();
-  }
-
-  const calculateHeight = () => {
-    let showButton = true;
-    for (let answer of state.list) {
-      if (answer.value === "") {
-        showButton = false;
-      }
-      if (answer.option === "") {
-        showButton = false;
-      }
-    }
-    showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
   const renderAnswer = (answer: Answer, i: number) => {
@@ -93,7 +77,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
       <AddAnswerButton
         locked={locked}
         addAnswer={addAnswer}
-        height={height}
+        height="auto"
         label="+ PAIR"
       />
     </div>

@@ -14,8 +14,6 @@ export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
 const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
-  const [height, setHeight] = React.useState('0%');
-  useEffect(() => calculateHeight());
   const newAnswer = () => ({ value: "" });
 
   if (!data.list) {
@@ -32,7 +30,6 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   const update = () => {
     setState(Object.assign({}, state));
     updateComponent(state);
-    calculateHeight();
   }
 
   const changed = (answer: any, value: string) => {
@@ -53,16 +50,6 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     state.list.splice(index, 1);
     update();
     save();
-  }
-
-  const calculateHeight = () => {
-    let showButton = true;
-    for (let answer of state.list) {
-      if (answer.value === "") {
-        showButton = false;
-      }
-    }
-    showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
   const renderAnswer = (answer: any, i: number) => {
@@ -104,7 +91,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
       <AddAnswerButton
         locked={locked}
         addAnswer={addAnswer}
-        height={height}
+        height="auto"
         label="+ ANSWER" />
     </div>
   )

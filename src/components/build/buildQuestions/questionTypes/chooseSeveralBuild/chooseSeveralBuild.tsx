@@ -4,7 +4,6 @@ import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/Add
 import './chooseSeveralBuild.scss';
 import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 import {ChooseOneAnswer} from '../chooseOneBuild/types';
-import { QuestionValueType } from '../types';
 import validator from '../../../questionService/UniqueValidator';
 import { showSameAnswerPopup } from '../service/questionBuild';
 
@@ -25,10 +24,6 @@ export interface ChooseSeveralBuildProps {
 const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
-  const [height, setHeight] = React.useState('0%');
-
-  useEffect(() => calculateHeight());
-
   const newAnswer = () => ({value: "", checked: false, valueFile: '' });
 
   if (!data.list) {
@@ -45,7 +40,6 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   const update = () => {
     setState(Object.assign({}, state));
     updateComponent(state);
-    calculateHeight();
   }
 
   const addAnswer = () => {
@@ -68,18 +62,6 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
     state.list.splice(index, 1);
     update();
     save();
-  }
-
-  const calculateHeight = () => {
-    let showButton = true;
-    for (let answer of state.list) {
-      if (answer.answerType !== QuestionValueType.Image) {
-        if (answer.value === "") {
-          showButton = false;
-        }
-      }
-    }
-    showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
   let isChecked = !!validator.validateChooseSeveralChecked(state.list);
@@ -109,7 +91,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
       <AddAnswerButton
         locked={locked}
         addAnswer={addAnswer}
-        height={height}
+        height="auto"
         label="+ ANSWER" />
     </div>
   )

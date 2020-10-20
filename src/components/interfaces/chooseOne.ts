@@ -5,6 +5,7 @@ export enum QuestionValueType {
 }
 
 export interface ChooseOneChoice {
+  index: number;
   value: string;
   valueFile: string;
   answerType: QuestionValueType;

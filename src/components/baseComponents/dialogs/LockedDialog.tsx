@@ -4,7 +4,7 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import LockIcon from '@material-ui/icons/Lock';
+import SpriteIcon from "../SpriteIcon";
 
 interface LockedProps {
   isOpen: boolean;
@@ -25,7 +25,7 @@ const LockedDialog: React.FC<LockedProps> = props => {
           <ListItemText primary={props.label} className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="circle-orange">
-              <LockIcon />
+              <SpriteIcon name="lock" className="stroke-2 m-b-05" />
             </Avatar>
           </ListItemAvatar>
         </ListItem>
