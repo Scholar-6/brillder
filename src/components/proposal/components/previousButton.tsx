@@ -29,7 +29,7 @@ const PreviousButton: React.FC<PrevButtonProps> = ({
       onClick={prev}
     >
       <SpriteIcon
-        name="arrow-up"
+        name="arrow-left"
         className={`active h100 w100 ${
           isActive ? "text-theme-orange" : "text-gray"
         }`}

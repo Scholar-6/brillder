@@ -320,7 +320,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             <Grid container justify="center" alignContent="center" style={{ height: '100%' }}>
               <div>
                 <img alt="" src="/images/choose-login/logo.png" />
-                <div className="white-text">PROPOSAL</div>
+                <div className="white-text">PLAN</div>
                 {renderAuthorRow()}
               </div>
             </Grid>
