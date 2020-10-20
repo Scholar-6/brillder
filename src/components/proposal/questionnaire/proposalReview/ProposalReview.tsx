@@ -45,7 +45,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
     this.state = {
-      mode: false,
+      mode: true,
       bookHovered: false,
       bookState: BookState.TitlesPage,
       closeTimeout: -1
@@ -63,7 +63,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
   onBookClose() {
     const closeTimeout = setTimeout(() => {
-      //this.setState({ bookHovered: false, mode: false });
+      this.setState({ bookHovered: false });
     }, 400);
     this.setState({ closeTimeout });
   }
