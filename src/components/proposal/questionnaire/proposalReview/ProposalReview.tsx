@@ -359,7 +359,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               />
             }
           </Grid>
-          <Grid className="main-text-container" style={{ opacity: this.state.mode === true ? '0' : '1' }}>
+          <Grid className="main-text-container">
             <h1>Your proposal has been saved!</h1>
             <h1>We've made a booklet for you</h1>
             <h1>to check all is in order.</h1>
