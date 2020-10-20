@@ -41,6 +41,7 @@ import UnauthorizedUserDialog from "components/baseComponents/dialogs/Unauthoriz
 import map from "components/map";
 import userActions from 'redux/actions/user';
 import { User } from "model/user";
+import { ChooseOneComponent } from "./questionTypes/chooseOne/ChooseOne";
 
 
 function shuffle(a: any[]) {
@@ -365,14 +366,16 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
       question.type === QuestionTypeEnum.ChooseOne ||
       question.type === QuestionTypeEnum.ChooseSeveral
     ) {
-      question.components.forEach((c) => {
+      question.components.forEach((c: ChooseOneComponent) => {
         if (c.type === QuestionComponentTypeEnum.Component) {
           const { hint } = question;
           if (hint.status === HintStatus.Each) {
-            for (let [index, item] of c.list.entries()) {
+            let list = c.list as any;
+            for (let [index, item] of list.entries()) {
               item.hint = question.hint.list[index];
             }
           }
+          c.list.map((c, i) => c.index = i);
           c.list = shuffle(c.list);
         }
       });
