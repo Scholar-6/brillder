@@ -15,6 +15,7 @@ import HighlightHtml from '../baseComponents/HighlightHtml';
 import IntroductionDetails from "./IntroductionDetails";
 import PrepareText from './PrepareText';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import MathInHtml from "../baseComponents/MathInHtml";
 
 const moment = require("moment");
 
@@ -292,7 +293,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <Grid item sm={8} xs={12}>
             <div className="introduction-page" style={{paddingTop: '2.4vh'}}>
               {renderHeader()}
-              <p className="open-question">{brick.openQuestion}</p>
+              <p className="open-question"><MathInHtml value={brick.openQuestion} /></p>
               <div className="intro-content">
                 {renderBriefTitle()}
                 {renderBriefExpandText()}
