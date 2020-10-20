@@ -71,6 +71,26 @@ describe("undo / redo service", () => {
         expect(redo3).toStrictEqual("abc");
     });
 
+    it("should clear the stack from the latest push", () => {
+        // arrange
+        UndoRedoService.instance.push(mockChanges[0]);
+        UndoRedoService.instance.push(mockChanges[1]);
+        UndoRedoService.instance.push(mockChanges[2]);
+        UndoRedoService.instance.undo();
+
+        // act
+        UndoRedoService.instance.push(mockChanges[3]); // should clear mockChanges[2] from stack.
+        const result = UndoRedoService.instance.redo(); // should be null.
+
+        const undo1 = UndoRedoService.instance.undo(); // should be mockChanges[3].
+        const undo2 = UndoRedoService.instance.undo(); // should be mockChanges[1].
+
+        // assert
+        expect(result).toBeNull();
+        expect(undo1).toStrictEqual("abc");
+        expect(undo2).toStrictEqual("a");
+    })
+
     it("should return null if there's nothing to undo", () => {
         // arrange (N/A)
 

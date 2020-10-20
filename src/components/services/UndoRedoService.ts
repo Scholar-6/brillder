@@ -24,8 +24,9 @@ export default class UndoRedoService {
     }
 
     public push(diff: DoubleBrickDiff) {
-        if(this.currentPosition >= this.stack.length) {
-            this.stack = this.stack.slice(this.currentPosition - 1);
+        console.log("push", diff);
+        if(this.currentPosition < this.stack.length - 1) {
+            this.stack = this.stack.slice(0, this.currentPosition + 1);
         }
         this.stack.push(diff);
         this.currentPosition++;
