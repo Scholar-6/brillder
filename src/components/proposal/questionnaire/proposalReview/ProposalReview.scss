@@ -158,6 +158,8 @@
     &.hovered {
       .flat {
         height: 80vh;
+        margin-top: 10vh;
+        width: 50vw;
 
         .front {
           height: 80vh;
@@ -181,11 +183,6 @@
       height: 63.6vh;
       backface-visibility: visible;
       transition: all 1s ease-in-out;
-
-      &.flat {
-        margin-top: 10vh;
-        width: 50vw;
-      }
     }
 
     .proposal-comments-panel {
