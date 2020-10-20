@@ -8,7 +8,7 @@ interface SpriteIconProps {
   onClick?(e: React.MouseEvent<SVGSVGElement, MouseEvent>): void;
 }
 
-const SpriteIcon:React.FC<SpriteIconProps> = ({name, className, onClick}) => {
+const SpriteIcon: React.FC<SpriteIconProps> = ({ name, className, onClick }) => {
   const onSvgClick = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     if (onClick) {
       onClick(e);
