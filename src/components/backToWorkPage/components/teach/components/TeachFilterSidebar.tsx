@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
 import { TeachClassroom, TeachStudent } from "model/classroom";
-import { TeachFilters } from '../../model';
+import { TeachFilters } from '../../../model';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 enum TeachFilterFields {

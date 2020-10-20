@@ -63,6 +63,14 @@ export const getAssignedBricks = async () => {
   }
 }
 
+export const getStudentAssignments = async (studentId: number) => {
+  try {
+    return await get<AssignmentBrick[]>("/bricks/assignedTo/" + studentId);
+  } catch {
+    return null;
+  }
+}
+
 export const searchBricks = async (searchString: string = '') => {
   try {
     return await post<Brick[]>("/bricks/search", { searchString });
