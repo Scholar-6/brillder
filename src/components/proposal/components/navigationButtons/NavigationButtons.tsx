@@ -28,18 +28,18 @@ const NavigationButtons:React.FC<NavigationButtonsProps> = (
 
   return (
     <div className="tutorial-pagination">
+      <PreviousButton
+        isActive={!active}
+        onHover={onPrevHover}
+        onOut={onPrevOut}
+        to={backLink}
+      />
       <NextButton
         isActive={active}
         step={step}
         canSubmit={canSubmit}
         onSubmit={onSubmit}
         data={data}
-      />
-      <PreviousButton
-        isActive={!active}
-        onHover={onPrevHover}
-        onOut={onPrevOut}
-        to={backLink}
       />
     </div>
   );

@@ -44,7 +44,7 @@ const NextButton:React.FC<NextButtonProps> = (
   return (
     <button className="btn btn-transparent tut-next svgOnHover" onClick={next}>
       <SpriteIcon
-        name="arrow-down"
+        name="arrow-right"
         className={`active h100 w100 ${isActive ? "text-theme-orange":"text-gray" }`}
       />
     </button>
