@@ -73,8 +73,8 @@ $tile-height: 100%;
       user-select: none;
     }
     .unread-indicator {
-      width: 1vw;
-      height: 1vw;
+      width: 1.1vw;
+      height: 1.1vw;
       position: absolute;
       left: 0.3vw;
       top: 0.3vw;
@@ -85,6 +85,14 @@ $tile-height: 100%;
         .inner-circle {
           color: var(--theme-orange);
         }
+        @media (prefers-color-scheme: dark) {
+          .outer-circle {
+            fill: var(--theme-orange-alpha5);
+          }
+          .inner-circle {
+            fill: var(--theme-orange);
+          }
+        }
       }
       &.has-replied {
         .svg {
@@ -93,6 +101,14 @@ $tile-height: 100%;
           }
           .inner-circle {
             color: var(--theme-yellow);
+          }
+          @media (prefers-color-scheme: dark) {
+            .outer-circle {
+              fill: var(--theme-yellow-alpha5);
+            }
+            .inner-circle {
+              fill: var(--theme-yellow);
+            }
           }
         }
       }
