@@ -48,6 +48,8 @@ export interface QuestionProps {
   getQuestionIndex(question: Question): number;
   setPreviousQuestion(): void;
   toggleLock(): void;
+  undo(): void;
+  redo(): void;
   locked: boolean;
 }
 
@@ -266,6 +268,10 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     </Grid>
                   </Grid>
                   <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+                  <Grid item container direction="row" justify="center">
+                    <button className="btn" onClick={props.undo}>Undo</button>
+                    <button className="btn" onClick={props.redo}>Redo</button>
+                  </Grid>
                 </Grid>
               </Grid>
             }
