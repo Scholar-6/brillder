@@ -228,6 +228,24 @@ const FinalStep: React.FC<FinalStepProps> = ({
     );
   }
 
+  const renderEditorsRow = () => {
+    return (
+      <p>
+        {brick.editors && brick.editors.length > 0
+          ? brick.editors.length === 1
+            ? <span>{brick.editors[0].firstName} is editing this brick</span>
+            : <span>{brick.editors.map((e, i, editors) => {
+              if (i < editors.length - 1) {
+                return e.firstName + ' ' + e.lastName + ' and ';
+              }
+              return e.firstName + ' ' + e.lastName + ' ';
+            })} are editing this brick</span>
+          : 'Invite an editor to begin the publication process'
+        }
+      </p>
+    );
+  }
+
   return (
     <div>
       <Hidden only={['xs']}>
@@ -248,7 +266,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                     :
                     <div>
                       <h2>Submit for Review?</h2>
-                      <p>Invite an editor to begin the publication process</p>
+                      {renderEditorsRow()}
                     </div>}
                   {renderActionColumns()}
                 </div>
