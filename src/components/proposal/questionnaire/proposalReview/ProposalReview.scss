@@ -155,14 +155,20 @@
     top: 0;
     transition: all 0.8s ease-in-out;
 
-    &.hovered {
+    &.hovered, &.prep-page {
       .flat {
-        height: 80vh;
+        height: 80vh !important;
         margin-top: 10vh;
         width: 50vw;
 
         .front {
           height: 80vh;
+        }
+        .back, .page6, .page4 {
+          height: 100% !important;
+        }
+        .normal-page-container { 
+          height: 100% !important;
         }
       }
     }
