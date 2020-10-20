@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 
-import { TeachClassroom, TeachStudent } from "model/classroom";
+import { Assignment, TeachClassroom, TeachStudent } from "model/classroom";
 import { getStudentAssignments } from "services/axios/brick";
-import { AssignmentBrick } from "model/assignment";
 import { Subject } from "model/brick";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import BackPagePagination from "../../BackPagePagination";
+import { getAssignmentStats } from "services/axios/stats";
+import ExpandedStudentAssignment from "./ExpandedStudentAssignment";
 
 
 interface ActiveStudentBricksProps {
@@ -19,8 +20,9 @@ interface ActiveStudentState {
   sortedIndex: number;
   pageSize: number;
   isLoaded: boolean;
-  activeAssignment: AssignmentBrick | null;
-  assignments: AssignmentBrick[];
+  activeAssignment: Assignment | null;
+  assignmentStats: any;
+  assignments: Assignment[];
 }
 
 class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStudentState> {
@@ -32,13 +34,14 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
       pageSize: 6,
       isLoaded: false,
       activeAssignment: null,
+      assignmentStats: null,
       assignments: []
     }
     this.loadAssignments(props.activeStudent.id);
   }
 
   async loadAssignments(studentId: number) {
-    let res = await getStudentAssignments(studentId);
+    let res = await getStudentAssignments(studentId) as Assignment[] | null;
     if (res) {
       this.setState({isLoaded: true, assignments: res });
     }
@@ -63,29 +66,50 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
     />
   }
 
-  expand(a: AssignmentBrick) {
-    if (this.props.classroom) {
-    }
+  async setActiveAssignment(a: Assignment) {
+    const assignmentStats = await getAssignmentStats(a.id);
+    this.setState({ sortedIndex: 0, activeAssignment: a, assignmentStats });
+  }
+
+  renderStudentAssignments() {
+    return (
+      <div className="classroom-list">
+        {this.state.assignments.map((a, i) => {
+          if (i >= this.state.sortedIndex && i < this.state.sortedIndex + this.state.pageSize) {
+            return (
+              <div key={i}>
+                <AssignedBrickDescription
+                  subjects={this.props.subjects}
+                  expand={() => this.setActiveAssignment(a)}
+                  key={i} assignment={a as any}
+               />
+              </div>
+            );
+          }
+        })}
+      </div>
+    );
+  }
+
+  renderExpandedAssignment(a: Assignment) {
+    return (
+      <ExpandedStudentAssignment
+        assignment={a}
+        student={this.props.activeStudent}
+        stats={this.state.assignmentStats}
+        subjects={this.props.subjects}
+        minimize={() => this.setState({ assignmentStats: null, activeAssignment: null })}
+      />
+    )
   }
 
   render() {
+    const {activeAssignment} = this.state;
     return (
       <div>
-        <div className="classroom-list">
-          {this.state.assignments.map((a, i) => {
-            if (i >= this.state.sortedIndex && i < this.state.sortedIndex + this.state.pageSize) {
-              return (
-                <div>
-                  <AssignedBrickDescription
-                    subjects={this.props.subjects}
-                    expand={() => this.expand(a)}
-                    key={i} assignment={a as any}
-                 />
-                </div>
-              );
-            }
-          })}
-        </div>
+        {activeAssignment
+          ? this.renderExpandedAssignment(activeAssignment)
+          : this.renderStudentAssignments()}
         {this.renderPagination()}
       </div>
     );

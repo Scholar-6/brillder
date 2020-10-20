@@ -33,6 +33,8 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             if (this.props.expand) {
               if (this.props.classroom) {
                 return this.props.expand(this.props.classroom.id, assignmentId)
+              } else {
+                this.props.expand(-1, -1);
               }
             }
           }
