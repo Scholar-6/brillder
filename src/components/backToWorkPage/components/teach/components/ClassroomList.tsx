@@ -7,7 +7,7 @@ import { TeachClassroom, Assignment } from "model/classroom";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
 
-interface TeachListItem {
+export interface TeachListItem {
   classroom: TeachClassroom;
   assignment: Assignment | null;
 }

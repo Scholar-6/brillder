@@ -10,7 +10,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
-  classroom: TeachClassroom;
+  classroom?: TeachClassroom;
   assignment: Assignment;
   isExpanded?: boolean;
   move?(): void;
@@ -31,7 +31,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             }
           } else {
             if (this.props.expand) {
-              return this.props.expand(this.props.classroom.id, assignmentId)
+              if (this.props.classroom) {
+                return this.props.expand(this.props.classroom.id, assignmentId)
+              }
             }
           }
         }}
@@ -50,10 +52,13 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   }
 
   renderStatus(studentStatus: StudentStatus[]) {
-    let { length } = this.props.classroom.students;
-    if (length !== studentStatus.length) {
-      return <SpriteIcon name="reminder" className="active reminder-icon" />;
+    if (this.props.classroom) {
+      let { length } = this.props.classroom.students;
+      if (length !== studentStatus.length) {
+        return <SpriteIcon name="reminder" className="active reminder-icon" />;
+      }
     }
+    return '';
   }
 
   render() {
@@ -67,7 +72,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     let { assignment, classroom } = this.props;
     const { brick, byStatus } = assignment;
     let className = "assigned-brick-description";
-    const studentsCount = classroom.students.length;
+    let studentsCount = 0;
+    if (classroom) {
+      studentsCount = classroom.students.length;
+    }
 
     let second = 0;
     let average = 0;
