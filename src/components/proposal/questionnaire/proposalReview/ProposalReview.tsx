@@ -95,7 +95,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     return <SpriteIcon onClick={e => this.switchMode(e)} name="edit-outline" className={className} />;
   }
 
-  renderEditableField(name: BrickFieldNames) {
+  renderEditableField(name: BrickFieldNames, placeholder: string = "Please fill in..", color?: string) {
     const { brick } = this.props;
     if (this.state.mode) {
       return (
@@ -104,7 +104,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             e.stopPropagation();
             this.props.setBrickField(name, e.target.value)
           }}
-          placeholder="Please fill in.."
+          placeholder={placeholder}
           value={brick[name]}
         />
       );
@@ -113,7 +113,34 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     if (value) {
       return value;
     }
-    return <span style={{ color: "#757575" }}>Please fill in..</span>;
+    if (color) {
+      return <span className={color}>{placeholder}</span>;
+    }
+    return <span style={{ color: "#757575" }}>{placeholder}</span>;
+  }
+
+  renderOpenQuestionField() {
+    const name = BrickFieldNames.openQuestion;
+    const placeholder = "Please fill in this field if you'd like to publish your brick";
+    const { brick } = this.props;
+    if (this.state.mode) {
+      return (
+        <textarea
+          className="open-question-text"
+          onChange={e => {
+            e.stopPropagation();
+            this.props.setBrickField(name, e.target.value)
+          }}
+          placeholder={placeholder}
+          value={brick[name]}
+        />
+      );
+    }
+    const value = brick[name];
+    if (value) {
+      return value;
+    }
+    return <span className="text-theme-orange">{placeholder}</span>;
   }
 
   renderMathField(name: BrickFieldNames) {
@@ -213,8 +240,8 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
               <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
               <p className="text-title m-t-3 bold">Open Question:</p>
-              <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
-                {this.renderEditableField(BrickFieldNames.openQuestion)}
+              <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`} style={{fontSize: '1.15vw'}}>
+                {this.renderOpenQuestionField()}
               </div>
               <p className="text-title brick-length m-t-3">
                 <span className="bold">Brick Length:</span> <span className="brickLength">{brick.brickLength} mins.</span>

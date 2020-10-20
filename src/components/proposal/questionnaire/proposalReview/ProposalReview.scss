@@ -664,4 +664,18 @@
       }
     }
   }
+
+  .open-question-text {
+    width: 100%;
+    border:none;
+    background-color: inherit;
+    color: var(--theme-dark-blue);
+    padding: 0;
+    margin: 0;
+    height: auto;
+
+    &::placeholder {
+      color: var(--theme-orange) !important;
+    }
+  }
 }
