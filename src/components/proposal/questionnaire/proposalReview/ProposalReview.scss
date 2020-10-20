@@ -17,6 +17,12 @@
     z-index: -1;
   }
 
+  .ck-editor {
+    .ck-content {
+      text-align: left !important;
+    }
+  }
+
   .beta-text {
     color: var(--theme-dark-blue);
   }
