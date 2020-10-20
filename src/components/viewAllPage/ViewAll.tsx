@@ -71,7 +71,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
 
     const values = queryString.parse(props.location.search)
     const searchString = values.searchString as string || '';
-    console.log(searchString);
 
     this.state = {
       yourBricks: [],
