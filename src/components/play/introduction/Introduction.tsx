@@ -10,7 +10,6 @@ import { PlayMode } from "../model";
 import { BrickFieldNames } from 'components/proposal/model';
 
 import TimerWithClock from "../baseComponents/TimerWithClock";
-import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import IntroductionDetails from "./IntroductionDetails";
 import PrepareText from './PrepareText';

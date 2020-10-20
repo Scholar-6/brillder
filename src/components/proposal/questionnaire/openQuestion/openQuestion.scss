@@ -68,5 +68,8 @@
 
   .document-editor {
     height: auto;
+    .ck-content {
+      height: 30vh !important;
+    }
   }
 }
