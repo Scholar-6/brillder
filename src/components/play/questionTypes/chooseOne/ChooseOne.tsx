@@ -24,7 +24,7 @@ interface ChooseOneProps extends CompQuestionProps {
   answers: ActiveItem;
 }
 
-interface ActiveItem {
+export interface ActiveItem {
   shuffleIndex: number;
   realIndex: number;
 }
