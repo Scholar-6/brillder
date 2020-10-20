@@ -154,6 +154,16 @@
     height: 100%;
     top: 0;
     transition: all 0.8s ease-in-out;
+
+    &.hovered {
+      .flat {
+        height: 80vh;
+
+        .front {
+          height: 80vh;
+        }
+      }
+    }
   }
 
   .book-container {
@@ -175,11 +185,6 @@
       &.flat {
         margin-top: 10vh;
         width: 50vw;
-        height: 80vh;
-
-        .front {
-          height: 80vh;
-        }
       }
     }
 
