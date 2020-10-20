@@ -16,16 +16,21 @@ export interface ChooseOneComponent {
   list: ChooseOneChoice[];
 }
 
-export type ChooseOneAnswer = number;
+export type ChooseOneAnswer = ActiveItem;
 
 interface ChooseOneProps extends CompQuestionProps {
   component: ChooseOneComponent;
-  attempt: ComponentAttempt<number>;
-  answers: number;
+  attempt: ComponentAttempt<ActiveItem>;
+  answers: ActiveItem;
+}
+
+interface ActiveItem {
+  shuffleIndex: number;
+  realIndex: number;
 }
 
 interface ChooseOneState {
-  activeItem: number;
+  activeItem: ActiveItem;
 }
 
 class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
@@ -36,10 +41,10 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   }
 
   getActiveItem(props: ChooseOneProps) {
-    let activeItem = -1;
-    if (props.answers >= 0) {
+    let activeItem = { shuffleIndex: -1, realIndex: -1};
+    if (props.answers?.shuffleIndex >= 0) {
       activeItem = props.answers;
-    } else if (props.attempt && props.attempt.answer >= 0) {
+    } else if (props.attempt?.answer?.shuffleIndex >= 0) {
       activeItem = props.attempt.answer;
     }
     return activeItem;
@@ -54,14 +59,16 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     }
   }
 
-  setActiveItem(activeItem: number) {
-    this.setState({ activeItem });
+  setActiveItem(realIndex: number, activeItem: number) {
+    this.setState({ activeItem: { realIndex, shuffleIndex: activeItem} });
     if (this.props.onAttempted) {
       this.props.onAttempted();
     }
   }
 
-  getAnswer() { return this.state.activeItem; }
+  getAnswer() {
+    return this.state.activeItem;
+  }
 
   renderData(answer: ChooseOneChoice) {
     if (answer.answerType === QuestionValueType.Image) {
@@ -73,11 +80,49 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   isCorrect(index: number) {
     if (this.props.attempt?.correct) {
-      if (index === this.props.attempt?.answer) {
+      if (index === this.props.attempt?.answer.shuffleIndex) {
         return true;
       }
     }
     return false;
+  }
+
+  isResultCorrect(index: number, choice: ChooseOneChoice) {
+    if (this.props.attempt?.answer) {
+      if (choice.checked && index === this.props.attempt?.answer.realIndex) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  renderBookChoice(index: number, activeItem: ActiveItem, choice: ChooseOneChoice) {
+    const isCorrect = this.isResultCorrect(index, choice);
+    let className = "choose-choice";
+
+    if (choice.answerType === QuestionValueType.Image) {
+      className += " image-choice";
+    }
+
+    if (index === activeItem.realIndex) {
+      if (isCorrect) {
+        className += " correct";
+      } else if (isCorrect === false) {
+        className += " wrong";
+      }
+    }
+    return (
+      <Button className={className} key={index}>
+        {this.renderData(choice)}
+        <ReviewEachHint
+          isPhonePreview={this.props.isPreview}
+          isReview={this.props.isReview}
+          isCorrect={isCorrect}
+          index={index}
+          hint={this.props.question.hint}
+        />
+      </Button>
+    );
   }
 
   renderChoice(choice: ChooseOneChoice, index: number) {
@@ -90,7 +135,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       if (choice.checked) {
         className += " correct";
       }
-    } else if (index === activeItem) {
+    } else if (index === activeItem.shuffleIndex) {
       className += " active";
     }
 
@@ -100,30 +145,12 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
     // book preview
     if (this.props.isBookPreview) {
-      if (index === activeItem) {
-        if (isCorrect) {
-          className += " correct";
-        } else if (isCorrect === false) {
-          className += " wrong";
-        }
-      }
-      return (
-        <Button className={className} key={index}>
-          {this.renderData(choice)}
-          <ReviewEachHint
-            isPhonePreview={this.props.isPreview}
-            isReview={this.props.isReview}
-            isCorrect={isCorrect}
-            index={index}
-            hint={this.props.question.hint}
-          />
-        </Button>
-      );
+      return this.renderBookChoice(index, activeItem, choice);
     }
     // if review show correct or wrong else just make answers active
-    else if (attempt && index === activeItem) {
+    else if (attempt && index === activeItem.shuffleIndex) {
       let { answer } = attempt;
-      if (answer >= 0 && answer === index) {
+      if (answer.shuffleIndex >= 0 && answer.shuffleIndex === index) {
         if (this.props.isReview) {
           if (isCorrect) {
             className += " correct";
@@ -140,7 +167,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       <Button
         className={className}
         key={index}
-        onClick={() => this.setActiveItem(index)}
+        onClick={() => this.setActiveItem(choice.index, index)}
       >
         {this.renderData(choice)}
         {(this.props.isReview || this.props.isPreview) ?

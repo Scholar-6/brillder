@@ -12,10 +12,9 @@ export function prefillAttempts(questions: Question[]) {
   questions.forEach(question => {
     let initAttempt = { correct: false, marks: 0, maxMarks: 5 } as ComponentAttempt<any>;
     
-    if 
-      (question.type === QuestionTypeEnum.ChooseOne) 
-    { initAttempt.answer = -1; }
-    
+    if (question.type === QuestionTypeEnum.ChooseOne) {
+      initAttempt.answer = { shuffleIndex: -1, realIndex: -1 };
+    }
     else if 
       (question.type === QuestionTypeEnum.ChooseSeveral ||
       question.type === QuestionTypeEnum.WordHighlighting ||
