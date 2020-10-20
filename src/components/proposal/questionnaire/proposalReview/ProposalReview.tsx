@@ -63,7 +63,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
   onBookClose() {
     const closeTimeout = setTimeout(() => {
-      this.setState({ bookHovered: false, mode: false });
+      //this.setState({ bookHovered: false, mode: false });
     }, 400);
     this.setState({ closeTimeout });
   }
@@ -100,6 +100,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     if (this.state.mode) {
       return (
         <input
+          disabled={!this.props.canEdit}
           onChange={e => {
             e.stopPropagation();
             this.props.setBrickField(name, e.target.value)
@@ -125,20 +126,23 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     const { brick } = this.props;
     if (this.state.mode) {
       return (
-        <textarea
-          className="open-question-text"
-          onChange={e => {
-            e.stopPropagation();
-            this.props.setBrickField(name, e.target.value)
-          }}
+        <DocumentWirisCKEditor
+          disabled={!this.props.canEdit}
           placeholder={placeholder}
-          value={brick[name]}
+          data={brick[name]}
+          toolbar={[
+            'bold', 'italic', 'mathType', 'chemType'
+          ]}
+          onBlur={() => { }}
+          onChange={v => {
+            this.props.setBrickField(name, v);
+          }}
         />
       );
     }
     const value = brick[name];
     if (value) {
-      return value;
+      return  <MathInHtml value={value} />;
     }
     return <span className="text-theme-orange">{placeholder}</span>;
   }
@@ -237,12 +241,10 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             </Grid>
             <div className="proposal-titles">
               <div className="title">{this.renderEditableField(BrickFieldNames.title)}</div>
-              <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
+                <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
               <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
               <p className="text-title m-t-3 bold">Open Question:</p>
-              <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`} style={{fontSize: '1.15vw'}}>
-                {this.renderOpenQuestionField()}
-              </div>
+              {this.renderOpenQuestionField()}
               <p className="text-title brick-length m-t-3">
                 <span className="bold">Brick Length:</span> <span className="brickLength">{brick.brickLength} mins.</span>
               </p>

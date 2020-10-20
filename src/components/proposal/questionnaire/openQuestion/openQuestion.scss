@@ -47,10 +47,6 @@
     @extend %buildInputs;
   }
 
-  .MuiInputBase-input {
-    letter-spacing: 0.05vw;
-  }
-
   .last-buttons {
     margin-top: 0.6vh;
     margin-left: 1.5vw;
@@ -68,5 +64,9 @@
       height: 35%;
       top: 48%;
     }
+  }
+
+  .document-editor {
+    height: auto;
   }
 }

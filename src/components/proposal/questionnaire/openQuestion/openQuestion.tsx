@@ -4,12 +4,12 @@ import { Grid, Hidden } from "@material-ui/core";
 import './openQuestion.scss';
 import { ProposalStep, PlayButtonStatus } from "../../model";
 import map from 'components/map';
-import { enterPressed } from "components/services/key";
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/proposal/components/navigation/Navigation';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
 interface OpenQuestionProps {
   selectedQuestion: any;
@@ -34,10 +34,6 @@ const HeadComponent: React.FC<any> = ({ data }) => {
 const OpenQuestion: React.FC<OpenQuestionProps> = ({
   selectedQuestion, saveOpenQuestion, ...props
 }) => {
-  const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
-    saveOpenQuestion(event.target.value);
-  };
-
   return (
     <div className="tutorial-page open-question-page">
       <Navigation
@@ -55,22 +51,16 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           <p className="sub-header">
             Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.
           </p>
-          <Grid item className="input-container">
-            <div className="audience-inputs">
-              <textarea
-                autoFocus={true}
-                onKeyUp={e => {
-                  if (enterPressed(e)) {
-                    props.history.push(map.ProposalLength);
-                  }
-                }}
-                disabled={!props.canEdit}
-                value={selectedQuestion}
-                onChange={handleChange}
-                placeholder="Enter Open Question(s)..."
-              />
-            </div>
-          </Grid>
+          <DocumentWirisCKEditor
+            disabled={!props.canEdit}
+            data={selectedQuestion}
+            placeholder="Enter Open Question(s)..."
+            toolbar={[
+              'bold', 'italic', 'mathType', 'chemType'
+            ]}
+            onBlur={() => { }}
+            onChange={saveOpenQuestion}
+          />
           <NavigationButtons
             step={ProposalStep.OpenQuestion}
             canSubmit={true}
