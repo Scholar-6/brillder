@@ -23,6 +23,14 @@ export const getBricks = async () => {
   }
 }
 
+export const getPublicBricks = async () => {
+  try {
+    return await get<Brick[]>('/bricks/public');
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Get bricks by status
  * return list of bricks if success or null if failed
