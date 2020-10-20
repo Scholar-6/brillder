@@ -168,20 +168,20 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const applyDiff = (diff: any) => {
     const brick = applyBrickDiff(currentBrick, diff);
-    console.log(brick);
-    const parsedQuestions: Question[] = questions;
+    console.log(currentBrick, diff, brick);
+    let parsedQuestions: Question[] = questions;
 
 
     if (diff.questions) {
       for (const questionKey of Object.keys(diff.questions)) {
         try {
-          console.log(questionKey);
-          console.log(brick.questions);
-          parseQuestion(brick.questions[questionKey as any], parsedQuestions);
+          parseQuestion(brick.questions[questionKey as any], parsedQuestions as Question[]);
         } catch (e) {
+          parsedQuestions[questionKey as any] = null as any;
           console.log(e);
         }
       }
+      parsedQuestions = parsedQuestions.filter(q => q !== null);
       if (parsedQuestions.length > 0) {
         let buildQuestion = GetCashedBuildQuestion();
         if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
@@ -193,6 +193,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       }
     }
 
+    console.log(parsedQuestions);
+
     if (diff.synthesis) {
       setSynthesis(brick.synthesis);
     }
@@ -200,9 +202,22 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setCurrentBrick(brick);
   }
 
+  const pushDiff = (brick: any) => {
+    const diff = getBrickDiff(currentBrick, brick);
+    if(diff) {
+      const backwardDiff = getBrickDiff(brick, currentBrick);
+      UndoRedoService.instance.push({
+        forward: diff,
+        backward: backwardDiff
+      });
+      updateBrick(diff);
+    }
+  }
+
   const undo = () => {
     const diff = UndoRedoService.instance.undo();
     if(diff) {
+      console.log(diff);
       applyDiff(diff);
       updateBrick(diff);
     }
@@ -211,6 +226,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const redo = () => {
     const diff = UndoRedoService.instance.redo();
     if(diff) {
+      console.log(diff);
       applyDiff(diff);
       updateBrick(diff);
     }
@@ -475,8 +491,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       prepareBrickToSave(brick, updatedQuestions, synthesis);
 
       console.log('save brick questions');
-      const diff = getBrickDiff(currentBrick, brick);
-      updateBrick(diff);
+      pushDiff(brick);
       setCurrentBrick(brick);
       props.saveBrick(brick).then((res: any) => {
         if (callback) {
@@ -492,12 +507,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (canEdit === true) {
       console.log('save brick')
       const diff = getBrickDiff(currentBrick, brick);
-      const backwardDiff = getBrickDiff(brick, currentBrick);
-      UndoRedoService.instance.push({
-        forward: diff,
-        backward: backwardDiff
-      });
-      updateBrick(diff);
+      pushDiff(brick);
       setCurrentBrick(brick);
       props.saveBrick(brick);
     }
@@ -517,9 +527,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       } catch { }
 
       if (time - lastAutoSave >= delay) {
-        console.log('auto save brick')
-        const diff = getBrickDiff(currentBrick, brick);
-        updateBrick(diff);
+        console.log('auto save brick');
+        pushDiff(brick);
         setCurrentBrick(brick);
         setLastAutoSave(time);
         props.saveBrick(brick);
@@ -570,6 +579,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         setPreviousQuestion={setPreviousQuestion}
         nextOrNewQuestion={setNextQuestion}
         saveBrick={autoSaveBrick}
+        undo={undo}
+        redo={redo}
       />
     );
   };
@@ -662,6 +673,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setSavingStatus(true);
       questions.map((question, index) => question.order = index);
       prepareBrickToSave(brick, questions, synthesis);
+      pushDiff(brick);
       props.saveBrick(brick);
     }
   }

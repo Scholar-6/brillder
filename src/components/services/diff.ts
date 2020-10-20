@@ -30,14 +30,21 @@ export const getDiff = <T>(oldObj: T, newObj: T): Diff<T> => {
             if (typeof oldObj[key] !== "undefined" && typeof newObj[key] === "undefined") { // the property was removed...
                 diffObj[key] = null;
             } else if (typeof oldObj[key] === "object" && typeof newObj[key] === "object") {
-                diffObj[key] = getDiff(oldObj[key], newObj[key]);
+                const subDiff = getDiff(oldObj[key], newObj[key]);
+                if (subDiff) {
+                    diffObj[key] = subDiff;
+                }
             } else { // the property was added or changed...
                 diffObj[key] = newObj[key];
             }
         }
     }
-
-    return diffObj;
+    
+    if(_.isEmpty(diffObj)) {
+        return undefined;
+    } else {
+        return diffObj;
+    }
 };
 
 export const applyBrickDiff = (brick: Brick, diff: any) => {
