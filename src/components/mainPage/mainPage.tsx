@@ -12,13 +12,13 @@ import { ReduxCombinedState } from "redux/reducers";
 import { clearProposal } from "localStorage/proposal";
 import map from 'components/map';
 import { Notification } from 'model/notifications';
-import { checkTeacherOrAdmin } from "components/services/brickService";
+import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
 
 import WelcomeComponent from './WelcomeComponent';
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { getAssignedBricks } from "services/axios/brick";
+import { getAssignedBricks, getCurrentUserBricks } from "services/axios/brick";
 import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
 import TeachButton from "./TeachButton";
 
@@ -58,6 +58,7 @@ interface MainPageState {
   isTryBuildOpen: boolean;
 
   // for builder
+  isBuilderActive: boolean;
   isBuilderBackWorkOpen: boolean;
 }
 
@@ -75,6 +76,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isMyLibraryOpen: false,
       isBackToWorkOpen: false,
       isTryBuildOpen: false,
+      isBuilderActive: false,
       isBuilderBackWorkOpen: false,
       isTeacher: checkTeacherOrAdmin(props.user.roles)
     } as any;
@@ -82,6 +84,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     const {rolePreference} = props.user;
     if (rolePreference?.roleId === UserType.Student) {
       this.preparationForStudent();
+    } else if (rolePreference?.roleId === UserType.Builder) {
+      this.preparationForBuilder();
     }
   }
 
@@ -89,6 +93,13 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     let bricks = await getAssignedBricks();
     if (bricks && bricks.length > 0) {
       this.setState({backWorkActive: true});
+    }
+  }
+
+  async preparationForBuilder() {
+    let bricks = await getCurrentUserBricks();
+    if (bricks && bricks.length > 0) {
+      this.setState({isBuilderActive: true });
     }
   }
 
@@ -199,7 +210,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderWorkButton() {
-    let isActive = this.props.user.hasPlayedBrick;
+    let isAdmin = checkAdmin(this.props.user.roles);
+    let isActive = isAdmin || this.state.isBuilderActive;
 
     return (
       <div className="back-item-container" onClick={() => {
