@@ -369,13 +369,13 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           <Grid className="back-button-container" container alignContent="center">
             {this.state.bookHovered && this.state.bookState === BookState.PrepPage
               ? <div
-                className="back-button text-button"
+                className="back-button hover-area"
                 onClick={this.toFirstPage.bind(this)}
                 onMouseOver={this.onBookHover.bind(this)}
                 onMouseOut={this.onBookClose.bind(this)}
               >
-                Click on the left-hand page to go back
-                </div>
+                <div className="back-button arrow-button" />
+              </div>
               : <div
                 className="back-button arrow-button"
                 onClick={() => this.props.history.push(map.ProposalPrep)}
@@ -402,8 +402,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 this.state.bookHovered && (
                   <div>
                     {this.state.bookState === BookState.TitlesPage && (
-                      <div className="next-button text-button" onClick={this.toSecondPage.bind(this)}>
-                        Click on the right-hand page to view Prep
+                      <div className="next-button arrow-button" onClick={this.toSecondPage.bind(this)}>
                       </div>
                     )}
                     {this.state.bookState === BookState.PrepPage && (
