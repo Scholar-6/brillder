@@ -56,20 +56,20 @@ export const getPlayThreeColumnName = (status: AssignmentBrickStatus) => {
   return name;
 }
 
-const filterByPrivate = (assignments: AssignmentBrick[], userId: number, generalSubjectId: number) => {
-  return assignments.filter(a => checkPrivateBrick(a.brick, userId, generalSubjectId));
+const filterByPrivate = (assignments: AssignmentBrick[]) => {
+  return assignments.filter(a => checkPrivateBrick(a.brick));
 }
 
-const filterByCore = (assignments: AssignmentBrick[], generalSubjectId: number) => {
-  return assignments.filter(a => checkCoreBrick(a.brick, generalSubjectId));
+const filterByCore = (assignments: AssignmentBrick[]) => {
+  return assignments.filter(a => checkCoreBrick(a.brick));
 }
 
-export const filterAssignments = (rawAssignments: AssignmentBrick[], isCore: boolean, userId: number, generalSubjectId: number) => {
+export const filterAssignments = (rawAssignments: AssignmentBrick[], isCore: boolean) => {
   let filteredAssignemnts = Object.assign([], rawAssignments) as AssignmentBrick[];
   if (!isCore) {
-    filteredAssignemnts = filterByPrivate(filteredAssignemnts, userId, generalSubjectId);
+    filteredAssignemnts = filterByPrivate(filteredAssignemnts);
   } else {
-    filteredAssignemnts = filterByCore(filteredAssignemnts, generalSubjectId);
+    filteredAssignemnts = filterByCore(filteredAssignemnts);
   }
   return filteredAssignemnts;
 }
