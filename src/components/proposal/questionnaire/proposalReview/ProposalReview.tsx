@@ -17,6 +17,8 @@ import PlayButton from "components/build/baseComponents/PlayButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { CommentLocation } from "model/comments";
 import CommentPanel from "components/baseComponents/comments/CommentPanel";
+import { Collapse } from "@material-ui/core";
+import { Transition } from "react-transition-group";
 
 enum BookState {
   TitlesPage,
@@ -38,6 +40,7 @@ interface ProposalState {
   bookState: BookState;
   bookHovered: boolean;
   closeTimeout: number;
+  briefCommentPanelExpanded: boolean;
   mode: boolean; // true - edit mode, false - view mode
 }
 
@@ -48,6 +51,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       mode: true,
       bookHovered: false,
       bookState: BookState.TitlesPage,
+      briefCommentPanelExpanded: false,
       closeTimeout: -1
     }
   }
@@ -255,6 +259,18 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     }
 
     const renderSecondPage = () => {
+      const defaultStyle = {
+        transition: "transform 300ms ease-in-out",
+        transform: "translateY(80%)"
+      };
+
+      const transitionStyles = {
+        entering: { transform: "translateY(0)" },
+        entered: { transform: "translateY(0)" },
+        exiting: { transform: "translateY(0)" },
+        exited: { transform: "translateY(85%)" },
+      } as any;
+
       return (
         <div className="page6" onClick={this.toSecondPage.bind(this)}>
           <div className="normal-page">
@@ -266,12 +282,20 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
                 {this.renderMathField(BrickFieldNames.brief)}
               </div>
-              <div className="proposal-comments-panel brief" onClick={e => e.stopPropagation()}>
-                <CommentPanel
-                  currentLocation={CommentLocation.Brief}
-                  currentBrick={this.props.brick}
-                />
-              </div>
+              <Transition in={this.state.briefCommentPanelExpanded} timeout={300}>
+                {state => (
+                  <div className="proposal-comments-panel brief" onClick={e => e.stopPropagation()} style={{
+                    ...defaultStyle,
+                    ...transitionStyles[state]
+                  }}>
+                    <CommentPanel
+                      currentLocation={CommentLocation.Brief}
+                      currentBrick={this.props.brick}
+                      onHeaderClick={() => this.setState({ briefCommentPanelExpanded: !this.state.briefCommentPanelExpanded })}
+                    />
+                  </div>
+                )}
+              </Transition>
             </div>
           </div>
         </div>
