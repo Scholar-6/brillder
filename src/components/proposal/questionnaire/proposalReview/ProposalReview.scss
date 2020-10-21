@@ -76,21 +76,20 @@
       margin-left: 5.5vw;
       color: var(--theme-orange);
 
-      &.arrow-button {
-        transform-origin: 200% 50%;
-
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(/feathericons/big-chevron-left-orange.png);
+      .arrow-button {
+        margin-left: 0vw;
       }
+    }
+    .hover-area {
+      width: 10vw;
+    }
+    .arrow-button {
+      transform-origin: 200% 50%;
 
-      &.text-button {
-        height: 5vw;
-        margin-left: 3vw;
-        width: 7vw;
-        font-size: 1.2vw;
-      }
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/feathericons/big-chevron-left-orange.png);
     }
   }
 
