@@ -39,7 +39,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
             <i>{props.comment.text}</i>
           </Grid>
         </Grid>
-        {props.comment.children.length > 0 &&
+        {props.comment.children && props.comment.children.length > 0 &&
         <Grid item className="comment-reply-count">
           +{props.comment.children.length} {props.comment.children.length > 1 ? "replies" : "reply"}
         </Grid>
