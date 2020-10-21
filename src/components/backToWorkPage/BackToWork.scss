@@ -331,9 +331,9 @@
             width: 1.1vw;
             height: 1.1vw;
             .svg {
-              width: 100%;
+              width: 90%;
+              height: 90%;
               @extend %flexCenter;
-              height: 100%;
               margin: 0;
             }
           }
