@@ -2,11 +2,11 @@ import React, { Component } from "react";
 
 import "./ExpandedAssignment.scss";
 import { Subject } from "model/brick";
-import { Assignment, StudentStatus, TeachClassroom, TeachStudent } from "model/classroom";
+import { Assignment, TeachStudent } from "model/classroom";
 import { getSubjectColor } from "components/services/subject";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
-import { ApiAssignemntStats, AssignmentStudent } from "model/stats";
+import { ApiAssignemntStats } from "model/stats";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 enum SortBy {
