@@ -14,7 +14,7 @@ import { getBricks, searchBricks, getCurrentUserBricks } from "services/axios/br
 import { Notification } from 'model/notifications';
 import {
   filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
-  removeBrickFromLists, sortBricks, hideBricks, expandBrick
+  removeBrickFromLists, sortBricks, hideBricks, expandBrick, expandSearchBrick
 } from '../../service';
 import {
   getThreeColumnName, prepareTreeRows,
@@ -166,19 +166,18 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
   }
 
-  getBricks() {
+  async getBricks() {
     const {isAdmin, isEditor} = this.state;
     if (isAdmin || isEditor) {
-      getBricks().then(bricks => {
-        if (bricks) {
-          let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
-          bs = bs.sort(b => (b.editors && b.editors.find(e => e.id === this.props.user.id)) ? -1 : 1);
-          bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
-          this.setBricks(bs);
-        } else {
-          this.props.requestFailed('Can`t get bricks');
-        }
-      });
+      const bricks = await getBricks();
+      if (bricks) {
+        let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
+        bs = bs.sort(b => (b.editors && b.editors.find(e => e.id === this.props.user.id)) ? -1 : 1);
+        bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
+        this.setBricks(bs);
+      } else {
+        this.props.requestFailed('Can`t get bricks');
+      }
     } else {
       getCurrentUserBricks().then(bricks => {
         if (bricks) {
@@ -305,26 +304,40 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   handleMouseHover(index: number) {
-    let { finalBricks } = this.state;
-    if (finalBricks[index] && finalBricks[index].expanded) return;
+    let bricks = this.state.finalBricks;
+    if (this.props.isSearching) {
+      bricks = this.state.searchBricks;
+      hideBricks(bricks);
+    } else {
+      hideBricks(this.state.rawBricks);
+    }
 
-    hideBricks(this.state.rawBricks);
-    hideBricks(this.state.finalBricks);
-
+    if (bricks[index] && bricks[index].expanded) return;
     this.setState({ ...this.state });
+
     setTimeout(() => {
-      expandBrick(this.state.finalBricks, this.state.rawBricks, index);
+      if (this.props.isSearching) {
+        expandSearchBrick(this.state.searchBricks, index);
+        console.log(index, this.state.searchBricks);
+      } else {
+        expandBrick(this.state.finalBricks, this.state.rawBricks, index);
+      }
       this.setState({ ...this.state });
     }, 400);
   }
 
   handleMouseLeave(key: number) {
-    let { finalBricks } = this.state;
-    hideBricks(this.state.rawBricks);
-    finalBricks[key].expandFinished = true;
+    let bricks = this.state.finalBricks;
+    if (this.props.isSearching) {
+      bricks = this.state.searchBricks;
+      hideBricks(this.state.searchBricks);
+    } else {
+      hideBricks(this.state.rawBricks);
+    }
+    bricks[key].expandFinished = true;
     this.setState({ ...this.state });
     setTimeout(() => {
-      finalBricks[key].expandFinished = false;
+      bricks[key].expandFinished = false;
       this.setState({ ...this.state });
     }, 400);
   }
@@ -332,40 +345,59 @@ class BuildPage extends Component<BuildProps, BuildState> {
   onThreeColumnsMouseHover(index: number, status: BrickStatus) {
     let key = Math.floor(index / 3);
 
-    const {threeColumns} = this.state;
+    let {threeColumns} = this.state;
+    if (this.props.isSearching) {
+      threeColumns = this.state.searchThreeColumns;
+      hideBricks(this.state.searchBricks);
+    } else {
+      hideBricks(this.state.rawBricks);
+    }
     let name = getThreeColumnName(status);
     let brick = getThreeColumnBrick(threeColumns, name, key);
     if (brick.expanded) return;
 
-    hideBricks(this.state.rawBricks);
-    hideBricks(this.state.finalBricks);
-
     clearTimeout(this.state.hoverTimeout);
 
     const hoverTimeout = setTimeout(() => {
-      hideBricks(this.state.rawBricks);
-      let name = getThreeColumnName(status);
-      expandThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
-      this.setState({ ...this.state });
+      try {
+        let {threeColumns} = this.state;
+        if (this.props.isSearching) {
+          threeColumns = this.state.searchThreeColumns;
+          hideBricks(this.state.searchBricks);
+        } else {
+          hideBricks(this.state.rawBricks);
+        }
+        let name = getThreeColumnName(status);
+        expandThreeColumnBrick(threeColumns, name, key + this.state.sortedIndex);
+        this.setState({ ...this.state });
+      } catch {}
     }, 400);
     this.setState({ ...this.state, hoverTimeout });
   }
 
   onThreeColumnsMouseLeave(index: number, status: BrickStatus) {
-    hideBricks(this.state.rawBricks);
+    let {threeColumns} = this.state;
+    if (this.props.isSearching) {
+      threeColumns = this.state.searchThreeColumns;
+      hideBricks(this.state.searchBricks);
+    } else {
+      hideBricks(this.state.rawBricks);
+    }
 
     let key = Math.ceil(index / 3);
     let name = getThreeColumnName(status);
-    let brick = getThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
+    let brick = getThreeColumnBrick(threeColumns, name, key + this.state.sortedIndex);
 
     if (brick) {
       brick.expandFinished = true;
       this.setState({ ...this.state });
       setTimeout(() => {
-        if (brick) {
-          brick.expandFinished = false;
-          this.setState({ ...this.state });
-        }
+        try {
+          if (brick) {
+            brick.expandFinished = false;
+            this.setState({ ...this.state });
+          }
+        } catch {}
       }, 400);
     }
   }
@@ -451,21 +483,26 @@ class BuildPage extends Component<BuildProps, BuildState> {
     if (!this.state.filters.isCore) {
       return <PersonalBuild
         user={this.props.user}
-        finalBricks={this.state.finalBricks}
+        finalBricks={finalBricks}
         loaded={this.state.bricksLoaded}
         shown={this.state.shown}
         pageSize={this.state.pageSize}
         sortedIndex={this.state.sortedIndex}
         history={this.props.history}
         isTeach={this.state.isTeach || this.state.isAdmin}
+        searchString={this.props.searchString}
+
         deleteDialogOpen={this.state.deleteDialogOpen}
         deleteBrickId={this.state.deleteBrickId}
         delete={this.delete.bind(this)}
         handleDeleteClose={this.handleDeleteClose.bind(this)}
+
         toggleCore={this.toggleCore.bind(this)}
         setTab={this.props.setTab.bind(this)}
+
         moveAllNext={this.moveAllNext.bind(this)}
         moveAllBack={this.moveAllBack.bind(this)}
+
         handleDeleteOpen={this.handleDeleteOpen.bind(this)}
         handleMouseHover={this.handleMouseHover.bind(this)}
         handleMouseLeave={this.handleMouseLeave.bind(this)}
