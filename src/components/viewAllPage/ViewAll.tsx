@@ -686,11 +686,11 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
 
   toggleCore() {
     const isCore = !this.state.isCore;
-    this.setState({ isCore, shown: false });
+    this.setState({ isCore, shown: false, sortedIndex: 0 });
     setTimeout(() => {
       try {
         const finalBricks = this.filter(this.state.bricks, isCore);
-        this.setState({ shown: true, finalBricks });
+        this.setState({ shown: true, finalBricks, sortedIndex: 0 });
       } catch {}
     }, 1400);
   }
