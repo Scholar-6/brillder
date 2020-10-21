@@ -41,6 +41,17 @@ export const filterByStatus = (bricks: Brick[], status: BrickStatus) => {
   return bricks.filter(b => b.status === status);
 }
 
+export const isEditor = (b: Brick, userId: number) => {
+  return (b.editors?.findIndex((e:any) => e.id === userId) ?? -1) >= 0;
+}
+
+export const filterByEditor = (bricks: Brick[], userId: number) => {
+  return bricks.filter(b => (b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review) && isEditor(b, userId));
+}
+
+export const filterByNoEditor = (bricks: Brick[], userId: number) => {
+  return bricks.filter(b => (b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review) && !isEditor(b, userId));
+}
 
 export const filterByCurretUser = (bricks: Brick[], userId: number) => {
   return bricks.filter(b => b.author.id === userId);
@@ -62,7 +73,7 @@ export const filterByCore = (bricks: Brick[]) => {
   return bricks.filter(b => checkCoreBrick(b));
 }
 
-export const filterBricks = (filters: Filters, rawBricks: Brick[]): Brick[] => {
+export const filterBricks = (filters: Filters, rawBricks: Brick[], userId: number): Brick[] => {
   let filteredBricks: Brick[] = [];
   let bricks = Object.assign([], rawBricks) as Brick[];
 
@@ -70,6 +81,12 @@ export const filterBricks = (filters: Filters, rawBricks: Brick[]): Brick[] => {
     bricks = filterByPrivate(bricks);
   } else {
     bricks = filterByCore(bricks);
+  }
+
+  if (filters.buildAll) {
+    filteredBricks.push(...filterByEditor(bricks, userId));
+  } else if (filters.editAll) {
+    filteredBricks.push(...filterByNoEditor(bricks, userId));
   }
 
   if (filters.draft) {
@@ -85,9 +102,6 @@ export const filterBricks = (filters: Filters, rawBricks: Brick[]): Brick[] => {
     filteredBricks.push(...filterByStatus(bricks, BrickStatus.Publish));
   }
 
-  if (!filters.draft && !filters.review && !filters.build) {
-    return bricks;
-  }
   return filteredBricks;
 }
 
