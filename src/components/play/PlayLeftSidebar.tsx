@@ -82,7 +82,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   renderHightlightButton() {
     let className = "highlight-button svgOnHover";
-    let icon = "#highlighter"
+    let icon = "highlighter"
     const { mode } = this.props;
     if (mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) {
       className += " active";

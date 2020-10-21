@@ -24,13 +24,30 @@ interface CommentItemProps {
 
 const CommentItem: React.FC<CommentItemProps> = props => {
   const [replyPanelShown, setReplyPanelShown] = React.useState(false);
+  const [collapsed, setCollapsed] = React.useState(false);
 
   return (
   <Grid item className="comment-container">
     <div className="comment-item-container">
+      {collapsed ?
+      <Grid className="comment-item-collapsed" container direction="column" onClick={() => setCollapsed(false)}>
+        <Grid item container direction="row" className="comment-collapsed-row">
+          <Grid item className="comment-author">
+            <h4>{props.comment.author.firstName}</h4>
+          </Grid>
+          <Grid item className="comment-text">
+            <i>{props.comment.text}</i>
+          </Grid>
+        </Grid>
+        {props.comment.children.length > 0 &&
+        <Grid item className="comment-reply-count">
+          +{props.comment.children.length} {props.comment.children.length > 1 ? "replies" : "reply"}
+        </Grid>
+        }
+      </Grid> :
       <Grid container direction="column">
         <Grid item container direction="row" style={{position: 'relative'}}>
-          <div style={{position: 'absolute'}} className="profile-image-container">
+          <div style={{position: 'absolute'}} className="profile-image-container" onClick={() => setCollapsed(true)}>
             <div className={`profile-image ${props.isAuthor ? 'yellow-border' : 'red-border'}`}>
               {
                 props.comment.author?.profileImage
@@ -39,7 +56,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
                 }
             </div>
           </div>
-          <Grid className="stretch" item>
+          <Grid className="stretch" item onClick={() => setCollapsed(true)}>
             <h4>{props.comment.author.firstName} {props.comment.author.lastName}</h4>
           </Grid>
           <div className="buttons-container">
@@ -57,7 +74,9 @@ const CommentItem: React.FC<CommentItemProps> = props => {
             }
           </div>
         </Grid>
-        <h5 className="comment-date">{moment(props.comment.timestamp).format("H:mm D MMM")}</h5>
+        <h5 className="comment-date" onClick={() => setCollapsed(true)}>
+          {moment(props.comment.timestamp).format("H:mm D MMM")}
+        </h5>
         <Grid item className="comment-text break-word">
           <span className="bold">Comment: </span>
           <Hyphenated language={gb}>
@@ -74,9 +93,11 @@ const CommentItem: React.FC<CommentItemProps> = props => {
             parentComment={props.comment}
             currentBrick={props.currentBrick}
             collapsePanel={() => setReplyPanelShown(false)}
-            createComment={props.createComment} />
+            createComment={props.createComment}
+            currentQuestionId={props.comment.question?.id} />
         </Collapse>
       </Grid>
+      }
     </div>
   </Grid>
   )
