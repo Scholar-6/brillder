@@ -11,12 +11,14 @@ import { getPlayPath, getAssignQueryString } from '../service';
 import ReviewStepper from '../review/ReviewStepper';
 import Clock from '../baseComponents/Clock';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { rightKeyPressed } from 'components/services/key';
 
 interface ProvisionalScoreState {
   value: number;
   score: number;
   maxScore: number;
   interval: any;
+  handleMove: any;
 }
 
 interface ProvisionalScoreProps {
@@ -55,7 +57,8 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
       value: 0,
       score,
       maxScore,
-      interval: null
+      interval: null,
+      handleMove: this.handleMove.bind(this)
     };
   }
 
@@ -70,10 +73,18 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
         clearInterval(interval);
       }
     }, 100);
+    document.addEventListener("keydown", this.state.handleMove, false);
+  }
+
+  handleMove(e: any) {
+    if (rightKeyPressed(e)) {
+      this.moveToSynthesis();
+    }
   }
 
   componentWillUnmount() {
     clearInterval(this.state.interval);
+    document.removeEventListener("keydown", this.state.handleMove, false);
   }
 
   renderProgressBar() {

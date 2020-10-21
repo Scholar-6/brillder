@@ -23,6 +23,7 @@ import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers
 import PulsingCircleNumber from "./components/PulsingCircleNumber";
 import LiveActionFooter from './components/LiveActionFooter';
 import MobileNextButton from './components/MobileNextButton';
+import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -67,6 +68,26 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const location = useLocation();
   const theme = useTheme();
+
+  useEffect(() => {
+    function handleMove(e: any) {
+      if (rightKeyPressed(e)) {
+        if (questions.length - 1 > activeStep) {
+          next();
+        } else {
+          setSubmitAnswers(true);
+        }
+      } else if (leftKeyPressed(e)) {
+        prev();
+      }
+    }
+
+    document.addEventListener("keydown", handleMove, false);
+    
+    return function cleanup() {
+      document.removeEventListener("keydown", handleMove, false);
+    };
+  });
 
   useEffect(() => {
     const values = queryString.parse(location.search);
