@@ -140,8 +140,13 @@
   .ck-insert-table-dropdown__grid {
     z-index: 100000;
   }
-  .upload-button-custom span {
-    font-family: $font-family-bold !important;
+  .upload-button-custom {
+    span {
+      font-family: $font-family-bold !important;
+    }
+    .ck-button__label {
+      font-size: 1.2vw !important;
+    }
   }
   &.highlight-editor {
     border-radius: 0 !important;

@@ -174,26 +174,26 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     return <span style={{ color: "#757575" }}>Please fill in..</span>;
   }
 
-  renderYoutubeAndMathField(name: BrickFieldNames) {
+  renderPrepField() {
     const { brick } = this.props;
     if (this.state.mode) {
       return (
         <DocumentWirisCKEditor
           disabled={!this.props.canEdit}
-          data={brick[name]}
+          data={brick.prep}
           placeholder="Enter Instructions, Links to Videos and Webpages Here…"
           mediaEmbed={true}
           toolbar={[
-            'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
+            'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList', 'uploadImageCustom'
           ]}
           onBlur={() => { }}
-          onChange={v => this.props.setBrickField(name, v)}
+          onChange={v => this.props.setBrickField(BrickFieldNames.prep, v)}
         />
       );
     }
-    const value = brick[name];
+    const value = brick.prep;
     if (value) {
-      return <YoutubeAndMathInHtml value={brick[name]} />;
+      return <YoutubeAndMathInHtml value={brick.prep} />;
     }
     return <span style={{ color: "#757575" }}>Please fill in..</span>;
   }
@@ -326,7 +326,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 </Grid>
                 <p className="text-title text-theme-dark-blue bold">Create an engaging and relevant preparatory task.</p>
                 <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
-                  {this.state.bookHovered && this.state.bookState === BookState.PrepPage && this.renderYoutubeAndMathField(BrickFieldNames.prep)}
+                  {this.state.bookHovered && this.state.bookState === BookState.PrepPage && this.renderPrepField()}
                 </div>
               </div>
             </div>
