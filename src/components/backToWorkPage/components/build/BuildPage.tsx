@@ -219,7 +219,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   toggleCore() {
     const { filters } = this.state;
     filters.isCore = !filters.isCore;
-    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks);
+    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
     const threeColumns = prepareTreeRows(this.state.rawBricks, this.state.filters, this.props.user.id);
     this.setState({ ...this.state, sortedIndex: 0, threeColumns, filters, finalBricks });
   }
@@ -253,6 +253,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     removeAllFilters(filters);
     filters.viewAll = true;
     filters.review = true;
+    filters.build = true;
     filters.draft = true;
     this.setState({ ...this.state, filters, sortedIndex: 0, finalBricks: this.state.rawBricks });
   }
@@ -261,18 +262,15 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const { filters } = this.state;
     removeAllFilters(filters);
     filters.editAll = true;
-    filters.review = true;
-    const finalBricks = filterBricks(filters, this.state.rawBricks);
+    const finalBricks = filterBricks(filters, this.state.rawBricks, this.props.user.id);
     this.setState({ ...this.state, sortedIndex: 0, filters, finalBricks });
   }
 
   showBuildAll() {
     const { filters } = this.state;
     removeAllFilters(filters);
-    filters.build = true;
     filters.buildAll = true;
-    filters.draft = true;
-    const finalBricks = filterBricks(filters, this.state.rawBricks);
+    const finalBricks = filterBricks(filters, this.state.rawBricks, this.props.user.id);
     this.setState({ ...this.state, sortedIndex: 0, filters, finalBricks });
   }
 
@@ -290,7 +288,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     } else if (filters.draft && !filters.review) {
       filters.buildAll = true;
     }
-    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks);
+    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
     this.setState({ ...this.state, filters, finalBricks, sortedIndex: 0 });
   }
 
@@ -468,6 +466,24 @@ class BuildPage extends Component<BuildProps, BuildState> {
     );
   }
 
+  countPublished() {
+    let published = 0;
+    if (this.props.isSearching) {
+      for (let b of this.state.searchBricks) {
+        if (b.status === BrickStatus.Publish && b.isCore === true) {
+          published++;
+        }
+      }
+    } else {
+      for (let b of this.state.rawBricks) {
+        if (b.status === BrickStatus.Publish && b.isCore === true) {
+          published++;
+        }
+      }
+    }
+    return published;
+  }
+
   render() {
     let searchString = '';
     if (this.props.isSearching) {
@@ -478,12 +494,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     if (this.props.isSearching) {
       finalBricks = this.state.searchBricks;
       threeColumns = this.state.searchThreeColumns;
-    }
-    let published = 0;
-    for (let b of this.state.rawBricks) {
-      if (b.status === BrickStatus.Publish && b.isCore === true) {
-        published++;
-      }
     }
 
     if (!this.state.filters.isCore) {
@@ -515,11 +525,13 @@ class BuildPage extends Component<BuildProps, BuildState> {
       />
     }
 
+    const published = this.countPublished();
     finalBricks = finalBricks.filter(b => b.isCore === true);
 
     return (
       <Grid container direction="row" className="sorted-row">
         <FilterSidebar
+          userId={this.props.user.id}
           finalBricks={finalBricks}
           threeColumns={threeColumns}
           filters={this.state.filters}
