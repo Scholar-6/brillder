@@ -350,7 +350,8 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 onMouseOver={this.onBookHover.bind(this)}
                 onMouseOut={this.onBookClose.bind(this)}
               >
-                Click on the left-hand page to go back
+                {/* Click on the left-hand page to go back */}
+                  <div className="next-button"></div>
                 </div>
               : <div
                 className="back-button arrow-button"
@@ -378,8 +379,8 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 this.state.bookHovered && (
                   <div>
                     {this.state.bookState === BookState.TitlesPage && (
-                      <div className="next-button text-button" onClick={this.toSecondPage.bind(this)}>
-                        Click on the right-hand page to view Prep
+                      <div className="next-button arrow-button" onClick={this.toSecondPage.bind(this)}>
+                        {/* Click on the right-hand page to view Prep */}
                       </div>
                     )}
                     {this.state.bookState === BookState.PrepPage && (
