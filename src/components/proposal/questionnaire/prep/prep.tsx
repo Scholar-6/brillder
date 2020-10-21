@@ -55,7 +55,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             mediaEmbed={true}
             link={true}
             toolbar={[
-              'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
+              'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList', 'uploadImageCustom'
             ]}
             onBlur={() => { }}
             onChange={savePrep}
