@@ -21,6 +21,7 @@ interface PersonalBuildProps {
   sortedIndex: number;
   history: any;
   isTeach: boolean;
+  searchString: string;
 
   deleteDialogOpen: boolean;
   deleteBrickId: number;
@@ -76,7 +77,7 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
         history={this.props.history}
         circleIcon=''
         iconColor=''
-        searchString=''
+        searchString={this.props.searchString}
         handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
         handleMouseHover={() => this.props.handleMouseHover(item.key)}
         handleMouseLeave={() => this.props.handleMouseLeave(item.key)}
