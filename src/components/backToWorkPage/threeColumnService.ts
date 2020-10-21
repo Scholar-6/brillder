@@ -14,15 +14,15 @@ const prepareAssignmentData = (data: any[], assignment: AssignmentBrick, index: 
 }
 
 const setColumnBricksByStatus = (
-  res: ThreeColumns, filters: Filters, userId: number, generalSubjectId: number,
+  res: ThreeColumns, filters: Filters, userId: number,
   name: ThreeColumnNames, bricks: Brick[], status: BrickStatus
 ) => {
   let bs = filterByStatus(bricks, status);
   let finalBs = [];
   if (!filters.isCore) {
-    finalBs = filterByPrivate(bs, userId, generalSubjectId);
+    finalBs = filterByPrivate(bs);
   } else {
-    finalBs = filterByCore(bs, generalSubjectId);
+    finalBs = filterByCore(bs);
   }
   finalBs = finalBs.sort(b => (b.editors && b.editors.find(e => e.id === userId)) ? -1 : 1);
   res[name] = { rawBricks: bs, finalBricks: finalBs };
@@ -56,12 +56,12 @@ export const expandThreeColumnBrick = (threeColumns: ThreeColumns, name: ThreeCo
   }
 }
 
-export const prepareTreeRows = (bricks: Brick[], filters: Filters, userId: number, generalSubjectId: number) => {
+export const prepareTreeRows = (bricks: Brick[], filters: Filters, userId: number) => {
   let threeColumns = {} as ThreeColumns;
   if (filters) {
-    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Red, bricks, BrickStatus.Draft);
-    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Yellow, bricks, BrickStatus.Build);
-    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Green, bricks, BrickStatus.Review);
+    setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Red, bricks, BrickStatus.Draft);
+    setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Yellow, bricks, BrickStatus.Build);
+    setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Green, bricks, BrickStatus.Review);
   }
   return threeColumns;
 }

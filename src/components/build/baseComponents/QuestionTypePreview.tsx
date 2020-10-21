@@ -14,22 +14,24 @@ import LogoPage from "components/logoPage/logoPage";
 interface QuestionTypePreviewProps {
   activeQuestionType: QuestionTypeEnum;
   hoverQuestion: QuestionTypeEnum;
+  nextQuestion(): void;
+  prevQuestion(): void;
 }
 
 const QuestionTypePreview:React.FC<QuestionTypePreviewProps> = ({
-  hoverQuestion, activeQuestionType
+  hoverQuestion, activeQuestionType, ...props
 }) => {
   const getPreviewElement = (type: QuestionTypeEnum) => {
     if (type === QuestionTypeEnum.ShortAnswer) {
-      return <PhonePreview Component={ShortAnswerPreview} />
+      return <PhonePreview Component={ShortAnswerPreview} next={props.nextQuestion} prev={props.prevQuestion} />
     } else if (type === QuestionTypeEnum.ChooseOne) {
-      return <PhonePreview Component={ChooseOnePreview} />
+      return <PhonePreview Component={ChooseOnePreview} next={props.nextQuestion} prev={props.prevQuestion} />
     } else if (type === QuestionTypeEnum.ChooseSeveral) {
-      return <PhonePreview Component={ChooseSeveralPreview} />
+      return <PhonePreview Component={ChooseSeveralPreview} next={props.nextQuestion} prev={props.prevQuestion} />
     } else if (type === QuestionTypeEnum.VerticalShuffle) {
-      return <PhonePreview Component={VerticalShufflePreview} />
+      return <PhonePreview Component={VerticalShufflePreview} next={props.nextQuestion} prev={props.prevQuestion} />
     } else if (type === QuestionTypeEnum.HorizontalShuffle) {
-      return <PhonePreview Component={HorizontalShufflePreview} />
+      return <PhonePreview Component={HorizontalShufflePreview} next={props.nextQuestion} prev={props.prevQuestion} />
     }
     return null;
   }
@@ -43,7 +45,7 @@ const QuestionTypePreview:React.FC<QuestionTypePreviewProps> = ({
     return preview;
   }
         
-  return <PhonePreview Component={LogoPage} />
+  return <PhonePreview Component={LogoPage} next={props.nextQuestion} prev={props.prevQuestion} />
 }
 
 export default QuestionTypePreview;

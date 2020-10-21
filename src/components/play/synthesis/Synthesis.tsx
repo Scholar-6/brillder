@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid, Hidden } from '@material-ui/core';
 import moment from 'moment';
 
@@ -14,6 +14,7 @@ import { BrickFieldNames } from 'components/proposal/model';
 import { getPlayPath, getAssignQueryString } from '../service';
 import BrickCounter from '../baseComponents/BrickCounter';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { rightKeyPressed } from 'components/services/key';
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
@@ -31,6 +32,20 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   const location = useLocation();
   const [startTime] = React.useState(moment());
   const playPath = getPlayPath(props.isPlayPreview, brick.id);
+
+  useEffect(() => {
+    function handleMove(e: any) {
+      if (rightKeyPressed(e)) {
+        reviewBrick();
+      }
+    }
+
+    document.addEventListener("keydown", handleMove, false);
+    
+    return function cleanup() {
+      document.removeEventListener("keydown", handleMove, false);
+    };
+  });
 
   if (status === PlayStatus.Live) {
     history.push(`${playPath}/intro${getAssignQueryString(location)}`);
