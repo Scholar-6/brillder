@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import "./FinalStep.scss";
@@ -17,6 +17,7 @@ import { User } from "model/user";
 import { checkAdmin } from "components/services/brickService";
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { rightKeyPressed } from "components/services/key";
 
 interface FinalStepProps {
   brick: Brick;
@@ -34,13 +35,28 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
 
-  const link = `/play/brick/${brick.id}/intro`;
 
   const [inviteSuccess, setInviteSuccess] = React.useState({
     isOpen: false,
     accessGranted: false,
     name: ''
   });
+
+  useEffect(() => {
+    function handleMove(e: any) {
+      if (rightKeyPressed(e)) {
+        moveNext();
+      }
+    }
+
+    document.addEventListener("keydown", handleMove, false);
+    
+    return function cleanup() {
+      document.removeEventListener("keydown", handleMove, false);
+    };
+  });
+
+  const link = `/play/brick/${brick.id}/intro`;
 
   let isAdmin = checkAdmin(user.roles);
   let isEditor = false;
@@ -70,6 +86,14 @@ const FinalStep: React.FC<FinalStepProps> = ({
     }
   }
 
+  const moveNext = () => {
+    if (isAuthor || isAdmin || isEditor) {
+      history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`);
+    } else {
+      history.push(`${map.BackToWorkLearnTab}?isCore=${brick.isCore}`);
+    }
+  }
+
   return (
     <div>
       <Hidden only={['xs']}>
@@ -96,13 +120,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 </div>
                 <div className="intro-text-row">
                 </div>
-                <ExitButton onClick={() => {
-                  if (isAuthor || isAdmin || isEditor) {
-                    history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`);
-                  } else {
-                    history.push(`${map.BackToWorkLearnTab}?isCore=${brick.isCore}`);
-                  }
-                 }} />
+                <ExitButton onClick={moveNext} />
               </div>
             </Grid>
           </Grid>

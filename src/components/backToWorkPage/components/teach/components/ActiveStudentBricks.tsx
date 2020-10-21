@@ -86,6 +86,7 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
               </div>
             );
           }
+          return '';
         })}
       </div>
     );

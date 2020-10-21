@@ -76,21 +76,20 @@
       margin-left: 5.5vw;
       color: var(--theme-orange);
 
-      &.arrow-button {
-        transform-origin: 200% 50%;
-
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(/feathericons/big-chevron-left-orange.png);
+      .arrow-button {
+        margin-left: 0vw;
       }
+    }
+    .hover-area {
+      width: 10vw;
+    }
+    .arrow-button {
+      transform-origin: 200% 50%;
 
-      &.text-button {
-        height: 5vw;
-        margin-left: 3vw;
-        width: 7vw;
-        font-size: 1.2vw;
-      }
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/feathericons/big-chevron-left-orange.png);
     }
   }
 
@@ -155,7 +154,8 @@
     top: 0;
     transition: all 0.8s ease-in-out;
 
-    &.hovered, &.prep-page {
+    &.hovered,
+    &.prep-page {
       .flat {
         height: 80vh !important;
         margin-top: 10vh;
@@ -164,10 +164,12 @@
         .front {
           height: 80vh;
         }
-        .back, .page6, .page4 {
+        .back,
+        .page6,
+        .page4 {
           height: 100% !important;
         }
-        .normal-page-container { 
+        .normal-page-container {
           height: 100% !important;
         }
       }
@@ -196,10 +198,14 @@
         left: 0;
         right: 0;
         bottom: 0;
-        height: 50%;
+        height: 70%;
         margin: 0;
         .comments-panel {
           border-radius: $editor-radius $editor-radius 0 0;
+
+          .comments-title {
+            cursor: pointer;
+          }
         }
       }
       &.prep {
@@ -253,6 +259,7 @@
       height: 100%;
       top: 0;
       left: 0;
+      overflow: hidden;
       transform-origin: left center;
       transition: transform 1s ease-in-out, box-shadow 0.7s ease-in-out;
       transition: all 1s ease-out;
@@ -352,7 +359,8 @@
       background: #fafafa;
     }
 
-    .page5, .page6-cover {
+    .page5,
+    .page6-cover {
       background: #fafafa;
       .flipped-page {
         width: calc(100% - 4vw);
@@ -685,7 +693,7 @@
 
   .open-question-text {
     width: 100%;
-    border:none;
+    border: none;
     background-color: inherit;
     color: var(--theme-dark-blue);
     padding: 0;

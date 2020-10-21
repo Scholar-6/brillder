@@ -14,9 +14,11 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 export interface PhonePreviewProps {
   getQuestionIndex(question: Question): number;
   question: Question;
+  nextQuestion(): void;
+  prevQuestion(): void;
 }
 
-const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex }) => {
+const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex, ...props }) => {
   const [questionPreview] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
 
   const areComponentsEmpty = () => {
@@ -102,6 +104,9 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex 
     <Hidden only={['xs', 'sm']}>
       <div className="phone-question-preview-box">
         <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
+          <div className="centered pointer">
+            <SpriteIcon name="arrow-left" className="scroll-arrow" onClick={props.prevQuestion} />
+          </div>
           <div className="phone-question-preview">
             <div className="centered">
               <SpriteIcon name="arrow-up" className="scroll-arrow" onClick={scrollUp} />
@@ -125,6 +130,9 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex 
             <div className="centered">
               <SpriteIcon name="arrow-down" className="scroll-arrow" onClick={scrollDown} />
             </div>
+          </div>
+          <div className="centered pointer">
+            <SpriteIcon name="arrow-right" className="scroll-arrow" onClick={props.nextQuestion} />
           </div>
         </Grid>
       </div>

@@ -15,6 +15,8 @@ import IntroductionDetails from "./IntroductionDetails";
 import PrepareText from './PrepareText';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "../baseComponents/MathInHtml";
+import { useEffect } from "react";
+import { rightKeyPressed } from "components/services/key";
 
 const moment = require("moment");
 
@@ -58,6 +60,20 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     otherExpanded: false,
     duration: null,
   } as IntroductionState);
+
+  useEffect(() => {
+    function handleMove(e: any) {
+      if (rightKeyPressed(e)) {
+        startBrick();
+      }
+    }
+
+    document.addEventListener("keydown", handleMove, false);
+    
+    return function cleanup() {
+      document.removeEventListener("keydown", handleMove, false);
+    };
+  });
 
   const toggleBrief = () => {
     setState({ ...state, briefExpanded: !state.briefExpanded });
