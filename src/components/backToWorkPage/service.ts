@@ -115,6 +115,13 @@ export const sortBricks = (bricks: Brick[], sortBy: SortBy) => {
 
 export const hideBricks = (bricks: Brick[]) => bricks.forEach(b => b.expanded = false);
 
+export const expandSearchBrick = (bricks: Brick[], index: number) => {
+  hideBricks(bricks);
+  if (!bricks[index].expandFinished) {
+    bricks[index].expanded = true;
+  }
+}
+
 export const expandBrick = (bricks: Brick[], allBricks: Brick[], index: number) => {
   hideBricks(allBricks);
   if (!bricks[index].expandFinished) {
