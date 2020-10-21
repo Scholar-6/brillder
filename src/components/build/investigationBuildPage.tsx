@@ -277,6 +277,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   };
 
+  const setPrevFromPhone = () => {
+    const index = getQuestionIndex(activeQuestion);
+    if (index >= 1) {
+      const updatedQuestions = activateQuestionByIndex(index - 1);
+      setQuestions(update(questions, { $set: updatedQuestions }));
+    }
+  }
+
   const saveSynthesis = (text: string) => {
     synthesis = text;
     setSynthesis(synthesis);
@@ -653,7 +661,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const renderQuestionTypePreview = () => {
     if (isTutorialPassed()) {
-      return <QuestionTypePreview hoverQuestion={hoverQuestion} activeQuestionType={activeQuestionType} />;
+      return <QuestionTypePreview
+        hoverQuestion={hoverQuestion}
+        activeQuestionType={activeQuestionType}
+        nextQuestion={setNextQuestion}
+        prevQuestion={setPrevFromPhone}
+      />;
     }
     return <TutorialPhonePreview step={step} />;
   }
@@ -746,7 +759,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <Redirect to={`/build/brick/${brick.id}/investigation/question`} />
           </Route>
           <Route path="/build/brick/:brickId/investigation/question-component">
-            <PhoneQuestionPreview question={activeQuestion} getQuestionIndex={getQuestionIndex} />
+            <PhoneQuestionPreview
+              question={activeQuestion}
+              getQuestionIndex={getQuestionIndex}
+              nextQuestion={setNextQuestion}
+              prevQuestion={setPrevFromPhone}
+            />
           </Route>
           <Route path="/build/brick/:brickId/investigation/question">
             {renderQuestionTypePreview()}
