@@ -21,7 +21,6 @@ import BackPagePaginationV2 from "../BackPagePaginationV2";
 
 interface PlayProps {
   history: any;
-  generalSubjectId: number;
   setTab(t: ActiveTab): void;
 
   // redux
@@ -110,7 +109,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
   }
 
   getFilteredAssignemnts(assignments: AssignmentBrick[], isCore: boolean) {
-    return service.filterAssignments(assignments, isCore, this.props.user.id, this.props.generalSubjectId);
+    return service.filterAssignments(assignments, isCore);
   }
 
   setAssignments(assignments: AssignmentBrick[]) {

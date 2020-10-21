@@ -46,30 +46,30 @@ export const filterByCurretUser = (bricks: Brick[], userId: number) => {
   return bricks.filter(b => b.author.id === userId);
 }
 
-export const checkPrivateBrick = (b: Brick, userId: number, generalSubjectId: number) => {
-  return (b.author.id === userId || b.subjectId === generalSubjectId) && !b.isCore;
+export const checkPrivateBrick = (b: Brick) => {
+  return !b.isCore;
 }
 
-export const filterByPrivate = (bricks: Brick[], userId: number, generalSubjectId: number) => {
-  return bricks.filter(b => checkPrivateBrick(b, userId, generalSubjectId));
+export const filterByPrivate = (bricks: Brick[]) => {
+  return bricks.filter(b => checkPrivateBrick(b));
 }
 
-export const checkCoreBrick = (b: Brick, generalSubjectId: number) => {
-  return b.subjectId !== generalSubjectId || b.isCore === true;
+export const checkCoreBrick = (b: Brick) => {
+  return b.isCore === true;
 }
 
-export const filterByCore = (bricks: Brick[], generalSubjectId: number) => {
-  return bricks.filter(b => checkCoreBrick(b, generalSubjectId));
+export const filterByCore = (bricks: Brick[]) => {
+  return bricks.filter(b => checkCoreBrick(b));
 }
 
-export const filterBricks = (filters: Filters, rawBricks: Brick[], userId: number, generalSubjectId: number): Brick[] => {
+export const filterBricks = (filters: Filters, rawBricks: Brick[]): Brick[] => {
   let filteredBricks: Brick[] = [];
   let bricks = Object.assign([], rawBricks) as Brick[];
 
   if (!filters.isCore) {
-    bricks = filterByPrivate(bricks, userId, generalSubjectId);
+    bricks = filterByPrivate(bricks);
   } else {
-    bricks = filterByCore(bricks, generalSubjectId);
+    bricks = filterByCore(bricks);
   }
 
   if (filters.draft) {

@@ -12,7 +12,7 @@ import map from 'components/map';
 import { User, UserType } from "model/user";
 import { Subject } from "model/brick";
 import { checkTeacher } from "components/services/brickService";
-import { loadSubjects, getGeneralSubject } from 'components/services/subject';
+import { loadSubjects } from 'components/services/subject';
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import { ActiveTab } from './components/Tab';
@@ -26,7 +26,6 @@ interface BackToWorkState {
   isSearching: boolean;
   dropdownShown: boolean;
   notificationsShown: boolean;
-  generalSubjectId: number;
   subjects: Subject[];
 }
 
@@ -46,7 +45,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
     this.state = {
       subjects: [],
-      generalSubjectId: -1,
 
       searchString: "",
       isSearching: false,
@@ -60,12 +58,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         this.props.requestFailed('Can`t get subjects');
         return;
       }
-      let generalSubjectId = - 1;
-      let generalSubject = getGeneralSubject(subjects);
-      if (generalSubject) {
-        generalSubjectId = generalSubject.id;
-      }
-      this.setState({ generalSubjectId, subjects });
+      this.setState({ subjects });
     });
 
     if (props.location.pathname === '/back-to-work') {
@@ -144,7 +137,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             <BuildPage
               isSearching={this.state.isSearching}
               searchString={this.state.searchString}
-              generalSubjectId={this.state.generalSubjectId}
               location={this.props.location}
               history={this.props.history}
               setTab={this.setTab.bind(this)}
@@ -153,7 +145,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           <Route path={map.BackToWorkLearnTab}>
             <PlayPage
               history={this.props.history}
-              generalSubjectId={this.state.generalSubjectId}
               setTab={this.setTab.bind(this)}
             />
           </Route>
