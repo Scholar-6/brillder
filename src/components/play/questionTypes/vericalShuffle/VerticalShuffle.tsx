@@ -122,13 +122,23 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
           <MathInHtml value={answer.value} />
         </Grid>
         <Grid container direction="row" justify="center">
-          <ReviewEachHint
-            isPhonePreview={this.props.isPreview}
-            isReview={this.props.isReview}
-            isCorrect={isCorrect}
-            index={i}
-            hint={this.props.question.hint}
-          />
+          {this.props.isPreview ?
+            <ReviewEachHint
+              isPhonePreview={this.props.isPreview}
+              isReview={this.props.isReview}
+              isCorrect={isCorrect}
+              index={i}
+              hint={this.props.question.hint}
+            />
+            : this.props.isReview &&
+            <ReviewEachHint
+              isPhonePreview={this.props.isPreview}
+              isReview={this.props.isReview}
+              isCorrect={isCorrect}
+              index={answer.index}
+              hint={this.props.question.hint}
+            />
+          }
         </Grid>
       </div>
     );
