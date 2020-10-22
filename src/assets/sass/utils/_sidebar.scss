@@ -252,65 +252,6 @@
             cursor: pointer;
           }
         }
-        .filter-icon {
-          position: relative;
-          width: 1vw;
-          height: 1vw;
-          cursor: pointer;
-
-          &.arrow-up,
-          &.arrow-down,
-          &.arrow-cancel {
-            &:before,
-            &:after {
-              content: '';
-              position: absolute;
-              top: 50%;
-              width: 0.15vw;
-              height: 0.8vw;
-              border-radius: 2px;
-              @extend %transitionAll300;
-              background-color: var(--white);
-            }
-          }
-
-          &.arrow-up,
-          &.arrow-down {
-            &:before {
-              left: calc(50% - 0.31vw);
-            }
-
-            &:after {
-              right: calc(50% - 0.31vw);
-            }
-          }
-          &.arrow-up {
-            &:before {
-              transform: translate(-50%, -50%) rotate(-45deg);
-            }
-            &:after {
-              transform: translate(-50%, -50%) rotate(45deg);
-            }
-          }
-          &.arrow-down {
-            &:before {
-              transform: translate(-50%, -50%) rotate(45deg);
-            }
-            &:after {
-              transform: translate(-50%, -50%) rotate(-45deg);
-            }
-          }
-          &.arrow-cancel {
-            &:before {
-              left: 50%;
-              transform: translate(-50%, -50%) rotate(45deg);
-            }
-            &:after {
-              right: calc(50% - 0.15vw);
-              transform: translate(-50%, -50%) rotate(-45deg);
-            }
-          }
-        }
       }
 
       .subjects-filter {
@@ -809,6 +750,66 @@
 
     .users-pagination {
       height: 6vh;
+    }
+  }
+}
+
+.filter-icon {
+  position: relative;
+  width: 1vw;
+  height: 1vw;
+  cursor: pointer;
+
+  &.arrow-up,
+  &.arrow-down,
+  &.arrow-cancel {
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 0.15vw;
+      height: 0.8vw;
+      border-radius: 2px;
+      @extend %transitionAll300;
+      background-color: var(--white);
+    }
+  }
+
+  &.arrow-up,
+  &.arrow-down {
+    &:before {
+      left: calc(50% - 0.31vw);
+    }
+
+    &:after {
+      right: calc(50% - 0.31vw);
+    }
+  }
+  &.arrow-up {
+    &:before {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+    &:after {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+  }
+  &.arrow-down {
+    &:before {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+    &:after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+  &.arrow-cancel {
+    &:before {
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+    &:after {
+      right: calc(50% - 0.15vw);
+      transform: translate(-50%, -50%) rotate(-45deg);
     }
   }
 }

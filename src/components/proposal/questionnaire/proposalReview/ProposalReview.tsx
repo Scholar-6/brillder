@@ -286,14 +286,14 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     const renderSecondPage = () => {
       const defaultStyle = {
         transition: "transform 300ms ease-in-out",
-        transform: "translateY(80%)"
+        transform: "translateY(30%)"
       };
 
       const transitionStyles = {
         entering: { transform: "translateY(0)" },
         entered: { transform: "translateY(0)" },
         exiting: { transform: "translateY(0)" },
-        exited: { transform: "translateY(85%)" },
+        exited: { transform: "translateY(calc(100% - 6.5vh))" },
       } as any;
 
       return (
@@ -314,6 +314,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                     ...transitionStyles[state]
                   }}>
                     <CommentPanel
+                      mode={!this.state.briefCommentPanelExpanded}
                       currentLocation={CommentLocation.Brief}
                       currentBrick={this.props.brick}
                       onHeaderClick={() => this.setState({ briefCommentPanelExpanded: !this.state.briefCommentPanelExpanded })}
