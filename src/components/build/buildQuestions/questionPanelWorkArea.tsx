@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, Select, FormControl } from '@material-ui/core';
 import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -86,6 +86,24 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     showHelpArrow = getNonEmptyComponent(question.components);
   }
 
+  //#region Scroll
+  const [canScroll, setScroll] = React.useState(false);
+
+  useEffect(() => {
+    const {current} = workarea;
+    if (current) {
+      if (current.scrollHeight > current.clientHeight) {
+        if (!canScroll) {
+          setScroll(true);
+        }
+      } else {
+        if (canScroll) {
+          setScroll(false);
+        }
+      }
+    }
+  });
+  
   const scrollUp = () => {
     if (workarea.current) {
       workarea.current.scrollBy(0, -100);
@@ -98,6 +116,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
       el.scrollBy(0, 100);
     }
   }
+  //#endregion
 
   const getNumberOfReplies = () => {
     const replies = props.comments?.filter(comment => (comment.question?.id ?? -1) === question.id)
@@ -159,7 +178,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
         <div className="top-scroll-area">
           <div className="top-button-container">
             <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
-              <SpriteIcon name="arrow-up" className="active text-theme-orange" />
+              <SpriteIcon name="arrow-up" className={`active text-theme-orange ${!canScroll && 'disabled'}`} />
             </button>
           </div>
         </div>
@@ -268,10 +287,12 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     </Grid>
                   </Grid>
                   <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+                  {/* 10/22/2020 hide for deploy
                   <Grid item container direction="row" justify="center">
                     <button className="btn" onClick={props.undo}>Undo</button>
                     <button className="btn" onClick={props.redo}>Redo</button>
                   </Grid>
+                  */}
                 </Grid>
               </Grid>
             }
@@ -280,7 +301,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
         <div className="bottom-scroll-area">
           <div className="bottom-button-container">
             <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
-              <SpriteIcon name="arrow-down" className="active text-theme-orange" />
+              <SpriteIcon name="arrow-down" className={`active text-theme-orange ${!canScroll && 'disabled'}`} />
             </button>
           </div>
         </div>

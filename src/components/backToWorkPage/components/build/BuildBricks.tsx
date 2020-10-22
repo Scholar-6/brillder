@@ -20,6 +20,7 @@ interface BuildBricksProps {
 
   pageSize: number;
   sortedIndex: number;
+  published: number;
 
   history: any;
   filters: any;
@@ -27,6 +28,7 @@ interface BuildBricksProps {
   searchString: string;
 
   switchPublish(): void;
+
 
   // brick events
   handleDeleteOpen(brickId: number): void;
@@ -222,18 +224,11 @@ class BuildBricks extends Component<BuildBricksProps> {
       return this.renderEmptyPage();
     }
 
-    let published = 0;
-    for (let b of this.props.finalBricks) {
-      if (b.status === BrickStatus.Publish) {
-        published++;
-      }
-    }
-
     return (
       <div className="bricks-list-container">
         <PublishToggle
           isPublish={this.props.filters.publish}
-          publishedCount={published}
+          publishedCount={this.props.published}
           onSwitch={this.props.switchPublish}
         />
         <div className="bricks-list">

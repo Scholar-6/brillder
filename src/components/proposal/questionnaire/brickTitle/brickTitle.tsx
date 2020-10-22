@@ -15,6 +15,8 @@ import Navigation from 'components/proposal/components/navigation/Navigation';
 import map from 'components/map';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
+import a from 'indefinite';
+
 enum RefName {
   subTitleRef = 'subTitleRef',
   altTitleRef = 'altTitleRef'
@@ -135,7 +137,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
               <img alt="titles" src="/images/new-brick/titles.png" />
             </div>
             <h1>
-             {subjectName && <div className="subject-text">This will be a {subjectName} brick</div>}
+             {subjectName && <div className="subject-text">This will be {a(subjectName)} brick</div>}
               What is it about?
             </h1>
             <form>

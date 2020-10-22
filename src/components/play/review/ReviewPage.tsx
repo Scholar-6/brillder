@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Hidden } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
@@ -21,6 +21,7 @@ import CountDown from "../baseComponents/CountDown";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -54,6 +55,26 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const [isSubmitOpen, setSubmitAnswers] = React.useState(false);
   const theme = useTheme();
   let playPath = getPlayPath(props.isPlayPreview, brickId);
+
+  useEffect(() => {
+    function handleMove(e: any) {
+      if (rightKeyPressed(e)) {
+        if (questions.length - 1 > activeStep) {
+          next();
+        } else {
+          setSubmitAnswers(true);
+        }
+      } else if (leftKeyPressed(e)) {
+        prev();
+      }
+    }
+
+    document.addEventListener("keydown", handleMove, false);
+    
+    return function cleanup() {
+      document.removeEventListener("keydown", handleMove, false);
+    };
+  });
 
   const moveToEnding = () => {
     history.push(`${playPath}/ending${getAssignQueryString(location)}`)

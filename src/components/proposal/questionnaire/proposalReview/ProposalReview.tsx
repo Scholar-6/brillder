@@ -17,6 +17,8 @@ import PlayButton from "components/build/baseComponents/PlayButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { CommentLocation } from "model/comments";
 import CommentPanel from "components/baseComponents/comments/CommentPanel";
+import { Collapse } from "@material-ui/core";
+import { Transition } from "react-transition-group";
 
 enum BookState {
   TitlesPage,
@@ -38,6 +40,7 @@ interface ProposalState {
   bookState: BookState;
   bookHovered: boolean;
   closeTimeout: number;
+  briefCommentPanelExpanded: boolean;
   mode: boolean; // true - edit mode, false - view mode
 }
 
@@ -48,6 +51,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       mode: true,
       bookHovered: false,
       bookState: BookState.TitlesPage,
+      briefCommentPanelExpanded: false,
       closeTimeout: -1
     }
   }
@@ -93,6 +97,31 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       className += " active";
     }
     return <SpriteIcon onClick={e => this.switchMode(e)} name="edit-outline" className={className} />;
+  }
+
+  renderEditableTextarea(name: BrickFieldNames, placeholder: string = "Please fill in..", color?: string) {
+    const { brick } = this.props;
+    if (this.state.mode) {
+      return (
+        <textarea
+          disabled={!this.props.canEdit}
+          onChange={e => {
+            e.stopPropagation();
+            this.props.setBrickField(name, e.target.value)
+          }}
+          placeholder={placeholder}
+          value={brick[name]}
+        />
+      );
+    }
+    const value = brick[name];
+    if (value) {
+      return value;
+    }
+    if (color) {
+      return <span className={color}>{placeholder}</span>;
+    }
+    return <span style={{ color: "#757575" }}>{placeholder}</span>;
   }
 
   renderEditableField(name: BrickFieldNames, placeholder: string = "Please fill in..", color?: string) {
@@ -170,26 +199,26 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     return <span style={{ color: "#757575" }}>Please fill in..</span>;
   }
 
-  renderYoutubeAndMathField(name: BrickFieldNames) {
+  renderPrepField() {
     const { brick } = this.props;
     if (this.state.mode) {
       return (
         <DocumentWirisCKEditor
           disabled={!this.props.canEdit}
-          data={brick[name]}
+          data={brick.prep}
           placeholder="Enter Instructions, Links to Videos and Webpages Here…"
           mediaEmbed={true}
           toolbar={[
-            'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
+            'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList', 'uploadImageCustom'
           ]}
           onBlur={() => { }}
-          onChange={v => this.props.setBrickField(name, v)}
+          onChange={v => this.props.setBrickField(BrickFieldNames.prep, v)}
         />
       );
     }
-    const value = brick[name];
+    const value = brick.prep;
     if (value) {
-      return <YoutubeAndMathInHtml value={brick[name]} />;
+      return <YoutubeAndMathInHtml value={brick.prep} />;
     }
     return <span style={{ color: "#757575" }}>Please fill in..</span>;
   }
@@ -240,7 +269,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               <FiberManualRecordIcon className="circle-icon" />
             </Grid>
             <div className="proposal-titles">
-              <div className="title">{this.renderEditableField(BrickFieldNames.title)}</div>
+              <div className="title">{this.renderEditableTextarea(BrickFieldNames.title)}</div>
                 <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
               <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
               <p className="text-title m-t-3 bold">Open Question:</p>
@@ -255,6 +284,18 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     }
 
     const renderSecondPage = () => {
+      const defaultStyle = {
+        transition: "transform 300ms ease-in-out",
+        transform: "translateY(80%)"
+      };
+
+      const transitionStyles = {
+        entering: { transform: "translateY(0)" },
+        entered: { transform: "translateY(0)" },
+        exiting: { transform: "translateY(0)" },
+        exited: { transform: "translateY(85%)" },
+      } as any;
+
       return (
         <div className="page6" onClick={this.toSecondPage.bind(this)}>
           <div className="normal-page">
@@ -266,12 +307,20 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
                 {this.renderMathField(BrickFieldNames.brief)}
               </div>
-              <div className="proposal-comments-panel brief" onClick={e => e.stopPropagation()}>
-                <CommentPanel
-                  currentLocation={CommentLocation.Brief}
-                  currentBrick={this.props.brick}
-                />
-              </div>
+              <Transition in={this.state.briefCommentPanelExpanded} timeout={300}>
+                {state => (
+                  <div className="proposal-comments-panel brief" onClick={e => e.stopPropagation()} style={{
+                    ...defaultStyle,
+                    ...transitionStyles[state]
+                  }}>
+                    <CommentPanel
+                      currentLocation={CommentLocation.Brief}
+                      currentBrick={this.props.brick}
+                      onHeaderClick={() => this.setState({ briefCommentPanelExpanded: !this.state.briefCommentPanelExpanded })}
+                    />
+                  </div>
+                )}
+              </Transition>
             </div>
           </div>
         </div>
@@ -302,7 +351,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 </Grid>
                 <p className="text-title text-theme-dark-blue bold">Create an engaging and relevant preparatory task.</p>
                 <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
-                  {this.state.bookHovered && this.state.bookState === BookState.PrepPage && this.renderYoutubeAndMathField(BrickFieldNames.prep)}
+                  {this.state.bookHovered && this.state.bookState === BookState.PrepPage && this.renderPrepField()}
                 </div>
               </div>
             </div>
@@ -345,13 +394,13 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           <Grid className="back-button-container" container alignContent="center">
             {this.state.bookHovered && this.state.bookState === BookState.PrepPage
               ? <div
-                className="back-button text-button"
+                className="back-button hover-area"
                 onClick={this.toFirstPage.bind(this)}
                 onMouseOver={this.onBookHover.bind(this)}
                 onMouseOut={this.onBookClose.bind(this)}
               >
-                Click on the left-hand page to go back
-                </div>
+                <div className="back-button arrow-button" />
+              </div>
               : <div
                 className="back-button arrow-button"
                 onClick={() => this.props.history.push(map.ProposalPrep)}
@@ -378,8 +427,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 this.state.bookHovered && (
                   <div>
                     {this.state.bookState === BookState.TitlesPage && (
-                      <div className="next-button text-button" onClick={this.toSecondPage.bind(this)}>
-                        Click on the right-hand page to view Prep
+                      <div className="next-button arrow-button" onClick={this.toSecondPage.bind(this)}>
                       </div>
                     )}
                     {this.state.bookState === BookState.PrepPage && (

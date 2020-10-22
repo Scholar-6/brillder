@@ -155,7 +155,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     if (bricks) {
       let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
       bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
-      const finalBricks = this.filter(bs);
+      const finalBricks = this.filter(bs, this.state.isCore);
       this.setState({ ...this.state, bricks, isLoading: false, finalBricks, shown: true });
     } else {
       this.setState({ ...this.state, isLoading: false, failedRequest: true });
@@ -207,14 +207,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     return filterSubjects;
   }
 
-  isCore(isCore: any) {
-    let tempIsCore = this.state.isCore;
-    if (typeof isCore === "boolean") {
-      tempIsCore = isCore;
-    }
-    return !tempIsCore;
-  }
-
   filterByCurretUser(bricks: Brick[]) {
     const userId = this.props.user.id;
     return bricks.filter(b => b.author.id === userId);
@@ -236,23 +228,22 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
 
     let filterSubjects = this.getCheckedSubjectIds();
 
+    if (isCore) {
+      bricks = bricks.filter(b => b.isCore === true);
+    } else {
+      bricks = bricks.filter(b => !b.isCore)
+    }
+
     if (filterSubjects.length > 0) {
       for (let brick of bricks) {
         let res = filterSubjects.indexOf(brick.subjectId);
         if (res !== -1) {
           filtered.push(brick);
         }
-        if (this.isCore(isCore)) {
-          filtered = this.filterByCurretUser(filtered);
-        }
       }
       return filtered;
-    } else {
-      if (this.isCore(isCore)) {
-        bricks = this.filterByCurretUser(bricks);
-      }
-      return bricks;
     }
+    return bricks;
   }
 
   //region Hide / Expand / Clear Filter
@@ -264,7 +255,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   filterBySubject = (i: number) => {
     const { subjects } = this.state;
     subjects[i].checked = !subjects[i].checked;
-    const finalBricks = this.filter(this.state.bricks);
+    const finalBricks = this.filter(this.state.bricks, this.state.isCore);
     this.setState({ ...this.state, shown: false });
     setTimeout(() => {
       try {
@@ -431,7 +422,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       try {
         if (bricks) {
           this.hideBricks();
-          const finalBricks = this.filter(bricks);
+          const finalBricks = this.filter(bricks, this.state.isCore);
           this.setState({
             ...this.state,
             searchBricks: bricks,
@@ -695,11 +686,11 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
 
   toggleCore() {
     const isCore = !this.state.isCore;
-    this.setState({ isCore, shown: false });
+    this.setState({ isCore, shown: false, sortedIndex: 0 });
     setTimeout(() => {
       try {
         const finalBricks = this.filter(this.state.bricks, isCore);
-        this.setState({ shown: true, finalBricks });
+        this.setState({ shown: true, finalBricks, sortedIndex: 0 });
       } catch {}
     }, 1400);
   }
