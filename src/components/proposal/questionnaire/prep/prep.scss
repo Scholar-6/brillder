@@ -38,4 +38,9 @@
   .screen {
     overflow: hidden;
   }
+  .document-editor {
+    .ck-content {
+      height: 29vh !important;
+    }
+  }
 }
