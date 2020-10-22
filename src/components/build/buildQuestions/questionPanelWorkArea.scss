@@ -136,10 +136,14 @@
       > button {
         @extend %floatToCenter;
 
-        svg {
+        .svg {
           $scroll-button-size: 2vw;
           height: $scroll-button-size;
           width: $scroll-button-size;
+          
+          &.disabled {
+            color: var(--tab-gray) !important;
+          }
         }
       }
     }

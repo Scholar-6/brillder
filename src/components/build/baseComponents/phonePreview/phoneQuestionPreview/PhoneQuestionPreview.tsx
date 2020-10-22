@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {  Hidden, Grid } from '@material-ui/core';
 
 import './PhoneQuestionPreview.scss';
@@ -12,14 +12,55 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 export interface PhonePreviewProps {
-  getQuestionIndex(question: Question): number;
   question: Question;
+  getQuestionIndex(question: Question): number;
+
+  // navigation
   nextQuestion(): void;
   prevQuestion(): void;
 }
 
 const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex, ...props }) => {
+  const questionIndex = getQuestionIndex(question);
+  const canGoBack = questionIndex > 0 ? true : false;
+
   const [questionPreview] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+
+  //#region Scroll
+  const [canScroll, setScroll] = React.useState(false);
+
+  useEffect(() => {
+    const {current} = questionPreview;
+    if (current) {
+      if (current.scrollHeight > current.clientHeight) {
+        if (!canScroll) {
+          setScroll(true);
+        }
+      } else {
+        if (canScroll) {
+          setScroll(false);
+        }
+      }
+    }
+  });
+
+  const scrollUp = () => {
+    try {
+      if (questionPreview.current) {
+        questionPreview.current.scrollBy(0, -50);
+      }
+    } catch {}
+  }
+
+  const scrollDown = () => {
+    try {
+      if (questionPreview.current) {
+        let el = questionPreview.current;
+        el.scrollBy(0, 50);
+      }
+    } catch {}
+  }
+  //#endregion
 
   const areComponentsEmpty = () => {
     for (const component of question.components) {
@@ -75,25 +116,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
     return true;
   }
   
-  const scrollUp = () => {
-    try {
-      if (questionPreview.current) {
-        questionPreview.current.scrollBy(0, -50);
-      }
-    } catch {}
-  }
-
-  const scrollDown = () => {
-    try {
-      if (questionPreview.current) {
-        let el = questionPreview.current;
-        el.scrollBy(0, 50);
-      }
-    } catch {}
-  }
-
   const renderInnerComponent = () => {
-    const questionIndex = getQuestionIndex(question);
     if (questionIndex === 0 && !question.firstComponent?.value && isHintEmpty(question.hint) && areComponentsEmpty()) {
       return <EmptyQP1 />;
     }
@@ -105,11 +128,11 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
       <div className="phone-question-preview-box">
         <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
           <div className="centered pointer">
-            <SpriteIcon name="arrow-left" className="scroll-arrow" onClick={props.prevQuestion} />
+            <SpriteIcon name="arrow-left" className={`scroll-arrow ${!canGoBack && 'disabled'}`} onClick={props.prevQuestion} />
           </div>
           <div className="phone-question-preview">
             <div className="centered">
-              <SpriteIcon name="arrow-up" className="scroll-arrow" onClick={scrollUp} />
+              <SpriteIcon name="arrow-up" className={`scroll-arrow ${!canScroll && 'disabled'}`} onClick={scrollUp} />
             </div>
             <div className="phone">
               <div className="phone-border">
@@ -118,17 +141,14 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
                 <div className="volume volume3"></div>
                 <div className="sleep"></div>
                 <div className="screen">
-                  <div
-                    className="custom-component mobile-question-component b-white"
-                    ref={questionPreview}
-                  >
+                  <div className="custom-component mobile-question-component b-white" ref={questionPreview}>
                     {renderInnerComponent()}
                   </div>
                 </div>
               </div>
             </div>
             <div className="centered">
-              <SpriteIcon name="arrow-down" className="scroll-arrow" onClick={scrollDown} />
+              <SpriteIcon name="arrow-down" className={`scroll-arrow ${!canScroll && 'disabled'}`} onClick={scrollDown} />
             </div>
           </div>
           <div className="centered pointer">
