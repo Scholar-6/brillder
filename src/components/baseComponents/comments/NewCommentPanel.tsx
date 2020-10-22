@@ -13,7 +13,13 @@ interface NewCommentPanelProps {
 }
 
 const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
+  const [textarea] = React.useState(React.createRef() as React.RefObject<HTMLTextAreaElement>);
+
   const [text, setText] = React.useState("");
+
+  const setDefaultHeight = (target: any) => {
+    target.style.height = "2vw";
+  }
 
   const handlePostComment = () => {
     props.createComment({
@@ -23,10 +29,16 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
       location: props.currentLocation
     });
     setText("");
+
+    const {current} = textarea;
+    if (current) {
+      setDefaultHeight(current);
+    }
   }
 
+
   const autoResize = ({ target }: any) => {
-    target.style.height = "2vw";
+    setDefaultHeight(target);
     target.style.height = target.scrollHeight + "px";
   }
 
@@ -35,6 +47,7 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
       <div>
         <form className="comment-text-form" onSubmit={e => { e.preventDefault(); }}>
           <textarea
+            ref={textarea}
             className="comment-text-entry" placeholder="Add Suggestion..." value={text}
             onChange={(evt) => setText(evt.target.value)} onInput={autoResize}
           />
