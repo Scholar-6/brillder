@@ -63,6 +63,7 @@ import { useSocket } from "socket/socket";
 import { applyBrickDiff, getBrickDiff } from "components/services/diff";
 import SaveDialog from "./baseComponents/dialogs/SaveDialog";
 import UndoRedoService from "components/services/UndoRedoService";
+import { Brick } from "model/brick";
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
@@ -181,7 +182,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           console.log(e);
         }
       }
-      parsedQuestions = parsedQuestions.filter(q => q !== null);
+      parsedQuestions = parsedQuestions.filter(q => q !== null)
+        .sort((qa, qb) => qa.order - qb.order);
       if (parsedQuestions.length > 0) {
         let buildQuestion = GetCashedBuildQuestion();
         if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
@@ -220,6 +222,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       console.log(diff);
       applyDiff(diff);
       updateBrick(diff);
+      prepareBrickToSave(brick, questions, synthesis);
+      props.saveBrick(brick);
     }
   }
 
@@ -229,6 +233,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       console.log(diff);
       applyDiff(diff);
       updateBrick(diff);
+      prepareBrickToSave(brick, questions, synthesis);
+      props.saveBrick(brick);
     }
   }
 
@@ -276,6 +282,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       history.push(map.ProposalReview);
     }
   };
+
+  const setPrevFromPhone = () => {
+    const index = getQuestionIndex(activeQuestion);
+    if (index >= 1) {
+      const updatedQuestions = activateQuestionByIndex(index - 1);
+      setQuestions(update(questions, { $set: updatedQuestions }));
+    }
+  }
 
   const saveSynthesis = (text: string) => {
     synthesis = text;
@@ -490,9 +504,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setSavingStatus(true);
       prepareBrickToSave(brick, updatedQuestions, synthesis);
 
-      console.log('save brick questions');
-      pushDiff(brick);
-      setCurrentBrick(brick);
+      console.log('save brick questions', brick);
+      const diffBrick = {
+        ...brick,
+        questions: brick.questions.filter((q: Question) => q.id)
+      } as Brick;
+      pushDiff(diffBrick);
+      setCurrentBrick(diffBrick);
       props.saveBrick(brick).then((res: any) => {
         if (callback) {
           callback(res);
@@ -653,7 +671,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const renderQuestionTypePreview = () => {
     if (isTutorialPassed()) {
-      return <QuestionTypePreview hoverQuestion={hoverQuestion} activeQuestionType={activeQuestionType} />;
+      return <QuestionTypePreview
+        hoverQuestion={hoverQuestion}
+        activeQuestionType={activeQuestionType}
+        nextQuestion={setNextQuestion}
+        prevQuestion={setPrevFromPhone}
+      />;
     }
     return <TutorialPhonePreview step={step} />;
   }
@@ -746,7 +769,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <Redirect to={`/build/brick/${brick.id}/investigation/question`} />
           </Route>
           <Route path="/build/brick/:brickId/investigation/question-component">
-            <PhoneQuestionPreview question={activeQuestion} getQuestionIndex={getQuestionIndex} />
+            <PhoneQuestionPreview
+              question={activeQuestion}
+              getQuestionIndex={getQuestionIndex}
+              nextQuestion={setNextQuestion}
+              prevQuestion={setPrevFromPhone}
+            />
           </Route>
           <Route path="/build/brick/:brickId/investigation/question">
             {renderQuestionTypePreview()}

@@ -140,8 +140,13 @@
   .ck-insert-table-dropdown__grid {
     z-index: 100000;
   }
-  .upload-button-custom span {
-    font-family: $font-family-bold !important;
+  .upload-button-custom {
+    span {
+      font-family: $font-family-bold !important;
+    }
+    .ck-button__label {
+      font-size: 1.2vw !important;
+    }
   }
   &.highlight-editor {
     border-radius: 0 !important;
@@ -157,14 +162,14 @@
         }
       }
     }
-    &:hover {
-      cursor: url('/feathericons/svg/cursor-highlighter.svg') 0 15, auto;
-      cursor: -webkit-image-set(
-          url('/feathericons/svg/cursor-highlighter.svg') 1x,
-          url('/feathericons/svg/cursor-highlighter.svg') 2x
-        ),
-        auto;
-    }
+    // &:hover {
+    //   cursor: url('/feathericons/svg/cursor-highlighter.svg') 0 15, auto;
+    //   cursor: -webkit-image-set(
+    //       url('/feathericons/svg/cursor-highlighter.svg') 1x,
+    //       url('/feathericons/svg/cursor-highlighter.svg') 2x
+    //     ),
+    //     auto;
+    // }
   }
   &.content-invalid {
     .ck-editor {

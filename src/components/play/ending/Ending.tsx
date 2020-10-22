@@ -23,6 +23,7 @@ interface EndingState {
   maxPScore: number;
 
   interval: number;
+  handleMove(): void;
 }
 
 interface EndingProps {
@@ -57,7 +58,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       minPScore,
       maxPScore,
 
-      interval: 0
+      interval: 0,
+      handleMove: this.handleMove.bind(this)
     };
   }
 
@@ -97,10 +99,17 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       }
     }, 100);
     this.setState({ interval });
+
+    document.addEventListener("keydown", this.state.handleMove, false);
   }
 
   componentWillUnmount() {
     clearInterval(this.state.interval);
+    document.removeEventListener("keydown", this.state.handleMove, false);
+  }
+
+  handleMove() {
+    this.props.saveAttempt();
   }
 
   renderProgressBars() {

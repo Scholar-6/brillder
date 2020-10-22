@@ -12,6 +12,7 @@ import {QuestionValueType} from 'components/build/buildQuestions/questionTypes/t
 import {Answer} from 'components/build/buildQuestions/questionTypes/pairMatchBuild/types';
 import { PairMatchProps, PairMatchState, DragAndDropStatus, PairMatchAnswer, PairMatchComponent } from './interface';
 import MathInHtml from '../../baseComponents/MathInHtml';
+import { Hint, HintStatus } from 'model/question';
 
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
@@ -116,6 +117,18 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     }
   }
 
+  renderEachHint(hint: Hint, i: number) {
+    if (hint.status === HintStatus.Each) {
+      let value = hint.list[i];
+      return (
+        <div className="question-hint">
+          <MathInHtml value={value} />
+        </div>
+      );
+    }
+    return '';
+  }
+
   renderAnswer(answer: any, i: number) {
     let className = "pair-match-play-choice";
     if (answer.answerType === QuestionValueType.Image) {
@@ -146,7 +159,14 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return (
       <div key={i} className={className}>
         <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
-          {this.renderAnswerContent(answer)}
+          <div style={{width: '100%'}}>
+            {this.renderAnswerContent(answer)}
+            {this.props.isPreview ?
+              this.renderEachHint(this.props.question.hint, i)
+              : this.props.isReview &&
+              this.renderEachHint(this.props.question.hint, answer.index)
+            }
+          </div>
         </div>
       </div>
     );
@@ -163,7 +183,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return (
       <ListItem key={i} className={className}>
         <div className="option-container">
-					{this.renderOptionContent(item as any)}
+          {this.renderOptionContent(item as any)}
         </div>
       </ListItem>
     );

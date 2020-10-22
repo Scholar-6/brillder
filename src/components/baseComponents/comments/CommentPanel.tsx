@@ -27,6 +27,7 @@ interface CommentPanelProps {
   getComments(brickId: number): void;
   createComment(comment: any): void;
   setCommentsShown?(value: boolean): void;
+  onHeaderClick?(): void;
 }
 
 const CommentPanel: React.FC<CommentPanelProps> = props => {
@@ -93,7 +94,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
 
   return (
     <Grid container className="comments-panel" direction="column" alignItems="stretch">
-      <Grid item >
+      <Grid item onClick={props.onHeaderClick}>
         <div className="comments-title">
           {renderBackButton()}
            Suggestions

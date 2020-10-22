@@ -288,13 +288,12 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
             </div>
           </Grid>
         </Grid>
-        <Grid className='tutorial-pagination'>
-          {
-            subject ? (
-              <NextButton isActive={true} step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
-            ) : ""
-          }
-        </Grid>
+        { subject &&
+          <Grid className='tutorial-pagination'>
+            <div className="centered text-theme-dark-blue bold" style={{fontSize: '2vw', marginRight: '2vw'}}>Next</div>
+            <NextButton isActive={true} step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
+          </Grid>
+         }
         <Hidden only={['xs', 'sm']}>
         <div className="subject-name">
           <div>{subjectName}</div>

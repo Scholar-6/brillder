@@ -8,6 +8,11 @@
   overflow-y: auto;
   color: var(--theme-dark-blue);
 
+  &.phone-preview-component {
+    p {
+      font-size: 1.05vw;
+    }
+  }
   p {
     margin-top: 5%;
     margin-bottom: 5%;

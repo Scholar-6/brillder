@@ -3,6 +3,7 @@ import React from 'react';
 import {  Hidden, Grid } from '@material-ui/core';
 
 import './PhonePreview.scss';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 export interface PhonePreviewProps {
@@ -10,9 +11,11 @@ export interface PhonePreviewProps {
   Component?: any;
   data?: any;
   action?(): any;
+  prev?(): void;
+  next?(): void;
 }
 
-const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, action }) => {
+const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, action, ...props }) => {
   const renderInner = () => {
     if (link) {
       return <iframe title="phone-preview-screen" src={link} />;
@@ -27,6 +30,11 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, acti
     <Hidden only={['xs', 'sm']}>
       <div className="phone-question-preview-box">
         <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
+          { props.prev &&
+            <div className="centered pointer">
+              <SpriteIcon name="arrow-left" className="scroll-arrow" onClick={props.prev} />
+            </div>
+          }
           <div className="phone-question-preview">
             <div className="phone">
               <div className="phone-border">
@@ -42,6 +50,11 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, acti
               </div>
             </div>
           </div>
+          { props.next &&
+            <div className="centered pointer">
+              <SpriteIcon name="arrow-right" className="scroll-arrow" onClick={props.next} />
+            </div>
+          }
         </Grid>
       </div>
     </Hidden>

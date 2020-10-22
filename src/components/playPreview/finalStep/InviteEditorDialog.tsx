@@ -53,11 +53,11 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const getNameText = () => {
     return editors.reduce((prev, current, idx, array) => {
       if (idx === 0) {
-        return `${prev}${current.firstName} ${current.lastName}`;
+        return `${prev}${current.username}`;
       } else if(idx === array.length - 1) {
-        return `${prev} and ${current.firstName} ${current.lastName}`;
+        return `${prev} and ${current.username}`;
       } else {
-        return `${prev}, ${current.firstName} ${current.lastName}`;
+        return `${prev}, ${current.username}`;
       }
     }, "")
   }

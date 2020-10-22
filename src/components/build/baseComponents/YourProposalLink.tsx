@@ -79,8 +79,7 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
           </div>
           <div className="proposal-text">
             <div style={{ lineHeight: 0.9 }}>YOUR</div>
-            <div style={{ lineHeight: 2 }}>PROP</div>
-            <div style={{ lineHeight: 0.9 }}>OSAL</div>
+            <div style={{ lineHeight: 2 }}>PLAN</div>
           </div>
         </div>
       </Grid>
