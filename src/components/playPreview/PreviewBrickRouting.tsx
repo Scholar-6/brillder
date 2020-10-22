@@ -358,6 +358,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
               item.hint = question.hint.list[index];
             }
           }
+          c.list.map((c:any, i:number) => c.index = i);
           c.list = shuffle(c.list);
         }
       });
