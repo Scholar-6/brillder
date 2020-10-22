@@ -1,4 +1,4 @@
-import { Brick } from 'model/brick';
+import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType, UserRole } from 'model/user';
 
 function formatTwoLastDigits(twoLastDigits: number) {
@@ -86,9 +86,6 @@ export function checkEditor(roles: UserRole[]) {
 }
 
 export function checkPublisher(user: User, brick: Brick) {
-  if (!brick.publisher) {
-    return false;
-  }
   const isAdmin = checkAdmin(user.roles);
   if (isAdmin) {
     return true;
@@ -112,12 +109,23 @@ export function checkAdmin(roles: UserRole[]) {
   return roles.some(role => role.roleId === UserType.Admin);
 }
 
-export function canEditBrick(brick: any, user: User) {
+export function canEditBrick(brick: Brick, user: User) {
   let isAdmin = checkAdmin(user.roles);
-  if (isAdmin || brick.author?.id === user.id) {
+  if (isAdmin) {
+    // If you're an admin you can edit no matter what.
     return true;
+  } else if (brick.author?.id === user.id) {
+    // If you're the author you can only edit if the brick has not already been published.
+    if(brick.status === BrickStatus.Publish
+      && brick.isCore === true
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    return false;
   }
-  return false;
 }
 
 export function canBuild(user: User) {

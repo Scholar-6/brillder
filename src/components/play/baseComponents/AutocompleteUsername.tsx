@@ -64,14 +64,14 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
         return <>
         {value.map((user, idx) => (
           <Chip
-            label={`${user.firstName} ${user.lastName}`}
+            label={`${user.username}`}
             avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${user.profileImage}`} />}
             {...getTagProps({ index: idx })}
           />
         ))}
         </>;
       }}
-      getOptionLabel={(option) => `${option.firstName} ${option.lastName}`}
+      getOptionLabel={(option) => `${option.username}`}
     />
   );
 };
