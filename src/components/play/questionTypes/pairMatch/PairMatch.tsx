@@ -159,7 +159,14 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return (
       <div key={i} className={className}>
         <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
-          {this.renderAnswerContent(answer)}
+          <div style={{width: '100%'}}>
+            {this.renderAnswerContent(answer)}
+            {this.props.isPreview ?
+              this.renderEachHint(this.props.question.hint, i)
+              : this.props.isReview &&
+              this.renderEachHint(this.props.question.hint, answer.index)
+            }
+          </div>
         </div>
       </div>
     );
@@ -175,13 +182,8 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     }
     return (
       <ListItem key={i} className={className}>
-        <div style={{width: '100%'}}>
-          <div className="option-container">
-            {this.renderOptionContent(item as any)}
-          </div>
-          <div className="option-container">
-            {this.renderEachHint(this.props.question.hint, i)}
-          </div>
+        <div className="option-container">
+          {this.renderOptionContent(item as any)}
         </div>
       </ListItem>
     );

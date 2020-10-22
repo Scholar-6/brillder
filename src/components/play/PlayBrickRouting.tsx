@@ -389,6 +389,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             item.index = index;
             item.hint = question.hint.list[index];
           }
+          c.list.map((c:any, i:number) => c.index = i);
           c.list = shuffle(c.list);
         }
       });
@@ -405,6 +406,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             valueFile: a.valueFile,
             answerType: a.answerType,
           }));
+          c.choices.map((c:any, i:number) => c.index = i);
           c.choices = shuffle(choices);
         }
       });
