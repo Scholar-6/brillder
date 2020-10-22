@@ -29,7 +29,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
   //#region Scroll
   const [canScroll, setScroll] = React.useState(false);
 
-  useEffect(() => {
+  const checkScroll = () => {
     const {current} = questionPreview;
     if (current) {
       if (current.scrollHeight > current.clientHeight) {
@@ -42,7 +42,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
         }
       }
     }
-  });
+  }
 
   const scrollUp = () => {
     try {
@@ -120,6 +120,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
     if (questionIndex === 0 && !question.firstComponent?.value && isHintEmpty(question.hint) && areComponentsEmpty()) {
       return <EmptyQP1 />;
     }
+    setTimeout(() => {checkScroll()}, 100);
     return <QuestionPlay question={question} isPhonePreview={true} answers={[]} />;
   }
   

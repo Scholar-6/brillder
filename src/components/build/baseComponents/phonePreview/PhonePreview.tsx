@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import {  Hidden, Grid } from '@material-ui/core';
 
 import './PhonePreview.scss';
@@ -16,11 +15,50 @@ export interface PhonePreviewProps {
 }
 
 const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, action, ...props }) => {
+  const [questionPreview] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+
+  //#region Scroll
+  const [canScroll, setScroll] = React.useState(false);
+
+  const scrollUp = () => {
+    try {
+      if (questionPreview.current) {
+        questionPreview.current.scrollBy(0, -50);
+      }
+    } catch {}
+  }
+
+  const scrollDown = () => {
+    try {
+      if (questionPreview.current) {
+        let el = questionPreview.current;
+        el.scrollBy(0, 50);
+      }
+    } catch {}
+  }
+
+  const checkScroll = () => {
+    const {current} = questionPreview;
+    if (current) {
+      if (current.scrollHeight > current.clientHeight) {
+        if (!canScroll) {
+          setScroll(true);
+        }
+      } else {
+        if (canScroll) {
+          setScroll(false);
+        }
+      }
+    }
+  }
+  //#endregion
+
   const renderInner = () => {
     if (link) {
       return <iframe title="phone-preview-screen" src={link} />;
     }
     if (Component) {
+      setTimeout(() => { checkScroll(); }, 100);
       return <Component data={data} action={action} />;
     }
     return "";
@@ -36,6 +74,9 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, acti
             </div>
           }
           <div className="phone-question-preview">
+            <div className="centered">
+              <SpriteIcon name="arrow-up" className={`scroll-arrow ${!canScroll && 'disabled'}`} onClick={scrollUp} />
+            </div>
             <div className="phone">
               <div className="phone-border">
                 <div className="volume volume1"></div>
@@ -43,11 +84,14 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, acti
                 <div className="volume volume3"></div>
                 <div className="sleep"></div>
                 <div className="screen">
-                  <div className="custom-component">
+                  <div className="custom-component" ref={questionPreview}>
                     {renderInner()}
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="centered">
+              <SpriteIcon name="arrow-down" className={`scroll-arrow ${!canScroll && 'disabled'}`} onClick={scrollDown} />
             </div>
           </div>
           { props.next &&
