@@ -99,6 +99,31 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     return <SpriteIcon onClick={e => this.switchMode(e)} name="edit-outline" className={className} />;
   }
 
+  renderEditableTextarea(name: BrickFieldNames, placeholder: string = "Please fill in..", color?: string) {
+    const { brick } = this.props;
+    if (this.state.mode) {
+      return (
+        <textarea
+          disabled={!this.props.canEdit}
+          onChange={e => {
+            e.stopPropagation();
+            this.props.setBrickField(name, e.target.value)
+          }}
+          placeholder={placeholder}
+          value={brick[name]}
+        />
+      );
+    }
+    const value = brick[name];
+    if (value) {
+      return value;
+    }
+    if (color) {
+      return <span className={color}>{placeholder}</span>;
+    }
+    return <span style={{ color: "#757575" }}>{placeholder}</span>;
+  }
+
   renderEditableField(name: BrickFieldNames, placeholder: string = "Please fill in..", color?: string) {
     const { brick } = this.props;
     if (this.state.mode) {
@@ -244,7 +269,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               <FiberManualRecordIcon className="circle-icon" />
             </Grid>
             <div className="proposal-titles">
-              <div className="title">{this.renderEditableField(BrickFieldNames.title)}</div>
+              <div className="title">{this.renderEditableTextarea(BrickFieldNames.title)}</div>
                 <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
               <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
               <p className="text-title m-t-3 bold">Open Question:</p>
