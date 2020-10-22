@@ -170,14 +170,23 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
         onClick={() => this.setActiveItem(choice.index, index)}
       >
         {this.renderData(choice)}
-        {(this.props.isReview || this.props.isPreview) ?
+        {this.props.isPreview ?
           <ReviewEachHint
-            isPhonePreview={this.props.isPreview}
-            isReview={this.props.isReview}
+            isPhonePreview={true}
+            isReview={false}
             isCorrect={isCorrect}
             index={index}
             hint={this.props.question.hint}
-          /> : ""}
+          />
+          : this.props.isReview &&
+          <ReviewEachHint
+            isPhonePreview={false}
+            isReview={true}
+            isCorrect={isCorrect}
+            index={choice.index}
+            hint={this.props.question.hint}
+          />
+        }
       </Button>
     );
   }
