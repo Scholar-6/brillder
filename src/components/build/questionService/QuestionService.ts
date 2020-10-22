@@ -96,8 +96,10 @@ export function prepareBrickToSave(brick: Brick, questions: Question[], synthesi
   brick.questions = [];
   brick.synthesis = synthesis;
   for (let question of questions) {
-    const apiQuestion = getApiQuestion(question) as Question;
-    brick.questions.push(apiQuestion);
+    if(question) {
+      const apiQuestion = getApiQuestion(question) as Question;
+      brick.questions.push(apiQuestion);
+    }
   }
 }
 
