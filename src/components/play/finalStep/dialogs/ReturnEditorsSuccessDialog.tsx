@@ -57,9 +57,9 @@ const ReturnEditorsSuccessDialog: React.FC<InvitationProps> = props => {
           <ListItemText primary={`Over for you${getEditors()}`} className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="circle-check">
-              <svg className="svg active" style={{marginLeft: 0, marginTop: '0.3vw', marginRight: '0.3vw'}}>
+              <svg className="svg active">
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#send"} className="text-white" />
+                <use href={sprite + "#repeat"} className="text-white stroke-2" />
               </svg>
             </Avatar>
           </ListItemAvatar>
