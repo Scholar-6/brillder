@@ -125,13 +125,23 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
         onClick={() => this.setActiveItem(index)}
       >
         {this.renderData(choice)}
-        <ReviewEachHint
-          isPhonePreview={this.props.isPreview}
-          isReview={this.props.isReview}
-          isCorrect={isCorrect ? isCorrect : false}
-          index={index}
-          hint={this.props.question.hint}
-        />
+        {this.props.isPreview ?
+          <ReviewEachHint
+            isPhonePreview={true}
+            isReview={false}
+            isCorrect={isCorrect ? isCorrect : false}
+            index={index}
+            hint={this.props.question.hint}
+          />
+          : this.props.isReview &&
+          <ReviewEachHint
+            isPhonePreview={false}
+            isReview={true}
+            isCorrect={isCorrect ? isCorrect : false}
+            index={choice.index as number}
+            hint={this.props.question.hint}
+          />
+        }
       </Button>
     );
   }
