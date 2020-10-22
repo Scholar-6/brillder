@@ -426,7 +426,10 @@
           text-transform: uppercase;
           font-family: $font-family-bold;
 
-          input {
+          textarea {
+            background: inherit;
+            border: none;
+            width: 100%;
             text-transform: uppercase;
             font-family: $font-family-bold !important;
           }
