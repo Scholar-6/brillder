@@ -28,6 +28,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import SendPublisherSuccessDialog from "./SendPublisherSuccess";
 import { Redirect } from "react-router-dom";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import ReturnEditorsSuccessDialog from "components/play/finalStep/dialogs/ReturnEditorsSuccessDialog";
 
 enum PublishStatus {
   None,
@@ -55,6 +56,7 @@ interface FinalStepProps {
 const FinalStep: React.FC<FinalStepProps> = ({
   user, brick, history, publisherConfirmed, sendedToPublisher, requestFailed, ...props
 }) => {
+  const [returnEditorsOpen, setEditorsReturn] = React.useState(false);
   const [shareOpen, setShare] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
@@ -109,6 +111,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         onClick={async () => {
           await props.returnToEditors(brick);
           props.fetchBrick(brick.id);
+          setEditorsReturn(true);
         }}
       />
     );
@@ -314,6 +317,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
           setInviteSuccess({ isOpen: false, name: '' });
           props.fetchBrick(brick.id);
         }}
+      />
+      <ReturnEditorsSuccessDialog
+        isOpen={returnEditorsOpen}
+        editors={brick.editors}
+        close={() => setEditorsReturn(false)}
       />
       <PublishSuccessDialog
         isOpen={publishSuccess === PublishStatus.Popup}
