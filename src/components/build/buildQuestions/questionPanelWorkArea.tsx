@@ -287,10 +287,12 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     </Grid>
                   </Grid>
                   <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+                  {/* 10/22/2020 hide for deploy
                   <Grid item container direction="row" justify="center">
                     <button className="btn" onClick={props.undo}>Undo</button>
                     <button className="btn" onClick={props.redo}>Redo</button>
                   </Grid>
+                  */}
                 </Grid>
               </Grid>
             }
