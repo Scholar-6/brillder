@@ -59,6 +59,9 @@ export interface DocumentWEditorProps {
   validationRequired?: boolean;
   onBlur(): void;
   onChange(data: string): void;
+
+  uploadStarted?(): void;
+  uploadFinished?(): void;
 }
 
 interface DocumentWEditorState {
@@ -141,6 +144,28 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
       this.setState({ ...this.state, data });
     })
     
+    // get uploading status
+    editor.commands.add('uploading', {
+      props: this.props,
+      execute() {
+        if (this.props.uploadStarted) {
+          console.log('upload started')
+          this.props.uploadStarted();
+        }
+      },
+      destroy() {}
+    });
+    editor.commands.add('uploaded', {
+      props: this.props,
+      execute() {
+        if (this.props.uploadFinished) {
+          console.log('upload finished')
+          this.props.uploadFinished();
+        }
+      },
+      destroy() {}
+    });
+
     const upcastWriter = new UpcastWriter();
     editor.plugins.get('Clipboard').on('inputTransformation', (evt: any, data: any) => {
       const frag = data.content;
