@@ -17,7 +17,6 @@ import PlayButton from "components/build/baseComponents/PlayButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { CommentLocation } from "model/comments";
 import CommentPanel from "components/baseComponents/comments/CommentPanel";
-import { Collapse } from "@material-ui/core";
 import { Transition } from "react-transition-group";
 
 enum BookState {
@@ -66,10 +65,16 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   }
 
   onBookClose() {
-    const closeTimeout = setTimeout(() => {
-      this.setState({ bookHovered: false });
-    }, 400);
-    this.setState({ closeTimeout });
+    let wirisPopups = document.getElementsByClassName("wrs_modal_dialogContainer wrs_modal_desktop wrs_stack");
+    if (wirisPopups.length === 0) { 
+      const closeTimeout = setTimeout(() => {
+        let wirisPopups = document.getElementsByClassName("wrs_modal_dialogContainer wrs_modal_desktop wrs_stack");
+        if (wirisPopups.length === 0) {
+          this.setState({ bookHovered: false });
+        }
+      }, 400);
+      this.setState({ closeTimeout });
+    }
   }
 
   switchMode(e: React.MouseEvent<SVGSVGElement, MouseEvent>) {
@@ -286,14 +291,14 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     const renderSecondPage = () => {
       const defaultStyle = {
         transition: "transform 300ms ease-in-out",
-        transform: "translateY(80%)"
+        transform: "translateY(30%)"
       };
 
       const transitionStyles = {
         entering: { transform: "translateY(0)" },
         entered: { transform: "translateY(0)" },
         exiting: { transform: "translateY(0)" },
-        exited: { transform: "translateY(85%)" },
+        exited: { transform: "translateY(calc(100% - 6.5vh))" },
       } as any;
 
       return (
@@ -314,6 +319,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                     ...transitionStyles[state]
                   }}>
                     <CommentPanel
+                      mode={!this.state.briefCommentPanelExpanded}
                       currentLocation={CommentLocation.Brief}
                       currentBrick={this.props.brick}
                       onHeaderClick={() => this.setState({ briefCommentPanelExpanded: !this.state.briefCommentPanelExpanded })}

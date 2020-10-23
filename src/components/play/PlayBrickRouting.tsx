@@ -406,7 +406,6 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             valueFile: a.valueFile,
             answerType: a.answerType,
           }));
-          c.choices.map((c:any, i:number) => c.index = i);
           c.choices = shuffle(choices);
         }
       });

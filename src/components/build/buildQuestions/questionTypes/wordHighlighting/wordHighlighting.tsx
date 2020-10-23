@@ -21,6 +21,10 @@ export interface WordHighlightingProps extends UniqueComponentProps {
   data: WordHighlightingData;
 }
 
+export const getDefaultWordHighlightingAnswer = () => {  
+  return { text: '', words: [] };
+}
+
 const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   locked, data, save, updateComponent, validationRequired
 }) => {

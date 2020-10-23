@@ -30,6 +30,16 @@ $margin-left: 21%;
       height: $icon-size;
       width: $icon-size;
     }
+
+    .filter-icon {
+      margin-left: 1vw;
+      &::before {
+        background: var(--theme-dark-blue);
+      }
+      &::after {
+        background: var(--theme-dark-blue);
+      }
+    }
   }
 
   .comment-item-container {

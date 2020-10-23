@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { connect } from "react-redux";
@@ -34,9 +34,11 @@ import map from "components/map";
 import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
 import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
+import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 
 interface ProposalProps {
   history: History;
+  location: any;
 
   //redux
   brick: Brick;
@@ -52,6 +54,7 @@ interface ProposalState {
   saved: boolean;
   subjects: Subject[];
   isDialogOpen: boolean;
+  handleKey(e: any): void;
 }
 
 class Proposal extends React.Component<ProposalProps, ProposalState> {
@@ -102,10 +105,49 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       saved: false,
       saving: false,
       isDialogOpen: false,
-      subjects: []
+      subjects: [],
+      handleKey: this.handleKey.bind(this)
     };
 
     this.getSubject();
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.state.handleKey, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.state.handleKey, false);
+  }
+
+  async handleKey(e: any) {
+    const {history} = this.props;
+    const {pathname} = this.props.location;
+    if (rightKeyPressed(e)) {
+      if (pathname == map.ProposalTitle) {
+        history.push(map.ProposalOpenQuestion);
+      } else if (pathname === map.ProposalOpenQuestion) {
+        history.push(map.ProposalLength);
+      } else if (pathname === map.ProposalLength) {
+        history.push(map.ProposalBrief);
+      } else if (pathname === map.ProposalBrief) {
+        history.push(map.ProposalPrep);
+      } else if (pathname === map.ProposalPrep) {
+        this.saveLocalBrick(this.state.brick);
+        await this.saveBrick(this.state.brick);
+        history.push(map.ProposalReview);
+      }
+    } else if (leftKeyPressed(e)) {
+      if (pathname === map.ProposalOpenQuestion) {
+        history.push(map.ProposalTitle);
+      } else if (pathname === map.ProposalLength) {
+        history.push(map.ProposalOpenQuestion);
+      } else if (pathname === map.ProposalBrief) {
+        history.push(map.ProposalLength);
+      } else if (pathname === map.ProposalPrep) {
+        history.push(map.ProposalBrief);
+      }
+    }
   }
 
   async getSubject() {

@@ -11,13 +11,19 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
 
+export const getDefaultVerticalShuffleAnswer = () => {
+  const newAnswer = () => ({ value: "" });
+
+  return { list: [newAnswer(), newAnswer(), newAnswer()] };
+}
+
 const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const newAnswer = () => ({ value: "" });
 
   if (!data.list) {
-    data.list = [newAnswer(), newAnswer(), newAnswer()];
+    data.list = getDefaultVerticalShuffleAnswer().list;
   } else if (data.list.length < 3) {
     data.list.push(newAnswer());
     updateComponent(data);
