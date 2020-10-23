@@ -21,6 +21,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getAssignedBricks, getCurrentUserBricks } from "services/axios/brick";
 import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
 import TeachButton from "./TeachButton";
+import FirstButton from "./FirstButton";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -113,39 +114,6 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     this.props.history.push(map.ProposalSubject);
   }
 
-  renderViewAllLabel() {
-    const { rolePreference } = this.props.user;
-    if (rolePreference && rolePreference.roleId === UserType.Student) {
-      return "View & Play";
-    }
-    return this.state.isTeacher ? "View & Assign Bricks" : "View All Bricks";
-  }
-
-  renderViewAllButton() {
-    return (
-      <div className="view-item-container zoom-item" onClick={() => this.props.history.push("/play/dashboard")}>
-        <div className="eye-glass-icon">
-          <div className="svgOnHover">
-            <SpriteIcon name="glasses-home" className="active text-theme-orange" />
-          </div>
-          <div className="glass-eyes-left svgOnHover">
-            <svg className="svg active" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-              <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
-              <path fill="#001C55" className="pupil" d="M13.1,12c0,2.1-1.7,3.8-3.8,3.8S5.5,14.1,5.5,12s1.7-3.8,3.8-3.8S13.1,9.9,13.1,12L13.1,12z" />
-            </svg>
-          </div>
-          <div className="glass-eyes-right svgOnHover">
-            <svg className="svg active" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-              <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
-              <path fill="#001C55" className="pupil" d="M13.1,12c0,2.1-1.7,3.8-3.8,3.8S5.5,14.1,5.5,12s1.7-3.8,3.8-3.8S13.1,9.9,13.1,12L13.1,12z" />
-            </svg>
-          </div>
-        </div>
-        <span className="item-description">{this.renderViewAllLabel()}</span>
-      </div>
-    );
-  }
-
   renderCreateButton() {
     return (
       <div className="create-item-container" onClick={() => this.creatingBrick()}>
@@ -195,16 +163,26 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   renderSecondButton() {
     const { rolePreference } = this.props.user;
-    if (rolePreference && rolePreference.roleId === UserType.Student) {
-      return this.renderStudentWorkButton();
+    if (rolePreference) {
+      const {roleId} = rolePreference;
+      if (roleId === UserType.Teacher) {
+        return <TeachButton history={this.props.history} />
+      } else if (roleId === UserType.Student) {
+        return this.renderStudentWorkButton();
+      }
     }
     return this.renderCreateButton();
   }
 
   renderThirdButton() {
     const { rolePreference } = this.props.user;
-    if (rolePreference && rolePreference.roleId === UserType.Student) {
-      return this.renderLibraryButton();
+    if (rolePreference) {
+      const {roleId} = rolePreference;
+      if (roleId === UserType.Teacher) {
+        return this.renderCreateButton();
+      } else if (roleId === UserType.Student) {
+        return this.renderLibraryButton();
+      }
     }
     return this.renderWorkButton();
   }
@@ -293,7 +271,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               this.setState({ ...this.state, swiper });
             }}
           >
-            <SwiperSlide>{this.renderViewAllButton()}</SwiperSlide>
+            <SwiperSlide>
+              <FirstButton user={this.props.user} history={this.props.history} />
+            </SwiperSlide>
             <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>
             <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>
           </Swiper>
@@ -317,7 +297,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         </div>
         <div className="first-col">
           <div className="first-item">
-            {this.renderViewAllButton()}
+            <FirstButton history={this.props.history} user={this.props.user} />
             {this.renderSecondButton()}
             {this.renderThirdButton()}
           </div>
