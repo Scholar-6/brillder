@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {  Hidden, Grid } from '@material-ui/core';
 
 import './PhonePreview.scss';
