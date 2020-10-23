@@ -18,16 +18,19 @@ import SpriteIcon from '../SpriteIcon';
 
 
 interface CommentPanelProps {
-  comments: Comment[] | null;
+  mode?: boolean; // true - hidden
   currentBrick: Brick;
   currentQuestionId?: number;
   currentLocation: CommentLocation;
-  currentUser: User;
   haveBackButton?: boolean;
-  getComments(brickId: number): void;
-  createComment(comment: any): void;
   setCommentsShown?(value: boolean): void;
   onHeaderClick?(): void;
+
+  //redux
+  comments: Comment[] | null;
+  currentUser: User;
+  getComments(brickId: number): void;
+  createComment(comment: any): void;
 }
 
 const CommentPanel: React.FC<CommentPanelProps> = props => {
@@ -50,7 +53,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
     return (
       <div className="comments-column-wrapper">
         <Grid container direction="column" className="comments-column">
-          {props.comments ? props.comments.map(comment => (
+          {props.comments && props.comments.map(comment => (
             comment.location === props.currentLocation &&
             (comment.location !== CommentLocation.Question ||
               comment.question?.id === props.currentQuestionId)
@@ -75,7 +78,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
                 />
               )}
             </CommentItem>
-          )) : ""}
+          ))}
         </Grid>
       </div>
     );
@@ -92,12 +95,27 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
     return <SpriteIcon name="arrow-left" className="active" onClick={hideComments} />;
   }
 
+  if (props.mode === true) {
+    return (
+      <Grid container className="comments-panel" direction="column" alignItems="stretch">
+        <Grid item onClick={props.onHeaderClick}>
+          <div className="comments-title">
+            {renderBackButton()}
+             Suggestions
+             <button className="btn-transparent filter-icon arrow-down" />
+          </div>
+        </Grid>
+      </Grid>
+    );
+  }
+
   return (
     <Grid container className="comments-panel" direction="column" alignItems="stretch">
       <Grid item onClick={props.onHeaderClick}>
         <div className="comments-title">
           {renderBackButton()}
            Suggestions
+           {props.mode === false && <button className="btn-transparent filter-icon arrow-up" />}
         </div>
       </Grid>
       <Grid item>
