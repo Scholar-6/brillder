@@ -54,7 +54,7 @@ const ReturnEditorsSuccessDialog: React.FC<InvitationProps> = props => {
     >
       <div className="dialog-header">
         <ListItem>
-          <ListItemText primary={`Over for you${getEditors()}`} className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemText primary={`Over to you${getEditors()}`} className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="circle-check">
               <svg className="svg active">
