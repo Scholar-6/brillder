@@ -3,6 +3,9 @@
 @import 'src/assets/sass/partials/extensions';
 
 .youtube-video-session {
+  img {
+    max-width: 100%;
+  }
   .youtube-video {
     iframe {
       @include phone_and_tabletP {
