@@ -21,13 +21,19 @@ export interface ChooseSeveralBuildProps {
   openSameAnswerDialog(): void;
 }
 
+export const getDefaultChooseSeveralAnswer = () => {
+  const newAnswer = () => ({value: "", checked: false, valueFile: '' });
+
+  return { list: [newAnswer(), newAnswer(), newAnswer()] };
+}
+
 const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const newAnswer = () => ({value: "", checked: false, valueFile: '' });
 
   if (!data.list) {
-    data.list = [newAnswer(), newAnswer(), newAnswer()];
+    data.list = getDefaultChooseSeveralAnswer().list;
   } else if (data.list.length < 3) {
     data.list.push(newAnswer());
     updateComponent(data);

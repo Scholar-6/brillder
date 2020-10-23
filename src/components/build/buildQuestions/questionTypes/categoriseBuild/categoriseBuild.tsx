@@ -18,6 +18,13 @@ export interface CategoriseBuildProps extends UniqueComponentProps {
   data: CategoriseData;
 }
 
+export const getDefaultCategoriseAnswer = () => {
+  const newAnswer = () => ({ value: "", text: "", valueFile: "", answerType: QuestionValueType.String });
+  const newCategory = () => ({ name: "", answers: [newAnswer()], height: '0%' })
+  
+  return { categories: [newCategory(), newCategory()] };
+}
+
 const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
@@ -27,7 +34,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   const newCategory = () => ({ name: "", answers: [newAnswer()], height: '0%' })
 
   if (!data.categories) {
-    data.categories = [newCategory(), newCategory()];
+    data.categories = getDefaultCategoriseAnswer().categories;
   }
 
   const [state, setState] = React.useState(data);

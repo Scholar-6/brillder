@@ -9,6 +9,17 @@ import {
 } from "model/question";
 import { Brick } from "model/brick";
 
+import { getDefaultChooseOneAnswer } from "../buildQuestions/questionTypes/chooseOneBuild/chooseOneBuild";
+import { getDefaultChooseSeveralAnswer } from "../buildQuestions/questionTypes/chooseSeveralBuild/chooseSeveralBuild";
+import { getDefaultHorizontalShuffleAnswer } from "../buildQuestions/questionTypes/horizontalShuffleBuild/horizontalShuffleBuild";
+import { getDefaultShortAnswerAnswer } from "../buildQuestions/questionTypes/shortAnswerBuild/shortAnswerBuild";
+import { getDefaultVerticalShuffleAnswer } from "../buildQuestions/questionTypes/verticalShuffleBuild/verticalShuffleBuild";
+import { getDefaultPairMatchAnswer } from "../buildQuestions/questionTypes/pairMatchBuild/pairMatchBuild";
+import { getDefaultCategoriseAnswer } from "../buildQuestions/questionTypes/categoriseBuild/categoriseBuild";
+import { getDefaultMissingWordAnswer } from "../buildQuestions/questionTypes/missingWordBuild/MissingWordBuild";
+import { getDefaultLineHighlightingAnswer } from "../buildQuestions/questionTypes/lineHighlightingBuild/LineHighlightingBuild";
+import { getDefaultWordHighlightingAnswer } from "../buildQuestions/questionTypes/wordHighlighting/wordHighlighting";
+
 
 export interface ApiQuestion {
   id?: number;
@@ -39,7 +50,9 @@ export function getNewQuestion(type: number, active: boolean) {
       list: [] as string[],
       status: HintStatus.None
     },
-    components: [{ type: QuestionComponentTypeEnum.Component }]
+    components: [{
+      type: QuestionComponentTypeEnum.Component
+    }]
   } as Question;
 };
 
@@ -119,9 +132,34 @@ export function removeQuestionByIndex(questions: Question[], index: number) {
   return updatedQuestions;
 }
 
+const defaultFunctions: { [key in QuestionTypeEnum]?: () => any } = {
+  [QuestionTypeEnum.ChooseOne]: getDefaultChooseOneAnswer,
+  [QuestionTypeEnum.ChooseSeveral]: getDefaultChooseSeveralAnswer,
+  [QuestionTypeEnum.ShortAnswer]: getDefaultShortAnswerAnswer,
+  [QuestionTypeEnum.HorizontalShuffle]: getDefaultHorizontalShuffleAnswer,
+  [QuestionTypeEnum.VerticalShuffle]: getDefaultVerticalShuffleAnswer,
+  [QuestionTypeEnum.PairMatch]: getDefaultPairMatchAnswer,
+  [QuestionTypeEnum.Sort]: getDefaultCategoriseAnswer,
+  [QuestionTypeEnum.MissingWord]: getDefaultMissingWordAnswer,
+  [QuestionTypeEnum.LineHighlighting]: getDefaultLineHighlightingAnswer,
+  [QuestionTypeEnum.WordHighlighting]: getDefaultWordHighlightingAnswer,
+}
 
 export function setQuestionTypeByIndex(questions: Question[], index: number, type: QuestionTypeEnum) {
-  return update(questions, { [index]: { type: { $set: type } } });
+  const uniqueComponentIndex = questions[index].components.findIndex(c => c.type === QuestionComponentTypeEnum.Component);
+  console.log(uniqueComponentIndex);
+  return update(questions, {
+    [index]: {
+      type: { $set: type },
+      components: {
+        [uniqueComponentIndex]: {
+          $merge: {
+            ...defaultFunctions[type]?.()
+          }
+        }
+      },
+    }
+  });
 }
 
 export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]) {

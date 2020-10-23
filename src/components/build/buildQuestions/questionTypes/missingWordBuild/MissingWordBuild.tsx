@@ -29,6 +29,13 @@ export interface MissingWordComponentProps extends UniqueComponentProps {
   };
 }
 
+export const getDefaultMissingWordAnswer = () => {
+  const newAnswer = () => ({ value: "", checked: false });
+  const newChoice = () => ({ before: "", answers: [newAnswer(), newAnswer(), newAnswer()], after: "", height: "0%" })
+  
+  return { choices: [newChoice()] };
+}
+
 const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
   locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
@@ -39,7 +46,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
   const newChoice = () => ({ before: "", answers: [newAnswer(), newAnswer(), newAnswer()], after: "", height: "0%" })
 
   if (!data.choices) {
-    data.choices = [newChoice()];
+    data.choices = getDefaultMissingWordAnswer().choices;
   }
 
   const [state, setState] = React.useState(data);
