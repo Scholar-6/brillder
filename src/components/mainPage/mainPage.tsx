@@ -179,7 +179,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     if (rolePreference) {
       const {roleId} = rolePreference;
       if (roleId === UserType.Teacher) {
-        return this.renderCreateButton();
+        return this.renderTryBuildButton(true);
       } else if (roleId === UserType.Student) {
         return this.renderLibraryButton();
       }
@@ -207,6 +207,45 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     );
   }
 
+  renderLiveAssignmentButton(isActive: boolean) {
+    return (
+      <div className="back-item-container student-back-work" onClick={() => {}}>
+        <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : 'text-theme-light-blue'}`}>
+          <SpriteIcon name="student-back-to-work"/>
+          <span className={`item-description ${isActive ? '' : 'disabled'}`}>Live Assignments</span>
+        </button>
+      </div>
+    );
+  }
+
+  renderReportsButton(isActive: boolean) {
+    return (
+      <div className="back-item-container student-back-work" onClick={() => {}}>
+        <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : 'text-theme-light-blue'}`}>
+          <SpriteIcon name="book-open"/>
+          <span className={`item-description ${isActive ? '' : 'disabled'}`}>Reports</span>
+        </button>
+      </div>
+    );
+  }
+
+  renderTryBuildButton(isActive: boolean) {
+    return (
+      <div className="create-item-container" onClick={() => {
+        if (isActive) {
+          this.creatingBrick()
+        } else {
+          this.setState({isTryBuildOpen: true});
+        }
+      }}>
+        <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
+          <SpriteIcon name="trowel-home" />
+          <span className={`item-description ${isActive ? '' : 'disabled'}`}>Try building?</span>
+        </button>
+      </div>
+    );
+  }
+
   renderRightButton() {
     if (this.props.user.rolePreference?.roleId === UserType.Builder) {
       let isActive = false;
@@ -221,24 +260,27 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     }
     const { rolePreference } = this.props.user;
     let isActive = this.props.user.hasPlayedBrick;
-    if (rolePreference && rolePreference.roleId === UserType.Student) {
-      return (
-        <div className="create-item-container" onClick={() => {
-          if (isActive) {
-            this.creatingBrick()
-          } else {
-            this.setState({isTryBuildOpen: true});
-          }
-        }}>
-          <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
-            <SpriteIcon name="trowel-home" />
-            <span className={`item-description ${isActive ? '' : 'disabled'}`}>Try building?</span>
-          </button>
-        </div>
-      );
+    if (rolePreference) {
+      const {roleId} = rolePreference;
+      if (roleId === UserType.Teacher) {
+        return this.renderLiveAssignmentButton(false);
+      } else if (roleId === UserType.Student) {
+        return this.renderTryBuildButton(isActive);
+      }
     }
     if (this.state.isTeacher) {
       return <TeachButton history={this.props.history} />
+    }
+    return "";
+  }
+
+  renderRightBottomButton() {
+    const { rolePreference } = this.props.user;
+    if (rolePreference) {
+      const {roleId} = rolePreference;
+      if (roleId === UserType.Teacher) {
+        return this.renderReportsButton(false);
+      }
     }
     return "";
   }
@@ -303,9 +345,17 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           </div>
           <div className="second-item"></div>
         </div>
-        <div className="second-col">
-          {this.renderRightButton()}
-        </div>
+        {this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Teacher ?
+          <div className="second-col">
+            <div>
+              {this.renderRightButton()}
+              {this.renderRightBottomButton()}
+            </div>
+          </div>
+          : <div className="second-col">
+              {this.renderRightButton()}
+            </div>
+        }
         <MainPageMenu
           user={this.props.user}
           history={this.props.history}
