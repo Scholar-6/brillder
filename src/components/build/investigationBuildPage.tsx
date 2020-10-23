@@ -121,6 +121,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   // time of last autosave
   let [lastAutoSave, setLastAutoSave] = React.useState(Date.now());
 
+  const [undoRedoService, setUndoRedoService] = React.useState(UndoRedoService.instance);
+
   /* Synthesis */
   let isSynthesisPage = false;
   if (history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
@@ -211,7 +213,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       if(Object.keys(diff).filter((k: any) => k !== "updated" && k !== "type").length === 0) {
         return;
       }
-      UndoRedoService.instance.push({
+      undoRedoService.push({
         forward: diff,
         backward: backwardDiff
       });
@@ -220,7 +222,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const undo = () => {
-    const diff = UndoRedoService.instance.undo();
+    const diff = undoRedoService.undo();
     if(diff) {
       console.log(diff);
       applyDiff(diff);
@@ -231,7 +233,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const redo = () => {
-    const diff = UndoRedoService.instance.redo();
+    const diff = undoRedoService.redo();
     if(diff) {
       console.log(diff);
       applyDiff(diff);
@@ -380,7 +382,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const updatedQuestions = activateQuestionByIndex(index);
     setQuestions(update(questions, { $set: updatedQuestions }));
     if (history.location.pathname.slice(-10) === '/synthesis') {
-      history.push(`/build/brick/${brickId}/investigation/question`)
+      history.push(`/build/brick/${brickId}/investigation/question`);
     }
   };
 
@@ -602,6 +604,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         saveBrick={autoSaveBrick}
         undo={undo}
         redo={redo}
+        undoRedoService={undoRedoService}
       />
     );
   };
@@ -783,7 +786,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             {renderQuestionTypePreview()}
           </Route>
           <Route path="/build/brick/:brickId/investigation/synthesis">
-            <PhonePreview Component={SynthesisPreviewComponent} data={{synthesis: synthesis, brickLength: brick.brickLength}} />
+            <PhonePreview
+              Component={SynthesisPreviewComponent}
+              prev={() => selectQuestion(questions.length - 1)}
+              next={()=>{}}
+              nextDisabled={true}
+              data={{synthesis: synthesis, brickLength: brick.brickLength}}
+            />
           </Route>
         </Grid>
         <QuestionInvalidDialog

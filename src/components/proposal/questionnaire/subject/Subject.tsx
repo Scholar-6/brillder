@@ -10,6 +10,7 @@ import map from 'components/map';
 
 
 interface SubjectProps {
+  history: any;
   subjectId: any
   subjects: any[]
   saveSubject(subjectId: number):void
@@ -194,7 +195,7 @@ const TheologyComponent:React.FC = () => {
   )
 }
 
-const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }) => {
+const SubjectPage:React.FC<SubjectProps> = ({ history, subjectId, subjects, saveSubject }) => {
   const getSubjectName = (subjectId: number) => {
     if (subjectId) {
       const subject = subjects.find(s => s.id === subjectId);
@@ -220,6 +221,7 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
     setSubject(subjectId);
     const currentName = getSubjectName(subjectId);
     setSubjectName(currentName);
+    saveSubject(subjectId);
   };
 
   const getInnerComponent = () => {
@@ -290,7 +292,10 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
         </Grid>
         { subject &&
           <Grid className='tutorial-pagination'>
-            <div className="centered text-theme-dark-blue bold" style={{fontSize: '2vw', marginRight: '2vw'}}>Next</div>
+            <div className="centered text-theme-dark-blue bold" style={{fontSize: '2vw', marginRight: '2vw'}}
+              onClick={() => {saveSubject(subject); history.push(map.ProposalTitle)}}>
+              Next
+            </div>
             <NextButton isActive={true} step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
           </Grid>
          }

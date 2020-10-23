@@ -180,7 +180,10 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
               </Grid>
             </form>
             <div className="tutorial-pagination">
-              <div className="centered text-theme-dark-blue bold" style={{fontSize: '2vw', marginRight: '2vw'}}>
+              <div className="centered text-theme-dark-blue bold" style={{fontSize: '2vw', marginRight: '2vw'}} onClick={() => {
+                saveTitles(parentState);
+                this.props.history.push(map.ProposalOpenQuestion);
+              }}>
                 Next
               </div>
               <div className="centered">

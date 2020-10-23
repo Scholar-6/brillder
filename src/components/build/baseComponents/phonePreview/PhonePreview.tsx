@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {  Hidden, Grid } from '@material-ui/core';
 
 import './PhonePreview.scss';
@@ -10,6 +10,8 @@ export interface PhonePreviewProps {
   Component?: any;
   data?: any;
   action?(): any;
+  nextDisabled?: boolean;
+  prevDisabled?: boolean;
   prev?(): void;
   next?(): void;
 }
@@ -96,7 +98,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, acti
           </div>
           { props.next &&
             <div className="centered pointer">
-              <SpriteIcon name="arrow-right" className="scroll-arrow" onClick={props.next} />
+              <SpriteIcon name="arrow-right" className={`scroll-arrow ${props.nextDisabled && 'disabled'}`} onClick={props.next} />
             </div>
           }
         </Grid>

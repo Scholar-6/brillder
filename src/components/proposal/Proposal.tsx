@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route } from "react-router-dom";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { connect } from "react-redux";
@@ -124,7 +124,11 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const {history} = this.props;
     const {pathname} = this.props.location;
     if (rightKeyPressed(e)) {
-      if (pathname == map.ProposalTitle) {
+      if (pathname === map.ProposalSubject) {
+        if (this.state.brick.subjectId) {
+          history.push(map.ProposalTitle);
+        }
+      } else if (pathname === map.ProposalTitle) {
         history.push(map.ProposalOpenQuestion);
       } else if (pathname === map.ProposalOpenQuestion) {
         history.push(map.ProposalLength);
@@ -291,6 +295,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               <SubjectPage
                 subjects={user.subjects}
                 subjectId={""}
+                history={history}
                 saveSubject={this.setSubject}
               />
             </Route>
