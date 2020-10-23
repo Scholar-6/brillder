@@ -208,6 +208,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const diff = getBrickDiff(currentBrick, brick);
     if(diff) {
       const backwardDiff = getBrickDiff(brick, currentBrick);
+      if(Object.keys(diff).filter((k: any) => k !== "updated" && k !== "type").length === 0) {
+        return;
+      }
       UndoRedoService.instance.push({
         forward: diff,
         backward: backwardDiff

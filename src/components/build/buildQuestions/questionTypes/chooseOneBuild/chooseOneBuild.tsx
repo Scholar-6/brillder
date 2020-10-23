@@ -16,13 +16,19 @@ export interface ChooseOneBuildProps extends UniqueComponentProps {
   data: ChooseOneData;
 }
 
+export const getDefaultChooseOneAnswer = () => {
+  const newAnswer = () => ({ value: "", checked: false, valueFile: "" });
+
+  return { list: [newAnswer(), newAnswer(), newAnswer()] };
+}
+
 const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const newAnswer = () => ({ value: "", checked: false, valueFile: "" });
 
   if (!data.list) {
-    data.list = [newAnswer(), newAnswer(), newAnswer()];
+    data.list = getDefaultChooseOneAnswer().list;
   } else if (data.list.length < 3) {
     data.list.push(newAnswer());
   }
