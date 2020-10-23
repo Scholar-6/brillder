@@ -18,8 +18,10 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { CommentLocation } from "model/comments";
 import CommentPanel from "components/baseComponents/comments/CommentPanel";
 import { Transition } from "react-transition-group";
+import NextButton from "./NextButton";
+import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 
-enum BookState {
+export enum BookState {
   TitlesPage,
   PrepPage
 }
@@ -42,6 +44,7 @@ interface ProposalState {
   briefCommentPanelExpanded: boolean;
   mode: boolean; // true - edit mode, false - view mode
   uploading: boolean;
+  handleKey(e: any): void;
 }
 
 class ProposalReview extends React.Component<ProposalProps, ProposalState> {
@@ -53,12 +56,40 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       bookState: BookState.TitlesPage,
       briefCommentPanelExpanded: false,
       closeTimeout: -1,
-      uploading: false
+      uploading: false,
+      handleKey: this.handleKey.bind(this)
     }
   }
 
+  componentWillMount() {
+    document.addEventListener("keydown", this.state.handleKey, false);
+  }
+
   componentWillUnmount() {
+    document.removeEventListener("keydown", this.state.handleKey, false);
     clearInterval(this.state.closeTimeout);
+  }
+
+  handleKey(e: any) {
+    if (this.state.bookHovered) {
+      if (rightKeyPressed(e)) {
+        if (this.state.bookState === BookState.TitlesPage) {
+          this.toSecondPage();
+        } else if (this.state.bookState === BookState.PrepPage) {
+          // save and move to build
+        }
+      } else if (leftKeyPressed(e)) {
+        if (this.state.bookState === BookState.PrepPage) {
+          this.toFirstPage();
+        } else if (this.state.bookState === BookState.TitlesPage) {
+          this.props.history.push(map.ProposalPrep);
+        }
+      }
+    } else {
+      if (leftKeyPressed(e)) {
+        this.props.history.push(map.ProposalPrep);
+      }
+    }
   }
 
   onBookHover() {
@@ -436,20 +467,9 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             </div>
             <Grid className="next-button-container" container onMouseOver={this.onBookHover.bind(this)} alignContent="center">
               {
-                this.state.bookHovered && (
-                  <div>
-                    {this.state.bookState === BookState.TitlesPage && (
-                      <div className="next-button arrow-button" onClick={this.toSecondPage.bind(this)}>
-                      </div>
-                    )}
-                    {this.state.bookState === BookState.PrepPage && (
-                      <div className="next-button text-with-button" onClick={() => this.props.saveBrick()}>
-                        Start Building!
-                        <SpriteIcon name="trowel-home" />
-                      </div>
-                    )}
-                  </div>
-                )
+                this.state.bookHovered && <NextButton
+                  bookState={this.state.bookState}
+                  next={this.toSecondPage.bind(this)} save={this.props.saveBrick} />
               }
             </Grid>
           </div>
