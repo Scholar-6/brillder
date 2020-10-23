@@ -17,7 +17,6 @@ import PlayButton from "components/build/baseComponents/PlayButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { CommentLocation } from "model/comments";
 import CommentPanel from "components/baseComponents/comments/CommentPanel";
-import { Collapse } from "@material-ui/core";
 import { Transition } from "react-transition-group";
 
 enum BookState {
@@ -66,10 +65,16 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   }
 
   onBookClose() {
-    const closeTimeout = setTimeout(() => {
-      this.setState({ bookHovered: false });
-    }, 400);
-    this.setState({ closeTimeout });
+    let wirisPopups = document.getElementsByClassName("wrs_modal_dialogContainer wrs_modal_desktop wrs_stack");
+    if (wirisPopups.length === 0) { 
+      const closeTimeout = setTimeout(() => {
+        let wirisPopups = document.getElementsByClassName("wrs_modal_dialogContainer wrs_modal_desktop wrs_stack");
+        if (wirisPopups.length === 0) {
+          this.setState({ bookHovered: false });
+        }
+      }, 400);
+      this.setState({ closeTimeout });
+    }
   }
 
   switchMode(e: React.MouseEvent<SVGSVGElement, MouseEvent>) {
