@@ -25,10 +25,13 @@ class UploadImageCustom extends Plugin {
       view.class = "upload-button-custom";
 
       view.on("execute", () => {
+        editor.isUploading = true;
         let el = document.createElement("input");
         el.setAttribute("type", "file");
         el.setAttribute("accept", ".jpg, .jpeg, .png");
         el.click();
+
+        editor.execute('uploading');
 
         // UPLOADING IMAGES TO BACKEND
         el.onchange = (files: any) => {
@@ -45,6 +48,8 @@ class UploadImageCustom extends Plugin {
                     imageElement,
                     editor.model.document.selection
                   );
+                  editor.isUploading = false;
+                  editor.execute('uploaded');
                 });
               },
               () => {}

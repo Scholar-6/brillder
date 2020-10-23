@@ -41,6 +41,7 @@ interface ProposalState {
   closeTimeout: number;
   briefCommentPanelExpanded: boolean;
   mode: boolean; // true - edit mode, false - view mode
+  uploading: boolean;
 }
 
 class ProposalReview extends React.Component<ProposalProps, ProposalState> {
@@ -51,7 +52,8 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       bookHovered: false,
       bookState: BookState.TitlesPage,
       briefCommentPanelExpanded: false,
-      closeTimeout: -1
+      closeTimeout: -1,
+      uploading: false
     }
   }
 
@@ -70,7 +72,9 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       const closeTimeout = setTimeout(() => {
         let wirisPopups = document.getElementsByClassName("wrs_modal_dialogContainer wrs_modal_desktop wrs_stack");
         if (wirisPopups.length === 0) {
-          this.setState({ bookHovered: false });
+          if (!this.state.uploading) {
+            this.setState({ bookHovered: false });
+          }
         }
       }, 400);
       this.setState({ closeTimeout });
@@ -216,6 +220,8 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           toolbar={[
             'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList', 'uploadImageCustom'
           ]}
+          uploadStarted={() => this.setState({uploading: true})}
+          uploadFinished={() => this.setState({uploading: false})}
           onBlur={() => { }}
           onChange={v => this.props.setBrickField(BrickFieldNames.prep, v)}
         />
