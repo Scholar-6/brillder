@@ -20,6 +20,7 @@ import { User } from 'model/user';
 import { TextComponentObj } from './components/Text/interface';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Brick } from 'model/brick';
+import UndoRedoService from 'components/services/UndoRedoService';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -39,6 +40,7 @@ export interface QuestionProps {
   currentUser: User;
   isAuthor: boolean;
   initSuggestionExpanded: boolean;
+  undoRedoService: UndoRedoService;
   saveBrick(): void;
   setQuestion(index: number, question: Question): void;
   updateFirstComponent(component: TextComponentObj): void;
@@ -256,6 +258,20 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               </Grid> :
               <Grid container item alignItems="center" style={{ height: '100%' }}>
                 <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
+                  <Grid item container direction="row" justify="space-evenly">
+                    <button className="btn btn-transparent svgOnHover undo-button" onClick={props.undo}>
+                      <SpriteIcon
+                        name="undo"
+                        className={`w100 h100 active ${props.undoRedoService.canUndo() && "text-theme-orange"}`}
+                      />
+                    </button>
+                    <button className="btn btn-transparent svgOnHover redo-button" onClick={props.redo}>
+                      <SpriteIcon
+                        name="redo"
+                        className={`w100 h100 active ${props.undoRedoService.canRedo() && "text-theme-orange"}`}
+                      />
+                    </button>
+                  </Grid>
                   {renderCommentButton()}
                   <Grid container direction="row" alignItems="center">
                     <Grid container justify="center" item sm={12}>
@@ -287,12 +303,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     </Grid>
                   </Grid>
                   <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
-                  {/* 10/22/2020 hide for deploy
-                  <Grid item container direction="row" justify="center">
-                    <button className="btn" onClick={props.undo}>Undo</button>
-                    <button className="btn" onClick={props.redo}>Redo</button>
-                  </Grid>
-                  */}
                 </Grid>
               </Grid>
             }
