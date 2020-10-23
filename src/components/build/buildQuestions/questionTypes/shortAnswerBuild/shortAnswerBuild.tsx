@@ -15,10 +15,14 @@ export interface ShortAnswerBuildProps extends UniqueComponentProps {
   data: ShortAnswerData;
 }
 
+export const getDefaultShortAnswerAnswer = () => {
+  return { list: [{ value: "" }] };
+}
+
 const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
   locked, editOnly, data, save, ...props
 }) => {
-  if (!data.list) data.list = [{ value: "" }];
+  if (!data.list) data.list = getDefaultShortAnswerAnswer().list;
 
   const [state, setState] = React.useState(data);
   const [limitOverflow, setLimitOverflow] = React.useState(false);
