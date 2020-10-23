@@ -9,6 +9,11 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
+export const getDefaultHorizontalShuffleAnswer = () => {
+  const newAnswer = () => ({ value: "" });
+
+  return { list: [newAnswer(), newAnswer(), newAnswer()] };
+}
 
 const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
   locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
@@ -16,7 +21,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
   const newAnswer = () => ({ value: "" });
 
   if (!data.list) {
-    data.list = [newAnswer(), newAnswer(), newAnswer()];
+    data.list = getDefaultHorizontalShuffleAnswer().list;
   } else if (data.list.length < 3) {
     data.list.push(newAnswer());
     updateComponent(data);

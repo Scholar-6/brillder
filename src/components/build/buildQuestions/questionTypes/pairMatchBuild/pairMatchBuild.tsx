@@ -13,13 +13,19 @@ import { showSameAnswerPopup } from '../service/questionBuild';
 
 export interface PairMatchBuildProps extends UniqueComponentProps { }
 
+export const getDefaultPairMatchAnswer = () => {
+  const newAnswer = () => ({ option: "", value: "" });
+
+  return { list: [newAnswer(), newAnswer(), newAnswer()] };
+}
+
 const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const newAnswer = () => ({ option: "", value: "" });
 
   if (!data.list) {
-    data.list = [newAnswer(), newAnswer(), newAnswer()];
+    data.list = getDefaultPairMatchAnswer().list;
   } else if (data.list.length < 3) {
     data.list.push(newAnswer());
     updateComponent(data);

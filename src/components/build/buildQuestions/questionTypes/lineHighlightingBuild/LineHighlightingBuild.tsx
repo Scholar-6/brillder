@@ -26,6 +26,10 @@ export interface LineHighlightingProps extends UniqueComponentProps {
   data: LineHighlightingData;
 }
 
+export const getDefaultLineHighlightingAnswer = () => {  
+  return { text: '', lines: [] };
+}
+
 const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
   locked, data, validationRequired, save, updateComponent
 }) => {
