@@ -45,10 +45,19 @@ export default class UndoRedoService {
     public redo() {
         if(this.currentPosition < this.stack.length - 1) {
             this.currentPosition++;
+            console.log("redo", this.currentPosition);
             return this.stack[this.currentPosition].forward;
         } else {
             return null;
         }
+    }
+
+    public canUndo() {
+        return this.currentPosition >= 0;
+    }
+
+    public canRedo() {
+        return this.currentPosition < this.stack.length - 1;
     }
 
 }

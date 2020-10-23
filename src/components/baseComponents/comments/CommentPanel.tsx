@@ -42,10 +42,10 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
     return <div>Loading comments...</div>;
   }
 
-  console.log('CommentPanel. Comments: ', props.comments);
+  // 10/23/2020 too much logs
+  //console.log('CommentPanel. Comments: ', props.comments);
 
   const onDelete = (brickId: number, commentId: number) => {
-    console.log('wef')
     setDeleteData({ isOpen: true, brickId, commentId });
   }
 

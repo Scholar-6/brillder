@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .build-question-page {
   $left-sidebar-width: 27.5%;
@@ -140,7 +140,7 @@
           $scroll-button-size: 2vw;
           height: $scroll-button-size;
           width: $scroll-button-size;
-          
+
           &.disabled {
             color: var(--tab-gray) !important;
           }
@@ -251,6 +251,13 @@
       max-width: $width;
       height: $suggestion-sidebar-height;
       overflow: hidden;
+
+      .undo-button,
+      .redo-button {
+        width: 2vw;
+        height: 2vw;
+        color: var(--tab-gray);
+      }
 
       .comment-button {
         margin-top: 3.2vh;

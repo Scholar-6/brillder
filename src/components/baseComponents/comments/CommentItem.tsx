@@ -26,14 +26,15 @@ const CommentItem: React.FC<CommentItemProps> = props => {
   const [replyPanelShown, setReplyPanelShown] = React.useState(false);
   const [collapsed, setCollapsed] = React.useState(false);
 
-  return (
-  <Grid item className="comment-container">
-    <div className="comment-item-container">
-      {collapsed ?
+  const renderCollapsedView = () => {
+    return (
       <Grid className="comment-item-collapsed" container direction="column" onClick={() => setCollapsed(false)}>
         <Grid item container direction="row" className="comment-collapsed-row">
           <Grid item className="comment-author">
             <h4>{props.comment.author.firstName}</h4>
+            <div style={{position: 'absolute', right: 0, top: 0}}>
+              <SpriteIcon name="plus-square" />
+            </div>
           </Grid>
           <Grid item className="comment-text">
             <i>{props.comment.text}</i>
@@ -44,7 +45,12 @@ const CommentItem: React.FC<CommentItemProps> = props => {
           +{props.comment.children.length} {props.comment.children.length > 1 ? "replies" : "reply"}
         </Grid>
         }
-      </Grid> :
+      </Grid>
+    );
+  }
+
+  const renderExpandedView = () => {
+    return (
       <Grid container direction="column">
         <Grid item container direction="row" style={{position: 'relative'}}>
           <div style={{position: 'absolute'}} className="profile-image-container" onClick={() => setCollapsed(true)}>
@@ -63,14 +69,14 @@ const CommentItem: React.FC<CommentItemProps> = props => {
           <button aria-label="reply" className="message-button svgOnHover" onClick={() => setReplyPanelShown(!replyPanelShown)}>
             <SpriteIcon name="corner-up-left" className="active" />
           </button>
-            {props.isAuthor &&
+            {props.isAuthor ?
               <button
                 aria-label="delete"
                 className="cancel-button svgOnHover"
                 onClick={() => props.onDelete(props.currentBrick.id, props.comment.id)}
               >
                 <SpriteIcon name="trash-outline" className="active" />
-              </button>
+              </button> : <SpriteIcon name="minus-square" onClick={() => setCollapsed(true)} />
             }
           </div>
         </Grid>
@@ -97,6 +103,15 @@ const CommentItem: React.FC<CommentItemProps> = props => {
             currentQuestionId={props.comment.question?.id} />
         </Collapse>
       </Grid>
+    )
+  }
+
+  return (
+  <Grid item className="comment-container">
+    <div className="comment-item-container">
+      {collapsed 
+        ? renderCollapsedView()
+        : renderExpandedView()
       }
     </div>
   </Grid>

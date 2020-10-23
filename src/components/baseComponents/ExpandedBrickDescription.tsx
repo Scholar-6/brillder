@@ -6,6 +6,7 @@ import { Brick } from "model/brick";
 import SpriteIcon from "./SpriteIcon";
 import SearchText from "./SearchText";
 import AuthorSearchRow from "./AuthorRow";
+import MathInHtml from "components/play/baseComponents/MathInHtml";
 
 
 interface ExpandedDescriptionProps {
@@ -109,7 +110,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
             <AuthorSearchRow searchString={searchString} brick={brick} />
           </div>
           <div className="hovered-open-question link-info">
-            <SearchText searchString={searchString} text={brick.openQuestion} />
+            <MathInHtml value={brick.openQuestion} />
           </div>
           <div className="link-info">{this.getSubjectRow(brick)}</div>
           <div className="link-info">Editor(s): &nbsp; {this.getEditors(brick, searchString)}</div>

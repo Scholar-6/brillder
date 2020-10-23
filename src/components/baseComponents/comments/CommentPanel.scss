@@ -93,15 +93,15 @@ $margin-left: 21%;
       top: 0;
       right: 0;
       @extend %flexCenter;
+      .svg {
+        stroke-width: 2;
+        @extend %removePosition;
+        height: 1.3vw;
+        width: 1.3vw;
+      }
       > button {
         border: 0;
         background-color: transparent;
-        .svg {
-          stroke-width: 2;
-          @extend %removePosition;
-          height: 1.3vw;
-          width: 1.3vw;
-        }
         &.message-button {
           .svg {
             color: var(--theme-dark-blue);
@@ -136,6 +136,14 @@ $margin-left: 21%;
         .comment-author {
           font-family: $font-family-bold;
           margin-right: 5%;
+
+          svg {
+            margin-top: 0.45vw;
+            margin-right: 0.35vw;
+            stroke-width: 2;
+            height: 1.3vw;
+            width: 1.3vw;
+          }
         }
         .comment-text {
           overflow: hidden;
