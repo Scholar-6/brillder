@@ -382,7 +382,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const updatedQuestions = activateQuestionByIndex(index);
     setQuestions(update(questions, { $set: updatedQuestions }));
     if (history.location.pathname.slice(-10) === '/synthesis') {
-      history.push(`/build/brick/${brickId}/investigation/question`)
+      history.push(`/build/brick/${brickId}/investigation/question`);
     }
   };
 
@@ -786,7 +786,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             {renderQuestionTypePreview()}
           </Route>
           <Route path="/build/brick/:brickId/investigation/synthesis">
-            <PhonePreview Component={SynthesisPreviewComponent} data={{synthesis: synthesis, brickLength: brick.brickLength}} />
+            <PhonePreview
+              Component={SynthesisPreviewComponent}
+              prev={() => selectQuestion(questions.length - 1)}
+              next={()=>{}}
+              nextDisabled={true}
+              data={{synthesis: synthesis, brickLength: brick.brickLength}}
+            />
           </Route>
         </Grid>
         <QuestionInvalidDialog

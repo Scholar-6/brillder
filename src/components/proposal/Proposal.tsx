@@ -150,8 +150,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
         history.push(map.ProposalLength);
       } else if (pathname === map.ProposalPrep) {
         history.push(map.ProposalBrief);
-      } else if (pathname === map.ProposalReview) {
-        history.push(map.ProposalPrep);
       }
     }
   }
