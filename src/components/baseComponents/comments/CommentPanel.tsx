@@ -46,7 +46,6 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
   //console.log('CommentPanel. Comments: ', props.comments);
 
   const onDelete = (brickId: number, commentId: number) => {
-    console.log('wef')
     setDeleteData({ isOpen: true, brickId, commentId });
   }
 
