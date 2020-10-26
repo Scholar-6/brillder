@@ -3,14 +3,9 @@ import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 
 import { AssignmentBrick } from "model/assignment";
 import { Subject } from "model/brick";
+import { SortBy } from "./model";
 
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
-
-export enum SortBy {
-  None,
-  Date,
-  Popularity,
-}
 
 interface FilterProps {
   sortBy: SortBy;
@@ -63,10 +58,10 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
             <Grid container direction="row">
               <Grid item xs={6}>
                 <FormControlLabel
-                  value={SortBy.Popularity}
+                  value={SortBy.Score}
                   style={{ marginRight: 0, width: "50%" }}
                   control={<Radio className="sortBy" />}
-                  label="Popularity"
+                  label="My Score"
                 />
               </Grid>
               <Grid item xs={6}>
