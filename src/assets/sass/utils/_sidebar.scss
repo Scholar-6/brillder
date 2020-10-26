@@ -429,9 +429,12 @@
       }
 
       .bricks-list {
-        display: grid;
-
+        @include phone_and_tabletP {
+          display: flex;
+          flex-direction: column;
+        }
         @include tabletP {
+        display: grid;
           grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
           // grid-template-columns: repeat(auto-fit, 33.33%);
         }
