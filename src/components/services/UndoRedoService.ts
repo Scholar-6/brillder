@@ -1,4 +1,4 @@
-import { BrickDiff, DoubleBrickDiff } from "./diff";
+import { DoubleBrickDiff } from "./diff";
 
 export default class UndoRedoService {
 
