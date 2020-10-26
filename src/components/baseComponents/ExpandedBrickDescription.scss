@@ -19,6 +19,7 @@
     @extend %linkDescription;
     .link-description {
       font-size: 1.2vw;
+      margin: 0;
     }
     .link-info {
       color: var(--theme-light-blue);
@@ -50,11 +51,14 @@
         }
       }
     }
+    .link-description ~ .link-info {
+      margin: 0;
+    }
     .hovered-open-question {
       font-family: $font-family-regular-italic;
       max-height: 4.4vh;
       margin-bottom: 1.5vh 0 1vh 0;
-      @extend %ellipsis;
+      // @extend %ellipsis;
     }
   }
   .hover-icons-row {
