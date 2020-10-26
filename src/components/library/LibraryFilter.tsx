@@ -1,6 +1,8 @@
-import "./ViewAll.scss";
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+
+import { AssignmentBrick } from "model/assignment";
+import { Subject } from "model/brick";
 
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 
@@ -12,8 +14,9 @@ export enum SortBy {
 
 interface FilterProps {
   sortBy: SortBy;
-  subjects: any[];
+  subjects: Subject[];
   isClearFilter: any;
+  assignments: AssignmentBrick[];
 
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   clearSubjects(): void;
@@ -25,7 +28,7 @@ interface FilterState {
   filterHeight: any;
 }
 
-class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
+class LibraryFilter extends Component<FilterProps, FilterState> {
   constructor(props: FilterProps) {
     super(props);
     this.state = {
@@ -33,9 +36,11 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       filterExpanded: true
     }
   }
+
   hideFilter() {
     this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
   }
+
   expandFilter() {
     this.setState({
       ...this.state,
@@ -43,7 +48,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       filterHeight: "auto",
     });
   }
-  render() {
+  render() {    
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box">
@@ -105,4 +110,4 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   }
 }
 
-export default ViewAllFilterComponent;
+export default LibraryFilter;

@@ -84,11 +84,14 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
     };
   }
 
-  UNSAFE_componentWillReceiveProps(props: DocumentWEditorProps) {
+  componentDidUpdate() {
     if (this.state.editor) {
+      const {props} = this;
       let data = this.state.editor.getData();
       if (props.data !== data) {
-        this.state.editor.setData(props.data ? props.data : "");
+        let newData = props.data ? props.data : "";
+        this.state.editor.setData(newData);
+        this.setState({ data: newData});
       }
     }
   }
