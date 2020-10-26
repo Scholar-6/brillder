@@ -627,7 +627,12 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
             padding-left: 1vw;
           }
           .sort-category {
-            font-size: 1.25vw !important;
+            @include phone_and_tabletP {
+              font-size: 4vw !important;
+            }
+            @include tabletP {
+              font-size: 1.25vw !important;
+            }
           }
           .question-index-container ~ h1 {
             @include tabletP {
