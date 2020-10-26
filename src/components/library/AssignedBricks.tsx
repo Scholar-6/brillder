@@ -4,9 +4,12 @@ import { User } from "model/user";
 import { AssignmentBrickData } from '../backToWorkPage/model';
 import { prepareVisibleAssignments } from '../backToWorkPage/service';
 import { AssignmentBrick } from "model/assignment";
-
-import BrickBlock from "components/baseComponents/BrickBlock";
 import { Subject } from "model/brick";
+
+import { Box } from "@material-ui/core";
+import AuthorSearchRow from "components/baseComponents/AuthorRow";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import map from "components/map";
 
 interface AssignedBricksProps {
   user: User;
@@ -16,10 +19,6 @@ interface AssignedBricksProps {
   subjects: Subject[];
   assignments: AssignmentBrick[];
   history: any;
-
-  handleDeleteOpen(brickId: number): void;
-  onMouseHover(key: number): void;
-  onMouseLeave(key: number): void;
 }
 
 class AssignedBricks extends Component<AssignedBricksProps> {
@@ -35,24 +34,60 @@ class AssignedBricks extends Component<AssignedBricksProps> {
     return '';
   }
 
-  renderBrick(item: AssignmentBrickData) {
+  renderIcon(onClick: Function) {
+    return (
+      <div className="round-button-icon" onClick={() => onClick()}>
+        <SpriteIcon name='book-open' className='text-white' />
+      </div>
+    );
+  }
+
+  renderCircle(color: string, onClick: Function) {
+    return (
+      <div className="left-brick-circle">
+        <div className="round-button pointer" style={{ background: `${color}` }}>
+          {this.renderIcon(onClick)}
+        </div>
+      </div>
+    );
+  }
+
+  renderShortDescription(item: AssignmentBrickData) {
     const color = this.getColor(item);
-    let circleIcon = 'book-open';
-    return <BrickBlock
-      brick={item.brick}
-      index={item.index}
-      row={item.row}
-      user={this.props.user}
-      key={item.index}
-      shown={this.props.shown}
-      history={this.props.history}
-      color={color}
-      circleIcon={circleIcon}
-      searchString=""
-      handleDeleteOpen={this.props.handleDeleteOpen}
-      handleMouseHover={() => this.props.onMouseHover(item.key)}
-      handleMouseLeave={() => this.props.onMouseLeave(item.key)}
-    />
+    const {brick} = item;
+    
+    const onClick = () => {
+      this.props.history.push(map.postPlay(item.brick.id, this.props.user.id));
+    }
+
+    return (
+      <div className="short-description">
+        {this.renderCircle(color, onClick)}
+        <div className="short-brick-info">
+          <div className="link-description">
+            {brick.title}
+          </div>
+          <div className="link-info">
+            {brick.subTopic} | {brick.alternativeTopics}
+          </div>
+          <div className="link-info">
+            <AuthorSearchRow searchString='' brick={brick} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderBrick(item: AssignmentBrickData) {
+    return (
+      <div className="main-brick-container">
+        <Box className="brick-container">
+          <div className="absolute-container">
+            {this.renderShortDescription(item)}
+          </div>
+        </Box>
+      </div>
+    );
   }
 
   renderSortedBricks() {
