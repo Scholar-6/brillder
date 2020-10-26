@@ -705,6 +705,11 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
           bottom: 87px !important;
           right: 13px !important;
         }
+        .mobile-prev {
+          top: auto !important;
+          bottom: 87px !important;
+          left: 13px !important;
+        }
       }
       &.synthesis-page {
         .introduction-info {
