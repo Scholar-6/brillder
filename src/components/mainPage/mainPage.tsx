@@ -130,7 +130,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     return (
       <div className="back-item-container my-library" onClick={() => {
         if (isActive) { 
-          this.props.history.push(map.BackToWorkLearnTab);
+          this.props.history.push('/my-library');
         } else {
           this.setState({isMyLibraryOpen: true});
         }
