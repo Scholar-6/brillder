@@ -181,6 +181,7 @@ const QuestionComponents = ({
         <FixedTextComponent
           locked={locked}
           editOnly={editOnly}
+          questionId={question.id}
           data={firstComponent}
           save={saveBrick}
           validationRequired={validationRequired}
