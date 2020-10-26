@@ -24,6 +24,7 @@ import PulsingCircleNumber from "./components/PulsingCircleNumber";
 import LiveActionFooter from './components/LiveActionFooter';
 import MobileNextButton from './components/MobileNextButton';
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
+import MobilePrevButton from "./components/MobilePrevButton";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -329,18 +330,11 @@ const LivePage: React.FC<LivePageProps> = ({
           </div>
         </div>
         <div className="introduction-page">
-          <SwipeableViews
-            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={activeStep}
-            className="swipe-view"
-            style={{ width: "100%" }}
-            onSwitching={handleSwipe}
-            onChangeIndex={handleStep}
-          >
-            {questions.map(renderQuestionContainer)}
-          </SwipeableViews>
+          {questions.map(renderQuestionContainer)}
         </div>
-        <MobileNextButton questions={questions} activeStep={activeStep} onClick={setSubmitAnswers} />
+
+        <MobilePrevButton questions={questions} activeStep={activeStep} onClick={prev} />
+        <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} />
       </Hidden>
       <ShuffleAnswerDialog
         isOpen={isShuffleOpen}
