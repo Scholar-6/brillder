@@ -4,7 +4,7 @@ import { ChooseSeveralAnswer } from "components/play/questionTypes/chooseSeveral
 const markLiveChoices = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
     const choices = component.list;
     for (let [index, choice] of choices.entries()) {
-        const checked = attempt.answer.indexOf(index) >= 0;
+        const checked = attempt.answer.findIndex(a => a.shuffleIndex === index) >= 0;
         if (checked === choice.checked) {
             attempt.marks += 2;
         } else {
@@ -24,7 +24,7 @@ const mark = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) =>
     attempt.maxMarks = component.list.length * markValue;
     markLiveChoices(component, attempt);
 
-    if (attempt.answer.length === 0 || attempt.answer.length === component.list.length) {
+    if (attempt.answer.length === 0) {
         attempt.marks = 0;
     }
 
