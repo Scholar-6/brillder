@@ -1,28 +1,26 @@
 import React from "react";
 
-import sprite from "assets/img/icons-sprite.svg";
 import { Question } from "model/question";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ButtonProps {
   questions: Question[];
   activeStep: number;
-  onClick(status: boolean): void;
+  onClick(): void;
 }
 
 const MobileNextButton: React.FC<ButtonProps> = ({ questions, activeStep, onClick }) => {
+  let icon = "check-icon-thin";
   if (questions.length - 1 > activeStep) {
-    return <div></div>;
+    icon = 'arrow-right';
   }
   return (
     <button
       type="button"
       className="play-preview svgOnHover play-green mobile-next"
-      onClick={() => onClick(true)}
+      onClick={onClick}
     >
-      <svg className="svg w80 h80 active" style={{ margin: 0 }}>
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#check-icon-thin"} />
-      </svg>
+      <SpriteIcon name={icon} className="w80 h80 active" />
     </button>
   );
 };
