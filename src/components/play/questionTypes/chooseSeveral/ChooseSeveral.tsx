@@ -2,15 +2,16 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 
 import './ChooseSeveral.scss';
-import CompComponent from '../Comp';
-import { ComponentAttempt } from 'components/play/model';
-import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
-import ReviewGlobalHint from 'components/play/baseComponents/ReviewGlobalHint';
 import { CompQuestionProps } from '../types';
-import MathInHtml from '../../baseComponents/MathInHtml';
+import { ComponentAttempt } from 'components/play/model';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneAnswer } from 'components/build/buildQuestions/questionTypes/chooseOneBuild/types';
 import { ActiveItem } from '../chooseOne/ChooseOne';
+
+import MathInHtml from '../../baseComponents/MathInHtml';
+import CompComponent from '../Comp';
+import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
+import ReviewGlobalHint from 'components/play/baseComponents/ReviewGlobalHint';
 
 export type ChooseSeveralAnswer = ActiveItem[];
 

@@ -105,7 +105,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         let user = this.state.user;
         const general = getGeneralSubject(subjects);
         if (general) {
-          user.subjects = [general];
+          if (user.subjects.length === 0) {
+            user.subjects = [general];
+          }
         }
         this.setState({ subjects, user });
       } else {

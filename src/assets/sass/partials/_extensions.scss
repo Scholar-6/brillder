@@ -688,6 +688,7 @@
     @extend %ellipsis;
     color: var(--theme-dark-blue);
     width: calc(100% - 3vw);
+    margin: 0;
     @include phone_and_tabletP {
       font-size: 4vw;
     }

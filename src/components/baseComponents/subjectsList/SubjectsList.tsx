@@ -3,21 +3,18 @@ import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
 import "./SubjectsList.scss";
+import { Subject } from "model/brick";
 
 interface PublishedSubjectsProps {
   filterHeight: string;
-  subjects: any[];
+  subjects: Subject[];
   filterBySubject(index: number): void;
 }
 
 class SubjectsList extends Component<PublishedSubjectsProps, any> {
   render() {
     return (
-      <Grid
-        container
-        direction="row"
-        className="filter-container subjects-filter"
-      >
+      <Grid container direction="row" className="filter-container subjects-filter">
         <AnimateHeight
           duration={500}
           height={this.props.filterHeight}
@@ -25,11 +22,7 @@ class SubjectsList extends Component<PublishedSubjectsProps, any> {
         >
           {this.props.subjects.map((subject, i) => (
             <Grid key={i} container direction="row">
-              <Grid
-                item
-                xs={11}
-                className="filter-container subjects-indexes-box"
-              >
+              <Grid item xs={11} className="filter-container subjects-indexes-box">
                 <FormControlLabel
                   className="index-box custom-color"
                   style={{ ["color" as any]: subject.color }}

@@ -69,7 +69,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     }
 
     document.addEventListener("keydown", handleMove, false);
-    
+
     return function cleanup() {
       document.removeEventListener("keydown", handleMove, false);
     };
@@ -273,14 +273,12 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderMobileHeader = () => {
     if (state.prepExpanded) {
       return (
-        <div className="intro-header expanded-intro-header" style={{height: '6vw'}}>
+        <div className="intro-header expanded-intro-header">
           <Hidden only={["sm", "md", "lg", "xl"]}>
             {renderTimer()}
             <div className="flex f-align-center">
               <div className="left-brick-circle">
-                <div
-                  className="round-button"
-                  style={{ background: `${color}` }}></div>
+                <div className="round-button" style={{ background: `${color}` }}></div>
               </div>
               <h1>{brick.title}</h1>
             </div>
@@ -305,7 +303,9 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <Grid item sm={8} xs={12}>
             <div className="introduction-page" style={{paddingTop: '2.4vh'}}>
               {renderHeader()}
-              <p className="open-question"><MathInHtml value={brick.openQuestion} /></p>
+              <div className="open-question">
+                <MathInHtml value={brick.openQuestion} />
+              </div>
               <div className="intro-content">
                 {renderBriefTitle()}
                 {renderBriefExpandText()}
