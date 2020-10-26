@@ -72,11 +72,11 @@
       }
       .logout-container {
         display: flex;
+        align-items: center;
         @include phone_and_tabletP {
           margin: 0;
           width: 100% !important;
           flex-wrap: inherit !important;
-          align-items: center;
           justify-content: space-between;
         }
         @include tabletP {
@@ -85,7 +85,7 @@
           margin-left: 1vw;
           border-bottom-left-radius: 2vw;
           background: var(--theme-light-blue);
-          align-items: center;
+          jusify-content: flex-end;
         }
 
         .search-container {
@@ -93,9 +93,11 @@
           align-items: center;
           @include phone_and_tabletP {
             display: flex;
-            align-items: center;
             &.active {
-              width: 91vw;
+              width: calc(100% - 17vw);
+              margin-left: 17vw;
+              position: absolute;
+              right: 0;
             }
           }
           @include tabletP {
@@ -135,10 +137,11 @@
               color: var(--dark-gray);
               @include phone_and_tabletP {
                 font-size: 3.7vw;
-                padding: 0.7vh 0.6vw 0.7vh 9vw;
+                padding: 0.7vh 0.6vw;
               }
               @include tabletP {
                 margin: 0 0 0 1.4vw;
+                padding: 0.7vh 0.6vw 0.7vh 9vw;
                 font-size: 1.7vw;
               }
             }
