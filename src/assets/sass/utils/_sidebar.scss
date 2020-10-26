@@ -488,12 +488,12 @@
               font-family: $font-family-regular;
               margin-bottom: 0.1vh;
               width: 100%;
-              display: flex;
               @include phone_and_tabletP {
                 font-size: 3.8vw;
                 width: 75vw;
               }
               @include tabletP {
+                display: flex;
                 font-size: 0.9vw;
                 width: 19vw;
               }
