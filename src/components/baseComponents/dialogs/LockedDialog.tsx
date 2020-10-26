@@ -4,7 +4,7 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import SpriteIcon from "../SpriteIcon";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface LockedProps {
   isOpen: boolean;
