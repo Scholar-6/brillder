@@ -113,6 +113,10 @@
 .question-unique-play {
   margin-top: 1vw !important;
   margin-bottom: 1vw !important;
+  > div {
+    border-radius: 3vw;
+    overflow: hidden;
+  }
   .document-editor {
     .ck-editor {
       .ck-editor__main {
