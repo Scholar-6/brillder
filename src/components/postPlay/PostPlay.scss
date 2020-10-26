@@ -6,9 +6,8 @@
   height: 100% !important;
   background: var(--theme-dark-blue);
   color: var(--white);
-
   $book-height: 60vh;
-  $real-book-height: 63.6vh;
+  $real-book-height: 64vh;
 
   h2 {
     font-family: $font-family-bold;
@@ -19,13 +18,7 @@
   .flipped-page {
     height: 100%;
     width: 100%;
-
-    -moz-transform: scale(-1, 1);
-    -webkit-transform: scale(-1, 1);
-    -o-transform: scale(-1, 1);
-    -ms-transform: scale(-1, 1);
-    transform: scale(-1, 1);
-
+    @include scale(1);
     padding-top: 3.5vh;
     color: var(--theme-dark-blue);
 
@@ -213,7 +206,6 @@
       @extend %textCenter;
       font-family: $font-family-black;
       background: var(--tab-gray);
-
       .page-stitch {
         position: absolute;
         height: 100%;
@@ -245,37 +237,37 @@
           bottom: 7.8vh;
         }
       }
-
-      .image-background-container {
-        width: 100%;
-        @extend %flexCenter;
-        .book-image-container {
-          background: var(--white);
-          width: 25vh;
-          height: 25vh;
-          border-radius: 1vh;
+      .page-cover{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        .image-background-container {
+          width: 9vw;
+          height: 20vh;
           @extend %flexCenter;
-
-          svg {
-            height: 21.5vh;
+          margin: 8vh auto;
+          background: var(--white);
+          border-radius: 1vw;
+          padding: 1vw;
+          .svg {
+            width: 100%;
+            height: 100%;
           }
         }
-      }
-
-      .brick-title {
-        margin-top: 5vh;
-        margin-left: 1.9vw;
-        letter-spacing: 0.8vw;
-        font-size: 3.5vw;
-        text-transform: uppercase;
-        color: var(--theme-dark-blue);
-        font-size: 2vw;
-        overflow-x: hidden;
-      }
-      .names-row {
-        margin-top: 1vh;
-        font-size: 2.4vw;
-        color: var(--theme-light-blue);
+        .brick-title {
+          margin: 0 1.8vw;
+          text-transform: uppercase;
+          color: var(--theme-dark-blue);
+          font-size: 1.8vw;
+          overflow-x: hidden;
+          height: 18vh;
+        }
+        .names-row {
+          margin-bottom: 3vh;
+          font-size: 2.4vw;
+          height: 7vh;
+          color: var(--theme-light-blue);
+        }
       }
     }
 
@@ -321,7 +313,7 @@
         }
       }
     }
-    
+
 
     .page1 {
       .flipped-page {
