@@ -302,7 +302,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     try {
       let { yourBricks } = this.state;
       if (yourBricks[index] && yourBricks[index].expanded) return;
-  
+
       this.hideBricks();
       this.setState({ ...this.state });
       setTimeout(() => {
@@ -815,11 +815,11 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
                 <div className="bricks-list">{this.renderSortedMobileBricks()}</div>
               </Hidden>
             </div>
-            <Hidden only={["sm", "md", "lg", "xl"]}>
+            {/* <Hidden only={["sm", "md", "lg", "xl"]}>
               {this.renderEmptyCategory("Suggest")}
               {this.renderEmptyCategory("Top in Humanities")}
               {this.renderEmptyCategory("Top in Stem")}
-            </Hidden>
+            </Hidden> */}
             <ViewAllPagination
               pageSize={this.state.pageSize}
               sortedIndex={this.state.sortedIndex}
