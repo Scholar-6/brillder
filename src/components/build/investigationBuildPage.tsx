@@ -121,7 +121,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   // time of last autosave
   let [lastAutoSave, setLastAutoSave] = React.useState(Date.now());
 
-  const [undoRedoService, setUndoRedoService] = React.useState(UndoRedoService.instance);
+  const [undoRedoService] = React.useState(UndoRedoService.instance);
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -529,7 +529,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     prepareBrickToSave(brick, questions, synthesis);
     if (canEdit === true) {
       console.log('save brick')
-      const diff = getBrickDiff(currentBrick, brick);
+      //const diff = getBrickDiff(currentBrick, brick);
       pushDiff(brick);
       setCurrentBrick(brick);
       props.saveBrick(brick);
