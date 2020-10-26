@@ -78,36 +78,43 @@ $tile-height: 100%;
       position: absolute;
       left: 0.3vw;
       top: 0.3vw;
-      .svg {
-        .outer-circle {
-          color: var(--theme-orange-alpha5);
+      > div {
+        @extend %flexCenter;
+        @extend %radCircle;
+        position: absolute;
+        &.outer-circle {
+          background-color: var(--theme-orange-alpha5);
+          width: 100%;
+          height: 100%;
         }
-        .inner-circle {
-          color: var(--theme-orange);
+        &.inner-circle {
+          background-color: var(--theme-orange);
+          width: 50%;
+          height: 50%;
         }
         @media (prefers-color-scheme: dark) {
-          .outer-circle {
-            fill: var(--theme-orange-alpha5);
+          &.outer-circle {
+            background-color: var(--theme-orange-alpha5);
           }
-          .inner-circle {
-            fill: var(--theme-orange);
+          &.inner-circle {
+            background-color: var(--theme-orange);
           }
         }
       }
       &.has-replied {
-        .svg {
-          .outer-circle {
-            color: var(--theme-yellow-alpha5);
+        > div {
+          &.outer-circle {
+            background-color: var(--theme-yellow-alpha5);
           }
-          .inner-circle {
-            color: var(--theme-yellow);
+          &.inner-circle {
+            background-color: var(--theme-yellow);
           }
           @media (prefers-color-scheme: dark) {
-            .outer-circle {
-              fill: var(--theme-yellow-alpha5);
+            &.outer-circle {
+              background-color: var(--theme-yellow-alpha5);
             }
-            .inner-circle {
-              fill: var(--theme-yellow);
+            &.inner-circle {
+              background-color: var(--theme-yellow);
             }
           }
         }
