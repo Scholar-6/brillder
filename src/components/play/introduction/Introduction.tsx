@@ -303,7 +303,9 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <Grid item sm={8} xs={12}>
             <div className="introduction-page" style={{paddingTop: '2.4vh'}}>
               {renderHeader()}
-              <p className="open-question"><MathInHtml value={brick.openQuestion} /></p>
+              <div className="open-question">
+                <MathInHtml value={brick.openQuestion} />
+              </div>
               <div className="intro-content">
                 {renderBriefTitle()}
                 {renderBriefExpandText()}
