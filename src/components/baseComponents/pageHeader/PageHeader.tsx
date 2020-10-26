@@ -88,7 +88,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
                 !searchVisible &&
                 <HomeButton link="/home" />
               }
-              <div className={searchVisible ? "search-container active animated slideInLeft" : "search-container"}>
+              <div className={searchVisible ? "search-container active animated slideInRight" : "search-container"}>
                 <div className={searchVisible ? 'search-area active' : 'search-area'}>
                   <input
                     className="search-input"
