@@ -22,6 +22,8 @@ import UserProfilePage from '../userProfilePage/UserProfile';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
 import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';
 import PostPlay from 'components/postPlay/PostPlay';
+import Library from 'components/library/Library';
+import UserPreferencePage from 'components/userProfilePage/userPreferencePage/UserPreferencePage';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
@@ -29,14 +31,13 @@ import BuildBrickRoute from './BuildBrickRoute';
 import StudentRoute from './StudentRoute';
 import AuthRedirectRoute from './AuthRedirectRoute';
 import AllUsersRoute from './AllUsersRoute';
+import UnauthorizedRoute from './UnauthorizedRoute';
 
 import BrickWrapper from './BrickWrapper';
 
 import { setBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'components/services/zendesk';
 import map from 'components/map';
-import UserPreferencePage from 'components/userProfilePage/userPreferencePage/UserPreferencePage';
-import UnauthorizedRoute from './UnauthorizedRoute';
 
 
 const App: React.FC = () => {
@@ -96,6 +97,7 @@ const App: React.FC = () => {
         <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <UnauthorizedRoute path={map.ViewAllPage} component={ViewAll} />
 
+        <StudentRoute path="/my-library" component={Library} />
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
 
