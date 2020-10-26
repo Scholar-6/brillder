@@ -89,9 +89,7 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
       const {props} = this;
       let data = this.state.editor.getData();
       if (props.data !== data) {
-        let newData = props.data ? props.data : "";
-        this.state.editor.setData(newData);
-        this.setState({ data: newData});
+        this.state.editor.setData(props.data ? props.data : "");
       }
     }
   }
