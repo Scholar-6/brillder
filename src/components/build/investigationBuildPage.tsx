@@ -320,6 +320,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       return;
     }
     if (!canEdit) { return; }
+    if (locked) { return; }
     const updatedQuestions = questions.slice();
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, false));
 
