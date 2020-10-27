@@ -86,7 +86,15 @@ class ClassroomList extends Component<ClassroomListProps> {
         this.prepareClassItems(items, classroom);
       }
     }
-    return items.map(this.renderTeachListItem.bind(this));
+    let k = 0;
+    return items.map(item => {
+      if (item.classroom && item.assignment === null) {
+        k += 0.5;
+      } else {
+        k += 1;
+      }
+      return this.renderTeachListItem(item, k);
+    });
   }
 
   render() {

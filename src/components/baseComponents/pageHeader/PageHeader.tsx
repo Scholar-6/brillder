@@ -10,6 +10,7 @@ import BellButton from './bellButton/BellButton';
 import MoreButton from './MoreButton';
 import SpriteIcon from '../SpriteIcon';
 import { isAuthenticated } from 'model/assignment';
+import map from 'components/map';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -26,6 +27,7 @@ const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
 
 interface UsersListProps {
   searchPlaceholder: string;
+  link?: string;
   search(): void;
   searching(value: string): void;
   showDropdown(): void;
@@ -73,6 +75,8 @@ class PageHeader extends Component<UsersListProps, MyState> {
       notificationCount = this.props.notifications.length;
     }
 
+    let link = this.props.link ? this.props.link : map.MainPage;
+
     return (
       <div className="upper-part">
         <div className={!searchVisible ? "page-header" : "page-header active"}>
@@ -84,10 +88,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
                   <SpriteIcon name="help-thin" className="svg-default" />
                 </div>
               }
-              {
-                !searchVisible &&
-                <HomeButton link="/home" />
-              }
+              { !searchVisible && <HomeButton link={link} /> }
               <div className={searchVisible ? "search-container active animated slideInRight" : "search-container"}>
                 <div className={searchVisible ? 'search-area active' : 'search-area'}>
                   <input
@@ -121,7 +122,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
             </div>
           </Hidden>
           <Hidden only={['xs']} >
-            <HomeButton link="/home" />
+            <HomeButton link={link} />
             <div className="logout-container">
               <div className="search-container">
                 <div className="header-btn search-button svgOnHover" onClick={() => this.props.search()}>

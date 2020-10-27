@@ -12,7 +12,7 @@ const CloseProposalDialog: React.FC<CloseProposalDialogProps> = (props) => {
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
       <div className="dialog-header">
-        <div>Your changes will not be saved.<br />Exit anyway?</div>
+        <div className="text-center">Exit?</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button"
