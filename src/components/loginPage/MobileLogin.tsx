@@ -4,7 +4,7 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import Button from "@material-ui/core/Button";
 import { History } from "history";
 
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 
 import GoogleButton from "./components/GoogleButton";
@@ -46,7 +46,7 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
     setTimeout(() => {
       this.props.setLoginState(LoginState.ChooseLogin)
       setTimeout(() => {
-        this.setState({animationFinished: true});
+        this.setState({ animationFinished: true });
       }, 2200);
     }, 700);
   }
@@ -66,13 +66,11 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
       <div className="first-col">
         <div className="second-item">
           <div className="logo-box">
-            <svg
-              className="svg active logo-image mobile"
-              onClick={() => this.props.history.push(map.Login)}
-            >
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#login"} className="text-theme-orange" />
-            </svg>
+            <div className="logo-box-inner">
+              <div className="logo-image mobile">
+                <SpriteIcon name="login" className="active text-theme-orange" onClick={() => this.props.history.push(map.Login)} />
+              </div>
+            </div>
           </div>
           <form
             onSubmit={this.props.handleLoginSubmit}
@@ -116,7 +114,7 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
                   this.props.register(this.props.email, this.props.password)
                 }
               >
-                Sign up
+                Register
               </Button>
               <Button
                 variant="contained"
@@ -138,19 +136,11 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
     return (
       <div className={`first-col ${!this.state.animationFinished ? 'filled' : ''}`}>
         <div className="second-item">
-          <div
-            className={`logo-box ${
-              loginState === LoginState.ChooseLoginAnimation ? "big" : ""
-            }`}
-          >
+          <div className={`logo-box ${loginState === LoginState.ChooseLoginAnimation ? "big" : ""}`}>
             <div className="logo-box-inner">
-              <svg
-                className="svg active logo-image mobile"
-                onClick={this.props.moveToLogin}
-              >
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#logo"} className="text-theme-orange" />
-              </svg>
+              <div className="logo-image mobile">
+                <SpriteIcon name="logo" className="active text-theme-orange" onClick={this.props.moveToLogin} />
+              </div>
               <img
                 className="logo-text-image"
                 alt="text"
@@ -173,7 +163,7 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
     return (
       <Hidden only={["sm", "md", "lg", "xl"]}>
         {loginState !== LoginState.ChooseLogin &&
-        loginState !== LoginState.ChooseLoginAnimation
+          loginState !== LoginState.ChooseLoginAnimation
           ? this.renderSignInPage()
           : this.renderChooseLoginPage(loginState)}
       </Hidden>
