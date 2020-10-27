@@ -3,6 +3,55 @@
 @import "src/assets/sass/partials/extensions";
 
 .synthesis-page {
+  .top-scroll-area,
+  .bottom-scroll-area {
+    height: 5%;
+    position: absolute;
+    width: 75%;
+    display: flex;
+    justify-content: center;
+    .top-button-container,
+    .bottom-button-container {
+      width: 27vw;
+      @extend %flexCenter;
+      justify-content: flex-end;
+      position: relative;
+      padding: 0.3vw 0;
+      > button {
+        @extend %floatToCenter;
+
+        .svg {
+          $scroll-button-size: 2vw;
+          height: $scroll-button-size;
+          width: $scroll-button-size;
+
+          &.disabled {
+            color: var(--tab-gray) !important;
+          }
+        }
+      }
+    }
+    .scroll-text {
+      @extend %flexCenter;
+      span {
+        font-size: 1vw;
+        color: var(--theme-dark-blue);
+      }
+      button {
+        width: 1.1vw;
+        height: 1.1vw;
+        margin: 0 0.4vw;
+
+        > svg {
+          width: inherit;
+          height: inherit;
+        }
+      }
+    }
+  }
+  .bottom-scroll-area {
+    bottom: 1vh;
+  }
   .inner-question-type {
     $synthesis-box-width: 72.5%;
     padding: 2vw;
