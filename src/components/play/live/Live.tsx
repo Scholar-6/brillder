@@ -313,7 +313,6 @@ const LivePage: React.FC<LivePageProps> = ({
         <div className="introduction-page">
           {questions.map(renderQuestionContainer)}
         </div>
-
         <MobilePrevButton questions={questions} activeStep={activeStep} onClick={prev} />
         <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} />
       </Hidden>
