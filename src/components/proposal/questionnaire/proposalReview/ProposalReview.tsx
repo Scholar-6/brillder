@@ -71,6 +71,9 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   }
 
   handleKey(e: any) {
+    if (e.target.tagName === "INPUT") { return; }
+    if (e.target.classList.contains("ck-content")) { return; }
+
     if (this.state.bookHovered) {
       if (rightKeyPressed(e)) {
         if (this.state.bookState === BookState.TitlesPage) {
