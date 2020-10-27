@@ -320,7 +320,6 @@
     }
     .centered {
       width: 4.2vw;
-      @extend %flexCenter;
       .red-circle {
         width: 1.9vw;
         height: 1.9vw;
