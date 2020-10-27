@@ -419,3 +419,9 @@ h3 {
 .flex-center {
   @extend %flexCenter;
 }
+
+.centered {
+  @include phone_and_tabletP {
+    @extend %flexCenter;
+  }
+}
