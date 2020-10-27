@@ -128,6 +128,16 @@
       line-height: 1 !important;
     }
   }
+  @include tabletL {
+    .logo-image {
+      height: 28vh;
+      margin-bottom: -13vh;
+    }
+
+    .logo-text-image {
+      height: 6vh;
+    }
+  }
 }
 
 .second-col {
