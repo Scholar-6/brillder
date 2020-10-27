@@ -309,7 +309,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       const updatedQuestions = activateQuestionByIndex(index + 1);
       setQuestions(update(questions, { $set: updatedQuestions }));
     } else {
-      createNewQuestion();
+      history.push(map.InvestigationSynthesis(brickId));
     }
   };
   /* Changing question in build */
@@ -772,7 +772,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             </Grid>
           </Grid>
           <LastSave updated={brick.updated} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} />
-          <Route path="/build/brick/:brickId/investigation/">
+          <Route path="/build/brick/:brickId/investigation/" exact>
             <Redirect to={`/build/brick/${brick.id}/investigation/question`} />
           </Route>
           <Route path="/build/brick/:brickId/investigation/question-component">

@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .post-play-page {
   height: 100% !important;
@@ -237,18 +237,18 @@
           bottom: 7.8vh;
         }
       }
-      .page-cover{
+      .page-cover {
         height: 100%;
         display: flex;
         flex-direction: column;
         .image-background-container {
-          width: 9vw;
-          height: 20vh;
+          width: 10vw;
+          height: 10vw;
           @extend %flexCenter;
           margin: 8vh auto;
           background: var(--white);
-          border-radius: 1vw;
-          padding: 1vw;
+          border-radius: 0.4vw;
+          padding: 0.4vw;
           .svg {
             width: 100%;
             height: 100%;
@@ -271,11 +271,14 @@
       }
     }
 
-    .page1, .page3-empty, .page4-attempts {
+    .page1,
+    .page3-empty,
+    .page4-attempts {
       background: #fafafa;
     }
 
-    .page3-empty, .page4-attempts {
+    .page3-empty,
+    .page4-attempts {
       color: #d3d4d5;
     }
 
@@ -313,7 +316,6 @@
         }
       }
     }
-
 
     .page1 {
       .flipped-page {
@@ -399,7 +401,8 @@
       }
     }
 
-    .page3, .page3-cover {
+    .page3,
+    .page3-cover {
       background: #f5f5f5;
     }
 
@@ -423,7 +426,7 @@
     width: 4vh;
     top: 1.3vh;
     transform-style: preserve-3d;
-    transform: translate3d(0,0,100px) scale($scale);
+    transform: translate3d(0, 0, 100px) scale($scale);
 
     &.hidden {
       opacity: 0;
@@ -432,7 +435,6 @@
 
   //#region book animations
   .book-main-container {
-
     &.expanded {
       width: 50vw;
 
@@ -455,7 +457,8 @@
     }
 
     &.hovered {
-      .page1, .page1-cover {
+      .page1,
+      .page1-cover {
         transform: rotateY(-130deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 5;
@@ -547,7 +550,10 @@
         }
       }
 
-      .front, .front-cover, .page1-cover, .page1 {
+      .front,
+      .front-cover,
+      .page1-cover,
+      .page1 {
         transform: rotateY(-180deg) scale($scale);
       }
 
@@ -585,7 +591,8 @@
         background: #efefef;
       }
 
-      .page3-empty, .page4-attempts {
+      .page3-empty,
+      .page4-attempts {
         transform: rotateY(-178.3deg) scale($scale);
       }
 
@@ -658,7 +665,8 @@
         background: #efefef;
       }
 
-      .page3-empty, .page4-attempts {
+      .page3-empty,
+      .page4-attempts {
         transform: rotateY(-180deg) scale($scale);
       }
 

@@ -9,6 +9,8 @@ import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignP
 import { checkTeacherOrAdmin } from "components/services/brickService";
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import LabelTyping from "components/baseComponents/LabelTyping";
+import UnauthorizedText from "./UnauthorizedText";
 
 
 interface SidebarProps {
@@ -162,6 +164,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           </div>
         );
       }
+    }
+    if (!this.props.user) {
+      return <UnauthorizedText />;
     }
     return (
       <div className="sidebar-button">

@@ -93,6 +93,17 @@
         @extend %flexCenter;
         overflow: hidden;
       }
+      &.unauthorized {
+        .text-left {
+          margin-top: 1vh;
+          margin-left: 2vw;
+          margin-right: 2vw;
+          font-size: 1vw;
+        }
+        .text-left {
+          margin-top: 3vh;
+        }
+      }
     }
   }
   &.rolled-up {
