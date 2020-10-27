@@ -309,7 +309,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       const updatedQuestions = activateQuestionByIndex(index + 1);
       setQuestions(update(questions, { $set: updatedQuestions }));
     } else {
-      createNewQuestion();
+      history.push(map.InvestigationSynthesis(brickId));
     }
   };
   /* Changing question in build */
