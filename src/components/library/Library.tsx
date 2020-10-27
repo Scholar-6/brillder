@@ -11,7 +11,6 @@ import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import { getAssignedBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
-import { hideAssignments } from '../backToWorkPage/components/play/service';
 import { SortBy } from "./model";
 import { AssignmentBrick } from "model/assignment";
 
