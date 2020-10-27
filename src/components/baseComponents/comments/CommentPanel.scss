@@ -204,7 +204,6 @@ $margin-left: 21%;
     color: var(--theme-dark-blue);
     overflow: scroll;
     display: block !important;
-    height: 54vh;
     position: absolute;
     top: 21vh;
     z-index: 3;
@@ -214,7 +213,7 @@ $margin-left: 21%;
 }
 
 .question-comments-panel {
-  height: $comments-panel-height;
+  height: 100%;
   overflow: hidden;
   position: absolute;
   transition: width 0.7s ease-out;
