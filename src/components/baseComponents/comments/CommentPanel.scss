@@ -216,7 +216,12 @@ $margin-left: 21%;
 .question-comments-panel {
   height: $comments-panel-height;
   overflow: hidden;
-  position: relative;
+  position: absolute;
+  transition: width 0.7s ease-out;
+
+  &.hidden {
+    width: 0;
+  }
 
   .comments-panel {
     .comments-column-wrapper {
