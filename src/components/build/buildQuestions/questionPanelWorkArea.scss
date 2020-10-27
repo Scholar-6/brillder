@@ -249,6 +249,7 @@
       $width: calc(100% - #{$left-sidebar-width} - #{$question-build-width});
       min-width: $width;
       max-width: $width;
+      position: relative;
       height: $suggestion-sidebar-height;
       overflow: hidden;
 
