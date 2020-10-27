@@ -739,6 +739,13 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
           .direction-info {
             display: none;
           }
+          .introduction-page {
+            .intro-header {
+              h1 {
+                text-transform: capitalize !important;
+              }
+            }
+          }
         }
       }
       &.mobile-synthesis-page,
@@ -1110,10 +1117,44 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
       }
     }
   }
+  .play-preview {
+    @include phone_and_tabletP {
+      animation-name: none !important;
+    }
+  }
+  .review-page {
+    .play-preview {
+      &.mobile-next {
+        &.play-green {
+          @include phone_and_tabletP {
+            bottom: calc(10px) !important;
+            animation-name: none;
+            width: 13vw;
+            height: 13vw;
+          }
+        }
+      }
+    }
+  }
+  .mobile-synthesis-page {
+    .play-preview {
+      &.play-green {
+        @include phone_and_tabletP {
+          bottom: calc(10px) !important;
+          animation-name: none;
+          width: 13vw;
+          height: 13vw;
+        }
+      }
+    }
+  }
 }
 
 .play-preview-pages ~ .beta-text {
   color: var(--theme-dark-blue) !important;
+  @include phone_and_tabletP {
+    display: none;
+  }
 }
 
 // only stepper in play
