@@ -121,6 +121,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   async handleKey(e: any) {
+    if (e.target.tagName === "INPUT") { return; }
+    if (e.target.classList.contains("ck-content")) { return; }
+
     const {history} = this.props;
     const {pathname} = this.props.location;
     if (rightKeyPressed(e)) {

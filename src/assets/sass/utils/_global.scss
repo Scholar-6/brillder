@@ -415,3 +415,7 @@ h3 {
 .pointer {
   cursor: pointer;
 }
+
+.flex-center {
+  @extend %flexCenter;
+}
