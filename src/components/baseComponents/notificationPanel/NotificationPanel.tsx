@@ -55,6 +55,8 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         if (notification.type === NotificationType.NewCommentOnBrick) {
           if (notification.question && notification.question.id >= 1) {
             history.push(map.investigationQuestionSuggestions(brick.id, notification.question.id));
+          } else {
+            history.push(map.InvestigationSynthesis(brick.id))
           }
         } else if (notification.type === NotificationType.InvitedToPlayBrick) {
           history.push(map.playIntro(brick.id));

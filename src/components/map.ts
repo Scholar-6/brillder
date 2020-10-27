@@ -10,8 +10,16 @@ export const BackToWorkLearnTab = BackToWorkPage + '/learn';
 
 export const ViewAllPage = '/play/dashboard';
 
+const investigation = (brickId: number) => {
+  return `/build/brick/${brickId}/investigation`;
+}
+
 export const InvestigationBuild = (brickId: number) => {
-  return `/build/brick/${brickId}/investigation/question-component`;
+  return `${investigation(brickId)}/question-component`;
+}
+
+export const InvestigationSynthesis = (brickId: number) => {
+  return `${investigation(brickId)}/synthesis`;
 }
 
 export const investigationBuildQuestion = (brickId: number, questionId: number) => {
@@ -85,6 +93,7 @@ export default {
   postPlay,
 
   InvestigationBuild,
+  InvestigationSynthesis,
   investigationBuildQuestion,
   investigationQuestionSuggestions,
   playPreviewIntro,
