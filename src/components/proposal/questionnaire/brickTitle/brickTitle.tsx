@@ -96,6 +96,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
   }
 
   onChange(event: React.ChangeEvent<{ value: string }>, value: string) {
+    event.stopPropagation();
     const title = event.target.value.substr(0, 40);
     this.props.saveTitles({ ...this.props.parentState, [value]: title });
   };
@@ -144,7 +145,6 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
               <Grid item className="input-container">
                 <div className="audience-inputs">
                   <Input
-                    autoFocus={true}
                     disabled={!canEdit}
                     value={parentState.title}
                     onKeyUp={e => this.moveToRef(e, RefName.subTitleRef)}
