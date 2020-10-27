@@ -123,25 +123,6 @@ const LivePage: React.FC<LivePageProps> = ({
     }, 100);
   };
 
-  const swipeLastQuestion = (step: number) => {
-    handleStep(step);
-    setSubmitAnswers(true);
-  }
-
-  /**
-   * Handle mobile swipe
-   * @param index number - could be from 0 to 1. in the end should be interger value
-   * @param status string - almost all time is "move" and in the end "end"
-   */
-  const handleSwipe = (step: number, status: string) => {
-    if (status === "move" && step === questions.length - 1) {
-      swipeLastQuestion(step);
-    }
-    if (status === "end") {
-      setActiveStep(Math.round(step));
-    }
-  }
-
   const setCurrentAnswerAttempt = () => {
     let attempt = questionRefs[activeStep].current?.getAttempt(false);
     props.updateAttempts(attempt, activeStep);

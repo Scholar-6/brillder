@@ -1,9 +1,5 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
-import Avatar from "@material-ui/core/Avatar";
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface LockedProps {
