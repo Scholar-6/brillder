@@ -73,11 +73,11 @@
     padding-top: 2vh;
     padding-bottom: 4vh;
     overflow-y: auto;
-    height: calc(100vh - 55.8vw);
     width: 48vw;
     height: calc(100vh - 12vh - 2vw - #{$page-head-height}) !important;
-    margin: 12vh 3vw 1vw 4vw;
-
+    @include tabletP {
+      margin: 12vh 3vw 1vw 4vw;
+    }
     blockquote {
       border-left: 0.3vw solid var(--tab-gray);
       padding-left: 1.8vw;
@@ -85,10 +85,10 @@
 
     @include phone_and_tabletP {
       padding: 0;
-      width: 96vw;
+      width: calc(100vw - 4vw);
       height: 100%;
-      padding-left: 2vw;
-      padding-right: 2vw;
+      margin: 2vw;
+      padding-bottom: 3vh;
     }
 
     table {
