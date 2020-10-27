@@ -720,3 +720,52 @@
   left: unset !important;
   transform: unset !important;
 }
+
+%arrow-top-bottom {
+  .top-scroll-area,
+  .bottom-scroll-area {
+    position: absolute;
+    width: 100%;
+    height: 5vh;
+    @extend %flexCenter;
+    .top-button-container,
+    .bottom-button-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      @extend %flexCenter;
+      justify-content: flex-end;
+      > button {
+        @extend %floatToCenter;
+        .svg {
+          $scroll-button-size: 2vw;
+          height: $scroll-button-size;
+          width: $scroll-button-size;
+          &.disabled {
+            color: var(--tab-gray) !important;
+          }
+        }
+      }
+    }
+    .scroll-text {
+      @extend %flexCenter;
+      @extend %flexCenter;
+      span {
+        font-size: 1vw;
+        color: var(--theme-dark-blue);
+      }
+      button {
+        width: 1.1vw;
+        height: 1.1vw;
+        margin: 0 0.4vw;
+        > svg {
+          width: inherit;
+          height: inherit;
+        }
+      }
+    }
+  }
+  .bottom-scroll-area {
+    bottom: 0;
+  }
+}

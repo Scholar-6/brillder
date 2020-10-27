@@ -419,3 +419,11 @@ h3 {
 .flex-center {
   @extend %flexCenter;
 }
+
+.centered {
+  @extend %flexCenter;
+  @include phone_and_tabletP {
+    height: auto;
+    width: 100%;
+  }
+}
