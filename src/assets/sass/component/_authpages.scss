@@ -2,13 +2,6 @@
   background: var(--theme-dark-blue);
   height: 100%;
   @extend %posRelative;
-  .centered {
-    @include phone_and_tabletP {
-      @extend %flexCenter;
-      height: auto;
-      width: 100%;
-    }
-  }
   .logo-box {
     background-color: transparent;
     @extend %flexCenter;
