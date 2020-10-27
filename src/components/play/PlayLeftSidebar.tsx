@@ -163,6 +163,15 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         );
       }
     }
+    if (!this.props.user) {
+      return (
+        <div className="sidebar-button unauthorized">
+          <div className="m-t-10 font-black">Welcome to Brillder</div>
+          <div className="text-left">You are looking at a Brick - our revolutionary interactive learning unit.</div>
+          <div className="text-left">Do the prep, play the investigation, study the synthesis and then review to score maximum points.</div>
+        </div>
+      );
+    }
     return (
       <div className="sidebar-button">
         {this.renderHightlightButton()}

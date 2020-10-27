@@ -10,6 +10,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/proposal/components/navigation/Navigation';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
+import MathInHtml from "components/play/baseComponents/MathInHtml";
 
 interface OpenQuestionProps {
   selectedQuestion: any;
@@ -25,7 +26,7 @@ const HeadComponent: React.FC<any> = ({ data }) => {
     <Grid container justify="center" className="phone-preview-component">
       <SpriteIcon name="help-circle" className={data ? "" : "big"} />
       <div className="typing-text">
-        <p>{data}</p>
+        <MathInHtml value={data} />
       </div>
     </Grid>
   );
