@@ -22,6 +22,7 @@ export enum PageEnum {
 
 interface HeaderMenuProps {
   history: any;
+  link?: string;
   user: User;
   placeholder?: string;
   page: PageEnum;
@@ -84,6 +85,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
       <div>
         <PageHeader ref={this.pageHeader}
           searchPlaceholder={placeholder}
+          link={this.props.link}
           search={() => this.props.search()}
           searching={(v: string) => this.props.searching(v)}
           showDropdown={() => this.showDropdown()}

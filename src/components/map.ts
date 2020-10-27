@@ -1,5 +1,6 @@
 export const Login = '/login';
 export const Build = '/build';
+export const MainPage = '/home';
 export const ProposalBase = `${Build}/new-brick`;
 export const BackToWorkPage = '/back-to-work';
 
@@ -65,6 +66,7 @@ export const postPlay = (brickId: number, userId: number) => {
 export default {
   Build,
   Login,
+  MainPage,
   ProposalBase,
   ProposalSubject,
   ProposalTitle,

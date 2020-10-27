@@ -213,8 +213,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0) {
       isMobileHidden = true;
     }
+    let link = map.MainPage;
+    if (!props.user) {
+      link = map.ViewAllPage;
+    }
     if (!isMobile && sidebarRolledUp) {
-      return <HomeButton link="/home" />;
+      return <HomeButton link={link} />;
     }
     if (headerHidden) {
       return <div></div>;
@@ -224,6 +228,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         isMobileHidden={isMobileHidden}
         page={PageEnum.Play}
         user={props.user}
+        link={link}
         history={props.history}
         search={search}
         searching={searching}
