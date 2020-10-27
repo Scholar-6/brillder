@@ -44,7 +44,7 @@ const TabComponent: React.FC<TabProps> = ({ isTeach, isCore, activeTab, user, se
       <div key={2} className={className} onClick={() => setTab(ActiveTab.Build)}>
         <div style={{display: 'flex'}}>
           <span>Build</span>
-          <div className={!isTeach ? 'long toggle-button' : 'centered'}>
+          <div className={!isTeach ? 'long toggle-button' : 'flex-center'}>
             <PrivateCoreToggle isCore={isCore} onSwitch={onCoreSwitch} />
           </div>
         </div>
