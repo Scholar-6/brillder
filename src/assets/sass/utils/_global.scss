@@ -421,7 +421,9 @@ h3 {
 }
 
 .centered {
+  @extend %flexCenter;
   @include phone_and_tabletP {
-    @extend %flexCenter;
+    height: auto;
+    width: 100%;
   }
 }
