@@ -201,7 +201,7 @@
       display: flex;
       @extend %flexAlignCenter;
       @include tabletP {
-        height: calc(#{$bricks-height / 6.35});
+        height: calc(#{$bricks-height / 6.35 / 2});
       }
       font-size: 1.5vw;
       text-transform: capitalize;

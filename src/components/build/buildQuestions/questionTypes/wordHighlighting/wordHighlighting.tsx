@@ -4,6 +4,7 @@ import './wordHighlighting.scss'
 import { UniqueComponentProps } from '../types';
 import { BuildWord, SpecialSymbols } from 'components/interfaces/word';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { TextareaAutosize } from '@material-ui/core';
 
 
 export enum WordMode {
@@ -21,7 +22,7 @@ export interface WordHighlightingProps extends UniqueComponentProps {
   data: WordHighlightingData;
 }
 
-export const getDefaultWordHighlightingAnswer = () => {  
+export const getDefaultWordHighlightingAnswer = () => {
   return { text: '', words: [] };
 }
 
@@ -201,10 +202,11 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
       className += " content-invalid"
     }
     return (
-      <textarea
+      <TextareaAutosize
         disabled={locked}
         className={className}
         onBlur={() => save()}
+        rowsMax={5}
         value={state.text}
         onChange={updateText}
         placeholder="Enter Words Here..."
