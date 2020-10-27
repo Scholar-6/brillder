@@ -240,9 +240,6 @@
         }
       }
       &.mobile-button-box {
-        @include phone_and_tabletP {
-          background: var(--theme-light-blue);
-        }
         .mobile-policy-text {
           position: fixed;
           bottom: 2.4vh;
@@ -250,12 +247,6 @@
           @extend %textCenter;
           font-size: 6vw;
           line-height: 1;
-          @include phone_and_tabletP {
-            color: var(--theme-dark-blue);
-          }
-          @include tabletP {
-            color: var(--white);
-          }
         }
       }
     }
@@ -333,8 +324,34 @@
           font-size: 3.6vh;
         }
       }
+      &.mobile-button-box {
+        @include phone_and_tabletP {
+          background: var(--theme-light-blue);
+        }
+        .mobile-policy-text {
+          @include phone_and_tabletP {
+            color: var(--theme-orange);
+          }
+          @include tabletP {
+            color: var(--white);
+          }
+        }
+      }
     }
     .button-box {
+      &.mobile-button-box {
+        @include phone_and_tabletP {
+          background: var(--tab-gray);
+        }
+        .mobile-policy-text {
+          @include phone_and_tabletP {
+            color: var(--theme-dark-blue);
+          }
+          @include tabletP {
+            color: var(--white);
+          }
+        }
+      }
       a,
       button {
         font-family: $font-family-regular;
