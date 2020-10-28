@@ -216,7 +216,7 @@ $margin-left: 21%;
     z-index: 3;
     width: 82%;
     margin: 0 5%;
-    max-height: 55vh;
+    max-height: 54vh;
     top: 21vh;
   }
   &.customize-panel {
@@ -234,6 +234,7 @@ $margin-left: 21%;
     }
     .comment-text {
       width: 12.5vw;
+      padding: 0.1vw;
     }
   }
 }
