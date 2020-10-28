@@ -14,7 +14,6 @@ interface NewCommentPanelProps {
 
 const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
   const [textarea] = React.useState(React.createRef() as React.RefObject<HTMLTextAreaElement>);
-
   const [text, setText] = React.useState("");
 
   const setDefaultHeight = (target: any) => {

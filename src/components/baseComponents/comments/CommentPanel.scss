@@ -13,10 +13,14 @@ $margin-left: 21%;
 
   .scroll-buttons {
     @extend %flexCenter;
+    margin-top: 6vh;
     
     svg {
       height: 2vw;
       width: 2vw;
+    }
+    .disabled {
+      color: var(--disabled-gray);
     }
   }
 
