@@ -18,7 +18,7 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
   const [text, setText] = React.useState("");
 
   const setDefaultHeight = (target: any) => {
-    target.style.height = "2vw";
+    target.style.height = "1vh";
   }
 
   const handlePostComment = () => {
@@ -39,6 +39,7 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
 
   const autoResize = ({ target }: any) => {
     setDefaultHeight(target);
+    console.log(target.scrollHeight);
     target.style.height = target.scrollHeight + "px";
   }
 

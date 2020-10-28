@@ -84,7 +84,7 @@ class UnauthorizedText extends Component<UnauthorizedTextProps, UnauthorizedText
         <LabelTyping
           className="text-left"
           start={this.state.third4Started}
-          value="score maximum points."
+          value="to score maximum points."
         />
       </div>
     );
