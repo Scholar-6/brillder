@@ -3,22 +3,26 @@
 @import "src/assets/sass/partials/extensions";
 
 .comment-text-container {
+  $radius: 0.25vw;
   @extend %flexCenter;
-  flex-direction: column;
-  // width: 92%;
-  width: 14.3vw;
+  background-color: var(--theme-green);
+  flex-wrap: wrap;
+  margin-left: 5%;
+  width:83%;
   position: absolute;
   top: 60px;
-  background-color: var(--tab-gray);
+  border-radius: $radius;
   z-index: 4;
   > div {
     width: 90%;
   }
+
   .comment-text-form {
     background-color: var(--white);
     margin: 0;
     padding: 0;
-    border-radius: 0.25vw;
+    width: 80%;
+    border-radius: $radius 0 0 $radius;
     .comment-text-entry {
       padding: 0;
       font-size: 2vh;
@@ -46,13 +50,25 @@
       padding: 0;
     }
   }
+  .comment-button-container {
+    height: 100%;
+    width: 20%;
 
-  .comment-action-buttons {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 13vw;
+    svg {
+      color: var(--white);
+      margin: auto;
+      height: 2vw;
+      width: 2vw;
+    }
+  }
+
+  &.disabled {
+    background-color: var(--disabled-gray);
+    .comment-button-container {
+      svg {
+        color: var(--tab-gray);
+      }
+    }
   }
 }
 
