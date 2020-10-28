@@ -7,12 +7,13 @@ interface BackPageTitleProps {
   sortedIndex: number;
   bricksLength: number;
   pageSize: number;
+  isRed?: boolean;
   moveBack(): void;
   moveNext(): void;
 }
 
 const BackPagePagination: React.FC<BackPageTitleProps> = ({
-  sortedIndex, bricksLength, pageSize, moveNext, moveBack
+  sortedIndex, bricksLength, pageSize, isRed, moveNext, moveBack
 }) => {
   if (bricksLength <= pageSize) {
     return <span></span>;
@@ -32,10 +33,16 @@ const BackPagePagination: React.FC<BackPageTitleProps> = ({
 
   const renderNextButton = () => {
     if (showNext) {
+      let className = 'btn btn-transparent next-button svgOnHover';
+      if (showNext) {
+        className += 'active';
+
+        if (isRed) {
+          className += ' text-theme-orange';
+        }
+      }
       return (
-        <button
-          className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
-          onClick={() => moveNext()}>
+        <button className={className} onClick={() => moveNext()}>
           <SpriteIcon name="arrow-down" className="w100 h100 active" />
         </button>
       );
