@@ -68,8 +68,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
     name: ''
   });
 
-  const [brickEditors, setBrickEditors] = React.useState(brick.editors);
-  
   let isAuthor = false;
   try {
     isAuthor = brick.author.id === user.id;

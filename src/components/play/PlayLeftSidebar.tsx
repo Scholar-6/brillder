@@ -9,7 +9,6 @@ import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignP
 import { checkTeacherOrAdmin } from "components/services/brickService";
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import LabelTyping from "components/baseComponents/LabelTyping";
 import UnauthorizedText from "./UnauthorizedText";
 
 
