@@ -250,17 +250,12 @@
     .bottom-next-button {
       bottom: 1vh;
       position: relative;
+      color: var(--gray);
       @extend %flexCenter;
       .btn {
         height: 4.7vh;
         width: 4.7vh;
         cursor: pointer;
-        .svg {
-          color: var(--gray);
-        }
-        .text-orange {
-          color: var(--theme-orange);
-        }
         &.active:hover {
           .svg {
             color: var(--theme-dark-blue);
