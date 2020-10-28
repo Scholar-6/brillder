@@ -85,6 +85,13 @@
       font-size: 1.4vw;
       font-family: $font-family-black;
     }
+    
+    .undo-button,
+    .redo-button {
+      width: 2vw;
+      height: 2vw;
+      color: var(--tab-gray);
+    }
 
     .synthesis-comments-panel:not(.hidden) {
       $comment-width: calc(100% - #{$synthesis-box-width});
