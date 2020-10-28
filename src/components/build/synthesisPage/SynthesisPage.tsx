@@ -105,6 +105,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 editOnly={this.props.editOnly}
                 data={this.state.synthesis}
                 placeholder=""
+                colorsExpanded={true}
                 toolbar={[
                   'bold', 'italic', 'fontColor',
                   'superscript', 'subscript', 'strikethrough',
