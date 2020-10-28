@@ -94,14 +94,17 @@
         overflow: hidden;
       }
       &.unauthorized {
-        .text-left {
-          margin-top: 1vh;
-          margin-left: 2vw;
-          margin-right: 2vw;
-          font-size: 1vw;
+        .first {
+          margin-top: 12vh;
+        }
+        .margin-top {
+          margin-top: 3vh;
         }
         .text-left {
-          margin-top: 3vh;
+          width: 76%;
+          margin-left: 2vw;
+          margin-right: 2vw;
+          font-size: 1.1vw;
         }
       }
     }
