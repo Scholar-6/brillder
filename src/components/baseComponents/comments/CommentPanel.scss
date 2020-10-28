@@ -222,10 +222,10 @@ $margin-left: 21%;
     margin: 0 5%;
     max-height: 54vh;
     @include desktop {
-      top: 24vh;
+      top: 17vh;
     }
     @include ex-desktop_wide_hd {
-      top: 21vh;
+      top: 17vh;
     }
   }
   &.customize-panel {

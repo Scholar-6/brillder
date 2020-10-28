@@ -53,6 +53,7 @@
   .comment-button-container {
     height: 100%;
     width: 20%;
+    cursor: pointer;
 
     svg {
       color: var(--white);
@@ -65,6 +66,7 @@
   &.disabled {
     background-color: var(--disabled-gray);
     .comment-button-container {
+      cursor: inherit;
       svg {
         color: var(--tab-gray);
       }

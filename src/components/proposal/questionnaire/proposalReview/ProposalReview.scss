@@ -525,6 +525,11 @@
   .book-main-container {
     .comment-text-container {
       width: 82% !important;
+      textarea {
+        padding-left: 5% !important;
+        padding-right: 5% !important;
+        width: 90% !important;
+      }
     }
     .comment-text {
      width: auto !important;
