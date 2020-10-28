@@ -18,7 +18,7 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
   const [text, setText] = React.useState("");
 
   const setDefaultHeight = (target: any) => {
-    target.style.height = "1vh";
+    target.style.height = "3vh";
   }
 
   const handlePostComment = () => {
