@@ -86,11 +86,10 @@
       font-family: $font-family-black;
     }
 
-    .comment-panel-container {
+    .synthesis-comments-panel:not(.hidden) {
       $comment-width: calc(100% - #{$synthesis-box-width});
       flex-basis: 250px;
-      min-width: $comment-width;
-      max-width: $comment-width;
+      width: $comment-width;
     }
     .comment-panel-container {
       position: relative;

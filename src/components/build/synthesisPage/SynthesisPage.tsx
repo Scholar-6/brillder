@@ -9,6 +9,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { Brick } from 'model/brick';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import CommentButton from '../baseComponents/commentButton/CommentButton';
 
 
 export interface SynthesisProps {
@@ -24,6 +25,7 @@ interface SynthesisState {
   scrollArea: any;
   canScroll: boolean;
   ref: React.RefObject<HTMLDivElement>;
+  commentsShown: boolean;
 }
 
 class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
@@ -33,7 +35,8 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
       synthesis: props.synthesis,
       canScroll: false,
       scrollArea: null,
-      ref: React.createRef() as React.RefObject<HTMLDivElement>
+      ref: React.createRef() as React.RefObject<HTMLDivElement>,
+      commentsShown: false
     }
   }
 
@@ -69,6 +72,10 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
     }
   }
 
+  setCommentsShown(commentsShown: boolean) {
+    this.setState({ ...this.state, commentsShown })
+  }
+
   componentDidUpdate() {
     if (this.props.locked) {
       this.setState({ ...this.state, synthesis: this.props.synthesis });
@@ -88,6 +95,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
 
   render() {
     const {canScroll} = this.state;
+
     return (
       <div className="question-type synthesis-page">
         <div className="top-scroll-area">
@@ -117,10 +125,24 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 onChange={this.onSynthesisChange.bind(this)}
               />
             </Grid>
-            <Grid className="comment-panel-container" item>
+            { !this.state.commentsShown &&
+              <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
+                <Grid container item direction="column" alignItems="center" style={{ height: '100%' }}>
+                  <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
+                    <CommentButton
+                      location={CommentLocation.Synthesis}
+                      setCommentsShown={this.setCommentsShown.bind(this)}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+            }
+            <Grid className={`synthesis-comments-panel ${!this.state.commentsShown && "hidden"}`} item>
               <CommentPanel
                 currentLocation={CommentLocation.Synthesis}
                 currentBrick={this.props.currentBrick}
+                setCommentsShown={this.setCommentsShown.bind(this)}
+                haveBackButton={true}
               />
             </Grid>
           </Grid>
