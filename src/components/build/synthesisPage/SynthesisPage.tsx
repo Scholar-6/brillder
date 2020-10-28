@@ -9,6 +9,8 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { Brick } from 'model/brick';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import CommentButton from '../baseComponents/commentButton/CommentButton';
+import UndoRedoService from 'components/services/UndoRedoService';
 
 
 export interface SynthesisProps {
@@ -16,7 +18,10 @@ export interface SynthesisProps {
   locked: boolean;
   editOnly: boolean;
   synthesis: string;
-  onSynthesisChange(text: string): void
+  undoRedoService: UndoRedoService;
+  onSynthesisChange(text: string): void;
+  undo(): void;
+  redo(): void;
 }
 
 interface SynthesisState {
@@ -24,6 +29,7 @@ interface SynthesisState {
   scrollArea: any;
   canScroll: boolean;
   ref: React.RefObject<HTMLDivElement>;
+  commentsShown: boolean;
 }
 
 class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
@@ -33,7 +39,8 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
       synthesis: props.synthesis,
       canScroll: false,
       scrollArea: null,
-      ref: React.createRef() as React.RefObject<HTMLDivElement>
+      ref: React.createRef() as React.RefObject<HTMLDivElement>,
+      commentsShown: false
     }
   }
 
@@ -69,8 +76,12 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
     }
   }
 
-  componentDidUpdate() {
-    if (this.props.locked) {
+  setCommentsShown(commentsShown: boolean) {
+    this.setState({ ...this.state, commentsShown })
+  }
+
+  componentDidUpdate(prevProps: SynthesisProps) {
+    if (prevProps.synthesis !== this.props.synthesis) {
       this.setState({ ...this.state, synthesis: this.props.synthesis });
     }
   }
@@ -88,6 +99,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
 
   render() {
     const {canScroll} = this.state;
+
     return (
       <div className="question-type synthesis-page">
         <div className="top-scroll-area">
@@ -118,10 +130,38 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 onChange={this.onSynthesisChange.bind(this)}
               />
             </Grid>
-            <Grid className="comment-panel-container" item>
+            { !this.state.commentsShown &&
+              <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
+                <Grid container item direction="column" alignItems="center" style={{ height: '100%' }}>
+                  <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
+                    <Grid item container direction="row" justify="space-evenly">
+                      <button className="btn btn-transparent svgOnHover undo-button" onClick={this.props.undo}>
+                        <SpriteIcon
+                          name="undo"
+                          className={`w100 h100 active ${this.props.undoRedoService.canUndo() && "text-theme-orange"}`}
+                        />
+                      </button>
+                      <button className="btn btn-transparent svgOnHover redo-button" onClick={this.props.redo}>
+                        <SpriteIcon
+                          name="redo"
+                          className={`w100 h100 active ${this.props.undoRedoService.canRedo() && "text-theme-orange"}`}
+                        />
+                      </button>
+                    </Grid>
+                    <CommentButton
+                      location={CommentLocation.Synthesis}
+                      setCommentsShown={this.setCommentsShown.bind(this)}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+            }
+            <Grid className={`synthesis-comments-panel ${!this.state.commentsShown && "hidden"}`} item>
               <CommentPanel
                 currentLocation={CommentLocation.Synthesis}
                 currentBrick={this.props.currentBrick}
+                setCommentsShown={this.setCommentsShown.bind(this)}
+                haveBackButton={true}
               />
             </Grid>
           </Grid>
