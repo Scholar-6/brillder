@@ -1,0 +1,61 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.comment-button {
+  margin-top: 3.2vh;
+  position: relative;
+  cursor: pointer;
+  @extend %flexCenter;
+  border-radius: 50%;
+  background: var(--tab-gray);
+  min-height: 0;
+  width: $comment-button-size;
+  height: $comment-button-size;
+  .comments-icon,
+  .comments-plus,
+  .comments-count {
+    font-size: 1.8vh;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    @extend %flexCenter;
+    font-family: $font-family-bold;
+    color: var(--theme-dark-blue);
+    .svg {
+      color: var(--theme-dark-blue);
+    }
+  }
+
+  .comments-count {
+    height: $comment-button-size / 1.7;
+    width: $comment-button-size / 1.7;
+    margin-bottom: 0.51vw;
+  }
+  .comments-plus {
+    width: 100%;
+    height: 5.88vh;
+    margin-bottom: 1vw;
+    align-items: start;
+    top: 44%;
+    transform: translateY(-50%);
+  }
+  &.active,
+  &.has-replied {
+    animation: pulse1 1.5s ease infinite;
+    .comments-icon,
+    .comments-plus,
+    .comments-count {
+      color: var(--white);
+      .svg {
+        color: var(--white);
+      }
+    }
+  }
+  &.active {
+    background: var(--theme-orange);
+  }
+  &.has-replied {
+    background: var(--theme-yellow);
+  }
+}

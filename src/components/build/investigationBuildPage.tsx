@@ -145,7 +145,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     startEditing(brickId)
   }, [brickId, startEditing]);
 
-  const [currentBrick, setCurrentBrick] = React.useState(props.brick);
+  const [currentBrick, setCurrentBrick] = React.useState({ ...props.brick });
 
   const openSkipTutorial = () => {
     setSkipDialog(true);
@@ -670,7 +670,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           {renderQuestionComponent}
         </Route>
         <Route path="/build/brick/:brickId/investigation/synthesis">
-          <SynthesisPage locked={locked} editOnly={!canEdit} synthesis={synthesis} onSynthesisChange={saveSynthesis} />
+          <SynthesisPage
+            locked={locked}
+            editOnly={!canEdit}
+            synthesis={synthesis}
+            onSynthesisChange={saveSynthesis}
+            undoRedoService={undoRedoService}
+            undo={undo}
+            redo={redo}
+           />
         </Route>
       </Switch>
     );

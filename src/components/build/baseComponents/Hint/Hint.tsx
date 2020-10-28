@@ -71,6 +71,12 @@ const HintComponent: React.FC<HintProps> = ({
 
   const [state, setState] = React.useState(initState);
 
+  React.useEffect(() => {
+    if(props.value) {
+      setState({ ...state, value: props.value });
+    }
+  }, [props.value])
+
   if (state.index !== index) {
     setState(initState);
   }

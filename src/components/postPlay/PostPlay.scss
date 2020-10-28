@@ -18,7 +18,12 @@
   .flipped-page {
     height: 100%;
     width: 100%;
-    @include scale(1);
+    -moz-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
+    -o-transform: scale(-1, 1);
+    -ms-transform: scale(-1, 1);
+    transform: scale(-1, 1);
+
     padding-top: 3.5vh;
     color: var(--theme-dark-blue);
 

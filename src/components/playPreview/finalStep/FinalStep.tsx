@@ -68,8 +68,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
     name: ''
   });
 
-  const [brickEditors, setBrickEditors] = React.useState(brick.editors);
-  
   let isAuthor = false;
   try {
     isAuthor = brick.author.id === user.id;
@@ -151,6 +149,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         onClick={async () => {
           await returnToEditor(brick.id);
           props.fetchBrick(brick.id);
+          history.push(map.BackToWorkBuildTab);
         }}
       />
     )

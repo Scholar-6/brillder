@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .proposal-page {
   height: 100% !important;
@@ -226,7 +226,8 @@
         .comment-text-entry {
           min-height: 2vw;
           max-height: 6vw;
-          padding: 0.5vw;
+          margin-top: 1vh;
+          margin-bottom: 1.2vh;
         }
 
         .comments-column-wrapper {
@@ -523,6 +524,17 @@
   $width: 32vw;
 
   .book-main-container {
+    .comment-text-container {
+      width: 82% !important;
+      textarea {
+        padding-left: 5% !important;
+        padding-right: 5% !important;
+        width: 90% !important;
+      }
+    }
+    .comment-text {
+     width: auto !important;
+    }
     &.hovered {
       width: 50vw;
 
