@@ -196,7 +196,8 @@
       min-width: $width;
       max-width: $width;
       position: relative;
-      height: $suggestion-sidebar-height;
+      // height: $suggestion-sidebar-height;
+      height: 74.5vh;
       overflow: hidden;
 
       .undo-button,
@@ -350,7 +351,9 @@
         font-size: 1.05vw;
       }
       .hightlight-area {
-        line-height: 1.1;
+        // line-height: 1.1;
+        line-height: 1.45;
+        font-size: 1.05vw;
         .line {
           cursor: pointer;
           &.active {
