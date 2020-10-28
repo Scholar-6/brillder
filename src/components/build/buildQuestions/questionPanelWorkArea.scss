@@ -350,7 +350,9 @@
         font-size: 1.05vw;
       }
       .hightlight-area {
-        line-height: 1.1;
+        // line-height: 1.1;
+        line-height: 1.45;
+        font-size: 1.05vw;
         .line {
           cursor: pointer;
           &.active {

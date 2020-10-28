@@ -5,7 +5,8 @@
 .comment-text-container {
   @extend %flexCenter;
   flex-direction: column;
-  width: 92%;
+  // width: 92%;
+  width: 14.3vw;
   position: absolute;
   top: 60px;
   background-color: var(--tab-gray);
@@ -51,6 +52,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    width: 13vw;
   }
 }
 
