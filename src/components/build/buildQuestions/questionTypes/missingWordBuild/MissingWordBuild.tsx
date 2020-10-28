@@ -32,7 +32,7 @@ export interface MissingWordComponentProps extends UniqueComponentProps {
 export const getDefaultMissingWordAnswer = () => {
   const newAnswer = () => ({ value: "", checked: false });
   const newChoice = () => ({ before: "", answers: [newAnswer(), newAnswer(), newAnswer()], after: "", height: "0%" })
-  
+
   return { choices: [newChoice()] };
 }
 

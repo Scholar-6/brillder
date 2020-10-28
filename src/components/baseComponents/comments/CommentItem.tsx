@@ -52,7 +52,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
   const renderExpandedView = () => {
     return (
       <Grid container direction="column">
-        <Grid item container direction="row" style={{position: 'relative'}}>
+        <Grid item container direction="row" style={{position: 'relative', flexWrap:'nowrap'}}>
           <div style={{position: 'absolute'}} className="profile-image-container" onClick={() => setCollapsed(true)}>
             <div className={`profile-image ${props.isAuthor ? 'yellow-border' : 'red-border'}`}>
               {
@@ -109,7 +109,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
   return (
   <Grid item className="comment-container">
     <div className="comment-item-container">
-      {collapsed 
+      {collapsed
         ? renderCollapsedView()
         : renderExpandedView()
       }

@@ -110,11 +110,11 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
   }
 
   return (
-    <Grid container className="comments-panel" direction="column" alignItems="stretch">
+    <Grid container className="comments-panel customize-panel" direction="column" alignItems="stretch">
       <Grid item onClick={props.onHeaderClick}>
         <div className="comments-title">
           {renderBackButton()}
-           Suggestions
+           <span>Suggestions</span>
            {props.mode === false && <button className="btn-transparent filter-icon arrow-up" />}
         </div>
       </Grid>
