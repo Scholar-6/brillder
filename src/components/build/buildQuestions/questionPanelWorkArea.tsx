@@ -21,6 +21,7 @@ import { TextComponentObj } from './components/Text/interface';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Brick } from 'model/brick';
 import UndoRedoService from 'components/services/UndoRedoService';
+import CommentButton from '../baseComponents/commentButton/CommentButton';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -120,58 +121,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   }
   //#endregion
 
-  const getNumberOfReplies = () => {
-    const replies = props.comments?.filter(comment => (comment.question?.id ?? -1) === question.id)
-      .map(getLatestChild)
-      .sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
-    if (replies && replies.length > 0) {
-      let currentIndex = 0;
-      const latestAuthor = replies[0].author.id;
-      while (currentIndex < replies.length
-        && replies[currentIndex].author.id === latestAuthor) {
-        currentIndex += 1;
-      }
-      const isCurrentUser = latestAuthor === props.currentUser.id;
-      return isCurrentUser ? currentIndex : -currentIndex;
-    } else {
-      return 0;
-    }
-  }
-
-  const getLatestChild = (comment: Comment) => {
-    if (!comment.children || comment.children.length <= 0) {
-      return comment;
-    }
-    const replies = comment.children.sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
-    return replies[0];
-  }
-
-  const renderCommentButton = () => {
-    let numberOfReplies = getNumberOfReplies();
-    if (numberOfReplies !== 0) {
-      return (
-        <div className={"comment-button " + (numberOfReplies > 0 ? "has-replied" : "active") + " animated pulse-orange iteration-2 duration-1s"} onClick={() => setCommentsShown(!commentsShown)}>
-          <div className="comments-icon svgOnHover">
-            <SpriteIcon name="message-square" className="w60 h60 active" />
-          </div>
-          <div className="comments-count">
-            {numberOfReplies > 0 ? numberOfReplies : -numberOfReplies}
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div className={"comment-button"} onClick={() => setCommentsShown(!commentsShown)}>
-        <div className="comments-icon svgOnHover">
-          <SpriteIcon name="message-square" className="w60 h60 active" />
-        </div>
-        <div className="comments-plus svgOnHover">
-          <SpriteIcon name="plus" className="w60 h60 active" />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <MuiThemeProvider >
       <div className={showHelpArrow ? "build-question-page unselectable" : "build-question-page unselectable active"} style={{ width: '100%', height: '94%' }}>
@@ -263,7 +212,11 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                       />
                     </button>
                   </Grid>
-                  {renderCommentButton()}
+                  <CommentButton
+                    location={CommentLocation.Question}
+                    questionId={question.id}
+                    setCommentsShown={() => setCommentsShown(true)}
+                  />
                   <Grid container direction="row" alignItems="center">
                     <Grid container justify="center" item sm={12}>
                       <FormControl variant="outlined">
