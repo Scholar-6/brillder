@@ -252,10 +252,9 @@ $margin-left: 21%;
   height: 100%;
   overflow: hidden;
   position: absolute;
-  transition: width 0.7s ease-out;
-
+  transition: margin 0.7s ease-out;
   &.hidden {
-    width: 0;
+    margin-right: -16vw;
   }
 
   .comments-panel {
