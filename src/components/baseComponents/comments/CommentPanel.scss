@@ -273,6 +273,33 @@ $margin-left: 21%;
   }
 }
 
+.synthesis-comments-panel {
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  transition: width 0.7s ease-out;
+  right: 0;
+  width: 100%;
+
+  &.hidden {
+    width: 0;
+  }
+
+  .comments-panel {
+    .comments-title {
+      @extend %displayFlex;
+      @extend %flexAlignCenter;
+    }
+    .comments-column-wrapper {
+      bottom: 0;
+      width: 100%;
+      overflow: scroll;
+      flex-grow: 1;
+      align-items: center;
+    }
+  }
+}
+
 .break-word {
   word-break: break-word;
 }
