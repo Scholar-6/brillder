@@ -110,11 +110,15 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
   }
 
   const scrollUp = () => {
-    
+    if (scrollArea.current) {
+      scrollArea.current.scrollBy(0, -window.screen.height / 30);
+    }
   }
 
   const scrollDown = () => {
-
+    if (scrollArea.current) {
+      scrollArea.current.scrollBy(0, window.screen.height / 30);
+    }
   }
 
   const renderBackButton = () => {
