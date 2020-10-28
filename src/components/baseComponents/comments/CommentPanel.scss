@@ -50,6 +50,7 @@ $margin-left: 21%;
     border-radius: 1.2vh;
     background-color: #ffffff;
     font-size: 1vw;
+    @extend %posRelative;
     .profile-image-container {
       @extend %flexCenter;
       // width: $margin-left;
@@ -99,15 +100,18 @@ $margin-left: 21%;
       // top: 0;
       // right: 0;
       @extend %flexCenter;
-      .svg {
-        stroke-width: 2;
-        @extend %removePosition;
+      > button {
         height: 1.3vw;
         width: 1.3vw;
-      }
-      > button {
         border: 0;
         background-color: transparent;
+        padding: 0;
+        .svg {
+          stroke-width: 2;
+          @extend %removePosition;
+          height: 100%;
+          width: 100%;
+        }
         &.message-button {
           .svg {
             color: var(--theme-dark-blue);
@@ -217,7 +221,12 @@ $margin-left: 21%;
     width: 82%;
     margin: 0 5%;
     max-height: 54vh;
-    top: 21vh;
+    @include desktop {
+      top: 24vh;
+    }
+    @include ex-desktop_wide_hd {
+      top: 21vh;
+    }
   }
   &.customize-panel {
     .comments-title {

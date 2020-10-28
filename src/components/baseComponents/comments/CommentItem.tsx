@@ -69,14 +69,19 @@ const CommentItem: React.FC<CommentItemProps> = props => {
           <button aria-label="reply" className="message-button svgOnHover" onClick={() => setReplyPanelShown(!replyPanelShown)}>
             <SpriteIcon name="corner-up-left" className="active" />
           </button>
-            {props.isAuthor ?
+            {props.isAuthor
+              ?
               <button
                 aria-label="delete"
                 className="cancel-button svgOnHover"
                 onClick={() => props.onDelete(props.currentBrick.id, props.comment.id)}
               >
                 <SpriteIcon name="trash-outline" className="active" />
-              </button> : <SpriteIcon name="minus-square" onClick={() => setCollapsed(true)} />
+              </button>
+              :
+              <button className="message-button svgOnHover">
+                <SpriteIcon name="minus-square" className="active" onClick={() => setCollapsed(true)} />
+              </button>
             }
           </div>
         </Grid>
