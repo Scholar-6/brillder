@@ -11,6 +11,15 @@ $margin-left: 21%;
   width: 92% !important;
   border-radius: $editor-radius 0 0 $editor-radius;
 
+  .scroll-buttons {
+    @extend %flexCenter;
+    
+    svg {
+      height: 2vw;
+      width: 2vw;
+    }
+  }
+
   .comments-title {
     position: relative;
     @extend %textCenter;

@@ -123,8 +123,12 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
           currentQuestionId={props.currentQuestionId}
           currentBrick={props.currentBrick}
           createComment={props.createComment}
-          currentLocation={props.currentLocation} />
+          currentLocation={props.currentLocation}
+        />
       </Grid>
+      <div className="scroll-buttons">
+        <SpriteIcon name="arrow-up" />
+      </div>
       {renderComments()}
       <CommentDeleteDialog
         isOpen={deleteData.isOpen}

@@ -43,6 +43,7 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
         disabled={locked}
         editOnly={editOnly}
         data={data.value}
+        colorsExpanded={true}
         placeholder="Enter Question Text Here..."
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
