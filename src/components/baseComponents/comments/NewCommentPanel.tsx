@@ -1,9 +1,9 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
 import './NewCommentPanel.scss';
 
 import { Brick } from 'model/brick';
 import { CommentLocation } from 'model/comments';
+import SpriteIcon from '../SpriteIcon';
 
 interface NewCommentPanelProps {
   currentBrick: Brick;
@@ -42,20 +42,25 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
     target.style.height = target.scrollHeight + "px";
   }
 
+  let className='comment-text-container';
+  if (text === '') {
+    className += ' disabled';
+  }
+
   return (
-    <div className="comment-text-container">
-      <div>
-        <form className="comment-text-form" onSubmit={e => { e.preventDefault(); }}>
-          <textarea
-            ref={textarea}
-            className="comment-text-entry" placeholder="Add Suggestion..." value={text}
-            onChange={(evt) => setText(evt.target.value)} onInput={autoResize}
-          />
-        </form>
-      </div>
-      <div className="comment-action-buttons">
-        <Button className="comment-action-button post" onClick={() => handlePostComment()} disabled={text === ""}>POST</Button>
-        <Button className="comment-action-button cancel" onClick={() => setText("")} disabled={text === ""}>CLEAR</Button>
+    <div className={className} onClick={handlePostComment}>
+      <form className="comment-text-form" onSubmit={e => { e.preventDefault(); }}>
+        <textarea
+          ref={textarea}
+          className="comment-text-entry" placeholder="Add suggestion..." value={text}
+          onClick={(e) => e.stopPropagation()}
+          onChange={(evt) => setText(evt.target.value)} onInput={autoResize}
+        />
+      </form>
+      <div className="comment-button-container">
+        <div className="centered">
+          <SpriteIcon name="send" />
+        </div>
       </div>
     </div>
   );
