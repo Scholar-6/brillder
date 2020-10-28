@@ -149,6 +149,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         onClick={async () => {
           await returnToEditor(brick.id);
           props.fetchBrick(brick.id);
+          history.push(map.BackToWorkBuildTab);
         }}
       />
     )
