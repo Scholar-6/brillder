@@ -458,6 +458,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
         <BackPagePaginationV2
           sortedIndex={sortedIndex}
           pageSize={pageSize}
+          isRed={sortedIndex === 0}
           longestColumn={longestColumn}
           moveNext={() => this.moveThreeColumnsNext()}
           moveBack={() => this.moveThreeColumnsBack()}
@@ -468,6 +469,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       <BackPagePagination
         sortedIndex={sortedIndex}
         pageSize={pageSize+3}
+        isRed={sortedIndex === 0}
         bricksLength={finalBricks.length}
         moveNext={() => this.moveAllNext()}
         moveBack={() => this.moveAllBack()}
