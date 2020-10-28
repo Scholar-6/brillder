@@ -282,6 +282,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
         <BackPagePaginationV2
           sortedIndex={sortedIndex}
           pageSize={pageSize}
+          isRed={sortedIndex === 0}
           longestColumn={longestColumn}
           moveNext={() => this.moveThreeColumnsNext()}
           moveBack={() => this.moveThreeColumnsBack()}
@@ -292,6 +293,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
       <BackPagePagination
         sortedIndex={sortedIndex}
         pageSize={pageSize}
+        isRed={sortedIndex === 0}
         bricksLength={this.state.finalAssignments.length}
         moveNext={() => this.moveNext()}
         moveBack={() => this.moveBack()}

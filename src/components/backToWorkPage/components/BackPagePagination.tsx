@@ -35,10 +35,10 @@ const BackPagePagination: React.FC<BackPageTitleProps> = ({
     if (showNext) {
       let className = 'btn btn-transparent next-button svgOnHover';
       if (showNext) {
-        className += 'active';
+        className += ' active';
 
         if (isRed) {
-          className += ' text-theme-orange';
+          className += ' text-orange';
         }
       }
       return (
