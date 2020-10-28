@@ -145,7 +145,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     startEditing(brickId)
   }, [brickId, startEditing]);
 
-  const [currentBrick, setCurrentBrick] = React.useState(props.brick);
+  const [currentBrick, setCurrentBrick] = React.useState({ ...props.brick });
 
   const openSkipTutorial = () => {
     setSkipDialog(true);
