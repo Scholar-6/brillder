@@ -113,7 +113,6 @@ const HintComponent: React.FC<HintProps> = ({
             disabled={locked}
             editOnly={editOnly}
             data={state.value}
-            colorsExpanded={true}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
               'mathType', 'chemType', 'insertTable', 'uploadImageCustom'
@@ -151,7 +150,6 @@ const HintComponent: React.FC<HintProps> = ({
             disabled={locked}
             editOnly={editOnly}
             data={state.list[i]}
-            colorsExpanded={true}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
               'mathType', 'chemType', 'imageUploadCustom'

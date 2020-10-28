@@ -32,7 +32,6 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, ...
         disabled={locked}
         data={data.value}
         placeholder=""
-        colorsExpanded={true}
         toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
         validationRequired={props.validationRequired}
         onBlur={() => props.save()}
