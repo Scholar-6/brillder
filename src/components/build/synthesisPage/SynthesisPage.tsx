@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Brick } from 'model/brick';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import CommentButton from '../baseComponents/commentButton/CommentButton';
+import UndoRedoService from 'components/services/UndoRedoService';
 
 
 export interface SynthesisProps {
@@ -17,7 +18,10 @@ export interface SynthesisProps {
   locked: boolean;
   editOnly: boolean;
   synthesis: string;
-  onSynthesisChange(text: string): void
+  undoRedoService: UndoRedoService;
+  onSynthesisChange(text: string): void;
+  undo(): void;
+  redo(): void;
 }
 
 interface SynthesisState {
@@ -76,8 +80,8 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
     this.setState({ ...this.state, commentsShown })
   }
 
-  componentDidUpdate() {
-    if (this.props.locked) {
+  componentDidUpdate(prevProps: SynthesisProps) {
+    if (prevProps.synthesis !== this.props.synthesis) {
       this.setState({ ...this.state, synthesis: this.props.synthesis });
     }
   }
@@ -129,6 +133,20 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
               <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
                 <Grid container item direction="column" alignItems="center" style={{ height: '100%' }}>
                   <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
+                    <Grid item container direction="row" justify="space-evenly">
+                      <button className="btn btn-transparent svgOnHover undo-button" onClick={this.props.undo}>
+                        <SpriteIcon
+                          name="undo"
+                          className={`w100 h100 active ${this.props.undoRedoService.canUndo() && "text-theme-orange"}`}
+                        />
+                      </button>
+                      <button className="btn btn-transparent svgOnHover redo-button" onClick={this.props.redo}>
+                        <SpriteIcon
+                          name="redo"
+                          className={`w100 h100 active ${this.props.undoRedoService.canRedo() && "text-theme-orange"}`}
+                        />
+                      </button>
+                    </Grid>
                     <CommentButton
                       location={CommentLocation.Synthesis}
                       setCommentsShown={this.setCommentsShown.bind(this)}

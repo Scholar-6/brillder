@@ -670,7 +670,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           {renderQuestionComponent}
         </Route>
         <Route path="/build/brick/:brickId/investigation/synthesis">
-          <SynthesisPage locked={locked} editOnly={!canEdit} synthesis={synthesis} onSynthesisChange={saveSynthesis} />
+          <SynthesisPage
+            locked={locked}
+            editOnly={!canEdit}
+            synthesis={synthesis}
+            onSynthesisChange={saveSynthesis}
+            undoRedoService={undoRedoService}
+            undo={undo}
+            redo={redo}
+           />
         </Route>
       </Switch>
     );
