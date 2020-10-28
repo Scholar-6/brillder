@@ -17,7 +17,9 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
   const [text, setText] = React.useState("");
 
   const setDefaultHeight = (target: any) => {
-    target.style.height = "3vh";
+    try {
+      target.style.height = "3vh";
+    } catch {}
   }
 
   const handlePostComment = () => {
@@ -38,8 +40,9 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
 
   const autoResize = ({ target }: any) => {
     setDefaultHeight(target);
-    console.log(target.scrollHeight);
-    target.style.height = target.scrollHeight + "px";
+    try {
+      target.style.height = target.scrollHeight + "px";
+    } catch {}
   }
 
   let className='comment-text-container';
@@ -49,7 +52,7 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
 
   return (
     <div className={className} onClick={handlePostComment}>
-      <form className="comment-text-form" onSubmit={e => { e.preventDefault(); }}>
+      <form className="comment-text-form" onClick={e => {e.stopPropagation()}} onSubmit={e => { e.preventDefault(); }}>
         <textarea
           ref={textarea}
           className="comment-text-entry" placeholder="Add suggestion..." value={text}
