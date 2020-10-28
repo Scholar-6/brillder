@@ -196,7 +196,8 @@
       min-width: $width;
       max-width: $width;
       position: relative;
-      height: $suggestion-sidebar-height;
+      // height: $suggestion-sidebar-height;
+      height: 74.5vh;
       overflow: hidden;
 
       .undo-button,
