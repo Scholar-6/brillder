@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .proposal-page {
   height: 100% !important;
@@ -523,6 +523,12 @@
   $width: 32vw;
 
   .book-main-container {
+    .comment-text-container {
+      width: 92% !important;
+    }
+    .comment-text {
+     width: auto !important;
+    }
     &.hovered {
       width: 50vw;
 
