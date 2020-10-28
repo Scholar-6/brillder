@@ -206,7 +206,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         disabled={locked}
         className={className}
         onBlur={() => save()}
-        rowsMax={5}
+        // rowsMax={5}
         value={state.text}
         onChange={updateText}
         placeholder="Enter Words Here..."
