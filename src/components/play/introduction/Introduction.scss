@@ -490,6 +490,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
           @include phone_and_tabletP {
             padding: 3vw;
             font-size: 4.4vw;
+            margin-top: 0 !important;
           }
           > p,
           > ul {
@@ -1130,10 +1131,8 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
       &.mobile-next {
         &.play-green {
           @include phone_and_tabletP {
-            bottom: calc(10px) !important;
+            // bottom: calc(10px) !important;
             animation-name: none;
-            width: 13vw;
-            height: 13vw;
           }
         }
       }

@@ -1,7 +1,5 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
-
 
 const LoginLogo: React.FC<any> = () => {
   return (

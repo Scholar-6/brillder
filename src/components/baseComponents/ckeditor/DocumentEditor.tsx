@@ -37,7 +37,7 @@ import SplitButtonView from "@ckeditor/ckeditor5-ui/src/dropdown/button/splitbut
 import Table from '@ckeditor/ckeditor5-table/src/table';
 // @ts-ignore
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
-
+import colors from './colors';
 
 import './DocumentEditor.scss';
 
@@ -47,6 +47,7 @@ export interface DocumentEditorProps {
   toolbar?: any;
   placeholder?: string;
   mediaEmbed?: boolean;
+  colorsExpanded?: boolean;
   defaultAlignment?: string;
   validationRequired?: boolean;
   onBlur(): void;
@@ -138,19 +139,11 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
         Table, TableToolbar
       ],
       fontColor: {
-        colors: [{
-          color: '#C43C30',
-          label: 'Red'
-        }, {
-          color: '#0681DB',
-          label: 'Blue'
-        }, {
-          color: '#30C474',
-          label: 'Green'
-        }]
+        colors: this.props.colorsExpanded ? colors.expandedColors : colors.baseColors
       },
       toolbar: [
-        'bold', 'italic', 'fontColor', 'superscript', 'insertDropDown', 'mathType', 'chemType',
+        'bold', 'italic', 'fontColor', 'superscript', 'insertDropDown',
+        'mathType', 'chemType',
         'bulletedList', 'numberedList',
       ],
       mediaEmbed: { previewsInData: true },

@@ -45,6 +45,7 @@ import Image from "@ckeditor/ckeditor5-image/src/image";
 import UpcastWriter from "@ckeditor/ckeditor5-engine/src/view/upcastwriter";
 import "./DocumentEditor.scss";
 import UploadImageCustom from './UploadImageCustom';
+import colors from './colors';
 
 export interface DocumentWEditorProps {
   disabled: boolean;
@@ -57,6 +58,7 @@ export interface DocumentWEditorProps {
   blockQuote?: boolean;
   defaultAlignment?: string;
   validationRequired?: boolean;
+  colorsExpanded?: boolean;
   onBlur(): void;
   onChange(data: string): void;
 
@@ -208,20 +210,7 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
         Image,
       ],
       fontColor: {
-        colors: [
-          {
-            color: "#C43C30",
-            label: "Red",
-          },
-          {
-            color: "#0681DB",
-            label: "Blue",
-          },
-          {
-            color: "#30C474",
-            label: "Green",
-          },
-        ],
+        colors: this.props.colorsExpanded ? colors.expandedColors : colors.baseColors
       },
       toolbar: [
         "bold",

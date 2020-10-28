@@ -258,6 +258,9 @@
         .svg {
           color: var(--gray);
         }
+        .text-orange {
+          color: var(--theme-orange);
+        }
         &.active:hover {
           .svg {
             color: var(--theme-dark-blue);

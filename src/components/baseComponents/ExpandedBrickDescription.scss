@@ -61,7 +61,7 @@
       font-family: $font-family-regular-italic;
       max-height: 4.4vh;
       margin-bottom: 1.5vh 0 1vh 0;
-      // @extend %ellipsis;
+      overflow: hidden;
     }
   }
   .hover-icons-row {
