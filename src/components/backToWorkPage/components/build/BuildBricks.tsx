@@ -45,8 +45,13 @@ class BuildBricks extends Component<BuildBricksProps> {
       let circleIcon = '';
       let iconColor = '';
       if (brick.editors && brick.editors.findIndex(e => e.id === this.props.user.id) >= 0) {
-        circleIcon="edit-outline";
+        circleIcon = "edit-outline";
         iconColor = 'text-theme-dark-blue';
+      }
+
+      //#2238 bricks returned to author have repeat icon in build
+      if (brick.status === BrickStatus.Draft && brick.editors && brick.editors.length > 0) {
+        circleIcon = "repeat";
       }
 
       if (brick.isEmptyColumn) {
