@@ -73,3 +73,15 @@ a.ck {
     }
   }
 }
+
+.ck-color-table .ck-color-table__remove-color {
+  color: var(--theme-dark-blue);
+  font-family: $font-family-regular;
+  max-width: none !important;
+  width: 11vw !important;
+  .ck-button__label {
+    max-width: none;
+    text-align: center;
+    font-size: 1vw !important;
+  }
+}
