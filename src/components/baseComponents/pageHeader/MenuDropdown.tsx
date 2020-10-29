@@ -96,6 +96,9 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         return (
           <MenuItem className="menu-item" onClick={() => move('/manage-classrooms')}>
             <span className="menu-text">Manage Classes</span>
+            <div className="btn btn-transparent svgOnHover">
+              <SpriteIcon name="manage-class" className="active text-white" />
+            </div>
           </MenuItem>
         );
       }
