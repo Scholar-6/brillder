@@ -198,6 +198,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       sortedIndex={this.state.sortedIndex}
       pageSize={this.state.assignmentPageSize}
       bricksLength={itemsCount}
+      isRed={this.state.sortedIndex === 0}
       moveNext={() => this.moveNext(assignmentPageSize)}
       moveBack={() => this.moveBack(assignmentPageSize)}
     />
@@ -219,6 +220,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       sortedIndex={this.state.sortedIndex}
       pageSize={this.state.pageSize}
       bricksLength={itemsCount}
+      isRed={this.state.sortedIndex === 0}
       moveNext={() => this.moveNext(pageSize)}
       moveBack={() => this.moveBack(pageSize)}
     />

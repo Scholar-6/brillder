@@ -187,10 +187,8 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     }
 
     return (
-      <span key={index}>
-        <span className={className} onClick={() => {toggleLight(index)}}>
-          {word.text}
-        </span>
+      <span key={index} className={className} onClick={() => {toggleLight(index)}}>
+        {word.text}
         {word.isBreakLine ? <br /> : ""}
       </span>
     );
@@ -206,7 +204,6 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         disabled={locked}
         className={className}
         onBlur={() => save()}
-        // rowsMax={5}
         value={state.text}
         onChange={updateText}
         placeholder="Enter Words Here..."
@@ -214,18 +211,44 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     );
   }
 
+  const renderIcon = () => {
+    let className = 'w100 h100 active';
+    if(state.mode) {
+      className += ' text-theme-green';
+    } else {
+      className += ' text-theme-dark-blue';
+    }
+    return <SpriteIcon name="highlighter" className={className} />;
+  }
+
+  const renderModeButton = () => {
+    let className = 'pencil-icon-container svgOnHover';
+
+    if (validationRequired) {
+      if (!state.text) {
+        className += ' content-invalid';
+      } else {
+        let isValid = state.words.find(w => w.checked);
+        if (!isValid) {
+          className += ' content-invalid';
+        }
+      }
+    }
+
+    return (
+      <div className={className} onClick={switchMode}>
+        {renderIcon()}
+      </div>
+    );
+  }
+
   return (
     <div className="word-highlight-build">
       <div className="component-title">
-        <div>Enter/Paste Text Below.</div>
-        <div>Use Highlighter Icon to click correct word(s).</div>
+        <div>Enter Text Below.</div>
+        <div>Highlight the correct word(s).</div>
       </div>
-      <div className="pencil-icon-container svgOnHover" onClick={switchMode}>
-        <SpriteIcon
-          name="highlighter"
-          className={`w100 h100 active ${state.mode ? "text-theme-green" : "text-theme-dark-blue"}`}
-        />
-      </div>
+      {renderModeButton()}
       <div className="input-container">
         {renderBox()}
       </div>

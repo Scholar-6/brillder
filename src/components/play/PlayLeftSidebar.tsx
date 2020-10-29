@@ -165,7 +165,11 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       }
     }
     if (!this.props.user) {
-      return <UnauthorizedText />;
+      if (!this.props.sidebarRolledUp) {
+        return <UnauthorizedText />;
+      } else {
+        return <div></div>;
+      }
     }
     return (
       <div className="sidebar-button">

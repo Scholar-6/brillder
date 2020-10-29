@@ -8,12 +8,13 @@ interface BackPageTitleProps {
   sortedIndex: number;
   pageSize: number;
   longestColumn: number;
+  isRed?: boolean;
   moveBack(): void;
   moveNext(): void;
 }
 
 const BackPagePaginationV2: React.FC<BackPageTitleProps> = ({
-  sortedIndex, longestColumn, pageSize, moveNext, moveBack
+  sortedIndex, longestColumn, pageSize, isRed, moveNext, moveBack
 }) => {
   pageSize = pageSize / 3;
   const showPrev = sortedIndex >= pageSize;
@@ -33,7 +34,7 @@ const BackPagePaginationV2: React.FC<BackPageTitleProps> = ({
         <Grid item xs={4} className="bottom-next-button">
           <div>
             <PrevButton isShown={showPrev} onClick={moveBack} />
-            <NextButton isShown={showNext} onClick={moveNext} />
+            <NextButton isShown={showNext} isRed={isRed} onClick={moveNext} />
           </div>
         </Grid>
       </Grid>

@@ -18,3 +18,17 @@ export const rightKeyPressed = (e: React.KeyboardEvent<HTMLInputElement | HTMLTe
   }
   return false;
 }
+
+export const upKeyPressed = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  if (e.keyCode === 38) {
+    return true;
+  }
+  return false;
+}
+
+export const downKeyPressed = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  if (e.keyCode === 40) {
+    return true;
+  }
+  return false;
+}
