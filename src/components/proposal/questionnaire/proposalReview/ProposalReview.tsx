@@ -107,7 +107,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         let wirisPopups = document.getElementsByClassName("wrs_modal_dialogContainer wrs_modal_desktop wrs_stack");
         if (wirisPopups.length === 0) {
           if (!this.state.uploading) {
-            this.setState({ bookHovered: false });
+            //this.setState({ bookHovered: false });
           }
         }
       }, 400);
@@ -396,7 +396,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                   {this.renderEditButton()}
                 </Grid>
                 <p className="text-title text-theme-dark-blue bold">Create an engaging and relevant preparatory task.</p>
-                <div className={`proposal-text text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
+                <div className={`proposal-text prep-editor text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
                   {this.state.bookHovered && this.state.bookState === BookState.PrepPage && this.renderPrepField()}
                 </div>
               </div>

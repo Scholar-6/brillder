@@ -29,6 +29,12 @@
 
   $book-height: 60vh;
 
+  .prep-page {
+    .ck-editor {
+      height: 57vh !important;
+    }
+  }
+
   .main-text-container {
     position: fixed;
     height: 100%;
@@ -203,6 +209,9 @@
           .comments-title {
             cursor: pointer;
           }
+          .scroll-buttons {
+            margin-top: 6.7vh;
+          }
         }
       }
       &.prep {
@@ -211,9 +220,17 @@
         bottom: 0;
         top: 0;
         margin-top: 3vw;
-        margin-bottom: 3vw;
+        margin-bottom: 0;
         .comments-panel {
           border-radius: $editor-radius;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+          .comments-column {
+            max-height: 59vh;
+          }
+          .scroll-buttons {
+            margin-top: 6.5vh;
+          }
         }
       }
 

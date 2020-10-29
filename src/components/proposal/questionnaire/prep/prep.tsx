@@ -35,7 +35,7 @@ const PrepPreviewComponent: React.FC<any> = ({ data }) => {
 
 const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) => {
   return (
-    <div className="tutorial-page prep-page">
+    <div className="tutorial-page prep-page-questionary">
       <Navigation
         step={ProposalStep.Prep}
         playStatus={props.playStatus}
