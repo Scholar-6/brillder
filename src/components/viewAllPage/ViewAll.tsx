@@ -761,7 +761,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
         <PageHeadWithMenu
           page={PageEnum.ViewAll}
           user={this.props.user}
-          placeholder={"Search Ongoing Projects & Published Bricks…"}
+          placeholder={"Search Subjects, Topics, Titles & more"}
           history={this.props.history}
           search={() => this.search()}
           searching={(v) => this.searching(v)}
