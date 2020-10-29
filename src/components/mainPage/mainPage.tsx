@@ -125,10 +125,14 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderCreateButton() {
+    let isActive = true;
+    if (isMobile) {
+      isActive = false;
+    }
     return (
       <div className="create-item-container" onClick={() => this.creatingBrick()}>
         <button className="btn btn-transparent zoom-item svgOnHover">
-          <SpriteIcon name="trowel-home" className="active text-theme-orange" />
+          <SpriteIcon name="trowel-home" className={isActive ? 'active text-theme-orange' : 'text-theme-light-blue'} />
           <span className="item-description">Start Building</span>
         </button>
       </div>
