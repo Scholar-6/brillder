@@ -1,14 +1,16 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .synthesis-page {
+  @extend %arrow-top-bottom;
   .inner-question-type {
+    width: 100%;
     $synthesis-box-width: 72.5%;
-    padding: 2vw;
-    padding-left: 0;
-    padding-right: 0;
-
+    margin: 5vh 0;
+    position: absolute;
+    top: 0;
+    padding: 0;
     .synthesis-input-container {
       max-width: $synthesis-box-width;
       min-width: $synthesis-box-width;
@@ -83,12 +85,18 @@
       font-size: 1.4vw;
       font-family: $font-family-black;
     }
+    
+    .undo-button,
+    .redo-button {
+      width: 2vw;
+      height: 2vw;
+      color: var(--tab-gray);
+    }
 
-    .comment-panel-container {
+    .synthesis-comments-panel:not(.hidden) {
       $comment-width: calc(100% - #{$synthesis-box-width});
       flex-basis: 250px;
-      min-width: $comment-width;
-      max-width: $comment-width;
+      width: $comment-width;
     }
     .comment-panel-container {
       position: relative;

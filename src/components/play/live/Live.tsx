@@ -24,6 +24,7 @@ import PulsingCircleNumber from "./components/PulsingCircleNumber";
 import LiveActionFooter from './components/LiveActionFooter';
 import MobileNextButton from './components/MobileNextButton';
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
+import MobilePrevButton from "./components/MobilePrevButton";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -121,25 +122,6 @@ const LivePage: React.FC<LivePageProps> = ({
       setActiveStep(step);
     }, 100);
   };
-
-  const swipeLastQuestion = (step: number) => {
-    handleStep(step);
-    setSubmitAnswers(true);
-  }
-
-  /**
-   * Handle mobile swipe
-   * @param index number - could be from 0 to 1. in the end should be interger value
-   * @param status string - almost all time is "move" and in the end "end"
-   */
-  const handleSwipe = (step: number, status: string) => {
-    if (status === "move" && step === questions.length - 1) {
-      swipeLastQuestion(step);
-    }
-    if (status === "end") {
-      setActiveStep(Math.round(step));
-    }
-  }
 
   const setCurrentAnswerAttempt = () => {
     let attempt = questionRefs[activeStep].current?.getAttempt(false);
@@ -329,18 +311,10 @@ const LivePage: React.FC<LivePageProps> = ({
           </div>
         </div>
         <div className="introduction-page">
-          <SwipeableViews
-            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={activeStep}
-            className="swipe-view"
-            style={{ width: "100%" }}
-            onSwitching={handleSwipe}
-            onChangeIndex={handleStep}
-          >
-            {questions.map(renderQuestionContainer)}
-          </SwipeableViews>
+          {questions.map(renderQuestionContainer)}
         </div>
-        <MobileNextButton questions={questions} activeStep={activeStep} onClick={setSubmitAnswers} />
+        <MobilePrevButton questions={questions} activeStep={activeStep} onClick={prev} />
+        <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} />
       </Hidden>
       <ShuffleAnswerDialog
         isOpen={isShuffleOpen}

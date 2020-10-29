@@ -3,8 +3,13 @@
 @import 'src/assets/sass/partials/extensions';
 @import 'src/assets/sass/component/authpages';
 
-.login-page .mobile-policy-text {
-  color: var(--white);
+.login-page ~ .beta-text {
+  @include phone_and_tabletP {
+    color: var(--theme-dark-blue);
+  }
+  @include tabletP {
+    color: var(--theme-orange);
+  }
 }
 
 .choose-login-desktop {
@@ -93,15 +98,6 @@
     }
   }
 
-  .logo-image {
-    height: 28vh;
-    margin-bottom: 5vh;
-  }
-
-  .logo-text-image {
-    height: 6vh;
-  }
-
   .user-type-btn:hover {
     color: white;
     background: var(--theme-orange) !important;
@@ -132,16 +128,16 @@
       line-height: 1 !important;
     }
   }
-}
+  @include tabletL {
+    .logo-image {
+      height: 28vh;
+      margin-bottom: -13vh;
+    }
 
-.mobile-policy-text {
-  position: absolute;
-  bottom: 2.4vh;
-  width: 88vw;
-  @extend %textCenter;
-  color: var(--theme-dark-blue);
-  font-size: 6vw;
-  line-height: 1;
+    .logo-text-image {
+      height: 6vh;
+    }
+  }
 }
 
 .second-col {
@@ -178,10 +174,10 @@
     border-top-right-radius: 10vw;
     overflow: hidden;
     margin-top: 34px;
-    height: calc(61% - 60px - 34px);
+    height: calc(61% - 34px);
     display: flex;
     flex-direction: column-reverse;
-    justify-content: flex-end;
-    padding: 3vh 6vw 0;
+    justify-content: flex-end !important;
+    padding: 8vh 6vw 0;
   }
 }

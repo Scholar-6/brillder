@@ -57,11 +57,18 @@
       text-transform: uppercase;
 
       @include phone_and_tabletP {
-        font-size: 15.4vw;
+        font-size: 13.4vw;
+        display: flex;
+        flex-direction: column;
       }
 
       .profile-username {
-        font-size: 2vw;
+        @include phone_and_tabletL {
+          font-size: 5vw;
+        }
+        @include tabletL {
+          font-size: 2vw;
+        }
         letter-spacing: 0.25vw;
         margin-left: 1.08vw;
       }
@@ -115,8 +122,8 @@
           border-radius: 50%;
 
           @include phone_and_tabletP {
-            height: 30vw;
-            width: 30vw;
+            height: 35vw;
+            width: 35vw;
           }
 
           .svg {
@@ -124,8 +131,8 @@
             width: 7.8vw;
 
             @include phone_and_tabletP {
-              height: 20vw;
-              width: 20vw;
+              height: 25vw;
+              width: 25vw;
             }
           }
         }
@@ -148,8 +155,8 @@
           cursor: pointer;
           @extend %transitionAll300;
           @include phone_and_tabletP {
-            height: 12vw;
-            width: 12vw;
+            height: 13vw;
+            width: 13vw;
           }
           .MuiIconButton-label {
             margin: 0;
@@ -158,8 +165,8 @@
             width: 2vw;
             height: 2vw;
             @include phone_and_tabletP {
-              height: 7vw;
-              width: 7vw;
+              height: 8vw;
+              width: 8vw;
             }
           }
           &.remove-image {
@@ -184,6 +191,9 @@
             margin-left: 0.45vw;
             color: var(--theme-dark-blue);
             font-size: 1.5vw;
+            @include phone_and_tabletL {
+              font-size: 5vw;
+            }
           }
         }
       }
@@ -287,12 +297,31 @@
     .big-input-container {
       margin-top: 2.3vh;
       padding-left: 4.5vw;
-      width: 68.25vw;
+      @include tabletL {
+        width: 68.25vw;
+      }
+      @include phone_and_tabletL {
+
+        width: calc(100% - 4.5vw);
+      }
+      .MuiAutocomplete-root {
+        margin-bottom: 0 !important;
+      }
       .MuiAutocomplete-tag {
-        font-size: 1vw;
         font-family: $font-family-regular;
         color: var(--theme-dark-blue);
         background-color: var(--tab-gray);
+        @include phone_and_tabletL {
+          font-size: 4vw;
+        }
+        @include tabletL {
+          font-size: 1vw;
+        }
+      }
+      .MuiInputBase-input{
+        &::-webkit-input-placeholder {
+          font-size: 5;
+        }
       }
       .MuiChip-deleteIcon {
         color: var(--theme-orange);
@@ -310,17 +339,23 @@
         box-shadow: $base-shadow;
         padding-top: 0;
         padding-left: 0.65vw;
-        font-size: 1.8vw;
         max-height: 18vh;
 
-        @include phone_and_tabletP {
+        @include phone_and_tabletL {
           font-size: 4vw;
+        }
+        @include tabletL {
+          font-size: 1.8vw;
+        }
+      }
+      .MuiAutocomplete-hasPopupIcon {
+        .MuiAutocomplete-endAdornment {
+          top: 0;
         }
       }
     }
     .centered {
       width: 4.2vw;
-      @extend %flexCenter;
       .red-circle {
         width: 1.9vw;
         height: 1.9vw;

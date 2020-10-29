@@ -10,4 +10,22 @@
   .bold .MuiTypography-root {
     font-family: $font-family-bold !important;
   }
+  &.locked-dialog {
+    min-width: 30vw;
+    .dialog-header {
+      @extend %flexCenter;
+      flex-direction: column;
+      .circle-orange {
+        width: 3vw;
+        height: 3vw;
+        @extend %flexCenter;
+        @extend %radCircle;
+        padding:0.2vw;
+        .svg {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
 }

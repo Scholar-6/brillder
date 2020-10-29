@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Hidden } from "@material-ui/core";
+import { Chip, Avatar, Grid, Hidden } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import map from 'components/map';
@@ -7,7 +7,7 @@ import actions from 'redux/actions/requestFailed';
 import brickActions from 'redux/actions/brickActions';
 import "./FinalStep.scss";
 import { User } from "model/user";
-import { Brick, BrickStatus } from "model/brick";
+import { Brick, BrickStatus, Editor } from "model/brick";
 import { PlayStatus } from "components/play/model";
 import { checkAdmin, checkPublisher } from "components/services/brickService";
 import { publishBrick, returnToAuthor, returnToEditor } from "services/axios/brick";
@@ -51,6 +51,7 @@ interface FinalStepProps {
   sendToPublisherConfirmed(): void;
   sendToPublisher(brickId: number): void;
   requestFailed(e: string): void;
+  assignEditor(brick: Brick, editorIds: number[]): void;
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
@@ -66,7 +67,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     isOpen: false,
     name: ''
   });
-  
+
   let isAuthor = false;
   try {
     isAuthor = brick.author.id === user.id;
@@ -87,6 +88,14 @@ const FinalStep: React.FC<FinalStepProps> = ({
       setPublishSuccess(PublishStatus.Popup);
     } else {
       requestFailed("Can`t publish brick");
+    }
+  }
+
+  const removeEditor = async (editor: Editor) => {
+    if(brick.editors) {
+      const newEditors = brick.editors.filter(e => e.id !== editor.id);
+      await props.assignEditor(brick, newEditors.map(e => e.id));
+      props.fetchBrick(brick.id);
     }
   }
 
@@ -140,6 +149,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         onClick={async () => {
           await returnToEditor(brick.id);
           props.fetchBrick(brick.id);
+          history.push(map.BackToWorkBuildTab);
         }}
       />
     )
@@ -235,22 +245,29 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <p>
         {brick.editors && brick.editors.length > 0
-          ? brick.editors.length === 1
-            ? <span>{brick.editors[0].firstName} is editing this brick</span>
-            : <span>{brick.editors.map((e, i, editors) => {
-              if (i < editors.length - 1) {
-                return e.firstName + ' ' + e.lastName + ' and ';
-              }
-              return e.firstName + ' ' + e.lastName + ' ';
-            })} are editing this brick</span>
-          : 'Invite an editor to begin the publication process'
-        }
-      </p>
-    );
-  }
+        ? (
+          <div>
+            {brick.editors.map((e, i, editors) =>
+              <Chip
+                avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${e.profileImage}`} />}
+                label={`${e.firstName} ${e.lastName}`}
+                onDelete={brick.editors?.length === 1 ? undefined : () => removeEditor(e)}
+              />
+            )}
+            {brick.editors.length === 1
+              ? <span> is editing this brick</span>
+              : <span> are editing this brick</span>
+            }
+          </div>
+        )
+        : 'Invite an editor to begin the publication process'
+      }
+    </p>
+  );
+}
 
-  return (
-    <div>
+return (
+  <div>
       <Hidden only={['xs']}>
         <div className="brick-container final-step-page">
           <Grid container direction="row">
@@ -342,7 +359,8 @@ const mapDispatch = (dispatch: any) => ({
   fetchBrick: (brickId: number) => dispatch(brickActions.fetchBrick(brickId)),
   sendToPublisher: (brickId: number) => dispatch(brickActions.sendToPublisher(brickId)),
   sendToPublisherConfirmed: () => dispatch(brickActions.sendToPublisherConfirmed()),
-  requestFailed: (e: string) => dispatch(actions.requestFailed(e))
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+  assignEditor: (brick: any, editor: any) => dispatch(brickActions.assignEditor(brick, editor))
 });
 
 export default connect(mapState, mapDispatch)(FinalStep);

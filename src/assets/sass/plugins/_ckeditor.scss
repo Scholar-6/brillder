@@ -68,8 +68,20 @@ a.ck {
         padding: 0 !important;
       }
       .ck-button {
-        margin:0 0.2vw !important;
+        margin:0 0.14vw !important;
       }
     }
+  }
+}
+
+.ck-color-table .ck-color-table__remove-color {
+  color: var(--theme-dark-blue);
+  font-family: $font-family-regular;
+  max-width: none !important;
+  width: 11vw !important;
+  .ck-button__label {
+    max-width: none;
+    text-align: center;
+    font-size: 1vw !important;
   }
 }

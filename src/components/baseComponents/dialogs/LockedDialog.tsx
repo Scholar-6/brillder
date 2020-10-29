@@ -1,10 +1,6 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
-import Avatar from "@material-ui/core/Avatar";
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import SpriteIcon from "../SpriteIcon";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface LockedProps {
   isOpen: boolean;
@@ -18,17 +14,13 @@ const LockedDialog: React.FC<LockedProps> = props => {
       open={props.isOpen}
       onClick={props.close}
       onClose={props.close}
-      className="dialog-box link-copied-dialog"
+      className="dialog-box link-copied-dialog locked-dialog"
     >
       <div className="dialog-header">
-        <ListItem>
-          <ListItemText primary={props.label} className="bold" style={{ minWidth: '30vw' }} />
-          <ListItemAvatar>
-            <Avatar className="circle-orange">
-              <SpriteIcon name="lock" className="stroke-2 m-b-05" />
-            </Avatar>
-          </ListItemAvatar>
-        </ListItem>
+        <div className="circle-orange">
+          <SpriteIcon name="lock" className="active text-white stroke-2" />
+        </div>
+        <p className="bold">{props.label}</p>
       </div>
     </Dialog>
   );

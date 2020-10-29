@@ -18,7 +18,7 @@ const ExitButton: React.FC<InviteProps> = props => {
           className="play-preview svgOnHover roller-red"
           onClick={props.onClick}
         >
-          <SpriteIcon name="roller-home" className="w80 h80 active m-l-02" />
+          <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
         </button>
       </div>
     </div>

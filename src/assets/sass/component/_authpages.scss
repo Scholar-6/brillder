@@ -6,28 +6,80 @@
     background-color: transparent;
     @extend %flexCenter;
     @include phone_and_tabletP {
-      background-color: var(--theme-light-blue);
+      background: var(--theme-light-blue);
       height: calc(39%) !important;
       border-bottom-right-radius: 10vw;
       overflow: hidden;
+      transition: all 2000ms ease-out !important;
     }
-    .logo-image {
-      height: 20vh;
-      color: var(--theme-orange);
-
+    .logo-text-image {
       @include phone_and_tabletP {
-        height: 20vh;
+        transition: all 800ms ease-out !important;
+        width: 55vw;
+        max-height: 20vw !important;
+        opacity: 0;
       }
     }
-    .mobile {
-      display: none;
+    .logo-box-inner {
       @include phone_and_tabletP {
-        display: block;
+        transition: all 2000ms ease-out !important;
+        width: 100%;
+        height: 80%;
       }
+      .logo-image {
+        width: 100%;
+        height: 100%;
+        color: var(--theme-orange);
+        @extend %flexCenter;
+        @include phone_and_tabletP {
+        }
+        @include tabletP {
+          height: 28vh;
+          margin-bottom: 5vh;
+        }
+        .svg {
+          @include phone_and_tabletP {
+            transition: all 2000ms ease-out !important;
+            height: 100%;
+            width: 100%;
+          }
+        }
+        &.mobile {
+          display: none;
+          @include phone_and_tabletP {
+            display: block;
+          }
+        }
+      }
+    }
+    .logo-text-image {
+      height: 6vh;
     }
     .website {
       @include phone_and_tabletP {
         display: none;
+      }
+    }
+  }
+  .big {
+    @include phone_and_tabletP {
+      height: 100% !important;
+    }
+    .logo-box-inner {
+      @include phone_and_tabletP {
+        height: 90vw;
+        width: 100%;
+      }
+    }
+    .svg {
+      @include phone_and_tabletP {
+        width: 100vw;
+        height: 70vw;
+      }
+    }
+    .logo-text-image {
+      @include phone_and_tabletP {
+        opacity: 1;
       }
     }
   }
@@ -141,8 +193,10 @@
       }
     }
     .logo-box {
-      background-color: transparent;
-      height: calc(40vh - 2vh);
+      @include tabletP {
+        background-color: transparent;
+        height: calc(40vh - 2vh);
+      }
     }
     .content-box,
     .button-box {
@@ -176,6 +230,16 @@
         .button-box {
           margin-top: 0px;
           z-index: 1;
+        }
+      }
+      &.mobile-button-box {
+        .mobile-policy-text {
+          position: fixed;
+          bottom: 2.4vh;
+          width: 88vw;
+          @extend %textCenter;
+          font-size: 6vw;
+          line-height: 1;
         }
       }
     }
@@ -255,17 +319,33 @@
       }
       &.mobile-button-box {
         @include phone_and_tabletP {
-          background-color: var(--theme-light-blue) !important;
-          // hide policy-text
-          // .input-block {
-          //   &:focus-within ~ .mobile-policy-text {
-          //     display: none;
-          //   }
-          // }
+          background: var(--theme-light-blue);
+          justify-content: flex-start!important;
+        }
+        .mobile-policy-text {
+          @include phone_and_tabletP {
+            color: var(--theme-orange);
+          }
+          @include tabletP {
+            color: var(--white);
+          }
         }
       }
     }
     .button-box {
+      &.mobile-button-box {
+        @include phone_and_tabletP {
+          background: var(--tab-gray);
+        }
+        .mobile-policy-text {
+          @include phone_and_tabletP {
+            color: var(--theme-dark-blue);
+          }
+          @include tabletP {
+            color: var(--white);
+          }
+        }
+      }
       a,
       button {
         font-family: $font-family-regular;
@@ -395,50 +475,6 @@
           }
         }
       }
-    }
-  }
-}
-
-// phone
-@include phone_and_tabletP {
-  .centered {
-    @extend %flexCenter;
-    height: auto;
-    width: 100%;
-  }
-  .auth-page .logo-box {
-    background: var(--theme-light-blue) !important;
-    transition: all 2000ms ease-out !important;
-    .logo-text-image {
-      transition: all 800ms ease-out !important;
-      width: 55vw;
-      max-height: 20vw !important;
-      opacity: 0;
-    }
-    .logo-box-inner {
-      transition: all 2000ms ease-out !important;
-      width: 100%;
-      height: 80%;
-    }
-    .svg {
-      transition: all 2000ms ease-out !important;
-      max-height: 70vw;
-      height: 100%;
-      width: 100%;
-    }
-  }
-  .auth-page .big {
-    height: 100% !important;
-    .logo-box-inner {
-      height: 90vw;
-      width: 100%;
-    }
-    .svg {
-      width: 100vw;
-      height: 70vw;
-    }
-    .logo-text-image {
-      opacity: 1;
     }
   }
 }

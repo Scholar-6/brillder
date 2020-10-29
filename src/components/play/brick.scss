@@ -93,6 +93,20 @@
         @extend %flexCenter;
         overflow: hidden;
       }
+      &.unauthorized {
+        .first {
+          margin-top: 12vh;
+        }
+        .margin-top {
+          margin-top: 3vh;
+        }
+        .text-left {
+          width: 76%;
+          margin-left: 2vw;
+          margin-right: 2vw;
+          font-size: 1.1vw;
+        }
+      }
     }
   }
   &.rolled-up {

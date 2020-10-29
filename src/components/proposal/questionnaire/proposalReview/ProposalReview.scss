@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .proposal-page {
   height: 100% !important;
@@ -28,6 +28,12 @@
   }
 
   $book-height: 60vh;
+
+  .prep-page {
+    .ck-editor {
+      height: 57vh !important;
+    }
+  }
 
   .main-text-container {
     position: fixed;
@@ -161,9 +167,6 @@
         margin-top: 10vh;
         width: 50vw;
 
-        .front {
-          height: 80vh;
-        }
         .back,
         .page6,
         .page4 {
@@ -206,6 +209,18 @@
           .comments-title {
             cursor: pointer;
           }
+          .comment-text-entry {
+            min-height: 2vw;
+            max-height: 6vw;
+            margin-top: 1.4vh;
+            margin-bottom: 0vh;
+          }
+          .scroll-buttons {
+            margin-top: 6.4vh;
+          }
+          textarea::placeholder {
+            font-family: $font-family-bold !important;
+          }
         }
       }
       &.prep {
@@ -214,9 +229,26 @@
         bottom: 0;
         top: 0;
         margin-top: 3vw;
-        margin-bottom: 3vw;
+        margin-bottom: 0;
         .comments-panel {
           border-radius: $editor-radius;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+          .comment-text-entry {
+            min-height: 2vw;
+            max-height: 6vw;
+            margin-top: 1.3vh;
+            margin-bottom: 0.2vh;
+          }
+          .comments-column {
+            max-height: 59vh;
+          }
+          .scroll-buttons {
+            margin-top: 6.5vh;
+          }
+          textarea::placeholder {
+            font-family: $font-family-bold !important;
+          }
         }
       }
 
@@ -225,12 +257,6 @@
         flex-wrap: nowrap;
         width: 100%;
         margin: auto;
-
-        .comment-text-entry {
-          min-height: 2vw;
-          max-height: 6vw;
-          padding: 0.5vw;
-        }
 
         .comments-column-wrapper {
           overflow: scroll;
@@ -267,8 +293,6 @@
 
     .front,
     .back {
-      width: 30.5vw;
-      height: 63.8vh;
       background: var(--theme-dark-blue);
     }
 
@@ -528,6 +552,17 @@
   $width: 32vw;
 
   .book-main-container {
+    .comment-text-container {
+      width: 82% !important;
+      textarea {
+        padding-left: 5% !important;
+        padding-right: 5% !important;
+        width: 90% !important;
+      }
+    }
+    .comment-text {
+     width: auto !important;
+    }
     &.hovered {
       width: 50vw;
 

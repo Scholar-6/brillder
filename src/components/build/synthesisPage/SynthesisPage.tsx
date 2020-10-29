@@ -8,6 +8,9 @@ import { CommentLocation } from "model/comments";
 import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { Brick } from 'model/brick';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import CommentButton from '../baseComponents/commentButton/CommentButton';
+import UndoRedoService from 'components/services/UndoRedoService';
 
 
 export interface SynthesisProps {
@@ -15,36 +18,98 @@ export interface SynthesisProps {
   locked: boolean;
   editOnly: boolean;
   synthesis: string;
-  onSynthesisChange(text: string): void
+  undoRedoService: UndoRedoService;
+  onSynthesisChange(text: string): void;
+  undo(): void;
+  redo(): void;
 }
 
 interface SynthesisState {
   synthesis: string;
+  scrollArea: any;
+  canScroll: boolean;
+  ref: React.RefObject<HTMLDivElement>;
+  commentsShown: boolean;
 }
 
 class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
   constructor(props: SynthesisProps) {
     super(props);
     this.state = {
-      synthesis: props.synthesis
+      synthesis: props.synthesis,
+      canScroll: false,
+      scrollArea: null,
+      ref: React.createRef() as React.RefObject<HTMLDivElement>,
+      commentsShown: false
     }
   }
 
-  UNSAFE_componentWillReceiveProps(props: SynthesisProps) {
-    if (props.locked) {
-      this.setState({ ...this.state, synthesis: props.synthesis });
+  componentDidMount() {
+    const interval = setInterval(() => {
+      try {
+        let {current} = this.state.ref;
+        if (current) {
+          let scrollArea = current.getElementsByClassName("ck-content")[0];
+          let canScroll = false;
+          if (scrollArea.scrollHeight > scrollArea.clientHeight) {
+            canScroll = true;
+          }
+
+          this.setState({scrollArea, canScroll});
+          clearInterval(interval);
+        }
+      } catch {}
+    }, 100);
+  }
+
+  scrollUp() {
+    const {scrollArea} = this.state;
+    if (scrollArea) {
+      scrollArea.scrollBy(0, -100);
+    }
+  }
+
+  scrollDown() {
+    const {scrollArea} = this.state;
+    if (scrollArea) {
+      scrollArea.scrollBy(0, 100);
+    }
+  }
+
+  setCommentsShown(commentsShown: boolean) {
+    this.setState({ ...this.state, commentsShown })
+  }
+
+  componentDidUpdate(prevProps: SynthesisProps) {
+    if (prevProps.synthesis !== this.props.synthesis) {
+      this.setState({ ...this.state, synthesis: this.props.synthesis });
     }
   }
 
   onSynthesisChange(text: string) {
-    this.setState({ synthesis: text });
+    const {scrollArea} = this.state;
+    let canScroll = false;
+    if (scrollArea.scrollHeight > scrollArea.clientHeight) {
+      canScroll = true;
+    }
+
+    this.setState({ synthesis: text, canScroll });
     this.props.onSynthesisChange(text);
   }
 
   render() {
+    const {canScroll} = this.state;
+
     return (
       <div className="question-type synthesis-page">
-        <div className="inner-question-type">
+        <div className="top-scroll-area">
+          <div className="top-button-container">
+            <button className="btn btn-transparent svgOnHover" onClick={this.scrollUp.bind(this)}>
+              <SpriteIcon name="arrow-up" className={`active text-theme-orange ${!canScroll && 'disabled'}`} />
+            </button>
+          </div>
+        </div>
+        <div className="inner-question-type" ref={this.state.ref}>
           <Grid container direction="row" alignItems="stretch">
             <Grid item xs className="synthesis-input-container">
               <DocumentWirisCKEditor
@@ -52,6 +117,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 editOnly={this.props.editOnly}
                 data={this.state.synthesis}
                 placeholder=""
+                colorsExpanded={true}
                 toolbar={[
                   'bold', 'italic', 'fontColor',
                   'superscript', 'subscript', 'strikethrough',
@@ -64,13 +130,50 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 onChange={this.onSynthesisChange.bind(this)}
               />
             </Grid>
-            <Grid className="comment-panel-container" item>
+            { !this.state.commentsShown &&
+              <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
+                <Grid container item direction="column" alignItems="center" style={{ height: '100%' }}>
+                  <Grid container item justify="center" style={{ height: "24%", width: '100%', marginTop:"4.9vh" }}>
+                    <Grid item container direction="row" justify="space-between" style={{ width: "66%", paddingLeft:"1.5vw", paddingBottom:"0.2vw" }}>
+                      <button className="btn btn-transparent svgOnHover undo-button" onClick={this.props.undo}>
+                        <SpriteIcon
+                          name="undo"
+                          className={`w100 h100 active ${this.props.undoRedoService.canUndo() && "text-theme-orange"}`}
+                        />
+                      </button>
+                      <button className="btn btn-transparent svgOnHover redo-button" onClick={this.props.redo}>
+                        <SpriteIcon
+                          name="redo"
+                          className={`w100 h100 active ${this.props.undoRedoService.canRedo() && "text-theme-orange"}`}
+                        />
+                      </button>
+                    </Grid>
+                    <div style={{ marginLeft:"1.3vw"}}>
+                      <CommentButton
+                        location={CommentLocation.Synthesis}
+                        setCommentsShown={this.setCommentsShown.bind(this)}
+                      />
+                    </div>
+                  </Grid>
+                </Grid>
+              </Grid>
+            }
+            <Grid className={`synthesis-comments-panel ${!this.state.commentsShown && "hidden"}`} item>
               <CommentPanel
                 currentLocation={CommentLocation.Synthesis}
                 currentBrick={this.props.currentBrick}
+                setCommentsShown={this.setCommentsShown.bind(this)}
+                haveBackButton={true}
               />
             </Grid>
           </Grid>
+        </div>
+        <div className="bottom-scroll-area">
+          <div className="bottom-button-container">
+            <button className="btn btn-transparent svgOnHover" onClick={this.scrollDown.bind(this)}>
+              <SpriteIcon name="arrow-down" className={`active text-theme-orange ${!canScroll && 'disabled'}`} />
+            </button>
+          </div>
         </div>
       </div>
     );

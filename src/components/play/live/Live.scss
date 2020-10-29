@@ -33,4 +33,10 @@
       font-size: 4vw;
     }
   }
+  .lines-container, .words-container {
+    font-size: 1.7vw !important;
+    @include phone_and_tabletP {
+      font-size: 3.5vw !important;
+    }
+  }
 }

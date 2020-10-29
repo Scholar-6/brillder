@@ -78,15 +78,21 @@
       width: auto !important;
       margin-bottom: 3vh !important;
     }
+    .circle-blue ,
     .circle-orange {
       $circle-size: 5vw;
       height: $circle-size;
       width: $circle-size;
-      background: var(--theme-orange);
       svg {
         height: 4vw;
         width: 4vw;
       }
+    }
+    .circle-orange {
+      background: var(--theme-orange);
+    }
+    .circle-blue {
+      background: var(--theme-dark-blue);
     }
     .circle-check {
       $circle-size: 3.5vw;
@@ -184,17 +190,28 @@
       color: transparent !important;
       font-size: 1.4vw;
       margin-bottom: 1vh;
+      @include phone_and_tabletL {
+        font-size: 4vw;
+      }
+      &::after {
+        position: absolute;
+        top: 0;
+        font-size: 1.4vw;
+        width: 100%;
+        color: var(--theme-dark-blue);
+        @extend %textCenter;
+        display: block;
+        content: 'Drag Image Here | Click to Select Image';
+        font-family: $font-family-regular;
+        @include phone_and_tabletL {
+          font-size: 4vw;
+        }
+      }
     }
-    .dropzone-instructions--main::after {
-      position: absolute;
-      top: 0;
-      font-size: 1.4vw;
-      width: 100%;
-      color: var(--theme-dark-blue);
-      @extend %textCenter;
-      display: block;
-      content: 'Drag Image Here | Click to Select Image';
-      font-family: $font-family-regular;
+    .dropzone-instructions--sub {
+      @include phone_and_tabletL {
+        font-size: 4vw;
+      }
     }
   }
   .dialog-footer {
@@ -266,9 +283,15 @@
         color: inherit;
 
         > div {
-          margin-bottom: 4.5vh;
           @extend %textCenter;
-          width: 30vw;
+          @include phone_and_tabletL {
+            width: 100%;
+            margin-bottom: 1.5vh;
+          }
+          @include tabletL {
+            margin-bottom: 4.5vh;
+            width: 30vw;
+          }
         }
 
         input {

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import './LineHighlightingBuild.scss'
 import { UniqueComponentProps } from '../types';
+import { TextareaAutosize } from '@material-ui/core';
 
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
@@ -103,20 +104,23 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
       className += " content-invalid"
     }
     return (
-      <textarea
+      <TextareaAutosize
         disabled={locked}
         className={className}
-        value={state.text}
         onBlur={() => save()}
-        onChange={updateText} placeholder="Enter Lines Here..." />
+        
+        value={state.text}
+        onChange={updateText}
+        placeholder="Enter Lines Here..."
+      />
     );
   }
 
   return (
     <div className="line-highlight-build">
       <div className="component-title">
-        <div>Enter/Paste Text Below.</div>
-        <div>Use Highlighter Icon to click correct line(s).</div>
+        <div>Enter Text Below.</div>
+        <div>Highlight the correct line(s).</div>
       </div>
       <div className="pencil-icon-container svgOnHover" onClick={switchMode}>
         <SpriteIcon

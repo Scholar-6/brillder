@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core";
 import NextButton from "components/baseComponents/pagination/NextButton";
 import PrevButton from "components/baseComponents/pagination/PrevButton";
 
-const DashboardPagination: React.FC<any> = ({ ...props }) => {
+const DashboardPagination: React.FC<any> = props => {
   const { pageSize, sortedIndex, bricksLength } = props;
 
   if (bricksLength <= pageSize) return <div></div>;
@@ -33,7 +33,7 @@ const DashboardPagination: React.FC<any> = ({ ...props }) => {
       <Grid container item xs={4} justify="center">
         <div className="bottom-next-button">
           <PrevButton isShown={showPrev} onClick={props.moveAllBack} />
-          <NextButton isShown={showNext} onClick={props.moveAllNext} />
+          <NextButton isShown={showNext} onClick={props.moveAllNext} isRed={sortedIndex === 0} />
         </div>
       </Grid>
     </Grid>

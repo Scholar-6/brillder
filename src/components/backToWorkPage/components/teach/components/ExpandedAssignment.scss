@@ -5,15 +5,9 @@
 .expanded-assignment {
   padding-left: 0 !important;
   padding-right: 0 !important;
-
-  .centered {
-    @extend %flexCenter;
-  }
-
   .classroom-title {
     padding-left: 1.6vw;
   }
-
   .users-table {
     $table-height: calc(64vh - 6.5vw);
     height: calc(#{$table-height} + 5vh) !important;
@@ -23,7 +17,8 @@
     .padding-left-column {
       width: 0.7vw;
     }
-    .student-status, .student-book {
+    .student-status,
+    .student-book {
       width: 2.75vw;
       > div {
         @extend %flexCenter;
@@ -80,7 +75,8 @@
         height: 2.2vw;
       }
 
-      .reminder-icon, .book-open-icon {
+      .reminder-icon,
+      .book-open-icon {
         color: white;
         stroke-width: 1.5;
         width: 1.7vw;

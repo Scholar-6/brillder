@@ -1,5 +1,6 @@
 export const Login = '/login';
 export const Build = '/build';
+export const MainPage = '/home';
 export const ProposalBase = `${Build}/new-brick`;
 export const BackToWorkPage = '/back-to-work';
 
@@ -9,8 +10,16 @@ export const BackToWorkLearnTab = BackToWorkPage + '/learn';
 
 export const ViewAllPage = '/play/dashboard';
 
+const investigation = (brickId: number) => {
+  return `/build/brick/${brickId}/investigation`;
+}
+
 export const InvestigationBuild = (brickId: number) => {
-  return `/build/brick/${brickId}/investigation/question-component`;
+  return `${investigation(brickId)}/question-component`;
+}
+
+export const InvestigationSynthesis = (brickId: number) => {
+  return `${investigation(brickId)}/synthesis`;
 }
 
 export const investigationBuildQuestion = (brickId: number, questionId: number) => {
@@ -65,6 +74,7 @@ export const postPlay = (brickId: number, userId: number) => {
 export default {
   Build,
   Login,
+  MainPage,
   ProposalBase,
   ProposalSubject,
   ProposalTitle,
@@ -83,6 +93,7 @@ export default {
   postPlay,
 
   InvestigationBuild,
+  InvestigationSynthesis,
   investigationBuildQuestion,
   investigationQuestionSuggestions,
   playPreviewIntro,

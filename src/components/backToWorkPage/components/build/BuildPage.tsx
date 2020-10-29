@@ -219,6 +219,15 @@ class BuildPage extends Component<BuildProps, BuildState> {
   toggleCore() {
     const { filters } = this.state;
     filters.isCore = !filters.isCore;
+    if (filters.isCore === false) {
+      filters.publish = true;
+      filters.viewAll = true;
+      filters.review = true;
+      filters.build = true;
+      filters.draft = true;
+    } else {
+      filters.publish = false;
+    }
     const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
     const threeColumns = prepareTreeRows(this.state.rawBricks, this.state.filters, this.props.user.id);
     this.setState({ ...this.state, sortedIndex: 0, threeColumns, filters, finalBricks });
@@ -449,6 +458,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
         <BackPagePaginationV2
           sortedIndex={sortedIndex}
           pageSize={pageSize}
+          isRed={sortedIndex === 0}
           longestColumn={longestColumn}
           moveNext={() => this.moveThreeColumnsNext()}
           moveBack={() => this.moveThreeColumnsBack()}
@@ -459,6 +469,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       <BackPagePagination
         sortedIndex={sortedIndex}
         pageSize={pageSize+3}
+        isRed={sortedIndex === 0}
         bricksLength={finalBricks.length}
         moveNext={() => this.moveAllNext()}
         moveBack={() => this.moveAllBack()}
