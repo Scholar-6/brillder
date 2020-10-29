@@ -434,7 +434,7 @@
           flex-direction: column;
         }
         @include tabletP {
-        display: grid;
+          display: grid;
           grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
           // grid-template-columns: repeat(auto-fit, 33.33%);
         }
@@ -476,15 +476,10 @@
 
           .short-brick-info {
             @extend %ellipsis;
-            @include phone_and_tabletP {
-              width: calc(100% - 4vh);
-            }
-
-            @include tabletP {
-              position: absolute;
-              top: 0.3vh;
-              left: 3vw;
-            }
+            padding-left: 3vw;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
             @extend %linkDescription;
             .link-info {
               color: var(--theme-light-blue);

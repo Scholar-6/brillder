@@ -685,10 +685,10 @@
     text-transform: uppercase;
     font-family: $font-family-bold;
     margin-bottom: 0.5vh;
-    @extend %ellipsis;
     color: var(--theme-dark-blue);
     width: calc(100% - 3vw);
     margin: 0;
+    @extend %ellipsis;
     @include phone_and_tabletP {
       font-size: 4vw;
     }
@@ -767,12 +767,11 @@
   }
   .top-scroll-area,
   .bottom-scroll-area {
-    .top-button-container ,
-    .bottom-button-container{
+    .top-button-container,
+    .bottom-button-container {
       max-width: 45%;
       min-width: 45%;
     }
-
   }
   .bottom-scroll-area {
     bottom: 0;
