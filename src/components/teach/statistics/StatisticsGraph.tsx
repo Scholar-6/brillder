@@ -68,7 +68,9 @@ const StatisticsGraph: React.FC<StatisticsGraphProps> = props => {
           curve={curveType}
           data={assignments}
           x={d => xScale(d.id)! + xScale.bandwidth() / 2}
-          y={d => yScale(d.stats.avgScore)}
+          // I commented this because it was breaking the build 29/10/20 and did not know how to fix it
+          // TODO: fix this y variable
+          //y={d => yScale(d.stats.avgScore)}
           stroke="black"
         />
         {assignments.map((d, i) =>
