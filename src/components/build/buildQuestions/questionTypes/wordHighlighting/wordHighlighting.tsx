@@ -206,11 +206,41 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         disabled={locked}
         className={className}
         onBlur={() => save()}
-        // rowsMax={5}
         value={state.text}
         onChange={updateText}
         placeholder="Enter Words Here..."
       />
+    );
+  }
+
+  const renderIcon = () => {
+    let className = 'w100 h100 active';
+    if(state.mode) {
+      className += ' text-theme-green';
+    } else {
+      className += ' text-theme-dark-blue';
+    }
+    return <SpriteIcon name="highlighter" className={className} />;
+  }
+
+  const renderModeButton = () => {
+    let className = 'pencil-icon-container svgOnHover';
+
+    if (validationRequired) {
+      if (!state.text) {
+        className += ' content-invalid';
+      } else {
+        let isValid = state.words.find(w => w.checked);
+        if (!isValid) {
+          className += ' content-invalid';
+        }
+      }
+    }
+
+    return (
+      <div className={className} onClick={switchMode}>
+        {renderIcon()}
+      </div>
     );
   }
 
@@ -220,12 +250,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         <div>Enter/Paste Text Below.</div>
         <div>Use Highlighter Icon to click correct word(s).</div>
       </div>
-      <div className="pencil-icon-container svgOnHover" onClick={switchMode}>
-        <SpriteIcon
-          name="highlighter"
-          className={`w100 h100 active ${state.mode ? "text-theme-green" : "text-theme-dark-blue"}`}
-        />
-      </div>
+      {renderModeButton()}
       <div className="input-container">
         {renderBox()}
       </div>
