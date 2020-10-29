@@ -1,0 +1,18 @@
+.desktop-version-dialog {
+  .MuiTypography-root.MuiListItemText-primary {
+    font-size: 7vw;
+  }
+  .MuiAvatar-root.MuiAvatar-circle.circle-orange.MuiAvatar-colorDefault {
+    height: 13vw;
+    width: 13vw;
+  svg {
+      height: 10vw;
+      width: 10vw;
+    }
+  }
+  .MuiListItemText-root.italic {
+    .MuiTypography-root.MuiListItemText-primary {
+      font-size: 3.5vw !important;
+    }
+  }
+}
