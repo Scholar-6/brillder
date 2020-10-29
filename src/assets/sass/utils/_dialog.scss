@@ -78,15 +78,21 @@
       width: auto !important;
       margin-bottom: 3vh !important;
     }
+    .circle-blue ,
     .circle-orange {
       $circle-size: 5vw;
       height: $circle-size;
       width: $circle-size;
-      background: var(--theme-orange);
       svg {
         height: 4vw;
         width: 4vw;
       }
+    }
+    .circle-orange {
+      background: var(--theme-orange);
+    }
+    .circle-blue {
+      background: var(--theme-dark-blue);
     }
     .circle-check {
       $circle-size: 3.5vw;

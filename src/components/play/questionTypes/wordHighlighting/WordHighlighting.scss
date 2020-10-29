@@ -10,10 +10,13 @@
       font-size: 3.5vw;
     }
     @include tabletP {
-      font-size: 1.25vw;
+      font-size: 0.7698vw;
     }
     .word {
       cursor: pointer;
+      display:inline-block;
+      max-width: 100%;
+      overflow-wrap: break-word;
     }
     .word.active {
       background: var(--white-blue);

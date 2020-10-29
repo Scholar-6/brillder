@@ -40,7 +40,20 @@ interface NotificationPanelProps {
   fetchBrick(brickId: number): Promise<void>;
 }
 
-class NotificationPanel extends Component<NotificationPanelProps> {
+interface NotificationsState {
+  scrollArea: React.RefObject<HTMLUListElement>;
+  canScroll: boolean;
+}
+
+class NotificationPanel extends Component<NotificationPanelProps, NotificationsState> {
+  constructor(props: NotificationPanelProps) {
+    super(props);
+    this.state = {
+      scrollArea: React.createRef(),
+      canScroll: false
+    }
+  }
+
   async move(notification: Notification) {
     const { history } = this.props;
     if (history) {
@@ -74,6 +87,44 @@ class NotificationPanel extends Component<NotificationPanelProps> {
           history.push(map.ProposalReview);
         }
       }
+    }
+  }
+
+  checkScroll() {
+    const {canScroll} = this.state;
+    const {current} = this.state.scrollArea;
+    if (current) {
+      if (current.scrollHeight > current.clientHeight) {
+        if (!canScroll) {
+          this.setState({canScroll: true});
+        }
+      } else {
+        if (canScroll) {
+          this.setState({canScroll: false});
+        }
+      }
+    }
+  }
+
+  componentDidMount() {
+    setTimeout(() => { this.checkScroll(); }, 200);
+  }
+
+  componentDidUpdate() {
+    setTimeout(() => { this.checkScroll(); }, 200);
+  }
+
+  scrollUp() {
+    const {current} = this.state.scrollArea;
+    if (current) {
+      current.scrollBy(0, -window.screen.height / 30);
+    }
+  }
+
+  scrollDown() {
+    const {current} = this.state.scrollArea;
+    if (current) {
+      current.scrollBy(0, window.screen.height / 30);
     }
   }
 
@@ -113,7 +164,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         onClose={this.props.handleClose}
         anchorReference={this.props.anchorElement ? "anchorEl" : "none"}
         anchorEl={this.props.anchorElement}
-        className="notification-box"
+        className={this.props.shown ? "notification-box active":"notification-box hidden"}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
@@ -124,7 +175,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         }}
       >
         <div className="notification-content">
-            <ul className="notification-list">
+            <ul className="notification-list" ref={this.state.scrollArea}>
               {/* eslint-disable-next-line */}
               {(this.props.notifications && this.props.notifications.length != 0) ? this.props.notifications.map((notification) => (
                 <li key={notification.id}>
@@ -200,6 +251,10 @@ class NotificationPanel extends Component<NotificationPanelProps> {
           {/* eslint-disable-next-line */}
           {(this.props.notifications && this.props.notifications.length != 0) &&
             <div className="clear-notification">
+              <div className="scroll-buttons">
+                <SpriteIcon name="arrow-up" onClick={this.scrollUp.bind(this)} />
+                <SpriteIcon name="arrow-down" onClick={this.scrollDown.bind(this)} />
+              </div>
               <div className="bold">Clear All</div>
               <IconButton aria-label="clear-all" onClick={() => this.markAllAsRead()}>
                 <SvgIcon>
