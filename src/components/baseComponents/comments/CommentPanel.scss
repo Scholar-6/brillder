@@ -14,7 +14,7 @@ $margin-left: 21%;
   .scroll-buttons {
     @extend %flexCenter;
     margin-top: 6vh;
-    
+
     svg {
       height: 2vw;
       width: 2vw;
@@ -105,14 +105,15 @@ $margin-left: 21%;
       width: calc(12vw - 5.2vw - 12px);
       cursor: pointer;
       h4 {
-        width: calc(9.8vw - 2.6vw  - 6px);
+        width: calc(9.8vw - 2.6vw - 6px);
+        padding-left: 0.2vw;
       }
     }
     .buttons-container {
       // position: absolute;
       // top: 0;
       // right: 0;
-      @extend %flexCenter;
+      @extend %flexToXCenter;
       > button {
         height: 1.3vw;
         width: 1.3vw;
@@ -138,9 +139,8 @@ $margin-left: 21%;
       }
     }
     .comment-date {
-      // margin-left: $margin-left;
       cursor: pointer;
-      margin-left: 2.7vw;
+      margin-left: 2.9vw;
       white-space: nowrap;
     }
 
@@ -194,12 +194,14 @@ $margin-left: 21%;
 
           .comment-author {
             margin-left: $margin-left;
+            padding-left: 0.3vw;
             flex-grow: 1;
             line-height: 1.3;
           }
         }
         .comment-date {
           margin-left: $margin-left;
+          padding-left: 0.2vw;
           line-height: 1.3;
           margin-bottom: 10px;
         }
@@ -256,7 +258,7 @@ $margin-left: 21%;
     }
     .comment-text {
       width: 12.5vw;
-      padding: 0.1vw;
+      margin-left: 0.13vw;
     }
   }
 }
