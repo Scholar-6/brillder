@@ -235,4 +235,12 @@
       }
     }
   }
+  .scroll-buttons {
+    width: 9.2vw;
+    svg {
+      cursor: pointer;
+      width: 2vw;
+      height: 2vw;
+    }
+  }
 }
