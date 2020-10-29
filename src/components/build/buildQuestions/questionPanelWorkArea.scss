@@ -284,19 +284,19 @@
         width: 100%;
         padding: 0.5vh 1%;
         min-height: 6vh;
-        font-size: 1vw;
+        font-size: 1.2vw;
         @extend %themeRadius;
         line-height: 1.45;
         background-color: var(--white);
         margin: 0;
       }
       .words-input {
-        font-size: 1.05vw;
+        font-size: 1.2vw;
       }
       .hightlight-area {
         // line-height: 1.1;
         line-height: 1.45;
-        font-size: 1.05vw;
+        font-size: 1.2vw;
         .line {
           cursor: pointer;
           &.active {
