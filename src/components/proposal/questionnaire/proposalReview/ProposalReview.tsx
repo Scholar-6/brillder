@@ -79,7 +79,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         if (this.state.bookState === BookState.TitlesPage) {
           this.toSecondPage();
         } else if (this.state.bookState === BookState.PrepPage) {
-          // save and move to build
+          this.props.saveBrick();
         }
       } else if (leftKeyPressed(e)) {
         if (this.state.bookState === BookState.PrepPage) {

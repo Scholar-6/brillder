@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import './LineHighlightingBuild.scss'
 import { UniqueComponentProps } from '../types';
+import { TextareaAutosize } from '@material-ui/core';
 
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
@@ -103,12 +104,14 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
       className += " content-invalid"
     }
     return (
-      <textarea
+      <TextareaAutosize
         disabled={locked}
         className={className}
-        value={state.text}
         onBlur={() => save()}
-        onChange={updateText} placeholder="Enter Lines Here..." />
+        value={state.text}
+        onChange={updateText}
+        placeholder="Enter Lines Here..."
+      />
     );
   }
 
