@@ -176,18 +176,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const again = () => {
-    setUnauthorized(false);
-    const parsedBrick = parseAndShuffleQuestions(props.brick);
-    setBrick(parsedBrick);
-    const initAttempts = prefillAttempts(brick.questions);
-    setStatus(PlayStatus.Live);
-    setBrickAttempt({} as BrickAttempt);
-    setAttempts(initAttempts);
-    setReviewAttempts(initAttempts);
-    setStartTime(undefined);
-    setMode(PlayMode.Normal);
-    setLiveEndTime(null as any);
-    props.history.push(`/play/brick/${brick.id}/intro`);
+    props.history.push(`/play/dashboard`);
   }
 
   const onHighlight = (name: BrickFieldNames, value: string) => {
