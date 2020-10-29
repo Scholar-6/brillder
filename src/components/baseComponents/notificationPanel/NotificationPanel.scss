@@ -3,6 +3,15 @@
 @import 'src/assets/sass/partials/extensions';
 
 .notification-box {
+  .scroll-buttons {
+    width: 9.2vw;
+    svg {
+      cursor: pointer;
+      width: 2vw;
+      height: 2vw;
+    }
+  }
+
   .MuiPaper-root {
     background: inherit;
   }
