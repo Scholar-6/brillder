@@ -365,7 +365,8 @@
     &.notification-expanded {
       width: $notification-width;
       border-bottom-left-radius: 0;
-      @extend %transitionAll300;
+      // @extend %transitionAll300;
+      transition: all 300ms ease-in;
     }
   }
 

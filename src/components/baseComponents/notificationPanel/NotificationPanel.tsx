@@ -113,7 +113,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         onClose={this.props.handleClose}
         anchorReference={this.props.anchorElement ? "anchorEl" : "none"}
         anchorEl={this.props.anchorElement}
-        className="notification-box"
+        className={this.props.shown ? "notification-box active":"notification-box hidden"}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
