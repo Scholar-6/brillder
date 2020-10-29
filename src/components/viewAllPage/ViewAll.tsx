@@ -772,17 +772,15 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           </div>
         </Hidden>
         <Grid container direction="row" className="sorted-row">
-          <Grid container item xs={3} className="sort-and-filter-container">
-            {this.props.user &&
-            <ViewAllFilter
-              sortBy={this.state.sortBy}
-              subjects={this.state.subjects}
-              isClearFilter={this.state.isClearFilter}
-              handleSortChange={e => this.handleSortChange(e)}
-              clearSubjects={() => this.clearSubjects()}
-              filterBySubject={index => this.filterBySubject(index)}
-            />}
-          </Grid>
+          <ViewAllFilter
+            user={this.props.user}
+            sortBy={this.state.sortBy}
+            subjects={this.state.subjects}
+            isClearFilter={this.state.isClearFilter}
+            handleSortChange={e => this.handleSortChange(e)}
+            clearSubjects={() => this.clearSubjects()}
+            filterBySubject={index => this.filterBySubject(index)}
+          />
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
               <div className="brick-row-title uppercase">
