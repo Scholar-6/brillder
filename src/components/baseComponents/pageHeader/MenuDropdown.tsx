@@ -112,10 +112,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         >
           <span className="menu-text">Back To Work</span>
           <div className="btn btn-transparent svgOnHover">
-            {isStudent
-              ? <SpriteIcon name="student-back-to-work" className="active text-white" />
-              : <SpriteIcon name="roller" className="active text-white" />
-            }
+            <SpriteIcon name="student-back-to-work" className="active text-white" />
           </div>
         </MenuItem>
       );
