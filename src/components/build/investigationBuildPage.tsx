@@ -14,7 +14,7 @@ import {
 } from "model/question";
 import actions from "redux/actions/brickActions";
 import { socketUpdateBrick, socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
-import { isHighlightInvalid, validateQuestion } from "./questionService/ValidateQuestionService";
+import { isHighlightInvalid, validateHint, validateQuestion } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
   getNewFirstQuestion,
@@ -36,6 +36,11 @@ import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { validateProposal } from 'components/proposal/service/validation';
+import { TextComponentObj } from "./buildQuestions/components/Text/interface";
+import { useSocket } from "socket/socket";
+import { applyBrickDiff, getBrickDiff } from "components/services/diff";
+import UndoRedoService from "components/services/UndoRedoService";
+import { Brick } from "model/brick";
 
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import PlayButton from './baseComponents/PlayButton';
@@ -48,23 +53,21 @@ import DragableTabs from "./dragTabs/dragableTabs";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
 import SynthesisPreviewComponent from "./baseComponents/phonePreview/synthesis/SynthesisPreview";
-import DeleteQuestionDialog from "./baseComponents/dialogs/DeleteQuestionDialog";
 import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
 import TutorialPhonePreview from "./tutorial/TutorialPreview";
 import YourProposalLink from './baseComponents/YourProposalLink';
+import TutorialLabels from './baseComponents/TutorialLabels';
+import PageLoader from "components/baseComponents/loaders/pageLoader";
+
+import DeleteQuestionDialog from "./baseComponents/dialogs/DeleteQuestionDialog";
 import DesktopVersionDialog from 'components/build/baseComponents/dialogs/DesktopVersionDialog';
 import QuestionInvalidDialog from './baseComponents/dialogs/QuestionInvalidDialog';
 import HighlightInvalidDialog from './baseComponents/dialogs/HighlightInvalidDialog';
+import HintInvalidDialog from './baseComponents/dialogs/HintInvalidDialog';
 import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialog';
-import TutorialLabels from './baseComponents/TutorialLabels';
-import PageLoader from "components/baseComponents/loaders/pageLoader";
-import { TextComponentObj } from "./buildQuestions/components/Text/interface";
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
-import { useSocket } from "socket/socket";
-import { applyBrickDiff, getBrickDiff } from "components/services/diff";
 import SaveDialog from "./baseComponents/dialogs/SaveDialog";
-import UndoRedoService from "components/services/UndoRedoService";
-import { Brick } from "model/brick";
+
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
@@ -109,6 +112,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [saveDialogOpen, setSaveDialog] = React.useState(false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
+  const [invalidHint, setInvalidHint] = React.useState({
+    isOpen: false,
+    questionNumber: -1
+  });
   const [highlightInvalid, setInvalidHighlight] = React.useState({
     isOpen: false,
     isLine: false
@@ -454,8 +461,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       return !validateQuestion(question);
     });
 
-    if (!synthesis) {
-      invalidQuestion = {} as Question;
+    if (!synthesis && !invalidQuestion) {
+      setSubmitDialog(true);
     }
 
     if (invalidQuestion) {
@@ -467,7 +474,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         }
         setInvalidHighlight({ isOpen: true, isLine });
       } else {
-        setSubmitDialog(true);
+        let isHintInvalid = validateHint(invalidQuestion.hint);
+        if (isHintInvalid) {
+          let index = getQuestionIndex(invalidQuestion);
+          setInvalidHint({ isOpen: true, questionNumber: index + 1});
+        } else {
+          setSubmitDialog(true);
+        }
       }
     } else {
       if (proposalRes.isValid) {
@@ -824,6 +837,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           close={() => {
             setValidation(true);
             setInvalidHighlight({ isOpen: false, isLine: false})
+          }}
+        />
+        <HintInvalidDialog
+          isOpen={invalidHint.isOpen}
+          invalidQuestionNumber={1}
+          close={() => {
+            setValidation(true);
+            setInvalidHint({isOpen: false, questionNumber: -1})
           }}
         />
         <QuestionInvalidDialog
