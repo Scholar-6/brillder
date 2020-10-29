@@ -108,6 +108,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
         disabled={locked}
         className={className}
         onBlur={() => save()}
+        
         value={state.text}
         onChange={updateText}
         placeholder="Enter Lines Here..."
@@ -118,8 +119,8 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
   return (
     <div className="line-highlight-build">
       <div className="component-title">
-        <div>Enter/Paste Text Below.</div>
-        <div>Use Highlighter Icon to click correct line(s).</div>
+        <div>Enter Text Below.</div>
+        <div>Highlight the correct line(s).</div>
       </div>
       <div className="pencil-icon-container svgOnHover" onClick={switchMode}>
         <SpriteIcon

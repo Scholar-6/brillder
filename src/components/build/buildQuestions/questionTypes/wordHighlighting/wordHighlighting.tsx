@@ -247,8 +247,8 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   return (
     <div className="word-highlight-build">
       <div className="component-title">
-        <div>Enter/Paste Text Below.</div>
-        <div>Use Highlighter Icon to click correct word(s).</div>
+        <div>Enter Text Below.</div>
+        <div>Highlight the correct word(s).</div>
       </div>
       {renderModeButton()}
       <div className="input-container">
