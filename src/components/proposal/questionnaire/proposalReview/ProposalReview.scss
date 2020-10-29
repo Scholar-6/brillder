@@ -209,8 +209,17 @@
           .comments-title {
             cursor: pointer;
           }
+          .comment-text-entry {
+            min-height: 2vw;
+            max-height: 6vw;
+            margin-top: 1.4vh;
+            margin-bottom: 0vh;
+          }
           .scroll-buttons {
-            margin-top: 6.7vh;
+            margin-top: 6.4vh;
+          }
+          textarea::placeholder {
+            font-family: $font-family-bold !important;
           }
         }
       }
@@ -225,11 +234,20 @@
           border-radius: $editor-radius;
           border-bottom-left-radius: 0;
           border-bottom-right-radius: 0;
+          .comment-text-entry {
+            min-height: 2vw;
+            max-height: 6vw;
+            margin-top: 1.3vh;
+            margin-bottom: 0.2vh;
+          }
           .comments-column {
             max-height: 59vh;
           }
           .scroll-buttons {
             margin-top: 6.5vh;
+          }
+          textarea::placeholder {
+            font-family: $font-family-bold !important;
           }
         }
       }
@@ -239,13 +257,6 @@
         flex-wrap: nowrap;
         width: 100%;
         margin: auto;
-
-        .comment-text-entry {
-          min-height: 2vw;
-          max-height: 6vw;
-          margin-top: 1vh;
-          margin-bottom: 1.2vh;
-        }
 
         .comments-column-wrapper {
           overflow: scroll;
