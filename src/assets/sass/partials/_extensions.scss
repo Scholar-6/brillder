@@ -765,6 +765,15 @@
       }
     }
   }
+  .top-scroll-area,
+  .bottom-scroll-area {
+    .top-button-container ,
+    .bottom-button-container{
+      max-width: 45%;
+      min-width: 45%;
+    }
+
+  }
   .bottom-scroll-area {
     bottom: 0;
   }
