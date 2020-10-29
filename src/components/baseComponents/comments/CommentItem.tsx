@@ -66,23 +66,23 @@ const CommentItem: React.FC<CommentItemProps> = props => {
             <h4>{props.comment.author.firstName} {props.comment.author.lastName}</h4>
           </Grid>
           <div className="buttons-container">
-          <button aria-label="reply" className="message-button svgOnHover" onClick={() => setReplyPanelShown(!replyPanelShown)}>
-            <SpriteIcon name="corner-up-left" className="active" />
-          </button>
-            {props.isAuthor
-              ?
-              <button
-                aria-label="delete"
-                className="cancel-button svgOnHover"
-                onClick={() => props.onDelete(props.currentBrick.id, props.comment.id)}
-              >
-                <SpriteIcon name="trash-outline" className="active" />
+              <button aria-label="reply" className="message-button svgOnHover m-r-04" onClick={() => setReplyPanelShown(!replyPanelShown)}>
+                <SpriteIcon name="corner-up-left" className="active" />
               </button>
-              :
-              <button className="message-button svgOnHover">
-                <SpriteIcon name="minus-square" className="active" onClick={() => setCollapsed(true)} />
-              </button>
-            }
+              {props.isAuthor
+                ?
+                <button
+                  aria-label="delete"
+                  className="cancel-button svgOnHover"
+                  onClick={() => props.onDelete(props.currentBrick.id, props.comment.id)}
+                >
+                  <SpriteIcon name="trash-outline" className="active" />
+                </button>
+                :
+                <button className="message-button svgOnHover">
+                  <SpriteIcon name="minus-square" className="active" onClick={() => setCollapsed(true)} />
+                </button>
+              }
           </div>
         </Grid>
         <h5 className="comment-date" onClick={() => setCollapsed(true)}>
