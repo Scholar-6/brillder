@@ -133,8 +133,8 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
             { !this.state.commentsShown &&
               <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
                 <Grid container item direction="column" alignItems="center" style={{ height: '100%' }}>
-                  <Grid container item justify="center" style={{ height: "24%", width: '100%', marginTop:"5vh" }}>
-                    <Grid item container direction="row" justify="space-between" style={{ width: "66%", paddingLeft:"1.5vw" }}>
+                  <Grid container item justify="center" style={{ height: "24%", width: '100%', marginTop:"4.9vh" }}>
+                    <Grid item container direction="row" justify="space-between" style={{ width: "66%", paddingLeft:"1.5vw", paddingBottom:"0.2vw" }}>
                       <button className="btn btn-transparent svgOnHover undo-button" onClick={this.props.undo}>
                         <SpriteIcon
                           name="undo"
