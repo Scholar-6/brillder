@@ -14,6 +14,8 @@
     }
     .line {
       cursor: pointer;
+      max-width: 100%;
+      overflow-wrap: break-word;
     }
     .line.active {
       background: var(--white-blue);
