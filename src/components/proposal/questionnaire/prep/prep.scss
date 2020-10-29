@@ -39,6 +39,12 @@
     overflow: hidden;
   }
   .document-editor {
+    .ck.ck-button.ck-color-table__remove-color {
+      width: calc(100% - 0.4vw) !important;
+      .ck.ck-button__label {
+        font-size: 1.5vw !important;
+      }
+    }
     .ck-content {
       height: 29vh !important;
     }

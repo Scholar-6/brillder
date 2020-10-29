@@ -10,3 +10,11 @@
     color: var(--white) !important;
   }
 }
+.line-highlight-build {
+  .lines-input {
+    resize: none;
+  }
+  .hightlight-area {
+    margin-bottom: 1vh !important;
+  }
+}
