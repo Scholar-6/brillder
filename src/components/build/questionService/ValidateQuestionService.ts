@@ -88,3 +88,14 @@ export function validateQuestion(question: Question) {
   }
   return false;
 };
+
+export function isHighlightInvalid(question: Question) {
+  const {type, components} = question;
+  const comp = getUniqueComponent(components);
+  if (type === QuestionTypeEnum.WordHighlighting) {
+    return uniqueValidator.validateWordHighlighting(comp);
+  } else if (type === QuestionTypeEnum.LineHighlighting) {
+    return uniqueValidator.validateLineHighlighting(comp);
+  }
+  return null;
+}

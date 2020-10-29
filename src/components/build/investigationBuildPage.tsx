@@ -14,7 +14,7 @@ import {
 } from "model/question";
 import actions from "redux/actions/brickActions";
 import { socketUpdateBrick, socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
-import { validateQuestion } from "./questionService/ValidateQuestionService";
+import { isHighlightInvalid, validateQuestion } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
   getNewFirstQuestion,
@@ -54,6 +54,7 @@ import TutorialPhonePreview from "./tutorial/TutorialPreview";
 import YourProposalLink from './baseComponents/YourProposalLink';
 import DesktopVersionDialog from 'components/build/baseComponents/dialogs/DesktopVersionDialog';
 import QuestionInvalidDialog from './baseComponents/dialogs/QuestionInvalidDialog';
+import HighlightInvalidDialog from './baseComponents/dialogs/HighlightInvalidDialog';
 import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialog';
 import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
@@ -108,6 +109,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [saveDialogOpen, setSaveDialog] = React.useState(false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
+  const [highlightInvalid, setInvalidHighlight] = React.useState({
+    isOpen: false,
+    isLine: false
+  });
   const [proposalResult, setProposalResult] = React.useState({ isOpen: false, isValid: proposalRes.isValid, url: proposalRes.url });
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
@@ -454,7 +459,16 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
 
     if (invalidQuestion) {
-      setSubmitDialog(true);
+      let invalid = isHighlightInvalid(invalidQuestion);
+      if (invalid === false) {
+        let isLine = false;
+        if (invalidQuestion.type === QuestionTypeEnum.LineHighlighting) {
+          isLine = true;
+        }
+        setInvalidHighlight({ isOpen: true, isLine });
+      } else {
+        setSubmitDialog(true);
+      }
     } else {
       if (proposalRes.isValid) {
         saveBrick();
@@ -804,6 +818,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             />
           </Route>
         </Grid>
+        <HighlightInvalidDialog
+          isOpen={highlightInvalid.isOpen}
+          isLines={highlightInvalid.isLine}
+          close={() => setInvalidHighlight({ isOpen: false, isLine: false})}
+        />
         <QuestionInvalidDialog
           isOpen={submitDialogOpen}
           close={() => setSubmitDialog(false)}
