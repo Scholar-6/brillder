@@ -14,7 +14,7 @@ const UnauthorizedSidebar: React.FC<Props> = (props) => {
     <div className="unauthorized-sidebar">
       <LabelTyping
         value="Discover bricks."
-        className="text-center bold title"
+        className="bold title"
         start={true}
         onFinish={() => setAnimate({...animate, secondStarted: true })}
       />
