@@ -187,10 +187,8 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     }
 
     return (
-      <span key={index}>
-        <span className={className} onClick={() => {toggleLight(index)}}>
-          {word.text}
-        </span>
+      <span key={index} className={className} onClick={() => {toggleLight(index)}}>
+        {word.text}
         {word.isBreakLine ? <br /> : ""}
       </span>
     );
