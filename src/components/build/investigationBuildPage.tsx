@@ -821,7 +821,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <HighlightInvalidDialog
           isOpen={highlightInvalid.isOpen}
           isLines={highlightInvalid.isLine}
-          close={() => setInvalidHighlight({ isOpen: false, isLine: false})}
+          close={() => {
+            setValidation(true);
+            setInvalidHighlight({ isOpen: false, isLine: false})
+          }}
         />
         <QuestionInvalidDialog
           isOpen={submitDialogOpen}
