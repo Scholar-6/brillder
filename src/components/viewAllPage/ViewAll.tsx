@@ -27,6 +27,7 @@ import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import BrickBlock from "components/baseComponents/BrickBlock";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import { downKeyPressed, upKeyPressed } from "components/services/key";
 
 
 interface BricksListProps {
@@ -51,6 +52,8 @@ interface BricksListState {
   dropdownShown: boolean;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
+
+  handleKey(e: any): void;
 
   isClearFilter: any;
   failedRequest: boolean;
@@ -93,6 +96,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       isAdmin,
       isCore: true,
       shown: false,
+      handleKey: this.handleKey.bind(this)
     };
 
     this.loadData(values);
@@ -106,6 +110,22 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       if (notifications.length > oldNotifications.length) {
         this.loadBricks();
       }
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.state.handleKey, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.state.handleKey, false);
+  }
+
+  async handleKey(e: any) {
+    if (upKeyPressed(e)) {
+      this.moveAllBack();
+    } else if (downKeyPressed(e)) {
+      this.moveAllNext();
     }
   }
 
@@ -282,7 +302,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     let index = this.state.sortedIndex;
     const { pageSize } = this.state;
 
-    let bricks = this.state.bricks;
+    let bricks = this.state.finalBricks;
     if (this.state.isSearching) {
       bricks = this.filterSearchBricks();
     }
