@@ -129,6 +129,7 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
       <BackPagePagination
         sortedIndex={sortedIndex}
         pageSize={pageSize}
+        isRed={sortedIndex === 0}
         bricksLength={finalBricks.length}
         moveNext={() => this.props.moveAllNext()}
         moveBack={() => this.props.moveAllBack()}

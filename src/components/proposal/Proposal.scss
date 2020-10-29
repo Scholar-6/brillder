@@ -114,7 +114,7 @@
 
 .brief-page,
 .open-question-page,
-.prep-page {
+.prep-page-questionary {
   .left-block {
     > h1 {
       letter-spacing: 0.04vw;
@@ -164,6 +164,7 @@
         .ck-color-table__remove-color {
           color: var(--theme-dark-blue);
           padding: 0.5vh 0.7vw;
+          width: 12vw;
           font-size: 1.1vw;
         }
         .ck-color-grid__tile {
@@ -178,7 +179,7 @@
           .ck-color-ui-dropdown {
             margin-right: 0;
             @extend %m0;
-            width: 6vw;
+            width: 3.8vw;
             .ck-button {
               padding: 0 !important;
             }
@@ -252,7 +253,7 @@
 .brick-title-page,
 .brief-page,
 .open-question-page,
-.prep-page {
+.prep-page-questionary {
   p {
     margin: 0.5vh 0;
   }

@@ -25,12 +25,12 @@ const IntroductionDetails: React.FC<IntroductionProps> = ({ brickLength }) => {
 
   return (
     <div className="intro-text-row">
-      <p>Bricks are divided into four sections.</p>
+      <p>The Brick is divided into four sections:</p>
       <ul>
-        <li>Set aside around {prepare} minutes to prepare</li>
-        <li>{investigation} minutes for the investigation (countdown)</li>
-        <li>Around {synthesis} minutes to take in the Synthesis</li>
-        <li>{review} minutes to review answers (countdown)</li>
+        <li>{prepare} minutes Preparation</li>
+        <li>{investigation} minutes Investigation</li>
+        <li>{synthesis} minutes to absorb the Synthesis</li>
+        <li>{review} minutes Review to maximise your score</li>
       </ul>
     </div>
   );

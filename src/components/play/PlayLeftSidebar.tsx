@@ -9,6 +9,7 @@ import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignP
 import { checkTeacherOrAdmin } from "components/services/brickService";
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import UnauthorizedText from "./UnauthorizedText";
 
 
 interface SidebarProps {
@@ -161,6 +162,13 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
             <h3>BACK<br />TO<br />BUILD</h3>
           </div>
         );
+      }
+    }
+    if (!this.props.user) {
+      if (!this.props.sidebarRolledUp) {
+        return <UnauthorizedText />;
+      } else {
+        return <div></div>;
       }
     }
     return (

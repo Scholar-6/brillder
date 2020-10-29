@@ -168,9 +168,15 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   getTotalCount() {
     const { classrooms } = this.state;
-    let itemsCount = classrooms.length;
+    let itemsCount = 0;
     for (const classroom of classrooms) {
-      itemsCount += classroom.assignments.length;
+      itemsCount += 0.5;
+      for (let a of classroom.assignments) {
+        itemsCount += 1;
+        if (((itemsCount + 0.5) % 6) === 0) {
+          itemsCount += 0.5;
+        }
+      }
     }
     return itemsCount;
   }
@@ -192,6 +198,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       sortedIndex={this.state.sortedIndex}
       pageSize={this.state.assignmentPageSize}
       bricksLength={itemsCount}
+      isRed={this.state.sortedIndex === 0}
       moveNext={() => this.moveNext(assignmentPageSize)}
       moveBack={() => this.moveBack(assignmentPageSize)}
     />
@@ -213,6 +220,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       sortedIndex={this.state.sortedIndex}
       pageSize={this.state.pageSize}
       bricksLength={itemsCount}
+      isRed={this.state.sortedIndex === 0}
       moveNext={() => this.moveNext(pageSize)}
       moveBack={() => this.moveBack(pageSize)}
     />

@@ -2,6 +2,7 @@ import React from "react";
 import Dialog from '@material-ui/core/Dialog';
 import { Avatar, ListItem, ListItemAvatar, ListItemText } from "@material-ui/core";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import './DesktopVersionDialog.scss';
 
 interface DesktopVersionProps {
   history: any;
@@ -12,8 +13,7 @@ const DesktopVersionDialog:React.FC<DesktopVersionProps> = ({history}) => {
     <Dialog
       open={true}
       onClick={() => history.push('/home')}
-      className="dialog-box link-copied-dialog"
-      style={{cursor: 'pointer'}}
+      className="desktop-version-dialog dialog-box link-copied-dialog poiter"
     >
       <div className="dialog-header">
         <ListItem>

@@ -15,6 +15,9 @@
         min-width: $size;
         max-width: $size;
       }
+      .ck-color-grid__tile {
+        border-radius: 0.15vw;
+      }
     }
   }
   .ck-editor {

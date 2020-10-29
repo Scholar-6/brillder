@@ -11,17 +11,17 @@ import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import { getAssignedBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
-import LibraryFilter, { SortBy } from "./LibraryFilter";
-import ViewAllPagination from "../viewAllPage/ViewAllPagination";
-import { hideAssignments } from '../backToWorkPage/components/play/service';
+import { SortBy } from "./model";
+import { AssignmentBrick } from "model/assignment";
 
+import LibraryFilter from "./LibraryFilter";
+import ViewAllPagination from "../viewAllPage/ViewAllPagination";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-import { AssignmentBrick } from "model/assignment";
 import AssignedBricks from "./AssignedBricks";
 
 
@@ -85,13 +85,13 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     this.loadData();
   }
 
-  // load bricks when notification come
+  // reload subjects and assignments when notification come
   componentDidUpdate(prevProps: BricksListProps) {
     const {notifications} = this.props;
     const oldNotifications = prevProps.notifications;
     if (notifications && oldNotifications) {
       if (notifications.length > oldNotifications.length) {
-        //this.loadBricks();
+        this.loadData();
       }
     }
   }
@@ -213,30 +213,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     if (index + pageSize <= assignments.length) {
       this.setState({ ...this.state, sortedIndex: index + this.state.pageSize });
     }
-  }
-
-  onMouseHover(index: number) {
-    hideAssignments(this.state.rawAssignments);
-    this.setState({ ...this.state });
-    setTimeout(() => {
-      hideAssignments(this.state.rawAssignments);
-      const assignment = this.state.finalAssignments[index];
-      if (assignment) {
-        assignment.brick.expanded = true;
-      }
-      this.setState({ ...this.state });
-    }, 400);
-  }
-
-  onMouseLeave(key: number) {
-    let { finalAssignments } = this.state;
-    hideAssignments(this.state.rawAssignments);
-    finalAssignments[key].brick.expandFinished = true;
-    this.setState({ ...this.state });
-    setTimeout(() => {
-      finalAssignments[key].brick.expandFinished = false;
-      this.setState({ ...this.state });
-    }, 400);
   }
 
   searching(searchString: string) { }
@@ -388,9 +364,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
                 sortedIndex={this.state.sortedIndex}
                 assignments={this.state.finalAssignments}
                 history={this.props.history}
-                handleDeleteOpen={() => {}}
-                onMouseHover={this.onMouseHover.bind(this)}
-                onMouseLeave={this.onMouseLeave.bind(this)}
               />
             </div>
             {/* <Hidden only={["sm", "md", "lg", "xl"]}>

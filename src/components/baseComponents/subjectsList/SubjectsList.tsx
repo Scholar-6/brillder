@@ -36,7 +36,7 @@ class SubjectsList extends Component<PublishedSubjectsProps, any> {
                   container
                   alignContent="center"
                   justify="center"
-                  style={{ height: "100%" }}
+                  style={{ height: "100%",margin:"0 0.7vw" }}
                 >
                   {subject.publishedBricksCount}
                 </Grid>

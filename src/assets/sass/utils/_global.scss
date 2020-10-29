@@ -350,6 +350,14 @@ h3 {
   font-family: $font-family-bold;
 }
 
+.font-black {
+  font-family: $font-family-black;
+}
+
+.text-left {
+  text-align: left;
+}
+
 .uppercase {
   text-transform: uppercase;
 }
@@ -406,4 +414,16 @@ h3 {
 
 .pointer {
   cursor: pointer;
+}
+
+.flex-center {
+  @extend %flexCenter;
+}
+
+.centered {
+  @extend %flexCenter;
+  @include phone_and_tabletP {
+    height: auto;
+    width: 100%;
+  }
 }

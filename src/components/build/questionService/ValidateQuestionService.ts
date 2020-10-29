@@ -4,7 +4,7 @@ import {
 import uniqueValidator from './UniqueValidator';
 
 const getUniqueComponent = (components: any[]) => {
-  return components.find(c => c.type === QuestionComponentTypeEnum.Component);
+  return components && components.find(c => c.type === QuestionComponentTypeEnum.Component);
 }
 
 export function getNonEmptyComponent(components: any[]) {
@@ -31,7 +31,7 @@ const validateComponentValues = (components: any[]) => {
   return true;
 }
 
-const validateHint = (hint: Hint) => {
+export const validateHint = (hint: Hint) => {
   if (hint.status === HintStatus.Each) {
     const emptyHint = hint.list.some(h => h == null || h === "");
     return emptyHint;
@@ -88,3 +88,14 @@ export function validateQuestion(question: Question) {
   }
   return false;
 };
+
+export function isHighlightInvalid(question: Question) {
+  const {type, components} = question;
+  const comp = getUniqueComponent(components);
+  if (type === QuestionTypeEnum.WordHighlighting) {
+    return uniqueValidator.validateWordHighlighting(comp);
+  } else if (type === QuestionTypeEnum.LineHighlighting) {
+    return uniqueValidator.validateLineHighlighting(comp);
+  }
+  return null;
+}

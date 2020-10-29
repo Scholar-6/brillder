@@ -135,13 +135,11 @@
               letter-spacing: 0.045vw;
               width: 100%;
               color: var(--dark-gray);
+              padding: 0.7vh 0.6vw;
               @include phone_and_tabletP {
                 font-size: 3.7vw;
-                padding: 0.7vh 0.6vw;
               }
               @include tabletP {
-                margin: 0 0 0 1.4vw;
-                padding: 0.7vh 0.6vw 0.7vh 9vw;
                 font-size: 1.7vw;
               }
             }
@@ -252,14 +250,12 @@
     .bottom-next-button {
       bottom: 1vh;
       position: relative;
+      color: var(--gray);
       @extend %flexCenter;
       .btn {
         height: 4.7vh;
         width: 4.7vh;
         cursor: pointer;
-        .svg {
-          color: var(--gray);
-        }
         &.active:hover {
           .svg {
             color: var(--theme-dark-blue);

@@ -29,6 +29,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, d
         editOnly={editOnly}
         data={data.value}
         placeholder=""
+        colorsExpanded={true}
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
           'mathType', 'chemType', 'insertTable', 'bulletedList', 'numberedList', 'addComment',

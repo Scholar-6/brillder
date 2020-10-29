@@ -159,9 +159,12 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
                 transition: all 300ms;
                 margin: 0;
                 width: calc(100vw - 38vw);
-                font-size: 5vw !important;
+                font-size: 4.5vw !important;
                 text-align: left !important;
                 padding-left: 2vw !important;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
               }
             }
 
@@ -487,6 +490,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
           @include phone_and_tabletP {
             padding: 3vw;
             font-size: 4.4vw;
+            margin-top: 0 !important;
           }
           > p,
           > ul {
@@ -705,6 +709,11 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
           bottom: 87px !important;
           right: 13px !important;
         }
+        .mobile-prev {
+          top: auto !important;
+          bottom: 87px !important;
+          left: 13px !important;
+        }
       }
       &.synthesis-page {
         .introduction-info {
@@ -733,6 +742,13 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
         &.mobile-synthesis-page {
           .direction-info {
             display: none;
+          }
+          .introduction-page {
+            .intro-header {
+              h1 {
+                text-transform: capitalize !important;
+              }
+            }
           }
         }
       }
@@ -1105,10 +1121,42 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
       }
     }
   }
+  .play-preview {
+    @include phone_and_tabletP {
+      animation-name: none !important;
+    }
+  }
+  .review-page {
+    .play-preview {
+      &.mobile-next {
+        &.play-green {
+          @include phone_and_tabletP {
+            // bottom: calc(10px) !important;
+            animation-name: none;
+          }
+        }
+      }
+    }
+  }
+  .mobile-synthesis-page {
+    .play-preview {
+      &.play-green {
+        @include phone_and_tabletP {
+          bottom: calc(10px) !important;
+          animation-name: none;
+          width: 13vw;
+          height: 13vw;
+        }
+      }
+    }
+  }
 }
 
 .play-preview-pages ~ .beta-text {
   color: var(--theme-dark-blue) !important;
+  @include phone_and_tabletP {
+    display: none;
+  }
 }
 
 // only stepper in play

@@ -22,6 +22,8 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
+import MobilePrevButton from "../live/components/MobilePrevButton";
+import MobileNextButton from "../live/components/MobileNextButton";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -135,25 +137,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     moveToEnding();
   }
 
-  const swipeLastQuestion = (step: number) => {
-    handleStep(step);
-    setSubmitAnswers(true);
-  }
-
-  /**
-   * Handle mobile swipe
-   * @param index number - could be from 0 to 1. in the end should be interger value
-   * @param status string - almost all time is "move" and in the end "end"
-   */
-  const handleSwipe = (step: number, status: string) => {
-    if (status === "move" && step === questions.length - 1) {
-      swipeLastQuestion(step);
-    }
-    if (status === "end") {
-      setActiveStep(Math.round(step));
-    }
-  }
-
   const renderQuestion = (question: Question, index: number) => {
     return (
       <QuestionLive
@@ -253,19 +236,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     );
   }
 
-  const renderMobileNext = () => {
-    if (questions.length - 1 > activeStep) { return; }
-    return (
-      <button
-        type="button"
-        className="play-preview svgOnHover play-green mobile-next"
-        onClick={() => setSubmitAnswers(true)}
-      >
-        <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
-      </button>
-    );
-  }
-
   return (
     <div className="brick-container play-preview-panel review-page">
       <Grid container direction="row">
@@ -281,16 +251,9 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
             </SwipeableViews>
           </Hidden>
           <Hidden only={["sm", "md", "lg", "xl"]}>
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={activeStep}
-              className="swipe-view"
-              onSwitching={handleSwipe}
-              onChangeIndex={handleStep}
-            >
-              {questions.map(renderQuestionContainer)}
-            </SwipeableViews>
-            {renderMobileNext()}
+            {questions.map(renderQuestionContainer)}
+            <MobilePrevButton questions={questions} activeStep={activeStep} onClick={prev} />
+            <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} />
           </Hidden>
         </Grid>
         <Grid item sm={4} xs={12}>
