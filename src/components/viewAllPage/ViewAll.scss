@@ -43,6 +43,21 @@
       max-height: calc(#{$bricks-height / 15});
     }
   }
+  .unauthorized-sidebar {
+    margin-top: 18vh;
+    margin-left: 7%;
+    width: 86%;
+    .title {
+      font-size: 1.6vw;
+      font-family: $font-family-bold;
+    }
+    .text {
+      font-size: 1.1vw;
+    }
+    .m-t-3 {
+      margin-top: 3vh;
+    }
+  }
 }
 
 .mobile-category {
