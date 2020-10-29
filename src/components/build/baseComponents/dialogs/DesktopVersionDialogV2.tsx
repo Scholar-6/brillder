@@ -5,16 +5,13 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import './DesktopVersionDialog.scss';
 
 interface DesktopVersionProps {
-  history: any;
+  isOpen: boolean;
+  onClick(): void;
 }
 
-const DesktopVersionDialog:React.FC<DesktopVersionProps> = ({history}) => {
+const DesktopVersionDialogV2:React.FC<DesktopVersionProps> = ({isOpen, onClick}) => {
   return (
-    <Dialog
-      open={true}
-      onClick={() => history.push('/home')}
-      className="desktop-version-dialog dialog-box link-copied-dialog poiter"
-    >
+    <Dialog open={isOpen} onClick={onClick} className="desktop-version-dialog dialog-box link-copied-dialog pointer">
       <div className="dialog-header">
         <ListItem>
           <ListItemText primary="You're going to need a bigger boat" className="bold" style={{ minWidth: '30vw' }} />
@@ -25,7 +22,7 @@ const DesktopVersionDialog:React.FC<DesktopVersionProps> = ({history}) => {
           </ListItemAvatar>
         </ListItem>
         <ListItem>
-          <ListItemText primary="Try a laptop or desktop computer for this page" className="italic"
+          <ListItemText primary="Building has not yet been optimised for mobile devices. Try a laptop or desktop computer" className="italic"
             style={{ minWidth: '30vw', margin: 0 }}
           />
         </ListItem>
@@ -34,4 +31,4 @@ const DesktopVersionDialog:React.FC<DesktopVersionProps> = ({history}) => {
   );
 }
 
-export default DesktopVersionDialog;
+export default DesktopVersionDialogV2;

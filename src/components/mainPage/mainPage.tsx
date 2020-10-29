@@ -22,6 +22,8 @@ import { getAssignedBricks, getCurrentUserBricks } from "services/axios/brick";
 import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
 import TeachButton from "./TeachButton";
 import FirstButton from "./FirstButton";
+import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/DesktopVersionDialogV2";
+import { isMobile } from "react-device-detect";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -61,6 +63,9 @@ interface MainPageState {
   // for builder
   isBuilderActive: boolean;
   isBuilderBackWorkOpen: boolean;
+
+  // for mobile
+  isDesktopOpen: boolean;
 }
 
 class MainPage extends Component<MainPageProps, MainPageState> {
@@ -79,6 +84,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isTryBuildOpen: false,
       isBuilderActive: false,
       isBuilderBackWorkOpen: false,
+      isDesktopOpen: false,
       isTeacher: checkTeacherOrAdmin(props.user.roles)
     } as any;
 
@@ -109,6 +115,10 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   creatingBrick() {
+    if (isMobile) {
+      this.setState({isDesktopOpen: true});
+      return;
+    }
     clearProposal();
     this.props.forgetBrick();
     this.props.history.push(map.ProposalSubject);
@@ -391,6 +401,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           label="Start Building to unlock this feature"
           isOpen={this.state.isBuilderBackWorkOpen}
           close={() => this.setState({isBuilderBackWorkOpen: false})} />
+        <DesktopVersionDialogV2 isOpen={this.state.isDesktopOpen} onClick={() => this.setState({isDesktopOpen: false})} />
       </Grid>
     );
   }
