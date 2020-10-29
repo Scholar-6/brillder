@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core";
 import NextButton from "components/baseComponents/pagination/NextButton";
 import PrevButton from "components/baseComponents/pagination/PrevButton";
 
-const DashboardPagination: React.FC<any> = ({ ...props }) => {
+const DashboardPagination: React.FC<any> = props => {
   const { pageSize, sortedIndex, bricksLength } = props;
 
   if (bricksLength <= pageSize) return <div></div>;
