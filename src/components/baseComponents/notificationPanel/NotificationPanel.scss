@@ -3,6 +3,15 @@
 @import 'src/assets/sass/partials/extensions';
 
 .notification-box {
+  .scroll-buttons {
+    width: 9.2vw;
+    svg {
+      cursor: pointer;
+      width: 2vw;
+      height: 2vw;
+    }
+  }
+
   .MuiPaper-root {
     background: inherit;
   }
@@ -20,18 +29,18 @@
     }
     @include tabletP {
       border-radius: 0 0 0 2.5vw;
-      left: calc(100% - #{$notification-width}) !important;
-    }
-    @include tabletL {
-      left: calc(100% - #{$notification-width}) !important;
+      left: unset !important;
+      right: 0vw;
+      animation: notification-active 325ms ease-in-out;
     }
     @include desktop {
       box-shadow: none;
-      left: calc(100% - #{$notification-width}) !important;
     }
     .notification-content {
       background-color: var(--theme-light-blue);
       box-shadow: none !important;
+      position: relative;
+
       @include phone_and_tabletP {
         width: 100vw;
         border-radius: 2.5vw 0 0 0;
@@ -39,12 +48,7 @@
       @include tabletP {
         border-radius: 0 0 0 2.5vw;
         width: $notification-width;
-      }
-      @include tabletL {
-        width: $notification-width;
-      }
-      @include desktop {
-        width: $notification-width;
+        // 300ms cubic-bezier(0.5, 1, 0.89, 1)
       }
       .notification-list {
         padding: 1vw 1vw 0 1vw !important;
@@ -205,6 +209,7 @@
       @include tabletP {
         font-size: 1vw;
         height: 4.5vh;
+        border-radius: 0 0 0 2.5vw;
         button {
           padding-top: 0vw;
           padding-bottom: 0vw;
@@ -235,12 +240,35 @@
       }
     }
   }
-  .scroll-buttons {
-    width: 9.2vw;
-    svg {
-      cursor: pointer;
-      width: 2vw;
-      height: 2vw;
-    }
+  &.hidden {
+    // opacity: 0;
+    animation: notification-deactivate 300ms ease-in;
+  }
+}
+@keyframes notification-active {
+  0% {
+    right: -28vw;
+  }
+
+  100% {
+    right: 0;
+  }
+}
+@keyframes notification-deactivate {
+  0% {
+    right: -1vw;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  30% {
+    opacity: 0.7;
+  }
+  40% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    right: -28vw;
   }
 }
