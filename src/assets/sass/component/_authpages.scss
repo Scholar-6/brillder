@@ -320,6 +320,7 @@
       &.mobile-button-box {
         @include phone_and_tabletP {
           background: var(--theme-light-blue);
+          justify-content: flex-start!important;
         }
         .mobile-policy-text {
           @include phone_and_tabletP {
