@@ -177,7 +177,7 @@
     height: calc(61% - 34px);
     display: flex;
     flex-direction: column-reverse;
-    justify-content: flex-end;
-    padding: 3vh 6vw 0;
+    justify-content: flex-end !important;
+    padding: 8vh 6vw 0;
   }
 }
