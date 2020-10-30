@@ -1261,6 +1261,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
   padding-left: 0 !important;
   margin-left: 7vw !important;
   justify-content: flex-start;
+  font-size: 1.75vw !important;
   max-width: 47.3vw;
   overflow-x: auto;
   margin-top: 2.4vh;
@@ -1269,6 +1270,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
 }
 .sorted-row-expanded {
   .intro-desktop-title {
+    font-size: 2vw !important;
     max-width: 54.2vw;
   }
 }
