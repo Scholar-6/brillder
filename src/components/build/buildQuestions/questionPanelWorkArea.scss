@@ -300,13 +300,13 @@
         background-color: var(--white);
         margin: 0;
       }
+      .lines-input,
       .words-input {
-        font-size: 1.2vw;
+        font-size: 1.49vw;
       }
       .hightlight-area {
-        // line-height: 1.1;
         line-height: 1.45;
-        font-size: 1.2vw;
+        font-size: 1.49vw;
         .line {
           cursor: pointer;
           &.active {
