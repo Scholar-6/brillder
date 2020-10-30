@@ -1190,7 +1190,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
         color: #d3d4d5;
 
         @include phone_and_tabletP {
-          display: inline-flex !important;
+          display: inline-flex;
           flex: 1;
           justify-content: center !important;
           min-width: 12vw;
@@ -1230,6 +1230,19 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
           }
         }
       }
+
+      // moblie stepper many rows styling
+      @include phone_and_tabletP {
+        &.inline {
+          display: block;
+          .step {
+            min-width: 11.5vw !important;
+            font-size: 4vw !important;
+            display: inline-block !important;
+          }
+        }
+      }
+
     }
   }
   .open-question {
