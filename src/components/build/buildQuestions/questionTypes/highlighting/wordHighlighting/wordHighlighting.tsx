@@ -1,21 +1,19 @@
 import React, { useEffect } from 'react'
 
+import '../style.scss';
 import './wordHighlighting.scss'
-import { UniqueComponentProps } from '../types';
+import { UniqueComponentProps } from '../../types';
 import { BuildWord, SpecialSymbols } from 'components/interfaces/word';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { TextareaAutosize } from '@material-ui/core';
+import { HighlightMode } from '../model';
+import HighlightButton from '../components/HighlightButton';
 
 
-export enum WordMode {
-  Input,
-  Edit,
-}
 
 export interface WordHighlightingData {
   text: string;
   words: BuildWord[];
-  mode: WordMode;
+  mode: HighlightMode;
 }
 
 export interface WordHighlightingProps extends UniqueComponentProps {
@@ -133,10 +131,10 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
 
   const switchMode = () => {
     if (locked) { return; }
-    if (state.mode === WordMode.Edit) {
-      state.mode = WordMode.Input;
+    if (state.mode === HighlightMode.Edit) {
+      state.mode = HighlightMode.Input;
     } else {
-      state.mode = WordMode.Edit;
+      state.mode = HighlightMode.Edit;
       state.words = prepareWords(state.text);
     }
     update();
@@ -159,7 +157,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   }
 
   const renderBox = () => {
-    if (state.mode === WordMode.Edit) {
+    if (state.mode === HighlightMode.Edit) {
       return renderEditBox();
     }
     return renderTextBox();
@@ -211,44 +209,19 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     );
   }
 
-  const renderIcon = () => {
-    let className = 'w100 h100 active';
-    if(state.mode) {
-      className += ' text-theme-green';
-    } else {
-      className += ' text-theme-dark-blue';
-    }
-    return <SpriteIcon name="highlighter" className={className} />;
-  }
-
-  const renderModeButton = () => {
-    let className = 'pencil-icon-container svgOnHover';
-
-    if (validationRequired) {
-      if (!state.text) {
-        className += ' content-invalid';
-      } else {
-        let isValid = state.words.find(w => w.checked);
-        if (!isValid) {
-          className += ' content-invalid';
-        }
-      }
-    }
-
-    return (
-      <div className={className} onClick={switchMode}>
-        {renderIcon()}
-      </div>
-    );
-  }
-
   return (
     <div className="word-highlight-build">
       <div className="component-title">
         <div>Enter Text Below.</div>
         <div>Highlight the correct word(s).</div>
       </div>
-      {renderModeButton()}
+      <HighlightButton
+        mode={state.mode}
+        validationRequired={validationRequired}
+        text={state.text}
+        list={state.words}
+        switchMode={switchMode}
+      />
       <div className="input-container">
         {renderBox()}
       </div>

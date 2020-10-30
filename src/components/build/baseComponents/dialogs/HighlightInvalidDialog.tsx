@@ -18,7 +18,7 @@ const QuestionInvalidDialog: React.FC<DialogProps> = (props) => {
         <ListItemText primary={`Please use the highlighter to select correct ${props.isLines ? 'lines' : 'words'}`} className="bold" style={{ minWidth: '30vw' }} />
         <ListItemAvatar style={{padding: 0}}>
           <Avatar className="circle-orange">
-            <SpriteIcon name="highlighter" className="active text-white stroke-2" />
+            <SpriteIcon name="highlighter" className="active text-white stroke-2 w-3" />
           </Avatar>
         </ListItemAvatar>
       </ListItem>
