@@ -117,14 +117,14 @@
     ]
   },
   "devDependencies": {
-    "@storybook/react": "^5.3.13",
+    "@storybook/react": "^5.3.21",
     "@types/prop-types": "^15.7.3",
     "@types/redux-socket.io": "^1.4.0",
-    "@types/socket.io-client": "^1.4.33",
+    "@types/socket.io-client": "^1.4.34",
     "awesome-typescript-loader": "^5.2.1",
-    "copy-webpack-plugin": "^6.1.0",
+    "copy-webpack-plugin": "^6.2.1",
     "react-app-rewired": "^2.1.6",
-    "react-test-renderer": "^16.13.1",
+    "react-test-renderer": "^16.14.0",
     "redux-mock-store": "^1.5.4"
   }
 }
