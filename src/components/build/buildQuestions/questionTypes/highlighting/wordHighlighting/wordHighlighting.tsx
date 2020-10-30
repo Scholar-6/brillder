@@ -212,8 +212,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   return (
     <div className="word-highlight-build">
       <div className="component-title">
-        <div>Enter Text Below.</div>
-        <div>Highlight the correct word(s).</div>
+        <div>Enter Text Below. Highlight the correct word(s).</div>
       </div>
       <HighlightButton
         mode={state.mode}

@@ -117,8 +117,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
   return (
     <div className="line-highlight-build">
       <div className="component-title">
-        <div>Enter Text Below.</div>
-        <div>Highlight the correct line(s).</div>
+        <div>Enter Text Below. Highlight the correct line(s).</div>
       </div>
       <HighlightButton
         mode={state.mode}
