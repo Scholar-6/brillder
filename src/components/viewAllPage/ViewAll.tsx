@@ -733,6 +733,8 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       return subject.name;
     } else if (filterSubjects.length > 1) {
       return "Filtered";
+    } else if (this.state.isSearching) {
+      return 'search term';
     }
     return "ALL BRICKS";
   }
