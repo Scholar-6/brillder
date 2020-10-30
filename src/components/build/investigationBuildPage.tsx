@@ -841,7 +841,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         />
         <HintInvalidDialog
           isOpen={invalidHint.isOpen}
-          invalidQuestionNumber={1}
+          invalidQuestionNumber={invalidHint.questionNumber}
           close={() => {
             setValidation(true);
             setInvalidHint({isOpen: false, questionNumber: -1})
