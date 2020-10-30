@@ -3,16 +3,9 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-.words-input.content-invalid {
-  background: var(--theme-orange) !important;
-
-  &::placeholder {
-    color: var(--white) !important;
-  }
-}
+.line-highlight-build,
 .word-highlight-build {
-  .pencil-icon-container.content-invalid {
-    background: var(--theme-orange) !important;
+  .pencil-icon-container {
     border-radius: 50%;
     height: 2vw !important;
     width: 2vw !important;
@@ -21,15 +14,10 @@
       height: 1.5vw !important;
     }
   }
-  .words-input {
-    resize: none;
-    margin-bottom: 0 !important;
+  .pencil-icon-container.content-invalid {
+    background: var(--theme-orange) !important;
   }
   .hightlight-area {
     margin-bottom: 1vh !important;
-  }
-  .word {
-    max-width: 100%;
-    overflow-wrap: break-word;
   }
 }

@@ -1,16 +1,14 @@
 import React, { useEffect } from 'react'
 
+import '../style.scss';
 import './LineHighlightingBuild.scss'
-import { UniqueComponentProps } from '../types';
+import { UniqueComponentProps } from '../../types';
 import { TextareaAutosize } from '@material-ui/core';
 
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { HighlightMode } from '../model';
+import HighlightButton from '../components/HighlightButton';
 
-enum LineMode {
-  Input,
-  Edit,
-}
 
 export interface Line {
   text: string;
@@ -20,7 +18,7 @@ export interface Line {
 export interface LineHighlightingData {
   text: string;
   lines: Line[];
-  mode: LineMode;
+  mode: HighlightMode;
 }
 
 export interface LineHighlightingProps extends UniqueComponentProps {
@@ -58,10 +56,10 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
 
   const switchMode = () => {
     if (locked) { return; }
-    if (state.mode === LineMode.Edit) {
-      state.mode = LineMode.Input;
+    if (state.mode === HighlightMode.Edit) {
+      state.mode = HighlightMode.Input;
     } else {
-      state.mode = LineMode.Edit;
+      state.mode = HighlightMode.Edit;
       state.lines = prepareLines(state.text);
     }
     update();
@@ -82,7 +80,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
   }
 
   const renderBox = () => {
-    if (state.mode === LineMode.Edit) {
+    if (state.mode === HighlightMode.Edit) {
       if (!state.lines) {
         switchMode();
         return <PageLoader content="...Switching mode..." />;
@@ -122,12 +120,13 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
         <div>Enter Text Below.</div>
         <div>Highlight the correct line(s).</div>
       </div>
-      <div className="pencil-icon-container svgOnHover" onClick={switchMode}>
-        <SpriteIcon
-          name="highlighter"
-          className={`w100 h100 active ${state.mode ? "text-theme-green" : "text-theme-dark-blue"}`}
-        />
-      </div>
+      <HighlightButton
+        mode={state.mode}
+        validationRequired={validationRequired}
+        text={state.text}
+        list={state.lines}
+        switchMode={switchMode}
+      />
       <div className="input-container">
         {renderBox()}
       </div>

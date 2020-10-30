@@ -7,6 +7,9 @@
 .text-orange {
   color: var(--theme-orange);
 }
+.text-white-gray {
+  color: var(--white-gray);
+}
 .text-theme-orange {
   color: var(--theme-orange) !important;
 }
@@ -46,6 +49,9 @@
 }
 .b-white {
   background: var(--white) !important;
+}
+.b-dark-blue {
+  background: var(--theme-dark-blue) !important;
 }
 
 .MuiButtonBase-root.MuiIconButton-root.MuiRadio-root.white {
