@@ -734,7 +734,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     } else if (filterSubjects.length > 1) {
       return "Filtered";
     } else if (this.state.isSearching) {
-      return 'search term';
+      return this.state.searchString;
     }
     return "ALL BRICKS";
   }
@@ -808,7 +808,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           />
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
-              <div className="brick-row-title uppercase">
+              <div className="brick-row-title main-title uppercase">
                 {this.renderMainTitle(filterSubjects)}
               </div>
               {this.props.user &&
