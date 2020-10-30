@@ -13,7 +13,6 @@
   width: $comment-button-size;
   height: $comment-button-size;
   &[title]:hover:after{
-    content: attr(title);
     background: #333333; 
     margin-top: 13vh;
     font-family: $font-family-regular;
