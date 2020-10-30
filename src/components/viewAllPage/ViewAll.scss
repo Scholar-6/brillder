@@ -13,6 +13,13 @@
     position: absolute;
   }
 
+  .main-title {
+    max-width: 55vw;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
   .no-found {
     margin-bottom: 0 !important;
   }
