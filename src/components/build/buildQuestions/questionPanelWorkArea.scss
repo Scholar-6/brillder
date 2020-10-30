@@ -205,6 +205,16 @@
         width: 2vw;
         height: 2vw;
         color: var(--tab-gray);
+        &[title]:hover:after{
+          content: attr(title);
+          background: #333333; 
+          margin-top: 3vw;
+          font-family: $font-family-regular;
+          font-size: 0.7vw;
+          color: var(--white);
+          padding: 0vw 0.4vw;
+          top: 100%;
+        }
       }
 
       .question-button-container {
