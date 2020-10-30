@@ -5,8 +5,16 @@
 
 .line-highlight-build,
 .word-highlight-build {
+  .component-title div {
+    line-height: 2.3;
+    margin-bottom: 0.4vw;
+    margin-left: 0.1vw;
+    letter-spacing: 0.075vw;
+  }
+
   .pencil-icon-container {
     border-radius: 50%;
+    top: 0;
     height: 2vw !important;
     width: 2vw !important;
     svg {
