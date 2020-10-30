@@ -68,8 +68,11 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     super(props);
 
     let isAdmin = false;
-    if (this.props.user) {
-      isAdmin = checkAdmin(this.props.user.roles);
+    let pageSize = 15;
+    if (props.user) {
+      isAdmin = checkAdmin(props.user.roles);
+    } else {
+      pageSize = 18;
     }
 
     const values = queryString.parse(props.location.search)
@@ -88,7 +91,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       searchBricks: [],
       searchString,
       isSearching: false,
-      pageSize: 15,
+      pageSize,
       isLoading: true,
 
       isClearFilter: false,
