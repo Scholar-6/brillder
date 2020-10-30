@@ -1256,3 +1256,15 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
     height: inherit !important;
   }
 }
+
+
+.intro-desktop-title {
+  padding-left: 0 !important;
+  margin-left: 7vw !important;
+  justify-content: flex-start;
+  max-width: calc(100% - 7vw) !important;
+  overflow-x: auto;
+  margin-top: 2.4vh;
+  margin-bottom: 3vh;
+  text-align: left;
+}
