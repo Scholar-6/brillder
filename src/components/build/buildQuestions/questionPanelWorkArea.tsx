@@ -199,13 +199,13 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               <Grid container item alignItems="center" style={{ height: '100%' }}>
                 <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
                   <Grid item container direction="row" justify="space-evenly">
-                    <button className="btn btn-transparent svgOnHover undo-button" onClick={props.undo}>
+                    <button className="btn btn-transparent svgOnHover undo-button" title="Undo" onClick={props.undo}>
                       <SpriteIcon
                         name="undo"
                         className={`w100 h100 active ${props.undoRedoService.canUndo() && "text-theme-orange"}`}
                       />
                     </button>
-                    <button className="btn btn-transparent svgOnHover redo-button" onClick={props.redo}>
+                    <button className="btn btn-transparent svgOnHover redo-button" title="Redo" onClick={props.redo}>
                       <SpriteIcon
                         name="redo"
                         className={`w100 h100 active ${props.undoRedoService.canRedo() && "text-theme-orange"}`}
