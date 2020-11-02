@@ -66,7 +66,6 @@ class WordHighlighting extends CompComponent<
     return (
       <div key={index} className={word.checked ? "correct word" : "word"}>
         {word.text}
-        {word.isBreakLine ? <br /> : ""}
       </div>
     );
   }
@@ -112,6 +111,22 @@ class WordHighlighting extends CompComponent<
     );
   }
 
+  getWords() {
+    const {words} = this.props.component;
+    let i = 0;
+    let i2 = words.length + 2;
+    let html = [];
+    for (let word of words) {
+      html.push(this.renderWord(word, i));
+      if (word.isBreakLine) {
+        html.push(<br key={i2} style={{width: '100%'}} />);
+        i2++;
+      }
+      i++;
+    }
+    return html;
+  }
+
   render() {
     const { component } = this.props;
 
@@ -123,9 +138,7 @@ class WordHighlighting extends CompComponent<
       <div className="question-unique-play word-highlighting-play">
         <p className="help-text">Click to highlight.</p>
         <div className="words-container">
-          {component.words.map((word: any, index: number) => (
-            this.renderWord(word, index)
-          ))}
+          {this.getWords()}
         </div>
         <br/>
         <ReviewGlobalHint
