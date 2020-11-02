@@ -64,9 +64,9 @@ class WordHighlighting extends CompComponent<
 
   renderWordPreview(word: PlayWord, index: number) {
     return (
-      <div key={index} className={word.checked ? "correct word" : "word"}>
+      <span key={index} className={word.checked ? "correct word" : "word"}>
         {word.text}
-      </div>
+      </span>
     );
   }
 
@@ -137,7 +137,7 @@ class WordHighlighting extends CompComponent<
     return (
       <div className="question-unique-play word-highlighting-play">
         <p className="help-text">Click to highlight.</p>
-        <div className="words-container">
+        <div className={`words-container ${this.props.isPreview && 'preview'}`}>
           {this.getWords()}
         </div>
         <br/>
