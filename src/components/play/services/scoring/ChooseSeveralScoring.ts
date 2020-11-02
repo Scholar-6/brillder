@@ -1,5 +1,5 @@
 import { ComponentAttempt } from "components/play/model";
-import { ChooseSeveralAnswer } from "components/play/questionTypes/chooseSeveral/ChooseSeveral";
+import { ChooseSeveralAnswer } from "components/play/questionTypes/choose/chooseSeveral/ChooseSeveral";
 
 const markLiveChoices = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
     const choices = component.list;
