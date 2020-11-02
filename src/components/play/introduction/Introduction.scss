@@ -115,7 +115,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             position: relative;
           }
           @include tabletP {
-            margin-bottom: 10vh;
+            margin-bottom: 2vh;
           }
           > .intro-header {
             @include phone_and_tabletP {
@@ -1246,7 +1246,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     }
   }
   .open-question {
-    margin-top: calc(3vh);
+    margin-top: 3vh;
     font-family: $font-family-regular-italic;
   }
 }
