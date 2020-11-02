@@ -265,7 +265,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             style={{ background: `${color}` }}
           ></div>
         </div>
-        <h1 className="intro-desktop-title">{brick.title}</h1>
+        <div className="intro-desktop-title">{brick.title}</div>
       </div>
     );
   };

@@ -151,7 +151,8 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           disabled={!this.props.canEdit}
           onChange={e => {
             e.stopPropagation();
-            this.props.setBrickField(name, e.target.value)
+            const title = e.target.value.substr(0, 49);
+            this.props.setBrickField(name, title);
           }}
           placeholder={placeholder}
           value={brick[name]}
