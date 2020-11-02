@@ -111,20 +111,19 @@ export function checkAdmin(roles: UserRole[]) {
 
 export function canEditBrick(brick: Brick, user: User) {
   let isAdmin = checkAdmin(user.roles);
-  if (isAdmin) {
-    // If you're an admin you can edit no matter what.
-    return true;
-  } else if (brick.author?.id === user.id) {
-    // If you're the author you can only edit if the brick has not already been published.
-    if(brick.status === BrickStatus.Publish
-      && brick.isCore === true
-    ) {
-      return false;
-    } else {
-      return true;
-    }
-  } else {
-    return false;
+  let isPublisher = checkPublisher(user, brick);
+  console.log(brick);
+  switch(brick.status) {
+    case BrickStatus.Draft:
+      return brick.author?.id === user.id || isAdmin;
+    case BrickStatus.Build:
+      return isPublisher;
+    case BrickStatus.Review:
+      return isPublisher;
+    case BrickStatus.Publish:
+      return isAdmin || !brick.isCore;
+    default:
+      return brick.author?.id === user.id || isAdmin;
   }
 }
 
