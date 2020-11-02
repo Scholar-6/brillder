@@ -6,6 +6,11 @@
   color: var(--theme-dark-blue);
   .words-container {
     width: 100%;
+    line-height: 0.8 !important;
+    br {
+      height: 0 !important;
+      line-height: 0 !important;
+    }
     @include phone_and_tabletP {
       font-size: 3.5vw;
       overflow-x: auto;
@@ -15,6 +20,7 @@
     }
     &.preview {
       max-width: 500%;
+      line-height: 1.5 !important;
       overflow-x: auto;
     }
     .word {
