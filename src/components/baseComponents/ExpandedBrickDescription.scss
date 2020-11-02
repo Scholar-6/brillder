@@ -63,7 +63,7 @@
       overflow: hidden;
       padding-top: $padding !important;
       padding-bottom: $padding !important;
-      max-height: calc(4.4vh + $padding + $padding);
+      max-height: calc(4.4vh + #{$padding + $padding});
     }
   }
   .hover-icons-row {
