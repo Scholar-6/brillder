@@ -1246,7 +1246,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     }
   }
   .open-question {
-    margin-top: calc(5vw + 3vh);
+    margin-top: calc(3vh);
     font-family: $font-family-regular-italic;
   }
 }
@@ -1259,13 +1259,16 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 .intro-desktop-title {
   padding-left: 0 !important;
-  margin-left: 7vw !important;
-  justify-content: flex-start;
+  margin-left: 0 !important;
   font-size: 1.75vw !important;
+  @extend %flexToYCenter;
+  font-family: $font-family-bold;
+  text-transform: uppercase;
   max-width: 47.3vw;
-  overflow-x: auto;
-  margin-top: 2.4vh;
-  margin-bottom: 3vh;
+  color: var(--theme-dark-blue);
+  margin-top: 0;
+  height: 5vw;
+  margin-bottom: 0;
   text-align: left;
 }
 .sorted-row-expanded {
