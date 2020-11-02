@@ -68,8 +68,11 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     super(props);
 
     let isAdmin = false;
-    if (this.props.user) {
-      isAdmin = checkAdmin(this.props.user.roles);
+    let pageSize = 15;
+    if (props.user) {
+      isAdmin = checkAdmin(props.user.roles);
+    } else {
+      pageSize = 18;
     }
 
     const values = queryString.parse(props.location.search)
@@ -88,7 +91,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       searchBricks: [],
       searchString,
       isSearching: false,
-      pageSize: 15,
+      pageSize,
       isLoading: true,
 
       isClearFilter: false,
@@ -730,6 +733,8 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       return subject.name;
     } else if (filterSubjects.length > 1) {
       return "Filtered";
+    } else if (this.state.isSearching) {
+      return this.state.searchString;
     }
     return "ALL BRICKS";
   }
@@ -803,7 +808,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           />
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
-              <div className="brick-row-title uppercase">
+              <div className="brick-row-title main-title uppercase">
                 {this.renderMainTitle(filterSubjects)}
               </div>
               {this.props.user &&

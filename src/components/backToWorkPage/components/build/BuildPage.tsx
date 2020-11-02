@@ -20,6 +20,7 @@ import {
   getThreeColumnName, prepareTreeRows,
   getThreeColumnBrick, expandThreeColumnBrick, getLongestColumn
 } from '../../threeColumnService';
+import { downKeyPressed, upKeyPressed } from "components/services/key";
 
 import Tab, { ActiveTab } from '../Tab';
 import BuildBricks from './BuildBricks';
@@ -65,6 +66,7 @@ interface BuildState {
 
   bricksLoaded: boolean;
   hoverTimeout: number;
+  handleKey(e: any): void;
 }
 
 class BuildPage extends Component<BuildProps, BuildState> {
@@ -124,7 +126,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
         build: true,
         publish: false,
         isCore
-      }
+      },
+      handleKey: this.handleKey.bind(this)
     }
 
     this.getBricks();
@@ -185,6 +188,33 @@ class BuildPage extends Component<BuildProps, BuildState> {
           this.props.requestFailed('Can`t get bricks for current user');
         }
       });
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.state.handleKey, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.state.handleKey, false);
+  }
+
+  handleKey(e: any) {
+    // only public page
+    if (this.state.filters.isCore) {
+      if (upKeyPressed(e)) {
+        if (this.state.filters.viewAll) {
+          this.moveThreeColumnsBack();
+        } else {
+          this.moveAllBack();
+        }
+      } else if (downKeyPressed(e)) {
+        if (this.state.filters.viewAll) {
+          this.moveThreeColumnsNext();
+        } else {
+          this.moveAllNext();
+        }
+      }
     }
   }
 
@@ -435,6 +465,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   moveAllBack() {
     let pageSize = this.state.pageSize + 3;
     let index = this.state.sortedIndex;
+
     if (index >= pageSize) {
       this.setState({ ...this.state, sortedIndex: index - pageSize });
     }
@@ -443,6 +474,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   moveAllNext() {
     let pageSize = this.state.pageSize + 3;
     let index = this.state.sortedIndex;
+
     if (index + pageSize <= this.state.finalBricks.length) {
       this.setState({ ...this.state, sortedIndex: index + pageSize });
     }
@@ -513,7 +545,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
         finalBricks={finalBricks}
         loaded={this.state.bricksLoaded}
         shown={this.state.shown}
-        pageSize={this.state.pageSize}
+        pageSize={this.state.pageSize + 3}
         sortedIndex={this.state.sortedIndex}
         history={this.props.history}
         isTeach={this.state.isTeach || this.state.isAdmin}

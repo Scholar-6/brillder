@@ -6,7 +6,7 @@ $expanded-intro-padding: 2vw;
 $introduction-desktop-height: calc(100vh - #{$expanded-intro-padding} - #{$page-head-height});
 $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
-$play-mobile-height: calc(100vh - 60px - 19vw) !important;
+$play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 .play-preview-pages {
   background: var(--theme-dark-blue);
@@ -115,7 +115,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
             position: relative;
           }
           @include tabletP {
-            margin-bottom: 10vh;
+            margin-bottom: 2vh;
           }
           > .intro-header {
             @include phone_and_tabletP {
@@ -1190,7 +1190,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
         color: #d3d4d5;
 
         @include phone_and_tabletP {
-          display: inline-flex !important;
+          display: inline-flex;
           flex: 1;
           justify-content: center !important;
           min-width: 12vw;
@@ -1230,10 +1230,23 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
           }
         }
       }
+
+      // moblie stepper many rows styling
+      @include phone_and_tabletP {
+        &.inline {
+          display: block;
+          .step {
+            min-width: 11.5vw !important;
+            font-size: 4vw !important;
+            display: inline-block !important;
+          }
+        }
+      }
+
     }
   }
   .open-question {
-    margin-top: calc(5vw + 3vh);
+    margin-top: 3vh;
     font-family: $font-family-regular-italic;
   }
 }
@@ -1241,5 +1254,46 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
 .question-live-play {
   .circle-progress-container {
     height: inherit !important;
+  }
+}
+
+.intro-desktop-title {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  font-size: 1.75vw !important;
+  @extend %flexToYCenter;
+  font-family: $font-family-bold;
+  text-transform: uppercase;
+  max-width: 47.3vw;
+  color: var(--theme-dark-blue);
+  margin-top: 0;
+  height: 5vw;
+  margin-bottom: 0;
+  text-align: left;
+}
+.sorted-row-expanded {
+  .intro-desktop-title {
+    font-size: 2vw !important;
+    max-width: 54.2vw;
+  }
+}
+.open-question {
+  font-size: 1.25vw;
+  color: var(--theme-dark-blue);
+}
+
+// mobile introduction page
+.brick-row-container .brick-container .introduction-page {
+  @include phone_and_tabletP {
+    .intro-desktop-title {
+      width: 100vw;
+      text-align: center;
+      display: block;
+      margin-top: 2vh;
+      margin-bottom: 3vh;
+      font-family: $font-family-black;
+      font-size: 3vh !important;
+      max-width: 90vw !important;
+    }
   }
 }

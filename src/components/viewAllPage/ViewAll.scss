@@ -13,6 +13,13 @@
     position: absolute;
   }
 
+  .main-title {
+    max-width: 55vw;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
   .no-found {
     margin-bottom: 0 !important;
   }
@@ -73,4 +80,30 @@
 
 .uppercase {
   text-transform: uppercase;
+}
+// mobile
+.dashboard-page {
+  @include phone_and_tabletP {
+    .sorted-row {
+      border-top-left-radius: 8vw;
+    }
+  }
+  .expand-button {
+    position: fixed;
+    top: 1vw;
+    left: 1vw;
+    border-radius: 50%;
+    background: var(--white);
+    $size: 9vw;
+    height: $size;
+    width: $size;
+    color: var(--theme-dark-blue);
+    svg {
+      $size: 6vw;
+      padding: 1.5vw;
+      height: $size;
+      width: $size;
+      transform: scale(-1,1);
+    }
+  }
 }

@@ -134,6 +134,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
   renderStepper() {
     return (
       <ReviewStepper
+        noScrolling={true}
         questions={this.props.brick.questions}
         attempts={this.props.attempts}
         handleStep={() => { }}

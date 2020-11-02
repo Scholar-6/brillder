@@ -1,0 +1,21 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.choose-one-live,
+.choose-several-live {
+  .image-choice {
+    background: inherit;
+    border: 4px solid var(--solitude-light) !important;
+    width: 100%;
+    padding: 0 !important;
+  }
+  @include phone_and_tabletP {
+    .choose-choice {
+      margin-bottom: 1.2vh !important;
+      p {
+        font-size: 4.5vw !important;
+      }
+    }
+  }
+}

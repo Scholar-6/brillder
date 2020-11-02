@@ -34,7 +34,7 @@ const EndingStepper: React.FC<ReviewStepperProps> = ({
   };
 
   return (
-    <div className="stepper">
+    <div className="stepper inline">
       {questions.map((q, index) => renderQuestionStep(index))}
     </div>
   );

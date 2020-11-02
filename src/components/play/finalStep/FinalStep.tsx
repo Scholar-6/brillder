@@ -70,20 +70,12 @@ const FinalStep: React.FC<FinalStepProps> = ({
   } catch {}
 
   const renderActionColumns = () => {
-    if (!brick.isCore) {
-      return (
-        <Grid className="share-row" container direction="row" justify="center">
-          <ShareColumn onClick={() => setShare(true)} />
-          <InviteColumn onClick={()=> setInvite(true)} />
-        </Grid>
-      );
-    } else {
-      return (
-        <Grid className="share-row" container direction="row" justify="center">
-          <InviteColumn onClick={()=> setInvite(true)} />
-        </Grid>
-      );
-    }
+    return (
+      <Grid className="share-row" container direction="row" justify="center">
+        <ShareColumn onClick={() => setShare(true)} />
+        <InviteColumn onClick={()=> setInvite(true)} />
+      </Grid>
+    );
   }
 
   const moveNext = () => {

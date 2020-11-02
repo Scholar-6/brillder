@@ -11,9 +11,11 @@
   }
 }
 .word-highlight-build {
+  .pencil-icon-container {
+    border-radius: 50%;
+  }
   .pencil-icon-container.content-invalid {
     background: var(--theme-orange) !important;
-    border-radius: 50%;
     height: 2vw !important;
     width: 2vw !important;
     svg {
@@ -30,6 +32,5 @@
   }
   .word {
     max-width: 100%;
-    overflow-wrap: break-word;
   }
 }

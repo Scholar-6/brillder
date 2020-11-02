@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .mainPage {
   $welcome-col-width: 35.2vw;
@@ -370,6 +370,32 @@
     }
   }
 
+  .policy-text {
+    position: fixed;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: right;
+    padding-right: 2.5vw;
+    color: var(--tab-gray);
+    font-family: $font-family-regular;
+    bottom: 2.4vh;
+    line-height: 2vw;
+    right: 10vw;
+    font-size: 1.6vw;
+    span:hover {
+      color: var(--theme-orange) !important;
+    }
+  }
+
+  .dialog-box {
+    .MuiDialog-container {
+      padding: 0 !important;
+    }
+  }
+}
+
+// mobile
+.mainPage {
   .mobile-main-page {
     width: 100%;
     height: 100%;
@@ -416,27 +442,30 @@
       }
     }
   }
+  @include phone_and_tabletP {
+    .main-page-menu {
+      position: absolute;
+      width: 42vw;
+      height: 60px;
+      bottom: 0;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 6vw;
+      z-index: 1;
 
-  .policy-text {
-    position: fixed;
-    cursor: pointer;
-    vertical-align: middle;
-    text-align: right;
-    padding-right: 2.5vw;
-    color: var(--tab-gray);
-    font-family: $font-family-regular;
-    bottom: 2.4vh;
-    line-height: 2vw;
-    right: 10vw;
-    font-size: 1.6vw;
-    span:hover {
-      color: var(--theme-orange) !important;
+      .more-button {
+        margin-right: 4vw;
+      }
+      .bell-button {
+        margin-right: 7.2vw;
+      }
     }
-  }
-
-  .dialog-box {
-    .MuiDialog-container {
-      padding: 0 !important;
+    .menu-expanded {
+      border-top-left-radius: 0;
+      width: 40vw !important;
+    }
+    .notification-expanded {
+      border-top-left-radius: 0;
+      width: 100vw !important;
     }
   }
 }

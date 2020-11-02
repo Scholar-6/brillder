@@ -12,6 +12,15 @@
   min-height: 0;
   width: $comment-button-size;
   height: $comment-button-size;
+  &[title]:hover:after{
+    background: #333333; 
+    margin-top: 13vh;
+    font-family: $font-family-regular;
+    font-size: 0.7vw;
+    color: var(--white);
+    padding: 0vw 0.4vw;
+    top: 100%;
+  }
   .comments-icon,
   .comments-plus,
   .comments-count {

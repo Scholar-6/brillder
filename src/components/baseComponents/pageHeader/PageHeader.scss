@@ -398,3 +398,10 @@
     }
   }
 }
+
+.mainPage ~ .beta-text {
+  @include phone_and_tabletP {
+    opacity: 0;
+    display: none;
+  }
+}

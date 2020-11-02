@@ -6,17 +6,25 @@
   color: var(--theme-dark-blue);
   .words-container {
     width: 100%;
+    line-height: 0.8 !important;
+    br {
+      height: 0 !important;
+      line-height: 0 !important;
+    }
     @include phone_and_tabletP {
       font-size: 3.5vw;
+      overflow-x: auto;
     }
     @include tabletP {
-      font-size: 0.7698vw;
+      font-size: 0.86vw;
+    }
+    &.preview {
+      max-width: 500%;
+      line-height: 1.5 !important;
+      overflow-x: auto;
     }
     .word {
       cursor: pointer;
-      display:inline-block;
-      max-width: 100%;
-      overflow-wrap: break-word;
     }
     .word.active {
       background: var(--white-blue);
