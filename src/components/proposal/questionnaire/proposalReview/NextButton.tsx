@@ -15,7 +15,7 @@ const NextButton: React.FC<ButtonProps> = props => {
         ? <div className="next-button arrow-button" onClick={props.next} />
         : props.bookState === BookState.PrepPage &&
           <div className="next-button text-with-button" onClick={props.save}>
-            Start Building!
+            Build Questions!
             <SpriteIcon name="trowel-home" />
           </div>
       }
