@@ -27,16 +27,16 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
     <Autocomplete<UserBase>
       // I commented out these because they were throwing errors in the build and was not sure how to fix them 29/10/20
       // TODO: fix the autosuggest for users
-      //multiple
+      multiple
       disabled={!props.canEdit}
-      //value={users}
+      value={users}
       options={suggestions}
       style={{ background: "inherit" }}
-      // onChange={(e: any, value: UserBase[]) => {
-      //   if (value) {
-      //     setUsers(value);
-      //   }
-      // }}
+      onChange={(e: any, value: UserBase[]) => {
+        if (value) {
+          setUsers(value);
+        }
+      }}
       renderInput={(params) => (
         <TextField
           {...params}
