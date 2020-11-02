@@ -81,3 +81,22 @@
 .uppercase {
   text-transform: uppercase;
 }
+// mobile
+.expand-button {
+  position: fixed;
+  top: 1vw;
+  left: 1vw;
+  border-radius: 50%;
+  background: var(--white);
+  $size: 9vw;
+  height: $size;
+  width: $size;
+  color: var(--theme-dark-blue);
+  svg {
+    $size: 6vw;
+    padding: 1.5vw;
+    height: $size;
+    width: $size;
+    transform: scale(-1,1);
+  }
+}
