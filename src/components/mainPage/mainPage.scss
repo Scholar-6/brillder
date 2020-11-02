@@ -459,5 +459,13 @@
         margin-right: 7.2vw;
       }
     }
+    .menu-expanded {
+      border-top-left-radius: 0;
+      width: 40vw !important;
+    }
+    .notification-expanded {
+      border-top-left-radius: 0;
+      width: 100vw !important;
+    }
   }
 }
