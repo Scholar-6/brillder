@@ -58,10 +58,12 @@
       margin: 0;
     }
     .hovered-open-question {
+      $padding: 1.4vh;
       font-family: $font-family-regular-italic;
-      max-height: 4.4vh;
-      margin-bottom: 1.5vh 0 1vh 0;
       overflow: hidden;
+      padding-top: $padding !important;
+      padding-bottom: $padding !important;
+      max-height: calc(4.4vh + $padding + $padding);
     }
   }
   .hover-icons-row {

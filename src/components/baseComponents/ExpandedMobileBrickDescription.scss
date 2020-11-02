@@ -10,7 +10,7 @@
     background: transparent;
     .brick-icons {
       @extend %flexCenter;
-      margin-bottom: 4vh;
+      margin-bottom: 2vh;
       .round-button {
         @extend %radCircle;
         width: 25vw;
@@ -22,6 +22,10 @@
     }
     .brick-description {
       @extend %linkDescription;
+      > div {
+        max-width: 57vw;
+      }
+      @extend %flexCenter;
       .link-info {
         color: var(--theme-light-blue);
         font-size: 1.6vh;
@@ -31,6 +35,10 @@
         margin-top: 2.5vh;
         max-height: 3.6vh;
         margin-bottom: 1.7vh;
+      }
+      .expand-open-question {
+        margin-top: 1vh;
+        margin-bottom: 1vh;
       }
     }
   }

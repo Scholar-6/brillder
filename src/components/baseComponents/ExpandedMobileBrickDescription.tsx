@@ -38,15 +38,17 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           </div>
         </div>
         <div className="brick-description">
+          <div>
           <div className="link-description">
             <span>{brick.title}</span>
           </div>
           <div className="link-info">
             <div>{brick.subTopic} | {brick.alternativeTopics}</div>
             <div>{getAuthorRow(brick)}</div>
-            <div><MathInHtml value={brick.openQuestion} /></div>
+            <div className="expand-open-question"><MathInHtml value={brick.openQuestion} /></div>
             <div>{this.getSubjectRow(brick)}</div>
             <div>Editor: Name Surname</div>
+          </div>
           </div>
         </div>
       </div>
