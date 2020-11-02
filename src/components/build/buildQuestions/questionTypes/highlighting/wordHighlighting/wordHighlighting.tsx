@@ -163,13 +163,26 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     return renderTextBox();
   }
 
+  const getWords = () => {
+    let words = [];
+    let i = 0;
+    let i2 = state.words.length + 2;
+    for (let word of state.words) {
+      words.push(renderEditWord(word, i));
+      if (word.isBreakLine) {
+        words.push(<br key={i2} style={{width: '100%'}} />);
+        i2++;
+      }
+      i++;
+    }
+    return words;
+  }
+
   const renderEditBox = () => {
     return (
       <div className="hightlight-area">
         {
-          state.words ? state.words.map((word, i) =>
-            renderEditWord(word, i)
-          ) : ""
+          state.words ? getWords() : ""
         }
       </div>
     );
@@ -187,7 +200,6 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     return (
       <span key={index} className={className} onClick={() => {toggleLight(index)}}>
         {word.text}
-        {word.isBreakLine ? <br /> : ""}
       </span>
     );
   }
