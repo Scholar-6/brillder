@@ -1281,3 +1281,17 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   font-size: 1.25vw;
   color: var(--theme-dark-blue);
 }
+
+// mobile introduction page
+.brick-row-container .brick-container .introduction-page {
+  .intro-desktop-title {
+    width: 100vw;
+    text-align: center;
+    display: block;
+    margin-top: 2vh;
+    margin-bottom: 3vh;
+    font-family: $font-family-black;
+    font-size: 3vh !important;
+    max-width: 90vw !important;
+  }
+}
