@@ -24,7 +24,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
   const [suggestions, setSuggestions] = React.useState([] as UserBase[]);
 
   return (
-    <Autocomplete<UserBase>
+    <Autocomplete
       // I commented out these because they were throwing errors in the build and was not sure how to fix them 29/10/20
       // TODO: fix the autosuggest for users
       multiple

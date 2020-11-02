@@ -8,15 +8,17 @@
     width: 100%;
     @include phone_and_tabletP {
       font-size: 3.5vw;
+      overflow-x: auto;
     }
     @include tabletP {
       font-size: 0.86vw;
     }
+    &.preview {
+      max-width: 500%;
+      overflow-x: auto;
+    }
     .word {
       cursor: pointer;
-      display:inline-block;
-      max-width: 100%;
-      overflow-wrap: break-word;
     }
     .word.active {
       background: var(--white-blue);
