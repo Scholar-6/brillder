@@ -41,7 +41,7 @@ import UnauthorizedUserDialog from "components/baseComponents/dialogs/Unauthoriz
 import map from "components/map";
 import userActions from 'redux/actions/user';
 import { User } from "model/user";
-import { ChooseOneComponent } from "./questionTypes/chooseOne/ChooseOne";
+import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
 
 
 function shuffle(a: any[]) {

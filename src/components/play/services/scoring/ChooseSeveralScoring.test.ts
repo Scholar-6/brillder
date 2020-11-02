@@ -2,7 +2,7 @@ import mark from './ChooseSeveralScoring';
 
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ComponentAttempt } from 'components/play/model';
-import { ChooseSeveralAnswer } from 'components/play/questionTypes/chooseSeveral/ChooseSeveral';
+import { ChooseSeveralAnswer } from 'components/play/questionTypes/choose/chooseSeveral/ChooseSeveral';
 
 const mockComponent: any = {
     type: 127,

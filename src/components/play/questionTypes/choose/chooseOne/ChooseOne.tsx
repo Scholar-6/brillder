@@ -1,13 +1,14 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 
+import '../choose.scss';
 import './ChooseOne.scss';
-import CompComponent from '../Comp';
-import { CompQuestionProps } from '../types';
+import CompComponent from '../../Comp';
+import { CompQuestionProps } from '../../types';
 import { ComponentAttempt } from 'components/play/model';
-import ReviewEachHint from '../../baseComponents/ReviewEachHint';
-import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import MathInHtml from '../../baseComponents/MathInHtml';
+import ReviewEachHint from '../../../baseComponents/ReviewEachHint';
+import ReviewGlobalHint from '../../../baseComponents/ReviewGlobalHint';
+import MathInHtml from '../../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneChoice } from 'components/interfaces/chooseOne';
 

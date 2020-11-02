@@ -238,7 +238,6 @@ h3 {
   @include phone_and_tabletP {
     font-size: 6vw;
     padding: 1vw 1.5vw !important;
-    margin: 0 0 1vw 0 !important;
   }
   @include tabletP {
     margin: 0 0 0.5vw 0 !important;
