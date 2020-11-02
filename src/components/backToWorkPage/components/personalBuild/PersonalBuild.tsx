@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { prepareVisibleBricks } from '../../service';
+import { downKeyPressed, upKeyPressed } from "components/services/key";
 
 import BrickBlock from "components/baseComponents/BrickBlock";
 import { Grid } from "@material-ui/core";
@@ -44,6 +45,7 @@ interface PersonalBuildProps {
 interface PersonalState {
   bricks: Brick[];
   filters: PersonalFilters;
+  handleKey(e: any): void;
 }
 
 class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
@@ -55,12 +57,43 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
       filters: {
         draft: true,
         selfPublish: true
-      }
+      },
+      handleKey: this.handleKey.bind(this)
     };
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.state.handleKey, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.state.handleKey, false);
   }
 
   setFilters(filters: PersonalFilters) {
     this.setState({filters});
+  }
+
+  handleKey(e: any) {
+    if (upKeyPressed(e)) {
+      this.props.moveAllBack();
+    } else if (downKeyPressed(e)) {
+      let bricks:Brick[] = [];
+      let pageSize = this.props.pageSize + 3;
+      let index = this.props.sortedIndex;
+
+      if (this.state.filters.draft) {
+        const draftBricks = this.props.finalBricks.filter(b => b.status === BrickStatus.Draft || b.status === BrickStatus.Review || b.status === BrickStatus.Build);
+        bricks.push(...draftBricks);
+      } else if (this.state.filters.selfPublish) {
+        const selfPublishBricks = this.props.finalBricks.filter(b => b.status === BrickStatus.Publish);
+        bricks.push(...selfPublishBricks);
+      }
+  
+      if (index + pageSize <= bricks.length) {
+        this.props.moveAllNext();
+      }
+    }
   }
 
   renderBricks = (bricks: Brick[]) => {

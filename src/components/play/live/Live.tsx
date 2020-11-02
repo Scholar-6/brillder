@@ -13,7 +13,7 @@ import { PlayStatus, ComponentAttempt } from "../model";
 import { CashQuestionFromPlay } from "localStorage/buildLocalStorage";
 import { Brick } from "model/brick";
 import { PlayMode } from "../model";
-import { getPlayPath, getAssignQueryString } from "../service";
+import { getPlayPath, getAssignQueryString, scrollToStep } from "../service";
 
 import CountDown from "../baseComponents/CountDown";
 import LiveStepper from "./components/LiveStepper";
@@ -135,7 +135,14 @@ const LivePage: React.FC<LivePageProps> = ({
     setAnswers(copyAnswers);
   };
 
-  const prev = () => (activeStep === 0) ? moveToPrep() : handleStep(activeStep - 1)();
+  const prev = () => {
+    if (activeStep === 0) {
+      moveToPrep();
+    } else {
+      handleStep(activeStep - 1)();
+      scrollToStep(activeStep);
+    }
+  }
 
   const nextFromShuffle = () => {
     setShuffleDialog(false);
@@ -172,6 +179,8 @@ const LivePage: React.FC<LivePageProps> = ({
       }
     }
     handleStep(activeStep + 1)();
+    scrollToStep(activeStep + 2);
+
     if (activeStep >= questions.length - 1) {
       moveNext();
     }

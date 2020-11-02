@@ -15,6 +15,7 @@ import { TeachFilters } from '../../model';
 import { Assignment } from "model/classroom";
 import { getAssignmentStats } from "services/axios/stats";
 import { ApiAssignemntStats } from "model/stats";
+import { downKeyPressed, upKeyPressed } from "components/services/key";
 
 import Tab, { ActiveTab } from '../Tab';
 import BackPagePagination from '../BackPagePagination';
@@ -51,6 +52,7 @@ interface TeachState {
   totalCount: number;
 
   filters: TeachFilters;
+  handleKey(e: any): void;
 }
 
 class TeachPage extends Component<TeachProps, TeachState> {
@@ -82,9 +84,18 @@ class TeachPage extends Component<TeachProps, TeachState> {
       pageSize: 6,
       assignmentPageSize: 8,
       sortedIndex: 0,
+      handleKey: this.handleKey.bind(this),
     };
 
     this.getClassrooms();
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.state.handleKey, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.state.handleKey, false);
   }
 
   async getClassrooms() {
@@ -103,6 +114,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
       if (this.props.isSearching === false) {
         //clear search
       }
+    }
+  }
+
+  handleKey(e: any) {
+    if (upKeyPressed(e)) {
+      this.moveBack(this.state.pageSize);
+    } else if (downKeyPressed(e)) {
+      this.moveNext(this.state.pageSize);
     }
   }
 
@@ -154,6 +173,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   moveNext(pageSize: number) {
     const index = this.state.sortedIndex;
     const itemsCount = this.getTotalCount();
+
     if (index + pageSize < itemsCount) {
       this.setState({ ...this.state, sortedIndex: index + pageSize });
     }
@@ -167,14 +187,18 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   getTotalCount() {
-    const { classrooms } = this.state;
+    const { classrooms, activeClassroom } = this.state;
     let itemsCount = 0;
-    for (const classroom of classrooms) {
-      itemsCount += 0.5;
-      for (let a of classroom.assignments) {
-        itemsCount += 1;
-        if (((itemsCount + 0.5) % 6) === 0) {
-          itemsCount += 0.5;
+    if (activeClassroom) {
+      itemsCount = activeClassroom.assignments.length + 0.5;
+    } else {
+      for (const classroom of classrooms) {
+        itemsCount += 0.5;
+        for (let a of classroom.assignments) {
+          itemsCount += 1;
+          if (((itemsCount + 0.5) % 6) === 0) {
+            itemsCount += 0.5;
+          }
         }
       }
     }
@@ -211,8 +235,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       return "";
     } else if (activeClassroom && this.state.activeAssignment) {
       return this.renderAssignmentPagination(activeClassroom);
-    } else if (activeClassroom) {
-      itemsCount = activeClassroom.assignments.length;
     } else {
       itemsCount = this.getTotalCount();
     }

@@ -205,6 +205,16 @@
         width: 2vw;
         height: 2vw;
         color: var(--tab-gray);
+        &[title]:hover:after{
+          content: attr(title);
+          background: #333333; 
+          margin-top: 3vw;
+          font-family: $font-family-regular;
+          font-size: 0.7vw;
+          color: var(--white);
+          padding: 0vw 0.4vw;
+          top: 100%;
+        }
       }
 
       .question-button-container {
@@ -290,13 +300,13 @@
         background-color: var(--white);
         margin: 0;
       }
+      .lines-input,
       .words-input {
-        font-size: 1.2vw;
+        font-size: 1.05vw;
       }
       .hightlight-area {
-        // line-height: 1.1;
         line-height: 1.45;
-        font-size: 1.2vw;
+        font-size: 1.05vw;
         .line {
           cursor: pointer;
           &.active {
@@ -324,7 +334,6 @@
         width: 1.5vw;
         height: 1.5vw;
         position: absolute;
-        top: 0.25vw;
         right: 0.25vw;
         cursor: pointer;
       }

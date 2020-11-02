@@ -12,8 +12,8 @@ import SoundLive from '../comp/SoundLive';
 import GraphLive from '../comp/GraphLive';
 
 import ShortAnswer from '../questionTypes/shortAnswer/ShortAnswer';
-import ChooseOne from '../questionTypes/chooseOne/ChooseOne';
-import ChooseSeveral from '../questionTypes/chooseSeveral/ChooseSeveral';
+import ChooseOne from '../questionTypes/choose/chooseOne/ChooseOne';
+import ChooseSeveral from '../questionTypes/choose/chooseSeveral/ChooseSeveral';
 import VerticalShuffle from '../questionTypes/vericalShuffle/VerticalShuffle';
 import HorizontalShuffle from '../questionTypes/horizontalShuffle/HorizontalShuffle';
 import PairMatch from '../questionTypes/pairMatch/PairMatch';

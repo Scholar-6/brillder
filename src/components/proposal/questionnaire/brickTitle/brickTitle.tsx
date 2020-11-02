@@ -97,7 +97,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
 
   onChange(event: React.ChangeEvent<{ value: string }>, value: string) {
     event.stopPropagation();
-    const title = event.target.value.substr(0, 40);
+    const title = event.target.value.substr(0, 49);
     this.props.saveTitles({ ...this.props.parentState, [value]: title });
   };
 

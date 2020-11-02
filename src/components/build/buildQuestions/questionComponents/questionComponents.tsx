@@ -10,11 +10,11 @@ import CategoriseComponent from '../questionTypes/categoriseBuild/categoriseBuil
 import ChooseOneComponent from '../questionTypes/chooseOneBuild/chooseOneBuild';
 import ChooseSeveralComponent from '../questionTypes/chooseSeveralBuild/chooseSeveralBuild';
 import HorizontalShuffleComponent from '../questionTypes/horizontalShuffleBuild/horizontalShuffleBuild';
-import LineHighlightingComponent from '../questionTypes/lineHighlightingBuild/LineHighlightingBuild';
+import LineHighlightingComponent from '../questionTypes/highlighting/lineHighlightingBuild/LineHighlightingBuild';
 import MissingWordComponent from '../questionTypes/missingWordBuild/MissingWordBuild';
 import PairMatchComponent from '../questionTypes/pairMatchBuild/pairMatchBuild';
 import VerticalShuffleComponent from '../questionTypes/verticalShuffleBuild/verticalShuffleBuild';
-import WordHighlightingComponent from '../questionTypes/wordHighlighting/wordHighlighting';
+import WordHighlightingComponent from '../questionTypes/highlighting/wordHighlighting/wordHighlighting';
 import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/question';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import { getNonEmptyComponent } from "../../questionService/ValidateQuestionService";

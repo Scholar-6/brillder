@@ -48,7 +48,10 @@ const CommentButton: React.FC<CommentButtonProps> = (props) => {
   let numberOfReplies = getNumberOfReplies();
   if (numberOfReplies !== 0) {
     return (
-      <div className={"comment-button " + (numberOfReplies > 0 ? "has-replied" : "active") + " animated pulse-orange iteration-2 duration-1s"} onClick={() => props.setCommentsShown(true)}>
+      <div
+        className={"comment-button " + (numberOfReplies > 0 ? "has-replied" : "active") + " animated pulse-orange iteration-2 duration-1s"}
+        onClick={() => props.setCommentsShown(true)}
+      >
         <div className="comments-icon svgOnHover">
           <SpriteIcon name="message-square" className="w60 h60 active" />
         </div>
@@ -60,7 +63,7 @@ const CommentButton: React.FC<CommentButtonProps> = (props) => {
   }
 
   return (
-    <div className={"comment-button"} onClick={() => props.setCommentsShown(true)}>
+    <div className="comment-button" title='Add comment' onClick={() => props.setCommentsShown(true)}>
       <div className="comments-icon svgOnHover">
         <SpriteIcon name="message-square" className="w60 h60 active" />
       </div>

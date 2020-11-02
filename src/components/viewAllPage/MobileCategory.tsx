@@ -185,6 +185,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         brick={brick}
         color={color}
         move={brickId => this.move(brickId)}
+        hide={this.hide.bind(this)}
       />
     );
   }
@@ -197,6 +198,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       color = brick.subject.color;
     }
     return color;
+  }
+
+  hide() {
+    this.state.bricks.map(b => b.expanded = false);
+    this.setState({...this.state});
   }
 
   renderMobileBricks() {

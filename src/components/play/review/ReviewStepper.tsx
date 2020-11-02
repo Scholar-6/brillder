@@ -5,8 +5,10 @@ import { ComponentAttempt } from "../model";
 
 import sprite from "assets/img/icons-sprite.svg";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isMobile } from "react-device-detect";
 
 interface ReviewStepperProps {
+  noScrolling?: boolean;
   attempts: ComponentAttempt<any>[];
   questions: Question[];
   isEnd?: boolean;
@@ -15,6 +17,7 @@ interface ReviewStepperProps {
 
 const ReviewStepper: React.FC<ReviewStepperProps> = ({
   isEnd,
+  noScrolling,
   questions,
   handleStep,
   attempts,
@@ -53,9 +56,14 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
     );
   };
 
+  let className = 'stepper';
+  if (isMobile && noScrolling) {
+    className += ' inline';
+  }  
+
   return (
-    <div className="stepper">
-      {questions.map((question, index) => renderQuestionStep(index))}
+    <div className={className}>
+      {questions.map((q, index) => renderQuestionStep(index))}
     </div>
   );
 };

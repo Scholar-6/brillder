@@ -17,8 +17,8 @@ import { getDefaultVerticalShuffleAnswer } from "../buildQuestions/questionTypes
 import { getDefaultPairMatchAnswer } from "../buildQuestions/questionTypes/pairMatchBuild/pairMatchBuild";
 import { getDefaultCategoriseAnswer } from "../buildQuestions/questionTypes/categoriseBuild/categoriseBuild";
 import { getDefaultMissingWordAnswer } from "../buildQuestions/questionTypes/missingWordBuild/MissingWordBuild";
-import { getDefaultLineHighlightingAnswer } from "../buildQuestions/questionTypes/lineHighlightingBuild/LineHighlightingBuild";
-import { getDefaultWordHighlightingAnswer } from "../buildQuestions/questionTypes/wordHighlighting/wordHighlighting";
+import { getDefaultLineHighlightingAnswer } from "../buildQuestions/questionTypes/highlighting/lineHighlightingBuild/LineHighlightingBuild";
+import { getDefaultWordHighlightingAnswer } from "../buildQuestions/questionTypes/highlighting/wordHighlighting/wordHighlighting";
 
 
 export interface ApiQuestion {

@@ -36,7 +36,10 @@ module.exports = function override(config, env) {
                                 themeImporter: {
                                     themePath: require.resolve( '@ckeditor/ckeditor5-theme-lark' )
                                 },
-                                minify: true
+                                minify: true,
+                                modules: {
+                                    localIdentName: "[name]__[local]___[hash:base64:5]"
+                                }
                             } )
                         }
                     ]

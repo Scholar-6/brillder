@@ -72,6 +72,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
   handleKey(e: any) {
     if (e.target.tagName === "INPUT") { return; }
+    if (e.target.tagName === "TEXTAREA") { return; }
     if (e.target.classList.contains("ck-content")) { return; }
 
     if (this.state.bookHovered) {
@@ -150,7 +151,8 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           disabled={!this.props.canEdit}
           onChange={e => {
             e.stopPropagation();
-            this.props.setBrickField(name, e.target.value)
+            const title = e.target.value.substr(0, 49);
+            this.props.setBrickField(name, title);
           }}
           placeholder={placeholder}
           value={brick[name]}

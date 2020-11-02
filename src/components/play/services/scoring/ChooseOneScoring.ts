@@ -1,4 +1,4 @@
-import { ChooseOneComponent, ChooseOneAnswer } from "components/play/questionTypes/chooseOne/ChooseOne";
+import { ChooseOneComponent, ChooseOneAnswer } from "components/play/questionTypes/choose/chooseOne/ChooseOne";
 import { ScoreFunction } from "../scoring";
 
 const mark: ScoreFunction<ChooseOneComponent, ChooseOneAnswer> = (component, attempt) => {

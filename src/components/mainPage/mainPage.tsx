@@ -337,6 +337,12 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             <SpriteIcon name="arrow-down" className="w100 h100 active text-white" />
           </button>
         </div>
+        <MainPageMenu
+          user={this.props.user}
+          history={this.props.history}
+          notificationExpanded={this.state.notificationExpanded}
+          toggleNotification={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
+        />
       </Hidden>
     );
   }

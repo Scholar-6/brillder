@@ -16,6 +16,12 @@ export const getAssignQueryString = (location: any) => {
   return '';
 }
 
+export const scrollToStep = (step: number) => {
+  try {
+    document.getElementsByClassName("step")[step].scrollIntoView();
+  } catch {}
+}
+
 export default {
   getPlayPath,
   getAssignQueryString,

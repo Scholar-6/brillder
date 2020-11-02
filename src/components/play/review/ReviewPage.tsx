@@ -12,7 +12,7 @@ import { Question } from "model/question";
 import { PlayStatus } from "../model";
 import { PlayMode } from "../model";
 import { BrickLengthEnum } from "model/brick";
-import { getPlayPath, getAssignQueryString } from "../service";
+import { getPlayPath, getAssignQueryString, scrollToStep } from "../service";
 
 import ReviewStepper from "./ReviewStepper";
 import QuestionLive from "../questionPlay/QuestionPlay";
@@ -114,15 +114,20 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   };
 
   const prev = () => {
+    if (activeStep === 0) {
+      return;
+    }
     setActiveAnswer();
     questions[activeStep].edited = true;
     setActiveStep(update(activeStep, { $set: activeStep - 1 }));
+    scrollToStep(activeStep);
   };
 
   const next = () => {
     setActiveAnswer();
     questions[activeStep].edited = true;
     setActiveStep(update(activeStep, { $set: activeStep + 1 }));
+    scrollToStep(activeStep + 2);
 
     if (activeStep >= questions.length - 1) {
       moveNext();

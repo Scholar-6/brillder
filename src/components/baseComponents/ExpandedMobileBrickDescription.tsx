@@ -11,6 +11,7 @@ interface ExpandedDescriptionProps {
   brick: Brick;
   color: string;
   move(brickId: number): void;
+  hide?(): void;
 }
 
 class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
@@ -25,6 +26,11 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
 
     return (
       <div className="expanded-mobile-brick-info">
+        {this.props.hide &&
+          <div className="expand-button" onClick={this.props.hide}>
+            <SpriteIcon name="minimize" />
+          </div>
+        }
         <div className="brick-icons">
           <div className="round-button svgOnHover" style={{ background: `${color}` }} onClick={() => this.props.move(brick.id)}>
             <SpriteIcon name="play-thin" className="w80 h80 svg-default text-white" />
@@ -32,15 +38,17 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           </div>
         </div>
         <div className="brick-description">
+          <div>
           <div className="link-description">
             <span>{brick.title}</span>
           </div>
           <div className="link-info">
             <div>{brick.subTopic} | {brick.alternativeTopics}</div>
             <div>{getAuthorRow(brick)}</div>
-            <div><MathInHtml value={brick.openQuestion} /></div>
+            <div className="expand-open-question"><MathInHtml value={brick.openQuestion} /></div>
             <div>{this.getSubjectRow(brick)}</div>
             <div>Editor: Name Surname</div>
+          </div>
           </div>
         </div>
       </div>

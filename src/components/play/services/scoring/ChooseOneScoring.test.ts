@@ -1,6 +1,6 @@
 import mark from './ChooseOneScoring';
 
-import { ChooseOneAnswer, ChooseOneComponent } from 'components/play/questionTypes/chooseOne/ChooseOne';
+import { ChooseOneAnswer, ChooseOneComponent } from 'components/play/questionTypes/choose/chooseOne/ChooseOne';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ComponentAttempt } from 'components/play/model';
 
