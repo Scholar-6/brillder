@@ -9,6 +9,7 @@ import actions from 'redux/actions/requestFailed';
 import { getAssignedBricks } from "services/axios/brick";
 import service, { getLongestColumn, hideAssignments } from './service';
 import { checkAdmin, checkEditor, checkTeacher } from "components/services/brickService";
+import { downKeyPressed, upKeyPressed } from "components/services/key";
 
 import { User } from "model/user";
 
@@ -42,6 +43,7 @@ interface PlayState {
   isAdmin: boolean;
   isTeach: boolean;
   isCore: boolean;
+  handleKey(e: any): void;
 }
 
 class PlayPage extends Component<PlayProps, PlayState> {
@@ -93,7 +95,8 @@ class PlayPage extends Component<PlayProps, PlayState> {
         completed: false,
         submitted: false,
         checked: false
-      }
+      },
+      handleKey: this.handleKey.bind(this)
     }
 
     this.getAssignments();
@@ -105,6 +108,22 @@ class PlayPage extends Component<PlayProps, PlayState> {
       this.setAssignments(assignments);
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.state.handleKey, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.state.handleKey, false);
+  }
+
+  handleKey(e: any) {
+    if (upKeyPressed(e)) {
+      this.moveBack();
+    } else if (downKeyPressed(e)) {
+      this.moveNext();
     }
   }
 
@@ -125,7 +144,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
 
     const finalAssignments = this.getFilteredAssignemnts(assignments, this.state.isCore);
     const threeColumns = service.prepareThreeAssignmentRows(finalAssignments);
-    this.setState({ ...this.state, classrooms, finalAssignments, rawAssignments: assignments, threeColumns });
+    this.setState({ ...this.state, classrooms, finalAssignments, rawAssignments: assignments, threeColumns, sortedIndex: 0 });
   }
 
   onThreeColumnsMouseHover(index: number, status: AssignmentBrickStatus) {
@@ -175,6 +194,15 @@ class PlayPage extends Component<PlayProps, PlayState> {
     if (!checked && !submitted && !completed) {
     } else {
       finalAssignments = this.state.rawAssignments.filter(a => {
+        if (this.state.isCore) {
+          if (!a.brick.isCore) {
+            return false;
+          }
+        } else {
+          if (a.brick.isCore) {
+            return false;
+          }
+        }
         if (checked) {
           if (a.status === AssignmentBrickStatus.CheckedByTeacher){
             return true;
@@ -193,7 +221,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
         return false;
       });
     }
-    this.setState({ filters, finalAssignments });
+    this.setState({ filters, finalAssignments, sortedIndex: 0 });
   }
 
   onMouseHover(index: number) {
@@ -259,6 +287,9 @@ class PlayPage extends Component<PlayProps, PlayState> {
   }
 
   moveBack() {
+    if (this.state.filters.viewAll) {
+      return this.moveThreeColumnsBack();
+    }
     let index = this.state.sortedIndex;
     if (index >= this.state.pageSize) {
       this.setState({ ...this.state, sortedIndex: index - this.state.pageSize });
@@ -266,6 +297,9 @@ class PlayPage extends Component<PlayProps, PlayState> {
   }
 
   moveNext() {
+    if (this.state.filters.viewAll) {
+      return this.moveThreeColumnsNext();
+    }
     let index = this.state.sortedIndex;
     if (index + this.state.pageSize <= this.state.finalAssignments.length) {
       this.setState({ ...this.state, sortedIndex: index + this.state.pageSize });
@@ -284,8 +318,8 @@ class PlayPage extends Component<PlayProps, PlayState> {
           pageSize={pageSize}
           isRed={sortedIndex === 0}
           longestColumn={longestColumn}
-          moveNext={() => this.moveThreeColumnsNext()}
-          moveBack={() => this.moveThreeColumnsBack()}
+          moveNext={this.moveThreeColumnsNext.bind(this)}
+          moveBack={this.moveThreeColumnsBack.bind(this)}
         />
       )
     }
@@ -295,8 +329,8 @@ class PlayPage extends Component<PlayProps, PlayState> {
         pageSize={pageSize}
         isRed={sortedIndex === 0}
         bricksLength={this.state.finalAssignments.length}
-        moveNext={() => this.moveNext()}
-        moveBack={() => this.moveBack()}
+        moveNext={this.moveNext.bind(this)}
+        moveBack={this.moveBack.bind(this)}
       />
     );
   }
@@ -316,7 +350,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
     const finalAssignments = this.getFilteredAssignemnts(assignments, this.state.isCore);
     const threeColumns = service.prepareThreeAssignmentRows(finalAssignments);
 
-    this.setState({activeClassroomId: classroomId, finalAssignments, threeColumns, filters});
+    this.setState({activeClassroomId: classroomId, finalAssignments, threeColumns, filters, sortedIndex: 0});
   }
 
   render() {
@@ -326,6 +360,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
           filters={this.state.filters}
           activeClassroomId={this.state.activeClassroomId}
           assignments={this.state.finalAssignments}
+          isCore={this.state.isCore}
           setActiveClassroom={this.setActiveClassroom.bind(this)}
           classrooms={this.state.classrooms}
           filterChanged={this.playFilterUpdated.bind(this)}
