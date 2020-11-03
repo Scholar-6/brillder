@@ -23,6 +23,7 @@ import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import AssignedBricks from "./AssignedBricks";
+import { getBrickColor } from "services/brick";
 
 
 interface BricksListProps {
@@ -221,18 +222,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   showDropdown() { this.setState({ ...this.state, dropdownShown: true }) }
   hideDropdown() { this.setState({ ...this.state, dropdownShown: false }) }
 
-
-  getBrickColor(brick: Brick) {
-    let color = "";
-
-    if (!brick.subject) {
-      color = "#B0B0AD";
-    } else {
-      color = brick.subject.color;
-    }
-    return color;
-  }
-
   prepareVisibleBricks = (
     sortedIndex: number,
     pageSize: number,
@@ -252,7 +241,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   };
 
   renderMobileExpandedBrick(brick: Brick) {
-    let color = this.getBrickColor(brick);
+    let color = getBrickColor(brick);
 
     return (
       <ExpandedMobileBrick

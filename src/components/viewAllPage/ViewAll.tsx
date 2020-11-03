@@ -28,6 +28,7 @@ import BrickBlock from "components/baseComponents/BrickBlock";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
+import { getBrickColor } from "services/brick";
 
 
 interface BricksListProps {
@@ -463,17 +464,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     }, 1400);
   }
 
-  getBrickColor(brick: Brick) {
-    let color = "";
-
-    if (!brick.subject) {
-      color = "#B0B0AD";
-    } else {
-      color = brick.subject.color;
-    }
-    return color;
-  }
-
   renderExpandedBrick(color: string, brick: Brick) {
     return (
       <ExpandedBrickDescription
@@ -489,7 +479,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderBrickContainer = (brick: Brick, key: number) => {
-    let color = this.getBrickColor(brick);
+    let color = getBrickColor(brick);
 
     return (
       <div key={key} className="main-brick-container">
@@ -572,7 +562,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
 
   //region Mobile
   renderMobileExpandedBrick(brick: Brick) {
-    let color = this.getBrickColor(brick);
+    let color = getBrickColor(brick);
 
     return (
       <ExpandedMobileBrick
@@ -588,7 +578,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     key: number,
     row: any = 0
   ) => {
-    const color = this.getBrickColor(brick);
+    const color = getBrickColor(brick);
     const circleIcon = getAssignmentIcon(brick);
 
     return (

@@ -18,6 +18,7 @@ import { getAssignmentIcon } from "components/services/brickService";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { getBrickColor } from "services/brick";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -178,7 +179,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderExpandedBrick(brick: Brick) {
-    let color = this.getBrickColor(brick);
+    let color = getBrickColor(brick);
 
     return (
       <ExpandedMobileBrick
@@ -188,16 +189,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         hide={this.hide.bind(this)}
       />
     );
-  }
-
-  getBrickColor(brick: Brick) {
-    let color = "";
-    if (!brick.subject) {
-      color = "#B0B0AD";
-    } else {
-      color = brick.subject.color;
-    }
-    return color;
   }
 
   hide() {
@@ -215,7 +206,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     for (let i = 0; i < this.state.finalBricks.length; i++) {
       const brick = this.state.finalBricks[i]
       if (brick) {
-        const color = this.getBrickColor(brick);
+        const color = getBrickColor(brick);
         const circleIcon = getAssignmentIcon(brick);
         bricksList.push(<ShortBrickDescription circleIcon={circleIcon} searchString="" brick={brick} index={i} color={color} />);
       }

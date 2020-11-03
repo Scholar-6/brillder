@@ -18,6 +18,8 @@ import AssignedBricks from "./AssignedBricks";
 import PlayFilterSidebar from "./PlayFilterSidebar";
 import BackPagePagination from "../BackPagePagination";
 import BackPagePaginationV2 from "../BackPagePaginationV2";
+import { isMobile } from "react-device-detect";
+import MobileLearn from "./MobileLearn";
 
 
 interface PlayProps {
@@ -353,7 +355,38 @@ class PlayPage extends Component<PlayProps, PlayState> {
     this.setState({activeClassroomId: classroomId, finalAssignments, threeColumns, filters, sortedIndex: 0});
   }
 
+  //#region mobile functions
+  handleMobileClick(index: number) {
+    let { finalAssignments } = this.state;
+    if (finalAssignments[index].expanded === true) {
+      finalAssignments[index].expanded = false;
+      this.setState({ ...this.state });
+      return;
+    }
+    hideAssignments(finalAssignments);
+    finalAssignments.forEach(a => a.brick.expanded = false);
+    if (!finalAssignments[index].expandFinished) {
+      finalAssignments[index].expanded = true;
+    }
+    this.setState({ ...this.state });
+  }
+
   render() {
+    if (isMobile) {
+      return (
+        <MobileLearn
+          shown={true}
+          assignments={this.state.rawAssignments}
+          user={this.props.user}
+          history={this.props.history}
+
+          isCore={this.state.isCore}
+          onCoreSwitch={this.toggleCore.bind(this)}
+
+          handleClick={this.handleMobileClick.bind(this)}
+        />
+      );
+    }
     return (
       <Grid container direction="row" className="sorted-row">
         <PlayFilterSidebar
