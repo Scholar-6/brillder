@@ -374,9 +374,6 @@
   @include phone_and_tabletP {
     width: 45px;
     height: 45px;
-    &:hover {
-      box-shadow: 0px 0px 0 10px var(--theme-orange-alpha2);
-    }
   }
   @include tabletP {
     margin: 0 2vw 0 0;
@@ -399,6 +396,7 @@
   }
 }
 
+// mobile
 .mainPage ~ .beta-text {
   @include phone_and_tabletP {
     opacity: 0;

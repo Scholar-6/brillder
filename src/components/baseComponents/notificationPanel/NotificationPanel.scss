@@ -16,17 +16,6 @@
     background: inherit;
   }
   .MuiPopover-paper {
-    @include phone_and_tabletP {
-      box-shadow: none !important;
-      width: 100%;
-      transform: none !important;
-      transform-origin: 0 !important;
-      left: 0 !important;
-      top: unset !important;
-      bottom: 60px;
-      border-radius: 12px 0 0 0;
-      overflow: unset !important;
-    }
     @include tabletP {
       border-radius: 0 0 0 2.5vw;
       left: unset !important;
@@ -270,5 +259,38 @@
   100% {
     opacity: 0;
     right: -28vw;
+  }
+}
+
+// mobile
+.notification-box {
+  @include phone_and_tabletP {
+    .scroll-buttons {
+      display: none;
+    }
+    .MuiPopover-paper {
+      box-shadow: none !important;
+      width: 100%;
+      transform: none !important;
+      transform-origin: 0 !important;
+      left: 0 !important;
+      top: unset !important;
+      bottom: 60px;
+      border-radius: 12px 0 0 0;
+      overflow: unset !important;
+  
+      .notification-content {
+        .notification-list li {
+          .content-box {
+            width: calc(100% - 10vw);
+          }
+  
+          .left-brick-circle {
+            height: 9vw;
+            width: 9vw;
+          }
+        }
+      }
+    }
   }
 }
