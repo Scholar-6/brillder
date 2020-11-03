@@ -74,6 +74,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   move(brickId: number) {
+    
     this.props.history.push(`/play/brick/${brickId}/intro`);
   }
 
