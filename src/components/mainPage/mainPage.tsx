@@ -335,10 +335,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             }}
           >
             <SwiperSlide><FirstButton user={user} history={this.props.history} /></SwiperSlide>
-            {this.state.isBuilder && <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>}
+            {this.state.isBuilder || this.state.isAdmin && <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>}
+            {this.state.isBuilder || this.state.isTeacher || this.state.isAdmin && <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>}
             {this.state.isTeacher || this.state.isAdmin && <SwiperSlide><TeachButton history={this.props.history} /></SwiperSlide>}
-            {this.state.isTeacher && <SwiperSlide>{this.renderReportsButton(false)}</SwiperSlide>}
-            {this.state.isTeacher && <SwiperSlide>{this.renderLiveAssignmentButton(false)}</SwiperSlide>}
+            {this.state.isTeacher || this.state.isAdmin && <SwiperSlide>{this.renderReportsButton(false)}</SwiperSlide>}
+            {this.state.isTeacher || this.state.isAdmin && <SwiperSlide>{this.renderLiveAssignmentButton(false)}</SwiperSlide>}
             {this.state.isStudent || this.state.isTeacher && <SwiperSlide>{this.renderTryBuildButton(user.hasPlayedBrick)}</SwiperSlide>}
             {this.state.isStudent && <SwiperSlide>{this.renderLibraryButton()}</SwiperSlide>}
             {this.state.isStudent && <SwiperSlide>{this.renderStudentWorkButton()}</SwiperSlide>}
