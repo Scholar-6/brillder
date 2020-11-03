@@ -141,6 +141,12 @@ export function canEdit(user: User) {
   });
 }
 
+export function canDelete(userId: number, isAdmin: boolean, brick: Brick) {
+  return isAdmin
+    || (!(brick.status === BrickStatus.Publish && brick.isCore)
+      && brick.author.id === userId);
+}
+
 export function checkTeacherEditorOrAdmin(user: User) {
   return user.roles.some(role => {
     const { roleId } = role;
