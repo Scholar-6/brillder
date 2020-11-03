@@ -214,8 +214,10 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       {renderManageClassesItem()}
       {renderProfileItem()}
       {renderMyLibraryItem()}
+      {/*
       {renderReportsItem()}
       {renderLiveAssignmentItem()}
+      */}
       <MenuItem className="menu-item" onClick={props.onLogout}>
         <span className="menu-text">Logout</span>
         <div className="btn btn-transparent svgOnHover">
