@@ -17,7 +17,8 @@ export enum PageEnum {
   ClassStatistics,
   MainPage,
   Profile,
-  Play
+  Play,
+  MyLibrary
 }
 
 interface HeaderMenuProps {

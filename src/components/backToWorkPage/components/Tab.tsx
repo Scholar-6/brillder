@@ -5,6 +5,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { User, UserType } from "model/user";
 
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
+import { isMobile } from "react-device-detect";
 
 export enum ActiveTab {
   Play,
@@ -71,9 +72,13 @@ const TabComponent: React.FC<TabProps> = ({ isTeach, isCore, activeTab, user, se
   }
   if (user.rolePreference?.roleId === UserType.Student) {
     tabs.push(getLearnTab());
-    tabs.push(getBuildTab());
+    if (!isMobile) {
+      tabs.push(getBuildTab());
+    }
   } else {
-    tabs.push(getBuildTab());
+    if (!isMobile) {
+      tabs.push(getBuildTab());
+    }
     tabs.push(getLearnTab());
   }
 

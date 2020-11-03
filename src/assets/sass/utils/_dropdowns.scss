@@ -10,12 +10,6 @@
     right: 0 !important;
     height: fit-content;
     left: auto !important;
-    @include phone_and_tabletP {
-      bottom: 60px !important;
-      top: unset !important;
-      width: 40vw;
-      border-radius: 4vw 0 0;
-    }
     @include tabletP {
       width: 16vw;
       top: $page-head-height !important;
@@ -32,10 +26,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        @include phone_and_tabletP {
-          font-size: 15px;
-          padding: 15px;
-        }
         @include tabletP {
           padding: 0.8vw 0.8vw 0.8vw 1vw;
           font-size: 1.45vw;
@@ -47,10 +37,6 @@
           .svg {
             @extend %removePosition;
             background: transparent;
-            @include phone_and_tabletP {
-              width: 25px;
-              height: 25px;
-            }
             @include tabletP {
               width: 2.5vw;
               height: 2.5vw;
@@ -69,6 +55,31 @@
         .manage-users-icon {
           margin-top: 0.13vh;
           width: 1.9vw;
+        }
+      }
+    }
+  }
+}
+
+// mobile 
+.menu-dropdown {
+  @include phone_and_tabletP {
+    .MuiPaper-root {
+      bottom: 60px !important;
+      top: unset !important;
+      width: 45vw;
+      border-radius: 4vw 0 0;
+    }
+    ul {
+      padding: 0 !important;
+      .menu-item {
+        font-size: 3.9vw !important;
+        padding: 15px;
+        .btn {
+          .svg {
+            width: 25px;
+            height: 25px;
+          }
         }
       }
     }

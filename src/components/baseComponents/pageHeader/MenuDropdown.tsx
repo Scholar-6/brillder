@@ -90,8 +90,14 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   };
 
   const renderManageClassesItem = () => {
-    if (page !== PageEnum.ManageClasses && page !== PageEnum.MainPage && props.user) {
-      const canSee = checkTeacherOrAdmin(props.user.roles);
+    const {user} = props;
+    if (page !== PageEnum.ManageClasses && page !== PageEnum.MainPage && user) {
+      let canSee = checkTeacherOrAdmin(user.roles);
+      if (!canSee && user.rolePreference) {
+        if (user.rolePreference.roleId === UserType.Teacher) {
+          canSee = true
+        }
+      }
       if (canSee) {
         return (
           <MenuItem className="menu-item" onClick={() => move('/manage-classrooms')}>
@@ -126,10 +132,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const renderManageUsersItem = () => {
     if (props.user && checkAdmin(props.user.roles) && props.page !== PageEnum.ManageUsers) {
       return (
-        <MenuItem
-          className="menu-item"
-          onClick={() => move("/users")}
-        >
+        <MenuItem className="menu-item" onClick={() => move("/users")}>
           <span className="menu-text">Manage Users</span>
           <div className="btn btn-transparent svgOnHover">
             <SpriteIcon name="users" className="active text-white" />
@@ -143,10 +146,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const renderProfileItem = () => {
     if (page !== PageEnum.Profile) {
       return (
-        <MenuItem
-          className="view-profile menu-item"
-          onClick={() => move("/user-profile")}
-        >
+        <MenuItem className="view-profile menu-item" onClick={() => move("/user-profile")}>
           <span className="menu-text">View Profile</span>
           <div className="btn btn-transparent svgOnHover">
             <SpriteIcon name="user" className="active text-white" />
@@ -156,6 +156,50 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     }
     return "";
   };
+
+  const renderMyLibraryItem = () => {
+    if (page !== PageEnum.MainPage && page !== PageEnum.MyLibrary) {
+      if (props.user.rolePreference?.roleId === UserType.Student) {
+        return (
+          <MenuItem className="view-profile menu-item" onClick={() => move("/my-library")}>
+            <span className="menu-text">My Library</span>
+            <div className="btn btn-transparent svgOnHover">
+              <SpriteIcon name="book-open" className="active text-white" />
+            </div>
+          </MenuItem>
+        );
+      }
+    }
+    return "";
+  }
+
+  const renderReportsItem = () => {
+    if (page !== PageEnum.MainPage && props.user.rolePreference?.roleId === UserType.Teacher) {
+      return (
+        <MenuItem className="view-profile menu-item disabled" onClick={() => {}}>
+          <span className="menu-text">Reports</span>
+          <div className="btn btn-transparent svgOnHover">
+            <SpriteIcon name="book-open" className="active text-white" />
+          </div>
+        </MenuItem>
+      );
+    }
+    return "";
+  }
+
+  const renderLiveAssignmentItem = () => {
+    if (page !== PageEnum.MainPage && props.user.rolePreference?.roleId === UserType.Teacher) {
+      return (
+        <MenuItem className="view-profile menu-item disabled" onClick={() => {}}>
+          <span className="menu-text">Live Assignments</span>
+          <div className="btn btn-transparent svgOnHover">
+            <SpriteIcon name="student-back-to-work" className="active text-white" />
+          </div>
+        </MenuItem>
+      );
+    }
+    return "";
+  }
 
   return (
     <Menu
@@ -169,6 +213,11 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       {renderManageUsersItem()}
       {renderManageClassesItem()}
       {renderProfileItem()}
+      {renderMyLibraryItem()}
+      {/*
+      {renderReportsItem()}
+      {renderLiveAssignmentItem()}
+      */}
       <MenuItem className="menu-item" onClick={props.onLogout}>
         <span className="menu-text">Logout</span>
         <div className="btn btn-transparent svgOnHover">

@@ -12,7 +12,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { clearProposal } from "localStorage/proposal";
 import map from 'components/map';
 import { Notification } from 'model/notifications';
-import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
+import { canTeach, checkAdmin } from "components/services/brickService";
 
 import WelcomeComponent from './WelcomeComponent';
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
@@ -85,7 +85,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isBuilderActive: false,
       isBuilderBackWorkOpen: false,
       isDesktopOpen: false,
-      isTeacher: checkTeacherOrAdmin(props.user.roles)
+      isTeacher: canTeach(props.user),
     } as any;
 
     const {rolePreference} = props.user;
@@ -312,6 +312,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderMobilePage() {
+    const {user} = this.props;
     return (
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="mobile-main-page">
@@ -328,17 +329,23 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             }}
           >
             <SwiperSlide>
-              <FirstButton user={this.props.user} history={this.props.history} />
+              <FirstButton user={user} history={this.props.history} />
             </SwiperSlide>
-            <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>
-            <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>
+            <SwiperSlide>{this.renderSecondButton()}</SwiperSlide>
+            <SwiperSlide>{this.renderThirdButton()}</SwiperSlide>
+            {this.state.isTeacher && <SwiperSlide>{this.renderReportsButton(false)}</SwiperSlide>}
+            {this.state.isTeacher
+              ? <SwiperSlide>{this.renderLiveAssignmentButton(false)}</SwiperSlide>
+              : user.rolePreference && user.rolePreference.roleId === UserType.Student
+                && <SwiperSlide>{this.renderTryBuildButton(user.hasPlayedBrick)}</SwiperSlide>
+            }
           </Swiper>
           <button className="btn btn-transparent next-image svgOnHover" onClick={() => this.swipeNext()}>
             <SpriteIcon name="arrow-down" className="w100 h100 active text-white" />
           </button>
         </div>
         <MainPageMenu
-          user={this.props.user}
+          user={user}
           history={this.props.history}
           notificationExpanded={this.state.notificationExpanded}
           toggleNotification={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}

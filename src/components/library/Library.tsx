@@ -23,6 +23,7 @@ import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import AssignedBricks from "./AssignedBricks";
+import { getBrickColor } from "services/brick";
 
 
 interface BricksListProps {
@@ -221,18 +222,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   showDropdown() { this.setState({ ...this.state, dropdownShown: true }) }
   hideDropdown() { this.setState({ ...this.state, dropdownShown: false }) }
 
-
-  getBrickColor(brick: Brick) {
-    let color = "";
-
-    if (!brick.subject) {
-      color = "#B0B0AD";
-    } else {
-      color = brick.subject.color;
-    }
-    return color;
-  }
-
   prepareVisibleBricks = (
     sortedIndex: number,
     pageSize: number,
@@ -252,7 +241,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   };
 
   renderMobileExpandedBrick(brick: Brick) {
-    let color = this.getBrickColor(brick);
+    let color = getBrickColor(brick);
 
     return (
       <ExpandedMobileBrick
@@ -313,7 +302,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       <div className="main-listing dashboard-page">
         {this.renderMobileGlassIcon()}
         <PageHeadWithMenu
-          page={PageEnum.ViewAll}
+          page={PageEnum.MyLibrary}
           user={this.props.user}
           placeholder={"Search Ongoing Projects & Published Bricks…"}
           history={this.props.history}
@@ -366,11 +355,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
                 history={this.props.history}
               />
             </div>
-            {/* <Hidden only={["sm", "md", "lg", "xl"]}>
-              {this.renderEmptyCategory("Suggest")}
-              {this.renderEmptyCategory("Top in Humanities")}
-              {this.renderEmptyCategory("Top in Stem")}
-            </Hidden> */}
             <ViewAllPagination
               pageSize={this.state.pageSize}
               sortedIndex={this.state.sortedIndex}

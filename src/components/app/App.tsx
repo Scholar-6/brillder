@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
@@ -38,13 +38,23 @@ import BrickWrapper from './BrickWrapper';
 import { setBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'components/services/zendesk';
 import map from 'components/map';
-
+import { isMobile } from 'react-device-detect';
+import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
 
 const App: React.FC = () => {
   setBrillderTitle();
   const history = useHistory();
   const location = useLocation();
   const [zendeskCreated, setZendesk] = React.useState(false);
+  const [orientation, setOrientation] = React.useState('');
+
+  useEffect(() => {
+    console.log('init');
+    window.addEventListener("orientationchange", function(event:any) {
+      console.log('orientation changed');
+      setOrientation(event.target.screen.orientation.type);
+    });
+  }, []);
 
   axios.interceptors.response.use(function (response) {
     return response;
@@ -89,6 +99,14 @@ const App: React.FC = () => {
   }, function (error) {
     return Promise.reject(error);
   });
+
+  if (isMobile) {
+    let orientationType = window.screen.orientation.type;
+    console.log(orientationType, orientation);
+    if (orientationType === 'landscape-secondary' || orientationType === 'landscape-primary') {
+      return <RotateInstruction />;
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
