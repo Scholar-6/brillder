@@ -37,6 +37,10 @@ class MobileLearn extends Component<Props> {
     return '';
   }
 
+  moveToPlay(a: AssignmentBrick) {
+    this.props.history.push(`/play/brick/${a.brick.id}/intro?assignmentId=${a.id}`);
+  }
+
   renderExpandedBrick(a: AssignmentBrick) {
     let color = this.getColor(a);
 
@@ -45,7 +49,7 @@ class MobileLearn extends Component<Props> {
         brick={a.brick}
         circleClass={color}
         color={color}
-        move={() => {}}
+        move={() => this.moveToPlay(a)}
         hide={() => {}}
       />
     );
@@ -113,7 +117,7 @@ class MobileLearn extends Component<Props> {
                 circleIcon={circleIcon}
                 isExpanded={a.brick.expanded}
                 searchString=""
-                move={() => {}}
+                move={() => this.moveToPlay(a)}
               />
             </div>
           </Box>
@@ -138,14 +142,9 @@ class MobileLearn extends Component<Props> {
       <div className="main-listing dashboard-page mobile-category learn-mobile-tab">
         <div className="page-navigation">
           <div className="btn btn-transparent glasses svgOnHover">
-            <SpriteIcon
-              name="glasses"
-              className="w100 h100 active text-theme-dark-blue"
-            />
+            <SpriteIcon name="glasses" className="w100 h100 active text-theme-dark-blue" />
           </div>
-          <div className="breadcrumbs">
-            New
-          </div>
+          <div className="breadcrumbs">New</div>
         </div>
         <PageHeadWithMenu
           page={PageEnum.ViewAll}
