@@ -53,6 +53,9 @@ interface MainPageState {
   isPolicyOpen: boolean;
   notificationExpanded: boolean;
   isTeacher: boolean;
+  isAdmin: boolean;
+  isStudent: boolean;
+  isBuilder: boolean;
 
   // for students
   backWorkActive: boolean;
@@ -85,7 +88,10 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isBuilderActive: false,
       isBuilderBackWorkOpen: false,
       isDesktopOpen: false,
-      isTeacher: canTeach(props.user),
+      isTeacher: props.user.rolePreference?.roleId === UserType.Teacher,
+      isAdmin: checkAdmin(props.user.roles),
+      isStudent: props.user.rolePreference?.roleId === UserType.Student,
+      isBuilder: props.user.rolePreference?.roleId === UserType.Builder
     } as any;
 
     const {rolePreference} = props.user;
@@ -328,17 +334,14 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               this.setState({ ...this.state, swiper });
             }}
           >
-            <SwiperSlide>
-              <FirstButton user={user} history={this.props.history} />
-            </SwiperSlide>
-            <SwiperSlide>{this.renderSecondButton()}</SwiperSlide>
-            <SwiperSlide>{this.renderThirdButton()}</SwiperSlide>
+            <SwiperSlide><FirstButton user={user} history={this.props.history} /></SwiperSlide>
+            {this.state.isBuilder && <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>}
+            {this.state.isTeacher || this.state.isAdmin && <SwiperSlide><TeachButton history={this.props.history} /></SwiperSlide>}
             {this.state.isTeacher && <SwiperSlide>{this.renderReportsButton(false)}</SwiperSlide>}
-            {this.state.isTeacher
-              ? <SwiperSlide>{this.renderLiveAssignmentButton(false)}</SwiperSlide>
-              : user.rolePreference && user.rolePreference.roleId === UserType.Student
-                && <SwiperSlide>{this.renderTryBuildButton(user.hasPlayedBrick)}</SwiperSlide>
-            }
+            {this.state.isTeacher && <SwiperSlide>{this.renderLiveAssignmentButton(false)}</SwiperSlide>}
+            {this.state.isStudent || this.state.isTeacher && <SwiperSlide>{this.renderTryBuildButton(user.hasPlayedBrick)}</SwiperSlide>}
+            {this.state.isStudent && <SwiperSlide>{this.renderLibraryButton()}</SwiperSlide>}
+            {this.state.isStudent && <SwiperSlide>{this.renderStudentWorkButton()}</SwiperSlide>}
           </Swiper>
           <button className="btn btn-transparent next-image svgOnHover" onClick={() => this.swipeNext()}>
             <SpriteIcon name="arrow-down" className="w100 h100 active text-white" />
