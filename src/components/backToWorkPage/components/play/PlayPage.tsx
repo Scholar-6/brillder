@@ -403,7 +403,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
             onCoreSwitch={this.toggleCore.bind(this)}
             setTab={t => this.props.setTab(t)}
           />
-          <div className="tab-content">
+          <div className="tab-content learn-tab-desktop">
             <AssignedBricks
               user={this.props.user}
               shown={true}
