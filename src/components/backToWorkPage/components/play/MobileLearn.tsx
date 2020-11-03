@@ -43,6 +43,7 @@ class MobileLearn extends Component<Props> {
     return (
       <ExpandedMobileBrick
         brick={a.brick}
+        circleClass={color}
         color={color}
         move={() => {}}
         hide={() => {}}
@@ -52,7 +53,7 @@ class MobileLearn extends Component<Props> {
 
   renderMobileBricks() {
     const {assignments} = this.props;
-    let expandedBrick = assignments.find(b => b.expanded === true);
+    let expandedBrick = assignments.find(a => a.brick.expanded === true);
 
     if (expandedBrick) {
       return this.renderExpandedBrick(expandedBrick);
