@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import './ExpandedBrickDescription.scss';
 import { Brick } from "model/brick";
 
+import { canDelete } from "components/services/brickService";
+
 import SpriteIcon from "./SpriteIcon";
 import SearchText from "./SearchText";
 import AuthorSearchRow from "./AuthorRow";
@@ -49,7 +51,8 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
   }
 
   renderDeleteButton(brick: Brick) {
-    if (!this.props.isAdmin) { return; }
+    // check if user can delete the brick
+    if (!canDelete(this.props.userId, this.props.isAdmin, brick)) { return; }
     return (
       <div>
         <button className="btn btn-transparent svgOnHover bin-button" onClick={() => this.props.onDelete(brick.id)}>
