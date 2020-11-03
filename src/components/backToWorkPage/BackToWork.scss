@@ -448,8 +448,10 @@
 .back-to-work-page {
   @include phone_and_tabletP {
     .brick-row-title {
+      padding-right: 0 !important;
       .private-core-toggle {
-        margin-left: 5vw;
+        float:right;
+        margin-left: auto;
         font-size: 5vw !important;
 
         .btn {
