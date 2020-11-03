@@ -48,7 +48,7 @@ const App: React.FC = () => {
 
   try {
     document.documentElement.requestFullscreen();
-    screen.orientation.lock('portrait');
+    window.screen.orientation.lock('portrait-primary');
   } catch (e) {
     console.log('can`t lock screen orientation', e);
   }
