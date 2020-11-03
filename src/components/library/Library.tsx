@@ -313,7 +313,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       <div className="main-listing dashboard-page">
         {this.renderMobileGlassIcon()}
         <PageHeadWithMenu
-          page={PageEnum.ViewAll}
+          page={PageEnum.MyLibrary}
           user={this.props.user}
           placeholder={"Search Ongoing Projects & Published Bricks…"}
           history={this.props.history}
@@ -366,11 +366,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
                 history={this.props.history}
               />
             </div>
-            {/* <Hidden only={["sm", "md", "lg", "xl"]}>
-              {this.renderEmptyCategory("Suggest")}
-              {this.renderEmptyCategory("Top in Humanities")}
-              {this.renderEmptyCategory("Top in Stem")}
-            </Hidden> */}
             <ViewAllPagination
               pageSize={this.state.pageSize}
               sortedIndex={this.state.sortedIndex}
