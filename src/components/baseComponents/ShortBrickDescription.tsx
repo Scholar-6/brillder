@@ -16,6 +16,8 @@ interface ShortDescriptionProps {
 
   searchString: string;
 
+  circleClass?: string;
+
   // mobile
   isMobile?: boolean;
   isExpanded?: boolean;
@@ -64,6 +66,11 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
 
   renderCircle(color: string) {
     let className = "left-brick-circle";
+
+    if (this.props.circleClass) {
+      className += ' ' + this.props.circleClass;
+    }
+
     if (color === "color3") {
     } else if (color === "color2") {
       className += ' skip-top-right-border';

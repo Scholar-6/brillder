@@ -141,6 +141,12 @@ export function canEdit(user: User) {
   });
 }
 
+export function canDelete(userId: number, isAdmin: boolean, brick: Brick) {
+  return isAdmin
+    || (!(brick.status === BrickStatus.Publish && brick.isCore)
+      && brick.author.id === userId);
+}
+
 export function checkTeacherEditorOrAdmin(user: User) {
   return user.roles.some(role => {
     const { roleId } = role;
@@ -154,4 +160,14 @@ export function getAssignmentIcon(brick: Brick) {
     circleIcon = 'file-plus';
   }
   return circleIcon;
+}
+
+export function canTeach(user: User) {
+  let canTeach = checkTeacherOrAdmin(user.roles);  
+  if (!canTeach && user.rolePreference) {
+    if (user.rolePreference.roleId === UserType.Teacher) {
+      canTeach = true;
+    }
+  }
+  return canTeach;
 }

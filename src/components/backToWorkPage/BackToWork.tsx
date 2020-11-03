@@ -20,6 +20,7 @@ import TeachPage from './components/teach/TeachPage';
 import BuildPage from './components/build/BuildPage';
 import PlayPage from './components/play/PlayPage';
 import { getTabLink } from "./service";
+import { isMobile } from "react-device-detect";
 
 interface BackToWorkState {
   searchString: string;

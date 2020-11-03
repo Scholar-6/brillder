@@ -117,7 +117,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
               <div className="left-brick-circle">
                 <div className="round-button" style={{ background: `${color}` }}></div>
               </div>
-              <h1 style={{ textTransform: 'uppercase' }}>Synthesis</h1>
+              <span className="heading">Synthesis</span>
             </div>
             <span>{renderSpendTime()}</span>
           </div>

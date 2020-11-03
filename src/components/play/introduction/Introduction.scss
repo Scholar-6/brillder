@@ -1138,18 +1138,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       }
     }
   }
-  .mobile-synthesis-page {
-    .play-preview {
-      &.play-green {
-        @include phone_and_tabletP {
-          bottom: calc(10px) !important;
-          animation-name: none;
-          width: 13vw;
-          height: 13vw;
-        }
-      }
-    }
-  }
 }
 
 .play-preview-pages ~ .beta-text {
