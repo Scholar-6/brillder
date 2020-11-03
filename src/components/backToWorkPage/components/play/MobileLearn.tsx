@@ -160,7 +160,7 @@ class MobileLearn extends Component<Props> {
         <Grid container direction="row" className="sorted-row">
           <Grid item xs={9} className="brick-row-container">
             <div className="brick-row-title">
-              <button className="btn btn-transparent svgOnHover">
+              <button className="btn btn-transparent svgOnHover" style={{width: '100vw'}}>
                 <span>Learn</span>
                 <PrivateCoreToggle isCore={this.props.isCore} onSwitch={this.props.onCoreSwitch} />
               </button>
