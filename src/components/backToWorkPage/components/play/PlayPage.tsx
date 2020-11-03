@@ -358,16 +358,13 @@ class PlayPage extends Component<PlayProps, PlayState> {
   //#region mobile functions
   handleMobileClick(index: number) {
     let { finalAssignments } = this.state;
-    if (finalAssignments[index].expanded === true) {
-      finalAssignments[index].expanded = false;
+    if (finalAssignments[index].brick.expanded === true) {
+      finalAssignments[index].brick.expanded = false;
       this.setState({ ...this.state });
       return;
     }
-    hideAssignments(finalAssignments);
     finalAssignments.forEach(a => a.brick.expanded = false);
-    if (!finalAssignments[index].expandFinished) {
-      finalAssignments[index].expanded = true;
-    }
+    finalAssignments[index].brick.expanded = true;
     this.setState({ ...this.state });
   }
 

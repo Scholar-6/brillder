@@ -497,6 +497,13 @@
           background: var(--theme-orange);
         }
       }
+      .color2 .round-button {
+        border: 1.5vw solid var(--theme-green);
+        background-color: var(--white);
+      }
+      .color1 .round-button {
+        background: var(--theme-orange);
+      }
     }
   }
 }

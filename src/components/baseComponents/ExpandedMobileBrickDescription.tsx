@@ -10,6 +10,7 @@ import MathInHtml from "components/play/baseComponents/MathInHtml";
 interface ExpandedDescriptionProps {
   brick: Brick;
   color: string;
+  circleClass?: string;
   move(brickId: number): void;
   hide?(): void;
 }
@@ -31,7 +32,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
             <SpriteIcon name="minimize" />
           </div>
         }
-        <div className="brick-icons">
+        <div className={"brick-icons " + this.props.circleClass}>
           <div className="round-button svgOnHover" style={{ background: `${color}` }} onClick={() => this.props.move(brick.id)}>
             <SpriteIcon name="play-thin" className="w80 h80 svg-default text-white" />
             <SpriteIcon name="play-thick" className="w80 h80 colored text-white" />
