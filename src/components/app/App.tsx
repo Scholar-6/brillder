@@ -46,6 +46,13 @@ const App: React.FC = () => {
   const location = useLocation();
   const [zendeskCreated, setZendesk] = React.useState(false);
 
+  try {
+    document.documentElement.requestFullscreen();
+    screen.orientation.lock('portrait');
+  } catch (e) {
+    console.log('can`t lock screen orientation', e);
+  }
+
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
