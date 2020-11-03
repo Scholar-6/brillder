@@ -426,3 +426,17 @@ h3 {
     width: 100%;
   }
 }
+
+@include phone_and_tabletP {
+  @media screen and (orientation: landscape) {
+    html {
+      transform: rotate(-90deg);
+      transform-origin: left top;
+      width: 100vh;
+      overflow-x: hidden;
+      position: absolute;
+      top: 100%;
+      left: 0;
+    }
+  }
+}
