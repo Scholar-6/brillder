@@ -51,20 +51,22 @@ const App: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
   const [zendeskCreated, setZendesk] = React.useState(false);
-  const [screenStatus, lockScreen] = React.useState(-1);
 
   // lock screen for mobile
+  /* 11/3/2020
+  const [screenStatus, lockScreen] = React.useState(-1);
   useEffect(() => {
     if (isMobile && screenStatus < 1) {
       console.log(66);
       lockScreen(ScreenStatus.Locking);
       setTimeout(()=> {
-        document.documentElement.requestFullscreen();
+        //document.documentElement.requestFullscreen();
         window.screen.orientation.lock('portrait-primary');
         lockScreen(ScreenStatus.Locked);
       }, 2000);
     }
   });
+  */
 
   axios.interceptors.response.use(function (response) {
     return response;
