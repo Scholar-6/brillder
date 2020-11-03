@@ -83,14 +83,6 @@
       padding-left: 1.8vw;
     }
 
-    @include phone_and_tabletP {
-      padding: 0;
-      width: calc(100vw - 4vw);
-      height: 100%;
-      margin: 2vw;
-      padding-bottom: 3vh;
-    }
-
     table {
       color: var(--theme-dark-blue);
       @include phone_and_tabletP {
@@ -106,6 +98,27 @@
   &.sorted-row-expanded .synthesis-content {
     @include desktop {
       height: calc(100vh - 12vh - 2vw) !important;
+    }
+  }
+}
+
+// mobile
+.synthesis-page {
+  @include phone_and_tabletP {
+    .heading {
+      font-size: 6vw;
+      font-family: $font-family-bold;
+      color: var(--theme-dark-blue);
+      margin-left: 1.5vw;
+    }
+    .synthesis-content {
+      padding: 0;
+      width: calc(100vw - 4vw);
+      padding: 2vw;
+      margin: 0;
+      margin-left: 2vw;
+      margin-bottom: 20vh;
+      height: calc(95% - 20vw - 80px) !important;
     }
   }
 }
