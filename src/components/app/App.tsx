@@ -41,33 +41,20 @@ import map from 'components/map';
 import { isMobile } from 'react-device-detect';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
 
-enum ScreenStatus {
-  None,
-  Locking,
-  Locked
-}
-
 const App: React.FC = () => {
   setBrillderTitle();
   const history = useHistory();
   const location = useLocation();
   const [zendeskCreated, setZendesk] = React.useState(false);
+  const [orientation, setOrientation] = React.useState('');
 
-  // lock screen for mobile
-  /* 11/3/2020
-  const [screenStatus, lockScreen] = React.useState(-1);
   useEffect(() => {
-    if (isMobile && screenStatus < 1) {
-      console.log(66);
-      lockScreen(ScreenStatus.Locking);
-      setTimeout(()=> {
-        //document.documentElement.requestFullscreen();
-        window.screen.orientation.lock('portrait-primary');
-        lockScreen(ScreenStatus.Locked);
-      }, 2000);
-    }
-  });
-  */
+    console.log('init');
+    window.addEventListener("orientationchange", function(event:any) {
+      console.log('orientation changed');
+      setOrientation(event.target.screen.orientation.type);
+    });
+  }, []);
 
   axios.interceptors.response.use(function (response) {
     return response;
@@ -115,8 +102,8 @@ const App: React.FC = () => {
 
   if (isMobile) {
     let orientationType = window.screen.orientation.type;
-    console.log(orientationType);
-    if (orientationType === 'landscape-secondary') {
+    console.log(orientationType, orientation);
+    if (orientationType === 'landscape-secondary' || orientationType === 'landscape-primary') {
       return <RotateInstruction />;
     }
   }
