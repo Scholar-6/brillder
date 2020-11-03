@@ -444,6 +444,25 @@
   }
 }
 
+// desktop learn tab
+.back-to-work-page {
+  .learn-tab-desktop {
+    .bricks-list-container .main-brick-container .brick-container {
+      .absolute-container .short-description .left-brick-circle.skip-top-right-border,
+      .expanded-brick-info .hover-icons-row .left-brick-circle.skip-top-right-border {
+        background: inherit !important;
+        padding: 0 !important;
+      }
+
+      &.color2 {
+        .round-button {
+          border: 0.25vw solid var(--theme-yellow);
+        }
+      }
+    }
+  }
+}
+
 // mobile learn tab
 .back-to-work-page {
   @include phone_and_tabletP {
@@ -476,7 +495,7 @@
       }
       .mobile-scroll-bricks .swiper-container .swiper-slide .short-description .left-brick-circle {
         &.color2 .round-button {
-          border: 1.5vw solid var(--theme-green);
+          border: 1.5vw solid var(--theme-yellow);
           background-color: var(--white);
         }
         &.color1 .round-button {
@@ -492,7 +511,7 @@
           padding: 0 !important;
         }
         .color2 .round-button {
-          border: 1vw solid var(--theme-green);
+          border: 1vw solid var(--theme-yellow);
           background-color: var(--white);
         }
         .color1 .round-button {
