@@ -444,7 +444,7 @@
   }
 }
 
-// mobile
+// mobile learn tab
 .back-to-work-page {
   @include phone_and_tabletP {
     .brick-row-title {
@@ -469,7 +469,9 @@
       }
     }
     .learn-mobile-tab {
-      
+      .bricks-list-container {
+        height: calc(100% - 39vh - 5vw - 60px) !important;
+      }
       .mobile-scroll-bricks .swiper-container .swiper-slide .short-description .left-brick-circle {
         &.color2 .round-button {
           border: 1.5vw solid var(--theme-green);

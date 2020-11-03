@@ -376,7 +376,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
       return (
         <MobileLearn
           shown={true}
-          assignments={this.state.rawAssignments}
+          assignments={this.state.finalAssignments}
           user={this.props.user}
           history={this.props.history}
 
