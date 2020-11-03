@@ -467,5 +467,12 @@
       border-top-left-radius: 0;
       width: 100vw !important;
     }
+    .manage-classes {
+      font-size: 25px;
+      .svg {
+        width: 200px;
+        height: 120px;
+      }
+    }
   }
 }

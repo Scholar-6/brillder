@@ -330,8 +330,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             <SwiperSlide>
               <FirstButton user={this.props.user} history={this.props.history} />
             </SwiperSlide>
-            <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>
-            <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>
+            <SwiperSlide>{this.renderSecondButton()}</SwiperSlide>
+            <SwiperSlide>{this.renderThirdButton()}</SwiperSlide>
           </Swiper>
           <button className="btn btn-transparent next-image svgOnHover" onClick={() => this.swipeNext()}>
             <SpriteIcon name="arrow-down" className="w100 h100 active text-white" />
