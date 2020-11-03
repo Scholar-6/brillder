@@ -161,3 +161,13 @@ export function getAssignmentIcon(brick: Brick) {
   }
   return circleIcon;
 }
+
+export function canTeach(user: User) {
+  let canTeach = checkTeacherOrAdmin(user.roles);  
+  if (!canTeach && user.rolePreference) {
+    if (user.rolePreference.roleId === UserType.Teacher) {
+      canTeach = true;
+    }
+  }
+  return canTeach;
+}
