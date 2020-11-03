@@ -1,13 +1,15 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .back-to-work-page {
   .brick-row-container {
     overflow: hidden;
     background: inherit !important;
     $tabs-margin-between: 0.2vw;
-    $width: calc(100.2vw - #{$filter-sidebar-size} - (#{$filter-sidebar-margin * 2}) - #{$tabs-margin-between});
+    $width: calc(
+      100.2vw - #{$filter-sidebar-size} - (#{$filter-sidebar-margin * 2}) - #{$tabs-margin-between}
+    );
 
     .tab-container {
       display: flex;
@@ -438,6 +440,61 @@
   .color2 {
     .left-brick-circle {
       background: var(--theme-yellow) !important;
+    }
+  }
+}
+
+// mobile
+.back-to-work-page {
+  @include phone_and_tabletP {
+    .brick-row-title {
+      .private-core-toggle {
+        margin-left: 5vw;
+        font-size: 5vw !important;
+
+        .btn {
+          span {
+            margin-left: 3vw;
+            margin-right: 3vw;
+          }
+
+          .svgOnHover {
+            height: 8.8vw;
+            .svg {
+              width: 8vw;
+              height: 8vw;
+            }
+          }
+        }
+      }
+    }
+    .learn-mobile-tab {
+      
+      .mobile-scroll-bricks .swiper-container .swiper-slide .short-description .left-brick-circle {
+        &.color2 .round-button {
+          border: 1.5vw solid var(--theme-green);
+          background-color: var(--white);
+        }
+        &.color1 .round-button {
+          background: var(--theme-orange);
+        }
+      }
+      .short-brick-info {
+        width: auto !important;
+      }
+      .main-brick-container .brick-container .absolute-container .short-description {
+        .left-brick-circle {
+          background: inherit !important;
+          padding: 0 !important;
+        }
+        .color2 .round-button {
+          border: 1vw solid var(--theme-green);
+          background-color: var(--white);
+        }
+        .color1 .round-button {
+          background: var(--theme-orange);
+        }
+      }
     }
   }
 }

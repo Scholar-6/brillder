@@ -7,7 +7,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
 import { Brick, BrickStatus } from "model/brick";
-import { User } from "model/user";
+import { User, UserType } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ThreeColumns, Filters, SortBy } from '../../model';
 import { getBricks, searchBricks, getCurrentUserBricks } from "services/axios/brick";
@@ -29,6 +29,9 @@ import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/Delet
 import BackPagePagination from '../BackPagePagination';
 import BackPagePaginationV2 from '../BackPagePaginationV2';
 import PersonalBuild from "../personalBuild/PersonalBuild";
+import { isMobile } from "react-device-detect";
+import map from "components/map";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 interface BuildProps {
   searchString: string;
@@ -528,6 +531,16 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   render() {
+    const {history} = this.props;
+    if (isMobile) {
+      const {rolePreference} = this.props.user;
+      if (rolePreference?.roleId === UserType.Teacher) {
+        history.push(map.BackToWorkTeachTab);
+      } else {
+        history.push(map.BackToWorkLearnTab);
+      }
+      return <PageLoader content="" />;
+    }
     let searchString = '';
     if (this.props.isSearching) {
       searchString = this.props.searchString;
@@ -547,7 +560,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
         shown={this.state.shown}
         pageSize={this.state.pageSize + 3}
         sortedIndex={this.state.sortedIndex}
-        history={this.props.history}
+        history={history}
         isTeach={this.state.isTeach || this.state.isAdmin}
         searchString={this.props.searchString}
 
@@ -601,7 +614,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 shown={this.state.shown}
                 pageSize={this.state.pageSize}
                 sortedIndex={this.state.sortedIndex}
-                history={this.props.history}
+                history={history}
                 filters={this.state.filters}
                 loaded={this.state.bricksLoaded}
                 searchString={searchString}
