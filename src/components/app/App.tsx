@@ -39,6 +39,7 @@ import { setBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'components/services/zendesk';
 import map from 'components/map';
 import { isMobile } from 'react-device-detect';
+import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
 
 enum ScreenStatus {
   None,
@@ -111,6 +112,14 @@ const App: React.FC = () => {
   }, function (error) {
     return Promise.reject(error);
   });
+
+  if (isMobile) {
+    let orientationType = window.screen.orientation.type;
+    console.log(orientationType);
+    if (orientationType === 'landscape-secondary') {
+      return <RotateInstruction />;
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
