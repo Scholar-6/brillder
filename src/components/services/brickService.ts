@@ -143,7 +143,7 @@ export function canEdit(user: User) {
 
 export function canDelete(userId: number, isAdmin: boolean, brick: Brick) {
   return isAdmin
-    || (!(brick.status === BrickStatus.Publish && brick.isCore)
+    || (!(brick.status !== BrickStatus.Draft && brick.isCore)
       && brick.author.id === userId);
 }
 
