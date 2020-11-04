@@ -30,7 +30,7 @@ interface CommentPanelProps {
   comments: Comment[] | null;
   currentUser: User;
   getComments(brickId: number): void;
-  createComment(comment: any): void;
+  createComment(comment: any): Promise<void>;
 }
 
 const CommentPanel: React.FC<CommentPanelProps> = props => {
@@ -66,6 +66,23 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
 
   const onDelete = (brickId: number, commentId: number) => {
     setDeleteData({ isOpen: true, brickId, commentId });
+  }
+
+  /**
+   * Create comment and move to scroll to it
+   * @param comment New Comment
+   */
+  const createCommentAndScroll = (comment: any) => {
+    console.log('create comment');
+    props.createComment(comment).then(() => {
+      // wait for rerender
+      setTimeout(() => {
+        const {current} = scrollArea;
+        if (current) {
+          current.scrollBy(0, window.screen.height);
+        }
+      }, 400)
+    });
   }
 
   const renderComments = () => {
@@ -110,14 +127,16 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
   }
 
   const scrollUp = () => {
-    if (scrollArea.current) {
-      scrollArea.current.scrollBy(0, -window.screen.height / 30);
+    const {current} = scrollArea;
+    if (current) {
+      current.scrollBy(0, -window.screen.height / 30);
     }
   }
 
   const scrollDown = () => {
-    if (scrollArea.current) {
-      scrollArea.current.scrollBy(0, window.screen.height / 30);
+    const {current} = scrollArea;
+    if (current) {
+      current.scrollBy(0, window.screen.height / 30);
     }
   }
 
@@ -158,7 +177,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
         <NewCommentPanel
           currentQuestionId={props.currentQuestionId}
           currentBrick={props.currentBrick}
-          createComment={props.createComment}
+          createComment={createCommentAndScroll}
           currentLocation={props.currentLocation}
         />
       </Grid>
