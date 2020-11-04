@@ -67,8 +67,10 @@ interface MainPageState {
   isBuilderActive: boolean;
   isBuilderBackWorkOpen: boolean;
 
-  // for mobile
+  // for mobile popopup
   isDesktopOpen: boolean;
+  secondaryLabel: string;
+  secondPart: string;
 }
 
 class MainPage extends Component<MainPageProps, MainPageState> {
@@ -87,11 +89,15 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isTryBuildOpen: false,
       isBuilderActive: false,
       isBuilderBackWorkOpen: false,
-      isDesktopOpen: false,
+
       isTeacher: props.user.rolePreference?.roleId === UserType.Teacher,
       isAdmin: checkAdmin(props.user.roles),
       isStudent: props.user.rolePreference?.roleId === UserType.Student,
-      isBuilder: props.user.rolePreference?.roleId === UserType.Builder
+      isBuilder: props.user.rolePreference?.roleId === UserType.Builder,
+
+      isDesktopOpen: false,
+      secondaryLabel: '',
+      secondPart: ' not yet been optimised for mobile devices.'
     } as any;
 
     const {rolePreference} = props.user;
@@ -122,7 +128,10 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   creatingBrick() {
     if (isMobile) {
-      this.setState({isDesktopOpen: true});
+      this.setState({
+        isDesktopOpen: true,
+        secondaryLabel: 'Building has' + this.state.secondPart
+      });
       return;
     }
     clearProposal();
@@ -149,6 +158,13 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     let isActive = this.props.user.hasPlayedBrick;
     return (
       <div className="back-item-container my-library" onClick={() => {
+        if (isMobile) {
+          this.setState({
+            isDesktopOpen: true,
+            secondaryLabel: 'Your Library has' + this.state.secondPart
+          });
+          return;
+        }
         if (isActive) { 
           this.props.history.push('/my-library');
         } else {
@@ -240,7 +256,14 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   renderReportsButton(isActive: boolean) {
     return (
-      <div className="back-item-container student-back-work" onClick={() => {}}>
+      <div className="back-item-container student-back-work" onClick={() => {
+        if (isMobile) {
+          this.setState({
+            isDesktopOpen: true,
+            secondaryLabel: 'Reports have ' + this.state.secondPart
+          });
+        }
+      }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : 'text-theme-light-blue'}`}>
           <SpriteIcon name="book-open"/>
           <span className={`item-description ${isActive ? '' : 'disabled'}`}>Reports</span>
@@ -422,7 +445,10 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           label="Start Building to unlock this feature"
           isOpen={this.state.isBuilderBackWorkOpen}
           close={() => this.setState({isBuilderBackWorkOpen: false})} />
-        <DesktopVersionDialogV2 isOpen={this.state.isDesktopOpen} onClick={() => this.setState({isDesktopOpen: false})} />
+        <DesktopVersionDialogV2
+          isOpen={this.state.isDesktopOpen} secondaryLabel={this.state.secondaryLabel}
+          onClick={() => this.setState({isDesktopOpen: false})}
+        />
       </Grid>
     );
   }
