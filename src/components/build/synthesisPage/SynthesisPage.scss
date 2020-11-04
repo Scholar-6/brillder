@@ -4,6 +4,16 @@
 
 .synthesis-page {
   @extend %arrow-top-bottom;
+  .top-scroll-area,
+  .bottom-scroll-area {
+    justify-content: flex-start;
+    .bottom-button-container,
+    .top-button-container {
+      margin-left: 2vw;
+      min-width: calc(72.5% - 2vw);
+      max-width: calc(72.5% - 2vw);
+    }
+  }
   .inner-question-type {
     width: 100%;
     $synthesis-box-width: 72.5%;
