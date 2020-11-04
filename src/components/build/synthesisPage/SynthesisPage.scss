@@ -4,6 +4,24 @@
 
 .synthesis-page {
   @extend %arrow-top-bottom;
+  .ck-color-grid__tile {
+    $size: 1.25vw;
+    min-height: $size;
+    max-height: $size;
+    min-width: $size;
+    max-width: $size;
+    border-radius: 0.15vw;
+  }
+  .top-scroll-area,
+  .bottom-scroll-area {
+    justify-content: flex-start;
+    .bottom-button-container,
+    .top-button-container {
+      margin-left: 2vw;
+      min-width: calc(72.5% - 2vw);
+      max-width: calc(72.5% - 2vw);
+    }
+  }
   .inner-question-type {
     width: 100%;
     $synthesis-box-width: 72.5%;
