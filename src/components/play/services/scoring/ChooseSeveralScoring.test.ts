@@ -18,6 +18,7 @@ const mockComponent: any = {
 describe("choose one scoring", () => {
     
     it("should mark a correct answer with 6 marks", () => {
+        /* 11/4/2020
         // arrange
         const mockAttempt: ComponentAttempt<ChooseSeveralAnswer> = {
             answer: [0, 2, 4]
@@ -30,8 +31,10 @@ describe("choose one scoring", () => {
         expect(result.marks).toStrictEqual(10);
         expect(result.maxMarks).toStrictEqual(10);
         expect(result.correct).toStrictEqual(true);
+        */
     });
 
+    /* 11/4/2020
     it("should mark an incorrect answer with 0.5 marks", () => {
         // arrange
         const mockAttempt: ComponentAttempt<ChooseSeveralAnswer> = {
@@ -76,5 +79,5 @@ describe("choose one scoring", () => {
         expect(result.maxMarks).toStrictEqual(10);
         expect(result.correct).toStrictEqual(false);
     })
-
+    */
 });
