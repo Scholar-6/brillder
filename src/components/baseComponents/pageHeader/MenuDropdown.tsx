@@ -35,7 +35,6 @@ interface MenuDropdownProps {
 const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const { page } = props;
   const {hasPlayedBrick} = props.user;
-  const [state, setState] = React.useState(false);
 
   let isStudent = false;
   if (props.user.rolePreference?.roleId === UserType.Student) {
