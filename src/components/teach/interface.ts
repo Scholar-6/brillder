@@ -5,3 +5,8 @@ export interface MUser extends User {
   selected: boolean;
   studyClassrooms: ClassroomApi[];
 }
+
+export enum TeachActiveTab {
+  Assignments,
+  Students,
+}

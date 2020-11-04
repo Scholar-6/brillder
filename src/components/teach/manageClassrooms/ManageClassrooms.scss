@@ -4,6 +4,9 @@
 
 .manage-classrooms-page {
   $base-filter-padding-left: 2vw;
+  .users-table {
+    padding-top: 2vh;
+  }
   .indexes-box {
     height: calc(94vh - #{$page-head-height} - 5.9vh - 6.5vw) !important;
     overflow: auto;
@@ -13,7 +16,7 @@
   }
 
   .brick-row-container {
-    background: var(--white);
+    background: inherit !important;
 
     .brick-row-title {
       padding-top: 0.5vh !important;
