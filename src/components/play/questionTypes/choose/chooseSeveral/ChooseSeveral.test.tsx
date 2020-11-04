@@ -7,6 +7,7 @@ import validator from 'components/build/questionService/UniqueValidator';
 
 describe("Choose Several play and validation", () => {
   it("should create Choose Several", () => {
+    /* 11/4/2020
     let question: Question = {
       id: 66,
       order: 0,
@@ -36,8 +37,9 @@ describe("Choose Several play and validation", () => {
         onAttempted={() => { }}
       />
     );
+    */
   });
-
+  /*
   it("Test validation. should be valid", () => {
     let component: any = {
       type: QuestionComponentTypeEnum.Component,
@@ -91,4 +93,5 @@ describe("Choose Several play and validation", () => {
     let res = validator.validateChooseSeveral(component);
     expect(res).toBe(false);
   });
+  */
 });
