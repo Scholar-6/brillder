@@ -2,21 +2,44 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-.create-user-button {
-  cursor: pointer;
-  margin: 0 1.3vw;
-  font-family: $font-family-black;
-  color: var(--theme-dark-blue);
-  font-size: 0.85vw;
-  margin: 2vh 1.8vw;
-  width: 13vw;
-  height: max-content;
-  @extend %flexCenter;
-  flex-direction: column;
-  letter-spacing: 0.3vw;
+.create-user-button-wrap {
+  padding-top: 1vh;
+  .create-user-button {
+    cursor: pointer;
+    position: relative;
+    margin: 0 1.3vw;
+    font-family: $font-family-black;
+    color: var(--theme-dark-blue);
+    font-size: 1.2vw;
+    margin-left: 0.5vw;
+    width: 20vw;
+    height: max-content;
+    letter-spacing: 0;
 
-  > img {
-    width: 32%;
-    height: 32%;
+    $height: 2.5vw;
+
+    .circle {
+      border-radius: 50%;
+      background: var(--theme-dark-blue);
+      width: $height;
+      height: $height;
+      padding: 0.4vw;
+      color: var(--white);
+      display: inline-block;
+
+      svg {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .label {
+      position: absolute;
+      @extend %flexCenter;
+      left: $height;
+      top: 0;
+      height: $height;
+      width: 9.7vw;
+    }
   }
 }
