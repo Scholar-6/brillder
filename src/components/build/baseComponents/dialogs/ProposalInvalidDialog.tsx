@@ -1,5 +1,5 @@
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
+import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 
 
 interface DialogProps {
@@ -11,7 +11,7 @@ interface DialogProps {
 
 const ProposalInvalidDialog: React.FC<DialogProps> = (props) => {
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
+    <BaseDialogWrapper open={props.isOpen} close={props.close} submit={props.hide}>
       <div className="dialog-header">
         <div>Your proposal is incomplete.</div>
         <div>Click through and fill in any fields marked in red.</div>
@@ -26,7 +26,7 @@ const ProposalInvalidDialog: React.FC<DialogProps> = (props) => {
           <span>Save & Exit</span>
         </button>
       </div>
-    </Dialog>
+    </BaseDialogWrapper>
   );
 }
 
