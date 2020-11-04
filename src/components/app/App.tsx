@@ -40,6 +40,7 @@ import { setupZendesk } from 'components/services/zendesk';
 import map from 'components/map';
 import { isMobile } from 'react-device-detect';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
+import TeachPage from 'components/backToWorkPage/components/teach/TeachPage';
 
 const App: React.FC = () => {
   setBrillderTitle();
@@ -119,7 +120,8 @@ const App: React.FC = () => {
         <StudentRoute path="/my-library" component={Library} />
         <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
 
-        <BuildRoute path="/manage-classrooms" component={ManageClassrooms} location={location} />
+        <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
+        <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />
         <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
 
         <BuildBrickRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
