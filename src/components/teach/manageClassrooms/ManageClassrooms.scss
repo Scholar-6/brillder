@@ -4,9 +4,6 @@
 
 .manage-classrooms-page {
   $base-filter-padding-left: 2vw;
-  .users-table {
-    padding-top: 2vh;
-  }
   .manage-classrooms-filter {
     height: calc(94vh - #{$page-head-height} - 5.9vh - 6.5vw) !important;
     overflow: auto;
