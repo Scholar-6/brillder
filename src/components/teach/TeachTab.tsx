@@ -16,7 +16,7 @@ const TeachTab: React.FC<TabProps> = ({ history, activeTab }) => {
     return (
       <div className={className} onClick={() => history.push(map.TeachAssignedTab)}>
         <div>
-          <span>Assigned</span>
+          <span>Assignments</span>
         </div>
       </div>
     )
