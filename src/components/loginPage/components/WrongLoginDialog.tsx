@@ -1,5 +1,5 @@
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
+import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 
 interface WrongLoginDialogProps {
   isOpen: boolean;
@@ -9,7 +9,7 @@ interface WrongLoginDialogProps {
 
 const WrongLoginDialog: React.FC<WrongLoginDialogProps> = props => {
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
+    <BaseDialogWrapper open={props.isOpen} close={props.close} submit={props.submit}>
       <div className="dialog-header">
         <div>We don't appear to have a record of you yet</div>
         <div>Sign up?</div>
@@ -22,7 +22,7 @@ const WrongLoginDialog: React.FC<WrongLoginDialogProps> = props => {
           <span>No</span>
         </button>
       </div>
-    </Dialog>
+    </BaseDialogWrapper>
   );
 };
 

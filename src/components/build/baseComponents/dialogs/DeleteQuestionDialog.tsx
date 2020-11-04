@@ -1,5 +1,5 @@
 import React from "react";
-import Dialog from '@material-ui/core/Dialog';
+import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 
 
 interface DeleteQuestionDialogProps {
@@ -13,7 +13,7 @@ const DeleteQuestionDialog: React.FC<DeleteQuestionDialogProps> = ({
   open, index, setDialog, deleteQuestion
 }) => {
   return (
-    <Dialog open={open} onClose={() => setDialog(false)} className="dialog-box">
+    <BaseDialogWrapper open={open} close={() => setDialog(false)} submit={() => deleteQuestion(index)}>
       <div className="dialog-header">
         <div>Permanently delete<br />this question?</div>
       </div>
@@ -27,7 +27,7 @@ const DeleteQuestionDialog: React.FC<DeleteQuestionDialogProps> = ({
           <span>No, keep</span>
         </button>
       </div>
-    </Dialog>
+    </BaseDialogWrapper>
   );
 }
 
