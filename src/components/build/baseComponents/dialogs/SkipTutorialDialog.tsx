@@ -1,5 +1,5 @@
 import React from "react";
-import Dialog from '@material-ui/core/Dialog';
+import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 
 
 interface SkipTutorialDialogProps {
@@ -12,7 +12,7 @@ const SkipTutorialDialog: React.FC<SkipTutorialDialogProps> = ({
   open, skip, close
 }) => {
   return (
-    <Dialog open={open} onClose={close} className="dialog-box">
+    <BaseDialogWrapper open={open} close={close} submit={skip}>
       <div className="dialog-header">
         <div>Skip tutorial?</div>
       </div>
@@ -26,7 +26,7 @@ const SkipTutorialDialog: React.FC<SkipTutorialDialogProps> = ({
           <span>No</span>
         </button>
       </div>
-    </Dialog>
+    </BaseDialogWrapper>
   );
 }
 

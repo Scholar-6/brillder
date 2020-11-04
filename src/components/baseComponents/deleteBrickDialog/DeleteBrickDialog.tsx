@@ -1,10 +1,10 @@
 import React from "react";
 import axios from 'axios';
-import Dialog from "@material-ui/core/Dialog";
 import actions from 'redux/actions/requestFailed';
 import { connect } from 'react-redux';
 
 import "./DeleteBrickDialog.scss";
+import BaseDialogWrapper from "../dialogs/BaseDialogWrapper";
 
 
 interface DeleteDialogProps {
@@ -28,7 +28,7 @@ const DeleteBrickDialog: React.FC<DeleteDialogProps> = (props) => {
   }
 
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
+    <BaseDialogWrapper open={props.isOpen} close={props.close} submit={deleteBrick}>
       <div className="dialog-header">
         <div>Permanently delete<br />this brick?</div>
       </div>
@@ -41,7 +41,7 @@ const DeleteBrickDialog: React.FC<DeleteDialogProps> = (props) => {
           <span>No, keep</span>
         </button>
       </div>
-    </Dialog>
+    </BaseDialogWrapper>
   );
 }
 

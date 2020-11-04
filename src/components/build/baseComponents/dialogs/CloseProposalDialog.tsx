@@ -1,5 +1,5 @@
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
+import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 
 
 interface CloseProposalDialogProps {
@@ -9,8 +9,9 @@ interface CloseProposalDialogProps {
 }
 
 const CloseProposalDialog: React.FC<CloseProposalDialogProps> = (props) => {
+  const {close} = props;
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
+    <BaseDialogWrapper open={props.isOpen} close={close} submit={props.move}>
       <div className="dialog-header">
         <div className="text-center">Exit?</div>
       </div>
@@ -24,7 +25,7 @@ const CloseProposalDialog: React.FC<CloseProposalDialogProps> = (props) => {
           <span>No</span>
         </button>
       </div>
-    </Dialog>
+    </BaseDialogWrapper>
   );
 }
 
