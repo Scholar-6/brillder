@@ -16,6 +16,11 @@
         max-width: $size;
       }
       .ck-color-grid__tile {
+        $size: 1.25vw;
+        min-height: $size;
+        max-height: $size;
+        min-width: $size;
+        max-width: $size;
         border-radius: 0.15vw;
       }
     }
