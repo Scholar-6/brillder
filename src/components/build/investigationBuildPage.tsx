@@ -201,6 +201,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       if (parsedQuestions.length > 0) {
         let buildQuestion = GetCashedBuildQuestion();
         if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
+          parsedQuestions.forEach(q => q.active = false);
           parsedQuestions[buildQuestion.questionNumber].active = true;
         } else {
           parsedQuestions[0].active = true;
