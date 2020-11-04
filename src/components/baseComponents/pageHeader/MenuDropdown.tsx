@@ -217,8 +217,8 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       {renderManageUsersItem()}
       {renderManageClassesItem()}
       {renderProfileItem()}
-      {renderMyLibraryItem()}
       <Hidden only={['sm', 'md', 'lg', 'xl']}>
+        {renderMyLibraryItem()}
         <FullScreenButton />
       </Hidden>
       {/*
