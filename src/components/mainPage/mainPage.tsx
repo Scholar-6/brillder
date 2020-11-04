@@ -179,8 +179,12 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     );
   }
 
-  renderStudentWorkButton() {
+  renderStudentWorkButton(isMobile: boolean = false) {
     let isActive = this.state.backWorkActive;
+    let disabledColor = 'text-theme-dark-blue';
+    if (isMobile) {
+      disabledColor = 'text-theme-light-blue';
+    }
     return (
       <div className="back-item-container student-back-work" onClick={() => {
         if (isActive) {
@@ -189,7 +193,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           this.setState({isBackToWorkOpen: true});
         }
       }}>
-        <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : 'text-theme-dark-blue'}`}>
+        <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : disabledColor}`}>
           <SpriteIcon name="student-back-to-work"/>
           <span className={`item-description ${isActive ? '' : 'disabled'}`}>Back To Work</span>
         </button>
@@ -223,9 +227,14 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     return this.renderWorkButton();
   }
 
-  renderWorkButton() {
+  renderWorkButton(isMobile: boolean = false) {
     let isAdmin = checkAdmin(this.props.user.roles);
     let isActive = isAdmin || this.state.isBuilderActive;
+
+    let disabledColor = 'text-theme-dark-blue';
+    if (isMobile) {
+      disabledColor = 'text-theme-light-blue';
+    }
 
     return (
       <div className="back-item-container" onClick={() => {
@@ -235,7 +244,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           this.setState({isBuilderBackWorkOpen: true});
         }
       }}>
-        <button className={`btn btn-transparent ${isActive ? 'text-theme-orange zoom-item' : 'text-theme-dark-blue'}`}>
+        <button className={`btn btn-transparent ${isActive ? 'text-theme-orange zoom-item' : disabledColor}`}>
           <SpriteIcon name="student-back-to-work" />
           <span className={`item-description ${isActive ? '' : 'disabled'}`}>Back To Work</span>
         </button>
@@ -359,13 +368,13 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           >
             <SwiperSlide><FirstButton user={user} history={this.props.history} /></SwiperSlide>
             {(this.state.isBuilder || this.state.isAdmin) && <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>}
-            {(this.state.isBuilder || this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>}
+            {(this.state.isBuilder || this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderWorkButton(true)}</SwiperSlide>}
             {(this.state.isTeacher || this.state.isAdmin) && <SwiperSlide><TeachButton history={this.props.history} /></SwiperSlide>}
             {(this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderReportsButton(false)}</SwiperSlide>}
             {(this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderLiveAssignmentButton(false)}</SwiperSlide>}
             {(this.state.isStudent || this.state.isTeacher) && <SwiperSlide>{this.renderTryBuildButton(user.hasPlayedBrick)}</SwiperSlide>}
             {this.state.isStudent && <SwiperSlide>{this.renderLibraryButton()}</SwiperSlide>}
-            {this.state.isStudent && <SwiperSlide>{this.renderStudentWorkButton()}</SwiperSlide>}
+            {this.state.isStudent && <SwiperSlide>{this.renderStudentWorkButton(true)}</SwiperSlide>}
           </Swiper>
           <button className="btn btn-transparent next-image svgOnHover" onClick={() => this.swipeNext()}>
             <SpriteIcon name="arrow-down" className="w100 h100 active text-white" />
