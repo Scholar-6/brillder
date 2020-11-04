@@ -80,7 +80,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
     return (
       <div className="upper-part">
         <div className={!searchVisible ? "page-header" : "page-header active"}>
-          <Hidden only={['sm', 'md', 'lg', 'xl',]}>
+          <Hidden only={['sm', 'md', 'lg', 'xl']}>
             <div className="logout-container">
 
               {!searchVisible &&
