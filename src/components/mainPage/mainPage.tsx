@@ -12,7 +12,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { clearProposal } from "localStorage/proposal";
 import map from 'components/map';
 import { Notification } from 'model/notifications';
-import { canTeach, checkAdmin } from "components/services/brickService";
+import { checkAdmin } from "components/services/brickService";
 
 import WelcomeComponent from './WelcomeComponent';
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
