@@ -29,6 +29,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 import { getBrickColor } from "services/brick";
+import { isMobile } from "react-device-detect";
 
 
 interface BricksListProps {
@@ -197,8 +198,18 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
-  move(brickId: number) {
+  moveToPlay(brickId: number) {
     this.props.history.push(`/play/brick/${brickId}/intro`);
+  }
+
+  move(brickId: number) {
+    if (isMobile) {
+      document.body.requestFullscreen().then(() => {
+        this.moveToPlay(brickId);
+      });
+    } else {
+      this.moveToPlay(brickId);
+    }
   }
 
   handleSortChange = (e: any) => {

@@ -13,6 +13,8 @@ import { clearProposal } from 'localStorage/proposal';
 import { ProposalSubject } from "components/map";
 import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
 import SpriteIcon from "../SpriteIcon";
+import { Hidden } from "@material-ui/core";
+import FullScreenButton from "./fullScreenButton/FullScreen";
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(actions.forgetBrick())
@@ -33,6 +35,7 @@ interface MenuDropdownProps {
 const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const { page } = props;
   const {hasPlayedBrick} = props.user;
+  const [state, setState] = React.useState(false);
 
   let isStudent = false;
   if (props.user.rolePreference?.roleId === UserType.Student) {
@@ -214,6 +217,9 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       {renderManageClassesItem()}
       {renderProfileItem()}
       {renderMyLibraryItem()}
+      <Hidden only={['sm', 'md', 'lg', 'xl']}>
+        <FullScreenButton />
+      </Hidden>
       {/*
       {renderReportsItem()}
       {renderLiveAssignmentItem()}
