@@ -47,7 +47,6 @@
           width: 100%;
           border: none;
           thead {
-            background: var(--tab-gray);
             color: var(--theme-dark-blue);
             font-family: $font-family-black;
             font-size: 1.3vw;
@@ -69,6 +68,7 @@
               }
 
               .subject-title {
+                padding-left: 1vw;
                 width: 5%;
               }
               .user-full-name {
@@ -88,7 +88,7 @@
             &.user-row {
               height: 4.4vh;
               font-family: $font-family-regular;
-              &:nth-child(even) {
+              &:nth-child(odd) {
                 background: var(--tab-gray);
               }
               td {
