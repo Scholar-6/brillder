@@ -1,6 +1,7 @@
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { User, UserType } from "model/user";
 import React from "react";
+import { isMobile } from "react-device-detect";
 
 interface FirstButtonProps {
   user: User;
@@ -22,7 +23,13 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
   }
 
   return (
-    <div className="view-item-container zoom-item" onClick={() => props.history.push("/play/dashboard")}>
+    <div className="view-item-container zoom-item" onClick={() => {
+      if (isMobile) {
+        props.history.push("/play/dashboard/1");
+      } else {
+        props.history.push("/play/dashboard");
+      }
+    }}>
       <div className="eye-glass-icon">
         <div className="svgOnHover">
           <SpriteIcon name="glasses-home" className="active text-theme-orange" />

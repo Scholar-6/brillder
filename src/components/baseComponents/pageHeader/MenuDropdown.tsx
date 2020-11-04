@@ -15,6 +15,7 @@ import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickServic
 import SpriteIcon from "../SpriteIcon";
 import { Hidden } from "@material-ui/core";
 import FullScreenButton from "./fullScreenButton/FullScreen";
+import { isMobile } from "react-device-detect";
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(actions.forgetBrick())
@@ -54,7 +55,13 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       return (
         <MenuItem
           className="first-item menu-item"
-          onClick={() => move("/play/dashboard")}
+          onClick={() => {
+            if (isMobile) {
+              move("/play/dashboard/1");
+            } else {
+              move("/play/dashboard");
+            }
+          }}
         >
           <span className="menu-text">View All Bricks</span>
           <div className="btn btn-transparent svgOnHover">
