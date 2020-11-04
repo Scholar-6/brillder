@@ -10,7 +10,7 @@ import { PageEnum } from "./PageHeadWithMenu";
 import { clearProposal } from 'localStorage/proposal';
 
 
-import { ProposalSubject } from "components/map";
+import map, { ProposalSubject } from "components/map";
 import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
 import SpriteIcon from "../SpriteIcon";
 import { Hidden } from "@material-ui/core";
@@ -109,7 +109,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       }
       if (canSee) {
         return (
-          <MenuItem className="menu-item" onClick={() => move('/manage-classrooms')}>
+          <MenuItem className="menu-item" onClick={() => move(map.ManageClassroomsTab)}>
             <span className="menu-text">Manage Classes</span>
             <div className="btn btn-transparent svgOnHover">
               <SpriteIcon name="manage-class" className="active text-white" />

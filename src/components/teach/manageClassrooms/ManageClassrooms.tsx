@@ -285,14 +285,14 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderViewAllFilter() {
-    let className = "index-box";
+    let className = "index-box item-box2";
     if (!this.state.activeClassroom) {
       className += " active";
     }
     return (
       <div className={className} onClick={() => this.unselectClasses()}>
         View All
-        <div className="right-index">
+        <div className="right-index right-index2">
           {this.state.users.length}
           <SpriteIcon name="users" className="active" />
           <div className="classrooms-box">
@@ -315,17 +315,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
           + Create Class
         </div>
-        <div className="indexes-box">
+        <div className="indexes-box manage-classrooms-filter">
           {this.renderViewAllFilter()}
           {this.state.classrooms.map((c, i) => {
-            let className = "index-box";
+            let className = "index-box item-box2";
             if (c.isActive) {
               className += " active";
             }
             return (
               <div key={i} className={className} onClick={() => this.setActiveClassroom(c)}>
                 {c.name}
-                <div className="right-index">
+                <div className="right-index right-index2">
                   {c.students.length}
                   <SpriteIcon name="users" className="active" />
                   <SpriteIcon
@@ -439,7 +439,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     users = this.getUsersByPage(users);
 
     return (
-      <div className="main-listing user-list-page manage-classrooms-page">
+      <div className="main-listing user-list-page manage-classrooms-page manage-classrooms-checkboxes">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
           placeholder="Search by Name, Email or Subject"
@@ -453,7 +453,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             {this.renderSortAndFilterBox()}
           </Grid>
           <Grid item xs={9} className="brick-row-container">
-            <TeachTab activeTab={TeachActiveTab.Students} setTab={() => {}} />
+            <TeachTab history={history} activeTab={TeachActiveTab.Students} />
             <div className="tab-content">
               <AddButton history={history} isAdmin={this.state.isAdmin} />
               <StudentTable

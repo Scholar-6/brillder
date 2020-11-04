@@ -1,30 +1,31 @@
+import map from "components/map";
 import React from "react";
-import { TeachActiveTab } from "./interface";
 
+import { TeachActiveTab } from "./interface";
 
 interface TabProps {
   activeTab: TeachActiveTab;
-  setTab(tab: TeachActiveTab): void;
+  history: any;
 }
 
-const TeachTabComponent: React.FC<TabProps> = ({ activeTab, setTab }) => {
+const TeachTab: React.FC<TabProps> = ({ history, activeTab }) => {
   const isActive = (t1: TeachActiveTab, t2: TeachActiveTab) => t1 === t2 ? 'active' : '';
 
-  const getAssignmentsTab = () => {
+  const assignedTab = () => {
     const className = isActive(activeTab, TeachActiveTab.Assignments);
     return (
-      <div key={1} className={className} onClick={() => setTab(TeachActiveTab.Assignments)}>
+      <div className={className} onClick={() => history.push(map.TeachAssignedTab)}>
         <div>
-          <span>Assignments</span>
+          <span>Assigned</span>
         </div>
       </div>
     )
   }
 
-  const getStudentsTab = () => {
+  const manageClassesTab = () => {
     const className = isActive(activeTab, TeachActiveTab.Students);
     return (
-      <div key={2} className={className} onClick={() => setTab(TeachActiveTab.Students)}>
+      <div className={className} onClick={() => history.push(map.ManageClassroomsTab)}>
         <div style={{display: 'flex'}}>
           <span>Students</span>
         </div>
@@ -34,10 +35,10 @@ const TeachTabComponent: React.FC<TabProps> = ({ activeTab, setTab }) => {
 
   return (
     <div className="tab-container">
-      {getAssignmentsTab()}
-      {getStudentsTab()}
+      {assignedTab()}
+      {manageClassesTab()}
     </div>
   )
 }
 
-export default TeachTabComponent;
+export default TeachTab;
