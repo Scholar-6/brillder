@@ -42,8 +42,6 @@ import { applyBrickDiff, getBrickDiff } from "components/services/diff";
 import UndoRedoService from "components/services/UndoRedoService";
 import { Brick } from "model/brick";
 
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
-import PlayButton from './baseComponents/PlayButton';
 import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
 import TutorialWorkArea, { TutorialStep } from './tutorial/TutorialPanelWorkArea';
 import QuestionTypePage from "./questionType/questionType";
@@ -66,7 +64,7 @@ import HighlightInvalidDialog from './baseComponents/dialogs/HighlightInvalidDia
 import HintInvalidDialog from './baseComponents/dialogs/HintInvalidDialog';
 import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialog';
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
-import SaveDialog from "./baseComponents/dialogs/SaveDialog";
+import BuildNavigation from "./baseComponents/BuildNavigation";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -109,7 +107,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   ] as Question[]);
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
-  const [saveDialogOpen, setSaveDialog] = React.useState(false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
   const [invalidHint, setInvalidHint] = React.useState({
@@ -750,12 +747,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   return (
     <div className="investigation-build-page">
-      <HomeButton onClick={() => setSaveDialog(true)} />
-      <PlayButton
+      <BuildNavigation
         tutorialStep={step}
         isTutorialSkipped={isTutorialPassed()}
         isValid={isValid}
-        onClick={moveToReview}
+        moveToReview={moveToReview}
+        history={history}
+        brickId={brickId}
+        exitAndSave={exitAndSave}
       />
       <Hidden only={['xs', 'sm']}>
         <TutorialLabels isTutorialPassed={isTutorialPassed()} tooltipsOn={tooltipsOn} />
@@ -874,7 +873,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             setSkipDialog(false);
           }}
         />
-        <SaveDialog open={saveDialogOpen} close={()=> setSaveDialog(false)} save={exitAndSave} />
       </Hidden>
       <Hidden only={['md', 'lg', 'xl']}>
         <div className="blue-page">
