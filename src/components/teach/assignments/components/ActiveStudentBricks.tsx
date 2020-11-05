@@ -5,7 +5,7 @@ import { getStudentAssignments } from "services/axios/brick";
 import { Subject } from "model/brick";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
-import BackPagePagination from "../../BackPagePagination";
+import BackPagePagination from "../../../backToWorkPage/components/BackPagePagination";
 import { getAssignmentStats } from "services/axios/stats";
 import ExpandedStudentAssignment from "./ExpandedStudentAssignment";
 

@@ -40,7 +40,7 @@ import { setupZendesk } from 'components/services/zendesk';
 import map from 'components/map';
 import { isMobile } from 'react-device-detect';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
-import TeachPage from 'components/backToWorkPage/components/teach/TeachPage';
+import TeachPage from 'components/teach/assignments/TeachPage';
 
 const App: React.FC = () => {
   setBrillderTitle();
