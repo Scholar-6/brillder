@@ -9,8 +9,9 @@ import SendToPublisherDialog from "./dialogs/SendToPublisherDialog";
 import SendPublisherSuccessDialog from "components/playPreview/finalStep/SendPublisherSuccess";
 
 export interface ButtonProps {
-  history: any;
+  disabled: boolean;
   brickId: number;
+  onFinish(): void;
 
   // redux
   sendedToPublisher: boolean;
@@ -23,9 +24,18 @@ export interface ButtonProps {
 const SendToPublisherButton: React.FC<ButtonProps> = props => {
   const [isOpen, setState] = React.useState(false);
 
+  let className = 'send-to-publisher-button';
+  if (props.disabled) {
+    className += ' disabled';
+  }
+
   return (
     <div>
-      <div className="send-to-publisher-button" onClick={() => setState(true)}>
+      <div className={className} onClick={() => {
+        if (!props.disabled) {
+          setState(true);
+        }
+      }}>
         <SpriteIcon name="send" />
       </div>
       <SendToPublisherDialog isOpen={isOpen} close={() => setState(false)} submit={async () => {
@@ -34,7 +44,10 @@ const SendToPublisherButton: React.FC<ButtonProps> = props => {
       }} />
       <SendPublisherSuccessDialog
         isOpen={props.sendedToPublisher && props.publisherConfirmed === false}
-        close={() => props.sendToPublisherConfirmed()}
+        close={() => {
+          props.sendToPublisherConfirmed();
+          props.onFinish();
+        }}
       />
     </div>
   );

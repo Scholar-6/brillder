@@ -299,7 +299,7 @@ $space-between-boxes: 0.1vw;
   $margin: 1.4vw;
   z-index: 9999999;
   right: $margin;
-  top: calc(#{$margin} + #{$size} + #{$margin});
+  top: calc(#{$margin} + #{$size} + #{$margin} + 0.7vw);
 
   .send-to-publisher-button,
   .build-publish-button,
@@ -319,6 +319,20 @@ $space-between-boxes: 0.1vw;
       stroke-width: 2;
       height: 100%;
       width: 100%;
+    }
+
+    &.disabled {
+      cursor: inherit;
+      background: var(--theme-light-blue);
+      color: var(--white);
+    }
+
+    &.send-to-publisher-button {
+      svg {
+        margin-top: 5%;
+        height: 95%;
+        width: 90%;
+      }
     }
   }
 }
