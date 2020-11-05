@@ -15,14 +15,12 @@ interface SendPublisherProps {
 const SendPublisherSuccessDialog: React.FC<SendPublisherProps> = props => {
   return (
     <Dialog
-      open={props.isOpen}
-      onClick={props.close}
-      onClose={props.close}
+      open={props.isOpen} onClick={props.close} onClose={props.close}
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
         <ListItem>
-          <ListItemText primary="Sended to Publisher!" className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemText primary="Sent to Publisher!" className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="circle-check">
               <svg className="svg active" style={{marginLeft: 0, marginTop: '0.3vw', marginRight: '0.3vw'}}>
