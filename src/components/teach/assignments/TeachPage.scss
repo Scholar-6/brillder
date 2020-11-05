@@ -7,6 +7,10 @@
     height: 100%;
   }
 
+  .classroom-list {
+    padding-top: calc(3vh + 1.5vw);
+  }
+
   .index-box {
     @extend %flexToYCenter;
     // padding-top: 0 !important;
