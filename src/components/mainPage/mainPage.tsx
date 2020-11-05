@@ -77,6 +77,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   constructor(props: MainPageProps) {
     super(props);
 
+    const {rolePreference} = props.user;
+
+    const isStudent = rolePreference?.roleId === UserType.Student;
+    const isBuilder = rolePreference?.roleId === UserType.Builder;
+
     this.state = {
       createHober: false,
       backHober: false,
@@ -90,20 +95,19 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isBuilderActive: false,
       isBuilderBackWorkOpen: false,
 
-      isTeacher: props.user.rolePreference?.roleId === UserType.Teacher,
+      isTeacher: rolePreference?.roleId === UserType.Teacher,
       isAdmin: checkAdmin(props.user.roles),
-      isStudent: props.user.rolePreference?.roleId === UserType.Student,
-      isBuilder: props.user.rolePreference?.roleId === UserType.Builder,
+      isStudent,
+      isBuilder,
 
       isDesktopOpen: false,
       secondaryLabel: '',
       secondPart: ' not yet been optimised for mobile devices.'
     } as any;
 
-    const {rolePreference} = props.user;
-    if (rolePreference?.roleId === UserType.Student) {
+    if (isStudent) {
       this.preparationForStudent();
-    } else if (rolePreference?.roleId === UserType.Builder) {
+    } else if (isBuilder) {
       this.preparationForBuilder();
     }
   }
@@ -202,27 +206,19 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderSecondButton() {
-    const { rolePreference } = this.props.user;
-    if (rolePreference) {
-      const {roleId} = rolePreference;
-      if (roleId === UserType.Teacher) {
-        return <TeachButton history={this.props.history} />
-      } else if (roleId === UserType.Student) {
-        return this.renderStudentWorkButton();
-      }
+    if (this.state.isTeacher || this.state.isAdmin) {
+      return <TeachButton history={this.props.history} />
+    } else if (this.state.isStudent) {
+      return this.renderStudentWorkButton();
     }
     return this.renderCreateButton();
   }
 
   renderThirdButton() {
-    const { rolePreference } = this.props.user;
-    if (rolePreference) {
-      const {roleId} = rolePreference;
-      if (roleId === UserType.Teacher) {
-        return this.renderTryBuildButton(true);
-      } else if (roleId === UserType.Student) {
-        return this.renderLibraryButton();
-      }
+    if (this.state.isTeacher) {
+      return this.renderTryBuildButton(true);
+    } else if (this.state.isStudent) {
+      return this.renderLibraryButton();
     }
     return this.renderWorkButton();
   }
@@ -299,7 +295,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderRightButton() {
-    if (this.props.user.rolePreference?.roleId === UserType.Builder) {
+    if (this.state.isBuilder) {
       let isActive = false;
       return (
         <div className="create-item-container">
@@ -310,29 +306,20 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         </div>
       );
     }
-    const { rolePreference } = this.props.user;
     let isActive = this.props.user.hasPlayedBrick;
-    if (rolePreference) {
-      const {roleId} = rolePreference;
-      if (roleId === UserType.Teacher) {
-        return this.renderLiveAssignmentButton(false);
-      } else if (roleId === UserType.Student) {
-        return this.renderTryBuildButton(isActive);
-      }
-    }
     if (this.state.isTeacher) {
-      return <TeachButton history={this.props.history} />
+      return this.renderLiveAssignmentButton(false);
+    } else if (this.state.isStudent) {
+      return this.renderTryBuildButton(isActive);
+    } else if (this.state.isAdmin) {
+      return this.renderCreateButton();
     }
     return "";
   }
 
   renderRightBottomButton() {
-    const { rolePreference } = this.props.user;
-    if (rolePreference) {
-      const {roleId} = rolePreference;
-      if (roleId === UserType.Teacher) {
-        return this.renderReportsButton(false);
-      }
+    if (this.state.isTeacher) {
+      return this.renderReportsButton(false);
     }
     return "";
   }
@@ -408,7 +395,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           </div>
           <div className="second-item"></div>
         </div>
-        {this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Teacher ?
+        {this.state.isTeacher ?
           <div className="second-col">
             <div>
               {this.renderRightButton()}
