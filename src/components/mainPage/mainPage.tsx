@@ -65,7 +65,6 @@ interface MainPageState {
 
   // for builder
   isBuilderActive: boolean;
-  isBuilderBackWorkOpen: boolean;
 
   // for mobile popopup
   isDesktopOpen: boolean;
@@ -93,7 +92,6 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isBackToWorkOpen: false,
       isTryBuildOpen: false,
       isBuilderActive: false,
-      isBuilderBackWorkOpen: false,
 
       isTeacher: rolePreference?.roleId === UserType.Teacher,
       isAdmin: checkAdmin(props.user.roles),
@@ -223,26 +221,14 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     return this.renderWorkButton();
   }
 
-  renderWorkButton(isMobile: boolean = false) {
-    let isAdmin = checkAdmin(this.props.user.roles);
-    let isActive = isAdmin || this.state.isBuilderActive;
-
-    let disabledColor = 'text-theme-dark-blue';
-    if (isMobile) {
-      disabledColor = 'text-theme-light-blue';
-    }
-
+  renderWorkButton() {
     return (
       <div className="back-item-container" onClick={() => {
-        if (isActive) {
-          this.props.history.push("/back-to-work");
-        } else {
-          this.setState({isBuilderBackWorkOpen: true});
-        }
+        this.props.history.push("/back-to-work");
       }}>
-        <button className={`btn btn-transparent ${isActive ? 'text-theme-orange zoom-item' : disabledColor}`}>
+        <button className="btn btn-transparent text-theme-orange zoom-item">
           <SpriteIcon name="student-back-to-work" />
-          <span className={`item-description ${isActive ? '' : 'disabled'}`}>Back To Work</span>
+          <span className="item-description">Back To Work</span>
         </button>
       </div>
     );
@@ -355,7 +341,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           >
             <SwiperSlide><FirstButton user={user} history={this.props.history} /></SwiperSlide>
             {(this.state.isBuilder || this.state.isAdmin) && <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>}
-            {(this.state.isBuilder || this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderWorkButton(true)}</SwiperSlide>}
+            {(this.state.isBuilder || this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>}
             {(this.state.isTeacher || this.state.isAdmin) && <SwiperSlide><TeachButton history={this.props.history} /></SwiperSlide>}
             {(this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderReportsButton(false)}</SwiperSlide>}
             {(this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderLiveAssignmentButton(false)}</SwiperSlide>}
@@ -437,10 +423,6 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           label="Play a brick to unlock this feature"
           isOpen={this.state.isTryBuildOpen}
           close={() => this.setState({isTryBuildOpen: false})} />
-        <LockedDialog
-          label="Start Building to unlock this feature"
-          isOpen={this.state.isBuilderBackWorkOpen}
-          close={() => this.setState({isBuilderBackWorkOpen: false})} />
         <DesktopVersionDialogV2
           isOpen={this.state.isDesktopOpen} secondaryLabel={this.state.secondaryLabel}
           onClick={() => this.setState({isDesktopOpen: false})}

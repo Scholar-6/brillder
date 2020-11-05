@@ -194,8 +194,10 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
       <Grid container direction="row" className="sorted-row personal-build">
         <FilterSidebar
           draft={draft}
+          history={this.props.history}
           selfPublish={selfPublish}
           bricks={bricks}
+          isEmpty={this.state.bricks.length === 0}
           filters={this.state.filters}
           setFilters={this.setFilters.bind(this)}
         />

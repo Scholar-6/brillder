@@ -588,10 +588,12 @@ class BuildPage extends Component<BuildProps, BuildState> {
       <Grid container direction="row" className="sorted-row">
         <FilterSidebar
           userId={this.props.user.id}
+          history={this.props.history}
           finalBricks={finalBricks}
           threeColumns={threeColumns}
           filters={this.state.filters}
           sortBy={this.state.sortBy}
+          isEmpty={this.state.rawBricks.length === 0}
           handleSortChange={e => this.handleSortChange(e)}
           showAll={() => this.showAll()}
           showBuildAll={() => this.showBuildAll()}

@@ -3,9 +3,12 @@ import { Grid } from "@material-ui/core";
 import { Brick } from "model/brick";
 import { PersonalFilters, SubjectItem } from "./model";
 import FilterToggle from "./FilterToggle";
+import EmptyFilterSidebar from "../EmptyFilter";
 
 interface FilterSidebarProps {
+  history: any;
   draft: number;
+  isEmpty: boolean;
   selfPublish: number;
   bricks: Brick[];
   filters: PersonalFilters;
@@ -79,6 +82,9 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   };
 
   render() {
+    if (this.props.isEmpty) {
+      return <EmptyFilterSidebar history={this.props.history} />;
+    }
     let subjects:SubjectItem[] = [];
     for (let brick of this.props.bricks) {
       let subject = subjects.find(s => s.id === brick.subject?.id);

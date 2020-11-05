@@ -159,7 +159,7 @@ class BuildBricks extends Component<BuildBricksProps> {
           <div className="bold empty-title">Bricks in this column are draft bricks.</div>
           <div className="italic">
             They will appear here once you have begun a
-            proposal, or when an editor has reviewed and
+            plan, or when an editor has reviewed and
             returned your brick to you.
           </div>
         </div>
