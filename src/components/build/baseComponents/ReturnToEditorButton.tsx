@@ -9,6 +9,7 @@ import ReturnToEditorDialog from "./dialogs/ReturnToEditorDialog";
 import map from "components/map";
 
 export interface ButtonProps {
+  disabled: boolean;
   history: any;
   brick: Brick;
 
@@ -19,9 +20,18 @@ export interface ButtonProps {
 const ReturnToEditorButton: React.FC<ButtonProps> = props => {
   const [isOpen, setState] = React.useState(false);
 
+  let className = 'return-to-editor-button';
+  if (props.disabled) {
+    className += ' disabled';
+  }
+
   return (
     <div>
-      <div className="return-to-editor-button" onClick={() => setState(true)}>
+      <div className={className} onClick={() => {
+        if (!props.disabled) {
+          setState(true);
+        }
+      }}>
         <SpriteIcon name="repeat" />
       </div>
       <ReturnToEditorDialog isOpen={isOpen} close={() => setState(false)} submit={async () => {

@@ -33,7 +33,7 @@ import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
-import { canEditBrick, checkPublisher } from "components/services/brickService";
+import { canEditBrick, checkAdmin, checkPublisher } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { validateProposal } from 'components/proposal/service/validation';
 import { TextComponentObj } from "./buildQuestions/components/Text/interface";
@@ -749,6 +749,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const isCurrentEditor = (props.brick.editors?.findIndex((e:any) => e.id === props.user.id) ?? -1) >= 0;
   const isPublisher = checkPublisher(props.user, props.brick);
+  const isAdmin = checkAdmin(props.user.roles);
 
   return (
     <div className="investigation-build-page">
@@ -759,6 +760,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         moveToReview={moveToReview}
         isEditor={isCurrentEditor}
         isPublisher={isPublisher}
+        isAdmin={isAdmin}
         history={history}
         brick={props.brick}
         exitAndSave={exitAndSave}

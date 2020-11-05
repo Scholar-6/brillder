@@ -23,12 +23,14 @@ interface NavigationProps {
   // other buttons
   isPublisher: boolean;
   isEditor: boolean;
+  isAdmin: boolean;
   history: any;
   brick: Brick;
   exitAndSave(): void;
 }
 
 interface NavigationState {
+  brickStatus: BrickStatus;
   saveDialogOpen: boolean;
 }
 
@@ -37,17 +39,27 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
     super(props);
 
     this.state = {
+      brickStatus: props.brick.status,
       saveDialogOpen: false
     }
   }
 
   renderPublisherButtons() {
     const {brick} = this.props;
-    if (brick.status === BrickStatus.Review && this.props.isPublisher) {
+    let disabled = this.state.brickStatus !== BrickStatus.Review;
+
+    let publishDisabled = this.state.brickStatus === BrickStatus.Publish;
+
+    if (this.props.isPublisher) {
       return (
         <div>
-          <ReturnToEditorButton brick={brick} history={this.props.history} />
-          <BuildPublishButton brick={brick} history={this.props.history} />
+          <ReturnToEditorButton disabled={disabled} brick={brick} history={this.props.history} />
+          <BuildPublishButton
+            disabled={publishDisabled}
+            brick={brick}
+            history={this.props.history}
+            onFinish={() => this.setState({brickStatus: BrickStatus.Publish})}
+            />
         </div>
       );
     }
@@ -56,15 +68,17 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
 
   renderEditorButtons() {
     const {brick} = this.props;
-    if (brick.status === BrickStatus.Build) {
-      return (
-        <div>
-          <ReturnToAuthorButton history={this.props.history} brickId={brick.id} />
-          <SendToPublisherButton history={this.props.history} brickId={brick.id} />
-        </div>
-      );
-    }
-    return '';
+    let disabled = this.state.brickStatus !== BrickStatus.Build;
+    return (
+      <div>
+        <ReturnToAuthorButton disabled={disabled} history={this.props.history} brickId={brick.id} />
+        <SendToPublisherButton
+          disabled={disabled}
+          brickId={brick.id}
+          onFinish={() => this.setState({brickStatus: BrickStatus.Review})}
+        />
+      </div>
+    );
   }
 
   render() {
@@ -84,7 +98,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         />
         <div className="build-navigation-buttons">
           {this.props.isPublisher && this.renderPublisherButtons()}
-          {this.props.isEditor && this.renderEditorButtons()}
+          {(this.props.isEditor || this.props.isAdmin) && this.renderEditorButtons()}
         </div>
       </div>
     );
