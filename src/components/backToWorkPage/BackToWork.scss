@@ -199,6 +199,7 @@
     padding-top: 5.5vh;
     padding-left: 0;
     padding-right: 0;
+
     .users-table {
       width: 100%;
       overflow-y: auto;
@@ -242,10 +243,10 @@
           }
         }
         tr {
-          height: 5vh;
+          height: calc((100vh - 5.834vw - 2vw - 5.2vw - 15vh)/13) !important;
           overflow-y: auto;
           &.user-row {
-            height: 4.4vh;
+            height: calc((100vh - 5.834vw - 2vw - 5.2vw - 15vh)/13) !important;
             font-family: $font-family-regular;
             &:nth-child(even) {
               background: var(--tab-gray);

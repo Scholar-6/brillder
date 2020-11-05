@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Dialog from "@material-ui/core/Dialog";
 
 import "./FailedRequestDialog.scss";
 import { enterPressed } from "components/services/key";
@@ -25,6 +24,7 @@ const ShuffleAnswerDialog: React.FC<ShuffleAnswerDialogProps> = (props) => {
     return function cleanup() {
       document.removeEventListener("keydown", handleMove, false);
     };
+  /*eslint-disable-next-line*/
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { Component } from "react";
 import Dialog from "@material-ui/core/Dialog";
 
 import { enterPressed } from "components/services/key";

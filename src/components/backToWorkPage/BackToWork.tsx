@@ -10,8 +10,6 @@ import actions from 'redux/actions/requestFailed';
 import "./BackToWork.scss";
 import map from 'components/map';
 import { User, UserType } from "model/user";
-import { Subject } from "model/brick";
-import { loadSubjects } from 'components/services/subject';
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import { ActiveTab } from './components/Tab';

@@ -12,6 +12,7 @@ const FullScreenButton: React.FC<Props> = () => {
     document.onfullscreenchange = function () { 
       setState(!state);
     };
+  /*eslint-disable-next-line*/
   }, []);
 
   const fullscreen = document.fullscreenElement;

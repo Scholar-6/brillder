@@ -182,6 +182,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     return "";
   }
 
+  /*eslint-disable-next-line*/
   const renderReportsItem = () => {
     if (page !== PageEnum.MainPage && props.user.rolePreference?.roleId === UserType.Teacher) {
       return (
@@ -196,6 +197,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     return "";
   }
 
+  /*eslint-disable-next-line*/
   const renderLiveAssignmentItem = () => {
     if (page !== PageEnum.MainPage && props.user.rolePreference?.roleId === UserType.Teacher) {
       return (

@@ -124,7 +124,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       userCats.push({choices: choices, name: 'Unsorted'});
 
       this.setState({
-        userCats: userCats,
+        userCats,
         choices: this.getChoices(),
         data: props.component.categories
       });
