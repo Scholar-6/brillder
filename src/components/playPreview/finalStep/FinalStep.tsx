@@ -182,7 +182,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <Grid className="share-row" container direction="row" justify="center">
         {renderInviteColumn()}
-        {status === BrickStatus.Build && renderReturnToAuthorColumn()}
+        {(status === BrickStatus.Build || status === BrickStatus.Review) && renderReturnToAuthorColumn()}
         {status === BrickStatus.Review && renderReturnToEditorsColumn()}
         {status !== BrickStatus.Publish && <PublishColumn onClick={() => publish(brick.id)} />}
       </Grid>
