@@ -505,3 +505,39 @@
     }
   }
 }
+
+.filter-create-button-container {
+  @extend %flexCenter;
+}
+
+.back-hover-area-filter {
+  width: 20vw;
+
+  .create-icon {
+    color: var(--theme-orange) !important;
+  }
+
+  .create-icon:hover {
+    color: var(--white) !important;
+  }
+
+  .text-container {
+    position: relative;
+    letter-spacing: 0.05vw !important;
+    font-family: $font-family-bold !important;
+    font-size: 1.7vw;
+
+    > div {
+      position: absolute;
+      right: -4vw;
+      top: -0.5vw;
+      color: var(--theme-orange);
+
+      svg {
+        $size: 3.6vw;
+        height: $size;
+        width: $size;
+      }
+    }
+  }
+}
