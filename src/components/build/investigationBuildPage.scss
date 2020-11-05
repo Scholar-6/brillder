@@ -292,3 +292,33 @@ $space-between-boxes: 0.1vw;
     }
   }
 }
+
+.send-to-publisher-button,
+.return-to-author-button {
+  position: absolute;
+  $margin: 1.4vw;
+  $size: 4.5vw;
+  top: calc(#{$margin} + #{$size} + #{$margin});
+  right: $margin;
+  height: $size;
+  width: $size;
+  border-radius: 50%;
+
+  cursor: pointer;
+  z-index: 9999999;
+  background: var(--white);
+  color: var(--theme-dark-blue);
+  padding: 0.7vw;
+
+  svg {
+    stroke-width: 2;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.send-to-publisher-button {
+  $margin: 1.4vw;
+  $size: 4.5vw;
+  top: calc(#{$margin} + #{$size} + #{$margin} + #{$size} + #{$margin});
+}
