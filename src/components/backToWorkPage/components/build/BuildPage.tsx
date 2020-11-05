@@ -552,6 +552,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
       threeColumns = this.state.searchThreeColumns;
     }
 
+    const isEmpty = this.state.rawBricks.length === 0;
+
     if (!this.state.filters.isCore) {
       return <PersonalBuild
         user={this.props.user}
@@ -563,6 +565,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
         history={history}
         isTeach={this.state.isTeach || this.state.isAdmin}
         searchString={this.props.searchString}
+        isFilterEmpty={isEmpty}
 
         deleteDialogOpen={this.state.deleteDialogOpen}
         deleteBrickId={this.state.deleteBrickId}
@@ -593,7 +596,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
           threeColumns={threeColumns}
           filters={this.state.filters}
           sortBy={this.state.sortBy}
-          isEmpty={this.state.rawBricks.length === 0}
+          isEmpty={isEmpty}
           handleSortChange={e => this.handleSortChange(e)}
           showAll={() => this.showAll()}
           showBuildAll={() => this.showBuildAll()}

@@ -21,6 +21,7 @@ interface PersonalBuildProps {
   pageSize: number;
   sortedIndex: number;
   history: any;
+  isFilterEmpty: boolean;
   isTeach: boolean;
   searchString: string;
 
@@ -197,7 +198,7 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
           history={this.props.history}
           selfPublish={selfPublish}
           bricks={bricks}
-          isEmpty={this.state.bricks.length === 0}
+          isEmpty={this.props.isFilterEmpty}
           filters={this.state.filters}
           setFilters={this.setFilters.bind(this)}
         />
