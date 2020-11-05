@@ -1,5 +1,5 @@
 import React from "react";
-import Dialog from '@material-ui/core/Dialog';
+import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 
 
 interface SkipTutorialDialogProps {
@@ -12,21 +12,19 @@ const SaveDialog: React.FC<SkipTutorialDialogProps> = ({
   open, save, close
 }) => {
   return (
-    <Dialog open={open} onClose={close} className="dialog-box">
+    <BaseDialogWrapper open={open} close={close} submit={save}>
       <div className="dialog-header">
         <div>Save and Exit?</div>
       </div>
       <div className="dialog-footer">
-        <button className="btn btn-md bg-theme-orange yes-button"
-          onClick={save}>
+        <button className="btn btn-md bg-theme-orange yes-button" onClick={save}>
           <span>Yes</span>
         </button>
-        <button className="btn btn-md bg-gray no-button"
-          onClick={close}>
+        <button className="btn btn-md bg-gray no-button" onClick={close}>
           <span>No</span>
         </button>
       </div>
-    </Dialog>
+    </BaseDialogWrapper>
   );
 }
 

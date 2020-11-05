@@ -9,8 +9,7 @@ import { isMobile } from "react-device-detect";
 
 export enum ActiveTab {
   Play,
-  Build,
-  Teach
+  Build
 }
 
 interface TabProps {
@@ -29,15 +28,6 @@ const TabComponent: React.FC<TabProps> = ({ isTeach, isCore, activeTab, user, se
   const tabs:any[] = [];
 
   const isActive = (t1: ActiveTab, t2: ActiveTab) => t1 === t2 ? 'active' : '';
-
-  const getTeachTab = () => {
-    const className = isActive(activeTab, ActiveTab.Teach);
-    return (
-      <div key={1} className={className} onClick={() => setTab(ActiveTab.Teach)}>
-        <span>Teach</span>
-      </div>
-    )
-  }
 
   const getBuildTab = () => {
     const className = isActive(activeTab, ActiveTab.Build);
@@ -67,9 +57,6 @@ const TabComponent: React.FC<TabProps> = ({ isTeach, isCore, activeTab, user, se
     );
   }
 
-  if (isTeach) {
-    tabs.push(getTeachTab());
-  }
   if (user.rolePreference?.roleId === UserType.Student) {
     tabs.push(getLearnTab());
     if (!isMobile) {

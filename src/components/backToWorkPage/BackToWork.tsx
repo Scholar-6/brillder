@@ -10,24 +10,18 @@ import actions from 'redux/actions/requestFailed';
 import "./BackToWork.scss";
 import map from 'components/map';
 import { User, UserType } from "model/user";
-import { Subject } from "model/brick";
-import { checkTeacher } from "components/services/brickService";
-import { loadSubjects } from 'components/services/subject';
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import { ActiveTab } from './components/Tab';
-import TeachPage from './components/teach/TeachPage';
 import BuildPage from './components/build/BuildPage';
 import PlayPage from './components/play/PlayPage';
 import { getTabLink } from "./service";
-import { isMobile } from "react-device-detect";
 
 interface BackToWorkState {
   searchString: string;
   isSearching: boolean;
   dropdownShown: boolean;
   notificationsShown: boolean;
-  subjects: Subject[];
 }
 
 export interface BackToWorkProps {
@@ -42,11 +36,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   constructor(props: BackToWorkProps) {
     super(props);
 
-    const isTeach = checkTeacher(this.props.user.roles);
-
     this.state = {
-      subjects: [],
-
       searchString: "",
       isSearching: false,
 
@@ -54,31 +44,21 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       notificationsShown: false,
     };
 
-    loadSubjects().then((subjects: Subject[] | null) => {
-      if (!subjects) {
-        this.props.requestFailed('Can`t get subjects');
-        return;
-      }
-      this.setState({ subjects });
-    });
-
     if (props.location.pathname === '/back-to-work') {
-      this.setAutoTab(isTeach);
+      this.setAutoTab();
     }
   }
 
-  getActiveTab(isTeach: boolean) {
+  getActiveTab() {
     let activeTab = ActiveTab.Play;
     if (this.props.user.rolePreference?.roleId === UserType.Builder) {
       activeTab = ActiveTab.Build;
-    } else if (isTeach) {
-      activeTab = ActiveTab.Teach;
     }
     const values = queryString.parse(this.props.location.search);
     if (values.activeTab) {
       try {
         let queryTab = parseInt(values.activeTab as string) as ActiveTab;
-        if (queryTab === ActiveTab.Build || queryTab === ActiveTab.Play || queryTab === ActiveTab.Teach) {
+        if (queryTab === ActiveTab.Build || queryTab === ActiveTab.Play) {
           activeTab = queryTab;
         }
       } catch { }
@@ -86,8 +66,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return activeTab;
   }
 
-  setAutoTab(isTeach: boolean) {
-    const activeTab = this.getActiveTab(isTeach);
+  setAutoTab() {
+    const activeTab = this.getActiveTab();
     const link = getTabLink(activeTab);
     this.props.history.push(link);
   }
@@ -125,15 +105,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           searching={(v: string) => this.searching(v)}
         />
         <Switch>
-          <Route path={map.BackToWorkTeachTab}>
-            <TeachPage
-              history={this.props.history}
-              searchString={this.state.searchString}
-              isSearching={this.state.isSearching}
-              subjects={this.state.subjects}
-              setTab={this.setTab.bind(this)}
-            />
-          </Route>
           <Route path={map.BackToWorkBuildTab}>
             <BuildPage
               isSearching={this.state.isSearching}

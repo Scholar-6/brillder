@@ -189,9 +189,7 @@ export const prepareVisibleAssignments = (sortedIndex: number, pageSize: number,
 
 export const getTabLink = (activeTab: ActiveTab) => {
   let link = map.BackToWorkBuildTab;
-  if (activeTab === ActiveTab.Teach) {
-    link = map.BackToWorkTeachTab;
-  } else if (activeTab === ActiveTab.Play) {
+  if (activeTab === ActiveTab.Play) {
     link = map.BackToWorkLearnTab;
   }
   return link;

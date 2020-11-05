@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Radio } from "@material-ui/core";
 
-import { MUser } from "../../interface";
+import { MUser } from "../../model";
 import { UserSortBy } from '../ManageClassrooms';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 

@@ -4,7 +4,7 @@
 
 .manage-classrooms-page {
   $base-filter-padding-left: 2vw;
-  .indexes-box {
+  .manage-classrooms-filter {
     height: calc(94vh - #{$page-head-height} - 5.9vh - 6.5vw) !important;
     overflow: auto;
     .index-box {
@@ -13,7 +13,7 @@
   }
 
   .brick-row-container {
-    background: var(--white);
+    background: inherit !important;
 
     .brick-row-title {
       padding-top: 0.5vh !important;
@@ -51,7 +51,7 @@
     font-family: $font-family-bold;
   }
 
-  .filter-header {
+  .filter-header2 {
     text-transform: capitalize !important;
     padding-left: $base-filter-padding-left !important;
     font-size: 1vw !important;
@@ -120,16 +120,6 @@
     width: 8vw;
     @extend %radioBlue;
   }
-  .MuiRadio-root.MuiIconButton-root {
-    padding: 0 !important;
-
-    .MuiSvgIcon-root {
-      fill: var(--theme-dark-blue) !important;
-      padding: 0;
-      height: 2vw;
-      width: 2vw;
-    }
-  }
 
   .users-pagination {
     position: absolute;
@@ -137,7 +127,7 @@
     bottom: 0;
   }
 
-  .right-index {
+  .right-index2 {
     padding: 0 !important;
     position: absolute;
     right: 0.7vw !important;
@@ -176,6 +166,19 @@
       display: flex;
       height: 100%;
       @extend %ellipsis;
+    }
+  }
+}
+
+.manage-classrooms-checkboxes {
+  .MuiRadio-root.MuiIconButton-root {
+    padding: 0 !important;
+
+    .MuiSvgIcon-root {
+      fill: var(--theme-dark-blue) !important;
+      padding: 0;
+      height: 2vw;
+      width: 2vw;
     }
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 
-import { MUser } from 'components/teach/interface';
+import { MUser } from 'components/teach/model';
 
 interface UnassignStudentProps {
   student: MUser | null;

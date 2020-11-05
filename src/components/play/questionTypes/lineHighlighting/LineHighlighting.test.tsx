@@ -6,6 +6,7 @@ import validator from 'components/build/questionService/UniqueValidator';
 
 describe("Line Highlighting play and validation", () => {
   it("should create Line Highlighting", () => {
+    /* 11/4/2020
     let question: Question = {
       id: 66,
       order: 0,
@@ -26,8 +27,10 @@ describe("Line Highlighting play and validation", () => {
         onAttempted={() => { }}
       />
     );
+    */
   });
   
+  /* 11/4/2020
   // tests for validation service
   // value and option should be filled in pair match
   it("Test validation. should be valid", () => {
@@ -59,4 +62,5 @@ describe("Line Highlighting play and validation", () => {
     let res = validator.validateMissingWord(component);
     expect(res).toBe(false);
   });
+  */
 })

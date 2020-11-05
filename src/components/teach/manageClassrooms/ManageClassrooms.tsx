@@ -3,9 +3,10 @@ import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import './ManageClassrooms.scss';
+import '../style.scss';
 
 import { User } from "model/user";
-import { MUser } from "../interface";
+import { MUser, TeachActiveTab } from "../model";
 import { deleteClassroom, getStudents } from 'services/axios/classroom';
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
@@ -24,6 +25,7 @@ import DeleteClassDialog from './components/DeleteClassDialog';
 import UnassignStudentDialog from './components/UnassignStudentDialog';
 import RoleDescription from 'components/baseComponents/RoleDescription';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import TeachTab from '../TeachTab';
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -283,14 +285,14 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderViewAllFilter() {
-    let className = "index-box";
+    let className = "index-box item-box2";
     if (!this.state.activeClassroom) {
       className += " active";
     }
     return (
       <div className={className} onClick={() => this.unselectClasses()}>
         View All
-        <div className="right-index">
+        <div className="right-index right-index2">
           {this.state.users.length}
           <SpriteIcon name="users" className="active" />
           <div className="classrooms-box">
@@ -313,17 +315,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
           + Create Class
         </div>
-        <div className="indexes-box">
+        <div className="indexes-box manage-classrooms-filter">
           {this.renderViewAllFilter()}
           {this.state.classrooms.map((c, i) => {
-            let className = "index-box";
+            let className = "index-box item-box2";
             if (c.isActive) {
               className += " active";
             }
             return (
               <div key={i} className={className} onClick={() => this.setActiveClassroom(c)}>
                 {c.name}
-                <div className="right-index">
+                <div className="right-index right-index2">
                   {c.students.length}
                   <SpriteIcon name="users" className="active" />
                   <SpriteIcon
@@ -401,15 +403,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     return users.slice(pageStart, pageStart + this.state.pageSize);
   }
 
-  renderTableHeader() {
-    return (
-      <div className="user-header">
-        <h1 className="brick-row-title">ALL STUDENTS</h1>
-        <AddButton isAdmin={this.state.isAdmin} history={this.props.history} />
-      </div>
-    );
-  }
-
   renderPagination() {
     let { users } = this.state;
     if (this.state.activeClassroom) {
@@ -446,7 +439,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     users = this.getUsersByPage(users);
 
     return (
-      <div className="main-listing user-list-page manage-classrooms-page">
+      <div className="main-listing user-list-page manage-classrooms-page manage-classrooms-checkboxes">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
           placeholder="Search by Name, Email or Subject"
@@ -460,22 +453,25 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             {this.renderSortAndFilterBox()}
           </Grid>
           <Grid item xs={9} className="brick-row-container">
-            {this.renderTableHeader()}
-            <StudentTable
-              users={users}
-              isClassroom={!!this.state.activeClassroom}
-              selectedUsers={this.state.selectedUsers}
-              sortBy={this.state.sortBy}
-              isAscending={this.state.isAscending}
-              sort={sortBy => this.sort(sortBy)}
-              pageStudentsSelected={this.state.pageStudentsSelected}
-              toggleUser={id => this.toggleUser(id)}
-              assignToClass={() => this.openAssignDialog()}
-              unassign={s => this.unassigningStudent(s)}
-              togglePageStudents={() => this.togglePageStudents()}
-            />
-            <RoleDescription />
-            {this.renderPagination()}
+            <TeachTab history={history} activeTab={TeachActiveTab.Students} />
+            <div className="tab-content">
+              <AddButton history={history} isAdmin={this.state.isAdmin} />
+              <StudentTable
+                users={users}
+                isClassroom={!!this.state.activeClassroom}
+                selectedUsers={this.state.selectedUsers}
+                sortBy={this.state.sortBy}
+                isAscending={this.state.isAscending}
+                sort={sortBy => this.sort(sortBy)}
+                pageStudentsSelected={this.state.pageStudentsSelected}
+                toggleUser={id => this.toggleUser(id)}
+                assignToClass={() => this.openAssignDialog()}
+                unassign={s => this.unassigningStudent(s)}
+                togglePageStudents={() => this.togglePageStudents()}
+              />
+              <RoleDescription />
+              {this.renderPagination()}
+            </div>
           </Grid>
         </Grid>
         <AssignClassDialog

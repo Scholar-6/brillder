@@ -75,6 +75,7 @@ const HintComponent: React.FC<HintProps> = ({
     if(props.value) {
       setState({ ...state, value: props.value });
     }
+  /*eslint-disable-next-line*/
   }, [props.value])
 
   if (state.index !== index) {

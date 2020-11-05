@@ -36,6 +36,7 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
     } else {
       setEditors([]);
     }
+  /*eslint-disable-next-line*/
   }, [accessGranted])
 
   const saveEditor = (editorIds: number[]) => {
