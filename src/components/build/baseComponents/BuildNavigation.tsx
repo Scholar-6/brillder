@@ -50,7 +50,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
           save={this.props.exitAndSave}
         />
         <ReturnToAuthorButton history={this.props.history} brickId={this.props.brickId} />
-        <SendToPublisherButton />
+        <SendToPublisherButton history={this.props.history} brickId={this.props.brickId} />
       </div>
     );
   }
