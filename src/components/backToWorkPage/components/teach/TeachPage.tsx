@@ -191,6 +191,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     } else {
       for (const classroom of classrooms) {
         itemsCount += 0.5;
+        /*eslint-disable-next-line*/
         for (let a of classroom.assignments) {
           itemsCount += 1;
           if (((itemsCount + 0.5) % 6) === 0) {
