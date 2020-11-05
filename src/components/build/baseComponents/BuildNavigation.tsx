@@ -4,11 +4,13 @@ import { TutorialStep } from "../tutorial/TutorialPanelWorkArea";
 
 import SaveDialog from "./dialogs/SaveDialog";
 import PlayButton from "./PlayButton";
+import { Brick, BrickStatus } from "model/brick";
+
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import ReturnToAuthorButton from "./ReturnToAuthorButton";
 import SendToPublisherButton from "./SendToPublisherButton";
-import { Brick, BrickStatus } from "model/brick";
 import ReturnToEditorButton from "./ReturnToEditorButton";
+import BuildPublishButton from "./PublishButton";
 
 
 interface NavigationProps {
@@ -41,10 +43,11 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
 
   renderPublisherButtons() {
     const {brick} = this.props;
-    if (brick.status === BrickStatus.Review) {
+    if (brick.status === BrickStatus.Review && this.props.isPublisher) {
       return (
         <div>
           <ReturnToEditorButton brick={brick} history={this.props.history} />
+          <BuildPublishButton brick={brick} history={this.props.history} />
         </div>
       );
     }
