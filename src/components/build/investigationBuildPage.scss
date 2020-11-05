@@ -293,32 +293,32 @@ $space-between-boxes: 0.1vw;
   }
 }
 
-.send-to-publisher-button,
-.return-to-author-button {
+.build-navigation-buttons {
   position: absolute;
-  $margin: 1.4vw;
   $size: 4.5vw;
-  top: calc(#{$margin} + #{$size} + #{$margin});
-  right: $margin;
-  height: $size;
-  width: $size;
-  border-radius: 50%;
-
-  cursor: pointer;
+  $margin: 1.4vw;
   z-index: 9999999;
-  background: var(--white);
-  color: var(--theme-dark-blue);
-  padding: 0.7vw;
+  right: $margin;
+  top: calc(#{$margin} + #{$size} + #{$margin});
 
-  svg {
-    stroke-width: 2;
-    height: 100%;
-    width: 100%;
+  .send-to-publisher-button,
+  .build-publish-button,
+  .return-to-editor-button,
+  .return-to-author-button {
+    height: $size;
+    width: $size;
+    border-radius: 50%;
+    margin-bottom: $margin;
+  
+    cursor: pointer;
+    background: var(--white);
+    color: var(--theme-dark-blue);
+    padding: 0.7vw;
+  
+    svg {
+      stroke-width: 2;
+      height: 100%;
+      width: 100%;
+    }
   }
-}
-
-.send-to-publisher-button {
-  $margin: 1.4vw;
-  $size: 4.5vw;
-  top: calc(#{$margin} + #{$size} + #{$margin} + #{$size} + #{$margin});
 }
