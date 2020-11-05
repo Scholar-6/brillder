@@ -33,14 +33,14 @@ import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
-import { canEditBrick } from "components/services/brickService";
+import { canEditBrick, checkPublisher } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { validateProposal } from 'components/proposal/service/validation';
 import { TextComponentObj } from "./buildQuestions/components/Text/interface";
 import { useSocket } from "socket/socket";
 import { applyBrickDiff, getBrickDiff } from "components/services/diff";
 import UndoRedoService from "components/services/UndoRedoService";
-import { Brick } from "model/brick";
+import { Brick, BrickStatus } from "model/brick";
 
 import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
 import TutorialWorkArea, { TutorialStep } from './tutorial/TutorialPanelWorkArea';
@@ -746,6 +746,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const isCurrentEditor = (props.brick.editors?.findIndex((e:any) => e.id === props.user.id) ?? -1) >= 0;
+  const isPublisher = checkPublisher(props.user, props.brick);
 
   return (
     <div className="investigation-build-page">
@@ -755,8 +756,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         isValid={isValid}
         moveToReview={moveToReview}
         isEditor={isCurrentEditor}
+        isPublisher={isPublisher}
         history={history}
-        brickId={brickId}
+        brick={props.brick}
         exitAndSave={exitAndSave}
       />
       <Hidden only={['xs', 'sm']}>
