@@ -7,6 +7,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ReturnToAuthorDialog from "./dialogs/ReturnToAuthorDialog";
 
 export interface ButtonProps {
+  disabled: boolean;
   brickId: number;
   history: any;
 }
@@ -14,9 +15,18 @@ export interface ButtonProps {
 const ReturnToAuthorButton: React.FC<ButtonProps> = props => {
   const [isOpen, setState] = React.useState(false);
 
+  let className = "return-to-author-button";
+  if (props.disabled) {
+    className += ' disabled';
+  }
+
   return (
     <div>
-      <div className="return-to-author-button" onClick={() => setState(true)}>
+      <div className={className} onClick={() => {
+        if (!props.disabled) {
+          setState(true);
+        }
+      }}>
         <SpriteIcon name="repeat" />
       </div>
       <ReturnToAuthorDialog

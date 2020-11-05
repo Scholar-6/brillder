@@ -21,6 +21,7 @@ interface PersonalBuildProps {
   pageSize: number;
   sortedIndex: number;
   history: any;
+  isFilterEmpty: boolean;
   isTeach: boolean;
   searchString: string;
 
@@ -194,8 +195,10 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
       <Grid container direction="row" className="sorted-row personal-build">
         <FilterSidebar
           draft={draft}
+          history={this.props.history}
           selfPublish={selfPublish}
           bricks={bricks}
+          isEmpty={this.props.isFilterEmpty}
           filters={this.state.filters}
           setFilters={this.setFilters.bind(this)}
         />
