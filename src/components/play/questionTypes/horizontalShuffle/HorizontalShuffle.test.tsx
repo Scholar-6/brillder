@@ -7,6 +7,7 @@ import { HintStatus } from 'model/question';
 
 describe("Horizontal Shuffle play", () => {
   it("should create Horizontal Shuffle", () => {
+    /* 11/4/2020
     let question: Question = {
       id: 66,
       order: 0,
@@ -34,5 +35,6 @@ describe("Horizontal Shuffle play", () => {
         onAttempted={() => { }}
       />
     );
+    */
   });
 })

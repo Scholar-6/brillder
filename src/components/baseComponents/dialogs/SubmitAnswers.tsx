@@ -1,5 +1,5 @@
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
+import BaseDialogWrapper from "./BaseDialogWrapper";
 
 interface DialogProps {
   isOpen: boolean;
@@ -9,7 +9,7 @@ interface DialogProps {
 
 const SubmitAnswersDialog: React.FC<DialogProps> = (props) => {
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
+    <BaseDialogWrapper open={props.isOpen} close={props.close} submit={props.submit} >
       <div className="dialog-header">
         <div>Submit answers?</div>
       </div>
@@ -23,7 +23,7 @@ const SubmitAnswersDialog: React.FC<DialogProps> = (props) => {
           <span>Not yet!</span>
         </button>
       </div>
-    </Dialog>
+    </BaseDialogWrapper>
   );
 }
 

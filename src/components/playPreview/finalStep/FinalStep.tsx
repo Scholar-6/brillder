@@ -99,10 +99,10 @@ const FinalStep: React.FC<FinalStepProps> = ({
     }
   }
 
-  const renderInviteColumn = (size: 5 | 3) => {
+  const renderInviteColumn = () => {
     return (
       <InviteColumn
-        size={size}
+        size={3}
         firstLabel="an internal user"
         secondLabel="to edit this brick"
         onClick={()=> setInvite(true)}
@@ -110,13 +110,13 @@ const FinalStep: React.FC<FinalStepProps> = ({
     );
   }
 
-  const renderReturnToEditorsColumn = (size: 5 | 3) => {
+  const renderReturnToEditorsColumn = () => {
     return (
       <CustomColumn
         icon="repeat"
         title="Return to editors"
         label="for futher changes"
-        size={size}
+        size={3}
         onClick={async () => {
           await props.returnToEditors(brick);
           props.fetchBrick(brick.id);
@@ -126,13 +126,13 @@ const FinalStep: React.FC<FinalStepProps> = ({
     );
   }
 
-  const renderReturnToAuthorColumn = (size: 5 | 3) => {
+  const renderReturnToAuthorColumn = () => {
     return (
       <CustomColumn
         icon="repeat"
         title="Return to author"
         label="for futher changes"
-        size={size}
+        size={3}
         onClick={async () => {
           await returnToAuthor(brick.id);
           history.push(map.BackToWorkBuildTab);
@@ -141,11 +141,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
     );
   }
 
-  const renderReturnToEditorColumn = (size: 5 | 3) => {
+  const renderReturnToEditorColumn = () => {
     return (
       <CustomColumn
         icon="repeat" title="Return to editor" label="for futher changes"
-        size={size}
+        size={3}
         onClick={async () => {
           await returnToEditor(brick.id);
           props.fetchBrick(brick.id);
@@ -155,11 +155,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
     )
   }
 
-  const renderSendToPublisherColumn = (size: 5 | 3) => {
+  const renderSendToPublisherColumn = () => {
     return (
       <CustomColumn
         icon="send" title="Send to publisher" label="for final review"
-        size={size}
+        size={3}
         onClick={async () => {
           await props.sendToPublisher(brick.id);
           history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`);
@@ -178,10 +178,13 @@ const FinalStep: React.FC<FinalStepProps> = ({
   }
 
   const renderAdminColumns = () => {
+    const {status} = brick;
     return (
       <Grid className="share-row" container direction="row" justify="center">
-        {renderInviteColumn(3)}
-        {brick.status !== BrickStatus.Publish && <PublishColumn onClick={() => publish(brick.id)} />}
+        {renderInviteColumn()}
+        {status === BrickStatus.Build && renderReturnToAuthorColumn()}
+        {status === BrickStatus.Review && renderReturnToEditorsColumn()}
+        {status !== BrickStatus.Publish && <PublishColumn onClick={() => publish(brick.id)} />}
       </Grid>
     );
   }
@@ -201,14 +204,14 @@ const FinalStep: React.FC<FinalStepProps> = ({
       if (brick.editors && brick.editors.length > 0) {
         return (
           <Grid className="share-row" container direction="row" justify="center">
-            {renderInviteColumn(3)}
-            {renderReturnToEditorsColumn(3)}
+            {renderInviteColumn()}
+            {renderReturnToEditorsColumn()}
           </Grid>
         );
       } else {
         return (
           <Grid className="share-row" container direction="row" justify="center">
-            {renderInviteColumn(3)}
+            {renderInviteColumn()}
           </Grid>
         );
       }
@@ -217,8 +220,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
     if (canPublish) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
-          {isAdmin && renderInviteColumn(3)}
-          {canPublish && renderReturnToEditorColumn(3)}
+          {isAdmin && renderInviteColumn()}
+          {canPublish && renderReturnToEditorColumn()}
           {canPublish && <PublishColumn onClick={() => publish(brick.id)} />}
         </Grid>
       );
@@ -227,28 +230,29 @@ const FinalStep: React.FC<FinalStepProps> = ({
     if (isCurrentEditor && brick.status === BrickStatus.Build) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
-          { renderReturnToAuthorColumn(3) }
-          { renderSendToPublisherColumn(3) }
+          { renderReturnToAuthorColumn() }
+          { renderSendToPublisherColumn() }
         </Grid>
       );
     }
 
     return (
       <Grid className="share-row" container direction="row" justify="center">
-        {renderInviteColumn(3)}
-        { canPublish && renderReturnToEditorColumn(3) }
+        {renderInviteColumn()}
+        { canPublish && renderReturnToEditorColumn() }
       </Grid>
     );
   }
 
   const renderEditorsRow = () => {
     return (
-      <p>
+      <div className="editors-row">
         {brick.editors && brick.editors.length > 0
         ? (
           <div>
-            {brick.editors.map((e, i, editors) =>
+            {brick.editors.map((e, i) =>
               <Chip
+                key={i}
                 avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${e.profileImage}`} />}
                 label={`${e.firstName} ${e.lastName}`}
                 onDelete={brick.editors?.length === 1 ? undefined : () => removeEditor(e)}
@@ -262,7 +266,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         )
         : 'Invite an editor to begin the publication process'
       }
-    </p>
+    </div>
   );
 }
 

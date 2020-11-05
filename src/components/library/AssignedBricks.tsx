@@ -80,7 +80,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
 
   renderBrick(item: AssignmentBrickData) {
     return (
-      <div className="main-brick-container">
+      <div className="main-brick-container" key={item.key}>
         <Box className="brick-container">
           <div className="absolute-container">
             {this.renderShortDescription(item)}

@@ -57,11 +57,6 @@ export interface PlayFilters {
   checked: boolean;
 }
 
-export interface TeachFilters {
-  assigned: boolean;
-  completed: boolean;
-}
-
 export interface AssignmentBrickData {
   brick: Brick;
   key: number;

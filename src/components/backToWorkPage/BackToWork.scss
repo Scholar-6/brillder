@@ -196,32 +196,9 @@
     height: $backwork-inner-tab-content-height;
     overflow: auto;
     color: var(--theme-dark-blue);
-    padding-top: 5.5vh;
     padding-left: 0;
     padding-right: 0;
-    .classroom-title {
-      display: flex;
-      @extend %flexAlignCenter;
-      @include tabletP {
-        height: calc(#{$bricks-height / 6.35 / 2});
-      }
-      font-size: 1.5vw;
-      text-transform: capitalize;
-      > div {
-        width: 100%;
-        line-height: 1.8;
-        padding-left: 1.6vw;
-        background: var(--off-white);
-      }
-      &.first {
-        position: absolute;
-        top: 1.8vh;
-        height: 2vh;
-        > div {
-          background: inherit;
-        }
-      }
-    }
+
     .users-table {
       width: 100%;
       overflow-y: auto;
@@ -265,10 +242,10 @@
           }
         }
         tr {
-          height: 5vh;
+          height: calc((100vh - 5.834vw - 2vw - 5.2vw - 15vh)/13) !important;
           overflow-y: auto;
           &.user-row {
-            height: 4.4vh;
+            height: calc((100vh - 5.834vw - 2vw - 5.2vw - 15vh)/13) !important;
             font-family: $font-family-regular;
             &:nth-child(even) {
               background: var(--tab-gray);

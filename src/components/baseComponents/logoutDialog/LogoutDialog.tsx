@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Dialog from '@material-ui/core/Dialog';
 
 import './LogoutDialog.scss';
 import authActions from 'redux/actions/auth';
 import map from 'components/map';
+import BaseDialogWrapper from '../dialogs/BaseDialogWrapper';
 
 const mapDispatch = (dispatch: any) => {
   return { logout: () => dispatch(authActions.logout()) }
@@ -24,7 +24,7 @@ const LogoutDialog: React.FC<LogoutComponentProps> = (props) => {
   }
 
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
+    <BaseDialogWrapper open={props.isOpen} close={props.close} submit={logout}>
       <div className="dialog-header">
         <div>Are you sure</div>
         <div>you want to log out?</div>
@@ -39,7 +39,7 @@ const LogoutDialog: React.FC<LogoutComponentProps> = (props) => {
           <span>No</span>
         </button>
       </div>
-    </Dialog>
+    </BaseDialogWrapper>
   );
 }
 

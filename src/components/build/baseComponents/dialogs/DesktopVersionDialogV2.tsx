@@ -6,10 +6,12 @@ import './DesktopVersionDialog.scss';
 
 interface DesktopVersionProps {
   isOpen: boolean;
+  secondaryLabel?: string;
+  secondaryClass?: string;
   onClick(): void;
 }
 
-const DesktopVersionDialogV2:React.FC<DesktopVersionProps> = ({isOpen, onClick}) => {
+const DesktopVersionDialogV2:React.FC<DesktopVersionProps> = ({isOpen, secondaryLabel, onClick}) => {
   return (
     <Dialog open={isOpen} onClick={onClick} className="desktop-version-dialog dialog-box link-copied-dialog pointer">
       <div className="dialog-header">
@@ -21,11 +23,8 @@ const DesktopVersionDialogV2:React.FC<DesktopVersionProps> = ({isOpen, onClick})
             </Avatar>
           </ListItemAvatar>
         </ListItem>
-        <ListItem>
-          <ListItemText primary="Building has not yet been optimised for mobile devices. Try a laptop or desktop computer" className="italic"
-            style={{ minWidth: '30vw', margin: 0 }}
-          />
-        </ListItem>
+        <ListItemText primary={secondaryLabel} className="italic" style={{ minWidth: '30vw', margin: 0 }} />
+        <ListItemText primary="Try a laptop or desktop computer." className="italic" style={{ minWidth: '30vw', margin: 0 }} />
       </div>
     </Dialog>
   );

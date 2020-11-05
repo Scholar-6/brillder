@@ -1,3 +1,4 @@
+import map from "components/map";
 import React from "react";
 
 interface TeachButtonProps {
@@ -6,7 +7,7 @@ interface TeachButtonProps {
 
 const TeachButton: React.FC<TeachButtonProps> = props => {
   return (
-    <div className="manage-classes svgOnHover" onClick={() => props.history.push('/manage-classrooms')}>
+    <div className="manage-classes svgOnHover" onClick={() => props.history.push(map.ManageClassroomsTab)}>
       <svg className="svg active" width="250px" height="160px" viewBox="0 0 250 160" fill="currentColor" stroke="none">
         <g className="left-class-icon">
           <path id="Path_8" fill="#E5E8EE" d="M159.737,123.579c11.23,17.258,30.847,21.291,48.259,9.926

@@ -19,6 +19,7 @@ import ShortBrickDescription from "components/baseComponents/ShortBrickDescripti
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
+import { isMobile } from "react-device-detect";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -73,8 +74,18 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     });
   }
 
-  move(brickId: number) {
+  moveToPlay(brickId: number) {
     this.props.history.push(`/play/brick/${brickId}/intro`);
+  }
+
+  move(brickId: number) {
+    if (isMobile) {
+      document.body.requestFullscreen().then(() => {
+        this.moveToPlay(brickId);
+      });
+    } else {
+      this.moveToPlay(brickId);
+    }
   }
 
   hideBricks() {

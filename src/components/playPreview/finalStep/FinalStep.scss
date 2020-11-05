@@ -15,6 +15,13 @@
       width: calc(100% - #{$padding * 2}) !important;
     }
   }
+  .editors-row {
+    margin-top: 1vh;
+    font-size: 1.25vw;
+    font-family: $font-family-bold;
+    display: flex;
+    justify-content: center;
+  }
 
   .link-description {
     font-family: $font-family-regular-italic !important;

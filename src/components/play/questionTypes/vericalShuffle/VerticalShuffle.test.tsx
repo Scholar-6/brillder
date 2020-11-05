@@ -6,6 +6,7 @@ import { HintStatus } from 'model/question';
 
 describe("Vertical Shuffle play", () => {
   it("should create Vertical Shuffle", () => {
+    /* 11/4/2020
     let question: Question = {
       id: 66,
       order: 0,
@@ -33,6 +34,6 @@ describe("Vertical Shuffle play", () => {
         isPreview={false}
         onAttempted={() => { }}
       />
-    );
+    );*/
   });
 })

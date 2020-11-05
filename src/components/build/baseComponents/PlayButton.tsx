@@ -26,21 +26,22 @@ const PlayButton: React.FC<PlayButtonProps> = ({
     }
     return 'bg-tab-gray disabled';
   }
-  const renderButton = () => {
+  
+  if (tutorialStep >= TutorialStep.Play || isTutorialSkipped) {
     return (
-      <button type="button" className={"play-preview svgOnHover " + renderButtonClass()} onClick={() => onClick()}>
+      <button type="button" className={"play-preview svgOnHover " + renderButtonClass()} onClick={() => {
+        if (isValid) {
+          onClick();
+        }
+      }}>
         <svg className="svg w80 h80 svg-default m-l-02">
           <use href={sprite + "#play-thin"} className="text-white" />
         </svg>
         <svg className="svg w80 h80 colored m-l-02">
           <use href={sprite + "#play-thick"} className="text-white" />
         </svg>
-        {/* <span className={//isTutorialSkipped ? "hidden" : ""}>Play Preview</span> */}
       </button>
     );
-  }
-  if (tutorialStep >= TutorialStep.Play || isTutorialSkipped) {
-    return renderButton();
   }
   return <div></div>
 };

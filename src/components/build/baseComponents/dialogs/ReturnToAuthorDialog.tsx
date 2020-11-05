@@ -1,18 +1,18 @@
 import React from "react";
-import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
+import Dialog from "@material-ui/core/Dialog";
 
-interface WrongLoginDialogProps {
+
+interface DialogProps {
   isOpen: boolean;
-  submit(): void;
   close(): void;
+  submit(): void;
 }
 
-const WrongLoginDialog: React.FC<WrongLoginDialogProps> = props => {
+const ReturnToAuthorDialog: React.FC<DialogProps> = (props) => {
   return (
-    <BaseDialogWrapper open={props.isOpen} close={props.close} submit={props.submit}>
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
       <div className="dialog-header">
-        <div>We don't appear to have a record of you yet</div>
-        <div>Sign up?</div>
+        <div>Return to Author?</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button" onClick={props.submit}>
@@ -22,8 +22,8 @@ const WrongLoginDialog: React.FC<WrongLoginDialogProps> = props => {
           <span>No</span>
         </button>
       </div>
-    </BaseDialogWrapper>
+    </Dialog>
   );
-};
+}
 
-export default WrongLoginDialog;
+export default ReturnToAuthorDialog;

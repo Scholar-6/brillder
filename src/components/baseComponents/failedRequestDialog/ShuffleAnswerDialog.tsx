@@ -1,7 +1,8 @@
-import React from "react";
-import Dialog from "@material-ui/core/Dialog";
+import React, { useEffect } from "react";
 
 import "./FailedRequestDialog.scss";
+import { enterPressed } from "components/services/key";
+import BaseDialogWrapper from "../dialogs/BaseDialogWrapper";
 
 
 interface ShuffleAnswerDialogProps {
@@ -12,8 +13,22 @@ interface ShuffleAnswerDialogProps {
 }
 
 const ShuffleAnswerDialog: React.FC<ShuffleAnswerDialogProps> = (props) => {
+  useEffect(() => {
+    function handleMove(e: any) {
+      if (enterPressed(e)) {
+        props.submit();
+      }
+    }
+
+    document.addEventListener("keydown", handleMove, false);
+    return function cleanup() {
+      document.removeEventListener("keydown", handleMove, false);
+    };
+  /*eslint-disable-next-line*/
+  }, []);
+
   return (
-    <Dialog open={props.isOpen} onClose={props.hide} className="dialog-box">
+    <BaseDialogWrapper open={props.isOpen} close={props.hide} submit={props.submit}>
       <div className="dialog-header">
         <div>Is this your answer?</div>
       </div>
@@ -27,7 +42,7 @@ const ShuffleAnswerDialog: React.FC<ShuffleAnswerDialogProps> = (props) => {
           <span>No, skip</span>
         </button>
       </div>
-    </Dialog>
+    </BaseDialogWrapper>
   );
 }
 

@@ -253,6 +253,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           data={brick.prep}
           placeholder="Enter Instructions, Links to Videos and Webpages Here…"
           mediaEmbed={true}
+          link={true}
           toolbar={[
             'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList', 'uploadImageCustom'
           ]}

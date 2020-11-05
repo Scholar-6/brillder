@@ -10,9 +10,12 @@ import { PageEnum } from "./PageHeadWithMenu";
 import { clearProposal } from 'localStorage/proposal';
 
 
-import { ProposalSubject } from "components/map";
+import map, { ProposalSubject } from "components/map";
 import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
 import SpriteIcon from "../SpriteIcon";
+import { Hidden } from "@material-ui/core";
+import FullScreenButton from "./fullScreenButton/FullScreen";
+import { isMobile } from "react-device-detect";
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(actions.forgetBrick())
@@ -52,7 +55,13 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       return (
         <MenuItem
           className="first-item menu-item"
-          onClick={() => move("/play/dashboard")}
+          onClick={() => {
+            if (isMobile) {
+              move("/play/dashboard/1");
+            } else {
+              move("/play/dashboard");
+            }
+          }}
         >
           <span className="menu-text">View All Bricks</span>
           <div className="btn btn-transparent svgOnHover">
@@ -100,7 +109,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       }
       if (canSee) {
         return (
-          <MenuItem className="menu-item" onClick={() => move('/manage-classrooms')}>
+          <MenuItem className="menu-item" onClick={() => move(map.ManageClassroomsTab)}>
             <span className="menu-text">Manage Classes</span>
             <div className="btn btn-transparent svgOnHover">
               <SpriteIcon name="manage-class" className="active text-white" />
@@ -173,6 +182,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     return "";
   }
 
+  /*eslint-disable-next-line*/
   const renderReportsItem = () => {
     if (page !== PageEnum.MainPage && props.user.rolePreference?.roleId === UserType.Teacher) {
       return (
@@ -187,6 +197,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     return "";
   }
 
+  /*eslint-disable-next-line*/
   const renderLiveAssignmentItem = () => {
     if (page !== PageEnum.MainPage && props.user.rolePreference?.roleId === UserType.Teacher) {
       return (
@@ -208,12 +219,17 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       onClose={props.hideDropdown}
     >
       {renderViewAllItem()}
-      {renderStartBuildItem()}
+      <Hidden only={['sm', 'md', 'lg', 'xl']}>
+        {renderStartBuildItem()}
+      </Hidden>
       {renderBackToWorkItem()}
       {renderManageUsersItem()}
       {renderManageClassesItem()}
       {renderProfileItem()}
-      {renderMyLibraryItem()}
+      <Hidden only={['sm', 'md', 'lg', 'xl']}>
+        {renderMyLibraryItem()}
+        <FullScreenButton />
+      </Hidden>
       {/*
       {renderReportsItem()}
       {renderLiveAssignmentItem()}

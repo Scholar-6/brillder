@@ -6,6 +6,19 @@
   height: 100% !important;
   color: var(--theme-dark-blue);
 
+  .comment-item-collapsed {
+    .comment-collapsed-row {
+      white-space: nowrap;
+      overflow: hidden;
+      flex-wrap: nowrap;
+      .comment-text {
+        width: 20vw !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
   .red-right-block {
     position: fixed;
     right: 0;
