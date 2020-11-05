@@ -10,3 +10,8 @@ export enum TeachActiveTab {
   Assignments,
   Students,
 }
+
+export interface TeachFilters {
+  assigned: boolean;
+  completed: boolean;
+}

@@ -1,7 +1,7 @@
 import map from "components/map";
 import React from "react";
 
-import { TeachActiveTab } from "./interface";
+import { TeachActiveTab } from "./model";
 
 interface TabProps {
   activeTab: TeachActiveTab;

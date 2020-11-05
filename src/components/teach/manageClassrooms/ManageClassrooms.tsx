@@ -6,7 +6,7 @@ import './ManageClassrooms.scss';
 import '../style.scss';
 
 import { User } from "model/user";
-import { MUser, TeachActiveTab } from "../interface";
+import { MUser, TeachActiveTab } from "../model";
 import { deleteClassroom, getStudents } from 'services/axios/classroom';
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";

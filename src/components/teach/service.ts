@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { MUser } from "./interface";
+import { MUser } from "./model";
 
 export interface ClassroomApi {
   created: string;

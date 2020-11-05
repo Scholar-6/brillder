@@ -11,19 +11,19 @@ import { Subject } from "model/brick";
 import { TeachClassroom, TeachStudent } from "model/classroom";
 import { getAllClassrooms } from "components/teach/service";
 import { checkAdmin, checkTeacher } from "components/services/brickService";
-import { TeachFilters } from '../../model';
+import { TeachFilters } from '../model';
 import { Assignment } from "model/classroom";
 import { getAssignmentStats } from "services/axios/stats";
 import { ApiAssignemntStats } from "model/stats";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 
-import BackPagePagination from '../BackPagePagination';
+import BackPagePagination from 'components/backToWorkPage/components/BackPagePagination';
 import TeachFilterSidebar from './components/TeachFilterSidebar';
 import ClassroomList from './components/ClassroomList';
 import ActiveStudentBricks from "./components/ActiveStudentBricks";
 import ExpandedAssignment from './components/ExpandedAssignment';
 import TeachTab from "components/teach/TeachTab";
-import { TeachActiveTab } from "components/teach/interface";
+import { TeachActiveTab } from "components/teach/model";
 import { getSubjects } from "services/axios/subject";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
@@ -115,15 +115,19 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   handleKey(e: any) {
+    let pageSize = this.state.pageSize;
+    if (!this.state.activeStudent && this.state.activeClassroom && this.state.activeAssignment) {
+      pageSize = this.state.assignmentPageSize;
+    }
     if (upKeyPressed(e)) {
-      this.moveBack(this.state.pageSize);
+      this.moveBack(pageSize);
     } else if (downKeyPressed(e)) {
-      this.moveNext(this.state.pageSize);
+      this.moveNext(pageSize);
     }
   }
 
   setActiveStudent(activeStudent: TeachStudent) {
-    this.setState({activeStudent});
+    this.setState({activeStudent, sortedIndex: 0});
   }
 
   setActiveClassroom(id: number | null) {
@@ -169,7 +173,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
   //#region pagination
   moveNext(pageSize: number) {
     const index = this.state.sortedIndex;
-    const itemsCount = this.getTotalCount();
+    let itemsCount = this.getTotalCount();
+
+    if (!this.state.activeStudent && this.state.activeAssignment && this.state.assignmentStats && this.state.activeClassroom) {
+      itemsCount = this.state.activeClassroom.students.length;
+    }
+
+    console.log(index + pageSize, itemsCount)
 
     if (index + pageSize < itemsCount) {
       this.setState({ ...this.state, sortedIndex: index + pageSize });
