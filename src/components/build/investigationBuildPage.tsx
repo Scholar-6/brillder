@@ -459,8 +459,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       return !validateQuestion(question);
     });
 
+    // synthesis invalid
     if (!synthesis && !invalidQuestion) {
       setSubmitDialog(true);
+      return;
     }
 
     if (invalidQuestion) {
