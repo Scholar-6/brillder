@@ -114,7 +114,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <CustomColumn
         icon="repeat"
-        title="Return to editors"
+        title="Return to Editors"
         label="for futher changes"
         size={3}
         onClick={async () => {
@@ -130,7 +130,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <CustomColumn
         icon="repeat"
-        title="Return to author"
+        title="Return to Author"
         label="for futher changes"
         size={3}
         onClick={async () => {
@@ -144,7 +144,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const renderReturnToEditorColumn = () => {
     return (
       <CustomColumn
-        icon="repeat" title="Return to editor" label="for futher changes"
+        icon="repeat" title="Return to Editor" label="for futher changes"
         size={3}
         onClick={async () => {
           await returnToEditor(brick.id);
