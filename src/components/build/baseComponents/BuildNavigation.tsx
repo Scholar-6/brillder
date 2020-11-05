@@ -17,6 +17,7 @@ interface NavigationProps {
   moveToReview(): void;
 
   // other buttons
+  isEditor: boolean;
   history: any;
   brickId: number;
   exitAndSave(): void;
@@ -49,8 +50,12 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
           close={() => this.setState({saveDialogOpen: false})}
           save={this.props.exitAndSave}
         />
-        <ReturnToAuthorButton history={this.props.history} brickId={this.props.brickId} />
-        <SendToPublisherButton history={this.props.history} brickId={this.props.brickId} />
+        {this.props.isEditor &&
+          <div>
+            <ReturnToAuthorButton history={this.props.history} brickId={this.props.brickId} />
+            <SendToPublisherButton history={this.props.history} brickId={this.props.brickId} />
+          </div>
+        }
       </div>
     );
   }

@@ -745,6 +745,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     isValid = false;
   }
 
+  const isCurrentEditor = (props.brick.editors?.findIndex((e:any) => e.id === props.user.id) ?? -1) >= 0;
+
   return (
     <div className="investigation-build-page">
       <BuildNavigation
@@ -752,6 +754,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         isTutorialSkipped={isTutorialPassed()}
         isValid={isValid}
         moveToReview={moveToReview}
+        isEditor={isCurrentEditor}
         history={history}
         brickId={brickId}
         exitAndSave={exitAndSave}
