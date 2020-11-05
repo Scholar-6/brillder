@@ -323,8 +323,8 @@ $space-between-boxes: 0.1vw;
 
     &.disabled {
       cursor: inherit;
-      background: var(--theme-light-blue);
-      color: var(--white);
+      background: var(--theme-light-blue) !important;
+      color: var(--theme-dark-blue) !important;
     }
 
     &.send-to-publisher-button {
