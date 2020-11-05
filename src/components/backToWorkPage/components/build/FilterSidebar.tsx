@@ -4,6 +4,7 @@ import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import { Brick, BrickStatus } from "model/brick";
 import { SortBy, Filters, ThreeColumns } from '../../model';
 import { clearStatusFilters } from '../../service';
+import EmptyFilterSidebar from "../EmptyFilter";
 
 
 enum FilterFields {
@@ -14,11 +15,13 @@ enum FilterFields {
 }
 
 interface FilterSidebarProps {
+  history: any;
   userId: number;
   finalBricks: Brick[];
   threeColumns: ThreeColumns;
   filters: Filters;
   sortBy: SortBy;
+  isEmpty: boolean;
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   showAll(): void;
   showBuildAll(): void;
@@ -145,6 +148,10 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   };
 
   render() {
+    if (this.props.isEmpty) {
+      return <EmptyFilterSidebar history={this.props.history} />;
+    }
+
     let edit = 0;
     let notEdit = 0;
 

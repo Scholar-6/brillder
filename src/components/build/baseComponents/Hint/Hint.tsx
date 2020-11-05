@@ -189,14 +189,10 @@ const HintComponent: React.FC<HintProps> = ({
             <HtmlTooltip
               title={
                 <React.Fragment>
-                  <div>
-                    Hints ensure that the learner has to keep
-                    re-evaluating when reviewing material.
-                    This is why our interface does not allow for standard true or false questions:
-                    much less can be gained by a blind click at the second time of asking.
-                    <div>
-                      We only give teachers the correct answers.
-                    </div>
+                  <div style={{fontSize: '1vw'}}>
+                    Hints written here are introduced to the student in the Review phase.
+                    Good hints usher the student closer to the correct answer,
+                    or the correct strategy, without giving it away.
                   </div>
                 </React.Fragment>
             }>
