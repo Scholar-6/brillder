@@ -80,10 +80,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       style={{ transformOrigin: "0 0 0" }}
       timeout={index * 150}
     >
-      <div className="main-brick-container"
-        onMouseEnter={props.handleMouseHover}
-        onMouseLeave={props.handleMouseLeave}
-      >
+      <div className="main-brick-container" onMouseLeave={props.handleMouseLeave}>
         <Box className={`brick-container ${color}`}>
           <div className={`absolute-container brick-row-${row} ${brick.expanded ? "brick-hover" : ""}`}>
             {brick.expanded ? (
@@ -103,6 +100,8 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
                 searchString={props.searchString}
                 circleIcon={props.circleIcon}
                 iconColor={props.iconColor}
+                onMouseEnter={props.handleMouseHover}
+                move={move}
                 color={color}
                 brick={brick}
               />

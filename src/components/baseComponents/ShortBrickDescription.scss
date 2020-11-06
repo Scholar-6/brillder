@@ -20,23 +20,6 @@
         flex-direction: column;
         justify-content: center;
         @extend %transitionAll300;
-        // &:hover {
-        //   .left-brick-circle {
-        //     .round-button {
-        //       height: 30vw !important;
-        //       width: 30vw !important;
-        //     }
-        //   }
-        // }
-        // &:not(:hover) {
-        //   @extend %transitionAll300;
-        //   width: 40vw;
-        //   .short-brick-info {
-        //     .link-info {
-        //       font-size: 2.9vw;
-        //     }
-        //   }
-        // }
         .left-brick-roller {
           .roller-button {
             height: 20vw;
@@ -96,4 +79,38 @@
 .search-highlight {
   background: #ffbf00;
   border-radius: 0.2vw;
+}
+
+.short-description {
+  .play-button {
+    position: absolute;
+    top: 0;
+    height: 2.1vw;
+    width: 2.1vw;
+    @extend %flexCenter;
+
+    svg {
+      color: var(--white) !important;
+      height: 0;
+      margin-left: 14%;
+      width: 0;
+    }
+  }
+  .circle-hovered {
+    .round-button {
+      .svg {
+        display: none;
+      }
+    }
+    .play-button {
+      .svg {
+        cursor: pointer;
+        color: var(--white) !important;
+        height: 80%;
+        margin-left: 14%;
+        width: 70%;
+        transition: all 0.2s ease-in-out;
+      }
+    }
+  }
 }
