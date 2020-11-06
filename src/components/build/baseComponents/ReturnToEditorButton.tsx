@@ -7,6 +7,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Brick } from "model/brick";
 import ReturnToEditorDialog from "./dialogs/ReturnToEditorDialog";
 import map from "components/map";
+import ReturnEditorsSuccessDialog from "components/play/finalStep/dialogs/ReturnEditorsSuccessDialog";
 
 export interface ButtonProps {
   disabled: boolean;
@@ -19,6 +20,7 @@ export interface ButtonProps {
 
 const ReturnToEditorButton: React.FC<ButtonProps> = props => {
   const [isOpen, setState] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
 
   let className = 'return-to-editor-button';
   if (props.disabled) {
@@ -36,8 +38,17 @@ const ReturnToEditorButton: React.FC<ButtonProps> = props => {
       </div>
       <ReturnToEditorDialog isOpen={isOpen} close={() => setState(false)} submit={async () => {
         await props.returnToEditors(props.brick);
-        props.history.push(map.BackToWorkBuildTab);
+        setState(false);
+        setSuccess(true);
       }} />
+      <ReturnEditorsSuccessDialog
+        isOpen={success}
+        editors={props.brick.editors}
+        close={() => {
+          setSuccess(false);
+          props.history.push(map.BackToWorkBuildTab);
+        }}
+      />
     </div>
   );
 };
