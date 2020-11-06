@@ -13,6 +13,7 @@ interface ShortDescriptionProps {
   index?: number;
   circleIcon?: string;
   iconColor?: string;
+  onMouseEnter?(e: any): void;
 
   searchString: string;
 
@@ -32,7 +33,18 @@ interface ShortDescriptionProps {
   move?(): void;
 }
 
-class ShortBrickDescription extends Component<ShortDescriptionProps> {
+interface State {
+  circleHovered: boolean;
+}
+
+class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
+  constructor(props: ShortDescriptionProps) {
+    super(props);
+    this.state = {
+      circleHovered: false,
+    };
+  }
+
   renderRoler() {
     return (
       <div className="left-brick-roller">
@@ -64,6 +76,18 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     return "";
   }
 
+  circleHover() {
+    if(!this.state.circleHovered) {
+      this.setState({circleHovered: true});
+    }
+  }
+
+  circleHide() {
+    if (this.state.circleHovered) {
+      this.setState({circleHovered: false});
+    }
+  }
+
   renderCircle(color: string) {
     let className = "left-brick-circle";
 
@@ -75,10 +99,18 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     } else if (color === "color2") {
       className += ' skip-top-right-border';
     }
+    
+    if (this.state.circleHovered) {
+      className += ' circle-hovered';
+    }
+
     return (
-      <div className={className}>
+      <div className={className} onMouseEnter={() => this.circleHover()} onMouseLeave={() => this.circleHide()}>
         <div className="round-button" style={{ background: `${color}` }}>
           {this.renderIcon()}
+        </div>
+        <div className="play-button">
+          <SpriteIcon name="play-thick" onClick={() => this.props.move ? this.props.move() : {}} />
         </div>
       </div>
     );
@@ -108,7 +140,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     return (
       <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
         {color ? this.renderCircle(color) : this.renderRoler()}
-        <div className="short-brick-info">
+        <div className="short-brick-info" onMouseEnter={this.props.onMouseEnter}>
           <div className="link-description">
             <SearchText searchString={searchString} text={brick.title} />
           </div>
