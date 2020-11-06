@@ -15,8 +15,8 @@ interface SubjectAutoCompleteProps {
 }
 
 interface SubjectAutoCompleteState {
-  subjects: Subject[];
   selected: Subject[];
+  autoCompleteSubjects: Subject[];
   autoCompleteOpen: boolean;
 }
 
@@ -29,15 +29,27 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
       selectedSubjects = this.props.selected;
     }
 
+    const autoCompleteSubjects = props.subjects.filter(s => this.checkSubject(s, selectedSubjects))
+
     this.state = {
-      subjects: props.subjects,
       selected: selectedSubjects,
+      autoCompleteSubjects,
       autoCompleteOpen: false,
     };
   }
 
+  checkSubject(s: Subject, subjects: Subject[]) {
+    for (let subject of subjects) {
+      if (subject.id === s.id) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   onSubjectChange(e: any, newValue: any[]) {
-    this.setState({...this.state, selected: newValue});
+    const autoCompleteSubjects = this.props.subjects.filter(s => this.checkSubject(s, newValue));
+    this.setState({...this.state, autoCompleteSubjects, selected: newValue});
     this.props.onSubjectChange(newValue);
   }
 
@@ -62,7 +74,7 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
           multiple
           open={this.state.autoCompleteOpen}
           value={this.state.selected}
-          options={this.state.subjects}
+          options={this.state.autoCompleteSubjects}
           onChange={(e:any, v: any) => this.onSubjectChange(e, v)}
           getOptionLabel={(option:any) => option.name}
           renderInput={(params:any) => (
