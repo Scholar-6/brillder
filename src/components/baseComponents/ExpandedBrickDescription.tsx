@@ -62,38 +62,6 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
     );
   }
 
-  renderIcon() {
-    const { circleIcon, iconColor } = this.props;
-    let svgClass = 'svg active ';
-    if (iconColor) {
-      svgClass += iconColor;
-    } else {
-      svgClass += 'text-white';
-    }
-    if (circleIcon) {
-      return (
-        <div className="round-button-icon">
-          <SpriteIcon name={circleIcon} className={svgClass} />
-        </div>
-      );
-    }
-    return "";
-  }
-
-  renderCircle(color: string) {
-    let className = "";
-    if (color === "color2") {
-      className += 'skip-top-right-border';
-    }
-    return (
-      <div className={"left-brick-circle " + className}>
-        <div className="round-button" style={{ background: `${color}` }}>
-          {this.renderIcon()}
-        </div>
-      </div>
-    );
-  }
-
   render() {
     const { color, brick, searchString } = this.props;
 
@@ -118,7 +86,6 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           <div className="link-info">Editor(s): &nbsp; {this.getEditors(brick, searchString)}</div>
         </div>
         <div className="hover-icons-row">
-          {this.renderCircle(color)}
           {this.renderDeleteButton(brick)}
           <div>
             <button className="btn btn-transparent svgOnHover play-button" onClick={() => this.props.move(brick.id)}>

@@ -7,13 +7,17 @@ import SpriteIcon from "./SpriteIcon";
 import sprite from 'assets/img/icons-sprite.svg';
 import SearchText from "./SearchText";
 import AuthorSearchRow from "./AuthorRow";
+import { User, UserType } from "model/user";
+import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDescription";
 
 interface ShortDescriptionProps {
   brick: Brick;
   index?: number;
   circleIcon?: string;
   iconColor?: string;
+  user?: User;
   onMouseEnter?(e: any): void;
+  handleDeleteOpen?(id: number): void;
 
   searchString: string;
 
@@ -126,6 +130,46 @@ class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
     )
   }
 
+  renderShortBrickInfo(searchString: string, brick: Brick) {
+    return (
+      <div className="short-brick-info" onMouseEnter={this.props.onMouseEnter}>
+        <div className="link-description">
+          <SearchText searchString={searchString} text={brick.title} />
+        </div>
+        <div className="link-info">
+          <SearchText searchString={searchString} text={brick.subTopic} />
+          |
+          <SearchText searchString={searchString} text={brick.alternativeTopics} />
+        </div>
+        <div className="link-info">
+          <AuthorSearchRow searchString={searchString} brick={brick} />
+        </div>
+      </div>
+    );
+  }
+
+  renderExpanded() {
+    const {user} = this.props;
+    let isAdmin = false;
+    if (user) {
+      isAdmin = user.roles.some(role => role.roleId === UserType.Admin);
+    }
+
+    return (
+      <ExpandedBrickDecsiption
+        userId={user ? user.id : -1}
+        isAdmin={isAdmin}
+        color={this.props.color ? this.props.color : ''}
+        brick={this.props.brick}
+        searchString={this.props.searchString}
+        circleIcon={this.props.circleIcon}
+        iconColor={this.props.iconColor}
+        move={this.props.move ? this.props.move : () => {}}
+        onDelete={brickId => this.props.handleDeleteOpen ? this.props.handleDeleteOpen(brickId) : {}}
+      />
+    );
+  }
+
   render() {
     const { color, brick, isMobile, isExpanded, searchString, index } = this.props;
     let className = "short-description";
@@ -140,23 +184,17 @@ class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
     return (
       <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
         {color ? this.renderCircle(color) : this.renderRoler()}
-        <div className="short-brick-info" onMouseEnter={this.props.onMouseEnter}>
-          <div className="link-description">
-            <SearchText searchString={searchString} text={brick.title} />
-          </div>
-          <div className="link-info">
-            <SearchText searchString={searchString} text={brick.subTopic} />
-            |
-            <SearchText searchString={searchString} text={brick.alternativeTopics} />
-          </div>
-          <div className="link-info">
-            <AuthorSearchRow searchString={searchString} brick={brick} />
-          </div>
-        </div>
+        {brick.expanded
+          ? this.renderExpanded()
+          : this.renderShortBrickInfo(searchString, brick)
+        }
+        
         {isExpanded ? this.renderPlayButton() : ""}
       </div>
     );
   }
 }
+
+
 
 export default ShortBrickDescription;
