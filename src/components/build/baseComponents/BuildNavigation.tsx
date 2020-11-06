@@ -47,7 +47,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
   renderReturnToAuthorButton() {
     const {brick} = this.props;
     let disabled = this.state.brickStatus !== BrickStatus.Build;
-    return <ReturnToAuthorButton disabled={disabled} history={this.props.history} brickId={brick.id} />;
+    return <ReturnToAuthorButton disabled={disabled} history={this.props.history} brick={brick} />;
   }
 
   renderReturnToEditorButton() {
