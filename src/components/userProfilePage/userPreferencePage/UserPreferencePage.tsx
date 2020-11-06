@@ -72,7 +72,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
                     I want to assign brick content, and provide feedback to my students.<br />
                     <i>Use my institution's license or start a 30-day free trial for personal use.</i>
                 </RadioContainer>
-                <RadioContainer roleId={UserType.Admin} name="Institution">
+                <RadioContainer roleId={UserType.Institution} name="Institution">
                     I want to manage classes, students and teachers.<br />
                     <i>Start a 30-day free trial for institutional use.</i>
                 </RadioContainer>
