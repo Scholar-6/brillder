@@ -6,7 +6,6 @@ import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
 
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
-import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDescription";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -53,11 +52,6 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     }
   }
 
-  let isAdmin = false;
-  if (props.user) {
-    isAdmin = props.user.roles.some(role => role.roleId === UserType.Admin);
-  }
-
   const move = () => {
     if (props.isPlay) {
       props.history.push(`/play/brick/${brick.id}/intro`);
@@ -83,29 +77,16 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       <div className="main-brick-container" onMouseLeave={props.handleMouseLeave}>
         <Box className={`brick-container ${color}`}>
           <div className={`absolute-container brick-row-${row} ${brick.expanded ? "brick-hover" : ""}`}>
-            {brick.expanded ? (
-              <ExpandedBrickDecsiption
-                userId={props.user ? props.user.id : -1}
-                isAdmin={isAdmin}
-                color={color}
-                brick={brick}
-                searchString={props.searchString}
-                circleIcon={props.circleIcon}
-                iconColor={props.iconColor}
-                move={move}
-                onDelete={(brickId) => props.handleDeleteOpen(brickId)}
-              />
-            ) : (
-              <ShortBrickDescription
-                searchString={props.searchString}
-                circleIcon={props.circleIcon}
-                iconColor={props.iconColor}
-                onMouseEnter={props.handleMouseHover}
-                move={move}
-                color={color}
-                brick={brick}
-              />
-            )}
+            <ShortBrickDescription
+              user={props.user}
+              searchString={props.searchString}
+              circleIcon={props.circleIcon}
+              iconColor={props.iconColor}
+              onMouseEnter={props.handleMouseHover}
+              move={move}
+              color={color}
+              brick={brick}
+            />
           </div>
         </Box>
       </div>
