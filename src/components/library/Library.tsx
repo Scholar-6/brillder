@@ -9,7 +9,7 @@ import { Notification } from 'model/notifications';
 import { Brick, Subject } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
-import { getAssignedBricks } from "services/axios/brick";
+import { getLibraryBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
 import { SortBy } from "./model";
 import { AssignmentBrick } from "model/assignment";
@@ -130,7 +130,8 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   }
 
   async getAssignments(subjects: Subject[]) {
-    const rawAssignments = await getAssignedBricks();
+    const rawAssignments = await getLibraryBricks();
+    console.log(rawAssignments)
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const finalAssignments = this.filter(rawAssignments, subjects, this.state.isCore);
