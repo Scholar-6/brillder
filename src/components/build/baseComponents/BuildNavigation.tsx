@@ -46,13 +46,15 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
 
   renderReturnToAuthorButton() {
     const {brick} = this.props;
-    let disabled = this.state.brickStatus !== BrickStatus.Build;
+    const {brickStatus} = this.state;
+    let disabled = brickStatus === BrickStatus.Draft;
     return <ReturnToAuthorButton disabled={disabled} history={this.props.history} brick={brick} />;
   }
 
   renderReturnToEditorButton() {
     const {brick} = this.props;
-    let disabled = this.state.brickStatus !== BrickStatus.Review;
+    const {brickStatus} = this.state;
+    let disabled = brickStatus === BrickStatus.Draft || brickStatus === BrickStatus.Build;
 
     if (this.props.isPublisher) {
       return <ReturnToEditorButton disabled={disabled} brick={brick} history={this.props.history} />;
@@ -62,7 +64,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
 
   renderSendToPublisherButton() {
     const {brick} = this.props;
-    let disabled = this.state.brickStatus !== BrickStatus.Build;
+    let disabled = this.state.brickStatus === BrickStatus.Review;
 
     return (
       <SendToPublisherButton
