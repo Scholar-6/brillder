@@ -64,7 +64,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
 
   renderSendToPublisherButton() {
     const {brick} = this.props;
-    let disabled = this.state.brickStatus === BrickStatus.Review;
+    let disabled = this.state.brickStatus === BrickStatus.Review || !this.props.isValid;
 
     return (
       <SendToPublisherButton
