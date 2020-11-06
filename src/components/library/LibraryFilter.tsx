@@ -76,7 +76,7 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
           </RadioGroup>
         </div>
         <div className="filter-header">
-          <span>Filter</span>
+          <span>Filter by Subject</span>
           <button
             className={
               "btn-transparent filter-icon " +
