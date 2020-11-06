@@ -76,17 +76,44 @@ class Sort extends CompComponent<SortProps, SortState> {
   }
 
   componentDidUpdate(prevProp: SortProps) {
-    if (this.props.isBookPreview && this.props.attempt) {
-      if (this.props.answers !== prevProp.answers) {
+    const {props} = this;
+    if (props.isBookPreview && props.attempt) {
+      // preview in book
+      if (props.answers !== prevProp.answers) {
         let userCats:UserCategory[] = [];
 
-        for (let cat of this.props.component.categories) {
+        for (let cat of props.component.categories) {
           userCats.push({choices: [], name: cat.name});
         }
     
         userCats.push({ choices: [], name: "Unsorted" });
         this.prepareChoices(userCats);
         this.setState({userCats});
+      }
+    } else {
+      // preview in build
+      if (props.isPreview === true && props.component) {
+        if (props.component !== prevProp.component) {
+          let userCats:UserCategory[] = [];
+          let choices:SortAnswer[] = [];
+    
+          for (let [catIndex, category] of (props.component.categories as any).entries()) {
+            const cat = category as SortCategory;
+            /* eslint-disable-next-line */
+            cat.answers.forEach((a, i) => {
+              let choice = Object.assign({}, a) as any;
+              choice.text = choice.value;
+              choice.value = this.getChoiceIndex(catIndex, i);
+              choices.push(choice as SortAnswer);
+            });
+            userCats.push({choices: [], name: cat.name});
+            catIndex++;
+          }
+  
+          userCats.push({choices, name: 'Unsorted'});
+  
+          this.setState({userCats, choices: []});
+        }
       }
     }
   }
@@ -109,26 +136,6 @@ class Sort extends CompComponent<SortProps, SortState> {
         userCats[answer[value]].choices.push(choice as SortAnswer);
       } catch {}
     });
-  }
-
-  UNSAFE_componentWillReceiveProps(props: SortProps) {
-    if (props.isPreview === true && props.component) {
-      let userCats:UserCategory[] = [];
-      let choices:SortAnswer[] = [];
-  
-      for (let cat of props.component.categories) {
-        choices = choices.concat(cat.answers);
-        userCats.push({choices: [], name: cat.name});
-      }
-
-      userCats.push({choices: choices, name: 'Unsorted'});
-
-      this.setState({
-        userCats,
-        choices: this.getChoices(),
-        data: props.component.categories
-      });
-    }
   }
 
   setUserAnswers(userCats: any[]) {
