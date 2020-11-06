@@ -63,6 +63,14 @@ export const getAssignedBricks = async () => {
   }
 }
 
+export const getLibraryBricks = async () => {
+  try {
+    return await post<any[]>("/play/library", {}); 
+  } catch (e) {
+    return null;
+  }
+}
+
 export const getStudentAssignments = async (studentId: number) => {
   try {
     return await get<AssignmentBrick[]>("/bricks/assignedTo/" + studentId);
