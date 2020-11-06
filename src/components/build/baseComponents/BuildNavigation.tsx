@@ -74,14 +74,16 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
   }
 
   renderPublisherButtons() {
-    const {brick} = this.props;
     let publishDisabled = this.state.brickStatus === BrickStatus.Publish;
+    if (!this.props.isValid) {
+      publishDisabled = true;
+    }
 
     if (this.props.isPublisher) {
       return (
         <BuildPublishButton
           disabled={publishDisabled}
-          brick={brick}
+          brick={this.props.brick}
           history={this.props.history}
           onFinish={() => this.setState({brickStatus: BrickStatus.Publish})}
         />
