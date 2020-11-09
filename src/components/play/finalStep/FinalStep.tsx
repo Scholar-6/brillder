@@ -80,9 +80,9 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
   const moveNext = () => {
     if (isAuthor || isAdmin || isEditor) {
-      history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`);
+      history.push(`${map.ViewAllPage}?isCore=${brick.isCore}`);
     } else {
-      history.push(`${map.BackToWorkLearnTab}?isCore=${brick.isCore}`);
+      history.push(`${map.ViewAllPage}?isCore=${brick.isCore}`);
     }
   }
 

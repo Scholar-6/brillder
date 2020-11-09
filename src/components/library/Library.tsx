@@ -9,7 +9,7 @@ import { Notification } from 'model/notifications';
 import { Brick, Subject } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
-import { getAssignedBricks } from "services/axios/brick";
+import { getLibraryBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
 import { SortBy } from "./model";
 import { AssignmentBrick } from "model/assignment";
@@ -24,6 +24,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import AssignedBricks from "./AssignedBricks";
 import { getBrickColor } from "services/brick";
+import { getClassrooms } from "services/axios/classroom";
 
 
 interface BricksListProps {
@@ -99,6 +100,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
 
   async loadData() {
     const subjects = await this.loadSubjects();
+    let classrooms = await getClassrooms();
     await this.getAssignments(subjects);
   }
 
@@ -130,7 +132,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   }
 
   async getAssignments(subjects: Subject[]) {
-    const rawAssignments = await getAssignedBricks();
+    const rawAssignments = await getLibraryBricks();
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const finalAssignments = this.filter(rawAssignments, subjects, this.state.isCore);
@@ -196,7 +198,8 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     const { state } = this;
     const { subjects } = state;
     subjects.forEach((r: any) => (r.checked = false));
-    this.setState({ ...state, isClearFilter: false });
+    const finalAssignments = this.filter(this.state.rawAssignments, subjects, this.state.isCore);
+    this.setState({ ...state, finalAssignments, isClearFilter: false });
   };
 
   moveAllBack() {
@@ -323,7 +326,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
-              <div className="brick-row-title uppercase">
+              <div className="brick-row-title main-title uppercase">
                 {this.renderMainTitle(filterSubjects)}
               </div>
               {this.props.user &&

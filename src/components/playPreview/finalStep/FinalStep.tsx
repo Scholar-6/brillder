@@ -29,6 +29,7 @@ import SendPublisherSuccessDialog from "./SendPublisherSuccess";
 import { Redirect } from "react-router-dom";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ReturnEditorsSuccessDialog from "components/play/finalStep/dialogs/ReturnEditorsSuccessDialog";
+import ReturnAuthorSuccessDialog from "components/play/finalStep/dialogs/ReturnAuthorSuccessDialog";
 
 enum PublishStatus {
   None,
@@ -58,6 +59,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   user, brick, history, publisherConfirmed, sendedToPublisher, requestFailed, ...props
 }) => {
   const [returnEditorsOpen, setEditorsReturn] = React.useState(false);
+  const [returnAuthorOpen, setAuthorReturn] = React.useState(false);
   const [shareOpen, setShare] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
@@ -135,7 +137,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         size={3}
         onClick={async () => {
           await returnToAuthor(brick.id);
-          history.push(map.BackToWorkBuildTab);
+          setAuthorReturn(true);
         }}
       />
     );
@@ -148,8 +150,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
         size={3}
         onClick={async () => {
           await returnToEditor(brick.id);
-          props.fetchBrick(brick.id);
-          history.push(map.BackToWorkBuildTab);
+          await props.fetchBrick(brick.id);
+          setEditorsReturn(true);
         }}
       />
     )
@@ -221,7 +223,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       return (
         <Grid className="share-row" container direction="row" justify="center">
           {isAdmin && renderInviteColumn()}
-          {canPublish && renderReturnToEditorColumn()}
+          {canPublish && brick.status === BrickStatus.Review && renderReturnToEditorColumn()}
           {canPublish && <PublishColumn onClick={() => publish(brick.id)} />}
         </Grid>
       );
@@ -239,7 +241,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <Grid className="share-row" container direction="row" justify="center">
         {renderInviteColumn()}
-        { canPublish && renderReturnToEditorColumn() }
+        { canPublish && brick.status === BrickStatus.Review && renderReturnToEditorColumn() }
       </Grid>
     );
   }
@@ -339,10 +341,21 @@ return (
           props.fetchBrick(brick.id);
         }}
       />
+      <ReturnAuthorSuccessDialog
+        isOpen={returnAuthorOpen}
+        author={brick.author}
+        close={() => {
+          setEditorsReturn(false)
+          history.push(map.BackToWorkBuildTab);
+        }}
+      />
       <ReturnEditorsSuccessDialog
         isOpen={returnEditorsOpen}
         editors={brick.editors}
-        close={() => setEditorsReturn(false)}
+        close={() => {
+          setEditorsReturn(false)
+          history.push(map.BackToWorkBuildTab);
+        }}
       />
       <PublishSuccessDialog
         isOpen={publishSuccess === PublishStatus.Popup}

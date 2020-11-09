@@ -5,6 +5,7 @@
 .expanded-brick-info {
   background: var(--tab-gray);
   border-radius: 0.5vw;
+  margin-left: 0;
   padding: 1.3vh;
   min-height: calc(#{$bricks-height / 3}) !important;
   position: absolute;

@@ -16,7 +16,7 @@ const HtmlTooltip = withStyles((theme: any) => ({
     padding: '1.5vh 1vw',
     maxWidth: '17vw',
     border: 0,
-    fontSize: '0.8vw',
+    fontSize: '1vw',
     fontFamily: 'Brandon Grotesque Regular',
   },
 }))(Tooltip);
@@ -189,8 +189,9 @@ const HintComponent: React.FC<HintProps> = ({
             <HtmlTooltip
               title={
                 <React.Fragment>
-                  <div style={{fontSize: '1vw'}}>
-                    Hints written here are introduced to the student in the Review phase.
+                  <div>Hints written here are introduced to</div>
+                  <div>the student in the Review phase.</div>
+                  <div style={{marginTop: '1.2vw'}}>
                     Good hints usher the student closer to the correct answer,
                     or the correct strategy, without giving it away.
                   </div>
