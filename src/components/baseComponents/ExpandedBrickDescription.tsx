@@ -9,6 +9,7 @@ import SpriteIcon from "./SpriteIcon";
 import SearchText from "./SearchText";
 import AuthorSearchRow from "./AuthorRow";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
+import BrickCircle from "./BrickCircle";
 
 
 interface ExpandedDescriptionProps {
@@ -18,6 +19,7 @@ interface ExpandedDescriptionProps {
 
   color: string;
   circleIcon?: string;
+  circleClass?: string;
   iconColor?: string;
 
   searchString: string;
@@ -31,14 +33,17 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
     let text = "";
     const { editors } = brick;
     if (editors) {
+      let key = 0;
       let i = 0;
       let res = [];
       for (let editor of editors) {
         if (i > 0) {
-          res.push(<span key={1}>,</span>)
+          res.push(<span key={key}>,</span>)
+          key++;
         }
-        res.push(<SearchText key={2} searchString={searchString} text={editor.firstName + ' ' + editor.lastName} />);
+        res.push(<SearchText key={key} searchString={searchString} text={editor.firstName + ' ' + editor.lastName} />);
         i++;
+        key++;
       }
       return res;
     }
@@ -86,6 +91,13 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           <div className="link-info">Editor(s): &nbsp; {this.getEditors(brick, searchString)}</div>
         </div>
         <div className="hover-icons-row">
+          <BrickCircle
+            color={color}
+            circleIcon={this.props.circleIcon}
+            circleClass={this.props.circleClass}
+            iconColor={this.props.iconColor}
+            onClick={() => this.props.move ? this.props.move(brick.id) : {}}
+          />
           {this.renderDeleteButton(brick)}
           <div>
             <button className="btn btn-transparent svgOnHover play-button" onClick={() => this.props.move(brick.id)}>

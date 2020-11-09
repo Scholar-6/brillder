@@ -5,7 +5,7 @@
 .expanded-brick-info {
   background: var(--tab-gray);
   border-radius: 0.5vw;
-  margin-left: 3vw;
+  margin-left: 0;
   padding: 1.3vh;
   min-height: calc(#{$bricks-height / 3}) !important;
   position: absolute;
@@ -14,7 +14,7 @@
     width: calc(100% - 8vw);
   }
   @include tabletP {
-    width: calc(100% - 3vw);
+    width: 100%;
   }
   .hover-text {
     height: 21vh;

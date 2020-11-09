@@ -9,6 +9,7 @@ import SearchText from "./SearchText";
 import AuthorSearchRow from "./AuthorRow";
 import { User, UserType } from "model/user";
 import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDescription";
+import BrickCircle from "./BrickCircle";
 
 interface ShortDescriptionProps {
   brick: Brick;
@@ -182,19 +183,32 @@ class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
     }
 
     return (
-      <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
-        {color ? this.renderCircle(color) : this.renderRoler()}
+      <div>
         {brick.expanded
           ? this.renderExpanded()
-          : this.renderShortBrickInfo(searchString, brick)
+          : (
+            <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
+              {color
+                ? ( 
+                   <BrickCircle
+                    color={color}
+                    circleIcon={this.props.circleIcon}
+                    circleClass={this.props.circleClass}
+                    iconColor={this.props.iconColor}
+                    canHover={true}
+                    onClick={() => this.props.move ? this.props.move() : {}}
+                  />
+                )
+                : this.renderRoler()
+              }
+              {this.renderShortBrickInfo(searchString, brick)}
+              {isExpanded ? this.renderPlayButton() : ""}
+            </div>
+          )
         }
-        
-        {isExpanded ? this.renderPlayButton() : ""}
       </div>
     );
   }
 }
-
-
 
 export default ShortBrickDescription;
