@@ -13,7 +13,7 @@ interface DialogProps {
 const QuestionInvalidDialog: React.FC<DialogProps> = (props) => {
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
-      <div className="dialog-header">
+      <div className="dialog-header" style={{marginBottom: 0}}>
       <ListItem>
         <ListItemText
           primary={`Please add a hint for Question ${props.invalidQuestionNumber}`}
