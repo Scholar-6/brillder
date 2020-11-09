@@ -46,7 +46,7 @@ const ReturnAuthorSuccessDialog: React.FC<InvitationProps> = props => {
           </ListItemAvatar>
         </ListItem>
         <ListItem>
-          <ListItemText primary={`${first} ${last} will be able to review your changes`} className="italic" style={{ minWidth: '30vw' }} />
+          <ListItemText primary={`${first} ${last} will be able to review your suggestions`} className="italic" style={{ minWidth: '30vw' }} />
         </ListItem>
       </div>
     </Dialog>
