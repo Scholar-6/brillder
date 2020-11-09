@@ -192,7 +192,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   render() {
     return (
       <div className="question-unique-play pair-match-play">
-        <p className="help-text">Drag to rearrange.</p>
+        <p><span className="help-text">Drag to rearrange.</span></p>
         <Grid container justify="center">
           <List style={{padding: 0}} className="answers-list">
           {

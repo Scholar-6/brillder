@@ -200,21 +200,33 @@
       height: 74.5vh;
       overflow: hidden;
 
-      .undo-button,
-      .redo-button {
-        width: 2vw;
-        height: 2vw;
-        color: var(--tab-gray);
-        &[title]:hover:after{
-          content: attr(title);
+      .undo-button-container,
+      .redo-button-container {
+        position: relative;
+        .custom-tooltip {
+          position: absolute;
           background: #333333; 
-          margin-top: 3vw;
           font-family: $font-family-regular;
           font-size: 0.7vw;
           color: var(--white);
           padding: 0vw 0.4vw;
           top: 100%;
         }
+      }
+
+      .undo-button,
+      .redo-button {
+        width: 2vw;
+        height: 2vw;
+        color: var(--tab-gray);
+      }
+
+      .undo-button:hover {
+        transform: rotate(-10deg);
+      }
+
+      .redo-button:hover {
+        transform: rotate(10deg);
       }
 
       .question-button-container {

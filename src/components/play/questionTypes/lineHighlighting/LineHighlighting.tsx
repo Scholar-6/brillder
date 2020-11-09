@@ -124,7 +124,7 @@ class LineHighlighting extends CompComponent<
 
     return (
       <div className="question-unique-play line-highlighting-play">
-        <p className="help-text">Click to highlight.</p>
+        <p><span className="help-text">Click to highlight.</span></p>
         <div className="lines-container">
           {component.lines.map((line: any, index: number) => (
             this.renderLine(line, index)
