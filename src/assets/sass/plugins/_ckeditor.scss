@@ -70,6 +70,11 @@ a.ck {
       .ck-button {
         margin:0 0.14vw !important;
       }
+      .upload-button-custom {
+        .ck.ck-button__label {
+          margin-bottom: 0.3vw !important;
+        }
+      }
     }
   }
 }
