@@ -476,7 +476,7 @@
 
           .short-brick-info {
             @extend %ellipsis;
-            padding-left: 3vw;
+            margin-left: 3vw;
             width: 100%;
             display: flex;
             flex-direction: column;

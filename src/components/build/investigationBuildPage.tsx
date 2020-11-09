@@ -40,7 +40,7 @@ import { TextComponentObj } from "./buildQuestions/components/Text/interface";
 import { useSocket } from "socket/socket";
 import { applyBrickDiff, getBrickDiff } from "components/services/diff";
 import UndoRedoService from "components/services/UndoRedoService";
-import { Brick, BrickStatus } from "model/brick";
+import { Brick } from "model/brick";
 
 import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
 import TutorialWorkArea, { TutorialStep } from './tutorial/TutorialPanelWorkArea';

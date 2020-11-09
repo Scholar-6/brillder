@@ -4,6 +4,7 @@ export enum UserType {
   Builder,
   Admin,
   Publisher,
+  Institution,
 }
 
 export enum UserStatus {
