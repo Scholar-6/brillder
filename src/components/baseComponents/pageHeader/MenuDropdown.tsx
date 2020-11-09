@@ -216,7 +216,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       onClose={props.hideDropdown}
     >
       {renderViewAllItem()}
-      <Hidden only={['sm', 'md', 'lg', 'xl']}>
+      <Hidden only={['xs']}>
         {renderStartBuildItem()}
       </Hidden>
       {renderBackToWorkItem()}
