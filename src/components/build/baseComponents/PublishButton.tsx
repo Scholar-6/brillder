@@ -1,12 +1,11 @@
 import React from "react";
 
-import map from "components/map";
 import { publishBrick } from "services/axios/brick";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SendToPublisherDialog from "./dialogs/SendToPublisherDialog";
 import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSuccessDialog";
-import { Brick, BrickStatus } from "model/brick";
+import { Brick } from "model/brick";
 
 export interface ButtonProps {
   disabled: boolean;
@@ -60,7 +59,6 @@ const PublishButton: React.FC<ButtonProps> = props => {
       />
     </div>
   );
-  return <div></div>;
 };
 
 export default PublishButton;

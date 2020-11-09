@@ -3,7 +3,7 @@ import Grow from "@material-ui/core/Grow";
 import { Box } from "@material-ui/core";
 
 import { Brick, BrickStatus } from "model/brick";
-import { User, UserType } from "model/user";
+import { User } from "model/user";
 
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 

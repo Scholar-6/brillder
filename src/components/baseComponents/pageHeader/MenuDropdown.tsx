@@ -124,10 +124,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const renderBackToWorkItem = () => {
     if (page !== PageEnum.BackToWork && page !== PageEnum.MainPage) {
       return (
-        <MenuItem
-          className="menu-item"
-          onClick={() => move("/back-to-work")}
-        >
+        <MenuItem className="menu-item" onClick={() => move("/back-to-work")}>
           <span className="menu-text">Back To Work</span>
           <div className="btn btn-transparent svgOnHover">
             <SpriteIcon name="student-back-to-work" className="active text-white" />
