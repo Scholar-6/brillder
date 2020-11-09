@@ -70,6 +70,10 @@ a.ck {
       .ck-button {
         margin:0 0.14vw !important;
       }
+      .ck-color-table__remove-color,
+      .ck-color-grid__tile {
+        margin: 0 !important;
+      }
       .upload-button-custom {
         .ck.ck-button__label {
           margin-bottom: 0.3vw !important;
@@ -83,10 +87,13 @@ a.ck {
   color: var(--theme-dark-blue);
   font-family: $font-family-regular;
   max-width: none !important;
-  width: 11vw !important;
+  width: 100% !important;
   .ck-button__label {
     max-width: none;
     text-align: center;
     font-size: 1vw !important;
+  }
+  .ck-button {
+    margin:0 !important;
   }
 }
