@@ -151,7 +151,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   render() {
     return (
       <div className="question-unique-play vertical-shuffle-play">
-        <p className="help-text">Drag to rearrange.</p>
+        <p><span className="help-text">Drag to rearrange.</span></p>
         {this.props.isBookPreview ? (
           <div>{this.renderAnswers()}</div>
         ) : (

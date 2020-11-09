@@ -42,7 +42,7 @@ $space-between-boxes: 0.1vw;
         }
 
         @include tabletP {
-          font-size: 0.8vw;
+          font-size: 0.8vw !important;
         }
       }
       blockquote {
@@ -334,5 +334,10 @@ $space-between-boxes: 0.1vw;
         width: 90%;
       }
     }
+  }
+}
+.question-unique-play .help-text {
+  @include tabletP {
+    font-size: 1vw !important;
   }
 }
