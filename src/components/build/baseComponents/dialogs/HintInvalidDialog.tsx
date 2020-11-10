@@ -22,7 +22,7 @@ const QuestionInvalidDialog: React.FC<DialogProps> = (props) => {
         />
         <ListItemAvatar style={{padding: 0}}>
           <Avatar className="circle-orange">
-            <SpriteIcon name="alert-triangle" className="active text-white stroke-2 w-3" />
+            <SpriteIcon name="alert-triangle" className="active text-white stroke-2 w-3 m-b-02" />
           </Avatar>
         </ListItemAvatar>
       </ListItem>
