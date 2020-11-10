@@ -80,6 +80,32 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         // overflow-y: auto;
       }
 
+      .left-brick-circle {
+        position: absolute;
+        top: 2.4vh;
+        left: 1vw;
+
+        @include phone_and_tabletP {
+          position: unset;
+          margin-bottom: 0.5vh;
+        }
+
+        > div {
+          @extend %radCircle;
+          background-color: var(--gray);
+
+          @include phone_and_tabletP {
+            height: 17vw;
+            width: 17vw;
+          }
+
+          @include tabletP {
+            height: 5vw;
+            width: 5vw;
+          }
+        }
+      }
+
       .introduction-page {
         font-family: $font-family-regular;
         position: relative;
@@ -187,32 +213,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             @include phone_and_tabletP {
               font-size: 5vw;
               padding-right: 5vw;
-            }
-          }
-
-          .left-brick-circle {
-            position: absolute;
-            top: 2.4vh;
-            left: 1vw;
-
-            @include phone_and_tabletP {
-              position: unset;
-              margin-bottom: 0.5vh;
-            }
-
-            > div {
-              @extend %radCircle;
-              background-color: var(--gray);
-
-              @include phone_and_tabletP {
-                height: 17vw;
-                width: 17vw;
-              }
-
-              @include tabletP {
-                height: 5vw;
-                width: 5vw;
-              }
             }
           }
         }
@@ -1000,7 +1000,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       height: 4vw;
       margin: 5vh 0 1vh 0;
 
-      font: 2.6vw $font-family-bold;
+      font: 2.4vw $font-family-bold;
     }
 
     > span {
@@ -1250,7 +1250,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   margin-left: 0 !important;
   font-size: 1.75vw !important;
   @extend %flexToYCenter;
-  font-family: $font-family-bold;
+  font-family: $font-family-black;
   text-transform: uppercase;
   max-width: 47.3vw;
   color: var(--theme-dark-blue);

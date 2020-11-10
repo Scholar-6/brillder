@@ -146,6 +146,22 @@
       .red {
         background: var(--theme-orange);
       }
+
+      &.create-link {
+        color: var(--theme-dark-blue);
+        font-family: $font-family-bold;
+        $size: 3vw;
+        .svg {
+          color: var(--theme-orange);
+          height: $size;
+          width: $size;
+        }
+        span {
+          margin-left: 1vw;
+          height: 2.5vw;
+          @extend %flexToYCenter;
+        }
+      }
     }
 
     h1 {
