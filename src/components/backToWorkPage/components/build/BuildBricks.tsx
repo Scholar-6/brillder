@@ -9,6 +9,7 @@ import { prepareVisibleBricks } from '../../service';
 import BrickBlock from "components/baseComponents/BrickBlock";
 import BrickColDescription from "./BrickColDescription";
 import PublishToggle from "./PublishToggle";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface BuildBricksProps {
   user: User;
@@ -65,6 +66,10 @@ class BuildBricks extends Component<BuildBricksProps> {
         }
       }
 
+      if (brick.isCreateLink) {
+        return this.renderCreateLinkColumn();
+      }
+
       // render first row as description
       if (this.props.loaded) {
         const {threeColumns} = this.props;
@@ -89,7 +94,9 @@ class BuildBricks extends Component<BuildBricksProps> {
         history={this.props.history}
         searchString={this.props.searchString}
         handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
-        handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, brick.status)}
+        handleMouseHover={() => {
+          this.props.onThreeColumnsMouseHover(item.key, brick.status)
+        }}
         handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, brick.status)}
       />
     });
@@ -181,6 +188,15 @@ class BuildBricks extends Component<BuildBricksProps> {
             suggest changes to it.
           </div>
         </div>
+      </div>
+    );
+  }
+
+  renderCreateLinkColumn() {
+    return (
+      <div className="main-brick-container create-link" key={-4}>
+        <SpriteIcon name="trowel" />
+        <span>Create A New Brick</span>
       </div>
     );
   }
