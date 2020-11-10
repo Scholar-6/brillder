@@ -24,6 +24,7 @@ import TeachButton from "./TeachButton";
 import FirstButton from "./FirstButton";
 import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/DesktopVersionDialogV2";
 import { isMobile } from "react-device-detect";
+import MobileButtonWrap from "./MobileButtonWrap";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -66,6 +67,8 @@ interface MainPageState {
   // for builder
   isBuilderActive: boolean;
 
+  isSwiping: boolean;
+
   // for mobile popopup
   isDesktopOpen: boolean;
   secondaryLabel: string;
@@ -92,6 +95,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isBackToWorkOpen: false,
       isTryBuildOpen: false,
       isBuilderActive: false,
+      isSwiping: false,
 
       isTeacher: rolePreference?.roleId === UserType.Teacher,
       isAdmin: checkAdmin(props.user.roles),
@@ -147,7 +151,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isActive = false;
     }
     return (
-      <div className="create-item-container" onClick={() => this.creatingBrick()}>
+      <div className="create-item-container" onClick={() => {
+        if (!this.state.isSwiping) {
+          this.creatingBrick();
+        }
+      }}>
         <button className="btn btn-transparent zoom-item svgOnHover">
           <SpriteIcon name="trowel-home" className={isActive ? 'active text-theme-orange' : 'text-theme-light-blue'} />
           <span className="item-description">Start Building</span>
@@ -161,10 +169,12 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     return (
       <div className="back-item-container my-library" onClick={() => {
         if (isMobile) {
-          this.setState({
-            isDesktopOpen: true,
-            secondaryLabel: 'Your Library has' + this.state.secondPart
-          });
+          if (!this.state.isSwiping) {
+            this.setState({
+              isDesktopOpen: true,
+              secondaryLabel: 'Your Library has' + this.state.secondPart
+            });
+          }
           return;
         }
         if (isActive) { 
@@ -189,10 +199,12 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     }
     return (
       <div className="back-item-container student-back-work" onClick={() => {
-        if (isActive) {
-          this.props.history.push("/back-to-work");
-        } else {
-          this.setState({isBackToWorkOpen: true});
+        if (!this.state.isSwiping) {
+          if (isActive) {
+            this.props.history.push("/back-to-work");
+          } else {
+            this.setState({isBackToWorkOpen: true});
+          }
         }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : disabledColor}`}>
@@ -224,7 +236,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   renderWorkButton() {
     return (
       <div className="back-item-container" onClick={() => {
-        this.props.history.push("/back-to-work");
+        if (!this.state.isSwiping) {
+          this.props.history.push("/back-to-work");
+        }
       }}>
         <button className="btn btn-transparent text-theme-orange zoom-item">
           <SpriteIcon name="student-back-to-work" />
@@ -248,7 +262,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   renderReportsButton(isActive: boolean) {
     return (
       <div className="back-item-container student-back-work" onClick={() => {
-        if (isMobile) {
+        if (isMobile && !this.state.isSwiping) {
           this.setState({
             isDesktopOpen: true,
             secondaryLabel: 'Reports have ' + this.state.secondPart
@@ -266,10 +280,12 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   renderTryBuildButton(isActive: boolean) {
     return (
       <div className="create-item-container" onClick={() => {
-        if (isActive) {
-          this.creatingBrick()
-        } else {
-          this.setState({isTryBuildOpen: true});
+        if (!this.state.isSwiping) {
+          if (isActive) {
+            this.creatingBrick()
+          } else {
+            this.setState({isTryBuildOpen: true});
+          }
         }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
@@ -322,6 +338,27 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     }
   }
 
+  handleMobileClick(e: any) {
+    if (this.state.isSwiping === false) {
+      const {height} = window.screen;
+      const minY = height / 3;
+      const maxY = height / 3 * 2;
+
+      const finished = () => {
+        this.setState({isSwiping: true});
+        setTimeout(() => this.setState({isSwiping: false}), 200);
+      }
+
+      if (e.touches.currentY < minY) {
+        this.state.swiper.slidePrev();
+        finished();
+      } else if (e.touches.currentY > maxY) {
+        this.state.swiper.slideNext();
+        finished();
+      }
+    }
+  }
+
   renderMobilePage() {
     const {user} = this.props;
     return (
@@ -335,14 +372,20 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             loop={true}
             loopedSlides={20}
             direction="vertical"
+            pagination={{ clickable: true }}
+            onClick={(e) => this.handleMobileClick(e)}
             onSwiper={swiper => {
               this.setState({ ...this.state, swiper });
             }}
           >
-            <SwiperSlide><FirstButton user={user} history={this.props.history} /></SwiperSlide>
+            <SwiperSlide>
+              <MobileButtonWrap>
+                <FirstButton user={user} history={this.props.history} disabled={this.state.isSwiping} />
+              </MobileButtonWrap>
+            </SwiperSlide>
             {(this.state.isBuilder || this.state.isAdmin) && <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>}
             {(this.state.isBuilder || this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>}
-            {(this.state.isTeacher || this.state.isAdmin) && <SwiperSlide><TeachButton history={this.props.history} /></SwiperSlide>}
+            {(this.state.isTeacher || this.state.isAdmin) && <SwiperSlide><TeachButton history={this.props.history} disabled={this.state.isSwiping} /></SwiperSlide>}
             {(this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderReportsButton(false)}</SwiperSlide>}
             {(this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderLiveAssignmentButton(false)}</SwiperSlide>}
             {(this.state.isStudent || this.state.isTeacher) && <SwiperSlide>{this.renderTryBuildButton(user.hasPlayedBrick)}</SwiperSlide>}

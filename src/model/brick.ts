@@ -74,6 +74,7 @@ export interface Brick {
   isEmptyColumn?: boolean;
   columnStatus?: BrickStatus;
   isDescription?: boolean;
+  isCreateLink?: boolean;
 }
 
 export enum isAuthenticated {

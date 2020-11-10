@@ -10,12 +10,13 @@ import HighlightHtml from '../baseComponents/HighlightHtml';
 
 interface TextProps {
   component: any;
+  className?: string;
 
   // only for real play
   mode?: PlayMode;
 }
 
-const TextLive: React.FC<TextProps> = ({ mode, component }) => {
+const TextLive: React.FC<TextProps> = ({ mode, className, component }) => {
   if (mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) {
     return (
       <HighlightHtml value={component.value} mode={mode} onHighlight={value => component.value = value} />
@@ -28,8 +29,12 @@ const TextLive: React.FC<TextProps> = ({ mode, component }) => {
     return <MathJax math={data} key={i} />;
   }
 
+  let classN = 'text-play';
+  if (className) {
+    classN += ' ' + className;
+  }
   return (
-    <div className="text-play">
+    <div className={classN}>
       {
         arr.map((el:any, i:number) => {
           const res = isMathJax(el);

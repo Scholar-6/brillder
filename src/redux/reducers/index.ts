@@ -8,9 +8,11 @@ import commentsReducer, {CommentsState} from './comments';
 import requestFailedReducer, {RequestFailedState} from './requestFailed';
 import statsReducer, { StatsState } from './stats';
 import sendPublisher, { SendPublisherState } from './sendPublisher';
+import subjectReducer, { SubjectState } from './subjects';
 
 
 export interface ReduxCombinedState {
+  subjects: SubjectState,
   bricks: BricksState;
   brick: BrickState;
   auth: AuthState;
@@ -23,6 +25,7 @@ export interface ReduxCombinedState {
 }
 
 export default combineReducers({
+  subjects: subjectReducer,
   bricks: bricksReducer,
   brick: brickReducer,
   auth: authReducer,
