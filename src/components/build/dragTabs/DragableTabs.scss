@@ -21,6 +21,7 @@ $tile-height: 100%;
     }
   }
   .drag-tile-container {
+    transition: all 1000ms ease-out !important;
     padding: 0 !important;
     height: 100% !important;
     margin-left: $distance !important;
