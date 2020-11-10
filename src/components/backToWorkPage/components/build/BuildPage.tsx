@@ -554,6 +554,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
     const isEmpty = this.state.rawBricks.length === 0;
 
+    if (!this.state.bricksLoaded) {
+      return <PageLoader content="load bricks" />;
+    }
+
     if (!this.state.filters.isCore) {
       return <PersonalBuild
         user={this.props.user}

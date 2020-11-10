@@ -11,7 +11,7 @@ import FilterSidebar from "./FilterSidebar";
 import Tab, { ActiveTab } from "../Tab";
 import BackPagePagination from "../BackPagePagination";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
-import { PersonalFilters } from "./model";
+import { PersonalFilters, SubjectItem } from "./model";
 
 interface PersonalBuildProps {
   user: User;
@@ -46,6 +46,7 @@ interface PersonalBuildProps {
 interface PersonalState {
   bricks: Brick[];
   filters: PersonalFilters;
+  checkedSubjectId: number;
   handleKey(e: any): void;
 }
 
@@ -55,6 +56,7 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
 
     this.state = {
       bricks: this.props.finalBricks,
+      checkedSubjectId: -1,
       filters: {
         draft: true,
         selfPublish: true
@@ -73,6 +75,16 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
 
   setFilters(filters: PersonalFilters) {
     this.setState({filters});
+  }
+
+  filterBySubject(s: SubjectItem | null) {
+    if (s) {
+      this.setState({checkedSubjectId: s.id});
+    } else {
+      if (this.state.checkedSubjectId !== -1) {
+        this.setState({checkedSubjectId: -1});
+      }
+    }
   }
 
   handleKey(e: any) {
@@ -98,6 +110,10 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
   }
 
   renderBricks = (bricks: Brick[]) => {
+    if (this.state.checkedSubjectId !== -1) {
+      bricks = bricks.filter(b => b.subjectId === this.state.checkedSubjectId);
+    }
+
     const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize, bricks);
 
     return data.map(item => {
@@ -201,6 +217,7 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
           isEmpty={this.props.isFilterEmpty}
           filters={this.state.filters}
           setFilters={this.setFilters.bind(this)}
+          filterBySubject={this.filterBySubject.bind(this)}
         />
         <Grid item xs={9} className="brick-row-container">
           <Tab
@@ -218,7 +235,7 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
                       {this.renderBricks(bricks)}
                     </div>
                   </div>}
-            {this.renderPagination(bricks)}
+              {this.renderPagination(bricks)}
             </div>
           </Grid>
         <DeleteBrickDialog
