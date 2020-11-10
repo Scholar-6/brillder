@@ -193,9 +193,8 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
     let draft = 0;
     let selfPublish = 0;
     let bricks:Brick[] = [];
-    console.log(this.props.finalBricks);
     if (this.state.filters.draft) {
-      const draftBricks = this.props.finalBricks.filter(b => b.status === BrickStatus.Draft || b.status === BrickStatus.Review || b.status === BrickStatus.Build);
+      const draftBricks = this.props.finalBricks.filter(b => b.status !== BrickStatus.Publish);
       draft = draftBricks.length;
       bricks.push(...draftBricks);
     } 
