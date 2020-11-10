@@ -53,7 +53,7 @@
     .ck-toolbar_vertical {
       border-radius: 0 !important;
       .ck-toolbar__items {
-        height: 5vh;
+        height: auto;
         width: 20vh;
         flex-flow: row wrap;
         .ck-button {
@@ -62,6 +62,21 @@
         }
       }
     }
+    .ck-dropdown__panel.ck-dropdown__panel_se.ck-dropdown__panel-visible {
+      height: auto;
+      width: auto;
+      background: var(--tab-gray);
+    }
+    .ck-dropdown.ck-toolbar-dropdown.ck-alignment-dropdown {
+      .ck-dropdown__panel.ck-dropdown__panel_se.ck-dropdown__panel-visible {
+        height: auto;
+        width: 100%;
+        .ck.ck-button {
+          margin-top: 0.3vw !important;
+        }
+      }
+    }
+
     .ck-editor {
       width: 100%;
       .ck-content {
