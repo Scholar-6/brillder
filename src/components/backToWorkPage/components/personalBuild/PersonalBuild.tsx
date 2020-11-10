@@ -74,7 +74,7 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
   }
 
   setFilters(filters: PersonalFilters) {
-    this.setState({filters});
+    this.setState({filters, checkedSubjectId: -1});
   }
 
   filterBySubject(s: SubjectItem | null) {
@@ -110,10 +110,6 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
   }
 
   renderBricks = (bricks: Brick[]) => {
-    if (this.state.checkedSubjectId !== -1) {
-      bricks = bricks.filter(b => b.subjectId === this.state.checkedSubjectId);
-    }
-
     const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize, bricks);
 
     return data.map(item => {
@@ -197,14 +193,22 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
     let draft = 0;
     let selfPublish = 0;
     let bricks:Brick[] = [];
+    console.log(this.props.finalBricks);
     if (this.state.filters.draft) {
       const draftBricks = this.props.finalBricks.filter(b => b.status === BrickStatus.Draft || b.status === BrickStatus.Review || b.status === BrickStatus.Build);
       draft = draftBricks.length;
       bricks.push(...draftBricks);
-    } else if (this.state.filters.selfPublish) {
+    } 
+    if (this.state.filters.selfPublish) {
       const selfPublishBricks = this.props.finalBricks.filter(b => b.status === BrickStatus.Publish);
       selfPublish = selfPublishBricks.length;
       bricks.push(...selfPublishBricks);
+    }
+
+    let displayBricks = bricks;
+
+    if (this.state.checkedSubjectId !== -1) {
+      displayBricks = bricks.filter(b => b.subjectId === this.state.checkedSubjectId);
     }
 
     return (
@@ -232,10 +236,10 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
                 ? this.renderEmptyPage()
                 : <div className="bricks-list-container">
                     <div className="bricks-list">
-                      {this.renderBricks(bricks)}
+                      {this.renderBricks(displayBricks)}
                     </div>
                   </div>}
-              {this.renderPagination(bricks)}
+              {this.renderPagination(displayBricks)}
             </div>
           </Grid>
         <DeleteBrickDialog

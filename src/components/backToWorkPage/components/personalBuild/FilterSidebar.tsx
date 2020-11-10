@@ -18,7 +18,7 @@ interface FilterSidebarProps {
 }
 
 interface FilterSidebarState {
-  subjectChecked: boolean;
+  subjectCheckedId: number;
   subjects: SubjectItem[];
 }
 
@@ -27,14 +27,24 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     super(props);
 
     this.state = {
-      subjectChecked: false,
+      subjectCheckedId: -1,
       subjects: this.getBrickSubjects(props.bricks)
+    }
+  }
+
+  componentDidUpdate(prevProps: FilterSidebarProps) {
+    if (this.props.bricks !== prevProps.bricks) {
+      let subjects = this.getBrickSubjects(this.props.bricks);
+      this.setState({subjects: this.getBrickSubjects(this.props.bricks)});
     }
   }
 
   getBrickSubjects(bricks: Brick[]) {
     let subjects:SubjectItem[] = [];
     for (let brick of bricks) {
+      if (!brick.subject) {
+        continue;
+      }
       let subject = subjects.find(s => s.id === brick.subject?.id);
       if (!subject) {
         let subject = Object.assign({}, brick.subject) as SubjectItem;
@@ -51,15 +61,18 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     let isChecked = false;
     for (let item of this.state.subjects) {
       if (item.id === s.id) {
-        item.checked = !item.checked;
-        if (item.checked === true) {
+
+        if (item.id === this.state.subjectCheckedId) {
+          item.checked = false;
+        } else {
+          item.checked = true;
           isChecked = true;
         }
       } else {
         item.checked = false;
       }
     }
-    this.setState({...this.state, subjectChecked: isChecked});
+    this.setState({...this.state, subjectCheckedId: isChecked ? s.id : -1});
     if (isChecked) {
       this.props.filterBySubject(s);
     } else {
@@ -68,6 +81,10 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   }
 
   setViewAll() {
+    for (const s of this.state.subjects) {
+      s.checked = false;
+    }
+    this.setState({...this.state, subjectCheckedId: -1});
     this.props.setFilters({draft: true, selfPublish: true});
   }
 
@@ -90,7 +107,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
           <div className="sort-header">INBOX</div>
         </div>
         <div className="filter-container indexes-box" style={{height: '40vh', overflowY: 'auto'}}>
-          <div className={"index-box " + (!this.state.subjectChecked ? "active" : "")} onClick={this.setViewAll}>
+          <div className={"index-box " + (this.state.subjectCheckedId === -1 ? "active" : "")} onClick={() => this.setViewAll()}>
             View All
             <div className="right-index">{this.props.bricks.length}</div>
           </div>
@@ -98,7 +115,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             SUBJECTS
           </div>
           {subjects.map((s, i) => 
-            <div className={"index-box " + (s.checked ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
+            <div className={"index-box " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
               {s.name}
               <div className="right-index">{s.count}</div>
             </div>
