@@ -34,7 +34,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
   componentDidUpdate(prevProps: FilterSidebarProps) {
     if (this.props.bricks !== prevProps.bricks) {
-      let subjects = this.getBrickSubjects(this.props.bricks);
       this.setState({subjects: this.getBrickSubjects(this.props.bricks)});
     }
   }
