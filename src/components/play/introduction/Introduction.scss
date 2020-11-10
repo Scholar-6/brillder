@@ -1000,7 +1000,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       height: 4vw;
       margin: 5vh 0 1vh 0;
 
-      font: 2.6vw $font-family-bold;
+      font: 2.4vw $font-family-bold;
     }
 
     > span {
@@ -1250,7 +1250,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   margin-left: 0 !important;
   font-size: 1.75vw !important;
   @extend %flexToYCenter;
-  font-family: $font-family-bold;
+  font-family: $font-family-black;
   text-transform: uppercase;
   max-width: 47.3vw;
   color: var(--theme-dark-blue);
