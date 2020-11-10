@@ -253,18 +253,21 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     );
   };
 
+  const renderBrickCircle = (color: string) => {
+    return (
+      <div className="left-brick-circle">
+        <div className="round-button" style={{ background: `${color}` }} />
+      </div>
+    );
+  }
+
   const renderHeader = () => {
     return (
       <div className="intro-header">
         <Hidden only={["sm", "md", "lg", "xl"]}>
           {renderTimer()}
+          {renderBrickCircle(color)}
         </Hidden>
-        <div className="left-brick-circle">
-          <div
-            className="round-button"
-            style={{ background: `${color}` }}
-          ></div>
-        </div>
         <div className="intro-desktop-title">{brick.title}</div>
       </div>
     );
@@ -277,16 +280,12 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <Hidden only={["sm", "md", "lg", "xl"]}>
             {renderTimer()}
             <div className="flex f-align-center">
-              <div className="left-brick-circle">
-                <div className="round-button" style={{ background: `${color}` }}></div>
-              </div>
+              {renderBrickCircle(color)}
               <h1>{brick.title}</h1>
             </div>
           </Hidden>
           <Hidden only={["xs"]}>
-            <div className="left-brick-circle">
-              <div className="round-button" style={{ background: `${color}` }}></div>
-            </div>
+            {renderBrickCircle(color)}
             <h1>{brick.title}</h1>
           </Hidden>
           <p><PrepareText brickLength={brick.brickLength} /></p>
@@ -301,6 +300,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <Hidden only={["xs"]}>
         <Grid container direction="row">
           <Grid item sm={8} xs={12}>
+            {renderBrickCircle(color)}
             <div className="introduction-page" style={{paddingTop: '2.4vh'}}>
               {renderHeader()}
               <div className="open-question">
