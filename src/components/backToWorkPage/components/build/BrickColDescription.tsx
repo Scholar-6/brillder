@@ -16,7 +16,7 @@ const BrickColDescription: React.FC<DescriptionProps> = (props) => {
           <div className={`left-brick-circle ${props.isGreen ? 'skip-top-right-border' : ''}`}>
             <div className={`round-button ${props.isGreen ? 'text-theme-green' : ''}`}>{props.number}</div>
           </div>
-          <div className="short-brick-info centered" style={{height: '3vw', width: '75%'}}>
+          <div className="short-brick-info centered-y-start-x" style={{height: '3vw', width: '75%'}}>
             {props.label}
           </div>
         </div>

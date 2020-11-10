@@ -426,3 +426,8 @@ h3 {
     width: 100%;
   }
 }
+
+.centered-y-start-x {
+  @extend %flexToYCenter;
+  align-items: flex-start !important;
+}
