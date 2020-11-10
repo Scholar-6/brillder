@@ -7,11 +7,13 @@ import { BuildWord, SpecialSymbols } from 'components/interfaces/word';
 import { TextareaAutosize } from '@material-ui/core';
 import { HighlightMode } from '../model';
 import HighlightButton from '../components/HighlightButton';
+import LineStyleDialog from './LineStyleDialog';
 
 
 
 export interface WordHighlightingData {
   text: string;
+  isPoem: boolean;
   words: BuildWord[];
   mode: HighlightMode;
 }
@@ -21,13 +23,14 @@ export interface WordHighlightingProps extends UniqueComponentProps {
 }
 
 export const getDefaultWordHighlightingAnswer = () => {
-  return { text: '', words: [] };
+  return { text: '', isPoem: false, words: [] };
 }
 
 const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   locked, data, save, updateComponent, validationRequired
 }) => {
   const [state, setState] = React.useState(data);
+  const [isOpen, setDialog] = React.useState(false);
 
   useEffect(() => {
     if (!data.text) { data.text = ''; }
@@ -134,6 +137,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     if (state.mode === HighlightMode.Edit) {
       state.mode = HighlightMode.Input;
     } else {
+      setDialog(true);
       state.mode = HighlightMode.Edit;
       state.words = prepareWords(state.text);
     }
@@ -236,6 +240,14 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
       <div className="input-container">
         {renderBox()}
       </div>
+      <LineStyleDialog isOpen={isOpen}
+        submit={v => {
+          state.isPoem = v;
+          update();
+          setDialog(false);
+        }}
+        value={data.isPoem}
+      />
     </div>
   )
 }
