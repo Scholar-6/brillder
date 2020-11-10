@@ -149,6 +149,12 @@ input {
   font-weight: normal !important;
 }
 
+.MuiListItemText-root.bold {
+  .MuiTypography-body1 {
+    font-family: $font-family-bold !important;
+  }
+}
+
 .MuiSwitch-switchBase {
   padding: 0 !important;
   border-radius: 50% !important;
