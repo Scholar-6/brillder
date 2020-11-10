@@ -37,8 +37,10 @@
 .lines-container, .words-container {
   line-height: 1 !important;
   font-size: 1.25vw !important;
-  word-wrap: break-word;
   @include phone_and_tabletP {
     font-size: 4.5vw !important;
+  }
+  &.break-lines {
+    word-wrap: break-word;
   }
 }
