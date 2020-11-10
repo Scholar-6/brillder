@@ -48,10 +48,4 @@
       margin: 0 !important;
     }
   }
-  .lines-container, .words-container {
-    font-size: 1.3vw !important;
-    @include phone_and_tabletP {
-      font-size: 3.5vw !important;
-    }
-  }
 }
