@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .pair-match-play {
-  $font-size: 1rem;
+  $font-size: 1.25vw;
 
   .MuiGrid-container {
     flex-direction: row !important;
@@ -59,6 +59,15 @@
         padding-bottom:4px !important;
         p {
           font-size: 1.25vw !important;
+          @include phone_and_tabletP {
+            font-size: 4.5vw !important;
+          }
+        }
+        .MuiListItemText-root {
+          font-size: 1.25vw !important;
+          @include phone_and_tabletP {
+            font-size: 4.5vw !important;
+          }
         }
         img {
           @include tabletP {

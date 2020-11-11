@@ -105,21 +105,27 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
         <div className="filter-container sort-by-box">
           <div className="sort-header">INBOX</div>
         </div>
-        <div className="filter-container indexes-box" style={{height: '40vh', overflowY: 'auto'}}>
+        <div className="filter-container indexes-box">
           <div className={"index-box " + (this.state.subjectCheckedId === -1 ? "active" : "")} onClick={() => this.setViewAll()}>
             View All
             <div className="right-index">{this.props.bricks.length}</div>
           </div>
-          <div className="filter-header">
+          <div className="filter-header" style={{marginBottom: 0}}>
             SUBJECTS
           </div>
-          {subjects.map((s, i) => 
+        </div>
+        <div className="filter-container subjects-list indexes-box">
+          {subjects.map((s, i) =>
             <div className={"index-box " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
               {s.name}
               <div className="right-index">{s.count}</div>
             </div>
           )}
         </div>
+        <div className="filter-header" style={{marginTop: '0', marginBottom: '3vh'}}>
+          <span>FILTER</span>
+        </div>
+        {this.renderSortAndFilterBox()}
       </div>
     );
   }
@@ -127,10 +133,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   renderSortAndFilterBox = () => {
     const {filters} = this.props;
     return (
-      <div className="sort-box">
-        <div className="filter-header" style={{marginTop: '5vh', marginBottom: '3vh'}}>
-          <span>FILTER</span>
-        </div>
+
         <div className="filter-container subject-indexes-box">
           <FilterToggle
             color="color1"
@@ -145,7 +148,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             label="Self-Published"
             count={this.props.selfPublish} />
         </div>
-      </div>
     );
   };
 
@@ -157,7 +159,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
         {this.renderIndexesBox(this.state.subjects)}
-        {this.renderSortAndFilterBox()}
       </Grid>
     );
   }

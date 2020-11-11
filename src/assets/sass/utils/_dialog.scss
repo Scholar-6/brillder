@@ -230,6 +230,18 @@
         font-family: $font-family-bold !important;
       }
     }
+    .MuiFormControlLabel-root {
+      color: var(--theme-dark-blue) !important;
+      width: 50% !important;
+      @extend %flexCenter;
+
+      .MuiTypography-root {
+        font-size: 1.5vw !important;
+      }
+      svg {
+        color: var(--theme-dark-blue) !important;
+      }
+    }
   }
   .close-button {
     cursor: pointer;

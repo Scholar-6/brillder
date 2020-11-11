@@ -18,11 +18,12 @@ export interface BuildWord extends Word {
 }
 
 export interface PlayWord extends Word {
-  selected?: boolean
+  selected?: boolean;
 }
 
 export interface IPlayWordComponent {
-  selected: boolean
-  type: number
-  words: PlayWord[]
+  selected: boolean;
+  type: number;
+  isPoem?: boolean;
+  words: PlayWord[];
 }
