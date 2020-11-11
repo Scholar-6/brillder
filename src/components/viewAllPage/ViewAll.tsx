@@ -484,7 +484,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
         color={color}
         brick={brick}
         move={(brickId) => this.move(brickId)}
-        onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+        onDelete={brickId => this.handleDeleteOpen(brickId)}
       />
     );
   }
