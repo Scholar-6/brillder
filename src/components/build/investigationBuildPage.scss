@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 $space-between-boxes: 0.1vw;
 
@@ -265,7 +265,7 @@ $space-between-boxes: 0.1vw;
     color: white;
     @extend %textCenter;
 
-    img {
+    svg {
       margin-top: 0.3vw;
       height: 1.52vw;
       width: 1.52vw;
@@ -309,12 +309,12 @@ $space-between-boxes: 0.1vw;
     width: $size;
     border-radius: 50%;
     margin-bottom: $margin;
-  
+
     cursor: pointer;
     background: var(--white);
     color: var(--theme-dark-blue);
     padding: 0.7vw;
-  
+
     svg {
       stroke-width: 2;
       height: 100%;
