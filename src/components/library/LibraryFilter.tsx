@@ -8,6 +8,7 @@ import { SortBy } from "./model";
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import { TeachClassroom } from "model/classroom";
 import CustomFilterBox from "./CustomFilterBox";
+import ClassroomList from "./ClassroomList";
 
 interface FilterProps {
   sortBy: SortBy;
@@ -20,11 +21,13 @@ interface FilterProps {
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   clearSubjects(): void;
   filterBySubject(index: number): void;
+  filterByClassroom(id: number): void;
 }
 
 interface FilterState {
   classFilterHeight: string;
   filterHeight: string;
+  activeClassId: number;
 }
 
 class LibraryFilter extends Component<FilterProps, FilterState> {
@@ -33,6 +36,15 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
     this.state = {
       classFilterHeight: "auto",
       filterHeight: "auto",
+      activeClassId: -1
+    }
+  }
+
+  filterByClassroom(id: number) {
+    if (this.state.activeClassId !== id) {
+      this.setState({activeClassId: id});
+    } else {
+      this.setState({activeClassId: -1});
     }
   }
 
@@ -73,6 +85,12 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
           isClearFilter={this.props.isClassClearFilter}
           setHeight={classFilterHeight => this.setState({classFilterHeight})}
           clear={() => {}}
+        />
+        <ClassroomList
+          activeId={this.state.activeClassId}
+          filterHeight={this.state.classFilterHeight}
+          classrooms={this.props.classrooms}
+          filterByClassroom={this.filterByClassroom.bind(this)}
         />
         <CustomFilterBox
           label="Filter by Subject"
