@@ -3,11 +3,13 @@ import './LastSave.scss'
 import { Grid } from "@material-ui/core";
 import { TutorialStep } from "components/build/tutorial/TutorialPanelWorkArea";
 import { getTime } from "components/services/brickService";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface LastSaveProps {
   tutorialStep: TutorialStep;
   isSaving: boolean;
+  saveError: boolean;
   updated: string;
 }
 
@@ -23,8 +25,10 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
         if (saveTimeout) {
           clearInterval(saveTimeout);
         }
-        return setTimeout(() => setSaving(false), 1000);
+        //return setTimeout(() => setSaving(false), 1000);
       });
+    } else {
+      setSaving(false);
     }
   }, [props]);
 
@@ -54,10 +58,10 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
     <div className="saved-info">
       <Grid container alignContent="center" justify="center">
         <div className={className}>
-          <Grid container direction="row" className="saved-info-row">
+          <Grid container direction="row" className={`saved-info-row ${props.saveError ? "save-error" : ""}`}>
             <Grid item xs={2}>
               <Grid container alignContent="center" justify="center">
-                <img alt="" src="/feathericons/svg/save-white.svg" />
+                <SpriteIcon name="save-icon" className="active"/>
               </Grid>
             </Grid>
             <Grid item xs={10} container alignContent="center">

@@ -67,7 +67,7 @@ const saveBrick = (brick:any) => {
   return function (dispatch: Dispatch) {
     brick.type = 1;
     return axios.put(
-      process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true}
+      process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true, timeout: 10000}
     ).then(response => {
       const savedBrick = response.data as Brick;
       // response brick don`t have author object
