@@ -46,6 +46,7 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
       this.props.filterByClassroom(id);
     } else {
       this.setState({activeClassId: -1});
+      this.props.filterByClassroom(-1);
     }
   }
 
