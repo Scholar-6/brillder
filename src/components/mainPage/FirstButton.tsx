@@ -6,6 +6,7 @@ import { isMobile } from "react-device-detect";
 interface FirstButtonProps {
   user: User;
   history: any;
+  disabled?: boolean;
 }
 
 const FirstButton: React.FC<FirstButtonProps> = props => {
@@ -24,10 +25,12 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
 
   return (
     <div className="view-item-container zoom-item" onClick={() => {
-      if (isMobile) {
-        props.history.push("/play/dashboard/1");
-      } else {
-        props.history.push("/play/dashboard");
+      if (!props.disabled) {
+        if (isMobile) {
+          props.history.push("/play/dashboard/1");
+        } else {
+          props.history.push("/play/dashboard");
+        }
       }
     }}>
       <div className="eye-glass-icon">

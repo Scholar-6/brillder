@@ -12,13 +12,15 @@
   min-height: 0;
   width: $comment-button-size;
   height: $comment-button-size;
-  &[title]:hover:after{
+  .custom-tooltip {
+    position: absolute;
     background: #333333; 
-    margin-top: 13vh;
     font-family: $font-family-regular;
-    font-size: 0.7vw;
+    font-size: 0.9vw;
     color: var(--white);
     padding: 0vw 0.4vw;
+    width: 7vw;
+    text-align: center;
     top: 100%;
   }
   .comments-icon,

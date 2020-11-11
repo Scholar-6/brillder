@@ -1,0 +1,14 @@
+@keyframes rotate {
+  $value: 25deg;
+  30%   {transform:rotate(-$value);}
+  50%  {transform:rotate($value);}
+  60%  {transform:rotate(-$value);}
+  80%  {transform:rotate($value);}
+  100% {transform:rotate(0deg);}
+}
+.rotate.animated:hover {
+  -webkit-animation-name: rotate;
+  -webkit-animation-duration: 700ms;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-timing-function: ease;
+}

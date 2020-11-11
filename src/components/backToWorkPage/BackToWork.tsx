@@ -50,9 +50,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   getActiveTab() {
-    let activeTab = ActiveTab.Play;
-    if (this.props.user.rolePreference?.roleId === UserType.Builder) {
-      activeTab = ActiveTab.Build;
+    let activeTab = ActiveTab.Build;
+    if (this.props.user.rolePreference?.roleId === UserType.Student) {
+      activeTab = ActiveTab.Play;
     }
     const values = queryString.parse(this.props.location.search);
     if (values.activeTab) {

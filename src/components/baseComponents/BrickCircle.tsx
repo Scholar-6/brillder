@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Hidden } from "@material-ui/core";
 import './BrickCircle.scss';
 import SpriteIcon from "./SpriteIcon";
 
@@ -70,12 +71,6 @@ class BrickCircle extends Component<BrickCircleProps, State> {
         className += ' circle-hovered';
     }
 
-    function lightenDarkenColor(colstr: string, amt: number) {
-      let col = parseInt(colstr, 16);
-      console.log(colstr, col);
-      return (((col & 0x0000FF) + amt) | ((((col >> 8) & 0x00FF) + amt) << 8) | (((col >> 16) + amt) << 16)).toString(16);
-    }
-
     let realColor = '';
     if (this.state.circleHovered) {
       realColor = color;
@@ -86,8 +81,6 @@ class BrickCircle extends Component<BrickCircleProps, State> {
       } else if (color === 'color4') {
         realColor = '#30c474';
       }
-      //realColor = '#' + lightenDarkenColor(realColor.substring(1), 50);
-      //console.log(realColor)
     }
 
     return (
@@ -97,9 +90,11 @@ class BrickCircle extends Component<BrickCircleProps, State> {
           {this.renderIcon()}
         </div>
         {this.props.canHover &&
-          <div className="play-button" onMouseEnter={() => this.showCircle()} onMouseLeave={() => this.hideCircle()}>
-            <SpriteIcon name="play-thick" onClick={() => this.props.onClick ? this.props.onClick() : {}} />
-          </div>
+          <Hidden only={['xs']}>
+            <div className="play-button" onMouseEnter={() => this.showCircle()} onMouseLeave={() => this.hideCircle()}>
+              <SpriteIcon name="play-thick" onClick={() => this.props.onClick ? this.props.onClick() : {}} />
+            </div>
+          </Hidden>
         }
       </div>
     );
