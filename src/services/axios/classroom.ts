@@ -12,6 +12,14 @@ export const getClassrooms = async () => {
   }
 }
 
+export const getStudentClassrooms = async () => {
+  try {
+    return await get<TeachClassroom[]>("/classrooms/me");
+  } catch {
+    return null;
+  }
+}
+
 export const deleteClassroom = async (id: number) => {
   try {
     return await del('/classroom/' + id);

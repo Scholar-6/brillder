@@ -4,6 +4,7 @@ import { Category } from "../viewAllPage/interface";
 import { connect } from "react-redux";
 import "swiper/swiper.scss";
 
+import './Library.scss';
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
 import { Brick, Subject } from "model/brick";
@@ -24,7 +25,8 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import AssignedBricks from "./AssignedBricks";
 import { getBrickColor } from "services/brick";
-import { getClassrooms } from "services/axios/classroom";
+import { getStudentClassrooms } from "services/axios/classroom";
+import { TeachClassroom } from "model/classroom";
 
 
 interface BricksListProps {
@@ -45,10 +47,12 @@ interface BricksListState {
   subjects: any[];
   sortedIndex: number;
   isLoading: boolean;
+  classrooms: TeachClassroom[];
 
   dropdownShown: boolean;
 
-  isClearFilter: any;
+  isClearFilter: boolean;
+  isClassClearFilter: boolean;
   failedRequest: boolean;
   pageSize: number;
   isAdmin: boolean;
@@ -56,7 +60,7 @@ interface BricksListState {
   shown: boolean;
 }
 
-class ViewAllPage extends Component<BricksListProps, BricksListState> {
+class Library extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props);
 
@@ -68,6 +72,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     this.state = {
       finalAssignments: [],
       rawAssignments: [],
+      classrooms: [],
       sortBy: SortBy.Date,
       subjects: [],
       sortedIndex: 0,
@@ -78,6 +83,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       isLoading: true,
 
       isClearFilter: false,
+      isClassClearFilter: false,
       failedRequest: false,
       isAdmin,
       isCore: true,
@@ -100,7 +106,10 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
 
   async loadData() {
     const subjects = await this.loadSubjects();
-    let classrooms = await getClassrooms();
+    let classrooms = await getStudentClassrooms();
+    if (classrooms) {
+      this.setState({classrooms});
+    }
     await this.getAssignments(subjects);
   }
 
@@ -136,7 +145,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const finalAssignments = this.filter(rawAssignments, subjects, this.state.isCore);
-  
       this.setState({...this.state, subjects, isLoading: false, rawAssignments, finalAssignments});
     } else {
       this.setState({failedRequest: true});
@@ -194,6 +202,14 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     this.setState({subjects, isClearFilter: this.isFilterClear(), finalAssignments, shown: true });
   };
 
+  filterByClassroom = async (id: number) => {
+    this.clearSubjects();
+    let rawAssignments = await getLibraryBricks();
+    if (rawAssignments) {
+      this.setState({...this.state, rawAssignments, finalAssignments: rawAssignments});
+    }
+  }
+
   clearSubjects = () => {
     const { state } = this;
     const { subjects } = state;
@@ -219,7 +235,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  searching(searchString: string) { }
+  searching(v: string) { }
   async search() { }
 
   showDropdown() { this.setState({ ...this.state, dropdownShown: true }) }
@@ -299,10 +315,9 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       return <PageLoader content="...Getting Bricks..." />;
     }
     const filterSubjects = this.getCheckedSubjectIds(this.state.subjects);
-
     const { history } = this.props;
     return (
-      <div className="main-listing dashboard-page">
+      <div className="main-listing dashboard-page my-library">
         {this.renderMobileGlassIcon()}
         <PageHeadWithMenu
           page={PageEnum.MyLibrary}
@@ -316,11 +331,14 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           <Grid container item xs={3} className="sort-and-filter-container">
             <LibraryFilter
               sortBy={this.state.sortBy}
+              classrooms={this.state.classrooms}
               subjects={this.state.subjects}
               assignments={this.state.rawAssignments}
               isClearFilter={this.state.isClearFilter}
+              isClassClearFilter={this.state.isClassClearFilter}
               handleSortChange={e => this.handleSortChange(e)}
               clearSubjects={() => this.clearSubjects()}
+              filterByClassroom={this.filterByClassroom.bind(this)}
               filterBySubject={index => this.filterBySubject(index)}
             />
           </Grid>
@@ -381,4 +399,4 @@ const mapState = (state: ReduxCombinedState) => ({
   notifications: state.notifications.notifications
 });
 
-export default connect(mapState)(ViewAllPage);
+export default connect(mapState)(Library);

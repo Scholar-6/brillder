@@ -130,7 +130,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     scrollToStep(activeStep + 2);
 
     if (activeStep >= questions.length - 1) {
-      moveNext();
+      setSubmitAnswers(true);
     }
   };
 
@@ -138,6 +138,11 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
 
   const moveNext = () => {
     handleStep(activeStep)();
+    finishBrick();
+    moveToEnding();
+  }
+
+  const submitAndMove = () => {
     finishBrick();
     moveToEnding();
   }
@@ -286,7 +291,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       </Grid>
       <SubmitAnswersDialog
         isOpen={isSubmitOpen}
-        submit={moveNext}
+        submit={submitAndMove}
         close={() => setSubmitAnswers(false)}
       />
     </div>

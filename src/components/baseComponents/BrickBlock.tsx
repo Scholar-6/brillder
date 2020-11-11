@@ -83,6 +83,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
               circleIcon={props.circleIcon}
               iconColor={props.iconColor}
               onMouseEnter={props.handleMouseHover}
+              handleDeleteOpen={props.handleDeleteOpen}
               move={move}
               color={color}
               brick={brick}

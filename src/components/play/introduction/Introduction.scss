@@ -1330,3 +1330,11 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     }
   }
 }
+
+.mobile-next {
+  @include phone_and_tabletP {
+    .svg {
+      margin-left: 0;
+    }
+  }
+}
