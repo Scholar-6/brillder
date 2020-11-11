@@ -106,7 +106,7 @@
     letter-spacing: 0.3vw;
     font-family: $font-family-regular;
     .svg {
-      width: 12vw;
+      width: 11.8vw;
       height: 8vw;
       @extend %removePosition;
       .left-class-icon,
@@ -231,6 +231,14 @@
         &.disabled {
           font-family: $font-family-light !important;
         }
+      }
+    }
+  }
+  .back-item-container {
+    .btn .svg {
+      @include ex-desktop_wide {
+        width: 11.2vw;
+        height: 8vw;
       }
     }
   }

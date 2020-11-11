@@ -202,9 +202,12 @@ class Library extends Component<BricksListProps, BricksListState> {
     this.setState({subjects, isClearFilter: this.isFilterClear(), finalAssignments, shown: true });
   };
 
-  filterByClassroom = (id: number) => {
+  filterByClassroom = async (id: number) => {
     this.clearSubjects();
-    this.setState({...this.state});
+    let rawAssignments = await getLibraryBricks();
+    if (rawAssignments) {
+      this.setState({...this.state, rawAssignments, finalAssignments: rawAssignments});
+    }
   }
 
   clearSubjects = () => {
