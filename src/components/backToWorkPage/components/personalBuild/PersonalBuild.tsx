@@ -5,6 +5,7 @@ import { User } from "model/user";
 import { prepareVisibleBricks } from '../../service';
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 
+import './PersonalBuild.scss';
 import BrickBlock from "components/baseComponents/BrickBlock";
 import { Grid } from "@material-ui/core";
 import FilterSidebar from "./FilterSidebar";
