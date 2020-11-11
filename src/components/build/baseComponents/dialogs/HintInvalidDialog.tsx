@@ -13,7 +13,7 @@ interface DialogProps {
 const QuestionInvalidDialog: React.FC<DialogProps> = (props) => {
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
-      <div className="dialog-header">
+      <div className="dialog-header" style={{marginBottom: 0}}>
       <ListItem>
         <ListItemText
           primary={`Please add a hint for Question ${props.invalidQuestionNumber}`}
@@ -22,7 +22,7 @@ const QuestionInvalidDialog: React.FC<DialogProps> = (props) => {
         />
         <ListItemAvatar style={{padding: 0}}>
           <Avatar className="circle-orange">
-            <SpriteIcon name="alert-triangle" className="active text-white stroke-2 w-3" />
+            <SpriteIcon name="alert-triangle" className="active text-white stroke-2 w-3 m-b-02" />
           </Avatar>
         </ListItemAvatar>
       </ListItem>

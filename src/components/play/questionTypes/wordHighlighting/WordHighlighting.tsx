@@ -136,8 +136,8 @@ class WordHighlighting extends CompComponent<
 
     return (
       <div className="question-unique-play word-highlighting-play">
-        <p className="help-text">Click to highlight.</p>
-        <div className={`words-container ${this.props.isPreview && 'preview'}`}>
+        <p><span className="help-text">Click to highlight.</span></p>
+        <div className={`words-container ${this.props.isPreview && 'preview'} ${!component.isPoem && 'break-lines'}`}>
           {this.getWords()}
         </div>
         <br/>

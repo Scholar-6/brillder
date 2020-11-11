@@ -357,7 +357,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     setTimeout(() => {
       if (this.props.isSearching) {
         expandSearchBrick(this.state.searchBricks, index);
-        console.log(index, this.state.searchBricks);
       } else {
         expandBrick(this.state.finalBricks, this.state.rawBricks, index);
       }
@@ -393,7 +392,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
     let name = getThreeColumnName(status);
     let brick = getThreeColumnBrick(threeColumns, name, key);
-    if (brick.expanded) return;
+    if (!brick || brick.expanded) return;
 
     clearTimeout(this.state.hoverTimeout);
 
@@ -553,6 +552,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
 
     const isEmpty = this.state.rawBricks.length === 0;
+
+    if (!this.state.bricksLoaded) {
+      return <PageLoader content="load bricks" />;
+    }
 
     if (!this.state.filters.isCore) {
       return <PersonalBuild

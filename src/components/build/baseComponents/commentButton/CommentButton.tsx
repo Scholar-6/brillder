@@ -16,6 +16,8 @@ interface CommentButtonProps {
 }
 
 const CommentButton: React.FC<CommentButtonProps> = (props) => {
+  const [hovered, setHover] = React.useState(false);
+
   const getNumberOfReplies = () => {
     const replies = props.comments?.filter(comment =>
       (comment.location === props.location) &&
@@ -63,13 +65,19 @@ const CommentButton: React.FC<CommentButtonProps> = (props) => {
   }
 
   return (
-    <div className="comment-button" title='Add comment' onClick={() => props.setCommentsShown(true)}>
+    <div
+      className="comment-button"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onClick={() => props.setCommentsShown(true)}
+    >
       <div className="comments-icon svgOnHover">
         <SpriteIcon name="message-square" className="w60 h60 active" />
       </div>
       <div className="comments-plus svgOnHover">
         <SpriteIcon name="plus" className="w60 h60 active" />
       </div>
+      {hovered && <div className="custom-tooltip">Add comment</div>}
     </div>
   );
 }

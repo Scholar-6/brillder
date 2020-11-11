@@ -69,6 +69,8 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   const [isCommingSoonOpen, setCommingSoon] = React.useState(false);
   const [commentsShown, setCommentsShown] = React.useState(props.initSuggestionExpanded);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+  const [redoHovered, setRedoHover] = React.useState(false);
+  const [undoHovered, setUndoHover] = React.useState(false);
   const { type } = question;
 
   const setQuestionHint = (hintState: HintState) => {
@@ -199,18 +201,34 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               <Grid container item alignItems="center" style={{ height: '100%' }}>
                 <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
                   <Grid item container direction="row" justify="space-evenly">
-                    <button className="btn btn-transparent svgOnHover undo-button" title="Undo" onClick={props.undo}>
-                      <SpriteIcon
-                        name="undo"
-                        className={`w100 h100 active ${props.undoRedoService.canUndo() && "text-theme-orange"}`}
-                      />
-                    </button>
-                    <button className="btn btn-transparent svgOnHover redo-button" title="Redo" onClick={props.redo}>
-                      <SpriteIcon
-                        name="redo"
-                        className={`w100 h100 active ${props.undoRedoService.canRedo() && "text-theme-orange"}`}
-                      />
-                    </button>
+                    <div className="undo-button-container">
+                      <button
+                        className="btn btn-transparent svgOnHover undo-button"
+                        onMouseLeave={() => setUndoHover(false)}
+                        onMouseEnter={()=> setUndoHover(true)}
+                        onClick={props.undo}
+                      >
+                        <SpriteIcon
+                          name="undo"
+                          className={`w100 h100 active ${props.undoRedoService.canUndo() && "text-theme-orange"}`}
+                        />
+                      </button>
+                      {undoHovered && <div className="custom-tooltip">Undo</div>}
+                    </div>
+                    <div className="redo-button-container">
+                      <button
+                        className="btn btn-transparent svgOnHover redo-button"
+                        onMouseLeave={() => setRedoHover(false)}
+                        onMouseEnter={()=> setRedoHover(true)}
+                        onClick={props.redo}
+                      >
+                        <SpriteIcon
+                          name="redo"
+                          className={`w100 h100 active ${props.undoRedoService.canRedo() && "text-theme-orange"}`}
+                        />
+                      </button>
+                      {redoHovered && <div className="custom-tooltip">Redo</div>}
+                    </div>
                   </Grid>
                   <CommentButton
                     location={CommentLocation.Question}
