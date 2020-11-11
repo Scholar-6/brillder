@@ -106,8 +106,8 @@
     letter-spacing: 0.3vw;
     font-family: $font-family-regular;
     .svg {
-      width: 10vw;
-      height: 7vw;
+      width: 11.8vw;
+      height: 8vw;
       @extend %removePosition;
       .left-class-icon,
       .right-class-icon {
@@ -122,6 +122,8 @@
     }
     span {
       @extend %transitionAll300;
+      font-size: 1.2vw;
+      font-family: $font-family-light;
     }
     &:hover {
       .svg {
@@ -133,8 +135,9 @@
         }
       }
       span {
-        font-family: $font-family-bold;
         @extend %transitionAll300;
+        font-family: $font-family-bold;
+        font-size: 1.2vw;
         letter-spacing: 0.4vw;
       }
     }
@@ -150,7 +153,7 @@
       padding: 25px 0;
     }
     @include ex-desktop_wide {
-      padding: 3vh 0;
+      padding: 5vh 0;
     }
     .eye-glass-icon,
     .btn {
@@ -228,6 +231,14 @@
         &.disabled {
           font-family: $font-family-light !important;
         }
+      }
+    }
+  }
+  .back-item-container {
+    .btn .svg {
+      @include ex-desktop_wide {
+        width: 11.2vw;
+        height: 8vw;
       }
     }
   }

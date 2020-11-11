@@ -549,7 +549,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         const time = Date.now();
         console.log(`${new Date(time)} -> ${res.updated}`);
         const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
-        if(timeDifference > 500) {
+        if(timeDifference > 10000) {
           console.log("Not updated properly!!");
           setSaveError(true);
         } else {
@@ -578,7 +578,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         const time = Date.now();
         console.log(`${new Date(time)} -> ${res.updated}`);
         const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
-        if(timeDifference > 500) {
+        if(timeDifference > 10000) {
           console.log("Not updated properly!!");
           setSaveError(true);
         } else {
@@ -613,7 +613,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         props.saveBrick(brick).then((res: Brick) => {
           console.log(`${new Date(time)} -> ${res.updated}`);
           const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
-          if(timeDifference > delay) {
+          if(timeDifference > 10000) {
             console.log("Not updated properly!!");
             setSaveError(true);
           } else {

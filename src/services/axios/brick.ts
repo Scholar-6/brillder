@@ -63,9 +63,13 @@ export const getAssignedBricks = async () => {
   }
 }
 
-export const getLibraryBricks = async () => {
+export const getLibraryBricks = async (classroomId?: number) => {
   try {
-    return await post<any[]>("/play/library", {}); 
+    let obj = {};
+    if (classroomId) {
+      obj = { classroomId };
+    }
+    return await post<any[]>("/play/library", obj); 
   } catch (e) {
     return null;
   }
