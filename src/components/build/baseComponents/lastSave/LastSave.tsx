@@ -34,7 +34,11 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
 
   const renderText = () => {
     if (isSaving) {
-      return "Saving...";
+      if(props.saveError) {
+        return "Connection lost.";
+      } else {
+        return "Saving...";
+      }
     } else {
       return `Last Saved at ${getTime(props.updated)}`;
     }
