@@ -60,7 +60,7 @@ interface BricksListState {
   shown: boolean;
 }
 
-class ViewAllPage extends Component<BricksListProps, BricksListState> {
+class Library extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props);
 
@@ -145,7 +145,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const finalAssignments = this.filter(rawAssignments, subjects, this.state.isCore);
-  
       this.setState({...this.state, subjects, isLoading: false, rawAssignments, finalAssignments});
     } else {
       this.setState({failedRequest: true});
@@ -202,6 +201,11 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     const finalAssignments = this.filter(this.state.rawAssignments, subjects, this.state.isCore);
     this.setState({subjects, isClearFilter: this.isFilterClear(), finalAssignments, shown: true });
   };
+
+  filterByClassroom = (id: number) => {
+    this.clearSubjects();
+    this.setState({...this.state});
+  }
 
   clearSubjects = () => {
     const { state } = this;
@@ -308,7 +312,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       return <PageLoader content="...Getting Bricks..." />;
     }
     const filterSubjects = this.getCheckedSubjectIds(this.state.subjects);
-
     const { history } = this.props;
     return (
       <div className="main-listing dashboard-page my-library">
@@ -332,6 +335,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
               isClassClearFilter={this.state.isClassClearFilter}
               handleSortChange={e => this.handleSortChange(e)}
               clearSubjects={() => this.clearSubjects()}
+              filterByClassroom={this.filterByClassroom.bind(this)}
               filterBySubject={index => this.filterBySubject(index)}
             />
           </Grid>
@@ -392,4 +396,4 @@ const mapState = (state: ReduxCombinedState) => ({
   notifications: state.notifications.notifications
 });
 
-export default connect(mapState)(ViewAllPage);
+export default connect(mapState)(Library);

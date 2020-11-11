@@ -1,5 +1,9 @@
 .my-library {
   .subjects-filter {
-    height: 20vh !important;
+    height: 25vh !important;
+  }
+  .classroom-filter-custom {
+    height: 25vh;
+    overflow-y: scroll;
   }
 }
