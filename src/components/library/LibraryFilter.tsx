@@ -6,12 +6,16 @@ import { Subject } from "model/brick";
 import { SortBy } from "./model";
 
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
+import { TeachClassroom } from "model/classroom";
+import CustomFilterBox from "./CustomFilterBox";
 
 interface FilterProps {
   sortBy: SortBy;
   subjects: Subject[];
-  isClearFilter: any;
+  isClearFilter: boolean;
+  isClassClearFilter: boolean;
   assignments: AssignmentBrick[];
+  classrooms: TeachClassroom[];
 
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   clearSubjects(): void;
@@ -19,30 +23,19 @@ interface FilterProps {
 }
 
 interface FilterState {
-  filterExpanded: boolean;
-  filterHeight: any;
+  classFilterHeight: string;
+  filterHeight: string;
 }
 
 class LibraryFilter extends Component<FilterProps, FilterState> {
   constructor(props: FilterProps) {
     super(props);
     this.state = {
+      classFilterHeight: "auto",
       filterHeight: "auto",
-      filterExpanded: true
     }
   }
 
-  hideFilter() {
-    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
-  }
-
-  expandFilter() {
-    this.setState({
-      ...this.state,
-      filterExpanded: true,
-      filterHeight: "auto",
-    });
-  }
   render() {    
     return (
       <div className="sort-box">
@@ -75,26 +68,18 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
             </Grid>
           </RadioGroup>
         </div>
-        <div className="filter-header">
-          <span>Filter by Subject</span>
-          <button
-            className={
-              "btn-transparent filter-icon " +
-              (this.state.filterExpanded
-                ? this.props.isClearFilter
-                  ? "arrow-cancel"
-                  : "arrow-down"
-                : "arrow-up")
-            }
-            onClick={() => {
-              this.state.filterExpanded
-                ? this.props.isClearFilter
-                  ? this.props.clearSubjects()
-                  : this.hideFilter()
-                : this.expandFilter();
-            }}
-          ></button>
-        </div>
+        <CustomFilterBox
+          label="Filter by Class"
+          isClearFilter={this.props.isClassClearFilter}
+          setHeight={classFilterHeight => this.setState({classFilterHeight})}
+          clear={() => {}}
+        />
+        <CustomFilterBox
+          label="Filter by Subject"
+          isClearFilter={this.props.isClearFilter}
+          setHeight={filterHeight => this.setState({filterHeight})}
+          clear={this.props.clearSubjects}
+        />
         <SubjectsList
           subjects={this.props.subjects}
           filterHeight={this.state.filterHeight}
