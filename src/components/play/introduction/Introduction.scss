@@ -572,7 +572,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         .MuiButton-label {
           p {
             @include phone_and_tabletP {
-              font-size: 3vw;
+              font-size: 4.5vw;
             }
             @include tabletP {
               font-size: 1vw;
@@ -632,7 +632,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           }
           .sort-category {
             @include phone_and_tabletP {
-              font-size: 4vw !important;
+              font-size: 4.5vw !important;
             }
             @include tabletP {
               font-size: 1.25vw !important;
