@@ -572,7 +572,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         .MuiButton-label {
           p {
             @include phone_and_tabletP {
-              font-size: 3vw;
+              font-size: 4.5vw;
             }
             @include tabletP {
               font-size: 1vw;
@@ -632,7 +632,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           }
           .sort-category {
             @include phone_and_tabletP {
-              font-size: 4vw !important;
+              font-size: 4.5vw !important;
             }
             @include tabletP {
               font-size: 1.25vw !important;
@@ -1282,6 +1282,51 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       font-family: $font-family-black;
       font-size: 3vh !important;
       max-width: 90vw !important;
+    }
+  }
+}
+
+.live-page .brick-row-container .brick-container.play-preview-panel {
+  .introduction-page {
+  }
+}
+
+// mobile live and review height
+.play-preview-pages .brick-row-container {
+  @include phone_and_tabletP {
+    .brick-container.live-page {
+      > .introduction-page {
+      height: calc(100% - 19vw) !important;
+        .MuiTypography-root {
+          height: 100% !important;
+          .MuiBox-root {
+            height: 100% !important;
+            .introduction-page {
+              height: 100% !important;
+              .question-live-play {
+                height: 100% !important;
+                padding-bottom: calc(20vw + 27px) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+    .brick-container.review-page {
+      .introduction-page {
+        height: calc(100vh - 60px - 21vw) !important;
+        .question-live-play {
+          height: 100% !important;
+          padding-bottom: calc(21vw + 25px) !important;
+        }
+      }
+    }
+    .brick-container.mobile-synthesis-page {
+      .synthesis-content {
+        height: calc(100% - 21vw) !important;
+        margin-bottom: 0;
+        padding-bottom: calc(20vw + 25px) !important;
+      }
     }
   }
 }

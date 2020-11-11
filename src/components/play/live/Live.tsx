@@ -182,7 +182,7 @@ const LivePage: React.FC<LivePageProps> = ({
     scrollToStep(activeStep + 2);
 
     if (activeStep >= questions.length - 1) {
-      moveNext();
+      setSubmitAnswers(true);
     }
   };
 
