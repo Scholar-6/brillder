@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .document-editor {
   border-radius: $editor-radius;
@@ -140,19 +140,13 @@
   .ck-insert-table-dropdown__grid {
     z-index: 100000;
   }
-  .upload-button-custom,
-  .latex-button-custom {
+  .upload-button-custom {
     span {
       font-family: $font-family-bold !important;
     }
     .ck-button__label {
       font-size: 1.2vw !important;
     }
-  }
-  .latex-button-custom {
-    width: 2vw !important;
-    min-width: 2vw !important;
-    max-width: 2vw !important;
   }
   &.highlight-editor {
     border-radius: 0 !important;
