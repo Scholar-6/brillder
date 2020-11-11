@@ -123,6 +123,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [activeQuestionType, setActiveType] = React.useState(QuestionTypeEnum.None);
   const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
   const [isSaving, setSavingStatus] = React.useState(false);
+  const [hasSaveError, setSaveError] = React.useState(false);
   const [skipTutorialOpen, setSkipDialog] = React.useState(false);
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
@@ -544,10 +545,23 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       } as Brick;
       pushDiff(diffBrick);
       setCurrentBrick(diffBrick);
-      props.saveBrick(brick).then((res: any) => {
+      props.saveBrick(brick).then((res: Brick) => {
+        const time = Date.now();
+        console.log(`${new Date(time)} -> ${res.updated}`);
+        const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
+        if(timeDifference > 500) {
+          console.log("Not updated properly!!");
+          setSaveError(true);
+        } else {
+          setSavingStatus(false);
+          setSaveError(false);
+        }
         if (callback) {
           callback(res);
         }
+      }).catch((err: any) => {
+        console.log("Error saving brick.");
+        setSaveError(true);
       });
     }
   }
@@ -560,7 +574,21 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       //const diff = getBrickDiff(currentBrick, brick);
       pushDiff(brick);
       setCurrentBrick(brick);
-      props.saveBrick(brick);
+      props.saveBrick(brick).then((res: Brick) => {
+        const time = Date.now();
+        console.log(`${new Date(time)} -> ${res.updated}`);
+        const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
+        if(timeDifference > 500) {
+          console.log("Not updated properly!!");
+          setSaveError(true);
+        } else {
+          setSavingStatus(false);
+          setSaveError(false);
+        }
+      }).catch((err: any) => {
+        console.log("Error saving brick.");
+        setSaveError(true);
+      });
     }
   };
 
@@ -582,7 +610,20 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         pushDiff(brick);
         setCurrentBrick(brick);
         setLastAutoSave(time);
-        props.saveBrick(brick);
+        props.saveBrick(brick).then((res: Brick) => {
+          console.log(`${new Date(time)} -> ${res.updated}`);
+          const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
+          if(timeDifference > delay) {
+            console.log("Not updated properly!!");
+            setSaveError(true);
+          } else {
+            setSavingStatus(false);
+            setSaveError(false);
+          }
+        }).catch((err: any) => {
+          console.log("Error saving brick!");
+          setSaveError(true);
+        });
       }
     }
   }
@@ -815,7 +856,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               </Grid>
             </Grid>
           </Grid>
-          <LastSave updated={brick.updated} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} />
+          <LastSave updated={brick.updated} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} saveError={hasSaveError} />
           <Route path="/build/brick/:brickId/investigation/" exact>
             <Redirect to={`/build/brick/${brick.id}/investigation/question`} />
           </Route>
