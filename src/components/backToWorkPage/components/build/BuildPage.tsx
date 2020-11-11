@@ -14,7 +14,7 @@ import { getBricks, searchBricks, getCurrentUserBricks } from "services/axios/br
 import { Notification } from 'model/notifications';
 import {
   filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
-  removeBrickFromLists, sortBricks, hideBricks, expandBrick, expandSearchBrick
+  removeBrickFromLists, sortBricks, hideBricks, expandBrick, expandSearchBrick, removeBrickFromList
 } from '../../service';
 import {
   getThreeColumnName, prepareTreeRows,
@@ -443,6 +443,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   delete(brickId: number) {
     let { rawBricks, finalBricks, threeColumns } = this.state;
     removeBrickFromLists(rawBricks, finalBricks, threeColumns, brickId);
+    removeBrickFromList(this.state.searchBricks, brickId);
     this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
