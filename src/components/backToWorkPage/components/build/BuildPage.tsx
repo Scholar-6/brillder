@@ -566,6 +566,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
         sortedIndex={this.state.sortedIndex}
         history={history}
         isTeach={this.state.isTeach || this.state.isAdmin}
+        isSearching={this.props.isSearching}
         searchString={this.props.searchString}
         isFilterEmpty={isEmpty}
 
@@ -581,8 +582,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
         moveAllBack={this.moveAllBack.bind(this)}
 
         handleDeleteOpen={this.handleDeleteOpen.bind(this)}
-        handleMouseHover={this.handleMouseHover.bind(this)}
-        handleMouseLeave={this.handleMouseLeave.bind(this)}
       />
     }
 
