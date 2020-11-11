@@ -46,6 +46,7 @@ import UpcastWriter from "@ckeditor/ckeditor5-engine/src/view/upcastwriter";
 import "./DocumentEditor.scss";
 import UploadImageCustom from './UploadImageCustom';
 import colors from './colors';
+import LatexCustom from "./LatexCustom";
 
 export interface DocumentWEditorProps {
   disabled: boolean;
@@ -192,7 +193,7 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
 
   render() {
     let config = {
-      extraPlugins: [UploadImageCustom/*, CommentCustom 30/07/2020 */],
+      extraPlugins: [UploadImageCustom, LatexCustom],
       plugins: [
         Essentials,
         Paragraph,
@@ -222,6 +223,7 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
         "chemType",
         "bulletedList",
         "numberedList",
+        "latex"
       ],
       mediaEmbed: { previewsInData: true },
       comments: { commentOnly: this.props.editOnly ?? false },
