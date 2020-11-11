@@ -57,4 +57,17 @@
       width: 100%;
     }
   }
+  .sortable-item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    .drag-area {
+      height: auto;
+      @extend %flexToYCenter;
+      .drag-choice {
+        height: 4vw;
+        width: 4vw;
+      }
+    }
+  }
 }
