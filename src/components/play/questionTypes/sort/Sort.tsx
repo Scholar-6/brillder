@@ -15,6 +15,7 @@ import { DragAndDropStatus } from '../pairMatch/interface';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { getValidationClassName } from '../service';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 interface UserCategory {
@@ -228,7 +229,10 @@ class Sort extends CompComponent<SortProps, SortState> {
 
     return (
       <div className={className} key={i}>
-        <ListItem>
+        <div className="drag-area">
+          <SpriteIcon name="move" className="drag-choice" />
+        </div>
+        <ListItem onMouseDown={e => e.preventDefault()} onTouchStart={e => e.preventDefault()} className="sort-choice-custom">
           <ListItemText>
             {this.renderChoiceContent(choice)}
             {this.props.isReview || this.props.isPreview ?

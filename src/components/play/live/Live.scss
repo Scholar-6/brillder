@@ -35,12 +35,21 @@
   }
 }
 .lines-container, .words-container {
-  line-height: 1 !important;
   font-size: 1.25vw !important;
+  line-height: 1.5 !important;
+
   @include phone_and_tabletP {
     font-size: 4.5vw !important;
   }
-  &.break-lines {
-    word-wrap: break-word;
+}
+
+.words-container {
+  line-height: 0.8 !important;
+}
+
+.words-container.break-lines {
+  line-height: 1.5 !important;
+  .word {
+    display: inline-block !important;
   }
 }

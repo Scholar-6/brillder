@@ -330,7 +330,7 @@ h3 {
   @extend %transitionAll300;
   &:hover {
     @include tabletP {
-      transform: scale(1.4);
+      transform: scale(1.2);
     }
   }
 }
