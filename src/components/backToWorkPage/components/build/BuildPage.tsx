@@ -6,6 +6,7 @@ import queryString from 'query-string';
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
+import './BuildPage.scss';
 import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
@@ -32,6 +33,7 @@ import PersonalBuild from "../personalBuild/PersonalBuild";
 import { isMobile } from "react-device-detect";
 import map from "components/map";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import { SubjectItem } from "../personalBuild/model";
 
 interface BuildProps {
   searchString: string;
@@ -66,6 +68,8 @@ interface BuildState {
 
   deleteDialogOpen: boolean;
   deleteBrickId: number;
+
+  buildCheckedSubjectId: number;
 
   bricksLoaded: boolean;
   hoverTimeout: number;
@@ -118,6 +122,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       bricksLoaded: false,
 
       hoverTimeout: -1,
+      buildCheckedSubjectId: - 1,
 
       filters: {
         viewAll: true,
@@ -286,7 +291,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
       filters.review= true;
       filters.draft = true;
       filters.viewAll = true;
-      this.setState({ ...this.state, filters, sortedIndex: 0 });
+      const bricks = filterByStatus(this.state.rawBricks, BrickStatus.Draft);
+      bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Build));
+      bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Review));
+      this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
     }
   }
 
@@ -331,6 +339,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       filters.buildAll = true;
     }
     const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
+    console.log('updated', finalBricks);
     this.setState({ ...this.state, filters, finalBricks, sortedIndex: 0 });
   }
 
@@ -530,6 +539,20 @@ class BuildPage extends Component<BuildProps, BuildState> {
     return published;
   }
 
+  filterBuildBySubject(s: SubjectItem | null) {
+    const {rawBricks} = this.state;
+    if (s) {
+      const bricks = rawBricks.filter(b => b.subjectId === s.id);
+      const threeColumns = prepareTreeRows(bricks, this.state.filters, this.props.user.id);
+      this.setState({buildCheckedSubjectId: s.id, threeColumns, finalBricks: bricks});
+    } else {
+      if (this.state.buildCheckedSubjectId !== -1) {
+        const threeColumns = prepareTreeRows(rawBricks, this.state.filters, this.props.user.id);
+        this.setState({buildCheckedSubjectId: -1, threeColumns, finalBricks: rawBricks});
+      }
+    }
+  }
+
   render() {
     const {history} = this.props;
     if (isMobile) {
@@ -553,9 +576,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
 
     const isEmpty = this.state.rawBricks.length === 0;
-
-    if (!this.state.bricksLoaded) {
-    }
 
     if (!this.state.filters.isCore) {
       return <PersonalBuild
@@ -590,7 +610,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     finalBricks = finalBricks.filter(b => b.isCore === true);
 
     return (
-      <Grid container direction="row" className="sorted-row">
+      <Grid container direction="row" className="sorted-row build-page-content">
         <FilterSidebar
           userId={this.props.user.id}
           history={this.props.history}
@@ -604,6 +624,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
           showBuildAll={() => this.showBuildAll()}
           showEditAll={() => this.showEditAll()}
           filterChanged={this.filterUpdated.bind(this)}
+          filterBySubject={this.filterBuildBySubject.bind(this)}
         />
         <Grid item xs={9} className="brick-row-container">
           <Tab
