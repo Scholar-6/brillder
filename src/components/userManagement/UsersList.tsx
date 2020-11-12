@@ -21,6 +21,7 @@ import RoleDescription from "components/baseComponents/RoleDescription";
 import NextButton from "components/baseComponents/pagination/NextButton";
 import PrevButton from "components/baseComponents/pagination/PrevButton";
 import CustomToggle from './CustomToggle';
+import CustomFilterBox from "components/library/CustomFilterBox";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -358,26 +359,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             </Grid>
           </RadioGroup>
         </div>
-        <div className="filter-header">
-          <span>Filter by: Subject</span>
-          <button
-            className={
-              "btn-transparent filter-icon " +
-              (this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? "arrow-cancel"
-                  : "arrow-down"
-                : "arrow-up")
-            }
-            onClick={() => {
-              this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? this.clearStatus()
-                  : this.hideFilter()
-                : this.expandFilter();
-            }}
-          ></button>
-        </div>
+        <CustomFilterBox
+          label="Filter by: Subject"
+          isClearFilter={this.state.isClearFilter}
+          setHeight={filterHeight => this.setState({filterHeight})}
+          clear={this.clearStatus.bind(this)}
+        />
         <SubjectsList
           subjects={this.state.subjects}
           filterHeight={this.state.filterHeight}

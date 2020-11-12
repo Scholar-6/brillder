@@ -65,6 +65,7 @@ import HintInvalidDialog from './baseComponents/dialogs/HintInvalidDialog';
 import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialog';
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
+import { Console } from "console";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -334,8 +335,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (locked) { return; }
     const updatedQuestions = questions.slice();
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, false));
-
-    saveBrickQuestions(updatedQuestions, (brick: any) => {
+    saveBrickQuestions(updatedQuestions, (brick2: any) => {
       const postUpdatedQuestions = setLastQuestionId(brick, updatedQuestions);
       setQuestions(update(questions, { $set: postUpdatedQuestions }));
       cashBuildQuestion(brickId, postUpdatedQuestions.length - 1);
@@ -546,6 +546,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       pushDiff(diffBrick);
       setCurrentBrick(diffBrick);
       props.saveBrick(brick).then((res: Brick) => {
+        console.log(res.questions.length)
         const time = Date.now();
         console.log(`${new Date(time)} -> ${res.updated}`);
         const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
@@ -556,10 +557,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           setSavingStatus(false);
           setSaveError(false);
         }
+        console.log(res.questions.length)
         if (callback) {
           callback(res);
         }
       }).catch((err: any) => {
+        console.log(err)
         console.log("Error saving brick.");
         setSaveError(true);
       });

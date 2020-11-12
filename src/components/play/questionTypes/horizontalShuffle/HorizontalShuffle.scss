@@ -8,11 +8,12 @@
     margin: 2px;
     border-radius: 0.6vw;
     background: var(--tab-gray);
-    font-size: 1.25vw !important;
     box-shadow: none !important;
     .answer {
       padding-left: 1vw;
       padding-right: 1vw;
+      font-size: 1.25vw !important;
+      line-height: 1.75;
       text-align: center;
     }
     .question-hint {
