@@ -177,6 +177,12 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.animationFlipRelease();
   }
 
+  moveToSynthesis() {
+    if (this.state.animationRunning) { return; }
+    this.setState({ bookState: BookState.Synthesis, animationRunning: true });
+    this.animationFlipRelease();
+  }
+
   nextQuestion() {
     if (!this.state.attempt) { return; }
     const {brick} = this.state.attempt;
@@ -185,14 +191,14 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       this.setState({ questionIndex: this.state.questionIndex + 1, animationRunning: true });
       this.animationFlipRelease();
     } else {
-      this.setState({ bookState: BookState.Synthesis});
+      this.moveToSynthesis();
     }
   }
 
   prevQuestion() {
     if (this.state.animationRunning) { return; }
     if (this.state.questionIndex === 0) {
-      this.setState({ bookState: BookState.Introduction});
+      this.moveToIntroduction();
     }
     if (this.state.questionIndex > 0) {
       this.setState({ questionIndex: this.state.questionIndex - 1, animationRunning: true });
@@ -258,6 +264,20 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       return {};
     }
 
+    const renderBookMark = () => {
+      if (!this.state.bookHovered) return '';
+      const {bookState} = this.state;
+      if (bookState === BookState.QuestionPage || bookState === BookState.Introduction || bookState === BookState.Synthesis) {
+        return (
+          <SpriteIcon
+            name="custom-bookmark"
+            className={`bookmark ${this.state.animationRunning ? "hidden" : ""}`}
+          />
+        );
+      }
+      return '';
+    }
+
     return (
       <div className="post-play-page">
         <HomeButton onClick={() => this.props.history.push('/')} />
@@ -281,12 +301,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <IntroBriefPage brick={brick} color={color} onClick={this.moveToAttempts.bind(this)} />
                 <IntroPrepPage brick={brick} color={color} onClick={this.moveToQuestions.bind(this)} />
                 <div className="page3-empty" onClick={this.moveToTitles.bind(this)}></div>
-                {this.state.bookHovered && this.state.bookState === BookState.QuestionPage &&
-                  <SpriteIcon
-                    name="custom-bookmark"
-                    className={`bookmark ${this.state.animationRunning ? "hidden" : ""}`}
-                  />
-                }
+                {renderBookMark()}
                 <AttemptsPage
                   attempts={this.state.attempts}
                   index={this.state.activeAttemptIndex}
