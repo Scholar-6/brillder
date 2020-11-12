@@ -5,6 +5,9 @@ import { Brick, BrickStatus } from "model/brick";
 import { SortBy, Filters, ThreeColumns } from '../../model';
 import { clearStatusFilters } from '../../service';
 import EmptyFilterSidebar from "../EmptyFilter";
+import CustomFilterBox from "components/library/CustomFilterBox";
+import { SubjectItem } from "../personalBuild/model";
+import AnimateHeight from "react-animate-height";
 
 
 enum FilterFields {
@@ -27,10 +30,18 @@ interface FilterSidebarProps {
   showBuildAll(): void;
   showEditAll(): void;
   filterChanged(filters: Filters): void;
+  filterBySubject(s: any): void;
 }
+
 interface FilterSidebarState {
   filterExpanded: boolean;
   isClearFilter: boolean;
+
+  isSubjectsClear: boolean;
+  subjectsHeight: string;
+
+  subjectCheckedId: number;
+  subjects: SubjectItem[];
 }
 
 class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
@@ -39,8 +50,69 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     this.state = {
       filterExpanded: true,
       isClearFilter: false,
+      subjectsHeight: 'auto',
+      isSubjectsClear: false,
+      subjectCheckedId: -1,
+      subjects: this.getBrickSubjects(props.finalBricks)
     }
   }
+
+  componentDidUpdate(prevProps: FilterSidebarProps) {
+    if (this.props.finalBricks !== prevProps.finalBricks) {
+      this.setState({subjects: this.getBrickSubjects(this.props.finalBricks)});
+    }
+  }
+
+  getBrickSubjects(bricks: Brick[]) {
+    let subjects:SubjectItem[] = [];
+    for (let brick of bricks) {
+      if (!brick.subject) {
+        continue;
+      }
+      if (this.props.filters.publish === true) {
+        if (brick.status !== BrickStatus.Publish) {
+          continue;
+        }
+      } else {
+        if (brick.status === BrickStatus.Publish) {
+          continue;
+        }
+      }
+      let subject = subjects.find(s => s.id === brick.subject?.id);
+      if (!subject) {
+        let subject = Object.assign({}, brick.subject) as SubjectItem;
+        subject.count = 1;
+        subjects.push(subject);
+      } else {
+        subject.count += 1;
+      }
+    }
+    return subjects;
+  }
+
+  filterBySubject(s: SubjectItem) {
+    let isChecked = false;
+    for (let item of this.state.subjects) {
+      if (item.id === s.id) {
+
+        if (item.id === this.state.subjectCheckedId) {
+          item.checked = false;
+        } else {
+          item.checked = true;
+          isChecked = true;
+        }
+      } else {
+        item.checked = false;
+      }
+    }
+    this.setState({...this.state, subjectCheckedId: isChecked ? s.id : -1});
+    if (isChecked) {
+      this.props.filterBySubject(s);
+    } else {
+      this.props.filterBySubject(null);
+    }
+  }
+
 
   hideFilter() { this.setState({ filterExpanded: false }) }
   expandFilter() { this.setState({ filterExpanded: true }) }
@@ -98,7 +170,27 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   renderSortAndFilterBox = (draft: number, build: number, review: number) => {
     return (
       <div className="sort-box">
-        <div className="filter-header" style={{marginTop: '5vh', marginBottom: '3vh'}}>
+        <CustomFilterBox
+          label="Subjects"
+          isClearFilter={this.state.isSubjectsClear}
+          setHeight={subjectsHeight => this.setState({subjectsHeight})}
+          clear={() => {}}
+        />
+        <AnimateHeight
+          duration={500}
+          height={this.state.subjectsHeight}
+          style={{ width: "100%" }}
+        >
+          <div className="filter-container subjects-list indexes-box">
+            {this.state.subjects.map((s, i) =>
+              <div className={"index-box " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
+                {s.name}
+                <div className="right-index">{s.count}</div>
+              </div>
+            )}
+          </div>
+        </AnimateHeight>
+        <div className="filter-header">
           <span>LIVE OVERVIEW</span>
           <button
             className={
