@@ -15,7 +15,8 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
         if (attempt.answer[index]) {
             const correctAnswer = stripHtml(answer.value);
             const givenAnswer = stripHtml(attempt.answer[index]);
-            if (givenAnswer === correctAnswer) {
+            console.log(`${givenAnswer.toLowerCase()} ${correctAnswer.toLowerCase()}`)
+            if (givenAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
                 // add the correct amount of marks
                 attempt.marks += markIncrement;
             } else {
