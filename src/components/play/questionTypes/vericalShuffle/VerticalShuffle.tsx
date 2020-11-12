@@ -9,6 +9,7 @@ import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 interface VerticalShuffleChoice {
@@ -118,28 +119,33 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     
     return (
       <div key={i} className={className}>
-        <Grid container direction="row" justify="center">
-          <MathInHtml value={answer.value} />
-        </Grid>
-        <Grid container direction="row" justify="center">
-          {this.props.isPreview ?
-            <ReviewEachHint
-              isPhonePreview={this.props.isPreview}
-              isReview={this.props.isReview}
-              isCorrect={isCorrect}
-              index={i}
-              hint={this.props.question.hint}
-            />
-            : this.props.isReview &&
-            <ReviewEachHint
-              isPhonePreview={this.props.isPreview}
-              isReview={this.props.isReview}
-              isCorrect={isCorrect}
-              index={answer.index}
-              hint={this.props.question.hint}
-            />
-          }
-        </Grid>
+        <div className="drag-area">
+          <SpriteIcon name="move" />
+        </div>
+        <div className="vertical-content">
+          <Grid container direction="row" justify="center">
+            <MathInHtml value={answer.value} />
+          </Grid>
+          <Grid container direction="row" justify="center">
+            {this.props.isPreview ?
+              <ReviewEachHint
+                isPhonePreview={this.props.isPreview}
+                isReview={this.props.isReview}
+                isCorrect={isCorrect}
+                index={i}
+                hint={this.props.question.hint}
+              />
+              : this.props.isReview &&
+              <ReviewEachHint
+                isPhonePreview={this.props.isPreview}
+                isReview={this.props.isReview}
+                isCorrect={isCorrect}
+                index={answer.index}
+                hint={this.props.question.hint}
+              />
+            }
+          </Grid>
+        </div>
       </div>
     );
   }

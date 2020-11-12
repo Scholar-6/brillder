@@ -230,7 +230,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     return (
       <div className={className} key={i}>
         <div className="drag-area">
-          <SpriteIcon name="move" className="drag-choice" />
+          <SpriteIcon name="move" />
         </div>
         <ListItem onMouseDown={e => e.preventDefault()} onTouchStart={e => e.preventDefault()} className="sort-choice-custom">
           <ListItemText>

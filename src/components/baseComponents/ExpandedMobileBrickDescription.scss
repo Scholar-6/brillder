@@ -5,7 +5,7 @@
 .mobile-scroll-bricks {
   .expanded-mobile-brick-info {
     width: 100%;
-    height: calc(43.5vh - 4vh);
+    height: calc(43vh);
     padding: 4vh 8vw 0 8vw;
     background: transparent;
     .brick-icons {
@@ -24,6 +24,7 @@
       @extend %linkDescription;
       > div {
         max-width: 57vw;
+        min-width: 43vw;
       }
       @extend %flexCenter;
       .link-info {
