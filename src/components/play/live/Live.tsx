@@ -198,6 +198,12 @@ const LivePage: React.FC<LivePageProps> = ({
     moveToProvisional();
   }
 
+  const submitAndMove = () => {
+    questions.forEach((question) => (question.edited = false));
+    props.finishBrick();
+    moveToProvisional();
+  }
+
   const onQuestionAttempted = (questionIndex: number) => {
     if (!questions[questionIndex].edited) {
       questions[activeStep].edited = true;
@@ -333,7 +339,7 @@ const LivePage: React.FC<LivePageProps> = ({
       />
       <SubmitAnswersDialog
         isOpen={isSubmitOpen}
-        submit={moveNext}
+        submit={submitAndMove}
         close={() => setSubmitAnswers(false)}
       />
     </div>

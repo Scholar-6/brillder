@@ -187,14 +187,19 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
+
   delete(brickId: number) {
-    let { bricks } = this.state;
-    let brick = bricks.find(brick => brick.id === brickId);
-    if (brick) {
-      let index = bricks.indexOf(brick);
-      bricks.splice(index, 1);
+    function removeByIndex(bricks: Brick[], brickId: number) {
+      let brick = bricks.find(brick => brick.id === brickId);
+      if (brick) {
+        let index = bricks.indexOf(brick);
+        bricks.splice(index, 1);
+      }
     }
 
+    removeByIndex(this.state.bricks, brickId);
+    removeByIndex(this.state.finalBricks, brickId);
+    removeByIndex(this.state.searchBricks, brickId);
     this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
@@ -484,7 +489,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
         color={color}
         brick={brick}
         move={(brickId) => this.move(brickId)}
-        onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+        onDelete={brickId => this.handleDeleteOpen(brickId)}
       />
     );
   }
