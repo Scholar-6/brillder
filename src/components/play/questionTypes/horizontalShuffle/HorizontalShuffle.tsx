@@ -123,6 +123,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
 
     return (
       <Card className={className} key={i}>
+        <div>
         <div className="drag-area">
           <SpriteIcon name="move" />
         </div>
@@ -148,6 +149,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
               />
             }
           </div>
+        </div>
         </div>
       </Card>
     );

@@ -4,7 +4,11 @@
 
 .horizontal-shuffle-play {
   .horizontal-shuffle-answer {
-    display: flex;
+    display: inline-block;
+    > div {
+      display: flex;
+      font-size: 1.25vw !important;
+    }
     margin: 2px;
     border-radius: 0.6vw;
     background: var(--tab-gray);
