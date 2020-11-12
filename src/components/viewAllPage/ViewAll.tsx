@@ -644,15 +644,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     );
   };
 
-  renderMobileUpperBricks() {
-    let expandedBrick = this.state.yourBricks.find(b => b.expanded === true);
-
-    if (expandedBrick) {
-      return this.renderMobileExpandedBrick(expandedBrick);
-    }
-
-    expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
-
+  renderMobileUpperBricks(expandedBrick: Brick | undefined) {
     if (expandedBrick) {
       return this.renderMobileExpandedBrick(expandedBrick);
     }
@@ -785,9 +777,22 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     if (this.state.isSearching) {
       bricks = this.filterSearchBricks();
     }
+
+    let expandedBrick = undefined;
+    let pageClass = "main-listing dashboard-page";
+    if (isMobile) {
+      expandedBrick = this.state.yourBricks.find(b => b.expanded === true);
+      if (!expandedBrick) {
+        expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
+      }
+      if (expandedBrick) {
+        pageClass += ' expanded';
+      }
+    }
+
     const { history } = this.props;
     return (
-      <div className="main-listing dashboard-page">
+      <div className={pageClass}>
         {this.renderMobileGlassIcon()}
         <PageHeadWithMenu
           page={PageEnum.ViewAll}
@@ -799,7 +804,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
         />
         <Hidden only={["sm", "md", "lg", "xl"]}>
           <div className="mobile-scroll-bricks">
-            {this.renderMobileUpperBricks()}
+            {this.renderMobileUpperBricks(expandedBrick)}
           </div>
         </Hidden>
         <Grid container direction="row" className="sorted-row">

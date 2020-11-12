@@ -207,9 +207,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     this.setState({...this.state});
   }
 
-  renderMobileBricks() {
-    let expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
-
+  renderMobileBricks(expandedBrick: Brick | undefined) {
     if (expandedBrick) {
       return this.renderExpandedBrick(expandedBrick);
     }
@@ -235,8 +233,15 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   render() {
+    let expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
+
+    let pageClass = 'main-listing dashboard-page mobile-category';
+    if (expandedBrick) {
+      pageClass += ' expanded';
+    }
+
     return (
-      <div className="main-listing dashboard-page mobile-category">
+      <div className={pageClass}>
         <div className="page-navigation">
           <div className="btn btn-transparent glasses svgOnHover">
             <SpriteIcon name="glasses" className="w100 h100 active text-theme-dark-blue" />
@@ -252,7 +257,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           searching={(v: string) => this.searching(v)}
         />
         <div className="mobile-scroll-bricks">
-          {this.renderMobileBricks()}
+          {this.renderMobileBricks(expandedBrick)}
         </div>
         <Grid container direction="row" className="sorted-row">
           <Grid item xs={9} className="brick-row-container">
