@@ -11,6 +11,7 @@ import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 enum DragAndDropStatus {
@@ -122,26 +123,31 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
 
     return (
       <Card className={className} key={i}>
-        <div style={{display: "block"}} className="answer">
-          <MathInHtml value={answer.value} />
+        <div className="drag-area">
+          <SpriteIcon name="move" />
         </div>
-        <div style={{display: "block"}}>
-          {this.props.isPreview ?
-            <ReviewEachHint
-              isPhonePreview={this.props.isPreview}
-              isReview={this.props.isReview}
-              index={i}
-              isCorrect={isCorrect}
-              hint={this.props.question.hint}
-            /> : this.props.isReview &&
-            <ReviewEachHint
-              isPhonePreview={this.props.isPreview}
-              isReview={this.props.isReview}
-              index={answer.index}
-              isCorrect={isCorrect}
-              hint={this.props.question.hint}
-            />
-          }
+        <div className="horizontal-content">
+          <div style={{display: "block"}} className="answer">
+            <MathInHtml value={answer.value} />
+          </div>
+          <div style={{display: "block"}}>
+            {this.props.isPreview ?
+              <ReviewEachHint
+                isPhonePreview={this.props.isPreview}
+                isReview={this.props.isReview}
+                index={i}
+                isCorrect={isCorrect}
+                hint={this.props.question.hint}
+              /> : this.props.isReview &&
+              <ReviewEachHint
+                isPhonePreview={this.props.isPreview}
+                isReview={this.props.isReview}
+                index={answer.index}
+                isCorrect={isCorrect}
+                hint={this.props.question.hint}
+              />
+            }
+          </div>
         </div>
       </Card>
     );
