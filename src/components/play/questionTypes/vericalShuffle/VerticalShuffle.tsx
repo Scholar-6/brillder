@@ -103,6 +103,35 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     return false;
   }
 
+  renderEachHint(i: number, answer: any, isCorrect: boolean) {
+    if (this.props.isPreview) {
+      return (
+        <Grid container direction="row" justify="center">
+          <ReviewEachHint
+            isPhonePreview={this.props.isPreview}
+            isReview={this.props.isReview}
+            isCorrect={isCorrect}
+            index={i}
+            hint={this.props.question.hint}
+          />
+        </Grid>
+      )
+    } else if (this.props.isReview) {
+      return (
+        <Grid container direction="row" justify="center">
+          <ReviewEachHint
+            isPhonePreview={this.props.isPreview}
+            isReview={this.props.isReview}
+            isCorrect={isCorrect}
+            index={answer.index}
+            hint={this.props.question.hint}
+          />
+        </Grid>
+      );
+    }
+    return "";
+  }
+
   renderAnswer(answer:any, i: number) {
     let isCorrect = this.checkAttemptAnswer(i);
     let className = "vertical-shuffle-choice";
@@ -116,35 +145,19 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     if (this.props.isBookPreview) {
       className += getValidationClassName(isCorrect);
     }
+
+    let hasHint = this.props.isReview || this.props.isPreview;
     
     return (
       <div key={i} className={className}>
         <div className="drag-area">
           <SpriteIcon name="move" />
         </div>
-        <div className="vertical-content">
+        <div className={`vertical-content ${hasHint ? '' : 'full-height'}`}>
           <Grid container direction="row" justify="center">
             <MathInHtml value={answer.value} />
           </Grid>
-          <Grid container direction="row" justify="center">
-            {this.props.isPreview ?
-              <ReviewEachHint
-                isPhonePreview={this.props.isPreview}
-                isReview={this.props.isReview}
-                isCorrect={isCorrect}
-                index={i}
-                hint={this.props.question.hint}
-              />
-              : this.props.isReview &&
-              <ReviewEachHint
-                isPhonePreview={this.props.isPreview}
-                isReview={this.props.isReview}
-                isCorrect={isCorrect}
-                index={answer.index}
-                hint={this.props.question.hint}
-              />
-            }
-          </Grid>
+          {this.renderEachHint(i, answer, isCorrect)}
         </div>
       </div>
     );
