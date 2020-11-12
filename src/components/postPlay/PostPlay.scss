@@ -31,7 +31,6 @@
       padding-top: 1.5vh;
       padding-left: 10%;
       padding-right: 10%;
-      overflow: auto;
       position: relative;
 
       .question-number {
@@ -827,4 +826,9 @@
     color: var(--theme-dark-blue);
     font-family: $font-family-bold;
   }
+}
+
+.page3 {
+  height: 100%;
+  overflow-y: scroll;
 }
