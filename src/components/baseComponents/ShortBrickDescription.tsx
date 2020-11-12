@@ -182,6 +182,30 @@ class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
       className += " mobile-short-" + index;
     }
 
+    if (isMobile) {
+      return (
+        <div>
+          <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
+            {color
+              ? ( 
+                 <BrickCircle
+                  color={color}
+                  circleIcon={this.props.circleIcon}
+                  circleClass={this.props.circleClass}
+                  iconColor={this.props.iconColor}
+                  canHover={true}
+                  onClick={() => this.props.move ? this.props.move() : {}}
+                />
+              )
+              : this.renderRoler()
+            }
+            {this.renderShortBrickInfo(searchString, brick)}
+            {isExpanded ? this.renderPlayButton() : ""}
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div>
         {brick.expanded
