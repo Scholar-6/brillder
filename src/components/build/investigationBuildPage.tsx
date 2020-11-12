@@ -336,13 +336,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const updatedQuestions = questions.slice();
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, false));
     saveBrickQuestions(updatedQuestions, (brick2: any) => {
-      console.log(77, brick2.questions.length)
       const postUpdatedQuestions = setLastQuestionId(brick, updatedQuestions);
-      console.log(56)
       setQuestions(update(questions, { $set: postUpdatedQuestions }));
-      console.log(5677)
       cashBuildQuestion(brickId, postUpdatedQuestions.length - 1);
-      console.log(67);
     });
 
     if (history.location.pathname.slice(-10) === '/synthesis') {
