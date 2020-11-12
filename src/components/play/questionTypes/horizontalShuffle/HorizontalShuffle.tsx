@@ -123,11 +123,6 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
 
     return (
       <Card className={className} key={i}>
-        <div>
-        <div className="drag-area">
-          <SpriteIcon name="move" />
-        </div>
-        <div className="horizontal-content">
           <div style={{display: "block"}} className="answer">
             <MathInHtml value={answer.value} />
           </div>
@@ -148,8 +143,6 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
                 hint={this.props.question.hint}
               />
             }
-          </div>
-        </div>
         </div>
       </Card>
     );
