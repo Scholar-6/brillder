@@ -741,3 +741,29 @@
   }
   //#endregion
 }
+
+
+.last-question-cover {
+  @extend %flexCenter;
+  .play-preview {
+    position: relative !important;
+  }
+}
+.page3-empty {
+  .flipped-page {
+    @extend %flexCenter;
+    .play-green-button {
+      @extend %flexCenter;
+      border-radius: 50%;
+      border: none;
+      outline: none;
+      width: 4.5vw;
+      height: 4.5vw;
+      background:  var(--theme-green);
+      .svg {
+        width: 80%;
+        height: 80%;
+      }
+    }
+  }
+}
