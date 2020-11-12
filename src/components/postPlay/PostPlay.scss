@@ -651,6 +651,10 @@
       .synthesis-page {
         transform: rotateY(-2deg) scale($scale);
       }
+      .last-question-cover {
+        border-radius: 0 !important;
+        transform: rotateY(-2deg) scale($scale);
+      }
     }
     &.synthesis {
       .front {
@@ -704,13 +708,6 @@
         transform: rotateY(-180deg) scale($scale);
       }
 
-      .last-question-result {
-        transform: rotateY(-131deg) scale($scale);
-        box-shadow: none;
-        z-index: 7;
-        color: var(--theme-dark-blue);
-      }
-
       .page6 {
         transform: rotateY(0.5deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
@@ -720,17 +717,22 @@
       .back {
         transform: rotateY(0.5deg) scale($scale);
       }
-      .introduction-brief {
-        transform: rotateY(-178.3deg) scale($scale);
-      }
+      .introduction-brief,
       .introduction-prep {
         transform: rotateY(-178.3deg) scale($scale);
       }
-      .last-question-cover {
-        transform: rotateY(-130deg) scale($scale);
+      .last-question-result {
+        transform: rotateY(-178deg) scale($scale);
+        box-shadow: none;
+        z-index: 7;
+        color: var(--theme-dark-blue);
       }
       .synthesis-page {
-        transform: rotateY(-50deg) scale($scale);
+        transform: rotateY(-177deg) scale($scale);
+      }
+      .last-question-cover {
+        border-radius: 0 !important;
+        transform: rotateY(-3deg) scale($scale);
       }
     }
     .wrong {
