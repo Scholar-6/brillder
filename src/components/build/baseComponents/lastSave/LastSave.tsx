@@ -65,7 +65,7 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
           <Grid container direction="row" className={`saved-info-row ${props.saveError ? "save-error" : ""}`}>
             <Grid item xs={2}>
               <Grid container alignContent="center" justify="center">
-                <SpriteIcon name="save-icon" className="active"/>
+                <SpriteIcon name={ props.saveError ? "alert-triangle": "save-icon" } className="active"/>
               </Grid>
             </Grid>
             <Grid item xs={10} container alignContent="center">
