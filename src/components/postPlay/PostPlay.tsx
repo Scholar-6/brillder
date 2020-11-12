@@ -32,6 +32,9 @@ import AttemptsPage from "./bookPages/AttemptsPage";
 import QuestionPage from "./bookPages/QuestionPage";
 import AnswersPage from "./bookPages/AnswersPage";
 import SynthesisPage from "./bookPages/SynthesisPage";
+import PlayButton from "components/build/baseComponents/PlayButton";
+import map from "components/map";
+import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 
 export enum BookState {
   Titles,
@@ -300,7 +303,15 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <OverallPage onClick={this.moveToAttempts.bind(this)} />
                 <IntroBriefPage brick={brick} color={color} onClick={this.moveToAttempts.bind(this)} />
                 <IntroPrepPage brick={brick} color={color} onClick={this.moveToQuestions.bind(this)} />
-                <div className="page3-empty" onClick={this.moveToTitles.bind(this)}></div>
+                <div className="page3-empty" onClick={this.moveToTitles.bind(this)}>
+                  <div className="flipped-page">
+                    <PlayGreenButton
+                      onClick= {() =>
+                        this.props.history.push(map.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId))
+                      }
+                    />
+                  </div>
+                </div>
                 {renderBookMark()}
                 <AttemptsPage
                   attempts={this.state.attempts}
@@ -346,7 +357,15 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <div className="page5"></div>
                 <div className="front-cover"></div>
                 <SynthesisPage synthesis={brick.synthesis} onClick={this.moveBackToQuestions.bind(this)}/>
-                <div className="book-page last-question-cover"></div>
+                <div className="book-page last-question-cover">
+                  <PlayButton
+                   tutorialStep={1}
+                   isTutorialSkipped={true}
+                   isValid={true}
+                   onClick={() =>
+                    this.props.history.push(map.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId))}
+                  />
+                </div>
                 <FrontPage brick={brick} student={student} color={color} />
                </div>
             </div>

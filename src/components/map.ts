@@ -74,6 +74,10 @@ export const postPlay = (brickId: number, userId: number) => {
   return PostPlay + '/' + brickId + '/' + userId;
 }
 
+export const playAssignment = (brickId: number, assignmentId: number) => {
+  return `/play/brick/${brickId}/intro?assignmentId=${assignmentId}`
+}
+
 export default {
   Build,
   Login,
@@ -97,6 +101,7 @@ export default {
 
   ViewAllPage,
   postPlay,
+  playAssignment,
 
   InvestigationBuild,
   InvestigationSynthesis,
