@@ -345,8 +345,8 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <div className="page6"></div>
                 <div className="page5"></div>
                 <div className="front-cover"></div>
-                <div className="book-page last-question-cover" onClick={this.moveBackToQuestions.bind(this)}></div>
-                <SynthesisPage synthesis={brick.synthesis} />
+                <SynthesisPage synthesis={brick.synthesis} onClick={this.moveBackToQuestions.bind(this)}/>
+                <div className="book-page last-question-cover"></div>
                 <FrontPage brick={brick} student={student} color={color} />
                </div>
             </div>
