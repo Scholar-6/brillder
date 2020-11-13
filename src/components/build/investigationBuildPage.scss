@@ -341,3 +341,22 @@ $space-between-boxes: 0.1vw;
     font-size: 1vw !important;
   }
 }
+.build-brick-title {
+  position: absolute;
+  width: 75%;
+  top: 0;
+  display: flex;
+  height: 5%;
+  @extend %flexCenter;
+  justify-content: center;
+  > div {
+    font-size: 2.5vh;
+    width: 75%;
+    color: var(--theme-light-blue);
+    font-family: $font-family-black;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
