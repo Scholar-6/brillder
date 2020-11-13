@@ -27,6 +27,7 @@ $tile-height: 100%;
     margin-left: $distance !important;
     .drag-tile {
       cursor: pointer;
+      transition: all 200ms ease-out !important;
       height: 100%;
       background-color: var(--tab-gray);
       &:first-child {
@@ -47,6 +48,24 @@ $tile-height: 100%;
     &.active {
       .drag-tile {
         background: var(--white);
+      }
+    }
+    &:hover {
+      .drag-tile {
+        background: var(--off-white) !important;
+      }
+      .tab-number {
+        font-family: $font-family-black !important;
+      }
+      .add-tab {
+        .svg {
+          stroke-width: 3;
+        }
+      }
+      .synthesis-tab-icon {
+        .svg {
+          stroke-width: 3;
+        }
       }
     }
   }
@@ -133,12 +152,19 @@ $tile-height: 100%;
         top: 0.3vw;
       }
       .svg {
-        stroke-width: 3;
+        stroke-width: 2.2;
+      }
+
+      &:hover {
+        .svg {
+          stroke-width: 3;
+        }
       }
     }
   }
   .add-tab {
     .svg {
+      stroke-width: 2;
       pointer-events: none;
     }
   }
@@ -159,6 +185,9 @@ $tile-height: 100%;
   .synthesis-tab {
     .drag-tile {
       background: var(--white);
+    }
+    .svg {
+      stroke-width: 2;
     }
   }
   .invalid {
