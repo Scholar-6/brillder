@@ -225,26 +225,12 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
       return <EmptyFilterSidebar history={this.props.history} />;
     }
 
-    let edit = 0;
-    let notEdit = 0;
-
     let draft = 0;
     let build = 0;
     let publication = 0;
     let viewAll = 0;
 
     const {threeColumns, finalBricks} = this.props;
-
-    for (let b of finalBricks) {
-      if (b.status === BrickStatus.Build || b.status === BrickStatus.Draft || b.status === BrickStatus.Review) {
-        const isCurrentEditor = (b.editors?.findIndex((e:any) => e.id === this.props.userId) ?? -1) >= 0;
-        if (isCurrentEditor) {
-          edit++;
-        } else {
-          notEdit++;
-        }
-      }
-    }
 
     if (this.props.filters.viewAll) {
       draft = threeColumns.red.finalBricks.length;
