@@ -127,6 +127,13 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     }
   }
 
+  showAll() {
+    for (let s of this.state.subjects) {
+      s.checked = false;
+    }
+    this.setState({...this.state, subjectCheckedId: -1});
+    this.props.showAll();
+  }
 
   hideFilter() { this.setState({ filterExpanded: false }) }
   expandFilter() { this.setState({ filterExpanded: true }) }
@@ -203,13 +210,13 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
         >
           <div className="filter-container subjects-list indexes-box">
             <div className="filter-container indexes-box">
-              <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")} onClick={this.props.showAll}>
+              <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")} onClick={this.showAll.bind(this)}>
                 View All
                 <div className="right-index">{viewAll}</div>
               </div>
             </div>
             {this.state.subjects.map((s, i) =>
-              <div className={"index-box hover-light" + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
+              <div className={"index-box hover-light " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
                 {s.name}
                 <div className="right-index">{s.count}</div>
               </div>

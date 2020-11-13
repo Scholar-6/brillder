@@ -4,10 +4,14 @@
 
 .build-page-content {
   .subjects-list {
-    max-height: 25vh;
+    max-height: calc(88vh - 15vw);
     overflow-y: auto;
+    padding-bottom: calc(2.3vw + 30px);
   }
   .index-box.hover-light:hover {
     background: var(--light-blue-alpha3);
+  }
+  .sort-and-filter-container {
+    overflow-y: auto;
   }
 }

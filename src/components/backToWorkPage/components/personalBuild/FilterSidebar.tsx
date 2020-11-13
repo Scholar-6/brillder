@@ -112,12 +112,12 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
           </div>
         </div>
         <div className="filter-container subjects-list indexes-box">
-          <div className={"index-box hover-light" + (this.state.subjectCheckedId === -1 ? "active" : "")} onClick={() => this.setViewAll()}>
+          <div className={"index-box hover-light " + (this.state.subjectCheckedId === -1 ? "active" : "")} onClick={() => this.setViewAll()}>
             View All
             <div className="right-index">{this.props.bricks.length}</div>
           </div>
           {subjects.map((s, i) =>
-            <div className={"index-box hover-light" + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
+            <div className={"index-box hover-light " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
               {s.name}
               <div className="right-index">{s.count}</div>
             </div>

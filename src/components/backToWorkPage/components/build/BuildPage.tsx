@@ -305,7 +305,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     filters.review = true;
     filters.build = true;
     filters.draft = true;
-    this.setState({ ...this.state, filters, sortedIndex: 0, finalBricks: this.state.rawBricks });
+    this.setState({ ...this.state, filters, sortedIndex: 0, buildCheckedSubjectId: -1, finalBricks: this.state.rawBricks });
   }
 
   showEditAll() {
@@ -544,6 +544,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     if (s) {
       const bricks = rawBricks.filter(b => b.subjectId === s.id);
       const threeColumns = prepareTreeRows(bricks, this.state.filters, this.props.user.id);
+      this.state.filters.viewAll = false;
       this.setState({buildCheckedSubjectId: s.id, threeColumns, finalBricks: bricks});
     } else {
       if (this.state.buildCheckedSubjectId !== -1) {
