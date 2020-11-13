@@ -130,7 +130,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   renderSortAndFilterBox = () => {
     const {filters} = this.props;
     return (
-      <div className="filter-container subject-indexes-box">
+      <div className="filter-container subject-indexes-box first">
         <FilterToggle
           color="color1"
           checked={filters.draft}
