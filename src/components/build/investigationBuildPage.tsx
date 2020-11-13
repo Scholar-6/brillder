@@ -835,6 +835,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               justify="center" alignItems="center"
               style={{ height: "100%" }}
             >
+              <div className="build-brick-title">
+                <div>{brick.title}</div>
+              </div>
               <Grid
                 container
                 item xs={12} sm={12} md={9}
