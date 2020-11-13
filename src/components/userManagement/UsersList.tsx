@@ -18,8 +18,6 @@ import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import AddUserButton from "./AddUserButton";
 import UserActionsCell from "./UserActionsCell";
 import RoleDescription from "components/baseComponents/RoleDescription";
-import NextButton from "components/baseComponents/pagination/NextButton";
-import PrevButton from "components/baseComponents/pagination/PrevButton";
 import CustomToggle from './CustomToggle';
 import CustomFilterBox from "components/library/CustomFilterBox";
 import UsersListPagination from "./Pagination";
