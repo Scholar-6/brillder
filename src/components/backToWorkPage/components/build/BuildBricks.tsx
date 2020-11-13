@@ -158,7 +158,7 @@ class BuildBricks extends Component<BuildBricksProps> {
 
   renderFirstEmptyColumn() {
     return (
-      <div className="main-brick-container empty-description first" key={0}>
+      <div className="main-brick-container empty-description first" key={-12}>
         <div>
           <div className="centered">
             <div className="circle b-red"></div>
