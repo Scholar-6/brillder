@@ -202,6 +202,12 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
           style={{ width: "100%" }}
         >
           <div className="filter-container subjects-list indexes-box">
+            <div className="filter-container indexes-box">
+              <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")} onClick={this.props.showAll}>
+                View All
+                <div className="right-index">{viewAll}</div>
+              </div>
+            </div>
             {this.state.subjects.map((s, i) =>
               <div className={"index-box " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
                 {s.name}
@@ -210,13 +216,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             )}
           </div>
         </AnimateHeight>
-        <div className="filter-container indexes-box">
-          <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")}
-            onClick={this.props.showAll}>
-            View All
-					<div className="right-index">{viewAll}</div>
-          </div>
-        </div>
       </div>
     );
   };
