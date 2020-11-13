@@ -15,7 +15,7 @@ const PlusTab: React.FC<PlusTabProps> = ({ tutorialStep }) => {
   return (
     <Grid className={"drag-tile"} container alignContent="center" justify="center">
       <div className={`svgOnHover ${className}`}>
-        <SpriteIcon name="plus" className="w100 h100 active text-theme-dark-blue"/>
+        <SpriteIcon name="plus-line-custom" className="w100 h100 active text-theme-dark-blue"/>
       </div>
     </Grid>
   );

@@ -1,6 +1,13 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
 .build-page-content {
   .subjects-list {
     max-height: 25vh;
     overflow-y: auto;
+  }
+  .index-box.hover-light:hover {
+    background: var(--light-blue-alpha3);
   }
 }

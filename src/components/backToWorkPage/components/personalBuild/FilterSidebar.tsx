@@ -105,27 +105,24 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
         <div className="filter-container sort-by-box">
           <div className="sort-header">INBOX</div>
         </div>
+        {this.renderSortAndFilterBox()}
         <div className="filter-container indexes-box">
-          <div className={"index-box " + (this.state.subjectCheckedId === -1 ? "active" : "")} onClick={() => this.setViewAll()}>
-            View All
-            <div className="right-index">{this.props.bricks.length}</div>
-          </div>
           <div className="filter-header" style={{marginBottom: 0}}>
             SUBJECTS
           </div>
         </div>
         <div className="filter-container subjects-list indexes-box">
+          <div className={"index-box hover-light" + (this.state.subjectCheckedId === -1 ? "active" : "")} onClick={() => this.setViewAll()}>
+            View All
+            <div className="right-index">{this.props.bricks.length}</div>
+          </div>
           {subjects.map((s, i) =>
-            <div className={"index-box " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
+            <div className={"index-box hover-light" + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
               {s.name}
               <div className="right-index">{s.count}</div>
             </div>
           )}
         </div>
-        <div className="filter-header" style={{marginTop: '0', marginBottom: '3vh'}}>
-          <span>FILTER</span>
-        </div>
-        {this.renderSortAndFilterBox()}
       </div>
     );
   }
@@ -133,21 +130,20 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   renderSortAndFilterBox = () => {
     const {filters} = this.props;
     return (
-
-        <div className="filter-container subject-indexes-box">
-          <FilterToggle
-            color="color1"
-            checked={filters.draft}
-            onClick={this.toggleDraft.bind(this)}
-            label="Draft"
-            count={this.props.draft} />
-          <FilterToggle
-            color="color7"
-            checked={filters.selfPublish}
-            onClick={this.toggleSelfPublish.bind(this)}
-            label="Self-Published"
-            count={this.props.selfPublish} />
-        </div>
+      <div className="filter-container subject-indexes-box">
+        <FilterToggle
+          color="color1"
+          checked={filters.draft}
+          onClick={this.toggleDraft.bind(this)}
+          label="Draft"
+          count={this.props.draft} />
+        <FilterToggle
+          color="color7"
+          checked={filters.selfPublish}
+          onClick={this.toggleSelfPublish.bind(this)}
+          label="Self-Published"
+          count={this.props.selfPublish} />
+      </div>
     );
   };
 
