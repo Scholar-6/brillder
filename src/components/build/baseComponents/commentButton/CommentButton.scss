@@ -49,6 +49,7 @@
     height: 5.88vh;
     margin-bottom: 1vw;
     align-items: start;
+    stroke-width: 2;
     top: 44%;
     transform: translateY(-50%);
   }
@@ -94,14 +95,21 @@
 
 // hover
 .comment-button:hover {
+  .svg {
+    stroke-width: 1.4;
+  }
   .comments-icon {
     z-index: 2;
   }
   .comments-count {
     z-index: 2;
+    font-family: $font-family-black;
   }
   .comments-plus {
     z-index: 2;
+    .svg {
+      stroke-width: 2.5;
+    }
   }
   &:before {
     content: '';
