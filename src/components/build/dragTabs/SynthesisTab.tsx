@@ -1,7 +1,6 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { TutorialStep } from "../tutorial/TutorialPanelWorkArea";
-import sprite from "assets/img/icons-sprite.svg";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 export interface SynthesisTabProps {
