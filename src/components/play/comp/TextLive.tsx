@@ -2,10 +2,11 @@ import React from 'react';
 
 // @ts-ignore
 import MathJax from 'react-mathjax-preview'
-import {isMathJax, parseSynthesisDataToArray} from 'components/services/mathJaxService';
+import {isLatex, isMathJax, parseSynthesisDataToArray} from 'components/services/mathJaxService';
 import './TextLive.scss';
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
+import Katex from 'components/baseComponents/katex/Katex';
 
 
 interface TextProps {
@@ -29,6 +30,10 @@ const TextLive: React.FC<TextProps> = ({ mode, className, component }) => {
     return <MathJax math={data} key={i} />;
   }
 
+  const renderLatex= (latex: string, i: number) => {
+    return <Katex latex={latex} key={i} />
+  }
+
   let classN = 'text-play';
   if (className) {
     classN += ' ' + className;
@@ -38,8 +43,11 @@ const TextLive: React.FC<TextProps> = ({ mode, className, component }) => {
       {
         arr.map((el:any, i:number) => {
           const res = isMathJax(el);
+          const latex = isLatex(el);
           if (res) {
             return renderMath(el, i);
+          } else if (latex) {
+            return renderLatex(el, i);
           } else {
             return <div key={i} dangerouslySetInnerHTML={{ __html: el}} />
           }
