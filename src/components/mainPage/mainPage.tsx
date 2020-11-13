@@ -322,6 +322,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   renderRightBottomButton() {
     if (this.state.isTeacher) {
       return this.renderReportsButton(false);
+    } else if (this.state.isAdmin) {
+      return this.renderLibraryButton();
     }
     return "";
   }
@@ -424,7 +426,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           </div>
           <div className="second-item"></div>
         </div>
-        {this.state.isTeacher ?
+        {(this.state.isTeacher || this.state.isAdmin) ?
           <div className="second-col">
             <div>
               {this.renderRightButton()}
