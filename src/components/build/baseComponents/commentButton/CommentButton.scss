@@ -22,7 +22,7 @@
     border-radius: 0.2vw;
     width: 6vw;
     text-align: center;
-    top: 100%;
+    top: 113%;
   }
   .comments-icon,
   .comments-plus,
@@ -66,8 +66,87 @@
   }
   &.active {
     background: var(--theme-orange);
+    &:after,
+    &:before {
+      background: var(--theme-orange);
+    }
   }
   &.has-replied {
     background: var(--theme-yellow);
+    &:after,
+    &:before {
+      background: var(--theme-yellow);
+    }
+  }
+
+  &:before {
+    transition: all 300ms ease-out;
+    content: '';
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    border-radius: 50%;
+    @extend %transitionAll300;
+  }
+}
+
+// hover
+.comment-button:hover {
+  .comments-icon {
+    z-index: 2;
+  }
+  .comments-count {
+    z-index: 2;
+  }
+  .comments-plus {
+    z-index: 2;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    width: 120%;
+    height: 120%;
+    opacity: 0.5;
+    border-radius: 50%;
+    @extend %transitionAll300;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    @extend %transitionAll300;
+  }
+}
+
+.comment-button.empty:hover {
+  &:before {
+    background: var(--tab-gray);
+  }
+  &:after {
+    background: var(--tab-gray);
+  }
+}
+
+.comment-button.has-replied:hover {
+  &:before {
+    background: var(--theme-yellow);
+  }
+  &:after {
+    background: var(--theme-yellow);
+  }
+}
+
+.comment-button.active:hover {
+  &:before {
+    background: var(--theme-orange);
+  }
+  &:after {
+    background: var(--theme-orange);
   }
 }

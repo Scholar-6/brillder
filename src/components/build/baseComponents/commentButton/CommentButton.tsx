@@ -71,7 +71,7 @@ const CommentButton: React.FC<CommentButtonProps> = (props) => {
 
   return (
     <div
-      className="comment-button"
+      className="comment-button empty"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onClick={() => props.setCommentsShown(true)}
