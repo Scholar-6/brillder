@@ -51,6 +51,8 @@ const CommentButton: React.FC<CommentButtonProps> = (props) => {
   if (numberOfReplies !== 0) {
     return (
       <div
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
         className={"comment-button " + (numberOfReplies > 0 ? "has-replied" : "active") + " animated pulse-orange iteration-2 duration-1s"}
         onClick={() => props.setCommentsShown(true)}
       >
@@ -60,6 +62,9 @@ const CommentButton: React.FC<CommentButtonProps> = (props) => {
         <div className="comments-count">
           {numberOfReplies > 0 ? numberOfReplies : -numberOfReplies}
         </div>
+        {hovered && <div className="custom-tooltip">
+          {numberOfReplies === 1 ? 'View Comment' : 'View Comments'}
+        </div>}
       </div>
     );
   }
