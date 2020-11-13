@@ -140,36 +140,42 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     }
   }
 
-  renderIndexesBox = (viewAll: number, build: number, edit: number) => {
+  renderInbox = () => {
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box">
           <div className="sort-header">INBOX</div>
         </div>
-        <div className="filter-container indexes-box">
-          <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")}
-            onClick={this.props.showAll}>
-            View All
-					<div className="right-index">{viewAll}</div>
-          </div>
-          <div className={"index-box " + (this.props.filters.buildAll ? "active" : "")}
-            onClick={this.props.showBuildAll}>
-            Build
-					<div className="right-index">{build}</div>
-          </div>
-          <div className={"index-box " + (this.props.filters.editAll ? "active" : "")}
-            onClick={this.props.showEditAll}>
-            Edit
-					<div className="right-index">{edit}</div>
-          </div>
-        </div>
       </div>
     );
   };
 
-  renderSortAndFilterBox = (draft: number, build: number, review: number) => {
+  renderSortAndFilterBox = (draft: number, build: number, review: number, viewAll: number) => {
     return (
       <div className="sort-box">
+        <div className="filter-container subject-indexes-box">
+          <div className="index-box color1">
+            <FormControlLabel
+              checked={this.props.filters.draft}
+              control={<Radio onClick={() => this.toggleFilter(FilterFields.Draft)} className={"filter-radio custom-color"} />}
+              label="Draft" />
+            <div className="right-index">{draft}</div>
+          </div>
+          <div className="index-box color2">
+            <FormControlLabel
+              checked={this.props.filters.build}
+              control={<Radio onClick={() => this.toggleFilter(FilterFields.Build)} className={"filter-radio custom-color"} />}
+              label="Submitted for Review" />
+            <div className="right-index">{build}</div>
+          </div>
+          <div className="index-box color5">
+            <FormControlLabel
+              checked={this.props.filters.review}
+              control={<Radio onClick={e => this.toggleFilter(FilterFields.Review)} className={"filter-radio custom-color"} />}
+              label="Pending Publication" />
+            <div className="right-index">{review}</div>
+          </div>
+        </div>
         <CustomFilterBox
           label="Subjects"
           isClearFilter={this.state.isSubjectsClear}
@@ -190,51 +196,13 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             )}
           </div>
         </AnimateHeight>
-        <div className="filter-header">
-          <span>LIVE OVERVIEW</span>
-          <button
-            className={
-              "btn-transparent filter-icon " +
-              (this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? "arrow-cancel"
-                  : "arrow-down"
-                : "arrow-up")
-            }
-            onClick={() => {
-              this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? this.clearStatus()
-                  : (this.hideFilter())
-                : (this.expandFilter())
-            }}>
-          </button>
-        </div>
-        {this.state.filterExpanded === true && (
-          <div className="filter-container subject-indexes-box">
-            <div className="index-box color1">
-              <FormControlLabel
-                checked={this.props.filters.draft}
-                control={<Radio onClick={() => this.toggleFilter(FilterFields.Draft)} className={"filter-radio custom-color"} />}
-                label="Draft" />
-              <div className="right-index">{draft}</div>
-            </div>
-            <div className="index-box color2">
-              <FormControlLabel
-                checked={this.props.filters.build}
-                control={<Radio onClick={() => this.toggleFilter(FilterFields.Build)} className={"filter-radio custom-color"} />}
-                label="Submitted for Review" />
-              <div className="right-index">{build}</div>
-            </div>
-            <div className="index-box color5">
-              <FormControlLabel
-                checked={this.props.filters.review}
-                control={<Radio onClick={e => this.toggleFilter(FilterFields.Review)} className={"filter-radio custom-color"} />}
-                label="Pending Publication" />
-              <div className="right-index">{review}</div>
-            </div>
+        <div className="filter-container indexes-box">
+          <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")}
+            onClick={this.props.showAll}>
+            View All
+					<div className="right-index">{viewAll}</div>
           </div>
-        )}
+        </div>
       </div>
     );
   };
@@ -293,8 +261,8 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
-        {this.renderIndexesBox(viewAll, edit, notEdit)}
-        {!this.props.filters.publish && this.renderSortAndFilterBox(draft, build, publication)}
+        {this.renderInbox()}
+        {!this.props.filters.publish && this.renderSortAndFilterBox(draft, build, publication, viewAll)}
       </Grid>
     );
   }
