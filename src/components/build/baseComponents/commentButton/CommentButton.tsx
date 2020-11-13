@@ -80,7 +80,7 @@ const CommentButton: React.FC<CommentButtonProps> = (props) => {
         <SpriteIcon name="message-square" className="w60 h60 active" />
       </div>
       <div className="comments-plus svgOnHover">
-        <SpriteIcon name="plus" className="w60 h60 active" />
+        <SpriteIcon name="plus-line-custom" className="w60 h60 active" />
       </div>
       {hovered && <div className="custom-tooltip">Add comment</div>}
     </div>
