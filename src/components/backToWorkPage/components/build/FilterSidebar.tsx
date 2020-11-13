@@ -87,6 +87,20 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
         subject.count += 1;
       }
     }
+    if (this.state && this.state.subjects) {
+      for (let stateSubject of this.state.subjects) {
+        let found = false;
+        for (let subject of subjects) {
+          if (subject.id === stateSubject.id) {
+            found = true;
+            break;
+          }
+        }
+        if (found === false) {
+          subjects.push(stateSubject);
+        }
+      }
+    }
     return subjects;
   }
 
