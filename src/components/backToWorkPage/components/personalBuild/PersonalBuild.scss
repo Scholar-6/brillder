@@ -6,4 +6,8 @@
     overflow-y: scroll;
     height: 30%;
   }
+
+  .index-box.hover-light:hover {
+    background: var(--light-blue-alpha3);
+  }
 }

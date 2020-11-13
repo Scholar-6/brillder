@@ -31,7 +31,7 @@ const DragTab: React.FC<DragTabProps> = ({
     }
     return (
       <div className="remove-icon svgOnHover active" onClick={removeTab}>
-        <SpriteIcon name="cancel" className={`w100 h100 active ${color}`} />
+        <SpriteIcon name="cancel-custom" className={`w100 h100 active ${color}`} />
       </div>
     );
   }

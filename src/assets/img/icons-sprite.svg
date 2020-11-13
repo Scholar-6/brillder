@@ -56,6 +56,10 @@
     C5.488,18.902,5.744,19,6,19s0.512-0.098,0.707-0.293L12,13.414l5.293,5.293C17.488,18.902,17.744,19,18,19s0.512-0.098,0.707-0.293
     c0.391-0.391,0.391-1.023,0-1.414L13.414,12z"/>
   </svg>
+  <svg id="cancel-custom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+  </svg>
   <svg id="cancel-thick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
     <line x1="18" y1="6" x2="6" y2="18"></line>
     <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -100,6 +104,10 @@
   </svg>
   <svg id="circle-filled" viewBox="0 0 24 24" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="10"></circle>
+  </svg>
+  <svg id="plus-line-custom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="12" y1="5" x2="12" y2="19"></line>
+    <line x1="5" y1="12" x2="19" y2="12"></line>
   </svg>
   <svg id="plus-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -162,6 +170,14 @@
       l-0.103,0.05C2.396,8.803,2,10.355,2,12s0.396,3.197,1.09,4.58L6.398,14.02"/>
     <path fill="#EB4335" d="M12.204,5.741c1.916,0,3.209,0.827,3.946,1.52l2.879-2.812c-1.769-1.645-4.07-2.653-6.825-2.653
       c-3.99,0-7.438,2.291-9.115,5.624l3.3,2.563C7.215,7.521,9.505,5.741,12.204,5.741"/>
+  </svg>
+   <svg id="list-custom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="8" y1="6" x2="21" y2="6"></line>
+    <line x1="8" y1="12" x2="21" y2="12"></line>
+    <line x1="8" y1="18" x2="21" y2="18"></line>
+    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+    <line x1="3" y1="18" x2="3.01" y2="18"></line>
   </svg>
   <svg id="list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <line x1="8" y1="6" x2="21" y2="6"></line>
@@ -319,7 +335,7 @@
   <svg id="check-icon-thin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="20 6 9 17 4 12"></polyline>
   </svg>
-  <svg id="message-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+  <svg id="message-square" viewBox="0 0 24 24" fill="none" stroke-width="inherit" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
   </svg>
   <svg id="message-square-thick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

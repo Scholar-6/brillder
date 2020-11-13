@@ -199,6 +199,7 @@ const LivePage: React.FC<LivePageProps> = ({
   }
 
   const submitAndMove = () => {
+    setActiveAnswer();
     questions.forEach((question) => (question.edited = false));
     props.finishBrick();
     moveToProvisional();
