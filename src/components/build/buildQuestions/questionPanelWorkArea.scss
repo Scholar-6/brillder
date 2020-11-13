@@ -205,20 +205,30 @@
         position: relative;
         .custom-tooltip {
           position: absolute;
-          background: #333333; 
+          margin-left: -1.2vw;
+          background: var(--off-white); 
           font-family: $font-family-regular;
+          border-radius: 0.2vw;
           font-size: 0.7vw;
-          color: var(--white);
+          color: var(--theme-dark-blue);
           padding: 0vw 0.4vw;
           top: 100%;
         }
       }
 
+      .redo-button-container {
+        .custom-tooltip {
+          margin-left: -1.1vw;
+        }
+      }
+
       .undo-button,
       .redo-button {
-        width: 2vw;
-        height: 2vw;
         color: var(--tab-gray);
+        .svg {
+          width: 2vw !important;
+          height: 2vw !important;
+        }
       }
 
       .undo-button:hover {

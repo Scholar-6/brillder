@@ -50,6 +50,11 @@ $tile-height: 100%;
         background: var(--white);
       }
     }
+    .synthesis-tab-icon {
+      .svg {
+        stroke-width: 2;
+      }
+    }
     &:hover {
       .drag-tile {
         background: var(--off-white) !important;
@@ -157,6 +162,7 @@ $tile-height: 100%;
 
       &:hover {
         .svg {
+          color: var(--theme-orange) !important;
           stroke-width: 3;
         }
       }
