@@ -209,7 +209,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
               </div>
             </div>
             {this.state.subjects.map((s, i) =>
-              <div className={"index-box " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
+              <div className={"index-box hover-light" + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
                 {s.name}
                 <div className="right-index">{s.count}</div>
               </div>
