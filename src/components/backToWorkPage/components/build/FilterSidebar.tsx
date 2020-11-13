@@ -174,7 +174,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   renderSortAndFilterBox = (draft: number, build: number, review: number, viewAll: number) => {
     return (
       <div className="sort-box">
-        <div className="filter-container subject-indexes-box">
+        <div className="filter-container subject-indexes-box first">
           <div className="index-box color1">
             <FormControlLabel
               checked={this.props.filters.draft}
