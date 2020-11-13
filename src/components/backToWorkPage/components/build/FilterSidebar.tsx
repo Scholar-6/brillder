@@ -25,6 +25,7 @@ interface FilterSidebarProps {
   filters: Filters;
   sortBy: SortBy;
   isEmpty: boolean;
+  subjects: SubjectItem[];
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   showAll(): void;
   showBuildAll(): void;
@@ -41,7 +42,6 @@ interface FilterSidebarState {
   subjectsHeight: string;
 
   subjectCheckedId: number;
-  subjects: SubjectItem[];
 }
 
 class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
@@ -53,60 +53,12 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
       subjectsHeight: 'auto',
       isSubjectsClear: false,
       subjectCheckedId: -1,
-      subjects: this.getBrickSubjects(props.finalBricks)
     }
-  }
-
-  componentDidUpdate(prevProps: FilterSidebarProps) {
-    if (this.props.finalBricks !== prevProps.finalBricks) {
-      this.setState({subjects: this.getBrickSubjects(this.props.finalBricks)});
-    }
-  }
-
-  getBrickSubjects(bricks: Brick[]) {
-    let subjects:SubjectItem[] = [];
-    for (let brick of bricks) {
-      if (!brick.subject) {
-        continue;
-      }
-      if (this.props.filters.publish === true) {
-        if (brick.status !== BrickStatus.Publish) {
-          continue;
-        }
-      } else {
-        if (brick.status === BrickStatus.Publish) {
-          continue;
-        }
-      }
-      let subject = subjects.find(s => s.id === brick.subject?.id);
-      if (!subject) {
-        let subject = Object.assign({}, brick.subject) as SubjectItem;
-        subject.count = 1;
-        subjects.push(subject);
-      } else {
-        subject.count += 1;
-      }
-    }
-    if (this.state && this.state.subjects) {
-      for (let stateSubject of this.state.subjects) {
-        let found = false;
-        for (let subject of subjects) {
-          if (subject.id === stateSubject.id) {
-            found = true;
-            break;
-          }
-        }
-        if (found === false) {
-          subjects.push(stateSubject);
-        }
-      }
-    }
-    return subjects;
   }
 
   filterBySubject(s: SubjectItem) {
     let isChecked = false;
-    for (let item of this.state.subjects) {
+    for (let item of this.props.subjects) {
       if (item.id === s.id) {
 
         if (item.id === this.state.subjectCheckedId) {
@@ -128,7 +80,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   }
 
   showAll() {
-    for (let s of this.state.subjects) {
+    for (let s of this.props.subjects) {
       s.checked = false;
     }
     this.setState({...this.state, subjectCheckedId: -1});
@@ -215,7 +167,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
                 <div className="right-index">{viewAll}</div>
               </div>
             </div>
-            {this.state.subjects.map((s, i) =>
+            {this.props.subjects.map((s, i) =>
               <div className={"index-box hover-light " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
                 {s.name}
                 <div className="right-index">{s.count}</div>
