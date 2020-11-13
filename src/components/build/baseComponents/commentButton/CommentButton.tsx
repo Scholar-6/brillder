@@ -63,7 +63,7 @@ const CommentButton: React.FC<CommentButtonProps> = (props) => {
           {numberOfReplies > 0 ? numberOfReplies : -numberOfReplies}
         </div>
         {hovered && <div className="custom-tooltip">
-          {numberOfReplies === 1 ? 'View Comment' : 'View Comments'}
+          {numberOfReplies <= 1 ? 'View Comment' : 'View Comments'}
         </div>}
       </div>
     );
