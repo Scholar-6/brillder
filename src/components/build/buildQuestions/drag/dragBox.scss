@@ -30,6 +30,7 @@
     letter-spacing: 0.5vw;
     margin-right: -0.5vw;
     opacity: 0;
+    @extend %transitionAll300;
   }
   .graph-box {
     .drag-box-name {

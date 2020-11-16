@@ -25,6 +25,7 @@ interface FilterSidebarProps {
   filters: Filters;
   sortBy: SortBy;
   isEmpty: boolean;
+  subjects: SubjectItem[];
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   showAll(): void;
   showBuildAll(): void;
@@ -41,7 +42,6 @@ interface FilterSidebarState {
   subjectsHeight: string;
 
   subjectCheckedId: number;
-  subjects: SubjectItem[];
 }
 
 class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
@@ -53,60 +53,12 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
       subjectsHeight: 'auto',
       isSubjectsClear: false,
       subjectCheckedId: -1,
-      subjects: this.getBrickSubjects(props.finalBricks)
     }
-  }
-
-  componentDidUpdate(prevProps: FilterSidebarProps) {
-    if (this.props.finalBricks !== prevProps.finalBricks) {
-      this.setState({subjects: this.getBrickSubjects(this.props.finalBricks)});
-    }
-  }
-
-  getBrickSubjects(bricks: Brick[]) {
-    let subjects:SubjectItem[] = [];
-    for (let brick of bricks) {
-      if (!brick.subject) {
-        continue;
-      }
-      if (this.props.filters.publish === true) {
-        if (brick.status !== BrickStatus.Publish) {
-          continue;
-        }
-      } else {
-        if (brick.status === BrickStatus.Publish) {
-          continue;
-        }
-      }
-      let subject = subjects.find(s => s.id === brick.subject?.id);
-      if (!subject) {
-        let subject = Object.assign({}, brick.subject) as SubjectItem;
-        subject.count = 1;
-        subjects.push(subject);
-      } else {
-        subject.count += 1;
-      }
-    }
-    if (this.state && this.state.subjects) {
-      for (let stateSubject of this.state.subjects) {
-        let found = false;
-        for (let subject of subjects) {
-          if (subject.id === stateSubject.id) {
-            found = true;
-            break;
-          }
-        }
-        if (found === false) {
-          subjects.push(stateSubject);
-        }
-      }
-    }
-    return subjects;
   }
 
   filterBySubject(s: SubjectItem) {
     let isChecked = false;
-    for (let item of this.state.subjects) {
+    for (let item of this.props.subjects) {
       if (item.id === s.id) {
 
         if (item.id === this.state.subjectCheckedId) {
@@ -127,6 +79,13 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     }
   }
 
+  showAll() {
+    for (let s of this.props.subjects) {
+      s.checked = false;
+    }
+    this.setState({...this.state, subjectCheckedId: -1});
+    this.props.showAll();
+  }
 
   hideFilter() { this.setState({ filterExpanded: false }) }
   expandFilter() { this.setState({ filterExpanded: true }) }
@@ -167,7 +126,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   renderSortAndFilterBox = (draft: number, build: number, review: number, viewAll: number) => {
     return (
       <div className="sort-box">
-        <div className="filter-container subject-indexes-box">
+        <div className="filter-container subject-indexes-box first">
           <div className="index-box color1">
             <FormControlLabel
               checked={this.props.filters.draft}
@@ -202,21 +161,20 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
           style={{ width: "100%" }}
         >
           <div className="filter-container subjects-list indexes-box">
-            {this.state.subjects.map((s, i) =>
-              <div className={"index-box " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
+            <div className="filter-container indexes-box">
+              <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")} onClick={this.showAll.bind(this)}>
+                View All
+                <div className="right-index">{viewAll}</div>
+              </div>
+            </div>
+            {this.props.subjects.map((s, i) =>
+              <div className={"index-box hover-light " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
                 {s.name}
                 <div className="right-index">{s.count}</div>
               </div>
             )}
           </div>
         </AnimateHeight>
-        <div className="filter-container indexes-box">
-          <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")}
-            onClick={this.props.showAll}>
-            View All
-					<div className="right-index">{viewAll}</div>
-          </div>
-        </div>
       </div>
     );
   };
@@ -226,26 +184,12 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
       return <EmptyFilterSidebar history={this.props.history} />;
     }
 
-    let edit = 0;
-    let notEdit = 0;
-
     let draft = 0;
     let build = 0;
     let publication = 0;
     let viewAll = 0;
 
     const {threeColumns, finalBricks} = this.props;
-
-    for (let b of finalBricks) {
-      if (b.status === BrickStatus.Build || b.status === BrickStatus.Draft || b.status === BrickStatus.Review) {
-        const isCurrentEditor = (b.editors?.findIndex((e:any) => e.id === this.props.userId) ?? -1) >= 0;
-        if (isCurrentEditor) {
-          edit++;
-        } else {
-          notEdit++;
-        }
-      }
-    }
 
     if (this.props.filters.viewAll) {
       draft = threeColumns.red.finalBricks.length;

@@ -4,10 +4,17 @@
 
 .build-page-content {
   .subjects-list {
-    max-height: 25vh;
+    max-height: calc(88vh - 16.2vw);
+    overflow-y: auto;
+    padding-bottom: calc(2.3vw + 30px);
+  }
+  .index-box.hover-light:hover {
+    background: var(--light-blue-alpha3);
+  }
+  .sort-and-filter-container {
     overflow-y: auto;
   }
-  .index-box:hover {
-    background: var(--light-blue-alpha3);
+  .filter-container.subject-indexes-box.first {
+    margin-bottom: 1.2vw !important;
   }
 }

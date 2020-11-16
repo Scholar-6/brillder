@@ -23,20 +23,26 @@ export interface ButtonProps {
 
 const SendToPublisherButton: React.FC<ButtonProps> = props => {
   const [isOpen, setState] = React.useState(false);
+  const [hovered, setHover] = React.useState(false);
 
   let className = 'send-to-publisher-button';
   if (props.disabled) {
     className += ' disabled';
+  } else {
+    className += ' active';
   }
 
   return (
     <div>
-      <div className={className} onClick={() => {
-        if (!props.disabled) {
-          setState(true);
-        }
-      }}>
+      <div className={className} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+        onClick={() => {
+          if (!props.disabled) {
+            setState(true);
+          }
+        }}
+      >
         <SpriteIcon name="send" />
+        {hovered && <div className="custom-tooltip">Send to Publisher</div>}
       </div>
       <SendToPublisherDialog isOpen={isOpen} close={() => setState(false)} submit={async () => {
         await props.sendToPublisher(props.brickId);

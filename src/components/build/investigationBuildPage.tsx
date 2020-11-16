@@ -65,7 +65,6 @@ import HintInvalidDialog from './baseComponents/dialogs/HintInvalidDialog';
 import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialog';
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
-import { Console } from "console";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -836,6 +835,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               justify="center" alignItems="center"
               style={{ height: "100%" }}
             >
+              <div className="build-brick-title">
+                <div>{brick.title}</div>
+              </div>
               <Grid
                 container
                 item xs={12} sm={12} md={9}
