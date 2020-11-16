@@ -40,11 +40,6 @@ $tile-height: 100%;
     &:first-child {
       margin-left: 0 !important;
     }
-    // &.pre-active {
-    //   .drag-tile {
-    //     margin-right: $distance;
-    //   }
-    // }
     &.active {
       .drag-tile {
         background: var(--white);
@@ -53,24 +48,6 @@ $tile-height: 100%;
     .synthesis-tab-icon {
       .svg {
         stroke-width: 2;
-      }
-    }
-    &:hover {
-      .drag-tile {
-        background: var(--off-white) !important;
-      }
-      .tab-number {
-        font-family: $font-family-black !important;
-      }
-      .add-tab {
-        .svg {
-          stroke-width: 3;
-        }
-      }
-      .synthesis-tab-icon {
-        .svg {
-          stroke-width: 3;
-        }
       }
     }
   }
@@ -220,6 +197,40 @@ $tile-height: 100%;
     }
     .svg {
       @extend %removePosition;
+    }
+  }
+}
+
+// hover
+.drag-tabs {
+  .drag-tile-container:hover {
+    .drag-tile {
+      background: var(--off-white) !important;
+    }
+    .tab-number {
+      font-family: $font-family-black !important;
+    }
+    .add-tab {
+      .svg {
+        stroke-width: 3;
+      }
+    }
+    .synthesis-tab-icon {
+      .svg {
+        stroke-width: 3;
+      }
+    }
+    .drag-tile.invalid {
+      background: #f43c30 !important;
+    }
+
+    .drag-tile.invalid {
+      background: #f43c30 !important;
+      .remove-icon:hover {
+        .svg {
+          color: var(--white) !important;
+        }
+      }
     }
   }
 }

@@ -11,7 +11,6 @@ import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 enum DragAndDropStatus {
