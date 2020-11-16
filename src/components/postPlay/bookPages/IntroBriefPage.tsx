@@ -4,6 +4,8 @@ import { Brick } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import HighlightHtml from "components/play/baseComponents/HighlightHtml";
 import { PlayMode } from "components/play/model";
+import MathInHtml from "components/play/baseComponents/MathInHtml";
+import './IntroBriefPage.scss';
 
 interface IntroPageProps {
   brick: Brick;
@@ -54,7 +56,7 @@ const IntroPage: React.FC<IntroPageProps> = ({brick, color, ...props}) => {
           <Grid container direction="row">
             <div className="introduction-page" style={{paddingTop: '2.4vh'}}>
               {renderHeader(brick, color)}
-              <p className="open-question">{brick.openQuestion}</p>
+              <div className="open-question"><MathInHtml value={brick.openQuestion} /></div>
               <div className="intro-content">
                 {renderBriefTitle()}
                 {renderBriefExpandText()}

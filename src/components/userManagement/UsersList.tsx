@@ -18,9 +18,9 @@ import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import AddUserButton from "./AddUserButton";
 import UserActionsCell from "./UserActionsCell";
 import RoleDescription from "components/baseComponents/RoleDescription";
-import NextButton from "components/baseComponents/pagination/NextButton";
-import PrevButton from "components/baseComponents/pagination/PrevButton";
 import CustomToggle from './CustomToggle';
+import CustomFilterBox from "components/library/CustomFilterBox";
+import UsersListPagination from "./Pagination";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -114,6 +114,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   getUsers(
     page: number,
     subjects: number[] = [],
+    roleFilters: any = [],
     sortBy: UserSortBy = UserSortBy.None,
     isAscending: any = null,
     search: string = ""
@@ -154,7 +155,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         page: page.toString(),
         searchString,
         subjectFilters: subjects,
-        roleFilters: [],
+        roleFilters,
         orderBy,
         isAscending,
       },
@@ -267,10 +268,19 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     this.getUsers(
       0,
       filterSubjects,
+      [],
       this.state.sortBy,
       this.state.isAscending,
       searchString
     );
+  }
+
+  toggleRole(role: any) {
+    role.checked = !role.checked;
+    let filterSubjects = this.getCheckedSubjectIds();
+    let roles = this.getCheckedRoles();
+    this.getUsers(0, filterSubjects, roles);
+    this.setState({...this.state});
   }
 
   filterBySubject = (i: number) => {
@@ -295,7 +305,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   filter() {
     let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(0, filterSubjects);
+    let filterRoles = this.getCheckedRoles();
+    this.getUsers(0, filterSubjects, filterRoles);
   }
 
   //region Hide / Expand / Clear Filter
@@ -305,17 +316,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     subjects.forEach((r: any) => (r.checked = false));
     this.filter();
     this.filterClear();
-  }
-  hideFilter() {
-    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
-  }
-
-  expandFilter() {
-    this.setState({
-      ...this.state,
-      filterExpanded: true,
-      filterHeight: "auto",
-    });
   }
 
   filterClear() {
@@ -350,7 +350,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                 <Grid item xs={4} key={i}>
                   <FormControlLabel
                     checked={role.checked}
-                    control={<Radio className={"filter-radio"} />}
+                    control={<Radio onClick={() => this.toggleRole(role)} className={"filter-radio"} />}
                     label={role.name}
                   />
                 </Grid>
@@ -358,26 +358,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             </Grid>
           </RadioGroup>
         </div>
-        <div className="filter-header">
-          <span>Filter by: Subject</span>
-          <button
-            className={
-              "btn-transparent filter-icon " +
-              (this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? "arrow-cancel"
-                  : "arrow-down"
-                : "arrow-up")
-            }
-            onClick={() => {
-              this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? this.clearStatus()
-                  : this.hideFilter()
-                : this.expandFilter();
-            }}
-          ></button>
-        </div>
+        <CustomFilterBox
+          label="Filter by: Subject"
+          isClearFilter={this.state.isClearFilter}
+          setHeight={filterHeight => this.setState({filterHeight})}
+          clear={this.clearStatus.bind(this)}
+        />
         <SubjectsList
           subjects={this.state.subjects}
           filterHeight={this.state.filterHeight}
@@ -387,50 +373,16 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     );
   };
 
-  renderPagination() {
-    const { totalCount, users, page, pageSize } = this.state;
-    const showPrev = page > 0;
-    const currentPage = page;
-    const showNext = totalCount / pageSize - currentPage > 1;
-    const prevCount = currentPage * pageSize;
-    const minUser = prevCount + 1;
-    const maxUser = prevCount + users.length;
+  nextPage() {
+    const {page} = this.state;
+    this.setState({ ...this.state, page: page + 1 });
+    this.getUsers(page + 1);
+  }
 
-    const nextPage = () => {
-      this.setState({ ...this.state, page: page + 1 });
-      this.getUsers(page + 1);
-    };
-
-    const previousPage = () => {
-      this.setState({ ...this.state, page: page - 1 });
-      this.getUsers(page - 1);
-    };
-
-    return (
-      <div className="users-pagination">
-        <Grid container direction="row">
-          <Grid item xs={4} className="left-pagination">
-            <div className="first-row">
-              {minUser}-{maxUser}
-              <span className="gray"> &nbsp;|&nbsp; {totalCount}</span>
-            </div>
-            <div>
-              {page + 1}
-              <span className="gray">
-                {" "}
-                &nbsp;|&nbsp; {Math.ceil(totalCount / pageSize)}
-              </span>
-            </div>
-          </Grid>
-          <Grid item xs={4} className="bottom-next-button">
-            <div>
-              <PrevButton isShown={showPrev} onClick={previousPage} />
-              <NextButton isShown={showNext} onClick={nextPage} />
-            </div>
-          </Grid>
-        </Grid>
-      </div>
-    );
+  previousPage() {
+    const {page} = this.state;
+    this.setState({ ...this.state, page: page - 1 });
+    this.getUsers(page - 1);
   }
 
   renderUserType(user: User) {
@@ -463,7 +415,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       this.setState({ ...this.state, isAscending, sortBy });
     }
     let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(this.state.page, filterSubjects, sortBy, isAscending);
+    this.getUsers(this.state.page, filterSubjects, [], sortBy, isAscending);
   }
 
   renderSortArrow(currentSortBy: UserSortBy) {
@@ -597,7 +549,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             {this.renderTableHeader()}
             {this.renderUsers()}
             <RoleDescription />
-            {this.renderPagination()}
+            <UsersListPagination
+              page={this.state.page}
+              totalCount={this.state.totalCount}
+              users={this.state.users}
+              pageSize={this.state.pageSize}
+              nextPage={this.nextPage.bind(this)}
+              previousPage={this.previousPage.bind(this)}
+            />
           </Grid>
         </Grid>
       </div>

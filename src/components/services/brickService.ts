@@ -112,7 +112,6 @@ export function checkAdmin(roles: UserRole[]) {
 export function canEditBrick(brick: Brick, user: User) {
   let isAdmin = checkAdmin(user.roles);
   let isPublisher = checkPublisher(user, brick);
-  console.log(brick);
   switch(brick.status) {
     case BrickStatus.Draft:
       return brick.author?.id === user.id || isAdmin;

@@ -5,6 +5,9 @@ import { Brick, BrickStatus } from "model/brick";
 import { SortBy, Filters, ThreeColumns } from '../../model';
 import { clearStatusFilters } from '../../service';
 import EmptyFilterSidebar from "../EmptyFilter";
+import CustomFilterBox from "components/library/CustomFilterBox";
+import { SubjectItem } from "../personalBuild/model";
+import AnimateHeight from "react-animate-height";
 
 
 enum FilterFields {
@@ -22,15 +25,23 @@ interface FilterSidebarProps {
   filters: Filters;
   sortBy: SortBy;
   isEmpty: boolean;
+  subjects: SubjectItem[];
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   showAll(): void;
   showBuildAll(): void;
   showEditAll(): void;
   filterChanged(filters: Filters): void;
+  filterBySubject(s: any): void;
 }
+
 interface FilterSidebarState {
   filterExpanded: boolean;
   isClearFilter: boolean;
+
+  isSubjectsClear: boolean;
+  subjectsHeight: string;
+
+  subjectCheckedId: number;
 }
 
 class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
@@ -39,7 +50,41 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     this.state = {
       filterExpanded: true,
       isClearFilter: false,
+      subjectsHeight: 'auto',
+      isSubjectsClear: false,
+      subjectCheckedId: -1,
     }
+  }
+
+  filterBySubject(s: SubjectItem) {
+    let isChecked = false;
+    for (let item of this.props.subjects) {
+      if (item.id === s.id) {
+
+        if (item.id === this.state.subjectCheckedId) {
+          item.checked = false;
+        } else {
+          item.checked = true;
+          isChecked = true;
+        }
+      } else {
+        item.checked = false;
+      }
+    }
+    this.setState({...this.state, subjectCheckedId: isChecked ? s.id : -1});
+    if (isChecked) {
+      this.props.filterBySubject(s);
+    } else {
+      this.props.filterBySubject(null);
+    }
+  }
+
+  showAll() {
+    for (let s of this.props.subjects) {
+      s.checked = false;
+    }
+    this.setState({...this.state, subjectCheckedId: -1});
+    this.props.showAll();
   }
 
   hideFilter() { this.setState({ filterExpanded: false }) }
@@ -68,81 +113,68 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     }
   }
 
-  renderIndexesBox = (viewAll: number, build: number, edit: number) => {
+  renderInbox = () => {
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box">
           <div className="sort-header">INBOX</div>
         </div>
-        <div className="filter-container indexes-box">
-          <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")}
-            onClick={this.props.showAll}>
-            View All
-					<div className="right-index">{viewAll}</div>
-          </div>
-          <div className={"index-box " + (this.props.filters.buildAll ? "active" : "")}
-            onClick={this.props.showBuildAll}>
-            Build
-					<div className="right-index">{build}</div>
-          </div>
-          <div className={"index-box " + (this.props.filters.editAll ? "active" : "")}
-            onClick={this.props.showEditAll}>
-            Edit
-					<div className="right-index">{edit}</div>
-          </div>
-        </div>
       </div>
     );
   };
 
-  renderSortAndFilterBox = (draft: number, build: number, review: number) => {
+  renderSortAndFilterBox = (draft: number, build: number, review: number, viewAll: number) => {
     return (
       <div className="sort-box">
-        <div className="filter-header" style={{marginTop: '5vh', marginBottom: '3vh'}}>
-          <span>LIVE OVERVIEW</span>
-          <button
-            className={
-              "btn-transparent filter-icon " +
-              (this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? "arrow-cancel"
-                  : "arrow-down"
-                : "arrow-up")
-            }
-            onClick={() => {
-              this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? this.clearStatus()
-                  : (this.hideFilter())
-                : (this.expandFilter())
-            }}>
-          </button>
-        </div>
-        {this.state.filterExpanded === true && (
-          <div className="filter-container subject-indexes-box">
-            <div className="index-box color1">
-              <FormControlLabel
-                checked={this.props.filters.draft}
-                control={<Radio onClick={() => this.toggleFilter(FilterFields.Draft)} className={"filter-radio custom-color"} />}
-                label="Draft" />
-              <div className="right-index">{draft}</div>
-            </div>
-            <div className="index-box color2">
-              <FormControlLabel
-                checked={this.props.filters.build}
-                control={<Radio onClick={() => this.toggleFilter(FilterFields.Build)} className={"filter-radio custom-color"} />}
-                label="Submitted for Review" />
-              <div className="right-index">{build}</div>
-            </div>
-            <div className="index-box color5">
-              <FormControlLabel
-                checked={this.props.filters.review}
-                control={<Radio onClick={e => this.toggleFilter(FilterFields.Review)} className={"filter-radio custom-color"} />}
-                label="Pending Publication" />
-              <div className="right-index">{review}</div>
-            </div>
+        <div className="filter-container subject-indexes-box first">
+          <div className="index-box color1">
+            <FormControlLabel
+              checked={this.props.filters.draft}
+              control={<Radio onClick={() => this.toggleFilter(FilterFields.Draft)} className={"filter-radio custom-color"} />}
+              label="Draft" />
+            <div className="right-index">{draft}</div>
           </div>
-        )}
+          <div className="index-box color2">
+            <FormControlLabel
+              checked={this.props.filters.build}
+              control={<Radio onClick={() => this.toggleFilter(FilterFields.Build)} className={"filter-radio custom-color"} />}
+              label="Submitted for Review" />
+            <div className="right-index">{build}</div>
+          </div>
+          <div className="index-box color5">
+            <FormControlLabel
+              checked={this.props.filters.review}
+              control={<Radio onClick={e => this.toggleFilter(FilterFields.Review)} className={"filter-radio custom-color"} />}
+              label="Pending Publication" />
+            <div className="right-index">{review}</div>
+          </div>
+        </div>
+        <CustomFilterBox
+          label="Subjects"
+          isClearFilter={this.state.isSubjectsClear}
+          setHeight={subjectsHeight => this.setState({subjectsHeight})}
+          clear={() => {}}
+        />
+        <AnimateHeight
+          duration={500}
+          height={this.state.subjectsHeight}
+          style={{ width: "100%" }}
+        >
+          <div className="filter-container subjects-list indexes-box">
+            <div className="filter-container indexes-box">
+              <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")} onClick={this.showAll.bind(this)}>
+                View All
+                <div className="right-index">{viewAll}</div>
+              </div>
+            </div>
+            {this.props.subjects.map((s, i) =>
+              <div className={"index-box hover-light " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
+                {s.name}
+                <div className="right-index">{s.count}</div>
+              </div>
+            )}
+          </div>
+        </AnimateHeight>
       </div>
     );
   };
@@ -152,26 +184,12 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
       return <EmptyFilterSidebar history={this.props.history} />;
     }
 
-    let edit = 0;
-    let notEdit = 0;
-
     let draft = 0;
     let build = 0;
     let publication = 0;
     let viewAll = 0;
 
     const {threeColumns, finalBricks} = this.props;
-
-    for (let b of finalBricks) {
-      if (b.status === BrickStatus.Build || b.status === BrickStatus.Draft || b.status === BrickStatus.Review) {
-        const isCurrentEditor = (b.editors?.findIndex((e:any) => e.id === this.props.userId) ?? -1) >= 0;
-        if (isCurrentEditor) {
-          edit++;
-        } else {
-          notEdit++;
-        }
-      }
-    }
 
     if (this.props.filters.viewAll) {
       draft = threeColumns.red.finalBricks.length;
@@ -201,8 +219,8 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
-        {this.renderIndexesBox(viewAll, edit, notEdit)}
-        {!this.props.filters.publish && this.renderSortAndFilterBox(draft, build, publication)}
+        {this.renderInbox()}
+        {!this.props.filters.publish && this.renderSortAndFilterBox(draft, build, publication, viewAll)}
       </Grid>
     );
   }

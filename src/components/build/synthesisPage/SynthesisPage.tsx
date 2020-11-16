@@ -11,6 +11,8 @@ import { Brick } from 'model/brick';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoRedoService from 'components/services/UndoRedoService';
+import RedoButton from '../baseComponents/redoButton';
+import UndoButton from '../baseComponents/UndoButton';
 
 
 export interface SynthesisProps {
@@ -135,18 +137,14 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 <Grid container item direction="column" alignItems="center" style={{ height: '100%' }}>
                   <Grid container item justify="center" style={{ height: "24%", width: '100%', marginTop:"4.9vh" }}>
                     <Grid item container direction="row" justify="space-between" style={{ width: "66%", paddingLeft:"1.5vw", paddingBottom:"0.2vw" }}>
-                      <button className="btn btn-transparent svgOnHover undo-button" title="Undo" onClick={this.props.undo}>
-                        <SpriteIcon
-                          name="undo"
-                          className={`w100 h100 active ${this.props.undoRedoService.canUndo() && "text-theme-orange"}`}
-                        />
-                      </button>
-                      <button className="btn btn-transparent svgOnHover redo-button" onClick={this.props.redo}>
-                        <SpriteIcon
-                          name="redo"
-                          className={`w100 h100 active ${this.props.undoRedoService.canRedo() && "text-theme-orange"}`}
-                        />
-                      </button>
+                      <UndoButton
+                         undo={this.props.undo}
+                         canUndo={() => this.props.undoRedoService.canUndo()}
+                      />
+                      <RedoButton
+                        redo={this.props.redo}
+                        canRedo={() => this.props.undoRedoService.canRedo()}
+                      />
                     </Grid>
                     <div style={{ marginLeft:"1.3vw"}}>
                       <CommentButton

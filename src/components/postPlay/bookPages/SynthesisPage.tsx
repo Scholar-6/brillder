@@ -4,12 +4,13 @@ import HighlightHtml from "components/play/baseComponents/HighlightHtml";
 
 interface SynthesisPageProps {
   synthesis: string;
+  onClick(): void;
 }
 
 const SynthesisPage: React.FC<SynthesisPageProps> = (props) => {
   return (
-    <div className="book-page synthesis-page">
-      <div className="normal-page">
+    <div className="book-page synthesis-page" onClick={props.onClick}>
+      <div className="normal-page flipped-page">
         <div className="normal-page-container">
           <h2>Synthesis</h2>
           <HighlightHtml

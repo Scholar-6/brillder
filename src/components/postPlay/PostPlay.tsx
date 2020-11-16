@@ -32,6 +32,8 @@ import AttemptsPage from "./bookPages/AttemptsPage";
 import QuestionPage from "./bookPages/QuestionPage";
 import AnswersPage from "./bookPages/AnswersPage";
 import SynthesisPage from "./bookPages/SynthesisPage";
+import map from "components/map";
+import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 
 export enum BookState {
   Titles,
@@ -137,7 +139,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   onBookClose() {
     const closeTimeout = setTimeout(() => {
-      this.setState({ bookHovered: false });
+      this.setState({ bookHovered: true });
     }, 400);
     this.setState({ closeTimeout });
   }
@@ -177,6 +179,12 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.animationFlipRelease();
   }
 
+  moveToSynthesis() {
+    if (this.state.animationRunning) { return; }
+    this.setState({ bookState: BookState.Synthesis, animationRunning: true });
+    this.animationFlipRelease();
+  }
+
   nextQuestion() {
     if (!this.state.attempt) { return; }
     const {brick} = this.state.attempt;
@@ -185,14 +193,14 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       this.setState({ questionIndex: this.state.questionIndex + 1, animationRunning: true });
       this.animationFlipRelease();
     } else {
-      this.setState({ bookState: BookState.Synthesis});
+      this.moveToSynthesis();
     }
   }
 
   prevQuestion() {
     if (this.state.animationRunning) { return; }
     if (this.state.questionIndex === 0) {
-      this.setState({ bookState: BookState.Introduction});
+      this.moveToIntroduction();
     }
     if (this.state.questionIndex > 0) {
       this.setState({ questionIndex: this.state.questionIndex - 1, animationRunning: true });
@@ -258,6 +266,20 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       return {};
     }
 
+    const renderBookMark = () => {
+      if (!this.state.bookHovered) return '';
+      const {bookState} = this.state;
+      if (bookState === BookState.QuestionPage || bookState === BookState.Introduction || bookState === BookState.Synthesis) {
+        return (
+          <SpriteIcon
+            name="custom-bookmark"
+            className={`bookmark ${this.state.animationRunning ? "hidden" : ""}`}
+          />
+        );
+      }
+      return '';
+    }
+
     return (
       <div className="post-play-page">
         <HomeButton onClick={() => this.props.history.push('/')} />
@@ -280,13 +302,21 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <OverallPage onClick={this.moveToAttempts.bind(this)} />
                 <IntroBriefPage brick={brick} color={color} onClick={this.moveToAttempts.bind(this)} />
                 <IntroPrepPage brick={brick} color={color} onClick={this.moveToQuestions.bind(this)} />
-                <div className="page3-empty" onClick={this.moveToTitles.bind(this)}></div>
-                {this.state.bookHovered && this.state.bookState === BookState.QuestionPage &&
-                  <SpriteIcon
-                    name="custom-bookmark"
-                    className={`bookmark ${this.state.animationRunning ? "hidden" : ""}`}
-                  />
-                }
+                <div className="page3-empty" onClick={this.moveToTitles.bind(this)}>
+                  <div className="flipped-page">
+                    <div className="green-button-container1">
+                      <div className="green-button-container2">
+                        <PlayGreenButton
+                          onClick={() =>
+                            this.props.history.push(map.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId))
+                          }
+                        />
+                      </div>
+                      <div className="play-text">Play Again</div>
+                    </div>
+                  </div>
+                </div>
+                {renderBookMark()}
                 <AttemptsPage
                   attempts={this.state.attempts}
                   index={this.state.activeAttemptIndex}
@@ -330,8 +360,19 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <div className="page6"></div>
                 <div className="page5"></div>
                 <div className="front-cover"></div>
-                <div className="book-page last-question-cover" onClick={this.moveBackToQuestions.bind(this)}></div>
-                <SynthesisPage synthesis={brick.synthesis} />
+                <SynthesisPage synthesis={brick.synthesis} onClick={this.moveBackToQuestions.bind(this)}/>
+                <div className="book-page last-question-cover">
+                   <div className="green-button-container1">
+                    <div className="green-button-container2">
+                      <PlayGreenButton
+                        onClick={() =>
+                          this.props.history.push(map.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId))
+                        }
+                      />
+                    </div>
+                    <div className="play-text">Play Again</div>
+                  </div>
+                </div>
                 <FrontPage brick={brick} student={student} color={color} />
                </div>
             </div>

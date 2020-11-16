@@ -228,6 +228,7 @@ h3 {
 .vertical-shuffle-choice,
 .choose-choice {
   display: block;
+  line-height: 1.75;
   color: var(--theme-dark-blue) !important;
   @extend %textCenter;
   text-transform: none !important;
@@ -236,8 +237,8 @@ h3 {
   background-color: var(--tab-gray) !important;
   opacity: 1;
   @include phone_and_tabletP {
-    font-size: 6vw;
     padding: 1vw 1.5vw !important;
+    margin-bottom: 1.2vh;
   }
   @include tabletP {
     margin: 0 0 0.5vw 0 !important;

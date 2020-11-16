@@ -122,26 +122,26 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
 
     return (
       <Card className={className} key={i}>
-        <div style={{display: "block"}} className="answer">
-          <MathInHtml value={answer.value} />
-        </div>
-        <div style={{display: "block"}}>
-          {this.props.isPreview ?
-            <ReviewEachHint
-              isPhonePreview={this.props.isPreview}
-              isReview={this.props.isReview}
-              index={i}
-              isCorrect={isCorrect}
-              hint={this.props.question.hint}
-            /> : this.props.isReview &&
-            <ReviewEachHint
-              isPhonePreview={this.props.isPreview}
-              isReview={this.props.isReview}
-              index={answer.index}
-              isCorrect={isCorrect}
-              hint={this.props.question.hint}
-            />
-          }
+          <div style={{display: "block"}} className="answer">
+            <MathInHtml value={answer.value} />
+          </div>
+          <div style={{display: "block"}}>
+            {this.props.isPreview ?
+              <ReviewEachHint
+                isPhonePreview={this.props.isPreview}
+                isReview={this.props.isReview}
+                index={i}
+                isCorrect={isCorrect}
+                hint={this.props.question.hint}
+              /> : this.props.isReview &&
+              <ReviewEachHint
+                isPhonePreview={this.props.isPreview}
+                isReview={this.props.isReview}
+                index={answer.index}
+                isCorrect={isCorrect}
+                hint={this.props.question.hint}
+              />
+            }
         </div>
       </Card>
     );
