@@ -21,20 +21,26 @@ export interface ButtonProps {
 const ReturnToEditorButton: React.FC<ButtonProps> = props => {
   const [isOpen, setState] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
+  const [hovered, setHover] = React.useState(false);
 
   let className = 'return-to-editor-button';
   if (props.disabled) {
     className += ' disabled';
+  } else {
+    className += ' active';
   }
 
   return (
     <div>
-      <div className={className} onClick={() => {
-        if (!props.disabled) {
-          setState(true);
-        }
-      }}>
+      <div className={className} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+        onClick={() => {
+          if (!props.disabled) {
+            setState(true);
+          }
+        }}
+      >
         <SpriteIcon name="repeat" />
+        {hovered && <div className="custom-tooltip">Return to Editor</div>}
       </div>
       <ReturnToEditorDialog isOpen={isOpen} close={() => setState(false)} submit={async () => {
         await props.returnToEditors(props.brick);

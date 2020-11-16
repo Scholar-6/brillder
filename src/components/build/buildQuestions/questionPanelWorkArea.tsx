@@ -22,6 +22,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Brick } from 'model/brick';
 import UndoRedoService from 'components/services/UndoRedoService';
 import CommentButton from '../baseComponents/commentButton/CommentButton';
+import UndoButton from '../baseComponents/UndoButton';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -201,20 +202,10 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               <Grid container item alignItems="center" style={{ height: '100%' }}>
                 <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
                   <Grid item container direction="row" justify="space-evenly">
-                    <div className="undo-button-container">
-                      <button
-                        className="btn btn-transparent svgOnHover undo-button"
-                        onMouseLeave={() => setUndoHover(false)}
-                        onMouseEnter={()=> setUndoHover(true)}
-                        onClick={props.undo}
-                      >
-                        <SpriteIcon
-                          name="undo"
-                          className={`w100 h100 active ${props.undoRedoService.canUndo() && "text-theme-orange"}`}
-                        />
-                      </button>
-                      {undoHovered && <div className="custom-tooltip">Undo</div>}
-                    </div>
+                      <UndoButton
+                        undo={props.undo}
+                        canUndo={() => props.undoRedoService.canUndo()}
+                      />
                     <div className="redo-button-container">
                       <button
                         className="btn btn-transparent svgOnHover redo-button"

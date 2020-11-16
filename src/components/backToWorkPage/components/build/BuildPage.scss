@@ -1,0 +1,20 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.build-page-content {
+  .subjects-list {
+    max-height: calc(88vh - 16.2vw);
+    overflow-y: auto;
+    padding-bottom: calc(2.3vw + 30px);
+  }
+  .index-box.hover-light:hover {
+    background: var(--light-blue-alpha3);
+  }
+  .sort-and-filter-container {
+    overflow-y: auto;
+  }
+  .filter-container.subject-indexes-box.first {
+    margin-bottom: 1.2vw !important;
+  }
+}

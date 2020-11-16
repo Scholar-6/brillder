@@ -4,6 +4,13 @@
   }
   .subjects-list {
     overflow-y: scroll;
-    height: 30%;
+    height: calc(90vh - 15vw) !important;
+  }
+
+  .index-box.hover-light:hover {
+    background: var(--light-blue-alpha3);
+  }
+  .filter-container.subject-indexes-box.first {
+    margin-bottom: 1.2vw !important;
   }
 }

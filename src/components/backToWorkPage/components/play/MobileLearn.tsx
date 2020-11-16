@@ -55,10 +55,8 @@ class MobileLearn extends Component<Props> {
     );
   }
 
-  renderMobileBricks() {
+  renderMobileBricks(expandedBrick: AssignmentBrick | undefined) {
     const {assignments} = this.props;
-    let expandedBrick = assignments.find(a => a.brick.expanded === true);
-
     if (expandedBrick) {
       return this.renderExpandedBrick(expandedBrick);
     }
@@ -136,10 +134,18 @@ class MobileLearn extends Component<Props> {
     return bricksList;
   };
 
+
   render() {
-    const {history} = this.props;
+    const {history, assignments} = this.props;
+    const expandedBrick = assignments.find(a => a.brick.expanded === true);
+
+    let pageClass = "main-listing dashboard-page mobile-category learn-mobile-tab";
+    if (expandedBrick) {
+      pageClass += " expanded"
+    }
+
     return (
-      <div className="main-listing dashboard-page mobile-category learn-mobile-tab">
+      <div className={pageClass}>
         <div className="page-navigation">
           <div className="btn btn-transparent glasses svgOnHover">
             <SpriteIcon name="glasses" className="w100 h100 active text-theme-dark-blue" />
@@ -155,7 +161,7 @@ class MobileLearn extends Component<Props> {
           searching={(v: string) => {}}
         />
         <div className="mobile-scroll-bricks">
-          {this.renderMobileBricks()}
+          {this.renderMobileBricks(expandedBrick)}
         </div>
         <Grid container direction="row" className="sorted-row">
           <Grid item xs={9} className="brick-row-container">

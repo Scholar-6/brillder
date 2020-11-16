@@ -1,0 +1,29 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.post-play-page {
+  $base-font-size: 0.85vw;
+  .expand-title {
+    font-size: 2vw;
+  }
+  .expanded-text p {
+    font-size: $base-font-size;
+  }
+  .book-page.synthesis-page,
+  .book-page.introduction-prep {
+    padding-left: 10% !important;
+    padding-right: 10% !important;
+  }
+  .pair-match-play .pair-match-play-option .option-container p,
+  .pair-match-play .answers-list .pair-match-play-choice .MuiListItem-root p {
+    font-size: $base-font-size !important;
+  }
+  p {
+    font-size: $base-font-size;
+  }
+  .open-question {
+    font-size: 1vw;
+    font-family: $font-family-regular-italic !important;
+  }
+}
