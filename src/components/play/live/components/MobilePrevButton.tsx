@@ -4,12 +4,11 @@ import { Question } from "model/question";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ButtonProps {
-  questions: Question[];
   activeStep: number;
   onClick(): void;
 }
 
-const MobilePrevButton: React.FC<ButtonProps> = ({ questions, activeStep, onClick }) => {
+const MobilePrevButton: React.FC<ButtonProps> = ({ activeStep, onClick }) => {
   if (activeStep <= 0) {
     return <div></div>;
   }

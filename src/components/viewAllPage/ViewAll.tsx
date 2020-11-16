@@ -30,6 +30,7 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 import { getBrickColor } from "services/brick";
 import { isMobile } from "react-device-detect";
+import map from "components/map";
 
 
 interface BricksListProps {
@@ -744,7 +745,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           <div className="centered text-theme-dark-blue title no-found">
             Sorry, no bricks found
           </div>
-          <div className="create-button">
+          <div className="create-button" onClick={() => this.props.history.push(map.ProposalSubject)}>
             <SpriteIcon name="trowel" />
             Create One
           </div>

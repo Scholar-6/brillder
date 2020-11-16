@@ -69,7 +69,7 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
           if (notification.question && notification.question.id >= 1) {
             history.push(map.investigationQuestionSuggestions(brick.id, notification.question.id));
           } else {
-            history.push(map.InvestigationSynthesis(brick.id))
+            history.push(map.investigationSynthesisSuggestions(brick.id))
           }
         } else if (notification.type === NotificationType.InvitedToPlayBrick) {
           history.push(map.playIntro(brick.id));
@@ -184,7 +184,7 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
                     onClick={() => this.move(notification)}
                   >
                     {notification.type === NotificationType.BrickSubmittedForReview &&
-                      <SpriteIcon name="message-square" className="w60 h60 active text-theme-dark-blue" />
+                      <SpriteIcon name="send" className="w60 h60 active text-theme-dark-blue send-icon-center" />
                     }
                     {notification.type === NotificationType.AssignedToEdit &&
                       <SpriteIcon name="edit-outline" className="w60 h60 active text-theme-dark-blue" />

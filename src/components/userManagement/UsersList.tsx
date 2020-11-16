@@ -376,13 +376,15 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   nextPage() {
     const {page} = this.state;
     this.setState({ ...this.state, page: page + 1 });
-    this.getUsers(page + 1);
+    let filterSubjects = this.getCheckedSubjectIds();
+    this.getUsers(page + 1, filterSubjects);
   }
 
   previousPage() {
     const {page} = this.state;
     this.setState({ ...this.state, page: page - 1 });
-    this.getUsers(page - 1);
+    let filterSubjects = this.getCheckedSubjectIds();
+    this.getUsers(page - 1, filterSubjects);
   }
 
   renderUserType(user: User) {

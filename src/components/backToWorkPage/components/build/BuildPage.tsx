@@ -173,10 +173,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
           this.props.requestFailed('Can`t get bricks by search');
         }
       });
-    } else {
-      if (this.props.isSearching === false) {
-        //this.setState({ finalBricks: this.state.rawBricks});
-      }
     }
   }
 
@@ -318,7 +314,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
     if (!filters.publish) {
       removeAllFilters(filters);
       filters.publish = true;
-      const bricks = filterByStatus(this.state.rawBricks, BrickStatus.Publish);
+      let bricks = filterByStatus(this.state.rawBricks, BrickStatus.Publish);
+      bricks = bricks.filter(b => b.isCore === true);
       this.setState({ ...this.state, filters, sortedIndex: 0, finalBricks: bricks });
     } else {
       removeAllFilters(filters);

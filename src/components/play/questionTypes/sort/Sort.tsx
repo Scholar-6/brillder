@@ -89,7 +89,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     
         userCats.push({ choices: [], name: "Unsorted" });
         this.prepareChoices(userCats);
-        this.setState({userCats});
+        this.setState({userCats, choices: props.answers});
       }
     } else {
       // preview in build
@@ -113,7 +113,7 @@ class Sort extends CompComponent<SortProps, SortState> {
   
           userCats.push({choices, name: 'Unsorted'});
   
-          this.setState({userCats, choices: []});
+          this.setState({userCats, choices});
         }
       }
     }
@@ -229,10 +229,7 @@ class Sort extends CompComponent<SortProps, SortState> {
 
     return (
       <div className={className} key={i}>
-        <div className="drag-area">
-          <SpriteIcon name="move" />
-        </div>
-        <ListItem onMouseDown={e => e.preventDefault()} onTouchStart={e => e.preventDefault()} className="sort-choice-custom">
+        <ListItem className="sort-choice-custom">
           <ListItemText>
             {this.renderChoiceContent(choice)}
             {this.props.isReview || this.props.isPreview ?
@@ -257,6 +254,7 @@ class Sort extends CompComponent<SortProps, SortState> {
 
     return (
       <div className="question-unique-play sort-play">
+        <p><span className="help-text">Drag to rearrange.</span></p>
         {
           this.state.userCats.map((cat, i) => (
             <div key={i}>
