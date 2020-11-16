@@ -69,7 +69,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
           editOnly={editOnly}
           data={answer.option}
           validationRequired={validationRequired}
-          toolbar={['mathType', 'chemType']}
+          toolbar={['latex', 'chemType']}
           placeholder={"Enter Option " + (index + 1) + "..."}
           onBlur={() => save()}
           onChange={value => optionChanged(answer, value)}

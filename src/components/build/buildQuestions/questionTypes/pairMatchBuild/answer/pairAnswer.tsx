@@ -83,7 +83,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
           editOnly={editOnly}
           data={answer.value}
           validationRequired={validationRequired}
-          toolbar={['mathType', 'chemType']}
+          toolbar={['latex', 'chemType']}
           placeholder={"Enter Answer " + (index + 1) + "..."}
           onBlur={() => {
             onBlur();
