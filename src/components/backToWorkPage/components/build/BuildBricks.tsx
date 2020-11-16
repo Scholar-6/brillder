@@ -10,6 +10,7 @@ import BrickBlock from "components/baseComponents/BrickBlock";
 import BrickColDescription from "./BrickColDescription";
 import PublishToggle from "./PublishToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import map from "components/map";
 
 interface BuildBricksProps {
   user: User;
@@ -194,7 +195,7 @@ class BuildBricks extends Component<BuildBricksProps> {
 
   renderCreateLinkColumn() {
     return (
-      <div className="main-brick-container create-link" key={-4}>
+      <div className="main-brick-container create-link" key={-32} onClick={() => this.props.history.push(map.ProposalSubject)}>
         <SpriteIcon name="trowel" />
         <span>Create A New Brick</span>
       </div>

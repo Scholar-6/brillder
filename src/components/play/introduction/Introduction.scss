@@ -295,7 +295,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           }
 
           &.attempted {
-            background: #82c0ed;
+            background: var(--highlight-blue);
 
             .question-index {
               background: var(--blue);

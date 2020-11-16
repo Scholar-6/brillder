@@ -148,8 +148,10 @@
       }
 
       &.create-link {
+        cursor: pointer;
         color: var(--theme-dark-blue);
         font-family: $font-family-bold;
+        font-size: 1.1vw;
         $size: 3vw;
         .svg {
           color: var(--theme-orange);

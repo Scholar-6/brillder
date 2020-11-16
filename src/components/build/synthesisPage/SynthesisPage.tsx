@@ -21,6 +21,7 @@ export interface SynthesisProps {
   editOnly: boolean;
   synthesis: string;
   undoRedoService: UndoRedoService;
+  initSuggestionExpanded: boolean;
   onSynthesisChange(text: string): void;
   undo(): void;
   redo(): void;
@@ -42,7 +43,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
       canScroll: false,
       scrollArea: null,
       ref: React.createRef() as React.RefObject<HTMLDivElement>,
-      commentsShown: false
+      commentsShown: props.initSuggestionExpanded
     }
   }
 

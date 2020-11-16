@@ -7,20 +7,28 @@ interface ButtonProps {
   questions: Question[];
   activeStep: number;
   onClick(): void;
+  setSubmitAnswers(value: boolean): void;
 }
 
-const MobileNextButton: React.FC<ButtonProps> = ({ questions, activeStep, onClick }) => {
-  let icon = "check-icon-thin";
+const MobileNextButton: React.FC<ButtonProps> = ({
+  questions, activeStep, onClick, setSubmitAnswers
+}) => {
   if (questions.length - 1 > activeStep) {
-    icon = 'arrow-right';
+    return (
+      <button
+        type="button" onClick={onClick}
+        className="play-preview svgOnHover play-green mobile-next"
+      >
+        <SpriteIcon name="arrow-right" className="w80 h80 active" />
+      </button>
+    );
   }
   return (
     <button
-      type="button"
+      type="button" onClick={() => setSubmitAnswers(true)}
       className="play-preview svgOnHover play-green mobile-next"
-      onClick={onClick}
     >
-      <SpriteIcon name={icon} className="w80 h80 active" />
+      <SpriteIcon name="check-icon-thin" className="w80 h80 active" />
     </button>
   );
 };

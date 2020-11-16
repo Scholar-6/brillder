@@ -4,6 +4,7 @@ import { PlayAttempt } from "model/attempt";
 import { Question } from "model/question";
 import { BookState } from "../PostPlay";
 
+import './QuestionPage.scss';
 import QuestionPlay from "components/play/questionPlay/QuestionPlay";
 
 interface QuestionPageProps {
@@ -77,7 +78,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
           <div className="question-number">
             <div>{i + 1}</div>
           </div>
-          <div>
+          <div className="question-scrollable">
             <h2>{renderTitle()}</h2>
             {mode === undefined
               ? <QuestionPlay question={question} isPhonePreview={true} answers={[]} />
