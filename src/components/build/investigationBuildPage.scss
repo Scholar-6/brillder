@@ -309,6 +309,7 @@ $space-between-boxes: 0.1vw;
     width: $size;
     border-radius: 50%;
     margin-bottom: $margin;
+    position: relative;
 
     cursor: pointer;
     background: var(--white);
@@ -333,6 +334,46 @@ $space-between-boxes: 0.1vw;
         height: 95%;
         width: 90%;
       }
+    }
+    &.active {
+      &:before {
+        content: '';
+        z-index: -1;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: #fff;
+        opacity: 50%;
+        @extend %transitionAll300;
+      }
+      &:hover {
+        &:before {
+          top: -10%;
+          left: -10%;
+          width: 120%;
+          height: 120%;
+        }
+      }
+    }
+
+    .custom-tooltip {
+      top: 100%;
+      z-index: 9999;
+      margin-top: 0.6vw;
+      left: -1.5vw;
+      width: 7vw !important;
+    }
+  }
+  .build-publish-button {
+    .custom-tooltip {
+      top: 100%;
+      z-index: 9999;
+      margin-top: 0.6vw;
+      left: 0.2vw;
+      width: 4vw !important;
     }
   }
 }
