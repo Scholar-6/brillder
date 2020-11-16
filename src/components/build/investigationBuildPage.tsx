@@ -744,6 +744,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             locked={locked}
             editOnly={!canEdit}
             synthesis={synthesis}
+            initSuggestionExpanded={initSuggestionExpanded}
             onSynthesisChange={saveSynthesis}
             undoRedoService={undoRedoService}
             undo={undo}
