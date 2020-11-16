@@ -30,7 +30,7 @@ const TextLive: React.FC<TextProps> = ({ mode, className, component }) => {
     return <MathJax math={data} key={i} />;
   }
 
-  const renderLatex= (latex: string, i: number) => {
+  const renderLatex = (latex: string, i: number) => {
     return <Katex latex={latex} key={i} />
   }
 

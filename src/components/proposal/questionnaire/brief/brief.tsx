@@ -53,7 +53,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
             link={true}
             placeholder="Enter Brief Here..."
             toolbar={[
-              'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
+              'bold', 'italic', 'fontColor', 'latex', 'chemType', 'bulletedList', 'numberedList'
             ]}
             onBlur={() => { }}
             onChange={saveBrief}
