@@ -89,7 +89,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     
         userCats.push({ choices: [], name: "Unsorted" });
         this.prepareChoices(userCats);
-        this.setState({userCats});
+        this.setState({userCats, choices: props.answers});
       }
     } else {
       // preview in build
@@ -113,7 +113,7 @@ class Sort extends CompComponent<SortProps, SortState> {
   
           userCats.push({choices, name: 'Unsorted'});
   
-          this.setState({userCats, choices: []});
+          this.setState({userCats, choices});
         }
       }
     }
