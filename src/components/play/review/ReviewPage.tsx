@@ -143,6 +143,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   }
 
   const submitAndMove = () => {
+    setActiveAnswer();
     finishBrick();
     moveToEnding();
   }
