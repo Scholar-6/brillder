@@ -57,7 +57,7 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
             data={selectedQuestion}
             placeholder="Enter Open Question(s)..."
             toolbar={[
-              'bold', 'italic', 'mathType', 'chemType'
+              'bold', 'italic', 'latex', 'chemType'
             ]}
             onBlur={() => { }}
             onChange={saveOpenQuestion}
