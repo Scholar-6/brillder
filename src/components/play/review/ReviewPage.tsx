@@ -263,8 +263,8 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
           </Hidden>
           <Hidden only={["sm", "md", "lg", "xl"]}>
             {questions.map(renderQuestionContainer)}
-            <MobilePrevButton questions={questions} activeStep={activeStep} onClick={prev} />
-            <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} />
+            <MobilePrevButton activeStep={activeStep} onClick={prev} />
+            <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
           </Hidden>
         </Grid>
         <Grid item sm={4} xs={12}>
