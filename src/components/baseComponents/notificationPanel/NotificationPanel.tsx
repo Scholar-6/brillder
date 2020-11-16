@@ -184,7 +184,7 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
                     onClick={() => this.move(notification)}
                   >
                     {notification.type === NotificationType.BrickSubmittedForReview &&
-                      <SpriteIcon name="message-square" className="w60 h60 active text-theme-dark-blue" />
+                      <SpriteIcon name="send" className="w60 h60 active text-theme-dark-blue send-icon-center" />
                     }
                     {notification.type === NotificationType.AssignedToEdit &&
                       <SpriteIcon name="edit-outline" className="w60 h60 active text-theme-dark-blue" />
