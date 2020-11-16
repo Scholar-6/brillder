@@ -36,6 +36,7 @@
   }
 
   .create-button {
+    cursor: pointer;
     margin-left: 12vw;
     svg {
       margin-top: calc(#{$bricks-height / 90});
