@@ -62,6 +62,7 @@ export const prepareTreeRows = (bricks: Brick[], filters: Filters, userId: numbe
     setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Red, bricks, BrickStatus.Draft);
     setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Yellow, bricks, BrickStatus.Build);
     setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Green, bricks, BrickStatus.Review);
+    threeColumns.red.finalBricks.unshift({isCreateLink: true} as Brick);
   }
   return threeColumns;
 }
