@@ -40,6 +40,7 @@ import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import colors from './colors';
 
 import './DocumentEditor.scss';
+import LatexCustom from './LatexCustom';
 
 export interface DocumentEditorProps {
   data: string;
@@ -131,7 +132,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
 
   render() {
     let config = {
-      extraPlugins: [InsertDropDown],
+      extraPlugins: [InsertDropDown, LatexCustom],
       plugins: [
         Essentials, Paragraph,
         Bold, Italic, Strikethrough, Superscript, Subscript,
@@ -144,7 +145,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
       toolbar: [
         'bold', 'italic', 'fontColor', 'superscript', 'insertDropDown',
         'mathType', 'chemType',
-        'bulletedList', 'numberedList',
+        'bulletedList', 'numberedList', 'latex'
       ],
       mediaEmbed: { previewsInData: true },
       toolbarCanCollapse: false,

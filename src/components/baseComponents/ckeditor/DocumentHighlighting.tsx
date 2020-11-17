@@ -40,6 +40,7 @@ import "./DocumentEditor.scss";
 import UploadImageCustom from "./UploadImageCustom";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { PlayMode } from "components/play/model";
+import LatexCustom from "./LatexCustom";
 
 export interface DocumentHighlightingEditorProps {
   data: string;
@@ -109,7 +110,7 @@ class DocumentHighlightComponent extends React.Component<
 
   render() {
     let config = {
-      extraPlugins: [UploadImageCustom],
+      extraPlugins: [UploadImageCustom, LatexCustom],
       plugins: [
         Essentials,
         Paragraph,

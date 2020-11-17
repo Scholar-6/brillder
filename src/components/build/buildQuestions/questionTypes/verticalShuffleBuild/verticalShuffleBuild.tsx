@@ -73,7 +73,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           editOnly={editOnly}
           data={answer.value}
           validationRequired={validationRequired}
-          toolbar={['mathType', 'chemType']}
+          toolbar={['latex', 'chemType']}
           placeholder={"Enter Answer " + (i + 1) + "..."}
           onBlur={() => {
             showSameAnswerPopup(i, state.list, openSameAnswerDialog);
