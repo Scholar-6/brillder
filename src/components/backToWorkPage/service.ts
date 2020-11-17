@@ -31,12 +31,6 @@ export const removeBrickFromLists = (rawBricks: Brick[], finalBricks: Brick[], t
   removeBrickFromList(yellow.rawBricks, brickId);
 }
 
-export const removeInboxFilters = (filters: Filters) => {
-  filters.viewAll = false;
-  filters.buildAll = false;
-  filters.editAll = false;
-}
-
 export const filterByStatus = (bricks: Brick[], status: BrickStatus) => {
   return bricks.filter(b => b.status === status);
 }
@@ -81,12 +75,6 @@ export const filterBricks = (filters: Filters, rawBricks: Brick[], userId: numbe
     bricks = filterByPrivate(bricks);
   } else {
     bricks = filterByCore(bricks);
-  }
-
-  if (filters.buildAll) {
-    filteredBricks.push(...filterByEditor(bricks, userId));
-  } else if (filters.editAll) {
-    filteredBricks.push(...filterByNoEditor(bricks, userId));
   }
 
   if (filters.draft) {
@@ -151,9 +139,6 @@ export const clearStatusFilters = (filters: Filters) => {
 }
 
 export const removeAllFilters = (filters: Filters) => {
-  filters.viewAll = false;
-  filters.buildAll = false;
-  filters.editAll = false;
   clearStatusFilters(filters);
 }
 
