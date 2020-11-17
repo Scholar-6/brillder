@@ -426,6 +426,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }, 400);
   }
 
+  moveToFirstPage() {
+    this.setState({sortedIndex: 0});
+  }
+
   onThreeColumnsMouseHover(index: number, status: BrickStatus) {
     let key = Math.floor(index / 3);
 
@@ -665,6 +669,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
         moveAllNext={this.moveAllNext.bind(this)}
         moveAllBack={this.moveAllBack.bind(this)}
+        moveToFirstPage={this.moveToFirstPage.bind(this)}
 
         handleDeleteOpen={this.handleDeleteOpen.bind(this)}
       />
