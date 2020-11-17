@@ -13,7 +13,6 @@ const Katex: React.FC<KatexProps> = props => {
         const arg = ctx.consumeArgs(1)[0] as any[];
         const str = arg.reduce((prev, curr) => curr.text + prev, "") as string;
         const elements = str.replace(/\,/g, "\\\\")
-        console.log(elements);
         return `\\begin{${matrixEnv}}${elements}\\end{${matrixEnv}}`;
     };
 
@@ -27,14 +26,14 @@ const Katex: React.FC<KatexProps> = props => {
     React.useEffect(() => {
         if(ref.current) {
             const spans = ref.current.getElementsByClassName("latex");
-            for(let i = 0; i < spans.length; i++) {
-                const el = spans[i];
+            while(spans.length > 0) {
+                const el = spans[0];
                 try {
                     katex.render(el.textContent!, el as HTMLSpanElement, {
                         throwOnError: false,
                         macros
                     });
-                    el.className = "latex-rendered";
+                    el.className = "katex-rendered";
                 } catch (e) {
                     console.log(e);
                 }
