@@ -543,8 +543,19 @@ class BuildPage extends Component<BuildProps, BuildState> {
     return published;
   }
 
-  filterProgressSubject(bs: Brick[], s: SubjectItem) {
-    return bs.filter(b => b.subjectId === s.id && b.status !== BrickStatus.Publish);
+  filterInProgressBySubject(bs: Brick[], s: SubjectItem, filters: Filters) {
+    return bs.filter(b => {
+      if (b.subjectId === s.id && b.status !== BrickStatus.Publish) {
+        if (filters.draft === true && b.status === BrickStatus.Draft) {
+          return true;
+        } else if (filters.review === true && b.status === BrickStatus.Review) {
+          return true;
+        } else if (filters.build === true && b.status === BrickStatus.Build) {
+          return true;
+        }
+      }
+      return false;
+    });
   }
 
   filterPublishedSubject(bs: Brick[], s: SubjectItem) {
@@ -566,17 +577,19 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
   filterBuildBySubject(s: SubjectItem | null) {
     const {rawBricks} = this.state;
-    if (this.state.filters.publish) {
+    const {filters} = this.state;
+    if (filters.publish) {
       this.filterBuildPublishBySubject(s);
     } else {
       if (s) {
-        const bricks = this.filterProgressSubject(rawBricks, s);
-        const threeColumns = prepareTreeRows(bricks, this.state.filters, this.props.user.id);
+        const bricks = this.filterInProgressBySubject(rawBricks, s, filters);
+        const threeColumns = prepareTreeRows(bricks, filters, this.props.user.id);
         this.setState({buildCheckedSubjectId: s.id, threeColumns, finalBricks: bricks});
       } else {
         if (this.state.buildCheckedSubjectId !== -1) {
-          const threeColumns = prepareTreeRows(rawBricks, this.state.filters, this.props.user.id);
-          this.setState({buildCheckedSubjectId: -1, threeColumns, finalBricks: rawBricks});
+          const finalBricks = filterBricks(filters, rawBricks, this.props.user.id);
+          const threeColumns = prepareTreeRows(rawBricks, filters, this.props.user.id);
+          this.setState({buildCheckedSubjectId: -1, threeColumns, finalBricks});
         }
       }
     }

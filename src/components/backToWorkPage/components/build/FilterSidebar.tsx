@@ -62,7 +62,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     let isChecked = false;
     for (let item of this.props.subjects) {
       if (item.id === s.id) {
-
         if (item.id === this.state.subjectCheckedId) {
           item.checked = false;
         } else {
