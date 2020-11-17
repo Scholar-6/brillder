@@ -88,7 +88,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     
         userCats.push({ choices: [], name: "Unsorted" });
         this.prepareChoices(userCats);
-        this.setState({userCats, choices: props.answers});
+        this.setState({userCats, choices: this.getChoices()});
       }
     } else {
       // preview in build

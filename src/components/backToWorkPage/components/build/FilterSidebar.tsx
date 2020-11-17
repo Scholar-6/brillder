@@ -56,6 +56,11 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     }
   }
 
+  removeSubject() {
+    this.setState({...this.state, subjectCheckedId: -1});
+    this.props.filterBySubject(null);
+  }
+
   filterBySubject(s: SubjectItem) {
     let isChecked = false;
     for (let item of this.props.subjects) {
@@ -113,19 +118,12 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     }
   }
 
-  renderInbox = () => {
+  renderInbox = (draft: number, build: number, review: number) => {
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box">
           <div className="sort-header">INBOX</div>
         </div>
-      </div>
-    );
-  };
-
-  renderSortAndFilterBox = (draft: number, build: number, review: number, viewAll: number) => {
-    return (
-      <div className="sort-box">
         <div className="filter-container subject-indexes-box first">
           <div className="index-box color1">
             <FormControlLabel
@@ -149,6 +147,37 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             <div className="right-index">{review}</div>
           </div>
         </div>
+      </div>
+    );
+  };
+
+  renderViewAll = (viewAll: number) => {
+    if (this.props.filters.publish) {
+      return (
+        <div className="filter-container indexes-box">
+          <div
+            className={"index-box " + (this.state.subjectCheckedId === -1 ? "active" : "")}
+            onClick={this.removeSubject.bind(this)}
+          >
+            View All
+            <div className="right-index">{viewAll}</div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="filter-container indexes-box">
+        <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")} onClick={this.showAll.bind(this)}>
+          View All
+          <div className="right-index">{viewAll}</div>
+        </div>
+      </div>
+    );
+  }
+
+  renderSubjectsBox = (viewAll: number) => {
+    return (
+      <div className="sort-box">
         <CustomFilterBox
           label="Subjects"
           isClearFilter={this.state.isSubjectsClear}
@@ -161,14 +190,12 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
           style={{ width: "100%" }}
         >
           <div className="filter-container subjects-list indexes-box">
-            <div className="filter-container indexes-box">
-              <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")} onClick={this.showAll.bind(this)}>
-                View All
-                <div className="right-index">{viewAll}</div>
-              </div>
-            </div>
+            {this.renderViewAll(viewAll)}
             {this.props.subjects.map((s, i) =>
-              <div className={"index-box hover-light " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
+              <div
+                className={"index-box hover-light " + (s.id === this.state.subjectCheckedId ? "active" : "")}
+                onClick={() => this.filterBySubject(s)} key={i}
+              >
                 {s.name}
                 <div className="right-index">{s.count}</div>
               </div>
@@ -219,8 +246,8 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
-        {this.renderInbox()}
-        {!this.props.filters.publish && this.renderSortAndFilterBox(draft, build, publication, viewAll)}
+        {!this.props.filters.publish && this.renderInbox(draft, build, publication)}
+        {this.renderSubjectsBox(viewAll)}
       </Grid>
     );
   }
