@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 // @ts-ignore
 import MathJax from 'react-mathjax-preview'
 
-import {parseDataToArray, isMathJax, parseSynthesisDataToArray} from 'components/services/mathJaxService';
+import {parseDataToArray, isMathJax, parseSynthesisDataToArray, isLatex} from 'components/services/mathJaxService';
 import YoutubeLink from './YoutubeLink';
 import './YoutubeAndMath.scss'
+import Katex from 'components/baseComponents/katex/Katex';
 
 interface MathHtmlProps {
   value: string;
@@ -33,6 +34,10 @@ class YoutubeAndMathInHtml extends Component<MathHtmlProps> {
       return <MathJax math={data} key={i} />;
     }
 
+    const renderLatex = (latex: string, i: number) => {
+      return <Katex latex={latex} key={i} />
+    }
+
     if (arr.length === 0) {
       return <div>{this.props.value}</div>;
     }
@@ -42,9 +47,12 @@ class YoutubeAndMathInHtml extends Component<MathHtmlProps> {
         {
           arr.map((el:any, i:number) => {
             let res = isMathJax(el);
+            const latex = isLatex(el);
             if (res) {
               return renderMath(el, i);
-            }
+            } else if (latex) {
+              return renderLatex(el, i);
+            } 
             res = this.isYoutube(el);
             if (res) {
               return <YoutubeLink key={i} value={el} />;

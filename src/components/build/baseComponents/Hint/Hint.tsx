@@ -116,7 +116,7 @@ const HintComponent: React.FC<HintProps> = ({
             data={state.value}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'mathType', 'chemType', 'insertTable', 'uploadImageCustom'
+              'latex', 'chemType', 'insertTable', 'uploadImageCustom'
             ]}
             placeholder="Enter Hint..."
             validationRequired={validationRequired}
@@ -153,7 +153,7 @@ const HintComponent: React.FC<HintProps> = ({
             data={state.list[i]}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'mathType', 'chemType', 'imageUploadCustom'
+              'latex', 'chemType', 'imageUploadCustom'
             ]}
             placeholder="Enter Hint"
             validationRequired={validationRequired}

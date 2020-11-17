@@ -3,12 +3,13 @@ import React from "react";
 // @ts-ignore
 import MathJax from "react-mathjax-preview";
 import {
-  isMathJax, parseSynthesisDataToArray
+  isMathJax, parseSynthesisDataToArray, isLatex
 } from "components/services/mathJaxService";
 import "./SynthesisPreview.scss";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Radio } from "@material-ui/core";
 import { BrickLengthEnum } from "model/brick";
+import Katex from "components/baseComponents/katex/Katex";
 
 interface SynthesisPreviewData {
   synthesis: string;
@@ -70,6 +71,10 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
     return <MathJax math={data} key={i} />;
   };
 
+  const renderLatex = (latex: string, i: number) => {
+    return <Katex latex={latex} key={i} />
+  }
+
   return (
     <div className="phone-preview-component synthesis-preview">
       <div className="synthesis-title" style={{ textAlign: "center" }}>
@@ -78,8 +83,11 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
       <div className="synthesis-text">
         {arr.map((el: any, i: number) => {
           const res = isMathJax(el);
+          const latex = isLatex(el);
           if (res) {
             return renderMath(el, i);
+          } else if (latex) {
+            return renderLatex(el, i);
           } else {
             return <div key={i} dangerouslySetInnerHTML={{ __html: el }} />;
           }
