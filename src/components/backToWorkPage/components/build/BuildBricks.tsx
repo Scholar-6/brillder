@@ -150,8 +150,13 @@ class BuildBricks extends Component<BuildBricksProps> {
     return this.renderGroupedBricks(data);
   }
 
+  isThreeColumns() {
+    const {filters} = this.props;
+    return !filters.publish && filters.build && filters.review && filters.draft;
+  }
+
   renderBricks = () => {
-    if (this.props.filters.viewAll) {
+    if (this.isThreeColumns()) {
       return this.renderBuildGroupedBricks();
     }
     return this.renderSortedBricks();

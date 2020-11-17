@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, RadioGroup, FormControlLabel, Radio, Hidden } from "@material-ui/core";
+import queryString from 'query-string';
 
 import './Subject.scss';
 import { ProposalStep } from "../../model";
@@ -11,6 +12,7 @@ import map from 'components/map';
 
 interface SubjectProps {
   history: any;
+  location: any;
   subjectId: any
   subjects: any[]
   saveSubject(subjectId: number):void
@@ -195,7 +197,7 @@ const TheologyComponent:React.FC = () => {
   )
 }
 
-const SubjectPage:React.FC<SubjectProps> = ({ history, subjectId, subjects, saveSubject }) => {
+const SubjectPage:React.FC<SubjectProps> = ({ history, subjectId, subjects, location, saveSubject }) => {
   const getSubjectName = (subjectId: number) => {
     if (subjectId) {
       const subject = subjects.find(s => s.id === subjectId);
@@ -223,6 +225,19 @@ const SubjectPage:React.FC<SubjectProps> = ({ history, subjectId, subjects, save
     setSubjectName(currentName);
     saveSubject(subjectId);
   };
+
+  const values = queryString.parse(location.search);
+
+  if (values.selectedSubject) {
+    try {
+      let subjectId = parseInt(values.selectedSubject as string);
+      let res = subjects.find(s => s.id === subjectId);
+      if (res) {
+        saveSubject(res.id);
+        return <Redirect to={map.ProposalTitle} />
+      }
+    } catch {}
+  }
 
   const getInnerComponent = () => {
     if (subjectName === 'French') {

@@ -27,9 +27,6 @@ interface FilterSidebarProps {
   isEmpty: boolean;
   subjects: SubjectItem[];
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
-  showAll(): void;
-  showBuildAll(): void;
-  showEditAll(): void;
   filterChanged(filters: Filters): void;
   filterBySubject(s: any): void;
 }
@@ -65,7 +62,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     let isChecked = false;
     for (let item of this.props.subjects) {
       if (item.id === s.id) {
-
         if (item.id === this.state.subjectCheckedId) {
           item.checked = false;
         } else {
@@ -89,7 +85,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
       s.checked = false;
     }
     this.setState({...this.state, subjectCheckedId: -1});
-    this.props.showAll();
+    this.props.filterBySubject(null);
   }
 
   hideFilter() { this.setState({ filterExpanded: false }) }
@@ -152,22 +148,12 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   };
 
   renderViewAll = (viewAll: number) => {
-    if (this.props.filters.publish) {
-      return (
-        <div className="filter-container indexes-box">
-          <div
-            className={"index-box " + (this.state.subjectCheckedId === -1 ? "active" : "")}
-            onClick={this.removeSubject.bind(this)}
-          >
-            View All
-            <div className="right-index">{viewAll}</div>
-          </div>
-        </div>
-      );
-    }
     return (
       <div className="filter-container indexes-box">
-        <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")} onClick={this.showAll.bind(this)}>
+        <div
+          className={"index-box " + (this.state.subjectCheckedId === -1 ? "active" : "")}
+          onClick={this.removeSubject.bind(this)}
+        >
           View All
           <div className="right-index">{viewAll}</div>
         </div>
@@ -216,9 +202,9 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     let publication = 0;
     let viewAll = 0;
 
-    const {threeColumns, finalBricks} = this.props;
+    const {threeColumns, finalBricks, filters} = this.props;
 
-    if (this.props.filters.viewAll) {
+    if (filters.draft && filters.review && filters.build) {
       draft = threeColumns.red.finalBricks.length;
       build = threeColumns.yellow.finalBricks.length;
       publication = threeColumns.green.finalBricks.length;
