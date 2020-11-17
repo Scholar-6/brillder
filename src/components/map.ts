@@ -1,6 +1,7 @@
 export const Login = '/login';
 export const Build = '/build';
 export const MainPage = '/home';
+export const UserProfile = '/user-profile';
 export const ProposalBase = `${Build}/new-brick`;
 export const BackToWorkPage = '/back-to-work';
 
@@ -84,8 +85,10 @@ export const playAssignment = (brickId: number, assignmentId: number) => {
 
 export default {
   Build,
+  UserProfile,
   Login,
   MainPage,
+
   ProposalBase,
   ProposalSubject,
   ProposalTitle,
