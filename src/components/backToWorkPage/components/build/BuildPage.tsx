@@ -329,7 +329,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
       const bricks = filterByStatus(this.state.rawBricks, BrickStatus.Draft);
       bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Build));
       bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Review));
-      this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
+      const subjects = this.getBrickSubjects(this.state.rawBricks);
+      this.setState({ ...this.state, filters, subjects, finalBricks: bricks, sortedIndex: 0 });
     }
   }
 
@@ -387,6 +388,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
   handleMouseHover(index: number) {
     let bricks = this.state.finalBricks;
+    bricks = bricks.filter(b => b.isCore === true);
     if (this.props.isSearching) {
       bricks = this.state.searchBricks;
       hideBricks(bricks);
@@ -401,7 +403,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
       if (this.props.isSearching) {
         expandSearchBrick(this.state.searchBricks, index);
       } else {
-        expandBrick(this.state.finalBricks, this.state.rawBricks, index);
+        let bricks2 = this.state.finalBricks.filter(b => b.isCore === true);
+        expandBrick(bricks2, this.state.rawBricks, index);
       }
       this.setState({ ...this.state });
     }, 400);
