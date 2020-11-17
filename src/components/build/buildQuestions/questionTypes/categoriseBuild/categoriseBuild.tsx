@@ -136,7 +136,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           editOnly={editOnly}
           data={answer.value}
           placeholder="Enter Answer..."
-          toolbar={['mathType', 'chemType']}
+          toolbar={['latex', 'chemType']}
           validationRequired={validationRequired}
           onBlur={() => {
             showSameAnswerPopup(i, category.answers, openSameAnswerDialog);
@@ -171,7 +171,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             editOnly={editOnly}
             data={category.name}
             placeholder="Enter Category Heading..."
-            toolbar={['mathType', 'chemType']}
+            toolbar={['latex', 'chemType']}
             validationRequired={validationRequired}
             onBlur={() => save()}
             onChange={value => categoryChanged(category, value)}
