@@ -31,6 +31,8 @@ import { downKeyPressed, upKeyPressed } from "components/services/key";
 import { getBrickColor } from "services/brick";
 import { isMobile } from "react-device-detect";
 import map from "components/map";
+import subject from "redux/actions/subject";
+import NoSubjectDialog from "components/baseComponents/dialogs/NoSubjectDialog";
 
 
 interface BricksListProps {
@@ -52,6 +54,7 @@ interface BricksListState {
   finalBricks: Brick[];
   isLoading: boolean;
 
+  noSubjectOpen: boolean;
   dropdownShown: boolean;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
@@ -87,6 +90,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       sortBy: SortBy.Date,
       subjects: [],
       sortedIndex: 0,
+      noSubjectOpen: false,
       deleteDialogOpen: false,
       deleteBrickId: -1,
       finalBricks: [],
@@ -136,8 +140,9 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   }
 
   async loadData(values: queryString.ParsedQuery<string>) {
+    let subjects:any = [];
     if (this.props.user) {
-      await this.loadSubjects();
+      subjects = await this.loadSubjects();
     }
 
     if (values.searchString) {
@@ -165,6 +170,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     } else {
       this.setState({ ...this.state, failedRequest: true });
     }
+    return subjects;
   }
 
   async loadBricks() {
@@ -182,12 +188,31 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
       bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
       const finalBricks = this.filter(bs, this.state.isCore);
-      this.setState({ ...this.state, bricks, isLoading: false, finalBricks, shown: true });
+      const {subjects} = this.state;
+      this.countSubjectBricks(subjects, bs);
+      this.setState({ ...this.state, subjects, bricks, isLoading: false, finalBricks, shown: true });
     } else {
       this.setState({ ...this.state, isLoading: false, failedRequest: true });
     }
   }
 
+  countSubjectBricks(subjects: any[], bricks: Brick[]) {
+    subjects.forEach((s:any) => {
+      s.publicCount = 0;
+      s.personalCount = 0;
+    });
+    for (let b of bricks) {
+      for (let s of subjects) {
+        if (s.id === b.subjectId) {
+          if (b.isCore) {
+            s.publicCount += 1;
+          } else {
+            s.personalCount += 1;
+          }
+        }
+      }
+    }
+  }
 
   delete(brickId: number) {
     function removeByIndex(bricks: Brick[], brickId: number) {
@@ -717,8 +742,8 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     }, 1400);
   }
 
-  renderTitle() {
-    const {length} = this.state.finalBricks;
+  renderTitle(bricks: Brick[]) {
+    const {length} = bricks;
     if (length === 1) {
       return '1 Brick found';
     }
@@ -738,29 +763,52 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     return "ALL BRICKS";
   }
 
-  renderFirstRow(filterSubjects: number[]) {
-    if (this.state.isSearching && this.state.searchBricks.length === 0) {
-      return (
-        <div className="main-brick-container">
-          <div className="centered text-theme-dark-blue title no-found">
-            Sorry, no bricks found
-          </div>
-          <div className="create-button" onClick={() => this.props.history.push(map.ProposalSubject)}>
-            <SpriteIcon name="trowel" />
-            Create One
-          </div>
-          <div className="recomend-button">
-            <SpriteIcon name="user-plus"/>
-            Recommend a Builder
-          </div>
+  moveToCreateOne() {
+    const filterSubjects = this.getCheckedSubjectIds();
+    if (filterSubjects.length === 1) {
+      const subjectId = filterSubjects[0];
+      const {subjects} = this.props.user;
+      if (subjects) {
+        for (let s of subjects) {
+          if (s.id === subjectId) {
+            this.props.history.push(map.ProposalSubject + '?selectedSubject=' + subjectId);
+          } else {
+            this.setState({noSubjectOpen: true});
+          }
+        }
+      }
+    } else {
+      this.props.history.push(map.ProposalSubject);
+    }
+  }
+
+  renderNoBricks() {
+    return (
+      <div className="main-brick-container">
+        <div className="centered text-theme-dark-blue title no-found">
+          Sorry, no bricks found
         </div>
-      );
+        <div className="create-button" onClick={() => this.moveToCreateOne()}>
+          <SpriteIcon name="trowel" />
+          Create One
+        </div>
+        <div className="recomend-button">
+          <SpriteIcon name="user-plus"/>
+          Recommend a Builder
+        </div>
+      </div>
+    );
+  }
+
+  renderFirstRow(filterSubjects: number[], bricks: Brick[]) {
+    if (bricks.length === 0) {
+      return this.renderNoBricks();
     }
     if (this.state.isSearching || filterSubjects.length !== 0) {
       return (
         <div className="main-brick-container">
           <div className="centered text-theme-dark-blue title">
-            {this.renderTitle()}
+            {this.renderTitle(bricks)}
           </div>
         </div>
       );
@@ -813,6 +861,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             user={this.props.user}
             sortBy={this.state.sortBy}
             subjects={this.state.subjects}
+            isCore={this.state.isCore}
             isClearFilter={this.state.isClearFilter}
             handleSortChange={e => this.handleSortChange(e)}
             clearSubjects={() => this.clearSubjects()}
@@ -843,18 +892,13 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
               <Hidden only={["xs"]}>
-                {this.renderFirstRow(filterSubjects)}
+                {this.renderFirstRow(filterSubjects, bricks)}
                 <div className="bricks-list">{this.renderSortedBricks(bricks)}</div>
               </Hidden>
               <Hidden only={["sm", "md", "lg", "xl"]}>
                 <div className="bricks-list">{this.renderSortedMobileBricks()}</div>
               </Hidden>
             </div>
-            {/* <Hidden only={["sm", "md", "lg", "xl"]}>
-              {this.renderEmptyCategory("Suggest")}
-              {this.renderEmptyCategory("Top in Humanities")}
-              {this.renderEmptyCategory("Top in Stem")}
-            </Hidden> */}
             <ViewAllPagination
               pageSize={this.state.pageSize}
               sortedIndex={this.state.sortedIndex}
@@ -873,6 +917,11 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
         <FailedRequestDialog
           isOpen={this.state.failedRequest}
           close={() => this.setState({ ...this.state, failedRequest: false })}
+        />
+        <NoSubjectDialog
+          isOpen={this.state.noSubjectOpen}
+          submit={() => this.props.history.push(map.UserProfile)}
+          close={() => this.setState({noSubjectOpen: false})}
         />
       </div>
     );

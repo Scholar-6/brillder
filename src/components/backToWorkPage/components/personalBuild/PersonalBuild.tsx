@@ -38,6 +38,7 @@ interface PersonalBuildProps {
 
   moveAllNext(): void;
   moveAllBack(): void;
+  moveToFirstPage(): void;
 
   // brick events
   handleDeleteOpen(brickId: number): void;
@@ -100,6 +101,7 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
 
   setFilters(filters: PersonalFilters) {
     this.setState({filters, checkedSubjectId: -1});
+    this.props.moveToFirstPage();
   }
 
   filterBySubject(s: SubjectItem | null) {

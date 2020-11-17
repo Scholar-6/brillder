@@ -296,6 +296,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
           >
             <Route path={map.ProposalSubject}>
               <SubjectPage
+                location={history.location}
                 subjects={user.subjects}
                 subjectId={""}
                 history={history}
