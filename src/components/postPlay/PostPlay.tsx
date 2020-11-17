@@ -9,6 +9,7 @@ import { Brick, Subject } from "model/brick";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 import { BrickFieldNames, PlayButtonStatus } from "../proposal/model";
+import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import {
   ApiQuestion,
   parseQuestion,
@@ -68,6 +69,7 @@ interface ProposalState {
   attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
   mode?: boolean; // live - false, review - true, undefined - default
+  handleKey(e: any): void;
 }
 
 class PostPlay extends React.Component<ProposalProps, ProposalState> {
@@ -85,9 +87,59 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       pageFlipDelay: 1200,
       attempts: [],
       subjects: [],
-      firstHoverTimeout: -1
+      firstHoverTimeout: -1,
+      handleKey: this.handleKey.bind(this)
     };
     this.loadData();
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.state.handleKey, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.state.handleKey, false);
+  }
+
+  handleKey(e: any) {
+    let {bookState} = this.state;
+    let newState = -1;
+    if (rightKeyPressed(e)) {
+      if (bookState === BookState.Titles) {
+        newState = BookState.Attempts;
+      } else if (bookState === BookState.Attempts) {
+        newState = BookState.Introduction;
+      } else if (bookState === BookState.Introduction) {
+        newState = BookState.QuestionPage;
+      } else if (bookState === BookState.QuestionPage) {
+        this.nextQuestion();
+      }
+      if (newState !== -1) {
+        this.movePage(newState);
+        if (this.state.animationRunning) { return; }
+        this.setState({ bookState: newState, animationRunning: true });
+        this.animationFlipRelease();
+      }
+    } else if (leftKeyPressed(e)) {
+      if (bookState === BookState.Attempts) {
+        newState = BookState.Titles;
+      } else if (bookState === BookState.Introduction) {
+        newState = BookState.Attempts;
+      } else if (bookState === BookState.QuestionPage) {
+        this.prevQuestion();
+      } else if (bookState === BookState.Synthesis) {
+        newState = BookState.QuestionPage;
+      }
+      if (newState !== -1) {
+        this.movePage(newState);
+      }
+    }
+  }
+
+  movePage(bookState: BookState) {
+    if (this.state.animationRunning) { return; }
+    this.setState({ bookState, animationRunning: true });
+    this.animationFlipRelease();
   }
 
   prepareAttempt(attempt:  PlayAttempt) {
@@ -377,6 +429,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                </div>
             </div>
           </div>
+          <div className="arrow-description">Click or use arrow keys to flick through your book</div>
         </Grid>
       </div>
     );

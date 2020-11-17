@@ -1,6 +1,5 @@
 import React from "react";
 
-import { Question } from "model/question";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ButtonProps {

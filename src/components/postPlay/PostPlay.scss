@@ -120,6 +120,7 @@
 
   .book-main-container {
     position: fixed;
+    z-index: 200;
     right: 0;
     width: 45.15vw;
     height: 100%;
@@ -783,6 +784,14 @@
   }
 
   //#endregion
+  .arrow-description {
+    z-index: 1;
+    position: fixed;
+    color: var(--white);
+    bottom: 5vh;
+    font-size: 1.2vw;
+    font-family: $font-family-light;
+  }
 }
 
 
