@@ -37,6 +37,10 @@ export interface Subject {
   color: string;
   publishedBricksCount: number;
   checked?: boolean;
+
+  // view all page
+  publicCount?: number;
+  personalCount?: number;
 }
 
 export interface Brick {

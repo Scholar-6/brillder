@@ -4,8 +4,8 @@ import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 
 import { User } from "model/user";
 
-import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import UnauthorizedSidebar from "./components/UnauthrizedSidebar";
+import SubjectsListV2 from "components/baseComponents/subjectsList/SubjectsListV2";
 
 export enum SortBy {
   None,
@@ -17,6 +17,7 @@ interface FilterProps {
   sortBy: SortBy;
   subjects: any[];
   isClearFilter: any;
+  isCore: boolean;
   user: User;
 
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
@@ -101,7 +102,8 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               }}
             ></button>
           </div>
-          <SubjectsList
+          <SubjectsListV2
+            isPublic={this.props.isCore}
             subjects={this.props.subjects}
             filterHeight={this.state.filterHeight}
             filterBySubject={this.props.filterBySubject}
