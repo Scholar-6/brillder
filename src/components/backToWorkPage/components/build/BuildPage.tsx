@@ -316,13 +316,16 @@ class BuildPage extends Component<BuildProps, BuildState> {
       filters.publish = true;
       let bricks = filterByStatus(this.state.rawBricks, BrickStatus.Publish);
       bricks = bricks.filter(b => b.isCore === true);
-      this.setState({ ...this.state, filters, sortedIndex: 0, finalBricks: bricks });
+      const subjects = this.getBrickSubjects(this.state.rawBricks);
+      this.setState({ ...this.state, filters, subjects, sortedIndex: 0, finalBricks: bricks });
     } else {
       removeAllFilters(filters);
       filters.build = true;
       filters.review= true;
       filters.draft = true;
-      filters.viewAll = true;
+      if (this.state.buildCheckedSubjectId === -1) {
+        filters.viewAll = true;
+      }
       const bricks = filterByStatus(this.state.rawBricks, BrickStatus.Draft);
       bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Build));
       bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Review));
@@ -570,17 +573,43 @@ class BuildPage extends Component<BuildProps, BuildState> {
     return published;
   }
 
-  filterBuildBySubject(s: SubjectItem | null) {
+  filterBricksBySubject(bs: Brick[], s: SubjectItem) {
+    return bs.filter(b => b.subjectId === s.id);
+  }
+
+  filterPublishedSubject(bs: Brick[], s: SubjectItem) {
+    return bs.filter(b => b.subjectId === s.id && b.status === BrickStatus.Publish);
+  }
+
+  filterBuildPublishBySubject(s: SubjectItem | null) {
     const {rawBricks} = this.state;
     if (s) {
-      const bricks = rawBricks.filter(b => b.subjectId === s.id);
-      const threeColumns = prepareTreeRows(bricks, this.state.filters, this.props.user.id);
+      const bricks = this.filterPublishedSubject(rawBricks, s);
       this.state.filters.viewAll = false;
-      this.setState({buildCheckedSubjectId: s.id, threeColumns, finalBricks: bricks});
+      this.setState({buildCheckedSubjectId: s.id, finalBricks: bricks});
     } else {
       if (this.state.buildCheckedSubjectId !== -1) {
-        const threeColumns = prepareTreeRows(rawBricks, this.state.filters, this.props.user.id);
-        this.setState({buildCheckedSubjectId: -1, threeColumns, finalBricks: rawBricks});
+        const finalBricks = rawBricks.filter(b => b.status === BrickStatus.Publish);
+        this.setState({buildCheckedSubjectId: -1, finalBricks});
+      }
+    }
+  }
+
+  filterBuildBySubject(s: SubjectItem | null) {
+    const {rawBricks} = this.state;
+    if (this.state.filters.publish) {
+      this.filterBuildPublishBySubject(s);
+    } else {
+      if (s) {
+        const bricks = this.filterBricksBySubject(rawBricks, s);
+        const threeColumns = prepareTreeRows(bricks, this.state.filters, this.props.user.id);
+        this.state.filters.viewAll = false;
+        this.setState({buildCheckedSubjectId: s.id, threeColumns, finalBricks: bricks});
+      } else {
+        if (this.state.buildCheckedSubjectId !== -1) {
+          const threeColumns = prepareTreeRows(rawBricks, this.state.filters, this.props.user.id);
+          this.setState({buildCheckedSubjectId: -1, threeColumns, finalBricks: rawBricks});
+        }
       }
     }
   }

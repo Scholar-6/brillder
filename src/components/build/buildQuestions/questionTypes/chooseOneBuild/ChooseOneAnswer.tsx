@@ -97,7 +97,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
         disabled={locked}
         editOnly={editOnly}
         data={answer.value}
-        toolbar={['mathType', 'chemType']}
+        toolbar={['latex', 'chemType']}
         placeholder="Enter Answer..."
         validationRequired={answer.answerType !== QuestionValueType.Image ? validationRequired : false}
         onBlur={() => {

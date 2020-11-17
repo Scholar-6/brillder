@@ -429,7 +429,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                </div>
             </div>
           </div>
-          <div className="arrow-description">Click or use arrow keys to flick through your book</div>
+          <div className={`arrow-description ${this.state.bookHovered ? 'shown' : 'hidden'}`}>
+            Click or use arrow keys to flick through your book
+          </div>
         </Grid>
       </div>
     );

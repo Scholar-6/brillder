@@ -39,3 +39,7 @@ export function isMathJax(el: string) {
   }
   return false;
 }
+
+export function isLatex(el: string) {
+  return el.indexOf('<span class="latex">') >= 0;
+}

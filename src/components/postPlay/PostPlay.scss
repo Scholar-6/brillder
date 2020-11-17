@@ -791,6 +791,10 @@
     bottom: 5vh;
     font-size: 1.2vw;
     font-family: $font-family-light;
+    @extend %transitionAll300;
+    &.hidden {
+      opacity: 0;
+    }
   }
 }
 
