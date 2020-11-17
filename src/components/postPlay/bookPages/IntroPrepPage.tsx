@@ -17,7 +17,7 @@ interface IntroductionState {
 
 const IntroPage: React.FC<IntroPageProps> = ({brick, color, ...props}) => {
   const [state, setState] = React.useState({
-    prepExpanded: false,
+    prepExpanded: true,
   } as IntroductionState);
 
   const togglePrep = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -41,11 +41,6 @@ const IntroPage: React.FC<IntroPageProps> = ({brick, color, ...props}) => {
             <SpriteIcon name="arrow-down" className="arrow" />
           </div>
         </div>
-        {!state.prepExpanded &&
-          <em className="help-prep">
-            Expand to start the timer. Aim to spend around {timeToSpend} minutes on this section.
-          </em>
-        }
       </div>
     );
   };

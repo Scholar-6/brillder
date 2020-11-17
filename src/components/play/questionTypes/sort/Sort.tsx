@@ -15,7 +15,6 @@ import { DragAndDropStatus } from '../pairMatch/interface';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { getValidationClassName } from '../service';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 interface UserCategory {

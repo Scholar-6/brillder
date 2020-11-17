@@ -4,8 +4,18 @@
 
 .post-play-page {
   $base-font-size: 0.85vw;
+  .intro-content {
+    margin-top: 3.9vh !important;
+  }
   .expand-title {
+    margin-top: 0;
     font-size: 2vw;
+    height: 2.85vw;
+  }
+  .intro-header {
+    h1 {
+      font-size: 2vw !important;
+    }
   }
   .expanded-text p {
     font-size: $base-font-size;
@@ -28,5 +38,11 @@
   .open-question {
     font-size: 1vw;
     font-family: $font-family-regular-italic !important;
+  }
+  .youtube-video {
+    iframe {
+      width: 100% !important;
+      height: 28vh !important;
+    }
   }
 }
