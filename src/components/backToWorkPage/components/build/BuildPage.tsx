@@ -580,8 +580,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
     return published;
   }
 
-  filterBricksBySubject(bs: Brick[], s: SubjectItem) {
-    return bs.filter(b => b.subjectId === s.id);
+  filterProgressSubject(bs: Brick[], s: SubjectItem) {
+    return bs.filter(b => b.subjectId === s.id && b.status !== BrickStatus.Publish);
   }
 
   filterPublishedSubject(bs: Brick[], s: SubjectItem) {
@@ -608,7 +608,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       this.filterBuildPublishBySubject(s);
     } else {
       if (s) {
-        const bricks = this.filterBricksBySubject(rawBricks, s);
+        const bricks = this.filterProgressSubject(rawBricks, s);
         const threeColumns = prepareTreeRows(bricks, this.state.filters, this.props.user.id);
         this.state.filters.viewAll = false;
         this.setState({buildCheckedSubjectId: s.id, threeColumns, finalBricks: bricks});
