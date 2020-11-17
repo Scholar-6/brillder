@@ -14,7 +14,7 @@ import { ThreeColumns, Filters, SortBy } from '../../model';
 import { getBricks, searchBricks, getCurrentUserBricks } from "services/axios/brick";
 import { Notification } from 'model/notifications';
 import {
-  filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
+  filterByStatus, filterBricks, removeAllFilters,
   removeBrickFromLists, sortBricks, hideBricks, expandBrick, expandSearchBrick, removeBrickFromList
 } from '../../service';
 import {
@@ -129,10 +129,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
       subjects: [],
 
       filters: {
-        viewAll: true,
-        buildAll: false,
-        editAll: false,
-
         draft: true,
         review: true,
         build: true,
@@ -207,17 +203,22 @@ class BuildPage extends Component<BuildProps, BuildState> {
     document.removeEventListener("keydown", this.state.handleKey, false);
   }
 
+  isThreeColumns() {
+    const {filters} = this.state;
+    return filters.build && filters.review && filters.draft;
+  }
+
   handleKey(e: any) {
     // only public page
     if (this.state.filters.isCore) {
       if (upKeyPressed(e)) {
-        if (this.state.filters.viewAll) {
+        if (this.isThreeColumns()) {
           this.moveThreeColumnsBack();
         } else {
           this.moveAllBack();
         }
       } else if (downKeyPressed(e)) {
-        if (this.state.filters.viewAll) {
+        if (this.isThreeColumns()) {
           this.moveThreeColumnsNext();
         } else {
           this.moveAllNext();
@@ -290,7 +291,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     filters.isCore = !filters.isCore;
     if (filters.isCore === false) {
       filters.publish = true;
-      filters.viewAll = true;
       filters.review = true;
       filters.build = true;
       filters.draft = true;
@@ -323,9 +323,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
       filters.build = true;
       filters.review= true;
       filters.draft = true;
-      if (this.state.buildCheckedSubjectId === -1) {
-        filters.viewAll = true;
-      }
       const bricks = filterByStatus(this.state.rawBricks, BrickStatus.Draft);
       bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Build));
       bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Review));
@@ -334,46 +331,12 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
   }
 
-  showAll() {
-    const { filters } = this.state;
-    removeAllFilters(filters);
-    filters.viewAll = true;
-    filters.review = true;
-    filters.build = true;
-    filters.draft = true;
-    this.setState({ ...this.state, filters, sortedIndex: 0, buildCheckedSubjectId: -1, finalBricks: this.state.rawBricks });
-  }
-
-  showEditAll() {
-    const { filters } = this.state;
-    removeAllFilters(filters);
-    filters.editAll = true;
-    const finalBricks = filterBricks(filters, this.state.rawBricks, this.props.user.id);
-    this.setState({ ...this.state, sortedIndex: 0, filters, finalBricks });
-  }
-
-  showBuildAll() {
-    const { filters } = this.state;
-    removeAllFilters(filters);
-    filters.buildAll = true;
-    const finalBricks = filterBricks(filters, this.state.rawBricks, this.props.user.id);
-    this.setState({ ...this.state, sortedIndex: 0, filters, finalBricks });
-  }
-
   filterUpdated(newFilters: Filters) {
     const { filters } = this.state;
     filters.build = newFilters.build;
     filters.publish = newFilters.publish;
     filters.review = newFilters.review;
     filters.draft = newFilters.draft;
-    removeInboxFilters(filters);
-    if (filters.build && filters.review && filters.draft) {
-      filters.viewAll = true;
-    } else if (filters.draft && filters.build) {
-      filters.editAll = true;
-    } else if (filters.draft && !filters.review) {
-      filters.buildAll = true;
-    }
     const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
     this.setState({ ...this.state, filters, finalBricks, sortedIndex: 0 });
   }
@@ -536,7 +499,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   renderPagination = (finalBricks: Brick[], threeColumns: ThreeColumns) => {
     let { sortedIndex, pageSize } = this.state;
 
-    if (this.state.filters.viewAll) {
+    if (this.isThreeColumns()) {
       const longestColumn = getLongestColumn(threeColumns);
   
       return (
@@ -592,7 +555,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const {rawBricks} = this.state;
     if (s) {
       const bricks = this.filterPublishedSubject(rawBricks, s);
-      this.state.filters.viewAll = false;
       this.setState({buildCheckedSubjectId: s.id, finalBricks: bricks});
     } else {
       if (this.state.buildCheckedSubjectId !== -1) {
@@ -610,7 +572,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
       if (s) {
         const bricks = this.filterProgressSubject(rawBricks, s);
         const threeColumns = prepareTreeRows(bricks, this.state.filters, this.props.user.id);
-        this.state.filters.viewAll = false;
         this.setState({buildCheckedSubjectId: s.id, threeColumns, finalBricks: bricks});
       } else {
         if (this.state.buildCheckedSubjectId !== -1) {
@@ -690,9 +651,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
           isEmpty={isEmpty}
           subjects={this.state.subjects}
           handleSortChange={e => this.handleSortChange(e)}
-          showAll={() => this.showAll()}
-          showBuildAll={() => this.showBuildAll()}
-          showEditAll={() => this.showEditAll()}
           filterChanged={this.filterUpdated.bind(this)}
           filterBySubject={this.filterBuildBySubject.bind(this)}
         />

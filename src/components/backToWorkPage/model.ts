@@ -38,10 +38,6 @@ export enum SortBy {
 }
 
 export interface Filters {
-  viewAll: boolean;
-  buildAll: boolean;
-  editAll: boolean;
-
   draft: boolean;
   build: boolean;
   review: boolean;
