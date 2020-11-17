@@ -5,6 +5,7 @@
   .subjects-list {
     overflow-y: scroll;
     height: calc(90vh - 15vw) !important;
+    padding-bottom: calc(2.3vw + 30px) !important;
   }
 
   .index-box.hover-light:hover {
@@ -12,5 +13,20 @@
   }
   .filter-container.subject-indexes-box.first {
     margin-bottom: 1.2vw !important;
+  }
+  .color2 {
+    .left-brick-circle {
+      padding: 0 !important;
+      background: inherit;
+    }
+    .round-button {
+      background: var(--theme-orange) !important;
+    }
+  }
+  .color4 {
+    .round-button {
+      background: var(--white) !important;
+      border: 0.25vw solid var(--theme-yellow) !important;
+    }
   }
 }
