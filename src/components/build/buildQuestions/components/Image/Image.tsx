@@ -1,43 +1,41 @@
-import React, { useEffect } from 'react'
-import {useDropzone} from 'react-dropzone';
+import React from 'react'
 import { Grid } from '@material-ui/core';
 
 import './Image.scss'
 import {uploadFile} from 'components/services/uploadFile';
+import ImageDialog from './ImageDialog';
+import { ImageComponentData } from './model';
 
 
 interface ImageProps {
   locked: boolean;
   index: number;
-  data: any;
+  data: ImageComponentData;
   save(): void;
   updateComponent(component:any, index:number): void;
 }
 
 const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
+  const [isOpen, setOpen] = React.useState(false);
   const [fileName, setFileName] = React.useState(props.data.value);
-  const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/jpeg, image/png',
-    disabled: locked,
-    onDrop: (files:any[]) => {
-      return uploadFile(files[0] as File, (res: any) => {
-        let comp = Object.assign({}, props.data);
-        comp.value = res.data.fileName;
-        props.updateComponent(comp, props.index);
-        setFileName(comp.value);
-        props.save();
-      }, () => { });
-    }
-  });
 
-  useEffect(() => {
-    setFileName(props.data.value);
-  }, [props]);
+  const upload = (file: File, source: string, caption: string) => {
+    uploadFile(file, (res: any) => {
+      let comp = Object.assign({}, props.data);
+      comp.value = res.data.fileName;
+      comp.imageSource = source;
+      comp.imageCaption = caption;
+      props.updateComponent(comp, props.index);
+      setFileName(comp.value);
+      props.save();
+      setOpen(false);
+      console.log(comp);
+    }, () => { });
+  }
 
   return (
     <div className="image-drag-n-drop">
-      <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
-        <input {...getInputProps()} />
+      <div className={'dropzone ' + (locked ? 'disabled' : '')} onClick={() => setOpen(true)}>
         {
           fileName
             ? <img alt="" style={{width: '100%'}} src={`${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`} />
@@ -48,10 +46,11 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
                 direction="row"
                 style={{height: '10vh'}}
               >
-                Drag Image Here | Click to Select Image
+                Click to Select Image
               </Grid>
         }
       </div>
+      <ImageDialog open={isOpen} setDialog={setOpen} upload={upload} />
     </div>
   );
 }
