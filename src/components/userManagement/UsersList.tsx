@@ -368,6 +368,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           subjects={this.state.subjects}
           filterHeight={this.state.filterHeight}
           filterBySubject={this.filterBySubject}
+          showUserCount={true}
         />
       </div>
     );
