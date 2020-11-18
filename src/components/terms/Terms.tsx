@@ -22,7 +22,7 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props);
 
-    this.state = {    };
+    this.state = { };
   }
 
   render() {

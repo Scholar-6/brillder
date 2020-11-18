@@ -9,28 +9,28 @@ import { ImageComponentData } from "./model";
 
 interface DialogProps {
   open: boolean;
+  file: File;
   initData: ImageComponentData;
   upload(file: File, source: string, caption: string): void;
   setDialog(open: boolean): void;
 }
 
-const ImageDialog: React.FC<DialogProps> = ({ open, initData, upload, setDialog }) => {
+const ImageDialog: React.FC<DialogProps> = ({ open, file, initData, upload, setDialog }) => {
   const [source, setSource] = React.useState(initData.imageSource || '');
   const [caption, setCaption] = React.useState(initData.imageCaption || '');
   const [permision, setPermision] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
-
-  const [file, setFile] = React.useState(null as File | null);
+  const [cropedFile, setCroped] = React.useState(file);
 
   let canUpload = false;
-  if (permision && source && file) {
+  if (permision && source && cropedFile) {
     canUpload = true;
   }
 
   return (
     <BaseDialogWrapper open={open} close={() => setDialog(false)} submit={() => {}}>
       <div className="dialog-header image-dialog">
-        <DropImage initFileName="" locked={false} setFile={setFile} />
+        <DropImage initFileName="" locked={false} file={file} setFile={setCroped} />
         <div className="bold">Where did you get this image?</div>
         <input
           value={source}
@@ -49,8 +49,8 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initData, upload, setDialog 
         />
         <div className="centered">
           <SpriteIcon name="upload" className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
-            if (file && canUpload) {
-              upload(file, source, caption);
+            if (cropedFile && canUpload) {
+              upload(cropedFile, source, caption);
             } else {
               setValidation(true);
             }

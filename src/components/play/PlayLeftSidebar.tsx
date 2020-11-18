@@ -143,6 +143,25 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     );
   }
 
+  renderAdaptButton() {
+    if (!this.props.user) { return ""; }
+    let canSee = checkTeacherOrAdmin(this.props.user.roles);
+    if (!canSee) { return ""; }
+
+    if (!this.props.sidebarRolledUp) {
+      return (
+        <button onClick={() => {}} className="assign-class-button svgOnHover">
+          <span>Adapt Brick</span>
+        </button>
+      );
+    }
+    return (
+      <button onClick={() => {}} className="assign-class-button svgOnHover">
+        <SpriteIcon name="file-plus" className="active" />
+      </button>
+    );
+  }
+
   renderButtons() {
     if (this.props.isPreview) {
       if (this.props.sidebarRolledUp) {
@@ -176,6 +195,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {this.renderHightlightButton()}
         {this.renderAnotateButton()}
         {this.renderAssignButton()}
+        {/*{this.renderAdaptButton()}*/}
       </div>
     );
   }
