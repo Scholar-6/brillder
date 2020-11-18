@@ -24,3 +24,13 @@
   text-align: center;
   margin-bottom: 5px;
 }
+
+@include phone_and_tabletP {
+  .image-play-container {
+    width: 100%;
+    .image-play {
+      height: auto !important;
+      width: 100%;
+    }
+  }
+}
