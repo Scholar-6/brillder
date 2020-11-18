@@ -57,11 +57,11 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
 
   const marks = [{
       value: 20,
-      label: '20%',
+      label: 'Small',
     },
     {
       value: 50,
-      label: '50%',
+      label: 'Large',
     },
   ];
 
@@ -72,13 +72,16 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   return (
     <BaseDialogWrapper open={open} close={() => setDialog(false)} submit={() => {}}>
       <div className="dialog-header image-dialog">
-        <div className="switch-image">
-          <div className={"svgOnHover " + className} onClick={handleClick}>
-            <SpriteIcon name="plus" className="svg-plus active text-white" />
-          </div>
-        </div>
         <div className="cropping">
-          {file && <DropImage initFileName="" locked={false} file={file} setFile={setCroped} />}
+          <div className="switch-image">
+            <div className={"svgOnHover " + className} onClick={handleClick}>
+              <SpriteIcon name="plus" className="svg-plus active text-white" />
+            </div>
+          </div>
+          {file
+            ? <DropImage initFileName="" locked={false} file={file} setFile={setCroped} />
+            : <SpriteIcon name="image" className="icon-image" />
+          }
         </div>
         <div className="bold">Where did you get this image?</div>
         <input
