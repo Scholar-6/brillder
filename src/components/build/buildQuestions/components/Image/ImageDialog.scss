@@ -98,8 +98,8 @@
     z-index: 100;
     position: absolute;
     background-color: var(--theme-dark-blue);
-    bottom: 2vh;
-    right: 1vw;
+    bottom: 0.8vh;
+    right: 0.8vh;
     border-radius: 50%;
     cursor: pointer;
     @extend %transitionAll300;
