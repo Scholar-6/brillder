@@ -91,7 +91,40 @@
         font-size: 1.6vw;
         font-family: $font-family-bold;
         @extend %flexCenter;
+        @extend %transitionAll300;
         overflow: hidden;
+
+        span {
+          @extend %transitionAll300;
+        }
+
+        svg {
+          @extend %transitionAll300;
+        }
+
+        &:hover {
+          background: var(--white);
+          span {
+            color: var(--theme-orange) !important;
+          }
+          svg {
+            color: var(--theme-orange) !important;
+          }
+        }
+
+        &.blue {
+          background: var(--theme-dark-blue);
+          stroke-width: 2;
+          &:hover {
+            background: var(--tab-gray);
+            span {
+              color: var(--theme-dark-blue) !important;
+            }
+            svg {
+              color: var(--theme-dark-blue) !important;
+            }
+          }
+        }
       }
       &.unauthorized {
         .first {

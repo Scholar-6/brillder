@@ -154,7 +154,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     brick.id = null as any;
     brick.status = BrickStatus.Draft;
     let res = await this.props.createBrick(brick);
-    console.log(res);
   }
 
   renderAdaptButton() {
@@ -164,13 +163,13 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     if (!this.props.sidebarRolledUp) {
       return (
-        <button onClick={this.createBrickCopy.bind(this)} className="assign-class-button svgOnHover">
+        <button onClick={this.createBrickCopy.bind(this)} className="assign-class-button svgOnHover blue">
           <span>Adapt Brick</span>
         </button>
       );
     }
     return (
-      <button onClick={this.createBrickCopy.bind(this)} className="assign-class-button svgOnHover">
+      <button onClick={this.createBrickCopy.bind(this)} className="assign-class-button svgOnHover blue">
         <SpriteIcon name="copy" className="active" />
       </button>
     );
