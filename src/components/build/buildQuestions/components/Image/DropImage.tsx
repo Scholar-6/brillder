@@ -42,7 +42,7 @@ const DropImage: React.FC<ImageProps> = props => {
     <div className="d" {...getRootProps({className: 'dropzone image-dropzone' + ((props.locked) ? 'disabled' : '')})}>
       <input {...getInputProps()} />
       { base64
-        ? <img src={base64} />
+        ? <img alt="selected-image" src={base64} />
         : <SpriteIcon name="image" />
       }
     </div>

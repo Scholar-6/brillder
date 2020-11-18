@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { Brick, BrickLengthEnum } from "model/brick";
+import { Brick } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import HighlightHtml from "components/play/baseComponents/HighlightHtml";
 import { PlayMode } from "components/play/model";
@@ -26,13 +26,6 @@ const IntroPage: React.FC<IntroPageProps> = ({brick, color, ...props}) => {
   };
 
   const renderPrepTitle = () => {
-    let timeToSpend = 5;
-    if (brick.brickLength === BrickLengthEnum.S40min) {
-      timeToSpend = 10;
-    } else if (brick.brickLength === BrickLengthEnum.S60min) {
-      timeToSpend = 15;
-    }
-
     return (
       <div className="expand-title">
         <span>Prep</span>

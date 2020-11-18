@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Grid } from '@material-ui/core';
 
 import './Image.scss'
 import {uploadFile} from 'components/services/uploadFile';
 import ImageDialog from './ImageDialog';
+import { ImageComponentData } from './model';
 
 
 interface ImageProps {
   locked: boolean;
   index: number;
-  data: any;
+  data: ImageComponentData;
   save(): void;
   updateComponent(component:any, index:number): void;
 }
@@ -18,14 +19,17 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   const [isOpen, setOpen] = React.useState(false);
   const [fileName, setFileName] = React.useState(props.data.value);
 
-  const upload = (file: File) => {
+  const upload = (file: File, source: string, caption: string) => {
     uploadFile(file, (res: any) => {
       let comp = Object.assign({}, props.data);
       comp.value = res.data.fileName;
+      comp.imageSource = source;
+      comp.imageCaption = caption;
       props.updateComponent(comp, props.index);
       setFileName(comp.value);
       props.save();
       setOpen(false);
+      console.log(comp);
     }, () => { });
   }
 
