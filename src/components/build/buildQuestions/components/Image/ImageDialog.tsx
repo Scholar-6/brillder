@@ -7,6 +7,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 import DropImage from "./DropImage";
 import { ImageAlign, ImageComponentData } from "./model";
+import Slider from '@material-ui/core/Slider';
 
 interface DialogProps {
   open: boolean;
@@ -54,6 +55,20 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
     }
   }
 
+  const marks = [{
+      value: 20,
+      label: '20%',
+    },
+    {
+      value: 50,
+      label: '50%',
+    },
+  ];
+
+  function valuetext(value: number) {
+    return `${value}%`;
+  }
+
   return (
     <BaseDialogWrapper open={open} close={() => setDialog(false)} submit={() => {}}>
       <div className="dialog-header image-dialog">
@@ -91,18 +106,16 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
             label="Center" />
         </div>
         <div>Image size</div>
-        <input
-          type="number"
-          value={height}
-          onChange={(e) => {
-            try {
-              const value = parseInt(e.target.value);
-              if (value > 0 && value <= 100) {
-                setHeight(value);
-              }
-            } catch {}
-          }}
-          placeholder="Add height 1 to 100%..."
+        <Slider
+          defaultValue={30}
+          getAriaValueText={valuetext}
+          aria-labelledby="discrete-slider"
+          valueLabelDisplay="auto"
+          step={1}
+          marks={marks}
+          min={20}
+          max={50}
+          onChange={(e:any, v:any) => setHeight(v)}
         />
         <div className="centered">
           <SpriteIcon name="upload" className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
