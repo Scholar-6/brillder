@@ -18,6 +18,12 @@
     white-space: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
+
+    &.subject-title {
+      letter-spacing: 0.3vw;
+      margin-top: 1vw;
+      font-size: 3vw;
+    }
   }
 
   .no-found {
