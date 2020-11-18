@@ -1,17 +1,18 @@
 import React from "react";
 import Checkbox from "@material-ui/core/Checkbox";
+import { FormControlLabel, Radio } from "@material-ui/core";
 
 import './ImageDialog.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 import DropImage from "./DropImage";
-import { ImageComponentData } from "./model";
+import { ImageAlign, ImageComponentData } from "./model";
 
 interface DialogProps {
   open: boolean;
   file: File;
   initData: ImageComponentData;
-  upload(file: File, source: string, caption: string): void;
+  upload(file: File, source: string, caption: string, align: ImageAlign, height: number): void;
   setDialog(open: boolean): void;
 }
 
@@ -21,6 +22,8 @@ const ImageDialog: React.FC<DialogProps> = ({ open, file, initData, upload, setD
   const [permision, setPermision] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
   const [cropedFile, setCroped] = React.useState(file);
+  const [align, setAlign] = React.useState(ImageAlign.left);
+  const [height, setHeight] = React.useState(0 as number);
 
   let canUpload = false;
   if (permision && source && cropedFile) {
@@ -47,10 +50,35 @@ const ImageDialog: React.FC<DialogProps> = ({ open, file, initData, upload, setD
           onChange={(e) => setCaption(e.target.value)}
           placeholder="Add caption..."
         />
+        <div>Align</div>
+        <div>
+          <FormControlLabel
+            checked={align === ImageAlign.left}
+            control={<Radio onClick={() => setAlign(ImageAlign.left)} />}
+            label="Left" />
+          <FormControlLabel
+            checked={align === ImageAlign.center}
+            control={<Radio onClick={() => setAlign(ImageAlign.center)} />}
+            label="Center" />
+        </div>
+        <div>Height in percentages of screen (if 0 based on height of image)</div>
+        <input
+          type="number"
+          value={height}
+          onChange={(e) => {
+            try {
+              const value = parseInt(e.target.value);
+              if (value > 0 && value <= 100) {
+                setHeight(value);
+              }
+            } catch {}
+          }}
+          placeholder="Add height 1 to 100%..."
+        />
         <div className="centered">
           <SpriteIcon name="upload" className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
             if (cropedFile && canUpload) {
-              upload(cropedFile, source, caption);
+              upload(cropedFile, source, caption, align, height);
             } else {
               setValidation(true);
             }
