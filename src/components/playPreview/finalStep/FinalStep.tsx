@@ -30,6 +30,7 @@ import { Redirect } from "react-router-dom";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ReturnEditorsSuccessDialog from "components/play/finalStep/dialogs/ReturnEditorsSuccessDialog";
 import ReturnAuthorSuccessDialog from "components/play/finalStep/dialogs/ReturnAuthorSuccessDialog";
+import SelfPublishColumn from "./SelfPublishColumn";
 
 enum PublishStatus {
   None,
@@ -174,7 +175,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <Grid className="share-row" container direction="row" justify="center">
         <ShareColumn size={3} onClick={() => setShare(true)} />
-        <PublishColumn onClick={() => publish(brick.id)} />
+        <SelfPublishColumn onClick={() => publish(brick.id)} />
       </Grid>
     );
   }
