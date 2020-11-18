@@ -17,6 +17,7 @@ interface ImageProps {
 
 const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   const [isOpen, setOpen] = React.useState(false);
+  const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.data.value);
 
   useEffect(() => {
@@ -39,7 +40,19 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
 
   return (
     <div className="image-drag-n-drop">
-      <div className={'dropzone ' + (locked ? 'disabled' : '')} onClick={() => setOpen(true)}>
+      <div className={'dropzone ' + (locked ? 'disabled' : '')} onClick={() => {
+        let el = document.createElement("input");
+        el.setAttribute("type", "file");
+        el.setAttribute("accept", ".jpg, .jpeg, .png");
+        el.click();
+
+        el.onchange = (files: any) => {
+          if (el.files && el.files.length >= 0) {
+            setFile(el.files[0]);
+            setOpen(true);
+          }
+        };
+      }}>
         {
           fileName
             ? <img alt="" style={{width: '100%'}} src={`${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`} />
@@ -54,11 +67,17 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
               </Grid>
         }
       </div>
-      <ImageDialog open={isOpen}
-        setDialog={setOpen}
-        initData={props.data}
-        upload={upload}
-      />
+      {file &&
+        <ImageDialog
+          open={isOpen}
+          setDialog={setOpen}
+  
+          initData={props.data}
+          upload={upload}
+  
+          file={file}
+        />
+      }
     </div>
   );
 }

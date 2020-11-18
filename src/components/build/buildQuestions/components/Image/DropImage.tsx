@@ -4,11 +4,11 @@ import ReactCrop from 'react-image-crop';
 import 'react-image-crop/lib/ReactCrop.scss';
 
 import './DropImage.scss';
-import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ImageProps {
   initFileName: string;
   locked: boolean;
+  file: File;
   setFile(file: File): void;
 }
 
@@ -24,17 +24,8 @@ const DropImage: React.FC<ImageProps> = props => {
     reader.onerror = error => reject(error);
   });
 
-  const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/jpeg, image/png',
-    disabled: props.locked,
-    onDrop: async (files:File[]) => {
-      const file = files[0];
-      let res = await toBase64(file);
-      if (res) {
-        setBase64(res)
-        props.setFile(file);
-      }
-    }
+  toBase64(props.file).then(b64 => {
+    setBase64(b64);
   });
 
   const getCroppedImg = (crop: any) => {
@@ -91,13 +82,7 @@ const DropImage: React.FC<ImageProps> = props => {
       </div>
     );
   }
-
-  return (
-    <div {...getRootProps({className: 'dropzone image-dropzone' + ((props.locked) ? 'disabled' : '')})}>
-      <input {...getInputProps()} />
-      <SpriteIcon name="image" />
-    </div>
-  );
+  return <div></div>
 }
 
 export default DropImage;
