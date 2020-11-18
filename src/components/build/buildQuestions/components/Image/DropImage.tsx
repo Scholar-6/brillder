@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {useDropzone} from 'react-dropzone';
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/lib/ReactCrop.scss';
 
 import './DropImage.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -12,6 +14,8 @@ interface ImageProps {
 
 const DropImage: React.FC<ImageProps> = props => {
   const [base64, setBase64] = React.useState(null as any);
+  const [crop, setCrop] = React.useState({ } as ReactCrop.Crop);
+  const [image, setImage] = React.useState(null as any);
 
   const toBase64 = (file:Blob) => new Promise<string | ArrayBuffer | null>((resolve, reject) => {
     const reader = new FileReader();
@@ -33,18 +37,65 @@ const DropImage: React.FC<ImageProps> = props => {
     }
   });
 
-  useEffect(() => {
-    //setFileName(props.data.value);
-  }, [props]);
+  const getCroppedImg = (crop: any) => {
+    if (image) {
+    const canvas = document.createElement('canvas');
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = crop.width;
+    canvas.height = crop.height;
+    const ctx = canvas.getContext('2d');
 
+    if (ctx) {
+      ctx.drawImage(
+        image,
+        crop.x * scaleX,
+        crop.y * scaleY,
+        crop.width * scaleX,
+        crop.height * scaleY,
+        0,
+        0,
+        crop.width,
+        crop.height
+      );
+    }
+
+    return new Promise((resolve, reject) => {
+      canvas.toBlob((blob:any) => {
+        if (!blob) {
+          console.error('Canvas is empty');
+          return;
+        } else {
+          blob.name = 'newFile.jpeg';
+          props.setFile(blob);
+        }
+        resolve(blob);
+      }, 'image/jpeg');
+    });
+    }
+  }
+
+  const onImageLoaded = (image: any) => {
+    setImage(image);
+  }
+
+  if (base64) {
+    return (
+      <div className="cropping">
+        <ReactCrop
+          src={base64} crop={crop}
+          onChange={setCrop}
+          onImageLoaded={onImageLoaded}
+          onComplete={getCroppedImg}
+        />
+      </div>
+    );
+  }
 
   return (
-    <div className="d" {...getRootProps({className: 'dropzone image-dropzone' + ((props.locked) ? 'disabled' : '')})}>
+    <div {...getRootProps({className: 'dropzone image-dropzone' + ((props.locked) ? 'disabled' : '')})}>
       <input {...getInputProps()} />
-      { base64
-        ? <img alt="selected-image" src={base64} />
-        : <SpriteIcon name="image" />
-      }
+      <SpriteIcon name="image" />
     </div>
   );
 }

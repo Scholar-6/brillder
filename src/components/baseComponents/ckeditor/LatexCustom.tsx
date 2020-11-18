@@ -5,7 +5,6 @@ import { viewToModelPositionOutsideModelElement } from '@ckeditor/ckeditor5-widg
 import Widget from '@ckeditor/ckeditor5-widget/src/widget';
 import AttributeCommand from '@ckeditor/ckeditor5-basic-styles/src/attributecommand';
 import "./LatexCustom.scss";
-import sprite from "assets/img/icons-sprite.svg";
 
 const latexIcon = `
 <svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
