@@ -11,7 +11,7 @@ import { checkTeacherOrAdmin } from "components/services/brickService";
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
-import { Brick } from "model/brick";
+import { Brick, BrickStatus } from "model/brick";
 
 
 interface SidebarProps {
@@ -152,6 +152,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   async createBrickCopy() {
     let brick = Object.assign({}, this.props.brick);
     brick.id = null as any;
+    brick.status = BrickStatus.Draft;
     let res = await this.props.createBrick(brick);
     console.log(res);
   }
