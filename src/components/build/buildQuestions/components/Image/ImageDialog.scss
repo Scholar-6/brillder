@@ -124,9 +124,12 @@
       transform: rotate(45deg);
     }
   }
+  .cropping.empty {
+    @extend %flexCenter;
+  }
   .icon-image {
-    height: 10vh;
-    width: 10vh;
+    height: 13vh !important;
+    width: 13vh !important;
   }
   .MuiSlider-markLabel {
     font-size: 1.3vw !important;
