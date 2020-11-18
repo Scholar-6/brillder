@@ -72,14 +72,12 @@ const DropImage: React.FC<ImageProps> = props => {
 
   if (base64) {
     return (
-      <div className="cropping">
-        <ReactCrop
-          src={base64} crop={crop}
-          onChange={setCrop}
-          onImageLoaded={onImageLoaded}
-          onComplete={getCroppedImg}
-        />
-      </div>
+      <ReactCrop
+        src={base64} crop={crop}
+        onChange={setCrop}
+        onImageLoaded={onImageLoaded}
+        onComplete={getCroppedImg}
+      />
     );
   }
   return <div></div>

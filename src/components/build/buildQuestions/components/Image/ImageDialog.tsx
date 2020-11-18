@@ -28,7 +28,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   const [height, setHeight] = React.useState(0 as number);
 
   let canUpload = false;
-  if (permision && source && cropedFile) {
+  if (permision && source && file) {
     canUpload = true;
   }
 
@@ -77,7 +77,9 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
             <SpriteIcon name="plus" className="svg-plus active text-white" />
           </div>
         </div>
-        {file && <DropImage initFileName="" locked={false} file={file} setFile={setCroped} />}
+        <div className="cropping">
+          {file && <DropImage initFileName="" locked={false} file={file} setFile={setCroped} />}
+        </div>
         <div className="bold">Where did you get this image?</div>
         <input
           value={source}
