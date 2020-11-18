@@ -5,16 +5,18 @@ import './ImageDialog.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 import DropImage from "./DropImage";
+import { ImageComponentData } from "./model";
 
 interface DialogProps {
   open: boolean;
+  initData: ImageComponentData;
   upload(file: File, source: string, caption: string): void;
   setDialog(open: boolean): void;
 }
 
-const ImageDialog: React.FC<DialogProps> = ({ open, upload, setDialog }) => {
-  const [source, setSource] = React.useState('');
-  const [caption, setCaption] = React.useState('');
+const ImageDialog: React.FC<DialogProps> = ({ open, initData, upload, setDialog }) => {
+  const [source, setSource] = React.useState(initData.imageSource || '');
+  const [caption, setCaption] = React.useState(initData.imageCaption || '');
   const [permision, setPermision] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
 

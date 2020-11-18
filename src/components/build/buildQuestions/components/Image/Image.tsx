@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core';
 
 import './Image.scss'
@@ -18,6 +18,10 @@ interface ImageProps {
 const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   const [isOpen, setOpen] = React.useState(false);
   const [fileName, setFileName] = React.useState(props.data.value);
+
+  useEffect(() => {
+    setFileName(props.data.value);
+  }, [props]);
 
   const upload = (file: File, source: string, caption: string) => {
     uploadFile(file, (res: any) => {
@@ -50,7 +54,11 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
               </Grid>
         }
       </div>
-      <ImageDialog open={isOpen} setDialog={setOpen} upload={upload} />
+      <ImageDialog open={isOpen}
+        setDialog={setOpen}
+        initData={props.data}
+        upload={upload}
+      />
     </div>
   );
 }
