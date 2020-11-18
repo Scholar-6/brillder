@@ -164,11 +164,11 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
       </div>
       <Grid className="submit-button-container" container alignContent="center">
         {
-          activeQuestionType ? (
+          activeQuestionType && (
             <div>
               <div className="submit-button" onClick={() => setQuestionType(type)}></div>
             </div>
-          ) : ""
+          )
         }
       </Grid>
     </div>

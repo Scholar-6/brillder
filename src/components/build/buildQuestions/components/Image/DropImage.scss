@@ -1,0 +1,17 @@
+.image-dropzone {
+  padding: 0 !important;
+  border: none !important;
+  img {
+    padding: 0;
+    max-width: 23vw;
+    border-radius: 0.5vw;
+  }
+  svg {
+    color: var(--theme-dark-blue);
+    $size: 7.5vw;
+    width: $size !important;
+    height: $size !important;
+    stroke-width: 0.8;
+    margin-bottom: 1vw;
+  }
+}
