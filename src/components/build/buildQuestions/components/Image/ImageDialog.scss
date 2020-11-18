@@ -76,14 +76,21 @@
   }
   .MuiFormControlLabel-root {
     margin-left: 0;
+    color: var(--theme-dark-blue) !important;
     .MuiButtonBase-root.MuiIconButton-root.MuiRadio-root {
+      color: var(--theme-dark-blue) !important;
       padding: 0.4vw 0 !important;
     }
     .MuiIconButton-label {
+      color: var(--theme-dark-blue) !important;
       input {
+        color: var(--theme-dark-blue) !important;
         margin: 0 !important;
         padding: 0 !important;
       }
+    }
+    .MuiTypography-root.MuiFormControlLabel-label {
+      font-size: 1.3vw !important;
     }
   }
   .add-image-button {
