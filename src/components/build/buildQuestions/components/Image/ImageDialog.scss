@@ -12,6 +12,18 @@
     padding-top: 2vh;
   }
 
+  .required {
+    svg {
+      color: var(--theme-orange) !important;
+    }
+  }
+  .Mui-checked.required {
+    svg {
+      color: var(--theme-green) !important;
+    }
+
+  }
+
   .MuiButtonBase-root.MuiIconButton-root.MuiCheckbox-root {
     padding: 0 !important;
     margin-bottom: 0.2vw;
@@ -25,6 +37,9 @@
       width: $checkbox-size;
     }
     .MuiSvgIcon-root {
+      margin: 0;
+      margin-right: 0.5vw;
+      margin-bottom: 0.1vw;
       height: $checkbox-size;
       width: $checkbox-size;
     }
@@ -52,5 +67,11 @@
     width: $size !important;
     height: $size !important;
     padding: 0.3vw;
+
+    &.active {
+      cursor: pointer;
+      background: var(--theme-green);
+      color: var(--white);
+    }
   }
 }

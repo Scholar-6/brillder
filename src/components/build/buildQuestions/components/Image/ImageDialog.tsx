@@ -8,7 +8,7 @@ import DropImage from "./DropImage";
 
 interface DialogProps {
   open: boolean;
-  upload(file: File): void;
+  upload(file: File, source: string, caption: string): void;
   setDialog(open: boolean): void;
 }
 
@@ -16,8 +16,14 @@ const ImageDialog: React.FC<DialogProps> = ({ open, upload, setDialog }) => {
   const [source, setSource] = React.useState('');
   const [caption, setCaption] = React.useState('');
   const [permision, setPermision] = React.useState(false);
+  const [validationRequired, setValidation] = React.useState(false);
 
   const [file, setFile] = React.useState(null as File | null);
+
+  let canUpload = false;
+  if (permision && source && file) {
+    canUpload = true;
+  }
 
   return (
     <BaseDialogWrapper open={open} close={() => setDialog(false)} submit={() => {}}>
@@ -30,7 +36,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, upload, setDialog }) => {
           placeholder="Add link to source or name of owner..."
         />
         <div onClick={() => setPermision(!permision)}>
-          <Checkbox checked={permision} />
+          <Checkbox checked={permision} className={validationRequired ? 'required' : ''} />
           I have permision to distribute this image
           <span className="text-theme-orange">*</span>
         </div>
@@ -40,9 +46,11 @@ const ImageDialog: React.FC<DialogProps> = ({ open, upload, setDialog }) => {
           placeholder="Add caption..."
         />
         <div className="centered">
-          <SpriteIcon name="upload" className="upload-button" onClick={() => {
-            if (file) {
-              upload(file);
+          <SpriteIcon name="upload" className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
+            if (file && canUpload) {
+              upload(file, source, caption);
+            } else {
+              setValidation(true);
             }
            }} />
         </div>
