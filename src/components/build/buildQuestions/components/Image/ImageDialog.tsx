@@ -58,6 +58,9 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   const marks = [{
       value: 20,
       label: 'Small',
+    }, {
+      value: 30,
+      label: 'Medium',
     },
     {
       value: 50,
