@@ -10,18 +10,19 @@ import { ImageAlign, ImageComponentData } from "./model";
 
 interface DialogProps {
   open: boolean;
-  file: File;
+  initFile: File;
   initData: ImageComponentData;
   upload(file: File, source: string, caption: string, align: ImageAlign, height: number): void;
   setDialog(open: boolean): void;
 }
 
-const ImageDialog: React.FC<DialogProps> = ({ open, file, initData, upload, setDialog }) => {
+const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, setDialog }) => {
   const [source, setSource] = React.useState(initData.imageSource || '');
   const [caption, setCaption] = React.useState(initData.imageCaption || '');
   const [permision, setPermision] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
-  const [cropedFile, setCroped] = React.useState(file);
+  const [file, setFile] = React.useState(initFile as File | null);
+  const [cropedFile, setCroped] = React.useState(file as File | null);
   const [align, setAlign] = React.useState(ImageAlign.left);
   const [height, setHeight] = React.useState(0 as number);
 
@@ -30,10 +31,38 @@ const ImageDialog: React.FC<DialogProps> = ({ open, file, initData, upload, setD
     canUpload = true;
   }
 
+  let className = "add-image-button"
+  if (file) {
+    className += " remove-image"
+  }
+
+  const handleClick= () => {
+    if (file) {
+      setFile(null);
+      setCroped(null);
+    } else {
+      let el = document.createElement("input");
+      el.setAttribute("type", "file");
+      el.setAttribute("accept", ".jpg, .jpeg, .png");
+      el.click();
+
+      el.onchange = (files: any) => {
+        if (el.files && el.files.length >= 0) {
+          setFile(el.files[0]);
+        }
+      };
+    }
+  }
+
   return (
     <BaseDialogWrapper open={open} close={() => setDialog(false)} submit={() => {}}>
       <div className="dialog-header image-dialog">
-        <DropImage initFileName="" locked={false} file={file} setFile={setCroped} />
+        <div className="switch-image">
+          <div className={"svgOnHover " + className} onClick={handleClick}>
+            <SpriteIcon name="plus" className="svg-plus active text-white" />
+          </div>
+        </div>
+        {file && <DropImage initFileName="" locked={false} file={file} setFile={setCroped} />}
         <div className="bold">Where did you get this image?</div>
         <input
           value={source}

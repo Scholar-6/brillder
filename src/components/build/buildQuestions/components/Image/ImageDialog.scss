@@ -86,4 +86,36 @@
       }
     }
   }
+  .add-image-button {
+    width: 4vw;
+    height: 4vw;
+    z-index: 100;
+    position: absolute;
+    background-color: var(--theme-dark-blue);
+    top: 2vh;
+    right: 1vw;
+    border-radius: 50%;
+    cursor: pointer;
+    @extend %transitionAll300;
+    @include phone_and_tabletP {
+      height: 13vw;
+      width: 13vw;
+    }
+    .MuiIconButton-label {
+      margin: 0;
+    }
+    .svg {
+      margin-left: 0;
+      width: 2vw;
+      height: 2vw;
+      @include phone_and_tabletP {
+        height: 8vw;
+        width: 8vw;
+      }
+    }
+    &.remove-image {
+      background-color: var(--theme-orange);
+      transform: rotate(45deg);
+    }
+  }
 }

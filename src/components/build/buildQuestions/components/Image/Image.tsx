@@ -70,11 +70,10 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
       </div>
       {file &&
         <ImageDialog
-          file={file}
+          initData={props.data}
           open={isOpen}
           setDialog={setOpen}
-  
-          initData={props.data}
+          initFile={file}
           upload={upload}
         />
       }
