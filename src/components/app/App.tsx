@@ -41,6 +41,7 @@ import map from 'components/map';
 import { isMobile } from 'react-device-detect';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
 import TeachPage from 'components/teach/assignments/TeachPage';
+import Terms from 'components/terms/Terms';
 
 const App: React.FC = () => {
   setBrillderTitle();
@@ -139,6 +140,7 @@ const App: React.FC = () => {
         <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path={map.Login} component={LoginPage} />
 
+        <Route path="/terms" component={Terms} />
         <Route component={AuthRedirectRoute} />
       </Switch>
       <VersionLabel />

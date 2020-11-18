@@ -1,0 +1,20 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.terms-page {
+  .sort-and-filter-container {
+    padding-top: 7vh;
+    padding-left: 1vw;
+    
+    font-size: 1.2vw;
+    
+    > div {
+      margin-bottom: 2vh;
+    }
+    .MuiTypography-root {
+      font-size: 1.2vw;
+      font-family: $font-family-regular;
+    }
+  }
+}
