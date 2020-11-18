@@ -310,7 +310,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     <div className="play-preview-pages">
       {renderHead()}
       <div className={className}>
-        <PlayLeftSidebar mode={mode} sidebarRolledUp={sidebarRolledUp} empty={finalStep} setMode={setMode} toggleSidebar={setSidebar} />
+        <PlayLeftSidebar
+          brick={brick}
+          mode={mode}
+          sidebarRolledUp={sidebarRolledUp}
+          empty={finalStep}
+          setMode={setMode}
+          toggleSidebar={setSidebar}
+        />
         <div className="brick-row-container">
           {renderRouter()}
         </div>
