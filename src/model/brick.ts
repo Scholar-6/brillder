@@ -36,6 +36,7 @@ export interface Subject {
   name: string;
   color: string;
   publishedBricksCount: number;
+  userCount: number;
   checked?: boolean;
 
   // view all page
