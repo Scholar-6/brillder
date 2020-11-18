@@ -21,7 +21,6 @@
     svg {
       color: var(--theme-green) !important;
     }
-
   }
 
   .MuiButtonBase-root.MuiIconButton-root.MuiCheckbox-root {
@@ -99,7 +98,7 @@
     z-index: 100;
     position: absolute;
     background-color: var(--theme-dark-blue);
-    top: 2vh;
+    bottom: 2vh;
     right: 1vw;
     border-radius: 50%;
     cursor: pointer;
@@ -124,5 +123,14 @@
       background-color: var(--theme-orange);
       transform: rotate(45deg);
     }
+  }
+  .icon-image {
+    height: 10vh;
+    width: 10vh;
+  }
+  .MuiSlider-markLabel {
+    font-size: 1.3vw !important;
+    font-family: $font-family-regular !important;
+    color: var(--theme-dark-blue) !important;
   }
 }
