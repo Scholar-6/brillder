@@ -8,7 +8,7 @@
   $font-size: 1.3vw;
   font-size: $font-size !important;
 
-  div {
+  > div {
     padding-top: 2vh;
   }
 
@@ -72,6 +72,18 @@
       cursor: pointer;
       background: var(--theme-green);
       color: var(--white);
+    }
+  }
+  .MuiFormControlLabel-root {
+    margin-left: 0;
+    .MuiButtonBase-root.MuiIconButton-root.MuiRadio-root {
+      padding: 0.4vw 0 !important;
+    }
+    .MuiIconButton-label {
+      input {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
     }
   }
 }

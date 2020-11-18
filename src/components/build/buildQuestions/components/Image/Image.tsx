@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 import './Image.scss'
 import {uploadFile} from 'components/services/uploadFile';
 import ImageDialog from './ImageDialog';
-import { ImageComponentData } from './model';
+import { ImageAlign, ImageComponentData } from './model';
 
 
 interface ImageProps {
@@ -24,17 +24,18 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
     setFileName(props.data.value);
   }, [props]);
 
-  const upload = (file: File, source: string, caption: string) => {
+  const upload = (file: File, source: string, caption: string, align: ImageAlign, height: number) => {
     uploadFile(file, (res: any) => {
       let comp = Object.assign({}, props.data);
       comp.value = res.data.fileName;
       comp.imageSource = source;
       comp.imageCaption = caption;
+      comp.imageAlign= align;
+      comp.imageHeight = height;
       props.updateComponent(comp, props.index);
       setFileName(comp.value);
       props.save();
       setOpen(false);
-      console.log(comp);
     }, () => { });
   }
 
@@ -69,13 +70,12 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
       </div>
       {file &&
         <ImageDialog
+          file={file}
           open={isOpen}
           setDialog={setOpen}
   
           initData={props.data}
           upload={upload}
-  
-          file={file}
         />
       }
     </div>
