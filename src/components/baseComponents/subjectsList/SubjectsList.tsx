@@ -9,6 +9,7 @@ interface PublishedSubjectsProps {
   filterHeight: string;
   subjects: Subject[];
   filterBySubject(index: number): void;
+  showUserCount?: boolean;
 }
 
 class SubjectsList extends Component<PublishedSubjectsProps, any> {
@@ -38,7 +39,7 @@ class SubjectsList extends Component<PublishedSubjectsProps, any> {
                   justify="center"
                   style={{ height: "100%",margin:"0 0" }}
                 >
-                  {subject.publishedBricksCount}
+                  {this.props.showUserCount ? subject.userCount : subject.publishedBricksCount}
                 </Grid>
               </Grid>
             </Grid>

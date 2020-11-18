@@ -31,7 +31,6 @@ import { downKeyPressed, upKeyPressed } from "components/services/key";
 import { getBrickColor } from "services/brick";
 import { isMobile } from "react-device-detect";
 import map from "components/map";
-import subject from "redux/actions/subject";
 import NoSubjectDialog from "components/baseComponents/dialogs/NoSubjectDialog";
 
 
@@ -140,9 +139,8 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   }
 
   async loadData(values: queryString.ParsedQuery<string>) {
-    let subjects:any = [];
     if (this.props.user) {
-      subjects = await this.loadSubjects();
+      await this.loadSubjects();
     }
 
     if (values.searchString) {
@@ -869,7 +867,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           />
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
-              <div className="brick-row-title main-title uppercase">
+              <div className={`brick-row-title main-title uppercase ${filterSubjects.length === 1 && 'subject-title'}`}>
                 {this.renderMainTitle(filterSubjects)}
               </div>
               {this.props.user &&

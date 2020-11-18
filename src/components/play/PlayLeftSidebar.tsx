@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from 'react-redux';
 
+import actions from "redux/actions/brickActions";
 import { ReduxCombinedState } from 'redux/reducers';
 import { PlayMode } from './model';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
@@ -10,14 +11,15 @@ import { checkTeacherOrAdmin } from "components/services/brickService";
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
+import { Brick, BrickStatus } from "model/brick";
 
 
 interface SidebarProps {
   sidebarRolledUp: boolean;
   toggleSidebar(): void;
-  user: User;
 
   // play
+  brick: Brick;
   empty?: boolean;
   mode?: PlayMode;
   setMode?(mode: PlayMode): void;
@@ -25,6 +27,10 @@ interface SidebarProps {
   //play-preview
   isPreview?: boolean;
   moveToBuild?(): void;
+
+  //redux
+  user: User;
+  createBrick(b: Brick): Promise<Brick | null>; 
 }
 
 interface SidebarState {
@@ -143,6 +149,32 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     );
   }
 
+  async createBrickCopy() {
+    let brick = Object.assign({}, this.props.brick);
+    brick.id = null as any;
+    brick.status = BrickStatus.Draft;
+    let res = await this.props.createBrick(brick);
+  }
+
+  renderAdaptButton() {
+    if (!this.props.user) { return ""; }
+    let canSee = checkTeacherOrAdmin(this.props.user.roles);
+    if (!canSee) { return ""; }
+
+    if (!this.props.sidebarRolledUp) {
+      return (
+        <button onClick={this.createBrickCopy.bind(this)} className="assign-class-button svgOnHover blue">
+          <span>Adapt Brick</span>
+        </button>
+      );
+    }
+    return (
+      <button onClick={this.createBrickCopy.bind(this)} className="assign-class-button svgOnHover blue">
+        <SpriteIcon name="copy" className="active" />
+      </button>
+    );
+  }
+
   renderButtons() {
     if (this.props.isPreview) {
       if (this.props.sidebarRolledUp) {
@@ -176,6 +208,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {this.renderHightlightButton()}
         {this.renderAnotateButton()}
         {this.renderAssignButton()}
+        {this.renderAdaptButton()}
       </div>
     );
   }
@@ -225,7 +258,11 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 };
 
 const mapState = (state: ReduxCombinedState) => ({
-  user: state.user.user
+  user: state.user.user,
 });
 
-export default connect(mapState)(PlayLeftSidebarComponent);
+const mapDispatch = (dispatch: any) => ({
+  createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
+});
+
+export default connect(mapState, mapDispatch)(PlayLeftSidebarComponent);
