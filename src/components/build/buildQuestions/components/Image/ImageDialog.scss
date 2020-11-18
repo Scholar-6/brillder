@@ -1,0 +1,56 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.image-dialog {
+  margin-bottom: 0 !important;
+  min-width: 22vw;
+  $font-size: 1.3vw;
+  font-size: $font-size !important;
+
+  div {
+    padding-top: 2vh;
+  }
+
+  .MuiButtonBase-root.MuiIconButton-root.MuiCheckbox-root {
+    padding: 0 !important;
+    margin-bottom: 0.2vw;
+    color: var(--theme-dark-blue) !important;
+
+    $checkbox-size: 1.5vw;
+    input {
+      margin: 0 !important;
+      padding: 0 !important;
+      height: $checkbox-size;
+      width: $checkbox-size;
+    }
+    .MuiSvgIcon-root {
+      height: $checkbox-size;
+      width: $checkbox-size;
+    }
+  }
+
+  input {
+    font-size: $font-size;
+    margin-top: 2vh;
+    color: var(--theme-dark-blue);
+    background: var(--tab-gray);
+    border-radius: 0.6vw;
+    padding: 0.2vh 1vw;
+    width: calc(100% - 2vw);
+    &::placeholder {
+      color: var(--dark-gray);
+      font-family: $font-family-regular;
+    }
+  }
+  .upload-button {
+    margin-top: 0.3vw;
+    background: var(--tab-gray);
+    color: var(--dark-gray);
+    border-radius: 50%;
+    $size: 1.8vw;
+    width: $size !important;
+    height: $size !important;
+    padding: 0.3vw;
+  }
+}
