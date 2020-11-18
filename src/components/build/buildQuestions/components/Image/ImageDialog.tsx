@@ -90,7 +90,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
             control={<Radio onClick={() => setAlign(ImageAlign.center)} />}
             label="Center" />
         </div>
-        <div>Height in percentages of screen (if 0 based on height of image)</div>
+        <div>Image size</div>
         <input
           type="number"
           value={height}
