@@ -127,18 +127,28 @@ class Library extends Component<BricksListProps, BricksListState> {
     return [];
   }
 
+  countSubjectBricks(subjects: any[], assignments: AssignmentBrick[]) {
+    subjects.forEach((s:any) => {
+      s.publicCount = 0;
+      s.personalCount = 0;
+    });
+    for (let a of assignments) {
+      for (let s of subjects) {
+        if (s.id === a.brick.subjectId) {
+          if (a.brick.isCore) {
+            s.publicCount += 1;
+          } else {
+            s.personalCount += 1;
+          }
+        }
+      }
+    }
+  }
+
   prepareSubjects(assignments: AssignmentBrick[], subjects: Subject[]) {
     subjects = subjects.filter(s => assignments.find(a => a.brick.subjectId === s.id));
-      
-    subjects.forEach(s => {
-      s.publishedBricksCount = 0;
-      assignments.forEach(a => {
-        if (a.brick.subjectId === s.id) {
-          s.publishedBricksCount += 1;
-        }
-      });
-    });
 
+    this.countSubjectBricks(subjects, assignments);
     return subjects;
   }
 
@@ -348,6 +358,7 @@ class Library extends Component<BricksListProps, BricksListState> {
           <Grid container item xs={3} className="sort-and-filter-container">
             <LibraryFilter
               sortBy={this.state.sortBy}
+              isPublic={this.state.isCore}
               classrooms={this.state.classrooms}
               subjects={this.state.subjects}
               assignments={this.state.rawAssignments}
