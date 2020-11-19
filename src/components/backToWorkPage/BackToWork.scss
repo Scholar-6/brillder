@@ -429,6 +429,9 @@
     &.active {
       color: var(--theme-dark-blue);
     }
+    &:hover {
+      font-family: $font-family-black;
+    }
   }
 }
 .personal-build {
