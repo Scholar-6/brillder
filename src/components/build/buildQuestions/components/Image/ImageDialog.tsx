@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 import { FormControlLabel, Radio } from "@material-ui/core";
 
@@ -11,7 +11,7 @@ import Slider from '@material-ui/core/Slider';
 
 interface DialogProps {
   open: boolean;
-  initFile: File;
+  initFile: File | null;
   initData: ImageComponentData;
   upload(file: File, source: string, caption: string, align: ImageAlign, height: number): void;
   setDialog(open: boolean): void;
@@ -26,6 +26,17 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   const [cropedFile, setCroped] = React.useState(file as File | null);
   const [align, setAlign] = React.useState(ImageAlign.left);
   const [height, setHeight] = React.useState(0 as number);
+
+  useEffect(() => {
+    if (!file) {
+      if (initFile) {
+        setFile(initFile);
+        setCroped(initFile);
+      } else if (initData.value) {
+        // get image by url
+      }
+    }
+  }, [initFile, initData.value]);
 
   let canUpload = false;
   if (permision && source && file) {
@@ -50,6 +61,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
       el.onchange = (files: any) => {
         if (el.files && el.files.length >= 0) {
           setFile(el.files[0]);
+          setCroped(el.files[0]);
         }
       };
     }
