@@ -479,7 +479,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   moveAllBack() {
-    let pageSize = this.state.pageSize + 3;
+    let pageSize = this.state.pageSize;
     let index = this.state.sortedIndex;
 
     if (index >= pageSize) {
@@ -488,7 +488,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   moveAllNext() {
-    let pageSize = this.state.pageSize + 3;
+    let pageSize = this.state.pageSize;
     let index = this.state.sortedIndex;
 
     if (index + pageSize <= this.state.finalBricks.length) {
@@ -516,7 +516,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     return (
       <BackPagePagination
         sortedIndex={sortedIndex}
-        pageSize={pageSize+3}
+        pageSize={pageSize}
         isRed={sortedIndex === 0}
         bricksLength={finalBricks.length}
         moveNext={() => this.moveAllNext()}
