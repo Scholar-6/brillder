@@ -352,9 +352,12 @@ $space-between-boxes: 0.1vw;
       width: 4vw !important;
     }
   }
+  .return-to-editor-button-container,
+  .return-to-author-button-container,
+  .send-to-publisher-button-container,
   .build-publish-button-container {
     position: relative;
-    .hover-container {
+    .custom-hover-container {
       top: 0;
       left: 0;
       width: 100%;

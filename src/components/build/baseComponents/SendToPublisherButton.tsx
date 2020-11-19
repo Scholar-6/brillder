@@ -33,7 +33,8 @@ const SendToPublisherButton: React.FC<ButtonProps> = props => {
   }
 
   return (
-    <div>
+    <div className="send-to-publisher-button-container">
+      <div className={`custom-hover-container ${(hovered && !props.disabled) ? 'hovered' : ''}`}></div>
       <div className={className} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
         onClick={() => {
           if (!props.disabled) {
