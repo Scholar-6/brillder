@@ -335,30 +335,6 @@ $space-between-boxes: 0.1vw;
         width: 90%;
       }
     }
-    &.active {
-      &:before {
-        content: '';
-        z-index: -1;
-        position: absolute;
-        top: 0%;
-        left: 0%;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background: #fff;
-        opacity: 50%;
-        @extend %transitionAll300;
-      }
-      &:hover {
-        &:before {
-          top: -10%;
-          left: -10%;
-          width: 120%;
-          height: 120%;
-        }
-      }
-    }
-
     .custom-tooltip {
       top: 100%;
       z-index: 9999;
@@ -374,6 +350,26 @@ $space-between-boxes: 0.1vw;
       margin-top: 0.6vw;
       left: 0.2vw;
       width: 4vw !important;
+    }
+  }
+  .build-publish-button-container {
+    position: relative;
+    .hover-container {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      opacity: 50%;
+      background: #fff;
+      @extend %transitionAll300;
+      &.hovered {
+        position: absolute;
+        top: -10%;
+        left: -10%;
+        width: 120%;
+        height: 120%;
+      }
     }
   }
 }

@@ -34,7 +34,8 @@ const PublishButton: React.FC<ButtonProps> = props => {
   }
 
   return (
-    <div>
+    <div className="build-publish-button-container">
+      <div className={`hover-container ${hovered ? 'hovered' : ''}`}></div>
       <div className={className} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
         onClick={() => {
           if (!props.disabled) {
