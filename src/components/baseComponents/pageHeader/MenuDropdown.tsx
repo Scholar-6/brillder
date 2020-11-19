@@ -165,16 +165,14 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
 
   const renderMyLibraryItem = () => {
     if (page !== PageEnum.MainPage && page !== PageEnum.MyLibrary) {
-      if (props.user.rolePreference?.roleId === UserType.Student) {
-        return (
-          <MenuItem className="view-profile menu-item" onClick={() => move("/my-library")}>
-            <span className="menu-text">My Library</span>
-            <div className="btn btn-transparent svgOnHover">
-              <SpriteIcon name="book-open" className="active text-white" />
-            </div>
-          </MenuItem>
-        );
-      }
+      return (
+        <MenuItem className="view-profile menu-item" onClick={() => move("/my-library")}>
+          <span className="menu-text">My Library</span>
+          <div className="btn btn-transparent svgOnHover">
+            <SpriteIcon name="book-open" className="active text-white" />
+          </div>
+        </MenuItem>
+      );
     }
     return "";
   }
@@ -222,11 +220,11 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       {renderBackToWorkItem()}
       {renderManageUsersItem()}
       {renderManageClassesItem()}
-      {renderProfileItem()}
+      {renderMyLibraryItem()}
       <Hidden only={['sm', 'md', 'lg', 'xl']}>
-        {renderMyLibraryItem()}
         <FullScreenButton />
       </Hidden>
+      {renderProfileItem()}
       {/*
       {renderReportsItem()}
       {renderLiveAssignmentItem()}
