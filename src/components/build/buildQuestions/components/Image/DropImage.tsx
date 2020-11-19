@@ -1,5 +1,4 @@
 import React from "react";
-import {useDropzone} from 'react-dropzone';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/lib/ReactCrop.scss';
 

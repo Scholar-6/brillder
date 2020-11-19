@@ -153,7 +153,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     let brick = Object.assign({}, this.props.brick);
     brick.id = null as any;
     brick.status = BrickStatus.Draft;
-    let res = await this.props.createBrick(brick);
+    delete brick.editors;
+    delete brick.publisher;
+    await this.props.createBrick(brick);
   }
 
   renderAdaptButton() {
