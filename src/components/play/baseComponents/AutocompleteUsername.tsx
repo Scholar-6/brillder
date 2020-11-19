@@ -74,7 +74,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
         </>;
       }}
       filterOptions={(options) => options}
-      getOptionLabel={(option) => `${option.username}`}
+      getOptionLabel={(option) => `${option.firstName} ${option.lastName} (${option.username})`}
     />
   );
 };
