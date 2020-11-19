@@ -311,6 +311,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       {renderHead()}
       <div className={className}>
         <PlayLeftSidebar
+          history={props.history}
           brick={brick}
           mode={mode}
           sidebarRolledUp={sidebarRolledUp}

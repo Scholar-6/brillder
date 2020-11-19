@@ -3,6 +3,7 @@ import BaseDialogWrapper from "./BaseDialogWrapper";
 
 interface DialogProps {
   isOpen: boolean;
+  subjectName: string;
   close(): void;
   submit(): void;
 }
@@ -11,7 +12,7 @@ const NoSubjectDialog: React.FC<DialogProps> = (props) => {
   return (
     <BaseDialogWrapper open={props.isOpen} close={props.close} submit={props.submit}>
       <div className="dialog-header">
-        <div>SUBJECT is not listed on your profile yet.<br />Would you like to add it?</div>
+        <div>{props.subjectName} is not listed on your profile yet.<br />Would you like to add it?</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button" onClick={props.submit}>

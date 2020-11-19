@@ -69,6 +69,7 @@ interface ProposalState {
   attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
   mode?: boolean; // live - false, review - true, undefined - default
+  playHovered: boolean;
   handleKey(e: any): void;
 }
 
@@ -88,6 +89,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       attempts: [],
       subjects: [],
       firstHoverTimeout: -1,
+      playHovered: false,
       handleKey: this.handleKey.bind(this)
     };
     this.loadData();
@@ -358,11 +360,18 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                   <div className="flipped-page">
                     <div className="green-button-container1">
                       <div className="green-button-container2">
-                        <PlayGreenButton
+                        <div className="green-button-container3"
+                          onMouseEnter={() => this.setState({playHovered: true})}
+                          onMouseLeave={() => this.setState({playHovered: false})}
                           onClick={() =>
-                            this.props.history.push(map.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId))
+                            this.props.history.push(
+                              map.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
+                            )
                           }
-                        />
+                        >
+                          <div className={`custom-hover-container ${this.state.playHovered ? 'hovered' : ''}`}></div>
+                          <PlayGreenButton onClick={() => {}} />
+                        </div>
                       </div>
                       <div className="play-text">Play Again</div>
                     </div>
@@ -414,13 +423,20 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <div className="front-cover"></div>
                 <SynthesisPage synthesis={brick.synthesis} onClick={this.moveBackToQuestions.bind(this)}/>
                 <div className="book-page last-question-cover">
-                   <div className="green-button-container1">
+                  <div className="green-button-container1">
                     <div className="green-button-container2">
-                      <PlayGreenButton
+                      <div className="green-button-container3"
+                        onMouseEnter={() => this.setState({playHovered: true})}
+                        onMouseLeave={() => this.setState({playHovered: false})}
                         onClick={() =>
-                          this.props.history.push(map.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId))
+                          this.props.history.push(
+                            map.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
+                          )
                         }
-                      />
+                      >
+                        <div className={`custom-hover-container ${this.state.playHovered ? 'hovered' : ''}`}></div>
+                        <PlayGreenButton onClick={() => {}} />
+                      </div>
                     </div>
                     <div className="play-text">Play Again</div>
                   </div>

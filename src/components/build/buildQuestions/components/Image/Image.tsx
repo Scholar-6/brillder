@@ -42,17 +42,21 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   return (
     <div className="image-drag-n-drop">
       <div className={'dropzone ' + (locked ? 'disabled' : '')} onClick={() => {
-        let el = document.createElement("input");
-        el.setAttribute("type", "file");
-        el.setAttribute("accept", ".jpg, .jpeg, .png");
-        el.click();
-
-        el.onchange = (files: any) => {
-          if (el.files && el.files.length >= 0) {
-            setFile(el.files[0]);
-            setOpen(true);
-          }
-        };
+        if (props.data.value) {
+          setOpen(true);
+        } else {
+          let el = document.createElement("input");
+          el.setAttribute("type", "file");
+          el.setAttribute("accept", ".jpg, .jpeg, .png");
+          el.click();
+  
+          el.onchange = (files: any) => {
+            if (el.files && el.files.length >= 0) {
+              setFile(el.files[0]);
+              setOpen(true);
+            }
+          };
+        }
       }}>
         {
           fileName
@@ -68,15 +72,13 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
               </Grid>
         }
       </div>
-      {file &&
-        <ImageDialog
-          initData={props.data}
-          open={isOpen}
-          setDialog={setOpen}
-          initFile={file}
-          upload={upload}
-        />
-      }
+      <ImageDialog
+        initData={props.data}
+        open={isOpen}
+        setDialog={setOpen}
+        initFile={file}
+        upload={upload}
+      />
     </div>
   );
 }

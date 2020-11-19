@@ -14,6 +14,7 @@ import { isMobile } from 'react-device-detect';
 import { checkTeacherEditorOrAdmin } from 'components/services/brickService';
 import { User } from 'model/user';
 import SpriteIcon from '../SpriteIcon';
+import DesktopVersionDialogV2 from 'components/build/baseComponents/dialogs/DesktopVersionDialogV2';
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -41,6 +42,7 @@ interface NotificationPanelProps {
 }
 
 interface NotificationsState {
+  needDesktopOpen: boolean;
   scrollArea: React.RefObject<HTMLUListElement>;
   canScroll: boolean;
 }
@@ -50,6 +52,7 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
     super(props);
     this.state = {
       scrollArea: React.createRef(),
+      needDesktopOpen: false,
       canScroll: false
     }
   }
@@ -74,7 +77,11 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
         } else if (notification.type === NotificationType.InvitedToPlayBrick) {
           history.push(map.playIntro(brick.id));
         } else if (notification.type === NotificationType.BrickAttemptSaved) {
-          history.push(map.postPlay(brick.id, this.props.user.id));
+          if (isMobile) {
+            this.setState({needDesktopOpen: true});
+          } else {
+            history.push(map.postPlay(brick.id, this.props.user.id));
+          }
         } else if (notification.type === NotificationType.ReturnedToEditor) {
           history.push(map.InvestigationBuild(brick.id));
         } else if (notification.type === NotificationType.AssignedToEdit) {
@@ -264,6 +271,11 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
             </div>
           }
         </div>
+        <DesktopVersionDialogV2
+          isOpen={this.state.needDesktopOpen}
+          secondaryLabel="Brick summaries have not yet been optimised for mobile devices."
+          onClick={() => this.setState({needDesktopOpen: false})}
+        />
       </Popover>
     );
   }
