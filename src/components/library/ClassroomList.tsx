@@ -20,7 +20,7 @@ const ClassroomList:React.FC<Props> = props => {
     >
       <div className="classroom-filter-custom">
         {props.classrooms.map((c, i) => 
-          <div className={`index-box ${c.id === props.activeId ? 'active' : ''}`} key={i} onClick={() => props.filterByClassroom(c.id)}>
+          <div className={`index-box hover-light ${c.id === props.activeId ? 'active' : ''}`} key={i} onClick={() => props.filterByClassroom(c.id)}>
             {c.name}
           </div>
         )}
