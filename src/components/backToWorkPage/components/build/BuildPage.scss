@@ -3,6 +3,15 @@
 @import "src/assets/sass/partials/extensions";
 
 .build-page-content {
+  .bricks-list.list {
+    position: relative;
+    padding-top: calc(calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35);
+    .fixed-first-brick {
+      position: absolute;
+      width: 100%;
+      top: 0;
+    }
+  }
   .subjects-list {
     max-height: calc(88vh - 16.2vw);
     overflow-y: auto;

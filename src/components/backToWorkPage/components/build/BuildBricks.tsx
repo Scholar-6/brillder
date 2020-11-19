@@ -103,7 +103,7 @@ class BuildBricks extends Component<BuildBricksProps> {
   }
 
   renderSortedBricks = () => {
-    const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize + 3, this.props.finalBricks)
+    const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize, this.props.finalBricks)
 
     return data.map(item => {
       const {brick} = item;
@@ -238,6 +238,134 @@ class BuildBricks extends Component<BuildBricksProps> {
     );
   }
 
+  renderRedDescription() {
+    let count = 0;
+    for (let b of this.props.finalBricks) {
+      if (b.status === BrickStatus.Draft && b.isCore === true) {
+        count++;
+      }
+    }
+    return (
+      <div className="brick-container color1" style={{width: '4vw'}}>
+        <div className="absolute-container" style={{width: '4vw'}}>
+          <div className="short-description" style={{width: '4vw'}}>
+            <div className="left-brick-circle">
+              <div className="round-button">{count}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderYellowDescription() {
+    let count = 0;
+    for (let b of this.props.finalBricks) {
+      if (b.status === BrickStatus.Build && b.isCore === true) {
+        count++;
+      }
+    }
+    return (
+      <div className="brick-container color3" style={{width: '4vw'}}>
+        <div className="absolute-container" style={{width: '4vw'}}>
+          <div className="short-description" style={{width: '4vw'}}>
+            <div className="left-brick-circle">
+              <div className="round-button">{count}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderGreenDescription() {
+    let count = 0;
+    for (let b of this.props.finalBricks) {
+      if (b.status === BrickStatus.Review && b.isCore === true) {
+        count++;
+      }
+    }
+    return (
+      <div className="brick-container color2">
+        <div className="absolute-container">
+          <div className="short-description">
+            <div className="left-brick-circle skip-top-right-border">
+              <div className="round-button text-theme-green">{count}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderDescriptions() {
+    if (this.props.filters.draft && !this.props.filters.review && !this.props.filters.build) {
+      let count = 0;
+      for (let b of this.props.finalBricks) {
+        if (b.status === BrickStatus.Draft && b.isCore === true) {
+          count++;
+        }
+      }
+      return (
+        <div className="fixed-first-brick">
+          <BrickColDescription label="Draft Bricks" color="color1" number={count} />
+        </div>
+      );
+    } else if (!this.props.filters.draft && !this.props.filters.review && this.props.filters.build) {
+      let count = 0;
+      for (let b of this.props.finalBricks) {
+        if (b.status === BrickStatus.Build && b.isCore === true) {
+          count++;
+        }
+      }
+      return (
+        <div className="fixed-first-brick">
+          <BrickColDescription label="Submitted to Editor(s)" color="color3" number={count} />;
+        </div>
+      );
+    } else if (!this.props.filters.draft && this.props.filters.review && !this.props.filters.build) {
+      let count = 0;
+      for (let b of this.props.finalBricks) {
+        if (b.status === BrickStatus.Review && b.isCore === true) {
+          count++;
+        }
+      }
+      return (
+        <div className="fixed-first-brick">
+          <BrickColDescription label="Pending Publication" color="color2" number={count} isGreen={true}/>
+        </div>
+      );
+    } else if (!this.props.filters.draft && this.props.filters.review && this.props.filters.build) {
+      return (
+        <div className="fixed-first-brick">
+          <div className="main-brick-container description">
+            {this.renderYellowDescription()}
+            {this.renderGreenDescription()}
+          </div>
+        </div>
+      );
+    } else if (this.props.filters.draft && this.props.filters.review && !this.props.filters.build) {
+      return (
+        <div className="fixed-first-brick">
+          <div className="main-brick-container description">
+            {this.renderRedDescription()}
+            {this.renderGreenDescription()}
+          </div>
+        </div>
+      );
+    } else if (this.props.filters.draft && !this.props.filters.review && this.props.filters.build) {
+      return (
+        <div className="fixed-first-brick">
+          <div className="main-brick-container description">
+            {this.renderRedDescription()}
+            {this.renderYellowDescription()}
+          </div>
+        </div>
+      );
+    }
+    return '';
+  }
+
   render() {
     let isEmpty = false;
 
@@ -256,7 +384,8 @@ class BuildBricks extends Component<BuildBricksProps> {
           publishedCount={this.props.published}
           onSwitch={this.props.switchPublish}
         />
-        <div className="bricks-list">
+        <div className={`bricks-list ${this.isThreeColumns() ? 'three-columns' : 'list'}`}>
+          {!this.isThreeColumns() && this.renderDescriptions()}
           {this.renderBricks()}
         </div>
       </div>
