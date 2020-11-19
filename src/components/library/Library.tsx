@@ -51,6 +51,7 @@ interface BricksListState {
 
   dropdownShown: boolean;
 
+  activeClassroomId: number;
   isClearFilter: boolean;
   isClassClearFilter: boolean;
   failedRequest: boolean;
@@ -82,6 +83,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       pageSize: 15,
       isLoading: true,
 
+      activeClassroomId: -1,
       isClearFilter: false,
       isClassClearFilter: false,
       failedRequest: false,
@@ -207,13 +209,13 @@ class Library extends Component<BricksListProps, BricksListState> {
       let rawAssignments = await getLibraryBricks(id);
       if (rawAssignments) {
         const finalAssignments = this.filter(rawAssignments, this.state.subjects, this.state.isCore);
-        this.setState({...this.state, rawAssignments, finalAssignments});
+        this.setState({...this.state, activeClassroomId: id, rawAssignments, finalAssignments});
       }
     } else {
       let rawAssignments = await getLibraryBricks();
       if (rawAssignments) {
         const finalAssignments = this.filter(rawAssignments, this.state.subjects, this.state.isCore);
-        this.setState({...this.state, rawAssignments, finalAssignments});
+        this.setState({...this.state, activeClassroomId: id, rawAssignments, finalAssignments});
       }
     }
   }
@@ -315,6 +317,13 @@ class Library extends Component<BricksListProps, BricksListState> {
     } else if (filterSubjects.length > 1) {
       return "Filtered";
     }
+    const {activeClassroomId} = this.state;
+    if (activeClassroomId > 0) {
+      const classroom = this.state.classrooms.find(c => c.id == activeClassroomId);
+      if (classroom) {
+        return classroom.name;
+      }
+    }
     return "My Library";
   }
 
@@ -352,7 +361,13 @@ class Library extends Component<BricksListProps, BricksListState> {
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
-              <div className={`brick-row-title main-title uppercase ${filterSubjects.length === 1 && 'subject-title'}`}>
+              <div className={
+                  `
+                    brick-row-title main-title uppercase
+                    ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}
+                  `
+                }
+              >
                 {this.renderMainTitle(filterSubjects)}
               </div>
               {this.props.user &&
