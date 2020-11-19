@@ -13,7 +13,7 @@
 
     .tab-container {
       display: flex;
-      flex-wrap: nowrap;
+      flex-wrap: nowrap;  
 
       .long {
         width: 25vw;
@@ -54,6 +54,10 @@
       > div:last-child {
         border-top-right-radius: 0vw;
         margin-right: 0;
+      }
+
+      > div.no-active:hover {
+        background: var(--off-white) !important;
       }
     }
   }
@@ -157,11 +161,19 @@
           color: var(--theme-orange);
           height: $size;
           width: $size;
+          @extend %transitionAll300;
         }
         span {
           margin-left: 1vw;
           height: 2.5vw;
           @extend %flexToYCenter;
+        }
+
+        &:hover {
+          .svg {
+            -webkit-transform: rotate(10deg);
+            transform: rotate(10deg);
+          }
         }
       }
     }
