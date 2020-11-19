@@ -352,7 +352,7 @@ class Library extends Component<BricksListProps, BricksListState> {
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
-              <div className="brick-row-title main-title uppercase">
+              <div className={`brick-row-title main-title uppercase ${filterSubjects.length === 1 && 'subject-title'}`}>
                 {this.renderMainTitle(filterSubjects)}
               </div>
               {this.props.user &&
