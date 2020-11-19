@@ -54,6 +54,7 @@ interface BricksListState {
   isLoading: boolean;
 
   noSubjectOpen: boolean;
+  activeSubjectName: string;
   dropdownShown: boolean;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
@@ -90,6 +91,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       subjects: [],
       sortedIndex: 0,
       noSubjectOpen: false,
+      activeSubjectName: '',
       deleteDialogOpen: false,
       deleteBrickId: -1,
       finalBricks: [],
@@ -771,7 +773,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           if (s.id === subjectId) {
             this.props.history.push(map.ProposalSubject + '?selectedSubject=' + subjectId);
           } else {
-            this.setState({noSubjectOpen: true});
+            this.setState({noSubjectOpen: true, activeSubjectName: filterSubjects[0].name});
           }
         }
       }
@@ -918,6 +920,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
         />
         <NoSubjectDialog
           isOpen={this.state.noSubjectOpen}
+          subjectName={this.state.activeSubjectName}
           submit={() => this.props.history.push(map.UserProfile)}
           close={() => this.setState({noSubjectOpen: false})}
         />
