@@ -12,9 +12,12 @@ import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
 import { Brick, BrickStatus } from "model/brick";
+import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
+import map from "components/map";
 
 
 interface SidebarProps {
+  history: any;
   sidebarRolledUp: boolean;
   toggleSidebar(): void;
 
@@ -34,6 +37,7 @@ interface SidebarProps {
 }
 
 interface SidebarState {
+  isAdaptBrickOpen: boolean;
   isCoomingSoonOpen: boolean;
   isAssigningOpen: boolean;
 }
@@ -42,6 +46,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   constructor(props: SidebarProps) {
     super(props);
     this.state = {
+      isAdaptBrickOpen: false,
       isCoomingSoonOpen: false,
       isAssigningOpen: false,
     }
@@ -155,7 +160,12 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     brick.status = BrickStatus.Draft;
     delete brick.editors;
     delete brick.publisher;
-    await this.props.createBrick(brick);
+    let copyBrick = await this.props.createBrick(brick);
+    if (copyBrick) {
+      this.props.history.push(map.ProposalReview);
+    } else {
+      console.log('can`t copy');
+    }
   }
 
   renderAdaptButton() {
@@ -165,13 +175,13 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     if (!this.props.sidebarRolledUp) {
       return (
-        <button onClick={this.createBrickCopy.bind(this)} className="assign-class-button svgOnHover blue">
+        <button onClick={() => this.setState({isAdaptBrickOpen: true})} className="assign-class-button svgOnHover blue">
           <span>Adapt Brick</span>
         </button>
       );
     }
     return (
-      <button onClick={this.createBrickCopy.bind(this)} className="assign-class-button svgOnHover blue">
+      <button onClick={() => this.setState({isAdaptBrickOpen: true})} className="assign-class-button svgOnHover blue">
         <SpriteIcon name="copy" className="active" />
       </button>
     );
@@ -226,11 +236,16 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return (
       <div>
         <CommingSoonDialog isOpen={this.state.isCoomingSoonOpen} close={() => this.toggleCommingSoon()} />
-        {canSee ?
+        <AdaptBrickDialog
+          isOpen={this.state.isAdaptBrickOpen}
+          close={() => this.setState({isAdaptBrickOpen: false})}
+          submit={this.createBrickCopy.bind(this)}
+        />
+        {canSee &&
           <AssignPersonOrClassDialog
             isOpen={this.state.isAssigningOpen}
             close={() => { this.setState({ isAssigningOpen: false }) }}
-          /> : ""}
+          />}
       </div>
     );
   }

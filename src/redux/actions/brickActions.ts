@@ -108,6 +108,7 @@ const createBrick = (brick:any) => {
       const brick = response.data as Brick;
       dispatch(createBrickSuccess(brick));
       dispatch(comments.getComments(brick.id));
+      return brick;
     })
     .catch(error => {
       dispatch(createBrickFailure(error.message))

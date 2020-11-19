@@ -240,6 +240,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       {renderHead()}
       <div className={className}>
         <PlayLeftSidebar
+          history={history}
           brick={brick}
           sidebarRolledUp={sidebarRolledUp}
           toggleSidebar={setSidebar}
