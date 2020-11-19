@@ -6,4 +6,7 @@
     height: 25vh;
     overflow-y: scroll;
   }
+  .index-box.hover-light:hover {
+    background: var(--light-blue-alpha3);
+  }
 }

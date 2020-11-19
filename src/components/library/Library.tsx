@@ -51,6 +51,7 @@ interface BricksListState {
 
   dropdownShown: boolean;
 
+  activeClassroomId: number;
   isClearFilter: boolean;
   isClassClearFilter: boolean;
   failedRequest: boolean;
@@ -82,6 +83,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       pageSize: 15,
       isLoading: true,
 
+      activeClassroomId: -1,
       isClearFilter: false,
       isClassClearFilter: false,
       failedRequest: false,
@@ -125,18 +127,28 @@ class Library extends Component<BricksListProps, BricksListState> {
     return [];
   }
 
+  countSubjectBricks(subjects: any[], assignments: AssignmentBrick[]) {
+    subjects.forEach((s:any) => {
+      s.publicCount = 0;
+      s.personalCount = 0;
+    });
+    for (let a of assignments) {
+      for (let s of subjects) {
+        if (s.id === a.brick.subjectId) {
+          if (a.brick.isCore) {
+            s.publicCount += 1;
+          } else {
+            s.personalCount += 1;
+          }
+        }
+      }
+    }
+  }
+
   prepareSubjects(assignments: AssignmentBrick[], subjects: Subject[]) {
     subjects = subjects.filter(s => assignments.find(a => a.brick.subjectId === s.id));
-      
-    subjects.forEach(s => {
-      s.publishedBricksCount = 0;
-      assignments.forEach(a => {
-        if (a.brick.subjectId === s.id) {
-          s.publishedBricksCount += 1;
-        }
-      });
-    });
 
+    this.countSubjectBricks(subjects, assignments);
     return subjects;
   }
 
@@ -207,13 +219,13 @@ class Library extends Component<BricksListProps, BricksListState> {
       let rawAssignments = await getLibraryBricks(id);
       if (rawAssignments) {
         const finalAssignments = this.filter(rawAssignments, this.state.subjects, this.state.isCore);
-        this.setState({...this.state, rawAssignments, finalAssignments});
+        this.setState({...this.state, activeClassroomId: id, rawAssignments, finalAssignments});
       }
     } else {
       let rawAssignments = await getLibraryBricks();
       if (rawAssignments) {
         const finalAssignments = this.filter(rawAssignments, this.state.subjects, this.state.isCore);
-        this.setState({...this.state, rawAssignments, finalAssignments});
+        this.setState({...this.state, activeClassroomId: id, rawAssignments, finalAssignments});
       }
     }
   }
@@ -315,6 +327,13 @@ class Library extends Component<BricksListProps, BricksListState> {
     } else if (filterSubjects.length > 1) {
       return "Filtered";
     }
+    const {activeClassroomId} = this.state;
+    if (activeClassroomId > 0) {
+      const classroom = this.state.classrooms.find(c => c.id == activeClassroomId);
+      if (classroom) {
+        return classroom.name;
+      }
+    }
     return "My Library";
   }
 
@@ -339,6 +358,7 @@ class Library extends Component<BricksListProps, BricksListState> {
           <Grid container item xs={3} className="sort-and-filter-container">
             <LibraryFilter
               sortBy={this.state.sortBy}
+              isPublic={this.state.isCore}
               classrooms={this.state.classrooms}
               subjects={this.state.subjects}
               assignments={this.state.rawAssignments}
@@ -352,7 +372,13 @@ class Library extends Component<BricksListProps, BricksListState> {
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
-              <div className="brick-row-title main-title uppercase">
+              <div className={
+                  `
+                    brick-row-title main-title uppercase
+                    ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}
+                  `
+                }
+              >
                 {this.renderMainTitle(filterSubjects)}
               </div>
               {this.props.user &&

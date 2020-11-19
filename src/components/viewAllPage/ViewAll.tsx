@@ -7,6 +7,7 @@ import queryString from 'query-string';
 import "swiper/swiper.scss";
 
 import "./ViewAll.scss";
+import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
 import { Brick, BrickStatus } from "model/brick";
@@ -32,6 +33,7 @@ import { getBrickColor } from "services/brick";
 import { isMobile } from "react-device-detect";
 import map from "components/map";
 import NoSubjectDialog from "components/baseComponents/dialogs/NoSubjectDialog";
+import { clearProposal } from "localStorage/proposal";
 
 
 interface BricksListProps {
@@ -39,6 +41,7 @@ interface BricksListProps {
   notifications: Notification[] | null;
   history: any;
   location: any;
+  forgetBrick(): void;
 }
 
 interface BricksListState {
@@ -54,6 +57,7 @@ interface BricksListState {
   isLoading: boolean;
 
   noSubjectOpen: boolean;
+  activeSubjectName: string;
   dropdownShown: boolean;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
@@ -90,6 +94,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       subjects: [],
       sortedIndex: 0,
       noSubjectOpen: false,
+      activeSubjectName: '',
       deleteDialogOpen: false,
       deleteBrickId: -1,
       finalBricks: [],
@@ -266,6 +271,18 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     for (let subject of subjects) {
       if (subject.checked) {
         filterSubjects.push(subject.id);
+      }
+    }
+    return filterSubjects;
+  }
+
+  getCheckedSubjects() {
+    const filterSubjects = [];
+    const { state } = this;
+    const { subjects } = state;
+    for (let subject of subjects) {
+      if (subject.checked) {
+        filterSubjects.push(subject);
       }
     }
     return filterSubjects;
@@ -762,16 +779,18 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   }
 
   moveToCreateOne() {
-    const filterSubjects = this.getCheckedSubjectIds();
+    const filterSubjects = this.getCheckedSubjects();
     if (filterSubjects.length === 1) {
-      const subjectId = filterSubjects[0];
+      const subjectId = filterSubjects[0].id;
       const {subjects} = this.props.user;
       if (subjects) {
         for (let s of subjects) {
           if (s.id === subjectId) {
+            clearProposal();
+            this.props.forgetBrick();
             this.props.history.push(map.ProposalSubject + '?selectedSubject=' + subjectId);
           } else {
-            this.setState({noSubjectOpen: true});
+            this.setState({noSubjectOpen: true, activeSubjectName: filterSubjects[0].name});
           }
         }
       }
@@ -918,6 +937,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
         />
         <NoSubjectDialog
           isOpen={this.state.noSubjectOpen}
+          subjectName={this.state.activeSubjectName}
           submit={() => this.props.history.push(map.UserProfile)}
           close={() => this.setState({noSubjectOpen: false})}
         />
@@ -931,4 +951,8 @@ const mapState = (state: ReduxCombinedState) => ({
   notifications: state.notifications.notifications
 });
 
-export default connect(mapState)(ViewAllPage);
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(brickActions.forgetBrick()),
+});
+
+export default connect(mapState, mapDispatch)(ViewAllPage);

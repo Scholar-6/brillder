@@ -27,7 +27,7 @@ interface TabProps {
 const TabComponent: React.FC<TabProps> = ({ isTeach, isCore, activeTab, user, setTab, onCoreSwitch }) => {
   const tabs:any[] = [];
 
-  const isActive = (t1: ActiveTab, t2: ActiveTab) => t1 === t2 ? 'active' : '';
+  const isActive = (t1: ActiveTab, t2: ActiveTab) => t1 === t2 ? 'active' : 'no-active';
 
   const getBuildTab = () => {
     const className = isActive(activeTab, ActiveTab.Build);
