@@ -365,7 +365,7 @@ $space-between-boxes: 0.1vw;
       border-radius: 50%;
       background: #fff;
       @extend %transitionAll300;
-      opacity: 50% !important;
+      opacity: 0.5 !important;
       &.hovered {
         position: absolute;
         top: -10%;
