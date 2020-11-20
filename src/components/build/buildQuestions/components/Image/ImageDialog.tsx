@@ -87,14 +87,14 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   return (
     <BaseDialogWrapper open={open} close={() => setDialog(false)} submit={() => {}}>
       <div className="dialog-header image-dialog">
-        <div className={`cropping ${file ? '' : 'empty'}`}>
+        <div className={`cropping ${(file || initData.value) ? '' : 'empty'}`}>
           <div className="switch-image">
             <div className={"svgOnHover " + className} onClick={handleClick}>
               <SpriteIcon name="plus" className="svg-plus active text-white" />
             </div>
           </div>
-          {file
-            ? <DropImage initFileName="" locked={false} file={file} setFile={setCroped} />
+          {(file || initData.value)
+            ? <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
             : <SpriteIcon name="image" className="icon-image" />
           }
         </div>

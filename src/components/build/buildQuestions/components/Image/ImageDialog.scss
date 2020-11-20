@@ -124,6 +124,11 @@
       transform: rotate(45deg);
     }
   }
+  .cropping {
+    img {
+      max-width: 100%;
+    }
+  }
   .cropping.empty {
     @extend %flexCenter;
   }
