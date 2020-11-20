@@ -22,7 +22,7 @@ const AssignSuccessDialog: React.FC<DialogProps> = props => {
       <div className="dialog-header">
         <ListItem>
           <ListItemText
-            primary={`Things have been assigned ${props.brickTitle}!`}
+            primary={`Classes or Students have been assigned to ${props.brickTitle}`}
             className="bold" style={{ minWidth: '30vw' }}
           />
           <ListItemAvatar>
