@@ -9,6 +9,7 @@ import SpriteIcon from "../SpriteIcon";
 
 interface DialogProps {
   isOpen: boolean;
+  selectedItems: any[];
   brickTitle: string;
   close(): void;
 }

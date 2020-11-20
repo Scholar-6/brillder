@@ -42,6 +42,7 @@ interface SidebarState {
   isCoomingSoonOpen: boolean;
   isAssigningOpen: boolean;
   isAssignedSuccessOpen: boolean;
+  selectedItems: any[];
 }
 
 class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
@@ -52,6 +53,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       isCoomingSoonOpen: false,
       isAssigningOpen: false,
       isAssignedSuccessOpen: false,
+      selectedItems: []
     }
   }
 
@@ -247,12 +249,15 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {canSee &&
           <AssignPersonOrClassDialog
             isOpen={this.state.isAssigningOpen}
-            success={() => this.setState({ isAssigningOpen: false, isAssignedSuccessOpen: true})}
+            success={(items: any[]) => {
+              this.setState({ isAssigningOpen: false, selectedItems: items, isAssignedSuccessOpen: true
+            })}}
             close={() => this.setState({ isAssigningOpen: false })}
           />}
         <AssignSuccessDialog
           isOpen={this.state.isAssignedSuccessOpen}
           brickTitle={this.props.brick.title}
+          selectedItems={this.state.selectedItems}
           close={() => this.setState({isAssignedSuccessOpen: false})}
         />
       </div>
