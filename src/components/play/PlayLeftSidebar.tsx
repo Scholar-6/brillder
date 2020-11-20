@@ -220,7 +220,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {this.renderHightlightButton()}
         {this.renderAnotateButton()}
         {this.renderAssignButton()}
-        {this.renderAdaptButton()}
+        {/*{this.renderAdaptButton()}*/}
       </div>
     );
   }

@@ -43,6 +43,9 @@ $tile-height: 100%;
     &.active {
       .drag-tile {
         background: var(--white);
+        .tab-number {
+          opacity: 1;
+        }
       }
     }
     .synthesis-tab-icon {
@@ -73,6 +76,7 @@ $tile-height: 100%;
       font-family: $font-family-bold;
       font-size: 3.4vh;
       user-select: none;
+      opacity: 0.2;
     }
     .unread-indicator {
       width: 1.1vw;
