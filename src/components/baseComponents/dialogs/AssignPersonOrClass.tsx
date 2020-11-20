@@ -101,9 +101,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
   const classroomSelected = (objs: any[]) => {
     setSelected(objs);
+    setAutoCompleteDropdown(false);
   }
 
-  const assign = (e: any) => {
+  const assign = () => {
     let classroomIds:Number[] = [];
     let studentIds:Number[] = [];
     for (let obj of selectedObjs) {
@@ -125,14 +126,13 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue">
       <div className="dialog-header">
-        <div>Who would you like to assign this brick to?</div>
+        <div className="bold">Who would you like to assign this brick to?</div>
         <Autocomplete
           multiple
           open={autoCompleteOpen}
-          onBlur={e => assign(e)}
           options={[...classes, ...students]}
           onChange={(e: any, c: any) => classroomSelected(c)}
-          getOptionLabel={(option: any) => option.isStudent ? `Student ${option.firstName} ${option.lastName}` : 'Class ' + option.name}
+          getOptionLabel={(option: any) => option.isStudent ? `Student ${option.firstName} ${option.lastName} (${option.username})` : 'Class ' + option.name}
           renderInput={(params: any) => (
             <TextField
               onBlur={() => hide()}
@@ -145,14 +145,15 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           )}
           renderOption={(option: any, { selected }) => (
             <React.Fragment>
-              <Checkbox
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
               {option.isStudent ? `Student ${option.firstName} ${option.lastName}` : 'Class ' + option.name}
             </React.Fragment>
           )}
         />
+        <div className="dialog-footer">
+          <button className="btn btn-md bg-theme-orange yes-button" onClick={assign}>
+            <span>Assign</span>
+          </button>
+        </div>
       </div>
     </Dialog>
   );
