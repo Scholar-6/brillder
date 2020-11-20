@@ -14,6 +14,7 @@ import UnauthorizedText from "./UnauthorizedText";
 import { Brick, BrickStatus } from "model/brick";
 import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
 import map from "components/map";
+import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
 
 
 interface SidebarProps {
@@ -40,6 +41,7 @@ interface SidebarState {
   isAdaptBrickOpen: boolean;
   isCoomingSoonOpen: boolean;
   isAssigningOpen: boolean;
+  isAssignedSuccessOpen: boolean;
 }
 
 class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
@@ -49,6 +51,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       isAdaptBrickOpen: false,
       isCoomingSoonOpen: false,
       isAssigningOpen: false,
+      isAssignedSuccessOpen: false,
     }
   }
 
@@ -244,8 +247,14 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {canSee &&
           <AssignPersonOrClassDialog
             isOpen={this.state.isAssigningOpen}
-            close={() => { this.setState({ isAssigningOpen: false }) }}
+            success={() => this.setState({ isAssigningOpen: false, isAssignedSuccessOpen: true})}
+            close={() => this.setState({ isAssigningOpen: false })}
           />}
+        <AssignSuccessDialog
+          isOpen={this.state.isAssignedSuccessOpen}
+          brickTitle={this.props.brick.title}
+          close={() => this.setState({isAssignedSuccessOpen: false})}
+        />
       </div>
     );
   }
