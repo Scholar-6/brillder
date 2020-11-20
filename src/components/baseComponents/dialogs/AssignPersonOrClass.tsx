@@ -125,7 +125,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue">
       <div className="dialog-header">
-        <div>Who would you like to assign this brick to?</div>
+        <div className="bold">Who would you like to assign this brick to?</div>
         <Autocomplete
           multiple
           open={autoCompleteOpen}
