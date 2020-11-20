@@ -39,7 +39,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   }, [initFile, initData.value]);
 
   let canUpload = false;
-  if (permision && source && file) {
+  if (permision && source && (file || initData.value)) {
     canUpload = true;
   }
 
@@ -69,14 +69,11 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
 
   const marks = [{
       value: 20,
-      label: 'Small',
-    }, {
-      value: 30,
-      label: 'Medium',
+      label: '-',
     },
     {
       value: 50,
-      label: 'Large',
+      label: '+',
     },
   ];
 
@@ -87,14 +84,14 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   return (
     <BaseDialogWrapper open={open} close={() => setDialog(false)} submit={() => {}}>
       <div className="dialog-header image-dialog">
-        <div className={`cropping ${file ? '' : 'empty'}`}>
+        <div className={`cropping ${(file || initData.value) ? '' : 'empty'}`}>
           <div className="switch-image">
             <div className={"svgOnHover " + className} onClick={handleClick}>
               <SpriteIcon name="plus" className="svg-plus active text-white" />
             </div>
           </div>
-          {file
-            ? <DropImage initFileName="" locked={false} file={file} setFile={setCroped} />
+          {(file || initData.value)
+            ? <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
             : <SpriteIcon name="image" className="icon-image" />
           }
         </div>

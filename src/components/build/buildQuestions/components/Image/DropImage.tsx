@@ -7,7 +7,7 @@ import './DropImage.scss';
 interface ImageProps {
   initFileName: string;
   locked: boolean;
-  file: File;
+  file: File | null;
   setFile(file: File): void;
 }
 
@@ -23,9 +23,11 @@ const DropImage: React.FC<ImageProps> = props => {
     reader.onerror = error => reject(error);
   });
 
-  toBase64(props.file).then(b64 => {
-    setBase64(b64);
-  });
+  if (props.file) {
+    toBase64(props.file).then(b64 => {
+      setBase64(b64);
+    });
+  }
 
   const getCroppedImg = (crop: any) => {
     if (image) {
@@ -78,8 +80,9 @@ const DropImage: React.FC<ImageProps> = props => {
         onComplete={getCroppedImg}
       />
     );
+  } else {
+    return <img src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.initFileName}`} />
   }
-  return <div></div>
 }
 
 export default DropImage;
