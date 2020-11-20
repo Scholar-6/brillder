@@ -17,7 +17,7 @@ import SpriteIcon from '../SpriteIcon';
 interface AssignPersonOrClassProps {
   brick: Brick;
   isOpen: boolean;
-  success(): void;
+  success(items: any): void;
   close(): void;
   requestFailed(e: string): void;
 }
@@ -70,22 +70,29 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }, [value, getAllStudents, getClasses]);
 
   const assignToStudents = async (studentsIds: Number[]) => {
-    await axios.post(
+    return await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignStudents/${props.brick.id}`,
       {studentsIds },
       { withCredentials: true }
-    ).catch(() => {
+    ).then(() => {
+      return true;
+    })
+    .catch(() => {
       props.requestFailed('Can`t assign student to brick');
+      return false;
     });
   }
 
   const assignToClasses = async (classesIds: Number[]) => {
-    await axios.post(
+    return await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignClasses/${props.brick.id}`,
       {classesIds},
       { withCredentials: true }
-    ).catch(() => {
+    ).then(() => {
+      return true;
+    }).catch(() => {
       props.requestFailed('Can`t assign class to brick');
+      return false;
     });
   }
 
@@ -105,7 +112,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     setAutoCompleteDropdown(false);
   }
 
-  const assign = () => {
+  const assign = async () => {
     let classroomIds:Number[] = [];
     let studentIds:Number[] = [];
     for (let obj of selectedObjs) {
@@ -115,13 +122,24 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         classroomIds.push(obj.id);
       }
     }
+    let good = true;
     if (studentIds.length > 0) {
-      assignToStudents(studentIds);
+      let res = await assignToStudents(studentIds);
+      if (!res) {
+        good = false;
+      }
     }
     if (classroomIds.length > 0) {
-      assignToClasses(classroomIds);
+      let res = await assignToClasses(classroomIds);
+      if (!res) {
+        good = false;
+      }
     }
-    props.success();
+    if (good) {
+      props.success(selectedObjs);
+    } else {
+      props.close();
+    }
   }
 
   return (
