@@ -15,6 +15,8 @@ import { Brick, BrickStatus } from "model/brick";
 import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
 import map from "components/map";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
+import { getApiQuestion } from "components/build/questionService/QuestionService";
+import { Question } from "model/question";
 
 
 interface SidebarProps {
@@ -162,12 +164,22 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   async createBrickCopy() {
     let brick = Object.assign({}, this.props.brick);
     brick.id = null as any;
+    brick.isCore = false;
     brick.status = BrickStatus.Draft;
     delete brick.editors;
     delete brick.publisher;
+
+    brick.questions = [];
+
+    for (let q of this.props.brick.questions) {
+      let apiQuestion = getApiQuestion(q) as Question;
+      apiQuestion.id = null as any;
+      brick.questions.push(apiQuestion);
+    }
+ 
     let copyBrick = await this.props.createBrick(brick);
     if (copyBrick) {
-      this.props.history.push(map.ProposalReview);
+      this.props.history.push(map.ProposalReview + '?bookHovered=true');
     } else {
       console.log('can`t copy');
     }
@@ -225,7 +237,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {this.renderHightlightButton()}
         {this.renderAnotateButton()}
         {this.renderAssignButton()}
-        {/*{this.renderAdaptButton()}*/}
+        {this.renderAdaptButton()}
       </div>
     );
   }

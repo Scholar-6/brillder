@@ -1,6 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import queryString from 'query-string';
 import { History } from 'history';
 
 import './ProposalReview.scss';
@@ -50,9 +51,16 @@ interface ProposalState {
 class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
+
+    const values = queryString.parse(props.history.location.search);
+    let bookHovered = false;
+    if (values.bookHovered) {
+      bookHovered = true;
+    }
+
     this.state = {
       mode: true,
-      bookHovered: false,
+      bookHovered,
       bookState: BookState.TitlesPage,
       briefCommentPanelExpanded: false,
       closeTimeout: -1,
