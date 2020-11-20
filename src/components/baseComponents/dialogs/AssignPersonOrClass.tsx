@@ -4,7 +4,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import Checkbox from '@material-ui/core/Checkbox';
 
 import './AssignPersonOrClass.scss';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -18,6 +17,7 @@ import SpriteIcon from '../SpriteIcon';
 interface AssignPersonOrClassProps {
   brick: Brick;
   isOpen: boolean;
+  success(): void;
   close(): void;
   requestFailed(e: string): void;
 }
@@ -121,7 +121,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (classroomIds.length > 0) {
       assignToClasses(classroomIds);
     }
-    props.close();
+    props.success();
   }
 
   return (
@@ -153,8 +153,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
           <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{width: 'auto'}}>
             <div className="centered">
-            <SpriteIcon name="file-plus" />
-            <span className="label">Assign Brick</span>
+              <SpriteIcon name="file-plus" />
+              <span className="label">Assign Brick</span>
             </div>
           </button>
         </div>
