@@ -17,7 +17,7 @@ const AdaptBrickDialog: React.FC<DialogProps> = ({ isOpen, submit, close }) => {
         <button className="btn btn-md bg-theme-orange yes-button" onClick={submit}>
           <span>Yes</span>
         </button>
-        <button className="btn btn-md bg-theme-orange yes-button" onClick={close}>
+        <button className="btn btn-md bg-gray no-button" onClick={close}>
           <span>No</span>
         </button>
       </div>
