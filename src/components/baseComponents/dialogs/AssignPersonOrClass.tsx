@@ -13,6 +13,7 @@ import { UserBase } from 'model/user';
 import { Classroom } from 'model/classroom';
 import { Brick } from 'model/brick';
 import { getClassrooms, getStudents } from 'services/axios/classroom';
+import SpriteIcon from '../SpriteIcon';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
@@ -124,7 +125,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }
 
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue">
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
       <div className="dialog-header">
         <div className="bold">Who would you like to assign this brick to?</div>
         <Autocomplete
@@ -149,9 +150,12 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             </React.Fragment>
           )}
         />
-        <div className="dialog-footer">
-          <button className="btn btn-md bg-theme-orange yes-button" onClick={assign}>
-            <span>Assign</span>
+        <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
+          <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{width: 'auto'}}>
+            <div className="centered">
+            <SpriteIcon name="file-plus" />
+            <span className="label">Assign Brick</span>
+            </div>
           </button>
         </div>
       </div>
