@@ -14,6 +14,9 @@ import UnauthorizedText from "./UnauthorizedText";
 import { Brick, BrickStatus } from "model/brick";
 import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
 import map from "components/map";
+import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
+import { getApiQuestion } from "components/build/questionService/QuestionService";
+import { Question } from "model/question";
 
 
 interface SidebarProps {
@@ -40,6 +43,8 @@ interface SidebarState {
   isAdaptBrickOpen: boolean;
   isCoomingSoonOpen: boolean;
   isAssigningOpen: boolean;
+  isAssignedSuccessOpen: boolean;
+  selectedItems: any[];
 }
 
 class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
@@ -49,6 +54,8 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       isAdaptBrickOpen: false,
       isCoomingSoonOpen: false,
       isAssigningOpen: false,
+      isAssignedSuccessOpen: false,
+      selectedItems: []
     }
   }
 
@@ -157,12 +164,22 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   async createBrickCopy() {
     let brick = Object.assign({}, this.props.brick);
     brick.id = null as any;
+    brick.isCore = false;
     brick.status = BrickStatus.Draft;
     delete brick.editors;
     delete brick.publisher;
+
+    brick.questions = [];
+
+    for (let q of this.props.brick.questions) {
+      let apiQuestion = getApiQuestion(q) as Question;
+      apiQuestion.id = null as any;
+      brick.questions.push(apiQuestion);
+    }
+ 
     let copyBrick = await this.props.createBrick(brick);
     if (copyBrick) {
-      this.props.history.push(map.ProposalReview);
+      this.props.history.push(map.ProposalReview + '?bookHovered=true');
     } else {
       console.log('can`t copy');
     }
@@ -220,7 +237,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {this.renderHightlightButton()}
         {this.renderAnotateButton()}
         {this.renderAssignButton()}
-        {/*{this.renderAdaptButton()}*/}
+        {this.renderAdaptButton()}
       </div>
     );
   }
@@ -244,8 +261,17 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {canSee &&
           <AssignPersonOrClassDialog
             isOpen={this.state.isAssigningOpen}
-            close={() => { this.setState({ isAssigningOpen: false }) }}
+            success={(items: any[]) => {
+              this.setState({ isAssigningOpen: false, selectedItems: items, isAssignedSuccessOpen: true
+            })}}
+            close={() => this.setState({ isAssigningOpen: false })}
           />}
+        <AssignSuccessDialog
+          isOpen={this.state.isAssignedSuccessOpen}
+          brickTitle={this.props.brick.title}
+          selectedItems={this.state.selectedItems}
+          close={() => this.setState({isAssignedSuccessOpen: false})}
+        />
       </div>
     );
   }
