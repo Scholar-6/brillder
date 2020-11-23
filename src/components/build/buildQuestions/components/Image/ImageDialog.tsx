@@ -8,16 +8,19 @@ import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapp
 import DropImage from "./DropImage";
 import { ImageAlign, ImageComponentData } from "./model";
 import Slider from '@material-ui/core/Slider';
+import ImageDesktopPreview from "./ImageDesktopPreview";
+import { fileUrl } from "components/services/uploadFile";
 
 interface DialogProps {
   open: boolean;
   initFile: File | null;
   initData: ImageComponentData;
   upload(file: File, source: string, caption: string, align: ImageAlign, height: number): void;
+  updateData(source: string, caption: string, align: ImageAlign, height: number): void;
   setDialog(open: boolean): void;
 }
 
-const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, setDialog }) => {
+const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, updateData, setDialog }) => {
   const [source, setSource] = React.useState(initData.imageSource || '');
   const [caption, setCaption] = React.useState(initData.imageCaption || '');
   const [permision, setPermision] = React.useState(false);
@@ -25,7 +28,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
   const [align, setAlign] = React.useState(ImageAlign.left);
-  const [height, setHeight] = React.useState(0 as number);
+  const [height, setHeight] = React.useState(30 as number);
   const [removed, setRemoved] = React.useState(null as boolean | null);
 
   useEffect(() => {
@@ -94,6 +97,8 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
             : <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
           }
         </div>
+        <ImageDesktopPreview src={fileUrl(initData.value)} height={height} caption={caption} file={cropedFile} />
+        <div className="absolute">
         <div className="bold">Where did you get this image?</div>
         <input
           value={source}
@@ -135,10 +140,13 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
           <SpriteIcon name="upload" className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
             if (cropedFile && canUpload) {
               upload(cropedFile, source, caption, align, height);
+            } else if (!removed) {
+              updateData(source, caption, align, height);
             } else {
               setValidation(true);
             }
            }} />
+        </div>
         </div>
       </div>
     </BaseDialogWrapper>

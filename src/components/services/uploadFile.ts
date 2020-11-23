@@ -1,6 +1,10 @@
 import axios from 'axios';
 
 
+export function fileUrl(fileName: string) {
+  return `${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`;
+}
+
 export function uploadFile(inputFile: File, callback: Function, onError: Function) {
   var formData = new FormData();
   const file = Object.assign(inputFile);
