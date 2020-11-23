@@ -38,7 +38,12 @@
       font-family: $font-family-regular;
     }
 
+    .class-header {
+      cursor: pointer;
+    }
+    
     .individuals-header {
+      cursor: pointer;
       margin-left: -0.5vw;
     }
 
