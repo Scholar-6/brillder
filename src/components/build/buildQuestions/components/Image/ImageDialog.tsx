@@ -92,10 +92,12 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
               <SpriteIcon name="plus" className="svg-plus active text-white" />
             </div>
           </div>
-          {removed
-            ? <SpriteIcon name="image" className="icon-image" />
-            : <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
-          }
+          <div className="centered">
+            {removed
+              ? <SpriteIcon name="image" className="icon-image" />
+              : <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
+            }
+          </div>
         </div>
          <div className="bold">Where did you get this image?</div>
          <input
@@ -136,7 +138,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
          />
         <div className="absolute">
           {!removed &&
-            <ImageDesktopPreview src={fileUrl(initData.value)} height={height} caption={caption} file={cropedFile} />
+            <ImageDesktopPreview src={fileUrl(initData.value)} height={height} align={align} file={cropedFile} />
           }
         </div>
         <div className="centered last-button">

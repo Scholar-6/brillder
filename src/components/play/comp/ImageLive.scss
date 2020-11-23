@@ -12,11 +12,15 @@
     justify-content: center;
   }
 }
-.image-play-container {}
 .image-play {
   max-width: 100%;
   @extend %textCenter;
   margin-top: 5px;
+}
+.custom-component.mobile-question-component {
+  .image-play {
+    height: auto !important;
+  }
 }
 
 .image-caption {

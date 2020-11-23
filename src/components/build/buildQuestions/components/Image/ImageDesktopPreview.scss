@@ -52,4 +52,13 @@
   .introduction-info {
     background: var(--solitude-light);
   }
+  .preview-image-container {
+    margin-top: 8vh;
+    padding-left: 4vw;
+    padding-right: 4vw;
+
+    &.image-center {
+      @extend %flexToXCenter;
+    }
+  }
 }
