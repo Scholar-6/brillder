@@ -31,10 +31,24 @@ const validateComponentValues = (components: any[]) => {
   return true;
 }
 
-export const validateHint = (hint: Hint) => {
+const validateEachHint = (list: any[], answersCount: number) => {
+  let index = 0;
+  for (let value of list) {
+    if (value === null || value === "") {
+      return true;
+    }
+    index++;
+    // limit number of hints
+    if (index >= answersCount) {
+      break;
+    }
+  }
+  return false;
+}
+
+export const validateHint = (hint: Hint, answersCount: number) => {
   if (hint.status === HintStatus.Each) {
-    const emptyHint = hint.list.some(h => h == null || h === "");
-    return emptyHint;
+    return validateEachHint(hint.list, answersCount);
   } else {
     return !hint.value;
   }
@@ -61,12 +75,17 @@ export function validateQuestion(question: Question) {
     return false;
   }
 
-  let isHintInvalid = validateHint(hint);
+  const comp = getUniqueComponent(components);
+
+  let answersCount = 1;
+  if (comp.list) {
+    answersCount = comp.list.length;
+  }
+  let isHintInvalid = validateHint(hint, answersCount);
   if (isHintInvalid) {
     return false;
   }
 
-  const comp = getUniqueComponent(components);
   if (type === QuestionTypeEnum.ShortAnswer || type === QuestionTypeEnum.VerticalShuffle
     || type === QuestionTypeEnum.HorizontalShuffle)
   {

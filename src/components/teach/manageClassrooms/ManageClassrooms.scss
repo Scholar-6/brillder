@@ -26,14 +26,25 @@
     padding-bottom: 1vw !important;
 
     .class-header,
-    .record-header {
+    .record-header,
+    .individuals-header {
       letter-spacing: 0.25vw;
       font-size: 1.3vw;
     }
 
-    .record-header {
+    .record-header,
+    .individuals-header {
       color: var(--dark-gray);
       font-family: $font-family-regular;
+    }
+
+    .class-header {
+      cursor: pointer;
+    }
+    
+    .individuals-header {
+      cursor: pointer;
+      margin-left: -0.5vw;
     }
 
     .class-header {

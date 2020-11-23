@@ -17,4 +17,10 @@
       font-family: $font-family-regular;
     }
   }
+  .terms-and-conditions {
+    padding: 9vh 3vw !important;
+    overflow: auto !important;
+    color: var(--theme-dark-blue);
+    height: calc(100vh - 5.834vw - 2vw) !important;
+  }
 }
