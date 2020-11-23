@@ -8,16 +8,19 @@ import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapp
 import DropImage from "./DropImage";
 import { ImageAlign, ImageComponentData } from "./model";
 import Slider from '@material-ui/core/Slider';
+import ImageDesktopPreview from "./ImageDesktopPreview";
+import { fileUrl } from "components/services/uploadFile";
 
 interface DialogProps {
   open: boolean;
   initFile: File | null;
   initData: ImageComponentData;
   upload(file: File, source: string, caption: string, align: ImageAlign, height: number): void;
+  updateData(source: string, caption: string, align: ImageAlign, height: number): void;
   setDialog(open: boolean): void;
 }
 
-const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, setDialog }) => {
+const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, updateData, setDialog }) => {
   const [source, setSource] = React.useState(initData.imageSource || '');
   const [caption, setCaption] = React.useState(initData.imageCaption || '');
   const [permision, setPermision] = React.useState(false);
@@ -25,7 +28,8 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
   const [align, setAlign] = React.useState(ImageAlign.left);
-  const [height, setHeight] = React.useState(0 as number);
+  const [height, setHeight] = React.useState(30 as number);
+  const [removed, setRemoved] = React.useState(null as boolean | null);
 
   useEffect(() => {
     if (!file) {
@@ -39,19 +43,20 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   }, [initFile, initData.value]);
 
   let canUpload = false;
-  if (permision && source && (file || initData.value)) {
+  if (permision && source && !removed) {
     canUpload = true;
   }
 
   let className = "add-image-button"
-  if (file) {
+  if (!removed) {
     className += " remove-image"
   }
 
   const handleClick= () => {
-    if (file) {
+    if (!removed) {
       setFile(null);
       setCroped(null);
+      setRemoved(true);
     } else {
       let el = document.createElement("input");
       el.setAttribute("type", "file");
@@ -62,6 +67,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
         if (el.files && el.files.length >= 0) {
           setFile(el.files[0]);
           setCroped(el.files[0]);
+          setRemoved(false);
         }
       };
     }
@@ -77,67 +83,70 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
     },
   ];
 
-  function valuetext(value: number) {
-    return `${value}%`;
-  }
-
   return (
     <BaseDialogWrapper open={open} close={() => setDialog(false)} submit={() => {}}>
       <div className="dialog-header image-dialog">
-        <div className={`cropping ${(file || initData.value) ? '' : 'empty'}`}>
+        <div className={`cropping ${removed ? 'empty' : ''}`}>
           <div className="switch-image">
             <div className={"svgOnHover " + className} onClick={handleClick}>
               <SpriteIcon name="plus" className="svg-plus active text-white" />
             </div>
           </div>
-          {(file || initData.value)
-            ? <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
-            : <SpriteIcon name="image" className="icon-image" />
+          <div className="centered">
+            {removed
+              ? <SpriteIcon name="image" className="icon-image" />
+              : <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
+            }
+          </div>
+        </div>
+         <div className="bold">Where did you get this image?</div>
+         <input
+           value={source}
+           onChange={(e) => setSource(e.target.value)}
+           placeholder="Add link to source or name of owner..."
+         />
+         <div onClick={() => setPermision(!permision)}>
+           <Checkbox checked={permision} className={validationRequired ? 'required' : ''} />
+           I have permision to distribute this image
+           <span className="text-theme-orange">*</span>
+         </div>
+         <input
+           value={caption}
+           onChange={(e) => setCaption(e.target.value)}
+           placeholder="Add caption..."
+         />
+         <div>Align</div>
+         <div>
+           <FormControlLabel
+             checked={align === ImageAlign.left}
+             control={<Radio onClick={() => setAlign(ImageAlign.left)} />}
+             label="Left" />
+           <FormControlLabel
+             checked={align === ImageAlign.center}
+             control={<Radio onClick={() => setAlign(ImageAlign.center)} />}
+             label="Center" />
+         </div>
+         <div>Image size</div>
+         <Slider
+           defaultValue={30}
+           aria-labelledby="discrete-slider"
+           step={1}
+           marks={marks}
+           min={20}
+           max={50}
+           onChange={(e:any, v:any) => setHeight(v)}
+         />
+        <div className="absolute">
+          {!removed &&
+            <ImageDesktopPreview src={fileUrl(initData.value)} height={height} align={align} file={cropedFile} />
           }
         </div>
-        <div className="bold">Where did you get this image?</div>
-        <input
-          value={source}
-          onChange={(e) => setSource(e.target.value)}
-          placeholder="Add link to source or name of owner..."
-        />
-        <div onClick={() => setPermision(!permision)}>
-          <Checkbox checked={permision} className={validationRequired ? 'required' : ''} />
-          I have permision to distribute this image
-          <span className="text-theme-orange">*</span>
-        </div>
-        <input
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
-          placeholder="Add caption..."
-        />
-        <div>Align</div>
-        <div>
-          <FormControlLabel
-            checked={align === ImageAlign.left}
-            control={<Radio onClick={() => setAlign(ImageAlign.left)} />}
-            label="Left" />
-          <FormControlLabel
-            checked={align === ImageAlign.center}
-            control={<Radio onClick={() => setAlign(ImageAlign.center)} />}
-            label="Center" />
-        </div>
-        <div>Image size</div>
-        <Slider
-          defaultValue={30}
-          getAriaValueText={valuetext}
-          aria-labelledby="discrete-slider"
-          valueLabelDisplay="off"
-          step={1}
-          marks={marks}
-          min={20}
-          max={50}
-          onChange={(e:any, v:any) => setHeight(v)}
-        />
-        <div className="centered">
+        <div className="centered last-button">
           <SpriteIcon name="upload" className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
             if (cropedFile && canUpload) {
               upload(cropedFile, source, caption, align, height);
+            } else if (!removed) {
+              updateData(source, caption, align, height);
             } else {
               setValidation(true);
             }

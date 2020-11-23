@@ -1,0 +1,64 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.image-desktop-preview {
+  $width: 34vw;
+  $height: 40vh;
+  position: relative;
+  width: $width;
+  height: $height;
+  .image-desktop-preview-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(#{$width} * 2);
+    height: 80vh;
+  }
+  .play-preview-pages {
+    position: absolute;
+    top: -25%;
+    left: -25%;
+    height: 100%;
+    transform: scale(0.5);
+  }
+  .main-listing .upper-part .page-header .logout-container, .play-preview-pages .upper-part .page-header .logout-container {
+    width: 85% !important;
+
+    .action-container {
+      width: 40%;
+    }
+  }
+  .play-preview-pages .sort-and-filter-container {
+    width: $home-button-size;
+  }
+  .back-hover-area-filter {
+    display: none !important;
+  }
+  .sorted-row {
+    height: calc(100% - 2vw);
+    .sort-and-filter-container {
+      margin-top: $home-button-size;
+      height: calc(100% - #{$home-button-size});
+    }
+  }
+  img {
+    max-width: 100%;
+  }
+  .brick-row-container {
+    width: calc(#{$width} * 2 - #{$home-button-size} - #{$sidebar-gutter} - #{$sidebar-gutter}) !important;
+    height: 100%;
+  }
+  .introduction-info {
+    background: var(--solitude-light);
+  }
+  .preview-image-container {
+    margin-top: 8vh;
+    padding-left: 4vw;
+    padding-right: 4vw;
+
+    &.image-center {
+      @extend %flexToXCenter;
+    }
+  }
+}

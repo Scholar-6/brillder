@@ -39,6 +39,17 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
     }, () => { });
   }
 
+  const updateData = (source: string, caption: string, align: ImageAlign, height: number) => {
+    let comp = Object.assign({}, props.data);
+    comp.imageSource = source;
+    comp.imageCaption = caption;
+    comp.imageAlign= align;
+    comp.imageHeight = height;
+    props.updateComponent(comp, props.index);
+    props.save();
+    setOpen(false);
+  }
+
   return (
     <div className="image-drag-n-drop">
       <div className={'dropzone ' + (locked ? 'disabled' : '')} onClick={() => {
@@ -78,6 +89,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
         setDialog={setOpen}
         initFile={file}
         upload={upload}
+        updateData={updateData}
       />
     </div>
   );
