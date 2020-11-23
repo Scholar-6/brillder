@@ -26,6 +26,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   const [cropedFile, setCroped] = React.useState(file as File | null);
   const [align, setAlign] = React.useState(ImageAlign.left);
   const [height, setHeight] = React.useState(0 as number);
+  const [removed, setRemoved] = React.useState(null as boolean | null);
 
   useEffect(() => {
     if (!file) {
@@ -39,7 +40,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   }, [initFile, initData.value]);
 
   let canUpload = false;
-  if (permision && source && (file || initData.value)) {
+  if (permision && source && !removed) {
     canUpload = true;
   }
 
@@ -52,6 +53,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
     if (file) {
       setFile(null);
       setCroped(null);
+      setRemoved(true);
     } else {
       let el = document.createElement("input");
       el.setAttribute("type", "file");
@@ -64,6 +66,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
           setCroped(el.files[0]);
         }
       };
+      setRemoved(false);
     }
   }
 
@@ -77,22 +80,18 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
     },
   ];
 
-  function valuetext(value: number) {
-    return `${value}%`;
-  }
-
   return (
     <BaseDialogWrapper open={open} close={() => setDialog(false)} submit={() => {}}>
       <div className="dialog-header image-dialog">
-        <div className={`cropping ${(file || initData.value) ? '' : 'empty'}`}>
+        <div className={`cropping ${removed ? 'empty' : ''}`}>
           <div className="switch-image">
             <div className={"svgOnHover " + className} onClick={handleClick}>
               <SpriteIcon name="plus" className="svg-plus active text-white" />
             </div>
           </div>
-          {(file || initData.value)
-            ? <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
-            : <SpriteIcon name="image" className="icon-image" />
+          {removed
+            ? <SpriteIcon name="image" className="icon-image" />
+            : <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
           }
         </div>
         <div className="bold">Where did you get this image?</div>
