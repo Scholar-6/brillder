@@ -329,7 +329,7 @@ class Library extends Component<BricksListProps, BricksListState> {
     }
     const {activeClassroomId} = this.state;
     if (activeClassroomId > 0) {
-      const classroom = this.state.classrooms.find(c => c.id == activeClassroomId);
+      const classroom = this.state.classrooms.find(c => c.id === activeClassroomId);
       if (classroom) {
         return classroom.name;
       }

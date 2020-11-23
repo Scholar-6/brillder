@@ -10,7 +10,7 @@ import "./ViewAll.scss";
 import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
-import { Brick, BrickStatus } from "model/brick";
+import { Brick, BrickStatus, Subject } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin, getAssignmentIcon } from "components/services/brickService";
 import { getCurrentUserBricks, getPublicBricks, getPublishedBricks, searchBricks, searchPublicBricks } from "services/axios/brick";
@@ -57,7 +57,7 @@ interface BricksListState {
   isLoading: boolean;
 
   noSubjectOpen: boolean;
-  activeSubjectName: string;
+  activeSubject: Subject;
   dropdownShown: boolean;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
@@ -94,13 +94,13 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       subjects: [],
       sortedIndex: 0,
       noSubjectOpen: false,
-      activeSubjectName: '',
       deleteDialogOpen: false,
       deleteBrickId: -1,
       finalBricks: [],
       dropdownShown: false,
       searchBricks: [],
       searchString,
+      activeSubject: {} as Subject,
       isSearching: false,
       pageSize,
       isLoading: true,
@@ -790,7 +790,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             this.props.forgetBrick();
             this.props.history.push(map.ProposalSubject + '?selectedSubject=' + subjectId);
           } else {
-            this.setState({noSubjectOpen: true, activeSubjectName: filterSubjects[0].name});
+            this.setState({noSubjectOpen: true, activeSubject: filterSubjects[0]});
           }
         }
       }
@@ -937,8 +937,8 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
         />
         <NoSubjectDialog
           isOpen={this.state.noSubjectOpen}
-          subjectName={this.state.activeSubjectName}
-          submit={() => this.props.history.push(map.UserProfile)}
+          subject={this.state.activeSubject}
+          history={this.props.history}
           close={() => this.setState({noSubjectOpen: false})}
         />
       </div>

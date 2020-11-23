@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import { connect } from "react-redux";
+import axios from "axios";
+// @ts-ignore
+import marked from 'marked';
 
 import './Terms.scss';
 import { User } from "model/user";
@@ -16,13 +19,22 @@ interface BricksListProps {
 }
 
 interface BricksListState {
+  markupText: string;
 }
 
 class TermsPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props);
 
-    this.state = { };
+    this.state = {
+      markupText: ''
+    };
+
+    axios.get('/terms.txt').then(r => {
+      if (r.data) {
+        this.setState({ markupText: r.data });
+      }
+    });
   }
 
   render() {
@@ -59,7 +71,8 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
             </div>
           </Grid>
           <Grid item xs={9} className="brick-row-container">
-            <div className="bricks-list-container bricks-container-mobile">
+            <div className="bricks-list-container bricks-container-mobile terms-and-conditions">
+              <div dangerouslySetInnerHTML={{ __html: marked(this.state.markupText) }} />
             </div>
           </Grid>
         </Grid>

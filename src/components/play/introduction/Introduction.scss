@@ -605,6 +605,9 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             border-left: 0.3vw solid var(--tab-gray);
             padding-left: 1.8vw;
           }
+          ul > li {
+            font-size: 1.25vw;
+          }
         }
         .MuiBox-root {
           padding: 0;
