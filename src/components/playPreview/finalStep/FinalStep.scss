@@ -21,15 +21,6 @@
     font-family: $font-family-bold;
     display: flex;
     justify-content: center;
-
-    .MuiChip-root, .MuiChip-label {
-      background: inherit;
-    }
-    .MuiChip-label {
-      color: var(--theme-dark-blue);
-      font-family: $font-family-regular;
-      font-size: 1.25vw;
-    }
   }
 
   .link-description {
@@ -128,5 +119,20 @@
       animation-iteration-count: 5;
       animation-timing-function: ease;
     }
+  }
+}
+
+.input-container, .editors-row {
+  .MuiChip-root, .MuiChip-label {
+    background: inherit;
+  }
+  .MuiChip-label {
+    color: var(--theme-dark-blue);
+    font-family: $font-family-regular;
+    font-size: 1.25vw;
+  }
+  .MuiSvgIcon-root.MuiChip-deleteIcon {
+    color: var(--theme-orange);
+    border-radius: 50%;
   }
 }
