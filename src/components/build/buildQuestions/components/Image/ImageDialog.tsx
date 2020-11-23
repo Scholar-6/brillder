@@ -125,9 +125,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
         <div>Image size</div>
         <Slider
           defaultValue={30}
-          getAriaValueText={valuetext}
           aria-labelledby="discrete-slider"
-          valueLabelDisplay="off"
           step={1}
           marks={marks}
           min={20}
