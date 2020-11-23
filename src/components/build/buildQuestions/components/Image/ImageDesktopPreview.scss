@@ -1,12 +1,18 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
 .image-desktop-preview {
+  $width: 34vw;
+  $height: 40vh;
   position: relative;
-  width: 23vw;
-  height: 40vh;
+  width: $width;
+  height: $height;
   .image-desktop-preview-container {
     position: absolute;
     top: 0;
     left: 0;
-    width: 46vw;
+    width: calc(#{$width} * 2);
     height: 80vh;
   }
   .play-preview-pages {
@@ -24,20 +30,24 @@
     }
   }
   .play-preview-pages .sort-and-filter-container {
-    width: 11vw;
+    width: $home-button-size;
   }
   .back-hover-area-filter {
     display: none !important;
   }
   .sorted-row {
-    height: calc(100% - 4vw);
+    height: calc(100% - 2vw);
     .sort-and-filter-container {
-      height: calc(100% - 4vw);
+      margin-top: $home-button-size;
+      height: calc(100% - #{$home-button-size});
     }
   }
+  img {
+    max-width: 100%;
+  }
   .brick-row-container {
-    width: 32.6vw !important;
-    height: calc(100% - 3.8vw);
+    width: calc(#{$width} * 2 - #{$home-button-size} - #{$sidebar-gutter} - #{$sidebar-gutter}) !important;
+    height: 100%;
   }
   .introduction-info {
     background: var(--solitude-light);

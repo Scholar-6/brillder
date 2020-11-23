@@ -97,48 +97,49 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
             : <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
           }
         </div>
-        {!removed &&
-          <ImageDesktopPreview src={fileUrl(initData.value)} height={height} caption={caption} file={cropedFile} />
-        }
+         <div className="bold">Where did you get this image?</div>
+         <input
+           value={source}
+           onChange={(e) => setSource(e.target.value)}
+           placeholder="Add link to source or name of owner..."
+         />
+         <div onClick={() => setPermision(!permision)}>
+           <Checkbox checked={permision} className={validationRequired ? 'required' : ''} />
+           I have permision to distribute this image
+           <span className="text-theme-orange">*</span>
+         </div>
+         <input
+           value={caption}
+           onChange={(e) => setCaption(e.target.value)}
+           placeholder="Add caption..."
+         />
+         <div>Align</div>
+         <div>
+           <FormControlLabel
+             checked={align === ImageAlign.left}
+             control={<Radio onClick={() => setAlign(ImageAlign.left)} />}
+             label="Left" />
+           <FormControlLabel
+             checked={align === ImageAlign.center}
+             control={<Radio onClick={() => setAlign(ImageAlign.center)} />}
+             label="Center" />
+         </div>
+         <div>Image size</div>
+         <Slider
+           defaultValue={30}
+           aria-labelledby="discrete-slider"
+           step={1}
+           marks={marks}
+           min={20}
+           max={50}
+           onChange={(e:any, v:any) => setHeight(v)}
+         />
         <div className="absolute">
-        <div className="bold">Where did you get this image?</div>
-        <input
-          value={source}
-          onChange={(e) => setSource(e.target.value)}
-          placeholder="Add link to source or name of owner..."
-        />
-        <div onClick={() => setPermision(!permision)}>
-          <Checkbox checked={permision} className={validationRequired ? 'required' : ''} />
-          I have permision to distribute this image
-          <span className="text-theme-orange">*</span>
+          {!removed &&
+            <ImageDesktopPreview src={fileUrl(initData.value)} height={height} caption={caption} file={cropedFile} />
+          }
         </div>
-        <input
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
-          placeholder="Add caption..."
-        />
-        <div>Align</div>
-        <div>
-          <FormControlLabel
-            checked={align === ImageAlign.left}
-            control={<Radio onClick={() => setAlign(ImageAlign.left)} />}
-            label="Left" />
-          <FormControlLabel
-            checked={align === ImageAlign.center}
-            control={<Radio onClick={() => setAlign(ImageAlign.center)} />}
-            label="Center" />
-        </div>
-        <div>Image size</div>
-        <Slider
-          defaultValue={30}
-          aria-labelledby="discrete-slider"
-          step={1}
-          marks={marks}
-          min={20}
-          max={50}
-          onChange={(e:any, v:any) => setHeight(v)}
-        />
-        <div className="centered">
+        <div className="centered last-button">
           <SpriteIcon name="upload" className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
             if (cropedFile && canUpload) {
               upload(cropedFile, source, caption, align, height);
@@ -148,7 +149,6 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
               setValidation(true);
             }
            }} />
-        </div>
         </div>
       </div>
     </BaseDialogWrapper>
