@@ -1,0 +1,45 @@
+.image-desktop-preview {
+  position: relative;
+  width: 23vw;
+  height: 40vh;
+  .image-desktop-preview-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 46vw;
+    height: 80vh;
+  }
+  .play-preview-pages {
+    position: absolute;
+    top: -25%;
+    left: -25%;
+    height: 100%;
+    transform: scale(0.5);
+  }
+  .main-listing .upper-part .page-header .logout-container, .play-preview-pages .upper-part .page-header .logout-container {
+    width: 85% !important;
+
+    .action-container {
+      width: 40%;
+    }
+  }
+  .play-preview-pages .sort-and-filter-container {
+    width: 11vw;
+  }
+  .back-hover-area-filter {
+    display: none !important;
+  }
+  .sorted-row {
+    height: calc(100% - 4vw);
+    .sort-and-filter-container {
+      height: calc(100% - 4vw);
+    }
+  }
+  .brick-row-container {
+    width: 32.6vw !important;
+    height: calc(100% - 3.8vw);
+  }
+  .introduction-info {
+    background: var(--solitude-light);
+  }
+}
