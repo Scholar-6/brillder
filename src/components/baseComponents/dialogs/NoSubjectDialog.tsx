@@ -30,6 +30,7 @@ const NoSubjectDialog: React.FC<DialogProps> = (props) => {
       updatedUser.subjects = user.subjects.map((s) => s.id);
     }
 
+    updatedUser.roles = null as any;
     updatedUser.subjects.push(props.subject.id);
 
     await props.forgetBrick();
