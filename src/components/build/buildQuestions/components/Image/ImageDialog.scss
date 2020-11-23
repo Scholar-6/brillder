@@ -4,7 +4,7 @@
 
 .image-dialog {
   margin-bottom: 0 !important;
-  min-width: 22vw;
+  min-width: 34vw;
   min-height: 66vh;
   $font-size: 1.3vw;
   font-size: $font-size !important;
@@ -144,7 +144,14 @@
     color: var(--theme-dark-blue) !important;
   }
   .absolute {
+    padding-top: 0;
+    margin-top: 2vh;
+    overflow: hidden;
     position: absolute;
-    min-height: 30vh;
+    height: 40vh;
+  }
+  .last-button {
+    margin-top: 40vh;
+    margin-bottom: 1.5vw;
   }
 }

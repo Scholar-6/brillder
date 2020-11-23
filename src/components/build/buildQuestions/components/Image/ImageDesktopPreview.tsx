@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core';
-import EmptyFilterSidebar from 'components/backToWorkPage/components/EmptyFilter';
 
 import './ImageDesktopPreview.scss'
-import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
+import EmptyFilterSidebar from 'components/backToWorkPage/components/EmptyFilter';
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 
 
 interface Props {
@@ -14,12 +14,12 @@ interface Props {
 }
 
 const ImageDesktopPreview: React.FC<Props> = props => {
-  let [value, setValue] = React.useState('');
+  let [value, setValue] = React.useState('' as any);
 
   const toBase64 = (file:Blob) => new Promise<string | ArrayBuffer | null>((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
+    reader.onload = () => setValue(reader.result);
     reader.onerror = error => reject(error);
   });
 
@@ -39,14 +39,7 @@ const ImageDesktopPreview: React.FC<Props> = props => {
     <div className="image-desktop-preview">
       <div className="image-desktop-preview-container">
         <div className="play-preview-pages">
-          <PageHeader
-            searchPlaceholder="search"
-            link=""
-            search={() => {}}
-            searching={() => {}}
-            showDropdown={() => {}}
-            showNotifications={() => {}}
-          />
+          <HomeButton />
           <Grid container direction="row" className="sorted-row personal-build">
             <EmptyFilterSidebar history={{ push: () => {}}} />
             <Grid item xs={9} className="brick-row-container">
