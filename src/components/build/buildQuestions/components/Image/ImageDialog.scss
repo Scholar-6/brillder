@@ -4,7 +4,8 @@
 
 .image-dialog {
   margin-bottom: 0 !important;
-  min-width: 22vw;
+  min-width: 34vw;
+  min-height: 66vh;
   $font-size: 1.3vw;
   font-size: $font-size !important;
 
@@ -137,8 +138,20 @@
     width: 13vh !important;
   }
   .MuiSlider-markLabel {
-    font-size: 1.1vw !important;
+    font-size: 1.5vw !important;
+    line-height: 1;
     font-family: $font-family-regular !important;
     color: var(--theme-dark-blue) !important;
+  }
+  .absolute {
+    padding-top: 0;
+    margin-top: 2vh;
+    overflow: hidden;
+    position: absolute;
+    height: 40vh;
+  }
+  .last-button {
+    margin-top: 40vh;
+    margin-bottom: 1.5vw;
   }
 }
