@@ -97,7 +97,9 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
             : <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
           }
         </div>
-        <ImageDesktopPreview src={fileUrl(initData.value)} height={height} caption={caption} file={cropedFile} />
+        {!removed &&
+          <ImageDesktopPreview src={fileUrl(initData.value)} height={height} caption={caption} file={cropedFile} />
+        }
         <div className="absolute">
         <div className="bold">Where did you get this image?</div>
         <input
