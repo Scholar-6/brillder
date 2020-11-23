@@ -179,6 +179,12 @@ $tile-height: 100%;
   }
   .invalid {
     background: var(--theme-orange) !important;
+    .inner-circle {
+      background: var(--white) !important;
+    }
+    .outer-circle {
+      background: rgb(155, 154, 154) !important;
+    }
   }
   .editor-border {
     line-height: 1;
