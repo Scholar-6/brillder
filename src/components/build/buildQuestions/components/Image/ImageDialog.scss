@@ -5,6 +5,7 @@
 .image-dialog {
   margin-bottom: 0 !important;
   min-width: 22vw;
+  min-height: 66vh;
   $font-size: 1.3vw;
   font-size: $font-size !important;
 
@@ -144,5 +145,6 @@
   }
   .absolute {
     position: absolute;
+    min-height: 30vh;
   }
 }
