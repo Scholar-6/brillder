@@ -45,12 +45,12 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   }
 
   let className = "add-image-button"
-  if (file) {
+  if (!removed) {
     className += " remove-image"
   }
 
   const handleClick= () => {
-    if (file) {
+    if (!removed) {
       setFile(null);
       setCroped(null);
       setRemoved(true);
@@ -64,9 +64,9 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
         if (el.files && el.files.length >= 0) {
           setFile(el.files[0]);
           setCroped(el.files[0]);
+          setRemoved(false);
         }
       };
-      setRemoved(false);
     }
   }
 
