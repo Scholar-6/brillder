@@ -28,6 +28,7 @@ import {
   setLastQuestionId,
   activateFirstInvalidQuestion,
   parseQuestion,
+  getUniqueComponent,
 } from "./questionService/QuestionService";
 import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
@@ -474,7 +475,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         }
         setInvalidHighlight({ isOpen: true, isLine });
       } else {
-        let isHintInvalid = validateHint(invalidQuestion.hint);
+        const comp = getUniqueComponent(invalidQuestion);
+
+        let answersCount = 1;
+        if (comp.list) {
+          answersCount = comp.list.length;
+        }
+        let isHintInvalid = validateHint(invalidQuestion.hint, answersCount);
         if (isHintInvalid) {
           let index = getQuestionIndex(invalidQuestion);
           setInvalidHint({ isOpen: true, questionNumber: index + 1});
