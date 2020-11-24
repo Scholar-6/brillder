@@ -51,8 +51,6 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       classrooms = [];
     }
 
-    classrooms = classrooms.filter(s => s.students.length > 0);
-
     if (!classrooms) {
       classrooms = [];
     }
