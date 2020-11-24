@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 import './app.scss';
+import actions from "redux/actions/auth";
 import GlobalFailedRequestDialog from "components/baseComponents/failedRequestDialog/GlobalFailedRequestDialog";
 
 import VersionLabel from 'components/baseComponents/VersionLabel';
@@ -42,8 +43,13 @@ import { isMobile } from 'react-device-detect';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
 import TeachPage from 'components/teach/assignments/TeachPage';
 import Terms from 'components/terms/Terms';
+import { connect } from 'react-redux';
 
-const App: React.FC = () => {
+interface AppProps {
+  setLogoutSuccess(): void;
+}
+
+const App: React.FC<AppProps> = props => {
   setBrillderTitle();
   const history = useHistory();
   const location = useLocation();
@@ -70,7 +76,8 @@ const App: React.FC = () => {
         && location.pathname.search('/play/brick/') === -1
         && location.pathname.search('/play/dashboard') === - 1
       ) {
-        history.push("/login");
+        props.setLogoutSuccess();
+        //history.push("/login");
       }
     }
     return Promise.reject(error);
@@ -149,4 +156,8 @@ const App: React.FC = () => {
   );
 }
 
-export default App;
+const mapDispatch = (dispatch: any) => ({
+  setLogoutSuccess: () => dispatch(actions.setLogoutSuccess()),
+});
+
+export default connect(null, mapDispatch)(App);
