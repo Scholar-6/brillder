@@ -69,6 +69,12 @@ const authorizedFailure = (errorMessage:string) => {
   } as Action;
 }
 
+const setLogoutSuccess = () => {
+  return function (dispatch: Dispatch) {
+    dispatch(logoutSuccess());
+  }
+}
+
 const logout = () => {
   return function (dispatch: Dispatch) {
     return axios.post(process.env.REACT_APP_BACKEND_HOST + '/auth/logout', {}, {withCredentials: true}).then(response => {
@@ -115,4 +121,4 @@ const redirectedToProfile = () => {
 }
 
 
-export default { login, logout, loginSuccess, isAuthorized, redirectedToProfile }
+export default { login, logout, loginSuccess, setLogoutSuccess, isAuthorized, redirectedToProfile }
