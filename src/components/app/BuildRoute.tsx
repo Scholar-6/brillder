@@ -27,11 +27,9 @@ class BuildRoute extends React.Component<BuildRouteProps> {
     super(props);
 
     if (!props.user) {
-      setTimeout(() => {
-        if (props.isAuthenticated === isAuthenticated.True) {
-          props.getUser();
-        }
-      }, 2000);
+      if (props.isAuthenticated === isAuthenticated.True) {
+        props.getUser();
+      }
     }
   }
 
