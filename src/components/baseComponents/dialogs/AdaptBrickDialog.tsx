@@ -11,7 +11,7 @@ const AdaptBrickDialog: React.FC<DialogProps> = ({ isOpen, submit, close }) => {
   return (
     <Dialog open={isOpen} onClose={close} className="dialog-box">
       <div className="dialog-header">
-        <div>Adapt brick?</div>
+        <div className="bold" style={{textAlign: 'center'}}>Adapt brick?</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button" onClick={submit}>

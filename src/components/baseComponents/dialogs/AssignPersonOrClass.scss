@@ -6,6 +6,13 @@
   height: 30vh !important;
 }
 .assign-dialog {
+  .dialog-header > div {
+    width: 50vw !important;
+
+    .MuiInputBase-input.MuiInput-input {
+      width: 14vw;
+    }
+  }
   .dialog-footer {
     margin-bottom: 0 !important;
   }
