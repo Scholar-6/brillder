@@ -56,6 +56,9 @@
           margin-top: 0.13vh;
           width: 1.9vw;
         }
+        &:hover {
+          background: var(--light-blue-alpha3);
+        }
       }
     }
   }
