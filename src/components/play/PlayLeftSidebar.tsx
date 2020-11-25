@@ -179,7 +179,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
  
     let copyBrick = await this.props.createBrick(brick);
     if (copyBrick) {
-      this.props.history.push(map.ProposalReview + '?bookHovered=true');
+      this.props.history.push(map.ProposalReview + '?bookHovered=true&copied=true');
     } else {
       console.log('can`t copy');
     }

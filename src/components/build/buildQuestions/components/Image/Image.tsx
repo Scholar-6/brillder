@@ -5,6 +5,7 @@ import './Image.scss'
 import {uploadFile} from 'components/services/uploadFile';
 import ImageDialog from './ImageDialog';
 import { ImageAlign, ImageComponentData } from './model';
+import ImageCloseDialog from './ImageCloseDialog';
 
 
 interface ImageProps {
@@ -19,6 +20,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   const [isOpen, setOpen] = React.useState(false);
   const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.data.value);
+  const [isCloseOpen, setCloseDialog] = React.useState(false);
 
   useEffect(() => {
     setFileName(props.data.value);
@@ -32,6 +34,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
       comp.imageCaption = caption;
       comp.imageAlign= align;
       comp.imageHeight = height;
+      comp.imagePermision = true;
       props.updateComponent(comp, props.index);
       setFileName(comp.value);
       props.save();
@@ -45,6 +48,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
     comp.imageCaption = caption;
     comp.imageAlign= align;
     comp.imageHeight = height;
+    comp.imagePermision = true;
     props.updateComponent(comp, props.index);
     props.save();
     setOpen(false);
@@ -86,10 +90,18 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
       <ImageDialog
         initData={props.data}
         open={isOpen}
-        setDialog={setOpen}
+        setDialog={() => setCloseDialog(true)}
         initFile={file}
         upload={upload}
         updateData={updateData}
+      />
+      <ImageCloseDialog
+        open={isCloseOpen}
+        submit={() => {
+          setCloseDialog(false);
+          setOpen(false);
+        }}
+        close={() => setCloseDialog(false)}
       />
     </div>
   );

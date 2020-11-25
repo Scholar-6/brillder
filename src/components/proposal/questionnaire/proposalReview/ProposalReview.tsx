@@ -21,6 +21,7 @@ import CommentPanel from "components/baseComponents/comments/CommentPanel";
 import { Transition } from "react-transition-group";
 import NextButton from "./NextButton";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
+import CopiedDialog from "./CopiedDialog";
 
 export enum BookState {
   TitlesPage,
@@ -40,6 +41,7 @@ interface ProposalProps {
 
 interface ProposalState {
   bookState: BookState;
+  isCopyOpen: boolean;
   bookHovered: boolean;
   closeTimeout: number;
   briefCommentPanelExpanded: boolean;
@@ -54,13 +56,18 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
     const values = queryString.parse(props.history.location.search);
     let bookHovered = false;
+    let isCopyOpen = false;
     if (values.bookHovered) {
       bookHovered = true;
+    }
+    if (values.copied) {
+      isCopyOpen = true;
     }
 
     this.state = {
       mode: true,
       bookHovered,
+      isCopyOpen,
       bookState: BookState.TitlesPage,
       briefCommentPanelExpanded: false,
       closeTimeout: -1,
@@ -489,6 +496,11 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           </div>
           <div className="red-right-block"></div>
         </Grid>
+        <CopiedDialog
+          isOpen={this.state.isCopyOpen}
+          title={this.props.brick.title}
+          close={() => this.setState({isCopyOpen: false})}
+        />
       </div>
     );
   }

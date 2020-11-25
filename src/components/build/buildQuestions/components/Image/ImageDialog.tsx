@@ -23,12 +23,12 @@ interface DialogProps {
 const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, updateData, setDialog }) => {
   const [source, setSource] = React.useState(initData.imageSource || '');
   const [caption, setCaption] = React.useState(initData.imageCaption || '');
-  const [permision, setPermision] = React.useState(false);
+  const [permision, setPermision] = React.useState(initData.imagePermision ? true : false);
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
-  const [align, setAlign] = React.useState(ImageAlign.left);
-  const [height, setHeight] = React.useState(30 as number);
+  const [align, setAlign] = React.useState(initData.imageAlign ? initData.imageAlign : ImageAlign.left);
+  const [height, setHeight] = React.useState(initData.imageHeight ? initData.imageAlign : 30);
   const [removed, setRemoved] = React.useState(null as boolean | null);
 
   useEffect(() => {
@@ -41,6 +41,10 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
       }
     }
   }, [initFile, initData.value]);
+
+  useEffect(() => {
+    setHeight(initData.imageHeight);
+  }, [initData.imageHeight]);
 
   let canUpload = false;
   if (permision && source && !removed) {
@@ -84,7 +88,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   ];
 
   return (
-    <BaseDialogWrapper open={open} close={() => setDialog(false)} submit={() => {}}>
+    <BaseDialogWrapper open={open} className="image-dialog-container" close={() => setDialog(false)} submit={() => {}}>
       <div className="dialog-header image-dialog">
         <div className={`cropping ${removed ? 'empty' : ''}`}>
           <div className="switch-image">
@@ -99,59 +103,63 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
             }
           </div>
         </div>
-         <div className="bold">Where did you get this image?</div>
-         <input
-           value={source}
-           onChange={(e) => setSource(e.target.value)}
-           placeholder="Add link to source or name of owner..."
-         />
-         <div onClick={() => setPermision(!permision)}>
-           <Checkbox checked={permision} className={validationRequired ? 'required' : ''} />
-           I have permision to distribute this image
-           <span className="text-theme-orange">*</span>
-         </div>
-         <input
-           value={caption}
-           onChange={(e) => setCaption(e.target.value)}
-           placeholder="Add caption..."
-         />
-         <div>Align</div>
-         <div>
-           <FormControlLabel
-             checked={align === ImageAlign.left}
-             control={<Radio onClick={() => setAlign(ImageAlign.left)} />}
-             label="Left" />
-           <FormControlLabel
-             checked={align === ImageAlign.center}
-             control={<Radio onClick={() => setAlign(ImageAlign.center)} />}
-             label="Center" />
-         </div>
-         <div>Image size</div>
-         <Slider
-           defaultValue={30}
-           aria-labelledby="discrete-slider"
-           step={1}
-           marks={marks}
-           min={20}
-           max={50}
-           onChange={(e:any, v:any) => setHeight(v)}
-         />
+        <div className="bold">
+          Where did you get this image?
+          <span className="text-theme-orange">*</span>
+        </div>
+        <input
+          value={source}
+          className={validationRequired && !source ? 'invalid' : ''}
+          onChange={(e) => setSource(e.target.value)}
+          placeholder="Add link to source or name of owner..."
+        />
+        <div onClick={() => setPermision(!permision)}>
+          <Checkbox checked={permision} className={validationRequired ? 'required' : ''} />
+          I have permision to distribute this image
+          <span className="text-theme-orange">*</span>
+        </div>
+        <input
+          value={caption}
+          onChange={(e) => setCaption(e.target.value)}
+          placeholder="Add caption..."
+        />
+        <div>Align</div>
+        <div>
+          <FormControlLabel
+            checked={align === ImageAlign.left}
+            control={<Radio onClick={() => setAlign(ImageAlign.left)} />}
+            label="Left" />
+          <FormControlLabel
+            checked={align === ImageAlign.center}
+            control={<Radio onClick={() => setAlign(ImageAlign.center)} />}
+            label="Center" />
+        </div>
+        <div>Image size</div>
+        <Slider
+          defaultValue={height}
+          aria-labelledby="discrete-slider"
+          step={1}
+          marks={marks}
+          min={20}
+          max={50}
+          onChange={(e:any, v:any) => setHeight(v)}
+        />
         <div className="absolute">
           {!removed &&
             <ImageDesktopPreview src={fileUrl(initData.value)} height={height} align={align} file={cropedFile} />
           }
         </div>
-        <div className="centered last-button">
-          <SpriteIcon name="upload" className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
-            if (cropedFile && canUpload) {
-              upload(cropedFile, source, caption, align, height);
-            } else if (!removed) {
-              updateData(source, caption, align, height);
-            } else {
-              setValidation(true);
-            }
-           }} />
-        </div>
+      </div>
+      <div className="centered last-button">
+        <SpriteIcon name="upload" className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
+          if (cropedFile && canUpload) {
+            upload(cropedFile, source, caption, align, height);
+          } else if (canUpload) {
+            updateData(source, caption, align, height);
+          } else {
+            setValidation(true);
+          }
+         }} />
       </div>
     </BaseDialogWrapper>
   );

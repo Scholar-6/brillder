@@ -44,6 +44,7 @@ $tile-height: 100%;
       .drag-tile {
         background: var(--white);
         .tab-number {
+          color: var(--theme-dark-blue);
           opacity: 1;
         }
       }
@@ -72,11 +73,11 @@ $tile-height: 100%;
       cursor: pointer;
     }
     .tab-number {
-      color: var(--theme-dark-blue);
+      color: var(--dark-gray);
       font-family: $font-family-bold;
       font-size: 3.4vh;
       user-select: none;
-      opacity: 0.2;
+      opacity: 1;
     }
     .unread-indicator {
       width: 1.1vw;
@@ -218,6 +219,8 @@ $tile-height: 100%;
       background: var(--off-white) !important;
     }
     .tab-number {
+      opacity: 0.5;
+      color: var(--theme-light-blue);
       font-family: $font-family-black !important;
     }
     .add-tab {
@@ -241,6 +244,11 @@ $tile-height: 100%;
           color: var(--white) !important;
         }
       }
+    }
+  }
+  .drag-tile-container.active {
+    .drag-tile {
+      background: white !important;
     }
   }
 }

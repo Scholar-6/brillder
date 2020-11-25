@@ -2,27 +2,27 @@ import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 
 interface DialogProps {
-  isOpen: boolean;
+  open: boolean;
   submit(): void;
   close(): void;
 }
 
-const AdaptBrickDialog: React.FC<DialogProps> = ({ isOpen, submit, close }) => {
+const ImageCloseDialog: React.FC<DialogProps> = ({ open, submit, close }) => {
   return (
-    <Dialog open={isOpen} onClose={close} className="dialog-box">
+    <Dialog open={open} onClose={close} className="dialog-box">
       <div className="dialog-header">
-        <div className="bold" style={{textAlign: 'center'}}>Adapt brick?</div>
+        <div>Your changes will not be saved unless you press the upload button</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button" onClick={submit}>
-          <span>Yes</span>
+          <span>Proceed</span>
         </button>
         <button className="btn btn-md bg-gray no-button" onClick={close}>
-          <span>No</span>
+          <span>Return</span>
         </button>
       </div>
     </Dialog>
   );
 };
 
-export default AdaptBrickDialog;
+export default ImageCloseDialog;

@@ -122,13 +122,17 @@
   }
 }
 
+.MuiAutocomplete-root,
 .input-container, .editors-row {
   .MuiChip-root, .MuiChip-label {
-    background: inherit;
+    height: auto;
+    background: var(--tab-gray);
+    overflow: hidden;
   }
   .MuiChip-label {
     color: var(--theme-dark-blue);
     font-family: $font-family-regular;
+    line-height: 1.5;
     font-size: 1.25vw;
   }
   .MuiSvgIcon-root.MuiChip-deleteIcon {
