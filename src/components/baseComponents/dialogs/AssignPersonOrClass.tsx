@@ -169,8 +169,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
           <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{width: 'auto'}}>
             <div className="centered">
-              <SpriteIcon name="file-plus" />
               <span className="label">Assign Brick</span>
+              <SpriteIcon name="file-plus" />
             </div>
           </button>
         </div>
