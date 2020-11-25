@@ -26,11 +26,19 @@ class BuildRoute extends React.Component<BuildRouteProps> {
   constructor(props: BuildRouteProps) {
     super(props);
 
+    this.getUser(props);
+  }
+
+  getUser(props: BuildRouteProps) {
     if (!props.user) {
       if (props.isAuthenticated === isAuthenticated.True) {
         props.getUser();
       }
     }
+  }
+
+  componentDidUpdate() {
+    this.getUser(this.props);
   }
 
   render() {
