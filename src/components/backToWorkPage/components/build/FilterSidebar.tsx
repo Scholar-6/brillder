@@ -200,7 +200,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     let draft = 0;
     let build = 0;
     let publication = 0;
-    let viewAll = 0;
 
     const {threeColumns, finalBricks, filters} = this.props;
 
@@ -208,7 +207,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
       draft = threeColumns.red.finalBricks.length;
       build = threeColumns.yellow.finalBricks.length;
       publication = threeColumns.green.finalBricks.length;
-      viewAll = draft + build + publication;
     } else {
       for (let b of finalBricks) {
         if (b.status === BrickStatus.Draft) {
@@ -219,15 +217,11 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
           publication += 1;
         }
       }
-      viewAll = draft + build + publication;
     }
 
-    if (this.props.filters.publish) {
-      for (let b of finalBricks) {
-        if (b.status === BrickStatus.Publish) {
-          viewAll += 1;
-        }
-      }
+    let viewAll = 0;
+    for (let subject of this.props.subjects) {
+      viewAll += subject.count;
     }
 
     return (
