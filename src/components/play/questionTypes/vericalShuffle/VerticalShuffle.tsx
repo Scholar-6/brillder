@@ -150,9 +150,6 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     
     return (
       <div key={i} className={className}>
-        <div className="drag-area">
-          <SpriteIcon name="move" />
-        </div>
         <div className={`vertical-content ${hasHint ? '' : 'full-height'}`}>
           <Grid container direction="row" justify="center">
             <MathInHtml value={answer.value} />

@@ -167,3 +167,11 @@
     }
   }
 }
+
+@include desktop {
+  .stepper {
+    .step:hover {
+      color: var(--theme-light-blue) !important;
+    }
+  }
+}
