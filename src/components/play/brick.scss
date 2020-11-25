@@ -170,8 +170,15 @@
 
 @include desktop {
   .stepper {
+    .step {
+      color: var(--dark-gray);
+    }
     .step:hover {
+      opacity: 0.5;
       color: var(--theme-light-blue) !important;
+    }
+    .step.current {
+      opacity: 1;
     }
   }
 }
