@@ -204,7 +204,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     const {threeColumns, finalBricks, filters} = this.props;
 
     if (filters.draft && filters.review && filters.build) {
-      draft = threeColumns.red.finalBricks.length;
+      draft = threeColumns.red.finalBricks.length - 1;
       build = threeColumns.yellow.finalBricks.length;
       publication = threeColumns.green.finalBricks.length;
     } else {
