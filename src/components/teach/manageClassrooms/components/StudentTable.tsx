@@ -116,7 +116,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                       <SpriteIcon name="edit-outline" className="active" />
                     </div>
                     {props.isClassroom &&
-                      <div className="trash-button  svgOnHover" onClick={() => props.unassign(user)}>
+                      <div className="trash-button svgOnHover" onClick={() => props.unassign(user)}>
                         <SpriteIcon name="trash-outline" className="active" />
                       </div>
                     }
