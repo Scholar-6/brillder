@@ -9,4 +9,5 @@ export interface ImageComponentData {
   imageCaption: string;
   imageAlign: ImageAlign;
   imageHeight: number;
+  imagePermision: boolean;
 }
