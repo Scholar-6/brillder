@@ -3,9 +3,15 @@
   display: flex;
   align-items: center;
   min-width: 6vw;
+  color: var(--dark-gray);
+
   .clock-image {
     width: 2vw;
     height: 2vw;
     stroke-width: 2;
+  }
+
+  .max-length {
+    color: inherit !important;
   }
 }
