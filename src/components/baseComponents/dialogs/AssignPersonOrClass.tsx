@@ -162,7 +162,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           )}
           renderOption={(option: any, { selected }) => (
             <React.Fragment>
-              {option.isStudent ? `Student ${option.firstName} ${option.lastName}` : 'Class ' + option.name}
+              {option.isStudent
+                ? <span><span className="bold">Student</span> {option.firstName} {option.lastName}</span>
+                : <span><span className="bold">Class</span> {option.name}</span>
+              }
             </React.Fragment>
           )}
         />
