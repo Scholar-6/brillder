@@ -509,7 +509,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               cursor: pointer;
               font-size: 2vw;
               font-family: $font-family-black;
-              color: #d3d4d5;
+              color: var(--dark-gray);
               &.completed,
               &.current {
                 color: var(--theme-dark-blue);
@@ -599,8 +599,8 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         }
         .text-play {
           //#1684 bug fix - overflow: auto;
-          margin-top: 5px;
-          margin-bottom: 5px;
+          margin-top: 1.5vh;
+          margin-bottom: 1.5vh;
           blockquote {
             border-left: 0.3vw solid var(--tab-gray);
             padding-left: 1.8vw;
@@ -1178,7 +1178,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       }
 
       > .step {
-        color: #d3d4d5;
+        color: var(--dark-gray);
 
         @include phone_and_tabletP {
           display: inline-flex;

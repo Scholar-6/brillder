@@ -162,15 +162,18 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           )}
           renderOption={(option: any, { selected }) => (
             <React.Fragment>
-              {option.isStudent ? `Student ${option.firstName} ${option.lastName}` : 'Class ' + option.name}
+              {option.isStudent
+                ? <span><span className="bold">Student</span> {option.firstName} {option.lastName}</span>
+                : <span><span className="bold">Class</span> {option.name}</span>
+              }
             </React.Fragment>
           )}
         />
         <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
           <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{width: 'auto'}}>
             <div className="centered">
-              <SpriteIcon name="file-plus" />
               <span className="label">Assign Brick</span>
+              <SpriteIcon name="file-plus" />
             </div>
           </button>
         </div>

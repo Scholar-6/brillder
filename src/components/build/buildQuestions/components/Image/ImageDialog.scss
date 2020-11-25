@@ -2,10 +2,43 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
+.image-dialog-container {
+  .invalid {
+    background: var(--theme-orange);
+  }
+  .MuiPaper-root.MuiDialog-paper {
+    padding-bottom: 9vh;
+    overflow-y: hidden;
+    min-width: 34vw;
+    .dialog-header.image-dialog {
+      position: relative;
+      overflow-y: auto;
+    }
+    .upload-button {
+      position: fixed;
+      bottom: 6vh;
+      background: var(--tab-gray);
+      color: var(--dark-gray);
+      border-radius: 50%;
+      $size: 5vh;
+      width: $size !important;
+      height: $size !important;
+      padding: 0.3vw;
+  
+      &.active {
+        cursor: pointer;
+        background: var(--theme-green);
+        color: var(--white);
+      }
+    }
+  }
+}
+
 .image-dialog {
   margin-bottom: 0 !important;
-  min-width: 34vw;
   min-height: 66vh;
+  padding-left: 1vw;
+  padding-right: 1vw;
   $font-size: 1.3vw;
   font-size: $font-size !important;
 
@@ -56,22 +89,6 @@
     &::placeholder {
       color: var(--dark-gray);
       font-family: $font-family-regular;
-    }
-  }
-  .upload-button {
-    margin-top: 0.3vw;
-    background: var(--tab-gray);
-    color: var(--dark-gray);
-    border-radius: 50%;
-    $size: 1.8vw;
-    width: $size !important;
-    height: $size !important;
-    padding: 0.3vw;
-
-    &.active {
-      cursor: pointer;
-      background: var(--theme-green);
-      color: var(--white);
     }
   }
   .MuiFormControlLabel-root {

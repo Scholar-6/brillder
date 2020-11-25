@@ -169,7 +169,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         <MenuItem className="view-profile menu-item" onClick={() => move("/my-library")}>
           <span className="menu-text">My Library</span>
           <div className="btn btn-transparent svgOnHover">
-            <SpriteIcon name="book-open" className="active text-white" />
+            <SpriteIcon name="book-open" className="active text-white stroke-2" />
           </div>
         </MenuItem>
       );
