@@ -5,6 +5,7 @@ import { enterPressed } from "components/services/key";
 
 interface DialogProps {
   open: boolean;
+  className?: string;
   submit(): void;
   close(): void;
 }
@@ -41,8 +42,12 @@ class BaseDialogWrapper extends Component<DialogProps, DialogState> {
   }
 
   render() {
+    let className = 'dialog-box';
+    if (this.props.className) {
+      className += ' ' + this.props.className;
+    }
     return (
-      <Dialog open={this.props.open} onClose={this.props.close} className="dialog-box">
+      <Dialog open={this.props.open} onClose={this.props.close} className={className}>
         {this.props.children}
       </Dialog>
     );
