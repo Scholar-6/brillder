@@ -162,6 +162,9 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   };
 
   const renderReviewTitle = (attempt: any) => {
+    if (!attempt) {
+      return "Not quite - try again!";
+    }
     if (attempt.correct) {
       return "Correct!"
     }

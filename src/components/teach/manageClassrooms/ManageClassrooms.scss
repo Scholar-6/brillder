@@ -111,6 +111,10 @@
       .trash-button {
         cursor: pointer;
         margin-left: 0.7vw;
+
+        &:hover {
+          color: var(--theme-orange) !important;
+        }
       }
     }
     .class-assign-button {
@@ -178,6 +182,15 @@
       height: 100%;
       @extend %ellipsis;
     }
+  }
+  .index-box.hover-light:hover {
+    background: var(--light-blue-alpha3);
+  }
+  .remove-class:hover {
+    color: var(--theme-orange) !important;
+  } 
+  .index-box.active .remove-class:hover {
+    color: var(--theme-dark-blue) !important;
   }
 }
 

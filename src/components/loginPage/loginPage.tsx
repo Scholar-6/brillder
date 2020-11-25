@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
 
-import actions from "redux/actions/auth";
 import "./loginPage.scss";
-
+import actions from "redux/actions/auth";
+import { login } from "services/axios/auth";
 import LoginLogo from './components/LoginLogo';
 import GoogleButton from "./components/GoogleButton";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
@@ -72,16 +72,12 @@ const LoginPage: React.FC<LoginProps> = (props) => {
       return;
     }
 
-    login(email, password);
+    sendLogin(email, password);
   }
 
-  const login = (email: string, password: string) => {
-    axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/auth/login/3`,
-      { email, password, userType: 3 },
-      { withCredentials: true }
-    ).then((response) => {
-      const { data } = response;
+  const sendLogin = async (email: string, password: string) => {
+    let data = await login(email, password);
+    if (!data.isError) {
       if (data === "OK") {
         props.loginSuccess();
         return;
@@ -93,17 +89,15 @@ const LoginPage: React.FC<LoginProps> = (props) => {
       }
       toggleAlertMessage(true);
       setAlertMessage(msg);
-    }).catch((error) => {
-      const { response } = error;
+    } else {
+      const { response } = data;
       if (response) {
-        if (response.status === 500) {
+        if (response.status === 500 ) {
           toggleAlertMessage(true);
           setAlertMessage("Server error");
         } else if (response.status === 401) {
           const { msg } = response.data;
-          if (msg === "USER_IS_NOT_ACTIVE") {
-            //props.history.push("/sign-up-success");
-          } else if (msg === "INVALID_EMAIL_OR_PASSWORD") {
+          if (msg === "INVALID_EMAIL_OR_PASSWORD") {
             setLoginWrong(true);
           }
         }
@@ -111,7 +105,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
         toggleAlertMessage(true);
         setAlertMessage("Connection problem");
       }
-    });
+    }
   };
 
   const register = (email: string, password: string) => {
@@ -134,7 +128,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
       }
 
       if (data === "OK") {
-        login(email, password);
+        sendLogin(email, password);
       }
     }).catch((e) => {
       toggleAlertMessage(true);

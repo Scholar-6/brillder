@@ -285,7 +285,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderViewAllFilter() {
-    let className = "index-box item-box2";
+    let className = "index-box hover-light item-box2";
     if (!this.state.activeClassroom) {
       className += " active";
     }
@@ -318,7 +318,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <div className="indexes-box manage-classrooms-filter">
           {this.renderViewAllFilter()}
           {this.state.classrooms.map((c, i) => {
-            let className = "index-box item-box2";
+            let className = "index-box hover-light item-box2";
             if (c.isActive) {
               className += " active";
             }
@@ -330,7 +330,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                   <SpriteIcon name="users" className="active" />
                   <SpriteIcon
                     name="trash-outline" 
-                    className="active text-white"
+                    className="active text-white remove-class"
                     onClick={() => this.onDeleteClass(c)}
                   />
                 </div>
@@ -484,7 +484,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <DeleteClassDialog
           isOpen={this.state.deleteClassOpen}
           submit={() => this.deleteClass()}
-          close={() => { this.setState({ assignClassOpen: false }) }}
+          close={() => { this.setState({ deleteClassOpen: false }) }}
         />
         <CreateClassDialog
           isOpen={this.state.createClassOpen}

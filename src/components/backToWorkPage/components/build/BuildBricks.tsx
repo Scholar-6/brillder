@@ -74,7 +74,7 @@ class BuildBricks extends Component<BuildBricksProps> {
       if (this.props.loaded) {
         const {threeColumns} = this.props;
         if (i === 0 ) {
-          return <BrickColDescription key={item.key} label="Draft Bricks" color="color1" number={threeColumns.red.finalBricks.length} />;
+          return <BrickColDescription key={item.key} label="Draft Bricks" color="color1" number={threeColumns.red.finalBricks.length - 1} />;
         } else if (i === 1) {
           return <BrickColDescription key={item.key} label="Submitted to Editor(s)" color="color3" number={threeColumns.yellow.finalBricks.length} />;
         } else if (i === 2) {

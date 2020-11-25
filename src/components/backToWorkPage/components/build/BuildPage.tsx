@@ -338,7 +338,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
     filters.review = newFilters.review;
     filters.draft = newFilters.draft;
     const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
-    this.setState({ ...this.state, filters, finalBricks, sortedIndex: 0 });
+    const subjects = this.getBrickSubjects(finalBricks);
+    this.setState({ ...this.state, filters, subjects, finalBricks, sortedIndex: 0 });
   }
 
   handleDeleteOpen(deleteBrickId: number) {
