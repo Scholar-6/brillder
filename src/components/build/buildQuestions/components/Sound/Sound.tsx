@@ -5,6 +5,7 @@ import axios from 'axios';
 import ReactRecord from 'react-record';
 import sprite from "assets/img/icons-sprite.svg";
 import './Sound.scss';
+import Dropzone from './Dropzone';
 
 interface SoundProps {
   locked: boolean;
@@ -14,7 +15,7 @@ interface SoundProps {
   updateComponent(component: any, index: number): void;
 }
 
-enum AudioStatus {
+export enum AudioStatus {
   Start,
   Recording,
   Recorded,
@@ -121,17 +122,7 @@ const SoundComponent: React.FC<SoundProps> = ({ locked, ...props }) => {
 
   return (
     <div className="react-recording">
-      {
-        (status === AudioStatus.Start) ?
-          <div>
-            <div {...getRootProps({ className: 'dropzone ' + ((locked) ? 'disabled' : '') })}>
-              <input {...getInputProps()} />
-              <p>Drag Sound File Here | Click to Select Sound File</p>
-            </div>
-            {files[0] ? files[0] : ""}
-          </div>
-          : <div></div>
-      }
+      <Dropzone locked={locked} status={status} saveAudio={saveAudio} />
       <div className="record-button-row">
         <ReactRecord
           record={status === AudioStatus.Recording}
