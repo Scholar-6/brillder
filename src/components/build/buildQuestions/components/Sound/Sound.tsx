@@ -1,11 +1,15 @@
 import React from 'react'
-import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 // @ts-ignore
 import ReactRecord from 'react-record';
 import sprite from "assets/img/icons-sprite.svg";
 import './Sound.scss';
 import Dropzone from './Dropzone';
+import PauseButton from './components/PauseButton';
+import PlayButton from './components/PlayButton';
+import RecordingButton from './components/RecordingButton';
+import RecordButton from './components/RecordButton';
+import { uploadFile } from 'components/services/uploadFile';
 
 interface SoundProps {
   locked: boolean;
@@ -33,27 +37,8 @@ const SoundComponent: React.FC<SoundProps> = ({ locked, ...props }) => {
   const [status, setStatus] = React.useState(initStatus as AudioStatus);
   const [blobUrl, setBlobUrl] = React.useState("");
   const [audio, setAudio] = React.useState(initAudio);
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: 'audio/*',
-    disabled: locked,
-    onDrop: (files: any[]) => {
-      if (files && files.length > 0) {
-        saveAudio(files[0]);
-      }
-    }
-  });
-
-  const files = acceptedFiles.map((file: any) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
 
   /* Recording audios */
-  const recordFile = (blob: Blob) => {
-    if (locked) { return; }
-  }
-
   const onSave = (blob: any) => {
     if (locked) { return; }
     saveAudio(blob.blob);
@@ -90,24 +75,14 @@ const SoundComponent: React.FC<SoundProps> = ({ locked, ...props }) => {
 
   const saveAudio = (file: any) => {
     if (file) {
-      var formData = new FormData();
-      formData.append('file', file);
-      return axios.post(
-        process.env.REACT_APP_BACKEND_HOST + '/fileUpload',
-        formData,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-          withCredentials: true
-        }
-      ).then(res => {
+      uploadFile(file, (res: any) => {
         let comp = Object.assign({}, props.data);
         comp.value = res.data.fileName;
         props.updateComponent(comp, props.index);
         props.save();
-      })
-        .catch(error => {
-          alert('Can`t save audio file');
-        });
+      }, () => {
+        alert('Can`t save audio file');
+      });
     }
   }
 
@@ -128,56 +103,11 @@ const SoundComponent: React.FC<SoundProps> = ({ locked, ...props }) => {
           record={status === AudioStatus.Recording}
           onStop={onStop}
           onSave={onSave}
-          onData={recordFile}
         >
-          {
-            (status === AudioStatus.Start && !blobUrl) ?
-              <button className="btn start-record svgOnHover"
-                onClick={() => startRecording()}>
-                <svg className="svg active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#circle-filled"} className="text-theme-orange" />
-                </svg>
-                <span>Record</span>
-              </button>
-              : ''
-          }
-          {
-            (status === AudioStatus.Recording) ?
-              <button className="btn stop-record svgOnHover"
-                onClick={stopRecording}>
-                <svg className="svg active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#circle-filled"} className="text-white" />
-                </svg>
-                <span>Recording</span>
-              </button>
-              : ''
-          }
-          {
-            (status === AudioStatus.Recorded) ?
-              <button className="btn svgOnHover play-record"
-                onClick={playRecord}>
-                <svg className="svg active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#play-filled"} className="text-theme-orange" />
-                </svg>
-                <span>Play</span>
-              </button>
-              : ''
-          }
-          {
-            (status === AudioStatus.Play) ?
-              <button className="btn svgOnHover play-record"
-                onClick={stopRecord}>
-                <svg className="svg active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#pause-filled"} className="text-theme-orange" />
-                </svg>
-                <span>Pause</span>
-              </button>
-              : ''
-          }
+          <RecordButton status={status} blobUrl={blobUrl} onClick={startRecording} />
+          <RecordingButton status={status} onClick={stopRecording} />
+          <PlayButton status={status} onClick={playRecord} />
+          <PauseButton status={status} onClick={stopRecord} />
           <button className={"btn delete-record " + (canDelete ? 'disabled' : "")}
             onClick={() => deleteAudio()}
             disabled={canDelete}>
