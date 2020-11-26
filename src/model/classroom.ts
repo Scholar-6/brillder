@@ -47,6 +47,11 @@ export interface Classroom {
   assignments: Assignment[];
 }
 
+export interface ClassroomInvitation {
+  classroom: Classroom;
+  sentBy: UserBase;
+}
+
 export interface StudentStatus {
   studentId: number;
   status: number;
