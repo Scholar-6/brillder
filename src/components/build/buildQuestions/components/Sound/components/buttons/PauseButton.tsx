@@ -1,6 +1,6 @@
 import React from "react";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { AudioStatus } from "../Sound";
+import { AudioStatus } from "../../Sound";
 
 interface SoundProps {
   status: AudioStatus;

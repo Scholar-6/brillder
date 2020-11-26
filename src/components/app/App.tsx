@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -51,7 +50,6 @@ interface AppProps {
 
 const App: React.FC<AppProps> = props => {
   setBrillderTitle();
-  const history = useHistory();
   const location = useLocation();
   const [zendeskCreated, setZendesk] = React.useState(false);
   const [orientation, setOrientation] = React.useState('');
@@ -77,7 +75,6 @@ const App: React.FC<AppProps> = props => {
         && location.pathname.search('/play/dashboard') === - 1
       ) {
         props.setLogoutSuccess();
-        //history.push("/login");
       }
     }
     return Promise.reject(error);
