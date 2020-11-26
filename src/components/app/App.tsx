@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -44,6 +43,7 @@ import RotateInstruction from 'components/baseComponents/rotateInstruction/Rotat
 import TeachPage from 'components/teach/assignments/TeachPage';
 import Terms from 'components/terms/Terms';
 import { connect } from 'react-redux';
+import ClassInvitationDialog from 'components/baseComponents/classInvitationDialog/ClassInvitationDialog';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -51,7 +51,6 @@ interface AppProps {
 
 const App: React.FC<AppProps> = props => {
   setBrillderTitle();
-  const history = useHistory();
   const location = useLocation();
   const [zendeskCreated, setZendesk] = React.useState(false);
   const [orientation, setOrientation] = React.useState('');
@@ -77,7 +76,6 @@ const App: React.FC<AppProps> = props => {
         && location.pathname.search('/play/dashboard') === - 1
       ) {
         props.setLogoutSuccess();
-        //history.push("/login");
       }
     }
     return Promise.reject(error);
@@ -152,6 +150,7 @@ const App: React.FC<AppProps> = props => {
       </Switch>
       <VersionLabel />
       <GlobalFailedRequestDialog />
+      <ClassInvitationDialog />
     </ThemeProvider>
   );
 }
