@@ -1,15 +1,12 @@
-import React from 'react'
-import axios from 'axios';
-// @ts-ignore
-import ReactRecord from 'react-record';
-import sprite from "assets/img/icons-sprite.svg";
-import './Sound.scss';
-import Dropzone from './Dropzone';
-import PauseButton from './components/PauseButton';
-import PlayButton from './components/PlayButton';
-import RecordingButton from './components/RecordingButton';
-import RecordButton from './components/RecordButton';
-import { uploadFile } from 'components/services/uploadFile';
+import React from "react";
+import "./Sound.scss";
+import Dropzone from "./Dropzone";
+import PauseButton from "./components/buttons/PauseButton";
+import PlayButton from "./components/buttons/PlayButton";
+import RecordingButton from "./components/buttons/RecordingButton";
+import RecordButton from "./components/buttons/RecordButton";
+import { uploadFile } from "components/services/uploadFile";
+import Recording from "./components/Recording";
 
 interface SoundProps {
   locked: boolean;
@@ -17,6 +14,12 @@ interface SoundProps {
   data: any;
   save(): void;
   updateComponent(component: any, index: number): void;
+}
+
+interface SoundState {
+  status: AudioStatus;
+  blobUrl: string;
+  audio: HTMLAudioElement;
 }
 
 export enum AudioStatus {
@@ -27,96 +30,141 @@ export enum AudioStatus {
   Stop,
 }
 
-const SoundComponent: React.FC<SoundProps> = ({ locked, ...props }) => {
-  let initAudio = new Audio();
-  let initStatus = AudioStatus.Start;
-  if (props.data && props.data.value) {
-    initAudio = new Audio(`${process.env.REACT_APP_BACKEND_HOST}/files/${props.data.value}`)
-    initStatus = AudioStatus.Recorded;
-  }
-  const [status, setStatus] = React.useState(initStatus as AudioStatus);
-  const [blobUrl, setBlobUrl] = React.useState("");
-  const [audio, setAudio] = React.useState(initAudio);
+class SoundComponent extends React.Component<SoundProps, SoundState> {
+  constructor(props: SoundProps) {
+    super(props);
 
-  /* Recording audios */
-  const onSave = (blob: any) => {
-    if (locked) { return; }
-    saveAudio(blob.blob);
-  }
+    let initAudio = new Audio();
+    let initStatus = AudioStatus.Start;
+    if (props.data && props.data.value) {
+      initAudio = new Audio(
+        `${process.env.REACT_APP_BACKEND_HOST}/files/${props.data.value}`
+      );
+      initStatus = AudioStatus.Recorded;
+    }
 
-  const onStop = (blob: any) => {
-    if (locked) { return; }
-    setBlobUrl(blob.blobURL);
-    setAudio(new Audio(blob.blobURL));
-  }
-
-  const startRecording = () => {
-    if (locked) { return; }
-    return status === AudioStatus.Start ? setStatus(AudioStatus.Recording) : null;
-  }
-
-  const stopRecording = () => {
-    if (locked) { return; }
-    return status === AudioStatus.Recording ? setStatus(AudioStatus.Recorded) : null;
-  }
-
-  const playRecord = () => {
-    audio.play();
-    setStatus(AudioStatus.Play);
-    audio.onended = function () {
-      setStatus(AudioStatus.Recorded);
+    this.state = {
+      status: initStatus,
+      blobUrl: "",
+      audio: initAudio,
     };
   }
 
-  const stopRecord = () => {
-    audio.pause();
-    setStatus(AudioStatus.Recorded);
+  onSave(blob: any) {
+    if (this.props.locked) {
+      return;
+    }
+    console.log('saved', blob);
+    this.saveAudio(blob.blob);
   }
 
-  const saveAudio = (file: any) => {
-    if (file) {
-      uploadFile(file, (res: any) => {
-        let comp = Object.assign({}, props.data);
-        comp.value = res.data.fileName;
-        props.updateComponent(comp, props.index);
-        props.save();
-      }, () => {
-        alert('Can`t save audio file');
-      });
+  onStop(blob: any) {
+    if (this.props.locked) {
+      return;
+    }
+    console.log("stop", blob);
+    this.setState({ blobUrl: blob.blobURL, audio: new Audio(blob.blobURL) });
+  }
+
+  startRecording() {
+    if (this.props.locked) {
+      return;
+    }
+    if (this.state.status === AudioStatus.Start) {
+      this.setState({ status: AudioStatus.Recording });
     }
   }
 
-  const deleteAudio = () => {
-    if (locked) { return; }
-    setStatus(AudioStatus.Start);
-    setBlobUrl("");
+  stopRecord() {
+    this.state.audio.pause();
+    this.setState({ status: AudioStatus.Recorded });
   }
-  /* Recording audios */
 
-  let canDelete = status === AudioStatus.Start || status === AudioStatus.Recording;
+  stopRecording() {
+    if (this.props.locked) {
+      return;
+    }
+    if (this.state.status === AudioStatus.Recording) {
+      this.setState({ status: AudioStatus.Recorded });
+    }
+  }
 
-  return (
-    <div className="react-recording">
-      <Dropzone locked={locked} status={status} saveAudio={saveAudio} />
-      <div className="record-button-row">
-        <ReactRecord
-          record={status === AudioStatus.Recording}
-          onStop={onStop}
-          onSave={onSave}
-        >
-          <RecordButton status={status} blobUrl={blobUrl} onClick={startRecording} />
-          <RecordingButton status={status} onClick={stopRecording} />
-          <PlayButton status={status} onClick={playRecord} />
-          <PauseButton status={status} onClick={stopRecord} />
-          <button className={"btn delete-record " + (canDelete ? 'disabled' : "")}
-            onClick={() => deleteAudio()}
-            disabled={canDelete}>
+  setRecorded() {
+    this.setState({ status: AudioStatus.Recorded });
+  }
+
+  playRecord() {
+    const {audio} = this.state;
+    audio.play();
+    this.setState({ status: AudioStatus.Play });
+    audio.onended = this.setRecorded.bind(this);
+  }
+
+  deleteAudio() {
+    if (this.props.locked) {
+      return;
+    }
+    this.setState({ blobUrl: "", status: AudioStatus.Start });
+  }
+
+  saveAudio(file: any) {
+    if (file) {
+      uploadFile(
+        file,
+        (res: any) => {
+          let comp = Object.assign({}, this.props.data);
+          comp.value = res.data.fileName;
+          this.props.updateComponent(comp, this.props.index);
+          this.props.save();
+        },
+        () => {
+          alert("Can`t save audio file");
+        }
+      );
+    }
+  }
+
+  render() {
+    const { locked } = this.props;
+    const { status } = this.state;
+    let canDelete =
+      status === AudioStatus.Start || status === AudioStatus.Recording;
+    
+    return (
+      <div className="react-recording">
+        <Dropzone
+          locked={locked}
+          status={status}
+          saveAudio={this.saveAudio.bind(this)}
+        />
+        <div className="record-button-row">
+          <Recording
+            status={status}
+            onStop={this.onStop.bind(this)}
+            onSave={this.onSave.bind(this)}
+          />
+          <RecordButton
+            status={status}
+            blobUrl={this.state.blobUrl}
+            onClick={this.startRecording.bind(this)}
+          />
+          <RecordingButton
+            status={status}
+            onClick={this.stopRecording.bind(this)}
+          />
+          <PlayButton status={status} onClick={this.playRecord.bind(this)} />
+          <PauseButton status={status} onClick={this.stopRecord.bind(this)} />
+          <button
+            className={"btn delete-record " + (canDelete ? "disabled" : "")}
+            onClick={this.deleteAudio.bind(this)}
+            disabled={canDelete}
+          >
             <span>Delete</span>
           </button>
-        </ReactRecord>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
-export default SoundComponent
+export default SoundComponent;
