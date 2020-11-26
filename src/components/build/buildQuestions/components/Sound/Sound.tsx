@@ -5,7 +5,7 @@ import PauseButton from "./components/buttons/PauseButton";
 import PlayButton from "./components/buttons/PlayButton";
 import RecordingButton from "./components/buttons/RecordingButton";
 import RecordButton from "./components/buttons/RecordButton";
-import { uploadFile } from "components/services/uploadFile";
+import { fileUrl, uploadFile } from "components/services/uploadFile";
 import Recording from "./components/Recording";
 
 interface SoundProps {
@@ -25,6 +25,7 @@ interface SoundState {
 export enum AudioStatus {
   Start,
   Recording,
+  BeforeRecorded,
   Recorded,
   Play,
   Stop,
@@ -37,9 +38,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
     let initAudio = new Audio();
     let initStatus = AudioStatus.Start;
     if (props.data && props.data.value) {
-      initAudio = new Audio(
-        `${process.env.REACT_APP_BACKEND_HOST}/files/${props.data.value}`
-      );
+      initAudio = new Audio(fileUrl(props.data.value));
       initStatus = AudioStatus.Recorded;
     }
 
@@ -54,7 +53,6 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
     if (this.props.locked) {
       return;
     }
-    console.log('saved', blob);
     this.saveAudio(blob.blob);
   }
 
@@ -62,7 +60,6 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
     if (this.props.locked) {
       return;
     }
-    console.log("stop", blob);
     this.setState({ blobUrl: blob.blobURL, audio: new Audio(blob.blobURL) });
   }
 
@@ -77,7 +74,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
 
   stopRecord() {
     this.state.audio.pause();
-    this.setState({ status: AudioStatus.Recorded });
+    this.setRecorded();
   }
 
   stopRecording() {
@@ -85,7 +82,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
       return;
     }
     if (this.state.status === AudioStatus.Recording) {
-      this.setState({ status: AudioStatus.Recorded });
+      this.setState({ status: AudioStatus.BeforeRecorded });
     }
   }
 
@@ -114,6 +111,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
         (res: any) => {
           let comp = Object.assign({}, this.props.data);
           comp.value = res.data.fileName;
+          this.setRecorded();
           this.props.updateComponent(comp, this.props.index);
           this.props.save();
         },
@@ -140,6 +138,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
         <div className="record-button-row">
           <Recording
             status={status}
+            isShown={true}
             onStop={this.onStop.bind(this)}
             onSave={this.onSave.bind(this)}
           />
