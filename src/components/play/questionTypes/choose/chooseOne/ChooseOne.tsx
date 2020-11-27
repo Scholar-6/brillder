@@ -11,6 +11,7 @@ import ReviewGlobalHint from '../../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneChoice } from 'components/interfaces/chooseOne';
+import { fileUrl } from 'components/services/uploadFile';
 
 export interface ChooseOneComponent {
   type: number;
@@ -73,7 +74,12 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   renderData(answer: ChooseOneChoice) {
     if (answer.answerType === QuestionValueType.Image) {
-      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
+      return (
+        <div className="image-container">
+          <img alt="" src={fileUrl(answer.valueFile)} />
+          {answer.imageCaption && <div>{answer.imageCaption}</div>}
+        </div>
+      );
     } else {
       return <MathInHtml value={answer.value} />;
     }

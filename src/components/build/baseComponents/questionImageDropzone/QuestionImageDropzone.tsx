@@ -7,13 +7,11 @@ import { QuestionValueType } from "../../buildQuestions/questionTypes/types";
 import AddImageBtnContent from "../AddImageBtnContent";
 import ImageDialogV2 from "./ImageDialogV2";
 import ImageCloseDialog from "components/build/buildQuestions/components/Image/ImageCloseDialog";
+import { MainImageProps } from "components/build/buildQuestions/components/Image/model";
 
-export interface ImageAnswerData {
+export interface ImageAnswerData extends MainImageProps {
   value: string;
   valueFile: string;
-  imageSource: string;
-  imageCaption: string;
-  imagePermision: boolean;
 }
 
 export interface AnswerProps {
