@@ -2,8 +2,8 @@ import React from 'react'
 import { Grid } from '@material-ui/core';
 
 import './horizontalShuffleBuild.scss'
-import { UniqueComponentProps } from '../types';
-import { showSameAnswerPopup } from '../service/questionBuild';
+import { UniqueComponentProps } from '../../types';
+import { showSameAnswerPopup } from '../../service/questionBuild';
 
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';

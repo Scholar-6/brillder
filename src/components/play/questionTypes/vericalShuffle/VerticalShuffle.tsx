@@ -9,6 +9,8 @@ import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
+import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
+import { fileUrl } from 'components/services/uploadFile';
 
 
 interface VerticalShuffleChoice {
@@ -131,6 +133,19 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     return "";
   }
 
+  renderData(answer: any) {
+    if (answer.answerType === QuestionValueType.Image) {
+      return (
+        <div className="image-container">
+          <img alt="" src={fileUrl(answer.valueFile)} width="100%" />
+          {answer.imageCaption && <div>{answer.imageCaption}</div>}
+        </div>
+      );
+    } else {
+      return <MathInHtml value={answer.value} />;
+    }
+  }
+
   renderAnswer(answer:any, i: number) {
     let isCorrect = this.checkAttemptAnswer(i);
     let className = "vertical-shuffle-choice";
@@ -151,7 +166,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
       <div key={i} className={className}>
         <div className={`vertical-content ${hasHint ? '' : 'full-height'}`}>
           <Grid container direction="row" justify="center">
-            <MathInHtml value={answer.value} />
+            {this.renderData(answer)}
           </Grid>
           {this.renderEachHint(i, answer, isCorrect)}
         </div>
