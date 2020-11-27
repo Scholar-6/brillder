@@ -10,8 +10,8 @@ interface DialogProps {
   open: boolean;
   initFile: File | null;
   initData: ImageComponentData;
-  upload(file: File, source: string, caption: string): void;
-  updateData(source: string, caption: string): void;
+  upload(file: File, source: string, caption: string, permision: boolean): void;
+  updateData(source: string, caption: string, permision: boolean): void;
   setDialog(open: boolean): void;
 }
 
@@ -104,9 +104,9 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, upload
       <div className="centered last-button">
         <SpriteIcon name="upload" className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
           if (cropedFile && canUpload) {
-            upload(cropedFile, source, caption);
+            upload(cropedFile, source, caption, permision);
           } else if (canUpload) {
-            updateData(source, caption);
+            updateData(source, caption, permision);
           } else {
             setValidation(true);
           }

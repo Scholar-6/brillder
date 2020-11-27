@@ -40,23 +40,24 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
     }
   });
 
-  const updateAnswer = (fileName: string, source: string, caption: string) => {
+  const updateAnswer = (fileName: string, source: string, caption: string, permision: boolean) => {
     if (locked) { return; }
     answer.imageSource = source;
     answer.imageCaption = caption;
+    answer.imagePermision = permision;
     update(fileName);
     setOpen(false);
   }
 
-  const upload = (file: File, source: string, caption: string) => {
+  const upload = (file: File, source: string, caption: string, permision: boolean) => {
     if (locked) { return; }
     return uploadFile(file, (res: any) => {
-      updateAnswer(res.data.fileName, source, caption);
+      updateAnswer(res.data.fileName, source, caption, permision);
     }, () => { });
   }
 
-  const updateData = (source: string, caption: string) => {
-    updateAnswer(answer.valueFile, source, caption);
+  const updateData = (source: string, caption: string, permision: boolean) => {
+    updateAnswer(answer.valueFile, source, caption, permision);
   }
  
   const renderImagePreview = () => {
@@ -78,7 +79,7 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
       <ImageDialogV2
         open={isOpen}
         initFile={file}
-        initData={{} as any}
+        initData={answer as any}
         upload={upload}
         updateData={updateData}
         setDialog={() => setCloseDialog(true)}
