@@ -4,6 +4,7 @@ export const MainPage = '/home';
 export const UserProfile = '/user-profile';
 export const ProposalBase = `${Build}/new-brick`;
 export const BackToWorkPage = '/back-to-work';
+export const AssignmentsPage = '/assignments';
 
 export const BackToWorkTeachTab = BackToWorkPage + '/teach';
 export const BackToWorkBuildTab = BackToWorkPage + '/build';
@@ -99,6 +100,7 @@ export default {
   ProposalReview,
 
   BackToWorkPage,
+  AssignmentsPage,
   BackToWorkTeachTab,
   BackToWorkBuildTab,
   BackToWorkLearnTab,
