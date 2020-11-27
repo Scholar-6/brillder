@@ -2,12 +2,13 @@ import React from 'react'
 import { Grid } from '@material-ui/core';
 
 import './horizontalShuffleBuild.scss'
-import { UniqueComponentProps } from '../../types';
+import { QuestionValueType, UniqueComponentProps } from '../../types';
 import { showSameAnswerPopup } from '../../service/questionBuild';
 
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
+import RemoveItemButton from '../../components/RemoveItemButton';
 
 export const getDefaultHorizontalShuffleAnswer = () => {
   const newAnswer = () => ({ value: "" });
@@ -34,9 +35,11 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
     updateComponent(state);
   }
 
-  const changed = (shortAnswer: any, value: string) => {
+  const changed = (answer: any, value: string) => {
     if (locked) { return; }
-    shortAnswer.value = value;
+    answer.value = value;
+    answer.valueFile = "";
+    answer.answerType = QuestionValueType.String;
     update();
   }
 
@@ -56,16 +59,32 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
 
   const renderAnswer = (answer: any, i: number) => {
     let column = (i % 3) + 1;
+
+    const setImage = (fileName: string) => {
+      if (locked) { return; }
+      answer.value = "";
+      answer.valueFile = fileName;
+      answer.answerType = QuestionValueType.Image;
+      update();
+      save();
+    }
+
+    let className = `horizontal-shuffle-box unique-component horizontal-column-${column}`;
+    if (answer.answerType === QuestionValueType.Image) {
+      className += ' big-answer';
+    }
+
     return (
       <Grid container item xs={4} key={i}>
-        <div className={`horizontal-shuffle-box unique-component horizontal-column-${column}`}>
-          {
-            (state.list.length > 3)
-              ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(i)}>
-                <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
-              </button>
-              : ""
-          }
+        <div className={className}>
+          <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
+          <QuestionImageDropzone
+            answer={answer as any}
+            type={answer.answerType || QuestionValueType.None}
+            locked={locked}
+            fileName={answer.valueFile}
+            update={setImage}
+          />
           <DocumentWirisCKEditor
             disabled={locked}
             editOnly={editOnly}

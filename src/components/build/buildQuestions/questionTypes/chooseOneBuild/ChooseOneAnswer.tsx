@@ -6,7 +6,7 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 import QuestionImageDropzone from "components/build/baseComponents/questionImageDropzone/QuestionImageDropzone";
 import { QuestionValueType } from "../types";
 import { ChooseOneAnswer } from './types';
-import SpriteIcon from "components/baseComponents/SpriteIcon";
+import RemoveItemButton from "../components/RemoveItemButton";
 
 
 export interface ChooseOneAnswerProps {
@@ -28,18 +28,6 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   locked, editOnly, index, length, answer, validationRequired, checkBoxValid,
   removeFromList, update, save, onChecked, onBlur
 }) => {
-  const renderDeleteButton = () => {
-    if (length > 3) {
-      return (
-        <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(index)}>
-          <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
-        </button>
-      );
-    }
-
-    return "";
-  }
-
   const setImage = (fileName: string) => {
     if (locked) { return; }
     answer.value = "";
@@ -73,7 +61,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
 
   return (
     <div className={className}>
-      {renderDeleteButton()}
+      <RemoveItemButton index={index} length={length} onClick={removeFromList} />
       <div className={"checkbox-container " + containerClass}>
         <Checkbox
           className={checkboxClass}

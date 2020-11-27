@@ -139,7 +139,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
         <div className="image-container">
           <img alt="" src={fileUrl(answer.valueFile)} width="100%" />
           {answer.imageCaption && <div>{answer.imageCaption}</div>}
-        </div>
+        </div>  
       );
     } else {
       return <MathInHtml value={answer.value} />;

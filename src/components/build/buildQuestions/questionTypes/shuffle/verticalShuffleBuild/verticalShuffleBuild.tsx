@@ -8,6 +8,7 @@ import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/Add
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
+import RemoveItemButton from '../../components/RemoveItemButton';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
@@ -42,6 +43,8 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   const changed = (answer: any, value: string) => {
     if (locked) { return; }
     answer.value = value;
+    answer.valueFile = "";
+    answer.answerType = QuestionValueType.String;
     update();
   }
 
@@ -69,14 +72,14 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
       save();
     }
 
+    let className = 'vertical-answer-box unique-component';
+    if (answer.answerType === QuestionValueType.Image) {
+      className += ' big-answer';
+    }
+
     return (
-      <div className="vertical-answer-box" key={i}>
-        {
-          (state.list.length > 3)
-            && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(i)}>
-              <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
-            </button>
-        }
+      <div className={className} key={i}>
+        <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
         <QuestionImageDropzone
           answer={answer as any}
           type={answer.answerType || QuestionValueType.None}
