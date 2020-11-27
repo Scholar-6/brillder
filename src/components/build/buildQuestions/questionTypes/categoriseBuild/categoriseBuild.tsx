@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import './categoriseBuild.scss'
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import { UniqueComponentProps } from '../types';
-import QuestionImageDropZone from 'components/build/baseComponents/QuestionImageDropzone';
+import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import { SortCategory, QuestionValueType, SortAnswer } from 'components/interfaces/sort';
 import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import sprite from "assets/img/icons-sprite.svg";
@@ -145,7 +145,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           onChange={value => { answerChanged(answer, value) }}
         />
         <QuestionImageDropZone
-          answer={answer}
+          answer={answer as any}
           type={answer.answerType || QuestionValueType.None}
           fileName={answer.valueFile}
           locked={locked}

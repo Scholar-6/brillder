@@ -2,7 +2,7 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import { QuestionValueType } from '../../types';
 import { Answer } from '../types';
-import QuestionImageDropZone from 'components/build/baseComponents/QuestionImageDropzone';
+import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
@@ -92,7 +92,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
           onChange={value => answerChanged(answer, value)}
         />
         <QuestionImageDropZone
-          answer={answer}
+          answer={answer as any}
           type={answer.answerType || QuestionValueType.None}
           fileName={answer.valueFile}
           locked={locked}

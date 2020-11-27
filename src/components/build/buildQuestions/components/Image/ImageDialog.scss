@@ -15,8 +15,8 @@
       overflow-y: auto;
     }
     .upload-button {
-      position: fixed;
-      bottom: 6vh;
+      position: absolute;
+      bottom: 1.5vh;
       background: var(--tab-gray);
       color: var(--dark-gray);
       border-radius: 50%;

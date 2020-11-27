@@ -3,10 +3,10 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import './ChooseOneAnswer.scss';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
-import QuestionImageDropzone from "components/build/baseComponents/QuestionImageDropzone";
+import QuestionImageDropzone from "components/build/baseComponents/questionImageDropzone/QuestionImageDropzone";
 import { QuestionValueType } from "../types";
 import { ChooseOneAnswer } from './types';
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 export interface ChooseOneAnswerProps {
@@ -32,10 +32,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     if (length > 3) {
       return (
         <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(index)}>
-          <svg className="svg active back-button">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#trash-outline"} className="theme-orange" />
-          </svg>
+          <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
         </button>
       );
     }
@@ -87,7 +84,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
         />
       </div>
       <QuestionImageDropzone
-        answer={answer}
+        answer={answer as any}
         type={answer.answerType || QuestionValueType.None}
         locked={locked}
         fileName={answer.valueFile}
