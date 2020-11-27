@@ -62,7 +62,10 @@ export const calcBrickLiveAttempt = (brick: Brick, answers: ComponentAttempt<any
 export const calcBrickReviewAttempt = (brick: Brick, answers: ComponentAttempt<any>[], brickAttempt: BrickAttempt) => {
   let score = getScore(answers);
   let maxScore = getMaxScore(answers);
-  const reviewAnswers = answers.map((attempt, index) => ({ ...attempt, liveCorrect: brickAttempt.liveAnswers![index].correct }));
+  const reviewAnswers = answers.map((attempt, index) => ({
+    ...attempt,
+    liveCorrect: brickAttempt.liveAnswers![index] ? brickAttempt.liveAnswers![index].correct : false
+  }));
   return {
     brick, score, oldScore: brickAttempt.score, maxScore, student: null, answers: reviewAnswers, liveAnswers: brickAttempt.liveAnswers
   } as BrickAttempt;
