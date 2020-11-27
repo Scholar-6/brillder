@@ -229,11 +229,13 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       return this.renderTryBuildButton(true);
     } else if (this.state.isStudent) {
       return this.renderLibraryButton();
+    } else if (this.state.isBuilder) {
+      return this.renderCreateButton();
     }
-    return this.renderWorkButton();
+    return this.renderAssignmentsButton();
   }
 
-  renderWorkButton() {
+  renderAssignmentsButton() {
     return (
       <div className="back-item-container" onClick={() => {
         if (!this.state.isSwiping) {
@@ -253,7 +255,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       <div className="back-item-container student-back-work" onClick={() => {}}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : 'text-theme-light-blue'}`}>
           <SpriteIcon name="student-back-to-work"/>
-          <span className={`item-description ${isActive ? '' : 'disabled'}`}>Live Assignments</span>
+          <span className={`item-description ${isActive ? '' : 'disabled'}`}>Shared with Me</span>
         </button>
       </div>
     );
@@ -386,7 +388,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               </MobileButtonWrap>
             </SwiperSlide>
             {(this.state.isBuilder || this.state.isAdmin) && <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>}
-            {(this.state.isBuilder || this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>}
+            {(this.state.isBuilder || this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderAssignmentsButton()}</SwiperSlide>}
             {(this.state.isTeacher || this.state.isAdmin) && <SwiperSlide><TeachButton history={this.props.history} disabled={this.state.isSwiping} /></SwiperSlide>}
             {(this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderReportsButton(false)}</SwiperSlide>}
             {(this.state.isTeacher || this.state.isAdmin) && <SwiperSlide>{this.renderLiveAssignmentButton(false)}</SwiperSlide>}
