@@ -50,10 +50,7 @@
       }
     }
     >div.no-active:hover {
-      > div {
-        opacity: 1;
-        color: var(--off-white);
-      }
+      background: var(--off-white);
     }
 
     >div:last-child {
