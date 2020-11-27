@@ -13,6 +13,7 @@ import {Answer} from 'components/build/buildQuestions/questionTypes/pairMatchBui
 import { PairMatchProps, PairMatchState, DragAndDropStatus, PairMatchAnswer, PairMatchComponent } from './interface';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { Hint, HintStatus } from 'model/question';
+import { fileUrl } from 'components/services/uploadFile';
 
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
@@ -97,14 +98,24 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
 
   renderOptionContent(answer: Answer) {
     if (answer.optionType && answer.optionType === QuestionValueType.Image) {
-      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} width="100%" />;
+      return (
+        <div className="image-container">
+          <img alt="" src={fileUrl(answer.optionFile)} width="100%" />
+          {answer.imageCaption && <div>{answer.imageCaption}</div>}
+        </div>
+      );
     }
     return <MathInHtml value={answer.option} />;
   }
 
   renderAnswerContent(answer: Answer) {
     if (answer.answerType && answer.answerType === QuestionValueType.Image) {
-      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} width="100%"/>;
+      return (
+        <div className="image-container">
+          <img alt="" src={fileUrl(answer.valueFile)} width="100%"/>
+          {answer.imageCaption && <div>{answer.imageCaption}</div>}
+        </div>
+      );
     } else {
       return (
         <div

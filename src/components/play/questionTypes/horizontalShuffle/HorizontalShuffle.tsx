@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Card from '@material-ui/core/Card';
 import { ReactSortable } from 'react-sortablejs';
@@ -11,6 +10,8 @@ import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
+import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
+import { fileUrl } from 'components/services/uploadFile';
 
 
 enum DragAndDropStatus {
@@ -107,6 +108,19 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     return attempt;
   }
 
+  renderData(answer: any) {
+    if (answer.answerType === QuestionValueType.Image) {
+      return (
+        <div className="image-container">
+          <img alt="" src={fileUrl(answer.valueFile)} width="100%" />
+          {answer.imageCaption && <div>{answer.imageCaption}</div>}
+        </div>
+      );
+    } else {
+      return <MathInHtml value={answer.value} />;
+    }
+  }
+
   renderAnswer(answer: any, i: number) {
     let isCorrect = this.checkAttemptAnswer(i);
     let className = "horizontal-shuffle-answer";
@@ -123,7 +137,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     return (
       <Card className={className} key={i}>
           <div style={{display: "block"}} className="answer">
-            <MathInHtml value={answer.value} />
+            {this.renderData(answer)}
           </div>
           <div style={{display: "block"}}>
             {this.props.isPreview ?
