@@ -132,6 +132,12 @@
     <path d="M22,20.2v-1.8c0-1.7-1.1-3.1-2.7-3.5"/>
     <path d="M15.6,3.9c1.9,0.5,3.1,2.5,2.6,4.4c-0.3,1.3-1.3,2.3-2.6,2.6"/>
   </svg>
+  <svg id="users-custom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16.5,20.2v-1.8c0-2-1.6-3.6-3.6-3.6H5.6c-2,0-3.6,1.6-3.6,3.6v1.8"/>
+    <circle cx="9.3" cy="7.5" r="3.6"/>
+    <path d="M22,20.2v-1.8c0-1.7-1.1-3.1-2.7-3.5"/>
+    <path d="M15.6,3.9c1.9,0.5,3.1,2.5,2.6,4.4c-0.3,1.3-1.3,2.3-2.6,2.6"/>
+  </svg>
   <svg id="upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload">
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
     <polyline points="17 8 12 3 7 8"></polyline>
