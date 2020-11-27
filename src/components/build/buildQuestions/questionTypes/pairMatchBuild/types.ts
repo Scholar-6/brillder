@@ -1,7 +1,8 @@
+import { MainImageProps } from '../../components/Image/model';
 import {QuestionValueType} from '../types';
 
 
-export interface Answer {
+export interface Answer extends MainImageProps {
   checked: boolean;
   value: string;
   valueFile: string;
