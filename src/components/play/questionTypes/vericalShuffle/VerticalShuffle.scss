@@ -17,5 +17,9 @@
         @extend %flexCenter;
       }
     }
+    .image-container {
+      margin: 5px;
+      width: 100%;
+    }
   }
 }
