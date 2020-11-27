@@ -27,6 +27,7 @@ import { TeachActiveTab } from "components/teach/model";
 import { getSubjects } from "services/axios/subject";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import map from "components/map";
 
 
 interface TeachProps {
@@ -262,23 +263,27 @@ class TeachPage extends Component<TeachProps, TeachState> {
   //#endregion
 
   renderTabContent() {
-   
     if (!this.state.isLoaded) {
       return <div className="tab-content"></div>
     }
-    /*
+    
     if (this.state.isLoaded && this.state.classrooms.length === 0) {
       return (
         <div className="tab-content">
           <div className="tab-content-centered">
             <div>
-              <SpriteIcon name="glasses-home-blue" />
+              <div className="icon-container">
+                <SpriteIcon
+                  name="glasses-home-blue"
+                  onClick={() => this.props.history.push(map.ViewAllPage)}
+                />
+              </div>
               <div className="bold">Click the icon above to search for brick to assign</div>
             </div>
           </div>
         </div>
       );
-    }*/
+    }
     return (
       <div className="tab-content">
         <div className="classroom-list-buttons">
@@ -333,6 +338,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       <Grid container direction="row" className="sorted-row back-to-work-teach">
         <TeachFilterSidebar
           classrooms={this.state.classrooms}
+          isLoaded={this.state.isLoaded}
           activeClassroom={this.state.activeClassroom}
           setActiveClassroom={this.setActiveClassroom.bind(this)}
           setActiveStudent={this.setActiveStudent.bind(this)}

@@ -4,6 +4,7 @@ import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import { TeachClassroom, TeachStudent } from "model/classroom";
 import { TeachFilters } from '../../model';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import EmptyFilter from "../filter/EmptyFilter";
 
 enum TeachFilterFields {
   Assigned = 'assigned',
@@ -11,6 +12,7 @@ enum TeachFilterFields {
 }
 
 interface FilterSidebarProps {
+  isLoaded: boolean;
   classrooms: TeachClassroom[];
   activeClassroom: TeachClassroom | null;
   setActiveStudent(s: TeachStudent): void;
@@ -22,6 +24,11 @@ interface FilterSidebarState {
   filterExpanded: boolean;
   filters: TeachFilters;
   isClearFilter: boolean;
+
+  // empty filter
+  firstStarted: boolean;
+  secondStarted: boolean;
+  thirdStarted: boolean;
 }
 
 class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
@@ -33,8 +40,17 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
       filters: {
         assigned: false,
         completed: false
-      }
+      },
+      firstStarted: true,
+      secondStarted: false,
+      thirdStarted: false
     };
+  }
+
+  componentDidUpdate(prevProps: FilterSidebarProps) {
+    if (prevProps.isLoaded === false && this.props.isLoaded === true) {
+      //this.setState({firstStarted: true});
+    }
   }
 
   hideFilter() { this.setState({ filterExpanded: false }) }
@@ -204,11 +220,23 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     );
   };
 
+  renderContent() {
+    if (!this.props.isLoaded) {
+      return <div></div>
+    }
+    if (this.props.isLoaded && this.props.classrooms.length === 0) {
+      return <EmptyFilter />;
+    }
+    let divs = [];
+    divs.push(this.renderClassesBox());
+    divs.push(this.renderFilterBox());
+    return divs;
+  }
+
   render() {
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
-        {this.renderClassesBox()}
-        {this.renderFilterBox()}
+        {this.renderContent()}
       </Grid>
     );
   }
