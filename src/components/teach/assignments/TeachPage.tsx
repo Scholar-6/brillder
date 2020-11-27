@@ -27,6 +27,7 @@ import { TeachActiveTab } from "components/teach/model";
 import { getSubjects } from "services/axios/subject";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
+
 interface TeachProps {
   history: any;
   searchString: string;
@@ -51,6 +52,7 @@ interface TeachState {
   totalCount: number;
   subjects: Subject[];
   isSearching: boolean;
+  isLoaded: boolean;
 
   filters: TeachFilters;
   handleKey(e: any): void;
@@ -79,6 +81,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       activeAssignment: null,
       assignmentStats: null,
       activeStudent: null,
+      isLoaded: false,
 
       totalCount: 0,
       isSearching: false,
@@ -108,7 +111,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
     const classrooms = await getAllClassrooms() as TeachClassroom[] | null;
     if (classrooms) {
-      this.setState({ classrooms });
+      this.setState({ classrooms, isLoaded: true });
     } else {
       this.props.requestFailed('can`t get classrooms');
     }
@@ -257,8 +260,48 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
   //#endregion
 
+  renderTabContent() {
+    return (
+      <div className="tab-content">
+        <div className="classroom-list-buttons">
+          {this.renderLiveBricksButton()}
+          {this.renderArchiveButton()}
+        </div>
+        { this.state.activeStudent ?
+          <ActiveStudentBricks
+            subjects={this.state.subjects}
+            classroom={this.state.activeClassroom}
+            activeStudent={this.state.activeStudent}
+          />
+          : this.state.activeAssignment && this.state.assignmentStats && this.state.activeClassroom ?
+            <ExpandedAssignment
+              classroom={this.state.activeClassroom}
+              assignment={this.state.activeAssignment}
+              stats={this.state.assignmentStats}
+              subjects={this.state.subjects}
+              startIndex={this.state.sortedIndex}
+              pageSize={this.state.assignmentPageSize}
+              history={this.props.history}
+              minimize={() => this.unselectAssignment()}
+            />
+            :
+            <ClassroomList
+              subjects={this.state.subjects}
+              expand={this.setActiveAssignment.bind(this)}
+              startIndex={this.state.sortedIndex}
+              classrooms={this.state.classrooms}
+              activeClassroom={this.state.activeClassroom}
+              pageSize={this.state.pageSize}
+            />
+        }
+        {this.renderTeachPagination()}
+      </div>
+    );
+  }
+
   render() {
     const {history} = this.props;
+
     return (
       <div className="main-listing user-list-page manage-classrooms-page">
         <PageHeadWithMenu
@@ -279,40 +322,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         />
         <Grid item xs={9} className="brick-row-container">
           <TeachTab activeTab={TeachActiveTab.Assignments} history={history} />
-          <div className="tab-content">
-            <div className="classroom-list-buttons">
-              {this.renderLiveBricksButton()}
-              {this.renderArchiveButton()}
-            </div>
-            { this.state.activeStudent ?
-              <ActiveStudentBricks
-                subjects={this.state.subjects}
-                classroom={this.state.activeClassroom}
-                activeStudent={this.state.activeStudent}
-              />
-              : this.state.activeAssignment && this.state.assignmentStats && this.state.activeClassroom ?
-                <ExpandedAssignment
-                  classroom={this.state.activeClassroom}
-                  assignment={this.state.activeAssignment}
-                  stats={this.state.assignmentStats}
-                  subjects={this.state.subjects}
-                  startIndex={this.state.sortedIndex}
-                  pageSize={this.state.assignmentPageSize}
-                  history={this.props.history}
-                  minimize={() => this.unselectAssignment()}
-                />
-                :
-                <ClassroomList
-                  subjects={this.state.subjects}
-                  expand={this.setActiveAssignment.bind(this)}
-                  startIndex={this.state.sortedIndex}
-                  classrooms={this.state.classrooms}
-                  activeClassroom={this.state.activeClassroom}
-                  pageSize={this.state.pageSize}
-                />
-            }
-            {this.renderTeachPagination()}
-          </div>
+          {this.renderTabContent()}
         </Grid>
       </Grid>
       </div>
