@@ -26,6 +26,7 @@ import TeachTab from "components/teach/TeachTab";
 import { TeachActiveTab } from "components/teach/model";
 import { getSubjects } from "services/axios/subject";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface TeachProps {
@@ -261,6 +262,23 @@ class TeachPage extends Component<TeachProps, TeachState> {
   //#endregion
 
   renderTabContent() {
+   
+    if (!this.state.isLoaded) {
+      return <div className="tab-content"></div>
+    }
+    /*
+    if (this.state.isLoaded && this.state.classrooms.length === 0) {
+      return (
+        <div className="tab-content">
+          <div className="tab-content-centered">
+            <div>
+              <SpriteIcon name="glasses-home-blue" />
+              <div className="bold">Click the icon above to search for brick to assign</div>
+            </div>
+          </div>
+        </div>
+      );
+    }*/
     return (
       <div className="tab-content">
         <div className="classroom-list-buttons">
