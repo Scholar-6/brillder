@@ -49,6 +49,12 @@
         opacity: 1;
       }
     }
+    >div.no-active:hover {
+      > div {
+        opacity: 1;
+        color: var(--off-white);
+      }
+    }
 
     >div:last-child {
       border-top-right-radius: 0vw;
