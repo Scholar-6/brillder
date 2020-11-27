@@ -9,8 +9,13 @@
     width: 100%;
     padding: 0 !important;
 
+    .image-container {
+      width: 100%;
+    }
+
     img {
       margin: 4px !important;
+      margin-bottom: 0 !important;
     }
   }
   @include phone_and_tabletP {
