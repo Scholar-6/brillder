@@ -478,8 +478,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
   }
 
-  moveAllBack() {
-    let pageSize = this.state.pageSize;
+  moveAllBack(pageSizeParam?: number) {
+    let pageSize = pageSizeParam ? pageSizeParam : this.state.pageSize;
     let index = this.state.sortedIndex;
 
     if (index >= pageSize) {
@@ -487,8 +487,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
   }
 
-  moveAllNext() {
-    let pageSize = this.state.pageSize;
+  moveAllNext(pageSizeParam?: number) {
+    let pageSize = pageSizeParam ? pageSizeParam : this.state.pageSize;
     let index = this.state.sortedIndex;
 
     if (index + pageSize <= this.state.finalBricks.length) {
@@ -641,8 +641,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
         toggleCore={this.toggleCore.bind(this)}
         setTab={() => {}}
 
-        moveAllNext={this.moveAllNext.bind(this)}
-        moveAllBack={this.moveAllBack.bind(this)}
+        moveAllNext={() => this.moveAllNext(this.state.pageSize + 3)}
+        moveAllBack={() => this.moveAllBack.bind(this.state.pageSize + 3)}
         moveToFirstPage={this.moveToFirstPage.bind(this)}
 
         handleDeleteOpen={this.handleDeleteOpen.bind(this)}

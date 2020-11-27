@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { ReduxCombinedState } from "redux/reducers";
-
 import "./BackToWork.scss";
+import { ReduxCombinedState } from "redux/reducers";
 import { User } from "model/user";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
