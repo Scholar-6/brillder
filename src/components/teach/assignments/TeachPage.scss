@@ -417,16 +417,40 @@
       }
     }
   }
+
+  .empty-filter-content {
+    margin-top: 18vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
+
+    font-size: 1.4vw;
+
+    .bold {
+      margin-bottom: 4vh;
+    }
+  }
 }
 
 .tab-content {
   .tab-content-centered {
     width: 100%;
-    height: 100%;
+    height: 70%;
     @extend %flexCenter;
-    color: var(--theme-dark-blue);
+    color: var(--theme-light-blue);
+    .icon-container {
+      @extend %flexToXCenter;
+      width: 100%;
+      margin-bottom: 5vh;
+    }
     .svg {
+      cursor: pointer;
+      width: 40vw;
+      height: 15vh;
       color: var(--theme-orange);
+    }
+    .bold {
+      text-align: center;
+      font-size: 1.5vw;
     }
   }
 }
