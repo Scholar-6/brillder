@@ -418,3 +418,15 @@
     }
   }
 }
+
+.tab-content {
+  .tab-content-centered {
+    width: 100%;
+    height: 100%;
+    @extend %flexCenter;
+    color: var(--theme-dark-blue);
+    .svg {
+      color: var(--theme-orange);
+    }
+  }
+}

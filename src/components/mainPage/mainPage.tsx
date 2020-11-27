@@ -229,8 +229,6 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       return this.renderTryBuildButton(true);
     } else if (this.state.isStudent) {
       return this.renderLibraryButton();
-    } else if (this.state.isBuilder) {
-      return this.renderCreateButton();
     }
     return this.renderAssignmentsButton();
   }
