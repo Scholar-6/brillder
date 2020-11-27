@@ -13,6 +13,7 @@ import MathInHtml from '../../../baseComponents/MathInHtml';
 import CompComponent from '../../Comp';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from 'components/play/baseComponents/ReviewGlobalHint';
+import { fileUrl } from 'components/services/uploadFile';
 
 export type ChooseSeveralAnswer = ActiveItem[];
 
@@ -101,7 +102,12 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   renderData(answer: ChooseOneAnswer) {
     if (answer.answerType === QuestionValueType.Image) {
-      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} width="100%" />;
+      return (
+        <div className="image-container">
+          <img alt="" src={fileUrl(answer.valueFile)} width="100%" />
+          {answer.imageCaption && <div>{answer.imageCaption}</div>}
+        </div>
+      );
     } else {
       return <MathInHtml value={answer.value} />;
     }

@@ -3,11 +3,14 @@ export enum ImageAlign {
   center
 }
 
-export interface ImageComponentData {
+export interface MainImageProps {
+  imageSource?: string;
+  imageCaption?: string;
+  imagePermision?: boolean;
+}
+
+export interface ImageComponentData extends MainImageProps {
   value: string;
-  imageSource: string;
-  imageCaption: string;
   imageAlign: ImageAlign;
   imageHeight: number;
-  imagePermision: boolean;
 }
