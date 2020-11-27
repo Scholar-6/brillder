@@ -8,17 +8,6 @@ export enum ThreeColumnNames {
   Green = "green",
 };
 
-export interface BricksContent {
-  rawBricks: Brick[];
-  finalBricks: Brick[];
-}
-
-export interface ThreeColumns {
-  red: BricksContent;
-  yellow: BricksContent;
-  green: BricksContent;
-}
-
 export interface AssignmentContent {
   rawAssignments: AssignmentBrick[];
   finalAssignments: AssignmentBrick[];
@@ -28,22 +17,6 @@ export interface ThreeAssignmentColumns {
   red: AssignmentContent;
   yellow: AssignmentContent;
   green: AssignmentContent;
-}
-
-export enum SortBy {
-  None,
-  Date,
-  Popularity,
-  Status,
-}
-
-export interface Filters {
-  draft: boolean;
-  build: boolean;
-  review: boolean;
-  publish: boolean;
-
-  isCore: boolean;
 }
 
 export interface PlayFilters {

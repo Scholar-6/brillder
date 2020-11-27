@@ -1,16 +1,9 @@
 import { Brick, BrickStatus } from 'model/brick';
-import { AssignmentBrick } from 'model/assignment';
-import { ThreeColumns, ThreeAssignmentColumns, Filters, ThreeColumnNames, AssignmentBrickData } from './model';
+import { ThreeColumns, Filters, ThreeColumnNames } from './model';
 import {filterByStatus, filterByPrivate, filterByCore } from './service';
 
 const prepareBrickData = (data: any[], brick: Brick, index: number, key: number, row: number) => {
   data.push({ brick: brick, key, index, row });
-}
-
-const prepareAssignmentData = (data: any[], assignment: AssignmentBrick, index: number, key: number, row: number) => {
-  data.push({
-    brick: assignment.brick, key, index, row, assignmentId: assignment.id, status: assignment.status, isInvitation: assignment.isInvitation
-  } as AssignmentBrickData);
 }
 
 const setColumnBricksByStatus = (
