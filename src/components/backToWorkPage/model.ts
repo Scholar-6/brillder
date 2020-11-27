@@ -1,5 +1,4 @@
 import { Brick } from "model/brick";
-import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 
 
 export enum ThreeColumnNames {
@@ -17,17 +16,6 @@ export interface ThreeColumns {
   red: BricksContent;
   yellow: BricksContent;
   green: BricksContent;
-}
-
-export interface AssignmentContent {
-  rawAssignments: AssignmentBrick[];
-  finalAssignments: AssignmentBrick[];
-}
-
-export interface ThreeAssignmentColumns {
-  red: AssignmentContent;
-  yellow: AssignmentContent;
-  green: AssignmentContent;
 }
 
 export enum SortBy {
@@ -51,14 +39,4 @@ export interface PlayFilters {
   completed: boolean;
   submitted: boolean;
   checked: boolean;
-}
-
-export interface AssignmentBrickData {
-  brick: Brick;
-  key: number;
-  index: number;
-  row: number;
-  assignmentId: number;
-  status: AssignmentBrickStatus;
-  isInvitation: boolean;
 }
