@@ -10,7 +10,7 @@ import './PersonalBuild.scss';
 import BrickBlock from "components/baseComponents/BrickBlock";
 import { Grid } from "@material-ui/core";
 import FilterSidebar from "./FilterSidebar";
-import Tab, { ActiveTab } from "../Tab";
+import Tab from "components/assignmentsPage/components/Tab";
 import BackPagePagination from "../BackPagePagination";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import { PersonalFilters, SubjectItem } from "./model";
@@ -34,7 +34,7 @@ interface PersonalBuildProps {
   handleDeleteClose(): void;
 
   toggleCore(): void;
-  setTab(tab: ActiveTab): void;
+  setTab(): void;
 
   moveAllNext(): void;
   moveAllBack(): void;
@@ -271,10 +271,8 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
         <Grid item xs={9} className="brick-row-container">
           <Tab
             isTeach={this.props.isTeach}
-            activeTab={ActiveTab.Build}
             isCore={false}
             onCoreSwitch={this.props.toggleCore.bind(this)}
-            setTab={this.props.setTab}
           />
             <div className="tab-content">
               {isEmpty && this.props.loaded
