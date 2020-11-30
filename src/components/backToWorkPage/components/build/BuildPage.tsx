@@ -23,7 +23,7 @@ import {
 } from '../../threeColumnService';
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 
-import Tab, { ActiveTab } from '../Tab';
+import Tab from 'components/assignmentsPage/components/Tab';
 import BuildBricks from './BuildBricks';
 import FilterSidebar from './FilterSidebar';
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
@@ -42,7 +42,6 @@ interface BuildProps {
   user: User;
   history: any;
   location: any;
-  setTab(t: ActiveTab): void;
 
   // redux
   notifications: Notification[] | null;
@@ -479,8 +478,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
   }
 
-  moveAllBack() {
-    let pageSize = this.state.pageSize;
+  moveAllBack(pageSizeParam?: number) {
+    let pageSize = pageSizeParam ? pageSizeParam : this.state.pageSize;
     let index = this.state.sortedIndex;
 
     if (index >= pageSize) {
@@ -488,8 +487,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
   }
 
-  moveAllNext() {
-    let pageSize = this.state.pageSize;
+  moveAllNext(pageSizeParam?: number) {
+    let pageSize = pageSizeParam ? pageSizeParam : this.state.pageSize;
     let index = this.state.sortedIndex;
 
     if (index + pageSize <= this.state.finalBricks.length) {
@@ -640,10 +639,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
         handleDeleteClose={this.handleDeleteClose.bind(this)}
 
         toggleCore={this.toggleCore.bind(this)}
-        setTab={this.props.setTab.bind(this)}
+        setTab={() => {}}
 
-        moveAllNext={this.moveAllNext.bind(this)}
-        moveAllBack={this.moveAllBack.bind(this)}
+        moveAllNext={() => this.moveAllNext(this.state.pageSize + 3)}
+        moveAllBack={() => this.moveAllBack.bind(this.state.pageSize + 3)}
         moveToFirstPage={this.moveToFirstPage.bind(this)}
 
         handleDeleteOpen={this.handleDeleteOpen.bind(this)}
@@ -671,10 +670,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
         <Grid item xs={9} className="brick-row-container">
           <Tab
             isTeach={this.state.isTeach || this.state.isAdmin}
-            activeTab={ActiveTab.Build}
             isCore={this.state.filters.isCore}
             onCoreSwitch={this.toggleCore.bind(this)}
-            setTab={this.props.setTab}
           />
             <div className="tab-content">
               <BuildBricks

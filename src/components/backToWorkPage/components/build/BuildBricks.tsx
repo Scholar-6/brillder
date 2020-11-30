@@ -229,6 +229,11 @@ class BuildBricks extends Component<BuildBricksProps> {
   renderEmptyPage() {
     return (
       <div className="bricks-list-container no-top-padding">
+        <PublishToggle
+          isPublish={this.props.filters.publish}
+          publishedCount={this.props.published}
+          onSwitch={this.props.switchPublish}
+        />
         <div className="bricks-list">
           {this.renderFirstEmptyColumn()}
           {this.renderSecondEmptyColumn()}
