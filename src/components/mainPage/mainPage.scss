@@ -293,6 +293,18 @@
           }
         }
       }
+      .glass-left-inside {
+        left: 0.05vw;
+        width: 5.5vw !important;
+        height: 5.5vw !important;
+        svg {
+          height: 100% !important;
+        }
+      }
+      .glass-right-inside {
+        right: $shift;
+      }
+      .glass-left-inside,
       .glass-right-inside {
         opacity: 0;
         @extend %transitionAll300;
@@ -309,7 +321,7 @@
           -o-animation: rotating 2s linear infinite;
           animation: rotating 2s linear infinite;
           color: var(--theme-dark-blue);
-          width: 30%;
+          width: 30% !important;
         }
       }
     }
@@ -317,6 +329,7 @@
       .eye-glass-icon {
         .glass-eyes-left,
         .glass-right-inside,
+        .glass-left-inside,
         .glass-eyes-right {
           @include tabletP {
             opacity: 1;
