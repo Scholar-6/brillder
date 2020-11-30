@@ -2,6 +2,35 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
+@-webkit-keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
 .mainPage {
   $welcome-col-width: 35.2vw;
   $first-col-width: 29.6vw;
@@ -169,20 +198,8 @@
           height: 120px;
         }
         @include tabletP {
-          width: 15vw;
-          height: 10vw;
-        }
-        @include laptop {
-          width: 10vw;
-          height: 8vw;
-        }
-        @include ex-desktop_wide {
-          width: 12vw;
-          height: 8vw;
-        }
-        @include apple-macbook-air-width {
           width: 13vw;
-          height: 9vw;
+          height: 6vw;
         }
       }
     }
@@ -244,91 +261,72 @@
   }
   .view-item-container {
     .eye-glass-icon,
-    .btn {
-      .svg {
-        @include tabletP {
-          height: 60px;
-        }
-        @include ex-desktop_wide {
-          height: 5vw;
-        }
-        @include apple-macbook-air-width {
-          height: 11vh;
-        }
-      }
-    }
     .eye-glass-icon {
       position: relative;
       .glass-eyes-left,
       .glass-eyes-right {
-        display: none;
         opacity: 0;
         transition-delay: 200ms;
         @extend %transitionAll300;
         @extend %floatToYCenter;
-        @include phone_and_tabletP {
-        }
         @include tabletP {
-          width: 5vw;
-          height: 5vw;
-        }
-        @include laptop {
-          width: 50px;
-          height: 50px;
-        }
-        @include ex-desktop_wide {
-          width: 4.5vw;
-          height: 4.5vw;
-        }
-        @include apple-macbook-air-width {
-          width: 3vw;
-          height: 3vw;
+          width: 5.5vw;
+          height: 5.5vw;
         }
         .svg {
           width: 60%;
           height: 60%;
         }
       }
+      $shift: 0.6vw;
       .glass-eyes-left {
         @include tabletP {
-          right: 15px;
-        }
-        @include laptop {
-          left: 10px;
-        }
-        @include ex-desktop_wide {
-          left: 16px;
-        }
-        @include apple-macbook-air-width {
-          left: 3.07vw;
+          left: $shift;
         }
       }
       .glass-eyes-right {
         @include tabletP {
-          right: 15px;
+          right: $shift;
+          .aperture {
+            position: absolute;
+            left: 0;
+          }
         }
-        @include laptop {
-          right: 10px;
-        }
-        @include ex-desktop_wide {
-          right: 16px;
-        }
-        @include apple-macbook-air-width {
-          right: 2.99vw;
+      }
+      .glass-right-inside {
+        opacity: 0;
+        @extend %transitionAll300;
+        position: absolute;
+        top: 0;
+        right: $shift;
+        width: 5.5vw;
+        height: 5.5vw;
+
+        svg {
+          -webkit-animation: rotating 2s linear infinite;
+          -moz-animation: rotating 2s linear infinite;
+          -ms-animation: rotating 2s linear infinite;
+          -o-animation: rotating 2s linear infinite;
+          animation: rotating 2s linear infinite;
+          color: var(--theme-dark-blue);
+          width: 30%;
         }
       }
     }
     &:hover {
       .eye-glass-icon {
         .glass-eyes-left,
+        .glass-right-inside,
         .glass-eyes-right {
-          opacity: 1;
-          .pupil {
-            animation-name: eye-movement;
-            animation-iteration-count: infinite;
-            animation-duration: 1300ms;
-            animation-delay: 0;
-            animation-direction: alternate;
+          @include tabletP {
+            opacity: 1;
+            .pupil {
+              animation-name: eye-movement;
+              animation-iteration-count: infinite;
+              animation-duration: 1300ms;
+              animation-delay: 0;
+              animation-direction: alternate;
+            }
           }
         }
       }
