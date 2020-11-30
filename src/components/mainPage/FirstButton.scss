@@ -3,6 +3,24 @@
 @import "src/assets/sass/partials/extensions";
 
 .mainPage {
+  @keyframes eye-movement {
+    0% {
+      transform: translateX(-4px);
+    }
+
+    50% {
+      transform: translateX(-4px);
+    }
+
+    70% {
+      transform: translateX(4px);
+    }
+
+    100% {
+      transform: translateX(4px);
+    }
+  }
+
   .view-item-container {
 
     .eye-glass-icon,
@@ -56,22 +74,39 @@
         }
       }
 
-      .glass-right-inside {
-        right: $shift;
+      .glass-left-pupil,
+      .glass-right-pupil {
+        position: absolute;
+        top: 1.25vw;
+        width: 5vw;
+      }
+
+      .glass-left-pupil {
+        left: 0.7vw;
+      }
+
+      .glass-right-pupil {
+        right: -0.1vw;
       }
 
       .glass-left-inside,
       .glass-right-inside {
         opacity: 0;
+        @extend %flexCenter;
         @extend %transitionAll300;
         position: absolute;
-        top: 0;
-        right: $shift;
         width: 5.5vw;
         height: 5.5vw;
 
+        .circle {
+          -webkit-animation: fade 2s;
+          -moz-animation: fade 2s;
+          -ms-animation: fade 2s;
+          -o-animation: fade 2s;
+          animation: fade 2s;
+        }
+
         svg {
-          @extend %transitionAll600;
           -webkit-animation: rotating 2s linear infinite;
           -moz-animation: rotating 2s linear infinite;
           -ms-animation: rotating 2s linear infinite;
@@ -85,6 +120,7 @@
 
     &:hover {
       .eye-glass-icon {
+
         .glass-eyes-left,
         .glass-right-inside,
         .glass-left-inside,
@@ -93,6 +129,18 @@
             opacity: 1;
           }
         }
+
+        .glass-left-pupil,
+        .glass-right-pupil {
+          .pupil {
+            animation-name: eye-movement;
+            animation-iteration-count: 1;
+            animation-duration: 1300ms;
+            animation-delay: 0;
+            animation-direction: alternate;
+          }
+        }
+
         .glass-right-inside,
         .glass-left-inside {
           @include tabletP {
@@ -105,4 +153,3 @@
     }
   }
 }
-
