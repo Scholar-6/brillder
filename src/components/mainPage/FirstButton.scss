@@ -71,13 +71,14 @@
         height: 5.5vw;
 
         svg {
+          @extend %transitionAll600;
           -webkit-animation: rotating 2s linear infinite;
           -moz-animation: rotating 2s linear infinite;
           -ms-animation: rotating 2s linear infinite;
           -o-animation: rotating 2s linear infinite;
           animation: rotating 2s linear infinite;
           color: var(--theme-dark-blue);
-          width: 30% !important;
+          width: 0 !important;
         }
       }
     }
@@ -90,6 +91,14 @@
         .glass-eyes-right {
           @include tabletP {
             opacity: 1;
+          }
+        }
+        .glass-right-inside,
+        .glass-left-inside {
+          @include tabletP {
+            svg {
+              width: 30% !important;
+            }
           }
         }
       }
