@@ -9,12 +9,14 @@ const ClassInvitationDialog: React.FC = props => {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const getInvitations = async () => {
-    const invitations = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/invitations`, {
-      withCredentials: true
-    });
+    try {
+      const invitations = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/invitations`, {
+        withCredentials: true
+      });
 
-    setInvitations(invitations.data as ClassroomInvitation[]);
-    setActiveStep(0);
+      setInvitations(invitations.data as ClassroomInvitation[]);
+      setActiveStep(0);
+    } catch(e) { }
   }
 
   useEffect(() => {
