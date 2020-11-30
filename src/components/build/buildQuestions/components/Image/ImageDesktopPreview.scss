@@ -57,6 +57,12 @@
     padding-left: 4vw;
     padding-right: 4vw;
 
+    > div {
+      width: 100%;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+    
     &.image-center {
       @extend %flexToXCenter;
     }

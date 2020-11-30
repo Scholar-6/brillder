@@ -51,7 +51,8 @@ const ImageDesktopPreview: React.FC<Props> = props => {
             <Grid item xs={9} className="brick-row-container">
               <Grid container direction="row" className="h100">
                 <Grid item xs={8} className={className}>
-                  <img alt="preview" src={finalSrc} style={{height: props.height + 'vh'}} />
+                  <div style={{backgroundImage: "url('" + finalSrc + "')" , height: props.height + 'vh'}} />
+                  {/*<img alt="preview" src={finalSrc} style={{height: props.height + 'vh'}} />*/}
                 </Grid>
                 <Grid item xs={4} className="introduction-info"/>
               </Grid>
