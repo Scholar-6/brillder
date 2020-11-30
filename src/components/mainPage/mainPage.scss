@@ -179,9 +179,6 @@
     @extend %flexCenter;
     flex-direction: column;
     @include tabletP {
-      padding: 25px 0;
-    }
-    @include ex-desktop_wide {
       padding: 5vh 0;
     }
     .eye-glass-icon,
