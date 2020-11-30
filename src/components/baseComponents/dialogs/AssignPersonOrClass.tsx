@@ -34,7 +34,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const getAllStudents = React.useCallback(async () => {
     let students = await getStudents();
     if (!students) {
-      requestFailed('Can`t get students');
+      //11/30/2020 #2485  requestFailed('Can`t get students');
       students = [];
     }
 

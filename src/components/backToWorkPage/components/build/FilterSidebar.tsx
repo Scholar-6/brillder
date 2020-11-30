@@ -194,7 +194,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
   render() {
     if (this.props.isEmpty) {
-      return <EmptyFilterSidebar history={this.props.history} />;
+      return <EmptyFilterSidebar history={this.props.history} isCore={true} />;
     }
 
     let draft = 0;
