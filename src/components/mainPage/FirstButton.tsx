@@ -2,6 +2,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { User, UserType } from "model/user";
 import React from "react";
 import { isMobile } from "react-device-detect";
+import './FirstButton.scss';
 
 interface FirstButtonProps {
   user: User;
