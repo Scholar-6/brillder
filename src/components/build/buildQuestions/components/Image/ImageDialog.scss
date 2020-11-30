@@ -58,6 +58,9 @@
   }
 
   .MuiButtonBase-root.MuiIconButton-root.MuiCheckbox-root {
+    &:hover {
+      background: inherit;
+    }
     padding: 0 !important;
     margin-bottom: 0.2vw;
     color: var(--theme-dark-blue) !important;
