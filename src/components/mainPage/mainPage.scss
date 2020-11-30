@@ -230,14 +230,6 @@
         letter-spacing: 5px;
       }
       @include tabletP {
-        font-size: 1.5vw;
-        letter-spacing: 0.3vw;
-      }
-      @include laptop {
-        font-size: 1vw;
-        letter-spacing: 0.2vw;
-      }
-      @include ex-desktop_wide {
         font-size: 1.2vw;
         letter-spacing: 0.3vw;
       }
