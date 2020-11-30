@@ -240,11 +240,10 @@
       }
     }
   }
-  .back-item-container {
+  .create-item-container {
     .btn .svg {
-      @include ex-desktop_wide {
-        width: 11.2vw;
-        height: 8vw;
+      @include tabletP {
+        height: 7vw;
       }
     }
   }
