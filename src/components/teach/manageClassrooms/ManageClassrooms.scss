@@ -194,6 +194,37 @@
   }
 }
 
+.main-listing.user-list-page.manage-classrooms-page.manage-classrooms-checkboxes {
+  .tab-content {
+    .tab-content-centered {
+      .icon-container {
+        margin-bottom: 1vh;
+      }
+      .svg {
+        cursor: pointer;
+        width: 28vw;
+        height: 18vh;
+        color: var(--theme-light-blue);
+      }
+    }
+  }
+  .empty-filter-content {
+    margin-top: 18vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
+
+    font-size: 1.4vw;
+
+    .space-line {
+      margin-bottom: 1.4vw;
+    }
+
+    .bold {
+      margin-bottom: 4vh;
+    }
+  }
+}
+
 .manage-classrooms-checkboxes {
   .MuiRadio-root.MuiIconButton-root {
     padding: 0 !important;

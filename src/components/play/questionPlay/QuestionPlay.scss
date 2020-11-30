@@ -113,6 +113,7 @@
 .question-unique-play {
   margin-top: 1vw !important;
   margin-bottom: 1vw !important;
+  font-size: 1.25vw !important;
   .document-editor {
     .ck-editor {
       .ck-editor__main {
@@ -121,5 +122,11 @@
         }
       }
     }
+  }
+}
+
+@include phone_and_tabletP {
+  .question-unique-play {
+    font-size: 4.5vw !important;
   }
 }

@@ -15,9 +15,11 @@ import PlayPreviewRouting from 'components/playPreview/PreviewBrickRouting';
 import Proposal from 'components/proposal/Proposal';
 import MainPage from 'components/mainPage/mainPage';
 import BackToWorkPage from '../backToWorkPage/BackToWork';
+import AssignmentsPage from '../assignmentsPage/AssignmentsPage';
 import UsersListPage from '../userManagement/UsersList';
 import InvestigationBuildPage from 'components/build/investigationBuildPage'
 import LoginPage from '../loginPage/loginPage';
+import ResetPasswordPage from '../resetPasswordPage/ResetPasswordPage';
 import UserProfilePage from '../userProfilePage/UserProfile';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
 import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';
@@ -135,6 +137,7 @@ const App: React.FC<AppProps> = props => {
         <BuildBrickRoute path="/build/brick/:brickId/investigation/question-component/:questionId" component={InvestigationBuildPage} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
+        <BuildRoute path={map.AssignmentsPage} component={AssignmentsPage} location={location} />
         <BuildRoute path="/users" component={UsersListPage} location={location} />
         <BuildRoute path="/user-profile/:userId" component={UserProfilePage} location={location} />
         <BuildRoute path="/home" component={MainPage} location={location} />
@@ -144,6 +147,7 @@ const App: React.FC<AppProps> = props => {
 
         <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path={map.Login} component={LoginPage} />
+        <AuthRoute path="/resetPassword" component={ResetPasswordPage} />
 
         <Route path="/terms" component={Terms} />
         <Route component={AuthRedirectRoute} />
