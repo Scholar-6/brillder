@@ -25,6 +25,7 @@ import FirstButton from "./FirstButton";
 import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/DesktopVersionDialogV2";
 import { isMobile } from "react-device-detect";
 import MobileButtonWrap from "./MobileButtonWrap";
+import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -472,6 +473,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           isOpen={this.state.isDesktopOpen} secondaryLabel={this.state.secondaryLabel}
           onClick={() => this.setState({isDesktopOpen: false})}
         />
+        <ClassInvitationDialog />
       </Grid>
     );
   }
