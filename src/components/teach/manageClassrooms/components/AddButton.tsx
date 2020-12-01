@@ -3,7 +3,6 @@ import React from 'react';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface AddButtonProps {
-  history: any;
   isAdmin: boolean;
   onOpen(): void;
 }

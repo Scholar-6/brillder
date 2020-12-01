@@ -501,7 +501,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     return (
       <div className="tab-content">
         {this.state.activeClassroom &&
-          <AddButton history={history} isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
+          <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
         }
         <StudentTable
           users={users}
