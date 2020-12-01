@@ -13,7 +13,7 @@ import { downKeyPressed, upKeyPressed } from "components/services/key";
 
 import { User } from "model/user";
 
-import Tab, { ActiveTab } from '../Tab';
+import Tab from '../Tab';
 import AssignedBricks from "./AssignedBricks";
 import PlayFilterSidebar from "./PlayFilterSidebar";
 import BackPagePagination from "../BackPagePagination";
@@ -24,7 +24,6 @@ import MobileLearn from "./MobileLearn";
 
 interface PlayProps {
   history: any;
-  setTab(t: ActiveTab): void;
 
   // redux
   user: User;
@@ -398,10 +397,8 @@ class PlayPage extends Component<PlayProps, PlayState> {
         <Grid item xs={9} className="brick-row-container">
           <Tab
             isTeach={this.state.isTeach || this.state.isAdmin}
-            activeTab={ActiveTab.Play}
             isCore={this.state.isCore}
             onCoreSwitch={this.toggleCore.bind(this)}
-            setTab={t => this.props.setTab(t)}
           />
           <div className="tab-content learn-tab-desktop">
             <AssignedBricks

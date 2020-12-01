@@ -51,7 +51,7 @@ interface FinalStepProps {
   returnToEditors(brick: Brick): Promise<void>;
   fetchBrick(brickId: number): void;
   sendToPublisherConfirmed(): void;
-  sendToPublisher(brickId: number): void;
+  sendToPublisher(brickId: number): Promise<boolean>;
   requestFailed(e: string): void;
   assignEditor(brick: Brick, editorIds: number[]): void;
 }
@@ -161,7 +161,9 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const renderSendToPublisherColumn = () => {
     return (
       <CustomColumn
-        icon="send" title="Send to publisher" label="for final review"
+        icon="send"
+        title="Send to publisher"
+        label="for final review"
         size={3}
         onClick={async () => {
           await props.sendToPublisher(brick.id);

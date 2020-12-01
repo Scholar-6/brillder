@@ -42,6 +42,13 @@
         > div {
           opacity: 0.2;
         }
+
+        .svg {
+          width: 3.8vh;
+          height: 3.8vh;
+          margin-top: 1.2vh;
+          margin-left: 2.4vw;
+        }
       }
 
       > div.active {
@@ -76,7 +83,7 @@
     height: $backwork-bricks-height !important;
 
     &.no-top-padding {
-      padding-top: 1vh;
+      padding-top: 5vh;
     }
 
     .main-brick-container {

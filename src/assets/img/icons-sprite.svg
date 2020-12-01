@@ -132,6 +132,12 @@
     <path d="M22,20.2v-1.8c0-1.7-1.1-3.1-2.7-3.5"/>
     <path d="M15.6,3.9c1.9,0.5,3.1,2.5,2.6,4.4c-0.3,1.3-1.3,2.3-2.6,2.6"/>
   </svg>
+  <svg id="users-custom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16.5,20.2v-1.8c0-2-1.6-3.6-3.6-3.6H5.6c-2,0-3.6,1.6-3.6,3.6v1.8"/>
+    <circle cx="9.3" cy="7.5" r="3.6"/>
+    <path d="M22,20.2v-1.8c0-1.7-1.1-3.1-2.7-3.5"/>
+    <path d="M15.6,3.9c1.9,0.5,3.1,2.5,2.6,4.4c-0.3,1.3-1.3,2.3-2.6,2.6"/>
+  </svg>
   <svg id="upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload">
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
     <polyline points="17 8 12 3 7 8"></polyline>
@@ -272,6 +278,17 @@
     <path d="M0.25,9.248V6.822l0.604-0.607h4.021v3.641H0.854L0.25,9.248z"/>
   </svg>
   <svg id="glasses-home" viewBox="0 0 24 10" stroke="none">
+    <path d="M13.5,5c0-2.5,2-4.4,4.5-4.4s4.5,2,4.5,4.4c0,2.5-2,4.4-4.5,4.4S13.5,7.4,13.5,5z M14.8,5c0,1.7,1.4,3.1,3.2,3.1
+		s3.2-1.4,3.2-3.1S19.8,1.9,18,1.9C16.2,1.8,14.8,3.2,14.8,5z"/>
+    <path d="M1.7,5c0-2.5,2-4.4,4.5-4.4s4.5,2,4.5,4.4c0,2.5-2,4.4-4.5,4.4S1.7,7.4,1.7,5z M3,5c0,1.7,1.4,3.1,3.2,3.1S9.4,6.7,9.4,5
+		S8,1.9,6.2,1.9S3,3.2,3,5z"/>
+    <path d="M9.5,4.6c0-1.3,1.1-2.3,2.6-2.3c1.4,0,2.6,1,2.6,2.3h-1.2c0-0.6-0.6-1.2-1.4-1.2c-0.8,0-1.4,0.5-1.4,1.2H9.5z"/>
+    <path d="M23,3v0.9l-0.2,0.2h-1.6V2.7h1.6L23,3z"/>
+    <path d="M1,3.9V3l0.2-0.2h1.5v1.4H1.2L1,3.9z"/>
+  </svg>
+  <svg id="glasses-home-blue" viewBox="0 0 24 10" stroke="none">
+    <circle cx="6" cy="5" r="3.5" fill="#193266" />
+    <circle cx="18" cy="5" r="3.5" fill="#193266" />
     <path d="M13.5,5c0-2.5,2-4.4,4.5-4.4s4.5,2,4.5,4.4c0,2.5-2,4.4-4.5,4.4S13.5,7.4,13.5,5z M14.8,5c0,1.7,1.4,3.1,3.2,3.1
 		s3.2-1.4,3.2-3.1S19.8,1.9,18,1.9C16.2,1.8,14.8,3.2,14.8,5z"/>
     <path d="M1.7,5c0-2.5,2-4.4,4.5-4.4s4.5,2,4.5,4.4c0,2.5-2,4.4-4.5,4.4S1.7,7.4,1.7,5z M3,5c0,1.7,1.4,3.1,3.2,3.1S9.4,6.7,9.4,5
@@ -599,5 +616,17 @@
   <svg id="copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+  </svg>
+  <svg id="aperture" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"></circle>
+    <line x1="14.31" y1="8" x2="20.05" y2="17.94"></line>
+    <line x1="9.69" y1="8" x2="21.17" y2="8"></line>
+    <line x1="7.38" y1="12" x2="13.12" y2="2.06"></line>
+    <line x1="9.69" y1="16" x2="3.95" y2="6.06"></line>
+    <line x1="14.31" y1="16" x2="2.83" y2="16"></line>
+    <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
+  </svg>
+  <svg id="circle-filled" viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="12" cy="12" r="10"></circle>
   </svg>
 </svg>

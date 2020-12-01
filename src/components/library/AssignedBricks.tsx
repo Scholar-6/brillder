@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
 import { User } from "model/user";
-import { AssignmentBrickData } from '../backToWorkPage/model';
-import { prepareVisibleAssignments } from '../backToWorkPage/service';
+import { AssignmentBrickData } from '../assignmentsPage/model';
+import { prepareVisibleAssignments } from '../assignmentsPage/service';
 import { AssignmentBrick } from "model/assignment";
 import { Subject } from "model/brick";
 

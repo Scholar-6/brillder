@@ -2,6 +2,35 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
+@-webkit-keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
 .mainPage {
   $welcome-col-width: 35.2vw;
   $first-col-width: 29.6vw;
@@ -37,7 +66,7 @@
         color: var(--theme-orange);
       }
       .notifications-text {
-        margin-top: 10vh;
+        margin-top: 4.3vw;//10vh;
         letter-spacing: 0.1vw;
         font-family: $font-family-light;
         font-size: 1.5vw;
@@ -150,9 +179,6 @@
     @extend %flexCenter;
     flex-direction: column;
     @include tabletP {
-      padding: 25px 0;
-    }
-    @include ex-desktop_wide {
       padding: 5vh 0;
     }
     .eye-glass-icon,
@@ -169,20 +195,8 @@
           height: 120px;
         }
         @include tabletP {
-          width: 15vw;
-          height: 10vw;
-        }
-        @include laptop {
-          width: 10vw;
-          height: 8vw;
-        }
-        @include ex-desktop_wide {
-          width: 12vw;
-          height: 8vw;
-        }
-        @include apple-macbook-air-width {
           width: 13vw;
-          height: 9vw;
+          height: 6vw;
         }
       }
     }
@@ -213,14 +227,6 @@
         letter-spacing: 5px;
       }
       @include tabletP {
-        font-size: 1.5vw;
-        letter-spacing: 0.3vw;
-      }
-      @include laptop {
-        font-size: 1vw;
-        letter-spacing: 0.2vw;
-      }
-      @include ex-desktop_wide {
         font-size: 1.2vw;
         letter-spacing: 0.3vw;
       }
@@ -234,123 +240,10 @@
       }
     }
   }
-  .back-item-container {
+  .create-item-container {
     .btn .svg {
-      @include ex-desktop_wide {
-        width: 11.2vw;
-        height: 8vw;
-      }
-    }
-  }
-  .view-item-container {
-    .eye-glass-icon,
-    .btn {
-      .svg {
-        @include tabletP {
-          height: 60px;
-        }
-        @include ex-desktop_wide {
-          height: 5vw;
-        }
-        @include apple-macbook-air-width {
-          height: 11vh;
-        }
-      }
-    }
-    .eye-glass-icon {
-      position: relative;
-      .glass-eyes-left,
-      .glass-eyes-right {
-        display: none;
-        opacity: 0;
-        transition-delay: 200ms;
-        @extend %transitionAll300;
-        @extend %floatToYCenter;
-        @include phone_and_tabletP {
-        }
-        @include tabletP {
-          width: 5vw;
-          height: 5vw;
-        }
-        @include laptop {
-          width: 50px;
-          height: 50px;
-        }
-        @include ex-desktop_wide {
-          width: 4.5vw;
-          height: 4.5vw;
-        }
-        @include apple-macbook-air-width {
-          width: 3vw;
-          height: 3vw;
-        }
-        .svg {
-          width: 60%;
-          height: 60%;
-        }
-      }
-      .glass-eyes-left {
-        @include tabletP {
-          right: 15px;
-        }
-        @include laptop {
-          left: 10px;
-        }
-        @include ex-desktop_wide {
-          left: 16px;
-        }
-        @include apple-macbook-air-width {
-          left: 3.07vw;
-        }
-      }
-      .glass-eyes-right {
-        @include tabletP {
-          right: 15px;
-        }
-        @include laptop {
-          right: 10px;
-        }
-        @include ex-desktop_wide {
-          right: 16px;
-        }
-        @include apple-macbook-air-width {
-          right: 2.99vw;
-        }
-      }
-    }
-    &:hover {
-      .eye-glass-icon {
-        .glass-eyes-left,
-        .glass-eyes-right {
-          opacity: 1;
-          .pupil {
-            animation-name: eye-movement;
-            animation-iteration-count: infinite;
-            animation-duration: 1300ms;
-            animation-delay: 0;
-            animation-direction: alternate;
-          }
-        }
-      }
-    }
-    @keyframes eye-movement {
-      0% {
-        transform: translateX(0);
-      }
-      50% {
-        transform: translateX(0);
-      }
-      70% {
-        transform: translateX(6px);
-        @include ex-desktop_wide {
-          transform: translateX(0.3vw);
-        }
-      }
-      100% {
-        transform: translateX(6px);
-        @include ex-desktop_wide {
-          transform: translateX(0.3vw);
-        }
+      @include tabletP {
+        height: 7.5vw;
       }
     }
   }

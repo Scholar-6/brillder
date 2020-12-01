@@ -9,7 +9,7 @@ interface TabProps {
 }
 
 const TeachTab: React.FC<TabProps> = ({ history, activeTab }) => {
-  const isActive = (t1: TeachActiveTab, t2: TeachActiveTab) => t1 === t2 ? 'active' : '';
+  const isActive = (t1: TeachActiveTab, t2: TeachActiveTab) => t1 === t2 ? 'active' : 'no-active';
 
   const assignedTab = () => {
     const className = isActive(activeTab, TeachActiveTab.Assignments);

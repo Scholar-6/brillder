@@ -49,6 +49,9 @@
         opacity: 1;
       }
     }
+    >div.no-active:hover {
+      background: var(--off-white);
+    }
 
     >div:last-child {
       border-top-right-radius: 0vw;

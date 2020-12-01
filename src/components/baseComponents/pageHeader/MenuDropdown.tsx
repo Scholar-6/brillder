@@ -197,7 +197,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     if (page !== PageEnum.MainPage && props.user.rolePreference?.roleId === UserType.Teacher) {
       return (
         <MenuItem className="view-profile menu-item disabled" onClick={() => {}}>
-          <span className="menu-text">Live Assignments</span>
+          <span className="menu-text">Shared with Me</span>
           <div className="btn btn-transparent svgOnHover">
             <SpriteIcon name="student-back-to-work" className="active text-white" />
           </div>
