@@ -17,6 +17,7 @@ import map from "components/map";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
 import { getApiQuestion } from "components/build/questionService/QuestionService";
 import { Question } from "model/question";
+import axios from "axios";
 
 
 interface SidebarProps {
@@ -36,7 +37,7 @@ interface SidebarProps {
 
   //redux
   user: User;
-  createBrick(b: Brick): Promise<Brick | null>; 
+  fetchBrick(brickId: number): Promise<Brick | null>;
 }
 
 interface SidebarState {
@@ -162,22 +163,14 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   async createBrickCopy() {
-    let brick = Object.assign({}, this.props.brick);
-    brick.id = null as any;
-    brick.isCore = false;
-    brick.status = BrickStatus.Draft;
-    delete brick.editors;
-    delete brick.publisher;
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/brick/adapt/${this.props.brick.id}`,
+      {},
+      { withCredentials: true }
+    );
+    const copyBrick = response.data as Brick;
 
-    brick.questions = [];
-
-    for (let q of this.props.brick.questions) {
-      let apiQuestion = getApiQuestion(q) as Question;
-      apiQuestion.id = null as any;
-      brick.questions.push(apiQuestion);
-    }
- 
-    let copyBrick = await this.props.createBrick(brick);
+    this.props.fetchBrick(copyBrick.id);
     if (copyBrick) {
       this.props.history.push(map.ProposalReview + '?bookHovered=true&copied=true');
     } else {
@@ -305,7 +298,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
+  fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
 });
 
 export default connect(mapState, mapDispatch)(PlayLeftSidebarComponent);

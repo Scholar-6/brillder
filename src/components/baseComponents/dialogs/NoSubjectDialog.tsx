@@ -45,7 +45,7 @@ const NoSubjectDialog: React.FC<DialogProps> = (props) => {
   return (
     <BaseDialogWrapper open={props.isOpen} close={props.close} submit={submit}>
       <div className="dialog-header">
-        <div>{props.subject.name} is not listed on your profile yet.<br />Would you like to add it?</div>
+        <div><span className="bold">{props.subject.name}</span> is not listed as one of your subjects yet.<br />Would you like to add it?</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button" onClick={submit}>

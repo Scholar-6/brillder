@@ -107,9 +107,11 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
           const res = component.categories?.find((cat: SortCategory) => cat.name || cat.answers.find(a => a.value || a.valueFile));
           if (res) { return false; }
         } else if (question.type === QuestionTypeEnum.LineHighlighting) {
-          if (component.text || component.lines) { return false; }
+          if (component.lines && component.lines.length > 0) { return false; }
+          if (component.text) { return false; }
         } else if (question.type === QuestionTypeEnum.WordHighlighting) {
-          if (component.text || component.words) { return false; }
+          if (component.words && component.words.length > 0) { return false; }
+          if (component.text) { return false; }
         }
       }
     }
@@ -117,7 +119,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
   }
   
   const renderInnerComponent = () => {
-    if (questionIndex === 0 && !question.firstComponent?.value && isHintEmpty(question.hint) && areComponentsEmpty()) {
+    if (!question.firstComponent?.value && isHintEmpty(question.hint) && areComponentsEmpty()) {
       return <EmptyQP1 />;
     }
     setTimeout(() => {checkScroll()}, 100);

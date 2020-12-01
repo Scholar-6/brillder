@@ -108,6 +108,14 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
           {answer.imageCaption && <div>{answer.imageCaption}</div>}
         </div>
       );
+    } else if (answer.answerType === QuestionValueType.Sound && answer.soundFile) {
+      return (
+        <audio
+          controls
+          style={{width: '100%'}}
+          src={fileUrl(answer.soundFile)}
+        />
+      );
     } else {
       return <MathInHtml value={answer.value} />;
     }

@@ -134,7 +134,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
             control={<Radio onClick={() => setAlign(ImageAlign.center)} />}
             label="Center" />
         </div>
-        <div>Image size</div>
+        <div>Image size (see in preview below)</div>
         <Slider
           defaultValue={height}
           aria-labelledby="discrete-slider"
@@ -151,7 +151,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
         </div>
       </div>
       <div className="centered last-button">
-        <SpriteIcon name="upload" className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
+        <div className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
           if (cropedFile && canUpload) {
             upload(cropedFile, source, caption, align, height);
           } else if (canUpload) {
@@ -159,7 +159,9 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
           } else {
             setValidation(true);
           }
-         }} />
+         }}>
+          <SpriteIcon name="upload" />
+         </div>
       </div>
     </BaseDialogWrapper>
   );

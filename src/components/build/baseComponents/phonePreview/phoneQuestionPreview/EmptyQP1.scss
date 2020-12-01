@@ -18,34 +18,50 @@
     font-family: $font-family-regular-italic;
   }
 
-  table {
-    margin-top: 5vh;
-    height: 38vh;
+  .qp1-row {
     width: 100%;
-    tr {
-      td {
-        width: 50%;
-        text-align: center;
-        font-size: 2.5vh;
+    .icon {
+      font-size: 4.5vh;
+      font-family: $font-family-bold;
+      @extend %flexCenter;
+    }
+    .text {
+      font-size: 2.5vh;
+      display: flex;
+      @extend %flexCenter;
+    }
+    img {
+      height: 5vh;
+    }
+  }
 
-        .centered {
-          height: 100%;
-          width: 100%;
-          
-          img {
-            height: 5vh;
-          }
-        }
-      }
-      td:first-child {
-        font-family: $font-family-bold;
-        font-size: 4.5vh;
-
-        &.graph-box {
-          font-size: 4vh;
-          font-family: $font-family-bold-italic;
-        }
-      }
+  .qp1-row.first {
+    margin-top: 6.9vh;
+    .icon {
+      line-height: 1;
+    }
+  }
+  .qp1-row.second {
+    .icon {
+      font-size: 4.5vh;
+      line-height: 1.2;
+      margin-top: 2.2vh !important;
+    }
+  }
+  .qp1-row.third {
+    margin-bottom: 3vh !important;
+    .icon {
+      font-size: 3.5vh !important;
+      margin-bottom: 1vh !important;
+    }
+  }
+  .qp1-row.forth {
+    margin-bottom: 3vh !important;
+  }
+  .qp1-row.fifth {
+    .icon {
+      font-size: 4vh !important;
+      font-family: $font-family-bold-italic;
     }
   }
 }

@@ -81,6 +81,7 @@ export interface Brick {
   columnStatus?: BrickStatus;
   isDescription?: boolean;
   isCreateLink?: boolean;
+  adaptedFrom?: any;
 }
 
 export enum isAuthenticated {

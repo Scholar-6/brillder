@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import actions from 'redux/actions/brickActions';
 import { Brick, Editor } from 'model/brick';
+import './InviteEditorDialog.scss';
 import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
@@ -67,7 +68,6 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
       <button
         disabled={false}
         className={`btn bold btn-md yes-button bg-theme-orange`}
-        style={{ width: 'auto', paddingLeft: '4vw' }}
         onClick={onNext}
       >
         Send Invite
@@ -80,13 +80,13 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
     <Dialog
       open={props.isOpen}
       onClose={props.close}
-      className="dialog-box light-blue unlimited"
+      className="dialog-box light-blue unlimited invite-editor-dialog"
     >
       <div className="close-button svgOnHover" onClick={props.close}>
         <SpriteIcon name="cancel-thick" className="active" />
       </div>
       <div className="dialog-header" style={{ minWidth: '30vw' }}>
-        <div className="title left">
+        <div className="title">
           {props.title ? props.title : 'Who would you like to invite to play this brick?'}
         </div>
         <div style={{ marginTop: '1.8vh' }}></div>
@@ -104,7 +104,6 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
           </div>
         </Grid>
       </div>
-      <div style={{ marginTop: '1.8vh' }}></div>
       <div className="dialog-footer" style={{ justifyContent: 'center' }}>
         {renderSendButton()}
       </div>
