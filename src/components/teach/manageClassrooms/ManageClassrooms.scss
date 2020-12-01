@@ -201,10 +201,14 @@
         margin-bottom: 1vh;
       }
       .svg {
+        @extend %transitionAll300;
         cursor: pointer;
         width: 28vw;
         height: 18vh;
         color: var(--theme-light-blue);
+        &:hover {
+          stroke-width: 1.6 !important;
+        }
       }
     }
   }
