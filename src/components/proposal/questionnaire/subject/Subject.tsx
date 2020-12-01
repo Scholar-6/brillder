@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, RadioGroup, FormControlLabel, Radio, Hidden } from "@material-ui/core";
 import queryString from 'query-string';
 
@@ -13,9 +13,11 @@ import map from 'components/map';
 interface SubjectProps {
   history: any;
   location: any;
-  subjectId: any
-  subjects: any[]
-  saveSubject(subjectId: number):void
+  subjectId: any;
+  subjects: any[];
+  saveCore(isCore: boolean): void;
+  saveSubject(subjectId: number):void;
+  saveData(subjectId: number, isCore: boolean): void;
 }
 
 const FrenchComponent:React.FC = () => {
@@ -197,7 +199,9 @@ const TheologyComponent:React.FC = () => {
   )
 }
 
-const SubjectPage:React.FC<SubjectProps> = ({ history, subjectId, subjects, location, saveSubject }) => {
+const SubjectPage:React.FC<SubjectProps> = ({
+  history, subjectId, subjects, location, saveData, saveCore, saveSubject
+}) => {
   const getSubjectName = (subjectId: number) => {
     if (subjectId) {
       const subject = subjects.find(s => s.id === subjectId);
@@ -212,11 +216,7 @@ const SubjectPage:React.FC<SubjectProps> = ({ history, subjectId, subjects, loca
 
   const [subject, setSubject] = React.useState(subjectId);
   const [subjectName, setSubjectName] = React.useState(initSubjectName);
-
-  if (subjects.length === 1) {
-    saveSubject(subjects[0].id);
-    return <Redirect to={map.ProposalTitle} />
-  }
+  const [isCoreSet, setCoreStatus] = React.useState(false);
 
   const onSubjectChange = (event: any) => {
     const subjectId = parseInt(event.target.value) as number;
@@ -227,6 +227,31 @@ const SubjectPage:React.FC<SubjectProps> = ({ history, subjectId, subjects, loca
   };
 
   const values = queryString.parse(location.search);
+
+  const getCore = (values: queryString.ParsedQuery<string>) => {
+    if (values.isCore === 'false') {
+      return false;
+    } else if (values.isCore === 'true') {
+      return true;
+    }
+    return false;
+  }
+
+  if (!isCoreSet && values.isCore) {
+    let isCore = getCore(values);
+    saveCore(isCore);
+    setCoreStatus(true);
+  }
+
+  if (subjects.length === 1) {
+    let subjectId = subjects[0].id;
+    if (values.isCore) {
+      saveData(subjectId, getCore(values));
+    } else {
+      saveSubject(subjectId);
+    }
+    return <Redirect to={map.ProposalTitle} />
+  }
 
   if (values.selectedSubject) {
     try {

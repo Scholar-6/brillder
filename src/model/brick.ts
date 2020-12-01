@@ -14,7 +14,8 @@ export enum BrickStatus {
   Draft = 1,
   Build,
   Review,
-  Publish
+  Publish,
+  Deleted
 }
 
 export interface Author {

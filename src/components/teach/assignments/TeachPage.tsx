@@ -26,6 +26,9 @@ import TeachTab from "components/teach/TeachTab";
 import { TeachActiveTab } from "components/teach/model";
 import { getSubjects } from "services/axios/subject";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import map from "components/map";
+
 
 interface TeachProps {
   history: any;
@@ -51,6 +54,7 @@ interface TeachState {
   totalCount: number;
   subjects: Subject[];
   isSearching: boolean;
+  isLoaded: boolean;
 
   filters: TeachFilters;
   handleKey(e: any): void;
@@ -79,6 +83,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       activeAssignment: null,
       assignmentStats: null,
       activeStudent: null,
+      isLoaded: false,
 
       totalCount: 0,
       isSearching: false,
@@ -108,7 +113,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
     const classrooms = await getAllClassrooms() as TeachClassroom[] | null;
     if (classrooms) {
-      this.setState({ classrooms });
+      this.setState({ classrooms, isLoaded: true });
     } else {
       this.props.requestFailed('can`t get classrooms');
     }
@@ -257,8 +262,88 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
   //#endregion
 
+  renderTabContent() {
+    if (!this.state.isLoaded) {
+      return <div className="tab-content"></div>
+    }
+    
+    if (this.state.isLoaded && this.state.classrooms.length === 0) {
+      return (
+        <div className="tab-content">
+          <div className="tab-content-centered">
+            <div>
+              <div className="icon-container glasses-icon-container">
+                <SpriteIcon
+                  name="glasses-home-blue"
+                  onClick={() => this.props.history.push(map.ViewAllPage)}
+                  className="glasses-icon"
+                />
+                <div className="glass-eyes-inside">
+                  <div className="glass-eyes-left svgOnHover">
+                    <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                      <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
+                    </svg>
+                    <div className="glass-left-inside">
+                      <SpriteIcon name="aperture" className="aperture" />
+                    </div>
+                  </div>
+                  <div className="glass-eyes-right svgOnHover">
+                    <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                      <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
+                    </svg>
+                    <div className="glass-right-inside">
+                      <SpriteIcon name="aperture" className="aperture" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bold">Click the icon above to search for brick to assign</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="tab-content">
+        <div className="classroom-list-buttons">
+          {this.renderLiveBricksButton()}
+          {this.renderArchiveButton()}
+        </div>
+        { this.state.activeStudent ?
+          <ActiveStudentBricks
+            subjects={this.state.subjects}
+            classroom={this.state.activeClassroom}
+            activeStudent={this.state.activeStudent}
+          />
+          : this.state.activeAssignment && this.state.assignmentStats && this.state.activeClassroom ?
+            <ExpandedAssignment
+              classroom={this.state.activeClassroom}
+              assignment={this.state.activeAssignment}
+              stats={this.state.assignmentStats}
+              subjects={this.state.subjects}
+              startIndex={this.state.sortedIndex}
+              pageSize={this.state.assignmentPageSize}
+              history={this.props.history}
+              minimize={() => this.unselectAssignment()}
+            />
+            :
+            <ClassroomList
+              subjects={this.state.subjects}
+              expand={this.setActiveAssignment.bind(this)}
+              startIndex={this.state.sortedIndex}
+              classrooms={this.state.classrooms}
+              activeClassroom={this.state.activeClassroom}
+              pageSize={this.state.pageSize}
+            />
+        }
+        {this.renderTeachPagination()}
+      </div>
+    );
+  }
+
   render() {
     const {history} = this.props;
+
     return (
       <div className="main-listing user-list-page manage-classrooms-page">
         <PageHeadWithMenu
@@ -272,6 +357,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       <Grid container direction="row" className="sorted-row back-to-work-teach">
         <TeachFilterSidebar
           classrooms={this.state.classrooms}
+          isLoaded={this.state.isLoaded}
           activeClassroom={this.state.activeClassroom}
           setActiveClassroom={this.setActiveClassroom.bind(this)}
           setActiveStudent={this.setActiveStudent.bind(this)}
@@ -279,40 +365,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         />
         <Grid item xs={9} className="brick-row-container">
           <TeachTab activeTab={TeachActiveTab.Assignments} history={history} />
-          <div className="tab-content">
-            <div className="classroom-list-buttons">
-              {this.renderLiveBricksButton()}
-              {this.renderArchiveButton()}
-            </div>
-            { this.state.activeStudent ?
-              <ActiveStudentBricks
-                subjects={this.state.subjects}
-                classroom={this.state.activeClassroom}
-                activeStudent={this.state.activeStudent}
-              />
-              : this.state.activeAssignment && this.state.assignmentStats && this.state.activeClassroom ?
-                <ExpandedAssignment
-                  classroom={this.state.activeClassroom}
-                  assignment={this.state.activeAssignment}
-                  stats={this.state.assignmentStats}
-                  subjects={this.state.subjects}
-                  startIndex={this.state.sortedIndex}
-                  pageSize={this.state.assignmentPageSize}
-                  history={this.props.history}
-                  minimize={() => this.unselectAssignment()}
-                />
-                :
-                <ClassroomList
-                  subjects={this.state.subjects}
-                  expand={this.setActiveAssignment.bind(this)}
-                  startIndex={this.state.sortedIndex}
-                  classrooms={this.state.classrooms}
-                  activeClassroom={this.state.activeClassroom}
-                  pageSize={this.state.pageSize}
-                />
-            }
-            {this.renderTeachPagination()}
-          </div>
+          {this.renderTabContent()}
         </Grid>
       </Grid>
       </div>

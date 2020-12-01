@@ -27,6 +27,7 @@ import UnassignStudentDialog from './components/UnassignStudentDialog';
 import RoleDescription from 'components/baseComponents/RoleDescription';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachTab from '../TeachTab';
+import EmptyFilter from "./components/EmptyFilter";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -43,6 +44,7 @@ export enum UserSortBy {
 }
 
 interface UsersListState {
+  isLoaded: boolean;
   users: MUser[];
   page: number;
   pageSize: number;
@@ -78,6 +80,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   constructor(props: UsersListProps) {
     super(props);
     this.state = {
+      isLoaded: false,
       users: [],
       classrooms: [],
       page: 0,
@@ -108,8 +111,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       pageStudentsSelected: false
     };
 
-    this.getStudents();
-    this.getClassrooms();
+    this.loadData();
+  }
+
+  async loadData() {
+    await this.getStudents();
+    await this.getClassrooms();
+    this.setState({isLoaded: true});
   }
 
   async getStudents() {
@@ -309,6 +317,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderSortAndFilterBox = () => {
+    if (!this.state.isLoaded) {
+      return <div></div>;
+    }
+    if (this.state.isLoaded && this.state.users.length === 0 && this.state.classrooms.length === 0) {
+      return <EmptyFilter />;
+    }
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box">
@@ -431,9 +445,50 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     );
   }
 
-  render() {
-    const { history } = this.props;
+  renderTabContent() {
+    if (!this.state.isLoaded) {
+      return <div className="tab-content" />
+    }
+
     let { users } = this.state;
+
+    const moveToNewUser = () => {
+      if (this.state.isAdmin) {
+        this.props.history.push('/user-profile/new');
+      } else {
+        alert('you don`t have permisions to create new user');
+      }
+    }
+
+    if (this.state.isLoaded && users.length === 0 && this.state.classrooms.length === 0) {
+      return (
+        <div className="tab-content">
+          <div className="tab-content-centered">
+            <div>
+              <div className="icon-container">
+                <SpriteIcon
+                  name="users-custom"
+                  className="stroke-1"
+                  onClick={() => this.setState({ createClassOpen: true })}
+                />
+              </div>
+              <div className="bold">+ Create Class</div>
+            </div>
+            <div>
+              <div className="icon-container">
+                <SpriteIcon
+                  name="user-plus"
+                  className="stroke-1"
+                  onClick={moveToNewUser}
+                />
+              </div>
+              <div className="bold">+ Invite Tutee</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     if (this.state.activeClassroom) {
       users = this.state.activeClassroom.students as MUser[];
     }
@@ -442,6 +497,33 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
 
     users = this.getUsersByPage(users);
+
+    return (
+      <div className="tab-content">
+        {this.state.activeClassroom &&
+          <AddButton history={history} isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
+        }
+        <StudentTable
+          users={users}
+          isClassroom={!!this.state.activeClassroom}
+          selectedUsers={this.state.selectedUsers}
+          sortBy={this.state.sortBy}
+          isAscending={this.state.isAscending}
+          sort={sortBy => this.sort(sortBy)}
+          pageStudentsSelected={this.state.pageStudentsSelected}
+          toggleUser={id => this.toggleUser(id)}
+          assignToClass={() => this.openAssignDialog()}
+          unassign={s => this.unassigningStudent(s)}
+          togglePageStudents={() => this.togglePageStudents()}
+        />
+        <RoleDescription />
+        {this.renderPagination()}
+      </div>
+    );
+  }
+
+  render() {
+    const { history } = this.props;
 
     return (
       <div className="main-listing user-list-page manage-classrooms-page manage-classrooms-checkboxes">
@@ -459,26 +541,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <TeachTab history={history} activeTab={TeachActiveTab.Students} />
-            <div className="tab-content">
-              {this.state.activeClassroom &&
-                <AddButton history={history} isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
-              }
-              <StudentTable
-                users={users}
-                isClassroom={!!this.state.activeClassroom}
-                selectedUsers={this.state.selectedUsers}
-                sortBy={this.state.sortBy}
-                isAscending={this.state.isAscending}
-                sort={sortBy => this.sort(sortBy)}
-                pageStudentsSelected={this.state.pageStudentsSelected}
-                toggleUser={id => this.toggleUser(id)}
-                assignToClass={() => this.openAssignDialog()}
-                unassign={s => this.unassigningStudent(s)}
-                togglePageStudents={() => this.togglePageStudents()}
-              />
-              <RoleDescription />
-              {this.renderPagination()}
-            </div>
+            {this.renderTabContent()}
           </Grid>
         </Grid>
         <AssignClassDialog

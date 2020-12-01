@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
-import "./BackToWork.scss";
 import { ReduxCombinedState } from "redux/reducers";
-import { User } from "model/user";
 
+import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import BuildPage from './components/build/BuildPage';
+import PlayPage from './components/play/PlayPage';
 
 interface BackToWorkState {
   searchString: string;
@@ -19,6 +17,7 @@ export interface BackToWorkProps {
   user: User;
   history: any;
   location: any;
+  forgetBrick(): void;
 }
 
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
@@ -61,12 +60,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           search={() => this.search()}
           searching={(v: string) => this.searching(v)}
         />
-        <BuildPage
-          isSearching={this.state.isSearching}
-          searchString={this.state.searchString}
-          location={this.props.location}
-          history={this.props.history}
-        />
+        <PlayPage history={this.props.history} />
       </div>
     );
   }

@@ -1,8 +1,5 @@
 import { Brick, BrickStatus } from 'model/brick';
-import { SortBy, Filters, ThreeColumns, AssignmentBrickData } from './model';
-import { AssignmentBrick } from "model/assignment";
-import { ActiveTab } from './components/Tab';
-import map from 'components/map';
+import { SortBy, Filters, ThreeColumns } from './model';
 
 const getBrickById = (bricks: Brick[], brickId: number) => {
   return bricks.find(b => b.id === brickId);
@@ -149,33 +146,9 @@ export const prepareVisibleBricks = (sortedIndex: number, pageSize: number, bric
     const brick = bricks[i];
     if (brick) {
       let row = Math.floor(count / 3);
-      data.push({ brick, key: i, index: count, row });
+      data.push({ brick, key: i, index: count, row, isCreateLink: brick.isCreateLink });
       count++;
     }
   }
   return data;
-}
-
-export const prepareVisibleAssignments = (sortedIndex: number, pageSize: number, assignments: AssignmentBrick[]) => {
-  let data: AssignmentBrickData[] = [];
-  let count = 0;
-  for (let i = 0 + sortedIndex; i < pageSize + sortedIndex; i++) {
-    const assignment = assignments[i];
-    if (assignment) {
-      let row = Math.floor(count / 3);
-      data.push({
-        brick: assignment.brick, key: i, index: count, assignmentId: assignment.id, status: assignment.status, row
-      } as AssignmentBrickData);
-      count++;
-    }
-  }
-  return data;
-}
-
-export const getTabLink = (activeTab: ActiveTab) => {
-  let link = map.BackToWorkBuildTab;
-  if (activeTab === ActiveTab.Play) {
-    link = map.BackToWorkLearnTab;
-  }
-  return link;
 }
