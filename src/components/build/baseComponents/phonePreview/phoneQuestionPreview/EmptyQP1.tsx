@@ -1,3 +1,4 @@
+import { Grid } from '@material-ui/core';
 import React from 'react';
 
 import './EmptyQP1.scss';
@@ -11,34 +12,46 @@ const EmptyQP1: React.FC<any> = () => {
         the following components from the
         left side of the tab window (in red)
       </p>
-      <table>
-        <tbody>
-          <tr>
-            <td>T</td>
-            <td>Text</td>
-          </tr>
-          <tr>
-            <td>“ ”</td>
-            <td>Quote</td>
-          </tr>
-          <tr style={{paddingTop: 0}}>
-            <td style={{fontSize: '3.5vh'}}>jpg.</td>
-            <td>Image</td>
-          </tr>
-          <tr>
-            <td>
-              <div className="centered">
-                <img alt="" className="sound-image" src="/images/soundicon-dark-blue.png" />
-              </div>
-            </td>
-            <td>Sound</td>
-          </tr>
-          <tr>
-            <td className="graph-box">f(x)</td>
-            <td>Graph</td>
-          </tr>
-        </tbody>
-      </table>
+      <Grid container className="qp1-row first">
+        <Grid item xs={6} className="icon">
+          T
+        </Grid>
+        <Grid item xs={6} className="text">
+          Text
+        </Grid>
+      </Grid>
+      <Grid container className="qp1-row second">
+        <Grid item xs={6} className="icon">
+          “ ”
+        </Grid>
+        <Grid item xs={6} className="text">
+          Quote
+        </Grid>
+      </Grid>
+      <Grid container className="qp1-row third">
+        <Grid item xs={6} className="icon">
+          jpg.
+        </Grid>
+        <Grid item xs={6} className="text">
+          Image
+        </Grid>
+      </Grid>
+      <Grid container className="qp1-row forth">
+        <Grid item xs={6} className="icon">
+          <img alt="" className="sound-image" src="/images/soundicon-dark-blue.png" />
+        </Grid>
+        <Grid item xs={6} className="text">
+          Sound
+        </Grid>
+      </Grid>
+      <Grid container className="qp1-row fifth">
+        <Grid item xs={6} className="icon graph-box">
+          f(x)
+        </Grid>
+        <Grid item xs={6} className="text">
+          Graph
+        </Grid>
+      </Grid>
     </div>
   );
 }
