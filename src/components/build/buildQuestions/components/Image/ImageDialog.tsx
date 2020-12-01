@@ -134,7 +134,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
             control={<Radio onClick={() => setAlign(ImageAlign.center)} />}
             label="Center" />
         </div>
-        <div>Image size</div>
+        <div>Image size (see in preview below)</div>
         <Slider
           defaultValue={height}
           aria-labelledby="discrete-slider"
@@ -144,9 +144,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
           max={50}
           onChange={(e:any, v:any) => setHeight(v)}
         />
-        <div className="image-preview-label">see in preview below</div>
         <div className="absolute">
-          
           {!removed &&
             <ImageDesktopPreview src={fileUrl(initData.value)} height={height} align={align} file={cropedFile} />
           }
