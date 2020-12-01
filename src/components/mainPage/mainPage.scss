@@ -241,9 +241,22 @@
     }
   }
   .create-item-container {
-    .btn .svg {
-      @include tabletP {
+    @include tabletP {
+      .btn .svg {
         height: 7.5vw;
+      }
+      &:hover {
+        .btn svg {
+          transform: rotate(10deg) !important;
+        }
+      }
+    }
+  }
+  .create-item-container,
+  .back-item-container {
+    @include tabletP {
+      .item-description {
+        margin-top: 0.5vw;
       }
     }
   }
