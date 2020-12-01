@@ -117,7 +117,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
   }
   
   const renderInnerComponent = () => {
-    if (questionIndex === 0 && !question.firstComponent?.value && isHintEmpty(question.hint) && areComponentsEmpty()) {
+    if (!question.firstComponent?.value && isHintEmpty(question.hint) && areComponentsEmpty()) {
       return <EmptyQP1 />;
     }
     setTimeout(() => {checkScroll()}, 100);
