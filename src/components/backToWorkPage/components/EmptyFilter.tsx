@@ -9,6 +9,7 @@ import { clearProposal } from "localStorage/proposal";
 
 interface Props {
   history: any;
+  isCore?: boolean;
   forgetBrick(): void;
 }
 
@@ -19,7 +20,13 @@ const EmptyFilterSidebar:React.FC<Props> = props => {
          <div className="back-hover-area back-hover-area-filter" onClick={() => {
            clearProposal();
            props.forgetBrick();
-           props.history.push(map.ProposalSubject);
+           let link = map.ProposalSubject;
+           if (props.isCore === true) {
+             link += '?isCore=true';
+           } else if (props.isCore === false) {
+             link += '?isCore=false';
+           }
+           props.history.push(link);
          }}>
             <div className="create-icon svgOnHover">
               <SpriteIcon name="trowel" className="w100 h100 active" />

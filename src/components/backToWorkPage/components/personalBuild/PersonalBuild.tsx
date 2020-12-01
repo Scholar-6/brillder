@@ -14,6 +14,7 @@ import Tab from "components/assignmentsPage/components/Tab";
 import BackPagePagination from "../BackPagePagination";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import { PersonalFilters, SubjectItem } from "./model";
+import CreateBrickBlock from "../CreateBrickBlock";
 
 interface PersonalBuildProps {
   user: User;
@@ -139,8 +140,8 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
   renderBricks = (bricks: Brick[]) => {
     const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize, bricks);
 
-    return data.map(item => {
-      return <BrickBlock
+    let res = data.map(item =>
+      <BrickBlock
         brick={item.brick}
         index={item.index}
         row={item.row}
@@ -155,7 +156,9 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
         handleMouseHover={() => this.handleMouseHover(item.key)}
         handleMouseLeave={() => this.handleMouseLeave(item.key)}
       />
-    });
+    );
+    res.unshift(<CreateBrickBlock history={this.props.history} isCore={true} />);
+    return res;
   }
 
   renderFirstEmptyColumn() {

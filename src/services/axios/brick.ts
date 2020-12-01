@@ -49,7 +49,7 @@ export const getPublishedBricks = async () => {
  */
 export const getCurrentUserBricks = async () => {
   try {
-    return await get<Brick[]>("/bricks/currentUser"); 
+    return (await get<Brick[]>("/bricks/currentUser"))?.filter(b => b.status !== BrickStatus.Deleted); 
   } catch (e) {
     return null;
   }

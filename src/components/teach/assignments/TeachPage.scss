@@ -437,15 +437,63 @@
     height: 70%;
     @extend %flexCenter;
     color: var(--theme-light-blue);
+    .glasses-icon-container {
+      @extend %transitionAll300;
+      .glass-eyes-inside {
+        @extend %transitionAll300;
+        opacity: 0;
+        position: absolute;
+        @extend %flexCenter;
+      }
+      .glass-left-inside,
+      .glass-right-inside {
+        @extend %flexCenter;
+        height: 6.3vw;
+        z-index: 1000;
+      }
+      .glass-eyes-right,
+      .glass-eyes-left {
+        position: absolute;
+        top: 0.7vw;
+        width: 5vw;
+        .aperture {
+          width: 40%;
+        }
+        .eyeball {
+          width: 90%;
+          height: 90%;
+        }
+      }
+      .glass-eyes-left {
+        left: 2vw;
+      }
+      .glass-eyes-right {
+        right: 2vw;
+      }
+      &:hover {
+        transform: scale(1.2);
+        .glass-eyes-inside {
+          opacity: 1;
+
+          .aperture {
+            -webkit-animation: rotating 2s linear infinite;
+            -moz-animation: rotating 2s linear infinite;
+            -ms-animation: rotating 2s linear infinite;
+            -o-animation: rotating 2s linear infinite;
+            animation: rotating 2s linear infinite;
+          }
+        }
+      }
+    }
     .icon-container {
       @extend %flexToXCenter;
       width: 100%;
       margin-bottom: 5vh;
     }
-    .svg {
+    .glasses-icon {
       cursor: pointer;
-      width: 40vw;
-      height: 15vh;
+      width: 19vw;
+      height: 7.6vw;
       color: var(--theme-orange);
     }
     .bold {
