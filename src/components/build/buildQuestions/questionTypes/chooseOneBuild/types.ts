@@ -8,4 +8,5 @@ export interface ChooseOneAnswer extends MainImageProps {
   value: string;
   valueFile: string;
   answerType?: QuestionValueType; 
+  soundFile?: string;
 }

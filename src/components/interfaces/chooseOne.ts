@@ -4,6 +4,7 @@ export enum QuestionValueType {
   None,
   String,
   Image,
+  Sound
 }
 
 export interface ChooseOneChoice extends MainImageProps {
@@ -11,5 +12,6 @@ export interface ChooseOneChoice extends MainImageProps {
   value: string;
   valueFile: string;
   answerType: QuestionValueType;
+  soundFile: string;
   checked: boolean;
 }
