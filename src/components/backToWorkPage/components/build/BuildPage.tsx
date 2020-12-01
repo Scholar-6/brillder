@@ -617,7 +617,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
       threeColumns = this.state.searchThreeColumns;
     }
 
-    const isEmpty = this.state.rawBricks.length === 0;
+    let rawPersonalBricks = this.state.rawBricks.filter(b => !b.isCore);
+    
+    const isEmpty = rawPersonalBricks.length === 0;
 
     if (!this.state.filters.isCore) {
       return <PersonalBuild
