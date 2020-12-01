@@ -144,14 +144,16 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
           max={50}
           onChange={(e:any, v:any) => setHeight(v)}
         />
+        <div className="image-preview-label">see in preview below</div>
         <div className="absolute">
+          
           {!removed &&
             <ImageDesktopPreview src={fileUrl(initData.value)} height={height} align={align} file={cropedFile} />
           }
         </div>
       </div>
       <div className="centered last-button">
-        <SpriteIcon name="upload" className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
+        <div className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
           if (cropedFile && canUpload) {
             upload(cropedFile, source, caption, align, height);
           } else if (canUpload) {
@@ -159,7 +161,9 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
           } else {
             setValidation(true);
           }
-         }} />
+         }}>
+          <SpriteIcon name="upload" />
+         </div>
       </div>
     </BaseDialogWrapper>
   );
