@@ -11,11 +11,15 @@ import BrickColDescription from "./BrickColDescription";
 import PublishToggle from "./PublishToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
+import { clearProposal } from "localStorage/proposal";
+import CreateBrickBlock from "../CreateBrickBlock";
 
 interface BuildBricksProps {
   user: User;
   finalBricks: Brick[];
   threeColumns: ThreeColumns;
+
+  isCorePage: boolean;
 
   loaded: boolean;
   shown: boolean;
@@ -67,7 +71,7 @@ class BuildBricks extends Component<BuildBricksProps> {
       }
 
       if (brick.isCreateLink) {
-        return this.renderCreateLinkColumn();
+        return <CreateBrickBlock history={this.props.history} isCore={this.props.isCorePage} />;
       }
 
       // render first row as description
@@ -192,15 +196,6 @@ class BuildBricks extends Component<BuildBricksProps> {
             suggest changes to it.
           </div>
         </div>
-      </div>
-    );
-  }
-
-  renderCreateLinkColumn() {
-    return (
-      <div className="main-brick-container create-link" key={-32} onClick={() => this.props.history.push(map.ProposalSubject)}>
-        <SpriteIcon name="trowel" />
-        <span>Create A New Brick</span>
       </div>
     );
   }

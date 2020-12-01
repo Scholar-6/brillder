@@ -627,7 +627,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
         finalBricks={finalBricks}
         loaded={this.state.bricksLoaded}
         shown={this.state.shown}
-        pageSize={this.state.pageSize + 3}
+        pageSize={17}
         sortedIndex={this.state.sortedIndex}
         history={history}
         isTeach={this.state.isTeach || this.state.isAdmin}
@@ -643,8 +643,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
         toggleCore={this.toggleCore.bind(this)}
         setTab={() => {}}
 
-        moveAllNext={() => this.moveAllNext(this.state.pageSize + 3)}
-        moveAllBack={() => this.moveAllBack.bind(this.state.pageSize + 3)}
+        moveAllNext={() => this.moveAllNext(17)}
+        moveAllBack={() => this.moveAllBack(17)}
         moveToFirstPage={this.moveToFirstPage.bind(this)}
 
         handleDeleteOpen={this.handleDeleteOpen.bind(this)}
@@ -688,6 +688,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 loaded={this.state.bricksLoaded}
                 searchString={searchString}
                 published={published}
+                isCorePage={false}
                 switchPublish={this.switchPublish.bind(this)}
                 handleDeleteOpen={this.handleDeleteOpen.bind(this)}
                 handleMouseHover={this.handleMouseHover.bind(this)}

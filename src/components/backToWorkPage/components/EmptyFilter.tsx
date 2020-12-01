@@ -22,9 +22,9 @@ const EmptyFilterSidebar:React.FC<Props> = props => {
            props.forgetBrick();
            let link = map.ProposalSubject;
            if (props.isCore === true) {
-            link += '?isCore=true';
+             link += '?isCore=true';
            } else if (props.isCore === false) {
-            link += '?isCore=false';
+             link += '?isCore=false';
            }
            props.history.push(link);
          }}>
