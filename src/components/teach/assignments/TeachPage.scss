@@ -448,6 +448,7 @@
       .glass-left-inside,
       .glass-right-inside {
         @extend %flexCenter;
+        height: 6.5vw;
         z-index: 1000;
       }
       .glass-eyes-right,
