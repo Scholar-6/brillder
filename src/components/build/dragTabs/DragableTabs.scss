@@ -47,6 +47,9 @@ $tile-height: 100%;
           color: var(--theme-dark-blue);
           opacity: 1;
         }
+        &.invalid {
+          color: var(--theme-dark-blue) !important;
+        }
       }
     }
     .synthesis-tab-icon {
@@ -243,6 +246,12 @@ $tile-height: 100%;
         .svg {
           color: var(--white) !important;
         }
+      }
+    }
+
+    &.active {
+      .drag-tile.invalid {
+        background: var(--white) !important;
       }
     }
   }
