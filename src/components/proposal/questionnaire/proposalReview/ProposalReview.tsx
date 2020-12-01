@@ -332,8 +332,11 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               <FiberManualRecordIcon className="circle-icon" />
             </Grid>
             <div className="proposal-titles">
-              <div className="title">{this.renderEditableTextarea(BrickFieldNames.title)}</div>
-                <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
+              <div className="title">
+                {this.renderEditableTextarea(BrickFieldNames.title)}
+                {brick.adaptedFrom && '(ADAPTED)'}
+              </div>
+              <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
               <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
               <p className="text-title m-t-3 bold">Open Question:</p>
               {this.renderOpenQuestionField()}
