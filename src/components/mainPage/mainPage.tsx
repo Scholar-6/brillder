@@ -229,6 +229,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       return this.renderTryBuildButton(true);
     } else if (this.state.isStudent) {
       return this.renderLibraryButton();
+    } else if (this.state.isAdmin) {
+      return this.renderCreateButton();
     }
     return this.renderAssignmentsButton();
   }
@@ -314,7 +316,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     } else if (this.state.isStudent) {
       return this.renderTryBuildButton(isActive);
     } else if (this.state.isAdmin) {
-      return this.renderCreateButton();
+      return this.renderAssignmentsButton();
     }
     return "";
   }

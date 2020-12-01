@@ -69,7 +69,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
     return (
       <SendToPublisherButton
         disabled={disabled}
-        brickId={brick.id}
+        brick={brick}
         onFinish={() => this.setState({brickStatus: BrickStatus.Review})}
       />
     );

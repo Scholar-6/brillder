@@ -146,7 +146,7 @@ export const prepareVisibleBricks = (sortedIndex: number, pageSize: number, bric
     const brick = bricks[i];
     if (brick) {
       let row = Math.floor(count / 3);
-      data.push({ brick, key: i, index: count, row });
+      data.push({ brick, key: i, index: count, row, isCreateLink: brick.isCreateLink });
       count++;
     }
   }

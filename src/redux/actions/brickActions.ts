@@ -153,6 +153,7 @@ const sendToPublisher = (brickId: number) => {
     } else {
       dispatch({ type: types.SEND_TO_PUBLISHER_FAILURE } as Action);
     }
+    return res;
   }
 }
 

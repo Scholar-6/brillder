@@ -1,0 +1,155 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.mainPage {
+  @keyframes eye-movement {
+    0% {
+      transform: translateX(-4px);
+    }
+
+    50% {
+      transform: translateX(-4px);
+    }
+
+    70% {
+      transform: translateX(4px);
+    }
+
+    100% {
+      transform: translateX(4px);
+    }
+  }
+
+  .view-item-container {
+
+    .eye-glass-icon,
+    .eye-glass-icon {
+      position: relative;
+
+      .glass-eyes-left,
+      .glass-eyes-right {
+        opacity: 0;
+        transition-delay: 200ms;
+        @extend %transitionAll300;
+        @extend %floatToYCenter;
+
+        @include tabletP {
+          width: 5.5vw;
+          height: 5.5vw;
+        }
+
+        .svg {
+          width: 60%;
+          height: 60%;
+        }
+      }
+
+      $shift: 0.6vw;
+
+      .glass-eyes-left {
+        @include tabletP {
+          left: $shift;
+        }
+      }
+
+      .glass-eyes-right {
+        @include tabletP {
+          right: $shift;
+
+          .aperture {
+            position: absolute;
+            left: 0;
+          }
+        }
+      }
+
+      .glass-left-inside {
+        left: 0.05vw;
+        width: 5.5vw !important;
+        height: 5.5vw !important;
+
+        svg {
+          height: 100% !important;
+        }
+      }
+
+      .glass-left-pupil,
+      .glass-right-pupil {
+        position: absolute;
+        top: 1.25vw;
+        width: 5vw;
+      }
+
+      .glass-left-pupil {
+        left: 0.7vw;
+      }
+
+      .glass-right-pupil {
+        right: -0.1vw;
+      }
+
+      .glass-left-inside,
+      .glass-right-inside {
+        opacity: 0;
+        @extend %flexCenter;
+        @extend %transitionAll300;
+        position: absolute;
+        width: 5.5vw;
+        height: 5.5vw;
+
+        .circle {
+          -webkit-animation: fade 2s;
+          -moz-animation: fade 2s;
+          -ms-animation: fade 2s;
+          -o-animation: fade 2s;
+          animation: fade 2s;
+        }
+
+        svg {
+          -webkit-animation: rotating 2s linear infinite;
+          -moz-animation: rotating 2s linear infinite;
+          -ms-animation: rotating 2s linear infinite;
+          -o-animation: rotating 2s linear infinite;
+          animation: rotating 2s linear infinite;
+          color: var(--theme-dark-blue);
+          width: 0 !important;
+        }
+      }
+    }
+
+    &:hover {
+      .eye-glass-icon {
+
+        .glass-eyes-left,
+        .glass-right-inside,
+        .glass-left-inside,
+        .glass-eyes-right {
+          @include tabletP {
+            opacity: 1;
+          }
+        }
+
+        .glass-left-pupil,
+        .glass-right-pupil {
+          .pupil {
+            animation-name: eye-movement;
+            animation-iteration-count: 1;
+            animation-duration: 1300ms;
+            animation-delay: 0;
+            animation-direction: alternate;
+          }
+        }
+
+        .glass-right-inside,
+        .glass-left-inside {
+          @include tabletP {
+            svg {
+              width: 30% !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
