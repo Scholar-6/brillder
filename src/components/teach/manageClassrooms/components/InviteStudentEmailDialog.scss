@@ -1,0 +1,33 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.invite-email-dialog {
+  .MuiDialog-container {
+    padding-left: 20vw;
+    padding-top: $page-head-height;
+  }
+  .MuiInputBase-root {
+    background: white !important;
+    box-shadow: none !important;
+    border-radius: 0.5vw !important;
+    padding: 1vw !important;
+
+    input {
+      text-transform: none !important;
+    }
+
+    .MuiAutocomplete-endAdornment {
+      height: 100%;
+      position: absolute;
+      top: 0;
+      .MuiAutocomplete-clearIndicator {
+        display: none !important;
+      }
+      .MuiAutocomplete-popupIndicator {
+        height: 100%;
+        border-radius: 0;
+      }
+    }
+  }
+}
