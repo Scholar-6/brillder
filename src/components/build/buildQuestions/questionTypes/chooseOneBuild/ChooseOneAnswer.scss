@@ -49,4 +49,30 @@
       opacity: 0.5;
     }
   }
+
+  .choose-image {
+    
+  }
+
+  .choose-empty {
+    .ck-content {
+      padding-top: 1vh !important;
+      padding-right: 9vw !important;
+      min-height: 6vh !important;
+    }
+    .question-image-drop {
+      width: 5vw !important;
+      left: auto !important;
+      right: 6vw !important;
+    }
+    .sound-record-button {
+      position: absolute;
+      cursor: pointer;
+      right: 3vw;
+      top: calc(1vh + 0.3vw);
+      img {
+        width: 2vw;
+      }
+    }
+  }
 }

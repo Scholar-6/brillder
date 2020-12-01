@@ -141,22 +141,29 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
     const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize, bricks);
 
     let res = data.map(item =>
-      <BrickBlock
-        brick={item.brick}
-        index={item.index}
-        row={item.row}
-        user={this.props.user}
-        key={item.index}
-        shown={this.props.shown}
-        history={this.props.history}
-        circleIcon=''
-        iconColor=''
-        searchString={this.props.searchString}
-        handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
-        handleMouseHover={() => this.handleMouseHover(item.key)}
-        handleMouseLeave={() => this.handleMouseLeave(item.key)}
-      />
-    );
+      {
+        let circleIcon = '';
+        if (item.brick.adaptedFrom) {
+          circleIcon = 'copy';
+        }
+        return (
+          <BrickBlock
+            brick={item.brick}
+            index={item.index}
+            row={item.row}
+            user={this.props.user}
+            key={item.index}
+            shown={this.props.shown}
+            history={this.props.history}
+            circleIcon={circleIcon}
+            iconColor=''
+            searchString={this.props.searchString}
+            handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
+            handleMouseHover={() => this.handleMouseHover(item.key)}
+            handleMouseLeave={() => this.handleMouseLeave(item.key)}
+          />
+        );
+      });
     res.unshift(<CreateBrickBlock history={this.props.history} isCore={true} />);
     return res;
   }

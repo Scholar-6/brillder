@@ -26,9 +26,6 @@ const DragTab: React.FC<DragTabProps> = ({
   const renderRemoveIcon = () => {
     if (!active) { return; }
     let color = 'text-theme-dark-blue'
-    if (!isValid) {
-      color = 'text-white';
-    }
     return (
       <div className="remove-icon svgOnHover active" onClick={removeTab}>
         <SpriteIcon name="cancel-custom" className={`w100 h100 active ${color}`} />
@@ -36,17 +33,12 @@ const DragTab: React.FC<DragTabProps> = ({
     );
   }
 
-  let tabClass = 'tab-number';
-  if (!isValid && active) {
-    tabClass += ' text-white';
-  }
-
   const replyType = getHasReplied(id);
 
   return (
     <div className={isValid ? "drag-tile valid" : "drag-tile invalid"}>
       <div className="draggable-tab" onClick={activateTab}>
-        <div className={tabClass}>
+        <div className='tab-number'>
           {index + 1}
         </div>
         {

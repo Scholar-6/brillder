@@ -7,7 +7,7 @@
     background: var(--theme-orange);
   }
   .MuiPaper-root.MuiDialog-paper {
-    padding-bottom: 9vh;
+    padding-bottom: 7.4vw;
     overflow-y: hidden;
     min-width: 34vw;
     .dialog-header.image-dialog {
@@ -16,14 +16,21 @@
     }
     .upload-button {
       position: absolute;
-      bottom: 1.5vh;
+      bottom: 1.5vw;
       background: var(--tab-gray);
       color: var(--dark-gray);
       border-radius: 50%;
-      $size: 5vh;
+      $size: 4vw;
       width: $size !important;
       height: $size !important;
-      padding: 0.3vw;
+      padding: 0.4vw;
+      padding-top: 0.6vw;
+
+      .svg {
+        position: absolute;
+        width: 80%;
+        height: 70%;
+      }
   
       &.active {
         cursor: pointer;
@@ -44,6 +51,10 @@
 
   > div {
     padding-top: 2vh;
+  }
+
+  .image-preview-label {
+    font-size: 1.2vw;
   }
 
   .required {
