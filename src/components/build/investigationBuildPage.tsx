@@ -121,7 +121,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [proposalResult, setProposalResult] = React.useState({ isOpen: false, isValid: proposalRes.isValid, url: proposalRes.url });
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
-  const [activeQuestionType, setActiveType] = React.useState(QuestionTypeEnum.None);
+  const [activeQuestionType] = React.useState(QuestionTypeEnum.None);
   const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
   const [isSaving, setSavingStatus] = React.useState(false);
   const [hasSaveError, setSaveError] = React.useState(false);
@@ -709,8 +709,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         brickId={brickId}
         setHoverQuestion={setHoverQuestion}
         questionId={activeQuestion.id}
-        activeQuestionType={activeQuestionType}
-        setActiveQuestionType={setActiveType}
         setQuestionType={setQuestionTypeAndMove}
         questionType={type}
       />
