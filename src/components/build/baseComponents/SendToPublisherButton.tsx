@@ -7,10 +7,11 @@ import { ReduxCombinedState } from "redux/reducers";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SendToPublisherDialog from "./dialogs/SendToPublisherDialog";
 import SendPublisherSuccessDialog from "components/playPreview/finalStep/SendPublisherSuccess";
+import { Brick, BrickStatus } from "model/brick";
 
 export interface ButtonProps {
   disabled: boolean;
-  brickId: number;
+  brick: Brick;
   onFinish(): void;
 
   // redux
@@ -18,9 +19,12 @@ export interface ButtonProps {
   publisherConfirmed: boolean;
 
   sendToPublisherConfirmed(): Promise<void>;
-  sendToPublisher(brickId: number): Promise<void>;
+  sendToPublisher(brickId: number): Promise<boolean>;
 }
 
+/**
+  This component could change brick status to BrickStatus.Review
+*/
 const SendToPublisherButton: React.FC<ButtonProps> = props => {
   const [isOpen, setState] = React.useState(false);
   const [hovered, setHover] = React.useState(false);
@@ -46,8 +50,12 @@ const SendToPublisherButton: React.FC<ButtonProps> = props => {
         {hovered && <div className="custom-tooltip">Send to Publisher</div>}
       </div>
       <SendToPublisherDialog isOpen={isOpen} close={() => setState(false)} submit={async () => {
-        await props.sendToPublisher(props.brickId);
-        setState(false);
+        let res = await props.sendToPublisher(props.brick.id);
+        if (res === true) {
+          // change brick status
+          props.brick.status = BrickStatus.Review;
+          setState(false);
+        }
       }} />
       <SendPublisherSuccessDialog
         isOpen={props.sendedToPublisher && props.publisherConfirmed === false}
