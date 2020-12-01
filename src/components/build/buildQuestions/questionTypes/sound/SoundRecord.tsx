@@ -9,12 +9,10 @@ interface SoundProps {
 
 const SoundRecord: React.FC<SoundProps> = props => {
   let [isOpen, setOpen] = React.useState(false);
-  console.log(isOpen)
   return (
     <div>
       <div className="sound-record-button" onClick={() => {
         if (!props.locked) {
-          console.log('bad')
           setOpen(true);
         }
       }}>

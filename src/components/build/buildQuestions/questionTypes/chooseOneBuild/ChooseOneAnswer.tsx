@@ -45,6 +45,8 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     answer.valueFile = '';
     answer.soundFile = soundFile;
     answer.answerType = QuestionValueType.Sound;
+    update();
+    save();
   }
 
   const onTextChanged = (answer: ChooseOneAnswer, value: string) => {
@@ -134,7 +136,6 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           />
         </div>
       }
-      
     </div>
   );
 };
