@@ -10,7 +10,6 @@ interface SoundRecordDialog {
 }
 
 const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
-  console.log(props.isOpen)
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box link-copied-dialog">
       <SoundComponent
