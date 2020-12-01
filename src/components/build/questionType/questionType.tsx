@@ -8,27 +8,24 @@ import TypeButton from './TypeButton'
 
 export interface QuestionTypeProps {
   questionType: QuestionTypeEnum,
-  activeQuestionType: QuestionTypeEnum,
   history: any,
   brickId: number,
   questionId: number,
   setQuestionType(type: QuestionTypeEnum): void
-  setActiveQuestionType(type: QuestionTypeEnum): void
   setHoverQuestion(type: QuestionTypeEnum): void
 }
 
 const QuestionTypePage: React.FC<QuestionTypeProps> = ({
-  questionType, history, brickId, questionId, activeQuestionType,
-  setQuestionType, setHoverQuestion, setActiveQuestionType
+  questionType, history, brickId, questionId, setQuestionType, setHoverQuestion
 }: QuestionTypeProps) => {
   if (questionType !== QuestionTypeEnum.None) {
     history.push(`/build/brick/${brickId}/investigation/question-component/${questionId}`);
   }
 
-  const type = activeQuestionType;
+  const type = questionType;
 
   const setCurrentType = (type: QuestionTypeEnum) => {
-    setActiveQuestionType(type);
+    setQuestionType(type);
   }
 
   const onHover = (type: QuestionTypeEnum) => {
@@ -42,7 +39,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
   return (
     <div className="question-type">
       <div className="inner-question-type">
-        <div className="label-question-type">Select Answer Type</div>
+        <div className="label-question-type">Click to Select Answer Type</div>
         <Grid container direction="row">
           <Grid item xs={4}>
             <TypeButton
@@ -162,15 +159,6 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
           </Grid>
         </Grid>
       </div>
-      <Grid className="submit-button-container" container alignContent="center">
-        {
-          activeQuestionType && (
-            <div>
-              <div className="submit-button" onClick={() => setQuestionType(type)}></div>
-            </div>
-          )
-        }
-      </Grid>
     </div>
   );
 }
