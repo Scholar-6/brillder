@@ -22,6 +22,7 @@ import UsersPagination from './components/UsersPagination';
 import AssignClassDialog from './components/AssignClassDialog';
 import CreateClassDialog from './components/CreateClassDialog';
 import DeleteClassDialog from './components/DeleteClassDialog';
+import InviteStudentEmailDialog from './components/InviteStudentEmailDialog';
 import UnassignStudentDialog from './components/UnassignStudentDialog';
 import RoleDescription from 'components/baseComponents/RoleDescription';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -68,6 +69,8 @@ interface UsersListState {
   unassignStudent: MUser | null;
   unassignOpen: boolean;
 
+  inviteEmailOpen: boolean;
+
   pageStudentsSelected: boolean;
 }
 
@@ -99,6 +102,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
       unassignStudent: null,
       unassignOpen: false,
+
+      inviteEmailOpen: false,
 
       pageStudentsSelected: false
     };
@@ -455,7 +460,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           <Grid item xs={9} className="brick-row-container">
             <TeachTab history={history} activeTab={TeachActiveTab.Students} />
             <div className="tab-content">
-              <AddButton history={history} isAdmin={this.state.isAdmin} />
+              {this.state.activeClassroom &&
+                <AddButton history={history} isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
+              }
               <StudentTable
                 users={users}
                 isClassroom={!!this.state.activeClassroom}
@@ -500,6 +507,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           close={() => this.setState({ unassignOpen: false })}
           submit={() => this.unassignStudent(this.state.unassignStudent)}
         />
+        {this.state.activeClassroom &&
+          <InviteStudentEmailDialog
+            isOpen={this.state.inviteEmailOpen}
+            close={() => this.setState({ inviteEmailOpen: false })}
+            classroom={this.state.activeClassroom}
+          />
+        }
       </div>
     );
   }
