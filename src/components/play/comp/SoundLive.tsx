@@ -1,3 +1,4 @@
+import { fileUrl } from 'components/services/uploadFile';
 import React from 'react';
 
 import './SoundLive.scss';
@@ -14,7 +15,7 @@ const ImageLive: React.FC<ImageProps> = ({ component }) => {
         <audio
           controls
           style={{width: '100%'}}
-          src={`${process.env.REACT_APP_BACKEND_HOST}/files/${component.value}`} />
+          src={fileUrl(component.value)} />
       </div>
     );
   }
