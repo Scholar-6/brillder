@@ -2,6 +2,7 @@ export enum QuestionValueType {
   None,
   String,
   Image,
+  Sound
 }
 
 export interface UniqueComponentProps {
