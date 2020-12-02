@@ -15,9 +15,11 @@ import CommentChild from './CommentChild';
 import NewCommentPanel from './NewCommentPanel';
 import CommentDeleteDialog from './CommentDeleteDialog';
 import SpriteIcon from '../SpriteIcon';
+import CommentIndicator from 'components/build/baseComponents/CommentIndicator';
 
 
 interface CommentPanelProps {
+  isPlanBrief?: boolean;
   mode?: boolean; // true - hidden
   currentBrick: Brick;
   currentQuestionId?: number;
@@ -85,6 +87,33 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
     });
   }
 
+  const getLatestChild = (comment: Comment) => {
+    if(!comment.children || comment.children.length <= 0) {
+      return comment;
+    }
+    const replies = comment.children.sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
+    return replies[0];
+  }
+
+  const getHasBriefReplied = () => {
+    const replies = props.comments?.filter(comment => comment.location === CommentLocation.Brief)
+      .map(getLatestChild)
+      .sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
+    if (replies && replies.length > 0) {
+      const latestAuthor = replies[0].author.id;
+      const isCurrentUser = latestAuthor === props.currentUser.id;
+      return isCurrentUser ? 1 : -1;
+    } else {
+      return 0;
+    }
+  }
+
+  const renderIndicator = () => {
+    if (props.isPlanBrief) {
+      return <CommentIndicator replyType={getHasBriefReplied()} />;
+    }
+  }
+
   const renderComments = () => {
     return (
       <div className="comments-column-wrapper">
@@ -148,6 +177,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
   if (props.mode === true) {
     return (
       <Grid container className="comments-panel" direction="column" alignItems="stretch">
+        {renderIndicator()}
         <Grid item onClick={props.onHeaderClick}>
           <div className="comments-title">
             {renderBackButton()}
@@ -166,6 +196,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
 
   return (
     <Grid container className="comments-panel customize-panel" direction="column" alignItems="stretch">
+      {renderIndicator()}
       <Grid item onClick={props.onHeaderClick}>
         <div className="comments-title">
           {renderBackButton()}

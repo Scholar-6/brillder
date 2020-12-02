@@ -8,6 +8,8 @@ import { QuestionValueType } from "../types";
 import { ChooseOneAnswer } from './types';
 import RemoveItemButton from "../components/RemoveItemButton";
 import SoundRecord from "../sound/SoundRecord";
+import DeleteDialog from "components/baseComponents/deleteBrickDialog/DeleteDialog";
+import RemoveButton from "../components/RemoveButton";
 
 
 export interface ChooseOneAnswerProps {
@@ -29,6 +31,8 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   locked, editOnly, index, length, answer, validationRequired, checkBoxValid,
   removeFromList, update, save, onChecked, onBlur
 }) => {
+  const [clearOpen, setClear] = React.useState(false);
+
   const setImage = (fileName: string) => {
     if (locked) { return; }
     answer.value = "";
@@ -72,9 +76,75 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     }
   }
 
+  const renderAnswerType = (answer: ChooseOneAnswer) => {
+    if (answer.answerType === QuestionValueType.Sound) {
+      return (
+        <div className="choose-sound">
+          <SoundRecord
+            locked={locked}
+            answer={answer}
+            save={v => setSound(v)}
+            clear={() => onTextChanged(answer, '')}
+          />
+        </div>
+      );
+    } else if (answer.answerType === QuestionValueType.Image) {
+      return (
+        <div className="choose-image">
+          <RemoveButton onClick={() => setClear(true)} />
+          <QuestionImageDropzone
+            answer={answer as any}
+            type={answer.answerType || QuestionValueType.None}
+            locked={locked}
+            fileName={answer.valueFile}
+            update={setImage}
+          />
+          <DeleteDialog
+            isOpen={clearOpen}
+            label="Delete image?"
+            submit={() => onTextChanged(answer, '')}
+            close={() => setClear(false)}
+          />
+        </div>
+      );
+    }
+    return (
+      <div className="choose-empty">
+        <QuestionImageDropzone
+          answer={answer as any}
+          type={answer.answerType || QuestionValueType.None}
+          locked={locked}
+          fileName={answer.valueFile}
+          update={setImage}
+        />
+        <DocumentWirisCKEditor
+          disabled={locked}
+          editOnly={editOnly}
+          data={answer.value}
+          toolbar={['latex', 'chemType']}
+          placeholder="Enter Answer..."
+          validationRequired={validationRequired}
+          onBlur={() => {
+            onBlur();
+            save();
+          }}
+          onChange={value => onTextChanged(answer, value)}
+        />
+        <SoundRecord
+          locked={locked}
+          answer={answer}
+          save={v => setSound(v)}
+          clear={() => onTextChanged(answer, '')}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={className}>
-      <RemoveItemButton index={index} length={length} onClick={removeFromList} />
+      {answer.answerType !== QuestionValueType.Sound && answer.answerType !== QuestionValueType.Image &&
+        <RemoveItemButton index={index} length={length} onClick={removeFromList} />
+      }
       <div className={"checkbox-container " + containerClass}>
         <Checkbox
           className={checkboxClass}
@@ -84,58 +154,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           value={index}
         />
       </div>
-      {answer.valueFile ? 
-        <div className="choose-image">
-          <QuestionImageDropzone
-            answer={answer as any}
-            type={answer.answerType || QuestionValueType.None}
-            locked={locked}
-            fileName={answer.valueFile}
-            update={setImage}
-          />
-          <DocumentWirisCKEditor
-            disabled={locked}
-            editOnly={editOnly}
-            data={answer.value}
-            toolbar={['latex', 'chemType']}
-            placeholder="Enter Answer..."
-            validationRequired={answer.answerType !== QuestionValueType.Image ? validationRequired : false}
-            onBlur={() => {
-              onBlur();
-              save();
-            }}
-            onChange={value => onTextChanged(answer, value)}
-          />
-        </div>
-        : 
-        <div className="choose-empty">
-          <QuestionImageDropzone
-            answer={answer as any}
-            type={answer.answerType || QuestionValueType.None}
-            locked={locked}
-            fileName={answer.valueFile}
-            update={setImage}
-          />
-          <DocumentWirisCKEditor
-            disabled={locked}
-            editOnly={editOnly}
-            data={answer.value}
-            toolbar={['latex', 'chemType']}
-            placeholder="Enter Answer..."
-            validationRequired={answer.answerType !== QuestionValueType.Image ? validationRequired : false}
-            onBlur={() => {
-              onBlur();
-              save();
-            }}
-            onChange={value => onTextChanged(answer, value)}
-          />
-          <SoundRecord
-            locked={locked}
-            data={{}}
-            save={v => setSound(v)}
-          />
-        </div>
-      }
+      {renderAnswerType(answer)}
     </div>
   );
 };

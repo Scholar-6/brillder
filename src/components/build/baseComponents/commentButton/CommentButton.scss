@@ -34,6 +34,10 @@
     width: 6vw;
     text-align: center;
     top: 113%;
+
+    &.bigger {
+      width: 7vw;
+    }
   }
   .comments-icon,
   .comments-plus,

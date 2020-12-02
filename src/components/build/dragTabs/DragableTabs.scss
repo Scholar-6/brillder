@@ -82,54 +82,6 @@ $tile-height: 100%;
       user-select: none;
       opacity: 1;
     }
-    .unread-indicator {
-      width: 1.1vw;
-      height: 1.1vw;
-      position: absolute;
-      left: 0.3vw;
-      top: 0.3vw;
-      > div {
-        @extend %flexCenter;
-        @extend %radCircle;
-        position: absolute;
-        &.outer-circle {
-          background-color: var(--theme-orange-alpha5);
-          width: 100%;
-          height: 100%;
-        }
-        &.inner-circle {
-          background-color: var(--theme-orange);
-          width: 50%;
-          height: 50%;
-        }
-        @media (prefers-color-scheme: dark) {
-          &.outer-circle {
-            background-color: var(--theme-orange-alpha5);
-          }
-          &.inner-circle {
-            background-color: var(--theme-orange);
-          }
-        }
-      }
-      &.has-replied {
-        > div {
-          &.outer-circle {
-            background-color: var(--theme-yellow-alpha5);
-          }
-          &.inner-circle {
-            background-color: var(--theme-yellow);
-          }
-          @media (prefers-color-scheme: dark) {
-            &.outer-circle {
-              background-color: var(--theme-yellow-alpha5);
-            }
-            &.inner-circle {
-              background-color: var(--theme-yellow);
-            }
-          }
-        }
-      }
-    }
     .remove-icon {
       width: 1.2vw;
       height: 1.2vw;
@@ -211,6 +163,61 @@ $tile-height: 100%;
     }
     .svg {
       @extend %removePosition;
+    }
+  }
+
+  .drag-tile .unread-indicator,
+  .draggable-tab .unread-indicator {
+    width: 1.1vw;
+    height: 1.1vw;
+    position: absolute;
+    left: 0.3vw;
+    top: 0.3vw;
+    > div {
+      @extend %flexCenter;
+      @extend %radCircle;
+      position: absolute;
+      &.outer-circle {
+        background-color: var(--theme-orange-alpha5);
+        width: 100%;
+        height: 100%;
+      }
+      &.inner-circle {
+        background-color: var(--theme-orange);
+        width: 50%;
+        height: 50%;
+      }
+      @media (prefers-color-scheme: dark) {
+        &.outer-circle {
+          background-color: var(--theme-orange-alpha5);
+        }
+        &.inner-circle {
+          background-color: var(--theme-orange);
+        }
+      }
+    }
+    &.has-replied {
+      > div {
+        &.outer-circle {
+          background-color: var(--theme-yellow-alpha5);
+        }
+        &.inner-circle {
+          background-color: var(--theme-yellow);
+        }
+        @media (prefers-color-scheme: dark) {
+          &.outer-circle {
+            background-color: var(--theme-yellow-alpha5);
+          }
+          &.inner-circle {
+            background-color: var(--theme-yellow);
+          }
+        }
+      }
+    }
+  }
+  .drag-tile .unread-indicator {
+    .inner-circle {
+      margin: 25%;
     }
   }
 }

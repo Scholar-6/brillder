@@ -21,12 +21,12 @@ const ProposalPanel: React.FC<TutorialProps> = (props) => {
           </div>
         </Grid>
         <p className="center">
-          You can <span className="bold">Edit Your Proposal</span> at anytime by clicking the text to the left of this window.
+          You can <span className="bold">Edit Your Plan</span> at anytime by clicking the text to the left of this window.
         </p>
         <div className="proposal-box">
-          <h2>1. The Proposal</h2>
-          <p>If you’ve made it here, then you’ve at least made a start on your proposal. If you are working with an editor, they will receive a notification at this point and be able to view the draft proposal of your brick.</p>
-          <p className="last-text bold">The Proposal can also be accessed via your ‘Back to Work’ page.</p>
+          <h2>1. The Plan</h2>
+          <p>If you’ve made it here, then you’ve at least made a start on your plan. If you are working with an editor, they will receive a notification at this point and be able to view the draft plan of your brick.</p>
+          <p className="last-text bold">The Plan can also be accessed via your ‘Back to Work’ page.</p>
         </div>
       </div>
       <Grid container direction="row" className="button-row">

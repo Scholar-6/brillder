@@ -3,34 +3,35 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface TabProps {
+  draft: number;
+  selfPublish: number;
+
   isTeach: boolean;
-  isCore: boolean;
   onCoreSwitch(): void;
 }
 
-const TabComponent: React.FC<TabProps> = ({ isCore, onCoreSwitch }) => {
-  const publicClass = () => isCore ? 'active' : 'no-active';
-  const personalClass = () => !isCore ? 'active' : 'no-active';
-
+const TabComponent: React.FC<TabProps> = ({ draft, selfPublish, onCoreSwitch }) => {
   const getPublicTab = () => {
-    const className = publicClass();
     return (
-      <div key={2} className={className} onClick={onCoreSwitch}>
+      <div key={2} className="active" onClick={onCoreSwitch}>
         <div style={{display: 'flex'}}>
           <span>Public</span>
-          <SpriteIcon name="globe" className={className} />
+          <SpriteIcon name="globe" className="active" />
         </div>
       </div>
     );
   }
 
   const getPersonalTab = () => {
-    const className = personalClass();
     return (
-      <div key={3} className={className} onClick={onCoreSwitch}>
+      <div key={3} className="no-active" onClick={onCoreSwitch}>
         <div style={{display: 'flex'}}>
           <span>Personal</span>
-          <SpriteIcon name="key" className={className} />
+          <SpriteIcon name="key" className="no-active" />
+        </div>
+        <div className="round-button-container">
+          <div className="round-button draft">{draft}</div>
+          <div className="round-button self-publish">{selfPublish}</div>
         </div>
       </div>
     );
