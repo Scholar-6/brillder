@@ -50,6 +50,23 @@
     }
   }
 
+  .choose-sound {
+    background: var(--solitude-light);
+    border-radius: 0.8vw;
+    width: 100%;
+
+    audio {
+      width: 80% !important;
+      padding-top: 1vh;
+      height: 6.25vh;
+    }
+
+    .right-top-icon {
+      height: calc(100% - 1vh);
+      right: 1vw !important;
+    }
+  }
+
   .choose-image {
     
   }
