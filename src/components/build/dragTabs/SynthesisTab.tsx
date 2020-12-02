@@ -2,6 +2,7 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import { TutorialStep } from "../tutorial/TutorialPanelWorkArea";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import CommentIndicator from "../baseComponents/CommentIndicator";
 
 export interface SynthesisTabProps {
   columns: number;
@@ -31,13 +32,7 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
       alignContent="center"
       justify="center"
     >
-      {
-        (replyType !== 0) &&
-          <div className={"unread-indicator" + (replyType > 0 ? " has-replied" : "")}>
-            <div className="outer-circle"></div>
-            <div className="inner-circle"></div>
-          </div>
-      }
+      <CommentIndicator replyType={replyType} />
       <div className={`last-tab svgOnHover ${className}`}>
         <SpriteIcon name="list-custom" className="svg w100 h100 active text-theme-dark-blue" />
       </div>

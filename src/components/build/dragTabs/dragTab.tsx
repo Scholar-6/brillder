@@ -1,5 +1,6 @@
 import React from 'react'
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import CommentIndicator from '../baseComponents/CommentIndicator';
 
 export interface DragTabProps {
   questionId: any
@@ -41,13 +42,7 @@ const DragTab: React.FC<DragTabProps> = ({
         <div className='tab-number'>
           {index + 1}
         </div>
-        {
-          (replyType !== 0) &&
-          <div className={"unread-indicator" + (replyType > 0 ? " has-replied" : "")}>
-            <div className="outer-circle"></div>
-            <div className="inner-circle"></div>
-          </div>
-        }
+        <CommentIndicator replyType={replyType} />
         {renderRemoveIcon()}
       </div>
     </div>

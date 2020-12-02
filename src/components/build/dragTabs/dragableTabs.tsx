@@ -10,7 +10,7 @@ import DragTab from './dragTab';
 import PlusTab from './plusTab';
 import SynthesisTab from './SynthesisTab';
 import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
-import { Comment } from 'model/comments';
+import { Comment, CommentLocation } from 'model/comments';
 import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { User } from 'model/user';
@@ -68,7 +68,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
   let isSynthesisPresent = true;
 
   const getHasSynthesisReplied = () => {
-    const replies = props.comments?.filter(comment => !comment.question)
+    const replies = props.comments?.filter(comment => comment.location === CommentLocation.Synthesis)
       .map(getLatestChild)
       .sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
     if (replies && replies.length > 0) {

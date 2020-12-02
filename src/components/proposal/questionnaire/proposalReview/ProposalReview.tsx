@@ -399,6 +399,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                     ...transitionStyles[state]
                   }}>
                     <CommentPanel
+                      isPlanBrief={true}
                       mode={!this.state.briefCommentPanelExpanded}
                       currentLocation={CommentLocation.Brief}
                       currentBrick={this.props.brick}
