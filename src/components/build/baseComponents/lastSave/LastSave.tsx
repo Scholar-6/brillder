@@ -40,7 +40,7 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
         return "Saving...";
       }
     } else {
-      return `Last Saved on ${getFormattedDate(props.updated)} at ${getTime(props.updated)}`;
+      return `Last Saved at ${getTime(props.updated)} on ${getFormattedDate(props.updated)}`;
     }
   }
 
