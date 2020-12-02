@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import { History } from 'history';
 
 import './ProposalReview.scss';
-import { Brick } from "model/brick";
+import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 
@@ -60,12 +60,36 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       isCopyOpen = true;
     }
 
+    let briefCommentExpanded = false;
+    const {brick} = props;
+    console.log(brick.status, brick.editors);
+    
+    let isAuthor = false;
+    try {
+      isAuthor = props.brick.author.id === props.user.id;
+    } catch { }
+
+    // expend suggestions for returned author
+    if (brick.status === BrickStatus.Draft && brick.editors && brick.editors.length > 0 && isAuthor) {
+      briefCommentExpanded = true;
+    }
+
+    // expend suggestions for editor
+    if (brick.status === BrickStatus.Build && brick.editors && brick.editors.findIndex((e:any) => e.id === props.user.id) >= 0) {
+      briefCommentExpanded = true;
+    }
+
+    // expend for publisher
+    if (brick.status === BrickStatus.Review && brick.publisher && brick.publisher.id === props.user.id) {
+      briefCommentExpanded = true;
+    }
+
     this.state = {
       mode: true,
       bookHovered: true,
       isCopyOpen,
       bookState: BookState.TitlesPage,
-      briefCommentPanelExpanded: false,
+      briefCommentPanelExpanded: briefCommentExpanded,
       closeTimeout: -1,
       uploading: false,
       handleKey: this.handleKey.bind(this)
