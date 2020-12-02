@@ -41,7 +41,11 @@
         margin-right: $tabs-margin-between;
         > div {
           span, .no-active {
+            @extend %transitionAll300;
             opacity: 0.2;
+          }
+          .round-button {
+            opacity: 0.5;
           }
         }
 
@@ -69,6 +73,14 @@
 
       > div.no-active:hover {
         background: var(--off-white) !important;
+
+        span, .no-active {
+          opacity: 0.5;
+        }
+        
+        .round-button {
+          opacity: 1;
+        }
       }
     }
   }
@@ -596,13 +608,15 @@
   }
   .round-button {
     border-radius: 50%;
-    width: 2vw;
-    height: 2vw;
+    width: 3.8vh;
+    height: 3.8vh;
     @extend %flexCenter;
-    font-size: 1vw;
+    font-size: 1.8vh;
     letter-spacing: 0;
     color: white;
     margin-right: 0.5vw;
+    @extend %transitionAll300;
+    font-family: $font-family-bold !important;
 
     &.draft {
       background: var(--theme-orange);
@@ -610,9 +624,13 @@
     &.build {
       background: var(--theme-yellow);
     }
-    &.review, &.self-publish {
+    &.review {
       border: 0.5vh solid var(--theme-green);
       color: var(--theme-green);
+    }
+    &.self-publish {
+      border: 0.5vh solid var(--theme-yellow);
+      color: var(--theme-yellow);
     }
     &.publish {
       background: var(--theme-green);
