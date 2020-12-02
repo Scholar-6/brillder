@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import { History } from 'history';
 
 import './ProposalReview.scss';
-import { Brick } from "model/brick";
+import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 
@@ -55,21 +55,41 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     super(props);
 
     const values = queryString.parse(props.history.location.search);
-    let bookHovered = false;
     let isCopyOpen = false;
-    if (values.bookHovered) {
-      bookHovered = true;
-    }
     if (values.copied) {
       isCopyOpen = true;
     }
 
+    let briefCommentExpanded = false;
+    const {brick} = props;
+    console.log(brick.status, brick.editors);
+    
+    let isAuthor = false;
+    try {
+      isAuthor = props.brick.author.id === props.user.id;
+    } catch { }
+
+    // expend suggestions for returned author
+    if (brick.status === BrickStatus.Draft && brick.editors && brick.editors.length > 0 && isAuthor) {
+      briefCommentExpanded = true;
+    }
+
+    // expend suggestions for editor
+    if (brick.status === BrickStatus.Build && brick.editors && brick.editors.findIndex((e:any) => e.id === props.user.id) >= 0) {
+      briefCommentExpanded = true;
+    }
+
+    // expend for publisher
+    if (brick.status === BrickStatus.Review && brick.publisher && brick.publisher.id === props.user.id) {
+      briefCommentExpanded = true;
+    }
+
     this.state = {
       mode: true,
-      bookHovered,
+      bookHovered: true,
       isCopyOpen,
       bookState: BookState.TitlesPage,
-      briefCommentPanelExpanded: false,
+      briefCommentPanelExpanded: briefCommentExpanded,
       closeTimeout: -1,
       uploading: false,
       handleKey: this.handleKey.bind(this)
@@ -123,7 +143,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         let wirisPopups = document.getElementsByClassName("wrs_modal_dialogContainer wrs_modal_desktop wrs_stack");
         if (wirisPopups.length === 0) {
           if (!this.state.uploading) {
-            //this.setState({ bookHovered: false });
           }
         }
       }, 400);
@@ -380,6 +399,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                     ...transitionStyles[state]
                   }}>
                     <CommentPanel
+                      isPlanBrief={true}
                       mode={!this.state.briefCommentPanelExpanded}
                       currentLocation={CommentLocation.Brief}
                       currentBrick={this.props.brick}
@@ -474,16 +494,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 onMouseOut={this.onBookClose.bind(this)}
               />
             }
-          </Grid>
-          <Grid className="main-text-container">
-            <h1>Your proposal has been saved!</h1>
-            <h1>We've made a booklet for you</h1>
-            <h1>to check all is in order.</h1>
-            <div className="text-line-1"></div>
-            <h2>Slide your mouse over the cover to</h2>
-            <h2>open it. &nbsp;Click the icon at the top of the page to edit.</h2>
-            <div className="text-line-2"></div>
-            <h2>When you're ready, start building!</h2>
           </Grid>
           <div className={bookClass}>
             <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>

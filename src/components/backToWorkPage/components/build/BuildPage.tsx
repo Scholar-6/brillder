@@ -23,7 +23,7 @@ import {
 } from '../../threeColumnService';
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 
-import Tab from 'components/assignmentsPage/components/Tab';
+import Tab from './Tab';
 import BuildBricks from './BuildBricks';
 import FilterSidebar from './FilterSidebar';
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
@@ -621,12 +621,24 @@ class BuildPage extends Component<BuildProps, BuildState> {
     
     const isEmpty = rawPersonalBricks.length === 0;
 
+    const published = this.countPublished();
+
     if (!this.state.filters.isCore) {
+      const publicFinalBricks = this.state.rawBricks.filter(b => b.isCore);
+
+      const draft = publicFinalBricks.filter(b => b.status === BrickStatus.Draft).length;
+      const build = publicFinalBricks.filter(b => b.status === BrickStatus.Build).length;
+      const review = publicFinalBricks.filter(b => b.status === BrickStatus.Review).length;
+     
       return <PersonalBuild
         user={this.props.user}
         finalBricks={finalBricks}
         loaded={this.state.bricksLoaded}
         shown={this.state.shown}
+        draft={draft}
+        build={build}
+        review={review}
+        publish={published}
         pageSize={17}
         sortedIndex={this.state.sortedIndex}
         history={history}
@@ -651,8 +663,11 @@ class BuildPage extends Component<BuildProps, BuildState> {
       />
     }
 
-    const published = this.countPublished();
     finalBricks = finalBricks.filter(b => b.isCore === true);
+
+    let selfPublish = rawPersonalBricks.filter(b => b.status === BrickStatus.Publish).length;
+    const personalDraft = rawPersonalBricks.filter(b =>
+      b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review).length;
 
     return (
       <Grid container direction="row" className="sorted-row build-page-content">
@@ -671,8 +686,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
         />
         <Grid item xs={9} className="brick-row-container">
           <Tab
+            draft={personalDraft}
+            selfPublish={selfPublish}
             isTeach={this.state.isTeach || this.state.isAdmin}
-            isCore={this.state.filters.isCore}
             onCoreSwitch={this.toggleCore.bind(this)}
           />
             <div className="tab-content">

@@ -40,7 +40,9 @@
         border-top-right-radius: 0.5vw;
         margin-right: $tabs-margin-between;
         > div {
-          opacity: 0.2;
+          span, .no-active {
+            opacity: 0.2;
+          }
         }
 
         .svg {
@@ -54,7 +56,9 @@
       > div.active {
         background: var(--white);
         > div {
-          opacity: 1;
+          span {
+            opacity: 1;
+          }
         }
       }
 
@@ -578,6 +582,40 @@
         height: $size;
         width: $size;
       }
+    }
+  }
+}
+
+.tab-container {
+  .round-button-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 6.6vh;
+    @extend %flexCenter;
+  }
+  .round-button {
+    border-radius: 50%;
+    width: 2vw;
+    height: 2vw;
+    @extend %flexCenter;
+    font-size: 1vw;
+    letter-spacing: 0;
+    color: white;
+    margin-right: 0.5vw;
+
+    &.draft {
+      background: var(--theme-orange);
+    }
+    &.build {
+      background: var(--theme-yellow);
+    }
+    &.review, &.self-publish {
+      border: 0.5vh solid var(--theme-green);
+      color: var(--theme-green);
+    }
+    &.publish {
+      background: var(--theme-green);
     }
   }
 }

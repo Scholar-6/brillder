@@ -1,8 +1,9 @@
 import React from 'react'
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import CommentIndicator from '../baseComponents/CommentIndicator';
 
 export interface DragTabProps {
-  id: any
+  questionId: any
   index: number,
   active: boolean,
   isValid: boolean;
@@ -12,7 +13,7 @@ export interface DragTabProps {
 }
 
 const DragTab: React.FC<DragTabProps> = ({
-  id, index, active, isValid, selectQuestion, removeQuestion, getHasReplied
+  questionId, index, active, isValid, selectQuestion, removeQuestion, getHasReplied
 }) => {
   const removeTab = (event: React.ChangeEvent<any>) => {
     event.stopPropagation();
@@ -33,7 +34,7 @@ const DragTab: React.FC<DragTabProps> = ({
     );
   }
 
-  const replyType = getHasReplied(id);
+  const replyType = getHasReplied(questionId);
 
   return (
     <div className={isValid ? "drag-tile valid" : "drag-tile invalid"}>
@@ -41,13 +42,7 @@ const DragTab: React.FC<DragTabProps> = ({
         <div className='tab-number'>
           {index + 1}
         </div>
-        {
-          (replyType !== 0) &&
-          <div className={"unread-indicator" + (replyType > 0 ? " has-replied" : "")}>
-            <div className="outer-circle"></div>
-            <div className="inner-circle"></div>
-          </div>
-        }
+        <CommentIndicator replyType={replyType} />
         {renderRemoveIcon()}
       </div>
     </div>
