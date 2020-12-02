@@ -8,6 +8,7 @@ export interface SynthesisTabProps {
   synthesis: string;
   validationRequired: boolean;
   tutorialStep: TutorialStep;
+  getHasReplied(): number;
 }
 
 const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
@@ -18,6 +19,9 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
   if (props.tutorialStep === TutorialStep.Synthesis) {
     className += " editor-border svgOnHover border-animation";
   }
+
+  const replyType = props.getHasReplied();
+
   return (
     <Grid
       className={`drag-tile ${
@@ -27,6 +31,13 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
       alignContent="center"
       justify="center"
     >
+      {
+        (replyType !== 0) &&
+          <div className={"unread-indicator" + (replyType > 0 ? " has-replied" : "")}>
+            <div className="outer-circle"></div>
+            <div className="inner-circle"></div>
+          </div>
+      }
       <div className={`last-tab svgOnHover ${className}`}>
         <SpriteIcon name="list-custom" className="svg w100 h100 active text-theme-dark-blue" />
       </div>

@@ -67,6 +67,19 @@ const DragableTabs: React.FC<DragTabsProps> = ({
   let isInit = true;
   let isSynthesisPresent = true;
 
+  const getHasSynthesisReplied = () => {
+    const replies = props.comments?.filter(comment => !comment.question)
+      .map(getLatestChild)
+      .sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
+    if (replies && replies.length > 0) {
+      const latestAuthor = replies[0].author.id;
+      const isCurrentUser = latestAuthor === props.user.id;
+      return isCurrentUser ? 1 : -1;
+    } else {
+      return 0;
+    }
+  }
+
   const getHasReplied = (questionId: number) => {
     const replies = props.comments?.filter(comment => (comment.question?.id ?? -1) === questionId)
       .map(getLatestChild)
@@ -119,7 +132,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
       <GridListTile className={titleClassNames} key={index} cols={cols} style={{ display: 'inline-block', width: `${width}%` }}>
         <DragTab
           index={index}
-          id={question.id}
+          questionId={question.id}
           active={question.active}
           isValid={isValid}
           getHasReplied={getHasReplied}
@@ -169,7 +182,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
           <PlusTab tutorialStep={props.tutorialStep} />
         </GridListTile>
         {
-          (isSynthesisPresent || isSynthesisPage) ?
+          (isSynthesisPresent || isSynthesisPage) &&
             <GridListTile
               onClick={() => {
                 if (props.tutorialSkipped) {
@@ -186,9 +199,9 @@ const DragableTabs: React.FC<DragTabsProps> = ({
                 tutorialStep={props.tutorialStep}
                 validationRequired={props.validationRequired}
                 synthesis={synthesis}
+                getHasReplied={getHasSynthesisReplied}
               />
             </GridListTile>
-            : ""
         }
       </GridList>
     </div>
