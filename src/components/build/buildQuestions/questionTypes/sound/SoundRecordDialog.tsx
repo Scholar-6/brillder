@@ -14,7 +14,7 @@ interface SoundRecordDialog {
 }
 
 const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
-  let initValue = props.data.value ? props.data.value : '';
+  let initValue = props.data.soundFile ? props.data.soundFile : '';
   const [value, setValue] = React.useState(initValue);
 
   return (
