@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import './LastSave.scss'
 import { Grid } from "@material-ui/core";
 import { TutorialStep } from "components/build/tutorial/TutorialPanelWorkArea";
-import { getTime } from "components/services/brickService";
+import { getTime, getFormattedDate } from "components/services/brickService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
@@ -40,7 +40,7 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
         return "Saving...";
       }
     } else {
-      return `Last Saved at ${getTime(props.updated)}`;
+      return `Last Saved on ${getFormattedDate(props.updated)} at ${getTime(props.updated)}`;
     }
   }
 
