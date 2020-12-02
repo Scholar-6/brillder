@@ -755,4 +755,10 @@
       color: var(--theme-orange) !important;
     }
   }
+  .proposal-comments-panel .unread-indicator {
+    margin-left: 4%;
+    .inner-circle {
+      margin: 25%;
+    }
+  }
 }
