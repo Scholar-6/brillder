@@ -9,9 +9,6 @@ import { prepareVisibleBricks } from '../../service';
 import BrickBlock from "components/baseComponents/BrickBlock";
 import BrickColDescription from "./BrickColDescription";
 import PublishToggle from "./PublishToggle";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
-import map from "components/map";
-import { clearProposal } from "localStorage/proposal";
 import CreateBrickBlock from "../CreateBrickBlock";
 
 interface BuildBricksProps {
