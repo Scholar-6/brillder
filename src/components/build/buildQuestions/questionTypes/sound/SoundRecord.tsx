@@ -4,6 +4,7 @@ import { ChooseOneAnswer } from '../chooseOneBuild/types';
 import { QuestionValueType } from '../types';
 import SoundRecordDialog from './SoundRecordDialog';
 import RemoveButton from '../components/RemoveButton';
+import DeleteDialog from 'components/baseComponents/deleteBrickDialog/DeleteDialog';
 
 
 interface SoundProps {
@@ -16,14 +17,13 @@ interface SoundProps {
 const SoundRecord: React.FC<SoundProps> = props => {
   const {answer} = props;
   let [isOpen, setOpen] = React.useState(false);
+  let [isClearOpen, setClear] = React.useState(false);
 
   const renderSoundComponent = () => {
     if (answer.answerType === QuestionValueType.Sound) {
       return (
         <div>
-          <div className="remove-button-container">
-            <RemoveButton onClick={props.clear} />
-          </div>
+          <RemoveButton onClick={() => setClear(true)} />
           <audio
             controls
             style={{width: '100%'}}
@@ -56,6 +56,15 @@ const SoundRecord: React.FC<SoundProps> = props => {
           close={() => setOpen(false)}
         />
       }
+      <DeleteDialog
+        isOpen={isClearOpen}
+        label="Delete sound?"
+        submit={() => {
+          props.clear();
+          setClear(false);
+        }}
+        close={() => setClear(false)}
+      />
     </div>
   );
 }

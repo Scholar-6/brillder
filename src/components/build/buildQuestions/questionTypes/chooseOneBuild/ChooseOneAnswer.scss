@@ -68,7 +68,19 @@
   }
 
   .choose-image {
-    
+    border-radius: 0.8vw;
+    background: var(--solitude-light);
+    height: 10vh;
+    .right-top-icon {
+      height: calc(100% - 1vh);
+      right: 1vw !important;
+    }
+
+    .question-image-drop .dropzone > img {
+      height: 8vh;
+      width: auto !important;
+      overflow: hidden;
+    }
   }
 
   .choose-empty {

@@ -8,6 +8,8 @@ import { QuestionValueType } from "../types";
 import { ChooseOneAnswer } from './types';
 import RemoveItemButton from "../components/RemoveItemButton";
 import SoundRecord from "../sound/SoundRecord";
+import DeleteDialog from "components/baseComponents/deleteBrickDialog/DeleteDialog";
+import RemoveButton from "../components/RemoveButton";
 
 
 export interface ChooseOneAnswerProps {
@@ -29,6 +31,8 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   locked, editOnly, index, length, answer, validationRequired, checkBoxValid,
   removeFromList, update, save, onChecked, onBlur
 }) => {
+  const [clearOpen, setClear] = React.useState(false);
+
   const setImage = (fileName: string) => {
     if (locked) { return; }
     answer.value = "";
@@ -87,6 +91,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     } else if (answer.answerType === QuestionValueType.Image) {
       return (
         <div className="choose-image">
+          <RemoveButton onClick={() => setClear(true)} />
           <QuestionImageDropzone
             answer={answer as any}
             type={answer.answerType || QuestionValueType.None}
@@ -94,18 +99,11 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
             fileName={answer.valueFile}
             update={setImage}
           />
-          <DocumentWirisCKEditor
-            disabled={locked}
-            editOnly={editOnly}
-            data={answer.value}
-            toolbar={['latex', 'chemType']}
-            placeholder="Enter Answer..."
-            validationRequired={answer.answerType !== QuestionValueType.Image ? validationRequired : false}
-            onBlur={() => {
-              onBlur();
-              save();
-            }}
-            onChange={value => onTextChanged(answer, value)}
+          <DeleteDialog
+            isOpen={clearOpen}
+            label="Delete image?"
+            submit={() => onTextChanged(answer, '')}
+            close={() => setClear(false)}
           />
         </div>
       );
@@ -144,7 +142,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
 
   return (
     <div className={className}>
-      {answer.answerType !== QuestionValueType.Sound &&
+      {answer.answerType !== QuestionValueType.Sound && answer.answerType !== QuestionValueType.Image &&
         <RemoveItemButton index={index} length={length} onClick={removeFromList} />
       }
       <div className={"checkbox-container " + containerClass}>
