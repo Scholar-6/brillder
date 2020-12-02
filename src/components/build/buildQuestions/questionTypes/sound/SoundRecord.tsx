@@ -1,6 +1,7 @@
 import React from 'react';
 import SoundRecordDialog from './SoundRecordDialog';
 
+
 interface SoundProps {
   locked: boolean;
   data: any;
@@ -21,9 +22,12 @@ const SoundRecord: React.FC<SoundProps> = props => {
       {isOpen &&
         <SoundRecordDialog
           isOpen={isOpen}
-          save={props.save}
+          save={v => {
+            props.save(v);
+            setOpen(false);
+          }}
           data={props.data}
-          close={()=> setOpen(false)}
+          close={() => setOpen(false)}
         />
       }
     </div>

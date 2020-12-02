@@ -131,7 +131,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           />
           <SoundRecord
             locked={locked}
-            data={{}}
+            data={{value: answer.soundFile}}
             save={v => setSound(v)}
           />
         </div>
