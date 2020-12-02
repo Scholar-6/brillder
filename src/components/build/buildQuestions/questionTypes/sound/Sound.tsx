@@ -112,7 +112,6 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
           comp.value = res.data.fileName;
           this.setRecorded();
           this.props.updateComponent(comp, this.props.index);
-          this.props.save();
         },
         () => {
           alert("Can`t save audio file");

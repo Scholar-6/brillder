@@ -56,11 +56,14 @@
 
   .choose-empty {
     .ck-content {
-      padding-top: 1vh !important;
+      padding-top: 2vh !important;
       padding-right: 9vw !important;
-      min-height: 6vh !important;
+      min-height: 7vh !important;
     }
     .question-image-drop {
+      height: 100%;
+      top: 0;
+      @extend %flexCenter;
       width: 5vw !important;
       left: auto !important;
       right: 6vw !important;
@@ -69,7 +72,9 @@
       position: absolute;
       cursor: pointer;
       right: 3vw;
-      top: calc(1vh + 0.3vw);
+      top: 0;
+      height: 100%;
+      @extend %flexCenter;
       img {
         width: 2vw;
       }
