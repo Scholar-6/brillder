@@ -55,18 +55,14 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     super(props);
 
     const values = queryString.parse(props.history.location.search);
-    let bookHovered = false;
     let isCopyOpen = false;
-    if (values.bookHovered) {
-      bookHovered = true;
-    }
     if (values.copied) {
       isCopyOpen = true;
     }
 
     this.state = {
       mode: true,
-      bookHovered,
+      bookHovered: true,
       isCopyOpen,
       bookState: BookState.TitlesPage,
       briefCommentPanelExpanded: false,
@@ -123,7 +119,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         let wirisPopups = document.getElementsByClassName("wrs_modal_dialogContainer wrs_modal_desktop wrs_stack");
         if (wirisPopups.length === 0) {
           if (!this.state.uploading) {
-            //this.setState({ bookHovered: false });
           }
         }
       }, 400);
@@ -474,16 +469,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 onMouseOut={this.onBookClose.bind(this)}
               />
             }
-          </Grid>
-          <Grid className="main-text-container">
-            <h1>Your proposal has been saved!</h1>
-            <h1>We've made a booklet for you</h1>
-            <h1>to check all is in order.</h1>
-            <div className="text-line-1"></div>
-            <h2>Slide your mouse over the cover to</h2>
-            <h2>open it. &nbsp;Click the icon at the top of the page to edit.</h2>
-            <div className="text-line-2"></div>
-            <h2>When you're ready, start building!</h2>
           </Grid>
           <div className={bookClass}>
             <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>
