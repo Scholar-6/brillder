@@ -633,6 +633,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           console.log("Error saving brick!");
           setSaveError(true);
         });
+      } else {
+        setSavingStatus(false);
       }
     }
   }
