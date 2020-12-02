@@ -6,7 +6,6 @@ interface TabProps {
   isTeach: boolean;
   isCore: boolean;
   onCoreSwitch(): void;
-
 }
 
 const TabComponent: React.FC<TabProps> = ({ isCore, onCoreSwitch }) => {
