@@ -55,11 +55,11 @@
 
       .glass-eyes-right {
         @include tabletP {
-          right: $shift;
+          right: 0.55vw;
 
           .aperture {
             position: absolute;
-            left: 0;
+            left: 0vw;
           }
         }
       }
