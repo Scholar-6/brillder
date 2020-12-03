@@ -328,6 +328,17 @@
         height: 3vw;
       }
 
+      .create-icon-label {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        overflow: hidden;
+      }
+
+      &.small {
+        top: calc(3vw + 2vh);
+        font-size: 3.2vh;
+      }
+
       h3 {
         font-size: 1.6vw;
         font-family: $font-family-black;
