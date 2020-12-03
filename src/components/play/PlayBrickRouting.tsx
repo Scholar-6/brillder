@@ -108,6 +108,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const saveBrickAttempt = () => {
+    brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
     let values = queryString.parse(location.search);
@@ -265,7 +266,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
         </Route>
         <Route exac path="/play/brick/:brickId/synthesis">
-          <Synthesis mode={mode} status={status} brick={brick} moveNext={moveToReview} />
+          <Synthesis mode={mode} status={status} brick={brick} moveNext={moveToReview} onHighlight={onHighlight} />
         </Route>
         <Route exac path="/play/brick/:brickId/review">
           <Review
