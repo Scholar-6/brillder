@@ -127,6 +127,8 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
           <div className="input-container">
             <input
               type="range"
+              draggable="true"
+              onDragStart={e => e.preventDefault()}
               value={this.state.rangeValue}
               onChange={this.setRange.bind(this)}
               max={100}
@@ -143,9 +145,15 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
                 onClick={this.toggleVolume.bind(this)}
               />
             </div>
-            <input type="range" min={0} max={100} value={this.state.volume * 100} onChange={e => {
-              this.setVolume(Number(e.target.value) / 100);
-            }} />
+            <input
+              type="range" min={0} max={100}
+              value={this.state.volume * 100}
+              draggable="true"
+              onDragStart={e => e.preventDefault()}
+              onChange={e => {
+                this.setVolume(Number(e.target.value) / 100);
+              }}
+            />
           </div>
         </div>
       </div>
