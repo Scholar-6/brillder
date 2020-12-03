@@ -458,19 +458,24 @@
     width: 7vw;
     -webkit-appearance: none;
     background: #C1C2C3;
-    height: 0.5vw;
+    height: 0.3vw;
     margin: 0 !important;
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
       width: 0.7vw;
       height: 0.7vw;
-      background:  var(--theme-dark-blue);
+      border-radius: 50%;
+      background: #494949;
       cursor: pointer;
     }
   }
   .volume-container-main {
     @extend %flexCenter;
+
+    input {
+      width: 2.5vw;
+    }
   }
   .volume-container {
     width: 2vw;
