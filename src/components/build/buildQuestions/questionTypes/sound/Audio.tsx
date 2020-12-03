@@ -1,5 +1,6 @@
 import React from "react";
 
+import './Audio.scss';
 import { fileUrl } from "components/services/uploadFile";
 import { ChooseOneAnswer } from "../chooseOneBuild/types";
 
@@ -60,8 +61,10 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
   }
 
   toggleVolume() {
-    if (this.state.volume > 0) {
+    if (this.state.volume > 0.5) {
       this.setVolume(0);
+    } else if (this.state.volume >= 0 && this.state.volume < 0.5) {
+      this.setVolume(0.5);
     } else {
       this.setVolume(1);
     }
@@ -116,7 +119,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
           <div className="button-container">
             {this.state.audioState === AudioState.Init ||
             this.state.audioState === AudioState.Paused ? (
-              <SpriteIcon name="play-thin" onClick={this.play.bind(this)} />
+              <SpriteIcon name="play-thick" onClick={this.play.bind(this)} />
             ) : (
               <SpriteIcon name="pause-filled" onClick={this.pause.bind(this)} />
             )}
@@ -141,7 +144,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
               onMouseLeave={() => this.setState({ volumeHovered: false })}
             >
               <SpriteIcon
-                name={this.state.volume > 0 ? "volume-2" : "volume-x"}
+                name={this.state.volume > 0.5 ? "volume-2" : this.state.volume > 0 ? "volume-1" : "volume-x"}
                 onClick={this.toggleVolume.bind(this)}
               />
             </div>
