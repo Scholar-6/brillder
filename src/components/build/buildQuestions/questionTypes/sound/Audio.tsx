@@ -23,6 +23,7 @@ interface SoundState {
   duration: string;
   audioState: AudioState;
   audio: any;
+  moreHovered: boolean;
 }
 
 class AudioComponent extends React.Component<SoundProps, SoundState> {
@@ -42,6 +43,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
       audio,
       volume: 0,
       volumeHovered: false,
+      moreHovered: false,
       rangeValue: 0,
     };
   }
@@ -81,7 +83,11 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
   }
 
   setRange(e: any) {
-    // set time by input
+    const {value} = e.target;
+    const {audio} = this.state;
+    const audioValue = (value * audio.duration) / 100;
+    audio.currentTime = audioValue;
+    this.setState({rangeValue: value});
   }
 
   play() {
@@ -127,21 +133,28 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
             />
           </div>
           <div className="volume-container-main">
-          <div
-            className={`volume-container ${this.state.volumeHovered ? 'hovered' : ''}`}
-            onMouseEnter={() => this.setState({ volumeHovered: true })}
-            onMouseLeave={() => this.setState({ volumeHovered: false })}
-          >
-            <SpriteIcon
-              name={this.state.volume > 0 ? "volume-1" : "volume-x"}
-              onClick={this.toggleVolume.bind(this)}
-            />
-            {this.state.volumeHovered && (
+            <div
+              className={`volume-container ${this.state.volumeHovered ? 'hovered' : ''}`}
+              onMouseEnter={() => this.setState({ volumeHovered: true })}
+              onMouseLeave={() => this.setState({ volumeHovered: false })}
+            >
+              <SpriteIcon
+                name={this.state.volume > 0 ? "volume-1" : "volume-x"}
+                onClick={this.toggleVolume.bind(this)}
+              />
               <div className="volume-absolute-range">
-                <input type="range" value={this.state.volume} />
+                <input type="range" min={0} max={100} value={this.state.volume * 100} onChange={e => {
+                  this.setVolume(Number(e.target.value) / 100);
+                }} />
               </div>
-            )}
+            </div>
           </div>
+          <div
+            className={`more-container ${this.state.moreHovered ? 'hovered' : ''}`}
+            onMouseEnter={() => this.setState({ moreHovered: true })}
+            onMouseLeave={() => this.setState({ moreHovered: false })}
+          >
+            <SpriteIcon name="more" />
           </div>
         </div>
       </div>
