@@ -24,12 +24,10 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
   }
 
   getTimeText(count: number) {
-    console.log(count);
-    let minutes = Math.floor(count / 150);
+    const minutes = Math.floor(count / 150);
     let seconds = count % 150;
-    seconds =  Math.round(seconds / 6) * 10;
-    console.log(seconds);
-    return `${minutes} mins ${seconds} secs`
+    seconds =  Math.round((seconds / 150) * 6) * 10;
+    return `${minutes} mins ${seconds} secs`;
   }
 
   getCount(value: string) {
