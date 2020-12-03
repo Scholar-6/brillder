@@ -82,11 +82,14 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       );
     } else if (answer.answerType === QuestionValueType.Sound) {
       return (
-        <audio
-          controls
-          style={{width: '100%'}}
-          src={fileUrl(answer.soundFile)}
-        />
+        <div style={{width: '100%'}}>
+          <audio
+            controls
+            style={{width: '100%'}}
+            src={fileUrl(answer.soundFile)}
+          />
+          <div>{answer.soundCaption ? answer.soundCaption : 'Click to select'}</div>
+        </div>
       );
     } else {
       return <MathInHtml value={answer.value} />;

@@ -11,12 +11,10 @@ import { checkTeacherOrAdmin } from "components/services/brickService";
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
-import { Brick, BrickStatus } from "model/brick";
+import { Brick } from "model/brick";
 import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
 import map from "components/map";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
-import { getApiQuestion } from "components/build/questionService/QuestionService";
-import { Question } from "model/question";
 import axios from "axios";
 
 
@@ -200,10 +198,14 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   renderButtons() {
     if (this.props.isPreview) {
       if (this.props.sidebarRolledUp) {
+        let label = "BACK TO BUILD";
         return (
-          <div className="back-hover-area" onClick={() => this.moveToBuild()}>
+          <div className="back-hover-area small" onClick={() => this.moveToBuild()}>
             <div className="create-icon create-icon-small svgOnHover">
               <SpriteIcon name="trowel" className="w100 h100 active" />
+            </div>
+            <div className="create-icon-label">
+              BACK TO BUILD
             </div>
           </div>
         );

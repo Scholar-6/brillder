@@ -1,42 +1,19 @@
-import React from 'react';
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridList from '@material-ui/core/GridList';
+import React from "react";
+import GridListTile from "@material-ui/core/GridListTile";
+import GridList from "@material-ui/core/GridList";
 import { ReactSortable } from "react-sortablejs";
 
-import './DragableTabs.scss';
-import { validateQuestion } from '../questionService/ValidateQuestionService';
-import DragTab from './dragTab';
-import PlusTab from './plusTab';
-import SynthesisTab from './SynthesisTab';
-import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
-import { Comment, CommentLocation } from 'model/comments';
-import { ReduxCombinedState } from 'redux/reducers';
-import { connect } from 'react-redux';
-import { User } from 'model/user';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around',
-      overflow: 'hidden',
-      backgroundColor: theme.palette.background.paper,
-    },
-    gridList: {
-      width: '100%',
-      flexWrap: 'nowrap',
-      margin: '0 !important',
-      overflow: 'hidden',
-      transform: 'translateZ(0)',
-    },
-    gridListTile: {
-      'text-align': 'center'
-    }
-  }),
-);
+import "./DragableTabs.scss";
+import { validateQuestion } from "../questionService/ValidateQuestionService";
+import DragTab from "./dragTab";
+import PlusTab from "./plusTab";
+import SynthesisTab from "./SynthesisTab";
+import { TutorialStep } from "../tutorial/TutorialPanelWorkArea";
+import { Comment, CommentLocation } from "model/comments";
+import { ReduxCombinedState } from "redux/reducers";
+import { connect } from "react-redux";
+import { User } from "model/user";
+import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 
 interface Question {
   id: number;
@@ -45,6 +22,7 @@ interface Question {
 }
 
 interface DragTabsProps {
+  location: any;
   questions: Question[];
   user: User;
   comments: Comment[] | null;
@@ -61,128 +39,220 @@ interface DragTabsProps {
   removeQuestion(e: any): void;
 }
 
-const DragableTabs: React.FC<DragTabsProps> = ({
-  questions, isSynthesisPage, synthesis, ...props
-}) => {
-  let isInit = true;
-  let isSynthesisPresent = true;
+interface TabsState {
+  handleKey(e: any): void;
+}
 
-  const getHasSynthesisReplied = () => {
-    const replies = props.comments?.filter(comment => comment.location === CommentLocation.Synthesis)
-      .map(getLatestChild)
-      .sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
-    if (replies && replies.length > 0) {
-      const latestAuthor = replies[0].author.id;
-      const isCurrentUser = latestAuthor === props.user.id;
-      return isCurrentUser ? 1 : -1;
-    } else {
-      return 0;
+class DragableTabs extends React.Component<DragTabsProps, TabsState> {
+  constructor(props: DragTabsProps) {
+    super(props);
+
+    this.state = {
+      handleKey: this.handleKey.bind(this)
     }
   }
 
-  const getHasReplied = (questionId: number) => {
-    const replies = props.comments?.filter(comment => (comment.question?.id ?? -1) === questionId)
-      .map(getLatestChild)
-      .sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
-    if (replies && replies.length > 0) {
-      const latestAuthor = replies[0].author.id;
-      const isCurrentUser = latestAuthor === props.user.id;
-      return isCurrentUser ? 1 : -1;
-    } else {
-      return 0;
+  componentDidMount() {
+    document.addEventListener("keydown", this.state.handleKey, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.state.handleKey, false);
+  }
+
+  handleKey(e: any) {
+    if (e.target.tagName === "INPUT") { return; }
+    if (e.target.tagName === "TEXTAREA") { return; }
+    if (e.target.classList.contains("ck-content")) { return; }
+
+    if (leftKeyPressed(e)) {
+      let isSynthesisPage = false;
+      if (this.props.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
+       isSynthesisPage = true;
+      }
+      if (!isSynthesisPage) {
+        let keyIndex = this.props.questions.findIndex(q => q.active === true);
+
+        if (keyIndex > 0) {
+          this.props.selectQuestion(keyIndex - 1)
+        }
+      }
+    } else if (rightKeyPressed(e)) {
+      let isSynthesisPage = false;
+      if (this.props.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
+       isSynthesisPage = true;
+      }
+      
+      if (!isSynthesisPage) {
+        let keyIndex = this.props.questions.findIndex(q => q.active === true);
+  
+        if (keyIndex < this.props.questions.length - 1) { 
+          this.props.selectQuestion(keyIndex + 1);
+        }
+      }
     }
   }
 
-  const getLatestChild = (comment: Comment) => {
-    if(!comment.children || comment.children.length <= 0) {
-      return comment;
-    }
-    const replies = comment.children.sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
-    return replies[0];
-  }
+  render() {
+    let isInit = true;
+    let isSynthesisPresent = true;
+    const { props } = this;
+    const { questions, isSynthesisPage, synthesis } = props;
 
-  const renderQuestionTab = (questions: Question[], question: Question, index: number, comlumns: number) => {
-    let titleClassNames = "drag-tile-container";
-    let cols = 2;
-    if (question.active) {
-      titleClassNames += " active";
-      cols = 3;
-    }
+    const getHasSynthesisReplied = () => {
+      const replies = props.comments
+        ?.filter((comment) => comment.location === CommentLocation.Synthesis)
+        .map(getLatestChild)
+        .sort(
+          (a, b) =>
+            new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf()
+        );
+      if (replies && replies.length > 0) {
+        const latestAuthor = replies[0].author.id;
+        const isCurrentUser = latestAuthor === props.user.id;
+        return isCurrentUser ? 1 : -1;
+      } else {
+        return 0;
+      }
+    };
 
-    let nextQuestion = questions[index + 1];
-    if (nextQuestion && nextQuestion.active) {
-      titleClassNames += " pre-active";
-    }
+    const getHasReplied = (questionId: number) => {
+      const replies = props.comments
+        ?.filter((comment) => (comment.question?.id ?? -1) === questionId)
+        .map(getLatestChild)
+        .sort(
+          (a, b) =>
+            new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf()
+        );
+      if (replies && replies.length > 0) {
+        const latestAuthor = replies[0].author.id;
+        const isCurrentUser = latestAuthor === props.user.id;
+        return isCurrentUser ? 1 : -1;
+      } else {
+        return 0;
+      }
+    };
 
-    let width = (100 * 2) / (comlumns - 2);
-    if (question.active) {
-      width = (100 * 3) / (comlumns - 2);
-    }
+    const getLatestChild = (comment: Comment) => {
+      if (!comment.children || comment.children.length <= 0) {
+        return comment;
+      }
+      const replies = comment.children.sort(
+        (a, b) =>
+          new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf()
+      );
+      return replies[0];
+    };
+
+    const renderQuestionTab = (
+      questions: Question[],
+      question: Question,
+      index: number,
+      comlumns: number
+    ) => {
+      let titleClassNames = "drag-tile-container";
+      let cols = 2;
+      if (question.active) {
+        titleClassNames += " active";
+        cols = 3;
+      }
+
+      let nextQuestion = questions[index + 1];
+      if (nextQuestion && nextQuestion.active) {
+        titleClassNames += " pre-active";
+      }
+
+      let width = (100 * 2) / (comlumns - 2);
+      if (question.active) {
+        width = (100 * 3) / (comlumns - 2);
+      }
+
+      if (isSynthesisPage) {
+        width = (100 * 2) / (comlumns - 2);
+      }
+
+      let isValid = true;
+      if (props.validationRequired) {
+        isValid = validateQuestion(question as any);
+      }
+
+      return (
+        <GridListTile
+          className={titleClassNames}
+          key={index}
+          cols={cols}
+          style={{ display: "inline-block", width: `${width}%` }}
+        >
+          <DragTab
+            index={index}
+            questionId={question.id}
+            active={question.active}
+            isValid={isValid}
+            getHasReplied={getHasReplied}
+            selectQuestion={props.selectQuestion}
+            removeQuestion={props.removeQuestion}
+          />
+        </GridListTile>
+      );
+    };
+
+    let columns = questions.length * 2 + 3;
 
     if (isSynthesisPage) {
-      width = (100 * 2) / (comlumns - 2);
+      columns = questions.length * 2 + 2;
     }
 
-    let isValid = true;
-    if (props.validationRequired) {
-      isValid = validateQuestion(question as any);
-    }
+    const setQuestions = (newQuestions: Question[], d: any) => {
+      if (isInit === false) {
+        let switched = newQuestions.find((q, i) => questions[i].id !== q.id);
+        if (switched) {
+          props.setQuestions(newQuestions);
+        }
+      } else {
+        isInit = false;
+      }
+    };
 
     return (
-      <GridListTile className={titleClassNames} key={index} cols={cols} style={{ display: 'inline-block', width: `${width}%` }}>
-        <DragTab
-          index={index}
-          questionId={question.id}
-          active={question.active}
-          isValid={isValid}
-          getHasReplied={getHasReplied}
-          selectQuestion={props.selectQuestion}
-          removeQuestion={props.removeQuestion}
-        />
-      </GridListTile>
-    );
-  }
-
-  const classes = useStyles();
-
-  let columns = (questions.length * 2) + 3;
-
-  if (isSynthesisPage) {
-    columns = (questions.length * 2) + 2;
-  }
-
-  const setQuestions = (newQuestions: Question[], d:any) => {
-    if (isInit === false) {
-      let switched = newQuestions.find((q, i) => questions[i].id !== q.id);
-      if (switched) {
-        props.setQuestions(newQuestions);
-      }
-    } else {
-      isInit = false;
-    }
-  }
-
-  return (
-    <div className={classes.root + " drag-tabs"}>
-      <GridList cellHeight={40} className={classes.gridList} cols={columns}>
-        <ReactSortable
-          list={questions}
-          className="drag-container"
-          group="tabs-group"
-          setList={setQuestions}>
-          {
-            questions.map((question, i) => renderQuestionTab(questions, question, i, columns))
-          }
-        </ReactSortable>
-        <GridListTile
-          onClick={props.createNewQuestion}
-          className={"drag-tile-container"}
-          cols={(isSynthesisPresent || isSynthesisPage) ? 1.5555 : 2}
+      <div
+        className="drag-tabs"
+        style={{
+          width: "100%",
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-around",
+          overflow: "hidden",
+        }}
+      >
+        <GridList
+          cellHeight={40}
+          cols={columns}
+          style={{
+            width: "100%",
+            flexWrap: "nowrap",
+            margin: "0 !important",
+            overflow: "hidden",
+            transform: "translateZ(0)",
+          }}
         >
-          <PlusTab tutorialStep={props.tutorialStep} />
-        </GridListTile>
-        {
-          (isSynthesisPresent || isSynthesisPage) &&
+          <ReactSortable
+            list={questions}
+            className="drag-container"
+            group="tabs-group"
+            setList={setQuestions}
+          >
+            {questions.map((question, i) =>
+              renderQuestionTab(questions, question, i, columns)
+            )}
+          </ReactSortable>
+          <GridListTile
+            onClick={props.createNewQuestion}
+            className={"drag-tile-container"}
+            cols={isSynthesisPresent || isSynthesisPage ? 1.5555 : 2}
+          >
+            <PlusTab tutorialStep={props.tutorialStep} />
+          </GridListTile>
+          {(isSynthesisPresent || isSynthesisPage) && (
             <GridListTile
               onClick={() => {
                 if (props.tutorialSkipped) {
@@ -191,7 +261,10 @@ const DragableTabs: React.FC<DragTabsProps> = ({
                   props.openSkipTutorial();
                 }
               }}
-              className={"drag-tile-container " + (isSynthesisPage ? "synthesis-tab" : "")}
+              className={
+                "drag-tile-container " +
+                (isSynthesisPage ? "synthesis-tab" : "")
+              }
               cols={1.5555}
             >
               <SynthesisTab
@@ -202,15 +275,16 @@ const DragableTabs: React.FC<DragTabsProps> = ({
                 getHasReplied={getHasSynthesisReplied}
               />
             </GridListTile>
-        }
-      </GridList>
-    </div>
-  )
+          )}
+        </GridList>
+      </div>
+    );
+  }
 }
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-  comments: state.comments.comments
+  comments: state.comments.comments,
 });
 
 const connector = connect(mapState);

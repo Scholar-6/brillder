@@ -43,11 +43,12 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     save();
   }
 
-  const setSound = (soundFile: string) => {
+  const setSound = (soundFile: string, caption: string) => {
     if (locked) { return; }
     answer.value = '';
     answer.valueFile = '';
     answer.soundFile = soundFile;
+    answer.soundCaption = caption;
     answer.answerType = QuestionValueType.Sound;
     update();
     save();
@@ -83,7 +84,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           <SoundRecord
             locked={locked}
             answer={answer}
-            save={v => setSound(v)}
+            save={setSound}
             clear={() => onTextChanged(answer, '')}
           />
         </div>
@@ -133,7 +134,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
         <SoundRecord
           locked={locked}
           answer={answer}
-          save={v => setSound(v)}
+          save={setSound}
           clear={() => onTextChanged(answer, '')}
         />
       </div>

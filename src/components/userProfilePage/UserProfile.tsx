@@ -17,7 +17,7 @@ import { getUserById, createUser, updateUser, saveProfileImageName } from 'servi
 import { isValid, getUserProfile, newStudentProfile } from './service';
 import { User, UserType, UserStatus, UserProfile } from "model/user";
 import { Subject } from "model/brick";
-import { checkAdmin, canBuild, canEdit } from "components/services/brickService";
+import { checkAdmin, canBuild, canEdit, isInstitution } from "components/services/brickService";
 
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import SubjectDialog from "./components/SubjectDialog";
@@ -152,6 +152,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         { roleId: UserType.Teacher, name: "Teacher", disabled: !isAdmin },
         { roleId: UserType.Builder, name: "Builder", disabled: !isBuilder },
         { roleId: UserType.Publisher, name: "Publisher", disabled: !isEditor },
+        { roleId: UserType.Institution, name: "Institution", disabled: !isInstitution(user) },
         { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
       ],
       noSubjectDialogOpen: false,

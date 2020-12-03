@@ -7,7 +7,7 @@ interface IndicatorProps {
 
 const CommentIndicator: React.FC<IndicatorProps> = ({replyType}) => {
   if (replyType === 0) {
-    return <div></div>;
+    return <div style={{width: 0}}></div>;
   }
   return (
     <div className={"unread-indicator" + (replyType > 0 ? " has-replied" : "")}>
