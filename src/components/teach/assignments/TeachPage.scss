@@ -489,9 +489,9 @@
       @extend %flexToXCenter;
       width: 100%;
       margin-bottom: 5vh;
+      cursor: pointer;
     }
     .glasses-icon {
-      cursor: pointer;
       width: 19vw;
       height: 7.6vw;
       color: var(--theme-orange);
