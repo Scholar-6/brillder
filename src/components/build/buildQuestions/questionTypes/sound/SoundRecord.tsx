@@ -11,7 +11,7 @@ import Audio from './Audio';
 interface SoundProps {
   locked: boolean;
   answer: ChooseOneAnswer;
-  save(soundFile: string): void;
+  save(soundFile: string, caption: string): void;
   clear(): void;
 }
 
@@ -90,8 +90,8 @@ class SoundRecord extends React.Component<SoundProps, SoundState> {
         {isOpen && (
           <SoundRecordDialog
             isOpen={isOpen}
-            save={(v) => {
-              this.props.save(v);
+            save={(v, caption) => {
+              this.props.save(v, caption);
               this.setOpen(false);
             }}
             data={this.props.answer}
