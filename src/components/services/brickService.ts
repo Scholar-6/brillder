@@ -116,7 +116,7 @@ export function canEditBrick(brick: Brick, user: User) {
     case BrickStatus.Draft:
       return brick.author?.id === user.id || isAdmin;
     case BrickStatus.Build:
-      return isPublisher;
+      return brick.editors?.findIndex(e => e.id === user.id) !== -1 || isAdmin;
     case BrickStatus.Review:
       return isPublisher;
     case BrickStatus.Publish:
