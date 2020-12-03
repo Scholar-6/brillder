@@ -66,6 +66,7 @@ import HintInvalidDialog from './baseComponents/dialogs/HintInvalidDialog';
 import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialog';
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
+import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -155,6 +156,43 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   useEffect(() => {
     startEditing(brickId)
   }, [brickId, startEditing]);
+
+  const handleKey = (e: any) => {
+    if (leftKeyPressed(e)) {
+      let isSynthesisPage = false;
+      if (history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
+       isSynthesisPage = true;
+      }
+      if (!isSynthesisPage) {
+        const keyActiveQuestion = getActiveQuestion(questions);
+        const keyIndex = getQuestionIndex(keyActiveQuestion);
+        if (keyIndex > 0) {
+          selectQuestion(keyIndex - 1)
+        }
+      }
+    } else if (rightKeyPressed(e)) {
+      let isSynthesisPage = false;
+      if (history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
+       isSynthesisPage = true;
+      }
+      
+      if (!isSynthesisPage) {
+        const keyActiveQuestion = getActiveQuestion(questions);
+        const keyIndex = getQuestionIndex(keyActiveQuestion);
+  
+        if (keyIndex < questions.length - 1) { 
+          selectQuestion(keyIndex + 1);
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKey, false);
+    return function cleanUp () {
+      document.removeEventListener("keydown", handleKey, false);
+    }
+  }, []);
 
   const [currentBrick, setCurrentBrick] = React.useState({ ...props.brick });
 
