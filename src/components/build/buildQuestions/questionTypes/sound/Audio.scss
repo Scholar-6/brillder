@@ -1,0 +1,85 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.custom-audio-controls {
+  display: flex;
+  margin: auto;
+  height: 3.5vw;
+  width: 80%;
+  .button-container {
+    @extend %flexCenter;
+    width: 1.5vw;
+    .svg {
+      cursor: pointer;
+      height: 1.2vw;
+      width: 1.2vw;
+    }
+  }
+  .time-text {
+    width: 6vw;
+    letter-spacing: -0.05vw;
+    @extend %flexCenter;
+  }
+  .input-container {
+    @extend %flexCenter;
+    margin: 0 !important;
+  }
+  input {
+    cursor: pointer;
+    width: 7vw;
+    -webkit-appearance: none;
+    background: #C1C2C3;
+    height: 0.3vw;
+    margin: 0 !important;
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 0.7vw;
+      height: 0.7vw;
+      border-radius: 50%;
+      background: #494949;
+      cursor: pointer;
+    }
+  }
+  .volume-container-main {
+    @extend %flexCenter;
+
+    input {
+      width: 2.5vw;
+      background: var(--tab-gray);
+    }
+  }
+  .volume-container {
+    width: 2vw;
+    height: 1.8vw;
+    @extend %flexCenter;
+    position: relative;
+
+    .volume-absolute-range {
+      display: none;
+      background: transparent;
+    }
+
+    .svg {
+      stroke-width: 1.5;
+      cursor: pointer;
+      width: 1.5vw;
+      height: 1.5vw;
+    }
+  }
+  .more-container {
+    @extend %flexCenter;
+    width: 3vw;
+    .svg {
+      cursor: pointer;
+      width: 2vw;
+      height: 2vw;
+      @extend %transitionAll300;
+      &:hover {
+        stroke-width: 2;
+      }
+    }
+  }
+  font-size: 0.8vw;
+}
