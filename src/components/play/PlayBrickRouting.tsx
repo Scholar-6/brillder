@@ -266,7 +266,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
         </Route>
         <Route exac path="/play/brick/:brickId/synthesis">
-          <Synthesis mode={mode} status={status} brick={brick} moveNext={moveToReview} />
+          <Synthesis mode={mode} status={status} brick={brick} moveNext={moveToReview} onHighlight={onHighlight} />
         </Route>
         <Route exac path="/play/brick/:brickId/review">
           <Review
