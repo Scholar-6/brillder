@@ -193,7 +193,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   onBookClose() {
     const closeTimeout = setTimeout(() => {
-      this.setState({ bookHovered: false });
+      this.setState({ bookHovered: true });
     }, 400);
     this.setState({ closeTimeout });
   }
