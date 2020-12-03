@@ -11,6 +11,7 @@ import ReturnToAuthorButton from "./ReturnToAuthorButton";
 import SendToPublisherButton from "./SendToPublisherButton";
 import ReturnToEditorButton from "./ReturnToEditorButton";
 import BuildPublishButton from "./PublishButton";
+import map from "components/map";
 
 
 interface NavigationProps {
@@ -70,7 +71,10 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
       <SendToPublisherButton
         disabled={disabled}
         brick={brick}
-        onFinish={() => this.setState({brickStatus: BrickStatus.Review})}
+        onFinish={() => {
+          this.setState({brickStatus: BrickStatus.Review});
+          this.props.history.push(map.BackToWorkBuildTab);
+        }}
       />
     );
   }
@@ -87,7 +91,10 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
           disabled={publishDisabled}
           brick={this.props.brick}
           history={this.props.history}
-          onFinish={() => this.setState({brickStatus: BrickStatus.Publish})}
+          onFinish={() => {
+            this.setState({brickStatus: BrickStatus.Publish});
+            this.props.history.push(map.BackToWorkBuildTab);
+          }}
         />
       );
     }
