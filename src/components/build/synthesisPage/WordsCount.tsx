@@ -27,14 +27,27 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
     const minutes = Math.floor(count / 150);
     let seconds = count % 150;
     seconds =  Math.round((seconds / 150) * 6) * 10;
-    return `${minutes} mins ${seconds} secs`;
+    let res = '';
+    if (minutes > 0) {
+      res += `${minutes} mins `;
+    }
+    res += `${seconds} secs`;
+    return res;
   }
 
   getCount(value: string) {
     if (!value) {
       return 0;
     }
-    return value.split(" ").length;
+
+    let res = value.replace(/\&nbsp;/g, '');
+    res = res.replace("   ", "");
+    res = res.replace("  ", " ");
+    let count = res.split(" ").length;
+    if (count > 1) {
+      count -= 1;
+    }
+    return count;
   }
 
   componentDidUpdate(prevProps: CountProps) {
