@@ -14,4 +14,5 @@ export interface ChooseOneChoice extends MainImageProps {
   answerType: QuestionValueType;
   soundFile: string;
   checked: boolean;
+  soundCaption: string;
 }

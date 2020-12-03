@@ -9,13 +9,14 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 interface SoundRecordDialog {
   isOpen: boolean;
   data: any;
-  save(soundFile: string): void;
+  save(soundFile: string, caption: string): void;
   close(): void;
 }
 
 const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
   let initValue = props.data.soundFile ? props.data.soundFile : '';
   const [value, setValue] = React.useState(initValue);
+  const [caption, setCaption] = React.useState('');
 
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box link-copied-dialog sound-dialog">
@@ -26,9 +27,10 @@ const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
         save={() => console.log('save')}
         updateComponent={c => setValue(c.value)}
       />
+      {value && <input value={caption} onChange={e => setCaption(e.target.value)} placeholder="Enter caption here..." />}
       <div className="upload-button-container">
         <div className={`upload-button ${value ? 'active' : 'disabled'}`} onClick={() => {
-          props.save(value);
+          props.save(value, caption);
         }}>
           <SpriteIcon name="upload" />
         </div>
