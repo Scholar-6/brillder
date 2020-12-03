@@ -170,3 +170,7 @@ export function canTeach(user: User) {
   }
   return canTeach;
 }
+
+export function isInstitution(user: User) {
+  return user.roles.some(role => role.roleId === UserType.Institution);
+}
