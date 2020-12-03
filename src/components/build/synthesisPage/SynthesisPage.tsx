@@ -13,6 +13,7 @@ import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoRedoService from 'components/services/UndoRedoService';
 import RedoButton from '../baseComponents/redoButton';
 import UndoButton from '../baseComponents/UndoButton';
+import CountSynthesis from './WordsCount';
 
 
 export interface SynthesisProps {
@@ -152,6 +153,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                       setCommentsShown={this.setCommentsShown.bind(this)}
                     />
                   </Grid>
+                  <CountSynthesis value={this.state.synthesis} />
                 </Grid>
               </Grid>
             }
