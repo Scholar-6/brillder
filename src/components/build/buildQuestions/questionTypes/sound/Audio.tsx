@@ -141,7 +141,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
               onMouseLeave={() => this.setState({ volumeHovered: false })}
             >
               <SpriteIcon
-                name={this.state.volume > 0 ? "volume-1" : "volume-x"}
+                name={this.state.volume > 0 ? "volume-2" : "volume-x"}
                 onClick={this.toggleVolume.bind(this)}
               />
             </div>
