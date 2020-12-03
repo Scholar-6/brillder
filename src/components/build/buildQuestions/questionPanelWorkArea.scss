@@ -429,3 +429,81 @@
 .redo-button:hover {
   transform: rotate(10deg);
 }
+
+.custom-audio-controls {
+  display: flex;
+  margin: auto;
+  height: 3.5vw;
+  width: 80%;
+  .button-container {
+    @extend %flexCenter;
+    width: 1.5vw;
+    .svg {
+      cursor: pointer;
+      height: 1vw;
+      width: 1vw;
+    }
+  }
+  .time-text {
+    width: 6vw;
+    letter-spacing: -0.05vw;
+    @extend %flexCenter;
+  }
+  .input-container {
+    @extend %flexCenter;
+    margin: 0 !important;
+  }
+  input {
+    width: 7vw;
+    -webkit-appearance: none;
+    background: #C1C2C3;
+    height: 0.5vw;
+    margin: 0 !important;
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 0.7vw;
+      height: 0.7vw;
+      background:  var(--theme-dark-blue);
+      cursor: pointer;
+    }
+  }
+  .volume-container-main {
+    @extend %flexCenter;
+  }
+  .volume-container {
+    width: 2vw;
+    height: 1.8vw;
+    @extend %flexCenter;
+    position: relative;
+
+    &.hovered {
+      border-top-right-radius: 4vw;
+      border-bottom-right-radius: 4vw;
+      background: grey;
+    }
+    
+    .svg {
+      stroke-width: 1.5;
+      cursor: pointer;
+      width: 1.5vw;
+      height: 1.5vw;
+    }
+    .volume-absolute-range {
+      position: absolute;
+      right: 0;
+      margin-right: 1.8vw;
+      background: grey;
+      height: 1.8vw;
+      border-top-left-radius: 4vw;
+      border-bottom-left-radius: 4vw;
+      padding-left: 1vw;
+      padding-right: 1vw;
+      @extend %flexCenter;
+      input {
+        width: 3vw;
+      }
+    }
+  }
+  font-size: 0.8vw;
+}
