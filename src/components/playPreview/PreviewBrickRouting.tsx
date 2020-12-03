@@ -160,6 +160,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       hideMobileHeader(true);
     }
     history.push(`/play-preview/brick/${brick.id}/live`);
+    setSidebar(true);
   }
 
   const moveToReview = () => {
