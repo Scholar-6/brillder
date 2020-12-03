@@ -29,7 +29,11 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
     seconds =  Math.round((seconds / 150) * 6) * 10;
     let res = '';
     if (minutes > 0) {
-      res += `${minutes} mins `;
+      if (minutes === 1) {
+        res += `${minutes} min `;
+      } else {
+        res += `${minutes} mins `;
+      }
     }
     res += `${seconds} secs`;
     return res;
