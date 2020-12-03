@@ -272,10 +272,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
         <div className="tab-content">
           <div className="tab-content-centered">
             <div>
-              <div className="icon-container glasses-icon-container">
+              <div className="icon-container glasses-icon-container" onClick={() => this.props.history.push(map.ViewAllPage)}>
                 <SpriteIcon
                   name="glasses-home-blue"
-                  onClick={() => this.props.history.push(map.ViewAllPage)}
                   className="glasses-icon"
                 />
                 <div className="glass-eyes-inside">

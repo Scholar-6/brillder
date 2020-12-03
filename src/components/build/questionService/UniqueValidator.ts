@@ -14,6 +14,15 @@ const validateImageAndText = (a: any) => {
   return !a.value;
 }
 
+const validateImageSoundAndText = (a: any) => {
+  if (a.answerType === QuestionValueType.Image) {
+    return !a.valueFile;
+  } else if (a.answerType === QuestionValueType.Sound) {
+    return !a.soundFile;
+  }
+  return !a.value;
+}
+
 const validateShortAnswer = (comp: any) => {
   if (comp.list && comp.list.length >= 1) {
     let invalid = comp.list.find((a:any) => !a.value);
@@ -27,7 +36,7 @@ const validateShortAnswer = (comp: any) => {
 
 const validateChooseOne = (comp: any) => {
   if (comp.list && comp.list.length > 1) {
-    let invalid = comp.list.find(validateImageAndText);
+    let invalid = comp.list.find(validateImageSoundAndText);
     if (invalid) {
       return false;
     }
@@ -54,7 +63,7 @@ const validateChooseSeveralChecked = (list: any[]) => {
 
 const validateChooseSeveral = (comp: any) => {
   if (comp.list && comp.list.length > 1) {
-    let invalid = comp.list.find(validateImageAndText);
+    let invalid = comp.list.find(validateImageSoundAndText);
     if (invalid) {
       return false;
     }

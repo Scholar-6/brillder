@@ -156,6 +156,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     startEditing(brickId)
   }, [brickId, startEditing]);
 
+
   const [currentBrick, setCurrentBrick] = React.useState({ ...props.brick });
 
   const openSkipTutorial = () => {
@@ -852,6 +853,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                 style={{ height: "90%", width: "75vw", minWidth: 'none' }}
               >
                 <DragableTabs
+                  location={history.location}
                   setQuestions={switchQuestions}
                   questions={questions}
                   synthesis={synthesis}

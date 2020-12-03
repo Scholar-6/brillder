@@ -1,72 +1,115 @@
-import React from 'react';
-import { fileUrl } from 'components/services/uploadFile';
-import { ChooseOneAnswer } from '../chooseOneBuild/types';
-import { QuestionValueType } from '../types';
-import SoundRecordDialog from './SoundRecordDialog';
-import RemoveButton from '../components/RemoveButton';
-import DeleteDialog from 'components/baseComponents/deleteBrickDialog/DeleteDialog';
+import React from "react";
 
+import { ChooseOneAnswer } from "../chooseOneBuild/types";
+import { QuestionValueType } from "../types";
+
+import SoundRecordDialog from "./SoundRecordDialog";
+import RemoveButton from "../components/RemoveButton";
+import DeleteDialog from "components/baseComponents/deleteBrickDialog/DeleteDialog";
+import Audio from './Audio';
 
 interface SoundProps {
   locked: boolean;
   answer: ChooseOneAnswer;
-  save(soundFile: string): void;
+  save(soundFile: string, caption: string): void;
   clear(): void;
 }
- 
-const SoundRecord: React.FC<SoundProps> = props => {
-  const {answer} = props;
-  let [isOpen, setOpen] = React.useState(false);
-  let [isClearOpen, setClear] = React.useState(false);
 
-  const renderSoundComponent = () => {
+interface SoundState {
+  isOpen: boolean;
+  isClearOpen: boolean;
+  audioRef: React.RefObject<HTMLAudioElement>;
+}
+
+class SoundRecord extends React.Component<SoundProps, SoundState> {
+  constructor(props: SoundProps) {
+    super(props);
+
+    this.state = {
+      isOpen: false,
+      isClearOpen: false,
+      audioRef: React.createRef<HTMLAudioElement>(),
+    };
+  }
+
+  setOpen = (isOpen: boolean) => {
+    this.setState({ isOpen });
+  };
+
+  setClear = (isClearOpen: boolean) => {
+    this.setState({ isClearOpen });
+  };
+
+  play() {
+    const { current } = this.state.audioRef;
+    if (current) {
+      current.play();
+      current.onended = () => {
+
+      }
+    }
+  }
+
+  pause() {
+    const { current } = this.state.audioRef;
+    if (current) {
+      current.pause();
+    }
+  }
+
+  renderSoundComponent(answer: ChooseOneAnswer) {
     if (answer.answerType === QuestionValueType.Sound) {
       return (
         <div>
-          <RemoveButton onClick={() => setClear(true)} />
-          <audio
-            controls
-            style={{width: '100%'}}
-            src={fileUrl(answer.soundFile ? answer.soundFile : '')} />
+          <RemoveButton onClick={() => this.setClear(true)} />
+          <Audio answer={answer} />
         </div>
       );
     }
     return (
-      <div className="sound-record-button" onClick={() => {
-        if (!props.locked) {
-          setOpen(true);
-        }
-      }}>
+      <div
+        className="sound-record-button"
+        onClick={() => {
+          if (!this.props.locked) {
+            this.setOpen(true);
+          }
+        }}
+      >
         <img alt="sound-image" src="/images/soundicon-dark-blue.png" />
       </div>
     );
   }
 
-  return (
-    <div>
-      {renderSoundComponent()}
-      {isOpen &&
-        <SoundRecordDialog
-          isOpen={isOpen}
-          save={v => {
-            props.save(v);
-            setOpen(false);
+  render() {
+    const { isOpen } = this.state;
+    const { answer } = this.props;
+
+    return (
+      <div>
+        {this.renderSoundComponent(answer)}
+        {isOpen && (
+          <SoundRecordDialog
+            isOpen={isOpen}
+            save={(v, caption) => {
+              this.props.save(v, caption);
+              this.setOpen(false);
+            }}
+            data={this.props.answer}
+            close={() => this.setOpen(false)}
+          />
+        )}
+        <DeleteDialog
+          isOpen={this.state.isClearOpen}
+          label="Delete sound?"
+          submit={() => {
+            this.props.clear();
+            this.setClear(false);
           }}
-          data={props.answer}
-          close={() => setOpen(false)}
+          close={() => this.setClear(false)}
         />
-      }
-      <DeleteDialog
-        isOpen={isClearOpen}
-        label="Delete sound?"
-        submit={() => {
-          props.clear();
-          setClear(false);
-        }}
-        close={() => setClear(false)}
-      />
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default SoundRecord;
