@@ -158,6 +158,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }, [brickId, startEditing]);
 
   const handleKey = (e: any) => {
+    if (e.target.tagName === "INPUT") { return; }
+    if (e.target.tagName === "TEXTAREA") { return; }
+    if (e.target.classList.contains("ck-content")) { return; }
+
     if (leftKeyPressed(e)) {
       let isSynthesisPage = false;
       if (history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
