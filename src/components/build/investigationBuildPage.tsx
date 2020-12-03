@@ -66,7 +66,6 @@ import HintInvalidDialog from './baseComponents/dialogs/HintInvalidDialog';
 import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialog';
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
-import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -157,46 +156,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     startEditing(brickId)
   }, [brickId, startEditing]);
 
-  const handleKey = (e: any) => {
-    if (e.target.tagName === "INPUT") { return; }
-    if (e.target.tagName === "TEXTAREA") { return; }
-    if (e.target.classList.contains("ck-content")) { return; }
-
-    if (leftKeyPressed(e)) {
-      let isSynthesisPage = false;
-      if (history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
-       isSynthesisPage = true;
-      }
-      if (!isSynthesisPage) {
-        const keyActiveQuestion = getActiveQuestion(questions);
-        const keyIndex = getQuestionIndex(keyActiveQuestion);
-        if (keyIndex > 0) {
-          selectQuestion(keyIndex - 1)
-        }
-      }
-    } else if (rightKeyPressed(e)) {
-      let isSynthesisPage = false;
-      if (history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
-       isSynthesisPage = true;
-      }
-      
-      if (!isSynthesisPage) {
-        const keyActiveQuestion = getActiveQuestion(questions);
-        const keyIndex = getQuestionIndex(keyActiveQuestion);
-  
-        if (keyIndex < questions.length - 1) { 
-          selectQuestion(keyIndex + 1);
-        }
-      }
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener("keydown", handleKey, false);
-    return function cleanUp () {
-      document.removeEventListener("keydown", handleKey, false);
-    }
-  }, []);
 
   const [currentBrick, setCurrentBrick] = React.useState({ ...props.brick });
 
@@ -894,6 +853,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                 style={{ height: "90%", width: "75vw", minWidth: 'none' }}
               >
                 <DragableTabs
+                  location={history.location}
                   setQuestions={switchQuestions}
                   questions={questions}
                   synthesis={synthesis}
