@@ -76,6 +76,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [startTime, setStartTime] = React.useState(undefined);
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [headerHidden, hideMobileHeader] = React.useState(false);
+  const [liveEndTime, setLiveEndTime] = React.useState(null as any);
 
   useEffect(() => {
     if (props.brick) {
@@ -268,10 +269,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 isPlayPreview={true}
                 brick={brick}
                 questions={brick.questions}
-                endTime={null}
                 updateAttempts={updateAttempts}
                 finishBrick={finishBrick}
-                setEndTime={() => { }}
+                endTime={liveEndTime}
+                setEndTime={time => {
+                  if (liveEndTime === null) {
+                    setLiveEndTime(time);
+                  }
+                }}
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/provisionalScore">
