@@ -22,7 +22,7 @@ interface Question {
 }
 
 interface DragTabsProps {
-  location: any;
+  history: any;
   questions: Question[];
   user: User;
   comments: Comment[] | null;
@@ -36,6 +36,7 @@ interface DragTabsProps {
   moveToSynthesis(): void;
   setQuestions(questions: any): void;
   selectQuestion(e: any): void;
+  moveToLastQuestion(): void;
   removeQuestion(e: any): void;
 }
 
@@ -66,11 +67,10 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     if (e.target.classList.contains("ck-content")) { return; }
 
     if (leftKeyPressed(e)) {
-      let isSynthesisPage = false;
-      if (this.props.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
-       isSynthesisPage = true;
-      }
-      if (!isSynthesisPage) {
+      if (this.props.history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
+        let keyIndex = this.props.questions.length;
+        this.props.selectQuestion(keyIndex - 1)
+      } else {
         let keyIndex = this.props.questions.findIndex(q => q.active === true);
 
         if (keyIndex > 0) {
@@ -79,8 +79,8 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       }
     } else if (rightKeyPressed(e)) {
       let isSynthesisPage = false;
-      if (this.props.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
-       isSynthesisPage = true;
+      if (this.props.history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
+        isSynthesisPage = true;
       }
       
       if (!isSynthesisPage) {
@@ -88,6 +88,8 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
   
         if (keyIndex < this.props.questions.length - 1) { 
           this.props.selectQuestion(keyIndex + 1);
+        } else {
+          this.props.moveToSynthesis();
         }
       }
     }

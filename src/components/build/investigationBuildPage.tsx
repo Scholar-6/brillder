@@ -106,6 +106,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [questions, setQuestions] = React.useState([
     getNewFirstQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
+
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
@@ -118,6 +119,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     isOpen: false,
     isLine: false
   });
+  const [movingFromSynthesis, setMovingFromSynthesis] = React.useState(false);
   const [proposalResult, setProposalResult] = React.useState({ isOpen: false, isValid: proposalRes.isValid, url: proposalRes.url });
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
@@ -277,12 +279,20 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let activeQuestion = getActiveQuestion(questions);
   if (isSynthesisPage === true) {
     if (activeQuestion) {
-      unselectQuestions();
+      if (movingFromSynthesis === false) {
+        unselectQuestions();
+      }
       return <PageLoader content="...Loading..." />;
     }
   } else if (!activeQuestion) {
     console.log("Can`t find active question");
     activeQuestion = {} as Question;
+  }
+
+  if (activeQuestion) {
+    if (movingFromSynthesis) {
+      setMovingFromSynthesis(false);
+    }
   }
 
   /* Changing question number by tabs in build */
@@ -392,6 +402,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const selectQuestion = (index: number) => {
+    if (history.location.pathname.slice(-10) === '/synthesis') {
+      setMovingFromSynthesis(true);
+    }
     const updatedQuestions = activateQuestionByIndex(index);
     setQuestions(update(questions, { $set: updatedQuestions }));
     if (history.location.pathname.slice(-10) === '/synthesis') {
@@ -795,6 +808,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   }
 
+  const moveToLastQuestion = () => {
+    history.push(`/build/brick/${brickId}/investigation/question-component/${questions[questions.length - 1].id}`);
+  }
+
   if (!synthesis) {
     isValid = false;
   }
@@ -853,7 +870,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                 style={{ height: "90%", width: "75vw", minWidth: 'none' }}
               >
                 <DragableTabs
-                  location={history.location}
+                  history={history}
                   setQuestions={switchQuestions}
                   questions={questions}
                   synthesis={synthesis}
@@ -866,6 +883,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   createNewQuestion={createNewQuestion}
                   selectQuestion={selectQuestion}
                   removeQuestion={removeQuestion}
+                  moveToLastQuestion={moveToLastQuestion}
                 />
                 {renderPanel()}
               </Grid>
