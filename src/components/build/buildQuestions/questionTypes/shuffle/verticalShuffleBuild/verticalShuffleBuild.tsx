@@ -106,8 +106,8 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   return (
     <div className="vertical-shuffle-build unique-component">
       <div className="component-title">
-        <div>Enter Answers below in order.</div>
-        <div>These will be randomised in the Play Interface.</div>
+        Enter Answers in the correct order from top to bottom.<br/>
+        These will be randomised in the Play Interface.
       </div>
       {
         state.list.map((answer: any, i: number) => renderAnswer(answer, i))

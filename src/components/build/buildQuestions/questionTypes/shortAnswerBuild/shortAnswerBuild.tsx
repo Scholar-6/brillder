@@ -92,6 +92,10 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
 
   return (
     <div className="short-answer-build unique-component">
+      <div className="component-title">
+        Take care to choose an unambiguous answer. <br/>
+        Specify the required form and whether an article is expected.
+      </div>
       {state.list.map((shortAnswer, i) => renderShortAnswer(shortAnswer, i))}
       <AddAnswerButton
         locked={locked}
