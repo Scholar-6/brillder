@@ -138,15 +138,41 @@
       width: 11.8vw;
       height: 8vw;
       @extend %removePosition;
+
+      @keyframes dash {
+        from {
+          stroke-dashoffset: 1000;
+        }
+        to {
+          stroke-dashoffset: 900;
+        }
+      }
+
+      .left-smile,
+      .right-smile,
       .left-class-icon,
       .right-class-icon {
         @extend %transitionAll300;
       }
       .left-class-icon {
-        transform: translateX(-0.1vw);
+        transform: translateX(-1px);
       }
       .right-class-icon {
-        transform: translateX(0.1vw);
+        transform: translateX(1px);
+        path {
+          @extend %transitionAll300;
+        }
+      }
+      .left-smile {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+
+        transform: translate(12px, 50px);
+      }
+      .right-smile {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+        transform: translate(139px, 50px);
       }
     }
     span {
@@ -157,10 +183,24 @@
     &:hover {
       .svg {
         .left-class-icon {
-          transform: translateX(0.5vw);
+          transform: translateX(8px);
         }
         .right-class-icon {
-          transform: translateX(-0.5vw);
+          transform: translateX(-8px);
+        }
+        .left-smile,
+        .right-smile {
+          path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 2s linear alternate infinite;
+          }
+        }
+        .left-smile {
+          transform: translate(3px, 50px);
+        }
+        .right-smile {
+          transform: translate(148px, 50px);
         }
       }
       span {
