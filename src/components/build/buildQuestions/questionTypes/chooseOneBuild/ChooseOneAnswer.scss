@@ -100,12 +100,20 @@
     .sound-record-button {
       position: absolute;
       cursor: pointer;
-      right: 3vw;
+      right: 3.5vw;
       top: 0;
       height: 100%;
       @extend %flexCenter;
-      img {
+      svg {
+        @extend %transitionAll300;
+        height: 100%;
         width: 2vw;
+        color: var(--dark-gray);
+      }
+      &:hover {
+        .svg {
+          color: var(--theme-orange);
+        }
       }
     }
   }
