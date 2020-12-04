@@ -4,6 +4,7 @@
 
 .short-answer-build {
   @extend %textCenter;
+  margin-top: 0 !important;
 
   .short-answer-box {
     position: relative;
