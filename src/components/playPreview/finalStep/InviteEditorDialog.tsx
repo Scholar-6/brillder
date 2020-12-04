@@ -3,7 +3,8 @@ import Dialog from '@material-ui/core/Dialog';
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
-import actions from 'redux/actions/brickActions';
+import actions from 'redux/actions/requestFailed';
+import brickActions from 'redux/actions/brickActions';
 import { Brick, Editor } from 'model/brick';
 import './InviteEditorDialog.scss';
 import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
@@ -14,10 +15,10 @@ interface InviteProps {
   isOpen: boolean;
   brick: Brick;
   hideAccess?: boolean;
-  title?: string;
   submit(name: string): void;
   close(): void;
-  assignEditor(brick: Brick, editorIds: number[]): void;
+  requestFailed(e: string): void;
+  assignEditor(brick: Brick, editorIds: number[]): Promise<boolean>;
 }
 
 const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
@@ -25,15 +26,22 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [editors, setEditors] = React.useState<Editor[]>(brick.editors ?? []);
   const [editorError, setEditorError] = React.useState("");
 
-  const saveEditors = (editorIds: number[]) => {
-    props.assignEditor(brick, editorIds);
-    props.submit(getNameText());
+  const saveEditors = async (editorIds: number[]) => {
+    let res = await props.assignEditor(brick, editorIds);
+    if (res) {
+      props.submit(getNameText());
+    }
+    return res;
   }
 
-  const onNext = () => {
+  const onNext = async () => {
     if (isValid && editors) {
-      saveEditors(editors.map(editor => editor.id));
-      props.close();
+      const res = await saveEditors(editors.map(editor => editor.id));
+      if (res) {
+        props.close();
+      } else {
+        props.requestFailed("can`t save editors");
+      }
     }
   };
 
@@ -87,7 +95,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
       </div>
       <div className="dialog-header" style={{ minWidth: '30vw' }}>
         <div className="title">
-          {props.title ? props.title : 'Who would you like to invite to play this brick?'}
+          Who would you like to edit this brick?
         </div>
         <div style={{ marginTop: '1.8vh' }}></div>
         <Grid item className="input-container">
@@ -112,7 +120,8 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
 }
 
 const mapDispatch = (dispatch: any) => ({
-  assignEditor: (brick: any, editor: any) => dispatch(actions.assignEditor(brick, editor))
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+  assignEditor: (brick: any, editor: any) => dispatch(brickActions.assignEditor(brick, editor))
 });
 
 const connector = connect(null, mapDispatch);

@@ -109,7 +109,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
         
         value={state.text}
         onChange={updateText}
-        placeholder="Enter Lines Here..."
+        placeholder="Enter Text Here..."
       />
     );
   }
@@ -117,7 +117,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
   return (
     <div className="line-highlight-build">
       <div className="component-title">
-        <div>Enter Text Below. Highlight the correct line(s).</div>
+        <div>Click the highlighter to select correct lines</div>
       </div>
       <HighlightButton
         mode={state.mode}

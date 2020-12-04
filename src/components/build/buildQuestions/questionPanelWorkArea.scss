@@ -429,3 +429,13 @@
 .redo-button:hover {
   transform: rotate(10deg);
 }
+
+// question placeholder style
+.questions .drop-box {
+  .question-build-text-editor.first .ck-placeholder:before,
+  .unique-component .ck-placeholder:before,
+  .hint-container .ck-placeholder:before {
+    color: #ACACAC;
+    font-family: $font-family-bold;
+  }
+}

@@ -7,6 +7,7 @@ import SoundRecordDialog from "./SoundRecordDialog";
 import RemoveButton from "../components/RemoveButton";
 import DeleteDialog from "components/baseComponents/deleteBrickDialog/DeleteDialog";
 import Audio from './Audio';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface SoundProps {
   locked: boolean;
@@ -75,7 +76,7 @@ class SoundRecord extends React.Component<SoundProps, SoundState> {
           }
         }}
       >
-        <img alt="sound-image" src="/images/soundicon-dark-blue.png" />
+        <SpriteIcon name="sound-icon" />
       </div>
     );
   }

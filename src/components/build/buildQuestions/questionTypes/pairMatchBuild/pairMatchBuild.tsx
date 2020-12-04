@@ -74,8 +74,8 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   return (
     <div className="pair-match-build unique-component">
       <div className="component-title">
-        <div>Enter Pairs below, eg. 1 (Option A), I (Answer A).</div>
-        <div>Order will be randomised in the Play Interface.</div>
+        Enter Pairs below so that Option 1 matches with Answer 1 and so on.
+        These will be randomised in the play interface.
       </div>
       {
         state.list.map((answer: Answer, i: number) => renderAnswer(answer, i))
