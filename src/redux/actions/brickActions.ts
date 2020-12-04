@@ -139,8 +139,10 @@ const assignEditor = (brick: any, editorIds?: number[]) => {
     ).then(response => {
       const brick = response.data as Brick;
       dispatch(assignEditorSuccess(brick));
+      return true;
     }).catch(error => {
       dispatch(assignEditorFailure(error.message))
+      return false;
     });
   }
 }
