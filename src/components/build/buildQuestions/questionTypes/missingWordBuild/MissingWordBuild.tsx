@@ -142,7 +142,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
           onChange={(event) => { beforeChanged(choice, event) }}
           disabled={locked}
           rows={3}
-          placeholder="Text before choice..."></textarea>
+          placeholder="Text before missing word..."></textarea>
         {
           (state.choices.length > 1)
             ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeChoice(key)}>
@@ -196,6 +196,9 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
 
   return (
     <div className="missing-word-build">
+      <div className="component-title">
+        Tick Correct Answer
+      </div>
       {
         state.choices.map((choice, i) => renderChoice(choice, i))
       }

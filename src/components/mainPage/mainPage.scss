@@ -128,50 +128,6 @@
     }
   }
 
-  .manage-classes {
-    flex-direction: column;
-    color: white;
-    cursor: pointer;
-    letter-spacing: 0.3vw;
-    font-family: $font-family-regular;
-    .svg {
-      width: 11.8vw;
-      height: 8vw;
-      @extend %removePosition;
-      .left-class-icon,
-      .right-class-icon {
-        @extend %transitionAll300;
-      }
-      .left-class-icon {
-        transform: translateX(-0.1vw);
-      }
-      .right-class-icon {
-        transform: translateX(0.1vw);
-      }
-    }
-    span {
-      @extend %transitionAll300;
-      font-size: 1.2vw;
-      font-family: $font-family-light;
-    }
-    &:hover {
-      .svg {
-        .left-class-icon {
-          transform: translateX(0.5vw);
-        }
-        .right-class-icon {
-          transform: translateX(-0.5vw);
-        }
-      }
-      span {
-        @extend %transitionAll300;
-        font-family: $font-family-bold;
-        font-size: 1.2vw;
-        letter-spacing: 0.4vw;
-      }
-    }
-  }
-
   .view-item-container,
   .create-item-container,
   .back-item-container {

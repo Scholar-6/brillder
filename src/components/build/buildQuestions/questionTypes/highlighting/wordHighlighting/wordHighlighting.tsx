@@ -220,7 +220,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         onBlur={() => save()}
         value={state.text}
         onChange={updateText}
-        placeholder="Enter Words Here..."
+        placeholder="Enter Text Here..."
       />
     );
   }
@@ -228,7 +228,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   return (
     <div className="word-highlight-build">
       <div className="component-title">
-        <div>Enter Text Below. Highlight the correct word(s).</div>
+        <div>Click the highlighter to select correct words</div>
       </div>
       <HighlightButton
         mode={state.mode}

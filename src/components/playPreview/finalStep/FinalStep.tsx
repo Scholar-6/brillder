@@ -333,7 +333,6 @@ return (
       <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
       <InviteEditorDialog
         canEdit={true} brick={brick} isOpen={inviteOpen}
-        title="Who would you like to edit this brick?"
         submit={name => { setInviteSuccess({ isOpen: true, name }); }}
         close={() => setInvite(false)} />
       <InvitationSuccessDialog
