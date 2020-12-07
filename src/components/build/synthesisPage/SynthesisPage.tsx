@@ -14,6 +14,7 @@ import UndoRedoService from 'components/services/UndoRedoService';
 import RedoButton from '../baseComponents/redoButton';
 import UndoButton from '../baseComponents/UndoButton';
 import CountSynthesis from './WordsCount';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 
 export interface SynthesisProps {
@@ -53,7 +54,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
       try {
         let {current} = this.state.ref;
         if (current) {
-          let scrollArea = current.getElementsByClassName("ck-content")[0];
+          let scrollArea = current.getElementsByClassName("ql-editor")[0];
           let canScroll = false;
           if (scrollArea.scrollHeight > scrollArea.clientHeight) {
             canScroll = true;
@@ -92,12 +93,14 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
 
   onSynthesisChange(text: string) {
     const {scrollArea} = this.state;
-    let canScroll = false;
-    if (scrollArea.scrollHeight > scrollArea.clientHeight) {
-      canScroll = true;
-    }
+    if(scrollArea) {
+      let canScroll = false;
+      if (scrollArea.scrollHeight > scrollArea.clientHeight) {
+        canScroll = true;
+      }
 
-    this.setState({ synthesis: text, canScroll });
+      this.setState({ synthesis: text, canScroll });
+    }
     this.props.onSynthesisChange(text);
   }
 
@@ -116,21 +119,9 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
         <div className="inner-question-type" ref={this.state.ref}>
           <Grid container direction="row" alignItems="stretch">
             <Grid item xs className="synthesis-input-container">
-              <DocumentWirisCKEditor
+              <QuillEditor
                 disabled={this.props.locked}
-                editOnly={this.props.editOnly}
                 data={this.state.synthesis}
-                placeholder=""
-                colorsExpanded={true}
-                toolbar={[
-                  'bold', 'italic', 'fontColor',
-                  'superscript', 'subscript', 'strikethrough',
-                  'latex', 'chemType', 'insertTable', 'alignment',
-                  'bulletedList', 'numberedList', 'uploadImageCustom', 'addComment'
-                ]}
-                blockQuote={true}
-                defaultAlignment="justify"
-                onBlur={() => { }}
                 onChange={this.onSynthesisChange.bind(this)}
               />
             </Grid>

@@ -65,6 +65,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     if (e.target.tagName === "INPUT") { return; }
     if (e.target.tagName === "TEXTAREA") { return; }
     if (e.target.classList.contains("ck-content")) { return; }
+    if (e.target.classList.contains("ql-editor")) { return; }
 
     if (leftKeyPressed(e)) {
       if (this.props.history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
