@@ -36,8 +36,6 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         },
     }
 
-    console.log((Quill as any).imports);
-
     return (
         <div className="quill-document-editor">
             <div className="quill-toolbar">
