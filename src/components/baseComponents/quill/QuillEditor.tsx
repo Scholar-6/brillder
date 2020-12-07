@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import ReactQuill, {Quill} from "react-quill"; 
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
+import _ from "lodash";
 import {ReactComponent as LatexIcon} from "assets/img/latex.svg";
 
 import './QuillLatex';
@@ -14,9 +15,9 @@ interface QuillEditorProps {
 }
 
 const QuillEditor: React.FC<QuillEditorProps> = (props) => {
-    const onChange = (content: string, delta: Delta, source: Sources) => {
+    const onChange = _.debounce((content: string, delta: Delta, source: Sources) => {
         props.onChange(content);
-    };
+    }, 500);
 
     const modules = {
         toolbar: {
