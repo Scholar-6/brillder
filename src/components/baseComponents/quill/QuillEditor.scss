@@ -9,9 +9,33 @@
   position: relative;
   overflow: hidden;
 
+  .ql-toolbar {
+    border: none !important;
+    padding: 1vh 0.5vw;
+    .ql-formats {
+      background-color: var(--tab-gray) !important;
+      button,
+      .ql-picker {
+        padding: 0;
+        margin: 0;
+        margin-left: 0.1vw;
+        margin-right: 0.1vw;
+        line-height: 1;
+        svg {
+          color: var(--theme-dark-blue) !important;
+          width: var(--ck-icon-size);
+          height: var(--ck-icon-size);
+          * {
+            stroke: currentColor;
+          }
+        }
+      }
+    }
+  }
+
   .ql-container {
     height: 100% !important;
-    width: calc(100% - 2vw) !important;
+    border: none !important;
     word-break: break-word !important;
     font-size: inherit;
     font-family: inherit;
@@ -26,6 +50,12 @@
       color: var(--theme-dark-blue);
       background: var(--solitude-light) !important;
       font-size: 1.05vw;
+      border: none !important;
+      background-color: var(--solitude-light) !important;
+      padding: 1vw;
+      p {
+        text-align: left;
+      }
     }
   }
 }

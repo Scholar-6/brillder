@@ -2,8 +2,8 @@
 import React from 'react'
 
 import './Text.scss'
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import { TextComponentObj } from './interface';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 
 export interface TextComponentProps {
@@ -39,19 +39,13 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
 
   return (
     <div className="question-build-text-editor first">
-      <DocumentWirisCKEditor
+      <QuillEditor
         disabled={locked}
-        editOnly={editOnly}
         data={data.value}
-        colorsExpanded={true}
-        placeholder="Enter Question Text Here..."
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-          'latex', 'chemType', 'insertTable', 'bulletedList', 'numberedList'
+          'latex', 'bulletedList', 'numberedList', 'blockQuote'
         ]}
-        blockQuote={true}
-        validationRequired={props.validationRequired}
-        onBlur={() => props.save()}
         onChange={onChange}
       />
     </div>

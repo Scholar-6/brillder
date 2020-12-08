@@ -4,13 +4,18 @@ import ReactQuill, {Quill} from "react-quill";
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
 import _ from "lodash";
-import {ReactComponent as LatexIcon} from "assets/img/latex.svg";
+import { ReactComponent as LatexIcon } from "assets/img/latex.svg";
 
 import './QuillLatex';
+
+function randomEditorId() {
+     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
+}
 
 interface QuillEditorProps {
     data: string;
     disabled: boolean;
+    toolbar: string[];
     onChange(data: string): void;
 }
 
@@ -18,51 +23,42 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
     const onChange = _.debounce((content: string, delta: Delta, source: Sources) => {
         props.onChange(content);
     }, 500);
+    const [uniqueId, setUniqueId] = React.useState(randomEditorId());
 
     const modules = {
         toolbar: {
-            // container: [
-            //     "bold", "italic",
-            //     { color: [] },
-            //     { script: "sub" },
-            //     { script: "super" },
-            //     "strike",
-            //     { align: [] },
-            //     { list: "bullet" },
-            //     { list: "ordered" },
-            //     "blockquote",
-            //     "latex"
-            // ],
-            container: ".quill-toolbar",
+            container: `.quill-${uniqueId}`,
         },
     }
+    
+    const toolbarItems: { [key: string]: any } = {
+        bold: <button className="ql-bold" />,
+        italic: <button className="ql-italic" />,
+        strikethrough: <button className="ql-strike" />,
+        fontColor: <select className="ql-color" />,
+        subscript: <button className="ql-script" value="sub" />,
+        superscript: <button className="ql-script" value="super" />,
+        align: <select className="ql-align" />,
+        blockQuote: <button className="ql-blockquote" />,
+        bulletedList: <button className="ql-list" value="bullet" />,
+        numberedList: <button className="ql-list" value="ordered" />,
+        latex: (<button className="ql-latex">
+            <LatexIcon />
+        </button>),
+    };
 
     return (
         <div className="quill-document-editor">
-            <div className="quill-toolbar">
+            <div className={`ql-toolbar quill-${uniqueId}`}>
                 <div className="ql-formats">
-                    <button className="ql-bold" />
-                    <button className="ql-italic" />
-                    <button className="ql-strike" />
-                    <select className="ql-color" />
-                </div>
-                <div className="ql-formats">
-                    <button className="ql-script" value="sub" />
-                    <button className="ql-script" value="super" />
-                    <select className="ql-align" />
-                    <button className="ql-blockquote" />
-                </div>
-                <div className="ql-formats">
-                    <button className="ql-list" value="bullet" />
-                    <button className="ql-list" value="ordered" />
-                    <button className="ql-latex">
-                        <LatexIcon />
-                    </button>
+                {props.toolbar.map((item) => (
+                    <>{ toolbarItems[item] }</>
+                ))}
                 </div>
             </div>
             <ReactQuill
                 theme="snow"
-                value={props.data}
+                value={props.data || ""}
                 onChange={onChange}
                 readOnly={props.disabled}
                 modules={modules}

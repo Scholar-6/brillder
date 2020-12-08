@@ -33,6 +33,9 @@
       max-width: $synthesis-box-width;
       min-width: $synthesis-box-width;
       padding-left: 2vw;
+      .ql-toolbar {
+        height: 5vh;
+      }
       .ql-container {
         width: 100% !important;
         .ql-editor {

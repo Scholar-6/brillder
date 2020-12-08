@@ -92,42 +92,9 @@
     }
   }
   .quill-document-editor {
-    .ql-toolbar {
-      border: none !important;
-      padding: 1vh 0.5vw;
-      height: 5vh;
-      .ql-formats {
-        background-color: var(--tab-gray) !important;
-        button,
-        .ql-picker {
-          padding: 0;
-          margin: 0;
-          margin-left: 0.1vw;
-          margin-right: 0.1vw;
-          line-height: 1;
-          svg {
-            color: var(--theme-dark-blue) !important;
-            width: var(--ck-icon-size);
-            height: var(--ck-icon-size);
-            * {
-              stroke: currentColor;
-            }
-          }
-        }
-      }
-    }
-
     .ql-container {
-      width: 100%;
-      border: none !important;
       .ql-editor {
         height: 70vh;
-        border: none !important;
-        background-color: var(--solitude-light) !important;
-        padding: 1vw;
-        p {
-          text-align: left;
-        }
       }
     }
   }

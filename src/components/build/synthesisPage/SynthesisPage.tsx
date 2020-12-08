@@ -123,6 +123,10 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 disabled={this.props.locked}
                 data={this.state.synthesis}
                 onChange={this.onSynthesisChange.bind(this)}
+                toolbar={[
+                  'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
+                  'latex', 'bulletedList', 'numberedList', 'blockQuote'
+                ]}
               />
             </Grid>
             { !this.state.commentsShown &&
