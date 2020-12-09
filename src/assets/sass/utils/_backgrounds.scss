@@ -5,6 +5,9 @@
 .bg-tab-gray {
   background-color: var(--tab-gray) !important;
 }
+.play-preview.bg-tab-gray {
+  background-color: var(--theme-light-blue) !important;
+}
 .bg-light-blue {
   background-color: var(--theme-light-blue) !important;
   &.btn {
