@@ -9,7 +9,6 @@ import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import YoutubeAndMathInHtml from "components/play/baseComponents/YoutubeAndMath";
 import { BrickFieldNames, PlayButtonStatus } from '../../model';
@@ -22,6 +21,7 @@ import { Transition } from "react-transition-group";
 import NextButton from "./NextButton";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import CopiedDialog from "./CopiedDialog";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 export enum BookState {
   TitlesPage,
@@ -234,14 +234,12 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     const { brick } = this.props;
     if (this.state.mode) {
       return (
-        <DocumentWirisCKEditor
+        <QuillEditor
           disabled={!this.props.canEdit}
-          placeholder={placeholder}
           data={brick[name]}
           toolbar={[
-            'bold', 'italic', 'latex', 'mathType', 'chemType'
+            'bold', 'italic', 'latex'
           ]}
-          onBlur={() => { }}
           onChange={v => {
             this.props.setBrickField(name, v);
           }}
@@ -259,14 +257,13 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     const { brick } = this.props;
     if (this.state.mode) {
       return (
-        <DocumentWirisCKEditor
+        <QuillEditor
           disabled={!this.props.canEdit}
           data={brick[name]}
-          placeholder="Enter Brief Here..."
+          allowLinks={true}
           toolbar={[
-            'bold', 'italic', 'fontColor', 'latex', 'mathType', 'chemType', 'bulletedList', 'numberedList'
+            'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList'
           ]}
-          onBlur={() => { }}
           onChange={v => this.props.setBrickField(name, v)}
         />
       );
@@ -282,18 +279,14 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     const { brick } = this.props;
     if (this.state.mode) {
       return (
-        <DocumentWirisCKEditor
+        <QuillEditor
           disabled={!this.props.canEdit}
           data={brick.prep}
-          placeholder="Enter Instructions, Links to Videos and Webpages Here…"
-          mediaEmbed={true}
-          link={true}
+          allowMediaEmbed={true}
+          allowLinks={true}
           toolbar={[
-            'bold', 'italic', 'fontColor', 'latex', 'mathType', 'chemType', 'bulletedList', 'numberedList', 'uploadImageCustom'
+            'bold', 'italic', 'fontColor', 'latex', 'chemType', 'bulletedList', 'numberedList'
           ]}
-          uploadStarted={() => this.setState({uploading: true})}
-          uploadFinished={() => this.setState({uploading: false})}
-          onBlur={() => { }}
           onChange={v => this.props.setBrickField(BrickFieldNames.prep, v)}
         />
       );

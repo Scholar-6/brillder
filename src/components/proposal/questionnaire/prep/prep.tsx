@@ -11,6 +11,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/proposal/components/navigation/Navigation';
 import YoutubeAndMath from 'components/play/baseComponents/YoutubeAndMath';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 
 interface PrepProps {
@@ -48,16 +49,14 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             <img className="size2" alt="titles" src="/images/new-brick/prep.png" />
           </div>
           <h1>Add engaging and relevant <br /> preparatory material.</h1>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!props.canEdit}
             data={parentPrep}
-            placeholder="Enter Instructions, Links to Videos and Webpages Here…"
-            mediaEmbed={true}
-            link={true}
+            allowMediaEmbed={true}
+            allowLinks={true}
             toolbar={[
-              'bold', 'italic', 'fontColor', 'latex', 'chemType', 'bulletedList', 'numberedList', 'uploadImageCustom'
+              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList'
             ]}
-            onBlur={() => { }}
             onChange={savePrep}
           />
           <NavigationButtons

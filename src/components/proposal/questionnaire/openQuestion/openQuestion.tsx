@@ -11,6 +11,7 @@ import Navigation from 'components/proposal/components/navigation/Navigation';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from "components/play/baseComponents/MathInHtml";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 interface OpenQuestionProps {
   selectedQuestion: any;
@@ -43,7 +44,7 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
         saveAndPreview={props.saveAndPreview}
         onMove={() => saveOpenQuestion(selectedQuestion)}
       />
-      <Grid container direction="row">
+      <Grid container direction="row" alignItems="flex-start">
         <Grid item className="left-block">
           <div className="mobile-view-image">
             <img alt="titles" className="size2" src="/images/new-brick/head.png" />
@@ -52,14 +53,12 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           <p className="sub-header">
             Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.
           </p>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!props.canEdit}
             data={selectedQuestion}
-            placeholder="Enter Open Question(s)..."
             toolbar={[
-              'bold', 'italic', 'latex', 'chemType'
+              'bold', 'italic', 'latex'
             ]}
-            onBlur={() => { }}
             onChange={saveOpenQuestion}
           />
           <NavigationButtons

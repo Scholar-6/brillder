@@ -11,6 +11,7 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import map from 'components/map';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 
 interface BriefProps {
@@ -47,15 +48,13 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
             <SpriteIcon name="crosshair" />
           </div>
           <h1>Outline the purpose of this brick.</h1>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!canEdit}
             data={parentBrief}
-            link={true}
-            placeholder="Enter Brief Here..."
+            allowLinks={true}
             toolbar={[
-              'bold', 'italic', 'fontColor', 'latex', 'chemType', 'bulletedList', 'numberedList'
+              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList'
             ]}
-            onBlur={() => { }}
             onChange={saveBrief}
           />
           <NavigationButtons

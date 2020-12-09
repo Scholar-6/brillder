@@ -7,6 +7,8 @@ import _ from "lodash";
 import { ReactComponent as LatexIcon } from "assets/img/latex.svg";
 
 import './QuillLatex';
+import './QuillAutoLink';
+import './QuillMediaEmbed';
 
 function randomEditorId() {
      return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -15,6 +17,8 @@ function randomEditorId() {
 interface QuillEditorProps {
     data: string;
     disabled: boolean;
+    allowLinks?: boolean;
+    allowMediaEmbed?: boolean;
     toolbar: string[];
     onChange(data: string): void;
 }
@@ -29,6 +33,8 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         toolbar: {
             container: `.quill-${uniqueId}`,
         },
+        autolink: props.allowLinks,
+        mediaembed: props.allowMediaEmbed,
     }
     
     const toolbarItems: { [key: string]: any } = {
