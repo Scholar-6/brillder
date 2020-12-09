@@ -45,6 +45,7 @@ import RotateInstruction from 'components/baseComponents/rotateInstruction/Rotat
 import TeachPage from 'components/teach/assignments/TeachPage';
 import Terms from 'components/terms/Terms';
 import { connect } from 'react-redux';
+import PlayPreviewRoute from './PlayPreviewRoute';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -131,7 +132,7 @@ const App: React.FC<AppProps> = props => {
         <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />
         <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
 
-        <BuildBrickRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
+        <PlayPreviewRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId/investigation/question-component/:questionId" component={InvestigationBuildPage} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId/investigation/question/:questionId" component={InvestigationBuildPage} location={location} />
