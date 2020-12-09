@@ -55,7 +55,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             allowMediaEmbed={true}
             allowLinks={true}
             toolbar={[
-              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList'
+              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'image'
             ]}
             onChange={savePrep}
           />

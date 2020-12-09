@@ -6,9 +6,10 @@ import "react-quill/dist/quill.snow.css";
 import _ from "lodash";
 import { ReactComponent as LatexIcon } from "assets/img/latex.svg";
 
-import './QuillLatex';
-import './QuillAutoLink';
-import './QuillMediaEmbed';
+import "./QuillLatex";
+import "./QuillAutoLink";
+import "./QuillMediaEmbed";
+import "./QuillImageUpload"
 
 function randomEditorId() {
      return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -35,6 +36,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         },
         autolink: props.allowLinks,
         mediaembed: props.allowMediaEmbed,
+        imageupload: true,
     }
     
     const toolbarItems: { [key: string]: any } = {
@@ -51,6 +53,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         latex: (<button className="ql-latex">
             <LatexIcon />
         </button>),
+        image: <button className="ql-image" />,
     };
 
     return (
