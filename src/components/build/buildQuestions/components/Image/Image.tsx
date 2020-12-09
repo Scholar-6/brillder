@@ -62,7 +62,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
         } else {
           let el = document.createElement("input");
           el.setAttribute("type", "file");
-          el.setAttribute("accept", ".jpg, .jpeg, .png");
+          el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
           el.click();
   
           el.onchange = (files: any) => {

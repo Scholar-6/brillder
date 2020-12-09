@@ -51,7 +51,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, upload
     } else {
       let el = document.createElement("input");
       el.setAttribute("type", "file");
-      el.setAttribute("accept", ".jpg, .jpeg, .png");
+      el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
       el.click();
 
       el.onchange = () => {

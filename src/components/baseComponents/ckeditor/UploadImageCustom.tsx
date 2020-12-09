@@ -27,7 +27,7 @@ class UploadImageCustom extends Plugin {
       view.on("execute", () => {
         let el = document.createElement("input");
         el.setAttribute("type", "file");
-        el.setAttribute("accept", ".jpg, .jpeg, .png");
+        el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
         el.click();
 
         editor.execute('uploading');
