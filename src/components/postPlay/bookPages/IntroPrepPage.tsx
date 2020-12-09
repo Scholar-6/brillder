@@ -29,7 +29,11 @@ const IntroPage: React.FC<IntroPageProps> = ({brick, color, ...props}) => {
     return (
       <div className="expand-title">
         <span>Prep</span>
-        <div className="centered text-white" onClick={e => togglePrep(e)}>
+        <div className="centered text-white" onClick={e => {
+            togglePrep(e);
+            e.stopPropagation();
+            e.preventDefault();
+          }}>
           <div className={state.prepExpanded ? "round-icon b-green": "round-icon b-yellow"}>
             <SpriteIcon name="arrow-down" className="arrow" />
           </div>
