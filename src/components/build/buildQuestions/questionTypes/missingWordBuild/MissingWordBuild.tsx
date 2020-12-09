@@ -145,17 +145,16 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
           placeholder="Text before missing word..."></textarea>
         {
           (state.choices.length > 1)
-            ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeChoice(key)}>
+            && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeChoice(key)}>
               <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
             </button>
-            : ""
         }
         {
           choice.answers.map((answer, i) => {
             return (
               <div style={{ position: 'relative' }} key={i}>
                 {
-                  (choice.answers.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, i)} /> : ""
+                  (choice.answers.length > 3) && <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, i)} />
                 }
                 <Checkbox
                   className={`left-ckeckbox ${(validationRequired && !checkBoxValid) ? "checkbox-invalid" : ""}`}
@@ -183,7 +182,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
           value={choice.after}
           disabled={locked}
           rows={3}
-          placeholder="Text after choice..."
+          placeholder="Text after missing word..."
           onChange={(event) => { afterChanged(choice, event) }}>
         </textarea>
         <AddAnswerButton

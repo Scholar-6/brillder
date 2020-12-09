@@ -22,7 +22,7 @@ const PublishSuccessDialog: React.FC<ProfileSavedProps> = props => {
     >
       <div className="dialog-header">
         <ListItem>
-          <ListItemText primary="Publish Successful!" className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemText primary="Successfully Published!" className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="circle-check">
               <SpriteIcon name="award" className="active stroke-2 text-white" />
