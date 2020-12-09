@@ -1,7 +1,6 @@
 import "./ViewAll.scss";
 import React, { Component } from "react";
 import { Box, Grid, Grow } from "@material-ui/core";
-import axios from "axios";
 import { connect } from "react-redux";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -20,6 +19,7 @@ import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDe
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
 import { isMobile } from "react-device-detect";
+import { getPublicBricks, searchPublicBricks } from "services/axios/brick";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -59,19 +59,21 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       shown: false,
     };
 
-    axios.get(
-      process.env.REACT_APP_BACKEND_HOST + "/bricks/byStatus/" + BrickStatus.Publish,
-      { withCredentials: true }
-    ).then(res => {
+    this.loadData();
+  }
+
+  async loadData() {
+    const bricks = await getPublicBricks();
+    if (bricks) {
       this.setState({
         ...this.state,
-        bricks: res.data,
+        bricks,
         shown: true,
-        finalBricks: res.data as Brick[],
+        finalBricks: bricks,
       });
-    }).catch(() => {
+    } else {
       this.props.requestFailed("Can`t get bricks");
-    });
+    }
   }
 
   moveToPlay(brickId: number) {
@@ -121,23 +123,19 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  search() {
+  async search() {
     const { searchString } = this.state;
-    axios.post(
-      process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
-      { searchString },
-      { withCredentials: true }
-    ).then(res => {
+    const bricks = await searchPublicBricks(searchString);
+    if (bricks) {
       this.hideBricks();
-      const searchBricks = res.data.map((brick: any) => brick.body);
       this.setState({
         ...this.state,
-        finalBricks: searchBricks,
+        finalBricks: bricks,
         isSearching: true,
       });
-    }).catch(() => {
+    } else {
       this.props.requestFailed("Can`t get bricks");
-    });
+    }
   }
 
   renderBrick = (brick: Brick, key: number) => {
