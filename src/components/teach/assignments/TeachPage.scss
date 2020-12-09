@@ -29,6 +29,7 @@
     line-height: 1;
   }
   .classroom-title {
+    color: var(--theme-dark-blue);
     display: flex;
     @extend %flexAlignCenter;
     @include tabletP {
