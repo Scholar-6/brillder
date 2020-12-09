@@ -6,7 +6,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 
-import { Brick, BrickStatus } from "model/brick";
+import { Brick } from "model/brick";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";

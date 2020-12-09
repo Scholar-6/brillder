@@ -45,7 +45,6 @@ import RotateInstruction from 'components/baseComponents/rotateInstruction/Rotat
 import TeachPage from 'components/teach/assignments/TeachPage';
 import Terms from 'components/terms/Terms';
 import { connect } from 'react-redux';
-import ClassInvitationDialog from 'components/baseComponents/classInvitationDialog/ClassInvitationDialog';
 
 interface AppProps {
   setLogoutSuccess(): void;
