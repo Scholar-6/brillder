@@ -121,7 +121,7 @@ const App: React.FC<AppProps> = props => {
     <ThemeProvider theme={theme}>
       {/* all page routes are here order of routes is important */}
       <Switch>
-        <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
+        <UnauthorizedRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <UnauthorizedRoute path={map.ViewAllPage} component={ViewAll} />
 
