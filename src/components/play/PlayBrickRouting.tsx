@@ -35,7 +35,7 @@ import PlayLeftSidebar from './PlayLeftSidebar';
 import { PlayMode } from './model';
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames } from "components/proposal/model";
-import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
+import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
 import { getAssignQueryString, getPlayPath } from "./service";
 import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";
 import map from "components/map";

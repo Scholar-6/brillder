@@ -38,7 +38,7 @@ import UnauthorizedRoute from './UnauthorizedRoute';
 import BrickWrapper from './BrickWrapper';
 
 import { setBrillderTitle } from 'components/services/titleService';
-import { setupZendesk } from 'components/services/zendesk';
+import { setupZendesk } from 'services/zendesk';
 import map from 'components/map';
 import { isMobile } from 'react-device-detect';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
