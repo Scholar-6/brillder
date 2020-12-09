@@ -64,7 +64,7 @@ const PlayPreviewRoute: React.FC<PreviewRouteProps> = ({
           // by default move to intro
           let splited = props.location.pathname.split('/');
           if (splited.length === 4) {
-            props.history.push(`/play/brick/${brickId}/intro`);
+            props.history.push(`/play-preview/brick/${brickId}/intro`);
             return <PageLoader content="...Getting Brick..." />;
           }
 
