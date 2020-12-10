@@ -201,10 +201,10 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               <Grid container item alignItems="center" style={{ height: '100%' }}>
                 <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
                   <Grid item container direction="row" justify="space-evenly">
-                      <UndoButton
-                        undo={props.undo}
-                        canUndo={() => props.undoRedoService.canUndo()}
-                      />
+                    <UndoButton
+                      undo={props.undo}
+                      canUndo={() => props.undoRedoService.canUndo()}
+                    />
                     <div className="redo-button-container">
                       <button
                         className="btn btn-transparent svgOnHover redo-button"
@@ -220,11 +220,13 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                       {redoHovered && <div className="custom-tooltip">Redo</div>}
                     </div>
                   </Grid>
-                  <CommentButton
-                    location={CommentLocation.Question}
-                    questionId={question.id}
-                    setCommentsShown={() => setCommentsShown(true)}
-                  />
+                  <div style={{marginTop: '2.1vh'}}>
+                    <CommentButton
+                      location={CommentLocation.Question}
+                      questionId={question.id}
+                      setCommentsShown={() => setCommentsShown(true)}
+                    />
+                  </div>
                   <Grid container direction="row" alignItems="center">
                     <Grid container justify="center" item sm={12} className="select-type-container">
                       <FormControl variant="outlined">
