@@ -24,7 +24,7 @@ const validateComponentValues = (components: any[]) => {
     || c.type === QuestionComponentTypeEnum.Sound
   });
 
-  let invalid = comps.find(c => !c.value);
+  let invalid = comps.find(c => !c.value || c.value === "<p><br></p>");
   if (invalid) {
     return false;
   }
@@ -66,7 +66,7 @@ export const isHintEmpty = (hint: Hint) => {
 export function validateQuestion(question: Question) {
   const {type, hint, components} = question;
 
-  if (!question.firstComponent || !question.firstComponent.value) {
+  if (!question.firstComponent || !question.firstComponent.value || question.firstComponent.value === "<p><br></p>") {
     return false;
   }
 

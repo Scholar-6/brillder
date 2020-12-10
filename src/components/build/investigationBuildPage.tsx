@@ -812,7 +812,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     history.push(`/build/brick/${brickId}/investigation/question-component/${questions[questions.length - 1].id}`);
   }
 
-  if (!synthesis) {
+  if (!synthesis || synthesis === "<p><br></p>") {
     isValid = false;
   }
 
