@@ -61,7 +61,7 @@ class SoundRecord extends React.Component<SoundProps, SoundState> {
       return (
         <div>
           <RemoveButton onClick={() => this.setClear(true)} />
-          <Audio answer={answer} />
+          <Audio src={answer.soundFile} />
         </div>
       );
     }
