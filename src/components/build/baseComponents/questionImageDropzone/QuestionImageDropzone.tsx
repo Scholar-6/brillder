@@ -19,11 +19,12 @@ export interface AnswerProps {
   locked: boolean;
   type: QuestionValueType;
   fileName: string;
+  isValid?: boolean;
   update(fileName: string): void;
 }
 
 const QuestionImageDropzone: React.FC<AnswerProps> = ({
-  locked, answer, fileName, type, update
+  locked, answer, fileName, type, update, ...props
 }) => {
   let [file, setFile] = useState(null);
   let [isOpen, setOpen] = useState(false);
@@ -66,8 +67,13 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
     );
   }
 
+  let className = 'question-image-drop';
+  if (props.isValid === false) {
+    className += ' invalid-color';
+  }
+
   return (
-    <div className="question-image-drop">
+    <div className={className}>
       <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
         <input {...getInputProps()} />
         {
