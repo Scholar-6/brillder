@@ -19,6 +19,7 @@ function randomEditorId() {
 interface QuillEditorProps {
     data: string;
     disabled: boolean;
+    placeholder?: string;
     allowLinks?: boolean;
     allowMediaEmbed?: boolean;
     validate?: boolean;
@@ -27,9 +28,13 @@ interface QuillEditorProps {
 }
 
 const QuillEditor: React.FC<QuillEditorProps> = (props) => {
-    const onChange = _.debounce((content: string, delta: Delta, source: Sources) => {
-        props.onChange(content);
-    }, 500);
+    const onChange = React.useCallback(
+        _.debounce((content: string, delta: Delta, source: Sources) => {
+            props.onChange(content);
+        }, 500),
+        []
+    );
+
     const [uniqueId, setUniqueId] = React.useState(randomEditorId());
 
     const modules = {
@@ -74,6 +79,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
                 value={props.data || ""}
                 onChange={onChange}
                 readOnly={props.disabled}
+                placeholder={props.placeholder}
                 modules={modules}
             />
         </div>
