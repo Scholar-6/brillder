@@ -824,7 +824,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     if (this.state.isSearching || filterSubjects.length !== 0) {
       return (
         <div className="main-brick-container">
-          <div className="centered text-theme-dark-blue title">
+          <div className="centered text-theme-dark-blue title found">
             {this.renderTitle(bricks)}
           </div>
         </div>
