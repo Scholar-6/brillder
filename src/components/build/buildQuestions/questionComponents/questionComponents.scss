@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .questions {
   width: 100%;
@@ -71,15 +71,15 @@
   .right-top-icon {
     right: 2.2vw !important;
   }
-  .ck-editor {
-    .ck-content {
+  .ql-container {
+    .ql-editor {
       background: var(--tab-gray) !important;
       p {
         text-align: center !important;
       }
     }
   }
-  .ck-toolbar {
+  .ql-toolbar {
     width: 2vw;
     height: 100%;
     position: absolute;
@@ -88,9 +88,10 @@
     top: 0;
     z-index: 1;
     padding: 0;
-    .ck-toolbar__items {
+    .ql-formats {
       background: inherit !important;
-      .ck-button {
+      button,
+      select {
         min-width: inherit !important;
         min-height: inherit !important;
         width: 100%;
@@ -142,7 +143,7 @@
         }
       }
     }
-    input:not([type='checkbox']) {
+    input:not([type="checkbox"]) {
       width: 84%;
       @extend %textCenter;
       border: none;
@@ -155,7 +156,7 @@
       font-family: $font-family-regular;
       height: $answer-height !important;
     }
-    input[type='checkbox'] {
+    input[type="checkbox"] {
       height: 100% !important;
     }
   }
@@ -169,7 +170,7 @@
   background: var(--tab-gray);
   @extend %themeRadius;
   .unique-component {
-    .ck-content {
+    .ql-editor {
       background: var(--solitude-light) !important;
     }
   }

@@ -10,6 +10,7 @@ import "./QuillLatex";
 import "./QuillAutoLink";
 import "./QuillMediaEmbed";
 import "./QuillImageUpload"
+import { validateHint } from "components/build/questionService/ValidateQuestionService";
 
 function randomEditorId() {
      return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -20,6 +21,7 @@ interface QuillEditorProps {
     disabled: boolean;
     allowLinks?: boolean;
     allowMediaEmbed?: boolean;
+    validate?: boolean;
     toolbar: string[];
     onChange(data: string): void;
 }
@@ -56,8 +58,10 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         image: <button className="ql-image" />,
     };
 
+    const valid = (!props.validate || props.data);
+
     return (
-        <div className="quill-document-editor">
+        <div className={`quill-document-editor${valid ? "" : " content-invalid"}`}>
             <div className={`ql-toolbar quill-${uniqueId}`}>
                 <div className="ql-formats">
                 {props.toolbar.map((item) => (
