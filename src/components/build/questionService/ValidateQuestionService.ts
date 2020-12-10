@@ -1,6 +1,7 @@
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, Hint, HintStatus
 } from 'model/question';
+import { stripHtml } from './ConvertService';
 import uniqueValidator from './UniqueValidator';
 
 const getUniqueComponent = (components: any[]) => {
@@ -24,7 +25,7 @@ const validateComponentValues = (components: any[]) => {
     || c.type === QuestionComponentTypeEnum.Sound
   });
 
-  let invalid = comps.find(c => !c.value || c.value === "<p><br></p>");
+  let invalid = comps.find(c => !c.value || !stripHtml(c.value));
   if (invalid) {
     return false;
   }
@@ -66,7 +67,7 @@ export const isHintEmpty = (hint: Hint) => {
 export function validateQuestion(question: Question) {
   const {type, hint, components} = question;
 
-  if (!question.firstComponent || !question.firstComponent.value || question.firstComponent.value === "<p><br></p>") {
+  if (!question.firstComponent || !question.firstComponent.value || !stripHtml(question.firstComponent.value)) {
     return false;
   }
 

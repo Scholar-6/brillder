@@ -20,6 +20,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, d
     let comp = Object.assign({}, data);
     comp.value = htmlString;
     props.updateComponent(comp, index);
+    props.save();
   }
 
   return (
