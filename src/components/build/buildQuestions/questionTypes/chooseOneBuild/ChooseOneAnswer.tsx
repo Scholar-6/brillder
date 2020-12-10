@@ -77,6 +77,11 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     }
   }
 
+  let isValid = !(validationRequired && !checkBoxValid);
+  if (isValid === false) {
+    className += ' invalid-answer';
+  }
+
   const renderAnswerType = (answer: ChooseOneAnswer) => {
     if (answer.answerType === QuestionValueType.Sound) {
       return (
@@ -115,6 +120,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           answer={answer as any}
           type={answer.answerType || QuestionValueType.None}
           locked={locked}
+          isValid={!(validationRequired && !checkBoxValid)}
           fileName={answer.valueFile}
           update={setImage}
         />
@@ -135,6 +141,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           locked={locked}
           answer={answer}
           save={setSound}
+          isValid={!(validationRequired && !checkBoxValid)}
           clear={() => onTextChanged(answer, '')}
         />
       </div>

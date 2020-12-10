@@ -12,6 +12,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 interface SoundProps {
   locked: boolean;
   answer: ChooseOneAnswer;
+  isValid?: boolean;
   save(soundFile: string, caption: string): void;
   clear(): void;
 }
@@ -65,9 +66,13 @@ class SoundRecord extends React.Component<SoundProps, SoundState> {
         </div>
       );
     }
+    let className = 'sound-record-button';
+    if (this.props.isValid === false) {
+      className += ' invalid-color';
+    }
     return (
       <div
-        className="sound-record-button"
+        className={className}
         onClick={() => {
           if (!this.props.locked) {
             this.setOpen(true);
