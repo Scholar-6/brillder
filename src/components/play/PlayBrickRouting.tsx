@@ -35,13 +35,14 @@ import PlayLeftSidebar from './PlayLeftSidebar';
 import { PlayMode } from './model';
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames } from "components/proposal/model";
-import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
+import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
 import { getAssignQueryString, getPlayPath } from "./service";
 import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";
 import map from "components/map";
 import userActions from 'redux/actions/user';
 import { User } from "model/user";
 import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 
 function shuffle(a: any[]) {
@@ -82,6 +83,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [searchString, setSearchString] = React.useState("");
 
   setBrillderTitle(brick.title);
+
+  // by default move to intro
+  let splited = location.pathname.split('/');
+  if (splited.length === 4) {
+    props.history.push(`/play/brick/${brick.id}/intro`);
+    return <PageLoader content="...Getting Brick..." />;
+  }
 
   const updateAttempts = (attempt: any, index: number) => {
     attempts[index] = attempt;

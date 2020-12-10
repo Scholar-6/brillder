@@ -49,11 +49,27 @@
           }
         }
 
-        .svg {
+        .tab-icon-container {
+          display: flex;
           width: 3.8vh;
           height: 3.8vh;
           margin-top: 1.2vh;
           margin-left: 2.4vw;
+          .svg {
+            height: 100%;
+            width: 100%;
+          }
+          .custom-tooltip {
+            margin-top: 4.1vh;
+            letter-spacing: 0;
+            text-transform: none;
+          }
+          &.personal .custom-tooltip {
+            margin-left: -2vw;
+          }
+          &.public .custom-tooltip {
+            margin-left: -2.7vw;
+          }
         }
       }
 

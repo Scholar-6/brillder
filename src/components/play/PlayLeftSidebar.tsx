@@ -198,7 +198,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   renderButtons() {
     if (this.props.isPreview) {
       if (this.props.sidebarRolledUp) {
-        let label = "BACK TO BUILD";
         return (
           <div className="back-hover-area small" onClick={() => this.moveToBuild()}>
             <div className="create-icon create-icon-small svgOnHover">

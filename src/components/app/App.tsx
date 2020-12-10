@@ -38,14 +38,14 @@ import UnauthorizedRoute from './UnauthorizedRoute';
 import BrickWrapper from './BrickWrapper';
 
 import { setBrillderTitle } from 'components/services/titleService';
-import { setupZendesk } from 'components/services/zendesk';
+import { setupZendesk } from 'services/zendesk';
 import map from 'components/map';
 import { isMobile } from 'react-device-detect';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
 import TeachPage from 'components/teach/assignments/TeachPage';
 import Terms from 'components/terms/Terms';
 import { connect } from 'react-redux';
-import ClassInvitationDialog from 'components/baseComponents/classInvitationDialog/ClassInvitationDialog';
+import PlayPreviewRoute from './PlayPreviewRoute';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -121,7 +121,7 @@ const App: React.FC<AppProps> = props => {
     <ThemeProvider theme={theme}>
       {/* all page routes are here order of routes is important */}
       <Switch>
-        <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
+        <UnauthorizedRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <UnauthorizedRoute path={map.ViewAllPage} component={ViewAll} />
 
@@ -132,7 +132,7 @@ const App: React.FC<AppProps> = props => {
         <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />
         <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
 
-        <BuildBrickRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
+        <PlayPreviewRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId/investigation/question-component/:questionId" component={InvestigationBuildPage} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId/investigation/question/:questionId" component={InvestigationBuildPage} location={location} />

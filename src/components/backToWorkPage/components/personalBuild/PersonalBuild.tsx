@@ -289,7 +289,6 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
             build={this.props.build}
             review={this.props.review}
             publish={this.props.publish}
-            isTeach={this.props.isTeach}
             onCoreSwitch={this.props.toggleCore.bind(this)}
           />
             <div className="tab-content">

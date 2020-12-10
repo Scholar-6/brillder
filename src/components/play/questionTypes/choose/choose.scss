@@ -10,11 +10,14 @@
     padding: 0 !important;
 
     .image-container {
+      display: flex;
       padding-left: 2vw;
       padding-right: 2vw;
-      padding-top: 1vh;
+      padding-top: 0.8vh;
+      padding-bottom: 0.8vh;
       > img {
-        width: auto;
+        width: auto !important;
+        margin: 0 !important;
         max-height: 20vh;
       }
     }

@@ -386,35 +386,36 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 />
                 {questions.map((q, i) => {
                   if (i <= this.state.questionIndex + 1 && i >= this.state.questionIndex - 1) {
-                    return (
-                      <div key={i}>
-                        {i === 0 ? <div className="page3-cover first" style={getQuestionCoverStyle(i)}></div> : ""}
-                        {this.state.attempt &&
-                        <QuestionPage
-                          i={i}
-                          question={q}
-                          questionIndex={this.state.questionIndex}
-                          activeAttempt={this.state.attempt}
-                          mode={this.state.mode}
-                          bookHovered={this.state.bookHovered}
-                          bookState={this.state.bookState}
-                          prevQuestion={this.prevQuestion.bind(this)}
-                        />}
-                        <AnswersPage
-                          i={i}
-                          mode={this.state.mode}
-                          isLast={questions.length - 1 === i}
-                          questionIndex={this.state.questionIndex}
-                          activeAttempt={this.state.attempt}
-                          bookHovered={this.state.bookHovered}
-                          bookState={this.state.bookState}
-                          setMode={mode => this.setState({mode})}
-                          nextQuestion={this.nextQuestion.bind(this)}
-                        />
-                      </div>
-                    );
+                    let res = [];
+                    if (i === 0) {
+                      res.push(<div className="page3-cover first" style={getQuestionCoverStyle(i)}></div>);
+                    }
+                    if (this.state.attempt) {
+                      res.push(<QuestionPage
+                        i={i}
+                        question={q}
+                        questionIndex={this.state.questionIndex}
+                        activeAttempt={this.state.attempt}
+                        mode={this.state.mode}
+                        bookHovered={this.state.bookHovered}
+                        bookState={this.state.bookState}
+                        prevQuestion={this.prevQuestion.bind(this)}
+                      />);
+                    }
+                    res.push(<AnswersPage
+                      i={i}
+                      mode={this.state.mode}
+                      isLast={questions.length - 1 === i}
+                      questionIndex={this.state.questionIndex}
+                      activeAttempt={this.state.attempt}
+                      bookHovered={this.state.bookHovered}
+                      bookState={this.state.bookState}
+                      setMode={mode => this.setState({mode})}
+                      nextQuestion={this.nextQuestion.bind(this)}
+                    />);
+                    return res;
                   } else {
-                    return <div key={i}></div>
+                    return <div key={i} className={`question${i}`}></div>
                   }
                 })}
 

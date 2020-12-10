@@ -12,7 +12,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
 
-interface BuildRouteProps {
+interface PreviewRouteProps {
   exact?: any;
   path: string;
   component: any;
@@ -26,7 +26,7 @@ interface BuildRouteProps {
   fetchBrick(id: number): void;
 }
 
-const BuildBrickRoute: React.FC<BuildRouteProps> = ({
+const PlayPreviewRoute: React.FC<PreviewRouteProps> = ({
   component: Component,
   ...rest
 }) => {
@@ -61,10 +61,10 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
             return <PageLoader content="...Getting Brick..." />;
           }
 
-          // move to investigation
-          let found = rest.location.pathname.indexOf('/investigation');
-          if (found === -1) {
-            props.history.push(`/build/brick/${brickId}/investigation`);
+          // by default move to intro
+          let splited = props.location.pathname.split('/');
+          if (splited.length === 4) {
+            props.history.push(`/play-preview/brick/${brickId}/intro`);
             return <PageLoader content="...Getting Brick..." />;
           }
 
@@ -95,4 +95,4 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(mapState, mapDispatch);
 
-export default connector(BuildBrickRoute);
+export default connector(PlayPreviewRoute);
