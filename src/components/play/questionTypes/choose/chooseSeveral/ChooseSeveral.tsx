@@ -3,6 +3,7 @@ import { Button } from '@material-ui/core';
 
 import '../choose.scss';
 import './ChooseSeveral.scss';
+import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import { CompQuestionProps } from '../../types';
 import { ComponentAttempt } from 'components/play/model';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
@@ -111,11 +112,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     } else if (answer.answerType === QuestionValueType.Sound && answer.soundFile) {
       return (
         <div style={{width: '100%'}}>
-          <audio
-            controls
-            style={{width: '100%'}}
-            src={fileUrl(answer.soundFile)}
-          />
+          <Audio src={answer.soundFile} />
           <div>{answer.soundCaption ? answer.soundCaption : 'Click to select'}</div>
         </div>
       );
