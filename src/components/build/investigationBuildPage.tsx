@@ -30,7 +30,7 @@ import {
   parseQuestion,
   getUniqueComponent,
 } from "./questionService/QuestionService";
-import { convertToQuestionType } from "./questionService/ConvertService";
+import { convertToQuestionType, stripHtml } from "./questionService/ConvertService";
 import { User } from "model/user";
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
@@ -812,7 +812,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     history.push(`/build/brick/${brickId}/investigation/question-component/${questions[questions.length - 1].id}`);
   }
 
-  if (!synthesis || synthesis === "<p><br></p>") {
+  if (!synthesis || !stripHtml(synthesis)) {
     isValid = false;
   }
 
