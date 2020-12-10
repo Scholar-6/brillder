@@ -1,7 +1,6 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface CustomColumnProps {
   icon: string;
@@ -11,20 +10,15 @@ interface CustomColumnProps {
   onClick(): void;
 }
 
-const CustomColumn: React.FC<CustomColumnProps> = props => {
+const CustomColumn: React.FC<CustomColumnProps> = (props) => {
   return (
     <Grid container item xs={props.size} justify="center">
       <div>
         <div className="button-container" onClick={props.onClick}>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + '#' + props.icon} style={{strokeWidth: 1.5}} />
-          </svg>
+          <SpriteIcon name={props.icon} />
         </div>
         <div className="link-text">{props.title}</div>
-        <div className="link-description">
-          {props.label}
-        </div>
+        <div className="link-description">{props.label}</div>
       </div>
     </Grid>
   );

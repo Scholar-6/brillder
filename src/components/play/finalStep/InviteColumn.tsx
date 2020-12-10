@@ -1,7 +1,6 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface InviteProps {
   size?: 3 | 4 | 5 | 6 | 7 | 8;
@@ -10,15 +9,12 @@ interface InviteProps {
   onClick(): void;
 }
 
-const InviteColumn: React.FC<InviteProps> = props => {
+const InviteColumn: React.FC<InviteProps> = (props) => {
   return (
     <Grid container item xs={props.size ? props.size : 5} justify="center">
       <div>
         <div className="button-container" onClick={props.onClick}>
-          <svg className="svg active inline-button">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#user-plus"} style={{strokeWidth: 1.5}} />
-          </svg>
+          <SpriteIcon name="user-plus" className="active inline-button" />
         </div>
         <div className="link-text">Invite</div>
         <div className="link-description">
