@@ -127,3 +127,21 @@
     }
   }
 }
+
+// live play
+.introduction-page .custom-audio-controls {
+  width: 85%;
+  .input-container input {
+      width: 20vw;
+  }
+  .volume-container-main input {
+    width: 10vw;
+    background: #C1C2C3;
+  }
+  .time-text {
+    width: 9vw;
+    letter-spacing: -0.05vw;
+    @extend %flexCenter;
+  }
+  font-size: 0.8vw;
+}
