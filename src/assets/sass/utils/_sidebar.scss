@@ -333,6 +333,9 @@
         text-orientation: upright;
         overflow: hidden;
         letter-spacing: -0.6vh;
+        @-moz-document url-prefix() {
+          letter-spacing: 0.8vh;
+        }
       }
 
       &.small {
