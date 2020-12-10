@@ -28,14 +28,20 @@ interface QuillEditorProps {
 }
 
 const QuillEditor: React.FC<QuillEditorProps> = (props) => {
-    const onChange = React.useCallback(
+    const callOnChange = React.useCallback(
         _.debounce((content: string, delta: Delta, source: Sources) => {
             props.onChange(content);
         }, 500),
         []
     );
 
+    const onChange = (content: string, delta: Delta, source: Sources) => {
+        setData(content);
+        callOnChange(content, delta, source);
+    }
+
     const [uniqueId, setUniqueId] = React.useState(randomEditorId());
+    const [data, setData] = React.useState(props.data);
 
     const modules = {
         toolbar: {
@@ -63,7 +69,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         image: <button className="ql-image" />,
     };
 
-    const valid = (!props.validate || props.data);
+    const valid = (!props.validate || data);
 
     return (
         <div className={`quill-document-editor${valid ? "" : " content-invalid"}`}>
@@ -76,7 +82,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
             </div>
             <ReactQuill
                 theme="snow"
-                value={props.data || ""}
+                value={data || ""}
                 onChange={onChange}
                 readOnly={props.disabled}
                 placeholder={props.placeholder}
