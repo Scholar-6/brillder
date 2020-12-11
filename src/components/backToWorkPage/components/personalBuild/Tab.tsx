@@ -13,6 +13,15 @@ const TabComponent: React.FC<TabProps> = (props) => {
   const [publicHovered, publicHover] = React.useState(false);
   const [personalHovered, personalHover] = React.useState(false);
 
+  const renderPublicTip = () => {
+    return (
+      <div className="custom-tooltip">
+        <div>Educate the World</div>
+        <div>These are bricks you hope to publish to our core library</div>
+      </div>
+    );
+  }
+
   const getPublicTab = () => {
     return (
       <div key={2} className="no-active" onClick={props.onCoreSwitch}>
@@ -20,7 +29,7 @@ const TabComponent: React.FC<TabProps> = (props) => {
           <span>Public</span>
           <div className="tab-icon-container public" onMouseEnter={() => publicHover(true)} onMouseLeave={() => publicHover(false)}>
             <SpriteIcon name="globe" className="no-active" />
-            {publicHovered && <div className="custom-tooltip">Educate the World</div>}
+            {publicHovered && renderPublicTip()}
           </div>
           <div className="round-button-container">
             <div className="round-button draft">{props.draft}</div>
@@ -33,6 +42,15 @@ const TabComponent: React.FC<TabProps> = (props) => {
     );
   };
 
+  const renderPersonalTip = () => {
+    return (
+      <div className="custom-tooltip">
+        <div>Keep Control</div>
+        <div>These are bricks you plan to use within your own bubbles</div>
+      </div>
+    );
+  }
+
   const getPersonalTab = () => {
     return (
       <div key={3} className="active">
@@ -40,7 +58,7 @@ const TabComponent: React.FC<TabProps> = (props) => {
           <span>Personal</span>
           <div className="tab-icon-container personal" onMouseEnter={() => personalHover(true)} onMouseLeave={() => personalHover(false)}>
             <SpriteIcon name="key" className="active" />
-            {personalHovered && <div className="custom-tooltip">Keep Control</div>}
+            {personalHovered && renderPersonalTip()}
           </div>
         </div>
       </div>
