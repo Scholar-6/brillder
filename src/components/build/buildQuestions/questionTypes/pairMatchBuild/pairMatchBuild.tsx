@@ -72,7 +72,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   }
 
   return (
-    <div className="pair-match-build unique-component">
+    <div className="pair-match-build">
       <div className="component-title">
         Enter Pairs below so that Option 1 matches with Answer 1 and so on.
         These will be randomised in the play interface.
