@@ -128,12 +128,4 @@
     max-width: 27.5% !important;
     flex-basis: 27.5% !important;
   }
-  .reundo-button-container {
-    @extend %flexToXCenter;
-    width: 100%;
-    > div {
-      margin-left: 2.6vw;
-      margin-right: 2.6vw;
-    }
-  }
 }
