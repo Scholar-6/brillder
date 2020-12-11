@@ -5,6 +5,7 @@ import {Answer} from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 
 export interface PairOptionProps {
@@ -45,6 +46,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     answer.optionFile = "";
     answer.optionType = QuestionValueType.String;
     update();
+    save();
   }
 
   const setImage = (fileName: string) => {
@@ -64,14 +66,12 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
   return (
     <Grid container item xs={6}>
       <div className={`unique-component pair-match-option ${customClass}`}>
-        <DocumentWirisCKEditor
+        <QuillEditor
           disabled={locked}
-          editOnly={editOnly}
           data={answer.option}
-          validationRequired={validationRequired}
-          toolbar={['latex', 'chemType']}
+          validate={validationRequired}
+          toolbar={['latex']}
           placeholder={"Enter Option " + (index + 1) + "..."}
-          onBlur={() => save()}
           onChange={value => optionChanged(answer, value)}
         />
         <QuestionImageDropZone

@@ -5,6 +5,7 @@ import { Answer } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 
 export interface PairAnswerProps {
@@ -30,6 +31,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     answer.valueFile = "";
     answer.answerType = QuestionValueType.String;
     update();
+    save();
   }
 
   const removeImage = () => {
@@ -78,16 +80,14 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     <Grid container item xs={6}>
       <div className={`unique-component pair-match-answer ${customClass}`}>
         {renderDeleteButton()}
-        <DocumentWirisCKEditor
+        <QuillEditor
           disabled={locked}
-          editOnly={editOnly}
           data={answer.value}
-          validationRequired={validationRequired}
+          validate={validationRequired}
           toolbar={['latex', 'chemType']}
           placeholder={"Enter Answer " + (index + 1) + "..."}
           onBlur={() => {
             onBlur();
-            save();
           }}
           onChange={value => answerChanged(answer, value)}
         />

@@ -9,6 +9,7 @@ import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/Doc
 import sprite from "assets/img/icons-sprite.svg";
 import { showSameAnswerPopup } from '../service/questionBuild';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 export interface CategoriseData {
   categories: SortCategory[];
@@ -73,6 +74,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     answer.valueFile = '';
     answer.answerType = QuestionValueType.String;
     update();
+    save();
   }
 
   const addAnswer = (category: SortCategory) => {
@@ -90,6 +92,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   const categoryChanged = (category: any, value: string) => {
     category.name = value;
     update();
+    save();
   }
 
   const addCategory = () => {
@@ -131,16 +134,14 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             </button>
             : ""
         }
-        <DocumentWirisEditorComponent
+        <QuillEditor
           disabled={locked}
-          editOnly={editOnly}
           data={answer.value}
           placeholder="Enter Answer..."
-          toolbar={['latex', 'chemType']}
-          validationRequired={validationRequired}
+          toolbar={['latex']}
+          validate={validationRequired}
           onBlur={() => {
             showSameAnswerPopup(i, category.answers, openSameAnswerDialog);
-            save();
           }}
           onChange={value => { answerChanged(answer, value) }}
         />
@@ -166,14 +167,12 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
               </button>
               : ""
           }
-          <DocumentWirisEditorComponent
+          <QuillEditor
             disabled={locked}
-            editOnly={editOnly}
             data={category.name}
             placeholder="Enter Category Heading..."
             toolbar={['latex', 'chemType']}
-            validationRequired={validationRequired}
-            onBlur={() => save()}
+            validate={validationRequired}
             onChange={value => categoryChanged(category, value)}
           />
           {
