@@ -10,13 +10,6 @@
   background: white;
   border-radius: 0 0 $editor-radius $editor-radius;
 
-  &:not(.active) {
-    .drag-box-name {
-      // animation: pulse1 1.5s ease infinite;
-      // animation: heartbeat 2s infinite;
-    }
-  }
-
   .invalid {
     background: var(--theme-orange) !important;
   }
@@ -395,7 +388,7 @@
 
   .custom-tooltip {
     position: absolute;
-    margin-left: -1.2vw;
+    margin-left: -0.5vw;
     background: var(--off-white);
     font-family: $font-family-regular;
     border-radius: 0.2vw;
@@ -408,7 +401,7 @@
 
 .redo-button-container {
   .custom-tooltip {
-    margin-left: -1.1vw;
+    margin-left: -0.3vw;
   }
 }
 
@@ -437,5 +430,28 @@
   .hint-container .ck-placeholder:before {
     color: #ACACAC;
     font-family: $font-family-bold;
+  }
+}
+
+.comments-sidebar-default {
+  width: 100%;
+
+  .comment-button-container {
+    @extend %flexToXCenter;
+  }
+
+  .reundo-button-container {
+    margin-top: 1vw;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    > div {
+      margin-left: 2.6vw;
+      margin-right: 2.6vw;
+      button {
+        height: 2vw;
+        width: 2vw;
+      }
+    }
   }
 }

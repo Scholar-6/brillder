@@ -199,58 +199,56 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
           </Grid>
           <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
             {!commentsShown &&
-              <Grid container item alignItems="center" style={{ height: '100%' }}>
-                <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
-                  <Grid item container direction="row" justify="space-evenly">
-                    <UndoButton
-                      undo={props.undo}
-                      canUndo={() => props.undoRedoService.canUndo()}
-                    />
-                    <RedoButton
-                      redo={props.redo}
-                      canRedo={() => props.undoRedoService.canRedo()}
-                    />
+              <div className="comments-sidebar-default">
+                <div className="reundo-button-container">
+                  <UndoButton
+                    undo={props.undo}
+                    canUndo={() => props.undoRedoService.canUndo()}
+                  />
+                  <RedoButton
+                    redo={props.redo}
+                    canRedo={() => props.undoRedoService.canRedo()}
+                  />
+                </div>
+                <div className="comment-button-container">
+                  <CommentButton
+                    location={CommentLocation.Question}
+                    questionId={question.id}
+                    setCommentsShown={() => setCommentsShown(true)}
+                  />
+                </div>
+                <Grid container direction="row" alignItems="center">
+                  <Grid container justify="center" item sm={12} className="select-type-container">
+                    <FormControl variant="outlined">
+                      Change Answer type here:
+                      <Select
+                        className="select-question-type"
+                        disabled={locked}
+                        value={type}
+                        inputProps={{
+                          name: 'age',
+                          id: 'age-native-simple',
+                        }}
+                        onChange={(e) => {
+                          props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
+                        }}
+                      >
+                        {
+                          typeArray.map((typeName, i) => {
+                            const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
+                            return (
+                              <MenuItem key={i} value={type}>
+                                {SplitByCapitalLetters(typeName)}
+                              </MenuItem>
+                            )
+                          })
+                        }
+                      </Select>
+                    </FormControl>
                   </Grid>
-                  <div style={{marginTop: '2.1vh'}}>
-                    <CommentButton
-                      location={CommentLocation.Question}
-                      questionId={question.id}
-                      setCommentsShown={() => setCommentsShown(true)}
-                    />
-                  </div>
-                  <Grid container direction="row" alignItems="center">
-                    <Grid container justify="center" item sm={12} className="select-type-container">
-                      <FormControl variant="outlined">
-                        Change Answer type here:
-                        <Select
-                          className="select-question-type"
-                          disabled={locked}
-                          value={type}
-                          inputProps={{
-                            name: 'age',
-                            id: 'age-native-simple',
-                          }}
-                          onChange={(e) => {
-                            props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
-                          }}
-                        >
-                          {
-                            typeArray.map((typeName, i) => {
-                              const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
-                              return (
-                                <MenuItem key={i} value={type}>
-                                  {SplitByCapitalLetters(typeName)}
-                                </MenuItem>
-                              )
-                            })
-                          }
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-                  <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
                 </Grid>
-              </Grid>
+                <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+              </div>
             }
             <Grid className={`question-comments-panel ${!commentsShown && 'hidden'}`} item container direction="row" justify="flex-start" xs>
               <CommentPanel
