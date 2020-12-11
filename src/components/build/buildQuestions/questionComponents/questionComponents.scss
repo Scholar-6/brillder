@@ -90,11 +90,16 @@
     padding: 0;
     .ql-formats {
       background: inherit !important;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      margin: 0;
+      align-items: center;
+      justify-content: center;
       button,
       select {
         min-width: inherit !important;
         min-height: inherit !important;
-        width: 100%;
         height: 1.5vw;
         border: 0;
         margin: 0 !important;
