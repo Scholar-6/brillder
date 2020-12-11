@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
 import { checkTeacherEditorOrAdmin } from "components/services/brickService";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import map from "components/map";
 
 enum FieldName {
   animatedNotificationText = "animatedNotificationText",
@@ -11,6 +13,7 @@ enum FieldName {
 
 interface WelcomeProps {
   user: User;
+  history: any;
   notifications: Notification[] | null;
   notificationClicked(): void;
 }
@@ -23,6 +26,7 @@ interface WelcomeState {
   isTextClickable: boolean;
   animationStarted: boolean;
   interval: number | null;
+  nameHovered: boolean;
 }
 
 class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
@@ -41,7 +45,8 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
       animatedNotificationText2: '',
       animatedNotificationText3: '',
       isTextClickable: false,
-      animationStarted: false
+      animationStarted: false,
+      nameHovered: false
     } as any;
   }
 
@@ -161,7 +166,18 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
       <div className="welcome-box">
         <div>WELCOME TO</div>
         <div className="smaller">BRILLDER,</div>
-        <div className="welcome-name">{this.state.animatedName}</div>
+        <div
+          className="welcome-name"
+          onMouseEnter={() => this.setState({nameHovered: true})}
+          onMouseLeave={() => this.setState({nameHovered: false})}
+          onClick={()=> this.props.history.push(map.UserProfile)}
+        >
+          <div className="centered">
+            <SpriteIcon name="user-custom" />
+            {this.state.nameHovered && <div className="custom-tooltip">View Profile</div>}
+          </div>
+          {this.state.animatedName}
+        </div>
         <div
           className={className}
           onClick={this.props.notificationClicked}
