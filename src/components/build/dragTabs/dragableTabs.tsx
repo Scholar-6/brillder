@@ -215,6 +215,35 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       }
     };
 
+    const renderSynthesisTab = () => {
+      let className = 'drag-tile-container';
+      if (isSynthesisPage) {
+        className += ' synthesis-tab active';
+      }
+
+      return (
+        <GridListTile
+          onClick={() => {
+            if (props.tutorialSkipped) {
+              props.moveToSynthesis();
+            } else {
+              props.openSkipTutorial();
+            }
+          }}
+          className={className}
+          cols={1.5555}
+        >
+          <SynthesisTab
+            columns={columns}
+            tutorialStep={props.tutorialStep}
+            validationRequired={props.validationRequired}
+            synthesis={synthesis}
+            getHasReplied={getHasSynthesisReplied}
+          />
+        </GridListTile>
+      );
+    }
+
     return (
       <div
         className="drag-tabs"
@@ -255,28 +284,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             <PlusTab tutorialStep={props.tutorialStep} />
           </GridListTile>
           {(isSynthesisPresent || isSynthesisPage) && (
-            <GridListTile
-              onClick={() => {
-                if (props.tutorialSkipped) {
-                  props.moveToSynthesis();
-                } else {
-                  props.openSkipTutorial();
-                }
-              }}
-              className={
-                "drag-tile-container " +
-                (isSynthesisPage ? "synthesis-tab" : "")
-              }
-              cols={1.5555}
-            >
-              <SynthesisTab
-                columns={columns}
-                tutorialStep={props.tutorialStep}
-                validationRequired={props.validationRequired}
-                synthesis={synthesis}
-                getHasReplied={getHasSynthesisReplied}
-              />
-            </GridListTile>
+            renderSynthesisTab()
           )}
         </GridList>
       </div>

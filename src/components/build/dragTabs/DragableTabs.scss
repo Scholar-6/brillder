@@ -288,6 +288,14 @@ $tile-height: 100%;
   .drag-tile-container.active {
     .drag-tile {
       background: white !important;
+      .tab-number {
+        font-family: $font-family-bold !important;
+      }
+      .synthesis-tab-icon {
+        .svg {
+          stroke-width: 3;
+        }
+      }
     }
   }
 }
