@@ -25,6 +25,7 @@ interface QuillEditorProps {
     validate?: boolean;
     toolbar: string[];
     onChange(data: string): void;
+    onBlur?(): void;
 }
 
 const QuillEditor: React.FC<QuillEditorProps> = (props) => {
@@ -84,6 +85,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
                 theme="snow"
                 value={data || ""}
                 onChange={onChange}
+                onBlur={props.onBlur}
                 readOnly={props.disabled}
                 placeholder={props.placeholder}
                 modules={modules}

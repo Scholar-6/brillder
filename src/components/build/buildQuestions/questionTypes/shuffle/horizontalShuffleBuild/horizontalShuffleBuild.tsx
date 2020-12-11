@@ -9,6 +9,7 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import RemoveItemButton from '../../components/RemoveItemButton';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 export const getDefaultHorizontalShuffleAnswer = () => {
   const newAnswer = () => ({ value: "" });
@@ -41,6 +42,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
     answer.valueFile = "";
     answer.answerType = QuestionValueType.String;
     update();
+    save();
   }
 
   const addAnswer = () => {
@@ -85,16 +87,14 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
             fileName={answer.valueFile}
             update={setImage}
           />
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={locked}
-            editOnly={editOnly}
             data={answer.value}
-            validationRequired={validationRequired}
-            toolbar={['latex', 'chemType']}
+            validate={validationRequired}
+            toolbar={['latex']}
             placeholder={"Enter A" + (i + 1) + "..."}
             onBlur={() => {
               showSameAnswerPopup(i, state.list, openSameAnswerDialog);
-              save();
             }}
             onChange={value => changed(answer, value)}
           />
