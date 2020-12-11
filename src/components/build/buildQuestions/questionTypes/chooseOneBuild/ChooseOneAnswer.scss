@@ -103,23 +103,4 @@
       }
     }
   }
-
-  // invalid colors
-  &.invalid-answer {
-    .right-top-icon svg {
-      color: var(--white);
-      &:hover {
-        color: var(--theme-dark-blue) !important;
-      }
-    }
-    .question-image-drop .answer-image-drop-button:hover {
-      span,
-      svg {
-        color: white !important;
-      }
-    }
-    .sound-record-button:hover .svg {
-      color: var(--white);
-    }
-  }
 }
