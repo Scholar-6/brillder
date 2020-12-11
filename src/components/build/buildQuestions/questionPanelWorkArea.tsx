@@ -23,6 +23,7 @@ import { Brick } from 'model/brick';
 import UndoRedoService from 'components/services/UndoRedoService';
 import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoButton from '../baseComponents/UndoButton';
+import RedoButton from '../baseComponents/redoButton';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -197,7 +198,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             />
           </Grid>
           <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
-          {!commentsShown &&
+            {!commentsShown &&
               <Grid container item alignItems="center" style={{ height: '100%' }}>
                 <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
                   <Grid item container direction="row" justify="space-evenly">
@@ -205,20 +206,10 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                       undo={props.undo}
                       canUndo={() => props.undoRedoService.canUndo()}
                     />
-                    <div className="redo-button-container">
-                      <button
-                        className="btn btn-transparent svgOnHover redo-button"
-                        onMouseLeave={() => setRedoHover(false)}
-                        onMouseEnter={()=> setRedoHover(true)}
-                        onClick={props.redo}
-                      >
-                        <SpriteIcon
-                          name="redo"
-                          className={`w100 h100 active ${props.undoRedoService.canRedo() && "text-theme-orange"}`}
-                        />
-                      </button>
-                      {redoHovered && <div className="custom-tooltip">Redo</div>}
-                    </div>
+                    <RedoButton
+                      redo={props.redo}
+                      canRedo={() => props.undoRedoService.canRedo()}
+                    />
                   </Grid>
                   <div style={{marginTop: '2.1vh'}}>
                     <CommentButton
