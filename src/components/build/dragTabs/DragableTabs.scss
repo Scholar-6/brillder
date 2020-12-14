@@ -139,7 +139,8 @@ $tile-height: 100%;
       background: var(--white) !important;
     }
     .outer-circle {
-      background: rgb(155, 154, 154) !important;
+      opacity: 0.5;
+      background: var(--white) !important;
     }
   }
   .editor-border {
@@ -199,17 +200,17 @@ $tile-height: 100%;
     &.has-replied {
       > div {
         &.outer-circle {
-          background-color: var(--theme-yellow-alpha5);
+          background-color: var(--theme-yellow-alpha5) !important;
         }
         &.inner-circle {
-          background-color: var(--theme-yellow);
+          background-color: var(--theme-yellow) !important;
         }
         @media (prefers-color-scheme: dark) {
           &.outer-circle {
-            background-color: var(--theme-yellow-alpha5);
+            background-color: var(--theme-yellow-alpha5) !important;
           }
           &.inner-circle {
-            background-color: var(--theme-yellow);
+            background-color: var(--theme-yellow) !important;
           }
         }
       }
@@ -218,6 +219,28 @@ $tile-height: 100%;
   .drag-tile .unread-indicator {
     .inner-circle {
       margin: 25%;
+    }
+  }
+}
+
+// active and invalid
+.drag-tabs {
+  .drag-tile-container.active .drag-tile.invalid {
+    .unread-indicator {
+      .outer-circle {
+        background-color: var(--theme-orange-alpha5) !important;
+      }
+      .inner-circle {
+        background-color: var(--theme-orange) !important;
+      }
+    }
+    .unread-indicator.has-replied {
+      .outer-circle {
+        background-color: var(--theme-yellow-alpha5) !important;
+      }
+      .inner-circle {
+        background-color: var(--theme-yellow) !important;
+      }
     }
   }
 }
@@ -265,6 +288,14 @@ $tile-height: 100%;
   .drag-tile-container.active {
     .drag-tile {
       background: white !important;
+      .tab-number {
+        font-family: $font-family-bold !important;
+      }
+      .synthesis-tab-icon {
+        .svg {
+          stroke-width: 3;
+        }
+      }
     }
   }
 }

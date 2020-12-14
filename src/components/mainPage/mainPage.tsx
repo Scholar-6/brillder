@@ -417,6 +417,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         <div className="welcome-col">
           <WelcomeComponent
             user={this.props.user}
+            history={this.props.history}
             notifications={this.props.notifications}
             notificationClicked={() => this.setState({ notificationExpanded: true })}
           />

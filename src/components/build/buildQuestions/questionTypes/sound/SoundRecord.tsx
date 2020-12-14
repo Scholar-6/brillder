@@ -45,9 +45,7 @@ class SoundRecord extends React.Component<SoundProps, SoundState> {
     const { current } = this.state.audioRef;
     if (current) {
       current.play();
-      current.onended = () => {
-
-      }
+      current.onended = () => { }
     }
   }
 
@@ -63,7 +61,7 @@ class SoundRecord extends React.Component<SoundProps, SoundState> {
       return (
         <div>
           <RemoveButton onClick={() => this.setClear(true)} />
-          <Audio answer={answer} />
+          <Audio src={answer.soundFile} />
         </div>
       );
     }

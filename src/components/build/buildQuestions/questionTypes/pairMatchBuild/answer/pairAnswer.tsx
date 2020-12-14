@@ -62,9 +62,21 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     return "";
   }
 
-  let customClass = '';
+  let customClass = 'unique-component pair-match-answer';
   if (answer.optionType === QuestionValueType.Image || answer.answerType === QuestionValueType.Image) {
-    customClass = 'pair-image';
+    customClass += ' pair-image';
+  }
+
+  let isValid = null;
+  if (validationRequired) {
+    isValid = true;
+    if ((answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None || !answer.answerType) && !answer.value) {
+      isValid = false;
+    }
+  }
+
+  if (isValid === false) {
+    customClass += ' invalid-answer';
   }
 
   const setImage = (fileName: string) => {
@@ -78,12 +90,13 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
 
   return (
     <Grid container item xs={6}>
-      <div className={`unique-component pair-match-answer ${customClass}`}>
+      <div className={customClass}>
         {renderDeleteButton()}
         <QuillEditor
           disabled={locked}
           data={answer.value}
           validate={validationRequired}
+          isValid={isValid}
           toolbar={['latex', 'chemType']}
           placeholder={"Enter Answer " + (index + 1) + "..."}
           onBlur={() => {

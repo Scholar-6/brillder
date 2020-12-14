@@ -41,6 +41,10 @@
     }
   }
 
+  .classroom-title {
+    color: var(--theme-dark-blue);
+  }
+
   .short-brick-info {
     font-size: 0.8vw;
     padding-left: 2.5vw;
@@ -59,6 +63,7 @@
       width: 100%;
       font-size: 0.9vw;
       text-align: justify;
+      color: var(--theme-dark-blue);
     }
   }
   .vertical-brick {
@@ -121,6 +126,7 @@
     }
   }
   .assignment-second-part {
+    color: var(--theme-dark-blue);
     display: flex;
     width: 30vw;
     .users-complete-count {

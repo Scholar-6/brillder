@@ -23,6 +23,7 @@ interface QuillEditorProps {
     allowLinks?: boolean;
     allowMediaEmbed?: boolean;
     validate?: boolean;
+    isValid?: boolean | null;
     toolbar: string[];
     onChange(data: string): void;
     onBlur?(): void;
@@ -70,7 +71,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         image: <button className="ql-image" />,
     };
 
-    const valid = (!props.validate || data);
+    const valid = (!props.validate || (data && (props.isValid !== false)));
 
     return (
         <div className={`quill-document-editor${valid ? "" : " content-invalid"}`}>

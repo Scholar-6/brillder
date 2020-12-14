@@ -23,6 +23,7 @@ import { Brick } from 'model/brick';
 import UndoRedoService from 'components/services/UndoRedoService';
 import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoButton from '../baseComponents/UndoButton';
+import RedoButton from '../baseComponents/redoButton';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -197,67 +198,57 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             />
           </Grid>
           <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
-          {!commentsShown &&
-              <Grid container item alignItems="center" style={{ height: '100%' }}>
-                <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
-                  <Grid item container direction="row" justify="space-evenly">
-                      <UndoButton
-                        undo={props.undo}
-                        canUndo={() => props.undoRedoService.canUndo()}
-                      />
-                    <div className="redo-button-container">
-                      <button
-                        className="btn btn-transparent svgOnHover redo-button"
-                        onMouseLeave={() => setRedoHover(false)}
-                        onMouseEnter={()=> setRedoHover(true)}
-                        onClick={props.redo}
-                      >
-                        <SpriteIcon
-                          name="redo"
-                          className={`w100 h100 active ${props.undoRedoService.canRedo() && "text-theme-orange"}`}
-                        />
-                      </button>
-                      {redoHovered && <div className="custom-tooltip">Redo</div>}
-                    </div>
-                  </Grid>
+            {!commentsShown &&
+              <div className="comments-sidebar-default">
+                <div className="reundo-button-container">
+                  <UndoButton
+                    undo={props.undo}
+                    canUndo={() => props.undoRedoService.canUndo()}
+                  />
+                  <RedoButton
+                    redo={props.redo}
+                    canRedo={() => props.undoRedoService.canRedo()}
+                  />
+                </div>
+                <div className="comment-button-container">
                   <CommentButton
                     location={CommentLocation.Question}
                     questionId={question.id}
                     setCommentsShown={() => setCommentsShown(true)}
                   />
-                  <Grid container direction="row" alignItems="center">
-                    <Grid container justify="center" item sm={12} className="select-type-container">
-                      <FormControl variant="outlined">
-                        Change Answer type here:
-                        <Select
-                          className="select-question-type"
-                          disabled={locked}
-                          value={type}
-                          inputProps={{
-                            name: 'age',
-                            id: 'age-native-simple',
-                          }}
-                          onChange={(e) => {
-                            props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
-                          }}
-                        >
-                          {
-                            typeArray.map((typeName, i) => {
-                              const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
-                              return (
-                                <MenuItem key={i} value={type}>
-                                  {SplitByCapitalLetters(typeName)}
-                                </MenuItem>
-                              )
-                            })
-                          }
-                        </Select>
-                      </FormControl>
-                    </Grid>
+                </div>
+                <Grid container direction="row" alignItems="center">
+                  <Grid container justify="center" item sm={12} className="select-type-container">
+                    <FormControl variant="outlined">
+                      Change Answer type here:
+                      <Select
+                        className="select-question-type"
+                        disabled={locked}
+                        value={type}
+                        inputProps={{
+                          name: 'age',
+                          id: 'age-native-simple',
+                        }}
+                        onChange={(e) => {
+                          props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
+                        }}
+                      >
+                        {
+                          typeArray.map((typeName, i) => {
+                            const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
+                            return (
+                              <MenuItem key={i} value={type}>
+                                {SplitByCapitalLetters(typeName)}
+                              </MenuItem>
+                            )
+                          })
+                        }
+                      </Select>
+                    </FormControl>
                   </Grid>
-                  <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
                 </Grid>
-              </Grid>
+                <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+              </div>
             }
             <Grid className={`question-comments-panel ${!commentsShown && 'hidden'}`} item container direction="row" justify="flex-start" xs>
               <CommentPanel

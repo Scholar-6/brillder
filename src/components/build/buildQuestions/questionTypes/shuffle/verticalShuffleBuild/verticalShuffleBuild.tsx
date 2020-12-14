@@ -78,6 +78,18 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
       className += ' big-answer';
     }
 
+    let isValid = null;
+    if (validationRequired) {
+      isValid = true;
+      if ((answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None) && !answer.value) {
+        isValid = false;
+      }
+    }
+
+    if (isValid === false) {
+      className += ' invalid-answer';
+    }
+
     return (
       <div className={className} key={i}>
         <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
@@ -93,6 +105,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           data={answer.value}
           validate={validationRequired}
           toolbar={['latex']}
+          isValid={isValid}
           placeholder={"Enter Answer " + (i + 1) + "..."}
           onBlur={() => {
             showSameAnswerPopup(i, state.list, openSameAnswerDialog);

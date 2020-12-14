@@ -65,7 +65,7 @@
             text-transform: none;
           }
           &.personal .custom-tooltip {
-            margin-left: -2vw;
+            margin-left: -5vw;
           }
           &.public .custom-tooltip {
             margin-left: -2.7vw;
@@ -650,6 +650,13 @@
     }
     &.publish {
       background: var(--theme-green);
+    }
+  }
+  .custom-tooltip {
+    z-index: 1000;
+    text-align: left;
+    > div:first-child {
+      font-family: $font-family-bold !important;
     }
   }
 }

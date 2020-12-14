@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Grid, RadioGroup, FormControlLabel, Radio, Hidden } from "@material-ui/core";
 import queryString from 'query-string';
 

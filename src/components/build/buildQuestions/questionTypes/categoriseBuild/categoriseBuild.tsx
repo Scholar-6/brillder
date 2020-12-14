@@ -6,7 +6,6 @@ import { UniqueComponentProps } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import { SortCategory, QuestionValueType, SortAnswer } from 'components/interfaces/sort';
 import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/DocumentWirisEditor';
-import sprite from "assets/img/icons-sprite.svg";
 import { showSameAnswerPopup } from '../service/questionBuild';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
@@ -108,7 +107,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   }
 
   const renderAnswer = (category: SortCategory, answer: SortAnswer, i: number) => {
-    let customClass = 'categorise-answer ';
+    let customClass = 'categorise-answer unique-component';
     if (answer.answerType === QuestionValueType.Image) {
       customClass = 'sort-image';
     }
@@ -122,17 +121,25 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       save();
     }
 
+    let isValid = null;
+    if (validationRequired) {
+      isValid = true;
+      if ((answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None || !answer.answerType) && !answer.value) {
+        isValid = false;
+      }
+    }
+  
+    if (isValid === false) {
+      customClass += ' invalid-answer';
+    }
+
     return (
       <div key={i} className={customClass}>
         {
           (category.answers.length > 1)
-            ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeAnswer(category, i)}>
-              <svg className="svg active back-button">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#trash-outline"} className="theme-orange" />
-              </svg>
+            && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeAnswer(category, i)}>
+              <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
             </button>
-            : ""
         }
         <QuillEditor
           disabled={locked}
@@ -140,6 +147,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           placeholder="Enter Answer..."
           toolbar={['latex']}
           validate={validationRequired}
+          isValid={isValid}
           onBlur={() => {
             showSameAnswerPopup(i, category.answers, openSameAnswerDialog);
           }}
@@ -162,10 +170,9 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
         <div className="categorise-box">
           {
             (state.categories.length > 2)
-              ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeCategory(key)}>
+              && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeCategory(key)}>
                 <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
               </button>
-              : ""
           }
           <QuillEditor
             disabled={locked}

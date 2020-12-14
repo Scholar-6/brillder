@@ -13,7 +13,6 @@ import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 export const getDefaultHorizontalShuffleAnswer = () => {
   const newAnswer = () => ({ value: "" });
-
   return { list: [newAnswer(), newAnswer(), newAnswer()] };
 }
 
@@ -76,6 +75,18 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
       className += ' big-answer';
     }
 
+    let isValid = null;
+    if (validationRequired) {
+      isValid = true;
+      if (answer.answerType === QuestionValueType.String && !answer.value) {
+        isValid = false;
+      }
+    }
+
+    if (isValid === false) {
+      className += ' invalid-answer';
+    }
+
     return (
       <Grid container item xs={4} key={i}>
         <div className={className}>
@@ -92,6 +103,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
             data={answer.value}
             validate={validationRequired}
             toolbar={['latex']}
+            isValid={isValid}
             placeholder={"Enter A" + (i + 1) + "..."}
             onBlur={() => {
               showSameAnswerPopup(i, state.list, openSameAnswerDialog);

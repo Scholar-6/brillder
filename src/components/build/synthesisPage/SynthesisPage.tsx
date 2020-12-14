@@ -131,25 +131,27 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
             </Grid>
             { !this.state.commentsShown &&
               <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
-                <Grid container item direction="column" alignItems="center" style={{ height: '100%' }}>
-                  <Grid container item justify="center" style={{ height: "24%", width: '100%', marginTop:"4.9vh" }}>
-                    <div className="reundo-button-container">
-                      <UndoButton
-                         undo={this.props.undo}
-                         canUndo={() => this.props.undoRedoService.canUndo()}
-                      />
-                      <RedoButton
-                        redo={this.props.redo}
-                        canRedo={() => this.props.undoRedoService.canRedo()}
-                      />
-                    </div>
+                <div className="comments-sidebar-default">
+                  <div className="reundo-button-container">
+                    <UndoButton
+                      undo={this.props.undo}
+                      canUndo={() => this.props.undoRedoService.canUndo()}
+                    />
+                    <RedoButton
+                      redo={this.props.redo}
+                      canRedo={() => this.props.undoRedoService.canRedo()}
+                    />
+                  </div>
+                  <div className="comment-button-container">
                     <CommentButton
                       location={CommentLocation.Synthesis}
                       setCommentsShown={this.setCommentsShown.bind(this)}
                     />
-                  </Grid>
-                  <CountSynthesis value={this.state.synthesis} />
-                </Grid>
+                  </div>
+                  <div style={{width: "100%"}}>
+                    <CountSynthesis value={this.state.synthesis} />
+                  </div>
+                </div>
               </Grid>
             }
             <Grid className={`synthesis-comments-panel ${!this.state.commentsShown && "hidden"}`} item>
