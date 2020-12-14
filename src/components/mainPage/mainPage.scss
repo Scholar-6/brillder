@@ -187,14 +187,6 @@
         }
       }
     }
-    &.my-library {
-      .btn .svg {
-        @include laptop {
-          width: 8.7vw;
-          height: 7vw;
-        }
-      }
-    }
     .item-description {
       padding: 0;
       @extend %textCenter;
@@ -237,6 +229,38 @@
       .item-description {
         margin-top: 0.5vw;
       }
+    }
+  }
+  .my-library-button {
+    width: auto;
+    @extend %flexCenter;
+    @include tabletP {
+      padding: 5vh 0;
+    }
+    button {
+      display: block;
+      span {
+        margin-top: .7vw;
+        letter-spacing: .3vw;
+        font-size: 1.2vw;
+        color: var(--white);
+        font-family: $font-family-light;
+        @include phone_and_tabletP {
+          font-size: 25px;
+          letter-spacing: 5px;
+        }
+      }
+    }
+    .btn svg {
+      width: 8.7vw;
+      height: 7vw;
+      @include phone_and_tabletP {
+        width: 150px;
+        height: 120px;
+      }
+    }
+    &:hover button span {
+      font-family: $font-family-bold;
     }
   }
   .main-page-menu {
