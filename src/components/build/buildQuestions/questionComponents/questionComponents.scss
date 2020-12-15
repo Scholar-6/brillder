@@ -21,6 +21,7 @@
     border: 0 !important;
   }
   .drop-box {
+    margin-top: 0.2vw;
     @extend %themeRadius;
     .dragableBox {
       margin-bottom: 0 !important;
