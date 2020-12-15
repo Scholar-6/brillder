@@ -46,6 +46,7 @@ import TeachPage from 'components/teach/assignments/TeachPage';
 import Terms from 'components/terms/Terms';
 import { connect } from 'react-redux';
 import PlayPreviewRoute from './PlayPreviewRoute';
+import EmailLoginPage from 'components/loginPage/EmailLoginPage';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -146,6 +147,7 @@ const App: React.FC<AppProps> = props => {
         <AllUsersRoute path="/user-profile" component={UserProfilePage} />
         <AllUsersRoute path="/user/preference" component={UserPreferencePage} isPreferencePage={true} />
 
+        <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
         <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path={map.Login} component={LoginPage} />
         <AuthRoute path="/resetPassword" component={ResetPasswordPage} />

@@ -8,12 +8,9 @@ import "./loginPage.scss";
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
 import LoginLogo from './components/LoginLogo';
-import GoogleButton from "./components/GoogleButton";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
-import RegisterButton from "./components/RegisterButton";
 import WrongLoginDialog from "./components/WrongLoginDialog";
-import MobileLoginPage from "./MobileLogin";
-import map from "components/map";
+import DesktopLoginForm from "./components/DesktopLoginForm";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -21,20 +18,13 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(null, mapDispatch);
 
-export enum LoginState {
-  ChooseLoginAnimation,
-  ChooseLogin,
-  ButtonsAnimation,
-  Login
-}
-
 interface LoginProps {
   loginSuccess(): void;
   history: History;
   match: any;
 }
 
-const LoginPage: React.FC<LoginProps> = (props) => {
+const EmailLoginPage: React.FC<LoginProps> = (props) => {
   let initPolicyOpen = false;
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
     initPolicyOpen = true;
@@ -45,22 +35,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
-  const [loginState, setLoginState] = React.useState(LoginState.ChooseLoginAnimation);
   const [isLoginWrong, setLoginWrong] = React.useState(false);
-
-  const moveToLogin = () => {
-    setLoginState(LoginState.ButtonsAnimation);
-    setTimeout(() => {
-      props.history.push(map.Login + '/email');
-    }, 450);
-  }
-
-  const moveMobileToLogin = () => {
-    setLoginState(LoginState.ButtonsAnimation);
-    setTimeout(() => {
-      setLoginState(LoginState.Login);
-    }, 450);
-  }
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -143,19 +118,6 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     });
   };
 
-  const renderButtons = () => {
-    let className = 'button-box f-column';
-    if (loginState === LoginState.ButtonsAnimation) {
-      className += ' expanding';
-    }
-    return (
-      <div className={className}>
-        <RegisterButton onClick={moveToLogin} />
-        <GoogleButton />
-      </div>
-    );
-  }
-
   return (
     <Grid
       className="auth-page login-page"
@@ -176,7 +138,16 @@ const LoginPage: React.FC<LoginProps> = (props) => {
               <LoginLogo />
             </div>
             <div className="second-col">
-              {renderButtons()}
+              <DesktopLoginForm
+                email={email}
+                setEmail={setEmail}
+                password={password}
+                setPassword={setPassword}
+                passwordHidden={passwordHidden}
+                setHidden={setHidden}
+                handleSubmit={handleLoginSubmit}
+                register={() => register(email, password)}
+              />
             </div>
           </Grid>
           <Grid container direction="row" className="third-row">
@@ -188,24 +159,6 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           </Grid>
         </div>
       </Hidden>
-      <MobileLoginPage
-        email={email}
-        password={password}
-        passwordHidden={passwordHidden}
-        loginState={loginState}
-        history={props.history}
-        match={props.match}
-        moveToLogin={moveMobileToLogin}
-        loginSuccess={props.loginSuccess}
-        setEmail={setEmail}
-        setPassword={setPassword}
-        setHidden={setHidden}
-        register={register}
-        login={login}
-        handleLoginSubmit={handleLoginSubmit}
-        setPolicyDialog={setPolicyDialog}
-        setLoginState={setLoginState}
-      />
       <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -220,4 +173,4 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   );
 };
 
-export default connector(LoginPage);
+export default connector(EmailLoginPage);
