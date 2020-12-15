@@ -46,8 +46,6 @@ In this ‘terms of service’ contract:
 
 ## 1. Introduction
 
-
-
 1. We are Scholar 6 Limited, a company registered in England and Wales under company number: 12023679. Our registered office is at: c/o Jamieson Alexander Legal 222 Temple Chambers, 3-7 Temple Avenue, London, Ec4Y 0DB and we are not currently registered for VAT. We provide digital content to aid students in their education in various subject matters and courses.
 2. This contract is only available in English. No other languages will apply to this contract.
 3. When using the Site you also agree to be legally bound by our user policies (including the acceptable use policy)
@@ -58,16 +56,14 @@ In this ‘terms of service’ contract:
 ## 
 
 
-## All Users
+## 2 All Users
 
 1. If you access any Digital Content on the Site (regardless of whether you register an account), you are entering into a binding contract with us and agree to be legally bound by this part of the agreement which applies to you. 
-2. The Site can be accessed anonymously but we will record some information about your visit as outlined in our Privacy Policy. Whilst we may not be able to immediately determine your identity we do track certain information which can be used to: 
+2. The Site can be accessed anonymously but we will record some information about your visit as outlined in our Privacy Policy. Whilst we may not be able to immediately determine your identity we do track certain information which can be used to:
     1. block your access to the Site; or 
     2. identify you in a court proceeding. 
-
 1. If we have to change any key information relevant to anonymous users we will update our terms at [https://scholar6.org/terms](https://scholar6.org/terms). 
-3. You agree that you are solely responsible for all costs and expenses you may incur in relation to your use of the Site. \
-
+3. You agree that you are solely responsible for all costs and expenses you may incur in relation to your use of the Site.
 4. Permission to use the Digital Content
     1. When you access the Digital Content, you will not own it. Instead we give you permission to use it (also known as a ‘licence’) for the purpose of you using and enjoying it according to this contract.
     2. The Digital Content:
@@ -78,27 +74,22 @@ In this ‘terms of service’ contract:
             2. combined or merged with, or used in, any other computer program;
             3. distributed or sold by you to any third party.
         4. contains information which is owned by us or third parties or both. You must not conceal, change or remove any markings which show who owns this information, such as copyright (©), registered trade mark (®) or unregistered trademark (™) markings.
-    3. Except where you have permission to use the Digital Content under this clause 2.4, you will not obtain any rights of ownership or other rights (of whatever nature) in the Digital Content or in any copies of it. \
-
+    3. Except where you have permission to use the Digital Content under this clause 2.4, you will not obtain any rights of ownership or other rights (of whatever nature) in the Digital Content or in any copies of it.
 5. Access to Digital Content and the Site
-    1. The Site is intended for use only by those who can access it from within the UK. If you choose to access the Site from locations outside the UK, you are responsible for compliance with local laws where they are applicable. \
-
-    2. The client web application that forms part of the site is open source and located at [https://github.com/scholar-6/brillder](https://github.com/scholar-6/brillder). You may use this code within the terms of the license agreement located at [https://github.com/Scholar-6/brillder/blob/master/LICENSE](https://github.com/Scholar-6/brillder/blob/master/LICENSE)  \
-
+    1. The Site is intended for use only by those who can access it from within the UK. If you choose to access the Site from locations outside the UK, you are responsible for compliance with local laws where they are applicable. 
+    2. The client web application that forms part of the site is open source and located at [https://github.com/scholar-6/brillder](https://github.com/scholar-6/brillder). You may use this code within the terms of the license agreement located at [https://github.com/Scholar-6/brillder/blob/master/LICENSE](https://github.com/Scholar-6/brillder/blob/master/LICENSE)
     3. The server side code and configuration may not be (without written permission):
         1. copied by you;
         2. changed by you (which means, in particular, that you are not allowed to adapt, reverse-engineer or decompile it, or try to extract the source code from it, except where any of this is allowed by law);
         3. combined or merged with, or used in, any other computer program;
-        4. distributed or sold by you to any third party. \
-
-    4. We seek to make the Site as accessible as possible. If you have any difficulties using the Site, please contact us at [support@scholar6.org](mailto:support@scholar6.org).  \
+        4. distributed or sold by you to any third party.
+    4. We seek to make the Site as accessible as possible. If you have any difficulties using the Site, please contact us at [support@scholar6.org](mailto:support@scholar6.org).
     5. We may prevent or suspend your access to the Site and the Digital Content if you do not comply with any relevant part of these Terms, any terms or policies to which they refer or any applicable law.
     6. We may suspend or terminate operation of the Site at any time as we see fit.
     7. We shall have no liability to you for any breach of these Terms caused by any event or circumstance beyond our reasonable control including, but not limited to, strikes, lock-outs or other industrial disputes; breakdown of systems or network access; or flood, fire, explosion or accident.
     8. While we try to make sure that the Site is available for your use, we do not promise that the Site is available at all times nor do we promise the uninterrupted use by you of the Site. If something happens which:
         1. is outside of our control; and/or
         2. affects you being able to access the Digital Content, we will publish updates on when you can expect to be able to access the Digital Content, either on [https://scholar6.org](https://scholar6.org) and/or on our social media channels.
-
 6. Accuracy of information
     1. While we try to make sure that the Site is accurate, up-to-date and free from bugs, we cannot promise that it will be. Furthermore, we cannot promise that the Site will be fit or suitable for any purpose. Any reliance that you may place on the information on the Site is at your own risk.
     2. Content is provided for your general information purposes only and to inform you about us and our products and news, features, services and other websites that may be of interest. It does not constitute technical, financial or legal advice or any other type of advice and should not be relied on for any purposes.
@@ -130,10 +121,10 @@ In this ‘terms of service’ contract:
 7. Hyperlinks, Embeds and third party sites
     The Site may contain hyperlinks, embedded content or references to third party websites other than the Site. Any such hyperlinks, embedded content or references are provided for your convenience only. We have no control over third party websites and accept no legal responsibility for any content, material or information contained in them. The display of any hyperlink, embedded content and reference to any third party website does not mean that we endorse that third party’s website, products or services. Your use of a third party site may be governed by the terms and conditions of that third party site.
 8. Assignment
-    9. You may not assign the agreement or any rights under the agreement to any third party.
-    10. If you use the service for creating and uploading content then see the additional part of this agreement ‘Content Creators’.
+9. You may not assign the agreement or any rights under the agreement to any third party.
+10. If you use the service for creating and uploading content then see the additional part of this agreement ‘Content Creators’.
 9. Third party rights
-    11. No one other than a party to this contract has any right to enforce any term of this contract.
+11. No one other than a party to this contract has any right to enforce any term of this contract.
 
 
 ## 
@@ -167,7 +158,7 @@ In this ‘terms of service’ contract:
     10. is placed on a website that itself breaches this Policy.
 13. We reserve the right to require you to immediately remove any link to the Site at any time, and you shall immediately comply with any request by us to remove any such link.
 14. Using our name and logo
-15. You may not use our trade marks, logos or trade names except in accordance with this Policy and our terms of supply of digital content and website terms of use [insert link]. \
+15. You may not use our trade marks, logos or trade names except in accordance with this Policy and our terms of supply of digital content and website terms of use [insert link].
 16. Payment 
 17. Deferred Earnings
 
@@ -196,7 +187,6 @@ In this ‘terms of service’ contract:
 4. If you have any questions about this Policy, please contact us using the contact details provided on our Site [http://brillder.scholar6.org/](http://brillder.scholar6.org/).
 5. Acceptable uses
     1. We permit you to use the Site only for personal purposes and primarily for accessing the learning bricks for the purpose of education and learning on particular subject areas and/or creating these learning bricks (whichever is applicable to you). Use of the Site in any other way, including any unacceptable use set out in this Policy, is not permitted.
-
 6. Unacceptable use
 7. As a condition of your use of the Site, you agree not to use the Site:
     2. for any purpose that is unlawful under any applicable law or prohibited by this Policy or our terms of supply of digital content and website terms of use;
@@ -217,6 +207,7 @@ In this ‘terms of service’ contract:
 10. (Interactive Services).
 11. We are not obliged to monitor or moderate any text, images, video, audio or other multimedia content, information or material (Submission) submitted to our Interactive Services. Where we do monitor or moderate Submissions we shall indicate how this is performed and who should be contacted in relation to any Submission of concern to you.
 12. Copyright infringement guidelines
+13. 
 14. Breach
 15. We shall apply the terms of this Policy in our absolute discretion. In the event of your breach of this Policy we may terminate or suspend your use of the Site, remove or edit Submissions, disclose Submissions or any other communication to users of our Site by you to law enforcement authorities or take any action we consider necessary to remedy the breach.
 
@@ -236,7 +227,7 @@ Scholar 6 Limited, a company registered in England and Wales under company numbe
 
 ### All Users
 
-For all people who access the Site with or without an authenticated user session, we may collect any of the following information from your session that could be used to indirectly identify a natural person (see ‘How does Scholar 6 Ltd. process and use your information?’): \
+For all people who access the Site with or without an authenticated user session, we may collect any of the following information from your session that could be used to indirectly identify a natural person (see ‘How does Scholar 6 Ltd. process and use your information?’):
 
 
 
@@ -260,7 +251,7 @@ Any user who accesses the Site can also
 
 ### General Users
 
-We may collect all of the following personally identifiable information for all users who register an account and access the Site using an authenticated session: \
+We may collect all of the following personally identifiable information for all users who register an account and access the Site using an authenticated session:
 
 
 
@@ -353,7 +344,6 @@ Your details will only be shared with other Brillder users on an individual and 
 ## What are your rights?
 
 You have the following rights:
-
 
 
 1. The right to be informed
