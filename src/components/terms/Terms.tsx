@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, FormControlLabel, Radio } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import axios from "axios";
 // @ts-ignore
@@ -38,7 +38,7 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
       parts: [],
     };
 
-    axios.get("/terms.txt").then((r) => {
+    axios.get("/terms.md").then((r) => {
       if (r.data) {
         const partContents = r.data.split(/(?=\n# )/g);
         const parts = [];
