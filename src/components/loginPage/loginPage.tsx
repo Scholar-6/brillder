@@ -11,9 +11,9 @@ import LoginLogo from './components/LoginLogo';
 import GoogleButton from "./components/GoogleButton";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import RegisterButton from "./components/RegisterButton";
-import DesktopLoginForm from "./components/DesktopLoginForm";
 import WrongLoginDialog from "./components/WrongLoginDialog";
 import MobileLoginPage from "./MobileLogin";
+import map from "components/map";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -49,6 +49,13 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [isLoginWrong, setLoginWrong] = React.useState(false);
 
   const moveToLogin = () => {
+    setLoginState(LoginState.ButtonsAnimation);
+    setTimeout(() => {
+      props.history.push(map.Login + '/email');
+    }, 450);
+  }
+
+  const moveMobileToLogin = () => {
     setLoginState(LoginState.ButtonsAnimation);
     setTimeout(() => {
       setLoginState(LoginState.Login);
@@ -169,21 +176,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
               <LoginLogo />
             </div>
             <div className="second-col">
-              {loginState === LoginState.Login ?
-                <DesktopLoginForm
-                  loginState={loginState}
-                  email={email}
-                  setEmail={setEmail}
-                  password={password}
-                  setPassword={setPassword}
-                  passwordHidden={passwordHidden}
-                  setHidden={setHidden}
-                  handleSubmit={handleLoginSubmit}
-                  register={() => register(email, password)}
-                />
-                :
-                renderButtons()
-              }
+              {renderButtons()}
             </div>
           </Grid>
           <Grid container direction="row" className="third-row">
@@ -202,7 +195,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
         loginState={loginState}
         history={props.history}
         match={props.match}
-        moveToLogin={moveToLogin}
+        moveToLogin={moveMobileToLogin}
         loginSuccess={props.loginSuccess}
         setEmail={setEmail}
         setPassword={setPassword}
