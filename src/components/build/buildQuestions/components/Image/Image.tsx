@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core';
 
 import './Image.scss'
-import {uploadFile} from 'components/services/uploadFile';
+import {fileUrl, uploadFile} from 'components/services/uploadFile';
 import ImageDialog from './ImageDialog';
 import { ImageAlign, ImageComponentData } from './model';
 import ImageCloseDialog from './ImageCloseDialog';
@@ -75,7 +75,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
       }}>
         {
           fileName
-            ? <img alt="" style={{width: '100%'}} src={`${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`} />
+            ? <img alt="" style={{width: '100%'}} src={fileUrl(fileName)} />
             : <Grid
                 container
                 justify="center"
@@ -83,7 +83,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
                 direction="row"
                 style={{height: '10vh'}}
               >
-                Click to Select Image
+                Click to Select Image (jpg, png or gif)
               </Grid>
         }
       </div>
