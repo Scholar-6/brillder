@@ -50,6 +50,9 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
   }
 
   showDropdown() {
+    if (this.props.notificationExpanded) {
+      this.props.toggleNotification();
+    }
     this.setState({ ...this.state, dropdownShown: true });
   }
 
@@ -74,10 +77,10 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
     }
 
     let className = "main-page-menu";
-    if (this.props.notificationExpanded) {
-      className += " notification-expanded"
-    } else if (this.state.dropdownShown) {
+    if (this.state.dropdownShown) {
       className += " menu-expanded";
+    } else if (this.props.notificationExpanded) {
+      className += " notification-expanded"
     }
 
     return (
