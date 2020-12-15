@@ -1,8 +1,9 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
-.notification-box {
+.notification-box,
+.main-notification-box {
   .scroll-buttons {
     width: 9.2vw;
     svg {
@@ -25,204 +26,204 @@
     @include desktop {
       box-shadow: none;
     }
-    .notification-content {
-      background-color: var(--theme-light-blue);
-      box-shadow: none !important;
-      position: relative;
+  }
+  .notification-content {
+    background-color: var(--theme-light-blue);
+    box-shadow: none !important;
+    position: relative;
 
+    @include phone_and_tabletP {
+      width: 100vw;
+      border-radius: 2.5vw 0 0 0;
+    }
+    @include tabletP {
+      border-radius: 0 0 0 2.5vw;
+      width: $notification-width;
+      // 300ms cubic-bezier(0.5, 1, 0.89, 1)
+    }
+    .notification-list {
+      padding: 1vw 1vw 0 1vw !important;
+      overflow: hidden;
+      overflow-y: auto;
+      max-height: 33vh;
       @include phone_and_tabletP {
-        width: 100vw;
-        border-radius: 2.5vw 0 0 0;
+        max-height: 26vh;
       }
-      @include tabletP {
-        border-radius: 0 0 0 2.5vw;
-        width: $notification-width;
-        // 300ms cubic-bezier(0.5, 1, 0.89, 1)
+      @include ex-desktop_wide_hd {
+        max-height: 35vh;
       }
-      .notification-list {
-        padding: 1vw 1vw 0 1vw !important;
-        overflow: hidden;
-        overflow-y: auto;
-        max-height: 33vh;
-        @include phone_and_tabletP {
-          max-height: 26vh;
+      li {
+        padding: 0;
+        @extend %displayFlex;
+        @extend %flexAlignCenter;
+        .left-brick-circle {
+          cursor: pointer;
+          font-size: 2vw;
+          width: 3vw;
+          height: 3vw;
+          @extend %radCircle;
+          margin-right: 1vw;
+          .svg {
+            color: var(--white);
+          }
+          &.generic {
+            background-color: #bdc2c8;
+          }
+          &.submitted-for-review {
+            background-color: #ff9800;
+          }
+          &.published {
+            background-color: #00c86b;
+          }
+          &.red {
+            background-color: #d42c24;
+          }
+          &.new-comment {
+            background-color: #006bfd;
+          }
+          &.invited-to-play {
+            background-color: var(--white);
+          }
         }
-        @include ex-desktop_wide_hd {
-          max-height: 35vh;
-        }
-        li {
-          padding: 0;
-          @extend %displayFlex;
-          @extend %flexAlignCenter;
-          .left-brick-circle {
-            cursor: pointer;
-            font-size: 2vw;
-            width: 3vw;
-            height: 3vw;
-            @extend %radCircle;
+        .content-box {
+          cursor: pointer;
+          display: flex;
+          justify-content: space-between;
+          width: calc(100% - 3.5vw);
+          .notification-detail {
+            border-bottom: 0.02vh solid var(--theme-dark-blue);
+            padding: 0.5vw 0;
             margin-right: 1vw;
-            .svg {
+            .notif-title,
+            .notif-desc {
+              @include tabletP {
+                font-size: 1.1vw;
+              }
+              @include tabletL {
+                font-size: 0.9vw;
+              }
+              @include desktop {
+                font-size: 1vw;
+              }
+            }
+            .notif-title {
               color: var(--white);
+              text-transform: capitalize;
+              font-family: $font-family-bold;
             }
-            &.generic {
-              background-color: #bdc2c8;
-            }
-            &.submitted-for-review {
-              background-color: #ff9800;
-            }
-            &.published {
-              background-color: #00c86b;
-            }
-            &.red {
-              background-color: #d42c24;
-            }
-            &.new-comment {
-              background-color: #006bfd;
-            }
-            &.invited-to-play {
-              background-color: var(--white);
+            .notif-desc {
+              color: var(--dark-gray);
             }
           }
-          .content-box {
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            width: calc(100% - 3.5vw);
-            .notification-detail {
-              border-bottom: 0.02vh solid var(--theme-dark-blue);
-              padding: 0.5vw 0;
-              margin-right: 1vw;
-              .notif-title,
-              .notif-desc {
-                @include tabletP {
-                  font-size: 1.1vw;
-                }
-                @include tabletL {
-                  font-size: 0.9vw;
-                }
-                @include desktop {
-                  font-size: 1vw;
-                }
+          .actions {
+            @extend %flexCenter;
+            flex-direction: column;
+            color: var(--tab-gray);
+            .notification-time {
+              @extend %textCenter;
+              white-space: nowrap;
+              margin-top: 0.4vh;
+              @include phone_and_tabletP {
+                font-size: 2.5vw;
               }
-              .notif-title {
-                color: var(--white);
-                text-transform: capitalize;
-                font-family: $font-family-bold;
+              @include tabletP {
+                font-size: 0.9vw;
               }
-              .notif-desc {
-                color: var(--dark-gray);
+              @include tabletL {
+                font-size: 0.8vw;
+              }
+              @include desktop {
+                font-size: 0.7vw;
               }
             }
-            .actions {
-              @extend %flexCenter;
-              flex-direction: column;
-              color: var(--tab-gray);
-              .notification-time {
-                @extend %textCenter;
-                white-space: nowrap;
-                margin-top: 0.4vh;
-                @include phone_and_tabletP {
-                  font-size: 2.5vw;
-                }
-                @include tabletP {
-                  font-size: 0.9vw;
-                }
-                @include tabletL {
-                  font-size: 0.8vw;
-                }
-                @include desktop {
-                  font-size: 0.7vw;
-                }
+            .delete-notification {
+              padding: 0;
+              @extend %width100;
+              @include phone {
+                width: 7vw;
+                height: 7vw;
               }
-              .delete-notification {
-                padding: 0;
-                @extend %width100;
-                @include phone {
-                  width: 7vw;
-                  height: 7vw;
-                }
-                @include tabletP {
-                  width: 2vw;
-                  height: 2vw;
-                }
-                svg {
-                  @extend %removePosition;
-                  stroke-width: 2;
-                  &:hover {
-                    color: var(--theme-orange);
-                  }
+              @include tabletP {
+                width: 2vw;
+                height: 2vw;
+              }
+              svg {
+                @extend %removePosition;
+                stroke-width: 2;
+                &:hover {
+                  color: var(--theme-orange);
                 }
               }
             }
           }
         }
-        .notification-detail-single {
-          width: 100%;
-          @include phone_and_tabletP {
-            font-size: 4vw;
-            padding: 15px 0;
-          }
-          @include tabletP {
-            font-size: 1.2vw;
-            padding: 1vw 0;
-          }
-          @include tabletL {
-            font-size: 1.4vw;
-          }
-          color: white;
-          font-family: $font-family-light;
-          @extend %textCenter;
+      }
+      .notification-detail-single {
+        width: 100%;
+        @include phone_and_tabletP {
+          font-size: 4vw;
+          padding: 15px 0;
+        }
+        @include tabletP {
+          font-size: 1.2vw;
+          padding: 1vw 0;
+        }
+        @include tabletL {
+          font-size: 1.4vw;
+        }
+        color: white;
+        font-family: $font-family-light;
+        @extend %textCenter;
+        font-size: 1vw;
+        em {
           font-size: 1vw;
-          em {
-            font-size: 1vw;
-          }
         }
       }
     }
-    .clear-notification {
-      background-color: var(--theme-orange);
-      color: var(--white);
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
+  }
+  .clear-notification {
+    background-color: var(--theme-orange);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0;
+    @include phone_and_tabletP {
+      font-size: 3.5vw;
+      button {
+        padding: 2vw;
+      }
+    }
+    @include tabletP {
+      font-size: 1vw;
+      height: 4.5vh;
+      border-radius: 0 0 0 2.5vw;
+      button {
+        padding-top: 0vw;
+        padding-bottom: 0vw;
+      }
+    }
+    .delete-notification {
       padding: 0;
-      @include phone_and_tabletP {
-        font-size: 3.5vw;
-        button {
-          padding: 2vw;
-        }
+      @extend %width100;
+      @include phone {
+        width: 7vw;
+        height: 7vw;
       }
       @include tabletP {
-        font-size: 1vw;
-        height: 4.5vh;
-        border-radius: 0 0 0 2.5vw;
-        button {
-          padding-top: 0vw;
-          padding-bottom: 0vw;
+        width: 2vw;
+        height: 2vw;
+      }
+      svg {
+        @extend %removePosition;
+        &:hover {
+          color: var(--theme-orange);
         }
       }
-      .delete-notification {
-        padding: 0;
-        @extend %width100;
-        @include phone {
-          width: 7vw;
-          height: 7vw;
-        }
-        @include tabletP {
-          width: 2vw;
-          height: 2vw;
-        }
-        svg {
-          @extend %removePosition;
-          &:hover {
-            color: var(--theme-orange);
-          }
-        }
-      }
-      .MuiCardActions-spacing {
-        > :not(:first-child) {
-          margin-left: 0;
-        }
+    }
+    .MuiCardActions-spacing {
+      > :not(:first-child) {
+        margin-left: 0;
       }
     }
   }
@@ -275,30 +276,30 @@
       bottom: 60px;
       border-radius: 12px 0 0 0;
       overflow: unset !important;
-  
-      .notification-content {
-        .notification-list li {
-          .content-box {
-            width: calc(100% - 10vw);
+    }
 
-            .notification-detail {
-              width: inherit;
-              .notif-title,
-              .notif-desc {
-                @include phone_and_tabletP {
-                  white-space: nowrap;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  font-size: 3.5vw;
-                }
+    .notification-content {
+      .notification-list li {
+        .content-box {
+          width: calc(100% - 10vw);
+
+          .notification-detail {
+            width: inherit;
+            .notif-title,
+            .notif-desc {
+              @include phone_and_tabletP {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 3.5vw;
               }
             }
           }
-  
-          .left-brick-circle {
-            height: 9vw;
-            width: 9vw;
-          }
+        }
+
+        .left-brick-circle {
+          height: 9vw;
+          width: 9vw;
         }
       }
     }
@@ -306,5 +307,14 @@
   .send-icon-center {
     margin-top: 0.1vw;
     margin-left: -0.1vw;
+  }
+}
+
+.main-notification-box {
+  display: block;
+  border-bottom-left-radius: 2vw;
+  &.hidden {
+    height: 0;
+    overflow: hidden;
   }
 }

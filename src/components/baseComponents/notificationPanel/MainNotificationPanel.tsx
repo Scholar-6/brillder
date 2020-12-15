@@ -1,14 +1,11 @@
-
-
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { Popover, IconButton, SvgIcon } from '@material-ui/core';
+import { IconButton, SvgIcon } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
 import sprite from "assets/img/icons-sprite.svg";
 import { Notification, notificationTypeColors, NotificationType } from 'model/notifications';
 import moment from 'moment';
-import './NotificationPanel.scss';
 
 import map from 'components/map';
 import actions from 'redux/actions/brickActions';
@@ -30,7 +27,7 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(mapState, mapDispatch);
 
-interface NotificationPanelProps {
+interface MainNotificationPanelProps {
   shown: boolean;
   handleClose(): void;
   anchorElement: any;
@@ -43,14 +40,14 @@ interface NotificationPanelProps {
   fetchBrick(brickId: number): Promise<void>;
 }
 
-interface NotificationsState {
+interface MainNotificationsState {
   needDesktopOpen: boolean;
   scrollArea: React.RefObject<HTMLUListElement>;
   canScroll: boolean;
 }
 
-class NotificationPanel extends Component<NotificationPanelProps, NotificationsState> {
-  constructor(props: NotificationPanelProps) {
+class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNotificationsState> {
+  constructor(props: MainNotificationPanelProps) {
     super(props);
     this.state = {
       scrollArea: React.createRef(),
@@ -168,25 +165,10 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
 
   render() {
     return (
-      <Popover
-        open={this.props.shown}
-        onClose={this.props.handleClose}
-        anchorReference={this.props.anchorElement ? "anchorEl" : "none"}
-        anchorEl={this.props.anchorElement}
-        className={this.props.shown ? "notification-box active":"notification-box hidden"}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-      >
+      <div className={this.props.shown ? "main-notification-box active":"main-notification-box hidden"}>
         <div className="notification-content">
             <ul className="notification-list" ref={this.state.scrollArea}>
-              {/* eslint-disable-next-line */}
-              {(this.props.notifications && this.props.notifications.length != 0) ? this.props.notifications.map((notification) => (
+              {(this.props.notifications && this.props.notifications.length !== 0) ? this.props.notifications.map((notification) => (
                 <li key={notification.id}>
                   <div
                     className={"left-brick-circle svgOnHover " + notificationTypeColors[notification.type]}
@@ -257,8 +239,7 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
                 )
               }
             </ul>
-          {/* eslint-disable-next-line */}
-          {(this.props.notifications && this.props.notifications.length != 0) &&
+          {(this.props.notifications && this.props.notifications.length !== 0) &&
             <div className="clear-notification">
               <div className="scroll-buttons">
                 <SpriteIcon name="arrow-up" onClick={this.scrollUp.bind(this)} />
@@ -278,9 +259,9 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
           secondaryLabel="Brick summaries have not yet been optimised for mobile devices."
           onClick={() => this.setState({needDesktopOpen: false})}
         />
-      </Popover>
+      </div>
     );
   }
 }
 
-export default connector(NotificationPanel);
+export default connector(MainNotificationPanel);

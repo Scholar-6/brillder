@@ -10,6 +10,18 @@
     display: flex;
     flex-wrap: nowrap;
 
+    .tab-icon-container {
+      display: flex;
+      width: 3.8vh;
+      height: 3.8vh;
+      margin-top: 1.2vh;
+      margin-left: 2.4vw;
+      .svg {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
     .long {
       width: 25vw;
 

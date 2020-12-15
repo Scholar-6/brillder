@@ -18,7 +18,9 @@ const TabComponent: React.FC<TabProps> = ({ isCore, onCoreSwitch }) => {
       <div key={2} className={className} onClick={onCoreSwitch}>
         <div style={{display: 'flex'}}>
           <span>Public</span>
-          <SpriteIcon name="globe" className={className} />
+          <div className="tab-icon-container">
+            <SpriteIcon name="globe" className={className} />
+          </div>
         </div>
       </div>
     );
@@ -30,7 +32,9 @@ const TabComponent: React.FC<TabProps> = ({ isCore, onCoreSwitch }) => {
       <div key={3} className={className} onClick={onCoreSwitch}>
         <div style={{display: 'flex'}}>
           <span>Personal</span>
-          <SpriteIcon name="key" className={className} />
+          <div className="tab-icon-container">
+            <SpriteIcon name="key" className={className} />
+          </div>
         </div>
       </div>
     );
