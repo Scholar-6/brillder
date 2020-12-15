@@ -17,12 +17,22 @@
       font-family: $font-family-regular;
     }
     .header-link {
+      @extend %flexToYCenter;
       cursor: pointer;
+      .white-circle {
+        border-radius: 50%;
+        display: flex;
+        height: 1.2vw;
+        width: 1.2vw;
+        margin-right: 0.5vw;
+        background: var(--white);
+      }
     }
   }
   .terms-and-conditions {
     padding: 9vh 3vw !important;
     overflow: auto !important;
+    overflow-x: hidden;
     color: var(--theme-dark-blue);
     height: calc(100vh - 5.834vw - 2vw) !important;
   }
