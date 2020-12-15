@@ -29,6 +29,7 @@
 .main-page-menu {
   padding-top: 1.1vw;
   .menu-buttons {
+    padding-bottom: 1.05vw;
     margin: auto;
     display: flex;
     margin-right: 0;
@@ -50,10 +51,6 @@
   }
   &.notification-expanded {
     height: auto;
-  }
-  .hidden {
-    width: 0;
-    height: 0;
   }
 }
 

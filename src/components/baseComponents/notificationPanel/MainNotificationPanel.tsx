@@ -164,8 +164,25 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
   }
 
   render() {
+    let haveNotification = false;
+    if (this.props.notifications && this.props.notifications.length !== 0) {
+      haveNotification = true;
+    }
+
+    let className = "main-notification-box";
+    if (this.props.shown) {
+      className += ' active';
+    } else {
+      className += ' hidden';
+    }
+    if (haveNotification) {
+      className += ' notifications';
+    } else {
+      className += ' no-notifications';
+    }
+
     return (
-      <div className={this.props.shown ? "main-notification-box active":"main-notification-box hidden"}>
+      <div className={className}>
         <div className="notification-content">
             <ul className="notification-list" ref={this.state.scrollArea}>
               {(this.props.notifications && this.props.notifications.length !== 0) ? this.props.notifications.map((notification) => (
