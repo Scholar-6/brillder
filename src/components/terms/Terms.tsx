@@ -93,14 +93,19 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
         />
         <Grid container direction="row" className="sorted-row">
           <Grid container item xs={3} className="sort-and-filter-container">
-            {this.state.parts.map((p) => (
+            {this.state.parts.map((p) => {
+              if (p.title) {
+                return (
               <div
                 className={`header-link ${p.active ? "bold active" : ""}`}
                 onClick={() => this.moveTo(p)}
               >
-                {p.title}
-              </div>
-            ))}
+                <div className="white-circle" />{p.title}
+              </div>);
+              } else {
+                return <div />;
+              }
+            })}
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <div className="bricks-list-container bricks-container-mobile terms-and-conditions">
