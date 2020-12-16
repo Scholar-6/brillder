@@ -6,6 +6,7 @@ import RecordButton from "../../components/Sound/components/buttons/RecordButton
 import RecordingButton from "../../components/Sound/components/buttons/RecordingButton";
 import PlayButton from "../../components/Sound/components/buttons/PlayButton";
 import PauseButton from "../../components/Sound/components/buttons/PauseButton";
+import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 
 interface SoundProps {
   locked: boolean;
@@ -19,6 +20,7 @@ interface SoundState {
   status: AudioStatus;
   blobUrl: string;
   audio: HTMLAudioElement;
+  cantSave: boolean;
 }
 
 export enum AudioStatus {
@@ -45,6 +47,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
       status: initStatus,
       blobUrl: "",
       audio: initAudio,
+      cantSave: false
     };
   }
 
@@ -114,7 +117,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
           this.props.updateComponent(comp, this.props.index);
         },
         () => {
-          alert("Can`t save audio file");
+          this.setState({cantSave: true});
         }
       );
     }
@@ -159,6 +162,11 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
             <span>Delete</span>
           </button>
         </div>
+        <ValidationFailedDialog
+          isOpen={this.state.cantSave}
+          header="Can`t save audio file"
+          close={() => this.setState({cantSave: true})}
+        />
       </div>
     );
   }

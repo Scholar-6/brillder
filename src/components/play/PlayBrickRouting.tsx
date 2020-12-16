@@ -43,6 +43,7 @@ import userActions from 'redux/actions/user';
 import { User } from "model/user";
 import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 
 
 function shuffle(a: any[]) {
@@ -66,6 +67,7 @@ interface BrickRoutingProps {
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const parsedBrick = parseAndShuffleQuestions(props.brick);
+  const [saveFailed, setFailed] = React.useState(false);
   const [brick, setBrick] = React.useState(parsedBrick);
   const initAttempts = prefillAttempts(brick.questions);
   const [status, setStatus] = React.useState(PlayStatus.Live);
@@ -133,7 +135,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       }
       props.history.push(`/play/brick/${brick.id}/finalStep`);
     }).catch(() => {
-      alert("Can`t save your attempt");
+      setFailed(true);
     });
   };
 
@@ -306,6 +308,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history={props.history}
           />
         </Route>
+        <ValidationFailedDialog
+          isOpen={saveFailed}
+          header="Can`t save your attempt"
+          close={() => setFailed(false)}
+        />
       </Switch>
     );
   };
