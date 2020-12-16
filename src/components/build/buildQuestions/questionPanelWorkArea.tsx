@@ -71,7 +71,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   const [isCommingSoonOpen, setCommingSoon] = React.useState(false);
   const [commentsShown, setCommentsShown] = React.useState(props.initSuggestionExpanded);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
-  const [redoHovered, setRedoHover] = React.useState(false);
   const { type } = question;
 
   const setQuestionHint = (hintState: HintState) => {
