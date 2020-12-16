@@ -95,6 +95,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
             status={hint.status}
             locked={locked}
             editOnly={editOnly}
+            component={component}
             value={hint.value}
             list={hint.list}
             count={numberOfAnswers}

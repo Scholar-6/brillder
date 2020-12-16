@@ -42,6 +42,7 @@ export interface HintProps {
   status?: HintStatus;
   value?: string;
   count?: number;
+  component: any;
   validationRequired?: boolean;
   save(): void;
   onChange(state: HintState): void;
@@ -166,6 +167,29 @@ const HintComponent: React.FC<HintProps> = ({
     return answerHints;
   }
 
+  const renderToggleButton = () => {
+    const {list} = props.component;
+    if (!list || list.length <= 1) {
+      return (
+        <ToggleButtonGroup className="hint-toggle-group" value={HintStatus.All}>
+          <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.All}>
+            All Answers
+          </ToggleButton>
+        </ToggleButtonGroup>
+      );
+    }
+    return (
+      <ToggleButtonGroup className="hint-toggle-group" value={state.status} exclusive onChange={handleStatusChange}>
+        <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.Each}>
+          Each Answer
+        </ToggleButton>
+        <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.All}>
+          All Answers
+        </ToggleButton>
+      </ToggleButtonGroup>
+    );
+  }
+
   return (
     <div className="hint-component">
       <div className="hint-header">
@@ -175,14 +199,7 @@ const HintComponent: React.FC<HintProps> = ({
           </div>
         </div>
         <div>
-          <ToggleButtonGroup className="hint-toggle-group" value={state.status} exclusive onChange={handleStatusChange}>
-            <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.Each}>
-              Each Answer
-            </ToggleButton>
-            <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.All}>
-              All Answers
-            </ToggleButton>
-          </ToggleButtonGroup>
+          {renderToggleButton()}
         </div>
         <div className="unselectable">
           <div className="hint-question-circle">
@@ -196,7 +213,8 @@ const HintComponent: React.FC<HintProps> = ({
                     or the correct strategy, without giving it away.
                   </div>
                 </React.Fragment>
-            }>
+              }
+            >
               <button className="btn btn-transparent svgOnHover question-mark">
                 <svg className="svg w80 h80 active">
                   {/*eslint-disable-next-line*/}
