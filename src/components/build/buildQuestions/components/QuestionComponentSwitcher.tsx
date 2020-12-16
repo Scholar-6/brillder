@@ -96,6 +96,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
             locked={locked}
             editOnly={editOnly}
             component={component}
+            questionType={props.questionType}
             value={hint.value}
             list={hint.list}
             count={numberOfAnswers}
@@ -114,14 +115,13 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
       <div style={{ position: 'relative', width: '100%' }}>
         {
           !locked
-            ?
+            &&
             <button className="btn btn-transparent right-top-icon svgOnHover" onClick={props.setEmptyType}>
               <svg className="svg active back-button">
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#trash-outline"} className="theme-orange" />
               </svg>
             </button>
-            : ""
         }
         <InnerComponent
           locked={locked}

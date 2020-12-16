@@ -8,6 +8,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import './Hint.scss';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
+import { QuestionTypeEnum } from 'model/question';
 
 
 const HtmlTooltip = withStyles((theme: any) => ({
@@ -43,6 +44,7 @@ export interface HintProps {
   value?: string;
   count?: number;
   component: any;
+  questionType: QuestionTypeEnum;
   validationRequired?: boolean;
   save(): void;
   onChange(state: HintState): void;
@@ -169,7 +171,12 @@ const HintComponent: React.FC<HintProps> = ({
 
   const renderToggleButton = () => {
     const {list} = props.component;
-    if (!list || list.length <= 1) {
+    console.log(props.component)
+    if (
+      !list || list.length <= 1 ||
+      props.questionType === QuestionTypeEnum.WordHighlighting ||
+      props.questionType === QuestionTypeEnum.LineHighlighting
+      ) {
       return (
         <ToggleButtonGroup className="hint-toggle-group" value={HintStatus.All}>
           <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.All}>
