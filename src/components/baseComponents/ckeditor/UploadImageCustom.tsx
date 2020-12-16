@@ -13,6 +13,7 @@ class UploadImageCustom extends Plugin {
 
   init() {
     const editor = this.editor;
+    console.log(editor);
     editor.ui.componentFactory.add("UploadImageCustom", (locale: any) => {
       const view = new ButtonView(locale);
 
@@ -22,9 +23,15 @@ class UploadImageCustom extends Plugin {
         tooltip: true,
       });
 
-      view.class = "upload-button-custom";
 
+      let className = "upload-button-custom";
+
+      if (!editor.isReadOnly) {
+        className += ' disabled';
+      }
+      view.class = className;
       view.on("execute", () => {
+        if (!editor.isReadOnly) {
         let el = document.createElement("input");
         el.setAttribute("type", "file");
         el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
@@ -55,6 +62,7 @@ class UploadImageCustom extends Plugin {
             );
           }
         };
+      }
       });
 
       return view;

@@ -176,7 +176,7 @@ const HintComponent: React.FC<HintProps> = ({
       !list || list.length <= 1 ||
       props.questionType === QuestionTypeEnum.WordHighlighting ||
       props.questionType === QuestionTypeEnum.LineHighlighting
-      ) {
+    ) {
       return (
         <ToggleButtonGroup className="hint-toggle-group" value={HintStatus.All}>
           <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.All}>
