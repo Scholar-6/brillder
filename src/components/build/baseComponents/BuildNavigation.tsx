@@ -59,11 +59,18 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
     const {brickStatus} = this.state;
     let disabled = brickStatus === BrickStatus.Draft || brickStatus === BrickStatus.Build;
 
-    let isOnlyPublisher = checkOnlyPublisher(this.props.user, brick);
-
-    if (this.props.isPublisher) {
+    if (this.props.isAdmin) {
       return <ReturnToEditorButton disabled={disabled} brick={brick} history={this.props.history} />;
     }
+
+    // publisher
+    if (this.props.isPublisher) {
+      if (!disabled && brick.status === BrickStatus.Publish) {
+        disabled = true;
+      }
+      return <ReturnToEditorButton disabled={disabled} brick={brick} history={this.props.history} />;
+    }
+    
     return '';
   }
 
