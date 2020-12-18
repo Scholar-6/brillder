@@ -93,37 +93,33 @@ export function convertToQuestionType(
   questions: Question[], question: Question, type: QuestionTypeEnum,
   setQuestionCallback: Function
 ) {
- if (type === QuestionTypeEnum.ChooseOne) {
-    const index = getQuestionIndex(questions, question);
-    const updatedQuestion = convertToChooseOne(question);
-    setQuestionCallback(index, updatedQuestion);
-  } else if (type === QuestionTypeEnum.ChooseSeveral) {
-    const index = getQuestionIndex(questions, question);
-    const updatedQuestion = convertToChooseSeveral(question);
-    setQuestionCallback(index, updatedQuestion);
-  } else if (type === QuestionTypeEnum.Sort) {
-    const index = getQuestionIndex(questions, question);
-    const updatedQuestion = convertToSort(question);
-    setQuestionCallback(index, updatedQuestion);
-  } else if (type === QuestionTypeEnum.ShortAnswer) {
-    const index = getQuestionIndex(questions, question);
-    const updatedQuestion = convertToShortAnswer(question);
-    setQuestionCallback(index, updatedQuestion);
-  } else if (type === QuestionTypeEnum.VerticalShuffle) {
-    const index = getQuestionIndex(questions, question);
-    const updatedQuestion = convertToVerticalShuffle(question);
-    setQuestionCallback(index, updatedQuestion);
-  } else if (type === QuestionTypeEnum.HorizontalShuffle) {
-    const index = getQuestionIndex(questions, question);
-    const updatedQuestion = convertToHorizontalShuffle(question);
-    setQuestionCallback(index, updatedQuestion);
-  } else if (type === QuestionTypeEnum.PairMatch) {
-    const index = getQuestionIndex(questions, question);
-    const updatedQuestion = convertToPairMatch(question);
-    setQuestionCallback(index, updatedQuestion);
-  } else {
-    const index = getQuestionIndex(questions, question);
-    const updatedQuestion = setQuestionType(question, type);
-    setQuestionCallback(index, updatedQuestion);
+  const index = getQuestionIndex(questions, question);
+  let updatedQuestion;
+  switch (type) {
+    case QuestionTypeEnum.ChooseOne:
+      updatedQuestion = convertToChooseOne(question);
+      break;
+    case QuestionTypeEnum.ChooseSeveral:
+      updatedQuestion = convertToChooseSeveral(question);
+      break;
+    case QuestionTypeEnum.Sort:
+      updatedQuestion = convertToSort(question);
+      break;
+    case QuestionTypeEnum.ShortAnswer:
+      updatedQuestion = convertToShortAnswer(question);
+      break;
+    case QuestionTypeEnum.VerticalShuffle:
+      updatedQuestion = convertToVerticalShuffle(question);
+      break;
+    case QuestionTypeEnum.HorizontalShuffle:
+      updatedQuestion = convertToHorizontalShuffle(question);
+      break;
+    case QuestionTypeEnum.PairMatch:
+      updatedQuestion = convertToPairMatch(question);
+      break;
+    default:
+      updatedQuestion = setQuestionType(question, type);
+      break;
   }
+  setQuestionCallback(index, updatedQuestion);
 }
