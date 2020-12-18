@@ -55,13 +55,6 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     }, 450);
   }
 
-  const moveMobileToLogin = () => {
-    setLoginState(LoginState.ButtonsAnimation);
-    setTimeout(() => {
-      setLoginState(LoginState.Login);
-    }, 450);
-  }
-
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
       return true;
@@ -195,14 +188,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
         loginState={loginState}
         history={props.history}
         match={props.match}
-        moveToLogin={moveMobileToLogin}
-        loginSuccess={props.loginSuccess}
-        setEmail={setEmail}
-        setPassword={setPassword}
-        setHidden={setHidden}
-        register={register}
-        login={login}
-        handleLoginSubmit={handleLoginSubmit}
+        moveToLogin={moveToLogin}
         setPolicyDialog={setPolicyDialog}
         setLoginState={setLoginState}
       />
