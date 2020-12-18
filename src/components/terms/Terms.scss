@@ -40,4 +40,27 @@
       margin-left: 1vw;
     }
   }
+  .MuiButtonBase-root.MuiIconButton-root {
+    padding: 0 !important;
+    margin-right: 10px;
+  }
+  .condition-box {
+    margin-top: 20px;
+    font-size: 20px;
+    @extend %flexCenter;
+  }
+  .MuiCheckbox-colorSecondary.Mui-checked {
+    color: var(--theme-light-blue) !important;
+  }
+  .condition-button {
+    margin-top: 5px;
+    @extend %flexCenter;
+
+    button {
+      background: var(--theme-light-blue);
+      border: none;
+      padding: 5px 15px;
+      color: white;
+    }
+  }
 }

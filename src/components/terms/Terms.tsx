@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid } from "@material-ui/core";
+import { Checkbox, Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import axios from "axios";
 // @ts-ignore
@@ -88,20 +88,20 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
           user={this.props.user}
           placeholder={"Search Subjects, Topics, Titles & more"}
           history={this.props.history}
-          search={() => {}}
-          searching={(v) => {}}
+          search={() => { }}
+          searching={(v) => { }}
         />
         <Grid container direction="row" className="sorted-row">
           <Grid container item xs={3} className="sort-and-filter-container">
             {this.state.parts.map((p) => {
               if (p.title) {
                 return (
-              <div
-                className={`header-link ${p.active ? "bold active" : ""}`}
-                onClick={() => this.moveTo(p)}
-              >
-                <div className="white-circle" />{p.title}
-              </div>);
+                  <div
+                    className={`header-link ${p.active ? "bold active" : ""}`}
+                    onClick={() => this.moveTo(p)}
+                  >
+                    <div className="white-circle" />{p.title}
+                  </div>);
               } else {
                 return <div />;
               }
@@ -112,6 +112,13 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
               {this.state.parts.map((p) => (
                 <div ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
               ))}
+              <div className="condition-box">
+                <Checkbox />
+                I agree to terms and conditions
+              </div>
+              <div className="condition-button">
+                <button onClick={() => this.props.history.push('/')}>Accept</button>
+              </div>
             </div>
           </Grid>
         </Grid>
