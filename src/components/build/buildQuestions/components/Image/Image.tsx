@@ -12,6 +12,7 @@ interface ImageProps {
   locked: boolean;
   index: number;
   data: ImageComponentData;
+  validationRequired: boolean;
   save(): void;
   updateComponent(component:any, index:number): void;
 }
@@ -21,9 +22,15 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.data.value);
   const [isCloseOpen, setCloseDialog] = React.useState(false);
+  const [invalid, setInvalid] = React.useState(props.validationRequired && !props.data.value);
 
   useEffect(() => {
     setFileName(props.data.value);
+    if (props.data.value) {
+      setInvalid(false);
+    } else if (props.validationRequired) {
+      setInvalid(true);
+    }
   }, [props]);
 
   const upload = (file: File, source: string, caption: string, align: ImageAlign, height: number) => {
@@ -54,9 +61,18 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
     setOpen(false);
   }
 
+  let className = 'dropzone';
+  if (locked) {
+    className += ' disabled';
+  }
+
+  if (invalid) {
+    className += ' invalid';
+  }
+
   return (
     <div className="image-drag-n-drop">
-      <div className={'dropzone ' + (locked ? 'disabled' : '')} onClick={() => {
+      <div className={className} onClick={() => {
         if (props.data.value) {
           setOpen(true);
         } else {
@@ -65,7 +81,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
           el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
           el.click();
   
-          el.onchange = (files: any) => {
+          el.onchange = () => {
             if (el.files && el.files.length >= 0) {
               setFile(el.files[0]);
               setOpen(true);
