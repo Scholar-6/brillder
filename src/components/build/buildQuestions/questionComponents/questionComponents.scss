@@ -64,6 +64,7 @@
   }
 }
 
+
 .unique-component {
   margin: 0.5vh 0;
   margin-top: 0;
@@ -161,6 +162,39 @@
     }
   }
 }
+
+.missing-word-build .invalid-answer,
+.unique-component.invalid-answer {
+  .answer-image-drop-button:hover {
+      span {
+        color: var(--white) !important;
+      }
+      .plus-image {
+        color: var(--white) !important;
+      }
+    }
+    .sound-record-button:hover {
+      svg {
+        color: var(--white) !important;
+      }
+    }
+    .right-top-icon {
+      opacity: 1;
+      color: var(--dark-gray) !important;
+
+      .back-button {
+        color: var(--dark-gray) !important;
+      }
+   
+      &:hover {
+        color: var(--white) !important;
+        .back-button {
+          color: var(--white) !important;
+        }
+      }
+    }
+}
+
 
 .unique-component-wrapper {
   margin: #{$editor-spacing} 0;
