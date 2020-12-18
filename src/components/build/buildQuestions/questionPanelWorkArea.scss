@@ -9,6 +9,7 @@
   font-family: $font-family-regular;
   background: white;
   border-radius: 0 0 $editor-radius $editor-radius;
+  margin-top: -2px;
 
   .invalid {
     background: var(--theme-orange) !important;
