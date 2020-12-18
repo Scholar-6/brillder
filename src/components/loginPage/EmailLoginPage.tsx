@@ -11,6 +11,7 @@ import LoginLogo from './components/LoginLogo';
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import WrongLoginDialog from "./components/WrongLoginDialog";
 import DesktopLoginForm from "./components/DesktopLoginForm";
+import MobileEmailLogin from './MobileEmailLogin';
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -159,6 +160,19 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
           </Grid>
         </div>
       </Hidden>
+      <MobileEmailLogin
+        history={props.history}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        passwordHidden={passwordHidden}
+        setHidden={setHidden}
+        register={register}
+        login={login}
+        handleLoginSubmit={handleLoginSubmit}
+        setPolicyDialog={setPolicyDialog}
+      />
       <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
