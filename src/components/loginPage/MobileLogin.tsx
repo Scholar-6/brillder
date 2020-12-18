@@ -12,9 +12,6 @@ interface MobileLoginState {
 }
 
 interface MobileLoginProps {
-  email: string;
-  password: string;
-  passwordHidden: boolean;
   loginState: LoginState;
   history: History;
   match: any;

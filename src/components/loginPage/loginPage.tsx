@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import { Grid, Snackbar, Hidden } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
-import axios from "axios";
 
 import "./loginPage.scss";
 import actions from "redux/actions/auth";
-import { login } from "services/axios/auth";
 import LoginLogo from './components/LoginLogo';
 import GoogleButton from "./components/GoogleButton";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import RegisterButton from "./components/RegisterButton";
-import WrongLoginDialog from "./components/WrongLoginDialog";
 import MobileLoginPage from "./MobileLogin";
 import map from "components/map";
 
@@ -39,14 +36,8 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
     initPolicyOpen = true;
   }
-  const [alertMessage, setAlertMessage] = useState("");
-  const [alertShown, toggleAlertMessage] = useState(false);
-  const [passwordHidden, setHidden] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
-  const [loginState, setLoginState] = React.useState(LoginState.ChooseLoginAnimation);
-  const [isLoginWrong, setLoginWrong] = React.useState(false);
+  const [isPolicyOpen, setPolicyDialog] = useState(initPolicyOpen);
+  const [loginState, setLoginState] = useState(LoginState.ChooseLoginAnimation);
 
   const moveToLogin = () => {
     setLoginState(LoginState.ButtonsAnimation);
@@ -54,87 +45,6 @@ const LoginPage: React.FC<LoginProps> = (props) => {
       props.history.push(map.Login + '/email');
     }, 450);
   }
-
-  const validateForm = () => {
-    if (email.length > 0 && password.length > 0) {
-      return true;
-    }
-    return "Fill required fields";
-  };
-
-  function handleLoginSubmit(event: any) {
-    event.preventDefault();
-
-    let res = validateForm();
-    if (res !== true) {
-      toggleAlertMessage(true);
-      setAlertMessage(res);
-      return;
-    }
-
-    sendLogin(email, password);
-  }
-
-  const sendLogin = async (email: string, password: string) => {
-    let data = await login(email, password);
-    if (!data.isError) {
-      if (data === "OK") {
-        props.loginSuccess();
-        return;
-      }
-      let { msg } = data;
-      if (!msg) {
-        const { errors } = data;
-        msg = errors[0].msg;
-      }
-      toggleAlertMessage(true);
-      setAlertMessage(msg);
-    } else {
-      const { response } = data;
-      if (response) {
-        if (response.status === 500 ) {
-          toggleAlertMessage(true);
-          setAlertMessage("Server error");
-        } else if (response.status === 401) {
-          const { msg } = response.data;
-          if (msg === "INVALID_EMAIL_OR_PASSWORD") {
-            setLoginWrong(true);
-          }
-        }
-      } else {
-        toggleAlertMessage(true);
-        setAlertMessage("Connection problem");
-      }
-    }
-  };
-
-  const register = (email: string, password: string) => {
-    axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp/3`,
-      { email, password, confirmPassword: password },
-      { withCredentials: true }
-    ).then((resp) => {
-      const { data } = resp;
-
-      if (data.errors) {
-        toggleAlertMessage(true);
-        setAlertMessage(data.errors[0].msg);
-        return;
-      }
-
-      if (data.msg) {
-        toggleAlertMessage(true);
-        setAlertMessage(data.msg);
-      }
-
-      if (data === "OK") {
-        sendLogin(email, password);
-      }
-    }).catch((e) => {
-      toggleAlertMessage(true);
-      setAlertMessage("Connection problem");
-    });
-  };
 
   const renderButtons = () => {
     let className = 'button-box f-column';
@@ -182,24 +92,12 @@ const LoginPage: React.FC<LoginProps> = (props) => {
         </div>
       </Hidden>
       <MobileLoginPage
-        email={email}
-        password={password}
-        passwordHidden={passwordHidden}
         loginState={loginState}
         history={props.history}
         match={props.match}
         moveToLogin={moveToLogin}
         setPolicyDialog={setPolicyDialog}
         setLoginState={setLoginState}
-      />
-      <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
-      <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        open={alertShown}
-        autoHideDuration={1500}
-        onClose={() => toggleAlertMessage(false)}
-        message={alertMessage}
-        action={<React.Fragment></React.Fragment>}
       />
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
     </Grid>
