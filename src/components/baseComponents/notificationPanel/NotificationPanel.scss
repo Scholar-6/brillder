@@ -4,27 +4,14 @@
 
 .notification-box,
 .main-notification-box {
+  opacity: 0;
   .scroll-buttons {
+    @extend %flexToYCenter;
     width: 9.2vw;
     svg {
       cursor: pointer;
       width: 2vw;
       height: 2vw;
-    }
-  }
-
-  .MuiPaper-root {
-    background: inherit;
-  }
-  .MuiPopover-paper {
-    @include tabletP {
-      border-radius: 0 0 0 2.5vw;
-      left: unset !important;
-      right: 0vw;
-      animation: notification-active 325ms ease-in-out;
-    }
-    @include desktop {
-      box-shadow: none;
     }
   }
   .notification-content {
@@ -326,6 +313,7 @@
   border-bottom-left-radius: 2vw;
   overflow: hidden;
   &.active {
+    opacity: 1;
     height: 100%;
     animation: notification-grow 0.7s linear;
   }
