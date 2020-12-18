@@ -2,9 +2,15 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
-.notification-box,
 .main-notification-box {
   opacity: 0;
+  @include phone_and_tabletP {
+    opacity: 1;
+  }
+}
+
+.notification-box,
+.main-notification-box {
   .scroll-buttons {
     @extend %flexToYCenter;
     width: 9.2vw;
