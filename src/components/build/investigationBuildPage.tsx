@@ -826,6 +826,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     <div className="investigation-build-page">
       <BuildNavigation
         tutorialStep={step}
+        user={props.user}
         isTutorialSkipped={isTutorialPassed()}
         isValid={isValid}
         moveToReview={moveToReview}

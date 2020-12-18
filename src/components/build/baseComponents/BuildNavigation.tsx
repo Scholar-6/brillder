@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 
+import map from "components/map";
 import { TutorialStep } from "../tutorial/TutorialPanelWorkArea";
+import { Brick, BrickStatus } from "model/brick";
 
 import SaveDialog from "./dialogs/SaveDialog";
 import PlayButton from "./PlayButton";
-import { Brick, BrickStatus } from "model/brick";
-
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import ReturnToAuthorButton from "./ReturnToAuthorButton";
 import SendToPublisherButton from "./SendToPublisherButton";
 import ReturnToEditorButton from "./ReturnToEditorButton";
 import BuildPublishButton from "./PublishButton";
-import map from "components/map";
+import { User } from "model/user";
+import { checkOnlyPublisher } from "components/services/brickService";
 
 
 interface NavigationProps {
@@ -26,6 +27,7 @@ interface NavigationProps {
   isEditor: boolean;
   isAdmin: boolean;
   history: any;
+  user: User;
   brick: Brick;
   exitAndSave(): void;
 }
@@ -56,6 +58,8 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
     const {brick} = this.props;
     const {brickStatus} = this.state;
     let disabled = brickStatus === BrickStatus.Draft || brickStatus === BrickStatus.Build;
+
+    let isOnlyPublisher = checkOnlyPublisher(this.props.user, brick);
 
     if (this.props.isPublisher) {
       return <ReturnToEditorButton disabled={disabled} brick={brick} history={this.props.history} />;
