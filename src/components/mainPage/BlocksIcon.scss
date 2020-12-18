@@ -1,0 +1,153 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+$top: -29.5%;
+
+@keyframes bl-1-stack {
+  0% { top: $top; }
+  90% { top: $top; }
+  100% {
+    top: 0%;
+    left: 38%;
+  }
+}
+
+@keyframes bl-2-stack {
+  0% { top: $top; }
+  70% { top: $top; }
+  100% {
+    top: 25.3%;
+    left: 24%;
+  }
+}
+
+@keyframes bl-3-stack {
+  0% { top: $top; }
+  80% { top: $top; }
+  100% {
+    top: 35.3%;
+    right: 24.5%;
+  }
+}
+
+@keyframes bl-4-stack {
+  0% { top: $top; }
+  50% { top: $top; }
+  100% {
+    top: 70%;
+    left: 10.5%;
+  }
+}
+
+@keyframes bl-5-stack {
+  0% { top: $top; }
+  60% { top: $top; }
+  100% {
+    top: 70%;
+    left: 38%;
+  }
+}
+
+@keyframes bl-6-stack {
+  0% { top: $top; }
+  70% { top: $top; }
+  100% {
+    top: 70%;
+    right: 10.5%;
+  }
+}
+
+.blocks-icon {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  .bl {
+    position: absolute;
+    border-radius: 0.45vw;
+    width: 24%;
+    height: 29.5%;
+    background: var(--theme-orange);
+  }
+  .groped-blocks {
+    @extend %transitionAll300;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    .bl-1 {
+      top: 0%;
+      left: 38%;
+    }
+    .bl-2, .bl-3 {
+      top: 35.3%;
+    }
+    .bl-2 {
+      left: 24%;
+    }
+    .bl-3 {
+      right: 24.5%;
+    }
+    .bl-4, .bl-5, .bl-6 {
+      bottom: 0;
+    }
+    .bl-4 {
+      left: 10.5%;
+    }
+    .bl-5 {
+      left: 38%;
+    }
+    .bl-6 {
+      right: 10.5%;
+    }
+  }
+
+  .stack-blocks {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    overflow: hidden;
+    .bl {
+      top: -29.5%;
+    }
+  }
+
+  &.hovered {
+    .groped-blocks {
+      margin-top: 100%;
+    }
+    .stack-blocks {
+      .bl-1 {
+        top: 0%;
+        left: 38%;
+        animation: bl-1-stack 1.8s;
+      }
+      .bl-2, .bl-3 {
+        top: 35.3%;
+      }
+      .bl-2 {
+        left: 24%;
+        animation: bl-2-stack 1.4s;
+      }
+      .bl-3 {
+        right: 24.5%;
+        animation: bl-3-stack 1.6s;
+      }
+      .bl-4, .bl-5, .bl-6 {
+        top: 70%;
+      }
+      .bl-4 {
+        animation: bl-4-stack 0.5s;
+        left: 10.5%;
+      }
+      .bl-5 {
+        animation: bl-5-stack 0.9s;
+        left: 38%;
+      }
+      .bl-6 {
+        right: 10.5%;
+        animation: bl-6-stack 1.2s;
+      }
+    }
+  }
+}

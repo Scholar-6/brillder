@@ -27,6 +27,7 @@ import { isMobile } from "react-device-detect";
 import MobileButtonWrap from "./MobileButtonWrap";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import LibraryButton from "./LibraryButton";
+import BlocksIcon from "./BlocksIcon";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -199,7 +200,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : disabledColor}`}>
-          <SpriteIcon name="student-back-to-work"/>
+          <BlocksIcon />
           <span className={`item-description ${isActive ? '' : 'disabled'}`}>Assignments</span>
         </button>
       </div>
@@ -234,7 +235,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         }
       }}>
         <button className="btn btn-transparent text-theme-orange zoom-item">
-          <SpriteIcon name="student-back-to-work" />
+          <BlocksIcon />
           <span className="item-description">Assignments</span>
         </button>
       </div>
@@ -245,7 +246,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     return (
       <div className="back-item-container student-back-work" onClick={() => {}}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : 'text-theme-light-blue'}`}>
-          <SpriteIcon name="student-back-to-work"/>
+          <BlocksIcon />
           <span className={`item-description ${isActive ? '' : 'disabled'}`}>Shared with Me</span>
         </button>
       </div>
