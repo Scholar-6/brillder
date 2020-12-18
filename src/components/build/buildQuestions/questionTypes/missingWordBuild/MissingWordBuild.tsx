@@ -131,6 +131,13 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
     return name;
   }
 
+  const getAnswerClass = (answer: any) => {
+    let name = "";
+    if (validationRequired && !answer.value) {
+      name += " invalid-answer";
+    }
+    return name;
+  }
 
   const renderChoice = (choice: MissingChoice, key: number) => {
     let checkBoxValid = !!validator.getChecked(choice.answers);
@@ -152,7 +159,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
         {
           choice.answers.map((answer, i) => {
             return (
-              <div style={{ position: 'relative' }} key={i}>
+              <div style={{ position: 'relative' }} className={getAnswerClass(answer)} key={i}>
                 {
                   (choice.answers.length > 3) && <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, i)} />
                 }
