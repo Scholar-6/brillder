@@ -40,9 +40,13 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [loginState, setLoginState] = useState(LoginState.ChooseLoginAnimation);
 
   const moveToLogin = () => {
+    props.history.push(map.Login + '/email');
+  }
+
+  const movingToLogin = () => {
     setLoginState(LoginState.ButtonsAnimation);
     setTimeout(() => {
-      props.history.push(map.Login + '/email');
+      moveToLogin();
     }, 450);
   }
 
@@ -53,7 +57,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     }
     return (
       <div className={className}>
-        <RegisterButton onClick={moveToLogin} />
+        <RegisterButton onClick={movingToLogin} />
         <GoogleButton />
       </div>
     );
