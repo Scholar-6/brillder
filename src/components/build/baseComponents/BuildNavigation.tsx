@@ -70,7 +70,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
       }
       return <ReturnToEditorButton disabled={disabled} brick={brick} history={this.props.history} />;
     }
-    
+
     return '';
   }
 
@@ -91,12 +91,31 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
   }
 
   renderPublisherButtons() {
-    let publishDisabled = this.state.brickStatus === BrickStatus.Publish;
+    const {brickStatus} = this.state;
+    let publishDisabled = brickStatus === BrickStatus.Publish;
     if (!this.props.isValid) {
       publishDisabled = true;
     }
 
+    if (this.props.isAdmin) {
+      return (
+        <BuildPublishButton
+          disabled={publishDisabled}
+          brick={this.props.brick}
+          history={this.props.history}
+          onFinish={() => {
+            this.setState({brickStatus: BrickStatus.Publish});
+            this.props.history.push(map.BackToWorkBuildTab);
+          }}
+        />
+      );
+    }
+
     if (this.props.isPublisher) {
+      if (!publishDisabled) {
+        publishDisabled = brickStatus === BrickStatus.Draft || brickStatus === BrickStatus.Build;
+      }
+
       return (
         <BuildPublishButton
           disabled={publishDisabled}
