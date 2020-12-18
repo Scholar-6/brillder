@@ -66,7 +66,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, upload
 
   return (
     <BaseDialogWrapper open={open} className="image-dialog-container" close={() => setDialog(false)} submit={() => {}}>
-      <div className="dialog-header image-dialog">
+      <div className="dialog-header image-dialog image-dialog-answer">
         <div className={`cropping ${removed ? 'empty' : ''}`}>
           <div className="switch-image">
             <div className={"svgOnHover " + className} onClick={handleClick}>
@@ -102,15 +102,20 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, upload
         />
       </div>
       <div className="centered last-button">
-        <SpriteIcon name="upload" className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
-          if (cropedFile && canUpload) {
-            upload(cropedFile, source, caption, permision);
-          } else if (canUpload) {
-            updateData(source, caption, permision);
-          } else {
-            setValidation(true);
-          }
-         }} />
+        <div
+          className={`upload-button ${canUpload ? 'active' : 'disabled'}`}
+          onClick={() => {
+            if (cropedFile && canUpload) {
+              upload(cropedFile, source, caption, permision);
+            } else if (canUpload) {
+              updateData(source, caption, permision);
+            } else {
+              setValidation(true);
+            }
+          }}
+        >
+          <SpriteIcon name="upload" />
+        </div>
       </div>
     </BaseDialogWrapper>
   );
