@@ -24,6 +24,10 @@
     margin: 0 !important;
     color: var(--theme-orange);
     font-family: $font-family-bold;
+    font-size: 1vw;
+    @include phone_and_tabletP {
+      font-size: 13px;
+    }
   }
   &:hover {
     .bell-cup {

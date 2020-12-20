@@ -81,7 +81,7 @@ const DropImage: React.FC<ImageProps> = props => {
       />
     );
   } else {
-    return <img alt="uploaded-image" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.initFileName}`} />
+    return <img alt="uploaded-file" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.initFileName}`} />
   }
 }
 

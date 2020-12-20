@@ -10,7 +10,7 @@ import sprite from "assets/img/icons-sprite.svg";
 interface ValidationFailedProps {
   isOpen: boolean;
   header: string;
-  label: string;
+  label?: string;
   close(): void;
 }
 
@@ -34,9 +34,10 @@ const ValidationFailedDialog: React.FC<ValidationFailedProps> = props => {
             </Avatar>
           </ListItemAvatar>
         </ListItem>
+        {props.label &&
         <ListItem>
           <ListItemText primary={props.label} className="italic" style={{ minWidth: '30vw' }} />
-        </ListItem>
+        </ListItem>}
       </div>
     </Dialog>
   );

@@ -120,13 +120,23 @@
       animation-timing-function: ease;
     }
   }
+  .button-container {
+    cursor: pointer;
+    svg {
+      stroke-width: 1.5 !important;
+    }
+    &:hover {
+      svg {
+        stroke-width: 1.8 !important;
+      }
+    }
+  }
 }
 
 .MuiAutocomplete-root,
 .input-container, .editors-row {
   .MuiChip-root, .MuiChip-label {
     height: auto;
-    background: var(--tab-gray);
     overflow: hidden;
   }
   .MuiChip-label {

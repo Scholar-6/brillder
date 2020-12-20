@@ -47,6 +47,10 @@
     }
     .ck-content {
       height: 29vh !important;
+      text-align: left !important;
+      p {
+        text-align: left !important;
+      }
     }
   }
 }

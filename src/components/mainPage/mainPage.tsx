@@ -26,6 +26,8 @@ import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/Desk
 import { isMobile } from "react-device-detect";
 import MobileButtonWrap from "./MobileButtonWrap";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
+import LibraryButton from "./LibraryButton";
+import BlocksIcon from "./BlocksIcon";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -168,27 +170,16 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   renderLibraryButton() {
     let isActive = this.props.user.hasPlayedBrick;
     return (
-      <div className="back-item-container my-library" onClick={() => {
-        if (isMobile) {
-          if (!this.state.isSwiping) {
-            this.setState({
-              isDesktopOpen: true,
-              secondaryLabel: 'Your Library has' + this.state.secondPart
-            });
-          }
-          return;
-        }
-        if (isActive) { 
-          this.props.history.push('/my-library');
-        } else {
-          this.setState({isMyLibraryOpen: true});
-        }
-      }}>
-        <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange svgOnHover' : 'text-theme-dark-blue'}`}>
-          <SpriteIcon name="library-book" className="active" />
-          <span className={`item-description ${isActive ? '' : 'disabled'}`}>My Library</span>
-        </button>
-      </div>
+      <LibraryButton
+        isActive={isActive} history={this.props.history} isSwiping={this.state.isSwiping}
+        onClick={() => this.setState({isMyLibraryOpen: true})}
+        onMobileClick={() => {
+          this.setState({
+            isDesktopOpen: true,
+            secondaryLabel: 'Your Library has' + this.state.secondPart
+          });
+        }}
+      />
     );
   }
 
@@ -209,7 +200,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : disabledColor}`}>
-          <SpriteIcon name="student-back-to-work"/>
+          <BlocksIcon />
           <span className={`item-description ${isActive ? '' : 'disabled'}`}>Assignments</span>
         </button>
       </div>
@@ -244,7 +235,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         }
       }}>
         <button className="btn btn-transparent text-theme-orange zoom-item">
-          <SpriteIcon name="student-back-to-work" />
+          <BlocksIcon />
           <span className="item-description">Assignments</span>
         </button>
       </div>
@@ -255,7 +246,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     return (
       <div className="back-item-container student-back-work" onClick={() => {}}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : 'text-theme-light-blue'}`}>
-          <SpriteIcon name="student-back-to-work"/>
+          <BlocksIcon />
           <span className={`item-description ${isActive ? '' : 'disabled'}`}>Shared with Me</span>
         </button>
       </div>
@@ -417,6 +408,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         <div className="welcome-col">
           <WelcomeComponent
             user={this.props.user}
+            history={this.props.history}
             notifications={this.props.notifications}
             notificationClicked={() => this.setState({ notificationExpanded: true })}
           />

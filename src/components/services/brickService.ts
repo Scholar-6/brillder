@@ -85,6 +85,18 @@ export function checkEditor(roles: UserRole[]) {
   return roles.some(role => role.roleId === UserType.Publisher);
 }
 
+export function checkOnlyPublisher(user: User, brick: Brick) {
+  const isEditor = checkEditor(user.roles);
+  if (!isEditor) {
+    return false;
+  }
+  let res = user.subjects.find(s => s.id === brick.subject?.id);
+  if (res) {
+    return true;
+  }
+  return false;
+}
+
 export function checkPublisher(user: User, brick: Brick) {
   const isAdmin = checkAdmin(user.roles);
   if (isAdmin) {

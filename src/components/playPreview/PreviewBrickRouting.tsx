@@ -15,7 +15,7 @@ import {
 import { setBrillderTitle } from 'components/services/titleService';
 import { prefillAttempts } from 'components/services/PlayService';
 import { ReduxCombinedState } from 'redux/reducers';
-import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
+import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
 import { User } from 'model/user';
 
 import Introduction from 'components/play/introduction/Introduction';

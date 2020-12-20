@@ -12,12 +12,13 @@
     background-color: var(--tab-gray);
     @extend %themeRadius;
   }
-  $toolbar-width: 2vw;
+  $toolbar-width: 5vw;
   $border-radius: 0.6vw;
 
   .document-editor {
     width: 100%;
     .ck-editor {
+      min-height: 5vw;
       width: calc(100% - #{$toolbar-width}) !important;
       background: #f5f6f7;
       padding-left: 1vw !important;
@@ -43,6 +44,9 @@
       .ck-toolbar__items {
         border-top-right-radius: $border-radius !important;
         border-bottom-right-radius: $border-radius !important;
+        .ck-button {
+          width: 100%;
+        }
       }
     }
   }

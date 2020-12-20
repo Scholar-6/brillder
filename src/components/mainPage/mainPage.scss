@@ -57,13 +57,36 @@
       }
 
       .welcome-name {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         font-size: 2.5vw;
         letter-spacing: 0.73vw;
         margin-top: 3.2vh;
         font-weight: 600;
         text-transform: uppercase;
         font-family: $font-family-light;
+        transition: font-family .2s ease;
         color: var(--theme-orange);
+        .custom-tooltip {
+          margin-left: -1.4vw;
+          letter-spacing: 0.05vw;
+          text-transform: none;
+          margin-top: 4.3vw;
+        }
+        .svg {
+          stroke-width: 1.7;
+          height: 3vw;
+          width: 3vw;
+          margin-right: 1vw;
+        }
+        &:hover {
+          font-family: $font-family-regular;
+          .svg {
+            stroke-width: 2.1;
+          }  
+        }
       }
       .notifications-text {
         margin-top: 4.3vw;//10vh;
@@ -164,14 +187,6 @@
         }
       }
     }
-    &.my-library {
-      .btn .svg {
-        @include laptop {
-          width: 8.7vw;
-          height: 7vw;
-        }
-      }
-    }
     .item-description {
       padding: 0;
       @extend %textCenter;
@@ -214,32 +229,6 @@
       .item-description {
         margin-top: 0.5vw;
       }
-    }
-  }
-  .main-page-menu {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-end;
-    box-sizing: border-box;
-    width: 16vw;
-    height: $page-head-height;
-    right: 0;
-    position: fixed;
-    background: var(--theme-light-blue);
-    @extend %transitionAll300;
-    border-bottom-left-radius: 2vw;
-
-    &.menu-expanded {
-      width: 16vw;
-      border-bottom-left-radius: 0;
-    }
-
-    &.notification-expanded {
-      width: $notification-width;
-      border-bottom-left-radius: 0;
-      // @extend %transitionAll300;
-      transition: all 300ms ease-in;
     }
   }
 
@@ -312,39 +301,6 @@
             }
           }
         }
-      }
-    }
-  }
-  @include phone_and_tabletP {
-    .main-page-menu {
-      position: absolute;
-      width: 42vw;
-      height: 60px;
-      bottom: 0;
-      border-bottom-left-radius: 0;
-      border-top-left-radius: 6vw;
-      z-index: 1;
-
-      .more-button {
-        margin-right: 4vw;
-      }
-      .bell-button {
-        margin-right: 7.2vw;
-      }
-    }
-    .menu-expanded {
-      border-top-left-radius: 0;
-      width: 45vw !important;
-    }
-    .notification-expanded {
-      border-top-left-radius: 0;
-      width: 100vw !important;
-    }
-    .manage-classes {
-      font-size: 25px;
-      .svg {
-        width: 200px;
-        height: 120px;
       }
     }
   }

@@ -28,6 +28,7 @@ import RoleDescription from 'components/baseComponents/RoleDescription';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachTab from '../TeachTab';
 import EmptyFilter from "./components/EmptyFilter";
+import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -53,6 +54,7 @@ interface UsersListState {
   searchString: string;
   isSearching: boolean;
   searchUsers: MUser[];
+  cantCreate: boolean;
 
   isAdmin: boolean;
   classrooms: ClassroomApi[];
@@ -86,6 +88,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       page: 0,
       pageSize: 12,
       totalCount: 0,
+      cantCreate: false,
 
       searchString: "",
       isSearching: false,
@@ -456,7 +459,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       if (this.state.isAdmin) {
         this.props.history.push('/user-profile/new');
       } else {
-        alert('you don`t have permisions to create new user');
+        this.setState({cantCreate: true});
       }
     }
 
@@ -577,6 +580,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             classroom={this.state.activeClassroom}
           />
         }
+        <ValidationFailedDialog
+          isOpen={this.state.cantCreate}
+          header="You don`t have permisions to create new user"
+          close={()=> this.setState({cantCreate: false})}
+        />
       </div>
     );
   }

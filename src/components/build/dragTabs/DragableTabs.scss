@@ -139,7 +139,8 @@ $tile-height: 100%;
       background: var(--white) !important;
     }
     .outer-circle {
-      background: rgb(155, 154, 154) !important;
+      opacity: 0.5;
+      background: var(--white) !important;
     }
   }
   .editor-border {
@@ -199,17 +200,17 @@ $tile-height: 100%;
     &.has-replied {
       > div {
         &.outer-circle {
-          background-color: var(--theme-yellow-alpha5);
+          background-color: var(--theme-yellow-alpha5) !important;
         }
         &.inner-circle {
-          background-color: var(--theme-yellow);
+          background-color: var(--theme-yellow) !important;
         }
         @media (prefers-color-scheme: dark) {
           &.outer-circle {
-            background-color: var(--theme-yellow-alpha5);
+            background-color: var(--theme-yellow-alpha5) !important;
           }
           &.inner-circle {
-            background-color: var(--theme-yellow);
+            background-color: var(--theme-yellow) !important;
           }
         }
       }
@@ -218,6 +219,38 @@ $tile-height: 100%;
   .drag-tile .unread-indicator {
     .inner-circle {
       margin: 25%;
+    }
+  }
+}
+
+.drag-tabs {
+  .drag-tile-container .drag-tile.invalid {
+    .synthesis-tab-icon {
+      .svg {
+        color: var(--dark-gray) !important;
+      }
+    }
+  }
+}
+
+// active and invalid comment indicator
+.drag-tabs {
+  .drag-tile-container.active .drag-tile.invalid {
+    .unread-indicator {
+      .outer-circle {
+        background-color: var(--theme-orange-alpha5) !important;
+      }
+      .inner-circle {
+        background-color: var(--theme-orange) !important;
+      }
+    }
+    .unread-indicator.has-replied {
+      .outer-circle {
+        background-color: var(--theme-yellow-alpha5) !important;
+      }
+      .inner-circle {
+        background-color: var(--theme-yellow) !important;
+      }
     }
   }
 }
@@ -254,17 +287,49 @@ $tile-height: 100%;
           color: var(--white) !important;
         }
       }
+      .tab-number {
+        opacity: 1;
+        color: var(--white);
+      }
+      .synthesis-tab-icon {
+        .svg {
+          color: var(--white) !important;
+        }
+      }
     }
 
     &.active {
       .drag-tile.invalid {
-        background: var(--white) !important;
+        background: var(--theme-orange) !important;
       }
     }
   }
   .drag-tile-container.active {
     .drag-tile {
       background: white !important;
+      
+      .tab-number {
+        font-family: $font-family-bold !important;
+      }
+      .synthesis-tab-icon {
+        .svg {
+          stroke-width: 3;
+        }
+      }
+      &.invalid {
+        .tab-number {
+         color: var(--white) !important;
+        }
+        .svg {
+          color: var(--white) !important;
+        }
+        background: var(--theme-orange) !important;
+        .synthesis-tab-icon {
+          .svg {
+            color: var(--white) !important;
+          }
+        }
+      }
     }
   }
 }

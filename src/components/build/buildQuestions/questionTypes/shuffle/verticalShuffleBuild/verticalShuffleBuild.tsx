@@ -76,6 +76,18 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
       className += ' big-answer';
     }
 
+    let isValid = null;
+    if (validationRequired) {
+      isValid = true;
+      if ((answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None) && !answer.value) {
+        isValid = false;
+      }
+    }
+
+    if (isValid === false) {
+      className += ' invalid-answer';
+    }
+
     return (
       <div className={className} key={i}>
         <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
@@ -90,7 +102,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           disabled={locked}
           editOnly={editOnly}
           data={answer.value}
-          validationRequired={validationRequired}
+          isValid={isValid}
           toolbar={['latex', 'chemType']}
           placeholder={"Enter Answer " + (i + 1) + "..."}
           onBlur={() => {

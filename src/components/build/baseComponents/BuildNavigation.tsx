@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 
+import map from "components/map";
 import { TutorialStep } from "../tutorial/TutorialPanelWorkArea";
+import { Brick, BrickStatus } from "model/brick";
 
 import SaveDialog from "./dialogs/SaveDialog";
 import PlayButton from "./PlayButton";
-import { Brick, BrickStatus } from "model/brick";
-
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import ReturnToAuthorButton from "./ReturnToAuthorButton";
 import SendToPublisherButton from "./SendToPublisherButton";
 import ReturnToEditorButton from "./ReturnToEditorButton";
 import BuildPublishButton from "./PublishButton";
-import map from "components/map";
+import { User } from "model/user";
+import { checkOnlyPublisher } from "components/services/brickService";
 
 
 interface NavigationProps {
@@ -26,6 +27,7 @@ interface NavigationProps {
   isEditor: boolean;
   isAdmin: boolean;
   history: any;
+  user: User;
   brick: Brick;
   exitAndSave(): void;
 }
@@ -57,9 +59,18 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
     const {brickStatus} = this.state;
     let disabled = brickStatus === BrickStatus.Draft || brickStatus === BrickStatus.Build;
 
-    if (this.props.isPublisher) {
+    if (this.props.isAdmin) {
       return <ReturnToEditorButton disabled={disabled} brick={brick} history={this.props.history} />;
     }
+
+    // publisher
+    if (this.props.isPublisher) {
+      if (!disabled && brick.status === BrickStatus.Publish) {
+        disabled = true;
+      }
+      return <ReturnToEditorButton disabled={disabled} brick={brick} history={this.props.history} />;
+    }
+
     return '';
   }
 
@@ -80,12 +91,31 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
   }
 
   renderPublisherButtons() {
-    let publishDisabled = this.state.brickStatus === BrickStatus.Publish;
+    const {brickStatus} = this.state;
+    let publishDisabled = brickStatus === BrickStatus.Publish;
     if (!this.props.isValid) {
       publishDisabled = true;
     }
 
+    if (this.props.isAdmin) {
+      return (
+        <BuildPublishButton
+          disabled={publishDisabled}
+          brick={this.props.brick}
+          history={this.props.history}
+          onFinish={() => {
+            this.setState({brickStatus: BrickStatus.Publish});
+            this.props.history.push(map.BackToWorkBuildTab);
+          }}
+        />
+      );
+    }
+
     if (this.props.isPublisher) {
+      if (!publishDisabled) {
+        publishDisabled = brickStatus === BrickStatus.Draft || brickStatus === BrickStatus.Build;
+      }
+
       return (
         <BuildPublishButton
           disabled={publishDisabled}

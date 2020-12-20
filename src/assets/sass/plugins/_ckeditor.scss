@@ -78,6 +78,9 @@ a.ck {
         .ck.ck-button__label {
           margin-bottom: 0.5vw !important;
         }
+        &.disabled {
+          opacity: 0.5;
+        }
       }
     }
   }

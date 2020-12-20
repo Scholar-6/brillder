@@ -23,20 +23,26 @@ interface InviteProps {
 
 const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [isValid, setValid] = React.useState(false);
-  const [editors, setEditors] = React.useState<Editor[]>(brick.editors ?? []);
+  const [editors, setEditors] = React.useState<Editor[]>([]);
   const [editorError, setEditorError] = React.useState("");
 
   const saveEditors = async (editorIds: number[]) => {
     let res = await props.assignEditor(brick, editorIds);
     if (res) {
       props.submit(getNameText());
+      setEditors([]);
     }
     return res;
   }
 
   const onNext = async () => {
     if (isValid && editors) {
-      const res = await saveEditors(editors.map(editor => editor.id));
+      let editorsIds = [];
+      editorsIds.push(...editors.map(editor => editor.id));
+      if (brick.editors) {
+        editorsIds.push(...brick.editors.map(editor => editor.id));
+      }
+      const res = await saveEditors(editorsIds);
       if (res) {
         props.close();
       } else {
