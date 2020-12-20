@@ -131,6 +131,13 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
     return name;
   }
 
+  const getAnswerClass = (answer: any) => {
+    let name = "";
+    if (validationRequired && !answer.value) {
+      name += " invalid-answer";
+    }
+    return name;
+  }
 
   const renderChoice = (choice: MissingChoice, key: number) => {
     let checkBoxValid = !!validator.getChecked(choice.answers);
@@ -145,17 +152,16 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
           placeholder="Text before missing word..."></textarea>
         {
           (state.choices.length > 1)
-            ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeChoice(key)}>
+            && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeChoice(key)}>
               <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
             </button>
-            : ""
         }
         {
           choice.answers.map((answer, i) => {
             return (
-              <div style={{ position: 'relative' }} key={i}>
+              <div style={{ position: 'relative' }} className={getAnswerClass(answer)} key={i}>
                 {
-                  (choice.answers.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, i)} /> : ""
+                  (choice.answers.length > 3) && <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, i)} />
                 }
                 <Checkbox
                   className={`left-ckeckbox ${(validationRequired && !checkBoxValid) ? "checkbox-invalid" : ""}`}
@@ -183,7 +189,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
           value={choice.after}
           disabled={locked}
           rows={3}
-          placeholder="Text after choice..."
+          placeholder="Text after missing word..."
           onChange={(event) => { afterChanged(choice, event) }}>
         </textarea>
         <AddAnswerButton

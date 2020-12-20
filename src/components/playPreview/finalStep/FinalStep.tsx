@@ -161,7 +161,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const renderSendToPublisherColumn = () => {
     return (
       <CustomColumn
-        icon="send"
+        icon="send-custom"
         title="Send to publisher"
         label="for final review"
         size={3}

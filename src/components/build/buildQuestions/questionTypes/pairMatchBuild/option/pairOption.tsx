@@ -56,19 +56,31 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     save();
   }
 
-  let customClass = '';
+  let customClass = 'unique-component pair-match-option';
   if (answer.optionType === QuestionValueType.Image || answer.answerType === QuestionValueType.Image) {
-    customClass = 'pair-image';
+    customClass += ' pair-image';
+  }
+
+  let isValid = null;
+  if (validationRequired) {
+    isValid = true;
+    if ((answer.optionType === QuestionValueType.String || answer.optionType === QuestionValueType.None || !answer.optionType) && !answer.option) {
+      isValid = false;
+    }
+  }
+
+  if (isValid === false) {
+    customClass += ' invalid-answer';
   }
 
   return (
     <Grid container item xs={6}>
-      <div className={`unique-component pair-match-option ${customClass}`}>
+      <div className={customClass}>
         <DocumentWirisCKEditor
           disabled={locked}
           editOnly={editOnly}
           data={answer.option}
-          validationRequired={validationRequired}
+          isValid={isValid}
           toolbar={['latex', 'chemType']}
           placeholder={"Enter Option " + (index + 1) + "..."}
           onBlur={() => save()}

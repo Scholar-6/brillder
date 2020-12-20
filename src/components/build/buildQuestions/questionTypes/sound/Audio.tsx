@@ -2,12 +2,11 @@ import React from "react";
 
 import './Audio.scss';
 import { fileUrl } from "components/services/uploadFile";
-import { ChooseOneAnswer } from "../chooseOneBuild/types";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface SoundProps {
-  answer: ChooseOneAnswer;
+  src?: string;
 }
 
 enum AudioState {
@@ -30,8 +29,8 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
   constructor(props: SoundProps) {
     super(props);
 
-    const { answer } = this.props;
-    const audio = new Audio(fileUrl(answer.soundFile ? answer.soundFile : ""));
+    const { src } = this.props;
+    const audio = new Audio(fileUrl(src ? src : ""));
 
     audio.addEventListener("timeupdate", this.progress.bind(this), false);
     audio.addEventListener("canplaythrough", this.onLoad.bind(this), false);
@@ -71,7 +70,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
   }
 
   getTime(t: any) {
-    var m = ~~(t / 60),
+    let m = ~~(t / 60),
       s = ~~(t % 60);
     return (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
   }

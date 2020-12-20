@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .choose-one-box {
   position: relative;
@@ -21,7 +21,7 @@
       height: 14vh;
     }
     .MuiButtonBase-root {
-      padding:0.45vw;
+      padding: 0.45vw;
     }
     .MuiSvgIcon-root {
       $checkbox-size: 1.25vw;
@@ -34,20 +34,6 @@
     width: calc(100% - 4.2vw);
     top: 2vh;
     left: 2.2vw;
-  }
-
-  .delete-right-top-icon {
-    position: absolute;
-    top: 0.8vh;
-    right: 2.2vw;
-    width: $bin-size;
-    height: $bin-size;
-    cursor: pointer;
-    color: var(--theme-orange);
-    z-index: 10;
-    &:hover {
-      opacity: 0.5;
-    }
   }
 
   .choose-sound {

@@ -28,7 +28,12 @@
   }
 
   .no-found {
+    margin-left: 0.9vw;
     margin-bottom: 0 !important;
+  }
+
+  .found {
+    margin-left: 0.9vw;
   }
 
   .create-button, .recomend-button {
@@ -46,8 +51,14 @@
     cursor: pointer;
     margin-left: 12vw;
     svg {
+      @extend %transitionAll300;
       margin-top: calc(#{$bricks-height / 90});
       max-height: calc(#{$bricks-height / 12});
+    }
+    &:hover {
+      svg {
+        transform: rotate(10deg);
+      }
     }
   }
   .recomend-button {

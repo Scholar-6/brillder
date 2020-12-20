@@ -35,13 +35,15 @@ import PlayLeftSidebar from './PlayLeftSidebar';
 import { PlayMode } from './model';
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames } from "components/proposal/model";
-import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
+import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
 import { getAssignQueryString, getPlayPath } from "./service";
 import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";
 import map from "components/map";
 import userActions from 'redux/actions/user';
 import { User } from "model/user";
 import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
+import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 
 
 function shuffle(a: any[]) {
@@ -65,6 +67,7 @@ interface BrickRoutingProps {
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const parsedBrick = parseAndShuffleQuestions(props.brick);
+  const [saveFailed, setFailed] = React.useState(false);
   const [brick, setBrick] = React.useState(parsedBrick);
   const initAttempts = prefillAttempts(brick.questions);
   const [status, setStatus] = React.useState(PlayStatus.Live);
@@ -82,6 +85,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [searchString, setSearchString] = React.useState("");
 
   setBrillderTitle(brick.title);
+
+  // by default move to intro
+  let splited = location.pathname.split('/');
+  if (splited.length === 4) {
+    props.history.push(`/play/brick/${brick.id}/intro`);
+    return <PageLoader content="...Getting Brick..." />;
+  }
 
   const updateAttempts = (attempt: any, index: number) => {
     attempts[index] = attempt;
@@ -125,7 +135,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       }
       props.history.push(`/play/brick/${brick.id}/finalStep`);
     }).catch(() => {
-      alert("Can`t save your attempt");
+      setFailed(true);
     });
   };
 
@@ -298,6 +308,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history={props.history}
           />
         </Route>
+        <ValidationFailedDialog
+          isOpen={saveFailed}
+          header="Can`t save your attempt"
+          close={() => setFailed(false)}
+        />
       </Switch>
     );
   };

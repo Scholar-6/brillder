@@ -58,6 +58,7 @@ export interface DocumentWEditorProps {
   link?: boolean;
   blockQuote?: boolean;
   defaultAlignment?: string;
+  isValid?: boolean | null;
   validationRequired?: boolean;
   colorsExpanded?: boolean;
   onBlur(): void;
@@ -278,6 +279,8 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
 
     let className = "document-editor";
     if (this.props.validationRequired && !this.state.data) {
+      className += " content-invalid";
+    } else if (this.props.isValid === false) {
       className += " content-invalid";
     }
 

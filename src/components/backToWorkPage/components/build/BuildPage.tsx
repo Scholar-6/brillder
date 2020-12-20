@@ -688,7 +688,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
           <Tab
             draft={personalDraft}
             selfPublish={selfPublish}
-            isTeach={this.state.isTeach || this.state.isAdmin}
             onCoreSwitch={this.toggleCore.bind(this)}
           />
             <div className="tab-content">

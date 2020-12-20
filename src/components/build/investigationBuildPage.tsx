@@ -66,6 +66,7 @@ import HintInvalidDialog from './baseComponents/dialogs/HintInvalidDialog';
 import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialog';
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
+import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -107,6 +108,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     getNewFirstQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
 
+  const [lastQuestionDialog, setLastQuestionDialog] = React.useState(false);
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
@@ -390,7 +392,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const removeQuestion = (index: number) => {
     if (locked) { return; }
     if (questions.length === 1) {
-      alert("You can`t delete last question");
+      setLastQuestionDialog(true);
       return;
     }
     if (questions[index].type) {
@@ -824,6 +826,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     <div className="investigation-build-page">
       <BuildNavigation
         tutorialStep={step}
+        user={props.user}
         isTutorialSkipped={isTutorialPassed()}
         isValid={isValid}
         moveToReview={moveToReview}
@@ -947,6 +950,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           index={deleteQuestionIndex}
           setDialog={setDeleteDialog}
           deleteQuestion={deleteQuestionByIndex}
+        />
+        <ValidationFailedDialog
+          isOpen={lastQuestionDialog}
+          header="You can`t delete last question"
+          close={() => setLastQuestionDialog(false)}
         />
         <SkipTutorialDialog
           open={skipTutorialOpen}

@@ -70,6 +70,10 @@
     height: auto;
     .ck-content {
       height: 26vh !important;
+      text-align: left !important;
+      p {
+        text-align: left !important;
+      }
     }
   }
 }

@@ -3,6 +3,7 @@ import { Button } from '@material-ui/core';
 
 import '../choose.scss';
 import './ChooseOne.scss';
+import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import CompComponent from '../../Comp';
 import { CompQuestionProps } from '../../types';
 import { ComponentAttempt } from 'components/play/model';
@@ -83,11 +84,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     } else if (answer.answerType === QuestionValueType.Sound) {
       return (
         <div style={{width: '100%'}}>
-          <audio
-            controls
-            style={{width: '100%'}}
-            src={fileUrl(answer.soundFile)}
-          />
+          <Audio src={answer.soundFile} />
           <div>{answer.soundCaption ? answer.soundCaption : 'Click to select'}</div>
         </div>
       );

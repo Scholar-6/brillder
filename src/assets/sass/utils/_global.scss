@@ -386,7 +386,7 @@ h3 {
 }
 .image-drag-n-drop {
   .dropzone {
-    background: #fafafa !important;
+    background: var(--tab-gray) !important;
     border-color: var(--gray) !important;
   }
 }
