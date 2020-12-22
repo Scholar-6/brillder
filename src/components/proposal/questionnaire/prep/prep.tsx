@@ -9,7 +9,7 @@ import NavigationButtons from '../../components/navigationButtons/NavigationButt
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/proposal/components/navigation/Navigation';
-import YoutubeAndMath from 'components/play/baseComponents/YoutubeAndMath';
+import YoutubeAndMathQuote from 'components/play/baseComponents/YoutubeAndMathQuote';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
@@ -23,11 +23,12 @@ interface PrepProps {
 }
 
 const PrepPreviewComponent: React.FC<any> = ({ data }) => {
+  console.log(data);
   return (
     <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
       <SpriteIcon name="file-text" className={data ? "" : "big"} />
       <div className="typing-text">
-        <YoutubeAndMath value={data} />
+        <YoutubeAndMathQuote value={data} isSynthesisParser={true} />
       </div>
     </Grid>
   );
@@ -55,8 +56,10 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             mediaEmbed={true}
             link={true}
             toolbar={[
-              'bold', 'italic', 'fontColor', 'latex', 'chemType', 'bulletedList', 'numberedList', 'uploadImageCustom'
+              'bold', 'italic', 'fontColor', 'latex', 'chemType',
+              'bulletedList', 'numberedList', 'uploadImageCustom'
             ]}
+            blockQuote={true}
             onBlur={() => { }}
             onChange={savePrep}
           />
