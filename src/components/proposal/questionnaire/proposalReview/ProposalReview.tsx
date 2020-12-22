@@ -291,6 +291,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           toolbar={[
             'bold', 'italic', 'fontColor', 'latex', 'mathType', 'chemType', 'bulletedList', 'numberedList', 'uploadImageCustom'
           ]}
+          blockQuote={true}
           uploadStarted={() => this.setState({uploading: true})}
           uploadFinished={() => this.setState({uploading: false})}
           onBlur={() => { }}
