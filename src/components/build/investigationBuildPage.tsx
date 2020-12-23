@@ -360,7 +360,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const moveToSynthesis = () => {
-    history.push(`/build/brick/${brickId}/investigation/synthesis`);
+    history.push(map.InvestigationSynthesis(brickId));
   }
 
   const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
@@ -762,7 +762,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <Route path="/build/brick/:brickId/investigation/question">
           {renderQuestionComponent}
         </Route>
-        <Route path="/build/brick/:brickId/investigation/synthesis">
+        <Route path="/build/brick/:brickId/synthesis">
           <SynthesisPage
             locked={locked}
             editOnly={!canEdit}
@@ -907,7 +907,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <Route path="/build/brick/:brickId/investigation/question">
             {renderQuestionTypePreview()}
           </Route>
-          <Route path="/build/brick/:brickId/investigation/synthesis">
+          <Route path="/build/brick/:brickId/synthesis">
             <PhonePreview
               Component={SynthesisPreviewComponent}
               prev={() => selectQuestion(questions.length - 1)}
