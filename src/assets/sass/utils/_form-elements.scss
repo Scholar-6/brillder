@@ -173,3 +173,31 @@ input {
 .left-ckeckbox {
   @extend %checkboxValidation;
 }
+
+.unique-component.invalid-answer {
+  .left-ckeckbox {
+    &.checkbox-invalid {
+      color: var(--gray) !important;
+      svg {
+        color: var(--gray) !important;
+      }
+      &:hover {
+        svg {
+          color: var(--white) !important;
+        }
+      }
+    }
+    &.Mui-checked {
+      color: var(--theme-green) !important;
+      &:hover {
+        svg {
+          color: var(--theme-green) !important;
+        }
+        background-color: var(--theme-green-alpha4) !important;
+      }
+      svg {
+        color: var(--theme-green) !important;
+      }
+    }
+  }
+}
