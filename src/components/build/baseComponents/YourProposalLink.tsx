@@ -6,10 +6,10 @@ import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
 import { useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { clearProposal } from 'localStorage/proposal';
-import map from 'components/map';
 
 
 export interface YourProposalButtonProps {
+  brickId: number;
   invalid: boolean;
   tutorialStep: TutorialStep;
   tooltipsOn: boolean;
@@ -19,14 +19,14 @@ export interface YourProposalButtonProps {
 }
 
 const YourProposalLink: React.FC<YourProposalButtonProps> = ({
-  invalid, tooltipsOn, tutorialStep, setTooltips, saveBrick, isTutorialPassed
+  invalid, brickId, tooltipsOn, tutorialStep, setTooltips, saveBrick, isTutorialPassed
 }) => {
   const history = useHistory();
 
   const editProposal = () => {
     clearProposal();
     saveBrick();
-    history.push(map.ProposalReview);
+    history.push(`/build/brick/${brickId}/proposal`);
   }
 
   const renderZapTooltip = () => {

@@ -36,7 +36,7 @@ import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick, checkAdmin, checkPublisher } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
-import { validateProposal } from 'components/proposal/service/validation';
+import { validateProposal } from 'components/build/proposal/service/validation';
 import { TextComponentObj } from "./buildQuestions/components/Text/interface";
 import { useSocket } from "socket/socket";
 import { applyBrickDiff, getBrickDiff } from "components/services/diff";
@@ -57,6 +57,7 @@ import TutorialPhonePreview from "./tutorial/TutorialPreview";
 import YourProposalLink from './baseComponents/YourProposalLink';
 import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import Proposal from "./proposal/Proposal";
 
 import DeleteQuestionDialog from "./baseComponents/dialogs/DeleteQuestionDialog";
 import DesktopVersionDialog from 'components/build/baseComponents/dialogs/DesktopVersionDialog';
@@ -67,6 +68,7 @@ import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialo
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
+import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./proposal/model";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -822,8 +824,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const isPublisher = checkPublisher(props.user, props.brick);
   const isAdmin = checkAdmin(props.user.roles);
 
-  return (
-    <div className="investigation-build-page">
+  const renderBuildPage = () => {
+    return (
+      <div className="investigation-build-page">
       <BuildNavigation
         tutorialStep={step}
         user={props.user}
@@ -840,6 +843,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       <Hidden only={['xs', 'sm']}>
         <TutorialLabels isTutorialPassed={isTutorialPassed()} tooltipsOn={tooltipsOn} />
         <YourProposalLink
+          brickId={props.brick.id}
           tutorialStep={step}
           tooltipsOn={tooltipsOn}
           invalid={validationRequired && !proposalResult.isValid}
@@ -971,6 +975,29 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         </div>
       </Hidden>
     </div>
+  );
+  }
+
+  const proposalBaseUrl = '/build/brick/' + brickId;
+
+  return (
+    <Switch>
+      <Route
+        path={[
+          proposalBaseUrl + TitleRoutePart,
+          proposalBaseUrl + OpenQuestionRoutePart,
+          proposalBaseUrl + BrickLengthRoutePart,
+          proposalBaseUrl + BriefRoutePart,
+          proposalBaseUrl + PrepRoutePart,
+          proposalBaseUrl + ProposalReviewPart
+        ]}
+      >
+        <Proposal history={history} location={props.location} match={props.match} />
+      </Route>
+      <Route path="/build/brick/:brickId">
+        {renderBuildPage()}
+      </Route>
+    </Switch>
   );
 };
 

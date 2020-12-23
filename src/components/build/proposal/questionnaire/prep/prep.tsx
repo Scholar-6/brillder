@@ -2,13 +2,12 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './prep.scss';
-import { ProposalStep, PlayButtonStatus } from "../../model";
-import map from 'components/map';
+import { ProposalStep, PlayButtonStatus, BriefRoutePart } from "../../model";
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
-import Navigation from 'components/proposal/components/navigation/Navigation';
+import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import YoutubeAndMathQuote from 'components/play/baseComponents/YoutubeAndMathQuote';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
@@ -16,6 +15,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 interface PrepProps {
   parentPrep: string;
   canEdit: boolean;
+  baseUrl: string;
   playStatus: PlayButtonStatus;
   savePrep(prep: string): void;
   saveBrick(prep: string): void;
@@ -23,7 +23,6 @@ interface PrepProps {
 }
 
 const PrepPreviewComponent: React.FC<any> = ({ data }) => {
-  console.log(data);
   return (
     <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
       <SpriteIcon name="file-text" className={data ? "" : "big"} />
@@ -39,6 +38,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
     <div className="tutorial-page prep-page-questionary">
       <Navigation
         step={ProposalStep.Prep}
+        baseUrl={props.baseUrl}
         playStatus={props.playStatus}
         saveAndPreview={props.saveAndPreview}
         onMove={() => savePrep(parentPrep)}
@@ -68,7 +68,8 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             canSubmit={true}
             data={parentPrep}
             onSubmit={props.saveBrick}
-            backLink={map.ProposalBrief}
+            backLink={props.baseUrl + BriefRoutePart}
+            baseUrl={props.baseUrl}
           />
           <h2 className="pagination-text">4 of 4</h2>
         </Grid>

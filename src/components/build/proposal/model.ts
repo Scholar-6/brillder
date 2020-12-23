@@ -24,3 +24,10 @@ export enum PlayButtonStatus {
   Invalid,
   Valid
 };
+
+export const TitleRoutePart = '/brick-title';
+export const OpenQuestionRoutePart = '/open-question';
+export const BrickLengthRoutePart = '/length';
+export const BriefRoutePart = '/brief';
+export const PrepRoutePart = '/prep';
+export const ProposalReviewPart = '/proposal';

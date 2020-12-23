@@ -12,8 +12,7 @@ import { setBrillderTitle } from "components/services/titleService";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import YoutubeAndMathInHtml from "components/play/baseComponents/YoutubeAndMath";
-import { BrickFieldNames, PlayButtonStatus } from '../../model';
-import map from 'components/map';
+import { BrickFieldNames, PlayButtonStatus, PrepRoutePart } from '../../model';
 import PlayButton from "components/build/baseComponents/PlayButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { CommentLocation } from "model/comments";
@@ -34,6 +33,7 @@ interface ProposalProps {
   canEdit: boolean;
   history: History;
   playStatus: PlayButtonStatus;
+  baseUrl: string;
   saveBrick(): void;
   setBrickField(name: BrickFieldNames, value: string): void;
   saveAndPreview(): void;
@@ -62,7 +62,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
     let briefCommentExpanded = false;
     const {brick} = props;
-    console.log(brick.status, brick.editors);
     
     let isAuthor = false;
     try {
@@ -121,12 +120,12 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         if (this.state.bookState === BookState.PrepPage) {
           this.toFirstPage();
         } else if (this.state.bookState === BookState.TitlesPage) {
-          this.props.history.push(map.ProposalPrep);
+          this.moveToPrep();
         }
       }
     } else {
       if (leftKeyPressed(e)) {
-        this.props.history.push(map.ProposalPrep);
+        this.moveToPrep();
       }
     }
   }
@@ -167,6 +166,10 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     if (this.state.bookState === BookState.TitlesPage) {
       this.setState({ bookState: BookState.PrepPage });
     }
+  }
+
+  moveToPrep() {
+    this.props.history.push(this.props.baseUrl + PrepRoutePart);
   }
 
   renderEditButton() {
@@ -491,7 +494,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               </div>
               : <div
                 className="back-button arrow-button"
-                onClick={() => this.props.history.push(map.ProposalPrep)}
+                onClick={() => this.moveToPrep()}
                 onMouseOut={this.onBookClose.bind(this)}
               />
             }
