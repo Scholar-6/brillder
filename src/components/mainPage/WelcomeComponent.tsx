@@ -175,7 +175,10 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
         >
           <div className="centered">
             {this.props.user.profileImage
-              ? <img alt="user-image" src={fileUrl(this.props.user.profileImage)} />
+              ? 
+                <div className="profile-image-border">
+                  <img alt="user-image" src={fileUrl(this.props.user.profileImage)} />
+                </div>
               : <SpriteIcon name="user-custom" />
             }
             {this.state.nameHovered && <div className="custom-tooltip">View Profile</div>}
