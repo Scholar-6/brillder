@@ -1,15 +1,48 @@
+const splitByTags = (value: string) => {
+  // youtube preparations
+  let res = value.replace(/<\/p>/gi, (s: string) => {
+    return s + '\n';
+  });
+  // #2086 youtube preparations
+  res = res.replace(/<\/iframe>/gi, (s: string) => {
+    return s + '\n';
+  });
+
+  return res.match(/<(.+)>.*?<\/(.+)>/g) || [];
+}
+
+export function parseDataToArrayQuote(value: string): string[] {
+  try {
+    // slit by quotes
+    value = value.replace(/<\/blockquote>/gi, (s: string) => {
+      return s + '\n';
+    });
+    const reg = new RegExp('<blockquote>(.*)</blockquote>', 'g')
+    let quoteParts = value.match(reg);
+    let res: string[] = [];
+    if (quoteParts) {
+      let rest = value;
+      for (let quote of quoteParts) {
+        const splited = rest.split(quote);
+        res.push(...splitByTags(splited[0]));
+        res.push(quote);
+        // if more that one coincidence join the rest to save the loop
+        rest = splited.slice(1).join();
+      }
+      // add last one
+      res.push(...splitByTags(rest));
+    } else {
+      res = splitByTags(value);
+    }
+    return res;
+  } catch {
+    return [];
+  }
+}
+
 export function parseDataToArray(value: string): Array<string> {
   try {
-    // youtube preparations
-    let res = value.replace(/<\/p>/gi, (s: string) => {
-      return s + '\n';
-    });
-    // #2086 youtube preparations
-    res = res.replace(/<\/iframe>/gi, (s: string) => {
-      return s + '\n';
-    });
-    
-    return res.match(/<(.+)>.*?<\/(.+)>/g) || [];
+    return splitByTags(value);
   } catch {
     return [];
   }
