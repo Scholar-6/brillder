@@ -236,7 +236,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.save(userToSave);
   }
 
-  save(userToSave: any) {
+  async save(userToSave: any) {
     const valid = isValid(userToSave);
     if (!valid) {
       this.setState({ validationRequired: true });
@@ -248,25 +248,23 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     if (this.state.isNewUser) {
-      createUser(userToSave).then(status => {
-        if (status === UpdateUserStatus.Success) {
-          this.setState({ savedDialogOpen: true });
-          this.props.getUser();
-        } else if (status === UpdateUserStatus.InvalidEmail) {
-          this.setState({ emailInvalidOpen: true });
-        } else {
-          this.props.requestFailed("Can`t save user profile");
-        }
-      });
+      const status = await createUser(userToSave);
+      if (status === UpdateUserStatus.Success) {
+        this.setState({ savedDialogOpen: true });
+        this.props.getUser();
+      } else if (status === UpdateUserStatus.InvalidEmail) {
+        this.setState({ emailInvalidOpen: true });
+      } else {
+        this.props.requestFailed("Can`t save user profile");
+      }
     } else {
-      updateUser(userToSave).then(saved => {
-        if (saved) {
-          this.setState({ savedDialogOpen: true });
-          this.props.getUser();
-        } else {
-          this.props.requestFailed("Can`t save user profile");
-        }
-      });
+      const saved = await updateUser(userToSave);
+      if (saved) {
+        this.setState({ savedDialogOpen: true });
+        this.props.getUser();
+      } else {
+        this.props.requestFailed("Can`t save user profile");
+      }
     }
   }
 
@@ -410,7 +408,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   render() {
     const { user } = this.state;
-    //let valid = isValid(user) && !this.state.emailInvalid;
     return (
       <div className="main-listing user-profile-page">
         <PageHeadWithMenu
@@ -493,7 +490,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               alignContent="center"
               style={{ height: "100%" }}
             >
-              <PhonePreview Component={UserProfilePreview} action={this.previewAnimationFinished.bind(this)} />
+              <PhonePreview Component={UserProfilePreview} data={{user:this.state.user}} action={this.previewAnimationFinished.bind(this)} />
             </Grid>
           </div>
         </Grid>
