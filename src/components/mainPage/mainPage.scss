@@ -73,7 +73,8 @@
           margin-left: -1.4vw;
           letter-spacing: 0.05vw;
           text-transform: none;
-          margin-top: 4.3vw;
+          margin-top: 4.9vw;
+          font-family: $font-family-regular;
         }
         
         .svg, .profile-image-border {
@@ -109,6 +110,9 @@
 
         &.clickable {
           cursor: pointer;
+        }
+        &:hover {
+          font-family: $font-family-bold;
         }
       }
 
