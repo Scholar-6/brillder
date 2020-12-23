@@ -24,7 +24,7 @@ export const InvestigationBuild = (brickId: number) => {
 }
 
 export const InvestigationSynthesis = (brickId: number) => {
-  return `${investigation(brickId)}/synthesis`;
+  return `/build/brick/${brickId}/synthesis`;
 }
 
 export const investigationBuildQuestion = (brickId: number, questionId: number) => {
