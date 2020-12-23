@@ -163,9 +163,15 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   }
 
   const renderCategory = (category: SortCategory, key: number) => {
+    let className = 'categorise-box';
+    if (validationRequired) {
+      if (!category.name) {
+        className += ' invalid-category';
+      }
+    }
     return (
       <div key={key}>
-        <div className="categorise-box">
+        <div className={className}>
           {
             (state.categories.length > 2)
               && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeCategory(key)}>
