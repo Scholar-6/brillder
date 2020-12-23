@@ -22,7 +22,11 @@ class YoutubeLink extends Component<YoutubeLinkProps, YoutubeLinkState> {
   getVideoLink(el: string) {
     let htmlElement = document.createElement("div");
     htmlElement.innerHTML = this.props.value;
-    let link = htmlElement.children[0].children[0].getAttribute("data-oembed-url");
+    console.log(htmlElement);
+    let link = '' as any;
+    if (htmlElement && htmlElement.children[0] && htmlElement.children[0].children[0] && htmlElement.children[0].children[0].getAttribute("data-oembed-url")) {
+      link = htmlElement.children[0].children[0].getAttribute("data-oembed-url");
+    }
     return link ? link : '';
   }
 
