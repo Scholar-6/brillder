@@ -75,17 +75,22 @@
           text-transform: none;
           margin-top: 4.3vw;
         }
-        .svg {
-          stroke-width: 1.7;
+        .svg, img {
           height: 3vw;
           width: 3vw;
           margin-right: 1vw;
+        }
+        .svg {
+          stroke-width: 1.7;
+        }
+        img {
+          border-radius: 50%;
         }
         &:hover {
           font-family: $font-family-regular;
           .svg {
             stroke-width: 2.1;
-          }  
+          }
         }
       }
       .notifications-text {
