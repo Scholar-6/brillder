@@ -7,7 +7,7 @@ import queryString from 'query-string';
 import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";
 import { PlayMode } from "../model";
-import { BrickFieldNames } from 'components/proposal/model';
+import { BrickFieldNames } from 'components/build/proposal/model';
 
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import HighlightHtml from '../baseComponents/HighlightHtml';

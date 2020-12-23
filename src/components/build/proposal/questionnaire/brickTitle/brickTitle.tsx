@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, Input, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
-import { ProposalStep, PlayButtonStatus } from "../../model";
+import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "../../model";
 import { Brick, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
@@ -10,9 +10,8 @@ import { enterPressed } from "components/services/key";
 
 import NextButton from '../../components/nextButton';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
-import Navigation from 'components/proposal/components/navigation/Navigation';
+import Navigation from 'components/build/proposal/components/navigation/Navigation';
 
-import map from 'components/map';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 import a from 'indefinite';
@@ -24,6 +23,7 @@ enum RefName {
 
 interface BrickTitleProps {
   history: any;
+  baseUrl: string;
   parentState: Brick;
   canEdit: boolean;
   playStatus: PlayButtonStatus;
@@ -111,7 +111,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
   }
 
   render() {
-    const { parentState, canEdit, saveTitles } = this.props;
+    const { parentState, canEdit, baseUrl, saveTitles } = this.props;
     if (parentState.title) {
       setBrillderTitle(parentState.title);
     }
@@ -127,6 +127,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
     return (
       <div className="tutorial-page brick-title-page">
         <Navigation
+          baseUrl={baseUrl}
           step={ProposalStep.BrickTitle}
           playStatus={this.props.playStatus}
           saveAndPreview={this.props.saveAndPreview}
@@ -170,7 +171,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                     onKeyUp={e => {
                       if (enterPressed(e)) {
                         saveTitles(parentState);
-                        this.props.history.push(map.ProposalOpenQuestion);
+                        this.props.history.push(baseUrl + OpenQuestionRoutePart);
                       }
                     }}
                     onChange={e => this.onChange(e, "alternativeTopics")}
@@ -182,7 +183,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <div className="tutorial-pagination">
               <div className="centered text-theme-dark-blue bold" style={{fontSize: '2vw', marginRight: '2vw'}} onClick={() => {
                 saveTitles(parentState);
-                this.props.history.push(map.ProposalOpenQuestion);
+                this.props.history.push(baseUrl + OpenQuestionRoutePart);
               }}>
                 Next
               </div>
@@ -193,6 +194,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                   canSubmit={true}
                   onSubmit={saveTitles}
                   data={parentState}
+                  baseUrl={baseUrl}
                 />
               </div>
             </div>

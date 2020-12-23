@@ -34,7 +34,7 @@ import { prefillAttempts } from "components/services/PlayService";
 import PlayLeftSidebar from './PlayLeftSidebar';
 import { PlayMode } from './model';
 import { ReduxCombinedState } from "redux/reducers";
-import { BrickFieldNames } from "components/proposal/model";
+import { BrickFieldNames } from "components/build/proposal/model";
 import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
 import { getAssignQueryString, getPlayPath } from "./service";
 import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";

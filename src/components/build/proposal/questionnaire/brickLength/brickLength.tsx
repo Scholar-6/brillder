@@ -3,13 +3,12 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './brickLength.scss';
-import { ProposalStep, PlayButtonStatus } from "components/proposal/model";
+import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "components/build/proposal/model";
 import { BrickLengthEnum } from 'model/brick';
-import map from 'components/map';
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
-import Navigation from 'components/proposal/components/navigation/Navigation';
+import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
@@ -50,6 +49,7 @@ const BrickLengthPreviewComponent: React.FC<any> = ({ data }) => {
 }
 
 interface BrickLengthProps {
+  baseUrl: string;
   length: BrickLengthEnum;
   canEdit: boolean;
   playStatus: PlayButtonStatus;
@@ -69,6 +69,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
   return (
     <div className="tutorial-page brick-length-page">
       <Navigation
+        baseUrl={props.baseUrl}
         step={ProposalStep.BrickLength}
         playStatus={props.playStatus}
         saveAndPreview={props.saveAndPreview}
@@ -112,7 +113,8 @@ const BrickLength: React.FC<BrickLengthProps> = (
             canSubmit={length !== BrickLengthEnum.None}
             onSubmit={props.saveBrick}
             data={length}
-            backLink={map.ProposalOpenQuestion}
+            backLink={props.baseUrl + OpenQuestionRoutePart}
+            baseUrl={props.baseUrl}
           />
         </Grid>
         <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} />

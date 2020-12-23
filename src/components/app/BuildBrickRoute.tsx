@@ -14,7 +14,7 @@ import map from "components/map";
 
 interface BuildRouteProps {
   exact?: any;
-  path: string;
+  path: string | string[];
   component: any;
   brick: Brick;
   isAuthenticated: isAuthenticated;

@@ -7,15 +7,16 @@ import './NavigationButtons.scss';
 
 
 interface NavigationButtonsProps {
-  step: ProposalStep
-  canSubmit: boolean
-  onSubmit(data?:any): void
-  data: any
-  backLink: string
+  baseUrl: string;
+  step: ProposalStep;
+  canSubmit: boolean;
+  onSubmit(data?:any): void;
+  data: any;
+  backLink: string;
 }
 
 const NavigationButtons:React.FC<NavigationButtonsProps> = (
-  { step, canSubmit, onSubmit, data, backLink }
+  { step, canSubmit, data, backLink, baseUrl, onSubmit }
 ) => {
   let [active, toggleActive] = React.useState(true);
   const onPrevHover = () => {
@@ -35,6 +36,7 @@ const NavigationButtons:React.FC<NavigationButtonsProps> = (
         to={backLink}
       />
       <NextButton
+        baseUrl={baseUrl}
         isActive={active}
         step={step}
         canSubmit={canSubmit}
