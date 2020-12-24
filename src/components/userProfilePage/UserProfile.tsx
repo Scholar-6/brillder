@@ -335,6 +335,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
     let index = this.state.user.roles.indexOf(roleId);
     if (index !== -1) {
+      // publisher can`t remove his publisher role
+      if (roleId === UserType.Publisher) {
+        const foundUpperRole = this.state.user.roles.find(r => r === UserType.Admin || r === UserType.Institution);
+        if (!foundUpperRole) {
+          return;
+        }
+      }
       this.state.user.roles.splice(index, 1);
     } else {
       this.state.user.roles.push(roleId);
