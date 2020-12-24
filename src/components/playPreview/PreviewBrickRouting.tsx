@@ -150,7 +150,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
     let isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
     if (isCurrentEditor) {
-      history.push(`/play-preview/brick/${brickId}/finalStep`);
+      history.push(`/play-preview/brick/${brickId}/submit`);
     } else {
       history.push(`/play-preview/brick/${brickId}/build-complete`);
     }
@@ -318,7 +318,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             <Route exac path="/play-preview/brick/:brickId/build-complete">
               <BuildCompletePage brick={brick} history={history} />
             </Route>
-            <Route exac path="/play-preview/brick/:brickId/finalStep">
+            <Route exac path="/play-preview/brick/:brickId/submit">
               <FinalStep user={props.user} status={status} history={history} location={location} />
             </Route>
           </Switch>
