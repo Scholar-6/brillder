@@ -41,7 +41,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
     if (success) {
       this.props.brick.isCore = this.state.isCore;
       await this.props.fetchBrick(this.props.brick.id);
-      this.props.history.push(`/play-preview/brick/${this.props.brick.id}/finalStep`);
+      this.props.history.push(`/play-preview/brick/${this.props.brick.id}/submit`);
     } else {
       this.props.requestFailed('Can`t set brick library');
     }
@@ -80,7 +80,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
     // show page for admins and authors
     if (!isAdmin && !isAuthor) {
       if (isCurrentEditor || isEditor) {
-        return <Redirect to={`/play-preview/brick/${brick.id}/finalStep`} />;
+        return <Redirect to={`/play-preview/brick/${brick.id}/submit`} />;
       }
     }
 
