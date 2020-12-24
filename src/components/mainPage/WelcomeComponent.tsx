@@ -177,7 +177,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
             {this.props.user.profileImage
               ? 
                 <div className="profile-image-border">
-                  <img alt="user-image" src={fileUrl(this.props.user.profileImage)} />
+                  <img alt="user-profile" src={fileUrl(this.props.user.profileImage)} />
                 </div>
               : <SpriteIcon name="user-custom" />
             }
