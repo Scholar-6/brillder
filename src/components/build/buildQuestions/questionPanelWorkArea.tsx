@@ -56,6 +56,9 @@ export interface QuestionProps {
   undo(): void;
   redo(): void;
   locked: boolean;
+  
+  // phone preview
+  componentFocus(index: number): void;
 }
 
 const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
@@ -190,6 +193,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               history={history}
               question={question}
               validationRequired={validationRequired}
+              componentFocus={props.componentFocus}
               saveBrick={props.saveBrick}
               updateFirstComponent={props.updateFirstComponent}
               updateComponents={props.updateComponents}

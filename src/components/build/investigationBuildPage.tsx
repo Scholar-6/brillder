@@ -135,6 +135,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
   const [tooltipsOn, setTooltips] = React.useState(true);
+  const [focusIndex, setFocusIndex] = React.useState(-1);
   // time of last autosave
   let [lastAutoSave, setLastAutoSave] = React.useState(Date.now());
 
@@ -215,8 +216,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         setQuestions(q => update(q, { $set: parsedQuestions }));
       }
     }
-
-    console.log(parsedQuestions);
 
     if (diff.synthesis) {
       setSynthesis(brick.synthesis);
@@ -369,6 +368,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (locked) { return; }
     setQuestionType(type);
     history.push(`/build/brick/${brickId}/investigation/question-component`);
+  };
+
+  const componentFocus = (index: number) => {
+    setFocusIndex(index);
   };
 
   const setQuestionType = (type: QuestionTypeEnum) => {
@@ -691,6 +694,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         isAuthor={isAuthor}
         validationRequired={validationRequired}
         initSuggestionExpanded={initSuggestionExpanded}
+        componentFocus={componentFocus}
         updateFirstComponent={updateFirstComponent}
         getQuestionIndex={getQuestionIndex}
         setQuestion={setQuestion}
@@ -903,6 +907,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <Route path="/build/brick/:brickId/investigation/question-component">
             <PhoneQuestionPreview
               question={activeQuestion}
+              focusIndex={focusIndex}
               getQuestionIndex={getQuestionIndex}
               nextQuestion={setNextQuestion}
               prevQuestion={setPrevFromPhone}
