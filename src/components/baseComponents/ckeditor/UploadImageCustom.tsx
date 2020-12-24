@@ -13,7 +13,6 @@ class UploadImageCustom extends Plugin {
 
   init() {
     const editor = this.editor;
-    console.log(editor);
     editor.ui.componentFactory.add("UploadImageCustom", (locale: any) => {
       const view = new ButtonView(locale);
 
@@ -23,7 +22,6 @@ class UploadImageCustom extends Plugin {
         tooltip: true,
       });
 
-
       let className = "upload-button-custom";
 
       if (!editor.isReadOnly) {
@@ -32,19 +30,17 @@ class UploadImageCustom extends Plugin {
       view.class = className;
       view.on("execute", () => {
         if (!editor.isReadOnly) {
-        let el = document.createElement("input");
-        el.setAttribute("type", "file");
-        el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
-        el.click();
+          let el = document.createElement("input");
+          el.setAttribute("type", "file");
+          el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
+          el.click();
 
-        editor.execute('uploading');
+          editor.execute('uploading');
 
-        // UPLOADING IMAGES TO BACKEND
-        el.onchange = (files: any) => {
-          if (el.files && el.files.length >= 0) {
-            uploadFile(
-              el.files[0] as File,
-              (res: any) => {
+          // UPLOADING IMAGES TO BACKEND
+          el.onchange = () => {
+            if (el.files && el.files.length >= 0) {
+              uploadFile(el.files[0] as File, (res: any) => {
                 let fileName = res.data.fileName;
                 editor.execute('uploaded');
 
@@ -58,11 +54,11 @@ class UploadImageCustom extends Plugin {
                   );
                 });
               },
-              () => {}
-            );
-          }
-        };
-      }
+                () => { }
+              );
+            }
+          };
+        }
       });
 
       return view;
