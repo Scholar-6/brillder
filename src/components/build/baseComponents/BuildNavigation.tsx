@@ -12,7 +12,6 @@ import SendToPublisherButton from "./SendToPublisherButton";
 import ReturnToEditorButton from "./ReturnToEditorButton";
 import BuildPublishButton from "./PublishButton";
 import { User } from "model/user";
-import { checkOnlyPublisher } from "components/services/brickService";
 
 
 interface NavigationProps {

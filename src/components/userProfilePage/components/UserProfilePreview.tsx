@@ -51,7 +51,6 @@ class UserProfilePreview extends Component<PreviewProps, PreiewState> {
   render() {
     const { user } = this.props.data;
     let showProfile = false;
-    console.log(user.bio);
     if (user.profileImage && user.bio) {
       showProfile = true;
     }
