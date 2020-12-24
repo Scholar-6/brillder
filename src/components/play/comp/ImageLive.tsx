@@ -5,10 +5,11 @@ import './ImageLive.scss';
 
 
 interface ImageProps {
+  refs?: any;
   component: ImageComponentData;
 }
 
-const ImageLive: React.FC<ImageProps> = ({ component }) => {
+const ImageLive: React.FC<ImageProps> = ({ component, refs }) => {
   if (component.value) {
     let className="image-play-container2";
     if (component.imageAlign === ImageAlign.center) {
@@ -19,7 +20,7 @@ const ImageLive: React.FC<ImageProps> = ({ component }) => {
       height = component.imageHeight + 'vh';
     }
     return (
-      <div className={className}>
+      <div className={className} ref={refs}>
         <div className="image-play-container">
           <img
             alt="play" className="image-play"

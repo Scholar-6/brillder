@@ -5,11 +5,12 @@ import Desmos from 'desmos';
 import './GraphLive.scss';
 
 
-interface ImageProps {
+interface GraphProps {
+  refs?: any;
   component: any;
 }
 
-const GraphLive: React.FC<ImageProps> = ({ component }) => {
+const GraphLive: React.FC<GraphProps> = ({ component, refs }) => {
   const [calculator, setCalculator] = React.useState<any>(null);
 
   const graphCallback = React.useCallback(elt => {
@@ -51,7 +52,7 @@ const GraphLive: React.FC<ImageProps> = ({ component }) => {
 
   if (component.graphState) {
     return (
-    <div className="graph-component-container">
+    <div className="graph-component-container" ref={refs}>
       <div className="graph-component" ref={graphCallback} />
     </div>
     );

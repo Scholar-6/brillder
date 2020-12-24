@@ -15,6 +15,8 @@ interface SoundProps {
   data: any;
   save(): void;
   updateComponent(component: any, index: number): void;
+  //phone preview
+  onFocus(): void;
 }
 
 interface SoundState {
@@ -132,7 +134,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
       status === AudioStatus.Start || status === AudioStatus.Recording;
     
     return (
-      <div className="react-recording">
+      <div className="react-recording" onClick={this.props.onFocus}>
         <Dropzone
           locked={locked}
           status={status}

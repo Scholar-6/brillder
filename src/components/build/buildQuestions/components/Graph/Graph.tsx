@@ -25,6 +25,8 @@ interface GraphProps {
     data: any;
     save(): void;
     updateComponent(component: any, index: number): void;
+    // phone preview
+    onFocus(): void;
 }
 
 const GraphComponent: React.FC<GraphProps> = (props) => {
@@ -93,7 +95,7 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
     }
 
     return (
-    <div className="question-component-graph-container">
+    <div className="question-component-graph-container" onClick={props.onFocus}>
         <div className="question-component-graph-header">Graph</div>
         <div className="question-component-graph" ref={graphRef} />
         

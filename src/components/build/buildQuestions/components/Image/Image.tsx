@@ -15,6 +15,9 @@ interface ImageProps {
   validationRequired: boolean;
   save(): void;
   updateComponent(component:any, index:number): void;
+
+  // phone preview
+  onFocus(): void;
 }
 
 const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
@@ -71,7 +74,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   }
 
   return (
-    <div className="image-drag-n-drop">
+    <div className="image-drag-n-drop" onClick={props.onFocus}>
       <div className={className} onClick={() => {
         if (props.data.value) {
           setOpen(true);
