@@ -28,18 +28,22 @@ interface QuestionProps {
   isTimeover?: boolean;
   attempt?: ComponentAttempt<any>;
   question: Question;
-  isPhonePreview?: boolean;
   answers: any;
   isReview?: boolean;
   isBookPreview?: boolean;
   onAttempted?(): void;
+
+  // build phone preview
+  isPhonePreview?: boolean;
+  focusIndex?: number;
 
   // only for real play
   mode?: PlayMode;
 }
 
 interface QuestionState {
-  answerRef: React.RefObject<CompComponent<any, any>>
+  answerRef: React.RefObject<CompComponent<any, any>>;
+  refs: React.RefObject<any>[];
 }
 
 class QuestionLive extends React.Component<QuestionProps, QuestionState> {
@@ -47,8 +51,18 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
     super(props);
 
     this.state = {
-      answerRef: React.createRef<CompComponent<any, any>>()
+      answerRef: React.createRef<CompComponent<any, any>>(),
+      refs: this.getComponentRefs()
     }
+  }
+
+  getComponentRefs() {
+    let refs:React.RefObject<any>[] = [];
+    let count = this.props.question.components.length;
+    for (let i = 0; i < count; i++) {
+      refs.push(React.createRef<any>());
+    }
+    return refs;
   }
 
   getAnswer(): any {
@@ -62,6 +76,28 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
   getRewritedAttempt(isReview: boolean): any {
     return this.state.answerRef.current?.getAttempt(isReview);
   }
+
+  componentDidUpdate() {
+    if (this.props.question.components.length > this.state.refs.length) {
+      this.setState({refs: this.getComponentRefs()});
+    }
+  }
+
+  shouldComponentUpdate(nextProps: QuestionProps) {
+    if (this.props.isPhonePreview) {
+      if (this.props.focusIndex !== nextProps.focusIndex) {
+        let {focusIndex} = nextProps;
+        if (focusIndex !== undefined && focusIndex >= 0) {
+          let ref = this.state.refs[focusIndex];
+          if (ref && ref.current) {
+            ref.current.scrollIntoView();
+          }
+        }
+      }
+    }
+    return true;
+  }
+
 
   render() {
     const { question } = this.props;
@@ -113,11 +149,11 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
     const renderComponent = (component: any, index: number) => {
       const { type } = component;
       if (type === QuestionComponentTypeEnum.Text) {
-        return <TextLive mode={this.props.mode} key={index} component={component} />
+        return <TextLive mode={this.props.mode} key={index} refs={this.state.refs[index]} component={component} />
       } else if (type === QuestionComponentTypeEnum.Image) {
         return <ImageLive key={index} component={component} />
       } else if (type === QuestionComponentTypeEnum.Quote) {
-        return <QuoteLive mode={this.props.mode} key={index} component={component} />
+        return <QuoteLive mode={this.props.mode} key={index} refs={this.state.refs[index]} component={component} />
       } else if (type === QuestionComponentTypeEnum.Sound) {
         return <SoundLive key={index} component={component} />
       } else if (type === QuestionComponentTypeEnum.Graph) {

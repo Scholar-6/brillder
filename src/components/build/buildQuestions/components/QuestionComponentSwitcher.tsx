@@ -31,6 +31,9 @@ export interface SwitchQuestionProps {
   setQuestionHint(hintState: HintState): void;
   removeComponent(componentIndex: number): void;
   openSameAnswerDialog(): void;
+
+  // phone preview
+  componentFocus(): void;
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
@@ -135,6 +138,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
           editOnly={editOnly}
           data={component}
           save={props.saveBrick}
+          onFocus={props.componentFocus}
           validationRequired={validationRequired}
           updateComponent={updateComponent}
         />
