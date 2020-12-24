@@ -120,12 +120,20 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     let isBuilder = canBuild(user);
     let isEditor = canEdit(user);
     let isStudent = isBuilder;
+    let isInstitute = isInstitution(user);
 
     let isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
     if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
       isBuilder = false;
       isEditor = false;
       isStudent = true;
+    }
+
+    if (isAdmin) {
+      isBuilder = true;
+      isEditor = true;
+      isStudent = true;
+      isInstitute = true;
     }
 
     return {
@@ -152,7 +160,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         { roleId: UserType.Teacher, name: "Teacher", disabled: !isAdmin },
         { roleId: UserType.Builder, name: "Builder", disabled: !isBuilder },
         { roleId: UserType.Publisher, name: "Publisher", disabled: !isEditor },
-        { roleId: UserType.Institution, name: "Institution", disabled: !isInstitution(user) },
+        { roleId: UserType.Institution, name: "Institution", disabled: !isInstitute },
         { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
       ],
       noSubjectDialogOpen: false,
@@ -313,7 +321,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   checkUserRole(roleId: number) {
-    if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
+    if (!this.state.isAdmin && this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
       if (roleId !== UserType.Student) {
         return false;
       }
