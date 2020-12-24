@@ -85,6 +85,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
 
   shouldComponentUpdate(nextProps: QuestionProps) {
     if (this.props.isPhonePreview) {
+      console.log(this.props.focusIndex);
       if (this.props.focusIndex !== nextProps.focusIndex) {
         let {focusIndex} = nextProps;
         if (focusIndex !== undefined && focusIndex >= 0) {
@@ -151,13 +152,13 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
       if (type === QuestionComponentTypeEnum.Text) {
         return <TextLive mode={this.props.mode} key={index} refs={this.state.refs[index]} component={component} />
       } else if (type === QuestionComponentTypeEnum.Image) {
-        return <ImageLive key={index} component={component} />
+        return <ImageLive key={index} component={component} refs={this.state.refs[index]} />
       } else if (type === QuestionComponentTypeEnum.Quote) {
         return <QuoteLive mode={this.props.mode} key={index} refs={this.state.refs[index]} component={component} />
       } else if (type === QuestionComponentTypeEnum.Sound) {
-        return <SoundLive key={index} component={component} />
+        return <SoundLive key={index} component={component} refs={this.state.refs[index]} />
       } else if (type === QuestionComponentTypeEnum.Graph) {
-        return <GraphLive key={index} component={component} />
+        return <GraphLive key={index} component={component} refs={this.state.refs[index]} />
       } else if (type === QuestionComponentTypeEnum.Component) {
         return renderUniqueComponent(component, index);
       }
