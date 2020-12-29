@@ -321,6 +321,22 @@
             }
           }
         }
+        .back-item-container {
+          .svg {
+            padding-top: 5px;
+            width: 230px;
+          }
+        }
+        .manage-classes {
+          .svg {
+            width: 150px;
+            height: 120px;
+          }
+
+          span {
+            font-size: 25px !important;
+          }
+        }
       }
     }
   }
