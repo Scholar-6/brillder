@@ -229,6 +229,9 @@
     }
   }
   .create-item-container {
+    .btn .svg {
+      @extend %transitionAll300;
+    }
     @include tabletP {
       .btn .svg {
         height: 7.5vw;
