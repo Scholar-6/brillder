@@ -120,6 +120,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       }
       return renderBuildingButton();
     }
+    return '';
   };
 
   const renderManageClassesItem = () => {
