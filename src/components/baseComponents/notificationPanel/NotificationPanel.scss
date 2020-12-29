@@ -15,6 +15,11 @@
     border-radius: 0 0 0 2.5vw !important;
     right: 0 !important;
     left: auto !important;
+
+    @include phone_and_tabletP {
+      width: 100vw !important;
+      border-radius: 2.5vw 0 0 0 !important;
+    }
   }
 }
 
