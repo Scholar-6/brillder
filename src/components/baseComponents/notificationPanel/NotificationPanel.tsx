@@ -263,7 +263,7 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
                 <SpriteIcon name="arrow-down" onClick={this.scrollDown.bind(this)} />
               </div>
               <div className="bold">Clear All</div>
-              <IconButton aria-label="clear-all" onClick={() => this.markAllAsRead()}>
+              <IconButton aria-label="clear-all" className="clear-icon" onClick={() => this.markAllAsRead()}>
                 <SvgIcon>
                   <SpriteIcon name="circle-cancel" className="text-white" />
                 </SvgIcon>

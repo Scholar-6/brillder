@@ -12,7 +12,7 @@
     left: auto !important;
     @include tabletP {
       width: 16vw;
-      top: $page-head-height !important;
+      top: calc(#{$page-head-height} - 1px) !important;
     }
     > ul {
       padding: 0 !important;
