@@ -8,7 +8,7 @@ export const isValid = (user: UserProfile) => {
 }
 
 export const getUserProfile = (user: User): UserProfile => {
-  let roles = user.roles.map(role => role.roleId);
+  const roles = user.roles.map(role => role.roleId);
 
   return {
     id: user.id,

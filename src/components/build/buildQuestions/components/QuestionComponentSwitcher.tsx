@@ -31,6 +31,9 @@ export interface SwitchQuestionProps {
   setQuestionHint(hintState: HintState): void;
   removeComponent(componentIndex: number): void;
   openSameAnswerDialog(): void;
+
+  // phone preview
+  componentFocus(): void;
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
@@ -111,8 +114,14 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     }
   }
   if (InnerComponent) {
+    let className = '';
+    if (InnerComponent.name === 'ImageComponent') {
+      if (validationRequired && !component.value) {
+        className += ' invalid-image';
+      }
+    }
     return (
-      <div style={{ position: 'relative', width: '100%' }}>
+      <div style={{ position: 'relative', width: '100%' }} className={className}>
         {
           !locked
             &&
@@ -129,6 +138,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
           editOnly={editOnly}
           data={component}
           save={props.saveBrick}
+          onFocus={props.componentFocus}
           validationRequired={validationRequired}
           updateComponent={updateComponent}
         />

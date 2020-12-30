@@ -12,10 +12,8 @@ import { setBrillderTitle } from "components/services/titleService";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import YoutubeAndMathInHtml from "components/play/baseComponents/YoutubeAndMath";
-import { BrickFieldNames, PlayButtonStatus } from '../../model';
-import map from 'components/map';
+import { BrickFieldNames, PlayButtonStatus, PrepRoutePart } from '../../model';
 import PlayButton from "components/build/baseComponents/PlayButton";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { CommentLocation } from "model/comments";
 import CommentPanel from "components/baseComponents/comments/CommentPanel";
 import { Transition } from "react-transition-group";
@@ -34,6 +32,7 @@ interface ProposalProps {
   canEdit: boolean;
   history: History;
   playStatus: PlayButtonStatus;
+  baseUrl: string;
   saveBrick(): void;
   setBrickField(name: BrickFieldNames, value: string): void;
   saveAndPreview(): void;
@@ -62,7 +61,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
     let briefCommentExpanded = false;
     const {brick} = props;
-    console.log(brick.status, brick.editors);
     
     let isAuthor = false;
     try {
@@ -121,12 +119,12 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         if (this.state.bookState === BookState.PrepPage) {
           this.toFirstPage();
         } else if (this.state.bookState === BookState.TitlesPage) {
-          this.props.history.push(map.ProposalPrep);
+          this.moveToPrep();
         }
       }
     } else {
       if (leftKeyPressed(e)) {
-        this.props.history.push(map.ProposalPrep);
+        this.moveToPrep();
       }
     }
   }
@@ -150,13 +148,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
-  switchMode(e: React.MouseEvent<SVGSVGElement, MouseEvent>) {
-    e.stopPropagation();
-    if (this.props.canEdit) {
-      this.setState({ mode: !this.state.mode });
-    }
-  }
-
   toFirstPage() {
     if (this.state.bookState === BookState.PrepPage) {
       this.setState({ bookState: BookState.TitlesPage });
@@ -169,12 +160,8 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
-  renderEditButton() {
-    let className = "edit-icon";
-    if (this.state.mode) {
-      className += " active";
-    }
-    return <SpriteIcon onClick={e => this.switchMode(e)} name="edit-outline" className={className} />;
+  moveToPrep() {
+    this.props.history.push(this.props.baseUrl + PrepRoutePart);
   }
 
   renderEditableTextarea(name: BrickFieldNames, placeholder: string = "Please fill in..", color?: string) {
@@ -291,6 +278,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           toolbar={[
             'bold', 'italic', 'fontColor', 'latex', 'mathType', 'chemType', 'bulletedList', 'numberedList', 'uploadImageCustom'
           ]}
+          blockQuote={true}
           uploadStarted={() => this.setState({uploading: true})}
           uploadFinished={() => this.setState({uploading: false})}
           onBlur={() => { }}
@@ -385,9 +373,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         <div className="page6" onClick={this.toSecondPage.bind(this)}>
           <div className="normal-page">
             <div className="normal-page-container">
-              <Grid container justify="center">
-                {this.renderEditButton()}
-              </Grid>
               <p className="text-title">Outline the purpose of your brick.</p>
               <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
                 {this.renderMathField(BrickFieldNames.brief)}
@@ -433,9 +418,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           <div className="page4">
             <div className="normal-page">
               <div className="normal-page-container">
-                <Grid container justify="center">
-                  {this.renderEditButton()}
-                </Grid>
                 <p className="text-title text-theme-dark-blue bold">Create an engaging and relevant preparatory task.</p>
                 <div className={`proposal-text prep-editor text-theme-dark-blue ${this.state.mode ? 'edit-mode' : ''}`} onClick={e => e.stopPropagation()}>
                   {this.state.bookHovered && this.state.bookState === BookState.PrepPage && this.renderPrepField()}
@@ -490,7 +472,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               </div>
               : <div
                 className="back-button arrow-button"
-                onClick={() => this.props.history.push(map.ProposalPrep)}
+                onClick={() => this.moveToPrep()}
                 onMouseOut={this.onBookClose.bind(this)}
               />
             }

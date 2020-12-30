@@ -35,11 +35,14 @@ type QuestionComponentsProps = {
   updateFirstComponent(component: TextComponentObj): void;
   updateComponents(components: any[]): void;
   setQuestionHint(hintState: HintState): void;
+
+  // phone preview
+  componentFocus(index: number): void;
 }
 
 const QuestionComponents = ({
   questionIndex, locked, editOnly, history, brickId, question, validationRequired,
-  updateComponents, setQuestionHint, saveBrick, updateFirstComponent
+  componentFocus, updateComponents, setQuestionHint, saveBrick, updateFirstComponent
 }: QuestionComponentsProps) => {
   
   let firstComponent = Object.assign({}, question.firstComponent) as any;
@@ -139,6 +142,7 @@ const QuestionComponents = ({
         uniqueComponent={uniqueComponent}
         allDropBoxesEmpty={allDropBoxesEmpty}
         validationRequired={validationRequired}
+        componentFocus={() => componentFocus(index)}
         setEmptyType={setEmptyType}
         removeComponent={removeInnerComponent}
         setQuestionHint={setQuestionHint}

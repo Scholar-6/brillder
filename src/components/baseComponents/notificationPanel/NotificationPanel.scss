@@ -9,6 +9,20 @@
   }
 }
 
+.notification-box {
+  .MuiPopover-paper {
+    box-shadow: none !important;
+    border-radius: 0 0 0 2.5vw !important;
+    right: 0 !important;
+    left: auto !important;
+
+    @include phone_and_tabletP {
+      width: 100vw !important;
+      border-radius: 2.5vw 0 0 0 !important;
+    }
+  }
+}
+
 .notification-box,
 .main-notification-box {
   .scroll-buttons {
@@ -182,6 +196,12 @@
     align-items: center;
     justify-content: flex-end;
     padding: 0;
+    .clear-icon {
+      svg {
+        height: 1vw;
+        width: 1vw;
+      }
+    }
     @include phone_and_tabletP {
       font-size: 3.5vw;
       button {

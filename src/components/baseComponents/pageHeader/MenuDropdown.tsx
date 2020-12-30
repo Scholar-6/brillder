@@ -16,6 +16,7 @@ import SpriteIcon from "../SpriteIcon";
 import { Hidden } from "@material-ui/core";
 import FullScreenButton from "./fullScreenButton/FullScreen";
 import { isMobile } from "react-device-detect";
+import PlaySkipDialog from "../dialogs/PlaySkipDialog";
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(actions.forgetBrick())
@@ -36,18 +37,43 @@ interface MenuDropdownProps {
 const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const { page } = props;
   const {hasPlayedBrick} = props.user;
+  const [playSkip, setPlaySkip] = React.useState({
+    isOpen: false,
+    label: '',
+    link: ''
+  });
 
   let isStudent = false;
   if (props.user.rolePreference?.roleId === UserType.Student) {
     isStudent = true;
   }
 
-  const move = (link: string) => props.history.push(link);
+  const checkPlay = () => {
+    const {pathname} = props.history.location;
+    if (pathname.slice(0, 12) === '/play/brick/') {
+      return true;
+    }
+    return false;
+  }
+
+  const move = (link: string, label: string) => {
+    let isPlay = checkPlay();
+    if (isPlay) {
+      setPlaySkip({ isOpen: true, link, label });
+    } else {
+      props.history.push(link);
+    }
+  }
 
   const creatingBrick = () => {
-    clearProposal();
-    props.forgetBrick();
-    move(ProposalSubject);
+    let isPlay = checkPlay();
+    if (isPlay) {
+      setPlaySkip({ isOpen: true, link: ProposalSubject, label: 'Start Building' });
+    } else {
+      clearProposal();
+      props.forgetBrick();
+      move(ProposalSubject, '');
+    }
   };
 
   const renderViewAllItem = () => {
@@ -57,9 +83,9 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
           className="first-item menu-item"
           onClick={() => {
             if (isMobile) {
-              move("/play/dashboard/1");
+              move("/play/dashboard/1", 'View All Bricks');
             } else {
-              move("/play/dashboard");
+              move("/play/dashboard", 'View All Bricks');
             }
           }}
         >
@@ -70,7 +96,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         </MenuItem>
       );
     }
-    return "";
   };
 
   const renderBuildingButton = () => {
@@ -95,7 +120,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       }
       return renderBuildingButton();
     }
-    return "";
+    return '';
   };
 
   const renderManageClassesItem = () => {
@@ -109,7 +134,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       }
       if (canSee) {
         return (
-          <MenuItem className="menu-item" onClick={() => move(map.ManageClassroomsTab)}>
+          <MenuItem className="menu-item" onClick={() => move(map.ManageClassroomsTab, 'Manage Classes')}>
             <span className="menu-text">Manage Classes</span>
             <div className="btn btn-transparent svgOnHover">
               <SpriteIcon name="manage-class" className="active text-white" />
@@ -118,13 +143,12 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         );
       }
     }
-    return "";
   };
 
   const renderBackToWorkItem = () => {
     if (page !== PageEnum.BackToWork && page !== PageEnum.MainPage) {
       return (
-        <MenuItem className="menu-item" onClick={() => move("/back-to-work")}>
+        <MenuItem className="menu-item" onClick={() => move("/back-to-work", 'Back To Work')}>
           <span className="menu-text">Back To Work</span>
           <div className="btn btn-transparent svgOnHover">
             <SpriteIcon name="student-back-to-work" className="active text-white" />
@@ -132,13 +156,12 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         </MenuItem>
       );
     }
-    return "";
   };
 
   const renderManageUsersItem = () => {
     if (props.user && checkAdmin(props.user.roles) && props.page !== PageEnum.ManageUsers) {
       return (
-        <MenuItem className="menu-item" onClick={() => move("/users")}>
+        <MenuItem className="menu-item" onClick={() => move("/users", 'Manage Users')}>
           <span className="menu-text">Manage Users</span>
           <div className="btn btn-transparent svgOnHover">
             <SpriteIcon name="users" className="active text-white" />
@@ -146,13 +169,12 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         </MenuItem>
       );
     }
-    return "";
   };
 
   const renderProfileItem = () => {
     if (page !== PageEnum.Profile) {
       return (
-        <MenuItem className="view-profile menu-item" onClick={() => move("/user-profile")}>
+        <MenuItem className="view-profile menu-item" onClick={() => move("/user-profile", 'View Profile')}>
           <span className="menu-text">View Profile</span>
           <div className="btn btn-transparent svgOnHover">
             <SpriteIcon name="user" className="active text-white" />
@@ -160,13 +182,12 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         </MenuItem>
       );
     }
-    return "";
   };
 
   const renderMyLibraryItem = () => {
     if (page !== PageEnum.MainPage && page !== PageEnum.MyLibrary) {
       return (
-        <MenuItem className="view-profile menu-item" onClick={() => move("/my-library")}>
+        <MenuItem className="view-profile menu-item" onClick={() => move("/my-library", 'My Library')}>
           <span className="menu-text">My Library</span>
           <div className="btn btn-transparent svgOnHover">
             <SpriteIcon name="book-open" className="active text-white stroke-2" />
@@ -174,7 +195,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         </MenuItem>
       );
     }
-    return "";
   }
 
   /*eslint-disable-next-line*/
@@ -189,7 +209,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         </MenuItem>
       );
     }
-    return "";
   }
 
   /*eslint-disable-next-line*/
@@ -204,7 +223,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         </MenuItem>
       );
     }
-    return "";
   }
 
   return (
@@ -235,6 +253,18 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
           <SpriteIcon name="logout" className="active logout-icon text-white" />
         </div>
       </MenuItem>
+      <PlaySkipDialog
+        isOpen={playSkip.isOpen}
+        label={playSkip.label}
+        submit={() => {
+          if (playSkip.link === ProposalSubject) {
+            clearProposal();
+            props.forgetBrick();
+          }
+          props.history.push(playSkip.link)
+        }}
+        close={() => setPlaySkip({ isOpen: false, link: '', label: '' })}
+      />
     </Menu>
   );
 };

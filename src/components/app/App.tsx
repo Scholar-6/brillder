@@ -12,7 +12,7 @@ import ViewAll from '../viewAllPage/ViewAll';
 import MobileCategory from '../viewAllPage/MobileCategory';
 import PlayBrickRouting from '../play/PlayBrickRouting';
 import PlayPreviewRouting from 'components/playPreview/PreviewBrickRouting';
-import Proposal from 'components/proposal/Proposal';
+import Proposal from 'components/build/proposal/Proposal';
 import MainPage from 'components/mainPage/mainPage';
 import BackToWorkPage from '../backToWorkPage/BackToWork';
 import AssignmentsPage from '../assignmentsPage/AssignmentsPage';
@@ -134,9 +134,19 @@ const App: React.FC<AppProps> = props => {
         <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
 
         <PlayPreviewRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
+        <BuildBrickRoute
+          path={[
+            "/build/brick/:brickId/investigation/question-component/:questionId",
+            "/build/brick/:brickId/investigation/question-component",
+            "/build/brick/:brickId/investigation/question/:questionId",
+            "/build/brick/:brickId/investigation/question",
+            "/build/brick/:brickId"
+          ]}
+          component={InvestigationBuildPage}
+          location={location}
+        />
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
-        <BuildBrickRoute path="/build/brick/:brickId/investigation/question-component/:questionId" component={InvestigationBuildPage} location={location} />
-        <BuildBrickRoute path="/build/brick/:brickId/investigation/question/:questionId" component={InvestigationBuildPage} location={location} />
+        <BuildRoute path="/build/brick/:brickId" component={Proposal} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
         <BuildRoute path={map.AssignmentsPage} component={AssignmentsPage} location={location} />

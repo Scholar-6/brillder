@@ -7,7 +7,7 @@ import queryString from 'query-string';
 import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";
 import { PlayMode } from "../model";
-import { BrickFieldNames } from 'components/proposal/model';
+import { BrickFieldNames } from 'components/build/proposal/model';
 
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import HighlightHtml from '../baseComponents/HighlightHtml';
@@ -17,6 +17,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "../baseComponents/MathInHtml";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
+import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 
 const moment = require("moment");
 
@@ -226,7 +227,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (state.prepExpanded) {
       return (
         <div className="expanded-text prep-box">
-          <HighlightHtml
+          <HighlightQuoteHtml
             value={brick.prep}
             mode={props.mode}
             onHighlight={value => {

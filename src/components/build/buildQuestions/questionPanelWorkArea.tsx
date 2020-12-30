@@ -56,6 +56,9 @@ export interface QuestionProps {
   undo(): void;
   redo(): void;
   locked: boolean;
+  
+  // phone preview
+  componentFocus(index: number): void;
 }
 
 const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
@@ -124,7 +127,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   //#endregion
 
   return (
-    <MuiThemeProvider >
+    <MuiThemeProvider>
       <div className={showHelpArrow ? "build-question-page unselectable" : "build-question-page unselectable active"} style={{ width: '100%', height: '94%' }}>
         {showHelpArrow && <div className="help-arrow-text">Drag</div>}
         {showHelpArrow && <img alt="arrow" className="help-arrow" src="/images/investigation-arrow.png" />}
@@ -190,6 +193,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               history={history}
               question={question}
               validationRequired={validationRequired}
+              componentFocus={props.componentFocus}
               saveBrick={props.saveBrick}
               updateFirstComponent={props.updateFirstComponent}
               updateComponents={props.updateComponents}

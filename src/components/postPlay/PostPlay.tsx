@@ -8,7 +8,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { Brick, Subject } from "model/brick";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
-import { BrickFieldNames, PlayButtonStatus } from "../proposal/model";
+import { BrickFieldNames, PlayButtonStatus } from "../build/proposal/model";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import {
   ApiQuestion,

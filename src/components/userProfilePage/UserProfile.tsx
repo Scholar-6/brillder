@@ -120,12 +120,20 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     let isBuilder = canBuild(user);
     let isEditor = canEdit(user);
     let isStudent = isBuilder;
+    let isInstitute = isInstitution(user);
 
     let isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
     if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
       isBuilder = false;
       isEditor = false;
       isStudent = true;
+    }
+
+    if (isAdmin) {
+      isBuilder = true;
+      isEditor = true;
+      isStudent = true;
+      isInstitute = true;
     }
 
     return {
@@ -152,7 +160,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         { roleId: UserType.Teacher, name: "Teacher", disabled: !isAdmin },
         { roleId: UserType.Builder, name: "Builder", disabled: !isBuilder },
         { roleId: UserType.Publisher, name: "Publisher", disabled: !isEditor },
-        { roleId: UserType.Institution, name: "Institution", disabled: !isInstitution(user) },
+        { roleId: UserType.Institution, name: "Institution", disabled: !isInstitute },
         { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
       ],
       noSubjectDialogOpen: false,
@@ -236,7 +244,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.save(userToSave);
   }
 
-  save(userToSave: any) {
+  async save(userToSave: any) {
     const valid = isValid(userToSave);
     if (!valid) {
       this.setState({ validationRequired: true });
@@ -248,25 +256,23 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     if (this.state.isNewUser) {
-      createUser(userToSave).then(status => {
-        if (status === UpdateUserStatus.Success) {
-          this.setState({ savedDialogOpen: true });
-          this.props.getUser();
-        } else if (status === UpdateUserStatus.InvalidEmail) {
-          this.setState({ emailInvalidOpen: true });
-        } else {
-          this.props.requestFailed("Can`t save user profile");
-        }
-      });
+      const status = await createUser(userToSave);
+      if (status === UpdateUserStatus.Success) {
+        this.setState({ savedDialogOpen: true });
+        this.props.getUser();
+      } else if (status === UpdateUserStatus.InvalidEmail) {
+        this.setState({ emailInvalidOpen: true });
+      } else {
+        this.props.requestFailed("Can`t save user profile");
+      }
     } else {
-      updateUser(userToSave).then(saved => {
-        if (saved) {
-          this.setState({ savedDialogOpen: true });
-          this.props.getUser();
-        } else {
-          this.props.requestFailed("Can`t save user profile");
-        }
-      });
+      const saved = await updateUser(userToSave);
+      if (saved) {
+        this.setState({ savedDialogOpen: true });
+        this.props.getUser();
+      } else {
+        this.props.requestFailed("Can`t save user profile");
+      }
     }
   }
 
@@ -315,7 +321,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   checkUserRole(roleId: number) {
-    if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
+    if (!this.state.isAdmin && this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
       if (roleId !== UserType.Student) {
         return false;
       }
@@ -329,6 +335,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
     let index = this.state.user.roles.indexOf(roleId);
     if (index !== -1) {
+      // publisher can`t remove his publisher role
+      if (roleId === UserType.Publisher) {
+        const foundUpperRole = this.state.user.roles.find(r => r === UserType.Admin || r === UserType.Institution);
+        if (!foundUpperRole) {
+          return;
+        }
+      }
       this.state.user.roles.splice(index, 1);
     } else {
       this.state.user.roles.push(roleId);
@@ -410,7 +423,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   render() {
     const { user } = this.state;
-    //let valid = isValid(user) && !this.state.emailInvalid;
     return (
       <div className="main-listing user-profile-page">
         <PageHeadWithMenu
@@ -493,7 +505,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               alignContent="center"
               style={{ height: "100%" }}
             >
-              <PhonePreview Component={UserProfilePreview} action={this.previewAnimationFinished.bind(this)} />
+              <PhonePreview Component={UserProfilePreview} data={{user:this.state.user}} action={this.previewAnimationFinished.bind(this)} />
             </Grid>
           </div>
         </Grid>

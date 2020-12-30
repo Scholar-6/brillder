@@ -11,7 +11,6 @@ interface ButtonProps {
 }
 
 const LibraryButton: React.FC<ButtonProps> = props => {
-  const [hovered, setHover] = React.useState(false);
   const {isActive} = props;
 
   const renderLibraryIcon = () => {
@@ -43,7 +42,7 @@ const LibraryButton: React.FC<ButtonProps> = props => {
   }
 
   return (
-    <div className="my-library-button" onClick={onClick} onMouseDown={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+    <div className="my-library-button" onClick={onClick}>
       <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange svgOnHover' : 'text-theme-dark-blue'}`}>
         {renderLibraryIcon()}
         <div>

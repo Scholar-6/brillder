@@ -77,11 +77,6 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     }
   }
 
-  let isValid = !(validationRequired && !checkBoxValid);
-  if (isValid === false) {
-    className += ' invalid-answer';
-  }
-
   if (validationRequired) {
     if (!answer.value && (answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None)) {
       className += ' invalid-answer';
