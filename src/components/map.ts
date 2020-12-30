@@ -3,6 +3,7 @@ export const Build = '/build';
 export const MainPage = '/home';
 export const UserProfile = '/user-profile';
 export const ProposalBase = `${Build}/new-brick`;
+export const ProposalBase2 = `${Build}/brick/:brickId`;
 export const BackToWorkPage = '/back-to-work';
 export const AssignmentsPage = '/assignments';
 
@@ -24,7 +25,7 @@ export const InvestigationBuild = (brickId: number) => {
 }
 
 export const InvestigationSynthesis = (brickId: number) => {
-  return `${investigation(brickId)}/synthesis`;
+  return `/build/brick/${brickId}/synthesis`;
 }
 
 export const investigationBuildQuestion = (brickId: number, questionId: number) => {
@@ -47,6 +48,8 @@ export const ProposalBrief = `${ProposalBase}/brief`;
 export const ProposalPrep = `${ProposalBase}/prep`;
 export const ProposalLength = `${ProposalBase}/length`;
 export const ProposalReview = `${ProposalBase}/proposal`;
+
+export const ProposalReview2 = `${ProposalBase2}/proposal`;
 
 
 // play preview
@@ -98,6 +101,7 @@ export default {
   ProposalPrep,
   ProposalLength,
   ProposalReview,
+  ProposalReview2,
 
   BackToWorkPage,
   AssignmentsPage,

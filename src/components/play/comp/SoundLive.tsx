@@ -4,6 +4,7 @@ import './SoundLive.scss';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 
 interface ImageProps {
+  refs?: any;
   component: any;
 }
 

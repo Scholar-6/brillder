@@ -516,6 +516,7 @@
       }
 
       .text-title {
+        margin-top: 1vw;
         font-family: $font-family-bold;
       }
       .text-title.brick-length {
@@ -523,10 +524,6 @@
       }
       .proposal-text {
         margin-top: 2%;
-        margin-left: 1.3vw;
-        &.edit-mode {
-          margin-left: 1vw;
-        }
         margin-bottom: 1vh;
         .document-editor {
           width: 100%;

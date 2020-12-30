@@ -23,7 +23,7 @@ import VersionLabel from "components/baseComponents/VersionLabel";
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
-import { BrickFieldNames, PlayButtonStatus } from "./model";
+import { BrickFieldNames, BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PlayButtonStatus, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./model";
 import { validateQuestion } from "components/build/questionService/ValidateQuestionService";
 import {
   parseQuestion,
@@ -38,6 +38,7 @@ import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 
 interface ProposalProps {
   history: History;
+  match: any;
   location: any;
 
   //redux
@@ -54,6 +55,7 @@ interface ProposalState {
   saved: boolean;
   subjects: Subject[];
   isDialogOpen: boolean;
+  moving: boolean;
   handleKey(e: any): void;
 }
 
@@ -105,6 +107,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       saved: false,
       saving: false,
       isDialogOpen: false,
+      moving: false,
       subjects: [],
       handleKey: this.handleKey.bind(this)
     };
@@ -126,33 +129,39 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
 
     const {history} = this.props;
     const {pathname} = this.props.location;
+    const baseUrl = this.getBaseUrl();
+
     if (rightKeyPressed(e)) {
       if (pathname === map.ProposalSubject) {
         if (this.state.brick.subjectId) {
-          history.push(map.ProposalTitle);
+          history.push(baseUrl + TitleRoutePart);
         }
-      } else if (pathname === map.ProposalTitle) {
-        history.push(map.ProposalOpenQuestion);
-      } else if (pathname === map.ProposalOpenQuestion) {
-        history.push(map.ProposalLength);
-      } else if (pathname === map.ProposalLength) {
-        history.push(map.ProposalBrief);
-      } else if (pathname === map.ProposalBrief) {
-        history.push(map.ProposalPrep);
-      } else if (pathname === map.ProposalPrep) {
+      } else if (pathname.slice(-TitleRoutePart.length) === TitleRoutePart) {
+        history.push(baseUrl + OpenQuestionRoutePart);
+      } else if (pathname.slice(-OpenQuestionRoutePart.length) === OpenQuestionRoutePart) {
+        history.push(baseUrl + BrickLengthRoutePart);
+      } else if (pathname.slice(-BrickLengthRoutePart.length) === BrickLengthRoutePart) {
+        history.push(baseUrl + BriefRoutePart );
+      } else if (pathname.slice(-BrickLengthRoutePart.length) === BrickLengthRoutePart) {
+        history.push(baseUrl + BriefRoutePart);
+      } else if (pathname.slice(-BriefRoutePart.length) === BriefRoutePart) {
+        history.push(baseUrl + PrepRoutePart);
+      } else if (pathname.slice(-PrepRoutePart.length) === PrepRoutePart) {
         this.saveLocalBrick(this.state.brick);
         await this.saveBrick(this.state.brick);
-        history.push(map.ProposalReview);
+        history.push(baseUrl + ProposalReviewPart);
       }
     } else if (leftKeyPressed(e)) {
-      if (pathname === map.ProposalOpenQuestion) {
-        history.push(map.ProposalTitle);
-      } else if (pathname === map.ProposalLength) {
-        history.push(map.ProposalOpenQuestion);
-      } else if (pathname === map.ProposalBrief) {
-        history.push(map.ProposalLength);
-      } else if (pathname === map.ProposalPrep) {
-        history.push(map.ProposalBrief);
+      console.log(pathname, pathname.slice(-BrickLengthRoutePart.length), BrickLengthRoutePart);
+
+      if (pathname.slice(-OpenQuestionRoutePart.length) === OpenQuestionRoutePart) {
+        history.push(baseUrl + TitleRoutePart)
+      } else if (pathname.slice(-BrickLengthRoutePart.length) === BrickLengthRoutePart) {
+        history.push(baseUrl + OpenQuestionRoutePart)
+      } else if (pathname.slice(-BriefRoutePart.length) === BriefRoutePart) {
+        history.push(baseUrl + BrickLengthRoutePart)
+      } else if (pathname.slice(-PrepRoutePart.length) === PrepRoutePart) {
+        history.push(baseUrl + BriefRoutePart);
       }
     }
   }
@@ -251,13 +260,24 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
+  getBaseUrl() {
+    const {brickId} = this.props.match.params;
+    if (brickId) {
+      return '/build/brick/' + brickId;
+    }
+    return map.ProposalBase;
+  }
+
   render() {
+    const baseUrl = this.getBaseUrl();
     const { history } = this.props;
     const canEdit = canEditBrick(this.state.brick, this.props.user);
 
     setBrillderTitle();
 
-    if (this.state.saved) {
+    if (this.state.saved && this.state.moving === false) {
+      this.setState({moving: true});
+
       if (this.props.brick) {
         history.push(
           `/build/brick/${this.props.brick.id}/investigation/question`
@@ -267,7 +287,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
           `/build/brick/${this.state.brick.id}/investigation/question`
         );
       } else {
-        history.push("/new-brick/brick-title");
+        history.push(baseUrl + TitleRoutePart);
       }
     }
 
@@ -300,9 +320,10 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             style={{ width: "100%", height: "100%" }}
             className="proposal-router"
           >
-            <Route path={map.ProposalSubject}>
+            <Route path={[map.ProposalSubject, '/build/brick/:brickId/subject']}>
               <SubjectPage
                 location={history.location}
+                baseUrl={baseUrl}
                 subjects={user.subjects}
                 subjectId={""}
                 history={history}
@@ -311,9 +332,10 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveData={this.setCoreAndSubject}
               />
             </Route>
-            <Route path={map.ProposalTitle}>
+            <Route path={[map.ProposalTitle, '/build/brick/:brickId/brick-title']}>
               <BrickTitle
                 history={history}
+                baseUrl={baseUrl}
                 playStatus={playStatus}
                 parentState={localBrick}
                 canEdit={canEdit}
@@ -322,8 +344,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={map.ProposalLength}>
+            <Route path={[map.ProposalLength, '/build/brick/:brickId/length']}>
               <BrickLength
+                baseUrl={baseUrl}
                 playStatus={playStatus}
                 length={localBrick.brickLength}
                 canEdit={canEdit}
@@ -332,8 +355,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={map.ProposalOpenQuestion}>
+            <Route path={[map.ProposalOpenQuestion, '/build/brick/:brickId/open-question']}>
               <OpenQuestion
+                baseUrl={baseUrl}
                 playStatus={playStatus}
                 history={history}
                 selectedQuestion={localBrick.openQuestion}
@@ -342,8 +366,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={map.ProposalBrief}>
+            <Route path={[map.ProposalBrief, '/build/brick/:brickId/brief']}>
               <Brief
+                baseUrl={baseUrl}
                 playStatus={playStatus}
                 parentBrief={localBrick.brief}
                 canEdit={canEdit}
@@ -351,20 +376,23 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={map.ProposalPrep}>
+            <Route path={[map.ProposalPrep, '/build/brick/:brickId/prep']}>
               <Prep
                 playStatus={playStatus}
                 parentPrep={localBrick.prep}
                 canEdit={canEdit}
+                baseUrl={baseUrl}
                 savePrep={this.setPrep}
                 saveBrick={this.setPrepAndSave}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={map.ProposalReview}>
+            
+            <Route path={[map.ProposalReview, '/build/brick/:brickId/proposal']}>
               <ProposalReview
                 playStatus={playStatus}
                 brick={localBrick}
+                baseUrl={baseUrl}
                 history={history}
                 canEdit={canEdit}
                 user={user}

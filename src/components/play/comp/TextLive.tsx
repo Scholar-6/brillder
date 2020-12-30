@@ -13,11 +13,14 @@ interface TextProps {
   component: any;
   className?: string;
 
+  // for build phone preview
+  refs?: any;
+
   // only for real play
   mode?: PlayMode;
 }
 
-const TextLive: React.FC<TextProps> = ({ mode, className, component }) => {
+const TextLive: React.FC<TextProps> = ({ mode, className, component, refs }) => {
   if (mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) {
     return (
       <HighlightHtml value={component.value} mode={mode} onHighlight={value => component.value = value} />
@@ -38,8 +41,9 @@ const TextLive: React.FC<TextProps> = ({ mode, className, component }) => {
   if (className) {
     classN += ' ' + className;
   }
+
   return (
-    <div className={classN}>
+    <div className={classN} ref={refs}>
       {
         arr.map((el:any, i:number) => {
           const res = isMathJax(el);

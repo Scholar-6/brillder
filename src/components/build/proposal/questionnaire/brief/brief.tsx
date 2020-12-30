@@ -5,15 +5,15 @@ import { Grid, Hidden } from "@material-ui/core";
 import './brief.scss';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
-import Navigation from 'components/proposal/components/navigation/Navigation';
-import { ProposalStep, PlayButtonStatus } from "../../model";
+import Navigation from 'components/build/proposal/components/navigation/Navigation';
+import { ProposalStep, PlayButtonStatus, BrickLengthRoutePart } from "../../model";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
-import map from 'components/map';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface BriefProps {
+  baseUrl: string;
   parentBrief: string;
   playStatus: PlayButtonStatus;
   canEdit: boolean;
@@ -36,6 +36,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
   return (
     <div className="tutorial-page brief-page">
       <Navigation
+        baseUrl={props.baseUrl}
         step={ProposalStep.Brief}
         playStatus={props.playStatus}
         saveAndPreview={props.saveAndPreview}
@@ -63,7 +64,8 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
             canSubmit={true}
             data={parentBrief}
             onSubmit={saveBrief}
-            backLink={map.ProposalLength}
+            baseUrl={props.baseUrl}
+            backLink={props.baseUrl + BrickLengthRoutePart}
           />
           <h2 className="pagination-text m-0">3 of 4</h2>
         </Grid>

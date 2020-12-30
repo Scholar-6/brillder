@@ -73,80 +73,128 @@
           height: 100% !important;
         }
       }
+    }
+  }
+}
 
-      .glass-left-pupil,
-      .glass-right-pupil {
-        position: absolute;
-        top: 1.25vw;
-        width: 5vw;
-      }
+// mobile
+.mobile-main-page .swiper-slide .view-item-container {
 
-      .glass-left-pupil {
-        left: 0.7vw;
-      }
+  .glass-eyes-left,
+  .glass-eyes-right {
+    opacity: 0;
+    transition-delay: 200ms;
+    @extend %transitionAll300;
+    @extend %floatToYCenter;
 
-      .glass-right-pupil {
-        right: -0.1vw;
-      }
+    @include tabletP {
+      width: 5.5vw;
+      height: 5.5vw;
+    }
 
-      .glass-left-inside,
-      .glass-right-inside {
-        opacity: 0;
-        @extend %flexCenter;
-        @extend %transitionAll300;
-        position: absolute;
-        width: 5.5vw;
-        height: 5.5vw;
+    .svg {
+      width: 60%;
+      height: 60%;
+    }
+  }
 
-        .circle {
-          -webkit-animation: fade 2s;
-          -moz-animation: fade 2s;
-          -ms-animation: fade 2s;
-          -o-animation: fade 2s;
-          animation: fade 2s;
-        }
+  .glass-eyes-left,
+  .glass-eyes-right {
+    width: 100px;
+  }
+}
 
-        svg {
-          -webkit-animation: rotating 2s linear infinite;
-          -moz-animation: rotating 2s linear infinite;
-          -ms-animation: rotating 2s linear infinite;
-          -o-animation: rotating 2s linear infinite;
-          animation: rotating 2s linear infinite;
-          color: var(--theme-dark-blue);
-          width: 0 !important;
-        }
+
+//mobile
+.mobile-main-page .swiper-slide .view-item-container {
+
+  .eye-glass-icon {
+    position: relative;
+
+    $eye-size: 92px;
+
+    .glass-eyes-left,
+    .glass-eyes-right {
+      opacity: 0;
+      transition-delay: 200ms;
+      @extend %transitionAll300;
+      @extend %floatToYCenter;
+
+      width: $eye-size;
+      height: $eye-size;
+
+      .svg {
+        width: 60%;
+        height: 60%;
       }
     }
 
-    &:hover {
-      .eye-glass-icon {
+    $shift: 12px;
 
-        .glass-eyes-left,
-        .glass-right-inside,
-        .glass-left-inside,
-        .glass-eyes-right {
-          @include tabletP {
-            opacity: 1;
-          }
-        }
+    .glass-eyes-left {
+      left: $shift;
+    }
 
-        .glass-left-pupil,
-        .glass-right-pupil {
-          .pupil {
-            animation-name: eye-movement;
-            animation-iteration-count: 1;
-            animation-duration: 1300ms;
-            animation-delay: 0;
-            animation-direction: alternate;
-          }
-        }
+    .glass-eyes-right {
+      right: $shift;
+    }
 
-        .glass-right-inside,
-        .glass-left-inside {
-          @include tabletP {
-            svg {
-              width: 30% !important;
-            }
+    .glass-right-inside,
+    .glass-left-inside {
+      width: $eye-size !important;
+      height: $eye-size !important;
+
+      svg {
+        width: 30% !important;
+        height: 100% !important;
+      }
+    }
+  }
+}
+
+// animation
+.mainPage,
+.mobile-main-page {
+
+  .swiper-slide.swiper-slide-next,
+  .view-item-container {
+
+    .glass-left-inside,
+    .glass-right-inside {
+      @extend %flexCenter;
+      @extend %transitionAll300;
+      position: absolute;
+      width: 5.5vw;
+      height: 5.5vw;
+
+      svg {
+        -webkit-animation: rotating 2s linear infinite;
+        -moz-animation: rotating 2s linear infinite;
+        -ms-animation: rotating 2s linear infinite;
+        -o-animation: rotating 2s linear infinite;
+        animation: rotating 2s linear infinite;
+        color: var(--theme-dark-blue);
+        width: 0 !important;
+      }
+    }
+  }
+
+  .swiper-slide.swiper-slide-next,
+  .view-item-container:hover {
+    .eye-glass-icon {
+
+      .glass-eyes-left,
+      .glass-right-inside,
+      .glass-left-inside,
+      .glass-eyes-right {
+        opacity: 1;
+      }
+
+      .glass-right-inside,
+      .glass-left-inside {
+        @include tabletP {
+          svg {
+            width: 30% !important;
           }
         }
       }

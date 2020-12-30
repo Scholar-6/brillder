@@ -12,6 +12,7 @@ import map from 'components/map';
 
 interface SubjectProps {
   history: any;
+  baseUrl: string;
   location: any;
   subjectId: any;
   subjects: any[];
@@ -200,7 +201,7 @@ const TheologyComponent:React.FC = () => {
 }
 
 const SubjectPage:React.FC<SubjectProps> = ({
-  history, subjectId, subjects, location, saveData, saveCore, saveSubject
+  history, subjectId, subjects, baseUrl, location, saveData, saveCore, saveSubject
 }) => {
   const getSubjectName = (subjectId: number) => {
     if (subjectId) {
@@ -336,7 +337,10 @@ const SubjectPage:React.FC<SubjectProps> = ({
               onClick={() => {saveSubject(subject); history.push(map.ProposalTitle)}}>
               Next
             </div>
-            <NextButton isActive={true} step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
+            <NextButton
+              isActive={true} step={ProposalStep.Subject}
+              baseUrl={baseUrl} canSubmit={true} onSubmit={saveSubject} data={subject}
+            />
           </Grid>
          }
         <Hidden only={['xs', 'sm']}>

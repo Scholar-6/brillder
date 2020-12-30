@@ -10,7 +10,7 @@ import { BrickLengthEnum } from 'model/brick';
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
-import { BrickFieldNames } from 'components/proposal/model';
+import { BrickFieldNames } from 'components/build/proposal/model';
 import { getPlayPath, getAssignQueryString } from '../service';
 import BrickCounter from '../baseComponents/BrickCounter';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';

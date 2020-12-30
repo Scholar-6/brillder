@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 
 import './Navigation.scss';
 import { ReduxCombinedState } from 'redux/reducers';
-import { ProposalStep, PlayButtonStatus } from "../../model";
-import map from 'components/map';
+import { ProposalStep, PlayButtonStatus, PrepRoutePart, BriefRoutePart, OpenQuestionRoutePart, TitleRoutePart, BrickLengthRoutePart } from "../../model";
 import PlayButton from "components/build/baseComponents/PlayButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
@@ -14,11 +13,12 @@ interface NextButtonProps {
   step: ProposalStep;
   playStatus: PlayButtonStatus;
   brickId?: number;
+  baseUrl?: string;
   onMove(): void;
   saveAndPreview(): void;
 }
 
-const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatus, ...props }) => {
+const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, baseUrl, playStatus, ...props }) => {
   const history = useHistory()
 
   const move = (route: string) => {
@@ -34,7 +34,7 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatu
           <SpriteIcon
             name="search-flip-thick"
             className="active navigation-button navigation-titles"
-            onClick={() => move(map.ProposalTitle)}
+            onClick={() => move(baseUrl + TitleRoutePart)}
           />
         </div>
         <div className={`step-container ${step === ProposalStep.OpenQuestion ? 'active' : ''}`}>
@@ -42,7 +42,7 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatu
           <SpriteIcon
             name="help-circle"
             className={`navigation-button navigation-question ${step >= ProposalStep.OpenQuestion ? 'active' : ''}`}
-            onClick={() => move(map.ProposalOpenQuestion)}
+            onClick={() => move(baseUrl + OpenQuestionRoutePart)}
           />
         </div>
         <div className={`step-container ${step === ProposalStep.BrickLength ? 'active' : ''}`}>
@@ -50,7 +50,7 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatu
           <SpriteIcon
             name="clock"
             className={`navigation-button navigation-length ${step >= ProposalStep.BrickLength ? 'active' : ''}`}
-            onClick={() => move(map.ProposalLength)}
+            onClick={() => move(baseUrl + BrickLengthRoutePart)}
           />
         </div>
         <div className={`step-container ${step === ProposalStep.Brief ? 'active' : ''}`}>
@@ -58,7 +58,7 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatu
           <SpriteIcon
             name="crosshair"
             className={`navigation-button navigation-brief ${step >= ProposalStep.Brief ? 'active' : ''}`}
-            onClick={() => move(map.ProposalBrief)}
+            onClick={() => move(baseUrl + BriefRoutePart)}
           />
         </div>
         <div className={`step-container ${step === ProposalStep.Prep ? 'active' : ''}`}>
@@ -66,7 +66,7 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatu
           <SpriteIcon
             name="file-text"
             className={`navigation-button navigation-prep ${step >= ProposalStep.Prep ? 'active' : ''}`}
-            onClick={() => move(map.ProposalPrep)}
+            onClick={() => move(baseUrl + PrepRoutePart)}
           />
         </div>
       </Grid>
@@ -107,6 +107,4 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatu
 
 const mapState = (state: ReduxCombinedState) => ({ brickId: state.brick?.brick?.id });
 
-const connector = connect(mapState)
-
-export default connector(NavigationButtons);
+export default connect(mapState)(NavigationButtons);

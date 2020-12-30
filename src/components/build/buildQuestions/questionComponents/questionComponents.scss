@@ -163,6 +163,9 @@
   }
 }
 
+.invalid-image,
+.categorise-box.invalid-category,
+.short-answer-box.invalid-answer,
 .missing-word-build .invalid-answer,
 .unique-component.invalid-answer {
   .answer-image-drop-button:hover {
@@ -187,6 +190,7 @@
       }
    
       &:hover {
+        opacity: 1 !important;
         color: var(--white) !important;
         .back-button {
           color: var(--white) !important;
