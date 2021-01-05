@@ -7,9 +7,12 @@ import { Notification, notificationTypeColors, NotificationType } from 'model/no
 import moment from 'moment';
 import './NotificationPopup.scss';
 
+import map from 'components/map';
 import actions from 'redux/actions/brickActions';
 import { User } from 'model/user';
+import { isMobile } from 'react-device-detect';
 import SpriteIcon from '../SpriteIcon';
+import DesktopVersionDialogV2 from 'components/build/baseComponents/dialogs/DesktopVersionDialogV2';
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -37,11 +40,54 @@ interface NotificationPopupProps {
 }
 
 const NotificationPopup: React.FC<NotificationPopupProps> = props => {
+
+  const [needDesktopOpen, setNeedDesktopOpen] = React.useState(false);
+
   if(!(props.notifications && props.notifications.length > 0) || Date.now() - new Date(props.notifications![0].timestamp).valueOf() > 300000) {
     return <></>;
   }
 
   const notification = props.notifications[0];
+
+  const move = async (notification: Notification) => {
+    const { history } = props;
+    if (history) {
+      if (notification.type === NotificationType.BrickPublished) {
+        history.push(map.ViewAllPage);
+      } else if (notification.type === NotificationType.BrickSubmittedForReview) {
+        history.push(map.BackToWorkPage);
+      }
+
+      if (notification.brick && notification.brick.id) {
+        const {brick} = notification;
+        if (notification.type === NotificationType.NewCommentOnBrick) {
+          if (notification.question && notification.question.id >= 1) {
+            history.push(map.investigationQuestionSuggestions(brick.id, notification.question.id));
+          } else {
+            history.push(map.investigationSynthesisSuggestions(brick.id))
+          }
+        } else if (notification.type === NotificationType.InvitedToPlayBrick) {
+          history.push(map.playIntro(brick.id));
+        } else if (notification.type === NotificationType.BrickAttemptSaved) {
+          if (isMobile) {
+            setNeedDesktopOpen(true);
+          } else {
+            history.push(map.postPlay(brick.id, props.user.id));
+          }
+        } else if (notification.type === NotificationType.ReturnedToEditor) {
+          history.push(map.InvestigationBuild(brick.id));
+        } else if (notification.type === NotificationType.AssignedToEdit) {
+          props.forgetBrick();
+          await props.fetchBrick(notification.brick.id);
+          history.push(map.ProposalReview);
+        } else if (notification.type === NotificationType.ReturnedToAuthor) {
+          props.forgetBrick();
+          await props.fetchBrick(notification.brick.id);
+          history.push(map.ProposalReview);
+        }
+      }
+    }
+  }
 
   return (
     <Popover
@@ -63,6 +109,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
         <div className="notification-container">
           <div
             className={"left-brick-circle svgOnHover " + notificationTypeColors[notification.type]}
+            onClick={() => move(notification)}
           >
             {notification.type === NotificationType.BrickSubmittedForReview &&
               <SpriteIcon name="send" className="w60 h60 active text-theme-dark-blue send-icon-center" />
@@ -101,20 +148,25 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
               </svg>
             }
           </div>
-          <div className="content-box">
+          <div className="content-box" onClick={() => move(notification)}>
             <div className="notification-detail">
               <p className="notif-title">{notification.title}</p>
               <p className="notif-desc">{notification.text}</p>
             </div>
             <div className="actions">
               <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={props.handleClose}>
-                <SpriteIcon name="arrow-up" className="w80 h80 active" />
+                <SpriteIcon name="cancel" className="w80 h80 active" />
               </button>
               <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>
             </div>
           </div>
         </div>
       </div>
+      <DesktopVersionDialogV2
+        isOpen={needDesktopOpen}
+        secondaryLabel="Brick summaries have not yet been optimised for mobile devices."
+        onClick={() => setNeedDesktopOpen(false)}
+      />
     </Popover>
   );
 }
