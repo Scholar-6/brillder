@@ -1,6 +1,6 @@
 import { ShortAnswerData } from "components/build/buildQuestions/questionTypes/shortAnswerBuild/interface";
 import { ShortAnswerAnswer } from "components/play/questionTypes/shortAnswer/ShortAnswer";
-import { stripHtml } from "components/build/questionService/ConvertService";
+import { stripHtmlExceptSubAndSup as stripHtml } from "components/build/questionService/ConvertService";
 import { ComponentAttempt } from "components/play/model";
 
 const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerAnswer>) => {
