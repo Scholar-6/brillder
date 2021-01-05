@@ -18,6 +18,9 @@
   }
   .notification-content {
     background-color: var(--theme-light-blue);
+    &:hover {
+      background-color: #223569;
+    }
     box-shadow: none !important;
     position: relative;
 
