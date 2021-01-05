@@ -122,8 +122,6 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
         {this.props.user &&
         <NotificationPopup
           history={this.props.history}
-          shown={this.state.recentNotificationShown}
-          handleClose={() => this.hideRecentNotification()}
           anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
         />}
         {this.props.user &&

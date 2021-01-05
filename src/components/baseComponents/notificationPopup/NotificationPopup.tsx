@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Popover } from '@material-ui/core';
+import { Popover, Popper } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
 import sprite from "assets/img/icons-sprite.svg";
 import { Notification, notificationTypeColors, NotificationType } from 'model/notifications';
@@ -27,8 +27,6 @@ const mapDispatch = (dispatch: any) => ({
 const connector = connect(mapState, mapDispatch);
 
 interface NotificationPopupProps {
-  shown: boolean;
-  handleClose(): void;
   anchorElement: any;
   history?: any;
 
@@ -42,8 +40,17 @@ interface NotificationPopupProps {
 const NotificationPopup: React.FC<NotificationPopupProps> = props => {
 
   const [needDesktopOpen, setNeedDesktopOpen] = React.useState(false);
+  const [shown, setShown] = React.useState(false);
 
-  if(!(props.notifications && props.notifications.length > 0) || Date.now() - new Date(props.notifications![0].timestamp).valueOf() > 300000) {
+  React.useEffect(() => {
+    if(!(props.notifications && props.notifications.length > 0) || Date.now() - new Date(props.notifications![0].timestamp).valueOf() > 300000) {
+      setShown(false);
+    } else {
+      setShown(true);
+    }
+  }, [setShown, props.notifications])
+
+  if(!(props.notifications && props.notifications.length > 0) || !shown) {
     return <></>;
   }
 
@@ -90,20 +97,11 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
   }
 
   return (
-    <Popover
-      open={props.shown}
-      onClose={props.handleClose}
-      anchorReference={props.anchorElement ? "anchorEl" : "none"}
+    <Popper
+      open={shown}
       anchorEl={props.anchorElement}
-      className={props.shown ? "notification-popup active":"notification-popup hidden"}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'right',
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
+      className={shown ? "notification-popup active":"notification-popup hidden"}
+      placement="bottom-end"
     >
       <div className="notification-content">
         <div className="notification-container">
@@ -154,7 +152,10 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
               <p className="notif-desc">{notification.text}</p>
             </div>
             <div className="actions">
-              <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={props.handleClose}>
+              <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={(e) => {
+                setShown(false);
+                e.stopPropagation();
+              }}>
                 <SpriteIcon name="cancel" className="w80 h80 active" />
               </button>
               <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>
@@ -167,7 +168,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
         secondaryLabel="Brick summaries have not yet been optimised for mobile devices."
         onClick={() => setNeedDesktopOpen(false)}
       />
-    </Popover>
+    </Popper>
   );
 }
 
