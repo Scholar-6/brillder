@@ -7,13 +7,13 @@
   .MuiPopover-paper {
     background-color: var(--theme-light-blue);
     box-shadow: none !important;
-    border-radius: 2.5vw !important;
+    border-radius: 1.5vw !important;
     right: 0 !important;
     left: auto !important;
 
     @include phone_and_tabletP {
       width: 100vw !important;
-      border-radius: 2.5vw !important;
+      border-radius: 1.5vw !important;
     }
   }
   .notification-content {
@@ -23,10 +23,10 @@
 
     @include phone_and_tabletP {
       width: 100vw;
-      border-radius: 2.5vw;
+      border-radius: 1.5vw;
     }
     @include tabletP {
-      border-radius: 2.5vw;
+      border-radius: 1.5vw;
       width: $notification-width;
       // 300ms cubic-bezier(0.5, 1, 0.89, 1)
     }
@@ -181,7 +181,7 @@
     @include tabletP {
       font-size: 1vw;
       height: 4.5vh;
-      border-radius: 0 0 0 2.5vw;
+      border-radius: 1.5vw;
       button {
         padding-top: 0vw;
         padding-bottom: 0vw;
