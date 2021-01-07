@@ -35,13 +35,24 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
   }
 
   const onSubmit = React.useCallback(async () => {
+    const currentEmails = emails;
+    if (!emailRegex.test(currentEmail)) {
+      if (emails.length <= 0) {
+        setEmailInvalid(true);
+        return;
+      }
+    } else {
+      setEmails(emails => [ ...emails, currentEmail ]);
+      currentEmails.push(currentEmail);
+      setCurrentEmail("");
+    }
     await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/classrooms/students/${props.classroom.id}/new`,
-      { emails },
+      { emails: currentEmails },
       { withCredentials: true }
     );
     props.close();
-  }, [emails])
+  }, [emails, currentEmail])
 
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue invite-email-dialog">
