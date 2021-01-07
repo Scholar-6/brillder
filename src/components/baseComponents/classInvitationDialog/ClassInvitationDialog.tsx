@@ -57,10 +57,11 @@ const ClassInvitationDialog: React.FC = props => {
           <h2>{currentInvitation.classroom.name}</h2>
         </div>
         <Grid item container direction="row" justify="center">
-          <button className="btn btn-md b-red text-white" onClick={handleReject}>Reject</button>
           <button className="btn btn-md b-green text-white" onClick={handleAccept}>Accept</button>
+          <button className="btn btn-md b-red text-white" onClick={handleReject}>Reject</button>
         </Grid>
         <CardHeader
+          className="sent-by"
           avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${currentInvitation.sentBy.profileImage}`} />}
           title={`sent by ${currentInvitation.sentBy.firstName} ${currentInvitation.sentBy.lastName}`}
         />
