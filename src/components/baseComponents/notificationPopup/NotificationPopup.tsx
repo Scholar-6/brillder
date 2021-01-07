@@ -9,6 +9,7 @@ import './NotificationPopup.scss';
 
 import map from 'components/map';
 import actions from 'redux/actions/brickActions';
+import notificationActions from 'redux/actions/notifications';
 import { User } from 'model/user';
 import { isMobile } from 'react-device-detect';
 import SpriteIcon from '../SpriteIcon';
@@ -16,12 +17,14 @@ import DesktopVersionDialogV2 from 'components/build/baseComponents/dialogs/Desk
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-  notifications: state.notifications.notifications
+  notifications: state.notifications.notifications,
+  shown: state.notifications.latestNotificationShown,
 });
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(actions.forgetBrick()),
   fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
+  dismiss: () => dispatch(notificationActions.notificationLatestDismissed())
 });
 
 const connector = connect(mapState, mapDispatch);
@@ -33,24 +36,17 @@ interface NotificationPopupProps {
   // redux
   user: User;
   notifications: Notification[] | null;
+  shown: boolean;
   forgetBrick(): void;
   fetchBrick(brickId: number): Promise<void>;
+  dismiss(): void;
 }
 
 const NotificationPopup: React.FC<NotificationPopupProps> = props => {
 
   const [needDesktopOpen, setNeedDesktopOpen] = React.useState(false);
-  const [shown, setShown] = React.useState(false);
 
-  React.useEffect(() => {
-    if(!(props.notifications && props.notifications.length > 0) || Date.now() - new Date(props.notifications![0].timestamp).valueOf() > 300000) {
-      setShown(false);
-    } else {
-      setShown(true);
-    }
-  }, [setShown, props.notifications])
-
-  if(!(props.notifications && props.notifications.length > 0) || !shown) {
+  if(!(props.notifications && props.notifications.length > 0) || !props.shown) {
     return <></>;
   }
 
@@ -98,9 +94,9 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
 
   return (
     <Popper
-      open={shown}
+      open={props.shown}
       anchorEl={props.anchorElement}
-      className={shown ? "notification-popup active":"notification-popup hidden"}
+      className={props.shown ? "notification-popup active":"notification-popup hidden"}
       placement="bottom-end"
     >
       <div className="notification-content">
@@ -153,7 +149,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
             </div>
             <div className="actions">
               <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={(e) => {
-                setShown(false);
+                props.dismiss();
                 e.stopPropagation();
               }}>
                 <SpriteIcon name="cancel" className="w80 h80 active" />
