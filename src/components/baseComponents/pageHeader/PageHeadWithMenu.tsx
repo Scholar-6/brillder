@@ -5,6 +5,7 @@ import LogoutDialog from "../logoutDialog/LogoutDialog";
 
 import ReactDOM from 'react-dom';
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
+import NotificationPopup from "components/baseComponents/notificationPopup/NotificationPopup";
 
 import MenuDropdown from './MenuDropdown';
 
@@ -35,6 +36,7 @@ interface HeaderMenuProps {
 interface HeaderMenuState {
   dropdownShown: boolean;
   notificationsShown: boolean;
+  recentNotificationShown: boolean;
   logoutOpen: boolean;
 }
 
@@ -47,6 +49,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
     this.state = {
       dropdownShown: false,
       notificationsShown: false,
+      recentNotificationShown: true,
       logoutOpen: false,
     };
 
@@ -67,6 +70,14 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
 
   hideNotifications() {
     this.setState({ ...this.state, notificationsShown: false });
+  }
+
+  showRecentNotification() {
+    this.setState({ ...this.state, recentNotificationShown: true });
+  }
+
+  hideRecentNotification() {
+    this.setState({ ...this.state, recentNotificationShown: false });
   }
 
   handleLogoutOpen() {
@@ -106,6 +117,11 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           history={this.props.history}
           shown={this.state.notificationsShown}
           handleClose={() => this.hideNotifications()}
+          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
+        />}
+        {this.props.user &&
+        <NotificationPopup
+          history={this.props.history}
           anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
         />}
         {this.props.user &&
