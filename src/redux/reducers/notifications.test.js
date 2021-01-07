@@ -20,6 +20,7 @@ describe("notifications reducer", () => {
     it("should return the initial state", () => {
         expect(reducer(undefined, {})).toStrictEqual({
             notifications: null,
+            latestNotificationShown: false,
             error: ""
         });
     });
@@ -31,7 +32,7 @@ describe("notifications reducer", () => {
         };
 
         const newState = reducer(undefined, action);
-        expect(newState).toStrictEqual({ notifications: [ mockNotification ] })
+        expect(newState).toStrictEqual({ notifications: [ mockNotification ], latestNotificationShown: false })
     });
 
     it("should handle GET_NOTIFICATIONS_FAILURE", () => {
@@ -55,7 +56,7 @@ describe("notifications reducer", () => {
         };
 
         const newState = reducer(initialState, action);
-        expect(newState).toStrictEqual({ notifications: [ mockNotification ] })
+        expect(newState).toStrictEqual({ notifications: [ mockNotification ], latestNotificationShown: true })
     });
 
     it("should handle NOTIFICATION_CLEAR", () => {
