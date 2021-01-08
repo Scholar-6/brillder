@@ -312,7 +312,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     }
     let isActive = this.props.user.hasPlayedBrick;
     if (this.state.isTeacher) {
-      return this.renderLiveAssignmentButton(false);
+      return this.renderLiveAssignmentButton(true);
     } else if (this.state.isStudent) {
       return this.renderTryBuildButton(isActive);
     } else if (this.state.isAdmin) {
