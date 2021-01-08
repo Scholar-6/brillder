@@ -72,7 +72,7 @@ class DesktopActivateForm extends React.Component<ActivateFormProps, LoginsState
         </div>
         <div className="input-block">
           <div className="button-box">
-            <button onClick={this.props.handleSubmit} className="sign-in-button">Set Password</button>
+            <button onClick={this.props.handleSubmit} className="sign-in-button">Get Started</button>
           </div>
         </div>
       </div>
