@@ -92,7 +92,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
           <button className="btn btn-md bg-theme-orange yes-button icon-button" style={{width: 'auto'}} onClick={onSubmit}>
             <div className="centered">
               <span className="label">Invite Students</span>
-              <SpriteIcon name="ok" />
+              <SpriteIcon name="send" />
             </div>
           </button>
         </div>
