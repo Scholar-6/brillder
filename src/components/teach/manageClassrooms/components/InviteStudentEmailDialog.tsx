@@ -7,6 +7,7 @@ import { Chip } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { ClassroomApi } from 'components/teach/service';
 import axios from 'axios';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 interface InviteStudentEmailProps {
   classroom: ClassroomApi;
@@ -58,33 +59,40 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue invite-email-dialog">
       <div className="dialog-header">
         <div className="bold">Invite students by email.</div>
-        <div className="chips">
-          {emails.map(email => (
-            <Chip
-              label={email}
-              onDelete={() => onDeleteEmail(email)}
-            />
-          ))}
-        </div>
-        <TextField
-          onChange={e => setCurrentEmail(e.target.value)}
-          onKeyPress={e => {
-            if(e.key === "Enter") {
-              onAddEmail();
-            }
-          }}
-          className="input"
-          value={currentEmail}
-          variant="standard"
-          placeholder="Enter emails here..."
-          error={emailInvalid}
-          helperText={emailInvalid ? "Email is not valid." : ""}
+        <Autocomplete
+          multiple
+          options={[] as string[]}
+          value={emails}
+          renderInput={(params) => <TextField
+            {...params}
+            onChange={e => setCurrentEmail(e.target.value)}
+            onKeyPress={e => {
+              if(e.key === "Enter") {
+                onAddEmail();
+              }
+            }}
+            className="input"
+            value={currentEmail}
+            variant="standard"
+            placeholder="Enter emails here..."
+            error={emailInvalid}
+            helperText={emailInvalid ? "Email is not valid." : ""}
+          />}
+          renderTags={(value: string[], getTagProps) => <>
+            {value.map((email, idx) => (
+              <Chip
+                label={email}
+                {...getTagProps({ index: idx })}
+                onDelete={() => onDeleteEmail(email)}
+              />
+            ))}
+          </>}
         />
         <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
           <button className="btn btn-md bg-theme-orange yes-button icon-button" style={{width: 'auto'}} onClick={onSubmit}>
             <div className="centered">
               <span className="label">Invite Students</span>
-              <SpriteIcon name="ok" />
+              <SpriteIcon name="send" />
             </div>
           </button>
         </div>
