@@ -1,4 +1,5 @@
 export const Login = '/login';
+export const ActivateAccount = '/activateAccount';
 export const Build = '/build';
 export const MainPage = '/home';
 export const UserProfile = '/user-profile';
@@ -89,6 +90,7 @@ export const playAssignment = (brickId: number, assignmentId: number) => {
 
 export default {
   Build,
+  ActivateAccount,
   UserProfile,
   Login,
   MainPage,

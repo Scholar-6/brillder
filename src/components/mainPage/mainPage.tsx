@@ -244,7 +244,15 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   renderLiveAssignmentButton(isActive: boolean) {
     return (
-      <div className="back-item-container student-back-work" onClick={() => {}}>
+      <div className="back-item-container student-back-work" onClick={() => {
+        if (!this.state.isSwiping) {
+          if (isActive) {
+            this.props.history.push(map.AssignmentsPage);
+          } else {
+            this.setState({isBackToWorkOpen: true});
+          }
+        }
+      }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : 'text-theme-light-blue'}`}>
           <BlocksIcon />
           <span className={`item-description ${isActive ? '' : 'disabled'}`}>Shared with Me</span>
@@ -304,7 +312,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     }
     let isActive = this.props.user.hasPlayedBrick;
     if (this.state.isTeacher) {
-      return this.renderLiveAssignmentButton(false);
+      return this.renderLiveAssignmentButton(true);
     } else if (this.state.isStudent) {
       return this.renderTryBuildButton(isActive);
     } else if (this.state.isAdmin) {
