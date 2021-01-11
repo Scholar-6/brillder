@@ -90,6 +90,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
         }
       }
     }
+    props.dismiss();
   }
 
   return (
