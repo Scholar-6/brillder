@@ -7,6 +7,11 @@
   letter-spacing: 0.2vw;
   &.btn-block {
     width: 100%;
+    &.btn-display {
+      display: block;
+      text-align: center;
+      font-size: 1.5vw;
+    }
   }
   &.btn-md {
     @include phone_and_tabletP {

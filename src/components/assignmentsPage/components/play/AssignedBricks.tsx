@@ -7,6 +7,8 @@ import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
 import { AssignmentBrickStatus, AssignmentBrick } from "model/assignment";
 
 import BrickBlock from "components/baseComponents/BrickBlock";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import map from "components/map";
 
 interface AssignedBricksProps {
   user: User;
@@ -108,12 +110,26 @@ class AssignedBricks extends Component<AssignedBricksProps> {
     return this.renderSortedBricks();
   }
 
+  renderEmptyPage() {
+    return (
+      <div className="tab-content-centered">
+        <div>
+          <div className="bold">There are currently no assignments for this class</div>
+          <a className="btn btn-block btn-display btn-xl" onClick={() => this.props.history.push(map.MainPage)}>Go to my Homepage</a>
+        </div>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="bricks-list-container">
-        <div className="bricks-list">
-          {this.renderAssignedBricks()}
-        </div>
+        {this.props.assignments.length > 0 ?
+          <div className="bricks-list">
+            { this.renderAssignedBricks() }
+          </div>
+          : this.renderEmptyPage()
+        }
       </div>
     );
   }
