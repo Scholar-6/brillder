@@ -448,6 +448,45 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     );
   }
 
+  renderEmptyTab() {
+    const moveToNewUser = () => {
+      if (this.state.isAdmin) {
+        this.props.history.push('/user-profile/new');
+      } else {
+        this.setState({cantCreate: true});
+      }
+    }
+
+    return (
+      <div className="tab-content">
+        <div className="tab-content-centered">
+          {this.state.activeClassroom ?
+            <div>
+              <div className="icon-container">
+                <SpriteIcon
+                  name="users-custom"
+                  className="stroke-1"
+                  onClick={() => this.setState({ inviteEmailOpen: true })}
+                />
+              </div>
+              <div className="bold">+ Invite Students</div>
+            </div>
+            : <div>
+              <div className="icon-container">
+                <SpriteIcon
+                  name="user-plus"
+                  className="stroke-1"
+                  onClick={moveToNewUser}
+                />
+              </div>
+              <div className="bold">+ Invite Tutee</div>
+            </div>
+          }
+        </div>
+      </div>
+    );
+  }
+
   renderTabContent() {
     if (!this.state.isLoaded) {
       return <div className="tab-content" />
@@ -506,19 +545,22 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         {this.state.activeClassroom &&
           <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
         }
-        <StudentTable
-          users={users}
-          isClassroom={!!this.state.activeClassroom}
-          selectedUsers={this.state.selectedUsers}
-          sortBy={this.state.sortBy}
-          isAscending={this.state.isAscending}
-          sort={sortBy => this.sort(sortBy)}
-          pageStudentsSelected={this.state.pageStudentsSelected}
-          toggleUser={id => this.toggleUser(id)}
-          assignToClass={() => this.openAssignDialog()}
-          unassign={s => this.unassigningStudent(s)}
-          togglePageStudents={() => this.togglePageStudents()}
-        />
+        {users.length > 0 ?
+          <StudentTable
+            users={users}
+            isClassroom={!!this.state.activeClassroom}
+            selectedUsers={this.state.selectedUsers}
+            sortBy={this.state.sortBy}
+            isAscending={this.state.isAscending}
+            sort={sortBy => this.sort(sortBy)}
+            pageStudentsSelected={this.state.pageStudentsSelected}
+            toggleUser={id => this.toggleUser(id)}
+            assignToClass={() => this.openAssignDialog()}
+            unassign={s => this.unassigningStudent(s)}
+            togglePageStudents={() => this.togglePageStudents()}
+          /> :
+          this.renderEmptyTab()
+        }
         <RoleDescription />
         {this.renderPagination()}
       </div>
