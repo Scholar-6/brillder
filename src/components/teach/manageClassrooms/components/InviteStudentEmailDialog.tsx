@@ -12,7 +12,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 interface InviteStudentEmailProps {
   classroom: ClassroomApi;
   isOpen: boolean;
-  close(): void;
+  close(success: boolean): void;
 }
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -52,11 +52,11 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
       { emails: currentEmails },
       { withCredentials: true }
     );
-    props.close();
+    props.close(true);
   }, [emails, currentEmail])
 
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue invite-email-dialog">
+    <Dialog open={props.isOpen} onClose={() => props.close(false)} className="dialog-box light-blue invite-email-dialog">
       <div className="dialog-header">
         <div className="bold">Invite students by email.</div>
         <Autocomplete
