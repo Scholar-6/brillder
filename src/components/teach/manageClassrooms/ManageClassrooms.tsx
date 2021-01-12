@@ -29,6 +29,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachTab from '../TeachTab';
 import EmptyFilter from "./components/EmptyFilter";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
+import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -74,6 +75,7 @@ interface UsersListState {
   unassignOpen: boolean;
 
   inviteEmailOpen: boolean;
+  inviteStudentsSuccess: boolean;
 
   pageStudentsSelected: boolean;
 }
@@ -110,6 +112,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       unassignOpen: false,
 
       inviteEmailOpen: false,
+      inviteStudentsSuccess: false,
 
       pageStudentsSelected: false
     };
@@ -615,13 +618,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           close={() => this.setState({ unassignOpen: false })}
           submit={() => this.unassignStudent(this.state.unassignStudent)}
         />
-        {this.state.activeClassroom &&
+        {this.state.activeClassroom && <>
           <InviteStudentEmailDialog
             isOpen={this.state.inviteEmailOpen}
-            close={() => this.setState({ inviteEmailOpen: false })}
+            close={(success) => this.setState({ inviteEmailOpen: false, inviteStudentsSuccess: success })}
             classroom={this.state.activeClassroom}
           />
-        }
+          <StudentInviteSuccessDialog
+            isOpen={this.state.inviteStudentsSuccess}
+            close={() => this.setState({ inviteStudentsSuccess: false })}
+          />
+        </>}
         <ValidationFailedDialog
           isOpen={this.state.cantCreate}
           header="You don`t have permisions to create new user"
