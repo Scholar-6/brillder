@@ -29,6 +29,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachTab from '../TeachTab';
 import EmptyFilter from "./components/EmptyFilter";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
+import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -74,6 +75,7 @@ interface UsersListState {
   unassignOpen: boolean;
 
   inviteEmailOpen: boolean;
+  inviteStudentsSuccess: boolean;
 
   pageStudentsSelected: boolean;
 }
@@ -110,6 +112,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       unassignOpen: false,
 
       inviteEmailOpen: false,
+      inviteStudentsSuccess: false,
 
       pageStudentsSelected: false
     };
@@ -448,6 +451,45 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     );
   }
 
+  renderEmptyTab() {
+    const moveToNewUser = () => {
+      if (this.state.isAdmin) {
+        this.props.history.push('/user-profile/new');
+      } else {
+        this.setState({cantCreate: true});
+      }
+    }
+
+    return (
+      <div className="tab-content">
+        <div className="tab-content-centered">
+          {this.state.activeClassroom ?
+            <div>
+              <div className="icon-container">
+                <SpriteIcon
+                  name="users-custom"
+                  className="stroke-1"
+                  onClick={() => this.setState({ inviteEmailOpen: true })}
+                />
+              </div>
+              <div className="bold">+ Invite Students</div>
+            </div>
+            : <div>
+              <div className="icon-container">
+                <SpriteIcon
+                  name="user-plus"
+                  className="stroke-1"
+                  onClick={moveToNewUser}
+                />
+              </div>
+              <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            </div>
+          }
+        </div>
+      </div>
+    );
+  }
+
   renderTabContent() {
     if (!this.state.isLoaded) {
       return <div className="tab-content" />
@@ -485,7 +527,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                   onClick={moveToNewUser}
                 />
               </div>
-              <div className="bold">+ Invite Tutee</div>
+              <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
             </div>
           </div>
         </div>
@@ -503,22 +545,26 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     return (
       <div className="tab-content">
-        {this.state.activeClassroom &&
-          <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
+        {users.length > 0 ? <>
+            {this.state.activeClassroom &&
+              <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
+            }
+            <StudentTable
+              users={users}
+              isClassroom={!!this.state.activeClassroom}
+              selectedUsers={this.state.selectedUsers}
+              sortBy={this.state.sortBy}
+              isAscending={this.state.isAscending}
+              sort={sortBy => this.sort(sortBy)}
+              pageStudentsSelected={this.state.pageStudentsSelected}
+              toggleUser={id => this.toggleUser(id)}
+              assignToClass={() => this.openAssignDialog()}
+              unassign={s => this.unassigningStudent(s)}
+              togglePageStudents={() => this.togglePageStudents()}
+            />
+          </>:
+          this.renderEmptyTab()
         }
-        <StudentTable
-          users={users}
-          isClassroom={!!this.state.activeClassroom}
-          selectedUsers={this.state.selectedUsers}
-          sortBy={this.state.sortBy}
-          isAscending={this.state.isAscending}
-          sort={sortBy => this.sort(sortBy)}
-          pageStudentsSelected={this.state.pageStudentsSelected}
-          toggleUser={id => this.toggleUser(id)}
-          assignToClass={() => this.openAssignDialog()}
-          unassign={s => this.unassigningStudent(s)}
-          togglePageStudents={() => this.togglePageStudents()}
-        />
         <RoleDescription />
         {this.renderPagination()}
       </div>
@@ -573,13 +619,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           close={() => this.setState({ unassignOpen: false })}
           submit={() => this.unassignStudent(this.state.unassignStudent)}
         />
-        {this.state.activeClassroom &&
+        {this.state.activeClassroom && <>
           <InviteStudentEmailDialog
             isOpen={this.state.inviteEmailOpen}
-            close={() => this.setState({ inviteEmailOpen: false })}
+            close={(success) => this.setState({ inviteEmailOpen: false, inviteStudentsSuccess: success })}
             classroom={this.state.activeClassroom}
           />
-        }
+          <StudentInviteSuccessDialog
+            isOpen={this.state.inviteStudentsSuccess}
+            close={() => this.setState({ inviteStudentsSuccess: false })}
+          />
+        </>}
         <ValidationFailedDialog
           isOpen={this.state.cantCreate}
           header="You don`t have permisions to create new user"
