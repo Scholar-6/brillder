@@ -39,12 +39,6 @@ const AssignSuccessDialog: React.FC<DialogProps> = props => {
     }
   }
 
-  if (props.selectedItems.length > 1) {
-    itemsText += ' have ';
-  } else {
-    itemsText += ' has ';
-  }
-
   return (
     <Dialog
       open={props.isOpen} onClick={props.close} onClose={props.close}
@@ -53,7 +47,7 @@ const AssignSuccessDialog: React.FC<DialogProps> = props => {
       <div className="dialog-header">
         <ListItem>
           <ListItemText
-            primary={ `${itemsText} been assigned to ${props.brickTitle}`}
+            primary={ `${props.brickTitle} has been assigned to ${itemsText}.`}
             className="bold" style={{ minWidth: '30vw' }}
           />
           <ListItemAvatar>
