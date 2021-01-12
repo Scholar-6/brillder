@@ -482,7 +482,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                   onClick={moveToNewUser}
                 />
               </div>
-              <div className="bold">+ Invite Tutee</div>
+              <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
             </div>
           }
         </div>
@@ -527,7 +527,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                   onClick={moveToNewUser}
                 />
               </div>
-              <div className="bold">+ Invite Tutee</div>
+              <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
             </div>
           </div>
         </div>
@@ -545,23 +545,24 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     return (
       <div className="tab-content">
-        {this.state.activeClassroom &&
-          <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
-        }
-        {users.length > 0 ?
-          <StudentTable
-            users={users}
-            isClassroom={!!this.state.activeClassroom}
-            selectedUsers={this.state.selectedUsers}
-            sortBy={this.state.sortBy}
-            isAscending={this.state.isAscending}
-            sort={sortBy => this.sort(sortBy)}
-            pageStudentsSelected={this.state.pageStudentsSelected}
-            toggleUser={id => this.toggleUser(id)}
-            assignToClass={() => this.openAssignDialog()}
-            unassign={s => this.unassigningStudent(s)}
-            togglePageStudents={() => this.togglePageStudents()}
-          /> :
+        {users.length > 0 ? <>
+            {this.state.activeClassroom &&
+              <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
+            }
+            <StudentTable
+              users={users}
+              isClassroom={!!this.state.activeClassroom}
+              selectedUsers={this.state.selectedUsers}
+              sortBy={this.state.sortBy}
+              isAscending={this.state.isAscending}
+              sort={sortBy => this.sort(sortBy)}
+              pageStudentsSelected={this.state.pageStudentsSelected}
+              toggleUser={id => this.toggleUser(id)}
+              assignToClass={() => this.openAssignDialog()}
+              unassign={s => this.unassigningStudent(s)}
+              togglePageStudents={() => this.togglePageStudents()}
+            />
+          </>:
           this.renderEmptyTab()
         }
         <RoleDescription />
