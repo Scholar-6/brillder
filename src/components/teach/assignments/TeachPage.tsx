@@ -363,7 +363,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           filterChanged={this.teachFilterUpdated.bind(this)}
         />
         <Grid item xs={9} className="brick-row-container">
-          <TeachTab activeTab={TeachActiveTab.Assignments} history={history} />
+          <TeachTab activeTab={TeachActiveTab.Assignments} history={history} assignmentsEnabled={true} />
           {this.renderTabContent()}
         </Grid>
       </Grid>

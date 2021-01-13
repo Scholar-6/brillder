@@ -589,7 +589,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             {this.renderSortAndFilterBox()}
           </Grid>
           <Grid item xs={9} className="brick-row-container">
-            <TeachTab history={history} activeTab={TeachActiveTab.Students} />
+            <TeachTab history={history} activeTab={TeachActiveTab.Students} assignmentsEnabled={this.state.classrooms.length > 0} />
             {this.renderTabContent()}
           </Grid>
         </Grid>
