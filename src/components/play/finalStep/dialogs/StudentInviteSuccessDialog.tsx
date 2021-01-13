@@ -11,24 +11,24 @@ import './LinkCopiedDialog.scss';
 import sprite from "assets/img/icons-sprite.svg";
 
 interface InvitationProps {
-  isOpen: boolean;
+  numStudentsInvited: number;
   close(): void;
 }
 
 const StudentInviteSuccessDialog: React.FC<InvitationProps> = props => {
   const getCustomText = () => {
-    return "Those students will be able to join your class.";
+    return `Ask your student${props.numStudentsInvited > 1 ? "s" : ""} to check their emails.`;
   }
 
   return (
     <Dialog
-      open={props.isOpen}
+      open={props.numStudentsInvited > 0}
       onClose={props.close}
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
         <ListItem>
-          <ListItemText primary="Invitation Sent!" className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemText primary={`Invitation${props.numStudentsInvited > 1 ? "s" : ""} Sent!`} className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="circle-check">
               <svg className="svg active" style={{marginLeft: 0, marginTop: '0.3vw', marginRight: '0.3vw'}}>

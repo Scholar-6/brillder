@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .manage-classrooms-page {
   $base-filter-padding-left: 2vw;
@@ -41,7 +41,7 @@
     .class-header {
       cursor: pointer;
     }
-    
+
     .individuals-header {
       cursor: pointer;
       margin-left: -0.5vw;
@@ -188,7 +188,7 @@
   }
   .remove-class:hover {
     color: var(--theme-orange) !important;
-  } 
+  }
   .index-box.active .remove-class:hover {
     color: var(--theme-dark-blue) !important;
   }

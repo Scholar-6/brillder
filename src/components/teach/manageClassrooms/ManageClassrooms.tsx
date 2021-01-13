@@ -75,7 +75,7 @@ interface UsersListState {
   unassignOpen: boolean;
 
   inviteEmailOpen: boolean;
-  inviteStudentsSuccess: boolean;
+  numStudentsInvited: number;
 
   pageStudentsSelected: boolean;
 }
@@ -112,7 +112,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       unassignOpen: false,
 
       inviteEmailOpen: false,
-      inviteStudentsSuccess: false,
+      numStudentsInvited: 0,
 
       pageStudentsSelected: false
     };
@@ -622,12 +622,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         {this.state.activeClassroom && <>
           <InviteStudentEmailDialog
             isOpen={this.state.inviteEmailOpen}
-            close={(success) => this.setState({ inviteEmailOpen: false, inviteStudentsSuccess: success })}
+            close={(numInvited) => this.setState({ inviteEmailOpen: false, numStudentsInvited: numInvited })}
             classroom={this.state.activeClassroom}
           />
           <StudentInviteSuccessDialog
-            isOpen={this.state.inviteStudentsSuccess}
-            close={() => this.setState({ inviteStudentsSuccess: false })}
+            numStudentsInvited={this.state.numStudentsInvited}
+            close={() => this.setState({ numStudentsInvited: 0 })}
           />
         </>}
         <ValidationFailedDialog
