@@ -51,7 +51,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   render() {
     return (
-      <div className="main-listing back-to-work-page">
+      <div className="main-listing">
         <PageHeadWithMenu
           page={PageEnum.BackToWork}
           user={this.props.user}
