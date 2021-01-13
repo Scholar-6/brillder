@@ -10,6 +10,8 @@ import BrickBlock from "components/baseComponents/BrickBlock";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 
+import "./AssignedBricks.scss";
+
 interface AssignedBricksProps {
   user: User;
   shown: boolean;
@@ -114,8 +116,13 @@ class AssignedBricks extends Component<AssignedBricksProps> {
     return (
       <div className="tab-content-centered">
         <div>
-          <div className="bold">There are currently no assignments for this class</div>
-          <a className="btn btn-block btn-display btn-xl" onClick={() => this.props.history.push(map.MainPage)}>Go to my Homepage</a>
+          <div className="icon-container big-search-icon-container" onClick={() => this.props.history.push(map.MainPage)}>
+            <SpriteIcon
+              name="search-large-blue"
+              className="big-search-icon"
+            />
+          </div>
+          <div className="bold">There are no assignments for this class yet.<br />Click the icon to explore Brillder.</div>
         </div>
       </div>
     )

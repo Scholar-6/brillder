@@ -15,7 +15,6 @@ interface FilterSidebarProps {
   filters: PlayFilters;
   assignments: AssignmentBrick[];
   classrooms: ClassroomApi[];
-  isCore: boolean;
   activeClassroomId: number;
   filterChanged(filters: PlayFilters): void;
   setActiveClassroom(classroom: number): void;
@@ -100,15 +99,6 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
     let checkedCount = 0;
 
     for (const assignment of this.props.assignments) {
-      if (this.props.isCore) {
-        if (!assignment.brick.isCore) {
-          continue;
-        }
-      } else {
-        if (assignment.brick.isCore) {
-          continue;
-        }
-      }
       if (assignment.status === AssignmentBrickStatus.ToBeCompleted) {
         toBeCompletedCount++;
       } else if (assignment.status === AssignmentBrickStatus.SubmitedToTeacher) {

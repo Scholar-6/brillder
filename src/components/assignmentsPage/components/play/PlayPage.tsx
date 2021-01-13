@@ -43,7 +43,6 @@ interface PlayState {
   pageSize: number;
   isAdmin: boolean;
   isTeach: boolean;
-  isCore: boolean;
   handleKey(e: any): void;
 }
 
@@ -54,11 +53,6 @@ class PlayPage extends Component<PlayProps, PlayState> {
     const isTeach = checkTeacher(this.props.user.roles);
     const isAdmin = checkAdmin(this.props.user.roles);
     const isEditor = checkEditor(this.props.user.roles)
-
-    let isCore = false;
-    if (isAdmin || isEditor) {
-      isCore = true;
-    }
 
     const threeColumns = {
       red: {
@@ -82,8 +76,6 @@ class PlayPage extends Component<PlayProps, PlayState> {
       classrooms: [],
       activeClassroomId: -1,
 
-      isCore,
-      
       filterExpanded: true,
       isClearFilter: false,
       sortedIndex: 0,
@@ -128,8 +120,8 @@ class PlayPage extends Component<PlayProps, PlayState> {
     }
   }
 
-  getFilteredAssignemnts(assignments: AssignmentBrick[], isCore: boolean) {
-    return service.filterAssignments(assignments, isCore);
+  getFilteredAssignemnts(assignments: AssignmentBrick[]) {
+    return service.filterAssignments(assignments, true);
   }
 
   setAssignments(assignments: AssignmentBrick[]) {
@@ -143,9 +135,8 @@ class PlayPage extends Component<PlayProps, PlayState> {
       }
     }
 
-    const finalAssignments = this.getFilteredAssignemnts(assignments, this.state.isCore);
-    const threeColumns = service.prepareThreeAssignmentRows(finalAssignments);
-    this.setState({ ...this.state, classrooms, finalAssignments, rawAssignments: assignments, threeColumns, sortedIndex: 0 });
+    const threeColumns = service.prepareThreeAssignmentRows(assignments);
+    this.setState({ ...this.state, classrooms, rawAssignments: assignments, threeColumns, sortedIndex: 0 });
   }
 
   onThreeColumnsMouseHover(index: number, status: AssignmentBrickStatus) {
@@ -195,15 +186,6 @@ class PlayPage extends Component<PlayProps, PlayState> {
     if (!checked && !submitted && !completed) {
     } else {
       finalAssignments = this.state.rawAssignments.filter(a => {
-        if (this.state.isCore) {
-          if (!a.brick.isCore) {
-            return false;
-          }
-        } else {
-          if (a.brick.isCore) {
-            return false;
-          }
-        }
         if (checked) {
           if (a.status === AssignmentBrickStatus.CheckedByTeacher){
             return true;
@@ -247,26 +229,6 @@ class PlayPage extends Component<PlayProps, PlayState> {
       finalAssignments[key].brick.expandFinished = false;
       this.setState({ ...this.state });
     }, 400);
-  }
-
-  toggleCore() {
-    let isCore = !this.state.isCore;
-    const {filters} = this.state;
-    filters.viewAll = true;
-    filters.completed = false;
-    filters.checked = false;
-    filters.submitted = false;
-
-    const finalAssignments = this.getFilteredAssignemnts(this.state.rawAssignments, isCore);
-    const threeColumns = service.prepareThreeAssignmentRows(finalAssignments);
-    
-    this.setState({
-      isCore,
-      finalAssignments,
-      threeColumns,
-      sortedIndex: 0,
-      filters
-    });
   }
 
   //#region Pagination
@@ -348,7 +310,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
     } else {
       filters.viewAll = true;
     }
-    const finalAssignments = this.getFilteredAssignemnts(assignments, this.state.isCore);
+    const finalAssignments = this.getFilteredAssignemnts(assignments);
     const threeColumns = service.prepareThreeAssignmentRows(finalAssignments);
 
     this.setState({activeClassroomId: classroomId, finalAssignments, threeColumns, filters, sortedIndex: 0});
@@ -376,8 +338,8 @@ class PlayPage extends Component<PlayProps, PlayState> {
           user={this.props.user}
           history={this.props.history}
 
-          isCore={this.state.isCore}
-          onCoreSwitch={this.toggleCore.bind(this)}
+          isCore={true}
+          onCoreSwitch={() => {}}
 
           handleClick={this.handleMobileClick.bind(this)}
         />
@@ -389,17 +351,14 @@ class PlayPage extends Component<PlayProps, PlayState> {
           filters={this.state.filters}
           activeClassroomId={this.state.activeClassroomId}
           assignments={this.state.finalAssignments}
-          isCore={this.state.isCore}
           setActiveClassroom={this.setActiveClassroom.bind(this)}
           classrooms={this.state.classrooms}
           filterChanged={this.playFilterUpdated.bind(this)}
         />
         <Grid item xs={9} className="brick-row-container">
-          <Tab
-            isTeach={this.state.isTeach || this.state.isAdmin}
-            isCore={this.state.isCore}
-            onCoreSwitch={this.toggleCore.bind(this)}
-          />
+          <div className="brick-row-title main-title uppercase">
+            Assignments
+          </div>
           <div className="tab-content learn-tab-desktop">
             <AssignedBricks
               user={this.props.user}
