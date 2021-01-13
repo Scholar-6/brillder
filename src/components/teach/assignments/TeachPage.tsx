@@ -267,7 +267,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       return <div className="tab-content"></div>
     }
     
-    if (this.state.isLoaded && this.state.classrooms.length === 0) {
+    if (this.state.isLoaded && (this.state.classrooms.length === 0 || (this.state.activeClassroom && this.state.activeClassroom?.assignments.length === 0))) {
       return (
         <div className="tab-content">
           <div className="tab-content-centered">
