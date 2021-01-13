@@ -267,7 +267,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       return <div className="tab-content"></div>
     }
     
-    if (this.state.isLoaded && this.state.classrooms.length === 0) {
+    if (this.state.isLoaded && (this.state.classrooms.length === 0 || (this.state.activeClassroom && this.state.activeClassroom?.assignments.length === 0))) {
       return (
         <div className="tab-content">
           <div className="tab-content-centered">
@@ -363,7 +363,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           filterChanged={this.teachFilterUpdated.bind(this)}
         />
         <Grid item xs={9} className="brick-row-container">
-          <TeachTab activeTab={TeachActiveTab.Assignments} history={history} />
+          <TeachTab activeTab={TeachActiveTab.Assignments} history={history} assignmentsEnabled={true} />
           {this.renderTabContent()}
         </Grid>
       </Grid>
