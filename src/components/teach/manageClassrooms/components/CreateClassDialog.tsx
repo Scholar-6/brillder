@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 interface AssignClassProps {
   isOpen: boolean;
-  submit(value: string): void;
+  submit(value: string, subject: Subject): void;
   close(): void;
 
   user: User;
@@ -78,7 +78,11 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button"
-          onClick={() => props.submit(value)}>
+          onClick={() => {
+            if(value && subjects && subjectIndex !== undefined && subjects[subjectIndex]) {
+              props.submit(value, subjects[subjectIndex]);
+            }
+          }}>
           <span>Create</span>
         </button>
         <button className="btn btn-md bg-gray no-button"

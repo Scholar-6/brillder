@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid } from "@material-ui/core";
+import { FormControlLabel, Grid, Radio, SvgIcon } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import './ManageClassrooms.scss';
@@ -30,6 +30,7 @@ import TeachTab from '../TeachTab';
 import EmptyFilter from "./components/EmptyFilter";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
+import { Subject } from "model/brick";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -145,8 +146,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
   }
 
-  createClass(name: string) {
-    createClass(name).then(newClassroom => {
+  createClass(name: string, subject: Subject) {
+    createClass(name, subject).then(newClassroom => {
       if (newClassroom) {
         this.state.classrooms.push(newClassroom);
         this.setState({ ...this.state });
@@ -340,7 +341,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
           + Create Class
         </div>
-        <div className="indexes-box manage-classrooms-filter">
+        <div className="subject-indexes-box filter-container manage-classrooms-filter">
           {this.renderViewAllFilter()}
           {this.state.classrooms.map((c, i) => {
             let className = "index-box hover-light item-box2";
@@ -349,7 +350,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             }
             return (
               <div key={i} className={className} onClick={() => this.setActiveClassroom(c)}>
-                {c.name}
+                <FormControlLabel
+                  checked={(this.state.activeClassroom && this.state.activeClassroom.id === c.id) ?? false}
+                  style={{ color: c.subject?.color ?? "#FFFFFF" }}
+                  control={<Radio onClick={() => this.setActiveClassroom(c)} className={"filter-radio custom-color"} />}
+                  label={c.name}
+                />
                 <div className="right-index right-index2">
                   {c.students.length}
                   <SpriteIcon name="users" className="active" />
@@ -607,8 +613,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         />
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
-          submit={name => {
-            this.createClass(name);
+          submit={(name, subject) => {
+            this.createClass(name, subject);
             this.setState({ createClassOpen: false })
           }}
           close={() => { this.setState({ createClassOpen: false }) }}

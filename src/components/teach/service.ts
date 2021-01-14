@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Subject } from "model/brick";
 
 import { MUser } from "./model";
 
@@ -6,6 +7,8 @@ export interface ClassroomApi {
   created: string;
   id: number;
   name: string;
+  subjectId: number;
+  subject: Subject;
   status: number;
   students: MUser[];
   updated: string;
@@ -17,11 +20,11 @@ export interface ClassroomApi {
  * @param name name of classroom
  * return classroom object if success or null if failed
  */
-export const createClass = async (name: string) => {
+export const createClass = async (name: string, subject: Subject) => {
   try {
     const res = await axios.post(
       process.env.REACT_APP_BACKEND_HOST + "/classroom",
-      { name },
+      { name, subject },
       { withCredentials: true }
     );
     if (res.data) {
