@@ -142,6 +142,22 @@
     bottom: 0;
   }
 
+  .manage-classrooms-filter {
+    .index-box {
+      .custom-color {
+        color: inherit !important;
+        .MuiSvgIcon-root {
+          color: inherit !important;
+          fill: currentColor !important;
+        }
+      }
+
+      .MuiTypography-root {
+        color: var(--white) !important;
+      }
+    }
+  }
+
   .right-index2 {
     padding: 0 !important;
     position: absolute;
