@@ -49,7 +49,7 @@ const TeachTab: React.FC<TabProps> = ({ history, activeTab, assignmentsEnabled }
     <div className="tab-container">
       {assignedTab()}
       {manageClassesTab()}
-      <ValidationFailedDialog header="You need to create a class or invite a pupil before managing assignments." isOpen={errorOpen} close={() => setErrorOpen(false)} />
+      <ValidationFailedDialog header="You need to create a class or invite a pupil before managing assignments" isOpen={errorOpen} close={() => setErrorOpen(false)} />
     </div>
   )
 }
