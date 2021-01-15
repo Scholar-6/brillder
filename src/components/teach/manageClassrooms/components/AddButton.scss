@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .create-user-button-wrap {
   padding-top: 1vh;
@@ -12,7 +12,7 @@
     color: var(--theme-dark-blue);
     font-size: 1.2vw;
     margin-left: 1vw;
-    width: 20vw;
+    width: 13vw;
     height: max-content;
     letter-spacing: 0;
 
