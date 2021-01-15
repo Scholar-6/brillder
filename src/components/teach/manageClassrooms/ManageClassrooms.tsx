@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { FormControlLabel, Grid, Radio, SvgIcon } from "@material-ui/core";
 import { connect } from "react-redux";
+import axios from 'axios';
 
 import './ManageClassrooms.scss';
 import '../style.scss';
@@ -31,6 +32,7 @@ import EmptyFilter from "./components/EmptyFilter";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 import { Subject } from "model/brick";
+import NameAndSubjectForm from "./components/NameAndSubjectForm";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -140,7 +142,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   async getClassrooms() {
     const classrooms = await getAllClassrooms();
     if (classrooms) {
-      this.setState({ classrooms });
+      this.setState({
+        classrooms,
+        activeClassroom: this.state.activeClassroom ? classrooms.find(c => c.id === this.state.activeClassroom!.id) ?? null : null
+      });
     } else {
       console.log('geting classrooms failed');
     }
@@ -496,6 +501,35 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     );
   }
 
+  async updateClassroom(name: string, subject: Subject) {
+    try {
+      const response = await axios.put(`${process.env.REACT_APP_BACKEND_HOST}/classroom`, {
+        ...this.state.activeClassroom,
+        name, subject
+      }, { withCredentials: true });
+      this.getClassrooms();
+    } catch(e) {
+      
+    }
+  }
+
+  renderTopRow() {
+    return (
+      <Grid container alignItems="stretch" direction="row">
+        <Grid item xs>
+          <NameAndSubjectForm
+            name={this.state.activeClassroom!.name}
+            subject={this.state.activeClassroom!.subject}
+            onChange={this.updateClassroom.bind(this)}
+          />
+        </Grid>
+        <Grid item>
+          <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
+        </Grid>
+      </Grid>
+    );
+  }
+
   renderTabContent() {
     if (!this.state.isLoaded) {
       return <div className="tab-content" />
@@ -552,9 +586,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     return (
       <div className="tab-content">
         {users.length > 0 ? <>
-            {this.state.activeClassroom &&
-              <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
-            }
+            {this.state.activeClassroom && this.renderTopRow()}
             <StudentTable
               users={users}
               isClassroom={!!this.state.activeClassroom}
