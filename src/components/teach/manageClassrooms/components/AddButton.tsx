@@ -11,7 +11,7 @@ const AddStudentButton: React.FC<AddButtonProps> = props => {
   return (
     <div className="create-user-button-wrap">
       <div className="create-user-button" onClick={props.onOpen}>
-        <div className="circle">
+        <div className="user-icon">
           <SpriteIcon name="user-plus" />
         </div>
         <div className="label">

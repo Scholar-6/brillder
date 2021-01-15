@@ -18,13 +18,12 @@
 
     $height: 2.5vw;
 
-    .circle {
-      border-radius: 50%;
-      background: var(--theme-dark-blue);
+    .user-icon {
       width: $height;
       height: $height;
-      padding: 0.4vw;
-      color: var(--white);
+      stroke-width: 2;
+      padding: 0.2vw;
+      color: var(--theme-dark-blue);
       display: inline-block;
 
       svg {
