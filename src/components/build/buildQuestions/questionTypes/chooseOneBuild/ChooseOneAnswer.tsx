@@ -128,7 +128,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           disabled={locked}
           editOnly={editOnly}
           data={answer.value}
-          toolbar={['latex', 'chemType']}
+          toolbar={['latex']}
           placeholder="Enter Answer..."
           validationRequired={validationRequired}
           onBlur={() => {
