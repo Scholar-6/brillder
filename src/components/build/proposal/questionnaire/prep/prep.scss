@@ -1,0 +1,56 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.prep-page-questionary {
+  .left-block {
+    margin-top: 12.5vh;
+    > h1 {
+      @include tabletL {
+        width: 100%;
+        line-height: 1.32;
+        font: 3.8vw $font-family-black;
+        letter-spacing: 0.04vw;
+      }
+    }
+  }
+  .proposal-phone-preview {
+    @include phone_and_tabletL {
+      display: none;
+    }
+  }
+  .phone-preview-component {
+    svg {
+      width: auto;
+      margin-left: 0vw;
+      stroke-width: 1;
+      height: 15vw;
+    }
+  }
+  .typing-text {
+    top: 54%;
+    left: 0;
+    height: 46.5%;
+    figure {
+      margin: 2vh 0;
+    }
+  }
+  .screen {
+    overflow: hidden;
+  }
+  .document-editor {
+    .ck.ck-button.ck-color-table__remove-color {
+      width: calc(100% - 0.4vw) !important;
+      .ck.ck-button__label {
+        font-size: 1.5vw !important;
+      }
+    }
+    .ck-content {
+      height: 29vh !important;
+      text-align: left !important;
+      p {
+        text-align: left !important;
+      }
+    }
+  }
+}

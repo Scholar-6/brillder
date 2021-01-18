@@ -1,9 +1,32 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.main-notification-box {
+  opacity: 0;
+  @include phone_and_tabletP {
+    opacity: 1;
+  }
+}
 
 .notification-box {
+  .MuiPopover-paper {
+    box-shadow: none !important;
+    border-radius: 0 0 0 2.5vw !important;
+    right: 0 !important;
+    left: auto !important;
+
+    @include phone_and_tabletP {
+      width: 100vw !important;
+      border-radius: 2.5vw 0 0 0 !important;
+    }
+  }
+}
+
+.notification-box,
+.main-notification-box {
   .scroll-buttons {
+    @extend %flexToYCenter;
     width: 9.2vw;
     svg {
       cursor: pointer;
@@ -11,224 +34,212 @@
       height: 2vw;
     }
   }
+  .notification-content {
+    background-color: var(--theme-light-blue);
+    box-shadow: none !important;
+    position: relative;
 
-  .MuiPaper-root {
-    background: inherit;
-  }
-  .MuiPopover-paper {
+    @include phone_and_tabletP {
+      width: 100vw;
+      border-radius: 2.5vw 0 0 0;
+    }
     @include tabletP {
       border-radius: 0 0 0 2.5vw;
-      left: unset !important;
-      right: 0vw;
-      animation: notification-active 325ms ease-in-out;
+      width: $notification-width;
+      // 300ms cubic-bezier(0.5, 1, 0.89, 1)
     }
-    @include desktop {
-      box-shadow: none;
-    }
-    .notification-content {
-      background-color: var(--theme-light-blue);
-      box-shadow: none !important;
-      position: relative;
-
+    .notification-list {
+      padding: 1vw 1vw 0 1vw !important;
+      overflow: hidden;
+      overflow-y: auto;
+      max-height: 33vh;
       @include phone_and_tabletP {
-        width: 100vw;
-        border-radius: 2.5vw 0 0 0;
+        max-height: 26vh;
       }
-      @include tabletP {
-        border-radius: 0 0 0 2.5vw;
-        width: $notification-width;
-        // 300ms cubic-bezier(0.5, 1, 0.89, 1)
+      @include ex-desktop_wide_hd {
+        max-height: 35vh;
       }
-      .notification-list {
-        padding: 1vw 1vw 0 1vw !important;
-        overflow: hidden;
-        overflow-y: auto;
-        max-height: 33vh;
-        @include phone_and_tabletP {
-          max-height: 26vh;
-        }
-        @include ex-desktop_wide_hd {
-          max-height: 35vh;
-        }
-        li {
-          padding: 0;
-          @extend %displayFlex;
-          @extend %flexAlignCenter;
-          .left-brick-circle {
-            cursor: pointer;
-            font-size: 2vw;
-            width: 3vw;
-            height: 3vw;
-            @extend %radCircle;
-            margin-right: 1vw;
-            .svg {
-              color: var(--white);
-            }
-            &.generic {
-              background-color: #bdc2c8;
-            }
-            &.submitted-for-review {
-              background-color: #ff9800;
-            }
-            &.published {
-              background-color: #00c86b;
-            }
-            &.red {
-              background-color: #d42c24;
-            }
-            &.new-comment {
-              background-color: #006bfd;
-            }
-            &.invited-to-play {
-              background-color: var(--white);
-            }
-          }
-          .content-box {
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            width: calc(100% - 3.5vw);
-            .notification-detail {
-              border-bottom: 0.02vh solid var(--theme-dark-blue);
-              padding: 0.5vw 0;
-              margin-right: 1vw;
-              .notif-title,
-              .notif-desc {
-                @include tabletP {
-                  font-size: 1.1vw;
-                }
-                @include tabletL {
-                  font-size: 0.9vw;
-                }
-                @include desktop {
-                  font-size: 1vw;
-                }
-              }
-              .notif-title {
-                color: var(--white);
-                text-transform: capitalize;
-                font-family: $font-family-bold;
-              }
-              .notif-desc {
-                color: var(--dark-gray);
-              }
-            }
-            .actions {
-              @extend %flexCenter;
-              flex-direction: column;
-              color: var(--tab-gray);
-              .notification-time {
-                @extend %textCenter;
-                white-space: nowrap;
-                margin-top: 0.4vh;
-                @include phone_and_tabletP {
-                  font-size: 2.5vw;
-                }
-                @include tabletP {
-                  font-size: 0.9vw;
-                }
-                @include tabletL {
-                  font-size: 0.8vw;
-                }
-                @include desktop {
-                  font-size: 0.7vw;
-                }
-              }
-              .delete-notification {
-                padding: 0;
-                @extend %width100;
-                @include phone {
-                  width: 7vw;
-                  height: 7vw;
-                }
-                @include tabletP {
-                  width: 2vw;
-                  height: 2vw;
-                }
-                svg {
-                  @extend %removePosition;
-                  stroke-width: 2;
-                  &:hover {
-                    color: var(--theme-orange);
-                  }
-                }
-              }
-            }
-          }
-        }
-        .notification-detail-single {
-          width: 100%;
-          @include phone_and_tabletP {
-            font-size: 4vw;
-            padding: 15px 0;
-          }
-          @include tabletP {
-            font-size: 1.2vw;
-            padding: 1vw 0;
-          }
-          @include tabletL {
-            font-size: 1.4vw;
-          }
-          color: white;
-          font-family: $font-family-light;
-          @extend %textCenter;
-          font-size: 1vw;
-          em {
-            font-size: 1vw;
-          }
-        }
-      }
-    }
-    .clear-notification {
-      background-color: var(--theme-orange);
-      color: var(--white);
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 0;
-      @include phone_and_tabletP {
-        font-size: 3.5vw;
-        button {
-          padding: 2vw;
-        }
-      }
-      @include tabletP {
-        font-size: 1vw;
-        height: 4.5vh;
-        border-radius: 0 0 0 2.5vw;
-        button {
-          padding-top: 0vw;
-          padding-bottom: 0vw;
-        }
-      }
-      .delete-notification {
+      li {
         padding: 0;
-        @extend %width100;
-        @include phone {
-          width: 7vw;
-          height: 7vw;
+        @extend %displayFlex;
+        @extend %flexAlignCenter;
+        .left-brick-circle {
+          cursor: pointer;
+          font-size: 2vw;
+          width: 3vw;
+          height: 3vw;
+          @extend %radCircle;
+          margin-right: 1vw;
+          .svg {
+            color: var(--white);
+          }
+          &.generic {
+            background-color: #bdc2c8;
+          }
+          &.submitted-for-review {
+            background-color: #ff9800;
+          }
+          &.published {
+            background-color: #00c86b;
+          }
+          &.red {
+            background-color: #d42c24;
+          }
+          &.new-comment {
+            background-color: #006bfd;
+          }
+          &.invited-to-play {
+            background-color: var(--white);
+          }
+        }
+        .content-box {
+          cursor: pointer;
+          display: flex;
+          justify-content: space-between;
+          width: calc(100% - 3.5vw);
+          .notification-detail {
+            border-bottom: 0.02vh solid var(--theme-dark-blue);
+            padding: 0.5vw 0;
+            margin-right: 1vw;
+            .notif-title,
+            .notif-desc {
+              @include tabletP {
+                font-size: 1.1vw;
+              }
+              @include tabletL {
+                font-size: 0.9vw;
+              }
+              @include desktop {
+                font-size: 1vw;
+              }
+            }
+            .notif-title {
+              color: var(--white);
+              text-transform: capitalize;
+              font-family: $font-family-bold;
+            }
+            .notif-desc {
+              color: var(--dark-gray);
+              font-family: $font-family-regular;
+            }
+          }
+          .actions {
+            @extend %flexCenter;
+            flex-direction: column;
+            color: var(--tab-gray);
+            .notification-time {
+              @extend %textCenter;
+              white-space: nowrap;
+              margin-top: 0.4vh;
+              @include phone_and_tabletP {
+                font-size: 2.5vw;
+              }
+              @include tabletP {
+                font-size: 0.9vw;
+              }
+              @include tabletL {
+                font-size: 0.8vw;
+              }
+              @include desktop {
+                font-size: 0.7vw;
+              }
+            }
+            .delete-notification {
+              padding: 0;
+              @extend %width100;
+              @include phone {
+                width: 7vw;
+                height: 7vw;
+              }
+              @include tabletP {
+                width: 2vw;
+                height: 2vw;
+              }
+              svg {
+                @extend %removePosition;
+                stroke-width: 2;
+                &:hover {
+                  color: var(--theme-orange);
+                }
+              }
+            }
+          }
+        }
+      }
+      .notification-detail-single {
+        width: 100%;
+        @include phone_and_tabletP {
+          font-size: 4vw;
+          padding: 15px 0;
         }
         @include tabletP {
-          width: 2vw;
-          height: 2vw;
+          font-size: 1.2vw;
+          padding: 1vw 0;
         }
-        svg {
-          @extend %removePosition;
-          &:hover {
-            color: var(--theme-orange);
-          }
+        @include tabletL {
+          font-size: 1.4vw;
         }
-      }
-      .MuiCardActions-spacing {
-        > :not(:first-child) {
-          margin-left: 0;
+        color: white;
+        font-family: $font-family-light;
+        @extend %textCenter;
+        font-size: 1vw;
+        em {
+          font-size: 1vw;
         }
       }
     }
   }
-  &.hidden {
-    // opacity: 0;
-    animation: notification-deactivate 300ms ease-in;
+  .clear-notification {
+    background-color: var(--theme-orange);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0;
+    .clear-icon {
+      svg {
+        height: 1vw;
+        width: 1vw;
+      }
+    }
+    @include phone_and_tabletP {
+      font-size: 3.5vw;
+      button {
+        padding: 2vw;
+      }
+    }
+    @include tabletP {
+      font-size: 1vw;
+      height: 4.5vh;
+      border-radius: 0 0 0 2.5vw;
+      button {
+        padding-top: 0vw;
+        padding-bottom: 0vw;
+      }
+    }
+    .delete-notification {
+      padding: 0;
+      @extend %width100;
+      @include phone {
+        width: 7vw;
+        height: 7vw;
+      }
+      @include tabletP {
+        width: 2vw;
+        height: 2vw;
+      }
+      svg {
+        @extend %removePosition;
+        &:hover {
+          color: var(--theme-orange);
+        }
+      }
+    }
+    .MuiCardActions-spacing {
+      > :not(:first-child) {
+        margin-left: 0;
+      }
+    }
   }
 }
 @keyframes notification-active {
@@ -238,24 +249,6 @@
 
   100% {
     right: 0;
-  }
-}
-@keyframes notification-deactivate {
-  0% {
-    right: -1vw;
-  }
-  20% {
-    opacity: 0.8;
-  }
-  30% {
-    opacity: 0.7;
-  }
-  40% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-    right: -28vw;
   }
 }
 
@@ -275,30 +268,30 @@
       bottom: 60px;
       border-radius: 12px 0 0 0;
       overflow: unset !important;
-  
-      .notification-content {
-        .notification-list li {
-          .content-box {
-            width: calc(100% - 10vw);
+    }
 
-            .notification-detail {
-              width: inherit;
-              .notif-title,
-              .notif-desc {
-                @include phone_and_tabletP {
-                  white-space: nowrap;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  font-size: 3.5vw;
-                }
+    .notification-content {
+      .notification-list li {
+        .content-box {
+          width: calc(100% - 10vw);
+
+          .notification-detail {
+            width: inherit;
+            .notif-title,
+            .notif-desc {
+              @include phone_and_tabletP {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 3.5vw;
               }
             }
           }
-  
-          .left-brick-circle {
-            height: 9vw;
-            width: 9vw;
-          }
+        }
+
+        .left-brick-circle {
+          height: 9vw;
+          width: 9vw;
         }
       }
     }
@@ -306,5 +299,59 @@
   .send-icon-center {
     margin-top: 0.1vw;
     margin-left: -0.1vw;
+  }
+}
+
+@keyframes notification-grow {
+  0% {
+    height: 0;
+  }
+  60% {
+    height: 0;
+  }
+  100% {
+    height: 33vh;
+  }
+}
+
+@keyframes notification-grow-small {
+  0% {
+    height: 0;
+  }
+  60% {
+    height: 0;
+  }
+  100% {
+    height: 6vw;
+  }
+}
+
+@keyframes notification-hide-small {
+  0% {
+    height: 9vw;
+  }
+  100% {
+    height: 0;
+  }
+}
+
+.main-notification-box {
+  display: block;
+  border-bottom-left-radius: 2vw;
+  overflow: hidden;
+  &.active {
+    opacity: 1;
+    height: 100%;
+    animation: notification-grow 0.7s linear;
+  }
+  &.active.no-notifications {
+    animation: notification-grow-small 0.7s linear;
+  }
+  &.no-notifications {
+    height: 8.6vw;
+  }
+  &.hidden {
+    height: 0;
+    animation: notification-hide-small 0.3s linear;
   }
 }

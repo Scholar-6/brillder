@@ -14,7 +14,7 @@ import map from "components/map";
 
 interface BuildRouteProps {
   exact?: any;
-  path: string;
+  path: string | string[];
   component: any;
   brick: Brick;
   isAuthenticated: isAuthenticated;
@@ -62,8 +62,13 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
           }
 
           // move to investigation
-          let found = rest.location.pathname.indexOf('/investigation');
+          const found = rest.location.pathname.indexOf('/investigation');
           if (found === -1) {
+            const isSynthesis = rest.location.pathname.indexOf('/synthesis');
+            if (isSynthesis) {
+              return <Component {...props} />;
+            }
+
             props.history.push(`/build/brick/${brickId}/investigation`);
             return <PageLoader content="...Getting Brick..." />;
           }

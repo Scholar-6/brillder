@@ -22,22 +22,25 @@ class UploadImageCustom extends Plugin {
         tooltip: true,
       });
 
-      view.class = "upload-button-custom";
+      let className = "upload-button-custom";
 
+      if (!editor.isReadOnly) {
+        className += ' disabled';
+      }
+      view.class = className;
       view.on("execute", () => {
-        let el = document.createElement("input");
-        el.setAttribute("type", "file");
-        el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
-        el.click();
+        if (!editor.isReadOnly) {
+          let el = document.createElement("input");
+          el.setAttribute("type", "file");
+          el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
+          el.click();
 
-        editor.execute('uploading');
+          editor.execute('uploading');
 
-        // UPLOADING IMAGES TO BACKEND
-        el.onchange = (files: any) => {
-          if (el.files && el.files.length >= 0) {
-            uploadFile(
-              el.files[0] as File,
-              (res: any) => {
+          // UPLOADING IMAGES TO BACKEND
+          el.onchange = () => {
+            if (el.files && el.files.length >= 0) {
+              uploadFile(el.files[0] as File, (res: any) => {
                 let fileName = res.data.fileName;
                 editor.execute('uploaded');
 
@@ -51,10 +54,11 @@ class UploadImageCustom extends Plugin {
                   );
                 });
               },
-              () => {}
-            );
-          }
-        };
+                () => { }
+              );
+            }
+          };
+        }
       });
 
       return view;

@@ -39,6 +39,12 @@ const receivedNotification = (notification: Notification) => {
     } as Action;
 }
 
+const notificationLatestDismissed = () => {
+    return {
+        type: types.NOTIFICATION_LATEST_DISMISSED
+    } as Action;
+}
+
 const notificationCleared = (notificationId: number) => {
     return {
         type: types.NOTIFICATION_CLEAR,
@@ -58,4 +64,4 @@ const notificationReset = () => {
     } as Action;
 }
 
-export default { getNotifications, receivedNotification, notificationCleared, notificationClearedAll, notificationReset }
+export default { getNotifications, receivedNotification, notificationLatestDismissed, notificationCleared, notificationClearedAll, notificationReset }

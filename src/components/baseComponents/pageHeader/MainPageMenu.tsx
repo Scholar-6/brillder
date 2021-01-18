@@ -8,13 +8,15 @@ import { ReduxCombinedState } from 'redux/reducers';
 import notificationActions from 'redux/actions/notifications';
 import { Notification } from 'model/notifications';
 
+import './MainPageMenu.scss';
 import LogoutDialog from "../logoutDialog/LogoutDialog";
-import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
+import MainNotificationPanel from "components/baseComponents/notificationPanel/MainNotificationPanel";
 import MenuDropdown from './MenuDropdown';
 import BellButton from './bellButton/BellButton';
 import MoreButton from './MoreButton';
-
 import { PageEnum } from './PageHeadWithMenu';
+import { isMobile } from "react-device-detect";
+import NotificationPanel from "../notificationPanel/NotificationPanel";
 
 interface MainPageMenuProps {
   history: any;
@@ -48,6 +50,9 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
   }
 
   showDropdown() {
+    if (this.props.notificationExpanded) {
+      this.props.toggleNotification();
+    }
     this.setState({ ...this.state, dropdownShown: true });
   }
 
@@ -72,16 +77,18 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
     }
 
     let className = "main-page-menu";
-    if (this.props.notificationExpanded) {
-      className += " notification-expanded"
-    } else if (this.state.dropdownShown) {
+    if (this.state.dropdownShown) {
       className += " menu-expanded";
+    } else if (this.props.notificationExpanded) {
+      className += " notification-expanded"
     }
 
     return (
       <div className={className} ref={this.pageHeader}>
-        <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
-        <MoreButton onClick={() => this.showDropdown()} />
+        <div className="menu-buttons">
+          <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
+          <MoreButton onClick={() => this.showDropdown()} />
+        </div>
         <MenuDropdown
           dropdownShown={this.state.dropdownShown}
           hideDropdown={() => this.hideDropdown()}
@@ -90,12 +97,21 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
           history={this.props.history}
           onLogout={() => this.handleLogoutOpen()}
         />
-        <NotificationPanel
-          history={this.props.history}
-          shown={this.props.notificationExpanded}
-          handleClose={this.props.toggleNotification}
-          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
-        />
+        {isMobile ? (
+          <NotificationPanel
+            history={this.props.history}
+            shown={this.props.notificationExpanded}
+            handleClose={this.props.toggleNotification}
+            anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
+          />
+        ) : (
+          <MainNotificationPanel
+            history={this.props.history}
+            shown={this.props.notificationExpanded}
+            handleClose={this.props.toggleNotification}
+            anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
+          />
+        )}
         <LogoutDialog
           isOpen={this.state.logoutOpen}
           close={() => this.handleLogoutClose()}

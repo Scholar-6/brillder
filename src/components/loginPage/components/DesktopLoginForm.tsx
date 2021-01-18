@@ -1,7 +1,6 @@
 import React from "react";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 
-import { LoginState } from "../loginPage";
 import TypingInput from "./TypingInput";
 import { enterPressed } from "components/services/key";
 
@@ -15,8 +14,6 @@ interface LoginFormProps {
 
   password: string;
   setPassword(password: string): void;
-
-  loginState: LoginState;
   passwordHidden: boolean;
 
   handleSubmit(e: any): void;
@@ -48,10 +45,7 @@ class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
   }
 
   render() {
-    let className = 'content-box';
-    if (this.props.loginState !== LoginState.ButtonsAnimation) {
-      className += ' expanded';
-    }
+    let className = 'content-box expanded';
     return (
       <form onSubmit={this.props.handleSubmit} className={className}>
         <div className="input-block">

@@ -31,6 +31,9 @@ export interface SwitchQuestionProps {
   setQuestionHint(hintState: HintState): void;
   removeComponent(componentIndex: number): void;
   openSameAnswerDialog(): void;
+
+  // phone preview
+  componentFocus(): void;
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
@@ -95,6 +98,8 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
             status={hint.status}
             locked={locked}
             editOnly={editOnly}
+            component={component}
+            questionType={props.questionType}
             value={hint.value}
             list={hint.list}
             count={numberOfAnswers}
@@ -109,18 +114,23 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     }
   }
   if (InnerComponent) {
+    let className = '';
+    if (InnerComponent.name === 'ImageComponent') {
+      if (validationRequired && !component.value) {
+        className += ' invalid-image';
+      }
+    }
     return (
-      <div style={{ position: 'relative', width: '100%' }}>
+      <div style={{ position: 'relative', width: '100%' }} className={className}>
         {
           !locked
-            ?
+            &&
             <button className="btn btn-transparent right-top-icon svgOnHover" onClick={props.setEmptyType}>
               <svg className="svg active back-button">
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#trash-outline"} className="theme-orange" />
               </svg>
             </button>
-            : ""
         }
         <InnerComponent
           locked={locked}
@@ -128,6 +138,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
           editOnly={editOnly}
           data={component}
           save={props.saveBrick}
+          onFocus={props.componentFocus}
           validationRequired={validationRequired}
           updateComponent={updateComponent}
         />

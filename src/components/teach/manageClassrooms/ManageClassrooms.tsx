@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Grid } from "@material-ui/core";
+import { FormControlLabel, Grid, Radio, SvgIcon } from "@material-ui/core";
 import { connect } from "react-redux";
+import axios from 'axios';
 
 import './ManageClassrooms.scss';
 import '../style.scss';
@@ -28,6 +29,10 @@ import RoleDescription from 'components/baseComponents/RoleDescription';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachTab from '../TeachTab';
 import EmptyFilter from "./components/EmptyFilter";
+import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
+import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
+import { Subject } from "model/brick";
+import NameAndSubjectForm from "./components/NameAndSubjectForm";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -53,6 +58,7 @@ interface UsersListState {
   searchString: string;
   isSearching: boolean;
   searchUsers: MUser[];
+  cantCreate: boolean;
 
   isAdmin: boolean;
   classrooms: ClassroomApi[];
@@ -72,6 +78,7 @@ interface UsersListState {
   unassignOpen: boolean;
 
   inviteEmailOpen: boolean;
+  numStudentsInvited: number;
 
   pageStudentsSelected: boolean;
 }
@@ -86,6 +93,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       page: 0,
       pageSize: 12,
       totalCount: 0,
+      cantCreate: false,
 
       searchString: "",
       isSearching: false,
@@ -107,6 +115,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       unassignOpen: false,
 
       inviteEmailOpen: false,
+      numStudentsInvited: 0,
 
       pageStudentsSelected: false
     };
@@ -133,14 +142,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   async getClassrooms() {
     const classrooms = await getAllClassrooms();
     if (classrooms) {
-      this.setState({ classrooms });
+      this.setState({
+        classrooms,
+        activeClassroom: this.state.activeClassroom ? classrooms.find(c => c.id === this.state.activeClassroom!.id) ?? null : null
+      });
     } else {
       console.log('geting classrooms failed');
     }
   }
 
-  createClass(name: string) {
-    createClass(name).then(newClassroom => {
+  createClass(name: string, subject: Subject) {
+    createClass(name, subject).then(newClassroom => {
       if (newClassroom) {
         this.state.classrooms.push(newClassroom);
         this.setState({ ...this.state });
@@ -334,7 +346,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
           + Create Class
         </div>
-        <div className="indexes-box manage-classrooms-filter">
+        <div className="subject-indexes-box filter-container manage-classrooms-filter">
           {this.renderViewAllFilter()}
           {this.state.classrooms.map((c, i) => {
             let className = "index-box hover-light item-box2";
@@ -343,7 +355,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             }
             return (
               <div key={i} className={className} onClick={() => this.setActiveClassroom(c)}>
-                {c.name}
+                <FormControlLabel
+                  checked={(this.state.activeClassroom && this.state.activeClassroom.id === c.id) ?? false}
+                  style={{ color: c.subject?.color ?? "#FFFFFF" }}
+                  control={<Radio onClick={() => this.setActiveClassroom(c)} className={"filter-radio custom-color"} />}
+                  label={c.name}
+                />
                 <div className="right-index right-index2">
                   {c.students.length}
                   <SpriteIcon name="users" className="active" />
@@ -445,6 +462,74 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     );
   }
 
+  renderEmptyTab() {
+    const moveToNewUser = () => {
+      if (this.state.isAdmin) {
+        this.props.history.push('/user-profile/new');
+      } else {
+        this.setState({cantCreate: true});
+      }
+    }
+
+    return (
+      <div className="tab-content">
+        <div className="tab-content-centered">
+          {this.state.activeClassroom ?
+            <div>
+              <div className="icon-container">
+                <SpriteIcon
+                  name="users-custom"
+                  className="stroke-1"
+                  onClick={() => this.setState({ inviteEmailOpen: true })}
+                />
+              </div>
+              <div className="bold">+ Invite Students</div>
+            </div>
+            : <div>
+              <div className="icon-container">
+                <SpriteIcon
+                  name="user-plus"
+                  className="stroke-1"
+                  onClick={moveToNewUser}
+                />
+              </div>
+              <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            </div>
+          }
+        </div>
+      </div>
+    );
+  }
+
+  async updateClassroom(name: string, subject: Subject) {
+    try {
+      const response = await axios.put(`${process.env.REACT_APP_BACKEND_HOST}/classroom`, {
+        ...this.state.activeClassroom,
+        name, subject
+      }, { withCredentials: true });
+      this.getClassrooms();
+    } catch(e) {
+      
+    }
+  }
+
+  renderTopRow() {
+    return (
+      <Grid container alignItems="stretch" direction="row">
+        <Grid item xs>
+          <NameAndSubjectForm
+            name={this.state.activeClassroom!.name}
+            subject={this.state.activeClassroom!.subject}
+            onChange={this.updateClassroom.bind(this)}
+          />
+        </Grid>
+        <Grid item>
+          <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
+        </Grid>
+      </Grid>
+    );
+  }
+
   renderTabContent() {
     if (!this.state.isLoaded) {
       return <div className="tab-content" />
@@ -456,7 +541,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       if (this.state.isAdmin) {
         this.props.history.push('/user-profile/new');
       } else {
-        alert('you don`t have permisions to create new user');
+        this.setState({cantCreate: true});
       }
     }
 
@@ -482,7 +567,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                   onClick={moveToNewUser}
                 />
               </div>
-              <div className="bold">+ Invite Tutee</div>
+              <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
             </div>
           </div>
         </div>
@@ -500,22 +585,24 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     return (
       <div className="tab-content">
-        {this.state.activeClassroom &&
-          <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
+        {users.length > 0 ? <>
+            {this.state.activeClassroom && this.renderTopRow()}
+            <StudentTable
+              users={users}
+              isClassroom={!!this.state.activeClassroom}
+              selectedUsers={this.state.selectedUsers}
+              sortBy={this.state.sortBy}
+              isAscending={this.state.isAscending}
+              sort={sortBy => this.sort(sortBy)}
+              pageStudentsSelected={this.state.pageStudentsSelected}
+              toggleUser={id => this.toggleUser(id)}
+              assignToClass={() => this.openAssignDialog()}
+              unassign={s => this.unassigningStudent(s)}
+              togglePageStudents={() => this.togglePageStudents()}
+            />
+          </>:
+          this.renderEmptyTab()
         }
-        <StudentTable
-          users={users}
-          isClassroom={!!this.state.activeClassroom}
-          selectedUsers={this.state.selectedUsers}
-          sortBy={this.state.sortBy}
-          isAscending={this.state.isAscending}
-          sort={sortBy => this.sort(sortBy)}
-          pageStudentsSelected={this.state.pageStudentsSelected}
-          toggleUser={id => this.toggleUser(id)}
-          assignToClass={() => this.openAssignDialog()}
-          unassign={s => this.unassigningStudent(s)}
-          togglePageStudents={() => this.togglePageStudents()}
-        />
         <RoleDescription />
         {this.renderPagination()}
       </div>
@@ -540,7 +627,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             {this.renderSortAndFilterBox()}
           </Grid>
           <Grid item xs={9} className="brick-row-container">
-            <TeachTab history={history} activeTab={TeachActiveTab.Students} />
+            <TeachTab history={history} activeTab={TeachActiveTab.Students} assignmentsEnabled={this.state.classrooms.length > 0} />
             {this.renderTabContent()}
           </Grid>
         </Grid>
@@ -558,8 +645,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         />
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
-          submit={name => {
-            this.createClass(name);
+          submit={(name, subject) => {
+            this.createClass(name, subject);
             this.setState({ createClassOpen: false })
           }}
           close={() => { this.setState({ createClassOpen: false }) }}
@@ -570,13 +657,22 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           close={() => this.setState({ unassignOpen: false })}
           submit={() => this.unassignStudent(this.state.unassignStudent)}
         />
-        {this.state.activeClassroom &&
+        {this.state.activeClassroom && <>
           <InviteStudentEmailDialog
             isOpen={this.state.inviteEmailOpen}
-            close={() => this.setState({ inviteEmailOpen: false })}
+            close={(numInvited) => this.setState({ inviteEmailOpen: false, numStudentsInvited: numInvited })}
             classroom={this.state.activeClassroom}
           />
-        }
+          <StudentInviteSuccessDialog
+            numStudentsInvited={this.state.numStudentsInvited}
+            close={() => this.setState({ numStudentsInvited: 0 })}
+          />
+        </>}
+        <ValidationFailedDialog
+          isOpen={this.state.cantCreate}
+          header="You don`t have permisions to create new user"
+          close={()=> this.setState({cantCreate: false})}
+        />
       </div>
     );
   }

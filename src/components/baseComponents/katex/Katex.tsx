@@ -1,5 +1,6 @@
 import 'katex/dist/katex.min.css';
 import katex from 'katex';
+import 'katex/contrib/mhchem/mhchem';
 import renderMathInElement from 'katex/dist/contrib/auto-render';
 
 import React from 'react';

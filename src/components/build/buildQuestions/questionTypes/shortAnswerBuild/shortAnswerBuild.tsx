@@ -71,12 +71,17 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
         </button>
       )
     }
-    return "";
   }
 
   const renderShortAnswer = (answer: ShortAnswerItem, index: number) => {
+    let className = "short-answer-box";
+    if (props.validationRequired) {
+      if (!answer.value) {
+        className += ' invalid-answer';
+      }
+    }
     return (
-      <div className="short-answer-box" key={index}>
+      <div className={className} key={index}>
         {renderDeleteButton(index)}
         <QuillEditor
           disabled={locked}

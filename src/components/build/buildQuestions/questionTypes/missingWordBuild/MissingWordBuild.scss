@@ -42,6 +42,10 @@
       background: var(--input-gray);
       @extend %themeRadius;
       font-size: $answer-input-text-size;
+
+      &.invalid::placeholder {
+        color: var(--white);
+      }
     }
   }
 }

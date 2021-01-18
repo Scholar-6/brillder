@@ -13,6 +13,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 export interface PhonePreviewProps {
   question: Question;
+  focusIndex: number;
   getQuestionIndex(question: Question): number;
 
   // navigation
@@ -123,7 +124,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
       return <EmptyQP1 />;
     }
     setTimeout(() => {checkScroll()}, 100);
-    return <QuestionPlay question={question} isPhonePreview={true} answers={[]} />;
+    return <QuestionPlay question={question} isPhonePreview={true} focusIndex={props.focusIndex} answers={[]} />;
   }
   
   return (

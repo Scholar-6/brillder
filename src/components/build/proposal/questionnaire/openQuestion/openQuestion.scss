@@ -1,0 +1,79 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.open-question-page {
+  .left-block {
+    margin-top: 15.5vh;
+    > h1 {
+      @extend %m0;
+      letter-spacing: 0.09vw;
+      font-family: $font-family-black;
+      line-height: 1.35;
+      margin: 0 2vw;
+      @include phone_and_tabletL {
+        font-size: 7.9vw !important;
+      }
+      @include tabletL {
+        font-size: 3.9vw;
+      }
+    }
+    .input-container {
+      @extend %inputContainer;
+      .audience-inputs {
+        &:before,
+        &:after {
+          @include phone_and_tabletL {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  .sub-header {
+    font-family: $font-family-regular;
+    @extend %textCenter;
+    color: var(--theme-dark-blue);
+    @include phone_and_tabletL {
+      display: none;
+    }
+    @include tabletL {
+      font-size: 1.32vw;
+    }
+  }
+
+  .audience-inputs {
+    @extend %buildInputs;
+  }
+
+  .last-buttons {
+    margin-top: 0.6vh;
+    margin-left: 1.5vw;
+  }
+
+  .phone-preview-component {
+    transition: all 300ms;
+    svg {
+      @extend %widthAuto;
+      height: 34%;
+      stroke-width: 1.2;
+      transition: width ease-in-out 300ms;
+    }
+    .typing-text {
+      height: 35%;
+      top: 48%;
+    }
+  }
+
+  .document-editor {
+    height: auto;
+    .ck-content {
+      height: 26vh !important;
+      text-align: left !important;
+      p {
+        text-align: left !important;
+      }
+    }
+  }
+}

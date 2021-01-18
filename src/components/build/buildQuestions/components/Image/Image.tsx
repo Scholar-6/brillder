@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core';
 
 import './Image.scss'
-import {uploadFile} from 'components/services/uploadFile';
+import {fileUrl, uploadFile} from 'components/services/uploadFile';
 import ImageDialog from './ImageDialog';
 import { ImageAlign, ImageComponentData } from './model';
 import ImageCloseDialog from './ImageCloseDialog';
@@ -12,8 +12,12 @@ interface ImageProps {
   locked: boolean;
   index: number;
   data: ImageComponentData;
+  validationRequired: boolean;
   save(): void;
   updateComponent(component:any, index:number): void;
+
+  // phone preview
+  onFocus(): void;
 }
 
 const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
@@ -21,9 +25,15 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.data.value);
   const [isCloseOpen, setCloseDialog] = React.useState(false);
+  const [invalid, setInvalid] = React.useState(props.validationRequired && !props.data.value);
 
   useEffect(() => {
     setFileName(props.data.value);
+    if (props.data.value) {
+      setInvalid(false);
+    } else if (props.validationRequired) {
+      setInvalid(true);
+    }
   }, [props]);
 
   const upload = (file: File, source: string, caption: string, align: ImageAlign, height: number) => {
@@ -54,9 +64,18 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
     setOpen(false);
   }
 
+  let className = 'dropzone';
+  if (locked) {
+    className += ' disabled';
+  }
+
+  if (invalid) {
+    className += ' invalid';
+  }
+
   return (
-    <div className="image-drag-n-drop">
-      <div className={'dropzone ' + (locked ? 'disabled' : '')} onClick={() => {
+    <div className="image-drag-n-drop" onClick={props.onFocus}>
+      <div className={className} onClick={() => {
         if (props.data.value) {
           setOpen(true);
         } else {
@@ -65,7 +84,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
           el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
           el.click();
   
-          el.onchange = (files: any) => {
+          el.onchange = () => {
             if (el.files && el.files.length >= 0) {
               setFile(el.files[0]);
               setOpen(true);
@@ -75,7 +94,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
       }}>
         {
           fileName
-            ? <img alt="" style={{width: '100%'}} src={`${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`} />
+            ? <img alt="" style={{width: '100%'}} src={fileUrl(fileName)} />
             : <Grid
                 container
                 justify="center"
@@ -83,7 +102,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
                 direction="row"
                 style={{height: '10vh'}}
               >
-                Click to Select Image
+                Click to Select Image (jpg, png or gif)
               </Grid>
         }
       </div>

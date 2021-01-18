@@ -12,7 +12,7 @@ import ViewAll from '../viewAllPage/ViewAll';
 import MobileCategory from '../viewAllPage/MobileCategory';
 import PlayBrickRouting from '../play/PlayBrickRouting';
 import PlayPreviewRouting from 'components/playPreview/PreviewBrickRouting';
-import Proposal from 'components/proposal/Proposal';
+import Proposal from 'components/build/proposal/Proposal';
 import MainPage from 'components/mainPage/mainPage';
 import BackToWorkPage from '../backToWorkPage/BackToWork';
 import AssignmentsPage from '../assignmentsPage/AssignmentsPage';
@@ -20,6 +20,8 @@ import UsersListPage from '../userManagement/UsersList';
 import InvestigationBuildPage from 'components/build/investigationBuildPage'
 import LoginPage from '../loginPage/loginPage';
 import ResetPasswordPage from '../resetPasswordPage/ResetPasswordPage';
+import ActivateAccountPage from '../activateAccountPage/activateAccountPage';
+import EmailActivateAccountPage from '../activateAccountPage/emailActivateAccountPage';
 import UserProfilePage from '../userProfilePage/UserProfile';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
 import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';
@@ -46,6 +48,7 @@ import TeachPage from 'components/teach/assignments/TeachPage';
 import Terms from 'components/terms/Terms';
 import { connect } from 'react-redux';
 import PlayPreviewRoute from './PlayPreviewRoute';
+import EmailLoginPage from 'components/loginPage/EmailLoginPage';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -133,9 +136,19 @@ const App: React.FC<AppProps> = props => {
         <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
 
         <PlayPreviewRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
+        <BuildBrickRoute
+          path={[
+            "/build/brick/:brickId/investigation/question-component/:questionId",
+            "/build/brick/:brickId/investigation/question-component",
+            "/build/brick/:brickId/investigation/question/:questionId",
+            "/build/brick/:brickId/investigation/question",
+            "/build/brick/:brickId"
+          ]}
+          component={InvestigationBuildPage}
+          location={location}
+        />
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
-        <BuildBrickRoute path="/build/brick/:brickId/investigation/question-component/:questionId" component={InvestigationBuildPage} location={location} />
-        <BuildBrickRoute path="/build/brick/:brickId/investigation/question/:questionId" component={InvestigationBuildPage} location={location} />
+        <BuildRoute path="/build/brick/:brickId" component={Proposal} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
         <BuildRoute path={map.AssignmentsPage} component={AssignmentsPage} location={location} />
@@ -146,9 +159,12 @@ const App: React.FC<AppProps> = props => {
         <AllUsersRoute path="/user-profile" component={UserProfilePage} />
         <AllUsersRoute path="/user/preference" component={UserPreferencePage} isPreferencePage={true} />
 
+        <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
         <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path={map.Login} component={LoginPage} />
         <AuthRoute path="/resetPassword" component={ResetPasswordPage} />
+        <AuthRoute path={map.ActivateAccount + '/email'} component={EmailActivateAccountPage} />
+        <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
 
         <Route path="/terms" component={Terms} />
         <Route component={AuthRedirectRoute} />

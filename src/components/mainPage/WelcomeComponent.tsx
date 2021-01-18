@@ -4,6 +4,7 @@ import { Notification } from 'model/notifications';
 import { checkTeacherEditorOrAdmin } from "components/services/brickService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
+import { fileUrl } from "components/services/uploadFile";
 
 enum FieldName {
   animatedNotificationText = "animatedNotificationText",
@@ -173,7 +174,13 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
           onClick={()=> this.props.history.push(map.UserProfile)}
         >
           <div className="centered">
-            <SpriteIcon name="user-custom" />
+            {this.props.user.profileImage
+              ? 
+                <div className="profile-image-border">
+                  <img alt="user-profile" src={fileUrl(this.props.user.profileImage)} />
+                </div>
+              : <SpriteIcon name="user-custom" />
+            }
             {this.state.nameHovered && <div className="custom-tooltip">View Profile</div>}
           </div>
           {this.state.animatedName}

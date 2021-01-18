@@ -13,6 +13,9 @@ export interface TextComponentProps {
   validationRequired: boolean;
   save(): void;
   updateComponent(component: any, index: number): void;
+
+  // build phone preview
+  onFocus(): void;
 }
 
 const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, data, ...props}) => {
@@ -24,7 +27,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, d
   }
 
   return (
-    <div className="question-build-text-editor">
+    <div className="question-build-text-editor" onFocus={props.onFocus}>
       <QuillEditor
         disabled={locked}
         data={data.value}

@@ -1,0 +1,15 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.big-search-icon-container {
+  @extend %transitionAll300;
+  .big-search-icon {
+    width: 10vw;
+    height: 10vw;
+    color: var(--theme-orange);
+  }
+  &:hover {
+    transform: scale(1.2) rotate(10deg);
+  }
+}

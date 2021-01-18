@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 $distance: 2px;
 $tile-height: 100%;
@@ -151,7 +151,7 @@ $tile-height: 100%;
     border-radius: 50%;
     @extend %flexCenter;
     &:before {
-      content: ' ';
+      content: " ";
       position: absolute;
       left: 0;
       right: 0;
@@ -223,7 +223,17 @@ $tile-height: 100%;
   }
 }
 
-// active and invalid
+.drag-tabs {
+  .drag-tile-container .drag-tile.invalid {
+    .synthesis-tab-icon {
+      .svg {
+        color: var(--dark-gray) !important;
+      }
+    }
+  }
+}
+
+// active and invalid comment indicator
 .drag-tabs {
   .drag-tile-container.active .drag-tile.invalid {
     .unread-indicator {
@@ -277,11 +287,20 @@ $tile-height: 100%;
           color: var(--white) !important;
         }
       }
+      .tab-number {
+        opacity: 1;
+        color: var(--white);
+      }
+      .synthesis-tab-icon {
+        .svg {
+          color: var(--white) !important;
+        }
+      }
     }
 
     &.active {
       .drag-tile.invalid {
-        background: var(--white) !important;
+        background: var(--theme-orange) !important;
       }
     }
   }
@@ -294,6 +313,20 @@ $tile-height: 100%;
       .synthesis-tab-icon {
         .svg {
           stroke-width: 3;
+        }
+      }
+      &.invalid {
+        .tab-number {
+          color: var(--white) !important;
+        }
+        .svg {
+          color: var(--white) !important;
+        }
+        background: var(--theme-orange) !important;
+        .synthesis-tab-icon {
+          .svg {
+            color: var(--white) !important;
+          }
         }
       }
     }

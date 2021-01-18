@@ -3,10 +3,14 @@ import { Dialog, MobileStepper, Avatar, CardHeader, Grid } from '@material-ui/co
 import { ClassroomInvitation } from 'model/classroom';
 import './ClassInvitationDialog.scss';
 import axios from "axios";
+import map from 'components/map';
+import { useHistory } from 'react-router-dom';
 
 const ClassInvitationDialog: React.FC = props => {
   const [invitations, setInvitations] = React.useState<ClassroomInvitation[] | undefined>(undefined);
   const [activeStep, setActiveStep] = React.useState(0);
+
+  const history = useHistory();
 
   const getInvitations = async () => {
     try {
@@ -16,6 +20,8 @@ const ClassInvitationDialog: React.FC = props => {
 
       setInvitations(invitations.data as ClassroomInvitation[]);
       setActiveStep(0);
+
+      return invitations.data as ClassroomInvitation[];
     } catch(e) { }
   }
 
@@ -30,7 +36,10 @@ const ClassInvitationDialog: React.FC = props => {
       await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].classroom.id}/accept`, {}, { withCredentials: true });
       setActiveStep(activeStep => activeStep + 1);
       if(activeStep + 1 >= invitations.length) {
-        getInvitations();
+        const newInvitations = await getInvitations();
+        if(newInvitations && newInvitations.length <= 0) {
+          history.push(map.AssignmentsPage);
+        }
       }
     }
   }
@@ -57,10 +66,11 @@ const ClassInvitationDialog: React.FC = props => {
           <h2>{currentInvitation.classroom.name}</h2>
         </div>
         <Grid item container direction="row" justify="center">
-          <button className="btn btn-md b-red text-white" onClick={handleReject}>Reject</button>
           <button className="btn btn-md b-green text-white" onClick={handleAccept}>Accept</button>
+          <button className="btn btn-md b-red text-white" onClick={handleReject}>Reject</button>
         </Grid>
         <CardHeader
+          className="sent-by"
           avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${currentInvitation.sentBy.profileImage}`} />}
           title={`sent by ${currentInvitation.sentBy.firstName} ${currentInvitation.sentBy.lastName}`}
         />

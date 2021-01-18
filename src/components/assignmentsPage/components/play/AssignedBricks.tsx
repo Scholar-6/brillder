@@ -7,6 +7,10 @@ import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
 import { AssignmentBrickStatus, AssignmentBrick } from "model/assignment";
 
 import BrickBlock from "components/baseComponents/BrickBlock";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import map from "components/map";
+
+import "./AssignedBricks.scss";
 
 interface AssignedBricksProps {
   user: User;
@@ -108,12 +112,31 @@ class AssignedBricks extends Component<AssignedBricksProps> {
     return this.renderSortedBricks();
   }
 
+  renderEmptyPage() {
+    return (
+      <div className="tab-content-centered">
+        <div>
+          <div className="icon-container big-search-icon-container" onClick={() => this.props.history.push(map.MainPage)}>
+            <SpriteIcon
+              name="search-large-blue"
+              className="big-search-icon"
+            />
+          </div>
+          <div className="bold">There are no assignments for this class yet.<br />Click the icon to explore Brillder.</div>
+        </div>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="bricks-list-container">
-        <div className="bricks-list">
-          {this.renderAssignedBricks()}
-        </div>
+        {this.props.assignments.length > 0 ?
+          <div className="bricks-list">
+            { this.renderAssignedBricks() }
+          </div>
+          : this.renderEmptyPage()
+        }
       </div>
     );
   }

@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-import { Grid, FormControlLabel, Radio } from "@material-ui/core";
+import { Checkbox, Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import axios from "axios";
 // @ts-ignore
-import marked from 'marked';
+import marked from "marked";
 
-import './Terms.scss';
+import "./Terms.scss";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 
-import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-
+import PageHeadWithMenu, {
+  PageEnum,
+} from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 interface BricksListProps {
   user: User;
@@ -18,8 +19,15 @@ interface BricksListProps {
   location: any;
 }
 
+interface Part {
+  title: string;
+  content: string;
+  active: boolean;
+  el: React.RefObject<HTMLDivElement>;
+}
+
 interface BricksListState {
-  markupText: string;
+  parts: Part[];
 }
 
 class TermsPage extends Component<BricksListProps, BricksListState> {
@@ -27,14 +35,48 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
     super(props);
 
     this.state = {
-      markupText: ''
+      parts: [],
     };
 
-    axios.get('/terms.txt').then(r => {
+    axios.get("/terms.md").then((r) => {
       if (r.data) {
-        this.setState({ markupText: r.data });
+        const partContents = r.data.split(/(?=\n# )/g);
+        const parts = [];
+
+        for (let partContent of partContents) {
+          let part = {
+            title: this.getTitle(partContent),
+            active: false,
+            content: partContent,
+            el: React.createRef() as React.RefObject<HTMLDivElement>
+          } as Part;
+          parts.push(part);
+        }
+
+        this.setState({ parts });
       }
     });
+  }
+
+  getTitle(content: string) {
+    let title = "";
+    let res = content.split("\n");
+
+    if (res[1].slice(0, 2) === "# ") {
+      title = res[1].slice(2);
+    }
+    return title;
+  }
+
+  moveTo(p: Part) {
+    for (let p of this.state.parts) {
+      p.active = false;
+    }
+    p.active = true;
+    if (p.el.current) {
+      p.el.current.scrollIntoView();
+    }
+    this.setState({ ...this.state });
   }
 
   render() {
@@ -45,34 +87,37 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
           user={this.props.user}
           placeholder={"Search Subjects, Topics, Titles & more"}
           history={this.props.history}
-          search={() => {}}
-          searching={(v) => {}}
+          search={() => { }}
+          searching={(v) => { }}
         />
         <Grid container direction="row" className="sorted-row">
           <Grid container item xs={3} className="sort-and-filter-container">
-            <div className="bold">Privacy Policy</div>
-            <div>
-              <FormControlLabel
-                control={<Radio />}
-                label="Сookie Policy" />
-            </div>
-            <div className="bold">Terms of Service</div>
-            <div className="bold">Rules</div>
-            <div>
-              <FormControlLabel
-                control={<Radio />}
-                label="Acceptable Content" />
-            </div>
-            <div className="bold">H1</div>
-            <div>
-              <FormControlLabel
-                control={<Radio />}
-                label="H2" />
-            </div>
+            {this.state.parts.map((p) => {
+              if (p.title) {
+                return (
+                  <div
+                    className={`header-link ${p.active ? "bold active" : ""}`}
+                    onClick={() => this.moveTo(p)}
+                  >
+                    <div className="white-circle" />{p.title}
+                  </div>);
+              } else {
+                return <div />;
+              }
+            })}
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <div className="bricks-list-container bricks-container-mobile terms-and-conditions">
-              <div dangerouslySetInnerHTML={{ __html: marked(this.state.markupText) }} />
+              {this.state.parts.map((p) => (
+                <div ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
+              ))}
+              <div className="condition-box">
+                <Checkbox />
+                I agree to terms and conditions
+              </div>
+              <div className="condition-button">
+                <button onClick={() => this.props.history.push('/')}>Accept</button>
+              </div>
             </div>
           </Grid>
         </Grid>
@@ -84,5 +129,5 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
 });
-  
+
 export default connect(mapState)(TermsPage);

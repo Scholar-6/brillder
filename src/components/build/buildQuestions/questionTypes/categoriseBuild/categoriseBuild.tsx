@@ -106,7 +106,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     save();
   }
 
-  const renderAnswer = (category: SortCategory, answer: SortAnswer, i: number) => {
+  const renderAnswer = (category: SortCategory, answer: SortAnswer, i: number, catIndex: number) => {
     let customClass = 'categorise-answer unique-component';
     if (answer.answerType === QuestionValueType.Image) {
       customClass = 'sort-image';
@@ -133,6 +133,21 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       customClass += ' invalid-answer';
     }
 
+    const checkCategoriesAnswers = () => {
+      if (answer.value) {
+        for (let cat of state.categories) {
+          if (cat !== category) {
+            cat.answers.map(a => {
+              if (a.value === answer.value) {
+                openSameAnswerDialog();
+                return;
+              }
+            });
+          }
+        }
+      }
+    }
+
     return (
       <div key={i} className={customClass}>
         {
@@ -150,6 +165,8 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           isValid={isValid}
           onBlur={() => {
             showSameAnswerPopup(i, category.answers, openSameAnswerDialog);
+            checkCategoriesAnswers();
+            save();
           }}
           onChange={value => { answerChanged(answer, value) }}
         />
@@ -165,9 +182,29 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   }
 
   const renderCategory = (category: SortCategory, key: number) => {
+    let className = 'categorise-box';
+    if (validationRequired) {
+      if (!category.name) {
+        className += ' invalid-category';
+      }
+    }
+
+    const checkCategoriesNames = () => {
+      if (category.name) {
+        for (let cat of state.categories) {
+          if (cat !== category) {
+            if (cat.name === category.name) {
+              openSameAnswerDialog();
+              return;
+            }
+          }
+        }
+      }
+    }
+
     return (
       <div key={key}>
-        <div className="categorise-box">
+        <div className={className}>
           {
             (state.categories.length > 2)
               && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeCategory(key)}>
@@ -180,10 +217,14 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             placeholder="Enter Category Heading..."
             toolbar={['latex', 'chemType']}
             validate={validationRequired}
+            onBlur={() => {
+              checkCategoriesNames();
+              save()
+            }}
             onChange={value => categoryChanged(category, value)}
           />
           {
-            category.answers.map((answer, key) => renderAnswer(category, answer, key))
+            category.answers.map((answer, answerKey) => renderAnswer(category, answer, answerKey, key))
           }
         </div>
         <AddAnswerButton
