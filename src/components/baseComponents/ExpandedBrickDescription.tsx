@@ -59,7 +59,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
     // check if user can delete the brick
     if (!canDelete(this.props.userId, this.props.isAdmin, brick)) { return; }
     return (
-      <div>
+      <div className="hover-delete-icon">
         <button className="btn btn-transparent svgOnHover bin-button" onClick={() => this.props.onDelete(brick.id)}>
           <SpriteIcon name="trash-outline" className="w100 h100 active" />
         </button>
@@ -84,26 +84,12 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           <div className="link-info">
             <AuthorSearchRow searchString={searchString} brick={brick} />
           </div>
-          <div className="hovered-open-question link-info">
-            <MathInHtml value={brick.openQuestion} />
-          </div>
-          <div className="link-info">{this.getSubjectRow(brick)}</div>
-          <div className="link-info">Editor(s): &nbsp; {this.getEditors(brick, searchString)}</div>
         </div>
-        <div className="hover-icons-row">
-          <BrickCircle
-            color={color}
-            circleIcon={this.props.circleIcon}
-            circleClass={this.props.circleClass}
-            iconColor={this.props.iconColor}
-            onClick={() => this.props.move ? this.props.move(brick.id) : {}}
-          />
+        <div className="hover-icons">
           {this.renderDeleteButton(brick)}
-          <div>
-            <button className="btn btn-transparent svgOnHover play-button" onClick={() => this.props.move(brick.id)}>
-              <SpriteIcon name="play-filled" className="w100 h100 active" />
-            </button>
-          </div>
+          <button className="btn btn-transparent svgOnHover play-button" onClick={() => this.props.move(brick.id)}>
+            <SpriteIcon name="play-filled" className="w100 h100 active" />
+          </button>
         </div>
       </div>
     );
