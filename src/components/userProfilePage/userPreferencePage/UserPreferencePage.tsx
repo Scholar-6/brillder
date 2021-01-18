@@ -11,6 +11,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { checkAdmin } from 'components/services/brickService';
+import { setUserPreference } from 'services/axios/user';
 
 interface UserPreferencePageProps {
   user: User;
@@ -22,18 +23,17 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
   const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId);
   const history = useHistory();
 
-  const handleChange = (roleId: UserType, disabled: boolean) => {
+  const handleChange = async (roleId: UserType, disabled: boolean) => {
     if (disabled) {
       return;
     }
     setPreference(roleId);
-    axios.put(
-      `${process.env.REACT_APP_BACKEND_HOST}/user/rolePreference/${roleId}`, {}, { withCredentials: true }
-    ).then(() => {
+    try {
+      await setUserPreference(roleId);
       props.getUser();
-    }).catch((e) => {
+    } catch (e) {
       console.log(e);
-    });
+    }
   }
 
   const renderRadioButton = (roleId: UserType) => {
