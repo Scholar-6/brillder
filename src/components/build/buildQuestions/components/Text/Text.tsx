@@ -35,7 +35,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, d
         colorsExpanded={true}
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-          'latex', 'chemType', 'insertTable', 'bulletedList', 'numberedList'
+          'latex', 'insertTable', 'bulletedList', 'numberedList'
         ]}
         blockQuote={true}
         validationRequired={props.validationRequired}

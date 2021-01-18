@@ -47,7 +47,7 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
         placeholder="Enter Question Text Here..."
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-          'latex', 'chemType', 'insertTable', 'bulletedList', 'numberedList'
+          'latex', 'insertTable', 'bulletedList', 'numberedList'
         ]}
         blockQuote={true}
         validationRequired={props.validationRequired}

@@ -56,7 +56,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             mediaEmbed={true}
             link={true}
             toolbar={[
-              'bold', 'italic', 'fontColor', 'latex', 'chemType',
+              'bold', 'italic', 'fontColor', 'latex',
               'bulletedList', 'numberedList', 'uploadImageCustom'
             ]}
             blockQuote={true}

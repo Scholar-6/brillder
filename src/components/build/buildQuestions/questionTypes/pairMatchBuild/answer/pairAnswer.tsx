@@ -95,7 +95,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
           editOnly={editOnly}
           data={answer.value}
           isValid={isValid}
-          toolbar={['latex', 'chemType']}
+          toolbar={['latex']}
           placeholder={"Enter Answer " + (index + 1) + "..."}
           onBlur={() => {
             onBlur();

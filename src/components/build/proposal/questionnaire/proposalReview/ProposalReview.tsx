@@ -226,7 +226,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           placeholder={placeholder}
           data={brick[name]}
           toolbar={[
-            'bold', 'italic', 'latex', 'mathType', 'chemType'
+            'bold', 'italic', 'latex', 'mathType'
           ]}
           onBlur={() => { }}
           onChange={v => {
@@ -251,7 +251,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           data={brick[name]}
           placeholder="Enter Brief Here..."
           toolbar={[
-            'bold', 'italic', 'fontColor', 'latex', 'mathType', 'chemType', 'bulletedList', 'numberedList'
+            'bold', 'italic', 'fontColor', 'latex', 'mathType', 'bulletedList', 'numberedList'
           ]}
           onBlur={() => { }}
           onChange={v => this.props.setBrickField(name, v)}
@@ -276,7 +276,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           mediaEmbed={true}
           link={true}
           toolbar={[
-            'bold', 'italic', 'fontColor', 'latex', 'mathType', 'chemType', 'bulletedList', 'numberedList', 'uploadImageCustom'
+            'bold', 'italic', 'fontColor', 'latex', 'mathType', 'bulletedList', 'numberedList', 'uploadImageCustom'
           ]}
           blockQuote={true}
           uploadStarted={() => this.setState({uploading: true})}
