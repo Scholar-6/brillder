@@ -121,7 +121,7 @@ const HintComponent: React.FC<HintProps> = ({
             data={state.value}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'chemType', 'insertTable', 'uploadImageCustom'
+              'latex', 'insertTable', 'uploadImageCustom'
             ]}
             validate={validationRequired}
             onChange={onHintChanged}
@@ -155,7 +155,7 @@ const HintComponent: React.FC<HintProps> = ({
             data={state.list[i]}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'chemType', 'imageUploadCustom'
+              'latex', 'imageUploadCustom'
             ]}
             validate={validationRequired}
             onChange={(v: any) => { onHintListChanged(v, i) }}

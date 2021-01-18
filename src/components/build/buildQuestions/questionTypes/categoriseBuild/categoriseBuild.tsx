@@ -215,7 +215,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             disabled={locked}
             data={category.name}
             placeholder="Enter Category Heading..."
-            toolbar={['latex', 'chemType']}
+            toolbar={['latex']}
             validate={validationRequired}
             onBlur={() => {
               checkCategoriesNames();

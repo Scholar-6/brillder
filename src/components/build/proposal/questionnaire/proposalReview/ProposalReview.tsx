@@ -272,7 +272,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           allowMediaEmbed={true}
           allowLinks={true}
           toolbar={[
-            'bold', 'italic', 'fontColor', 'latex', 'chemType', 'bulletedList', 'numberedList'
+            'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList'
           ]}
           onChange={v => this.props.setBrickField(BrickFieldNames.prep, v)}
         />

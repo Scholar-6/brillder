@@ -220,8 +220,6 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
         "fontColor",
         "superscript",
         "uploadImageCustom",
-        "mathType",
-        "chemType",
         "bulletedList",
         "numberedList",
         "latex"
