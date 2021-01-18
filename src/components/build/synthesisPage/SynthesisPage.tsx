@@ -125,7 +125,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 toolbar={[
                   'bold', 'italic', 'fontColor',
                   'superscript', 'subscript', 'strikethrough',
-                  'latex', 'chemType', 'insertTable', 'alignment',
+                  'latex', 'insertTable', 'alignment',
                   'bulletedList', 'numberedList', 'uploadImageCustom', 'addComment'
                 ]}
                 blockQuote={true}
