@@ -30,6 +30,9 @@ describe("Roles Box", () => {
     expect(component.props().children[0].props.children.props.checked).toBe(true);
     expect(component.props().children[1].props.children.props.checked).toBe(false);
     expect(component.props().children[2].props.children.props.checked).toBe(false);
+    expect(component.props().children[3].props.children.props.checked).toBe(false);
+    expect(component.props().children[4].props.children.props.checked).toBe(false);
+    expect(component.props().children[5].props.children.props.checked).toBe(false);
   });
 
   it("check teacher preference", () => {
@@ -46,6 +49,9 @@ describe("Roles Box", () => {
     expect(component.props().children[0].props.children.props.checked).toBe(false);
     expect(component.props().children[1].props.children.props.checked).toBe(true);
     expect(component.props().children[2].props.children.props.checked).toBe(false);
+    expect(component.props().children[3].props.children.props.checked).toBe(false);
+    expect(component.props().children[4].props.children.props.checked).toBe(false);
+    expect(component.props().children[5].props.children.props.checked).toBe(false);
   });
 
   it("check builder preference", () => {
@@ -62,6 +68,9 @@ describe("Roles Box", () => {
     expect(component.props().children[0].props.children.props.checked).toBe(false);
     expect(component.props().children[1].props.children.props.checked).toBe(false);
     expect(component.props().children[2].props.children.props.checked).toBe(true);
+    expect(component.props().children[3].props.children.props.checked).toBe(false);
+    expect(component.props().children[4].props.children.props.checked).toBe(false);
+    expect(component.props().children[5].props.children.props.checked).toBe(false);
   });
 
   it("check admin role", () => {
@@ -78,7 +87,27 @@ describe("Roles Box", () => {
     expect(component.props().children[0].props.children.props.checked).toBe(false);
     expect(component.props().children[1].props.children.props.checked).toBe(false);
     expect(component.props().children[2].props.children.props.checked).toBe(true);
-
+    expect(component.props().children[3].props.children.props.checked).toBe(false);
+    expect(component.props().children[4].props.children.props.checked).toBe(false);
     expect(component.props().children[5].props.children.props.checked).toBe(true);
   });
+  it("check all roles", () => {
+    const component = shallow(
+      <RolesBox
+        roles={roles}
+        userRoles={[UserType.Admin, UserType.Publisher, UserType.Institution]}
+        rolePreference={UserType.Builder}
+        toggleRole={() => {}}
+      />
+    );
+    expect(component).toHaveLength(1);
+    expect(component.props().children).toHaveLength(6);
+    expect(component.props().children[0].props.children.props.checked).toBe(false);
+    expect(component.props().children[1].props.children.props.checked).toBe(false);
+    expect(component.props().children[2].props.children.props.checked).toBe(true);
+    expect(component.props().children[3].props.children.props.checked).toBe(true);
+    expect(component.props().children[4].props.children.props.checked).toBe(true);
+    expect(component.props().children[5].props.children.props.checked).toBe(true);
+  });
+
 });
