@@ -7,7 +7,7 @@
   border-radius: 0.5vw;
   margin-left: 0;
   padding: 1.3vh;
-  min-height: calc(#{$bricks-height / 3}) !important;
+  min-height: calc(#{$bricks-height / 6}) !important;
   position: absolute;
   z-index: 2;
   @include phone_and_tabletP {
@@ -17,10 +17,10 @@
     width: 100%;
   }
   .hover-text {
-    height: 21vh;
     font-family: $font-family-regular;
     overflow: hidden;
     overflow-y: auto;
+    margin-right: 3vw;
     font-size: 1.7vh;
     @extend %linkDescription;
     .link-info {
@@ -55,6 +55,9 @@
         }
       }
     }
+    .link-description {
+      width: 100% !important;
+    }
     .link-description ~ .link-info {
       margin: 0;
     }
@@ -67,27 +70,24 @@
       max-height: calc(4.4vh + #{$padding + $padding});
     }
   }
-  .hover-icons-row {
-    .left-brick-circle {
-      border-radius: 50%;
-      > div {
-        height: 100%;
-        width: 100%;
-        border-radius: 50%;
-        background: var(--gray);
-      }
-      &.skip-top-left-border,
-      &.skip-top-right-border {
-        padding: 3px;
-        > div {
-          background: var(--tab-gray) !important;
-        }
-      }
-      &.skip-top-left-border {
-        background: var(--theme-orange);
-      }
-      &.skip-top-right-border {
-        background: var(--theme-green);
+  .hover-icons {
+    @extend %flexCenter;
+    height: 100%;
+    width: 3vw;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 3vw;
+
+    svg {
+      height: 1.3vw !important;
+      width: 1.3vw !important;
+    }
+    .hover-delete-icon {
+      height: 4vw;
+      svg {
+        height: 1vw !important;
+        width: 1vw !important;
       }
     }
   }
