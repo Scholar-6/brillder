@@ -8,7 +8,7 @@ import actions from 'redux/actions/requestFailed';
 import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
 import authActions from "redux/actions/auth";
-
+import RolesBox from './RolesBox';
 import "./UserProfile.scss";
 
 import { getGeneralSubject, loadSubjects } from 'components/services/subject';
@@ -156,9 +156,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       isStudent: isOnlyStudent,
       isAdmin,
       roles: [
-        { roleId: UserType.Student, name: "Student", disabled: !isStudent },
-        { roleId: UserType.Teacher, name: "Teacher", disabled: !isAdmin },
-        { roleId: UserType.Builder, name: "Builder", disabled: !isBuilder },
         { roleId: UserType.Publisher, name: "Publisher", disabled: !isEditor },
         { roleId: UserType.Institution, name: "Institution", disabled: !isInstitute },
         { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
@@ -181,9 +178,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       isStudent: false,
       isAdmin,
       roles: [
-        { roleId: UserType.Student, name: "Student", disabled: false },
-        { roleId: UserType.Teacher, name: "Teacher", disabled: false },
-        { roleId: UserType.Builder, name: "Builder", disabled: false },
         { roleId: UserType.Publisher, name: "Publisher", disabled: false },
         { roleId: UserType.Admin, name: "Admin", disabled: false },
       ],
@@ -320,15 +314,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({ user });
   }
 
-  checkUserRole(roleId: number) {
-    if (!this.state.isAdmin && this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
-      if (roleId !== UserType.Student) {
-        return false;
-      }
-    }
-    return this.state.user.roles.some((id) => id === roleId);
-  }
-
   toggleRole(roleId: number, disabled: boolean) {
     if (disabled) {
       return;
@@ -347,39 +332,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       this.state.user.roles.push(roleId);
     }
     this.setState({ ...this.state });
-  }
-
-  renderUserRole(role: UserRoleItem) {
-    let checked = this.checkUserRole(role.roleId);
-
-    if (this.state.isStudent) {
-      return (
-        <FormControlLabel
-          className="filter-container disabled"
-          checked={checked}
-          control={<Radio className="filter-radio" />}
-          label={role.name}
-        />
-      );
-    }
-
-    return (
-      <FormControlLabel
-        className={`filter-container ${role.disabled ? "disabled" : ""}`}
-        checked={checked}
-        onClick={() => this.toggleRole(role.roleId, role.disabled)}
-        control={<Radio className="filter-radio" />}
-        label={role.name}
-      />
-    );
-  }
-
-  renderRoles() {
-    return this.state.roles.map((role: any, i: number) => (
-      <Grid item key={i}>
-        {this.renderUserRole(role)}
-      </Grid>
-    ));
   }
 
   onSubjectChange(newValue: any[]) {
@@ -475,9 +427,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               </div>
               <div className="profile-roles-container">
                 <div className="roles-title">ROLES</div>
-                <Grid container className="roles-box">
-                  {this.renderRoles()}
-                </Grid>
+                <RolesBox
+                  roles={this.state.roles}
+                  userRoles={this.state.user.roles}
+                  rolePreference={this.props.user.rolePreference?.roleId}
+                  toggleRole={this.toggleRole.bind(this)}
+                />
               </div>
             </div>
             <div style={{ display: 'flex' }}>
