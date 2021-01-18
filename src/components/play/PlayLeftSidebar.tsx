@@ -129,11 +129,11 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     }
   }
 
-  renderAnotateButton() {
+  renderShareButton() {
     return (
       <div className="annotate-button svgOnHover" onClick={() => this.setAnotateMode()}>
-        {!this.props.sidebarRolledUp ? <span>Annotate Text</span> : <span></span>}
-        <SpriteIcon name="pen-tool" className="active" />
+        {!this.props.sidebarRolledUp ? <span>Share</span> : <span></span>}
+        <SpriteIcon name="share" className="active" />
       </div>
     );
   };
@@ -229,7 +229,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return (
       <div className="sidebar-button">
         {this.renderHightlightButton()}
-        {this.renderAnotateButton()}
+        {this.renderShareButton()}
         {this.renderAssignButton()}
         {this.renderAdaptButton()}
       </div>
