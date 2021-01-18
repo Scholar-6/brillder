@@ -101,7 +101,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
             editOnly={editOnly}
             data={answer.value}
             isValid={isValid}
-            toolbar={['latex', 'chemType']}
+            toolbar={['latex']}
             placeholder={"Enter A" + (i + 1) + "..."}
             onBlur={() => {
               showSameAnswerPopup(i, state.list, openSameAnswerDialog);
