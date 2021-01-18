@@ -26,7 +26,9 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
     setEdit(true);
 
     setName(props.name);
-    setSubjectIndex(props.user.subjects.findIndex(s => s.id === props.subject.id));
+    if(props.subject) {
+      setSubjectIndex(props.user.subjects.findIndex(s => s.id === props.subject.id));
+    }
   }, [props.name, props.subject]);
 
   const submit = React.useCallback(() => {
