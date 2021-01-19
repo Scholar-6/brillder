@@ -34,6 +34,7 @@ import { isMobile } from "react-device-detect";
 import map from "components/map";
 import NoSubjectDialog from "components/baseComponents/dialogs/NoSubjectDialog";
 import { clearProposal } from "localStorage/proposal";
+import SubjectsColumn from "./components/SubjectsColumn";
 
 
 interface ViewAllProps {
@@ -804,6 +805,22 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
+  onSubjectSelected(subjectId: number) {
+    const { subjects } = this.state;
+    const subject = subjects.find(s => s.id === subjectId);
+
+    if (subject) {
+      subject.checked = true;
+      const finalBricks = this.filter(this.state.bricks, this.state.isCore);
+      this.setState({ ...this.state, subjectSelected: true, shown: false });
+      setTimeout(() => {
+        try {
+          this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
+        } catch {}
+      }, 1400);
+    }
+  }
+
   renderNoBricks() {
     return (
       <div className="main-brick-container">
@@ -857,9 +874,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
 
-  renderDesktopBricks(filterSubjects: any[], bricks: Brick[]) {
+  renderDesktopBricks(bricks: Brick[]) {
+    const filterSubjects = this.getCheckedSubjectIds();
+
     return (
-      <Grid item xs={9} className="brick-row-container">
+      <div>
         <div className={`brick-row-title main-title uppercase ${filterSubjects.length === 1 && 'subject-title'}`}>
           {this.renderMainTitle(filterSubjects)}
         </div>
@@ -879,6 +898,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           moveAllNext={() => this.moveAllNext()}
           moveAllBack={() => this.moveAllBack()}
         />
+      </div>
+    );
+  }
+
+  renderDesktopBricksColumn(bricks: Brick[]) {
+    return (
+      <Grid item xs={9} className="brick-row-container">
+        {this.state.subjectSelected
+          ? this.renderDesktopBricks(bricks)
+          : <SubjectsColumn subjects={this.state.subjects} onClick={this.onSubjectSelected.bind(this)} />
+        }
       </Grid>
     );
   }
@@ -887,7 +917,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (this.state.isLoading) {
       return <PageLoader content="...Getting Bricks..." />;
     }
-    const filterSubjects = this.getCheckedSubjectIds();
 
     let bricks = this.state.finalBricks;
     if (this.state.isSearching) {
@@ -934,7 +963,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             filterBySubject={index => this.filterBySubject(index)}
           />
           <Hidden only={["xs"]}>
-            {this.renderDesktopBricks(filterSubjects, bricks)}
+            {this.renderDesktopBricksColumn(bricks)}
           </Hidden>
           <Hidden only={["sm", "md", "lg", "xl"]}>
             {this.renderMobileBricks()}
