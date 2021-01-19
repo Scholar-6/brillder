@@ -35,7 +35,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
 
-
   const [inviteSuccess, setInviteSuccess] = React.useState({
     isOpen: false,
     accessGranted: false,
@@ -144,7 +143,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       <ShareDialog
         isOpen={shareOpen}
         link={() => { setShare(false); setLink(true) }}
-        invite={() => {}}
+        invite={() => { setShare(false); setInvite(true)}}
         close={() => setShare(false)}
       />
     </div>
