@@ -130,11 +130,17 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   renderShareButton() {
+    if (!this.props.sidebarRolledUp) {
+      return (
+        <button onClick={() => this.setAnotateMode()} className="assign-class-button share-button svgOnHover">
+        {!this.props.sidebarRolledUp ? <span>Share with friend</span> : <span></span>}
+      </button>
+      );
+    }
     return (
-      <div className="annotate-button svgOnHover" onClick={() => this.setAnotateMode()}>
-        {!this.props.sidebarRolledUp ? <span>Share</span> : <span></span>}
-        <SpriteIcon name="share" className="active" />
-      </div>
+      <button onClick={() => this.setAnotateMode()} className="assign-class-button share-button svgOnHover">
+        <SpriteIcon name="feather-share" className="active" />
+      </button>
     );
   };
 
