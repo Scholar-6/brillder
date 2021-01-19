@@ -141,7 +141,12 @@ const FinalStep: React.FC<FinalStepProps> = ({
         isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={inviteSuccess.accessGranted}
         close={() => setInviteSuccess({ isOpen: false, name: '', accessGranted: false })} />
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
-      <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
+      <ShareDialog
+        isOpen={shareOpen}
+        link={() => { setShare(false); setLink(true) }}
+        invite={() => {}}
+        close={() => setShare(false)}
+      />
     </div>
   );
 };
