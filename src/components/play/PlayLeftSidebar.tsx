@@ -16,6 +16,10 @@ import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog
 import map from "components/map";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
 import axios from "axios";
+import ShareDialog from "./finalStep/dialogs/ShareDialog";
+import LinkDialog from "./finalStep/dialogs/LinkDialog";
+import LinkCopiedDialog from "./finalStep/dialogs/LinkCopiedDialog";
+import InviteDialog from "./finalStep/dialogs/InviteDialog";
 
 
 interface SidebarProps {
@@ -43,6 +47,10 @@ interface SidebarState {
   isCoomingSoonOpen: boolean;
   isAssigningOpen: boolean;
   isAssignedSuccessOpen: boolean;
+  isSharingOpen: boolean;
+  isLinkOpen: boolean;
+  linkCopiedOpen: boolean;
+  inviteOpen: boolean;
   selectedItems: any[];
 }
 
@@ -54,6 +62,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       isCoomingSoonOpen: false,
       isAssigningOpen: false,
       isAssignedSuccessOpen: false,
+      isSharingOpen: false,
+      isLinkOpen: false,
+      linkCopiedOpen: false,
+      inviteOpen: false,
       selectedItems: []
     }
   }
@@ -129,16 +141,20 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     }
   }
 
+  share() {
+    this.setState({isSharingOpen: true});
+  }
+
   renderShareButton() {
     if (!this.props.sidebarRolledUp) {
       return (
-        <button onClick={() => this.setAnotateMode()} className="assign-class-button share-button svgOnHover">
-        {!this.props.sidebarRolledUp ? <span>Share with friend</span> : <span></span>}
+        <button onClick={this.share.bind(this)} className="assign-class-button share-button svgOnHover">
+        <span>Share with friend</span>
       </button>
       );
     }
     return (
-      <button onClick={() => this.setAnotateMode()} className="assign-class-button share-button svgOnHover">
+      <button onClick={this.share.bind(this)} className="assign-class-button share-button svgOnHover">
         <SpriteIcon name="feather-share" className="active" />
       </button>
     );
@@ -250,6 +266,15 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       canSee = checkTeacherOrAdmin(this.props.user.roles);
     } catch { }
 
+    const {brick} = this.props;
+
+    let isAuthor = false;
+    try {
+      isAuthor = brick.author.id === this.props.user.id;
+    } catch {}
+
+    const link = `/play/brick/${brick.id}/intro`;
+
     return (
       <div>
         <CommingSoonDialog isOpen={this.state.isCoomingSoonOpen} close={() => this.toggleCommingSoon()} />
@@ -271,6 +296,27 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           brickTitle={this.props.brick.title}
           selectedItems={this.state.selectedItems}
           close={() => this.setState({isAssignedSuccessOpen: false})}
+        />
+        <ShareDialog
+          isOpen={this.state.isSharingOpen}
+          link={() => { this.setState({isSharingOpen: false, isLinkOpen: true }) }}
+          invite={() => { this.setState({isSharingOpen: false, inviteOpen: true})}}
+          close={() => this.setState({isSharingOpen: false})}
+        />
+        <LinkDialog
+          isOpen={this.state.isLinkOpen}
+          link={document.location.host + link}
+          submit={() => this.setState({isLinkOpen: false, linkCopiedOpen: true})}
+          close={() => this.setState({isLinkOpen: false})}
+        />
+        <LinkCopiedDialog
+          isOpen={this.state.linkCopiedOpen}
+          close={()=> this.setState({linkCopiedOpen: false})}
+        />
+        <InviteDialog
+          canEdit={true} brick={brick} isOpen={this.state.inviteOpen} hideAccess={true} isAuthor={isAuthor}
+          submit={name => { }}
+          close={() => this.setState({inviteOpen: false})}
         />
       </div>
     );

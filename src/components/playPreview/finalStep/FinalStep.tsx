@@ -330,7 +330,12 @@ return (
         submit={() => setCopiedLink(true)} close={() => setLink(false)}
       />
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
-      <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
+      <ShareDialog
+        isOpen={shareOpen}
+        link={() => { setShare(false); setLink(true) }}
+        invite={() => {}}
+        close={() => setShare(false)}
+      />
       <InviteEditorDialog
         canEdit={true} brick={brick} isOpen={inviteOpen}
         submit={name => { setInviteSuccess({ isOpen: true, name }); }}
