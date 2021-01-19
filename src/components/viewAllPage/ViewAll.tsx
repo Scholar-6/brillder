@@ -909,7 +909,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       <Grid item xs={9} className="brick-row-container">
         {this.state.subjectSelected
           ? this.renderDesktopBricks(bricks)
-          : <SubjectsColumn subjects={this.state.subjects} onClick={this.onSubjectSelected.bind(this)} />
+          : <SubjectsColumn subjects={this.state.totalSubjects} onClick={this.onSubjectSelected.bind(this)} />
         }
       </Grid>
     );
