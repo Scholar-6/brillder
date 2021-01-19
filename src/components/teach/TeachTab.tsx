@@ -1,5 +1,5 @@
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
-import map, { ProposalSubject } from "components/map";
+import map from "components/map";
 import React from "react";
 
 import { TeachActiveTab } from "./model";

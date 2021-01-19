@@ -8,12 +8,11 @@ import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 import actions from 'redux/actions/requestFailed';
 import { getAssignedBricks } from "services/axios/brick";
 import service, { getLongestColumn, hideAssignments } from './service';
-import { checkAdmin, checkEditor, checkTeacher } from "components/services/brickService";
+import { checkAdmin, checkTeacher } from "components/services/brickService";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 
 import { User } from "model/user";
 
-import Tab from '../Tab';
 import AssignedBricks from "./AssignedBricks";
 import PlayFilterSidebar from "./PlayFilterSidebar";
 import BackPagePagination from "../BackPagePagination";
@@ -52,7 +51,6 @@ class PlayPage extends Component<PlayProps, PlayState> {
 
     const isTeach = checkTeacher(this.props.user.roles);
     const isAdmin = checkAdmin(this.props.user.roles);
-    const isEditor = checkEditor(this.props.user.roles)
 
     const threeColumns = {
       red: {
