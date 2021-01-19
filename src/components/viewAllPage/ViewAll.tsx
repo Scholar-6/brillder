@@ -36,7 +36,7 @@ import NoSubjectDialog from "components/baseComponents/dialogs/NoSubjectDialog";
 import { clearProposal } from "localStorage/proposal";
 
 
-interface BricksListProps {
+interface ViewAllProps {
   user: User;
   notifications: Notification[] | null;
   history: any;
@@ -44,7 +44,7 @@ interface BricksListProps {
   forgetBrick(): void;
 }
 
-interface BricksListState {
+interface ViewAllState {
   yourBricks: Array<Brick>;
   bricks: Array<Brick>;
   searchBricks: Array<Brick>;
@@ -70,10 +70,12 @@ interface BricksListState {
   isAdmin: boolean;
   isCore: boolean;
   shown: boolean;
+
+  subjectSelected: boolean; // first time page loaded subject filter selected
 }
 
-class ViewAllPage extends Component<BricksListProps, BricksListState> {
-  constructor(props: BricksListProps) {
+class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
+  constructor(props: ViewAllProps) {
     super(props);
 
     let isAdmin = false;
@@ -110,6 +112,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       isAdmin,
       isCore: true,
       shown: false,
+      subjectSelected: false,
       handleKey: this.handleKey.bind(this)
     };
 
@@ -117,7 +120,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   }
 
   // load bricks when notification come
-  componentDidUpdate(prevProps: BricksListProps) {
+  componentDidUpdate(prevProps: ViewAllProps) {
     const {notifications} = this.props;
     const oldNotifications = prevProps.notifications;
     if (notifications && oldNotifications) {
@@ -835,6 +838,51 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     return <div className="bricks-list">{this.renderYourBrickRow()}</div>;
   }
 
+  renderMobileBricks() {
+    return (
+      <Grid item xs={9} className="brick-row-container">
+        <div
+          className="brick-row-title"
+          onClick={() => this.props.history.push(`/play/dashboard/${Category.New}`)}
+        >
+          <button className="btn btn-transparent svgOnHover">
+            <span>New</span>
+            <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" />
+          </button>
+        </div>
+        <div className="bricks-list-container bricks-container-mobile">
+          <div className="bricks-list">{this.renderSortedMobileBricks()}</div>
+        </div>
+      </Grid>
+    );
+  }
+
+  renderDesktopBricks(filterSubjects: any[], bricks: Brick[]) {
+    return (
+      <Grid item xs={9} className="brick-row-container">
+        <div className={`brick-row-title main-title uppercase ${filterSubjects.length === 1 && 'subject-title'}`}>
+          {this.renderMainTitle(filterSubjects)}
+        </div>
+        {this.props.user && <PrivateCoreToggle
+          isViewAll={true}
+          isCore={this.state.isCore}
+          onSwitch={() => this.toggleCore()}
+        />}
+        <div className="bricks-list-container bricks-container-mobile">
+          {this.renderFirstRow(filterSubjects, bricks)}
+          <div className="bricks-list">{this.renderSortedBricks(bricks)}</div>
+        </div>
+        <ViewAllPagination
+          pageSize={this.state.pageSize}
+          sortedIndex={this.state.sortedIndex}
+          bricksLength={bricks.length}
+          moveAllNext={() => this.moveAllNext()}
+          moveAllBack={() => this.moveAllBack()}
+        />
+      </Grid>
+    );
+  }
+
   render() {
     if (this.state.isLoading) {
       return <PageLoader content="...Getting Bricks..." />;
@@ -858,7 +906,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       }
     }
 
-    const { history } = this.props;
     return (
       <div className={pageClass}>
         {this.renderMobileGlassIcon()}
@@ -886,46 +933,12 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             clearSubjects={() => this.clearSubjects()}
             filterBySubject={index => this.filterBySubject(index)}
           />
-          <Grid item xs={9} className="brick-row-container">
-            <Hidden only={["xs"]}>
-              <div className={`brick-row-title main-title uppercase ${filterSubjects.length === 1 && 'subject-title'}`}>
-                {this.renderMainTitle(filterSubjects)}
-              </div>
-              {this.props.user &&
-                <PrivateCoreToggle
-                  isViewAll={true}
-                  isCore={this.state.isCore}
-                  onSwitch={() => this.toggleCore()}
-                />}
-            </Hidden>
-            <Hidden only={["sm", "md", "lg", "xl"]}>
-              <div
-                className="brick-row-title"
-                onClick={() => history.push(`/play/dashboard/${Category.New}`)}
-              >
-                <button className="btn btn-transparent svgOnHover">
-                  <span>New</span>
-                  <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" />
-                </button>
-              </div>
-            </Hidden>
-            <div className="bricks-list-container bricks-container-mobile">
-              <Hidden only={["xs"]}>
-                {this.renderFirstRow(filterSubjects, bricks)}
-                <div className="bricks-list">{this.renderSortedBricks(bricks)}</div>
-              </Hidden>
-              <Hidden only={["sm", "md", "lg", "xl"]}>
-                <div className="bricks-list">{this.renderSortedMobileBricks()}</div>
-              </Hidden>
-            </div>
-            <ViewAllPagination
-              pageSize={this.state.pageSize}
-              sortedIndex={this.state.sortedIndex}
-              bricksLength={bricks.length}
-              moveAllNext={() => this.moveAllNext()}
-              moveAllBack={() => this.moveAllBack()}
-            />
-          </Grid>
+          <Hidden only={["xs"]}>
+            {this.renderDesktopBricks(filterSubjects, bricks)}
+          </Hidden>
+          <Hidden only={["sm", "md", "lg", "xl"]}>
+            {this.renderMobileBricks()}
+          </Hidden>
         </Grid>
         <DeleteBrickDialog
           isOpen={this.state.deleteDialogOpen}
