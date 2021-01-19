@@ -6,10 +6,8 @@ import ProposalPanel from './ProposalPanel';
 import InvestigationPanel from './InvestigationPanel';
 import SynthesisPanel from './SynthesisPanel';
 import PlayPanel from './PlayPanel';
-import AdditionalPanel from './AdditionalPanel';
 import { User } from 'model/user';
 import userActions from 'redux/actions/user';
-import { ReduxCombinedState } from 'redux/reducers';
 
 
 export enum TutorialStep {
@@ -18,7 +16,6 @@ export enum TutorialStep {
   Investigation,
   Synthesis,
   Play,
-  Additional,
 }
 
 export interface TutorialProps {
@@ -42,8 +39,6 @@ const TutorialPanelWorkArea: React.FC<TutorialProps> = ({ user, step, setStep, g
       return <SynthesisPanel next={(step) => setStep(step)} skip={skip} />
     } else if (step === TutorialStep.Play) {
       return <PlayPanel next={(step) => setStep(step)} skip={skip} />
-    } else if (step === TutorialStep.Additional) {
-      return <AdditionalPanel next={(step) => setStep(step)} skip={skip} />
     }
     return "";
   }
@@ -57,12 +52,10 @@ const TutorialPanelWorkArea: React.FC<TutorialProps> = ({ user, step, setStep, g
   );
 }
 
-const mapState = (state: ReduxCombinedState) => ({})
-
 const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
-})
+});
 
-const connector = connect(mapState, mapDispatch);
+const connector = connect(null, mapDispatch);
 
 export default connector(TutorialPanelWorkArea);
