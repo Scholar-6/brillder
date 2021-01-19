@@ -59,7 +59,7 @@ class UserProfilePreview extends Component<PreviewProps, PreiewState> {
         <div ref={this.state.image} className="leonardo-image">
           {
             showProfile
-              ? <img alt="profile-image" className="profile-image" src={fileUrl(user.profileImage)} />
+              ? <img alt="profile" className="profile-image" src={fileUrl(user.profileImage)} />
               : <img alt="leonardo" src={LeonardoSvg} />
           }
         </div>
