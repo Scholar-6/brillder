@@ -12,21 +12,19 @@ export interface YourProposalButtonProps {
   brickId: number;
   invalid: boolean;
   tutorialStep: TutorialStep;
-  tooltipsOn: boolean;
-  setTooltips(value: boolean): void;
   saveBrick(): void;
   isTutorialPassed(): boolean;
 }
 
 const YourProposalLink: React.FC<YourProposalButtonProps> = ({
-  invalid, brickId, tooltipsOn, tutorialStep, setTooltips, saveBrick, isTutorialPassed
+  invalid, brickId, tutorialStep, saveBrick, isTutorialPassed
 }) => {
   const history = useHistory();
 
   const editProposal = () => {
     clearProposal();
     saveBrick();
-    history.push(`/build/brick/${brickId}/proposal`);
+    history.push(`/build/brick/${brickId}/plan`);
   }
 
   let className = "proposal-container";

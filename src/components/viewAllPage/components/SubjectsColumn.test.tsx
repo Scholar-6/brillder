@@ -202,24 +202,35 @@ describe("Roles Box", () => {
       <SubjectsColumn subjects={subjects.slice(0, 6)} onClick={() => {}} />
     );
     expect(component).toHaveLength(1);
-    expect(component.props().children).toHaveLength(2);
+    expect(component.props().children.props.children).toHaveLength(2);
   });
   it("Subject column should have 2 full rows", () => {
-    const component = shallow(
-      <SubjectsColumn subjects={subjects.slice(0, 6)} onClick={() => {}} />
-    );
-    expect(component).toHaveLength(1);
-    expect(component.props().children).toHaveLength(2);
-    expect(component.props().children[0].props.children).toHaveLength(4);
-    expect(component.props().children[1].props.children).toHaveLength(2);
-  });
-  it("Subject column should have 3 rows", () => {
     const component = shallow(
       <SubjectsColumn subjects={subjects.slice(0, 7)} onClick={() => {}} />
     );
     expect(component).toHaveLength(1);
-    expect(component.props().children).toHaveLength(2);
-    expect(component.props().children[0].props.children).toHaveLength(4);
-    expect(component.props().children[1].props.children).toHaveLength(3);
+    const rows = component.props().children.props.children;
+    expect(rows).toHaveLength(2);
+    expect(rows[0].props.children).toHaveLength(4);
+    expect(rows[1].props.children).toHaveLength(3);
+  });
+  it("Subject column should have 3 rows", () => {
+    const component = shallow(
+      <SubjectsColumn subjects={subjects.slice(0, 8)} onClick={() => {}} />
+    );
+    expect(component).toHaveLength(1);
+    const rows = component.props().children.props.children;
+    expect(rows).toHaveLength(3);
+    expect(rows[0].props.children).toHaveLength(4);
+    expect(rows[1].props.children).toHaveLength(3);
+    expect(rows[2].props.children).toHaveLength(1);
+  });
+  it("Subject column should not show general subject", () => {
+    const component = shallow(
+      <SubjectsColumn subjects={[subjects[subjects.length - 1]]} onClick={() => {}} />
+    );
+    expect(component).toHaveLength(1);
+    const rows = component.props().children.props.children;
+    expect(rows).toHaveLength(0);
   });
 });
