@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormControlLabel, Grid, Radio, SvgIcon } from "@material-ui/core";
+import { FormControlLabel, Grid, Radio } from "@material-ui/core";
 import { connect } from "react-redux";
 import axios from 'axios';
 
@@ -503,7 +503,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   async updateClassroom(name: string, subject: Subject) {
     try {
-      const response = await axios.put(`${process.env.REACT_APP_BACKEND_HOST}/classroom`, {
+      await axios.put(`${process.env.REACT_APP_BACKEND_HOST}/classroom`, {
         ...this.state.activeClassroom,
         name, subject
       }, { withCredentials: true });

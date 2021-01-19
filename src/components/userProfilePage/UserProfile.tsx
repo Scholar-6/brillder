@@ -117,18 +117,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   getExistedUserState(user: User, isAdmin: boolean) {
-    let isBuilder = canBuild(user);
     let isEditor = canEdit(user);
     let isInstitute = isInstitution(user);
 
     let isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
     if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
-      isBuilder = false;
       isEditor = false;
     }
 
     if (isAdmin) {
-      isBuilder = true;
       isEditor = true;
       isInstitute = true;
     }
