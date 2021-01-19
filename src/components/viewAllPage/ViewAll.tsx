@@ -10,7 +10,7 @@ import "./ViewAll.scss";
 import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
-import { Brick, BrickStatus, Subject } from "model/brick";
+import { Brick, BrickStatus, SubjectItem } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin, getAssignmentIcon } from "components/services/brickService";
 import { getCurrentUserBricks, getPublicBricks, getPublishedBricks, searchBricks, searchPublicBricks } from "services/axios/brick";
@@ -57,7 +57,7 @@ interface BricksListState {
   isLoading: boolean;
 
   noSubjectOpen: boolean;
-  activeSubject: Subject;
+  activeSubject: SubjectItem;
   dropdownShown: boolean;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
@@ -100,7 +100,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       dropdownShown: false,
       searchBricks: [],
       searchString,
-      activeSubject: {} as Subject,
+      activeSubject: {} as SubjectItem,
       isSearching: false,
       pageSize,
       isLoading: true,
@@ -165,7 +165,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   }
 
   async loadSubjects() {
-    const subjects = await getSubjects();
+    let subjects = await getSubjects() as SubjectItem[] | null;
 
     if(subjects) {
       subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
@@ -191,8 +191,10 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
       bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
       const finalBricks = this.filter(bs, this.state.isCore);
-      const {subjects} = this.state;
+      let {subjects} = this.state;
       this.countSubjectBricks(subjects, bs);
+      subjects = subjects.filter(s => s.publicCount > 0);
+      subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
       this.setState({ ...this.state, subjects, bricks, isLoading: false, finalBricks, shown: true });
     } else {
       this.setState({ ...this.state, isLoading: false, failedRequest: true });
