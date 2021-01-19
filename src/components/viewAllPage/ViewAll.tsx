@@ -10,7 +10,7 @@ import "./ViewAll.scss";
 import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
-import { Brick, BrickStatus, SubjectItem } from "model/brick";
+import { Brick, BrickStatus, Subject, SubjectItem } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin, getAssignmentIcon } from "components/services/brickService";
 import { getCurrentUserBricks, getPublicBricks, getPublishedBricks, searchBricks, searchPublicBricks } from "services/axios/brick";
@@ -52,7 +52,8 @@ interface ViewAllState {
   searchString: string;
   isSearching: boolean;
   sortBy: SortBy;
-  subjects: any[];
+  subjects: SubjectItem[];
+  totalSubjects: Subject[];
   sortedIndex: number;
   finalBricks: Brick[];
   isLoading: boolean;
@@ -95,6 +96,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricks: [],
       sortBy: SortBy.Date,
       subjects: [],
+      totalSubjects: [],
       sortedIndex: 0,
       noSubjectOpen: false,
       deleteDialogOpen: false,
@@ -173,7 +175,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     if(subjects) {
       subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
-      this.setState({ ...this.state, subjects });
+      this.setState({ ...this.state, subjects, totalSubjects: subjects });
     } else {
       this.setState({ ...this.state, failedRequest: true });
     }
@@ -775,7 +777,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (filterSubjects.length === 1) {
       const subjectId = filterSubjects[0];
       const subject = this.state.subjects.find(s => s.id === subjectId);
-      return subject.name;
+      return subject?.name;
     } else if (filterSubjects.length > 1) {
       return "Filtered";
     } else if (this.state.isSearching) {

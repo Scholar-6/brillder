@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import './PlayPanel.scss';
 import { TutorialStep } from './TutorialPanelWorkArea';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';

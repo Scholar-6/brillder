@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Radio, FormControlLabel } from "@material-ui/core";
+import { Grid, FormControlLabel } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import { connect } from "react-redux";
 
@@ -119,20 +119,17 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   getExistedUserState(user: User, isAdmin: boolean) {
     let isBuilder = canBuild(user);
     let isEditor = canEdit(user);
-    let isStudent = isBuilder;
     let isInstitute = isInstitution(user);
 
     let isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
     if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
       isBuilder = false;
       isEditor = false;
-      isStudent = true;
     }
 
     if (isAdmin) {
       isBuilder = true;
       isEditor = true;
-      isStudent = true;
       isInstitute = true;
     }
 

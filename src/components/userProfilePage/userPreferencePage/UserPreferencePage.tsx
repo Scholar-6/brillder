@@ -8,7 +8,6 @@ import userActions from 'redux/actions/user';
 import './UserPreferencePage.scss';
 import { Grid, Radio } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { checkAdmin } from 'components/services/brickService';
 import { setUserPreference } from 'services/axios/user';
