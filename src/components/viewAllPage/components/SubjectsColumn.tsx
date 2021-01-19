@@ -2,6 +2,7 @@ import React from "react";
 
 import './SubjectsColumn.scss';
 import { Subject } from "model/brick";
+import { GENERAL_SUBJECT } from "components/services/subject";
 
 interface Props {
   subjects: Subject[];
@@ -14,6 +15,9 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, onClick }) => {
   let row = [];
 
   for (let subject of subjects) {
+    if (subject.name === GENERAL_SUBJECT) {
+      continue;
+    }
     row.push(subject);
     if (isOdd && row.length >= 3) {
       isOdd = false;

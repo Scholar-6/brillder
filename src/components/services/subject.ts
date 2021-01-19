@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { Subject } from "../../model/brick";
 
-const GENERAL_SUBJECT = "General";
+export const GENERAL_SUBJECT = "General";
 
 export interface SubjectsResult {
   data: Subject[];
