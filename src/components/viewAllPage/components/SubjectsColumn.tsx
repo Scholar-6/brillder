@@ -47,11 +47,13 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, onClick }) => {
 
   return (
     <div className="subjects-column">
-      {list.map((row, i) =>
-        <div key={i} className="subject-row">
-          {row.map((s, j) => renderSubject(s, j))}
-        </div>
-      )}
+      <div style={{width: '100%'}}>
+        {list.map((row, i) =>
+          <div key={i} className="subject-row">
+            {row.map((s, j) => renderSubject(s, j))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
