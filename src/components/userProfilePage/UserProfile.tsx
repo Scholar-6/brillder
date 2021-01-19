@@ -405,13 +405,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                     user.lastName, 'last-name', 'Surname', e => this.onFieldChanged(e, UserProfileField.LastName)
                   )}
                 </div>
-                <FormControlLabel
-                  value="start"
-                  className="secret-input unselectable"
-                  control={<Checkbox color="primary" />}
-                  label="Keep me secret: I don't want to be searchable"
-                  labelPlacement="end"
-                />
                 {this.renderInput(
                   user.email, '', 'Email', e => this.onEmailChanged(e), 'email'
                 )}
