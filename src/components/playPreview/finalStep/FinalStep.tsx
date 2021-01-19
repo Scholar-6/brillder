@@ -333,7 +333,7 @@ return (
       <ShareDialog
         isOpen={shareOpen}
         link={() => { setShare(false); setLink(true) }}
-        invite={() => {}}
+        invite={() => { setShare(false); setInvite(true)}}
         close={() => setShare(false)}
       />
       <InviteEditorDialog

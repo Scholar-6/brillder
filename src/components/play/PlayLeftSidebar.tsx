@@ -20,6 +20,7 @@ import ShareDialog from "./finalStep/dialogs/ShareDialog";
 import LinkDialog from "./finalStep/dialogs/LinkDialog";
 import LinkCopiedDialog from "./finalStep/dialogs/LinkCopiedDialog";
 import InviteDialog from "./finalStep/dialogs/InviteDialog";
+import InvitationSuccessDialog from "./finalStep/dialogs/InvitationSuccessDialog";
 
 
 interface SidebarProps {
@@ -42,6 +43,12 @@ interface SidebarProps {
   fetchBrick(brickId: number): Promise<Brick | null>;
 }
 
+interface InviteResult {
+  isOpen: boolean;
+  accessGranted: boolean;
+  name: string;
+}
+
 interface SidebarState {
   isAdaptBrickOpen: boolean;
   isCoomingSoonOpen: boolean;
@@ -51,6 +58,7 @@ interface SidebarState {
   isLinkOpen: boolean;
   linkCopiedOpen: boolean;
   inviteOpen: boolean;
+  inviteResult: InviteResult;
   selectedItems: any[];
 }
 
@@ -66,6 +74,11 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       isLinkOpen: false,
       linkCopiedOpen: false,
       inviteOpen: false,
+      inviteResult: {
+        isOpen: false,
+        accessGranted: false,
+        name: ''
+      },
       selectedItems: []
     }
   }
@@ -267,6 +280,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     } catch { }
 
     const {brick} = this.props;
+    const {inviteResult} = this.state;
 
     let isAuthor = false;
     try {
@@ -315,8 +329,13 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         />
         <InviteDialog
           canEdit={true} brick={brick} isOpen={this.state.inviteOpen} hideAccess={true} isAuthor={isAuthor}
-          submit={name => { }}
+          submit={name => this.setState({ inviteResult: { isOpen: true, name, accessGranted: false }})}
           close={() => this.setState({inviteOpen: false})}
+        />
+        <InvitationSuccessDialog
+          isAuthor={isAuthor}
+          isOpen={inviteResult.isOpen} name={inviteResult.name} accessGranted={inviteResult.accessGranted}
+          close={() => this.setState({inviteResult: { isOpen: false, name: '', accessGranted: false }})}
         />
       </div>
     );
