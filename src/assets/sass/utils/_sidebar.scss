@@ -636,22 +636,6 @@
                 }
               }
             }
-            &.brick-row-0,
-            &.brick-row-1,
-            &.brick-row-2,
-            &.brick-row-3 {
-              .expanded-brick-info {
-                border-top-left-radius: 0 !important;
-              }
-            }
-
-            &.brick-row-4,
-            &.brick-row-5 {
-              .expanded-brick-info {
-                bottom: 0;
-                border-bottom-left-radius: 0 !important;
-              }
-            }
           }
 
           &.color1 {
