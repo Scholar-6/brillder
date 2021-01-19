@@ -17,7 +17,7 @@ import { getUserById, createUser, updateUser, saveProfileImageName } from 'servi
 import { isValid, getUserProfile, newStudentProfile } from './service';
 import { User, UserType, UserStatus, UserProfile } from "model/user";
 import { Subject } from "model/brick";
-import { checkAdmin, canBuild, canEdit, isInstitution } from "components/services/brickService";
+import { checkAdmin, canEdit, isInstitution } from "components/services/brickService";
 
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import SubjectDialog from "./components/SubjectDialog";
