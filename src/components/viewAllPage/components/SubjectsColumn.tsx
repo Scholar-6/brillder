@@ -26,7 +26,9 @@ const SubjectsColumn: React.FC<Props> = ({subjects, onClick}) => {
     }
   }
 
-  list.push(row);
+  if (row.length > 0) {
+    list.push(row);
+  }
 
   return (
     <div className="subjects-column">
