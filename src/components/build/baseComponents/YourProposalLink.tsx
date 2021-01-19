@@ -29,32 +29,6 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
     history.push(`/build/brick/${brickId}/proposal`);
   }
 
-  const renderZapTooltip = () => {
-    if (!isTutorialPassed() && tutorialStep === TutorialStep.Additional) {
-      let className = "additional-tooltip"
-      if (tooltipsOn === false) {
-        className += " tooltip-off";
-      }
-
-      return (
-        <div className={className}>
-          <div className="tooltip-text">Tool Tips</div>
-          <button onClick={() => setTooltips(!tooltipsOn)}>
-            <img
-              alt="" className="additional-tooltip-icon"
-              src={
-                tooltipsOn === true
-                  ? "/feathericons/zap-white.png"
-                  : "/feathericons/zap-off-light-blue.png"
-              }
-            />
-          </button>
-        </div>
-      );
-    }
-    return "";
-  }
-
   let className = "proposal-container";
 
   if (!isTutorialPassed()) {
@@ -83,7 +57,6 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
           </div>
         </div>
       </Grid>
-      {renderZapTooltip()}
     </div>
   );
 }
