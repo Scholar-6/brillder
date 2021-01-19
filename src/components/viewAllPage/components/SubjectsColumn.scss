@@ -3,7 +3,8 @@
 @import "src/assets/sass/partials/extensions";
 
 .subjects-column {
-  margin-top: 8vh;
+  height: 100%;
+  @extend %flexToYCenter;
   margin-left: 2vw;
   margin-right: 2vw;
   .subject-row {
