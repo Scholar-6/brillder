@@ -9,7 +9,6 @@ import ShareDialog from './dialogs/ShareDialog';
 import LinkDialog from './dialogs/LinkDialog';
 import LinkCopiedDialog from './dialogs/LinkCopiedDialog';
 import ShareColumn from "./ShareColumn";
-import InviteColumn from "./InviteColumn";
 import ExitButton from "./ExitButton";
 import InviteDialog from "./dialogs/InviteDialog";
 import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
@@ -72,7 +71,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <Grid className="share-row" container direction="row" justify="center">
         <ShareColumn onClick={() => setShare(true)} />
-        <InviteColumn onClick={()=> setInvite(true)} />
       </Grid>
     );
   }
