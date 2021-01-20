@@ -1,17 +1,33 @@
-.subject-list-v2 {
-  .subject-border {
-    margin-right: 0.5vw !important;
-    padding: 0.05vw;
-    border-radius: 50%;
-  }
-  .subject-no-border {
-    margin: 0.25vw;
-    margin-right: 0.65vw;
-  }
-  .filter-circle {
-    margin-right: 0 !important;
-    width: 0.85vw;
-    height: 0.85vw;
-    border-radius: 50%;
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.subjects-filter-v2 {
+  margin: 0 !important;
+  width: 100% !important;
+  .subject-list-v2 {
+    padding-left: 1.2vw;
+    padding-right: 1.2vw;
+    .subject-border {
+      margin-right: 0.5vw !important;
+      padding: 0.05vw;
+      border-radius: 50%;
+    }
+
+    .subject-no-border {
+      margin: 0.25vw;
+      margin-right: 0.65vw;
+    }
+
+    .filter-circle {
+      margin-right: 0 !important;
+      width: 0.85vw;
+      height: 0.85vw;
+      border-radius: 50%;
+    }
+
+    &:hover {
+      background: var(--light-blue-alpha3);
+    }
   }
 }

@@ -69,7 +69,7 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
 
   render() {
     return (
-      <Grid container direction="row" className="filter-container subjects-filter">
+      <Grid container direction="row" className="filter-container subjects-filter subjects-filter-v2">
         <AnimateHeight
           duration={500}
           height={this.props.filterHeight}
