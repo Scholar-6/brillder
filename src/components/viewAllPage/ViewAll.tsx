@@ -163,7 +163,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       // load bricks for unauthorized users
       const bricks = await getPublicBricks();
       if (bricks) {
-        this.setState({ ...this.state, bricks, isLoading: false, finalBricks: bricks, shown: true });
+        this.setState({ ...this.state, bricks, subjectSelected: true, isLoading: false, finalBricks: bricks, shown: true });
       } else {
         this.setState({ ...this.state, isLoading: false, failedRequest: true });
       }
@@ -960,6 +960,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             subjects={this.state.subjects}
             isCore={this.state.isCore}
             isClearFilter={this.state.isClearFilter}
+            subjectSelected={this.state.subjectSelected}
             handleSortChange={e => this.handleSortChange(e)}
             clearSubjects={() => this.clearSubjects()}
             filterBySubject={index => this.filterBySubject(index)}
