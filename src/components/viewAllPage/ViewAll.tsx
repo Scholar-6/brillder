@@ -34,7 +34,6 @@ import { isMobile } from "react-device-detect";
 import map from "components/map";
 import NoSubjectDialog from "components/baseComponents/dialogs/NoSubjectDialog";
 import { clearProposal } from "localStorage/proposal";
-import SubjectsColumn from "./components/SubjectsColumn";
 
 
 interface ViewAllProps {
@@ -72,8 +71,6 @@ interface ViewAllState {
   isAdmin: boolean;
   isCore: boolean;
   shown: boolean;
-
-  subjectSelected: boolean; // first time page loaded subject filter selected
 }
 
 class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
@@ -88,7 +85,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       pageSize = 18;
     }
 
-    const values = queryString.parse(props.location.search)
+    const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
 
     this.state = {
@@ -115,7 +112,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isAdmin,
       isCore: true,
       shown: false,
-      subjectSelected: false,
       handleKey: this.handleKey.bind(this)
     };
 
@@ -151,7 +147,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async loadData(values: queryString.ParsedQuery<string>) {
     if (this.props.user) {
-      await this.loadSubjects();
+      await this.loadSubjects(values);
     }
 
     if (values.searchString) {
@@ -163,18 +159,28 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       // load bricks for unauthorized users
       const bricks = await getPublicBricks();
       if (bricks) {
-        this.setState({ ...this.state, bricks, subjectSelected: true, isLoading: false, finalBricks: bricks, shown: true });
+        this.setState({ ...this.state, bricks, isLoading: false, finalBricks: bricks, shown: true });
       } else {
         this.setState({ ...this.state, isLoading: false, failedRequest: true });
       }
     }
   }
 
-  async loadSubjects() {
+  /**
+   * Load subject and check by query string
+   */
+  async loadSubjects(values: queryString.ParsedQuery<string>) {
     let subjects = await getSubjects() as SubjectItem[] | null;
 
     if(subjects) {
       subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
+      subjects.forEach(s => {
+        if (values.subjectId) {
+          if (s.id === parseInt(values.subjectId as string || '')) {
+            s.checked = true;
+          }
+        }
+      });
       this.setState({ ...this.state, subjects, totalSubjects: subjects });
     } else {
       this.setState({ ...this.state, failedRequest: true });
@@ -809,22 +815,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
-  onSubjectSelected(subjectId: number) {
-    const { subjects } = this.state;
-    const subject = subjects.find(s => s.id === subjectId);
-
-    if (subject) {
-      subject.checked = true;
-      const finalBricks = this.filter(this.state.bricks, this.state.isCore);
-      this.setState({ ...this.state, subjectSelected: true, shown: false });
-      setTimeout(() => {
-        try {
-          this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
-        } catch {}
-      }, 1400);
-    }
-  }
-
   renderNoBricks() {
     return (
       <div className="main-brick-container">
@@ -909,10 +899,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   renderDesktopBricksColumn(bricks: Brick[]) {
     return (
       <Grid item xs={9} className="brick-row-container">
-        {this.state.subjectSelected
-          ? this.renderDesktopBricks(bricks)
-          : <SubjectsColumn subjects={this.state.totalSubjects} onClick={this.onSubjectSelected.bind(this)} />
-        }
+        {this.renderDesktopBricks(bricks)}
       </Grid>
     );
   }
@@ -962,7 +949,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             subjects={this.state.subjects}
             isCore={this.state.isCore}
             isClearFilter={this.state.isClearFilter}
-            subjectSelected={this.state.subjectSelected}
+            subjectSelected={true}
             handleSortChange={e => this.handleSortChange(e)}
             clearSubjects={() => this.clearSubjects()}
             filterBySubject={index => this.filterBySubject(index)}
