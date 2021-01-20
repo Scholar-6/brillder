@@ -10,10 +10,13 @@ import { Notification } from 'model/notifications';
 import { Subject, SubjectItem } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { getSubjects } from "services/axios/subject";
+import map from "components/map";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import ViewAllFilter, { SortBy } from "./ViewAllFilter";
 import SubjectsColumn from "./components/SubjectsColumn";
+import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
+import AllSubjectsSidebar from "./AllSubjectsSidebar";
 
 
 interface ViewAllProps {
@@ -61,7 +64,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const { subjects } = this.state;
     const subject = subjects.find(s => s.id === subjectId);
     if (subject) {
-      this.props.history.push(`/play/dashboard?subjectId=${subject.id}`);
+      this.props.history.push(map.ViewAllPage +`?subjectId=${subject.id}`);
     }
   }
 
@@ -77,21 +80,19 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           searching={(v) => {}}
         />
         <Grid container direction="row" className="sorted-row">
-          <ViewAllFilter
-            user={this.props.user}
-            sortBy={SortBy.Date}
-            subjects={[]}
-            isCore={false}
-            isClearFilter={false}
-            subjectSelected={false}
-            handleSortChange={e => {}}
-            clearSubjects={() => {}}
-            filterBySubject={index => {}}
-          />
+          <AllSubjectsSidebar />
           <Grid item xs={9} className="brick-row-container">
-            <SubjectsColumn subjects={this.state.totalSubjects} onClick={this.onSubjectSelected.bind(this)} />
+            <SubjectsColumn
+              subjects={this.state.totalSubjects}
+              viewAll={() => this.props.history.push(map.ViewAllPage)}
+              onClick={this.onSubjectSelected.bind(this)}
+            />
           </Grid>
         </Grid>
+        <FailedRequestDialog
+          isOpen={this.state.failedRequest}
+          close={() => this.setState({ ...this.state, failedRequest: false })}
+        />
       </div>
     );
   }

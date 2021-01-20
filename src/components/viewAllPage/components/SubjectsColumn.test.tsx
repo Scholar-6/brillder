@@ -199,14 +199,14 @@ const subjects = [
 describe("Roles Box", () => {
   it("Subject column should have 2 rows", () => {
     const component = shallow(
-      <SubjectsColumn subjects={subjects.slice(0, 6)} onClick={() => {}} />
+      <SubjectsColumn subjects={subjects.slice(0, 6)} viewAll={() => {}} onClick={() => {}} />
     );
     expect(component).toHaveLength(1);
     expect(component.props().children.props.children).toHaveLength(2);
   });
   it("Subject column should have 2 full rows", () => {
     const component = shallow(
-      <SubjectsColumn subjects={subjects.slice(0, 7)} onClick={() => {}} />
+      <SubjectsColumn subjects={subjects.slice(0, 7)} viewAll={() => {}} onClick={() => {}} />
     );
     expect(component).toHaveLength(1);
     const rows = component.props().children.props.children;
@@ -216,7 +216,7 @@ describe("Roles Box", () => {
   });
   it("Subject column should have 3 rows", () => {
     const component = shallow(
-      <SubjectsColumn subjects={subjects.slice(0, 8)} onClick={() => {}} />
+      <SubjectsColumn subjects={subjects.slice(0, 8)} viewAll={() => {}} onClick={() => {}} />
     );
     expect(component).toHaveLength(1);
     const rows = component.props().children.props.children;
@@ -227,7 +227,7 @@ describe("Roles Box", () => {
   });
   it("Subject column should not show general subject", () => {
     const component = shallow(
-      <SubjectsColumn subjects={[subjects[subjects.length - 1]]} onClick={() => {}} />
+      <SubjectsColumn subjects={[subjects[subjects.length - 1]]} viewAll={() => {}} onClick={() => {}} />
     );
     expect(component).toHaveLength(1);
     const rows = component.props().children.props.children;
