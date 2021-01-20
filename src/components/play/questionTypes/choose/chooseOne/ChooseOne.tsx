@@ -179,7 +179,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     }
 
     return (
-      <Button
+      <div
         className={className}
         key={index}
         onClick={() => this.setActiveItem(choice.index, index)}
@@ -202,7 +202,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
             hint={this.props.question.hint}
           />
         }
-      </Button>
+      </div>
     );
   }
 
