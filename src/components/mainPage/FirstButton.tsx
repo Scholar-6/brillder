@@ -4,6 +4,7 @@ import './FirstButton.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { User, UserType } from "model/user";
 import { isMobile } from "react-device-detect";
+import map from "components/map";
 
 interface FirstButtonProps {
   user: User;
@@ -33,7 +34,7 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
           if (isMobile) {
             props.history.push("/play/dashboard/1");
           } else {
-            props.history.push("/play/dashboard");
+            props.history.push(map.AllSubjects);
           }
         }
       }}
