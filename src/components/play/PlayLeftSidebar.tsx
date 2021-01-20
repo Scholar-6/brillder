@@ -162,8 +162,8 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     if (!this.props.sidebarRolledUp) {
       return (
         <button onClick={this.share.bind(this)} className="assign-class-button share-button svgOnHover">
-        <span>Share with friend</span>
-      </button>
+          <span>Share Brick</span>
+        </button>
       );
     }
     return (
