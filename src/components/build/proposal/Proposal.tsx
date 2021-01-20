@@ -388,7 +388,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               />
             </Route>
             
-            <Route path={[map.ProposalReview, '/build/brick/:brickId/proposal']}>
+            <Route path={[map.ProposalReview, '/build/brick/:brickId/plan']}>
               <ProposalReview
                 playStatus={playStatus}
                 brick={localBrick}

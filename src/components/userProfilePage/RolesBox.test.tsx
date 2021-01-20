@@ -1,11 +1,10 @@
 import React from "react";
-import { render } from "@testing-library/react";
 import { shallow } from "enzyme";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 import RolesBox from "./RolesBox";
-import { UserRole, UserType } from "model/user";
+import { UserType } from "model/user";
 
 Enzyme.configure({ adapter: new Adapter() });
 

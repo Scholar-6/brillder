@@ -62,19 +62,6 @@ const PlayPreview: React.FC = () => {
   );
 }
 
-const AdditionalPreview: React.FC = () => {
-  return (
-    <div className="tutorial-preview tutorial-additional-preview">
-      <div className="tutorial-number">5.</div>
-      <Grid container justify="center">
-        <div className="tutorial-icon-container svgOnHover">
-          <SpriteIcon name="zap" className="w80 h80 active text-theme-dark-blue" />
-        </div>
-      </Grid>
-    </div>
-  );
-}
-
 const TutorialPhonePreview: React.FC<QuestionTypePreviewProps> = ({ step }) => {
   if (step === TutorialStep.Proposal) {
     return <PhonePreview Component={ProposalPreview} />
@@ -84,8 +71,6 @@ const TutorialPhonePreview: React.FC<QuestionTypePreviewProps> = ({ step }) => {
     return <PhonePreview Component={SynthesisPreview} />
   } else if (step === TutorialStep.Play) {
     return <PhonePreview Component={PlayPreview} />
-  } else if (step === TutorialStep.Additional) {
-    return <PhonePreview Component={AdditionalPreview} />
   }
   return <div></div>;
 }

@@ -849,11 +849,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <YourProposalLink
           brickId={props.brick.id}
           tutorialStep={step}
-          tooltipsOn={tooltipsOn}
           invalid={validationRequired && !proposalResult.isValid}
           saveBrick={saveBrick}
           isTutorialPassed={isTutorialPassed}
-          setTooltips={setTooltips}
         />
         <Grid
           container direction="row"

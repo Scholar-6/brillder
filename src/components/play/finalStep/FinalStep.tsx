@@ -9,7 +9,6 @@ import ShareDialog from './dialogs/ShareDialog';
 import LinkDialog from './dialogs/LinkDialog';
 import LinkCopiedDialog from './dialogs/LinkCopiedDialog';
 import ShareColumn from "./ShareColumn";
-import InviteColumn from "./InviteColumn";
 import ExitButton from "./ExitButton";
 import InviteDialog from "./dialogs/InviteDialog";
 import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
@@ -34,7 +33,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const [linkOpen, setLink] = React.useState(false);
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
-
 
   const [inviteSuccess, setInviteSuccess] = React.useState({
     isOpen: false,
@@ -73,7 +71,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <Grid className="share-row" container direction="row" justify="center">
         <ShareColumn onClick={() => setShare(true)} />
-        <InviteColumn onClick={()=> setInvite(true)} />
       </Grid>
     );
   }
@@ -141,7 +138,12 @@ const FinalStep: React.FC<FinalStepProps> = ({
         isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={inviteSuccess.accessGranted}
         close={() => setInviteSuccess({ isOpen: false, name: '', accessGranted: false })} />
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
-      <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
+      <ShareDialog
+        isOpen={shareOpen}
+        link={() => { setShare(false); setLink(true) }}
+        invite={() => { setShare(false); setInvite(true)}}
+        close={() => setShare(false)}
+      />
     </div>
   );
 };

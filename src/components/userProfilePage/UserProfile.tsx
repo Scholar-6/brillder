@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Radio, FormControlLabel } from "@material-ui/core";
+import { Grid, FormControlLabel } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import { connect } from "react-redux";
 
@@ -17,7 +17,7 @@ import { getUserById, createUser, updateUser, saveProfileImageName } from 'servi
 import { isValid, getUserProfile, newStudentProfile } from './service';
 import { User, UserType, UserStatus, UserProfile } from "model/user";
 import { Subject } from "model/brick";
-import { checkAdmin, canBuild, canEdit, isInstitution } from "components/services/brickService";
+import { checkAdmin, canEdit, isInstitution } from "components/services/brickService";
 
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import SubjectDialog from "./components/SubjectDialog";
@@ -117,22 +117,16 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   getExistedUserState(user: User, isAdmin: boolean) {
-    let isBuilder = canBuild(user);
     let isEditor = canEdit(user);
-    let isStudent = isBuilder;
     let isInstitute = isInstitution(user);
 
     let isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
     if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
-      isBuilder = false;
       isEditor = false;
-      isStudent = true;
     }
 
     if (isAdmin) {
-      isBuilder = true;
       isEditor = true;
-      isStudent = true;
       isInstitute = true;
     }
 
@@ -411,13 +405,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                     user.lastName, 'last-name', 'Surname', e => this.onFieldChanged(e, UserProfileField.LastName)
                   )}
                 </div>
-                <FormControlLabel
-                  value="start"
-                  className="secret-input unselectable"
-                  control={<Checkbox color="primary" />}
-                  label="Keep me secret: I don't want to be searchable"
-                  labelPlacement="end"
-                />
                 {this.renderInput(
                   user.email, '', 'Email', e => this.onEmailChanged(e), 'email'
                 )}

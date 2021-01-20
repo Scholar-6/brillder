@@ -1,7 +1,6 @@
 import 'katex/dist/katex.min.css';
 import katex from 'katex';
 import 'katex/contrib/mhchem/mhchem';
-import renderMathInElement from 'katex/dist/contrib/auto-render';
 
 import React from 'react';
 
@@ -43,7 +42,7 @@ const Katex: React.FC<KatexProps> = props => {
     }, [ref]);
 
     return (
-        <div ref={ref} dangerouslySetInnerHTML={{ __html: props.latex }} />
+        <div ref={ref} className="katex-overflow-scroll" dangerouslySetInnerHTML={{ __html: props.latex }} />
     );
 };
 

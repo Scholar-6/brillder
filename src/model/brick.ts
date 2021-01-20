@@ -45,6 +45,10 @@ export interface Subject {
   personalCount?: number;
 }
 
+export interface SubjectItem extends Subject {
+  publicCount: number;
+}
+
 export interface Brick {
   id: number;
   subject?: Subject;

@@ -48,13 +48,12 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
   if (tutorialStep === TutorialStep.Proposal
     || tutorialStep === TutorialStep.Investigation
     || tutorialStep === TutorialStep.Synthesis
-    || tutorialStep === TutorialStep.Play
   ) {
     return <div></div>;
   }
 
   let className = "";
-  if (tutorialStep === TutorialStep.Additional) {
+  if (tutorialStep === TutorialStep.Play) {
     className = " editor-border";
   }
 

@@ -3,11 +3,12 @@
 @import 'src/assets/sass/partials/extensions';
 
 .expanded-brick-info {
+  cursor: pointer;
   background: var(--tab-gray);
   border-radius: 0.5vw;
   margin-left: 0;
-  padding: 1.3vh;
-  min-height: calc(#{$bricks-height / 6}) !important;
+  padding: 0.8vh 1.3vh;
+  min-height: calc(#{$bricks-height / 6} - 0.8vw) !important;
   position: absolute;
   z-index: 2;
   @include phone_and_tabletP {
@@ -16,11 +17,15 @@
   @include tabletP {
     width: 100%;
   }
+  .circle-container {
+    height: 100%;
+    position: relative;
+  }
   .hover-text {
     font-family: $font-family-regular;
     overflow: hidden;
     overflow-y: auto;
-    margin-right: 3vw;
+    margin-left: 3vw;
     font-size: 1.7vh;
     @extend %linkDescription;
     .link-info {
@@ -70,25 +75,14 @@
       max-height: calc(4.4vh + #{$padding + $padding});
     }
   }
-  .hover-icons {
-    @extend %flexCenter;
-    height: 100%;
-    width: 3vw;
+  .hover-delete-icon {
     position: absolute;
-    right: 0;
-    top: 0;
-    width: 3vw;
-
+    top:1.6vh;
+    right: 1.6vh;
+    height: 3.5vw;
     svg {
-      height: 1.3vw !important;
-      width: 1.3vw !important;
-    }
-    .hover-delete-icon {
-      height: 4vw;
-      svg {
-        height: 1vw !important;
-        width: 1vw !important;
-      }
+      height: 1vw !important;
+      width: 1vw !important;
     }
   }
 }

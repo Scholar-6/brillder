@@ -37,7 +37,6 @@
       span {
         letter-spacing: 0.03vw;
         // padding-right: $right-padding;
-        width: 70%;
         transition: 700ms width;
         text-align: center;
         white-space: nowrap;
@@ -123,6 +122,19 @@
             svg {
               color: var(--theme-dark-blue) !important;
             }
+          }
+        }
+      }
+      .share-button {
+        background: var(--white);
+        span, svg {
+          color: var(--theme-orange);
+          stroke-width: 2 !important;
+        }
+        &:hover {
+          background: var(--theme-orange);
+          span, svg {
+            color: var(--white) !important;
           }
         }
       }
