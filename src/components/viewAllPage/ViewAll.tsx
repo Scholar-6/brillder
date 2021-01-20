@@ -396,38 +396,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   yourBricksMouseHover(index: number) {
-    try {
-      let { yourBricks } = this.state;
-      if (yourBricks[index] && yourBricks[index].expanded) return;
-
-      this.hideBricks();
-      this.setState({ ...this.state });
-      setTimeout(() => {
-        try {
-          let { yourBricks } = this.state;
-          this.hideBricks();
-          if (!yourBricks[index].expandFinished) {
-            yourBricks[index].expanded = true;
-          }
-          this.setState({ ...this.state });
-        } catch {}
-      }, 400);
-    } catch {}
+    let { yourBricks } = this.state;
+    this.hideBricks();
+    if (yourBricks[index]) {
+      yourBricks[index].expanded = true;
+    }
+    this.setState({ ...this.state });
   }
 
-  yourBricksMouseLeave(key: number) {
-    try {
-      let { yourBricks } = this.state;
-      this.hideBricks();
-      yourBricks[key].expandFinished = true;
-      this.setState({ ...this.state });
-      setTimeout(() => {
-        try {
-          yourBricks[key].expandFinished = false;
-          this.setState({ ...this.state });
-        } catch {}
-      }, 400);
-    } catch {}
+  yourBricksMouseLeave() {
+    this.hideBricks();
+    this.setState({ ...this.state });
   }
 
   handleMouseHover(index: number) {
@@ -435,17 +414,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (finalBricks[index] && finalBricks[index].expanded) return;
 
     this.hideBricks();
+    if (finalBricks[index]) {
+      finalBricks[index].expanded = true;
+    }
     this.setState({ ...this.state });
-    setTimeout(() => {
-      try {
-        let { finalBricks } = this.state;
-        this.hideBricks();
-        if (!finalBricks[index].expandFinished) {
-          finalBricks[index].expanded = true;
-        }
-        this.setState({ ...this.state });
-      } catch {}
-    }, 400);
   }
 
   handleMobileClick(index: number) {
@@ -466,19 +438,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...this.state });
   }
 
-  handleMouseLeave(key: number) {
-    try {
-      let { finalBricks } = this.state;
-      this.hideBricks();
-      finalBricks[key].expandFinished = true;
-      this.setState({ ...this.state });
-      setTimeout(() => {
-        try {
-          finalBricks[key].expandFinished = false;
-          this.setState({ ...this.state });
-        } catch {}
-      }, 400);
-    } catch {}
+  handleMouseLeave() {
+    this.hideBricks();
+    this.setState({ ...this.state });
   }
 
   handleDeleteOpen(deleteBrickId: number) {
@@ -562,7 +524,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
               brick.expanded ? "brick-hover" : ""
               }`}
             onMouseEnter={() => this.yourBricksMouseHover(key)}
-            onMouseLeave={() => this.yourBricksMouseLeave(key)}
+            onMouseLeave={() => this.yourBricksMouseLeave()}
           >
             {brick.expanded ? (
               this.renderExpandedBrick(color, brick)
@@ -626,7 +588,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           circleIcon={circleIcon}
           handleDeleteOpen={(brickId) => this.handleDeleteOpen(brickId)}
           handleMouseHover={() => this.handleMouseHover(item.key)}
-          handleMouseLeave={() => this.handleMouseLeave(item.key)}
+          handleMouseLeave={() => this.handleMouseLeave()}
           isPlay={true}
         />
       );
