@@ -340,9 +340,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
   //endregion
 
-  filterBySubject = (i: number) => {
+  filterBySubject = (id: number) => {
     const { subjects } = this.state;
-    subjects[i].checked = !subjects[i].checked;
+    const subject = subjects.find(s => s.id === id);
+    if (subject) {
+      subject.checked = !subject?.checked;
+    }
     const finalBricks = this.filter(this.state.bricks, this.state.isCore);
     this.setState({ ...this.state, shown: false });
     setTimeout(() => {
