@@ -40,6 +40,10 @@
       .MuiFormControlLabel-root .MuiTypography-root {
         color: var(--theme-dark-blue) !important;
       }
+
+      &:hover {
+        opacity: 0.9;
+      }
     }
   }
 }
