@@ -199,7 +199,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       const finalBricks = this.filter(bs, this.state.isCore);
       let {subjects} = this.state;
       this.countSubjectBricks(subjects, bs);
-      subjects = subjects.filter(s => s.publicCount > 0);
       subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
       this.setState({ ...this.state, subjects, bricks, isLoading: false, finalBricks, shown: true });
     } else {
