@@ -716,9 +716,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   renderTitle(bricks: Brick[]) {
     const {length} = bricks;
     if (length === 1) {
-      return '1 Brick found';
+      return '1 brick found';
     }
-    return length + ' Bricks found';
+    return length + ' bricks found';
   }
 
   renderMainTitle(filterSubjects: number[]) {
@@ -759,7 +759,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return (
       <div className="create-button" onClick={() => this.moveToCreateOne()}>
         <SpriteIcon name="trowel" />
-        Create One
+        Create a new one
       </div>
     );
   }
@@ -768,7 +768,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return (
       <div className="recomend-button">
         <SpriteIcon name="user-plus"/>
-        Recommend a Builder
+        Recommend a builder
       </div>
     );
   }
