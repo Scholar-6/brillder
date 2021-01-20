@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Box, Grid, Hidden } from "@material-ui/core";
-import { Category } from "./interface";
 import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import queryString from 'query-string';
@@ -52,8 +51,10 @@ interface ViewAllState {
   searchString: string;
   isSearching: boolean;
   sortBy: SortBy;
+
   subjects: SubjectItem[];
-  totalSubjects: Subject[];
+  userSubjects: Subject[];
+
   sortedIndex: number;
   finalBricks: Brick[];
   isLoading: boolean;
@@ -94,7 +95,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricks: [],
       sortBy: SortBy.Date,
       subjects: [],
-      totalSubjects: [],
+      userSubjects: Object.assign([], props.user.subjects),
       sortedIndex: 0,
       noSubjectOpen: false,
       deleteDialogOpen: false,
@@ -182,7 +183,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           }
         }
       });
-      this.setState({ ...this.state, subjects, totalSubjects: subjects });
+      this.setState({ ...this.state, subjects });
     } else {
       this.setState({ ...this.state, failedRequest: true });
     }
@@ -385,6 +386,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (subject) {
       subject.checked = !subject?.checked;
     }
+    const userSubject = this.state.userSubjects.find(s => s.id === id);
+    if (userSubject) {
+      userSubject.checked = !userSubject?.checked;
+    }
     const finalBricks = this.filter(this.state.bricks, this.state.isCore);
     this.setState({ ...this.state, shown: false });
     setTimeout(() => {
@@ -396,8 +401,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   clearSubjects = () => {
     const { state } = this;
-    const { subjects } = state;
+    const { subjects, userSubjects } = state;
     subjects.forEach((r: any) => (r.checked = false));
+    userSubjects.forEach((r: any) => (r.checked = false));
     this.setState({ ...state, isClearFilter: false });
   };
 
@@ -882,12 +888,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             user={this.props.user}
             sortBy={this.state.sortBy}
             subjects={this.state.subjects}
+            userSubjects={this.state.userSubjects}
             isCore={this.state.isCore}
             isClearFilter={this.state.isClearFilter}
-            subjectSelected={true}
             handleSortChange={e => this.handleSortChange(e)}
             clearSubjects={() => this.clearSubjects()}
-            filterBySubject={index => this.filterBySubject(index)}
+            filterBySubject={id => this.filterBySubject(id)}
           />
           <Hidden only={["xs"]}>
             {this.renderDesktopBricksColumn(bricks)}
