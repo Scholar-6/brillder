@@ -81,6 +81,7 @@
       }
     }
     .link-text {
+      cursor: pointer;
       margin-top: 2vh;
       font-family: $font-family-bold;
       @extend %textCenter;

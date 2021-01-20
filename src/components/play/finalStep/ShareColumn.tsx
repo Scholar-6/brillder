@@ -10,12 +10,12 @@ interface ShareProps {
 
 const ShareColumn: React.FC<ShareProps> = props => {
   return (
-    <Grid container item xs={props.size ? props.size : 5} justify="center">
+    <Grid className="share-column" onClick={props.onClick} container item xs={props.size ? props.size : 5} justify="center">
       <div>
         <div className="button-container">
-          <SpriteIcon name="share" className="active" onClick={props.onClick} />
+          <SpriteIcon name="feather-share" className="active" />
         </div>
-        <div className="link-text">Share with friend</div>
+        <div className="link-text" >Share with a friend or colleague</div>
       </div>
     </Grid>
   );
