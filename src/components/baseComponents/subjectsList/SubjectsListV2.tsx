@@ -4,6 +4,7 @@ import AnimateHeight from "react-animate-height";
 
 import "./SubjectsList.scss";
 import { Subject } from "model/brick";
+import SpriteIcon from "../SpriteIcon";
 
 interface PublishedSubjectsProps {
   filterHeight: string;
@@ -14,15 +15,15 @@ interface PublishedSubjectsProps {
 
 class SubjectsListV2 extends Component<PublishedSubjectsProps> {
   renderCircle(color: string) {
-    return <div className="filter-circle" style={{ ["background" as any]: color }} />
+    return <div className="filter-circle" style={{ background: color }} />
   }
 
   renderChecked(color: string) {
     return (
-      <div className="subject-border" style={{ ["border" as any]: "0.15vw solid " + color }}>
-        {this.renderCircle(color)}
+      <div className="subject-border">
+        <SpriteIcon name="radio" className="radio-checked" style={{ color, fill: color }} />
       </div>
-    )
+    );
   }
 
   renderDefault(color: string) {

@@ -13,11 +13,16 @@
     padding-left: 1.2vw;
     padding-right: 1.2vw;
     .subject-border {
-      margin-right: 0.5vw !important;
+      margin-right: 0.4vw !important;
       padding: 0.05vw;
       border-radius: 50%;
-    }
+      @extend %flexToYCenter;
 
+      .radio-checked {
+        stroke-width: 2;
+      }
+    }
+    
     .subject-no-border {
       margin: 0.25vw;
       margin-right: 0.65vw;
