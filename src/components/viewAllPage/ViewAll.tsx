@@ -777,20 +777,32 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
+  renderCreateOneButton() {
+    return (
+      <div className="create-button" onClick={() => this.moveToCreateOne()}>
+        <SpriteIcon name="trowel" />
+        Create One
+      </div>
+    );
+  }
+
+  renderRecomendButton() {
+    return (
+      <div className="recomend-button">
+        <SpriteIcon name="user-plus"/>
+        Recommend a Builder
+      </div>
+    );
+  }
+
   renderNoBricks() {
     return (
       <div className="main-brick-container">
         <div className="centered text-theme-dark-blue title no-found">
           Sorry, no bricks found
         </div>
-        <div className="create-button" onClick={() => this.moveToCreateOne()}>
-          <SpriteIcon name="trowel" />
-          Create One
-        </div>
-        <div className="recomend-button">
-          <SpriteIcon name="user-plus"/>
-          Recommend a Builder
-        </div>
+        {this.renderCreateOneButton()}
+        {this.renderRecomendButton()}
       </div>
     );
   }
@@ -804,6 +816,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         <div className="main-brick-container">
           <div className="centered text-theme-dark-blue title found">
             {this.renderTitle(bricks)}
+            {this.renderCreateOneButton()}
+            {this.renderRecomendButton()}
           </div>
         </div>
       );
