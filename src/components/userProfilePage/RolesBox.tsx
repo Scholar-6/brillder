@@ -1,4 +1,4 @@
-import { UserRole, UserType } from "model/user";
+import { UserType } from "model/user";
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 

@@ -1,4 +1,4 @@
-import { Grid, ListItemIcon, ListItemText, MenuItem, Select, SvgIcon, TextField } from '@material-ui/core';
+import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon, TextField } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Subject } from 'model/brick';
 import { User } from 'model/user';

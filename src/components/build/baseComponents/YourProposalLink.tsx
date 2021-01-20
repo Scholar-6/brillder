@@ -12,47 +12,19 @@ export interface YourProposalButtonProps {
   brickId: number;
   invalid: boolean;
   tutorialStep: TutorialStep;
-  tooltipsOn: boolean;
-  setTooltips(value: boolean): void;
   saveBrick(): void;
   isTutorialPassed(): boolean;
 }
 
 const YourProposalLink: React.FC<YourProposalButtonProps> = ({
-  invalid, brickId, tooltipsOn, tutorialStep, setTooltips, saveBrick, isTutorialPassed
+  invalid, brickId, tutorialStep, saveBrick, isTutorialPassed
 }) => {
   const history = useHistory();
 
   const editProposal = () => {
     clearProposal();
     saveBrick();
-    history.push(`/build/brick/${brickId}/proposal`);
-  }
-
-  const renderZapTooltip = () => {
-    if (!isTutorialPassed() && tutorialStep === TutorialStep.Additional) {
-      let className = "additional-tooltip"
-      if (tooltipsOn === false) {
-        className += " tooltip-off";
-      }
-
-      return (
-        <div className={className}>
-          <div className="tooltip-text">Tool Tips</div>
-          <button onClick={() => setTooltips(!tooltipsOn)}>
-            <img
-              alt="" className="additional-tooltip-icon"
-              src={
-                tooltipsOn === true
-                  ? "/feathericons/zap-white.png"
-                  : "/feathericons/zap-off-light-blue.png"
-              }
-            />
-          </button>
-        </div>
-      );
-    }
-    return "";
+    history.push(`/build/brick/${brickId}/plan`);
   }
 
   let className = "proposal-container";
@@ -83,7 +55,6 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
           </div>
         </div>
       </Grid>
-      {renderZapTooltip()}
     </div>
   );
 }

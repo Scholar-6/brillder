@@ -30,4 +30,4 @@ export const OpenQuestionRoutePart = '/open-question';
 export const BrickLengthRoutePart = '/length';
 export const BriefRoutePart = '/brief';
 export const PrepRoutePart = '/prep';
-export const ProposalReviewPart = '/proposal';
+export const ProposalReviewPart = '/plan';
