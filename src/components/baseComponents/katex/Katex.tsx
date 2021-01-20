@@ -42,7 +42,7 @@ const Katex: React.FC<KatexProps> = props => {
     }, [ref]);
 
     return (
-        <div ref={ref} dangerouslySetInnerHTML={{ __html: props.latex }} />
+        <div ref={ref} className="katex-overflow-scroll" dangerouslySetInnerHTML={{ __html: props.latex }} />
     );
 };
 
