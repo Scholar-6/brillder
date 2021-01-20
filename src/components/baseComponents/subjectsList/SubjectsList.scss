@@ -6,6 +6,10 @@
   margin: 0 !important;
   width: 100% !important;
   .subject-list-v2 {
+    cursor: pointer;
+    margin-bottom: 0 !important;
+    padding-bottom: 0.5vh;
+    padding-top: 0.5vh;
     padding-left: 1.2vw;
     padding-right: 1.2vw;
     .subject-border {
@@ -28,6 +32,14 @@
 
     &:hover {
       background: var(--light-blue-alpha3);
+    }
+
+    &.checked {
+      background: var(--white);
+      color: var(--theme-dark-blue);
+      .MuiFormControlLabel-root .MuiTypography-root {
+        color: var(--theme-dark-blue) !important;
+      }
     }
   }
 }

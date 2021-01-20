@@ -36,12 +36,17 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
   renderSubjectItem(subject: Subject, i: number) {
     let count = this.props.isPublic ? subject.publicCount : subject.personalCount;
 
+    let className = "subject-list-v2";
+    if (subject.checked) {
+      className += ' checked';
+    }
+
     return (
-      <Grid key={i} container direction="row" className="subject-list-v2">
+      <Grid key={i} container direction="row" className={className} onClick={() => this.props.filterBySubject(i)}>
         <Grid item xs={11} className="filter-container subjects-indexes-box">
           <FormControlLabel
             checked={subject.checked}
-            onClick={() => this.props.filterBySubject(i)}
+            
             control={
               <div>
                 {subject.checked
