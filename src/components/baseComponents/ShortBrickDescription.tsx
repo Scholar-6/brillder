@@ -38,18 +38,8 @@ interface ShortDescriptionProps {
   move?(): void;
 }
 
-interface State {
-  circleHovered: boolean;
-}
 
-class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
-  constructor(props: ShortDescriptionProps) {
-    super(props);
-    this.state = {
-      circleHovered: false,
-    };
-  }
-
+class ShortBrickDescription extends Component<ShortDescriptionProps> {
   renderRoler() {
     return (
       <div className="left-brick-roller">
@@ -81,18 +71,6 @@ class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
     return "";
   }
 
-  circleHover() {
-    if(!this.state.circleHovered) {
-      this.setState({circleHovered: true});
-    }
-  }
-
-  circleHide() {
-    if (this.state.circleHovered) {
-      this.setState({circleHovered: false});
-    }
-  }
-
   renderCircle(color: string) {
     let className = "left-brick-circle";
 
@@ -105,12 +83,8 @@ class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
       className += ' skip-top-right-border';
     }
     
-    if (this.state.circleHovered) {
-      className += ' circle-hovered';
-    }
-
     return (
-      <div className={className} onMouseEnter={() => this.circleHover()} onMouseLeave={() => this.circleHide()}>
+      <div className={className}>
         <div className="round-button" style={{ background: `${color}` }}>
           {this.renderIcon()}
         </div>
@@ -133,7 +107,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
 
   renderShortBrickInfo(searchString: string, brick: Brick) {
     return (
-      <div className="short-brick-info" onMouseEnter={this.props.onMouseEnter}>
+      <div className="short-brick-info">
         <div className="link-description">
           <SearchText searchString={searchString} text={brick.title} />
         </div>
@@ -211,7 +185,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
         {brick.expanded
           ? this.renderExpanded()
           : (
-            <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
+            <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}} onMouseEnter={this.props.onMouseEnter}>
               {color
                 ? ( 
                    <BrickCircle
