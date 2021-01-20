@@ -2,20 +2,22 @@ import React from "react";
 
 import './SubjectsColumn.scss';
 import { Subject } from "model/brick";
-import { GENERAL_SUBJECT } from "components/services/subject";
+import { GENERAL_SUBJECT, CURRENT_AFFAIRS_SUBJECT } from "components/services/subject";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface Props {
   subjects: Subject[];
+  viewAll(): void;
   onClick(subjectId: number): void;
 }
 
-const SubjectsColumn: React.FC<Props> = ({ subjects, onClick }) => {
+const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
   let list = [];
   let isOdd = false;
   let row = [];
 
   for (let subject of subjects) {
-    if (subject.name === GENERAL_SUBJECT) {
+    if (subject.name === GENERAL_SUBJECT || subject.name === CURRENT_AFFAIRS_SUBJECT) {
       continue;
     }
     row.push(subject);
@@ -45,12 +47,24 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, onClick }) => {
     )
   }
 
+  const renderViewAllButton = () => {
+    return (
+      <div className="subject-item" onClick={viewAll}>
+        <div className="round-circle-container icon">
+          <SpriteIcon name="glasses-home" />
+        </div>
+        <div className="subject-name">View All</div>
+      </div>
+    )
+  }
+
   return (
     <div className="subjects-column">
       <div style={{width: '100%'}}>
         {list.map((row, i) =>
           <div key={i} className="subject-row">
             {row.map((s, j) => renderSubject(s, j))}
+            {i === list.length - 1 && renderViewAllButton()}
           </div>
         )}
       </div>
