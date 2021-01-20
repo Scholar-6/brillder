@@ -9,7 +9,7 @@ interface PublishedSubjectsProps {
   filterHeight: string;
   subjects: Subject[];
   isPublic: boolean;
-  filterBySubject(index: number): void;
+  filterBySubject(id: number): void;
 }
 
 class SubjectsListV2 extends Component<PublishedSubjectsProps> {
@@ -42,7 +42,7 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
     }
 
     return (
-      <Grid key={i} container direction="row" className={className} onClick={() => this.props.filterBySubject(i)}>
+      <Grid key={i} container direction="row" className={className} onClick={() => this.props.filterBySubject(subject.id)}>
         <Grid item xs={11} className="filter-container subjects-indexes-box">
           <FormControlLabel
             checked={subject.checked}
@@ -73,6 +73,10 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
   }
 
   render() {
+    const {subjects} = this.props;
+    let checkedSubjects = subjects.filter(s => s.checked);
+    let otherSubjects = subjects.filter(s => !s.checked);
+
     return (
       <Grid container direction="row" className="filter-container subjects-filter subjects-filter-v2">
         <AnimateHeight
@@ -80,7 +84,8 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
           height={this.props.filterHeight}
           style={{ width: "100%" }}
         >
-          {this.props.subjects.map(this.renderSubjectItem.bind(this))}
+          {checkedSubjects.map(this.renderSubjectItem.bind(this))}
+          {otherSubjects.map(this.renderSubjectItem.bind(this))}
         </AnimateHeight>
       </Grid>
     );

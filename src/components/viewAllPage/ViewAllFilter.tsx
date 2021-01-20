@@ -23,7 +23,7 @@ interface FilterProps {
 
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   clearSubjects(): void;
-  filterBySubject(index: number): void;
+  filterBySubject(id: number): void;
 }
 
 interface FilterState {
