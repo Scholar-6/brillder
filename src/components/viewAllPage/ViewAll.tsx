@@ -304,7 +304,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     let checked = this.state.subjects.find(s => s.checked === true);
     if (!checked) {
-      this.props.history.push(map.AllSubjects);
+      this.props.history.push(map.AllSubjects + '?filter=true');
     }
 
     const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore);
