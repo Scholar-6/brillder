@@ -11,6 +11,7 @@ interface PublishedSubjectsProps {
   filterHeight: string;
   subjects: Subject[];
   isPublic: boolean;
+  ref?: React.RefObject<any>;
   filterBySubject(id: number): void;
 }
 
@@ -86,7 +87,7 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
     let otherSubjects = subjects.filter(s => !s.checked);
 
     return (
-      <Grid container direction="row" className="filter-container subjects-filter subjects-filter-v2">
+      <Grid container direction="row" className="filter-container subjects-filter subjects-filter-v2" ref={this.props.ref}>
         <AnimateHeight
           duration={500}
           height={this.props.filterHeight}
