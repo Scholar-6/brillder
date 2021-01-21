@@ -368,10 +368,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
     this.setState({ ...this.state });
   }
 
-  handleMouseLeave(key: number) {
-    let bricks = this.state.finalBricks;
+  handleMouseLeave() {
     if (this.props.isSearching) {
-      bricks = this.state.searchBricks;
       hideBricks(this.state.searchBricks);
     } else {
       hideBricks(this.state.rawBricks);
@@ -400,10 +398,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
     this.setState({ ...this.state });
   }
 
-  onThreeColumnsMouseLeave(index: number, status: BrickStatus) {
-    let {threeColumns} = this.state;
+  onThreeColumnsMouseLeave() {
     if (this.props.isSearching) {
-      threeColumns = this.state.searchThreeColumns;
       hideBricks(this.state.searchBricks);
     } else {
       hideBricks(this.state.rawBricks);
