@@ -172,6 +172,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       isAdmin,
       roles: [
         { roleId: UserType.Publisher, name: "Publisher", disabled: false },
+        { roleId: UserType.Institution, name: "Institution", disabled: !isInstitute },
         { roleId: UserType.Admin, name: "Admin", disabled: false },
       ],
       noSubjectDialogOpen: false,
