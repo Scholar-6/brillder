@@ -13,7 +13,6 @@ import { getSubjects } from "services/axios/subject";
 import map from "components/map";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import ViewAllFilter, { SortBy } from "./ViewAllFilter";
 import SubjectsColumn from "./components/SubjectsColumn";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import AllSubjectsSidebar from "./AllSubjectsSidebar";
