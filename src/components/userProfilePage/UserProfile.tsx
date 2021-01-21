@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Grid, FormControlLabel } from "@material-ui/core";
-import Checkbox from "@material-ui/core/Checkbox";
+import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import { ReduxCombinedState } from "redux/reducers";
