@@ -1,7 +1,9 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 
+import './ShareDialog.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import SpriteHoverIcon from 'components/baseComponents/SpriteHoverIcon';
 
 interface ShareProps {
   isOpen: boolean;
@@ -11,6 +13,9 @@ interface ShareProps {
 }
 
 const ShareDialog: React.FC<ShareProps> = props => {
+  const [linkHovered, setLinkHover] = React.useState(false);
+  const [inviteHovered, setInviteHover] = React.useState(false);
+
   return (
     <Dialog
       open={props.isOpen}
@@ -24,8 +29,14 @@ const ShareDialog: React.FC<ShareProps> = props => {
         <div className="title">How would you like to share this brick?</div>
       </div>
       <div className="social-share-row">
-        <SpriteIcon name="link" onClick={props.link} />
-        <SpriteIcon name="user-plus" onClick={props.invite} />
+        <div>
+          <SpriteHoverIcon name="link" onClick={props.link} onHover={() => setLinkHover(true)} onBlur={() => setLinkHover(false)} />
+          {linkHovered && <div className="custom-tooltip copy-tooltip">Copy Link</div>}
+        </div>
+        <div >
+          <SpriteHoverIcon name="user-plus" onClick={props.invite} onBlur={() => setInviteHover(false)} onHover={() => setInviteHover(true)} />
+          {inviteHovered && <div className="custom-tooltip invite-tooltip">Invite an existing user</div>}
+        </div>
         {/*
         <SpriteIcon name="email-feather" className="active" />
         <SpriteIcon name="whatsapp" className="active" />

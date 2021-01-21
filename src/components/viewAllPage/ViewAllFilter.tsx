@@ -3,9 +3,11 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 
 import { User } from "model/user";
+import './ViewAllFilter.scss';
 
 import UnauthorizedSidebar from "./components/UnauthrizedSidebar";
-import SubjectsListV2 from "components/baseComponents/subjectsList/SubjectsListV2";
+import SubjectsListV3 from "components/baseComponents/subjectsList/SubjectsListV3";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 export enum SortBy {
   None,
@@ -16,9 +18,9 @@ export enum SortBy {
 interface FilterProps {
   sortBy: SortBy;
   subjects: any[];
+  userSubjects: any[];
   isClearFilter: any;
   isCore: boolean;
-  subjectSelected: boolean;
   user: User;
 
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
@@ -28,6 +30,7 @@ interface FilterProps {
 
 interface FilterState {
   filterExpanded: boolean;
+  isAllSubjects: boolean;
   filterHeight: any;
 }
 
@@ -36,7 +39,8 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     super(props);
     this.state = {
       filterHeight: "auto",
-      filterExpanded: true
+      isAllSubjects: true,
+      filterExpanded: true,
     }
   }
 
@@ -53,11 +57,15 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   }
 
   render() {
+    let { subjects } = this.props;
+    if (!this.state.isAllSubjects) {
+      subjects = this.props.userSubjects;
+    }
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
-        {this.props.user ? this.props.subjectSelected &&
+        {this.props.user ?
           <div className="sort-box">
-            <div className="filter-container sort-by-box">
+            <div className="filter-container sort-by-box" style={{height: '6.5vw'}}>
               <div className="sort-header">Sort By</div>
               <RadioGroup
                 className="sort-group"
@@ -87,7 +95,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               </RadioGroup>
             </div>
             <div className="filter-header">
-              <span>Filter</span>
+              <span>Subject</span>
               <button
                 className={
                   "btn-transparent filter-icon " +
@@ -106,9 +114,38 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
                 }}
               ></button>
             </div>
-            <SubjectsListV2
+            <div className="subjects-toggle">
+              <div
+                className={`${!this.state.isAllSubjects ? 'toggle-button my-subjects active' : 'toggle-button my-subjects not-active'}`}
+                onClick={() => {
+                  if (this.state.isAllSubjects) {
+                    this.props.clearSubjects();
+                    this.setState({ isAllSubjects: false });
+                  }
+                }}
+              >
+                <div className="icon-container">
+                  <SpriteIcon name="user" />
+                </div>
+                <div className="text-container">
+                  My Subjects
+                </div>
+              </div>
+              <div
+                className={`${this.state.isAllSubjects ? 'toggle-button all-subjects active' : 'toggle-button all-subjects not-active'}`}
+                onClick={() => {
+                  if (!this.state.isAllSubjects) {
+                    this.props.clearSubjects();
+                    this.setState({ isAllSubjects: true });
+                  }
+                }}
+              >
+                All Subjects
+              </div>
+            </div>
+            <SubjectsListV3
               isPublic={this.props.isCore}
-              subjects={this.props.subjects}
+              subjects={subjects}
               filterHeight={this.state.filterHeight}
               filterBySubject={this.props.filterBySubject}
             />

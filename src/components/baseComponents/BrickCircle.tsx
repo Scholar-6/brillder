@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Hidden } from "@material-ui/core";
 import './BrickCircle.scss';
 import SpriteIcon from "./SpriteIcon";
 
