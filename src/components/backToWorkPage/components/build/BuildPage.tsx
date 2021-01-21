@@ -73,7 +73,6 @@ interface BuildState {
   buildCheckedSubjectId: number;
 
   bricksLoaded: boolean;
-  hoverTimeout: number;
   handleKey(e: any): void;
 }
 
@@ -122,7 +121,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
       bricksLoaded: false,
 
-      hoverTimeout: -1,
       buildCheckedSubjectId: - 1,
 
       subjects: [],
@@ -360,17 +358,14 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
 
     if (bricks[index] && bricks[index].expanded) return;
-    this.setState({ ...this.state });
 
-    setTimeout(() => {
-      if (this.props.isSearching) {
-        expandSearchBrick(this.state.searchBricks, index);
-      } else {
-        let bricks2 = this.state.finalBricks.filter(b => b.isCore === true);
-        expandBrick(bricks2, this.state.rawBricks, index);
-      }
-      this.setState({ ...this.state });
-    }, 400);
+    if (this.props.isSearching) {
+      expandSearchBrick(this.state.searchBricks, index);
+    } else {
+      let bricks2 = this.state.finalBricks.filter(b => b.isCore === true);
+      expandBrick(bricks2, this.state.rawBricks, index);
+    }
+    this.setState({ ...this.state });
   }
 
   handleMouseLeave(key: number) {
@@ -381,12 +376,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     } else {
       hideBricks(this.state.rawBricks);
     }
-    bricks[key].expandFinished = true;
     this.setState({ ...this.state });
-    setTimeout(() => {
-      bricks[key].expandFinished = false;
-      this.setState({ ...this.state });
-    }, 400);
   }
 
   moveToFirstPage() {
@@ -406,24 +396,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
     let name = getThreeColumnName(status);
     let brick = getThreeColumnBrick(threeColumns, name, key);
     if (!brick || brick.expanded) return;
-
-    clearTimeout(this.state.hoverTimeout);
-
-    const hoverTimeout = setTimeout(() => {
-      try {
-        let {threeColumns} = this.state;
-        if (this.props.isSearching) {
-          threeColumns = this.state.searchThreeColumns;
-          hideBricks(this.state.searchBricks);
-        } else {
-          hideBricks(this.state.rawBricks);
-        }
-        let name = getThreeColumnName(status);
-        expandThreeColumnBrick(threeColumns, name, key + this.state.sortedIndex);
-        this.setState({ ...this.state });
-      } catch {}
-    }, 400);
-    this.setState({ ...this.state, hoverTimeout });
+    expandThreeColumnBrick(threeColumns, name, key + this.state.sortedIndex);
+    this.setState({ ...this.state });
   }
 
   onThreeColumnsMouseLeave(index: number, status: BrickStatus) {
@@ -434,23 +408,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     } else {
       hideBricks(this.state.rawBricks);
     }
-
-    let key = Math.ceil(index / 3);
-    let name = getThreeColumnName(status);
-    let brick = getThreeColumnBrick(threeColumns, name, key + this.state.sortedIndex);
-
-    if (brick) {
-      brick.expandFinished = true;
-      this.setState({ ...this.state });
-      setTimeout(() => {
-        try {
-          if (brick) {
-            brick.expandFinished = false;
-            this.setState({ ...this.state });
-          }
-        } catch {}
-      }, 400);
-    }
+    this.setState({ ...this.state });
   }
 
   delete(brickId: number) {

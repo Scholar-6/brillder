@@ -3,6 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .subjects-filter-v2 {
+  padding-top: 0 !important;
   margin: 0 !important;
   width: 100% !important;
   .subject-list-v2 {
@@ -51,4 +52,9 @@
       }
     }
   }
+}
+
+.subjects-filter-v3 {
+  height: calc(100vh - 5.834vw - 2vw - 2.4vw - 6.5vw - 2vw - 1.8vw) !important;
+  padding-bottom: 6vh !important;
 }
