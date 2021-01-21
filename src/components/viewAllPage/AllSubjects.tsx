@@ -83,7 +83,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           <Grid item xs={9} className="brick-row-container">
             <SubjectsColumn
               subjects={this.state.totalSubjects}
-              viewAll={() => this.props.history.push(map.ViewAllPage)}
+              viewAll={() => this.props.history.push(map.ViewAllPage + `?isViewAll=${true}`)}
               onClick={this.onSubjectSelected.bind(this)}
             />
           </Grid>
