@@ -73,6 +73,7 @@ interface ViewAllState {
   isAdmin: boolean;
   isCore: boolean;
   shown: boolean;
+  isAllSubjects: boolean;
 }
 
 class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
@@ -114,6 +115,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isAdmin,
       isCore: true,
       shown: false,
+      isAllSubjects: true,
       handleKey: this.handleKey.bind(this)
     };
 
@@ -737,7 +739,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     } else if (this.state.isSearching) {
       return this.state.searchString;
     }
-    return "ALL BRICKS";
+
+    if (this.state.isAllSubjects) {
+      return 'All subjects'
+    }
+    return 'My subjects';
   }
 
   moveToCreateOne() {
@@ -891,6 +897,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             userSubjects={this.state.userSubjects}
             isCore={this.state.isCore}
             isClearFilter={this.state.isClearFilter}
+            isAllSubjects={this.state.isAllSubjects}
+            setAllSubjects={isAllSubjects => {
+              this.clearSubjects();
+              this.setState({isAllSubjects});
+            }}
             handleSortChange={e => this.handleSortChange(e)}
             clearSubjects={() => this.clearSubjects()}
             filterBySubject={id => this.filterBySubject(id)}
