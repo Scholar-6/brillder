@@ -132,9 +132,9 @@
           stroke-width: 2 !important;
         }
         &:hover {
-          background: var(--theme-orange);
+          background: var(--tab-gray);
           span, svg {
-            color: var(--white) !important;
+            color: var(--theme-dark-blue) !important;
           }
         }
       }

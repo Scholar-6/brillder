@@ -4,6 +4,11 @@
 
 .sort-and-filter-container {
   margin-top: 0.5vh;
+  .view-all-sort-box {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    @extend %flexToXCenter;
+  }
   .subjects-toggle {
     width: 100%;
     display: flex;
@@ -33,7 +38,7 @@
       }
 
       &.not-active:hover {
-        background: var(--off-white);
+        background: var(--off-white) !important;
       }
 
       &:nth-child(odd) {

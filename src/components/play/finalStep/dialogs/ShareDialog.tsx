@@ -26,7 +26,7 @@ const ShareDialog: React.FC<ShareProps> = props => {
         <SpriteIcon name="cancel-thick" className="active" />
       </div>
       <div className="dialog-header">
-        <div className="title">How would you like to share this brick?</div>
+        <div className="title smaller">How would you like to share this brick?</div>
       </div>
       <div className="social-share-row">
         <div>

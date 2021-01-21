@@ -211,7 +211,7 @@ const QuestionComponents = ({
       <ValidationFailedDialog
         isOpen={sameAnswerDialogOpen}
         header="Looks like some answers are the same."
-        label="Correct answers could be marked wrong. Please make sure answers are different."
+        label="Correct answers could be marked wrong. Please make sure all answers are different."
         close={hideSameAnswerDialog}
       />
     </div>
