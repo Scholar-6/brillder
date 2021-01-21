@@ -9,16 +9,16 @@ interface DialogProps {
 const SameCategoryDialog: React.FC<DialogProps> = (props) => {
   return (
     <Dialog open={props.isOpen} className="dialog-box" onClose={props.close}>
-        <div className="dialog-header">
-          <div className="bold">Some Category Headings are the same</div>
-          <div>This will confuse students. Please make sure they are all different</div>
-        </div>
-        <div className="dialog-footer">
-          <button className="btn btn-md bg-gray yes-button" onClick={props.close}>
-            <span>Ok</span>
-          </button>
-        </div>
-      </Dialog>
+      <div className="dialog-header">
+        <div className="bold">Some Category Headings are the same</div>
+        <div>This will confuse students. Please make sure they are all different</div>
+      </div>
+      <div className="dialog-footer">
+        <button className="btn btn-md bg-gray yes-button" onClick={props.close}>
+          <span>Ok</span>
+        </button>
+      </div>
+    </Dialog>
   );
 }
 
