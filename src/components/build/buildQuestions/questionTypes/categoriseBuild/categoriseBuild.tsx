@@ -8,7 +8,7 @@ import { SortCategory, QuestionValueType, SortAnswer } from 'components/interfac
 import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import { showSameAnswerPopup } from '../service/questionBuild';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import SameCategoryDialog from './sameCategoryDialog';
+import ValidationFailedDialog from 'components/baseComponents/dialogs/ValidationFailedDialog';
 
 export interface CategoriseData {
   categories: SortCategory[];
@@ -248,7 +248,12 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
         height={categoryHeight}
         label="+ CATEGORY"
       />
-      <SameCategoryDialog isOpen={sameCategoryOpen} close={() => setSameCategory(false)} />
+      <ValidationFailedDialog
+        isOpen={sameCategoryOpen}
+        header="Some Category Headings are the same"
+        label="This will confuse students. Please make sure they are all different"
+        close={() => setSameCategory(false)}
+      />
     </div>
   )
 }
