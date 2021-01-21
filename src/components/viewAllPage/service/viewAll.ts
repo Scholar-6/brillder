@@ -131,28 +131,6 @@ export const sortBySubjectId = (bricks: Brick[], filterSubjectIds: number[]) => 
   });
 }
 
-export const filterBricks = (bricks: Brick[], searchBricks: Brick[], subjects: Subject[], stateIsCore: boolean, isSearching: boolean, isCore?: boolean) => {
-  if (isSearching) {
-    bricks = filterSearchBricks(searchBricks, stateIsCore);
-  }
-  let filtered: Brick[] = [];
-
-  let filterSubjects = getCheckedSubjectIds(subjects);
-
-  if (isCore) {
-    bricks = bricks.filter(b => b.isCore === true);
-  } else {
-    bricks = bricks.filter(b => !b.isCore)
-  }
-
-  if (filterSubjects.length > 0) {
-    filtered = filterBySubjects(bricks, filterSubjects);
-    sortBySubjectId(filtered, filterSubjects);
-    return filtered;
-  }
-  return bricks;
-}
-
 export const toggleSubject = (subjects: Subject[], id: number) => {
   const subject = subjects.find(s => s.id === id);
   if (subject) {

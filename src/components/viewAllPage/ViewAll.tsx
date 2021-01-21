@@ -161,7 +161,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (values.searchString) {
       this.search();
     } else if (this.props.user) {
-      this.loadBricks();
+      this.loadBricks(values);
     } else {
       this.setState({ ...this.state, failedRequest: true });
       // load bricks for unauthorized users
@@ -189,7 +189,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return subjects;
   }
 
-  async loadBricks() {
+  async loadBricks(values?: queryString.ParsedQuery<string>) {
     const currentBricks = await getCurrentUserBricks();
     if (currentBricks) {
       let yourBricks = prepareYourBricks(currentBricks);
@@ -201,10 +201,18 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const bricks = await getPublishedBricks();
     if (bricks) {
       let bs = sortAllBricks(bricks);
-      const finalBricks = this.filter(bs, this.state.isCore);
+      let finalBricks = this.filter(bs, this.state.isCore);
       let {subjects} = this.state;
       countSubjectBricks(subjects, bs);
       subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
+      if (values && values.isViewAll) {
+        subjects.forEach(s => {
+          if (s.publicCount > 0) {
+            s.checked = true;
+          }
+        });
+        finalBricks = this.filter(bricks, this.state.isCore);
+      }
       this.setState({ ...this.state, subjects, bricks, isLoading: false, finalBricks, shown: true });
     } else {
       this.setState({ ...this.state, isLoading: false, failedRequest: true });
@@ -219,7 +227,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   moveToPlay(brickId: number) {
-    this.props.history.push(`/play/brick/${brickId}/intro`);
+    this.props.history.push(map.playIntro(brickId));
   }
 
   move(brickId: number) {
