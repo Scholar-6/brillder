@@ -210,8 +210,8 @@ const QuestionComponents = ({
       <DeleteComponentDialog isOpen={dialogOpen} removeIndex={removeIndex} submit={removeInnerComponent} close={hideDialog} />
       <ValidationFailedDialog
         isOpen={sameAnswerDialogOpen}
-        header="Looks like some answers are the same"
-        label="Correct answers could be marked wrong. Please make sure answers are different"
+        header="Looks like some answers are the same."
+        label="Correct answers could be marked wrong. Please make sure answers are different."
         close={hideSameAnswerDialog}
       />
     </div>
