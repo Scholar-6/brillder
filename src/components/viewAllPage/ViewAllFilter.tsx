@@ -116,7 +116,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
             </div>
             <div className="subjects-toggle">
               <div
-                className={`${!this.state.isAllSubjects ? 'toggle-button my-subjects active' : 'toggle-button my-subjects'}`}
+                className={`${!this.state.isAllSubjects ? 'toggle-button my-subjects active' : 'toggle-button my-subjects not-active'}`}
                 onClick={() => {
                   if (this.state.isAllSubjects) {
                     this.props.clearSubjects();
@@ -132,7 +132,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
                 </div>
               </div>
               <div
-                className={`${this.state.isAllSubjects ? 'toggle-button all-subjects active' : 'toggle-button all-subjects'}`}
+                className={`${this.state.isAllSubjects ? 'toggle-button all-subjects active' : 'toggle-button all-subjects not-active'}`}
                 onClick={() => {
                   if (!this.state.isAllSubjects) {
                     this.props.clearSubjects();
