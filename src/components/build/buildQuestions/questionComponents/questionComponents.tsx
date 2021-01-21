@@ -20,8 +20,8 @@ import { getNonEmptyComponent } from "../../questionService/ValidateQuestionServ
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import FixedTextComponent from "../components/Text/FixedText";
 import { TextComponentObj } from "../components/Text/interface";
-import SameAnswerDialog from "./sameAnswerDialog";
 import DeleteComponentDialog from "./deleteComponentDialog";
+import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 
 
 type QuestionComponentsProps = {
@@ -208,7 +208,12 @@ const QuestionComponents = ({
         }
       </ReactSortable>
       <DeleteComponentDialog isOpen={dialogOpen} removeIndex={removeIndex} submit={removeInnerComponent} close={hideDialog} />
-      <SameAnswerDialog isOpen={sameAnswerDialogOpen} close={hideSameAnswerDialog} />
+      <ValidationFailedDialog
+        isOpen={sameAnswerDialogOpen}
+        header="Looks like some answers are the same"
+        label="Correct answers could be marked wrong. Please make sure answers are different"
+        close={hideSameAnswerDialog}
+      />
     </div>
   );
 }
