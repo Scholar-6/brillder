@@ -6,7 +6,7 @@ import { User } from "model/user";
 import './ViewAllFilter.scss';
 
 import UnauthorizedSidebar from "./components/UnauthrizedSidebar";
-import SubjectsListV2 from "components/baseComponents/subjectsList/SubjectsListV2";
+import SubjectsListV3 from "components/baseComponents/subjectsList/SubjectsListV3";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 export enum SortBy {
@@ -40,7 +40,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     this.state = {
       filterHeight: "auto",
       isAllSubjects: true,
-      filterExpanded: true
+      filterExpanded: true,
     }
   }
 
@@ -57,7 +57,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   }
 
   render() {
-    let {subjects} = this.props;
+    let { subjects } = this.props;
     if (!this.state.isAllSubjects) {
       subjects = this.props.userSubjects;
     }
@@ -65,7 +65,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       <Grid container item xs={3} className="sort-and-filter-container">
         {this.props.user ?
           <div className="sort-box">
-            <div className="filter-container sort-by-box">
+            <div className="filter-container sort-by-box" style={{height: '6.5vw'}}>
               <div className="sort-header">Sort By</div>
               <RadioGroup
                 className="sort-group"
@@ -143,7 +143,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
                 All Subjects
               </div>
             </div>
-            <SubjectsListV2
+            <SubjectsListV3
               isPublic={this.props.isCore}
               subjects={subjects}
               filterHeight={this.state.filterHeight}

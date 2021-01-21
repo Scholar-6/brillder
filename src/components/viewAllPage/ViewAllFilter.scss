@@ -66,4 +66,19 @@
       @extend %flexCenter;
     }
   }
+  .scroll-buttons {
+    @extend %flexCenter;
+    background: var(--white);
+    height: 2vw;
+    svg {
+      cursor: pointer;
+      width: 1.7vw;
+      height: 1.7vw;
+      color: var(--theme-orange);
+
+      &.disabled {
+        color: var(--tab-gray);
+      }
+    }
+  }
 }

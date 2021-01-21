@@ -11,17 +11,69 @@ interface PublishedSubjectsProps {
   filterHeight: string;
   subjects: Subject[];
   isPublic: boolean;
-  ref?: React.RefObject<any>;
   filterBySubject(id: number): void;
 }
 
-class SubjectsListV2 extends Component<PublishedSubjectsProps> {
+interface ListState {
+  canScroll: boolean;
+  scrollArea: React.RefObject<any>;
+}
+
+class SubjectsListV2 extends Component<PublishedSubjectsProps, ListState> {
+  constructor(props: PublishedSubjectsProps) {
+    super(props);
+    
+    this.state = {
+      canScroll: false,
+      scrollArea: React.createRef()
+    }
+  }
+
+  componentDidUpdate() {
+    this.checkScroll();
+  }
+
+  componentDidMount() {
+    this.checkScroll();
+  }
+
+  checkScroll() {
+    const {canScroll} = this.state;
+    const {current} = this.state.scrollArea;
+    console.log(current, current.scrollHeight, current.clientHeight);
+    if (current) {
+      if (current.scrollHeight > current.clientHeight) {
+        if (!canScroll) {
+          this.setState({canScroll: true});
+        }
+      } else {
+        if (canScroll) {
+          this.setState({canScroll: false});
+        }
+      }
+    }
+  }
+
+  scrollUp() {
+    const {current} = this.state.scrollArea;
+    if (current) {
+      current.scrollBy(0, -window.screen.height / 30);
+    }
+  }
+
+  scrollDown() {
+    const {current} = this.state.scrollArea;
+    if (current) {
+      current.scrollBy(0, window.screen.height / 30);
+    }
+  }
+
   renderCircle(color: string) {
     return <div className="filter-circle" style={{ background: color }} />
   }
 
   renderChecked(subject: Subject) {
-    let {color, name} = subject;
+    let { color, name } = subject;
 
     if (name === GENERAL_SUBJECT) {
       color = '#001c58';
@@ -55,7 +107,7 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
         <Grid item xs={11} className="filter-container subjects-indexes-box">
           <FormControlLabel
             checked={subject.checked}
-            
+
             control={
               <div>
                 {subject.checked
@@ -82,21 +134,27 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
   }
 
   render() {
-    const {subjects} = this.props;
+    const { subjects } = this.props;
     let checkedSubjects = subjects.filter(s => s.checked);
     let otherSubjects = subjects.filter(s => !s.checked);
 
     return (
-      <Grid container direction="row" className="filter-container subjects-filter subjects-filter-v2" ref={this.props.ref}>
-        <AnimateHeight
-          duration={500}
-          height={this.props.filterHeight}
-          style={{ width: "100%" }}
-        >
-          {checkedSubjects.map(this.renderSubjectItem.bind(this))}
-          {otherSubjects.map(this.renderSubjectItem.bind(this))}
-        </AnimateHeight>
-      </Grid>
+      <div>
+        <div className="scroll-buttons">
+          <SpriteIcon name="arrow-up" className={`${!this.state.canScroll ? 'disabled' : ''}`} onClick={this.scrollUp.bind(this)} />
+          <SpriteIcon name="arrow-down" className={`${!this.state.canScroll ? 'disabled' : ''}`} onClick={this.scrollDown.bind(this)} />
+        </div>
+        <Grid container direction="row" className="filter-container subjects-filter subjects-filter-v2 subjects-filter-v3" ref={this.state.scrollArea}>
+          <AnimateHeight
+            duration={500}
+            height={this.props.filterHeight}
+            style={{ width: "100%" }}
+          >
+            {checkedSubjects.map(this.renderSubjectItem.bind(this))}
+            {otherSubjects.map(this.renderSubjectItem.bind(this))}
+          </AnimateHeight>
+        </Grid>
+      </div>
     );
   }
 }
