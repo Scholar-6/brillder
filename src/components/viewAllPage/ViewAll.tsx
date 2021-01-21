@@ -208,7 +208,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const bricks = await getPublishedBricks();
     if (bricks) {
       let bs = sortAllBricks(bricks);
-      let finalBricks = this.filter(bs, this.state.isCore);
+      let finalBricks = this.filter(bs, this.state.isAllSubjects, this.state.isCore);
       let {subjects} = this.state;
       countSubjectBricks(subjects, bs);
       subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
@@ -218,7 +218,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             s.checked = true;
           }
         });
-        finalBricks = this.filter(bricks, this.state.isCore);
+        finalBricks = this.filter(bricks, this.state.isAllSubjects, this.state.isCore);
       }
       this.setState({ ...this.state, subjects, bricks, isLoading: false, finalBricks, shown: true });
     } else {
@@ -259,12 +259,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...state, finalBricks, sortBy });
   };
 
-  filter(bricks: Brick[], isCore?: boolean) {
+  filter(bricks: Brick[], isAllSubjects: boolean, isCore?: boolean) {
     if (this.state.isSearching) {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
 
-    let filterSubjects = getCheckedSubjectIds(this.state.subjects);
+    let filterSubjects = [];
+    if (isAllSubjects) {
+      filterSubjects = getCheckedSubjectIds(this.state.subjects);
+    } else {
+      filterSubjects = getCheckedSubjectIds(this.state.userSubjects);
+    }
 
     if (isCore) {
       bricks = bricks.filter(b => b.isCore === true);
@@ -293,7 +298,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       this.props.history.push(map.AllSubjects);
     }
 
-    const finalBricks = this.filter(this.state.bricks, this.state.isCore);
+    const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore);
     this.setState({ ...this.state, isViewAll: false, shown: false });
     setTimeout(() => {
       try {
@@ -419,7 +424,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       try {
         if (bricks) {
           this.hideBricks();
-          const finalBricks = this.filter(bricks, this.state.isCore);
+          const finalBricks = this.filter(bricks, this.state.isAllSubjects, this.state.isCore);
           this.setState({
             ...this.state,
             searchBricks: bricks,
@@ -592,7 +597,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ isCore, shown: false, sortedIndex: 0 });
     setTimeout(() => {
       try {
-        const finalBricks = this.filter(this.state.bricks, isCore);
+        const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, isCore);
         this.setState({ shown: true, finalBricks, sortedIndex: 0 });
       } catch {}
     }, 1400);
@@ -751,7 +756,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             isCore={this.state.isCore}
             isClearFilter={this.state.isClearFilter}
             isAllSubjects={this.state.isAllSubjects}
-            setAllSubjects={isAllSubjects => this.setState({isAllSubjects})}
+            setAllSubjects={isAllSubjects => {
+              const finalBricks = this.filter(this.state.bricks, isAllSubjects, this.state.isCore);
+              this.setState({isAllSubjects, finalBricks, sortedIndex: 0 });
+            }}
             handleSortChange={e => this.handleSortChange(e)}
             clearSubjects={() => this.clearSubjects()}
             filterBySubject={id => this.filterBySubject(id)}
