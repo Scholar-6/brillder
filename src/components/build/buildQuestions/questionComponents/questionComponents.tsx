@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { Grid } from '@material-ui/core';
-import Dialog from '@material-ui/core/Dialog';
 
 import './questionComponents.scss';
 import ShortAnswerComponent from '../questionTypes/shortAnswerBuild/shortAnswerBuild';
@@ -21,6 +20,8 @@ import { getNonEmptyComponent } from "../../questionService/ValidateQuestionServ
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import FixedTextComponent from "../components/Text/FixedText";
 import { TextComponentObj } from "../components/Text/interface";
+import SameAnswerDialog from "./sameAnswerDialog";
+import DeleteComponentDialog from "./deleteComponentDialog";
 
 
 type QuestionComponentsProps = {
@@ -206,34 +207,8 @@ const QuestionComponents = ({
           ))
         }
       </ReactSortable>
-      <Dialog open={dialogOpen} onClose={hideDialog} className="dialog-box">
-        <div className="dialog-header">
-          <div>Permanently delete<br />this component?</div>
-        </div>
-        <div className="dialog-footer">
-          <button className="btn btn-md bg-theme-orange yes-button"
-            onClick={() => {
-              removeInnerComponent(removeIndex);
-              hideDialog();
-            }}>
-            <span>Yes, delete</span>
-          </button>
-          <button className="btn btn-md bg-gray no-button"
-            onClick={hideDialog}>
-            <span>No, keep</span>
-          </button>
-        </div>
-      </Dialog>
-      <Dialog open={sameAnswerDialogOpen} className="dialog-box" onClose={hideSameAnswerDialog}>
-        <div className="dialog-header">
-          <div>Looks like these two answers are the same</div>
-        </div>
-        <div className="dialog-footer">
-          <button className="btn btn-md bg-gray yes-button" onClick={hideSameAnswerDialog}>
-            <span>Ok</span>
-          </button>
-        </div>
-      </Dialog>
+      <DeleteComponentDialog isOpen={dialogOpen} removeIndex={removeIndex} submit={removeInnerComponent} close={hideDialog} />
+      <SameAnswerDialog isOpen={sameAnswerDialogOpen} close={hideSameAnswerDialog} />
     </div>
   );
 }
