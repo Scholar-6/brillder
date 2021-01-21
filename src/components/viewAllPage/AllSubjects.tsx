@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 import "swiper/swiper.scss";
 
 import "./ViewAll.scss";
@@ -16,6 +17,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import SubjectsColumn from "./components/SubjectsColumn";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import AllSubjectsSidebar from "./AllSubjectsSidebar";
+import ViewAllFilter, { SortBy } from "./ViewAllFilter";
 
 
 interface ViewAllProps {
@@ -31,18 +33,27 @@ interface ViewAllState {
   totalSubjects: Subject[];
   activeSubject: SubjectItem;
   failedRequest: boolean;
+  showFilters: boolean;
 }
 
 class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   constructor(props: ViewAllProps) {
     super(props);
 
+    let showFilters = false;
+    const values = queryString.parse(props.location.search);
+    if (values.filter) {
+      showFilters = true;
+    }
+
     this.state = {
       subjects: [],
       totalSubjects: [],
       activeSubject: {} as SubjectItem,
-      failedRequest: false
+      failedRequest: false,
+      showFilters
     };
+
 
     this.loadSubjects();
   }
@@ -50,7 +61,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async loadSubjects() {
     let subjects = await getSubjects() as SubjectItem[] | null;
 
-    if(subjects) {
+    if (subjects) {
       subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
       this.setState({ ...this.state, subjects, totalSubjects: subjects });
     } else {
@@ -63,7 +74,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const { subjects } = this.state;
     const subject = subjects.find(s => s.id === subjectId);
     if (subject) {
-      this.props.history.push(map.ViewAllPage +`?subjectId=${subject.id}`);
+      this.props.history.push(map.ViewAllPage + `?subjectId=${subject.id}`);
     }
   }
 
@@ -75,15 +86,31 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           user={this.props.user}
           placeholder={"Search Subjects, Topics, Titles & more"}
           history={this.props.history}
-          search={() => {}}
-          searching={(v) => {}}
+          search={() => { }}
+          searching={(v) => { }}
         />
         <Grid container direction="row" className="sorted-row">
-          <AllSubjectsSidebar />
+          {this.state.showFilters ?
+            <ViewAllFilter
+              user={this.props.user}
+              sortBy={SortBy.Date}
+              subjects={this.state.subjects}
+              userSubjects={this.props.user.subjects}
+              isCore={true}
+              isClearFilter={() => { }}
+              isAllSubjects={true}
+              setAllSubjects={() => { }}
+              handleSortChange={() => { }}
+              clearSubjects={() => { }}
+              filterBySubject={id => this.onSubjectSelected(id)}
+            />
+            :
+            <AllSubjectsSidebar />
+          }
           <Grid item xs={9} className="brick-row-container">
             <SubjectsColumn
               subjects={this.state.totalSubjects}
-              viewAll={() => this.props.history.push(map.ViewAllPage)}
+              viewAll={() => this.props.history.push(map.ViewAllPage + `?isViewAll=${true}`)}
               onClick={this.onSubjectSelected.bind(this)}
             />
           </Grid>

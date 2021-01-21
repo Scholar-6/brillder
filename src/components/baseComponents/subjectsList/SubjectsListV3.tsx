@@ -40,7 +40,6 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps, ListState> {
   checkScroll() {
     const {canScroll} = this.state;
     const {current} = this.state.scrollArea;
-    console.log(current, current.scrollHeight, current.clientHeight);
     if (current) {
       if (current.scrollHeight > current.clientHeight) {
         if (!canScroll) {

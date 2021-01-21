@@ -23,6 +23,9 @@ interface FilterProps {
   isCore: boolean;
   user: User;
 
+  isAllSubjects: boolean;
+  setAllSubjects(value: boolean): void;
+
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   clearSubjects(): void;
   filterBySubject(id: number): void;
@@ -30,7 +33,6 @@ interface FilterProps {
 
 interface FilterState {
   filterExpanded: boolean;
-  isAllSubjects: boolean;
   filterHeight: any;
 }
 
@@ -39,7 +41,6 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     super(props);
     this.state = {
       filterHeight: "auto",
-      isAllSubjects: true,
       filterExpanded: true,
     }
   }
@@ -58,14 +59,22 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
 
   render() {
     let { subjects } = this.props;
-    if (!this.state.isAllSubjects) {
-      subjects = this.props.userSubjects;
+    if (!this.props.isAllSubjects) {
+      subjects = [];
+      for (let subject of this.props.userSubjects) {
+        for (let s of this.props.subjects) {
+          if (s.id === subject.id) {
+            subjects.push(s);
+          }
+        }
+      }
+      subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
     }
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
         {this.props.user ?
           <div className="sort-box">
-            <div className="filter-container sort-by-box" style={{height: '6.5vw'}}>
+            <div className="filter-container sort-by-box view-all-sort-box" style={{height: '6.5vw'}}>
               <div className="sort-header">Sort By</div>
               <RadioGroup
                 className="sort-group"
@@ -95,7 +104,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               </RadioGroup>
             </div>
             <div className="filter-header">
-              <span>Subject</span>
+              <span>Subjects</span>
               <button
                 className={
                   "btn-transparent filter-icon " +
@@ -116,11 +125,10 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
             </div>
             <div className="subjects-toggle">
               <div
-                className={`${!this.state.isAllSubjects ? 'toggle-button my-subjects active' : 'toggle-button my-subjects not-active'}`}
+                className={`${!this.props.isAllSubjects ? 'toggle-button my-subjects active' : 'toggle-button my-subjects not-active'}`}
                 onClick={() => {
-                  if (this.state.isAllSubjects) {
-                    this.props.clearSubjects();
-                    this.setState({ isAllSubjects: false });
+                  if (this.props.isAllSubjects) {
+                    this.props.setAllSubjects(false);
                   }
                 }}
               >
@@ -132,11 +140,10 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
                 </div>
               </div>
               <div
-                className={`${this.state.isAllSubjects ? 'toggle-button all-subjects active' : 'toggle-button all-subjects not-active'}`}
+                className={`${this.props.isAllSubjects ? 'toggle-button all-subjects active' : 'toggle-button all-subjects not-active'}`}
                 onClick={() => {
-                  if (!this.state.isAllSubjects) {
-                    this.props.clearSubjects();
-                    this.setState({ isAllSubjects: true });
+                  if (!this.props.isAllSubjects) {
+                    this.props.setAllSubjects(true);
                   }
                 }}
               >
