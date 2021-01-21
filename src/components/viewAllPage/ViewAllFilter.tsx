@@ -60,7 +60,14 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   render() {
     let { subjects } = this.props;
     if (!this.props.isAllSubjects) {
-      subjects = this.props.userSubjects;
+      subjects = [];
+      for (let subject of this.props.userSubjects) {
+        for (let s of this.props.subjects) {
+          if (s.id === subject.id) {
+            subjects.push(s);
+          }
+        }
+      }
     }
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
