@@ -32,11 +32,27 @@
       }
 
       .subject-text {
+        display: flex;
+        flex-direction: row;
         color: var(--theme-orange);
         font-size: 3.6vh;
         text-align: left;
         @include phone_and_tabletL {
           font-size: 3.5vw;
+        }
+        div {
+          display: flex;
+          flex-direction: column;
+        }
+        .icon-container {
+          @extend %flexCenter;
+          cursor: pointer;
+        }
+        svg {
+          margin-left: 0.4vw;
+          stroke-width: 2.7 !important;
+          width: 2vw;
+          height: 2vw;
         }
       }
     }
