@@ -15,6 +15,8 @@ import Navigation from 'components/build/proposal/components/navigation/Navigati
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 import a from 'indefinite';
+import map from "components/map";
+import { User } from "model/user";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
@@ -22,6 +24,7 @@ enum RefName {
 }
 
 interface BrickTitleProps {
+  user: User;
   history: any;
   baseUrl: string;
   parentState: Brick;
@@ -110,6 +113,23 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
     }
   }
 
+  renderSubjectTitle(subjectName: string) {
+    return (
+      <div className="subject-text">
+        <div>
+          This will be {a(subjectName)} brick
+        </div>
+        <div className="icon-container" onClick={() => {
+          if (this.props.user.subjects.length > 1) {
+            this.props.history.push(map.ProposalSubject);
+          }
+        }}>
+          <SpriteIcon name="edit-outline-custom" />
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { parentState, canEdit, baseUrl, saveTitles } = this.props;
     if (parentState.title) {
@@ -139,7 +159,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
               <img alt="titles" src="/images/new-brick/titles.png" />
             </div>
             <h1>
-             {subjectName && <div className="subject-text">This will be {a(subjectName)} brick</div>}
+              {subjectName && this.renderSubjectTitle(subjectName)}
               What is it about?
             </h1>
             <form>
