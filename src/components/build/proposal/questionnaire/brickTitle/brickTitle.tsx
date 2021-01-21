@@ -9,6 +9,7 @@ import { setBrillderTitle } from "components/services/titleService";
 import { enterPressed } from "components/services/key";
 
 import NextButton from '../../components/nextButton';
+import PrevButton from "../../components/previousButton";
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 
@@ -17,6 +18,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import a from 'indefinite';
 import map from "components/map";
 import { User } from "model/user";
+import AddSubjectDialog from "./AddSubjectDialog";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
@@ -36,6 +38,7 @@ interface BrickTitleProps {
 }
 
 interface BrickTitleState {
+  subjectSelectOpen: boolean;
   subTitleRef: React.RefObject<HTMLDivElement>;
   altTitleRef: React.RefObject<HTMLDivElement>;
 }
@@ -93,6 +96,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
     super(props);
 
     this.state = {
+      subjectSelectOpen: false,
       subTitleRef: React.createRef<HTMLDivElement>(),
       altTitleRef: React.createRef<HTMLDivElement>(),
     }
@@ -122,6 +126,8 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
         <div className="icon-container" onClick={() => {
           if (this.props.user.subjects.length > 1) {
             this.props.history.push(map.ProposalSubject);
+          } else {
+            this.setState({subjectSelectOpen: true});
           }
         }}>
           <SpriteIcon name="edit-outline-custom" />
@@ -142,7 +148,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
       if (subject) {
         subjectName = subject.name;
       }
-    } catch {}
+    } catch { }
 
     return (
       <div className="tutorial-page brick-title-page">
@@ -201,12 +207,24 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
               </Grid>
             </form>
             <div className="tutorial-pagination">
-              <div className="centered text-theme-dark-blue bold" style={{fontSize: '2vw', marginRight: '2vw'}} onClick={() => {
-                saveTitles(parentState);
-                this.props.history.push(baseUrl + OpenQuestionRoutePart);
-              }}>
-                Next
-              </div>
+              {this.props.user.subjects.length > 1
+                ?
+                <div className="centered">
+                  <PrevButton
+                    to={map.ProposalSubject}
+                    isActive={true}
+                    onHover={() => { }}
+                    onOut={() => { }}
+                  />
+                </div>
+                :
+                <div className="centered text-theme-dark-blue bold" style={{ fontSize: '2vw', marginRight: '2vw' }} onClick={() => {
+                  saveTitles(parentState);
+                  this.props.history.push(baseUrl + OpenQuestionRoutePart);
+                }}>
+                  Next
+                </div>
+              }
               <div className="centered">
                 <NextButton
                   isActive={true}
@@ -224,6 +242,13 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <div className="red-right-block"></div>
           </Hidden>
         </Grid>
+        {this.props.user.subjects.length <= 1 &&
+          <AddSubjectDialog
+            isOpen={this.state.subjectSelectOpen}
+            user={this.props.user}
+            close={() => this.setState({subjectSelectOpen: false})}
+          />
+        }
       </div>
     );
   }
