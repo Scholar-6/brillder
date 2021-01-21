@@ -65,7 +65,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       <Grid container item xs={3} className="sort-and-filter-container">
         {this.props.user ?
           <div className="sort-box">
-            <div className="filter-container sort-by-box" style={{height: '6.5vw'}}>
+            <div className="filter-container sort-by-box view-all-sort-box" style={{height: '6.5vw'}}>
               <div className="sort-header">Sort By</div>
               <RadioGroup
                 className="sort-group"
@@ -95,7 +95,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               </RadioGroup>
             </div>
             <div className="filter-header">
-              <span>Subject</span>
+              <span>Subjects</span>
               <button
                 className={
                   "btn-transparent filter-icon " +
