@@ -268,7 +268,16 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (isAllSubjects) {
       filterSubjects = getCheckedSubjectIds(this.state.subjects);
     } else {
-      filterSubjects = getCheckedSubjectIds(this.state.userSubjects);
+      let subjects = [];
+      for (let subject of this.state.userSubjects) {
+        for (let s of this.state.subjects) {
+          if (s.id === subject.id) {
+            subjects.push(s);
+          }
+        }
+      }
+      subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
+      filterSubjects = getCheckedSubjectIds(subjects);
     }
 
     if (isCore) {
