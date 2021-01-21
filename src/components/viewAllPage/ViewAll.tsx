@@ -78,6 +78,7 @@ interface ViewAllState {
   isCore: boolean;
   shown: boolean;
   isAllSubjects: boolean;
+  isViewAll: boolean;
 }
 
 class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
@@ -94,6 +95,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
+
+    let isViewAll = false;
+    if (values.isViewAll) {
+      isViewAll = true;
+    }
 
     this.state = {
       yourBricks: [],
@@ -120,6 +126,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isCore: true,
       shown: false,
       isAllSubjects: true,
+      isViewAll,
       handleKey: this.handleKey.bind(this)
     };
 
@@ -277,7 +284,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
   //endregion
 
-  filterBySubject = (id: number) => {
+  filterBySubject(id: number) {
     toggleSubject(this.state.subjects, id);
     toggleSubject(this.state.userSubjects, id);
 
@@ -287,7 +294,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     const finalBricks = this.filter(this.state.bricks, this.state.isCore);
-    this.setState({ ...this.state, shown: false });
+    this.setState({ ...this.state, isViewAll: false, shown: false });
     setTimeout(() => {
       try {
         this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
@@ -596,6 +603,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       const subjectId = filterSubjects[0];
       const subject = this.state.subjects.find(s => s.id === subjectId);
       return subject?.name;
+    } else if (this.state.isViewAll) {
+      return "View All";
     } else if (filterSubjects.length > 1) {
       return "Filtered";
     } else if (this.state.isSearching) {
