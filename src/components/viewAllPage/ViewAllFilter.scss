@@ -32,6 +32,10 @@
         background: var(--white);
       }
 
+      &.not-active:hover {
+        background: var(--off-white);
+      }
+
       &:nth-child(odd) {
         margin-right: 0.4%;
       }
