@@ -7,6 +7,7 @@ import './ViewAllFilter.scss';
 
 import UnauthorizedSidebar from "./components/UnauthrizedSidebar";
 import SubjectsListV2 from "components/baseComponents/subjectsList/SubjectsListV2";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 export enum SortBy {
   None,
@@ -115,7 +116,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
             </div>
             <div className="subjects-toggle">
               <div
-                className={`${!this.state.isAllSubjects ? 'active' : ''}`}
+                className={`${!this.state.isAllSubjects ? 'toggle-button my-subjects active' : 'toggle-button my-subjects'}`}
                 onClick={() => {
                   if (this.state.isAllSubjects) {
                     this.props.clearSubjects();
@@ -123,10 +124,15 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
                   }
                 }}
               >
-                My Subjects
+                <div className="icon-container">
+                  <SpriteIcon name="user" />
+                </div>
+                <div className="text-container">
+                  My Subjects
+                </div>
               </div>
               <div
-                className={`${this.state.isAllSubjects ? 'active' : ''}`}
+                className={`${this.state.isAllSubjects ? 'toggle-button all-subjects active' : 'toggle-button all-subjects'}`}
                 onClick={() => {
                   if (!this.state.isAllSubjects) {
                     this.props.clearSubjects();
