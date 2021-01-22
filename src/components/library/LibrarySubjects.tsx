@@ -4,11 +4,10 @@ import { Subject } from "model/brick";
 import './LibrarySubjects.scss';
 
 import { SubjectAssignments } from "./model";
-import { User } from "model/user";
 import LibrarySubject from "./LibrarySubject";
 
 interface LibrarySubjectsProps {
-  user: User;
+  userId: number;
   pageSize: number;
   sortedIndex: number;
   subjects: Subject[];
@@ -18,7 +17,7 @@ interface LibrarySubjectsProps {
 
 class LibrarySubjects extends Component<LibrarySubjectsProps> {
   renderSubjectAssignments(item: SubjectAssignments, key: number) {
-    return <LibrarySubject subjectAssignment={item} key={key} history={this.props.history} />
+    return <LibrarySubject userId={this.props.userId} subjectAssignment={item} index={key} history={this.props.history} />
   }
 
   render() {
