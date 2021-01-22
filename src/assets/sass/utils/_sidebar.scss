@@ -199,8 +199,7 @@
       }
 
       .subject-indexes-box {
-        margin: 0 1.2vw !important;
-        width: calc(100% - #{$sidebar-gutter * 2});
+        width: 100%;
 
         .index-box {
           margin: 0 0 0.5vw 0;
