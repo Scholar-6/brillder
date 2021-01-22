@@ -173,3 +173,16 @@ export const prepareVisibleBricks = (
   }
   return data;
 }
+
+export const prepareUserSubjects = (subjects: SubjectItem[], userSubjects: Subject[]) => {
+  const ss = [];
+  for (let subject of userSubjects) {
+    for (let s of subjects) {
+      if (s.id === subject.id) {
+        ss.push(s);
+      }
+    }
+  }
+  subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
+  return getCheckedSubjectIds(subjects);
+}
