@@ -107,7 +107,7 @@
             padding: 0.25vw 0.6vw;
             border-radius: 0.65vw;
             font-size: 1vw;
-            right: 1.4vw;
+            right: 1.2vw !important;
             top: 50%;
             transform: translateY(-50%);
           }
@@ -202,7 +202,9 @@
         width: 100%;
 
         .index-box {
-          margin: 0 1vw 0.5vw 1vw;
+          margin: 0 0 0.5vw 0;
+          padding-left: 1.2vw;
+          padding-right: 1.2vw;
           height: auto !important;
           min-height: 3.4vh;
 
