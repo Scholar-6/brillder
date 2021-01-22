@@ -126,9 +126,9 @@
         }
       }
       .share-button {
-        background: var(--white);
+        background: var(--theme-dark-blue);
         span, svg {
-          color: var(--theme-orange);
+          color: var(--white);
           stroke-width: 2 !important;
         }
         &:hover {
