@@ -37,7 +37,8 @@ import ViewAllMobile from "./ViewAllMobile";
 import CreateOneButton from "components/userProfilePage/components/CreateOneButton";
 import RecommendButton from "components/userProfilePage/components/RecommendBuilderButton";
 
-import {removeByIndex, sortByPopularity, sortByDate, sortAndFilterBySubject, getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks, expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks, sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds} from './service/viewAll';
+import {removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject, getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks, expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks, sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds} from './service/viewAll';
+import { filterByCurretUser } from "components/backToWorkPage/service";
 
 
 interface ViewAllProps {
@@ -106,7 +107,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricks: [],
       sortBy: SortBy.Date,
       subjects: [],
-      userSubjects: Object.assign([], props.user.subjects),
+      userSubjects: props.user ? Object.assign([], props.user.subjects) : [],
       sortedIndex: 0,
       noSubjectOpen: false,
       deleteDialogOpen: false,
@@ -268,22 +269,16 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (isAllSubjects) {
       filterSubjects = getCheckedSubjectIds(this.state.subjects);
     } else {
-      let subjects = [];
-      for (let subject of this.state.userSubjects) {
-        for (let s of this.state.subjects) {
-          if (s.id === subject.id) {
-            subjects.push(s);
-          }
-        }
-      }
-      subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
-      filterSubjects = getCheckedSubjectIds(subjects);
+      filterSubjects = prepareUserSubjects(this.state.subjects, this.state.userSubjects);
     }
 
     if (isCore) {
       bricks = bricks.filter(b => b.isCore === true);
     } else {
-      bricks = bricks.filter(b => !b.isCore)
+      bricks = bricks.filter(b => !b.isCore);
+      if (!this.state.isAdmin) {
+        bricks = filterByCurretUser(bricks, this.props.user.id);
+      }
     }
 
     if (filterSubjects.length > 0) {
