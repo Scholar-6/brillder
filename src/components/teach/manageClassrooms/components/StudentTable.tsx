@@ -104,7 +104,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                   <div className="classroom-names">
                     {user.studyClassrooms && user.studyClassrooms.map((classroom, i) =>
                       <div key={i} className="classroom-name" style={{
-                        backgroundColor: classroom.subject.color
+                        backgroundColor: classroom.subject?.color
                       }}>{classroom.name}</div>)
                     }
                   </div>
