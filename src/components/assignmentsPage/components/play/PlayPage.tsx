@@ -42,6 +42,7 @@ interface PlayState {
   pageSize: number;
   isAdmin: boolean;
   isTeach: boolean;
+  isLoaded: boolean;
   handleKey(e: any): void;
 }
 
@@ -79,6 +80,8 @@ class PlayPage extends Component<PlayProps, PlayState> {
       sortedIndex: 0,
       pageSize: 18,
 
+      isLoaded: false,
+
       isAdmin, isTeach,
 
       filters: {
@@ -99,6 +102,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
       this.setAssignments(assignments);
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
+      this.setState({isLoaded: true})
     }
   }
 
@@ -134,7 +138,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
     }
 
     const threeColumns = service.prepareThreeAssignmentRows(assignments);
-    this.setState({ ...this.state, classrooms, rawAssignments: assignments, threeColumns, sortedIndex: 0 });
+    this.setState({ ...this.state, isLoaded: true, classrooms, rawAssignments: assignments, finalAssignments: assignments, threeColumns, sortedIndex: 0 });
   }
 
   onThreeColumnsMouseHover(index: number, status: AssignmentBrickStatus) {
@@ -146,35 +150,13 @@ class PlayPage extends Component<PlayProps, PlayState> {
     if (assignment && assignment.brick.expanded) return;
   
     hideAssignments(this.state.rawAssignments);
-
+    service.expandPlayThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
     this.setState({ ...this.state });
-
-    setTimeout(() => {
-      hideAssignments(this.state.rawAssignments);
-      const name = service.getPlayThreeColumnName(status);
-      service.expandPlayThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
-      this.setState({ ...this.state });
-    }, 400);
   }
 
-  onThreeColumnsMouseLeave(index: number, status: AssignmentBrickStatus) {
+  onThreeColumnsMouseLeave() {
     hideAssignments(this.state.rawAssignments);
-
-    const key = Math.ceil(index / 3);
-    const name = service.getPlayThreeColumnName(status);
-
-    const assignment = service.getPlayThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
-
-    if (assignment) {
-      assignment.brick.expandFinished = true;
-      this.setState({ ...this.state });
-      setTimeout(() => {
-        if (assignment) {
-          assignment.brick.expandFinished = false;
-          this.setState({ ...this.state });
-        }
-      }, 400);
-    }
+    this.setState({ ...this.state });
   }
 
   playFilterUpdated(filters: PlayFilters) {
@@ -207,26 +189,16 @@ class PlayPage extends Component<PlayProps, PlayState> {
 
   onMouseHover(index: number) {
     hideAssignments(this.state.rawAssignments);
+    const assignment = this.state.finalAssignments[index];
+    if (assignment) {
+      assignment.brick.expanded = true;
+    }
     this.setState({ ...this.state });
-    setTimeout(() => {
-      hideAssignments(this.state.rawAssignments);
-      const assignment = this.state.finalAssignments[index];
-      if (assignment) {
-        assignment.brick.expanded = true;
-      }
-      this.setState({ ...this.state });
-    }, 400);
   }
 
-  onMouseLeave(key: number) {
-    let { finalAssignments } = this.state;
+  onMouseLeave() {
     hideAssignments(this.state.rawAssignments);
-    finalAssignments[key].brick.expandFinished = true;
     this.setState({ ...this.state });
-    setTimeout(() => {
-      finalAssignments[key].brick.expandFinished = false;
-      this.setState({ ...this.state });
-    }, 400);
   }
 
   //#region Pagination
@@ -357,24 +329,26 @@ class PlayPage extends Component<PlayProps, PlayState> {
           <div className="brick-row-title main-title uppercase">
             Assignments
           </div>
-          <div className="tab-content learn-tab-desktop">
-            <AssignedBricks
-              user={this.props.user}
-              shown={true}
-              filters={this.state.filters}
-              pageSize={this.state.pageSize}
-              sortedIndex={this.state.sortedIndex}
-              assignments={this.state.finalAssignments}
-              threeColumns={this.state.threeColumns}
-              history={this.props.history}
-              handleDeleteOpen={() => {}}
-              onMouseHover={this.onMouseHover.bind(this)}
-              onMouseLeave={this.onMouseLeave.bind(this)}
-              onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
-              onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
-            />
-            {this.renderPagination()}
-          </div>
+          { this.state.isLoaded &&
+            <div className="tab-content learn-tab-desktop">
+              <AssignedBricks
+                user={this.props.user}
+                shown={true}
+                filters={this.state.filters}
+                pageSize={this.state.pageSize}
+                sortedIndex={this.state.sortedIndex}
+                assignments={this.state.finalAssignments}
+                threeColumns={this.state.threeColumns}
+                history={this.props.history}
+                handleDeleteOpen={() => {}}
+                onMouseHover={this.onMouseHover.bind(this)}
+                onMouseLeave={this.onMouseLeave.bind(this)}
+                onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
+                onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
+              />
+              {this.renderPagination()}
+            </div>
+          }
         </Grid>
       </Grid>
     );

@@ -79,7 +79,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
           <div className={`index-box ${activeClassroomId > 0 ? '' : 'active'}`} onClick={() => this.props.setActiveClassroom(-1)}>
             View All
             <div className="right-index">
-              <div className="white-box">{0}</div>
+              <div className="white-box">{this.props.assignments.length}</div>
             </div>
           </div>
           {this.props.classrooms.map((c, i) => 
