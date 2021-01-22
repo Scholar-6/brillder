@@ -4,8 +4,7 @@ import AnimateHeight from "react-animate-height";
 
 import "./SubjectsList.scss";
 import { Subject } from "model/brick";
-import SpriteIcon from "../SpriteIcon";
-import { GENERAL_SUBJECT } from "components/services/subject";
+import RadioButton from "../buttons/RadioButton";
 
 interface PublishedSubjectsProps {
   filterHeight: string;
@@ -16,32 +15,6 @@ interface PublishedSubjectsProps {
 }
 
 class SubjectsListV2 extends Component<PublishedSubjectsProps> {
-  renderCircle(color: string) {
-    return <div className="filter-circle" style={{ background: color }} />
-  }
-
-  renderChecked(subject: Subject) {
-    let {color, name} = subject;
-
-    if (name === GENERAL_SUBJECT) {
-      color = '#001c58';
-    }
-
-    return (
-      <div className="subject-border">
-        <SpriteIcon name="radio" className="radio-checked" style={{ color, fill: color }} />
-      </div>
-    );
-  }
-
-  renderDefault(color: string) {
-    return (
-      <div className="subject-no-border">
-        {this.renderCircle(color)}
-      </div>
-    )
-  }
-
   renderSubjectItem(subject: Subject, i: number) {
     let count = this.props.isPublic ? subject.publicCount : subject.personalCount;
 
@@ -55,14 +28,8 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
         <Grid item xs={11} className="filter-container subjects-indexes-box">
           <FormControlLabel
             checked={subject.checked}
-            
             control={
-              <div>
-                {subject.checked
-                  ? this.renderChecked(subject)
-                  : this.renderDefault(subject.color)
-                }
-              </div>
+              <RadioButton checked={subject.checked} name={subject.name} color={subject.color} />
             }
             label={subject.name}
           />

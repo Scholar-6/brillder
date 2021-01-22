@@ -30,7 +30,7 @@ const EmailActivateAccountPage: React.FC<EmailActivateAccountProps> = (props) =>
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
     initPolicyOpen = true;
   }
-  const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
 

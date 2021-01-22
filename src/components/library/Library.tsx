@@ -12,7 +12,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import { getLibraryBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
-import { SortBy } from "./model";
+import { SortBy, SubjectAssignments } from "./model";
 import { AssignmentBrick } from "model/assignment";
 
 import LibraryFilter from "./LibraryFilter";
@@ -23,10 +23,10 @@ import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDe
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-import AssignedBricks from "./AssignedBricks";
 import { getBrickColor } from "services/brick";
 import { getStudentClassrooms } from "services/axios/classroom";
 import { TeachClassroom } from "model/classroom";
+import LibrarySubjects from "./LibrarySubjects";
 
 
 interface BricksListProps {
@@ -39,6 +39,7 @@ interface BricksListProps {
 interface BricksListState {
   finalAssignments: AssignmentBrick[];
   rawAssignments: AssignmentBrick[];
+  subjectAssignments: SubjectAssignments[];
 
   searchString: string;
   isSearching: boolean;
@@ -73,6 +74,7 @@ class Library extends Component<BricksListProps, BricksListState> {
     this.state = {
       finalAssignments: [],
       rawAssignments: [],
+      subjectAssignments: [],
       classrooms: [],
       sortBy: SortBy.Date,
       subjects: [],
@@ -152,12 +154,46 @@ class Library extends Component<BricksListProps, BricksListState> {
     return subjects;
   }
 
+  getAssignmentSubjects(assignments: AssignmentBrick[], subjects: Subject[]) {
+    let subjectAssignments:SubjectAssignments[] = [];
+    for (let assignment of assignments) {
+      const {subjectId} = assignment.brick;
+      let subjectFound = false;
+      for (let subjectAssignment of subjectAssignments) {
+        if (subjectAssignment.subject.id === subjectId) {
+          subjectFound = true;
+        }
+      }
+      if (!subjectFound) {
+        const subject = subjects.find(s => s.id === subjectId);
+        if (subject) {
+          subjectAssignments.push({
+            subject,
+            assignments: []
+          });
+        } else {
+          // error
+        }
+      }
+    }
+    this.populateAssignments(subjectAssignments, assignments);
+    return subjectAssignments;
+  }
+
+  populateAssignments(subjectAssignments: SubjectAssignments[], assignments: AssignmentBrick[]) {
+    for (let assignment of assignments) {
+      const subjectAssignment = subjectAssignments.find(s => s.subject.id === assignment.brick.subjectId);
+      subjectAssignment?.assignments.push(assignment);
+    }
+  }
+
   async getAssignments(subjects: Subject[]) {
     const rawAssignments = await getLibraryBricks();
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const finalAssignments = this.filter(rawAssignments, subjects, this.state.isCore);
-      this.setState({...this.state, subjects, isLoading: false, rawAssignments, finalAssignments});
+      const subjectAssignments = this.getAssignmentSubjects(finalAssignments, subjects);
+      this.setState({...this.state, subjects, subjectAssignments, isLoading: false, rawAssignments, finalAssignments});
     } else {
       this.setState({failedRequest: true});
     }
@@ -206,13 +242,6 @@ class Library extends Component<BricksListProps, BricksListState> {
   isFilterClear() {
     return this.state.subjects.some(r => r.checked);
   }
-
-  filterBySubject = (i: number) => {
-    const { subjects } = this.state;
-    subjects[i].checked = !subjects[i].checked;
-    const finalAssignments = this.filter(this.state.rawAssignments, subjects, this.state.isCore);
-    this.setState({subjects, isClearFilter: this.isFilterClear(), finalAssignments, shown: true });
-  };
 
   filterByClassroom = async (id: number) => {
     if (id > 0) {
@@ -367,7 +396,7 @@ class Library extends Component<BricksListProps, BricksListState> {
               handleSortChange={e => this.handleSortChange(e)}
               clearSubjects={() => this.clearSubjects()}
               filterByClassroom={this.filterByClassroom.bind(this)}
-              filterBySubject={index => this.filterBySubject(index)}
+              filterBySubject={index => {}}
             />
           </Grid>
           <Grid item xs={9} className="brick-row-container">
@@ -400,13 +429,12 @@ class Library extends Component<BricksListProps, BricksListState> {
               </div>
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
-              <AssignedBricks
-                user={this.props.user}
-                shown={true}
+              <LibrarySubjects
+                userId={this.props.user.id}
                 subjects={this.state.subjects}
                 pageSize={this.state.pageSize}
                 sortedIndex={this.state.sortedIndex}
-                assignments={this.state.finalAssignments}
+                subjectAssignments={this.state.subjectAssignments}
                 history={this.props.history}
               />
             </div>

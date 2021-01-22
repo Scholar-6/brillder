@@ -3,12 +3,11 @@ import { Grid } from "@material-ui/core";
 
 
 interface LabelProps {
-  tooltipsOn: boolean;
   isTutorialPassed: boolean;
 }
 
 const TutorialLabels: React.FC<LabelProps> = (props) => {
-  if (!props.isTutorialPassed && props.tooltipsOn) {
+  if (!props.isTutorialPassed) {
     return (
       <div className="tutorial-top-labels">
         <div className="exit-arrow">
