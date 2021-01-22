@@ -136,10 +136,9 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       if (answer.value) {
         for (let cat of state.categories) {
           if (cat !== category) {
-            cat.answers.map(a => {
+            cat.answers.forEach(a => {
               if (a.value === answer.value) {
                 openSameAnswerDialog();
-                return;
               }
             });
           }

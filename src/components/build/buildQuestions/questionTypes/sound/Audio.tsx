@@ -55,8 +55,9 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
   }
 
   setVolume(volume: number) {
-    this.state.audio.volume = volume;
-    this.setState({ volume });
+    const {audio} = this.state;
+    audio.volume = volume;
+    this.setState({ audio, volume });
   }
 
   toggleVolume() {
