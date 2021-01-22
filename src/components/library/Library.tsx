@@ -243,13 +243,6 @@ class Library extends Component<BricksListProps, BricksListState> {
     return this.state.subjects.some(r => r.checked);
   }
 
-  filterBySubject = (i: number) => {
-    const { subjects } = this.state;
-    subjects[i].checked = !subjects[i].checked;
-    const finalAssignments = this.filter(this.state.rawAssignments, subjects, this.state.isCore);
-    this.setState({subjects, isClearFilter: this.isFilterClear(), finalAssignments, shown: true });
-  };
-
   filterByClassroom = async (id: number) => {
     if (id > 0) {
       let rawAssignments = await getLibraryBricks(id);
@@ -403,7 +396,7 @@ class Library extends Component<BricksListProps, BricksListState> {
               handleSortChange={e => this.handleSortChange(e)}
               clearSubjects={() => this.clearSubjects()}
               filterByClassroom={this.filterByClassroom.bind(this)}
-              filterBySubject={index => this.filterBySubject(index)}
+              filterBySubject={index => {}}
             />
           </Grid>
           <Grid item xs={9} className="brick-row-container">
