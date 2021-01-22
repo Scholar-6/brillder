@@ -438,7 +438,6 @@ class Library extends Component<BricksListProps, BricksListState> {
             <div className="bricks-list-container bricks-container-mobile">
               <LibrarySubjects
                 user={this.props.user}
-                shown={true}
                 subjects={this.state.subjects}
                 pageSize={this.state.pageSize}
                 sortedIndex={this.state.sortedIndex}
