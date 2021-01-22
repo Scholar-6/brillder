@@ -75,13 +75,12 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           </MenuItem>
         ) }
       </Select>
-      <TextField
+      <input
         value={name}
         onChange={e => setName(e.target.value)}
         className="name-input"
-        variant="outlined"
       />
-      <a className="submit-icon" onClick={submit}>
+      <a className="submit-icon tick" onClick={submit}>
         <SpriteIcon
           name="ok"
           className="w100 h100 active"
@@ -89,7 +88,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
       </a>
       <a className="submit-icon" onClick={() => setEdit(false)}>
         <SpriteIcon
-          name="cancel"
+          name="cancel-custom"
           className="w100 h100 active"
         />
       </a>

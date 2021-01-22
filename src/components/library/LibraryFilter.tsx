@@ -105,7 +105,7 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
           isPublic={this.props.isPublic}
           subjects={this.props.subjects}
           filterHeight={this.state.filterHeight}
-          filterBySubject={this.props.filterBySubject}
+          filterBySubject={() => {}}
         />
       </div>
     );

@@ -13,28 +13,6 @@
     padding-top: 0.5vh;
     padding-left: 1.2vw;
     padding-right: 1.2vw;
-    .subject-border {
-      margin-right: 0.4vw !important;
-      padding: 0.05vw;
-      border-radius: 50%;
-      @extend %flexToYCenter;
-
-      .radio-checked {
-        stroke-width: 2;
-      }
-    }
-    
-    .subject-no-border {
-      margin: 0.25vw;
-      margin-right: 0.65vw;
-    }
-
-    .filter-circle {
-      margin-right: 0 !important;
-      width: 0.85vw;
-      height: 0.85vw;
-      border-radius: 50%;
-    }
 
     &:hover {
       background: var(--light-blue-alpha3);
@@ -57,4 +35,26 @@
 .subjects-filter-v3 {
   height: calc(100vh - 5.834vw - 2vw - 2.4vw - 6.5vw - 2vw - 1.8vw) !important;
   padding-bottom: 6vh !important;
+}
+
+.subject-border {
+  margin-right: 0.4vw !important;
+  padding: 0.05vw;
+  border-radius: 50%;
+  @extend %flexToYCenter;
+
+  .radio-checked {
+    stroke-width: 2;
+  }
+}
+
+.subject-no-border {
+  margin: 0.25vw;
+  margin-right: 0.65vw;
+  .filter-circle {
+    margin-right: 0 !important;
+    width: 0.85vw;
+    height: 0.85vw;
+    border-radius: 50%;
+  }
 }
