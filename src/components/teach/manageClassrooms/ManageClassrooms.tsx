@@ -33,6 +33,7 @@ import ValidationFailedDialog from "components/baseComponents/dialogs/Validation
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 import { Subject } from "model/brick";
 import NameAndSubjectForm from "./components/NameAndSubjectForm";
+import RadioButton from "components/baseComponents/buttons/RadioButton";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -358,7 +359,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                 <FormControlLabel
                   checked={(this.state.activeClassroom && this.state.activeClassroom.id === c.id) ?? false}
                   style={{ color: c.subject?.color ?? "#FFFFFF" }}
-                  control={<Radio onClick={() => this.setActiveClassroom(c)} className={"filter-radio custom-color"} />}
+                  control={<RadioButton checked={(this.state.activeClassroom && this.state.activeClassroom.id === c.id) ?? false} name={c.name} color={c.subject?.color ?? "#FFFFFF"} />}
                   label={c.name}
                 />
                 <div className="right-index right-index2">
