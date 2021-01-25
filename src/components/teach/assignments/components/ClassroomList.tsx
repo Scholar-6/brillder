@@ -6,6 +6,9 @@ import { Subject } from "model/brick";
 import { TeachClassroom, Assignment } from "model/classroom";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
+import NameAndSubjectForm from "components/teach/components/NameAndSubjectForm";
+import { updateClassroom } from "services/axios/classroom";
+import { ClassroomApi } from "components/teach/service";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -20,9 +23,42 @@ interface ClassroomListProps {
   pageSize: number;
   activeClassroom: TeachClassroom | null;
   expand(classroomId: number, assignmentId: number): void;
+  reloadClasses(): void;
 }
 
 class ClassroomList extends Component<ClassroomListProps> {
+  async updateClassroom(classroom: TeachClassroom, name: string, subject: Subject) {
+    let classroomApi = {
+      id: classroom.id,
+      name: name,
+      subjectId: subject.id,
+      subject: subject,
+      status: classroom.status,
+      updated: classroom.updated,
+    } as any;
+    let success = await updateClassroom(classroomApi);
+    if (success) {
+      this.props.reloadClasses();
+    }
+  }
+  
+  renderClassname(c: TeachListItem, i: number) {
+    const {classroom} = c as any;
+    let className = 'classroom-title';
+    if (i === 0) {
+       className += ' first';
+    }
+    return (
+      <div className={className} key={i}>
+        <NameAndSubjectForm
+          name={classroom!.name}
+          subject={classroom.subject}
+          onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
+        />
+      </div>
+    );
+  }
+
   renderTeachListItem(c: TeachListItem, i: number) {
     if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
       if (c.assignment && c.classroom) {
@@ -36,29 +72,9 @@ class ClassroomList extends Component<ClassroomListProps> {
           </div>
         );
       }
-      let className = 'classroom-title';
-      if (i === 0) {
-         className += ' first';
-      }
-      return (
-        <div className={className} key={i}>
-          <div>{c.classroom.name}</div>
-        </div>
-      );
+      return this.renderClassname(c, i);
     }
     return "";
-  }
-
-  renderActiveClassroom(c: TeachClassroom) {
-    return (
-      <div className="classroom-title">
-        {c.name}
-        {}
-        {c.assignments.map((a, i) => <AssignedBrickDescription
-          subjects={this.props.subjects} expand={this.props.expand.bind(this)} key={i} classroom={c} assignment={a}
-        />)}
-      </div>
-    )
   }
 
   prepareClassItems(items: TeachListItem[], classroom: TeachClassroom) {

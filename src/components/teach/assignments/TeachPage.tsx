@@ -111,8 +111,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (subjects) {
       this.setState({subjects});
     }
+    this.loadClasses();
+  }
+
+  async loadClasses() {
     const classrooms = await getAllClassrooms() as TeachClassroom[] | null;
     if (classrooms) {
+      console.log('reload');
       this.setState({ classrooms, isLoaded: true });
     } else {
       this.props.requestFailed('can`t get classrooms');
@@ -260,42 +265,46 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
   //#endregion
 
+  renderEmptyTabContent() {
+    return (
+      <div className="tab-content">
+        <div className="tab-content-centered">
+          <div>
+            <div className="icon-container glasses-icon-container" onClick={() => this.props.history.push(map.ViewAllPage)}>
+              <SpriteIcon name="glasses-home-blue" className="glasses-icon" />
+              <div className="glass-eyes-inside">
+                <div className="glass-eyes-left svgOnHover">
+                  <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                    <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
+                  </svg>
+                  <div className="glass-left-inside">
+                    <SpriteIcon name="aperture" className="aperture" />
+                  </div>
+                </div>
+                <div className="glass-eyes-right svgOnHover">
+                  <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                    <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
+                  </svg>
+                  <div className="glass-right-inside">
+                    <SpriteIcon name="aperture" className="aperture" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bold">Click the icon above to search for brick to assign</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   renderTabContent() {
     if (!this.state.isLoaded) {
       return <div className="tab-content" />
     }
     
     if (this.state.isLoaded && (this.state.classrooms.length === 0 || (this.state.activeClassroom && this.state.activeClassroom?.assignments.length === 0))) {
-      return (
-        <div className="tab-content">
-          <div className="tab-content-centered">
-            <div>
-              <div className="icon-container glasses-icon-container" onClick={() => this.props.history.push(map.ViewAllPage)}>
-                <SpriteIcon name="glasses-home-blue" className="glasses-icon" />
-                <div className="glass-eyes-inside">
-                  <div className="glass-eyes-left svgOnHover">
-                    <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                      <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
-                    </svg>
-                    <div className="glass-left-inside">
-                      <SpriteIcon name="aperture" className="aperture" />
-                    </div>
-                  </div>
-                  <div className="glass-eyes-right svgOnHover">
-                    <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                      <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
-                    </svg>
-                    <div className="glass-right-inside">
-                      <SpriteIcon name="aperture" className="aperture" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bold">Click the icon above to search for brick to assign</div>
-            </div>
-          </div>
-        </div>
-      );
+      return this.renderEmptyTabContent();
     }
     return (
       <div className="tab-content">
@@ -328,6 +337,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
               classrooms={this.state.classrooms}
               activeClassroom={this.state.activeClassroom}
               pageSize={this.state.pageSize}
+              reloadClasses={this.loadClasses.bind(this)}
             />
         }
         {this.renderTeachPagination()}

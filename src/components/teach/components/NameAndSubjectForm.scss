@@ -58,6 +58,7 @@
   }
 
   .submit-icon {
+    cursor: pointer;
     width: 1.5vw;
     height: 1.5vw;
     color: var(--theme-orange);
@@ -86,6 +87,7 @@
   }
 
   .edit-icon {
+    cursor: pointer;
     width: 1.7vw;
     height: 1.7vw;
     color: var(--theme-dark-blue) !important;
