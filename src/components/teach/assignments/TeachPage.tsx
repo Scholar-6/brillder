@@ -262,7 +262,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   renderTabContent() {
     if (!this.state.isLoaded) {
-      return <div className="tab-content"></div>
+      return <div className="tab-content" />
     }
     
     if (this.state.isLoaded && (this.state.classrooms.length === 0 || (this.state.activeClassroom && this.state.activeClassroom?.assignments.length === 0))) {
@@ -271,10 +271,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           <div className="tab-content-centered">
             <div>
               <div className="icon-container glasses-icon-container" onClick={() => this.props.history.push(map.ViewAllPage)}>
-                <SpriteIcon
-                  name="glasses-home-blue"
-                  className="glasses-icon"
-                />
+                <SpriteIcon name="glasses-home-blue" className="glasses-icon" />
                 <div className="glass-eyes-inside">
                   <div className="glass-eyes-left svgOnHover">
                     <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
