@@ -43,7 +43,7 @@ class ClassroomList extends Component<ClassroomListProps> {
   
   renderClassname(c: TeachListItem, i: number) {
     const {classroom} = c as any;
-    let className = 'classroom-title';
+    let className = 'classroom-title one-of-many';
     if (i === 0) {
        className += ' first';
     }
