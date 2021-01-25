@@ -1,8 +1,19 @@
+import { ClassroomApi } from 'components/teach/service';
 import { TeachClassroom } from 'model/classroom';
 import { Student } from 'model/user';
 
-import {get, del} from './index';
+import { get, put, del } from './index';
 
+export const updateClassroom = async (
+  classroom: ClassroomApi
+) => {
+  try {
+    await put("/classroom", { ...classroom });
+    return true;
+  } catch (e) {
+    return false
+  }
+}
 
 export const getClassrooms = async () => {
   try {

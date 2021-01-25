@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { FormControlLabel, Grid } from "@material-ui/core";
 import { connect } from "react-redux";
-import axios from 'axios';
 
 import './ManageClassrooms.scss';
 import '../style.scss';
 
 import { User } from "model/user";
 import { MUser, TeachActiveTab } from "../model";
-import { deleteClassroom, getStudents } from 'services/axios/classroom';
+import { deleteClassroom, getStudents, updateClassroom } from 'services/axios/classroom';
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import {
@@ -31,8 +30,8 @@ import TeachTab from '../TeachTab';
 import EmptyFilter from "./components/EmptyFilter";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
+import NameAndSubjectForm from "../components/NameAndSubjectForm";
 import { Subject } from "model/brick";
-import NameAndSubjectForm from "./components/NameAndSubjectForm";
 import RadioButton from "components/baseComponents/buttons/RadioButton";
 
 
@@ -503,13 +502,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   async updateClassroom(name: string, subject: Subject) {
-    try {
-      await axios.put(`${process.env.REACT_APP_BACKEND_HOST}/classroom`, {
-        ...this.state.activeClassroom,
-        name, subject
-      }, { withCredentials: true });
-      this.getClassrooms();
-    } catch(e) {}
+    if (this.state.activeClassroom) {
+      let success = await updateClassroom({...this.state.activeClassroom, name, subject});
+      if (success) {
+        this.getClassrooms();
+      }
+    }
   }
 
   renderTopRow() {
