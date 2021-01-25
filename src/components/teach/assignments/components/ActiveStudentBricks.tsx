@@ -9,7 +9,6 @@ import BackPagePagination from "../../../backToWorkPage/components/BackPagePagin
 import { getAssignmentStats } from "services/axios/stats";
 import ExpandedStudentAssignment from "./ExpandedStudentAssignment";
 
-
 interface ActiveStudentBricksProps {
   classroom: TeachClassroom | null;
   subjects: Subject[];
@@ -25,9 +24,14 @@ interface ActiveStudentState {
   assignments: Assignment[];
 }
 
-class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStudentState> {
+class ActiveStudentBricks extends Component<
+  ActiveStudentBricksProps,
+  ActiveStudentState
+> {
   constructor(props: ActiveStudentBricksProps) {
     super(props);
+
+    console.log(props);
 
     this.state = {
       sortedIndex: 0,
@@ -35,35 +39,41 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
       isLoaded: false,
       activeAssignment: null,
       assignmentStats: null,
-      assignments: []
-    }
+      assignments: [],
+    };
     this.loadAssignments(props.activeStudent.id);
   }
 
   async loadAssignments(studentId: number) {
-    let res = await getStudentAssignments(studentId) as Assignment[] | null;
+    let res = (await getStudentAssignments(studentId)) as Assignment[] | null;
     if (res) {
-      this.setState({isLoaded: true, assignments: res });
+      this.setState({ isLoaded: true, assignments: res });
     }
   }
 
   moveNext() {
-    this.setState({sortedIndex: this.state.sortedIndex + this.state.pageSize});
+    this.setState({
+      sortedIndex: this.state.sortedIndex + this.state.pageSize,
+    });
   }
 
   moveBack() {
-    this.setState({sortedIndex: this.state.sortedIndex - this.state.pageSize});
+    this.setState({
+      sortedIndex: this.state.sortedIndex - this.state.pageSize,
+    });
   }
 
   renderPagination() {
     const itemsCount = this.state.assignments.length;
-    return <BackPagePagination
-      sortedIndex={this.state.sortedIndex}
-      pageSize={this.state.pageSize}
-      bricksLength={itemsCount}
-      moveNext={this.moveNext.bind(this)}
-      moveBack={this.moveBack.bind(this)}
-    />
+    return (
+      <BackPagePagination
+        sortedIndex={this.state.sortedIndex}
+        pageSize={this.state.pageSize}
+        bricksLength={itemsCount}
+        moveNext={this.moveNext.bind(this)}
+        moveBack={this.moveBack.bind(this)}
+      />
+    );
   }
 
   async setActiveAssignment(a: Assignment) {
@@ -75,18 +85,22 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
     return (
       <div className="classroom-list">
         {this.state.assignments.map((a, i) => {
-          if (i >= this.state.sortedIndex && i < this.state.sortedIndex + this.state.pageSize) {
+          if (
+            i >= this.state.sortedIndex &&
+            i < this.state.sortedIndex + this.state.pageSize
+          ) {
             return (
               <div key={i}>
                 <AssignedBrickDescription
                   subjects={this.props.subjects}
                   expand={() => this.setActiveAssignment(a)}
-                  key={i} assignment={a as any}
-               />
+                  key={i}
+                  assignment={a as any}
+                />
               </div>
             );
           }
-          return '';
+          return "";
         })}
       </div>
     );
@@ -99,15 +113,25 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
         student={this.props.activeStudent}
         stats={this.state.assignmentStats}
         subjects={this.props.subjects}
-        minimize={() => this.setState({ assignmentStats: null, activeAssignment: null })}
+        minimize={() =>
+          this.setState({ assignmentStats: null, activeAssignment: null })
+        }
       />
-    )
+    );
   }
 
   render() {
-    const {activeAssignment} = this.state;
+    const { activeAssignment } = this.state;
     return (
       <div>
+        <div className="classroom-list">
+          <div className="classroom-title">
+            <div>
+              {this.props.activeStudent.firstName}{" "}
+              {this.props.activeStudent.lastName}
+            </div>
+          </div>
+        </div>
         {activeAssignment
           ? this.renderExpandedAssignment(activeAssignment)
           : this.renderStudentAssignments()}
