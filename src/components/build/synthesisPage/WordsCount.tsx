@@ -44,6 +44,7 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
       return 0;
     }
 
+    //eslint-disable-next-line
     let res = value.replace(/\&nbsp;/g, '');
     res = res.replace("   ", "");
     res = res.replace("  ", " ");

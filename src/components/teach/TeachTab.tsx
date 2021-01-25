@@ -21,7 +21,7 @@ const TeachTab: React.FC<TabProps> = ({ history, activeTab, assignmentsEnabled }
     } else {
       setErrorOpen(true);
     }
-  }, [assignmentsEnabled]);
+  }, [assignmentsEnabled, history]);
 
   const assignedTab = () => {
     const className = isActive(activeTab, TeachActiveTab.Assignments);
