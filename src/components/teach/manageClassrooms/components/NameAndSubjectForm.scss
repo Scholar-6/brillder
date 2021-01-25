@@ -86,15 +86,13 @@
   }
 
   .edit-icon {
-    width: 1.5vw;
-    height: 1.5vw;
+    width: 1.7vw;
+    height: 1.7vw;
     color: var(--theme-dark-blue) !important;
     margin-left: 1vw;
 
-    opacity: 0.5 !important;
-
     &:hover {
-      opacity: 1 !important;
+      color: var(--theme-orange) !important;
     }
   }
 }
