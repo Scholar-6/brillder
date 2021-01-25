@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormControlLabel, Grid, Radio } from "@material-ui/core";
+import { FormControlLabel, Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import axios from 'axios';
 
@@ -34,7 +34,6 @@ import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/Studen
 import { Subject } from "model/brick";
 import NameAndSubjectForm from "./components/NameAndSubjectForm";
 import RadioButton from "components/baseComponents/buttons/RadioButton";
-import { isAccessor } from "typescript";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
