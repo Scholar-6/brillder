@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import './ActiveStudentBricks.scss';
 import { Assignment, TeachClassroom, TeachStudent } from "model/classroom";
 import { getStudentAssignments } from "services/axios/brick";
 import { Subject } from "model/brick";
@@ -31,8 +32,6 @@ class ActiveStudentBricks extends Component<
   constructor(props: ActiveStudentBricksProps) {
     super(props);
 
-    console.log(props);
-
     this.state = {
       sortedIndex: 0,
       pageSize: 6,
@@ -42,6 +41,15 @@ class ActiveStudentBricks extends Component<
       assignments: [],
     };
     this.loadAssignments(props.activeStudent.id);
+  }
+
+  /**
+   * Load student assignments if other student selected
+   */
+  componentDidUpdate(prevProps: ActiveStudentBricksProps) {
+    if (this.props.activeStudent !== prevProps.activeStudent) {
+      this.loadAssignments(this.props.activeStudent.id);
+    }
   }
 
   async loadAssignments(studentId: number) {
@@ -121,9 +129,13 @@ class ActiveStudentBricks extends Component<
   }
 
   render() {
+    const {activeStudent} = this.props;
     const { activeAssignment } = this.state;
     return (
-      <div>
+      <div className="student-assignments">
+        <div className="classroom-title">
+          <div>{activeStudent.firstName} {activeStudent.lastName}</div>
+        </div>
         {activeAssignment
           ? this.renderExpandedAssignment(activeAssignment)
           : this.renderStudentAssignments()}
