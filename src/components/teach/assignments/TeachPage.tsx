@@ -20,6 +20,7 @@ import { downKeyPressed, upKeyPressed } from "components/services/key";
 import BackPagePagination from 'components/backToWorkPage/components/BackPagePagination';
 import TeachFilterSidebar from './components/TeachFilterSidebar';
 import ClassroomList from './components/ClassroomList';
+import ClassroomsList from './components/ClassroomsList';
 import ActiveStudentBricks from "./components/ActiveStudentBricks";
 import ExpandedAssignment from './components/ExpandedAssignment';
 import TeachTab from "components/teach/TeachTab";
@@ -119,8 +120,19 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (classrooms) {
       console.log('reload');
       this.setState({ classrooms, isLoaded: true });
+      return classrooms;
     } else {
       this.props.requestFailed('can`t get classrooms');
+    }
+  }
+
+  async loadClass(id: number) {
+    let classrooms = await this.loadClasses();
+    if (classrooms) {
+      const classroom = classrooms.find(c => c.id === id);
+      if (classroom) {
+        this.setState({activeClassroom: classroom});
+      }
     }
   }
 
@@ -329,8 +341,17 @@ class TeachPage extends Component<TeachProps, TeachState> {
               history={this.props.history}
               minimize={() => this.unselectAssignment()}
             />
-            :
-            <ClassroomList
+            : this.state.activeClassroom ?
+              <ClassroomList
+                subjects={this.state.subjects}
+                expand={this.setActiveAssignment.bind(this)}
+                startIndex={this.state.sortedIndex}
+                activeClassroom={this.state.activeClassroom}
+                pageSize={this.state.pageSize}
+                reloadClass={this.loadClass.bind(this)}
+              />
+              :
+            <ClassroomsList
               subjects={this.state.subjects}
               expand={this.setActiveAssignment.bind(this)}
               startIndex={this.state.sortedIndex}
