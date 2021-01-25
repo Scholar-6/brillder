@@ -1,3 +1,7 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
 .student-assignments {
   .classroom-title {
     position: absolute;
@@ -6,6 +10,7 @@
     div {
       line-height: 1;
       background: inherit !important;
+      font-family: $font-family-bold;
     }
     left: 0;
   }
