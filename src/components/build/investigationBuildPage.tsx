@@ -839,6 +839,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         isEditor={isCurrentEditor}
         isPublisher={isPublisher}
         isAdmin={isAdmin}
+        isAuthor={isAuthor}
         history={history}
         brick={props.brick}
         exitAndSave={exitAndSave}
