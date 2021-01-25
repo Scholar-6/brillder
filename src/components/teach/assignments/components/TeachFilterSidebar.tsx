@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
+import './TeachFilterSidebar.scss';
 import { TeachClassroom, TeachStudent } from "model/classroom";
 import { TeachFilters } from '../../model';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -98,14 +99,17 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
         <div className={"index-box " + (c.active ? "active" : "")} onClick={() => this.toggleClassroom(c)}>
           <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
             <span>{c.name}</span>
-            <div className="classroom-icon svgOnHover">
-              <SpriteIcon name="arrow-right" className="active" />
-            </div>
+            {
+              c.active &&
+              <div className="classroom-icon svgOnHover">
+                <SpriteIcon name="arrow-right" className="active" />
+              </div>
+            }
           </div>
           <div className="right-index">
             {c.students.length}
             <SpriteIcon name="users" className="active" />
-            <div className="white-box">
+            <div className="classrooms-box">
               {c.assignments.length}
             </div>
           </div>
@@ -147,7 +151,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             <div className="right-index">
               {totalCount}
               <SpriteIcon name="users" className="active" />
-              <div className="white-box">
+              <div className="classrooms-box">
                 {totalBricks}
               </div>
             </div>
@@ -235,7 +239,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
 
   render() {
     return (
-      <Grid container item xs={3} className="sort-and-filter-container">
+      <Grid container item xs={3} className="sort-and-filter-container teach-assigned">
         {this.renderContent()}
       </Grid>
     );

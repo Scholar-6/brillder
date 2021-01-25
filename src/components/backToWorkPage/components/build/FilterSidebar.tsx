@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
+import AnimateHeight from "react-animate-height";
 
+import './FilterSidebar.scss';
 import { Brick, BrickStatus } from "model/brick";
 import { SortBy, Filters, ThreeColumns } from '../../model';
 import { clearStatusFilters } from '../../service';
 import EmptyFilterSidebar from "../EmptyFilter";
 import CustomFilterBox from "components/library/CustomFilterBox";
 import { SubjectItem } from "../personalBuild/model";
-import AnimateHeight from "react-animate-height";
 
 
 enum FilterFields {
@@ -155,7 +156,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
           onClick={this.removeSubject.bind(this)}
         >
           View All
-          <div className="right-index">{viewAll}</div>
+          <div className="right-index outline-box">{viewAll}</div>
         </div>
       </div>
     );
@@ -183,7 +184,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
                 onClick={() => this.filterBySubject(s)} key={i}
               >
                 {s.name}
-                <div className="right-index">{s.count}</div>
+                <div className="right-index outline-box">{s.count}</div>
               </div>
             )}
           </div>
@@ -225,7 +226,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     }
 
     return (
-      <Grid container item xs={3} className="sort-and-filter-container">
+      <Grid container item xs={3} className="sort-and-filter-container build-filter">
         {!this.props.filters.publish && this.renderInbox(draft, build, publication)}
         {this.renderSubjectsBox(viewAll)}
       </Grid>
