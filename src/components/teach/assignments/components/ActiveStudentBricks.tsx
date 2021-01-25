@@ -124,14 +124,6 @@ class ActiveStudentBricks extends Component<
     const { activeAssignment } = this.state;
     return (
       <div>
-        <div className="classroom-list">
-          <div className="classroom-title">
-            <div>
-              {this.props.activeStudent.firstName}{" "}
-              {this.props.activeStudent.lastName}
-            </div>
-          </div>
-        </div>
         {activeAssignment
           ? this.renderExpandedAssignment(activeAssignment)
           : this.renderStudentAssignments()}
