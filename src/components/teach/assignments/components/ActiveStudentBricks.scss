@@ -1,0 +1,12 @@
+.student-assignments {
+  .classroom-title {
+    position: absolute;
+    top: calc(8.5vh - 0.2vw);
+    height: auto !important;
+    div {
+      line-height: 1;
+      background: inherit !important;
+    }
+    left: 0;
+  }
+}
