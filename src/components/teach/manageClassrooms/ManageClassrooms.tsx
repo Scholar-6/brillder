@@ -34,6 +34,7 @@ import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/Studen
 import { Subject } from "model/brick";
 import NameAndSubjectForm from "./components/NameAndSubjectForm";
 import RadioButton from "components/baseComponents/buttons/RadioButton";
+import { isAccessor } from "typescript";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -379,16 +380,16 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     );
   };
 
-  sort(sortBy: UserSortBy) {
-    let isAscending = this.state.isAscending;
-
-    if (sortBy === this.state.sortBy) {
-      isAscending = !isAscending;
-      this.setState({ ...this.state, isAscending });
+  sortByLastName() {
+    let {users, isAscending} = this.state;
+    isAscending = !isAscending;
+    if (isAscending) {
+      users.sort((a, b) => a.lastName < b.lastName ? -1 : 1);
     } else {
-      isAscending = false;
-      this.setState({ ...this.state, isAscending, sortBy });
+      users.sort((a, b) => a.lastName < b.lastName ? 1 : -1);
     }
+    console.log(isAscending);
+    this.setState({ ...this.state, users, sortBy: UserSortBy.Name, isAscending });
   }
 
   moveToPage(page: number) {
@@ -509,9 +510,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         name, subject
       }, { withCredentials: true });
       this.getClassrooms();
-    } catch(e) {
-      
-    }
+    } catch(e) {}
   }
 
   renderTopRow() {
@@ -594,12 +593,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
               selectedUsers={this.state.selectedUsers}
               sortBy={this.state.sortBy}
               isAscending={this.state.isAscending}
-              sort={sortBy => this.sort(sortBy)}
               pageStudentsSelected={this.state.pageStudentsSelected}
-              toggleUser={id => this.toggleUser(id)}
-              assignToClass={() => this.openAssignDialog()}
-              unassign={s => this.unassigningStudent(s)}
-              togglePageStudents={() => this.togglePageStudents()}
+              sort={this.sortByLastName.bind(this)}
+              toggleUser={this.toggleUser.bind(this)}
+              assignToClass={this.openAssignDialog.bind(this)}
+              unassign={this.unassigningStudent.bind(this)}
+              togglePageStudents={this.togglePageStudents.bind(this)}
             />
           </>:
           this.renderEmptyTab()
