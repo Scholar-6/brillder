@@ -227,6 +227,9 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
                         <use href={sprite + "#repeat"} />
                       </svg>
                     }
+                    {notification.type === NotificationType.StudentAssignedBrick &&
+                      <SpriteIcon name="file-plus" className="w60 h60 active text-theme-dark-blue" />
+                    }
                   </div>
                   <div className="content-box" onClick={() => this.move(notification)}>
                     <div className="notification-detail">

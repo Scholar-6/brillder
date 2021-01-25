@@ -41,15 +41,10 @@
       width: 100%;
       line-height: 1.8;
       padding-left: 1.6vw;
-      background: var(--off-white);
     }
-    &.first {
-      position: absolute;
-      top: 1.8vh;
-      height: 2vh;
-      > div {
-        background: inherit;
-      }
+    &.one-of-many {
+      margin-top: 1vh;
+      margin-left: 0.6vw;
     }
   }
   .sort-box {

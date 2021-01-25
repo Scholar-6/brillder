@@ -40,5 +40,12 @@
       height: $height;
       width: 9.7vw;
     }
+
+    &:hover {
+      color: var(--theme-orange) !important;
+      .user-icon {
+        color: var(--theme-orange) !important;
+      }
+    }
   }
 }

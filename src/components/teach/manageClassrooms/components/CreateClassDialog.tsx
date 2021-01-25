@@ -34,7 +34,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     } else {
       setSubjects(props.user.subjects);
     }
-  }, []);
+  }, [props.user.roles, props.user.subjects]);
 
   React.useEffect(() => {
     if(subjects && subjects.length > 0) {

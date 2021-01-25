@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import './ClassroomList.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
 import { TeachClassroom, Assignment } from "model/classroom";
@@ -18,11 +17,12 @@ export interface TeachListItem {
 interface ClassroomListProps {
   stats: any;
   subjects: Subject[];
+  classrooms: TeachClassroom[];
   startIndex: number;
   pageSize: number;
-  activeClassroom: TeachClassroom;
+  activeClassroom: TeachClassroom | null;
   expand(classroomId: number, assignmentId: number): void;
-  reloadClass(id: number): void;
+  reloadClasses(): void;
 }
 
 class ClassroomList extends Component<ClassroomListProps> {
@@ -37,15 +37,18 @@ class ClassroomList extends Component<ClassroomListProps> {
     } as any;
     let success = await updateClassroom(classroomApi);
     if (success) {
-      this.props.reloadClass(classroom.id);
+      this.props.reloadClasses();
     }
   }
   
-  renderClassname() {
-    const classroom = this.props.activeClassroom as any;
-    let className = 'classroom-title';
+  renderClassname(c: TeachListItem, i: number) {
+    const {classroom} = c as any;
+    let className = 'classroom-title one-of-many';
+    if (i === 0) {
+       className += ' first';
+    }
     return (
-      <div className={className}>
+      <div className={className} key={i}>
         <NameAndSubjectForm
           name={classroom!.name}
           subject={classroom.subject}
@@ -68,11 +71,17 @@ class ClassroomList extends Component<ClassroomListProps> {
           </div>
         );
       }
+      return this.renderClassname(c, i);
     }
     return "";
   }
 
   prepareClassItems(items: TeachListItem[], classroom: TeachClassroom) {
+    let item: TeachListItem = {
+      classroom,
+      assignment: null
+    };
+    items.push(item);
     for (let assignment of classroom.assignments) {
       let item: TeachListItem = {
         classroom,
@@ -83,9 +92,15 @@ class ClassroomList extends Component<ClassroomListProps> {
   }
 
   renderContent() {
-    const {activeClassroom} = this.props;
+    const {activeClassroom, classrooms} = this.props;
     let items = [] as TeachListItem[];
-    this.prepareClassItems(items, activeClassroom);
+    if (activeClassroom) {
+      this.prepareClassItems(items, activeClassroom);
+    } else {
+      for (let classroom of classrooms) {
+        this.prepareClassItems(items, classroom);
+      }
+    }
     let k = 0;
     return items.map(item => {
       if (item.classroom && item.assignment === null) {
@@ -99,10 +114,7 @@ class ClassroomList extends Component<ClassroomListProps> {
 
   render() {
     return (
-      <div className="classroom-list one-classroom-assignments">
-        <div className="fixed-classname">
-          {this.renderClassname()}
-        </div>
+      <div className="classroom-list">
         {this.renderContent()}
       </div>
     );
