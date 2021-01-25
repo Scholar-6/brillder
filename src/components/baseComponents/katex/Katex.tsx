@@ -12,6 +12,7 @@ const Katex: React.FC<KatexProps> = props => {
     const vectorMacro = (matrixEnv: string) => (ctx: any) => {
         const arg = ctx.consumeArgs(1)[0] as any[];
         const str = arg.reduce((prev, curr) => curr.text + prev, "") as string;
+        //eslint-disable-next-line
         const elements = str.replace(/\,/g, "\\\\")
         return `\\begin{${matrixEnv}}${elements}\\end{${matrixEnv}}`;
     };
