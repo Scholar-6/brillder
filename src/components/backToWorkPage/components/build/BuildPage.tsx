@@ -623,9 +623,19 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
     finalBricks = finalBricks.filter(b => b.isCore === true);
 
-    let selfPublish = rawPersonalBricks.filter(b => b.status === BrickStatus.Publish).length;
-    const personalDraft = rawPersonalBricks.filter(b =>
-      b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review).length;
+    let selfPublish = 0;
+    let personalDraft = 0;
+    if (this.state.isAdmin) {
+      selfPublish = rawPersonalBricks.filter(b => b.status === BrickStatus.Publish).length;
+      personalDraft = rawPersonalBricks.filter(b =>
+        b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review).length;
+    } else {
+      selfPublish = rawPersonalBricks.filter(b => b.author.id === this.props.user.id && b.status === BrickStatus.Publish).length;
+      personalDraft = rawPersonalBricks.filter(b =>
+        b.author.id === this.props.user.id &&
+        (b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review)
+      ).length;
+    }
 
     return (
       <Grid container direction="row" className="sorted-row build-page-content">
