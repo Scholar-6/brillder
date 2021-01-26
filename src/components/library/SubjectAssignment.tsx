@@ -4,6 +4,7 @@ import './SubjectAssignment.scss';
 import { BrickLengthEnum, Subject } from "model/brick";
 import { LibraryAssignmentBrick } from "model/assignment";
 import map from "components/map";
+import { GENERAL_SUBJECT } from "components/services/subject";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -27,6 +28,11 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
   }
   const height = (assignment.lastAttemptScore / assignment.maxScore * 100) + '%';
 
+  let {color} = subject;
+  if (subject.name === GENERAL_SUBJECT) {
+    color = '#001c58';
+  }
+
   return (
     <div className="assignment-progressbar" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       <div
@@ -38,8 +44,8 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           <div className="bold">{subject.name}</div>
           <div>{brick.title}</div>
         </div>}
+        <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height }} />
       </div>
-      <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: subject.color, height }} />
     </div>
   );
 }

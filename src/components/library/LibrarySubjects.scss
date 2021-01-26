@@ -11,7 +11,6 @@
     height: calc(100% / 3);
     .libary-container {
       height: 90%;
-      display: flex;
       background: var(--white);
       border-radius: 0.7vw;
       padding-left: 0.4vw;
@@ -19,10 +18,5 @@
       padding-top: 1%;
       padding-bottom: 1%;
     }
-  }
-  .subject-tooltip {
-    margin-top: calc((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh) / 4);
-    text-align: center;
-    transform: translate(-25%, 0); 
   }
 }
