@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
 import './LibrarySubjects.scss';
-
 import { SubjectAssignments } from "./model";
 import { LibraryAssignmentBrick } from "model/assignment";
 import { SubjectAssignment } from "./SubjectAssignment";
 
 interface LibrarySubjectsProps {
   index: number;
+  width: number;
   userId: number;
   history: any;
   subjectAssignment: SubjectAssignments;
@@ -30,9 +30,11 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
 
   render() {
     return (
-      <div className="libary-container-1" key={this.props.index}>
+      <div className="libary-container-1" key={this.props.index} style={{width: this.props.width + 'vw', display: 'inline-flex'}}>
         <div className="libary-container">
-          {this.props.subjectAssignment.assignments.map(this.renderAssignment.bind(this))}
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+            {this.props.subjectAssignment.assignments.map(this.renderAssignment.bind(this))}
+          </div>
         </div>
       </div>
     );
