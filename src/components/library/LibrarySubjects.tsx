@@ -27,7 +27,6 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, State> {
     this.state = {
       page: 0
     };
-
   }
 
   componentDidUpdate() {
@@ -42,12 +41,15 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, State> {
 
   renderSubjectAssignments(item: SubjectAssignments, key: number) {
     const width = getSubjectWidth(item);
-    return <LibrarySubject userId={this.props.userId} subjectAssignment={item} width={width} index={key} history={this.props.history} />
+    return <div key={key} className="libary-container-1" style={{width: width + 'vw', display: 'inline-flex'}}>
+      <LibrarySubject userId={this.props.userId} subjectAssignment={item} history={this.props.history} />
+    </div>
   }
 
   render() {
-    const margin = 0.5 * 2;
-    const maxWidth = 69.1;
+    //const margin = 0.5 * 2;
+    //const maxWidth = 69.1;
+    console.log('start')
 
     return (
       <div className="my-library-list">

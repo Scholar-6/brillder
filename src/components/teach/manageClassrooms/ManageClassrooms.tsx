@@ -24,7 +24,6 @@ import CreateClassDialog from './components/CreateClassDialog';
 import DeleteClassDialog from './components/DeleteClassDialog';
 import InviteStudentEmailDialog from './components/InviteStudentEmailDialog';
 import UnassignStudentDialog from './components/UnassignStudentDialog';
-import RoleDescription from 'components/baseComponents/RoleDescription';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachTab from '../TeachTab';
 import EmptyFilter from "./components/EmptyFilter";

@@ -176,6 +176,7 @@ class Library extends Component<BricksListProps, BricksListState> {
         }
       }
     }
+    console.log()
     this.populateAssignments(subjectAssignments, assignments);
     return subjectAssignments;
   }
@@ -345,7 +346,8 @@ class Library extends Component<BricksListProps, BricksListState> {
   toggleCore() {
     const isCore = !this.state.isCore;
     const finalAssignments = this.filter(this.state.rawAssignments, this.state.subjects, isCore);
-    this.setState({isCore, finalAssignments});
+    const subjectAssignments = this.getAssignmentSubjects(finalAssignments, this.state.subjects);
+    this.setState({isCore, subjectAssignments, finalAssignments});
   }
 
   renderMainTitle(filterSubjects: number[]) {
@@ -396,7 +398,7 @@ class Library extends Component<BricksListProps, BricksListState> {
               handleSortChange={e => this.handleSortChange(e)}
               clearSubjects={() => this.clearSubjects()}
               filterByClassroom={this.filterByClassroom.bind(this)}
-              filterBySubject={index => {}}
+              filterBySubject={() => {}}
             />
           </Grid>
           <Grid item xs={9} className="brick-row-container">
