@@ -29,10 +29,14 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
   }
 
   render() {
+    const {assignments} = this.props.subjectAssignment;
+
+    assignments.sort(a => a.lastAttemptScore ? -1 : 1);
+
     return (
       <div className="libary-container">
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          {this.props.subjectAssignment.assignments.map(this.renderAssignment.bind(this))}
+          {assignments.map(this.renderAssignment.bind(this))}
         </div>
       </div>
     );
