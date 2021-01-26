@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 
 import './LibrarySubjects.scss';
-
 import { SubjectAssignments } from "./model";
-import { AssignmentBrick } from "model/assignment";
+import { LibraryAssignmentBrick } from "model/assignment";
 import { SubjectAssignment } from "./SubjectAssignment";
 
 interface LibrarySubjectsProps {
-  index: number;
   userId: number;
   history: any;
   subjectAssignment: SubjectAssignments;
@@ -20,18 +18,25 @@ interface LibrarySubjectState {
 
 
 class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectState> {
-  renderAssignment(assignment: AssignmentBrick, key: number) {
-    return <SubjectAssignment
-      userId={this.props.userId}
-      subjectName={this.props.subjectAssignment.subject.name}
-      index={key} history={this.props.history} assignment={assignment} />
+  renderAssignment(assignment: LibraryAssignmentBrick, key: number) {
+    return <div key={key}>
+      <SubjectAssignment
+        userId={this.props.userId}
+        subject={this.props.subjectAssignment.subject}
+        history={this.props.history} assignment={assignment}
+      />
+    </div>
   }
 
   render() {
+    const {assignments} = this.props.subjectAssignment;
+
+    assignments.sort(a => a.lastAttemptScore ? -1 : 1);
+
     return (
-      <div className="libary-container-1" key={this.props.index}>
-        <div className="libary-container">
-          {this.props.subjectAssignment.assignments.map(this.renderAssignment.bind(this))}
+      <div className="libary-container">
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          {assignments.map(this.renderAssignment.bind(this))}
         </div>
       </div>
     );

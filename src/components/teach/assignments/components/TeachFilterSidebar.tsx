@@ -162,68 +162,6 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     );
   };
 
-  renderFilterBox = () => {
-    let assignedCount = 0;
-    let completedCount = 0;
-
-    for (let classroom of this.props.classrooms) {
-      for (let assignemnt of classroom.assignments) {
-        if (assignemnt.byStatus) {
-          const { byStatus } = assignemnt;
-          assignedCount += byStatus[0] ? byStatus[0].count : 0;
-          completedCount += byStatus[1] ? byStatus[1].count : 0;
-        } else {
-          assignedCount += classroom.students.length;
-        }
-      }
-    }
-
-    return (
-      <div className="sort-box">
-        <div className="filter-header">
-          LIVE OVERVIEW
-          <button
-            className={
-              "btn-transparent filter-icon " +
-              (this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? "arrow-cancel"
-                  : "arrow-up"
-                : "arrow-down")
-            }
-            onClick={() => {
-              this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? this.clearStatus()
-                  : (this.hideFilter())
-                : (this.expandFilter())
-            }}>
-          </button>
-        </div>
-        {this.state.filterExpanded === true && (
-          <div className="filter-container subject-indexes-box">
-            <div className="index-box color1">
-              <FormControlLabel
-                checked={this.state.filters.assigned}
-                control={<Radio onClick={() => this.toggleFilter(TeachFilterFields.Assigned)} className={"filter-radio custom-color"} />}
-                label="Assigned to class or Student" />
-              <div className="right-index" style={{ height: 'auto' }}>{assignedCount}</div>
-            </div>
-            <div className="index-box color4">
-              <FormControlLabel
-                checked={this.state.filters.completed}
-                control={
-                  <Radio onClick={e => this.toggleFilter(TeachFilterFields.Completed)} className={"filter-radio custom-color"} />
-                }
-                label="Completed" />
-              <div className="right-index" style={{ height: 'auto' }}>{completedCount}</div>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
-
   renderContent() {
     if (!this.props.isLoaded) {
       return <div></div>
@@ -231,10 +169,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     if (this.props.isLoaded && this.props.classrooms.length === 0) {
       return <EmptyFilter />;
     }
-    let divs = [];
-    divs.push(this.renderClassesBox());
-    divs.push(this.renderFilterBox());
-    return divs;
+    return this.renderClassesBox();
   }
 
   render() {
