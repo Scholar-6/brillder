@@ -24,6 +24,6 @@ export interface AssignmentBrick {
 }
 
 export interface LibraryAssignmentBrick extends AssignmentBrick {
-  maxScore: number;
-  lastAttemptScore: number;
+  maxScore?: number;
+  lastAttemptScore?: number;
 }
