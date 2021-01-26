@@ -1,4 +1,4 @@
-import { AssignmentBrick } from "model/assignment";
+import { LibraryAssignmentBrick } from "model/assignment";
 import { Subject } from "model/brick";
 
 export enum SortBy {
@@ -9,5 +9,5 @@ export enum SortBy {
 
 export interface SubjectAssignments {
   subject: Subject,
-  assignments: AssignmentBrick[]
+  assignments: LibraryAssignmentBrick[]
 }
