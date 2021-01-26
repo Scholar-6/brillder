@@ -583,6 +583,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
       const draft = publicFinalBricks.filter(b => b.status === BrickStatus.Draft).length;
       const build = publicFinalBricks.filter(b => b.status === BrickStatus.Build).length;
       const review = publicFinalBricks.filter(b => b.status === BrickStatus.Review).length;
+
+      if (!this.state.isAdmin) {
+        finalBricks = finalBricks.filter(b => b.author.id === this.props.user.id);
+      }
      
       return <PersonalBuild
         user={this.props.user}
