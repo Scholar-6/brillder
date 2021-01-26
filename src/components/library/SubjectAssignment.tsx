@@ -11,7 +11,6 @@ interface LibrarySubjectsProps {
   subject: Subject;
   assignment: LibraryAssignmentBrick;
   history: any;
-  index: number;
 }
 
 export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
@@ -35,11 +34,7 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
 
   return (
     <div className="assignment-progressbar" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-      <div
-        key={props.index}
-        className={className}
-        onClick={() => props.history.push(map.postPlay(brick.id, props.userId))}
-      >
+      <div className={className} onClick={() => props.history.push(map.postPlay(brick.id, props.userId))}>
         {hovered && <div className="custom-tooltip subject-tooltip">
           <div className="bold">{subject.name}</div>
           <div>{brick.title}</div>
