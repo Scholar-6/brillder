@@ -600,7 +600,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           </>:
           this.renderEmptyTab()
         }
-        <RoleDescription />
         {this.renderPagination()}
       </div>
     );
