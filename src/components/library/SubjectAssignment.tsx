@@ -1,14 +1,14 @@
 import React from "react";
 
-import { BrickLengthEnum } from "model/brick";
-import './LibrarySubjects.scss';
-import { AssignmentBrick } from "model/assignment";
+import './SubjectAssignment.scss';
+import { BrickLengthEnum, Subject } from "model/brick";
+import { LibraryAssignmentBrick } from "model/assignment";
 import map from "components/map";
 
 interface LibrarySubjectsProps {
   userId: number;
-  subjectName: string;
-  assignment: AssignmentBrick;
+  subject: Subject;
+  assignment: LibraryAssignmentBrick;
   history: any;
   index: number;
 }
@@ -17,24 +17,29 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
   const [hovered, setHover] = React.useState(false);
   let className = 'assignment'
 
+  const { assignment, subject } = props;
+
   const { brick } = props.assignment;
   if (brick.brickLength) {
     className += ' length-' + brick.brickLength;
   } else {
     className += ' length-' + BrickLengthEnum.S40min;
   }
+  const height = (assignment.lastAttemptScore / assignment.maxScore * 100) + '%';
+
   return (
-    <div
-      key={props.index}
-      className={className}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      onClick={() => props.history.push(map.postPlay(brick.id, props.userId))}
-    >
-      {hovered && <div className="custom-tooltip subject-tooltip">
-        <div className="bold">{props.subjectName}</div>
-        <div>{brick.title}</div>
-      </div>}
+    <div className="assignment-progressbar" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+      <div
+        key={props.index}
+        className={className}
+        onClick={() => props.history.push(map.postPlay(brick.id, props.userId))}
+      >
+        {hovered && <div className="custom-tooltip subject-tooltip">
+          <div className="bold">{subject.name}</div>
+          <div>{brick.title}</div>
+        </div>}
+      </div>
+      <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: subject.color, height }} />
     </div>
   );
 }

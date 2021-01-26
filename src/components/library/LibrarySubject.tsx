@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import './LibrarySubjects.scss';
 
 import { SubjectAssignments } from "./model";
-import { AssignmentBrick } from "model/assignment";
+import { LibraryAssignmentBrick } from "model/assignment";
 import { SubjectAssignment } from "./SubjectAssignment";
 
 interface LibrarySubjectsProps {
@@ -20,11 +20,12 @@ interface LibrarySubjectState {
 
 
 class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectState> {
-  renderAssignment(assignment: AssignmentBrick, key: number) {
+  renderAssignment(assignment: LibraryAssignmentBrick, key: number) {
     return <SubjectAssignment
       userId={this.props.userId}
-      subjectName={this.props.subjectAssignment.subject.name}
-      index={key} history={this.props.history} assignment={assignment} />
+      subject={this.props.subjectAssignment.subject}
+      index={key} history={this.props.history} assignment={assignment}
+    />
   }
 
   render() {
