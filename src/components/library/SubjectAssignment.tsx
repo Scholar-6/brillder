@@ -25,7 +25,10 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
   } else {
     className += ' length-' + BrickLengthEnum.S40min;
   }
-  const height = (assignment.lastAttemptScore / assignment.maxScore * 100) + '%';
+  let height = '0%';
+  if (assignment.lastAttemptScore && assignment.maxScore) {
+    height = (assignment.lastAttemptScore / assignment.maxScore * 100) + '%';
+  }
 
   let {color} = subject;
   if (subject.name === GENERAL_SUBJECT) {

@@ -37,6 +37,8 @@
     border-radius: 0.3vw;
   }
   .subject-tooltip {
+    background: var(--theme-light-blue);
+    color: var(--tab-gray);
     margin-top: calc((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 2.5vh) / 4);
     text-align: center;
     transform: translate(-25%, 0); 
