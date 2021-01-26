@@ -1,5 +1,8 @@
 .assignment-progressbar {
   position: relative;
+  height: 100%;
+  display: inline-block;
+
   .assignment {
     cursor: pointer;
     background: var(--tab-gray);
@@ -10,22 +13,33 @@
     border-radius: 0.3vw;
 
     &.length-20 {
-      width: 1vw;
+      width: 0.8vw;
+      .progress-value {
+        width: 0.8vw;
+      }
     }
     &.length-40 {
-      width: 2vw;
+      width: 1.6vw;
+      .progress-value {
+        width: 1.6vw;
+      }
     }
     &.length-60 {
-      width: 4vw;
+      width: 3.2vw;
+      .progress-value {
+        width: 3.2vw;
+      }
     }
   }
   .progress-value {
     position: absolute;
     bottom: 0;
     border-radius: 0.3vw;
-    width: 100%;
   }
-  .custom-tooltip {
+  .subject-tooltip {
+    margin-top: calc((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh) / 4);
+    text-align: center;
+    transform: translate(-25%, 0); 
     z-index: 1000;
   }
 }
