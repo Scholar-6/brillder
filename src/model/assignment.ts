@@ -22,3 +22,8 @@ export interface AssignmentBrick {
   isInvitation: boolean;
   classroom?: any;
 }
+
+export interface LibraryAssignmentBrick extends AssignmentBrick {
+  maxScore?: number;
+  lastAttemptScore?: number;
+}

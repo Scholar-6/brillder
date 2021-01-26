@@ -13,7 +13,7 @@ import { checkAdmin } from "components/services/brickService";
 import { getLibraryBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
 import { SortBy, SubjectAssignments } from "./model";
-import { AssignmentBrick } from "model/assignment";
+import { LibraryAssignmentBrick } from "model/assignment";
 
 import LibraryFilter from "./LibraryFilter";
 import ViewAllPagination from "../viewAllPage/ViewAllPagination";
@@ -37,8 +37,8 @@ interface BricksListProps {
 }
 
 interface BricksListState {
-  finalAssignments: AssignmentBrick[];
-  rawAssignments: AssignmentBrick[];
+  finalAssignments: LibraryAssignmentBrick[];
+  rawAssignments: LibraryAssignmentBrick[];
   subjectAssignments: SubjectAssignments[];
 
   searchString: string;
@@ -129,7 +129,7 @@ class Library extends Component<BricksListProps, BricksListState> {
     return [];
   }
 
-  countSubjectBricks(subjects: any[], assignments: AssignmentBrick[]) {
+  countSubjectBricks(subjects: any[], assignments: LibraryAssignmentBrick[]) {
     subjects.forEach((s:any) => {
       s.publicCount = 0;
       s.personalCount = 0;
@@ -147,14 +147,14 @@ class Library extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  prepareSubjects(assignments: AssignmentBrick[], subjects: Subject[]) {
+  prepareSubjects(assignments: LibraryAssignmentBrick[], subjects: Subject[]) {
     subjects = subjects.filter(s => assignments.find(a => a.brick.subjectId === s.id));
 
     this.countSubjectBricks(subjects, assignments);
     return subjects;
   }
 
-  getAssignmentSubjects(assignments: AssignmentBrick[], subjects: Subject[]) {
+  getAssignmentSubjects(assignments: LibraryAssignmentBrick[], subjects: Subject[]) {
     let subjectAssignments:SubjectAssignments[] = [];
     for (let assignment of assignments) {
       const {subjectId} = assignment.brick;
@@ -176,11 +176,12 @@ class Library extends Component<BricksListProps, BricksListState> {
         }
       }
     }
+    console.log()
     this.populateAssignments(subjectAssignments, assignments);
     return subjectAssignments;
   }
 
-  populateAssignments(subjectAssignments: SubjectAssignments[], assignments: AssignmentBrick[]) {
+  populateAssignments(subjectAssignments: SubjectAssignments[], assignments: LibraryAssignmentBrick[]) {
     for (let assignment of assignments) {
       const subjectAssignment = subjectAssignments.find(s => s.subject.id === assignment.brick.subjectId);
       subjectAssignment?.assignments.push(assignment);
@@ -215,8 +216,8 @@ class Library extends Component<BricksListProps, BricksListState> {
     return filterSubjects;
   }
 
-  filter(assignments: AssignmentBrick[], subjects: Subject[], isCore?: boolean) {
-    let filtered: AssignmentBrick[] = [];
+  filter(assignments: LibraryAssignmentBrick[], subjects: Subject[], isCore?: boolean) {
+    let filtered: LibraryAssignmentBrick[] = [];
 
     let filterSubjects = this.getCheckedSubjectIds(subjects);
 
@@ -345,7 +346,8 @@ class Library extends Component<BricksListProps, BricksListState> {
   toggleCore() {
     const isCore = !this.state.isCore;
     const finalAssignments = this.filter(this.state.rawAssignments, this.state.subjects, isCore);
-    this.setState({isCore, finalAssignments});
+    const subjectAssignments = this.getAssignmentSubjects(finalAssignments, this.state.subjects);
+    this.setState({isCore, subjectAssignments, finalAssignments});
   }
 
   renderMainTitle(filterSubjects: number[]) {
@@ -396,7 +398,7 @@ class Library extends Component<BricksListProps, BricksListState> {
               handleSortChange={e => this.handleSortChange(e)}
               clearSubjects={() => this.clearSubjects()}
               filterByClassroom={this.filterByClassroom.bind(this)}
-              filterBySubject={index => {}}
+              filterBySubject={() => {}}
             />
           </Grid>
           <Grid item xs={9} className="brick-row-container">
