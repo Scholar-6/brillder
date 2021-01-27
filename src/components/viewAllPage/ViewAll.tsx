@@ -162,16 +162,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadData(values: queryString.ParsedQuery<string>) {
-    if (this.props.user) {
-      await this.loadSubjects(values);
-    }
+    await this.loadSubjects(values);
 
     if (values.searchString) {
       this.search();
     } else if (this.props.user) {
       this.loadBricks(values);
     } else {
-      this.setState({ ...this.state, failedRequest: true });
       // load bricks for unauthorized users
       const bricks = await getPublicBricks();
       if (bricks) {
@@ -187,7 +184,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
    */
   async loadSubjects(values: queryString.ParsedQuery<string>) {
     let subjects = await getSubjects() as SubjectItem[] | null;
-
+    console.log(subjects);
+    
     if(subjects) {
       sortAndCheckSubjects(subjects, values);
       this.setState({ ...this.state, subjects });
@@ -660,6 +658,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   renderFirstRow(filterSubjects: number[], bricks: Brick[]) {
+    if (!this.props.user) {
+      return "";
+    }
     if (bricks.length === 0) {
       return this.renderNoBricks();
     }

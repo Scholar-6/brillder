@@ -19,7 +19,7 @@ const UnauthorizedSidebar: React.FC<Props> = (props) => {
         onFinish={() => setAnimate({...animate, secondStarted: true })}
       />
       <LabelTyping
-        value="Click on a topic that interests you and begin a"
+        value="Click on a subject that interests you and begin a"
         start={animate.secondStarted}
         className="m-t-3 text"
         onFinish={() => setAnimate({...animate, thirdStarted: true })}
