@@ -4,7 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import actions from 'redux/actions/requestFailed';
 import { connect } from 'react-redux';
 
+import './SubjectAutoCompete.scss';
 import { Subject } from 'model/brick';
+import { Popper } from '@material-ui/core';
 
 
 interface SubjectAutoCompleteProps {
@@ -19,6 +21,10 @@ interface SubjectAutoCompleteState {
   autoCompleteSubjects: Subject[];
   autoCompleteOpen: boolean;
 }
+
+const SubjectsPopper = function (props: any) {
+  return <Popper {...props} className="subjects-popper" placement="bottom-start" />;
+};
 
 class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAutoCompleteState> {
   constructor(props: SubjectAutoCompleteProps) {
@@ -77,6 +83,9 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
           options={this.state.autoCompleteSubjects}
           onChange={(e:any, v: any) => this.onSubjectChange(e, v)}
           getOptionLabel={(option:any) => option.name}
+          PopperComponent={SubjectsPopper}
+          noOptionsText="Sorry, try typing something else"
+          className="subject-autocomplete"
           renderInput={(params:any) => (
             <TextField
               onBlur={() => this.hide()}
@@ -95,7 +104,7 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
 
 const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
-})
+});
 
 const connector = connect(null, mapDispatch);
 
