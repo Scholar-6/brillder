@@ -39,6 +39,7 @@ import RecommendButton from "components/userProfilePage/components/RecommendBuil
 
 import { removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject, getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks, expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks, sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds } from './service/viewAll';
 import { filterByCurretUser } from "components/backToWorkPage/service";
+import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 
 
 interface ViewAllProps {
@@ -651,36 +652,37 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   renderNoBricks() {
+    let subjects = [];
+    console.log(this.state.subjects)
+    if (!this.props.user) {
+      subjects = this.state.subjects.filter(s => s.publicCount > 0);
+    } else {
+      if (this.state.isCore) {
+        subjects = this.state.subjects.filter(s => s.publicCount > 0);
+      } else {
+        subjects =  this.state.subjects.filter(s => s.personalCount && s.personalCount > 0);
+      }
+    }
     return (
-      <div className="main-brick-container">
-        <div className="centered text-theme-dark-blue title no-found">
-          Sorry, no bricks found
+      <div className="bricks-list-container desktop-no-bricks">
+        <div className="main-brick-container">
+          <div className="centered text-theme-dark-blue title no-found">
+            Sorry, no bricks found
+          </div>
+          <CreateOneButton onClick={this.moveToCreateOne.bind(this)} />
+          <RecommendButton />
         </div>
-        <CreateOneButton onClick={this.moveToCreateOne.bind(this)} />
-        <RecommendButton />
+        <div className="no-found-help-text">Try one of the following</div>
+        <SubjectsColumn
+          subjects={subjects}
+          viewAll={() => this.props.history.push(map.ViewAllPage + `?isViewAll=${true}`)}
+          onClick={() => {}}
+        />
       </div>
     );
   }
 
-  renderUnathorizedUserFirstRow(bricksLength: number) {
-    if (bricksLength === 0) {
-      return (
-        <div className="unauthrized-help-box">
-          <div className="unauthrized-help-text">Try one of the following</div>
-          {this.renderNoBricks()}
-        </div>
-      );
-    }
-    return "";
-  }
-
   renderFirstRow(filterSubjects: number[], bricks: Brick[]) {
-    if (!this.props.user) {
-      return this.renderUnathorizedUserFirstRow(bricks.length);
-    }
-    if (bricks.length === 0) {
-      return this.renderNoBricks();
-    }
     if (this.state.isSearching || filterSubjects.length !== 0) {
       return (
         <div className="main-brick-container">
@@ -693,6 +695,23 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       );
     }
     return <div className="bricks-list">{this.renderYourBrickRow()}</div>;
+  }
+
+  renderDesktopBricksPanel(filterSubjects: number[], bricks: Brick[]) {
+    if (!this.props.user) {
+      if (bricks.length === 0) {
+        return this.renderNoBricks();
+      }
+    }
+    if (bricks.length === 0) {
+      return this.renderNoBricks();
+    }
+    return (
+      <div className="bricks-list-container bricks-container-mobile">
+        {this.renderFirstRow(filterSubjects, bricks)}
+        <div className="bricks-list">{this.renderSortedBricks(bricks)}</div>
+      </div>
+    );
   }
 
   renderDesktopBricks(bricks: Brick[]) {
@@ -708,10 +727,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           isCore={this.state.isCore}
           onSwitch={() => this.toggleCore()}
         />}
-        <div className="bricks-list-container bricks-container-mobile">
-          {this.renderFirstRow(filterSubjects, bricks)}
-          <div className="bricks-list">{this.renderSortedBricks(bricks)}</div>
-        </div>
+        {this.renderDesktopBricksPanel(filterSubjects, bricks)}
         <ViewAllPagination
           pageSize={this.state.pageSize}
           sortedIndex={this.state.sortedIndex}

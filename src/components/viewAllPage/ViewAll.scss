@@ -9,22 +9,20 @@
   width: 100%;
   font-family: $font-family-regular;
 
-  .view-all-toggle {
-    position: absolute;
-  }
-
-  .unauthrized-help-box {
-    .main-brick-container {
-      padding-top: 0 !important;
-      max-height: 3.8vw;
-    }
-    .unauthrized-help-text {
-      margin-top: 1vw;
+  .desktop-no-bricks {
+    .no-found-help-text {
       color: var(--theme-dark-blue);
       font-size: 1.5vw;
       font-family: $font-family-bold;
       margin-left: 1.7vw;
     }
+    .subjects-column {
+      align-items: flex-start;
+    }
+  }
+
+  .view-all-toggle {
+    position: absolute;
   }
 
   .main-title {
