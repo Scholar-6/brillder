@@ -33,6 +33,9 @@
       width: 2vw;
       height: 2vw;
     }
+    .svg:hover {
+      color: var(--theme-dark-blue) !important;
+    }
   }
   .notification-content {
     background-color: var(--theme-light-blue);
@@ -212,6 +215,15 @@
       svg {
         height: 1vw;
         width: 1vw;
+      }
+    }
+    .clickable:hover {
+      cursor: pointer;
+      color: var(--theme-dark-blue) !important;
+    }
+    button:hover {
+      .text-white {
+        color: var(--theme-dark-blue) !important;
       }
     }
     @include phone_and_tabletP {
