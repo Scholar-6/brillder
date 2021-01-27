@@ -57,6 +57,66 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     });
   }
 
+  renderSubjectLabelBox() {
+    return (
+      <div className="filter-header">
+        <span>Subjects</span>
+        <button
+          className={
+            "btn-transparent filter-icon " +
+            (this.state.filterExpanded
+              ? this.props.isClearFilter
+                ? "arrow-cancel"
+                : "arrow-down"
+              : "arrow-up")
+          }
+          onClick={() => {
+            this.state.filterExpanded
+              ? this.props.isClearFilter
+                ? this.props.clearSubjects()
+                : this.hideFilter()
+              : this.expandFilter();
+          }}
+        ></button>
+      </div>
+    );
+  }
+
+  renderSubjectsToggle() {
+    if (!this.props.user) {
+      return "";
+    }
+    return (
+      <div className="subjects-toggle">
+        <div
+          className={`${!this.props.isAllSubjects ? 'toggle-button my-subjects active' : 'toggle-button my-subjects not-active'}`}
+          onClick={() => {
+            if (this.props.isAllSubjects) {
+              this.props.setAllSubjects(false);
+            }
+          }}
+        >
+          <div className="icon-container">
+            <SpriteIcon name="user" />
+          </div>
+          <div className="text-container">
+            My Subjects
+          </div>
+        </div>
+        <div
+          className={`${this.props.isAllSubjects ? 'toggle-button all-subjects active' : 'toggle-button all-subjects not-active'}`}
+          onClick={() => {
+            if (!this.props.isAllSubjects) {
+              this.props.setAllSubjects(true);
+            }
+          }}
+        >
+          All Subjects
+        </div>
+      </div>
+    );
+  }
+
   render() {
     let { subjects } = this.props;
     if (!this.props.isAllSubjects) {
@@ -72,93 +132,45 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     }
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
-        {this.props.user ?
-          <div className="sort-box">
-            <div className="filter-container sort-by-box view-all-sort-box" style={{height: '6.5vw'}}>
-              <div className="sort-header">Sort By</div>
-              <RadioGroup
-                className="sort-group"
-                aria-label="SortBy"
-                name="SortBy"
-                value={this.props.sortBy}
-                onChange={this.props.handleSortChange}
-              >
-                <Grid container direction="row">
-                  <Grid item xs={6}>
-                    <FormControlLabel
-                      value={SortBy.Popularity}
-                      style={{ marginRight: 0, width: "50%" }}
-                      control={<Radio className="sortBy" />}
-                      label="Popularity"
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FormControlLabel
-                      value={SortBy.Date}
-                      style={{ marginRight: 0 }}
-                      control={<Radio className="sortBy" />}
-                      label="Date Added"
-                    />
-                  </Grid>
+        <div className="sort-box">
+          <div className="filter-container sort-by-box view-all-sort-box" style={{ height: '6.5vw' }}>
+            <div className="sort-header">Sort By</div>
+            <RadioGroup
+              className="sort-group"
+              aria-label="SortBy"
+              name="SortBy"
+              value={this.props.sortBy}
+              onChange={this.props.handleSortChange}
+            >
+              <Grid container direction="row">
+                <Grid item xs={6}>
+                  <FormControlLabel
+                    value={SortBy.Popularity}
+                    style={{ marginRight: 0, width: "50%" }}
+                    control={<Radio className="sortBy" />}
+                    label="Popularity"
+                  />
                 </Grid>
-              </RadioGroup>
-            </div>
-            <div className="filter-header">
-              <span>Subjects</span>
-              <button
-                className={
-                  "btn-transparent filter-icon " +
-                  (this.state.filterExpanded
-                    ? this.props.isClearFilter
-                      ? "arrow-cancel"
-                      : "arrow-down"
-                    : "arrow-up")
-                }
-                onClick={() => {
-                  this.state.filterExpanded
-                    ? this.props.isClearFilter
-                      ? this.props.clearSubjects()
-                      : this.hideFilter()
-                    : this.expandFilter();
-                }}
-              ></button>
-            </div>
-            <div className="subjects-toggle">
-              <div
-                className={`${!this.props.isAllSubjects ? 'toggle-button my-subjects active' : 'toggle-button my-subjects not-active'}`}
-                onClick={() => {
-                  if (this.props.isAllSubjects) {
-                    this.props.setAllSubjects(false);
-                  }
-                }}
-              >
-                <div className="icon-container">
-                  <SpriteIcon name="user" />
-                </div>
-                <div className="text-container">
-                  My Subjects
-                </div>
-              </div>
-              <div
-                className={`${this.props.isAllSubjects ? 'toggle-button all-subjects active' : 'toggle-button all-subjects not-active'}`}
-                onClick={() => {
-                  if (!this.props.isAllSubjects) {
-                    this.props.setAllSubjects(true);
-                  }
-                }}
-              >
-                All Subjects
-              </div>
-            </div>
-            <SubjectsListV3
-              isPublic={this.props.isCore}
-              subjects={subjects}
-              filterHeight={this.state.filterHeight}
-              filterBySubject={this.props.filterBySubject}
-            />
+                <Grid item xs={6}>
+                  <FormControlLabel
+                    value={SortBy.Date}
+                    style={{ marginRight: 0 }}
+                    control={<Radio className="sortBy" />}
+                    label="Date Added"
+                  />
+                </Grid>
+              </Grid>
+            </RadioGroup>
           </div>
-          : <UnauthorizedSidebar />
-        }
+          {this.renderSubjectLabelBox()}
+          {this.renderSubjectsToggle()}
+          <SubjectsListV3
+            isPublic={this.props.isCore}
+            subjects={subjects}
+            filterHeight={this.state.filterHeight}
+            filterBySubject={this.props.filterBySubject}
+          />
+        </div>
       </Grid>
     );
   }
