@@ -80,6 +80,11 @@
           }
         }
 
+        &.no-hover {
+          cursor: inherit;
+          background: inherit !important;
+        }
+
         .left-brick-circle {
           font-size: 2vw;
           width: 3vw;

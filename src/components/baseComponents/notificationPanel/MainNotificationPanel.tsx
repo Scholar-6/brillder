@@ -246,7 +246,7 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
                 </li>
               )) :
                 (
-                  <li>
+                  <li className="no-hover">
                     <div className="notification-detail-single">
                       You have no new notifications
                       <br />
