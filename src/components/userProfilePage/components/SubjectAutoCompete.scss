@@ -1,5 +1,25 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
 .subject-autocomplete {
   .MuiAutocomplete-endAdornment {
     display: none !important;
+  }
+}
+
+.subjects-popper {
+  .MuiAutocomplete-listbox {
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: calc(6vw + 3vh) !important;
+    font-size: 1.25vw;
+    color: var(--theme-dark-blue);
+    font-family: $font-family-regular;
+  }
+
+  .MuiAutocomplete-noOptions {
+    font-size: 1.25vw;
+    font-family: $font-family-regular;
   }
 }

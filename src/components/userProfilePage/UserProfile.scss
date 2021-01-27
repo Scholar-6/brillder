@@ -9,10 +9,6 @@
   width: 100%;
   font-family: $font-family-regular;
 
-  .MuiAutocomplete-listbox {
-    height: 10vh !important;
-  }
-
   .phone-question-preview-box {
     top: $page-head-height;
     height: calc(100vh - #{$page-head-height}) !important;
@@ -416,19 +412,5 @@
     .custom-component {
       background-color: white;
     }
-  }
-}
-
-.subjects-popper {
-  .MuiAutocomplete-listbox {
-    padding-top: 0;
-    padding-bottom: 0;
-    max-height: calc(6vw + 3vh) !important;
-    font-size: 1.25vw;
-    color: var(--theme-dark-blue);
-  }
-
-  .MuiAutocomplete-noOptions {
-    font-size: 1.25vw;
   }
 }
