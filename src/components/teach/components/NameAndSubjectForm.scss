@@ -80,9 +80,8 @@
 
   .name-display {
     font-size: 1.5vw;
-    letter-spacing: 0.15vw;
-    font-family: $font-family-black;
-    text-transform: uppercase;
+    font-family: $font-family-regular;
+    text-transform: capitalize;
     color: var(--theme-dark-blue);
   }
 
