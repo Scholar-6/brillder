@@ -96,6 +96,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     const values = queryString.parse(props.location.search);
+    if (!values.isViewAll && !values.subjectId) {
+      this.props.history.push(map.AllSubjects);
+    }
     const searchString = values.searchString as string || '';
 
     let isViewAll = false;
