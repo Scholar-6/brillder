@@ -418,7 +418,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             user={this.props.user}
             history={this.props.history}
             notifications={this.props.notifications}
-            notificationClicked={() => this.setState({ notificationExpanded: true })}
+            notificationClicked={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
           />
         </div>
         <div className="first-col">

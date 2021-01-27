@@ -2,11 +2,13 @@ import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { Subject } from 'model/brick';
 import { InputBase, ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
+import { connect } from 'react-redux';
+
+import './CreateClassDialog.scss';
 import { loadSubjects } from 'components/services/subject';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { User, UserType } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
-import { connect } from 'react-redux';
 
 interface AssignClassProps {
   isOpen: boolean;
@@ -46,14 +48,16 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     <Dialog
       open={props.isOpen}
       onClose={props.close}
-      className="dialog-box light-blue assign-class-dialog"
+      className="dialog-box light-blue assign-class-dialog create-classroom-dialog"
     >
-      <div className="dialog-header" style={{marginBottom: '2vh'}}>
-        <div className="title">What is the name of class?</div>
-        <input value={value} onChange={e => setValue(e.target.value)} />
+      <div className="close-button svgOnHover" onClick={props.close}>
+        <SpriteIcon name="cancel" className="w100 h100 active" />
       </div>
       <div className="dialog-header" style={{marginBottom: '2vh'}}>
-        <div className="title">What subject is the class for?</div>
+        <div className="title">Name Your Class</div>
+        <input placeholder="Class Name" value={value} onChange={e => setValue(e.target.value)} />
+      </div>
+      <div className="dialog-header dialog-select-container">
         <Select
           MenuProps={{ style: { zIndex: 1000000 } } /* Dialog box is always z-index 999999 */}
           value={subjectIndex}
@@ -83,11 +87,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               props.submit(value, subjects[subjectIndex]);
             }
           }}>
-          <span>Create</span>
-        </button>
-        <button className="btn btn-md bg-gray no-button"
-          onClick={props.close}>
-          <span>Cancel</span>
+          <span className="bold">Create</span>
         </button>
       </div>
     </Dialog>

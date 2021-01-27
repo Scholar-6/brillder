@@ -72,16 +72,20 @@
 
       .round {
         border-radius: 50%;
-        width: 2.2vw;
-        height: 2.2vw;
+        width: 1.9vw;
+        height: 1.9vw;
       }
 
       .reminder-icon,
       .book-open-icon {
         color: white;
         stroke-width: 1.5;
-        width: 1.7vw;
-        height: 1.7vw;
+        width: 1.4vw;
+        height: 1.4vw;
+      }
+      .reminder-icon {
+        width: 1.35vw;
+        height: 1.35vw;
       }
 
       .book-open-icon {

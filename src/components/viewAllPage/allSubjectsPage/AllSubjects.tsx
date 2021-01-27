@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import queryString from 'query-string';
 import "swiper/swiper.scss";
 
-import "./ViewAll.scss";
+import "../ViewAll.scss";
 import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
@@ -17,10 +17,11 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import SubjectsColumn from "./components/SubjectsColumn";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import AllSubjectsSidebar from "./AllSubjectsSidebar";
-import ViewAllFilter, { SortBy } from "./ViewAllFilter";
+import ViewAllFilter, { SortBy } from "../components/ViewAllFilter";
+import UnauthorizedSidebar from "./components/UnauthrizedSidebar";
 
 
-interface ViewAllProps {
+interface AllSubjectsProps {
   user: User;
   notifications: Notification[] | null;
   history: any;
@@ -28,16 +29,18 @@ interface ViewAllProps {
   forgetBrick(): void;
 }
 
-interface ViewAllState {
+interface AllSubjectsState {
   subjects: SubjectItem[];
   totalSubjects: Subject[];
   activeSubject: SubjectItem;
-  failedRequest: boolean;
   showFilters: boolean;
+  searchString: string;
+  isAllSubjects: boolean;
+  failedRequest: boolean;
 }
 
-class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
-  constructor(props: ViewAllProps) {
+class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
+  constructor(props: AllSubjectsProps) {
     super(props);
 
     let showFilters = false;
@@ -51,9 +54,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       totalSubjects: [],
       activeSubject: {} as SubjectItem,
       failedRequest: false,
+      searchString: '',
+      isAllSubjects: true,
       showFilters
     };
-
 
     this.loadSubjects();
   }
@@ -68,6 +72,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       this.setState({ ...this.state, failedRequest: true });
     }
     return subjects;
+  }
+
+  search() {
+    this.props.history.push(map.ViewAllPage + '?searchString=' + this.state.searchString);
   }
 
   onSubjectSelected(subjectId: number) {
@@ -86,8 +94,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           user={this.props.user}
           placeholder={"Search Subjects, Topics, Titles & more"}
           history={this.props.history}
-          search={() => { }}
-          searching={(v) => { }}
+          search={this.search.bind(this)}
+          searching={v => this.setState({searchString: v})}
         />
         <Grid container direction="row" className="sorted-row">
           {this.state.showFilters ?
@@ -98,14 +106,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
               userSubjects={this.props.user.subjects}
               isCore={true}
               isClearFilter={() => { }}
-              isAllSubjects={true}
-              setAllSubjects={() => { }}
+              isAllSubjects={this.state.isAllSubjects}
+              setAllSubjects={isAllSubjects => this.setState({isAllSubjects})}
               handleSortChange={() => { }}
               clearSubjects={() => { }}
               filterBySubject={id => this.onSubjectSelected(id)}
             />
-            :
-            <AllSubjectsSidebar />
+            : this.props.user ? <AllSubjectsSidebar /> : <UnauthorizedSidebar />
           }
           <Grid item xs={9} className="brick-row-container">
             <SubjectsColumn
@@ -133,4 +140,4 @@ const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
 });
 
-export default connect(mapState, mapDispatch)(ViewAllPage);
+export default connect(mapState, mapDispatch)(AllSubjectsPage);

@@ -21,7 +21,7 @@ import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/Delet
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
-import ViewAllFilter, { SortBy } from "./ViewAllFilter";
+import ViewAllFilter, { SortBy } from "./components/ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import BrickBlock from "components/baseComponents/BrickBlock";
@@ -37,8 +37,9 @@ import ViewAllMobile from "./ViewAllMobile";
 import CreateOneButton from "components/userProfilePage/components/CreateOneButton";
 import RecommendButton from "components/userProfilePage/components/RecommendBuilderButton";
 
-import {removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject, getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks, expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks, sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds} from './service/viewAll';
+import { removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject, getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks, expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks, sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds } from './service/viewAll';
 import { filterByCurretUser } from "components/backToWorkPage/service";
+import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 
 
 interface ViewAllProps {
@@ -95,6 +96,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     const values = queryString.parse(props.location.search);
+    if (!values.isViewAll && !values.subjectId) {
+      this.props.history.push(map.AllSubjects);
+    }
     const searchString = values.searchString as string || '';
 
     let isViewAll = false;
@@ -136,13 +140,27 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   // load bricks when notification come
   componentDidUpdate(prevProps: ViewAllProps) {
-    const {notifications} = this.props;
+    const { notifications } = this.props;
     const oldNotifications = prevProps.notifications;
     if (notifications && oldNotifications) {
       if (notifications.length > oldNotifications.length) {
         this.loadBricks();
       }
     }
+  }
+
+  checkSubjectsWithBricks(subjects: SubjectItem[]) {
+    subjects.forEach(s => {
+      if (this.state.isCore) {
+        if (s.publicCount > 0) {
+          s.checked = true;
+        }
+      } else {
+        if (s.personalCount && s.personalCount > 0) {
+          s.checked = true;
+        }
+      }
+    });
   }
 
   componentDidMount() {
@@ -162,23 +180,14 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadData(values: queryString.ParsedQuery<string>) {
-    if (this.props.user) {
-      await this.loadSubjects(values);
-    }
+    await this.loadSubjects(values);
 
     if (values.searchString) {
       this.search();
     } else if (this.props.user) {
       this.loadBricks(values);
     } else {
-      this.setState({ ...this.state, failedRequest: true });
-      // load bricks for unauthorized users
-      const bricks = await getPublicBricks();
-      if (bricks) {
-        this.setState({ ...this.state, bricks, isLoading: false, finalBricks: bricks, shown: true });
-      } else {
-        this.setState({ ...this.state, isLoading: false, failedRequest: true });
-      }
+      this.loadUnauthorizedBricks(values);
     }
   }
 
@@ -188,13 +197,26 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async loadSubjects(values: queryString.ParsedQuery<string>) {
     let subjects = await getSubjects() as SubjectItem[] | null;
 
-    if(subjects) {
+    if (subjects) {
       sortAndCheckSubjects(subjects, values);
       this.setState({ ...this.state, subjects });
     } else {
       this.setState({ ...this.state, failedRequest: true });
     }
     return subjects;
+  }
+
+  async loadUnauthorizedBricks(values?: queryString.ParsedQuery<string>) {
+    const bricks = await getPublicBricks();
+    if (bricks) {
+      let finalBricks = this.filter(bricks, this.state.isAllSubjects, true);
+      let { subjects } = this.state;
+      countSubjectBricks(subjects, bricks);
+      subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
+      this.setState({ ...this.state, bricks, isLoading: false, finalBricks, shown: true });
+    } else {
+      this.setState({ ...this.state, isLoading: false, failedRequest: true });
+    }
   }
 
   async loadBricks(values?: queryString.ParsedQuery<string>) {
@@ -210,15 +232,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (bricks) {
       let bs = sortAllBricks(bricks);
       let finalBricks = this.filter(bs, this.state.isAllSubjects, this.state.isCore);
-      let {subjects} = this.state;
+      let { subjects } = this.state;
       countSubjectBricks(subjects, bs);
       subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
       if (values && values.isViewAll) {
-        subjects.forEach(s => {
-          if (s.publicCount > 0) {
-            s.checked = true;
-          }
-        });
+        this.checkSubjectsWithBricks(subjects);
         finalBricks = this.filter(bricks, this.state.isAllSubjects, this.state.isCore);
       }
       this.setState({ ...this.state, subjects, bricks, isLoading: false, finalBricks, shown: true });
@@ -307,9 +325,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     setTimeout(() => {
       try {
         this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
-      } catch {}
+      } catch { }
     }, 1400);
-  };
+  }
+
+  viewAll() {
+    this.checkSubjectsWithBricks(this.state.subjects);
+    const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore);
+    this.setState({finalBricks, isViewAll: true});
+  }
 
   clearSubjects = () => {
     const { state } = this;
@@ -416,7 +440,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async search() {
     const { searchString } = this.state;
-    this.setState({shown: false});
+    this.setState({ shown: false });
     let bricks: Brick[] | null = [];
     if (this.props.user) {
       bricks = await searchBricks(searchString);
@@ -441,7 +465,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           this.setState({ ...this.state, isLoading: false, failedRequest: true });
         }
       } catch {
-        this.setState({isLoading: false, failedRequest: true});
+        this.setState({ isLoading: false, failedRequest: true });
       }
     }, 1400);
   }
@@ -603,7 +627,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       try {
         const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, isCore);
         this.setState({ shown: true, finalBricks, sortedIndex: 0 });
-      } catch {}
+      } catch { }
     }, 1400);
   }
 
@@ -630,15 +654,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const filterSubjects = getCheckedSubjects(this.state.subjects);
     if (filterSubjects.length === 1) {
       const subjectId = filterSubjects[0].id;
-      const {subjects} = this.props.user;
-      if (subjects) {
-        for (let s of subjects) {
-          if (s.id === subjectId) {
-            clearProposal();
-            this.props.forgetBrick();
-            this.props.history.push(map.ProposalSubject + '?selectedSubject=' + subjectId);
-          } else {
-            this.setState({noSubjectOpen: true, activeSubject: filterSubjects[0]});
+      if (this.props.user) {
+        const { subjects } = this.props.user;
+        if (subjects) {
+          for (let s of subjects) {
+            if (s.id === subjectId) {
+              clearProposal();
+              this.props.forgetBrick();
+              this.props.history.push(map.ProposalSubject + '?selectedSubject=' + subjectId);
+            } else {
+              this.setState({ noSubjectOpen: true, activeSubject: filterSubjects[0] });
+            }
           }
         }
       }
@@ -647,22 +673,70 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
+  filterSubjectsByCurrentUser(subjects: SubjectItem[]) {
+    let resSubjects = [];
+    for (let subject of this.props.user.subjects) {
+      for (let s of subjects) {
+        if (s.id === subject.id) {
+          resSubjects.push(s);
+        }
+      }
+    }
+    return resSubjects;
+  }
+
+  getPersonalSubjectsWithBricks() {
+    let subjects =  this.state.subjects.filter(s => s.personalCount && s.personalCount > 0);
+    if (!this.state.isAllSubjects) {
+      subjects = this.filterSubjectsByCurrentUser(subjects);
+    }
+    return subjects;
+  }
+
+  getPublicSubjectsWithBricks() {
+    let subjects = this.state.subjects.filter(s => s.publicCount > 0);
+    if (!this.state.isAllSubjects) {
+      subjects = this.filterSubjectsByCurrentUser(subjects);
+    }
+    return subjects;
+  }
+
+  getSubjectsWithBricks() {
+    let subjects = [];
+    if (!this.props.user) {
+      subjects = this.state.subjects.filter(s => s.publicCount > 0);
+    } else {
+      if (this.state.isCore) {
+        subjects = this.getPublicSubjectsWithBricks();
+      } else {
+        subjects = this.getPersonalSubjectsWithBricks();
+      }
+    }
+    return subjects;
+  }
+
   renderNoBricks() {
+    const subjects = this.getSubjectsWithBricks();
     return (
-      <div className="main-brick-container">
-        <div className="centered text-theme-dark-blue title no-found">
-          Sorry, no bricks found
+      <div className="bricks-list-container desktop-no-bricks">
+        <div className="main-brick-container">
+          <div className="centered text-theme-dark-blue title no-found">
+            Sorry, no bricks found
+          </div>
+          <CreateOneButton onClick={this.moveToCreateOne.bind(this)} />
+          <RecommendButton />
         </div>
-        <CreateOneButton onClick={this.moveToCreateOne.bind(this)} />
-        <RecommendButton />
+        <div className="no-found-help-text">Try one of the following:</div>
+        <SubjectsColumn
+          subjects={subjects}
+          viewAll={this.viewAll.bind(this)}
+          onClick={subjectId => this.filterBySubject(subjectId)}
+        />
       </div>
     );
   }
 
   renderFirstRow(filterSubjects: number[], bricks: Brick[]) {
-    if (bricks.length === 0) {
-      return this.renderNoBricks();
-    }
     if (this.state.isSearching || filterSubjects.length !== 0) {
       return (
         <div className="main-brick-container">
@@ -675,6 +749,23 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       );
     }
     return <div className="bricks-list">{this.renderYourBrickRow()}</div>;
+  }
+
+  renderDesktopBricksPanel(filterSubjects: number[], bricks: Brick[]) {
+    if (!this.props.user) {
+      if (bricks.length === 0) {
+        return this.renderNoBricks();
+      }
+    }
+    if (bricks.length === 0) {
+      return this.renderNoBricks();
+    }
+    return (
+      <div className="bricks-list-container bricks-container-mobile">
+        {this.renderFirstRow(filterSubjects, bricks)}
+        <div className="bricks-list">{this.renderSortedBricks(bricks)}</div>
+      </div>
+    );
   }
 
   renderDesktopBricks(bricks: Brick[]) {
@@ -690,10 +781,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           isCore={this.state.isCore}
           onSwitch={() => this.toggleCore()}
         />}
-        <div className="bricks-list-container bricks-container-mobile">
-          {this.renderFirstRow(filterSubjects, bricks)}
-          <div className="bricks-list">{this.renderSortedBricks(bricks)}</div>
-        </div>
+        {this.renderDesktopBricksPanel(filterSubjects, bricks)}
         <ViewAllPagination
           pageSize={this.state.pageSize}
           sortedIndex={this.state.sortedIndex}
@@ -762,7 +850,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             isAllSubjects={this.state.isAllSubjects}
             setAllSubjects={isAllSubjects => {
               const finalBricks = this.filter(this.state.bricks, isAllSubjects, this.state.isCore);
-              this.setState({isAllSubjects, finalBricks, sortedIndex: 0 });
+              this.setState({ isAllSubjects, finalBricks, sortedIndex: 0 });
             }}
             handleSortChange={e => this.handleSortChange(e)}
             clearSubjects={() => this.clearSubjects()}
@@ -796,7 +884,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           isOpen={this.state.noSubjectOpen}
           subject={this.state.activeSubject}
           history={this.props.history}
-          close={() => this.setState({noSubjectOpen: false})}
+          close={() => this.setState({ noSubjectOpen: false })}
         />
       </div>
     );
