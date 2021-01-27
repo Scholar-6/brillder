@@ -415,6 +415,9 @@
         text-transform: capitalize;
         font-family: $font-family-light;
       }
+      &.active {
+        background: var(--theme-orange);
+      }
     }
     .right-index {
       right: 0.3vw !important;

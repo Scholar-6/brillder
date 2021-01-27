@@ -383,6 +383,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         <TeachFilterSidebar
           classrooms={this.state.classrooms}
           isLoaded={this.state.isLoaded}
+          activeStudent={this.state.activeStudent}
           activeClassroom={this.state.activeClassroom}
           setActiveClassroom={this.setActiveClassroom.bind(this)}
           setActiveStudent={this.setActiveStudent.bind(this)}

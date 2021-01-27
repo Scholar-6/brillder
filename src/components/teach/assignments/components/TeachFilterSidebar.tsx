@@ -15,6 +15,7 @@ enum TeachFilterFields {
 interface FilterSidebarProps {
   isLoaded: boolean;
   classrooms: TeachClassroom[];
+  activeStudent: TeachStudent | null;
   activeClassroom: TeachClassroom | null;
   setActiveStudent(s: TeachStudent): void;
   setActiveClassroom(id: number | null): void;
@@ -93,6 +94,22 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     }
   }
 
+  renderStudent(s: TeachStudent, key: number) {
+    let className = "student-row";
+
+    if (this.props.activeStudent) {
+      if (s.id === this.props.activeStudent.id) {
+        className += " active";
+      }
+    }
+
+    return (
+      <div className={className} key={key} onClick={() => this.props.setActiveStudent(s)}>
+        <span className="student-name">{s.firstName} {s.lastName}</span>
+      </div>
+    );
+  }
+
   renderClassroom(c: TeachClassroom, i: number) {
     return (
       <div key={i} className="classes-box">
@@ -114,11 +131,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             </div>
           </div>
         </div>
-        {c.active && c.students.map((s, i2) =>
-          <div className="student-row" key={i2} onClick={() => this.props.setActiveStudent(s)}>
-            <span className="student-name">{s.firstName} {s.lastName}</span>
-          </div>
-        )}
+        {c.active && c.students.map(this.renderStudent.bind(this))}
       </div>
     );
   }
