@@ -224,6 +224,14 @@
     }
     .clear-all-button {
       display: flex;
+      .MuiSvgIcon-root {
+        width: 1.45vw;
+        height: 1.45vw;
+      }
+      .clickable {
+        display: flex;
+        align-items: center;
+      }
       &:hover {
         cursor: pointer;
         .clickable {
