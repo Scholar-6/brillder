@@ -169,13 +169,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     } else if (this.props.user) {
       this.loadBricks(values);
     } else {
-      // load bricks for unauthorized users
-      const bricks = await getPublicBricks();
-      if (bricks) {
-        this.setState({ ...this.state, bricks, isLoading: false, finalBricks: bricks, shown: true });
-      } else {
-        this.setState({ ...this.state, isLoading: false, failedRequest: true });
-      }
+      this.loadUnauthorizedBricks(values);
     }
   }
 
@@ -184,7 +178,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
    */
   async loadSubjects(values: queryString.ParsedQuery<string>) {
     let subjects = await getSubjects() as SubjectItem[] | null;
-    console.log(subjects);
     
     if(subjects) {
       sortAndCheckSubjects(subjects, values);
@@ -193,6 +186,16 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       this.setState({ ...this.state, failedRequest: true });
     }
     return subjects;
+  }
+
+  async loadUnauthorizedBricks(values?: queryString.ParsedQuery<string>) {
+    const bricks = await getPublicBricks();
+    if (bricks) {
+      let finalBricks = this.filter(bricks, this.state.isAllSubjects, true);
+      this.setState({ ...this.state, bricks, isLoading: false, finalBricks, shown: true });
+    } else {
+      this.setState({ ...this.state, isLoading: false, failedRequest: true });
+    }
   }
 
   async loadBricks(values?: queryString.ParsedQuery<string>) {
