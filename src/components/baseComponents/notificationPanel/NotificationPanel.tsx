@@ -185,11 +185,8 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
             <ul className="notification-list" ref={this.state.scrollArea}>
               {/* eslint-disable-next-line */}
               {(this.props.notifications && this.props.notifications.length != 0) ? this.props.notifications.map((notification) => (
-                <li key={notification.id}>
-                  <div
-                    className={"left-brick-circle svgOnHover " + notificationTypeColors[notification.type]}
-                    onClick={() => this.move(notification)}
-                  >
+                <li key={notification.id} onClick={() => this.move(notification)}>
+                  <div className={"left-brick-circle svgOnHover " + notificationTypeColors[notification.type]}>
                     {notification.type === NotificationType.BrickSubmittedForReview &&
                       <SpriteIcon name="send" className="w60 h60 active text-theme-dark-blue send-icon-center" />
                     }
@@ -230,7 +227,7 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
                       <SpriteIcon name="file-plus" className="w60 h60 active text-theme-dark-blue" />
                     }
                   </div>
-                  <div className="content-box" onClick={() => this.move(notification)}>
+                  <div className="content-box">
                     <div className="notification-detail">
                       <p className="notif-title">{notification.title}</p>
                       <p className="notif-desc">{notification.text}</p>
