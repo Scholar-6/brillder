@@ -146,6 +146,20 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
+  checkSubjectsWithBricks(subjects: SubjectItem[]) {
+    subjects.forEach(s => {
+      if (this.state.isCore) {
+        if (s.publicCount > 0) {
+          s.checked = true;
+        }
+      } else {
+        if (s.personalCount && s.personalCount > 0) {
+          s.checked = true;
+        }
+      }
+    });
+  }
+
   componentDidMount() {
     document.addEventListener("keydown", this.state.handleKey, false);
   }
@@ -219,11 +233,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       countSubjectBricks(subjects, bs);
       subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
       if (values && values.isViewAll) {
-        subjects.forEach(s => {
-          if (s.publicCount > 0) {
-            s.checked = true;
-          }
-        });
+        this.checkSubjectsWithBricks(subjects);
         finalBricks = this.filter(bricks, this.state.isAllSubjects, this.state.isCore);
       }
       this.setState({ ...this.state, subjects, bricks, isLoading: false, finalBricks, shown: true });
@@ -314,7 +324,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
       } catch { }
     }, 1400);
-  };
+  }
+
+  viewAll() {
+    this.checkSubjectsWithBricks(this.state.subjects);
+    const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore);
+    this.setState({finalBricks, isViewAll: true});
+  }
 
   clearSubjects = () => {
     const { state } = this;
@@ -656,7 +672,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   renderNoBricks() {
     let subjects = [];
-    console.log(this.state.subjects)
     if (!this.props.user) {
       subjects = this.state.subjects.filter(s => s.publicCount > 0);
     } else {
@@ -678,8 +693,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         <div className="no-found-help-text">Try one of the following</div>
         <SubjectsColumn
           subjects={subjects}
-          viewAll={() => this.props.history.push(map.ViewAllPage + `?isViewAll=${true}`)}
-          onClick={() => {}}
+          viewAll={this.viewAll.bind(this)}
+          onClick={subjectId => this.filterBySubject(subjectId)}
         />
       </div>
     );
