@@ -186,11 +186,8 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
         <div className="notification-content">
             <ul className="notification-list" ref={this.state.scrollArea}>
               {(this.props.notifications && this.props.notifications.length !== 0) ? this.props.notifications.map((notification) => (
-                <li key={notification.id}>
-                  <div
-                    className={"left-brick-circle svgOnHover " + notificationTypeColors[notification.type]}
-                    onClick={() => this.move(notification)}
-                  >
+                <li key={notification.id} onClick={() => this.move(notification)}>
+                  <div className={"left-brick-circle svgOnHover " + notificationTypeColors[notification.type]}>
                     {notification.type === NotificationType.BrickSubmittedForReview &&
                       <SpriteIcon name="send" className="w60 h60 active text-theme-dark-blue send-icon-center" />
                     }
@@ -231,7 +228,7 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
                       <SpriteIcon name="file-plus" className="w60 h60 active text-theme-dark-blue" />
                     }
                   </div>
-                  <div className="content-box" onClick={() => this.move(notification)}>
+                  <div className="content-box">
                     <div className="notification-detail">
                       <p className="notif-title">{notification.title}</p>
                       <p className="notif-desc">{notification.text}</p>
