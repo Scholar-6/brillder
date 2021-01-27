@@ -1,0 +1,14 @@
+.create-classroom-dialog, .dialog-box {
+  .dialog-select-container {
+    margin-bottom: 2vh !important;
+    .MuiInputBase-root {
+      margin-bottom: 0 !important;
+    }
+    .MuiListItemText-root {
+      margin: 0 !important;
+    }
+  }
+  input {
+    line-height: 1.87 !important;
+  }
+}
