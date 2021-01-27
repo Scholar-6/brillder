@@ -17,7 +17,9 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import SubjectsColumn from "./components/SubjectsColumn";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import AllSubjectsSidebar from "./AllSubjectsSidebar";
-import ViewAllFilter, { SortBy } from "../ViewAllFilter";
+import ViewAllFilter, { SortBy } from "../components/ViewAllFilter";
+import UnauthorizedRoute from "components/app/UnauthorizedRoute";
+import UnauthorizedSidebar from "./components/UnauthrizedSidebar";
 
 
 interface AllSubjectsProps {
@@ -109,8 +111,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               clearSubjects={() => { }}
               filterBySubject={id => this.onSubjectSelected(id)}
             />
-            :
-            <AllSubjectsSidebar />
+            : this.props.user ? <AllSubjectsSidebar /> : <UnauthorizedSidebar />
           }
           <Grid item xs={9} className="brick-row-container">
             <SubjectsColumn
