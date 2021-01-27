@@ -670,17 +670,50 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
-  renderNoBricks() {
+  filterSubjectsByCurrentUser(subjects: SubjectItem[]) {
+    let resSubjects = [];
+    for (let subject of this.props.user.subjects) {
+      for (let s of subjects) {
+        if (s.id === subject.id) {
+          resSubjects.push(s);
+        }
+      }
+    }
+    return resSubjects;
+  }
+
+  getPersonalSubjectsWithBricks() {
+    let subjects =  this.state.subjects.filter(s => s.personalCount && s.personalCount > 0);
+    if (!this.state.isAllSubjects) {
+      subjects = this.filterSubjectsByCurrentUser(subjects);
+    }
+    return subjects;
+  }
+
+  getPublicSubjectsWithBricks() {
+    let subjects = this.state.subjects.filter(s => s.publicCount > 0);
+    if (!this.state.isAllSubjects) {
+      subjects = this.filterSubjectsByCurrentUser(subjects);
+    }
+    return subjects;
+  }
+
+  getSubjectsWithBricks() {
     let subjects = [];
     if (!this.props.user) {
       subjects = this.state.subjects.filter(s => s.publicCount > 0);
     } else {
       if (this.state.isCore) {
-        subjects = this.state.subjects.filter(s => s.publicCount > 0);
+        subjects = this.getPublicSubjectsWithBricks();
       } else {
-        subjects =  this.state.subjects.filter(s => s.personalCount && s.personalCount > 0);
+        subjects = this.getPersonalSubjectsWithBricks();
       }
     }
+    return subjects;
+  }
+
+  renderNoBricks() {
+    const subjects = this.getSubjectsWithBricks();
     return (
       <div className="bricks-list-container desktop-no-bricks">
         <div className="main-brick-container">
