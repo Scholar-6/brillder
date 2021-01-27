@@ -13,6 +13,20 @@
     position: absolute;
   }
 
+  .unauthrized-help-box {
+    .main-brick-container {
+      padding-top: 0 !important;
+      max-height: 3.8vw;
+    }
+    .unauthrized-help-text {
+      margin-top: 1vw;
+      color: var(--theme-dark-blue);
+      font-size: 1.5vw;
+      font-family: $font-family-bold;
+      margin-left: 1.7vw;
+    }
+  }
+
   .main-title {
     @extend %transitionAll300;
     max-width: 55vw;
@@ -36,11 +50,13 @@
     margin-left: 0.9vw;
   }
 
-  .create-button, .recomend-button {
+  .create-button,
+  .recomend-button {
     color: var(--theme-dark-blue);
     font-size: 1.5vw;
     font-family: $font-family-bold;
     @extend %flexCenter;
+
     svg {
       color: var(--theme-orange);
       width: 4vw;
@@ -50,39 +66,48 @@
   .create-button {
     cursor: pointer;
     margin-left: 12vw;
+
     svg {
       @extend %transitionAll300;
       margin-top: calc(#{$bricks-height / 90});
       max-height: calc(#{$bricks-height / 12});
     }
+
     &:hover {
       svg {
         transform: rotate(10deg);
       }
     }
   }
+
   .recomend-button {
     margin-left: 10vw;
+
     svg {
       stroke-width: 2;
       margin-top: calc(#{$bricks-height / 90});
       max-height: calc(#{$bricks-height / 15});
     }
   }
+
   .unauthorized-sidebar {
     margin-top: 18vh;
     margin-left: 7%;
     width: 86%;
+
     .title {
       font-size: 2.1vw;
       font-family: $font-family-bold;
     }
+
     .text {
       font-size: 1.05vw;
     }
+
     .m-t-3 {
       margin-top: 3vh;
     }
+
     .f-1-9vw {
       font-size: 1.9vw;
     }
@@ -94,6 +119,7 @@
     height: calc(5vw + 2.6vh);
     margin-bottom: 0 !important;
   }
+
   .bricks-list-container {
     height: calc(100vh - 46vh - 5vw - 2.6vh);
     overflow-y: scroll;
@@ -103,6 +129,7 @@
 .uppercase {
   text-transform: uppercase;
 }
+
 // mobile
 .dashboard-page {
   @include phone_and_tabletP {
@@ -110,6 +137,7 @@
       border-top-left-radius: 8vw;
     }
   }
+
   .expand-button {
     position: fixed;
     top: 1vw;
@@ -120,14 +148,16 @@
     height: $size;
     width: $size;
     color: var(--theme-dark-blue);
+
     svg {
       $size: 6vw;
       padding: 1.5vw;
       height: $size;
       width: $size;
-      transform: scale(-1,1);
+      transform: scale(-1, 1);
     }
   }
+
   @include phone_and_tabletP {
     .short-brick-info {
       width: calc(100% - 10vw) !important;

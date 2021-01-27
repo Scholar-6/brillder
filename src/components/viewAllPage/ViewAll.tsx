@@ -37,7 +37,7 @@ import ViewAllMobile from "./ViewAllMobile";
 import CreateOneButton from "components/userProfilePage/components/CreateOneButton";
 import RecommendButton from "components/userProfilePage/components/RecommendBuilderButton";
 
-import {removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject, getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks, expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks, sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds} from './service/viewAll';
+import { removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject, getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks, expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks, sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds } from './service/viewAll';
 import { filterByCurretUser } from "components/backToWorkPage/service";
 
 
@@ -136,7 +136,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   // load bricks when notification come
   componentDidUpdate(prevProps: ViewAllProps) {
-    const {notifications} = this.props;
+    const { notifications } = this.props;
     const oldNotifications = prevProps.notifications;
     if (notifications && oldNotifications) {
       if (notifications.length > oldNotifications.length) {
@@ -178,8 +178,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
    */
   async loadSubjects(values: queryString.ParsedQuery<string>) {
     let subjects = await getSubjects() as SubjectItem[] | null;
-    
-    if(subjects) {
+
+    if (subjects) {
       sortAndCheckSubjects(subjects, values);
       this.setState({ ...this.state, subjects });
     } else {
@@ -211,7 +211,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (bricks) {
       let bs = sortAllBricks(bricks);
       let finalBricks = this.filter(bs, this.state.isAllSubjects, this.state.isCore);
-      let {subjects} = this.state;
+      let { subjects } = this.state;
       countSubjectBricks(subjects, bs);
       subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
       if (values && values.isViewAll) {
@@ -308,7 +308,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     setTimeout(() => {
       try {
         this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
-      } catch {}
+      } catch { }
     }, 1400);
   };
 
@@ -417,7 +417,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async search() {
     const { searchString } = this.state;
-    this.setState({shown: false});
+    this.setState({ shown: false });
     let bricks: Brick[] | null = [];
     if (this.props.user) {
       bricks = await searchBricks(searchString);
@@ -442,7 +442,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           this.setState({ ...this.state, isLoading: false, failedRequest: true });
         }
       } catch {
-        this.setState({isLoading: false, failedRequest: true});
+        this.setState({ isLoading: false, failedRequest: true });
       }
     }, 1400);
   }
@@ -604,7 +604,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       try {
         const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, isCore);
         this.setState({ shown: true, finalBricks, sortedIndex: 0 });
-      } catch {}
+      } catch { }
     }, 1400);
   }
 
@@ -631,15 +631,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const filterSubjects = getCheckedSubjects(this.state.subjects);
     if (filterSubjects.length === 1) {
       const subjectId = filterSubjects[0].id;
-      const {subjects} = this.props.user;
-      if (subjects) {
-        for (let s of subjects) {
-          if (s.id === subjectId) {
-            clearProposal();
-            this.props.forgetBrick();
-            this.props.history.push(map.ProposalSubject + '?selectedSubject=' + subjectId);
-          } else {
-            this.setState({noSubjectOpen: true, activeSubject: filterSubjects[0]});
+      if (this.props.user) {
+        const { subjects } = this.props.user;
+        if (subjects) {
+          for (let s of subjects) {
+            if (s.id === subjectId) {
+              clearProposal();
+              this.props.forgetBrick();
+              this.props.history.push(map.ProposalSubject + '?selectedSubject=' + subjectId);
+            } else {
+              this.setState({ noSubjectOpen: true, activeSubject: filterSubjects[0] });
+            }
           }
         }
       }
@@ -660,9 +662,21 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
 
+  renderUnathorizedUserFirstRow(bricksLength: number) {
+    if (bricksLength === 0) {
+      return (
+        <div className="unauthrized-help-box">
+          <div className="unauthrized-help-text">Try one of the following</div>
+          {this.renderNoBricks()}
+        </div>
+      );
+    }
+    return "";
+  }
+
   renderFirstRow(filterSubjects: number[], bricks: Brick[]) {
     if (!this.props.user) {
-      return "";
+      return this.renderUnathorizedUserFirstRow(bricks.length);
     }
     if (bricks.length === 0) {
       return this.renderNoBricks();
@@ -766,7 +780,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             isAllSubjects={this.state.isAllSubjects}
             setAllSubjects={isAllSubjects => {
               const finalBricks = this.filter(this.state.bricks, isAllSubjects, this.state.isCore);
-              this.setState({isAllSubjects, finalBricks, sortedIndex: 0 });
+              this.setState({ isAllSubjects, finalBricks, sortedIndex: 0 });
             }}
             handleSortChange={e => this.handleSortChange(e)}
             clearSubjects={() => this.clearSubjects()}
@@ -800,7 +814,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           isOpen={this.state.noSubjectOpen}
           subject={this.state.activeSubject}
           history={this.props.history}
-          close={() => this.setState({noSubjectOpen: false})}
+          close={() => this.setState({ noSubjectOpen: false })}
         />
       </div>
     );
