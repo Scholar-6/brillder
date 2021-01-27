@@ -53,7 +53,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         <input value={value} onChange={e => setValue(e.target.value)} />
       </div>
       <div className="dialog-header" style={{marginBottom: '2vh'}}>
-        <div className="title">What subject is the class for?</div>
         <Select
           MenuProps={{ style: { zIndex: 1000000 } } /* Dialog box is always z-index 999999 */}
           value={subjectIndex}
