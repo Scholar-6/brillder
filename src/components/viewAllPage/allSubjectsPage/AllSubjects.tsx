@@ -35,6 +35,7 @@ interface AllSubjectsState {
   activeSubject: SubjectItem;
   showFilters: boolean;
   searchString: string;
+  isAllSubjects: boolean;
   failedRequest: boolean;
 }
 
@@ -54,6 +55,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
       activeSubject: {} as SubjectItem,
       failedRequest: false,
       searchString: '',
+      isAllSubjects: true,
       showFilters
     };
 
@@ -104,8 +106,8 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               userSubjects={this.props.user.subjects}
               isCore={true}
               isClearFilter={() => { }}
-              isAllSubjects={true}
-              setAllSubjects={() => { }}
+              isAllSubjects={this.state.isAllSubjects}
+              setAllSubjects={isAllSubjects => this.setState({isAllSubjects})}
               handleSortChange={() => { }}
               clearSubjects={() => { }}
               filterBySubject={id => this.onSubjectSelected(id)}
