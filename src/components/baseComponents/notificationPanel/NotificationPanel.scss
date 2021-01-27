@@ -33,6 +33,9 @@
       width: 2vw;
       height: 2vw;
     }
+    .svg:hover {
+      color: var(--theme-dark-blue) !important;
+    }
   }
   .notification-content {
     background-color: var(--theme-light-blue);
@@ -49,7 +52,7 @@
       // 300ms cubic-bezier(0.5, 1, 0.89, 1)
     }
     .notification-list {
-      padding: 1vw 1vw 0 1vw !important;
+      padding: 1vw 0 0 0 !important;
       overflow: hidden;
       overflow-y: auto;
       max-height: 33vh;
@@ -61,10 +64,28 @@
       }
       li {
         padding: 0;
+        padding-left: 1vw;
+        padding-right: 1vw;
         @extend %displayFlex;
         @extend %flexAlignCenter;
-        .left-brick-circle {
+
+        &:hover {
           cursor: pointer;
+          background: var(--light-blue-alpha3);
+          .left-brick-circle {
+            svg {
+              width: 70% !important;
+              height: 70% !important;
+            }
+          }
+        }
+
+        &.no-hover {
+          cursor: inherit;
+          background: inherit !important;
+        }
+
+        .left-brick-circle {
           font-size: 2vw;
           width: 3vw;
           height: 3vw;
@@ -93,7 +114,6 @@
           }
         }
         .content-box {
-          cursor: pointer;
           display: flex;
           justify-content: space-between;
           width: calc(100% - 3.5vw);
@@ -200,6 +220,27 @@
       svg {
         height: 1vw;
         width: 1vw;
+      }
+    }
+    .clear-all-button {
+      display: flex;
+      .MuiSvgIcon-root {
+        width: 1.45vw;
+        height: 1.45vw;
+      }
+      .clickable {
+        display: flex;
+        align-items: center;
+      }
+      &:hover {
+        cursor: pointer;
+        .clickable {
+          cursor: pointer;
+          color: var(--theme-dark-blue) !important;
+        }
+        .text-white {
+          color: var(--theme-dark-blue) !important;
+        }
       }
     }
     @include phone_and_tabletP {
