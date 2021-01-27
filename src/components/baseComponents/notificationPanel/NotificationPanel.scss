@@ -69,6 +69,12 @@
         &:hover {
           cursor: pointer;
           background: var(--light-blue-alpha3);
+          .left-brick-circle {
+            svg {
+              width: 70% !important;
+              height: 70% !important;
+            }
+          }
         }
 
         .left-brick-circle {
