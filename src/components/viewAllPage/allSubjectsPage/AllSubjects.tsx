@@ -18,7 +18,6 @@ import SubjectsColumn from "./components/SubjectsColumn";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import AllSubjectsSidebar from "./AllSubjectsSidebar";
 import ViewAllFilter, { SortBy } from "../components/ViewAllFilter";
-import UnauthorizedRoute from "components/app/UnauthorizedRoute";
 import UnauthorizedSidebar from "./components/UnauthrizedSidebar";
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, FormControlLabel, Radio } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 import './TeachFilterSidebar.scss';
 import { TeachClassroom, TeachStudent } from "model/classroom";

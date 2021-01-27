@@ -5,8 +5,7 @@ import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { User } from "model/user";
 import './ViewAllFilter.scss';
 
-import UnauthorizedSidebar from "../allSubjectsPage/components/UnauthrizedSidebar";
-import SubjectsListV3 from "components/baseComponents/subjectsList/SubjectsListV3";
+ import SubjectsListV3 from "components/baseComponents/subjectsList/SubjectsListV3";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 export enum SortBy {
