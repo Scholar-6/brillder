@@ -262,12 +262,14 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
                 <SpriteIcon name="arrow-up" onClick={this.scrollUp.bind(this)} />
                 <SpriteIcon name="arrow-down" onClick={this.scrollDown.bind(this)} />
               </div>
-              <div className="bold clickable" onClick={() => this.markAllAsRead()}>Clear All</div>
-              <IconButton aria-label="clear-all" onClick={() => this.markAllAsRead()}>
+              <div className="clear-all-button" onClick={() => this.markAllAsRead()}>
+              <div className="bold clickable">Clear All</div>
+              <IconButton aria-label="clear-all">
                 <SvgIcon>
                   <SpriteIcon name="circle-cancel" className="text-white" />
                 </SvgIcon>
               </IconButton>
+              </div>
             </div>
           }
         </div>

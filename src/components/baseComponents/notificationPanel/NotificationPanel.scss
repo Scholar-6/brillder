@@ -217,13 +217,17 @@
         width: 1vw;
       }
     }
-    .clickable:hover {
-      cursor: pointer;
-      color: var(--theme-dark-blue) !important;
-    }
-    button:hover {
-      .text-white {
-        color: var(--theme-dark-blue) !important;
+    .clear-all-button {
+      display: flex;
+      &:hover {
+        cursor: pointer;
+        .clickable {
+          cursor: pointer;
+          color: var(--theme-dark-blue) !important;
+        }
+        .text-white {
+          color: var(--theme-dark-blue) !important;
+        }
       }
     }
     @include phone_and_tabletP {
