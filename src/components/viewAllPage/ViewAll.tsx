@@ -21,7 +21,7 @@ import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/Delet
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
-import ViewAllFilter, { SortBy } from "./ViewAllFilter";
+import ViewAllFilter, { SortBy } from "./components/ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import BrickBlock from "components/baseComponents/BrickBlock";

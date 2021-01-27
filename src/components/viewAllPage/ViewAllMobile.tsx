@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Box, Grid } from "@material-ui/core";
-import { Category } from "./interface";
+import { Category } from "./service/interface";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { Brick } from "model/brick";

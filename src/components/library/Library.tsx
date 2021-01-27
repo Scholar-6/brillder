@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Grid, Hidden } from "@material-ui/core";
-import { Category } from "../viewAllPage/interface";
+import { Category } from "../viewAllPage/service/interface";
 import { connect } from "react-redux";
 import "swiper/swiper.scss";
 
