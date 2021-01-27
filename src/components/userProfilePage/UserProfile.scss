@@ -9,6 +9,10 @@
   width: 100%;
   font-family: $font-family-regular;
 
+  .MuiAutocomplete-listbox {
+    height: 10vh !important;
+  }
+
   .phone-question-preview-box {
     top: $page-head-height;
     height: calc(100vh - #{$page-head-height}) !important;
@@ -66,9 +70,11 @@
         @include phone_and_tabletL {
           font-size: 5vw;
         }
+
         @include tabletL {
           font-size: 2vw;
         }
+
         letter-spacing: 0.25vw;
         margin-left: 1.08vw;
       }
@@ -154,21 +160,26 @@
           border-radius: 50%;
           cursor: pointer;
           @extend %transitionAll300;
+
           @include phone_and_tabletP {
             height: 13vw;
             width: 13vw;
           }
+
           .MuiIconButton-label {
             margin: 0;
           }
+
           .svg {
             width: 2vw;
             height: 2vw;
+
             @include phone_and_tabletP {
               height: 8vw;
               width: 8vw;
             }
           }
+
           &.remove-image {
             background-color: var(--theme-orange);
             transform: rotate(45deg);
@@ -187,10 +198,11 @@
             @extend %removePosition;
           }
 
-          > span {
+          >span {
             margin-left: 0.45vw;
             color: var(--theme-dark-blue);
             font-size: 1.5vw;
+
             @include phone_and_tabletL {
               font-size: 5vw;
             }
@@ -271,6 +283,7 @@
               font-size: 1.45vw;
               color: var(--theme-dark-blue);
               font-family: $font-family-regular;
+
               @include phone_and_tabletP {
                 font-size: 4vw;
               }
@@ -297,38 +310,48 @@
     .big-input-container {
       margin-top: 2.3vh;
       padding-left: 4.5vw;
+
       @include tabletL {
         width: 68.25vw;
       }
+
       @include phone_and_tabletL {
 
         width: calc(100% - 4.5vw);
       }
+
       .MuiAutocomplete-root {
         margin-bottom: 0 !important;
       }
+
       .MuiAutocomplete-tag {
         font-family: $font-family-regular;
         color: var(--theme-dark-blue);
         background-color: var(--tab-gray);
+
         @include phone_and_tabletL {
           font-size: 4vw;
         }
+
         @include tabletL {
           font-size: 1vw;
         }
       }
-      .MuiInputBase-input{
+
+      .MuiInputBase-input {
         &::-webkit-input-placeholder {
           font-size: 5;
         }
       }
+
       .MuiChip-deleteIcon {
         color: var(--theme-orange);
       }
+
       .MuiInput-underline:after {
         display: none !important;
       }
+
       textarea {
         width: 100%;
         height: 15vh;
@@ -344,18 +367,22 @@
         @include phone_and_tabletL {
           font-size: 4vw;
         }
+
         @include tabletL {
           font-size: 1.8vw;
         }
       }
+
       .MuiAutocomplete-hasPopupIcon {
         .MuiAutocomplete-endAdornment {
           top: 0;
         }
       }
     }
+
     .centered {
       width: 4.2vw;
+
       .red-circle {
         width: 1.9vw;
         height: 1.9vw;
@@ -375,8 +402,8 @@
   }
 
   .profile-phone-preview {
-    > div {
-      > div {
+    >div {
+      >div {
         height: 39.5vw;
       }
     }
@@ -389,5 +416,19 @@
     .custom-component {
       background-color: white;
     }
+  }
+}
+
+.subjects-popper {
+  .MuiAutocomplete-listbox {
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: calc(6vw + 3vh) !important;
+    font-size: 1.25vw;
+    color: var(--theme-dark-blue);
+  }
+
+  .MuiAutocomplete-noOptions {
+    font-size: 1.25vw;
   }
 }
