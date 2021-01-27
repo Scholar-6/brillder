@@ -193,6 +193,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const bricks = await getPublicBricks();
     if (bricks) {
       let finalBricks = this.filter(bricks, this.state.isAllSubjects, true);
+      let { subjects } = this.state;
+      countSubjectBricks(subjects, bricks);
+      subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
       this.setState({ ...this.state, bricks, isLoading: false, finalBricks, shown: true });
     } else {
       this.setState({ ...this.state, isLoading: false, failedRequest: true });
