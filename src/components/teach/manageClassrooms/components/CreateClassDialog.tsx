@@ -50,9 +50,12 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       onClose={props.close}
       className="dialog-box light-blue assign-class-dialog create-classroom-dialog"
     >
+      <div className="close-button svgOnHover" onClick={props.close}>
+        <SpriteIcon name="cancel" className="w100 h100 active" />
+      </div>
       <div className="dialog-header" style={{marginBottom: '2vh'}}>
-        <div className="title">What is the name of class?</div>
-        <input className="" value={value} onChange={e => setValue(e.target.value)} />
+        <div className="title">Name Your Class</div>
+        <input placeholder="Class Name" value={value} onChange={e => setValue(e.target.value)} />
       </div>
       <div className="dialog-header dialog-select-container">
         <Select
@@ -85,10 +88,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
             }
           }}>
           <span className="bold">Create</span>
-        </button>
-        <button className="btn btn-md bg-gray no-button"
-          onClick={props.close}>
-          <span className="bold">Cancel</span>
         </button>
       </div>
     </Dialog>

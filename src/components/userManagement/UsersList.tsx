@@ -15,12 +15,12 @@ import PageHeadWithMenu, {
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
-import AddUserButton from "./AddUserButton";
-import UserActionsCell from "./UserActionsCell";
+import AddUserButton from "./components/AddUserButton";
+import UserActionsCell from "./components/UserActionsCell";
 import RoleDescription from "components/baseComponents/RoleDescription";
-import CustomToggle from './CustomToggle';
+import CustomToggle from './components/CustomToggle';
 import CustomFilterBox from "components/library/CustomFilterBox";
-import UsersListPagination from "./Pagination";
+import UsersListPagination from "./components/Pagination";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
