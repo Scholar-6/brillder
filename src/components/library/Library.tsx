@@ -440,13 +440,14 @@ class Library extends Component<BricksListProps, BricksListState> {
                 history={this.props.history}
               />
             </div>
+            {/* pagination removed temporarily 28/01/2021
             <ViewAllPagination
               pageSize={this.state.pageSize}
               sortedIndex={this.state.sortedIndex}
               bricksLength={this.state.finalAssignments.length}
               moveAllNext={() => this.moveAllNext()}
               moveAllBack={() => this.moveAllBack()}
-            />
+            />*/}
           </Grid>
         </Grid>
         <FailedRequestDialog
