@@ -1,5 +1,5 @@
-import React from 'react'
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
+import React from 'react';
+import * as Y from "yjs";
 
 import './SynthesisPage.scss';
 import { Grid } from '@material-ui/core';
@@ -21,16 +21,14 @@ export interface SynthesisProps {
   currentBrick: Brick;
   locked: boolean;
   editOnly: boolean;
-  synthesis: string;
+  synthesis: Y.Text;
   undoRedoService: UndoRedoService;
   initSuggestionExpanded: boolean;
-  onSynthesisChange(text: string): void;
   undo(): void;
   redo(): void;
 }
 
 interface SynthesisState {
-  synthesis: string;
   scrollArea: any;
   canScroll: boolean;
   ref: React.RefObject<HTMLDivElement>;
@@ -41,7 +39,6 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
   constructor(props: SynthesisProps) {
     super(props);
     this.state = {
-      synthesis: props.synthesis,
       canScroll: false,
       scrollArea: null,
       ref: React.createRef() as React.RefObject<HTMLDivElement>,
@@ -85,12 +82,6 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
     this.setState({ ...this.state, commentsShown })
   }
 
-  componentDidUpdate(prevProps: SynthesisProps) {
-    if (prevProps.synthesis !== this.props.synthesis) {
-      this.setState({ ...this.state, synthesis: this.props.synthesis });
-    }
-  }
-
   onSynthesisChange(text: string) {
     const {scrollArea} = this.state;
     if(scrollArea) {
@@ -99,9 +90,8 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
         canScroll = true;
       }
 
-      this.setState({ synthesis: text, canScroll });
+      this.setState({ canScroll });
     }
-    this.props.onSynthesisChange(text);
   }
 
   render() {
@@ -121,8 +111,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
             <Grid item xs className="synthesis-input-container">
               <QuillEditor
                 disabled={this.props.locked}
-                data={this.state.synthesis}
-                onChange={this.onSynthesisChange.bind(this)}
+                sharedData={this.props.synthesis}
                 toolbar={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
                   'latex', 'bulletedList', 'numberedList', 'blockQuote'
@@ -149,7 +138,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                     />
                   </div>
                   <div style={{width: "100%"}}>
-                    <CountSynthesis value={this.state.synthesis} />
+                    <CountSynthesis value={this.props.synthesis.toJSON()} />
                   </div>
                 </div>
               </Grid>

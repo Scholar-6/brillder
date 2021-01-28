@@ -1,5 +1,5 @@
-
 import React from 'react';
+import Y from "yjs";
 import { withStyles } from '@material-ui/core/styles';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
@@ -29,102 +29,42 @@ export enum HintStatus {
   Each
 }
 
-export interface HintState {
-  index: number,
-  status: HintStatus
-  value: string
-  list: string[]
-}
-
 export interface HintProps {
   index: number;
   locked: boolean;
   editOnly: boolean;
-  list: string[];
-  status?: HintStatus;
-  value?: string;
+  hint: Y.Map<any>;
   count?: number;
   component: any;
   questionType: QuestionTypeEnum;
   validationRequired?: boolean;
-  save(): void;
-  onChange(state: HintState): void;
 }
 
 const HintComponent: React.FC<HintProps> = ({
-  index, locked, editOnly, validationRequired, onChange, save, ...props
+  index, locked, editOnly, validationRequired, ...props
 }) => {
-  let initState = {
-    status: HintStatus.All,
-    value: '',
-    index,
-    list: []
-  } as HintState;
-
-  if (props.value) {
-    initState.value = props.value;
-  }
-
-  if (props.list) {
-    initState.list = props.list;
-  }
-
-  if (props.status) {
-    initState.status = props.status;
-  }
-
-  const [state, setState] = React.useState(initState);
-
-  React.useEffect(() => {
-    if(props.value) {
-      setState({ ...state, value: props.value });
-    }
-  /*eslint-disable-next-line*/
-  }, [props.value])
-
-  if (state.index !== index) {
-    setState(initState);
-  }
-
-  if (state.status !== initState.status) {
-    setState(initState);
-  }
-
-  const onHintChanged = (value: string) => {
-    if (locked) { return; }
-    setState({ ...state, value });
-    onChange({ ...state, value });
-    save();
-  }
-
-  const onHintListChanged = (value: string, index: number) => {
-    if (locked) { return; }
-    let { list } = state;
-    list[index] = value;
-    onChange({ ...state, list });
-    save();
-  }
-
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
     if (locked) { return; }
-    setState({ ...state, status });
-    onChange({ ...state, status });
-    save();
+    props.hint.set("status", status);
   };
 
   const renderHintInputs = () => {
-    if (state.status === HintStatus.All) {
+    console.log(props.hint);
+    if (!props.hint) {
+      return <PageLoader content="...Preparing hints..." />;
+    }
+
+    if (props.hint.get("status") === HintStatus.All) {
       return (
         <div className="hint-container">
           <QuillEditor
             disabled={locked}
-            data={state.value}
+            sharedData={props.hint.get("value")}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
               'latex', 'insertTable', 'uploadImageCustom'
             ]}
             validate={validationRequired}
-            onChange={onHintChanged}
           />
         </div>
       );
@@ -135,16 +75,10 @@ const HintComponent: React.FC<HintProps> = ({
       return <PageLoader content="...Preparing hints..." />;
     }
 
-    if (state.list.length < props.count) {
-      let list = state.list;
-      for (let i = 0; i < props.count; i++) {
-        if (state.list.length < props.count) {
-          list.push('');
-        } else {
-          setState({ ...state, list });
-          return <PageLoader content="...Preparing hints..." />;
-        }
-      }
+    if (props.hint.toJSON().list.length < props.count) {
+      let list = props.hint.get("list") as Y.Array<any>;
+      const newItems = Array.from({ length: props.count - list.length }).map(() => "");
+      list.push(newItems);
     }
 
     for (let i = 0; i < props.count; i++) {
@@ -152,13 +86,12 @@ const HintComponent: React.FC<HintProps> = ({
         <div className="hint-container" key={i}>
           <QuillEditor
             disabled={locked}
-            data={state.list[i]}
+            sharedData={props.hint.get("list").get(i)}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
               'latex', 'imageUploadCustom'
             ]}
             validate={validationRequired}
-            onChange={(v: any) => { onHintListChanged(v, i) }}
           />
         </div>
       );
@@ -182,7 +115,7 @@ const HintComponent: React.FC<HintProps> = ({
       );
     }
     return (
-      <ToggleButtonGroup className="hint-toggle-group" value={state.status} exclusive onChange={handleStatusChange}>
+      <ToggleButtonGroup className="hint-toggle-group" value={props.hint.get("status")} exclusive onChange={handleStatusChange}>
         <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.Each}>
           Each Answer
         </ToggleButton>

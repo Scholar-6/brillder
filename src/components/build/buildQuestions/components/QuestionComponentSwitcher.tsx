@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import Y from "yjs";
 
 import sprite from "assets/img/icons-sprite.svg";
 import { QuestionComponentTypeEnum, Hint, QuestionTypeEnum } from 'model/question';
@@ -7,7 +8,7 @@ import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'
 import SoundComponent from './Sound/Sound'
 import GraphComponent from './Graph/Graph'
-import HintComponent, { HintState } from 'components/build/baseComponents/Hint/Hint';
+import HintComponent from 'components/build/baseComponents/Hint/Hint';
 
 
 export interface SwitchQuestionProps {
@@ -16,8 +17,8 @@ export interface SwitchQuestionProps {
   index: number;
   questionIndex: number;
   uniqueComponent: any;
-  component: any;
-  hint: Hint;
+  component: Y.Map<any>;
+  hint: Y.Map<any>;
   locked: boolean;
   editOnly: boolean;
   canRemove: boolean;
@@ -25,10 +26,7 @@ export interface SwitchQuestionProps {
   allDropBoxesEmpty: boolean;
   validationRequired: boolean;
 
-  saveBrick(): void;
   setEmptyType(): void;
-  updateComponent(component: any, index: number): void;
-  setQuestionHint(hintState: HintState): void;
   removeComponent(componentIndex: number): void;
   openSameAnswerDialog(): void;
 
@@ -39,7 +37,7 @@ export interface SwitchQuestionProps {
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   type, index, component, hint, locked, editOnly, uniqueComponent,
   allDropBoxesEmpty, validationRequired,
-  updateComponent, ...props
+  ...props
 }) => {
   let InnerComponent = null;
 
@@ -67,13 +65,13 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     InnerComponent = uniqueComponent;
     let numberOfAnswers = getNumberOfAnswers(component);
     if (props.questionType === QuestionTypeEnum.MissingWord) {
-      if (component.choices) {
-        numberOfAnswers = component.choices.length;
+      if (component.get("choices")) {
+        numberOfAnswers = component.toJSON().choices.length;
       }
     } else if (props.questionType === QuestionTypeEnum.Sort) {
-      if (component.categories) {
+      if (component.get("categories")) {
         numberOfAnswers = 0;
-        for (let c of component.categories) {
+        for (let c of component.toJSON().categories) {
           if (c.answers) {
             numberOfAnswers += c.answers.length;
           }
@@ -88,24 +86,18 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
             locked={locked}
             editOnly={editOnly}
             data={component}
-            save={props.saveBrick}
             validationRequired={validationRequired}
-            updateComponent={updateComponent}
             openSameAnswerDialog={props.openSameAnswerDialog}
           />
           <HintComponent
             index={props.questionIndex}
-            status={hint.status}
+            hint={hint}
             locked={locked}
             editOnly={editOnly}
             component={component}
             questionType={props.questionType}
-            value={hint.value}
-            list={hint.list}
             count={numberOfAnswers}
             validationRequired={validationRequired}
-            save={props.saveBrick}
-            onChange={props.setQuestionHint}
           />
         </div>
       );
@@ -116,7 +108,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   if (InnerComponent) {
     let className = '';
     if (InnerComponent.name === 'ImageComponent') {
-      if (validationRequired && !component.value) {
+      if (validationRequired && !component.get("value")) {
         className += ' invalid-image';
       }
     }
@@ -137,10 +129,8 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
           index={props.questionIndex}
           editOnly={editOnly}
           data={component}
-          save={props.saveBrick}
           onFocus={props.componentFocus}
           validationRequired={validationRequired}
-          updateComponent={updateComponent}
         />
       </div>
     );

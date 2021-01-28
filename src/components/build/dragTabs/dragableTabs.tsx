@@ -1,4 +1,5 @@
 import React from "react";
+import * as Y from "yjs";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridList from "@material-ui/core/GridList";
 import { ReactSortable } from "react-sortablejs";
@@ -23,7 +24,8 @@ interface Question {
 
 interface DragTabsProps {
   history: any;
-  questions: Question[];
+  yquestions: Y.Array<Y.Doc>;
+  currentQuestionIndex: number;
   user: User;
   comments: Comment[] | null;
   synthesis: string;
@@ -67,12 +69,14 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     if (e.target.classList.contains("ck-content")) { return; }
     if (e.target.classList.contains("ql-editor")) { return; }
 
+    const jsonQuestions = this.props.yquestions.toJSON() as Question[];
+
     if (leftKeyPressed(e)) {
       if (this.props.history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
-        let keyIndex = this.props.questions.length;
+        let keyIndex = jsonQuestions.length;
         this.props.selectQuestion(keyIndex - 1)
       } else {
-        let keyIndex = this.props.questions.findIndex(q => q.active === true);
+        let keyIndex = jsonQuestions.findIndex(q => q.active === true);
 
         if (keyIndex > 0) {
           this.props.selectQuestion(keyIndex - 1)
@@ -85,9 +89,9 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       }
       
       if (!isSynthesisPage) {
-        let keyIndex = this.props.questions.findIndex(q => q.active === true);
+        let keyIndex = jsonQuestions.findIndex(q => q.active === true);
   
-        if (keyIndex < this.props.questions.length - 1) { 
+        if (keyIndex < jsonQuestions.length - 1) { 
           this.props.selectQuestion(keyIndex + 1);
         } else {
           this.props.moveToSynthesis();
@@ -100,7 +104,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     let isInit = true;
     let isSynthesisPresent = true;
     const { props } = this;
-    const { questions, isSynthesisPage, synthesis } = props;
+    const { isSynthesisPage, synthesis } = props;
 
     const getHasSynthesisReplied = () => {
       const replies = props.comments
@@ -148,20 +152,21 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     };
 
     const renderQuestionTab = (
-      questions: Question[],
-      question: Question,
+      yquestions: Y.Array<Y.Doc>,
+      yquestion: Y.Doc,
       index: number,
       comlumns: number
     ) => {
+      const question = yquestion.toJSON();
       let titleClassNames = "drag-tile-container";
       let cols = 2;
-      if (question.active) {
+      if (index === props.currentQuestionIndex) {
         titleClassNames += " active";
         cols = 3;
       }
 
-      let nextQuestion = questions[index + 1];
-      if (nextQuestion && nextQuestion.active) {
+      let nextQuestion = yquestions.get(index + 1)?.getMap();
+      if (nextQuestion && nextQuestion.get("active")) {
         titleClassNames += " pre-active";
       }
 
@@ -182,7 +187,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       return (
         <GridListTile
           className={titleClassNames}
-          key={index}
+          key={yquestion.guid}
           cols={cols}
           style={{ display: "inline-block", width: `${width}%` }}
         >
@@ -199,15 +204,15 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       );
     };
 
-    let columns = questions.length * 2 + 3;
+    let columns = props.yquestions.length * 2 + 3;
 
     if (isSynthesisPage) {
-      columns = questions.length * 2 + 2;
+      columns = props.yquestions.length * 2 + 2;
     }
 
-    const setQuestions = (newQuestions: Question[], d: any) => {
+    const setQuestions = (newQuestions: { id: string }[], d: any) => {
       if (isInit === false) {
-        let switched = newQuestions.find((q, i) => questions[i].id !== q.id);
+        let switched = newQuestions.find((q, i) => props.yquestions.get(i).getMap().get("id") !== q.id);
         if (switched) {
           props.setQuestions(newQuestions);
         }
@@ -268,13 +273,13 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           }}
         >
           <ReactSortable
-            list={questions}
+            list={props.yquestions.map((q: Y.Doc) => ({ id: q.guid }))}
             className="drag-container"
             group="tabs-group"
             setList={setQuestions}
           >
-            {questions.map((question, i) =>
-              renderQuestionTab(questions, question, i, columns)
+            {props.yquestions.map((question: Y.Doc, i) =>
+              renderQuestionTab(props.yquestions, question, i, columns)
             )}
           </ReactSortable>
           <GridListTile

@@ -16,11 +16,13 @@ import PairMatchComponent from '../questionTypes/pairMatchBuild/pairMatchBuild';
 import VerticalShuffleComponent from '../questionTypes/shuffle/verticalShuffleBuild/verticalShuffleBuild';
 import WordHighlightingComponent from '../questionTypes/highlighting/wordHighlighting/wordHighlighting';
 import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/question';
-import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import { getNonEmptyComponent } from "../../questionService/ValidateQuestionService";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import FixedTextComponent from "../components/Text/FixedText";
 import { TextComponentObj } from "../components/Text/interface";
+import * as Y from "yjs";
+import _ from "lodash";
+import { convertObject } from "services/SharedTypeService";
 
 
 type QuestionComponentsProps = {
@@ -29,12 +31,8 @@ type QuestionComponentsProps = {
   editOnly: boolean;
   history: any;
   brickId: number;
-  question: Question;
+  question: Y.Doc;
   validationRequired: boolean;
-  saveBrick(): void;
-  updateFirstComponent(component: TextComponentObj): void;
-  updateComponents(components: any[]): void;
-  setQuestionHint(hintState: HintState): void;
 
   // phone preview
   componentFocus(index: number): void;
@@ -42,66 +40,55 @@ type QuestionComponentsProps = {
 
 const QuestionComponents = ({
   questionIndex, locked, editOnly, history, brickId, question, validationRequired,
-  componentFocus, updateComponents, setQuestionHint, saveBrick, updateFirstComponent
+  componentFocus
 }: QuestionComponentsProps) => {
-  
-  let firstComponent = Object.assign({}, question.firstComponent) as any;
-  if (!firstComponent.type || firstComponent.type !== QuestionComponentTypeEnum.Text) {
-    firstComponent = {
-      type: QuestionComponentTypeEnum.Text,
-      value: ''
-    };
-  }
 
-  const componentsCopy = Object.assign([], question.components) as any[]
-  const [components, setComponents] = useState(componentsCopy);
-  const [questionId, setQuestionId] = useState(question.id);
   const [removeIndex, setRemovedIndex] = useState(-1);
   const [dialogOpen, setDialog] = useState(false);
   const [sameAnswerDialogOpen, setSameAnswerDialog] = useState(false);
 
-  useEffect(() => {
-    setComponents(Object.assign([], question.components) as any[]);
-  }, [question]);
-
-  if (questionId !== question.id) {
-    setQuestionId(question.id);
-    setComponents(Object.assign([], question.components));
+  const questionData = question.getMap();
+  const questionId = questionData.get("id");
+  
+  let firstComponent = questionData.get("firstComponent") as Y.Map<any>;
+  if (!firstComponent.get("type") || firstComponent.get("type") !== QuestionComponentTypeEnum.Text) {
+    firstComponent.set("type", QuestionComponentTypeEnum.Text);
+    firstComponent.set("value", '');
   }
 
   const hideSameAnswerDialog = () => setSameAnswerDialog(false);
   const openSameAnswerDialog = () => setSameAnswerDialog(true);
 
+  const components = questionData.get("components") as Y.Array<Y.Map<any>>;
+
   const removeInnerComponent = (componentIndex: number) => {
     if (locked) { return; }
-    const comps = Object.assign([], components) as any[];
-    comps.splice(componentIndex, 1);
-    setComponents(comps);
-    updateComponents(comps);
-    saveBrick();
+    components.delete(componentIndex);
   }
 
   let canRemove = (components.length > 3) ? true : false;
 
-  const renderDropBox = (component: any, index: number) => {
+  const renderDropBox = (component: Y.Map<any>, index: number) => {
     const updatingComponent = (compData: any) => {
       let copyComponents = Object.assign([], components) as any[];
       copyComponents[index] = compData;
-      setComponents(copyComponents);
-      updateComponents(copyComponents);
+
+      components.doc!.transact(() => {
+        components.delete(index);
+        components.insert(index, [convertObject(compData)]);
+      })
     }
 
     const setEmptyType = () => {
-      if (component.value) {
+      if (component.get("value")) {
         setDialog(true);
         setRemovedIndex(index);
       } else {
         removeInnerComponent(index);
       }
-      saveBrick();
     }
 
-    const { type } = question;
+    const type = questionData.get("type");
     let uniqueComponent: any;
     if (type === QuestionTypeEnum.ShortAnswer) {
       uniqueComponent = ShortAnswerComponent;
@@ -130,14 +117,14 @@ const QuestionComponents = ({
 
     return (
       <SwitchQuestionComponent
-        questionType={question.type}
-        type={component.type}
+        questionType={type}
+        type={component.get("type")}
         questionIndex={questionIndex}
         index={index}
         locked={locked}
         editOnly={editOnly}
         component={component}
-        hint={question.hint}
+        hint={questionData.get("hint")}
         canRemove={canRemove}
         uniqueComponent={uniqueComponent}
         allDropBoxesEmpty={allDropBoxesEmpty}
@@ -145,19 +132,25 @@ const QuestionComponents = ({
         componentFocus={() => componentFocus(index)}
         setEmptyType={setEmptyType}
         removeComponent={removeInnerComponent}
-        setQuestionHint={setQuestionHint}
-        updateComponent={updatingComponent}
-        saveBrick={saveBrick}
         openSameAnswerDialog={openSameAnswerDialog}
       />
     );
   }
 
-  const setList = (components: any) => {
+  const setList = (newComponents: any) => {
     if (locked) { return; }
-    setComponents(components);
-    updateComponents(components);
-    saveBrick();
+    // create a new doc and sync it with this one.
+    const newDoc = new Y.Doc();
+    const oldUpdate = Y.encodeStateAsUpdate(question);
+    Y.applyUpdate(newDoc, oldUpdate);
+
+    const newComponentsArray = new Y.Array();
+    newComponentsArray.push(newComponents);
+    newDoc.getMap().set("questions", newComponentsArray);
+
+    const newState = Y.encodeStateVector(newDoc);
+    const newUpdate = Y.encodeStateAsUpdate(question, newState);
+    Y.applyUpdate(question, newUpdate);
   }
 
   const hideDialog = () => {
@@ -166,7 +159,7 @@ const QuestionComponents = ({
   }
 
   let allDropBoxesEmpty = false;
-  let noComponent = getNonEmptyComponent(components);
+  let noComponent = getNonEmptyComponent(components.toJSON());
   if (noComponent) {
     allDropBoxesEmpty = true;
   }
@@ -185,21 +178,19 @@ const QuestionComponents = ({
         <FixedTextComponent
           locked={locked}
           editOnly={editOnly}
-          questionId={question.id}
+          questionId={questionId}
           data={firstComponent}
-          save={saveBrick}
           validationRequired={validationRequired}
-          updateComponent={updateFirstComponent}
         />
       </Grid>
       <ReactSortable
-        list={components}
+        list={components.toJSON()}
         animation={150}
         group={{ name: "cloning-group-name", pull: "clone" }}
         setList={setList}
       >
         {
-          components.map((comp, i) => (
+          components.map((comp: Y.Map<any>, i) => (
             <Grid key={`${questionId}-${i}`} container direction="row" className={validateDropBox(comp)}>
               {renderDropBox(comp, i)}
             </Grid>

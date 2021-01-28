@@ -14,7 +14,7 @@ export interface YourProposalButtonProps {
   tutorialStep: TutorialStep;
   tooltipsOn: boolean;
   setTooltips(value: boolean): void;
-  saveBrick(): void;
+  saveBrick?(): void;
   isTutorialPassed(): boolean;
 }
 
@@ -25,7 +25,7 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
 
   const editProposal = () => {
     clearProposal();
-    saveBrick();
+    saveBrick?.();
     history.push(`/build/brick/${brickId}/proposal`);
   }
 

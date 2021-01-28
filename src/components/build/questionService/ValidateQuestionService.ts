@@ -3,18 +3,20 @@ import {
 } from 'model/question';
 import { stripHtml } from './ConvertService';
 import uniqueValidator from './UniqueValidator';
+import Y from "yjs";
 
 const getUniqueComponent = (components: any[]) => {
   return components && components.find(c => c.type === QuestionComponentTypeEnum.Component);
 }
 
 export function getNonEmptyComponent(components: any[]) {
-  return !components.find(c =>
-    c.type === QuestionComponentTypeEnum.Text ||
-    c.type === QuestionComponentTypeEnum.Image ||
-    c.type === QuestionComponentTypeEnum.Quote ||
-    c.type === QuestionComponentTypeEnum.Sound
-  );
+  return components
+    .find(c =>
+      c.type === QuestionComponentTypeEnum.Text ||
+      c.type === QuestionComponentTypeEnum.Image ||
+      c.type === QuestionComponentTypeEnum.Quote ||
+      c.type === QuestionComponentTypeEnum.Sound
+    );
 }
 
 const validateComponentValues = (components: any[]) => {

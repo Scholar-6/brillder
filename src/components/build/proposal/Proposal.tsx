@@ -1,6 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import { MuiThemeProvider } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 
@@ -313,7 +313,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     }
 
     return (
-      <MuiThemeProvider>
         <div>
           <HomeButton onClick={() => this.openDialog()} />
           <div
@@ -409,7 +408,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             move={() => this.goHome()}
           />
         </div>
-      </MuiThemeProvider>
     );
   }
 }

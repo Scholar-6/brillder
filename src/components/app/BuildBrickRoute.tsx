@@ -11,6 +11,7 @@ import { setBrillderTitle } from "components/services/titleService";
 import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
+import YJSProvider, { YJSContext } from "components/build/baseComponents/YJSProvider";
 
 interface BuildRouteProps {
   exact?: any;
@@ -56,24 +57,40 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
         render={(props) => {
           // fetch brick
           const brickId = parseInt(props.match.params.brickId);
-          if (!rest.brick || !rest.brick.author || rest.brick.id !== brickId) {
-            rest.fetchBrick(brickId);
-            return <PageLoader content="...Getting Brick..." />;
-          }
 
           // move to investigation
-          const found = rest.location.pathname.indexOf('/investigation');
-          if (found === -1) {
-            const isSynthesis = rest.location.pathname.indexOf('/synthesis');
-            if (isSynthesis) {
-              return <Component {...props} />;
-            }
-
+          const isInvestigation = rest.location.pathname.indexOf('/investigation') !== -1;
+          const isSynthesis = rest.location.pathname.indexOf('/synthesis') !== -1;
+          if (!(isInvestigation || isSynthesis)) {
             props.history.push(`/build/brick/${brickId}/investigation`);
             return <PageLoader content="...Getting Brick..." />;
           }
+          return (
+            <YJSProvider brickId={brickId}>
+              <YJSContext.Consumer>
+                {context => {
+                  const brick = context?.json.brick;
+                  console.log(brick);
+                  if (!brick || !brick.authorId || brick.id !== brickId) {
+                    return <PageLoader content="...Getting Brick..." />;
+                  }
 
-          return <Component {...props} />;
+                  const reduxBrick = rest.brick;
+                  if (!reduxBrick || !reduxBrick.author || reduxBrick.id !== brickId) {
+                    rest.fetchBrick(brickId);
+                    return <PageLoader content="...Getting Brick..." />;
+                  }
+
+                  // move to investigation
+                  if (!(isInvestigation || isSynthesis)) {
+                    props.history.push(`/build/brick/${brickId}/investigation`);
+                    return <PageLoader content="...Getting Brick..." />;
+                  }
+                  return <Component {...props} />
+                }}
+              </YJSContext.Consumer>
+            </YJSProvider>
+          );
         }}
       />
     );

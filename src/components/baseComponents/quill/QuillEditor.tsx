@@ -1,23 +1,25 @@
 import { Delta, Sources } from "quill";
-import React, { Component } from "react";
+import React, { Component, MutableRefObject } from "react";
 import ReactQuill, {Quill} from "react-quill"; 
+import { QuillBinding } from "y-quill";
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
 import _ from "lodash";
 import { ReactComponent as LatexIcon } from "assets/img/latex.svg";
+import * as Y from "yjs";
 
 import "./QuillLatex";
 import "./QuillAutoLink";
 import "./QuillMediaEmbed";
 import "./QuillImageUpload"
-import { validateHint } from "components/build/questionService/ValidateQuestionService";
 
 function randomEditorId() {
      return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
 }
 
 interface QuillEditorProps {
-    data: string;
+    data?: string;
+    sharedData?: Y.Text;
     disabled: boolean;
     placeholder?: string;
     allowLinks?: boolean;
@@ -25,21 +27,24 @@ interface QuillEditorProps {
     validate?: boolean;
     isValid?: boolean | null;
     toolbar: string[];
-    onChange(data: string): void;
+    onChange?(data: string): void;
     onBlur?(): void;
 }
 
 const QuillEditor: React.FC<QuillEditorProps> = (props) => {
     const callOnChange = React.useCallback(
         _.debounce((content: string, delta: Delta, source: Sources) => {
-            props.onChange(content);
+            if(props.onChange) {
+                props.onChange(content);
+            }
         }, 500),
         []
     );
 
     const onChange = (content: string, delta: Delta, source: Sources) => {
-        setData(content);
-        callOnChange(content, delta, source);
+        console.log("data changing");
+        // setData(content);
+        // callOnChange(content, delta, source);
     }
 
     const [uniqueId, setUniqueId] = React.useState(randomEditorId());
@@ -71,6 +76,13 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         image: <button className="ql-image" />,
     };
 
+    const ref = React.useCallback((node: ReactQuill) => {
+        if(node && props.sharedData) {
+            const editor = node.getEditor();
+            const binding = new QuillBinding(props.sharedData, editor);
+        }
+    }, []);
+
     const valid = (!props.validate || (data && (props.isValid !== false)));
 
     return (
@@ -78,18 +90,19 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
             <div className={`ql-toolbar quill-${uniqueId}`}>
                 <div className="ql-formats">
                 {props.toolbar.map((item) => (
-                    <>{ toolbarItems[item] }</>
+                    <React.Fragment key={item}>{ toolbarItems[item] }</React.Fragment>
                 ))}
                 </div>
             </div>
             <ReactQuill
                 theme="snow"
-                value={data || ""}
-                onChange={onChange}
-                onBlur={props.onBlur}
+                // value={props.sharedData ? undefined : (data || "")}
+                onChange={props.sharedData ? undefined : onChange}
+                // onBlur={props.onBlur}
                 readOnly={props.disabled}
                 placeholder={props.placeholder}
                 modules={modules}
+                ref={ref}
             />
         </div>
     );
