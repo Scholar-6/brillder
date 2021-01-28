@@ -49,7 +49,6 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, State> {
   render() {
     //const margin = 0.5 * 2;
     //const maxWidth = 69.1;
-    console.log('start')
 
     return (
       <div className="my-library-list">
