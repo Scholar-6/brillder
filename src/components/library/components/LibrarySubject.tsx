@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import './LibrarySubjects.scss';
-import { SubjectAssignments } from "./model";
+import { SubjectAssignments } from "../service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
 import { SubjectAssignment } from "./SubjectAssignment";
 

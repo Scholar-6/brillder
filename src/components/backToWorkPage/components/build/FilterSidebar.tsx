@@ -7,7 +7,7 @@ import { Brick, BrickStatus } from "model/brick";
 import { SortBy, Filters, ThreeColumns } from '../../model';
 import { clearStatusFilters } from '../../service';
 import EmptyFilterSidebar from "../EmptyFilter";
-import CustomFilterBox from "components/library/CustomFilterBox";
+import CustomFilterBox from "components/library/components/CustomFilterBox";
 import { SubjectItem } from "../personalBuild/model";
 
 
