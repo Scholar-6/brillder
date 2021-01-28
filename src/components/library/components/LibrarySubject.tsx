@@ -47,7 +47,6 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
 
     assignments.sort((a, b) => {
       let foundA = this.findStudent(a);
-      let foundB = this.findStudent(b);
       if (a.lastAttemptScore) {
         return -1;
       }
