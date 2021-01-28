@@ -19,7 +19,6 @@ interface SubjectAutoCompleteProps {
 interface SubjectAutoCompleteState {
   selected: Subject[];
   autoCompleteSubjects: Subject[];
-  autoCompleteOpen: boolean;
 }
 
 const SubjectsPopper = function (props: any) {
@@ -36,11 +35,15 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
     }
 
     const autoCompleteSubjects = props.subjects.filter(s => this.checkSubject(s, selectedSubjects))
+    autoCompleteSubjects.sort((a, b) => {
+      if(a.name < b.name) { return -1; }
+      if(a.name > b.name) { return 1; }
+      return 0;
+    });
 
     this.state = {
       selected: selectedSubjects,
       autoCompleteSubjects,
-      autoCompleteOpen: false,
     };
   }
 
@@ -59,26 +62,11 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
     this.props.onSubjectChange(newValue);
   }
 
-  onSubjectInput(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    const {value} = event.target;
-
-    if (value && value.length >= 2) {
-      this.setState({...this.state, autoCompleteOpen: true});
-    } else {
-      this.setState({...this.state, autoCompleteOpen: false});
-    }
-  }
-
-  hide() {
-    this.setState({...this.state, autoCompleteOpen: false});
-  }
-
   render() {
     return (
       <div className="big-input-container">
         <Autocomplete
           multiple
-          open={this.state.autoCompleteOpen}
           value={this.state.selected}
           options={this.state.autoCompleteSubjects}
           onChange={(e:any, v: any) => this.onSubjectChange(e, v)}
@@ -88,9 +76,7 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
           className="subject-autocomplete"
           renderInput={(params:any) => (
             <TextField
-              onBlur={() => this.hide()}
               {...params}
-              onChange={(e) => this.onSubjectInput(e)}
               variant="standard"
               label="Subjects: "
               placeholder="Subjects"
