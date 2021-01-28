@@ -86,6 +86,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
               <QuestionPlay
                 question={question}
                 attempt={attempt}
+                isReview={mode}
                 isBookPreview={true}
                 answers={parsedAnswers}
               />
