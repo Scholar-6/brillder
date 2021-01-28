@@ -1,0 +1,89 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.username-page {
+  background-color: var(--theme-dark-blue);
+  color: var(--white) !important;
+  height: 100%;
+
+  .blue-right-block {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    background: var(--theme-light-blue);
+    height: 74.9vh;
+    width: 43.8vw;
+    border-top-left-radius: 2vw;
+    z-index: 1;
+    @include phone_and_tabletL {
+      display: none;
+    }
+  }
+  form {
+    display: flex;
+    height: 100%;
+    margin-left: 10vw;
+    align-items: center;
+    h1 {
+      font-size: 4vw;
+      font-family: $font-family-black;
+      letter-spacing: 0.1vw;
+    }
+    .inputs-box {
+      margin-top: 9vh;
+      margin-bottom: 9vh;
+    }
+    input {
+      margin-top: 3vh;
+      margin-bottom: 3vh;
+      width: 100%;
+      font-size: 1.8vw;
+      color: var(--white);
+      text-transform: capitalize;
+      border-bottom: 0.4vh solid var(--dark-gray);
+    }
+    .submit-button {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: $font-family-regular;
+      margin-top: 14vh;
+      letter-spacing: 0.1vw;
+      font-size: 3vw;
+      svg {
+        height: 5vw;
+        width: 5vw;
+        color: var(--theme-orange);
+      }
+      &:hover {
+        font-family: $font-family-bold;
+      }
+    }
+  }
+  .phone-username-preview {
+    z-index: 2;
+    .phone {
+      background: var(--white);
+
+      .phone-border {
+        background-color: var(--tab-gray);
+      }
+      .volume, .sleep, .screen {
+        background: var(--white) !important;
+      }
+      .screen {
+        border-radius: 1.6vw;
+        display: flex;
+        justify-content: center;
+
+        svg {
+          width: 70%;
+          color: var(--theme-dark-blue);
+          margin-bottom: 40%;
+        }
+      }
+    }
+  }
+}
