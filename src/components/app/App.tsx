@@ -22,12 +22,14 @@ import LoginPage from '../loginPage/loginPage';
 import ResetPasswordPage from '../resetPasswordPage/ResetPasswordPage';
 import ActivateAccountPage from '../activateAccountPage/activateAccountPage';
 import EmailActivateAccountPage from '../activateAccountPage/emailActivateAccountPage';
-import UserProfilePage from '../userProfilePage/UserProfile';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
 import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';
 import PostPlay from 'components/postPlay/PostPlay';
 import Library from 'components/library/Library';
+
+import UserProfilePage from 'components/userProfilePage/UserProfile';
 import UserPreferencePage from 'components/userProfilePage/userPreferencePage/UserPreferencePage';
+import UsernamePage from 'components/userProfilePage/usernamePage/UsernamePage';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
@@ -160,6 +162,7 @@ const App: React.FC<AppProps> = props => {
 
         <AllUsersRoute path="/user-profile" component={UserProfilePage} />
         <AllUsersRoute path="/user/preference" component={UserPreferencePage} isPreferencePage={true} />
+        <AllUsersRoute path="/user/set-username" component={UsernamePage} />
 
         <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
         <AuthRoute path="/login/:privacy" component={LoginPage} />

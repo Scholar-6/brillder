@@ -1,4 +1,4 @@
-import { UserBase } from "./user";
+import { User, UserBase } from "./user";
 import { Brick } from "./brick";
 import { AssignmentStudent } from "./stats";
 
@@ -20,6 +20,8 @@ export interface Assignment {
   brick: Brick;
   deadline: string;
   assignedDate: string;
+
+  student?: User;
 
   studentStatus: StudentStatus[];
   byStatus: any;

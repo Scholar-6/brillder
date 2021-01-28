@@ -96,10 +96,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     const values = queryString.parse(props.location.search);
-    if (!values.isViewAll && !values.subjectId) {
+    const searchString = values.searchString as string || '';
+    if (!values.isViewAll && !values.subjectId && !values.searchString) {
       this.props.history.push(map.AllSubjects);
     }
-    const searchString = values.searchString as string || '';
 
     let isViewAll = false;
     if (values.isViewAll) {
@@ -320,13 +320,22 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       this.props.history.push(map.AllSubjects + '?filter=true');
     }
 
-    const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore);
     this.setState({ ...this.state, isViewAll: false, shown: false });
     setTimeout(() => {
       try {
+        const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore);
         this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
       } catch { }
     }, 1400);
+  }
+
+  filterByOneSubject(id: number) {
+    this.state.subjects.forEach(s => s.checked = false);
+    toggleSubject(this.state.subjects, id);
+    toggleSubject(this.state.userSubjects, id);
+
+    const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore);
+    this.setState({ ...this.state, isClearFilter: this.isFilterClear(), isViewAll: false, finalBricks, shown: true });
   }
 
   viewAll() {
@@ -730,7 +739,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         <SubjectsColumn
           subjects={subjects}
           viewAll={this.viewAll.bind(this)}
-          onClick={subjectId => this.filterBySubject(subjectId)}
+          onClick={subjectId => this.filterByOneSubject(subjectId)}
         />
       </div>
     );

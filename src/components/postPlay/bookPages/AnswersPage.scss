@@ -1,0 +1,51 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.result-page {
+  padding-top: 1.5vh;
+  padding-left: 10%;
+  padding-right: 10%;
+
+  .eye-text {
+    margin-bottom: 1vh;
+    font-family: $font-family-regular-italic;
+  }
+
+  .col {
+    width: 33%;
+
+    svg {
+      width: 2vw;
+      height: 2vw;
+      margin-left: 0.3vw;
+      margin-right: 0.3vw;
+      stroke-width: 3;
+
+      &.active {
+        cursor: pointer;
+      }
+      &.eye:hover {
+        color: var(--theme-dark-blue) !important;
+        opacity: 0.5;
+      }
+    }
+  }
+
+  h3 {
+    color: var(--theme-dark-blue);
+    margin: 0;
+    padding-bottom: 1.3vh;
+    letter-spacing: 0;
+    font-family: $font-family-bold;
+    font-size: 1.2vw;
+  }
+
+  div {
+    font-size: 0.9vw;
+  }
+
+  h2 {
+    text-align: center;
+  }
+}

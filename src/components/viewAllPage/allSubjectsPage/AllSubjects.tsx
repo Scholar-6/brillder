@@ -103,7 +103,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               user={this.props.user}
               sortBy={SortBy.Date}
               subjects={this.state.subjects}
-              userSubjects={this.props.user.subjects}
+              userSubjects={this.props.user ? this.props.user.subjects : []}
               isCore={true}
               isClearFilter={() => { }}
               isAllSubjects={this.state.isAllSubjects}
