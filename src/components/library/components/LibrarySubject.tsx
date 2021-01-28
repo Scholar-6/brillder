@@ -28,10 +28,37 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
     </div>
   }
 
+  findStudent(a: LibraryAssignmentBrick) {
+    if (a.brick.assignments && a.brick.assignments.length > 0) {
+      const {assignments} = a.brick;
+      for (let a2 of assignments) {
+        if (a2.student) {
+          if (a2.student.id === this.props.userId) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   render() {
     const {assignments} = this.props.subjectAssignment;
 
-    assignments.sort(a => a.lastAttemptScore ? -1 : 1);
+    assignments.sort((a, b) => {
+      let foundA = this.findStudent(a);
+      let foundB = this.findStudent(b);
+      if (a.lastAttemptScore) {
+        return -1;
+      }
+      if (foundA && !a.lastAttemptScore && b.lastAttemptScore) {
+        return 1;
+      }
+      if (foundA) {
+        return -1;
+      }
+      return 1;
+    });
 
     return (
       <div className="libary-container">
