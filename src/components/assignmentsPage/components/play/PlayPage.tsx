@@ -126,6 +126,17 @@ class PlayPage extends Component<PlayProps, PlayState> {
     return service.filterAssignments(assignments, true);
   }
 
+  countClassroomAssignments(classrooms: any[], assignments: AssignmentBrick[]) {
+    for (let c of classrooms) {
+      c.assignmentsCount = 0;
+      for (let a of assignments) {
+        if (a.classroom && a.classroom.id === c.id && a.brick.isCore) {
+          c.assignmentsCount += 1;
+        }
+      }
+    }
+  }
+
   setAssignments(assignments: AssignmentBrick[]) {
     let classrooms:any[] = [];
     for (let assignment of assignments) {
@@ -138,6 +149,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
     }
 
     const threeColumns = service.prepareThreeAssignmentRows(assignments);
+    this.countClassroomAssignments(classrooms, assignments);
     this.setState({ ...this.state, isLoaded: true, classrooms, rawAssignments: assignments, finalAssignments: assignments, threeColumns, sortedIndex: 0 });
   }
 
@@ -320,6 +332,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
         <PlayFilterSidebar
           filters={this.state.filters}
           activeClassroomId={this.state.activeClassroomId}
+          assignmentsLength={this.state.rawAssignments.length}
           assignments={this.state.finalAssignments}
           setActiveClassroom={this.setActiveClassroom.bind(this)}
           classrooms={this.state.classrooms}
