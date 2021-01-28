@@ -124,7 +124,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
       return <EmptyQP1 />;
     }
     setTimeout(() => {checkScroll()}, 100);
-    return <QuestionPlay question={question} isPhonePreview={true} focusIndex={props.focusIndex} answers={[]} />;
+    return <QuestionPlay question={question} isPreview={true} focusIndex={props.focusIndex} answers={[]} />;
   }
   
   return (
