@@ -3,9 +3,9 @@ import React, { Component } from "react";
 import { Subject } from "model/brick";
 import './LibrarySubjects.scss';
 
-import { SubjectAssignments } from "./model";
+import { SubjectAssignments } from "../service/model";
 import LibrarySubject from "./LibrarySubject";
-import { getSubjectWidth } from "./service/css";
+import { getSubjectWidth } from "../service/css";
 
 interface LibrarySubjectsProps {
   userId: number;

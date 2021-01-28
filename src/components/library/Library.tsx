@@ -12,10 +12,10 @@ import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import { getLibraryBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
-import { SortBy, SubjectAssignments } from "./model";
+import { SortBy, SubjectAssignments } from "./service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
 
-import LibraryFilter from "./LibraryFilter";
+import LibraryFilter from "./components/LibraryFilter";
 import ViewAllPagination from "../viewAllPage/ViewAllPagination";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
@@ -26,7 +26,7 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { getBrickColor } from "services/brick";
 import { getStudentClassrooms } from "services/axios/classroom";
 import { TeachClassroom } from "model/classroom";
-import LibrarySubjects from "./LibrarySubjects";
+import LibrarySubjects from "./components/LibrarySubjects";
 
 
 interface BricksListProps {
