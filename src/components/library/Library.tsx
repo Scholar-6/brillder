@@ -16,7 +16,7 @@ import { SortBy, SubjectAssignments } from "./service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
 
 import LibraryFilter from "./components/LibraryFilter";
-import ViewAllPagination from "../viewAllPage/ViewAllPagination";
+//import ViewAllPagination from "../viewAllPage/ViewAllPagination";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
