@@ -47,12 +47,11 @@ const AnswersPage: React.FC<AnswersPageProps> = ({
   }
 
   return (
-    <div
-      className={className}
-      style={getResultStyle(i)}
-      onClick={nextQuestion}
-    >
+    <div className={className} style={getResultStyle(i)} onClick={nextQuestion}>
       <h2>My Answer(s)</h2>
+      <div className="eye-text">
+        Click the eye icons to see your answers in the Review or Investigation
+      </div>
       <div style={{ display: "flex" }}>
         <div className="col">
           <h3>Attempt</h3>

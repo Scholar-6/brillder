@@ -9,6 +9,10 @@
     flex-direction: row !important;
   }
 
+  .question-hint-global  {
+    margin-top: 5px;
+  }
+
   .pair-match-play-option {
     @extend %textCenter;
     color: var(--theme-dark-blue);
