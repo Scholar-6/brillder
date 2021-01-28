@@ -41,7 +41,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
 
   const moveNext = () => {
     if (preference && props.user.rolePreference) {
-      history.push("/terms");
+      history.push("/user/set-username");
     }
   }
 
