@@ -147,7 +147,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 
   renderAnswer(answer:any, i: number) {
-    let isCorrect = this.checkAttemptAnswer(i);
+    const isCorrect = this.checkAttemptAnswer(i);
     let className = "vertical-shuffle-choice";
 
     if (!this.props.isPreview && this.props.attempt && this.props.isReview) {
@@ -160,8 +160,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
       className += getValidationClassName(isCorrect);
     }
 
-    let hasHint = this.props.isReview || this.props.isPreview;
-    console.log(this.props.isBookPreview, this.props.isReview)
+    const hasHint = this.props.isReview || this.props.isPreview;
     
     return (
       <div key={i} className={className}>
