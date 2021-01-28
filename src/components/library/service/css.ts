@@ -1,5 +1,5 @@
 import { BrickLengthEnum } from "model/brick";
-import { SubjectAssignments } from "../model";
+import { SubjectAssignments } from "./model";
 
 export const getSubjectWidth = (subjectAssignment: SubjectAssignments) => {
   const paddingWidth = 0.4 * 2;

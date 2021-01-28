@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { ReduxCombinedState } from "redux/reducers";
 
+import './AssignmentsPage.scss';
 import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import PlayPage from './components/play/PlayPage';
@@ -51,7 +52,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   render() {
     return (
-      <div className="main-listing">
+      <div className="main-listing student-assignments-page">
         <PageHeadWithMenu
           page={PageEnum.BackToWork}
           user={this.props.user}

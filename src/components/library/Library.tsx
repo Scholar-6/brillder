@@ -12,11 +12,11 @@ import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import { getLibraryBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
-import { SortBy, SubjectAssignments } from "./model";
+import { SortBy, SubjectAssignments } from "./service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
 
-import LibraryFilter from "./LibraryFilter";
-import ViewAllPagination from "../viewAllPage/ViewAllPagination";
+import LibraryFilter from "./components/LibraryFilter";
+//import ViewAllPagination from "../viewAllPage/ViewAllPagination";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
@@ -26,7 +26,7 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { getBrickColor } from "services/brick";
 import { getStudentClassrooms } from "services/axios/classroom";
 import { TeachClassroom } from "model/classroom";
-import LibrarySubjects from "./LibrarySubjects";
+import LibrarySubjects from "./components/LibrarySubjects";
 
 
 interface BricksListProps {
@@ -440,13 +440,14 @@ class Library extends Component<BricksListProps, BricksListState> {
                 history={this.props.history}
               />
             </div>
+            {/* pagination removed temporarily 28/01/2021
             <ViewAllPagination
               pageSize={this.state.pageSize}
               sortedIndex={this.state.sortedIndex}
               bricksLength={this.state.finalAssignments.length}
               moveAllNext={() => this.moveAllNext()}
               moveAllBack={() => this.moveAllBack()}
-            />
+            />*/}
           </Grid>
         </Grid>
         <FailedRequestDialog

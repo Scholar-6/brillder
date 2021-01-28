@@ -4,6 +4,7 @@ import { getFormattedDate, getTime } from "components/services/brickService";
 import { PlayAttempt } from "model/attempt";
 import { BookState } from "../PostPlay";
 
+import './AnswersPage.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface AnswersPageProps {
@@ -46,15 +47,14 @@ const AnswersPage: React.FC<AnswersPageProps> = ({
   }
 
   return (
-    <div
-      className={className}
-      style={getResultStyle(i)}
-      onClick={nextQuestion}
-    >
+    <div className={className} style={getResultStyle(i)} onClick={nextQuestion}>
       <h2>My Answer(s)</h2>
+      <div className="eye-text">
+        Click the eye icons to see your answers in the Review or Investigation
+      </div>
       <div style={{ display: "flex" }}>
         <div className="col">
-          <h3>Attempt1</h3>
+          <h3>Attempt</h3>
           <div className="bold">{getFormattedDate(timestamp)}</div>
           <div>{getTime(timestamp)}</div>
         </div>
@@ -67,11 +67,11 @@ const AnswersPage: React.FC<AnswersPageProps> = ({
             }
             {
               mode === true || mode === undefined
-                ? <SpriteIcon name="eye-off" className="text-dark-gray active" onClick={e => {
+                ? <SpriteIcon name="eye-off" className="text-dark-gray eye active" onClick={e => {
                     e.stopPropagation();
                     setMode(false);
                   }} />
-                : <SpriteIcon name="eye-on" className="text-theme-dark-blue active" onClick={e => {
+                : <SpriteIcon name="eye-on" className="text-theme-dark-blue eye active" onClick={e => {
                   e.stopPropagation();
                   setMode(undefined);
                 }} />
@@ -87,11 +87,11 @@ const AnswersPage: React.FC<AnswersPageProps> = ({
             }
             {
               mode === true
-                ? <SpriteIcon name="eye-on" className="text-theme-dark-blue active" onClick={e => {
+                ? <SpriteIcon name="eye-on" className="text-theme-dark-blue eye active" onClick={e => {
                   e.stopPropagation();
                   setMode(undefined);
                 }} />
-                : <SpriteIcon name="eye-off" className="text-dark-gray active" onClick={e => {
+                : <SpriteIcon name="eye-off" className="text-dark-gray eye active" onClick={e => {
                     e.stopPropagation();
                     setMode(true);
                   }} />

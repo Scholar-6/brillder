@@ -3,8 +3,17 @@
 @import 'src/assets/sass/partials/extensions';
 
 .subject-autocomplete {
+  .MuiInputBase-root.MuiInput-root.MuiAutocomplete-inputRoot {
+    padding-right: 4vw !important;
+  }
   .MuiAutocomplete-endAdornment {
-    display: none !important;
+    .MuiAutocomplete-clearIndicator {
+      display: none;
+    }
+    .MuiAutocomplete-popupIndicator {
+      margin: 1vw;
+      margin-top: 1.4vw;
+    }
   }
 }
 

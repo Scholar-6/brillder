@@ -161,6 +161,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     }
 
     let hasHint = this.props.isReview || this.props.isPreview;
+    console.log(this.props.isBookPreview, this.props.isReview)
     
     return (
       <div key={i} className={className}>
