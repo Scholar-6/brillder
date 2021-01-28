@@ -193,7 +193,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   onBookClose() {
     const closeTimeout = setTimeout(() => {
-      this.setState({ bookHovered: true });
+      this.setState({ bookHovered: false });
     }, 400);
     this.setState({ closeTimeout });
   }
@@ -347,6 +347,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             <h1>This book is yours.</h1>
             <h2>Hover your mouse over the cover to</h2>
             <h2>see a summary of your results.</h2>
+            <button onClick={() => this.props.history.push('/my-library')}>View it in my library</button>
           </Grid>
           <div className={bookClass}>
             <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>

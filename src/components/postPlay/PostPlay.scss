@@ -77,6 +77,18 @@
       margin: 0;
       line-height: 2.3;
     }
+
+    button {
+      border: none;
+      outline: none;
+      border-radius: 1vw;
+      margin-top: 8vh;
+      margin-left: 7vw;
+      font-family: $font-family-bold;
+      font-size: 1.6vw;
+      background: var(--theme-light-blue);
+      padding: 0.8vh 1.5vw;
+    }
   }
 
   .book-main-container {
@@ -103,6 +115,10 @@
       position: relative;
       height: $real-book-height;
       backface-visibility: visible;
+    }
+
+    .front {
+      transform: rotateY(0deg);
     }
 
     .front,

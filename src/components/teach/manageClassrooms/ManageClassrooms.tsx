@@ -385,7 +385,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     } else {
       users.sort((a, b) => a.lastName < b.lastName ? 1 : -1);
     }
-    console.log(isAscending);
     this.setState({ ...this.state, users, sortBy: UserSortBy.Name, isAscending });
   }
 
