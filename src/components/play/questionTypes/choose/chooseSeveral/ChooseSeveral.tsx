@@ -209,6 +209,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   render() {
     const { component } = this.props;
+    console.log(this.props)
 
     return (
       <div className="question-unique-play choose-several-live">
