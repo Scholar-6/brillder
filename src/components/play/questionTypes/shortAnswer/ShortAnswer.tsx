@@ -4,7 +4,6 @@ import CompComponent from "../Comp";
 import "./ShortAnswer.scss";
 import { ComponentAttempt } from "components/play/model";
 import ReviewEachHint from "../../baseComponents/ReviewEachHint";
-import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 import { CompQuestionProps } from "../types";
 import {
   ShortAnswerData,
@@ -152,12 +151,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
         {component.list.map((answer, index) => {
           return this.renderAnswer(answer, width, index);
         })}
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }

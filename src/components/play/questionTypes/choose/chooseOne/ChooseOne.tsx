@@ -8,7 +8,6 @@ import CompComponent from '../../Comp';
 import { CompQuestionProps } from '../../types';
 import { ComponentAttempt } from 'components/play/model';
 import ReviewEachHint from '../../../baseComponents/ReviewEachHint';
-import ReviewGlobalHint from '../../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneChoice } from 'components/interfaces/chooseOne';
@@ -211,12 +210,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     return (
       <div className="question-unique-play choose-one-live">
         {list.map((choice, index) => this.renderChoice(choice, index))}
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }
