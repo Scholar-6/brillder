@@ -51,7 +51,6 @@ import Terms from 'components/terms/Terms';
 import { connect } from 'react-redux';
 import PlayPreviewRoute from './PlayPreviewRoute';
 import EmailLoginPage from 'components/loginPage/EmailLoginPage';
-import AllSubjects from 'components/viewAllPage/allSubjectsPage/AllSubjects';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -127,7 +126,7 @@ const App: React.FC<AppProps> = props => {
     <ThemeProvider theme={theme}>
       {/* all page routes are here order of routes is important */}
       <Switch>
-        <UnauthorizedRoute path={map.AllSubjects} component={AllSubjects} />
+        <UnauthorizedRoute path={map.AllSubjects} component={ViewAll} />
         <UnauthorizedRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <UnauthorizedRoute path={map.ViewAllPage} component={ViewAll} />

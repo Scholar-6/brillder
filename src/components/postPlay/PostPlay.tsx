@@ -244,7 +244,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     const {brick} = this.state.attempt;
     if (this.state.animationRunning) { return; }
     if (this.state.questionIndex < brick.questions.length - 1) {
-      this.setState({ questionIndex: this.state.questionIndex + 1, animationRunning: true });
+      this.setState({ questionIndex: this.state.questionIndex + 1, mode: undefined, animationRunning: true });
       this.animationFlipRelease();
     } else {
       this.moveToSynthesis();
@@ -257,7 +257,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       this.moveToIntroduction();
     }
     if (this.state.questionIndex > 0) {
-      this.setState({ questionIndex: this.state.questionIndex - 1, animationRunning: true });
+      this.setState({ questionIndex: this.state.questionIndex - 1, mode: undefined, animationRunning: true });
       this.animationFlipRelease();
     }
   }
