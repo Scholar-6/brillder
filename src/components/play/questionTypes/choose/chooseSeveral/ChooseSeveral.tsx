@@ -13,7 +13,6 @@ import { ActiveItem } from '../chooseOne/ChooseOne';
 import MathInHtml from '../../../baseComponents/MathInHtml';
 import CompComponent from '../../Comp';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
-import ReviewGlobalHint from 'components/play/baseComponents/ReviewGlobalHint';
 import { fileUrl } from 'components/services/uploadFile';
 
 export type ChooseSeveralAnswer = ActiveItem[];
@@ -209,7 +208,6 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   render() {
     const { component } = this.props;
-    console.log(this.props)
 
     return (
       <div className="question-unique-play choose-several-live">
@@ -219,12 +217,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
         {
           component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }

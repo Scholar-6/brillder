@@ -13,7 +13,6 @@ import {SortCategory, SortAnswer, QuestionValueType} from 'components/interfaces
 import { DragAndDropStatus } from '../pairMatch/interface';
 
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
-import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { getValidationClassName } from '../service';
 
 
@@ -284,12 +283,7 @@ class Sort extends CompComponent<SortProps, SortState> {
             </div>
           ))
         }
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }
