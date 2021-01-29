@@ -870,7 +870,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   renderAllSubjectsPage() {
-    return <AllSubjects user={this.props.user} history={this.props.history} location={this.props.location} />
+    return <AllSubjects
+      user={this.props.user}
+      history={this.props.history} location={this.props.location}
+      filterByOneSubject={this.filterByOneSubject.bind(this)} />
   }
 
   render() {
