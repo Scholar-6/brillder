@@ -32,6 +32,7 @@ interface QuestionProps {
   isReview?: boolean;
   isPreview?: boolean;
   isBookPreview?: boolean;
+  isDefaultBook?: boolean;
   onAttempted?(): void;
 
   // build phone preview
@@ -138,6 +139,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
           attempt={this.props.attempt}
           answers={this.props.answers}
           isPreview={this.props.isPreview}
+          isDefaultBook={this.props.isDefaultBook}
           isBookPreview={this.props.isBookPreview}
           question={question}
           component={component}
