@@ -25,7 +25,10 @@ const AttemptsPage: React.FC<AttemptsPageProps> = (props) => {
               }}
             >
               <div className="percentage">{percentages}</div>
-              {i === 0 ? `Your latest attempt on ${getDateString(a.timestamp)} at ${getTime(a.timestamp)}` : `Attempt on ${getDateString(a.timestamp)} at ${getTime(a.timestamp)}`}
+              {i === 0
+                ? <span>Your latest attempt on {getDateString(a.timestamp)} at {getTime(a.timestamp)}</span>
+                : <span>Attempt on {getDateString(a.timestamp)} at {getTime(a.timestamp)}</span>
+              }
             </div>
           );
         }
