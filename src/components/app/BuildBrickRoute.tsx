@@ -12,6 +12,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
 import YJSProvider, { YJSContext } from "components/build/baseComponents/YJSProvider";
+import { toRenderJSON } from "services/SharedTypeService";
 
 interface BuildRouteProps {
   exact?: any;
@@ -70,10 +71,10 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
               <YJSContext.Consumer>
                 {context => {
                   const brick = context?.json.brick;
-                  console.log(brick);
                   if (!brick || !brick.authorId || brick.id !== brickId) {
                     return <PageLoader content="...Getting Brick..." />;
                   }
+                  console.log({ ...brick, questions: brick.questions.map((q: any) => q.toJSON()) });
 
                   const reduxBrick = rest.brick;
                   if (!reduxBrick || !reduxBrick.author || reduxBrick.id !== brickId) {

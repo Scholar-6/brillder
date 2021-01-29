@@ -2,6 +2,35 @@
 import * as Y from "yjs";
 import { Brick } from "model/brick";
 import { Question } from "model/question";
+import quillToHTML from "components/baseComponents/quill/QuillToHTML";
+
+export const toRenderJSON = (type: Y.AbstractType<any> | any): any => {
+    if(type instanceof Y.Doc) {
+        const jsonDoc: any = {};
+        type.share.forEach((value, key) => {
+            jsonDoc[key] = toRenderJSON(value);
+        });
+        return jsonDoc;
+    } else if (type instanceof Y.Array) {
+        return type.map(c => toRenderJSON(c));
+    } else if (type instanceof Y.Map) {
+        const jsonMap: any = {};
+        type._map.forEach((item, key) => {
+            if(!item.deleted) {
+                const v = item.content.getContent()[item.length-1];
+                jsonMap[key] = toRenderJSON(v);
+            }
+        });
+        return jsonMap;
+    } else if (type instanceof Y.Text) {
+        const delta = type.toDelta();
+        return quillToHTML(delta);
+    } else if (type instanceof Y.AbstractType) {
+        return type.toJSON();
+    } else {
+        return type;
+    }
+}
 
 export const convertBrick = (brick: Brick): Y.Doc => {
     const ydoc = new Y.Doc();

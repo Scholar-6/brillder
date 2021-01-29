@@ -68,7 +68,7 @@ import ValidationFailedDialog from "components/baseComponents/dialogs/Validation
 import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./proposal/model";
 import { YJSContext } from "./baseComponents/YJSProvider";
 import * as Y from "yjs";
-import { convertQuestion } from "services/SharedTypeService";
+import { convertQuestion, toRenderJSON } from "services/SharedTypeService";
 import _ from "lodash";
 
 
@@ -652,7 +652,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <Route path="/build/brick/:brickId/investigation/question-component">
             {activeQuestion &&
               <PhoneQuestionPreview
-                question={activeQuestion.getMap().toJSON()}
+                question={toRenderJSON(activeQuestion.getMap())}
                 focusIndex={focusIndex}
                 getQuestionIndex={getJSONQuestionIndex}
                 nextQuestion={setNextQuestion}
@@ -669,7 +669,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               prev={() => selectQuestion(questions.length - 1)}
               next={()=>{}}
               nextDisabled={true}
-              data={{synthesis: synthesis.toDelta(), brickLength: ybrick.get("brickLength")}}
+              data={{synthesis: toRenderJSON(ybrick).synthesis, brickLength: ybrick.get("brickLength")}}
             />
           </Route>
         </Grid>

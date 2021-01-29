@@ -14,7 +14,7 @@ import quillToHTML from "components/baseComponents/quill/QuillToHTML";
 import { DeltaOperation } from "quill";
 
 interface SynthesisPreviewData {
-  synthesis: DeltaOperation[];
+  synthesis: string;
   brickLength: BrickLengthEnum;
 }
 
@@ -67,9 +67,7 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
     );
   }
 
-  const html = quillToHTML(data.synthesis);
-  console.log(html);
-  const arr = parseSynthesisDataToArray(html);
+  const arr = parseSynthesisDataToArray(data.synthesis);
 
   const renderMath = (data: string, i: number) => {
     return <MathJax math={data} key={i} />;
