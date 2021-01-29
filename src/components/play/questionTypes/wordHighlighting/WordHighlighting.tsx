@@ -73,7 +73,17 @@ class WordHighlighting extends CompComponent<
     if (this.props.isPreview) {
       return this.renderWordPreview(word, index);
     }
+    
     let className = "word";
+
+    if (this.props.isDefaultBook) {
+      return (
+        <span key={index} className={className}>
+          {word.text}
+          {word.isBreakLine ? <br/> : ""}
+        </span>
+      );
+    }
     
     if (word.selected) {
       className += " active";
@@ -136,7 +146,7 @@ class WordHighlighting extends CompComponent<
     return (
       <div className="question-unique-play word-highlighting-play">
         <p><span className="help-text">Click to highlight.</span></p>
-        <div className={`words-container ${this.props.isPreview && 'preview'} ${!component.isPoem && 'break-lines'}`}>
+        <div className={`words-container ${this.props.isPreview && 'preview'} ${!component.isPoem ? 'break-lines' : 'lines-inline'}`}>
           {this.getWords()}
         </div>
         <br/>

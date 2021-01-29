@@ -81,7 +81,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
           <div className="question-scrollable">
             <h2>{renderTitle()}</h2>
             {mode === undefined
-              ? <QuestionPlay question={question} isPhonePreview={true} answers={[]} />
+              ? <QuestionPlay question={question} isPhonePreview={true} isDefaultBook={true} answers={[]} />
               : 
               <QuestionPlay
                 question={question}
