@@ -534,6 +534,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         if (item.brick.editor?.id === this.props.user.id) {
           circleIcon = 'award';
         }
+        if (item.brick.adaptedFrom) {
+          circleIcon = 'copy';
+        }
       }
 
       let searchString = ''
