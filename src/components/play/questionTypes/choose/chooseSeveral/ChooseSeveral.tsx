@@ -74,7 +74,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   checkBookChoice(choice: ChooseOneAnswer, index: number) {
     const { answer } = this.props.attempt;
-    const found = answer.find(a => a.realIndex === index);
+    const found = answer.find(a => a.shuffleIndex === index);
     if (found) {
       if (choice.checked) {
         return true;
@@ -123,7 +123,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   getBookPreviewClass(active: ActiveItem | undefined, isCorrect: boolean | null) {
     let className = "choose-choice";
 
-    if (active && active.realIndex >= 0) {
+    if (active && active.shuffleIndex >= 0) {
       className += " active";
       if (isCorrect === true) {
         className += " correct";
@@ -172,7 +172,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     let className = '';
     if (this.props.isBookPreview) {
       isCorrect = this.checkBookChoice(choice, index);
-      active = this.state.activeItems.find(i => i.realIndex === index);
+      active = this.state.activeItems.find(i => i.shuffleIndex === index);
       className = this.getBookPreviewClass(active, isCorrect);
     } else {
       className = this.getButtonClass(choice, active, isCorrect);
