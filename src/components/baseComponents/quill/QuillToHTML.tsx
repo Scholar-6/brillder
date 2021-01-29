@@ -11,7 +11,6 @@ const quillToHTML = (data: Op[]) => {
     });
 
     const html = converter.convert();
-    console.log(data, html);
 
     return html;
 }

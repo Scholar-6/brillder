@@ -49,7 +49,6 @@ const HintComponent: React.FC<HintProps> = ({
   };
 
   const renderHintInputs = () => {
-    console.log(props.hint);
     if (!props.hint) {
       return <PageLoader content="...Preparing hints..." />;
     }

@@ -49,7 +49,6 @@ interface QuestionState {
 class QuestionLive extends React.Component<QuestionProps, QuestionState> {
   constructor(props: QuestionProps) {
     super(props);
-    console.log(props.question);
 
     this.state = {
       answerRef: React.createRef<CompComponent<any, any>>(),
