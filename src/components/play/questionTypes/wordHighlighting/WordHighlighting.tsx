@@ -73,7 +73,17 @@ class WordHighlighting extends CompComponent<
     if (this.props.isPreview) {
       return this.renderWordPreview(word, index);
     }
+    
     let className = "word";
+
+    if (this.props.isDefaultBook) {
+      return (
+        <span key={index} className={className}>
+          {word.text}
+          {word.isBreakLine ? <br/> : ""}
+        </span>
+      );
+    }
     
     if (word.selected) {
       className += " active";
