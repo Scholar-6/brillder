@@ -4,7 +4,6 @@ import "./WordHighlighting.scss";
 import CompComponent from "../Comp";
 import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/model";
-import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 import { PlayWord, IPlayWordComponent } from 'components/interfaces/word';
 
 interface WordHighlightingProps extends CompQuestionProps {
@@ -141,12 +140,7 @@ class WordHighlighting extends CompComponent<
           {this.getWords()}
         </div>
         <br/>
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }

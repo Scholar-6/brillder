@@ -13,7 +13,6 @@ import { ActiveItem } from '../chooseOne/ChooseOne';
 import MathInHtml from '../../../baseComponents/MathInHtml';
 import CompComponent from '../../Comp';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
-import ReviewGlobalHint from 'components/play/baseComponents/ReviewGlobalHint';
 import { fileUrl } from 'components/services/uploadFile';
 
 export type ChooseSeveralAnswer = ActiveItem[];
@@ -75,7 +74,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   checkBookChoice(choice: ChooseOneAnswer, index: number) {
     const { answer } = this.props.attempt;
-    const found = answer.find(a => a.realIndex === index);
+    const found = answer.find(a => a.shuffleIndex === index);
     if (found) {
       if (choice.checked) {
         return true;
@@ -124,7 +123,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   getBookPreviewClass(active: ActiveItem | undefined, isCorrect: boolean | null) {
     let className = "choose-choice";
 
-    if (active && active.realIndex >= 0) {
+    if (active && active.shuffleIndex >= 0) {
       className += " active";
       if (isCorrect === true) {
         className += " correct";
@@ -173,7 +172,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     let className = '';
     if (this.props.isBookPreview) {
       isCorrect = this.checkBookChoice(choice, index);
-      active = this.state.activeItems.find(i => i.realIndex === index);
+      active = this.state.activeItems.find(i => i.shuffleIndex === index);
       className = this.getBookPreviewClass(active, isCorrect);
     } else {
       className = this.getButtonClass(choice, active, isCorrect);
@@ -209,7 +208,6 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   render() {
     const { component } = this.props;
-    console.log(this.props)
 
     return (
       <div className="question-unique-play choose-several-live">
@@ -219,12 +217,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
         {
           component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }

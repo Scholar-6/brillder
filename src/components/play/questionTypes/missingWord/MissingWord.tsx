@@ -7,7 +7,6 @@ import "./MissingWord.scss";
 import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/model";
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
-import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 
@@ -154,12 +153,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
             </Grid>
           </div>
         ))}
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }
