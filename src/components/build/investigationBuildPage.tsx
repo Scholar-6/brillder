@@ -669,7 +669,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               prev={() => selectQuestion(questions.length - 1)}
               next={()=>{}}
               nextDisabled={true}
-              data={{synthesis: synthesis.toJSON(), brickLength: ybrick.get("brickLength")}}
+              data={{synthesis: synthesis.toDelta(), brickLength: ybrick.get("brickLength")}}
             />
           </Route>
         </Grid>

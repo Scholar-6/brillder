@@ -10,9 +10,11 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Radio } from "@material-ui/core";
 import { BrickLengthEnum } from "model/brick";
 import Katex from "components/baseComponents/katex/Katex";
+import quillToHTML from "components/baseComponents/quill/QuillToHTML";
+import { DeltaOperation } from "quill";
 
 interface SynthesisPreviewData {
-  synthesis: string;
+  synthesis: DeltaOperation[];
   brickLength: BrickLengthEnum;
 }
 
@@ -65,7 +67,9 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
     );
   }
 
-  var arr = parseSynthesisDataToArray(data.synthesis);
+  const html = quillToHTML(data.synthesis);
+  console.log(html);
+  const arr = parseSynthesisDataToArray(html);
 
   const renderMath = (data: string, i: number) => {
     return <MathJax math={data} key={i} />;
