@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .missing-word-live {
-  line-height: 50px;
+  line-height: 1.45;
   margin: 5px 0;
   place-content: center space-evenly;
 
@@ -11,7 +11,7 @@
     font-family: $font-family-regular;
     display: inline;
     color: var(--theme-dark-blue);
-    font-size: 1.25vw;
+    font-size: 1vw;
     .missing-select {
       margin-left: 10px;
       margin-right: 10px;
