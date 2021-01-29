@@ -305,6 +305,13 @@
           border-radius: 50%;
         }
 
+        &:hover {
+          span {
+            opacity: 0.5;
+            color: var(--theme-dark-blue);
+          }
+        }
+
         &.active {
           color: var(--theme-dark-blue);
         }
