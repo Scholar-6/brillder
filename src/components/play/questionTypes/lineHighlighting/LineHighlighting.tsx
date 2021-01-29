@@ -75,6 +75,15 @@ class LineHighlighting extends CompComponent<
       return this.renderLinePreview(line, index);
     }
     let className = "line";
+    
+    if (this.props.isDefaultBook) {
+      return (
+        <div key={index}>
+          <span className={className}>{line.text}</span>
+        </div>
+      );
+    }
+    
     if (line.selected) {
       className += " active";
     }
