@@ -7,7 +7,6 @@ import ListItem from '@material-ui/core/ListItem';
 import './PairMatch.scss';
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/model';
-import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import {QuestionValueType} from 'components/build/buildQuestions/questionTypes/types';
 import {Answer} from 'components/build/buildQuestions/questionTypes/pairMatchBuild/types';
 import { PairMatchProps, PairMatchState, DragAndDropStatus, PairMatchAnswer, PairMatchComponent } from './interface';
@@ -229,12 +228,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
             </ReactSortable>
           }
         </Grid>
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview || this.props.isBookPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }

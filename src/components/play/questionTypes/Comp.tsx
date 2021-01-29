@@ -1,4 +1,5 @@
 import React from 'react';
+import ReviewGlobalHint from '../baseComponents/ReviewGlobalHint';
 
 import {ComponentAttempt} from '../model';
 import { mark as markAttempt } from '../services/scoring';
@@ -35,6 +36,24 @@ class CompComponent<Props extends CompQuestionProps, State> extends React.Compon
   mark(component: any, attempt: ComponentAttempt<any>) {
     this.prepareAttempt(component, attempt);
     return markAttempt(this.props.question.type, component, attempt);
+  }
+
+  renderGlobalHint() {
+    let correct = false;
+    if (this.props.isBookPreview) {
+      correct = true;
+    } else {
+      correct = this.props.attempt ? this.props.attempt.correct : false;
+    }
+
+    return (
+      <ReviewGlobalHint
+        isReview={this.props.isReview}
+        correct={correct}
+        isPhonePreview={this.props.isPreview}
+        hint={this.props.question.hint}
+      />
+    );
   }
 }
 

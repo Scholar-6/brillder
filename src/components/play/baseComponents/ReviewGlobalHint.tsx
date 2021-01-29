@@ -1,14 +1,14 @@
 import React from 'react';
 
 import {checkVisibility} from '../services/hintService';
-import {ComponentAttempt} from '../model';
 import {Hint, HintStatus} from 'model/question';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 
 
 interface ReviewHintProps {
   isReview?: boolean;
-  attempt?: ComponentAttempt<any>;
+  //attempt?: ComponentAttempt<any>;
+  correct: boolean;  
   isPhonePreview?: boolean;
   hint: Hint;
 }
@@ -18,7 +18,7 @@ const ReviewGlobalHint: React.FC<ReviewHintProps> = ({ hint, ...props }) => {
 
   const renderHint = () => {
     return (
-      <div className={`question-hint-global ${props.attempt?.correct ? 'correct' : ''}`}>
+      <div className={`question-hint-global ${props.correct ? 'correct' : ''}`}>
         <MathInHtml value={hint.value} />
       </div>
     );
