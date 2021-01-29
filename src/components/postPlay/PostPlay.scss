@@ -88,6 +88,12 @@
       font-size: 1.6vw;
       background: var(--theme-light-blue);
       padding: 0.8vh 1.5vw;
+      transition: all 300ms ease-out !important;
+
+      &:hover {
+        background: var(--white);
+        color: var(--theme-dark-blue);
+      }
     }
   }
 
