@@ -19,6 +19,7 @@ interface AllSubjectsProps {
   user: User;
   history: any;
   location: any;
+  filterByOneSubject(subjectId: number): void;
 }
 
 interface AllSubjectsState {
@@ -72,6 +73,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
     const subject = subjects.find(s => s.id === subjectId);
     if (subject) {
       this.props.history.push(map.ViewAllPage + `?subjectId=${subject.id}`);
+      this.props.filterByOneSubject(subject.id);
     }
   }
 
