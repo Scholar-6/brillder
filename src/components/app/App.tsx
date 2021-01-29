@@ -51,7 +51,6 @@ import Terms from 'components/terms/Terms';
 import { connect } from 'react-redux';
 import PlayPreviewRoute from './PlayPreviewRoute';
 import EmailLoginPage from 'components/loginPage/EmailLoginPage';
-import AllSubjects from 'components/viewAllPage/allSubjectsPage/AllSubjects';
 
 interface AppProps {
   setLogoutSuccess(): void;
