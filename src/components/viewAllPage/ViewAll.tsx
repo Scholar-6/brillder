@@ -3,6 +3,7 @@ import { Box, Grid, Hidden } from "@material-ui/core";
 import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import queryString from 'query-string';
+import { Route, Switch } from 'react-router-dom';
 import "swiper/swiper.scss";
 
 import "./ViewAll.scss";
@@ -40,6 +41,7 @@ import RecommendButton from "components/userProfilePage/components/RecommendBuil
 import { removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject, getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks, expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks, sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds } from './service/viewAll';
 import { filterByCurretUser } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
+import AllSubjects from "./allSubjectsPage/AllSubjects";
 
 
 interface ViewAllProps {
@@ -341,7 +343,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   viewAll() {
     this.checkSubjectsWithBricks(this.state.subjects);
     const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore);
-    this.setState({finalBricks, isViewAll: true});
+    this.setState({ finalBricks, isViewAll: true });
   }
 
   clearSubjects = () => {
@@ -451,6 +453,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const { searchString } = this.state;
     this.setState({ shown: false });
     let bricks: Brick[] | null = [];
+    const {pathname} = this.props.location;
+    if (pathname.slice(pathname.length - 13, pathname.length) === '/all-subjects') {
+      this.props.history.push(map.ViewAllPage + '?searchString=' + searchString);
+    }
     if (this.props.user) {
       bricks = await searchBricks(searchString);
     } else {
@@ -695,7 +701,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   getPersonalSubjectsWithBricks() {
-    let subjects =  this.state.subjects.filter(s => s.personalCount && s.personalCount > 0);
+    let subjects = this.state.subjects.filter(s => s.personalCount && s.personalCount > 0);
     if (!this.state.isAllSubjects) {
       subjects = this.filterSubjectsByCurrentUser(subjects);
     }
@@ -810,6 +816,63 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
 
+  renderMobilePage(expandedBrick: Brick | undefined) {
+    return (
+      <div>
+        {this.renderMobileGlassIcon()}
+        <PageHeadWithMenu
+          page={PageEnum.ViewAll}
+          user={this.props.user}
+          placeholder={"Search Subjects, Topics, Titles & more"}
+          history={this.props.history}
+          search={() => this.search()}
+          searching={(v) => this.searching(v)}
+        />
+        <div className="mobile-scroll-bricks">
+          {this.renderMobileUpperBricks(expandedBrick)}
+        </div>
+        <Grid container direction="row" className="sorted-row">
+          <ViewAllMobile
+            sortedIndex={this.state.sortedIndex}
+            pageSize={this.state.pageSize}
+            finalBricks={this.state.finalBricks}
+            history={this.props.history}
+            handleMobileClick={this.handleMobileClick.bind(this)}
+            move={this.move.bind(this)}
+          />
+        </Grid>
+      </div>
+    );
+  }
+
+  renderDesktopViewAllPage(bricks: Brick[]) {
+    return (
+      <Grid container direction="row" className="sorted-row">
+        <ViewAllFilter
+          user={this.props.user}
+          sortBy={this.state.sortBy}
+          subjects={this.state.subjects}
+          userSubjects={this.state.userSubjects}
+          isCore={this.state.isCore}
+          isClearFilter={this.state.isClearFilter}
+          isAllSubjects={this.state.isAllSubjects}
+          setAllSubjects={isAllSubjects => {
+            const finalBricks = this.filter(this.state.bricks, isAllSubjects, this.state.isCore);
+            this.setState({ isAllSubjects, finalBricks, sortedIndex: 0 });
+          }}
+          handleSortChange={e => this.handleSortChange(e)}
+          clearSubjects={() => this.clearSubjects()}
+          filterBySubject={id => this.filterBySubject(id)}
+        />
+        {this.renderDesktopBricksColumn(bricks)}
+      </Grid>
+    );
+  }
+
+  renderAllSubjectsPage() {
+    return <AllSubjects user={this.props.user} history={this.props.history} location={this.props.location} />
+  }
+
   render() {
     if (this.state.isLoading) {
       return <PageLoader content="...Getting Bricks..." />;
@@ -834,51 +897,34 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     return (
       <div className={pageClass}>
-        {this.renderMobileGlassIcon()}
-        <PageHeadWithMenu
-          page={PageEnum.ViewAll}
-          user={this.props.user}
-          placeholder={"Search Subjects, Topics, Titles & more"}
-          history={this.props.history}
-          search={() => this.search()}
-          searching={(v) => this.searching(v)}
-        />
         <Hidden only={["sm", "md", "lg", "xl"]}>
-          <div className="mobile-scroll-bricks">
-            {this.renderMobileUpperBricks(expandedBrick)}
-          </div>
+          <Switch>
+            <Route exec path={map.AllSubjects}>
+              {this.renderAllSubjectsPage()}
+            </Route>
+            <Route exec path={map.ViewAllPage}>
+              {this.renderMobilePage(expandedBrick)}
+            </Route>
+          </Switch>
         </Hidden>
-        <Grid container direction="row" className="sorted-row">
-          <ViewAllFilter
+        <Hidden only={["xs"]}>
+          <PageHeadWithMenu
+            page={PageEnum.ViewAll}
             user={this.props.user}
-            sortBy={this.state.sortBy}
-            subjects={this.state.subjects}
-            userSubjects={this.state.userSubjects}
-            isCore={this.state.isCore}
-            isClearFilter={this.state.isClearFilter}
-            isAllSubjects={this.state.isAllSubjects}
-            setAllSubjects={isAllSubjects => {
-              const finalBricks = this.filter(this.state.bricks, isAllSubjects, this.state.isCore);
-              this.setState({ isAllSubjects, finalBricks, sortedIndex: 0 });
-            }}
-            handleSortChange={e => this.handleSortChange(e)}
-            clearSubjects={() => this.clearSubjects()}
-            filterBySubject={id => this.filterBySubject(id)}
+            placeholder={"Search Subjects, Topics, Titles & more"}
+            history={this.props.history}
+            search={() => this.search()}
+            searching={(v) => this.searching(v)}
           />
-          <Hidden only={["xs"]}>
-            {this.renderDesktopBricksColumn(bricks)}
-          </Hidden>
-          <Hidden only={["sm", "md", "lg", "xl"]}>
-            <ViewAllMobile
-              sortedIndex={this.state.sortedIndex}
-              pageSize={this.state.pageSize}
-              finalBricks={this.state.finalBricks}
-              history={this.props.history}
-              handleMobileClick={this.handleMobileClick.bind(this)}
-              move={this.move.bind(this)}
-            />
-          </Hidden>
-        </Grid>
+          <Switch>
+            <Route exec path={map.AllSubjects}>
+              {this.renderAllSubjectsPage()}
+            </Route>
+            <Route exec path={map.ViewAllPage}>
+              {this.renderDesktopViewAllPage(bricks)}
+            </Route>
+          </Switch>
+        </Hidden>
         <DeleteBrickDialog
           isOpen={this.state.deleteDialogOpen}
           brickId={this.state.deleteBrickId}
@@ -895,7 +941,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           history={this.props.history}
           close={() => this.setState({ noSubjectOpen: false })}
         />
-      </div>
+      </div >
     );
   }
 }
