@@ -28,6 +28,7 @@ const getUser = () => {
       const {data} = response;
       dispatch(getUserSuccess(data));
       dispatch(socketLogin(data.id));
+      return data;
     }).catch(error => {
       dispatch(getUserFailure(error.message));
     });

@@ -10,7 +10,7 @@ interface SubjectDialogProps {
 
 const LineStyleDialog: React.FC<SubjectDialogProps> = ({ isOpen, value = false, submit }) => {
   return (
-    <Dialog open={isOpen} onClose={() => submit(value)} className="dialog-box">
+    <Dialog open={isOpen} onClose={() => submit(value)} className="dialog-box poem-dialog">
       <div className="dialog-header">
         <div>Will this be a poem, or text where line breaks matter?</div>
       </div>

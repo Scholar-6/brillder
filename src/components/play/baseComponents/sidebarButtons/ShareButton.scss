@@ -1,0 +1,10 @@
+.collapsable-sidebar {
+  .share-button, .assign-small, .adapt-small {
+    overflow: visible !important;
+    position: relative;
+    .custom-tooltip {
+      z-index: 100;
+      bottom: -3vw; 
+    }
+  }
+}

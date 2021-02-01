@@ -20,7 +20,6 @@ import LibraryFilter from "./components/LibraryFilter";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
-import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { getBrickColor } from "services/brick";
@@ -58,7 +57,6 @@ interface BricksListState {
   failedRequest: boolean;
   pageSize: number;
   isAdmin: boolean;
-  isCore: boolean;
   shown: boolean;
 }
 
@@ -90,7 +88,6 @@ class Library extends Component<BricksListProps, BricksListState> {
       isClassClearFilter: false,
       failedRequest: false,
       isAdmin,
-      isCore: true,
       shown: false,
     };
 
@@ -176,7 +173,6 @@ class Library extends Component<BricksListProps, BricksListState> {
         }
       }
     }
-    console.log()
     this.populateAssignments(subjectAssignments, assignments);
     return subjectAssignments;
   }
@@ -189,10 +185,14 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   async getAssignments(subjects: Subject[]) {
-    const rawAssignments = await getLibraryBricks();
+    let rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>();
     if (rawAssignments) {
+      rawAssignments = rawAssignments.filter(a => a.maxScore || (a.brick.assignments && a.brick.assignments.length > 0));
+      if (!rawAssignments) {
+        rawAssignments = [];
+      }
       subjects = this.prepareSubjects(rawAssignments, subjects);
-      const finalAssignments = this.filter(rawAssignments, subjects, this.state.isCore);
+      const finalAssignments = this.filter(rawAssignments, subjects);
       const subjectAssignments = this.getAssignmentSubjects(finalAssignments, subjects);
       this.setState({...this.state, subjects, subjectAssignments, isLoading: false, rawAssignments, finalAssignments});
     } else {
@@ -216,16 +216,10 @@ class Library extends Component<BricksListProps, BricksListState> {
     return filterSubjects;
   }
 
-  filter(assignments: LibraryAssignmentBrick[], subjects: Subject[], isCore?: boolean) {
+  filter(assignments: LibraryAssignmentBrick[], subjects: Subject[]) {
     let filtered: LibraryAssignmentBrick[] = [];
 
     let filterSubjects = this.getCheckedSubjectIds(subjects);
-
-    if (isCore) {
-      assignments = assignments.filter(a => a.brick.isCore === true);
-    } else {
-      assignments = assignments.filter(a => !a.brick.isCore)
-    }
 
     if (filterSubjects.length > 0) {
       for (let assignment of assignments) {
@@ -245,26 +239,13 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   filterByClassroom = async (id: number) => {
-    if (id > 0) {
-      let rawAssignments = await getLibraryBricks(id);
-      if (rawAssignments) {
-        const finalAssignments = this.filter(rawAssignments, this.state.subjects, this.state.isCore);
-        this.setState({...this.state, activeClassroomId: id, rawAssignments, finalAssignments});
-      }
-    } else {
-      let rawAssignments = await getLibraryBricks();
-      if (rawAssignments) {
-        const finalAssignments = this.filter(rawAssignments, this.state.subjects, this.state.isCore);
-        this.setState({...this.state, activeClassroomId: id, rawAssignments, finalAssignments});
-      }
-    }
   }
 
   clearSubjects = () => {
     const { state } = this;
     const { subjects } = state;
     subjects.forEach((r: any) => (r.checked = false));
-    const finalAssignments = this.filter(this.state.rawAssignments, subjects, this.state.isCore);
+    const finalAssignments = this.filter(this.state.rawAssignments, subjects);
     this.setState({ ...state, finalAssignments, isClearFilter: false });
   };
 
@@ -343,13 +324,6 @@ class Library extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  toggleCore() {
-    const isCore = !this.state.isCore;
-    const finalAssignments = this.filter(this.state.rawAssignments, this.state.subjects, isCore);
-    const subjectAssignments = this.getAssignmentSubjects(finalAssignments, this.state.subjects);
-    this.setState({isCore, subjectAssignments, finalAssignments});
-  }
-
   renderMainTitle(filterSubjects: number[]) {
     if (filterSubjects.length === 1) {
       const subjectId = filterSubjects[0];
@@ -389,7 +363,6 @@ class Library extends Component<BricksListProps, BricksListState> {
           <Grid container item xs={3} className="sort-and-filter-container">
             <LibraryFilter
               sortBy={this.state.sortBy}
-              isPublic={this.state.isCore}
               classrooms={this.state.classrooms}
               subjects={this.state.subjects}
               assignments={this.state.rawAssignments}
@@ -412,12 +385,6 @@ class Library extends Component<BricksListProps, BricksListState> {
               >
                 {this.renderMainTitle(filterSubjects)}
               </div>
-              {this.props.user &&
-                <PrivateCoreToggle
-                  isViewAll={true}
-                  isCore={this.state.isCore}
-                  onSwitch={() => this.toggleCore()}
-                />}
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div

@@ -73,10 +73,6 @@ export function getDateString(inputDateString: string) {
   return `${date}.${month}.${year}`;
 }
 
-export function checkBuilder(roles: UserRole[]) {
-  return roles.some(role => role.roleId === UserType.Builder);
-}
-
 export function checkTeacherOrAdmin(roles: UserRole[]) {
   return roles.some(r => r.roleId === UserType.Teacher || r.roleId === UserType.Admin);
 }

@@ -1,0 +1,36 @@
+.collapsable-sidebar {
+  .highlight-button {
+    position: relative;
+    span {
+      transition: all 300ms ease-out !important;
+    }
+    .custom-tooltip {
+      z-index: 100;
+      bottom: -3vw;
+    }
+  }
+
+  .highlight-button.active {
+
+    span,
+    .svg {
+      color: var(--theme-yellow);
+    }
+  }
+
+  .highlight-button:hover {
+
+    span,
+    .svg {
+      color: var(--theme-yellow);
+    }
+  }
+
+  .highlight-button.active:hover {
+
+    span,
+    .svg {
+      color: var(--white);
+    }
+  }
+}
