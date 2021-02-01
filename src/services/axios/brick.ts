@@ -63,13 +63,13 @@ export const getAssignedBricks = async () => {
   }
 }
 
-export const getLibraryBricks = async (classroomId?: number) => {
+export const getLibraryBricks = async <T>(classroomId?: number) => {
   try {
     let obj = {};
     if (classroomId) {
       obj = { classroomId };
     }
-    return await post<any[]>("/play/library", obj); 
+    return await post<T[]>("/play/library", obj); 
   } catch (e) {
     return null;
   }

@@ -86,23 +86,16 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
     hideBricks(bricks);
 
     if (bricks[index] && bricks[index].expanded) return;
-    this.setState({ ...this.state });
 
-    setTimeout(() => {
-      expandSearchBrick(bricks, index);
-      this.setState({ ...this.state });
-    }, 400);
+    expandSearchBrick(bricks, index);
+
+    this.setState({ ...this.state });
   }
 
-  handleMouseLeave(key: number) {
-    let bricks = this.getDisplayBricks();
+  handleMouseLeave() {
+    const bricks = this.getDisplayBricks();
     hideBricks(bricks);
-    bricks[key].expandFinished = true;
     this.setState({ ...this.state });
-    setTimeout(() => {
-      bricks[key].expandFinished = false;
-      this.setState({ ...this.state });
-    }, 400);
   }
 
   setFilters(filters: PersonalFilters) {
@@ -163,9 +156,9 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
             circleIcon={circleIcon}
             iconColor=''
             searchString={this.props.searchString}
-            handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
+            handleDeleteOpen={this.props.handleDeleteOpen.bind(this)}
             handleMouseHover={() => this.handleMouseHover(item.key)}
-            handleMouseLeave={() => this.handleMouseLeave(item.key)}
+            handleMouseLeave={this.handleMouseLeave.bind(this)}
           />
         );
       });

@@ -24,7 +24,6 @@
     flex-direction: column;
     width: 100%;
     .sidebar-button {
-      cursor: pointer;
       font-family: $font-family-bold !important;
       width: 100%;
       font-size: 1.6vw;
@@ -52,6 +51,7 @@
       // .minimize-icon,
       .highlight-button,
       .annotate-button {
+        cursor: pointer;
         width: calc(100% - 2vw);
         margin: 2vw 1vw 0 1vw;
         justify-content: center;
@@ -62,14 +62,6 @@
         justify-content: flex-end;
         .svg {
           color: var(--theme-orange);
-        }
-      }
-      .highlight-button {
-        &.active {
-          span,
-          .svg {
-            color: var(--theme-yellow);
-          }
         }
       }
       .annotate-button {

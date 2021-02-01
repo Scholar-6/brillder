@@ -108,10 +108,9 @@
         font-size: 1.8vw;
         color: var(--white);
         text-transform: capitalize;
-
-        &.invalid {
-          background: var(--theme-orange);
-        }
+      }
+      .MuiInputBase-root.MuiInput-root.invalid {
+        background: var(--theme-orange);
       }
     }
 
@@ -161,11 +160,47 @@
         border-radius: 1.6vw;
         display: flex;
         justify-content: center;
+        align-items: center;
+
+        &.username-screen {
+          padding-top: 3vw;
+          align-items: flex-start;
+        }
+
+        .icon-container {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
+
+        .username {
+          text-align: center;
+          font-size: 1.7vw;
+          font-family: $font-family-bold;
+          text-transform: uppercase;
+          color: var(--theme-dark-blue);
+          width: 100%;
+          overflow-x: auto;
+        }
+
+        .username-help-label {
+          text-align: center;
+          font-size: 1.7vw;
+          color: var(--theme-dark-blue);
+          font-family: $font-family-regular-italic;
+        }
 
         svg {
-          width: 70%;
+          transition: all 300ms ease-out !important;
+          max-width: auto;
+          height: 14vw;
           color: var(--theme-dark-blue);
-          margin-bottom: 40%;
+        }
+        .username-container {
+          max-width: 100%;
+          svg {
+            height: 10vw;
+          }
         }
       }
     }
