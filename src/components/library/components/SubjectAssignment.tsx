@@ -44,20 +44,6 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     color = '#001c58';
   }
 
-  let found = false;
-
-  if (assignment.brick.assignments && assignment.brick.assignments.length > 0) {
-    const { assignments } = assignment.brick;
-    for (let a of assignments) {
-      if (a.student) {
-        if (a.student.id === props.userId) {
-          console.log('found', assignment);
-          found = true;
-        }
-      }
-    }
-  }
-
   className += ' default';
 
   return (
@@ -74,7 +60,6 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           <div>{brick.title}</div>
         </div>}
         <div className="progress-value default-value" onMouseEnter={() => setHover(true)} />
-        {found && <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: '100%', opacity: 0.25 }} />}
         <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height }} />
       </div>
     </div>

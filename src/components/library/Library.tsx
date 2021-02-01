@@ -176,7 +176,6 @@ class Library extends Component<BricksListProps, BricksListState> {
         }
       }
     }
-    console.log()
     this.populateAssignments(subjectAssignments, assignments);
     return subjectAssignments;
   }
@@ -189,8 +188,13 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   async getAssignments(subjects: Subject[]) {
-    const rawAssignments = await getLibraryBricks();
+    let rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>();
     if (rawAssignments) {
+      rawAssignments = rawAssignments.filter(a => a.maxScore || (a.brick.assignments && a.brick.assignments.length > 0));
+      if (!rawAssignments) {
+        rawAssignments = [];
+      }
+      console.log(rawAssignments)
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const finalAssignments = this.filter(rawAssignments, subjects, this.state.isCore);
       const subjectAssignments = this.getAssignmentSubjects(finalAssignments, subjects);
@@ -245,19 +249,6 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   filterByClassroom = async (id: number) => {
-    if (id > 0) {
-      let rawAssignments = await getLibraryBricks(id);
-      if (rawAssignments) {
-        const finalAssignments = this.filter(rawAssignments, this.state.subjects, this.state.isCore);
-        this.setState({...this.state, activeClassroomId: id, rawAssignments, finalAssignments});
-      }
-    } else {
-      let rawAssignments = await getLibraryBricks();
-      if (rawAssignments) {
-        const finalAssignments = this.filter(rawAssignments, this.state.subjects, this.state.isCore);
-        this.setState({...this.state, activeClassroomId: id, rawAssignments, finalAssignments});
-      }
-    }
   }
 
   clearSubjects = () => {
