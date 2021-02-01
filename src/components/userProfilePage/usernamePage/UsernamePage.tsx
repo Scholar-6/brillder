@@ -10,6 +10,7 @@ import userActions from "redux/actions/user";
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { updateUser } from 'services/axios/user';
 import { User, UserType } from 'model/user';
+import LabelTyping from 'components/baseComponents/LabelTyping';
 
 interface InputState {
   value: string;
@@ -20,12 +21,15 @@ interface UsernamePageProps {
   history: any;
 
   user: User;
-  getUser(): Promise<void>;
+  getUser(): Promise<User>;
 }
 
 const UsernamePage: React.FC<UsernamePageProps> = props => {
   const { user } = props;
 
+  const [submited, setSubmited] = React.useState(null as boolean | null);
+  const [labelFinished, setLabelFinished] = React.useState(false);
+  const [username, setUsername] = React.useState('');
   const [firstName, setFirstName] = React.useState({ value: user.firstName ? user.firstName : '', valid: null } as InputState);
   const [lastName, setLastName] = React.useState({ value: user.lastName ? user.lastName : '', valid: null } as InputState);
 
@@ -53,20 +57,57 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     let userToSave = {
       id: user.id,
       roles: user.roles.map(r => r.roleId),
-      firstName,
-      lastName
+      email: user.email,
+      firstName: firstName.value,
+      lastName: lastName.value
     } as any;
+
     const saved = await updateUser(userToSave);
+
+    setSubmited(false);
+
     if (saved) {
-      await props.getUser();
-      if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
-        props.history.push('/home');
-      } else {
-        props.history.push('/terms');
-      }
+      const updatedUser = await props.getUser();
+      setSubmited(true);
+      setUsername(updatedUser.username);
     } else {
       //this.props.requestFailed("Can`t save user profile");
     }
+  }
+
+  const move = () => {
+    if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
+      props.history.push('/home');
+    } else {
+      props.history.push('/terms');
+    }
+  }
+
+  const renderGetStartedButton = () => {
+    return (
+      <div className="submit-button" onClick={move}>
+        <div>Get Started!</div>
+        <SpriteIcon name="arrow-right" className={lastName.value && firstName.value ? 'valid' : 'invalid'} />
+      </div>
+    );
+  }
+
+  const renderGenerateButton = () => {
+    return (
+      <div className="submit-button" onClick={submit}>
+        <div>Generate!</div>
+        <SpriteIcon name="arrow-right" className={lastName.value && firstName.value ? 'valid' : 'invalid'} />
+      </div>
+    );
+  }
+
+  const renderUsername = () => {
+    return (
+      <div>
+        <LabelTyping value="Your username will be" className="username-help-label" start={true} onFinish={() => setLabelFinished(true)} />
+        <LabelTyping value={username} className="username" start={labelFinished} />
+      </div>
+    );
   }
 
   return (
@@ -88,10 +129,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
               onChange={e => setLastName({ ...lastName, value: e.target.value })}
               placeholder="Last Name" />
           </div>
-          <div className="submit-button" onClick={submit}>
-            <div>Get Started!</div>
-            <SpriteIcon name="arrow-right" className={lastName.value && firstName.value ? 'valid' : 'invalid'} />
-          </div>
+          {submited === null ? renderGenerateButton() : renderGetStartedButton()}
         </div>
       </form>
       <div className="blue-right-block"></div>
@@ -103,8 +141,13 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
               <div className="volume volume2"></div>
               <div className="volume volume3"></div>
               <div className="sleep"></div>
-              <div className="screen">
-                <SpriteIcon name="user" />
+              <div className={username ? 'username-screen screen' : 'screen'}>
+                <div className={username ? 'username-container': 'only-icon-container'}>
+                  <div className="icon-container">
+                    <SpriteIcon name="user" />
+                  </div>
+                  {username && renderUsername()}
+                </div>
               </div>
             </div>
           </div>
