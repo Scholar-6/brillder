@@ -8,12 +8,11 @@ import { SortBy } from "../service/model";
 import { TeachClassroom } from "model/classroom";
 import CustomFilterBox from "./CustomFilterBox";
 import ClassroomList from "./ClassroomList";
-import SubjectsListV2 from "components/baseComponents/subjectsList/SubjectsListV2";
+import SubjectsListV2N from "components/baseComponents/subjectsList/SubjectsListV2N";
 
 interface FilterProps {
   sortBy: SortBy;
   subjects: Subject[];
-  isPublic: boolean;
   isClearFilter: boolean;
   isClassClearFilter: boolean;
   assignments: AssignmentBrick[];
@@ -101,8 +100,7 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
           setHeight={filterHeight => this.setState({filterHeight})}
           clear={this.props.clearSubjects}
         />
-        <SubjectsListV2
-          isPublic={this.props.isPublic}
+        <SubjectsListV2N
           subjects={this.props.subjects}
           filterHeight={this.state.filterHeight}
           filterBySubject={() => {}}
