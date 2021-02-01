@@ -1,6 +1,9 @@
 import React from 'react'
+
+import './HighlightButton.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { HighlightMode } from '../model';
+
 
 export interface Props {
   text: string;
@@ -15,8 +18,6 @@ const HighlightButton: React.FC<Props> = props => {
     let className = 'w100 h100 active';
     if(props.mode) {
       className += ' text-white';
-    } else {
-      className += ' text-white-gray';
     }
     return <SpriteIcon name="highlighter" className={className} />;
   }
@@ -38,7 +39,7 @@ const HighlightButton: React.FC<Props> = props => {
     if (props.mode) {
       className += ' b-green';
     } else {
-      className += ' b-dark-blue';
+      className += ' write-mode';
     }
   }
 
