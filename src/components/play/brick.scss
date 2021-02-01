@@ -64,29 +64,6 @@
           color: var(--theme-orange);
         }
       }
-      .highlight-button {
-        span {
-          transition: all 300ms ease-out !important;
-        }
-      }
-      .highlight-button.active {
-        span,
-        .svg {
-          color: var(--theme-yellow);
-        }
-      }
-      .highlight-button:hover {
-        span,
-        .svg {
-          color: var(--theme-yellow);
-        }
-      }
-      .highlight-button.active:hover {
-        span,
-        .svg {
-          color: var(--white);
-        }
-      }
       .annotate-button {
         span,
         .svg {

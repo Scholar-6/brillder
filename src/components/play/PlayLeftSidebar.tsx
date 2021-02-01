@@ -21,6 +21,7 @@ import LinkDialog from "./finalStep/dialogs/LinkDialog";
 import LinkCopiedDialog from "./finalStep/dialogs/LinkCopiedDialog";
 import InviteDialog from "./finalStep/dialogs/InviteDialog";
 import InvitationSuccessDialog from "./finalStep/dialogs/InvitationSuccessDialog";
+import HighlightTextButton from "./baseComponents/HighlightTextButton";
 
 
 interface SidebarProps {
@@ -111,35 +112,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       </div>
     );
   }
-
-  renderHightlightText() {
-    if (!this.props.sidebarRolledUp) {
-      if (this.props.mode === PlayMode.UnHighlighting) {
-        return <span>Unhighlight Text</span>;
-      }
-      return <span>Highlight Text</span>;
-    } else {
-      return <span></span>;
-    }
-  }
-
-  renderHightlightButton() {
-    let className = "highlight-button svgOnHover";
-    let icon = "highlighter"
-    const { mode } = this.props;
-    if (mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) {
-      className += " active";
-    }
-    if (mode === PlayMode.UnHighlighting) {
-      icon = "#trash";
-    }
-    return (
-      <div className={className} onClick={() => this.setHighlightMode()}>
-        {this.renderHightlightText()}
-        <SpriteIcon name={icon} className="active" />
-      </div>
-    );
-  };
 
   setAnotateMode() {
     if (this.props.setMode) {
@@ -263,7 +235,11 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     }
     return (
       <div className="sidebar-button">
-        {this.renderHightlightButton()}
+        <HighlightTextButton
+          mode={this.props.mode}
+          sidebarRolledUp={this.props.sidebarRolledUp}
+          setHighlightMode={this.setHighlightMode.bind(this)}
+        />
         {this.renderShareButton()}
         {this.renderAssignButton()}
         {this.renderAdaptButton()}
