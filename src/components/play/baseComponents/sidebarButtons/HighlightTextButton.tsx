@@ -2,7 +2,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import React from 'react';
 
 import './HighlightTextButton.scss';
-import { PlayMode } from '../model';
+import { PlayMode } from '../../model';
 
 interface ButtonProps {
   mode: PlayMode | undefined;

@@ -21,7 +21,8 @@ import LinkDialog from "./finalStep/dialogs/LinkDialog";
 import LinkCopiedDialog from "./finalStep/dialogs/LinkCopiedDialog";
 import InviteDialog from "./finalStep/dialogs/InviteDialog";
 import InvitationSuccessDialog from "./finalStep/dialogs/InvitationSuccessDialog";
-import HighlightTextButton from "./baseComponents/HighlightTextButton";
+import HighlightTextButton from "./baseComponents/sidebarButtons/HighlightTextButton";
+import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 
 
 interface SidebarProps {
@@ -130,21 +131,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     this.setState({isSharingOpen: true});
   }
 
-  renderShareButton() {
-    if (!this.props.sidebarRolledUp) {
-      return (
-        <button onClick={this.share.bind(this)} className="assign-class-button share-button svgOnHover">
-          <span>Share Brick</span>
-        </button>
-      );
-    }
-    return (
-      <button onClick={this.share.bind(this)} className="assign-class-button share-button svgOnHover">
-        <SpriteIcon name="feather-share" className="active" />
-      </button>
-    );
-  };
-
   renderAssignButton() {
     if (!this.props.user) { return ""; }
     let canSee = checkTeacherOrAdmin(this.props.user.roles);
@@ -240,7 +226,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           sidebarRolledUp={this.props.sidebarRolledUp}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />
-        {this.renderShareButton()}
+        <ShareButton sidebarRolledUp={this.props.sidebarRolledUp} share={this.share.bind(this)} />
         {this.renderAssignButton()}
         {this.renderAdaptButton()}
       </div>
