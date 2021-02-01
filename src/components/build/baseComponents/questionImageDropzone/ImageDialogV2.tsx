@@ -31,7 +31,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, upload
         setCroped(initFile);
       }
     }
-  }, [initFile, initData.value]);
+  }, [initFile, initData.value, file]);
 
   let canUpload = false;
   if (permision && source && !removed) {

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Hidden } from "@material-ui/core";
 import './BrickCircle.scss';
 import SpriteIcon from "./SpriteIcon";
 
@@ -89,13 +88,6 @@ class BrickCircle extends Component<BrickCircleProps, State> {
         <div className="round-button" style={{ background: `${color}` }}>
           {this.renderIcon()}
         </div>
-        {this.props.canHover &&
-          <Hidden only={['xs']}>
-            <div className="play-button" onMouseEnter={() => this.showCircle()} onMouseLeave={() => this.hideCircle()}>
-              <SpriteIcon name="play-thick" onClick={() => this.props.onClick ? this.props.onClick() : {}} />
-            </div>
-          </Hidden>
-        }
       </div>
     );
   }

@@ -197,10 +197,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   saveLocalBrick(brick: Brick) {
-    console.log(brick);
     this.setState({ brick });
     setLocalBrick(brick);
-    console.log('saved');
   }
 
   setCore = (isCore: boolean) =>
@@ -324,7 +322,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 location={history.location}
                 baseUrl={baseUrl}
                 subjects={user.subjects}
-                subjectId={""}
+                subjectId={this.state.brick.subjectId ? this.state.brick.subjectId : ""}
                 history={history}
                 saveCore={this.setCore}
                 saveSubject={this.setSubject}
@@ -333,6 +331,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             </Route>
             <Route path={[map.ProposalTitle, '/build/brick/:brickId/brick-title']}>
               <BrickTitle
+                user={user}
                 history={history}
                 baseUrl={baseUrl}
                 playStatus={playStatus}
@@ -387,7 +386,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               />
             </Route>
             
-            <Route path={[map.ProposalReview, '/build/brick/:brickId/proposal']}>
+            <Route path={[map.ProposalReview, '/build/brick/:brickId/plan']}>
               <ProposalReview
                 playStatus={playStatus}
                 brick={localBrick}

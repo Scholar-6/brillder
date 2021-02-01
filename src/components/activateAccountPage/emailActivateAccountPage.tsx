@@ -6,12 +6,8 @@ import axios from "axios";
 
 import "./activateAccountPage.scss";
 import actions from "redux/actions/auth";
-import { login } from "services/axios/auth";
 import LoginLogo from 'components/loginPage/components/LoginLogo';
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
-import WrongLoginDialog from "components/loginPage/components/WrongLoginDialog";
-import DesktopLoginForm from "components/loginPage/components/DesktopLoginForm";
-import MobileEmailLogin from 'components/loginPage/MobileEmailLogin';
 import { Redirect, useLocation } from "react-router-dom";
 import DesktopActivateForm from "./DesktopActivateForm";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
@@ -34,7 +30,7 @@ const EmailActivateAccountPage: React.FC<EmailActivateAccountProps> = (props) =>
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
     initPolicyOpen = true;
   }
-  const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
 

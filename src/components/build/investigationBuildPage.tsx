@@ -133,7 +133,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [skipTutorialOpen, setSkipDialog] = React.useState(false);
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
-  const [tooltipsOn, setTooltips] = React.useState(true);
   const [focusIndex, setFocusIndex] = React.useState(-1);
   // time of last autosave
   let [lastAutoSave, setLastAutoSave] = React.useState(Date.now());
@@ -585,19 +584,18 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         isEditor={isCurrentEditor}
         isPublisher={isPublisher}
         isAdmin={isAdmin}
+        isAuthor={isAuthor}
         history={history}
         brick={props.reduxBrick}
         exitAndSave={exitAndSave}
       />
       <Hidden only={['xs', 'sm']}>
-        <TutorialLabels isTutorialPassed={isTutorialPassed()} tooltipsOn={tooltipsOn} />
+        <TutorialLabels isTutorialPassed={isTutorialPassed()} />
         <YourProposalLink
           brickId={brickId}
           tutorialStep={step}
-          tooltipsOn={tooltipsOn}
           invalid={validationRequired && !proposalResult.isValid}
           isTutorialPassed={isTutorialPassed}
-          setTooltips={setTooltips}
         />
         <Grid
           container direction="row"

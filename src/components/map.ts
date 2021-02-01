@@ -16,6 +16,7 @@ export const TeachAssignedTab = '/teach/assigned';
 export const ManageClassroomsTab = '/teach/manage-classrooms';
 
 export const ViewAllPage = '/play/dashboard';
+export const AllSubjects = ViewAllPage + '/all-subjects';
 
 const investigation = (brickId: number) => {
   return `/build/brick/${brickId}/investigation`;
@@ -48,9 +49,9 @@ export const ProposalOpenQuestion = `${ProposalBase}/open-question`;
 export const ProposalBrief = `${ProposalBase}/brief`;
 export const ProposalPrep = `${ProposalBase}/prep`;
 export const ProposalLength = `${ProposalBase}/length`;
-export const ProposalReview = `${ProposalBase}/proposal`;
+export const ProposalReview = `${ProposalBase}/plan`;
 
-export const ProposalReview2 = `${ProposalBase2}/proposal`;
+export const ProposalReview2 = `${ProposalBase2}/plan`;
 
 
 // play preview
@@ -115,6 +116,8 @@ export default {
   ManageClassroomsTab,
 
   ViewAllPage,
+  AllSubjects,
+
   postPlay,
   playAssignment,
 

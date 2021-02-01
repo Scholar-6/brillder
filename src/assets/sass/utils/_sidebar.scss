@@ -107,7 +107,7 @@
             padding: 0.25vw 0.6vw;
             border-radius: 0.65vw;
             font-size: 1vw;
-            right: 1.4vw;
+            right: 1.2vw !important;
             top: 50%;
             transform: translateY(-50%);
           }
@@ -199,11 +199,12 @@
       }
 
       .subject-indexes-box {
-        margin: 0 1.2vw !important;
-        width: calc(100% - #{$sidebar-gutter * 2});
+        width: 100%;
 
         .index-box {
           margin: 0 0 0.5vw 0;
+          padding-left: 1.2vw;
+          padding-right: 1.2vw;
           height: auto !important;
           min-height: 3.4vh;
 
@@ -565,7 +566,7 @@
               position: absolute;
               width: 95%;
             }
-            .short-description {
+            .short-description, .expanded-brick-info {
               display: flex;
               width: 100%;
               height: 100%;
@@ -634,22 +635,6 @@
                     height: 10vh;
                   }
                 }
-              }
-            }
-            &.brick-row-0,
-            &.brick-row-1,
-            &.brick-row-2,
-            &.brick-row-3 {
-              .expanded-brick-info {
-                border-top-left-radius: 0 !important;
-              }
-            }
-
-            &.brick-row-4,
-            &.brick-row-5 {
-              .expanded-brick-info {
-                bottom: 0;
-                border-bottom-left-radius: 0 !important;
               }
             }
           }

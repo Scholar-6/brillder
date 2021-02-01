@@ -3,7 +3,7 @@ import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 
 import { AssignmentBrick } from "model/assignment";
 import { Subject } from "model/brick";
-import { SortBy } from "./model";
+import { SortBy } from "../service/model";
 
 import { TeachClassroom } from "model/classroom";
 import CustomFilterBox from "./CustomFilterBox";
@@ -105,7 +105,7 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
           isPublic={this.props.isPublic}
           subjects={this.props.subjects}
           filterHeight={this.state.filterHeight}
-          filterBySubject={this.props.filterBySubject}
+          filterBySubject={() => {}}
         />
       </div>
     );

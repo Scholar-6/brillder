@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Grid, FormControlLabel, Radio } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
+import './TeachFilterSidebar.scss';
 import { TeachClassroom, TeachStudent } from "model/classroom";
 import { TeachFilters } from '../../model';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -14,6 +15,7 @@ enum TeachFilterFields {
 interface FilterSidebarProps {
   isLoaded: boolean;
   classrooms: TeachClassroom[];
+  activeStudent: TeachStudent | null;
   activeClassroom: TeachClassroom | null;
   setActiveStudent(s: TeachStudent): void;
   setActiveClassroom(id: number | null): void;
@@ -92,29 +94,44 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     }
   }
 
+  renderStudent(s: TeachStudent, key: number) {
+    let className = "student-row";
+
+    if (this.props.activeStudent) {
+      if (s.id === this.props.activeStudent.id) {
+        className += " active";
+      }
+    }
+
+    return (
+      <div className={className} key={key} onClick={() => this.props.setActiveStudent(s)}>
+        <span className="student-name">{s.firstName} {s.lastName}</span>
+      </div>
+    );
+  }
+
   renderClassroom(c: TeachClassroom, i: number) {
     return (
       <div key={i} className="classes-box">
         <div className={"index-box " + (c.active ? "active" : "")} onClick={() => this.toggleClassroom(c)}>
           <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
             <span>{c.name}</span>
-            <div className="classroom-icon svgOnHover">
-              <SpriteIcon name="arrow-right" className="active" />
-            </div>
+            {
+              c.active &&
+              <div className="classroom-icon svgOnHover">
+                <SpriteIcon name="arrow-right" className="active" />
+              </div>
+            }
           </div>
           <div className="right-index">
             {c.students.length}
             <SpriteIcon name="users" className="active" />
-            <div className="white-box">
+            <div className="classrooms-box">
               {c.assignments.length}
             </div>
           </div>
         </div>
-        {c.active && c.students.map((s, i2) =>
-          <div className="student-row" key={i2} onClick={() => this.props.setActiveStudent(s)}>
-            <span className="student-name">{s.firstName} {s.lastName}</span>
-          </div>
-        )}
+        {c.active && c.students.map(this.renderStudent.bind(this))}
       </div>
     );
   }
@@ -147,75 +164,13 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             <div className="right-index">
               {totalCount}
               <SpriteIcon name="users" className="active" />
-              <div className="white-box">
+              <div className="classrooms-box">
                 {totalBricks}
               </div>
             </div>
           </div>
           {this.props.classrooms.map(this.renderClassroom.bind(this))}
         </div>
-      </div>
-    );
-  };
-
-  renderFilterBox = () => {
-    let assignedCount = 0;
-    let completedCount = 0;
-
-    for (let classroom of this.props.classrooms) {
-      for (let assignemnt of classroom.assignments) {
-        if (assignemnt.byStatus) {
-          const { byStatus } = assignemnt;
-          assignedCount += byStatus[0] ? byStatus[0].count : 0;
-          completedCount += byStatus[1] ? byStatus[1].count : 0;
-        } else {
-          assignedCount += classroom.students.length;
-        }
-      }
-    }
-
-    return (
-      <div className="sort-box">
-        <div className="filter-header">
-          LIVE OVERVIEW
-          <button
-            className={
-              "btn-transparent filter-icon " +
-              (this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? "arrow-cancel"
-                  : "arrow-up"
-                : "arrow-down")
-            }
-            onClick={() => {
-              this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? this.clearStatus()
-                  : (this.hideFilter())
-                : (this.expandFilter())
-            }}>
-          </button>
-        </div>
-        {this.state.filterExpanded === true && (
-          <div className="filter-container subject-indexes-box">
-            <div className="index-box color1">
-              <FormControlLabel
-                checked={this.state.filters.assigned}
-                control={<Radio onClick={() => this.toggleFilter(TeachFilterFields.Assigned)} className={"filter-radio custom-color"} />}
-                label="Assigned to class or Student" />
-              <div className="right-index" style={{ height: 'auto' }}>{assignedCount}</div>
-            </div>
-            <div className="index-box color4">
-              <FormControlLabel
-                checked={this.state.filters.completed}
-                control={
-                  <Radio onClick={e => this.toggleFilter(TeachFilterFields.Completed)} className={"filter-radio custom-color"} />
-                }
-                label="Completed" />
-              <div className="right-index" style={{ height: 'auto' }}>{completedCount}</div>
-            </div>
-          </div>
-        )}
       </div>
     );
   };
@@ -227,15 +182,12 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     if (this.props.isLoaded && this.props.classrooms.length === 0) {
       return <EmptyFilter />;
     }
-    let divs = [];
-    divs.push(this.renderClassesBox());
-    divs.push(this.renderFilterBox());
-    return divs;
+    return this.renderClassesBox();
   }
 
   render() {
     return (
-      <Grid container item xs={3} className="sort-and-filter-container">
+      <Grid container item xs={3} className="sort-and-filter-container teach-assigned">
         {this.renderContent()}
       </Grid>
     );

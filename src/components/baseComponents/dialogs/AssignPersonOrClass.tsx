@@ -29,12 +29,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const [classes, setClasses] = React.useState<Classroom[]>([]);
   const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
 
-  const { requestFailed } = props;
-
   const getAllStudents = React.useCallback(async () => {
     let students = await getStudents();
     if (!students) {
-      //11/30/2020 #2485  requestFailed('Can`t get students');
       students = [];
     }
 
@@ -42,12 +39,11 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       student.isStudent = true;
     }
     setStudents(students);
-  }, [requestFailed]);
+  }, []);
 
   const getClasses = React.useCallback(async () => {
     let classrooms = await getClassrooms();
     if (!classrooms) {
-      //11/30/2020 #2485 requestFailed('Can`t get classrooms');
       classrooms = [];
     }
 
@@ -60,7 +56,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     }
 
     setClasses(classrooms);
-  }, [requestFailed]);
+  }, []);
 
   useEffect(() => {
     getAllStudents();

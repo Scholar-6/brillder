@@ -41,15 +41,10 @@
       width: 100%;
       line-height: 1.8;
       padding-left: 1.6vw;
-      background: var(--off-white);
     }
-    &.first {
-      position: absolute;
-      top: 1.8vh;
-      height: 2vh;
-      > div {
-        background: inherit;
-      }
+    &.one-of-many {
+      margin-top: 1vh;
+      margin-left: 0.6vw;
     }
   }
   .sort-box {
@@ -219,7 +214,7 @@
     }
 
     .subject-indexes-box {
-      margin: 0 1.2vw !important;
+      margin: 0 !important;
       width: calc(100% - #{$sidebar-gutter * 2});
 
       .index-box {
@@ -228,7 +223,7 @@
         min-height: 3.4vh;
 
         .right-index {
-          right: 0;
+          right: 1vw !important;
         }
       }
     }

@@ -3,11 +3,12 @@
 @import 'src/assets/sass/partials/extensions';
 
 .expanded-brick-info {
+  cursor: pointer;
   background: var(--tab-gray);
   border-radius: 0.5vw;
   margin-left: 0;
-  padding: 1.3vh;
-  min-height: calc(#{$bricks-height / 3}) !important;
+  padding: 0.8vh 1.3vh;
+  min-height: calc(#{$bricks-height / 6} - 0.8vw) !important;
   position: absolute;
   z-index: 2;
   @include phone_and_tabletP {
@@ -16,11 +17,15 @@
   @include tabletP {
     width: 100%;
   }
+  .circle-container {
+    height: 100%;
+    position: relative;
+  }
   .hover-text {
-    height: 21vh;
     font-family: $font-family-regular;
     overflow: hidden;
     overflow-y: auto;
+    margin-left: 3vw;
     font-size: 1.7vh;
     @extend %linkDescription;
     .link-info {
@@ -55,6 +60,9 @@
         }
       }
     }
+    .link-description {
+      width: 100% !important;
+    }
     .link-description ~ .link-info {
       margin: 0;
     }
@@ -67,28 +75,14 @@
       max-height: calc(4.4vh + #{$padding + $padding});
     }
   }
-  .hover-icons-row {
-    .left-brick-circle {
-      border-radius: 50%;
-      > div {
-        height: 100%;
-        width: 100%;
-        border-radius: 50%;
-        background: var(--gray);
-      }
-      &.skip-top-left-border,
-      &.skip-top-right-border {
-        padding: 3px;
-        > div {
-          background: var(--tab-gray) !important;
-        }
-      }
-      &.skip-top-left-border {
-        background: var(--theme-orange);
-      }
-      &.skip-top-right-border {
-        background: var(--theme-green);
-      }
+  .hover-delete-icon {
+    position: absolute;
+    top:1.6vh;
+    right: 1.6vh;
+    height: 3.5vw;
+    svg {
+      height: 1vw !important;
+      width: 1vw !important;
     }
   }
 }

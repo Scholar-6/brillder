@@ -415,6 +415,9 @@
         text-transform: capitalize;
         font-family: $font-family-light;
       }
+      &.active {
+        background: var(--theme-orange);
+      }
     }
     .right-index {
       right: 0.3vw !important;
@@ -498,7 +501,7 @@
   .learn-tab-desktop {
     .bricks-list-container .main-brick-container .brick-container {
       .absolute-container .short-description .left-brick-circle.skip-top-right-border,
-      .expanded-brick-info .hover-icons-row .left-brick-circle.skip-top-right-border {
+      .expanded-brick-info .left-brick-circle.skip-top-right-border {
         background: inherit !important;
         padding: 0 !important;
       }

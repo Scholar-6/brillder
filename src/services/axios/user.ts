@@ -1,6 +1,6 @@
 import {get, put, post} from './index';
 
-import { User } from 'model/user';
+import { User, UserType } from 'model/user';
 import { UpdateUserStatus } from 'components/userProfilePage/model';
 import { Editor } from 'model/brick';
 
@@ -69,5 +69,14 @@ export const getUserByUserName = async (userName: string) => {
       success: false,
       message: e.response.data
     }
+  }
+}
+
+export const setUserPreference = async (roleId: UserType) => {
+  try {
+    const data = await put<any>(`/user/rolePreference/${roleId}`, {});
+    return data === "OK" ? true : false;
+  } catch (e) {
+    return false;
   }
 }

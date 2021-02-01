@@ -13,6 +13,7 @@ export interface ClassroomApi {
   students: MUser[];
   updated: string;
   isActive: boolean;
+  assignmentsCount?: number;
 }
 
 /**

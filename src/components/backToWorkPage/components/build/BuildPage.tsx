@@ -73,7 +73,6 @@ interface BuildState {
   buildCheckedSubjectId: number;
 
   bricksLoaded: boolean;
-  hoverTimeout: number;
   handleKey(e: any): void;
 }
 
@@ -122,7 +121,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
       bricksLoaded: false,
 
-      hoverTimeout: -1,
       buildCheckedSubjectId: - 1,
 
       subjects: [],
@@ -360,33 +358,23 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
 
     if (bricks[index] && bricks[index].expanded) return;
-    this.setState({ ...this.state });
 
-    setTimeout(() => {
-      if (this.props.isSearching) {
-        expandSearchBrick(this.state.searchBricks, index);
-      } else {
-        let bricks2 = this.state.finalBricks.filter(b => b.isCore === true);
-        expandBrick(bricks2, this.state.rawBricks, index);
-      }
-      this.setState({ ...this.state });
-    }, 400);
+    if (this.props.isSearching) {
+      expandSearchBrick(this.state.searchBricks, index);
+    } else {
+      let bricks2 = this.state.finalBricks.filter(b => b.isCore === true);
+      expandBrick(bricks2, this.state.rawBricks, index);
+    }
+    this.setState({ ...this.state });
   }
 
-  handleMouseLeave(key: number) {
-    let bricks = this.state.finalBricks;
+  handleMouseLeave() {
     if (this.props.isSearching) {
-      bricks = this.state.searchBricks;
       hideBricks(this.state.searchBricks);
     } else {
       hideBricks(this.state.rawBricks);
     }
-    bricks[key].expandFinished = true;
     this.setState({ ...this.state });
-    setTimeout(() => {
-      bricks[key].expandFinished = false;
-      this.setState({ ...this.state });
-    }, 400);
   }
 
   moveToFirstPage() {
@@ -406,51 +394,17 @@ class BuildPage extends Component<BuildProps, BuildState> {
     let name = getThreeColumnName(status);
     let brick = getThreeColumnBrick(threeColumns, name, key);
     if (!brick || brick.expanded) return;
-
-    clearTimeout(this.state.hoverTimeout);
-
-    const hoverTimeout = setTimeout(() => {
-      try {
-        let {threeColumns} = this.state;
-        if (this.props.isSearching) {
-          threeColumns = this.state.searchThreeColumns;
-          hideBricks(this.state.searchBricks);
-        } else {
-          hideBricks(this.state.rawBricks);
-        }
-        let name = getThreeColumnName(status);
-        expandThreeColumnBrick(threeColumns, name, key + this.state.sortedIndex);
-        this.setState({ ...this.state });
-      } catch {}
-    }, 400);
-    this.setState({ ...this.state, hoverTimeout });
+    expandThreeColumnBrick(threeColumns, name, key + this.state.sortedIndex);
+    this.setState({ ...this.state });
   }
 
-  onThreeColumnsMouseLeave(index: number, status: BrickStatus) {
-    let {threeColumns} = this.state;
+  onThreeColumnsMouseLeave() {
     if (this.props.isSearching) {
-      threeColumns = this.state.searchThreeColumns;
       hideBricks(this.state.searchBricks);
     } else {
       hideBricks(this.state.rawBricks);
     }
-
-    let key = Math.ceil(index / 3);
-    let name = getThreeColumnName(status);
-    let brick = getThreeColumnBrick(threeColumns, name, key + this.state.sortedIndex);
-
-    if (brick) {
-      brick.expandFinished = true;
-      this.setState({ ...this.state });
-      setTimeout(() => {
-        try {
-          if (brick) {
-            brick.expandFinished = false;
-            this.setState({ ...this.state });
-          }
-        } catch {}
-      }, 400);
-    }
+    this.setState({ ...this.state });
   }
 
   delete(brickId: number) {
@@ -629,6 +583,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
       const draft = publicFinalBricks.filter(b => b.status === BrickStatus.Draft).length;
       const build = publicFinalBricks.filter(b => b.status === BrickStatus.Build).length;
       const review = publicFinalBricks.filter(b => b.status === BrickStatus.Review).length;
+
+      if (!this.state.isAdmin) {
+        finalBricks = finalBricks.filter(b => b.author.id === this.props.user.id);
+      }
      
       return <PersonalBuild
         user={this.props.user}
@@ -665,9 +623,19 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
     finalBricks = finalBricks.filter(b => b.isCore === true);
 
-    let selfPublish = rawPersonalBricks.filter(b => b.status === BrickStatus.Publish).length;
-    const personalDraft = rawPersonalBricks.filter(b =>
-      b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review).length;
+    let selfPublish = 0;
+    let personalDraft = 0;
+    if (this.state.isAdmin) {
+      selfPublish = rawPersonalBricks.filter(b => b.status === BrickStatus.Publish).length;
+      personalDraft = rawPersonalBricks.filter(b =>
+        b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review).length;
+    } else {
+      selfPublish = rawPersonalBricks.filter(b => b.author.id === this.props.user.id && b.status === BrickStatus.Publish).length;
+      personalDraft = rawPersonalBricks.filter(b =>
+        b.author.id === this.props.user.id &&
+        (b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review)
+      ).length;
+    }
 
     return (
       <Grid container direction="row" className="sorted-row build-page-content">

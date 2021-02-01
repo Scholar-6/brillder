@@ -1,0 +1,26 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.my-library-list {
+  height: 100%;
+  padding-top: 2%;
+  margin-left: 1.5vw;
+  margin-right: 2vw;
+  overflow: scroll;
+  .libary-container-1 {
+    height: calc(100% / 3);
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+    .libary-container {
+      height: 90%;
+      display: flex;
+      background: var(--white);
+      border-radius: 0.7vw;
+      padding-left: 0.4vw;
+      padding-right: 0.4vw;
+      padding-top: 1vh;
+      padding-bottom: 1vh;
+    }
+  }
+}

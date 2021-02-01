@@ -35,7 +35,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
         alt=""
         src={
           sortBy === currentSortBy
-            ? !isAscending
+            ? isAscending
               ? "/feathericons/chevron-down.svg"
               : "/feathericons/chevron-up.svg"
             : "/feathericons/chevron-right.svg"
@@ -67,10 +67,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
           </Grid>
         </th>
         <th className="classes-names">
-          <Grid container>
-            CLASSES
-            {renderSortArrow(UserSortBy.Name)}
-          </Grid>
+          <Grid container>CLASSES</Grid>
         </th>
         <th className="user-radio-column">
           <Radio checked={props.pageStudentsSelected} onClick={props.togglePageStudents} />
@@ -79,7 +76,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
           {renderAssignButton()}
           <div className="selected-label svgOnHover">
             <span className="selected-count">{props.selectedUsers.length}</span>
-            <SpriteIcon name="users" className="active" />
+            <SpriteIcon name="users-custom" className="active thin" />
             <span>Selected</span>
           </div>
         </th>
@@ -103,7 +100,9 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                 <td>
                   <div className="classroom-names">
                     {user.studyClassrooms && user.studyClassrooms.map((classroom, i) =>
-                      <div key={i} className="classroom-name">{classroom.name}</div>)
+                      <div key={i} className="classroom-name" style={{
+                        backgroundColor: classroom.subject?.color
+                      }}>{classroom.name}</div>)
                     }
                   </div>
                 </td>

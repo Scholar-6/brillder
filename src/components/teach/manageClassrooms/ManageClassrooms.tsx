@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import { FormControlLabel, Grid, Radio, SvgIcon } from "@material-ui/core";
+import { FormControlLabel, Grid } from "@material-ui/core";
 import { connect } from "react-redux";
-import axios from 'axios';
 
 import './ManageClassrooms.scss';
 import '../style.scss';
 
 import { User } from "model/user";
 import { MUser, TeachActiveTab } from "../model";
-import { deleteClassroom, getStudents } from 'services/axios/classroom';
+import { deleteClassroom, getStudents, updateClassroom } from 'services/axios/classroom';
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import {
@@ -25,14 +24,14 @@ import CreateClassDialog from './components/CreateClassDialog';
 import DeleteClassDialog from './components/DeleteClassDialog';
 import InviteStudentEmailDialog from './components/InviteStudentEmailDialog';
 import UnassignStudentDialog from './components/UnassignStudentDialog';
-import RoleDescription from 'components/baseComponents/RoleDescription';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachTab from '../TeachTab';
 import EmptyFilter from "./components/EmptyFilter";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
+import NameAndSubjectForm from "../components/NameAndSubjectForm";
 import { Subject } from "model/brick";
-import NameAndSubjectForm from "./components/NameAndSubjectForm";
+import RadioButton from "components/baseComponents/buttons/RadioButton";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -358,7 +357,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                 <FormControlLabel
                   checked={(this.state.activeClassroom && this.state.activeClassroom.id === c.id) ?? false}
                   style={{ color: c.subject?.color ?? "#FFFFFF" }}
-                  control={<Radio onClick={() => this.setActiveClassroom(c)} className={"filter-radio custom-color"} />}
+                  control={<RadioButton checked={(this.state.activeClassroom && this.state.activeClassroom.id === c.id) ?? false} name={c.name} color={c.subject?.color ?? "#FFFFFF"} />}
                   label={c.name}
                 />
                 <div className="right-index right-index2">
@@ -378,16 +377,15 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     );
   };
 
-  sort(sortBy: UserSortBy) {
-    let isAscending = this.state.isAscending;
-
-    if (sortBy === this.state.sortBy) {
-      isAscending = !isAscending;
-      this.setState({ ...this.state, isAscending });
+  sortByLastName() {
+    let {users, isAscending} = this.state;
+    isAscending = !isAscending;
+    if (isAscending) {
+      users.sort((a, b) => a.lastName < b.lastName ? -1 : 1);
     } else {
-      isAscending = false;
-      this.setState({ ...this.state, isAscending, sortBy });
+      users.sort((a, b) => a.lastName < b.lastName ? 1 : -1);
     }
+    this.setState({ ...this.state, users, sortBy: UserSortBy.Name, isAscending });
   }
 
   moveToPage(page: number) {
@@ -502,14 +500,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   async updateClassroom(name: string, subject: Subject) {
-    try {
-      const response = await axios.put(`${process.env.REACT_APP_BACKEND_HOST}/classroom`, {
-        ...this.state.activeClassroom,
-        name, subject
-      }, { withCredentials: true });
-      this.getClassrooms();
-    } catch(e) {
-      
+    if (this.state.activeClassroom) {
+      let success = await updateClassroom({...this.state.activeClassroom, name, subject});
+      if (success) {
+        this.getClassrooms();
+      }
     }
   }
 
@@ -593,17 +588,16 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
               selectedUsers={this.state.selectedUsers}
               sortBy={this.state.sortBy}
               isAscending={this.state.isAscending}
-              sort={sortBy => this.sort(sortBy)}
               pageStudentsSelected={this.state.pageStudentsSelected}
-              toggleUser={id => this.toggleUser(id)}
-              assignToClass={() => this.openAssignDialog()}
-              unassign={s => this.unassigningStudent(s)}
-              togglePageStudents={() => this.togglePageStudents()}
+              sort={this.sortByLastName.bind(this)}
+              toggleUser={this.toggleUser.bind(this)}
+              assignToClass={this.openAssignDialog.bind(this)}
+              unassign={this.unassigningStudent.bind(this)}
+              togglePageStudents={this.togglePageStudents.bind(this)}
             />
           </>:
           this.renderEmptyTab()
         }
-        <RoleDescription />
         {this.renderPagination()}
       </div>
     );

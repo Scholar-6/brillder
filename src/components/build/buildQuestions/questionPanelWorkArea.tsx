@@ -97,7 +97,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
         }
       }
     }
-  });
+  }, [canScroll, workarea, setScroll]);
   
   const scrollUp = () => {
     if (workarea.current) {

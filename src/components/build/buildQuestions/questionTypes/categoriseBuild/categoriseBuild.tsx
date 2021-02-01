@@ -9,6 +9,7 @@ import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/Doc
 import { showSameAnswerPopup } from '../service/questionBuild';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import ValidationFailedDialog from 'components/baseComponents/dialogs/ValidationFailedDialog';
 
 export interface CategoriseData {
   categories: SortCategory[];
@@ -21,7 +22,7 @@ export interface CategoriseBuildProps extends UniqueComponentProps {
 export const getDefaultCategoriseAnswer = () => {
   const newAnswer = () => ({ value: "", text: "", valueFile: "", answerType: QuestionValueType.String });
   const newCategory = () => ({ name: "", answers: [newAnswer()], height: '0%' })
-  
+
   return { categories: [newCategory(), newCategory()] };
 }
 
@@ -29,6 +30,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [categoryHeight, setCategoryHeight] = React.useState('0%');
+  const [sameCategoryOpen, setSameCategory] = React.useState(false);
 
   const newAnswer = () => ({ value: "", text: "", valueFile: "", answerType: QuestionValueType.String });
   const newCategory = () => ({ name: "", answers: [newAnswer()], height: '0%' })
@@ -128,7 +130,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
         isValid = false;
       }
     }
-  
+
     if (isValid === false) {
       customClass += ' invalid-answer';
     }
@@ -137,10 +139,9 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       if (answer.value) {
         for (let cat of state.categories) {
           if (cat !== category) {
-            cat.answers.map(a => {
+            cat.answers.forEach(a => {
               if (a.value === answer.value) {
                 openSameAnswerDialog();
-                return;
               }
             });
           }
@@ -152,9 +153,9 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       <div key={i} className={customClass}>
         {
           (category.answers.length > 1)
-            && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeAnswer(category, i)}>
-              <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
-            </button>
+          && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeAnswer(category, i)}>
+            <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
+          </button>
         }
         <QuillEditor
           disabled={locked}
@@ -194,7 +195,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
         for (let cat of state.categories) {
           if (cat !== category) {
             if (cat.name === category.name) {
-              openSameAnswerDialog();
+              setSameCategory(true);
               return;
             }
           }
@@ -207,9 +208,9 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
         <div className={className}>
           {
             (state.categories.length > 2)
-              && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeCategory(key)}>
-                <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
-              </button>
+            && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeCategory(key)}>
+              <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
+            </button>
           }
           <QuillEditor
             disabled={locked}
@@ -247,6 +248,12 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
         addAnswer={addCategory}
         height={categoryHeight}
         label="+ CATEGORY"
+      />
+      <ValidationFailedDialog
+        isOpen={sameCategoryOpen}
+        header="Some Category Headings are the same."
+        label="This will confuse students. Please make sure they are all different."
+        close={() => setSameCategory(false)}
       />
     </div>
   )

@@ -1,4 +1,4 @@
-import { Grid, ListItemIcon, ListItemText, MenuItem, Select, SvgIcon, TextField } from '@material-ui/core';
+import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Subject } from 'model/brick';
 import { User } from 'model/user';
@@ -29,14 +29,14 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
     if(props.subject) {
       setSubjectIndex(props.user.subjects.findIndex(s => s.id === props.subject.id));
     }
-  }, [props.name, props.subject]);
+  }, [props.name, props.subject, props.user.subjects]);
 
   const submit = React.useCallback(() => {
     if(name && (subjectIndex !== undefined) && props.user.subjects[subjectIndex]) {
       props.onChange(name, props.user.subjects[subjectIndex]);
       setEdit(false);
     }
-  }, [name, subjectIndex, props.user.subjects, props.onChange]);
+  }, [name, subjectIndex, props]);
 
   return edit ?
   (
@@ -75,24 +75,23 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           </MenuItem>
         ) }
       </Select>
-      <TextField
+      <input
         value={name}
         onChange={e => setName(e.target.value)}
         className="name-input"
-        variant="outlined"
       />
-      <a className="submit-icon" onClick={submit}>
+      <span className="submit-icon tick" onClick={submit}>
         <SpriteIcon
           name="ok"
           className="w100 h100 active"
         />
-      </a>
-      <a className="submit-icon" onClick={() => setEdit(false)}>
+      </span>
+      <span className="submit-icon" onClick={() => setEdit(false)}>
         <SpriteIcon
-          name="cancel"
+          name="cancel-custom"
           className="w100 h100 active"
         />
-      </a>
+      </span>
     </div>
   ) : (
     <div className="name-subject-display">
@@ -108,12 +107,12 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
         />
       </div>
       <h1 className="name-display">{props.name}</h1>
-      <a className="edit-icon" onClick={startEditing}>
+      <span className="edit-icon" onClick={startEditing}>
         <SpriteIcon
           name="edit-outline"
           className="w100 h100 active"
         />
-      </a>
+      </span>
     </div>
   );
 }

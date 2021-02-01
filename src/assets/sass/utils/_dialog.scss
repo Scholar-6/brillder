@@ -77,6 +77,9 @@
       font-family: $font-family-bold;
       width: auto !important;
       margin-bottom: 3vh !important;
+      &.smaller {
+        margin-bottom: 1.5vh !important;
+      }
     }
     .circle-blue ,
     .circle-orange {
@@ -272,12 +275,15 @@
   }
   .social-share-row {
     @extend %flexToXCenter;
+    margin-bottom: 1.2vh;
     svg {
       cursor: pointer;
       margin: 1vw;
+      margin-bottom: 0.2vw;
       $icon-size: 3.4vw;
       height: $icon-size;
       width: $icon-size;
+      stroke-width: 2;
       transition: all 0.2s ease-in-out;
     }
 

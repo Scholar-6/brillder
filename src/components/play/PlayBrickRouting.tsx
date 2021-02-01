@@ -94,13 +94,17 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const updateAttempts = (attempt: any, index: number) => {
-    attempts[index] = attempt;
-    setAttempts(attempts);
+    if (attempt) {
+      attempts[index] = attempt;
+      setAttempts(attempts);
+    }
   };
 
   const updateReviewAttempts = (attempt: any, index: number) => {
-    reviewAttempts[index] = attempt;
-    setReviewAttempts(reviewAttempts);
+    if (attempt) {
+      reviewAttempts[index] = attempt;
+      setReviewAttempts(reviewAttempts);
+    }
   };
 
   const finishLive = () => {

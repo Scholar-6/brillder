@@ -7,7 +7,6 @@ import CompComponent from '../Comp';
 import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/model';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
-import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
@@ -181,12 +180,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
             {this.renderAnswers()}
           </ReactSortable>
         ) }
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }

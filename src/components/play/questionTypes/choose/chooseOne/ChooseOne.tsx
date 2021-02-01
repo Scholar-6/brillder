@@ -8,7 +8,6 @@ import CompComponent from '../../Comp';
 import { CompQuestionProps } from '../../types';
 import { ComponentAttempt } from 'components/play/model';
 import ReviewEachHint from '../../../baseComponents/ReviewEachHint';
-import ReviewGlobalHint from '../../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneChoice } from 'components/interfaces/chooseOne';
@@ -53,10 +52,18 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     return activeItem;
   }
 
+  getBookActiveItem(props: ChooseOneProps) {
+    let activeItem = { shuffleIndex: -1, realIndex: -1};
+    if (props.attempt?.answer?.shuffleIndex >= 0) {
+      activeItem = props.attempt.answer;
+    }
+    return activeItem;
+  }
+
   componentDidUpdate(prevProp: ChooseOneProps) {
     if (this.props.isBookPreview) {
       if (this.props.answers !== prevProp.answers) {
-        const activeItem = this.getActiveItem(this.props);
+        const activeItem = this.getBookActiveItem(this.props);
         this.setState({activeItem});
       }
     }
@@ -104,7 +111,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   isResultCorrect(index: number, choice: ChooseOneChoice) {
     if (this.props.attempt?.answer) {
-      if (choice.checked && index === this.props.attempt?.answer.realIndex) {
+      if (choice.checked && index === this.props.attempt?.answer.shuffleIndex) {
         return true;
       }
     }
@@ -119,7 +126,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       className += " image-choice";
     }
 
-    if (index === activeItem.realIndex) {
+    if (index === activeItem.shuffleIndex) {
       if (isCorrect) {
         className += " correct";
       } else if (isCorrect === false) {
@@ -179,7 +186,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     }
 
     return (
-      <Button
+      <div
         className={className}
         key={index}
         onClick={() => this.setActiveItem(choice.index, index)}
@@ -202,7 +209,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
             hint={this.props.question.hint}
           />
         }
-      </Button>
+      </div>
     );
   }
 
@@ -211,12 +218,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     return (
       <div className="question-unique-play choose-one-live">
         {list.map((choice, index) => this.renderChoice(choice, index))}
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }

@@ -1,7 +1,6 @@
 import 'katex/dist/katex.min.css';
 import katex from 'katex';
 import 'katex/contrib/mhchem/mhchem';
-import renderMathInElement from 'katex/dist/contrib/auto-render';
 
 import React from 'react';
 
@@ -13,6 +12,7 @@ const Katex: React.FC<KatexProps> = props => {
     const vectorMacro = (matrixEnv: string) => (ctx: any) => {
         const arg = ctx.consumeArgs(1)[0] as any[];
         const str = arg.reduce((prev, curr) => curr.text + prev, "") as string;
+        //eslint-disable-next-line
         const elements = str.replace(/\,/g, "\\\\")
         return `\\begin{${matrixEnv}}${elements}\\end{${matrixEnv}}`;
     };
@@ -43,7 +43,7 @@ const Katex: React.FC<KatexProps> = props => {
     }, [ref]);
 
     return (
-        <div ref={ref} dangerouslySetInnerHTML={{ __html: props.latex }} />
+        <div ref={ref} className="katex-overflow-scroll" dangerouslySetInnerHTML={{ __html: props.latex }} />
     );
 };
 

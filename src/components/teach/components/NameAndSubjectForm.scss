@@ -11,9 +11,14 @@
 
   height: 100%;
   padding-left: 1vw;
+  padding-top: 1vh;
 }
 
 .name-subject-form {
+  .MuiOutlinedInput-input {
+    padding-top: 1vh !important;
+    padding-bottom: 1vh !important;
+  }
   .subject-input {
     width: 3vw;
     height: 3vw;
@@ -44,18 +49,25 @@
   }
 
   .name-input {
-    .MuiInputBase-root {
-      font-size: 1.5vw;
-      letter-spacing: 0.15vw;
-      color: var(--theme-dark-blue);
-    }
+    font-size: 1.5vw;
+    letter-spacing: 0.15vw;
+    background: var(--tab-gray);
+    color: var(--theme-dark-blue);
+    border-radius: 0.3vw;
+    padding-left: 0.5vw;
   }
 
   .submit-icon {
+    cursor: pointer;
     width: 1.5vw;
     height: 1.5vw;
-    color: var(--theme-dark-blue);
+    color: var(--theme-orange);
     margin-left: 1vw;
+    stroke-width: 2.8;
+
+    &.tick {
+      color: var(--theme-green);
+    }
   }
 }
 
@@ -68,22 +80,20 @@
 
   .name-display {
     font-size: 1.5vw;
-    letter-spacing: 0.15vw;
-    font-family: $font-family-black;
-    text-transform: uppercase;
+    font-family: $font-family-regular;
+    text-transform: capitalize;
     color: var(--theme-dark-blue);
   }
 
   .edit-icon {
-    width: 1.5vw;
-    height: 1.5vw;
-    color: var(--theme-dark-blue);
+    cursor: pointer;
+    width: 1.7vw;
+    height: 1.7vw;
+    color: var(--theme-dark-blue) !important;
     margin-left: 1vw;
 
-    opacity: 50%;
-
     &:hover {
-      opacity: 100%;
+      color: var(--theme-orange) !important;
     }
   }
 }
