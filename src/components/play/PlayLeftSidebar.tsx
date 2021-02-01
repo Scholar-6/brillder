@@ -23,6 +23,8 @@ import InviteDialog from "./finalStep/dialogs/InviteDialog";
 import InvitationSuccessDialog from "./finalStep/dialogs/InvitationSuccessDialog";
 import HighlightTextButton from "./baseComponents/sidebarButtons/HighlightTextButton";
 import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
+import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
+import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 
 
 interface SidebarProps {
@@ -131,26 +133,8 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     this.setState({isSharingOpen: true});
   }
 
-  renderAssignButton() {
-    if (!this.props.user) { return ""; }
-    let canSee = checkTeacherOrAdmin(this.props.user.roles);
-    if (!canSee) { return ""; }
-    const openAssignDialog = () => {
-      this.setState({ isAssigningOpen: true });
-    }
-
-    if (!this.props.sidebarRolledUp) {
-      return (
-        <button onClick={openAssignDialog} className="assign-class-button svgOnHover">
-          <span>Assign Brick</span>
-        </button>
-      );
-    }
-    return (
-      <button onClick={openAssignDialog} className="assign-class-button svgOnHover">
-        <SpriteIcon name="file-plus" className="active" />
-      </button>
-    );
+  openAssignDialog() {
+    this.setState({ isAssigningOpen: true });
   }
 
   async createBrickCopy() {
@@ -169,23 +153,8 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     }
   }
 
-  renderAdaptButton() {
-    if (!this.props.user) { return ""; }
-    let canSee = checkTeacherOrAdmin(this.props.user.roles);
-    if (!canSee) { return ""; }
-
-    if (!this.props.sidebarRolledUp) {
-      return (
-        <button onClick={() => this.setState({isAdaptBrickOpen: true})} className="assign-class-button svgOnHover blue">
-          <span>Adapt Brick</span>
-        </button>
-      );
-    }
-    return (
-      <button onClick={() => this.setState({isAdaptBrickOpen: true})} className="assign-class-button svgOnHover blue">
-        <SpriteIcon name="copy" className="active" />
-      </button>
-    );
+  onAdaptDialog() {
+    this.setState({isAdaptBrickOpen: true});
   }
 
   renderButtons() {
@@ -227,8 +196,16 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           setHighlightMode={this.setHighlightMode.bind(this)}
         />
         <ShareButton sidebarRolledUp={this.props.sidebarRolledUp} share={this.share.bind(this)} />
-        {this.renderAssignButton()}
-        {this.renderAdaptButton()}
+        <AssignButton
+          sidebarRolledUp={this.props.sidebarRolledUp}
+          user={this.props.user}
+          openAssignDialog={this.openAssignDialog.bind(this)}
+        />
+        <AdaptButton
+          user={this.props.user}
+          sidebarRolledUp={this.props.sidebarRolledUp}
+          onClick={this.onAdaptDialog.bind(this)}
+        />
       </div>
     );
   }
