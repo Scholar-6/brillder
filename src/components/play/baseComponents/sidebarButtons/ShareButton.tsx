@@ -34,7 +34,7 @@ const ShareButton: React.FC<ButtonProps> = (props) => {
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
     >
       <SpriteIcon name="feather-share" className="active" />
-      {props.sidebarRolledUp && hovered && renderTooltip()}
+      {hovered && renderTooltip()}
     </button>
   );
 }
