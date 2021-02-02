@@ -90,6 +90,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     initSuggestionExpanded = true;
   }
 
+  const isCurrentEditor = (props.brick.editors?.findIndex((e:any) => e.id === props.user.id) ?? -1) >= 0;
+  if (isCurrentEditor) {
+    initSuggestionExpanded = true;
+  }
+
   let initQuestionId = -1;
   if (params.questionId) {
     try {
@@ -823,7 +828,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     isValid = false;
   }
 
-  const isCurrentEditor = (props.brick.editors?.findIndex((e:any) => e.id === props.user.id) ?? -1) >= 0;
   const isPublisher = checkPublisher(props.user, props.brick);
   const isAdmin = checkAdmin(props.user.roles);
 

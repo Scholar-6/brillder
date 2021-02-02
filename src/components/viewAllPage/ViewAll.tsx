@@ -280,7 +280,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...state, finalBricks, sortBy });
   };
 
-  filter(bricks: Brick[], isAllSubjects: boolean, isCore?: boolean) {
+  filter(bricks: Brick[], isAllSubjects: boolean, isCore: boolean, showAll?: boolean) {
     if (this.state.isSearching) {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
@@ -292,13 +292,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       filterSubjects = prepareUserSubjects(this.state.subjects, this.state.userSubjects);
     }
 
-    if (isCore) {
-      bricks = bricks.filter(b => b.isCore === true);
-    } else {
-      bricks = bricks.filter(b => !b.isCore);
-      if (!this.state.isAdmin) {
-        bricks = filterByCurretUser(bricks, this.props.user.id);
-      }
+    if (showAll === true) {
+      filterSubjects = this.state.subjects.map(s => s.id);
+    }
+
+    bricks = this.filterByCore(bricks, isCore);
+    if (!isCore && !this.state.isAdmin) {
+      bricks = filterByCurretUser(bricks, this.props.user.id);
     }
 
     if (filterSubjects.length > 0) {
@@ -433,12 +433,27 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
+  filterByCore(bricks: Brick[], isCore: boolean) {
+    return isCore
+      ? bricks.filter(b => b.isCore === true)
+      : bricks.filter(b => b.isCore === false);
+  }
+
   searching(searchString: string) {
     if (searchString.length === 0) {
+      let finalBricks = this.filterByCore(this.state.bricks, this.state.isCore);
+      let filterSubjects = [];
+      if (this.state.isAllSubjects) {
+        filterSubjects = getCheckedSubjectIds(this.state.subjects);
+      } else {
+        filterSubjects = prepareUserSubjects(this.state.subjects, this.state.userSubjects);
+      }
+      finalBricks = sortAndFilterBySubject(finalBricks, filterSubjects);
+
       this.setState({
         ...this.state,
         searchString,
-        finalBricks: this.state.bricks,
+        finalBricks,
         isSearching: false,
       });
     } else {
@@ -876,7 +891,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return <AllSubjects
       user={this.props.user}
       history={this.props.history} location={this.props.location}
-      filterByOneSubject={this.filterByOneSubject.bind(this)} />
+      filterByOneSubject={this.filterByOneSubject.bind(this)}
+      checkSubjectsWithBricks={() => this.checkSubjectsWithBricks(this.state.subjects)}
+    />
   }
 
   render() {

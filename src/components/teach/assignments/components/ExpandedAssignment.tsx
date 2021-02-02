@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Grow } from "@material-ui/core";
 
 import "./ExpandedAssignment.scss";
 import { Subject } from "model/brick";
@@ -21,6 +22,7 @@ interface AssignemntExpandedState {
   questionCount: number;
   studentsPrepared: boolean;
   students: TeachStudent[];
+  shown: boolean;
 }
 
 interface AssignmentBrickProps {
@@ -50,8 +52,13 @@ class ExpandedAssignment extends Component<
       sortBy: SortBy.None,
       questionCount: questionCount,
       studentsPrepared: false,
-      students: this.prepareStudents()
+      students: this.prepareStudents(),
+      shown: false
     };
+  }
+
+  componentDidMount() {
+    this.setState({shown: true});
   }
 
   prepareStudents() {
@@ -247,7 +254,13 @@ class ExpandedAssignment extends Component<
         <div className="users-table">
           <table cellSpacing="0" cellPadding="0">
             {this.renderTableHead()}
-            <tbody>{students.map(this.renderStudent.bind(this))}</tbody>
+            <Grow
+              in={this.state.shown}
+              style={{ transformOrigin: "0 0 0" }}
+              timeout={700}
+            >
+              <tbody>{students.map(this.renderStudent.bind(this))}</tbody>
+            </Grow>
           </table>
         </div>
       </div>

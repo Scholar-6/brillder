@@ -382,6 +382,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 canEdit={canEdit}
                 baseUrl={baseUrl}
                 savePrep={this.setPrep}
+                brickLength={localBrick.brickLength}
                 saveBrick={this.setPrepAndSave}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
