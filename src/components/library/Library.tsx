@@ -187,10 +187,6 @@ class Library extends Component<BricksListProps, BricksListState> {
   async getAssignments(subjects: Subject[]) {
     let rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>();
     if (rawAssignments) {
-      rawAssignments = rawAssignments.filter(a => a.maxScore || (a.brick.assignments && a.brick.assignments.length > 0));
-      if (!rawAssignments) {
-        rawAssignments = [];
-      }
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const finalAssignments = this.filter(rawAssignments, subjects);
       const subjectAssignments = this.getAssignmentSubjects(finalAssignments, subjects);
