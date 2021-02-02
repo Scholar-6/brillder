@@ -158,6 +158,13 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
     }
   }
 
+  getStyle() {
+    if (this.props.user.firstName && this.props.user.firstName.length > 10) {
+      return { fontSize: '1.8vw', letterSpacing: '0.15vw' }
+    }
+    return {};
+  }
+
   render() {
     let className = "notifications-text";
     if (this.state.isTextClickable) {
@@ -183,7 +190,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
             }
             {this.state.nameHovered && <div className="custom-tooltip">View Profile</div>}
           </div>
-          {this.state.animatedName}
+          <span style={this.getStyle()}>{this.state.animatedName}</span>
         </div>
         <div
           className={className}
