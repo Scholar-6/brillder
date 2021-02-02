@@ -10,12 +10,14 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import YoutubeAndMathQuote from 'components/play/baseComponents/YoutubeAndMathQuote';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { BrickLengthEnum } from "model/brick";
 
 
 interface PrepProps {
   parentPrep: string;
   canEdit: boolean;
   baseUrl: string;
+  brickLength: BrickLengthEnum;
   playStatus: PlayButtonStatus;
   savePrep(prep: string): void;
   saveBrick(prep: string): void;
@@ -34,6 +36,19 @@ const PrepPreviewComponent: React.FC<any> = ({ data }) => {
 }
 
 const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) => {
+  const getPrepLength = () => {
+    if (props.brickLength) {
+      if (props.brickLength === BrickLengthEnum.S20min) {
+        return 5;
+      } else if (props.brickLength === BrickLengthEnum.S40min) {
+        return 10;
+      } else if (props.brickLength === BrickLengthEnum.S60min) {
+        return 15;
+      }
+    }
+    return 'X';
+  }
+
   return (
     <div className="tutorial-page prep-page-questionary">
       <Navigation
@@ -63,6 +78,9 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             onBlur={() => { }}
             onChange={savePrep}
           />
+          <div className="prep-bottom-help-text">
+            This should take the student no longer than {getPrepLength()} minutes in total
+          </div>
           <NavigationButtons
             step={ProposalStep.Prep}
             canSubmit={true}

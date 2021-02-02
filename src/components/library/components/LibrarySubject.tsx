@@ -43,22 +43,15 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
   }
 
   render() {
-    const {assignments} = this.props.subjectAssignment;
+    let {assignments} = this.props.subjectAssignment;
 
-    assignments.sort((a, b) => {
-      let foundA = this.findStudent(a);
-      if (a.lastAttemptScore) {
-        return -1;
-      }
-      if (foundA && !a.lastAttemptScore && b.lastAttemptScore) {
-        return 1;
-      }
-      if (foundA) {
+    assignments.sort(a => {
+      if (a.maxScore && a.maxScore >= 0) {
         return -1;
       }
       return 1;
     });
-
+    
     return (
       <div className="libary-container">
         <div style={{ display: 'flex', flexDirection: 'row' }}>
