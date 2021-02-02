@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Grow } from "@material-ui/core";
 
 import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
@@ -114,9 +115,15 @@ class ClassroomList extends Component<ClassroomListProps> {
 
   render() {
     return (
-      <div className="classroom-list">
-        {this.renderContent()}
-      </div>
+      <Grow
+        in={true}
+        style={{ transformOrigin: "0 0 0" }}
+        timeout={700}
+      >
+        <div className="classroom-list">
+          {this.renderContent()}
+        </div>
+      </Grow>
     );
   }
 }
