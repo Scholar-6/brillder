@@ -90,7 +90,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             onBlur={() => { }}
             onChange={savePrep}
           />
-          {isVisible &&
+          {isVisible() &&
             <div className="prep-bottom-help-text">
               This should take the student no longer than {getPrepLength()} minutes in total
             </div>
