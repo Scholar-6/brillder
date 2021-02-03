@@ -36,6 +36,19 @@ const PrepPreviewComponent: React.FC<any> = ({ data }) => {
 }
 
 const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) => {
+  const isVisible = () => {
+    if (props.brickLength) {
+      if (props.brickLength === BrickLengthEnum.S20min) {
+        return true;
+      } else if (props.brickLength === BrickLengthEnum.S40min) {
+        return true;
+      } else if (props.brickLength === BrickLengthEnum.S60min) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   const getPrepLength = () => {
     if (props.brickLength) {
       if (props.brickLength === BrickLengthEnum.S20min) {
@@ -46,7 +59,6 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
         return 15;
       }
     }
-    return 'X';
   }
 
   return (
@@ -78,9 +90,11 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             onBlur={() => { }}
             onChange={savePrep}
           />
-          <div className="prep-bottom-help-text">
-            This should take the student no longer than {getPrepLength()} minutes in total
-          </div>
+          {isVisible &&
+            <div className="prep-bottom-help-text">
+              This should take the student no longer than {getPrepLength()} minutes in total
+            </div>
+          }
           <NavigationButtons
             step={ProposalStep.Prep}
             canSubmit={true}
