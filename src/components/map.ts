@@ -11,6 +11,7 @@ export const Onboarding = '/onboarding';
 
 export const TermsPage = Onboarding + '/terms';
 export const SetUsername = Onboarding + '/set-username';
+export const SelectSubjectPage = Onboarding + '/select-subject'; 
 
 export const BackToWorkTeachTab = BackToWorkPage + '/teach';
 export const BackToWorkBuildTab = BackToWorkPage + '/build';
@@ -103,6 +104,7 @@ export default {
   Onboarding,
   TermsPage,
   SetUsername,
+  SelectSubjectPage,
 
   ProposalBase,
   ProposalSubject,
