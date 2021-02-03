@@ -13,7 +13,7 @@ interface PublishedSubjectsProps {
   filterBySubject(id: number): void;
 }
 
-class SubjectsListV2 extends Component<PublishedSubjectsProps> {
+class SubjectsListLibrary extends Component<PublishedSubjectsProps> {
   renderSubjectItem(subject: Subject, i: number) {
     let count = 0;
     if (subject.publicCount) {
@@ -68,4 +68,4 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
   }
 }
 
-export default SubjectsListV2;
+export default SubjectsListLibrary;

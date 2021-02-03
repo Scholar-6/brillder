@@ -27,6 +27,7 @@ import { getStudentClassrooms } from "services/axios/classroom";
 import { TeachClassroom } from "model/classroom";
 import LibrarySubjects from "./components/LibrarySubjects";
 import LibrarySubject from "./components/LibrarySubject";
+import SingleSubjectAssignments from "./singleSubject/SingleSubjectAssignments";
 
 
 interface BricksListProps {
@@ -99,7 +100,7 @@ class Library extends Component<BricksListProps, BricksListState> {
 
   // reload subjects and assignments when notification come
   componentDidUpdate(prevProps: BricksListProps) {
-    const {notifications} = this.props;
+    const { notifications } = this.props;
     const oldNotifications = prevProps.notifications;
     if (notifications && oldNotifications) {
       if (notifications.length > oldNotifications.length) {
@@ -112,7 +113,7 @@ class Library extends Component<BricksListProps, BricksListState> {
     const subjects = await this.loadSubjects();
     let classrooms = await getStudentClassrooms();
     if (classrooms) {
-      this.setState({classrooms});
+      this.setState({ classrooms });
     }
     await this.getAssignments(subjects);
   }
@@ -120,7 +121,7 @@ class Library extends Component<BricksListProps, BricksListState> {
   async loadSubjects() {
     const subjects = await getSubjects();
 
-    if(subjects) {
+    if (subjects) {
       subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
       return subjects;
     } else {
@@ -130,7 +131,7 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   countSubjectBricks(subjects: any[], assignments: LibraryAssignmentBrick[]) {
-    subjects.forEach((s:any) => {
+    subjects.forEach((s: any) => {
       s.publicCount = 0;
       s.personalCount = 0;
     });
@@ -155,9 +156,9 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   getAssignmentSubjects(assignments: LibraryAssignmentBrick[], subjects: Subject[]) {
-    let subjectAssignments:SubjectAssignments[] = [];
+    let subjectAssignments: SubjectAssignments[] = [];
     for (let assignment of assignments) {
-      const {subjectId} = assignment.brick;
+      const { subjectId } = assignment.brick;
       let subjectFound = false;
       for (let subjectAssignment of subjectAssignments) {
         if (subjectAssignment.subject.id === subjectId) {
@@ -193,9 +194,9 @@ class Library extends Component<BricksListProps, BricksListState> {
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const finalAssignments = this.filter(rawAssignments, subjects);
       const subjectAssignments = this.getAssignmentSubjects(finalAssignments, subjects);
-      this.setState({...this.state, subjects, subjectAssignments, isLoading: false, rawAssignments, finalAssignments});
+      this.setState({ ...this.state, subjects, subjectAssignments, isLoading: false, rawAssignments, finalAssignments });
     } else {
-      this.setState({failedRequest: true});
+      this.setState({ failedRequest: true });
     }
   }
 
@@ -257,7 +258,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       subject.checked = true;
     }
 
-    this.setState({...this.state, subjectChecked});
+    this.setState({ ...this.state, subjectChecked });
   }
 
   clearSubjects = () => {
@@ -351,11 +352,11 @@ class Library extends Component<BricksListProps, BricksListState> {
     } else if (filterSubjects.length > 1) {
       return "Filtered";
     }
-    const {activeClassroomId} = this.state;
+    const { activeClassroomId } = this.state;
     if (activeClassroomId > 0) {
       const classroom = this.state.classrooms.find(c => c.id === activeClassroomId);
       if (classroom) {
-        return classroom.name; 
+        return classroom.name;
       }
     }
     return "My Library";
@@ -367,20 +368,22 @@ class Library extends Component<BricksListProps, BricksListState> {
       if (subject) {
         const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
         if (subjectAssignment) {
-          return <div className="one-subject">
-            <LibrarySubject userId={this.props.user.id} subjectAssignment={subjectAssignment} history={this.props.history} />
-          </div>
+          return <SingleSubjectAssignments userId={this.props.user.id} subjectAssignment={subjectAssignment} history={this.props.history} />
         }
       }
     }
-    return <LibrarySubjects
-      userId={this.props.user.id}
-      subjects={this.state.subjects}
-      pageSize={this.state.pageSize}
-      sortedIndex={this.state.sortedIndex}
-      subjectAssignments={this.state.subjectAssignments}
-      history={this.props.history}
-    />
+    return (
+      <div className="bricks-list-container bricks-container-mobile">
+        <LibrarySubjects
+          userId={this.props.user.id}
+          subjects={this.state.subjects}
+          pageSize={this.state.pageSize}
+          sortedIndex={this.state.sortedIndex}
+          subjectAssignments={this.state.subjectAssignments}
+          history={this.props.history}
+        />
+      </div>
+    );
   }
 
   render() {
@@ -418,11 +421,11 @@ class Library extends Component<BricksListProps, BricksListState> {
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={["xs"]}>
               <div className={
-                  `
+                `
                     brick-row-title main-title uppercase
                     ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}
                   `
-                }
+              }
               >
                 {this.renderMainTitle(filterSubjects)}
               </div>
@@ -438,9 +441,7 @@ class Library extends Component<BricksListProps, BricksListState> {
                 </button>
               </div>
             </Hidden>
-            <div className="bricks-list-container bricks-container-mobile">
-              {this.renderContent()}
-            </div>
+            {this.renderContent()}
             {/* pagination removed temporarily 28/01/2021
             <ViewAllPagination
               pageSize={this.state.pageSize}
