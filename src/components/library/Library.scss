@@ -9,4 +9,53 @@
   .index-box.hover-light:hover {
     background: var(--light-blue-alpha3);
   }
+  .one-subject {
+    padding-top: 3vh;
+    padding-left: 2vw;
+    padding-bottom: 5vh;
+    height: 100%;
+    .libary-container {
+      background: var(--white);
+      border-radius: 0.7vw;
+      height: 100%;
+      padding-top: 1.5vh;
+      padding-bottom: 1.5vh;
+      $base-side-margin: 0.32vw;
+      padding-left: $base-side-margin;
+      padding-right: $base-side-margin;
+      > div {
+        height: 100%;
+        $base-width: 1.5vw;
+        .assignment {
+          margin-left: $base-side-margin;
+          margin-right: $base-side-margin;
+          $base-radius: 0.5vw;
+          border-radius: $base-radius;
+          .progress-value {
+            border-radius: $base-radius;
+          }
+        }
+        .length-20 {
+          width: $base-width;
+          .progress-value {
+            width: $base-width;
+          }
+        }
+        .length-40 {
+          $width: calc(#{$base-width} * 2);
+          width: $width;
+          .progress-value {
+            width: $width
+          }
+        }
+        .length-60 {
+          $width: calc(#{$base-width} * 4);
+          width: $width;
+          .progress-value {
+            width: $width;
+          }
+        }
+      }
+    }
+  }
 }

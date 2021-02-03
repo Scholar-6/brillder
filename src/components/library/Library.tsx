@@ -26,6 +26,7 @@ import { getBrickColor } from "services/brick";
 import { getStudentClassrooms } from "services/axios/classroom";
 import { TeachClassroom } from "model/classroom";
 import LibrarySubjects from "./components/LibrarySubjects";
+import LibrarySubject from "./components/LibrarySubject";
 
 
 interface BricksListProps {
@@ -58,6 +59,7 @@ interface BricksListState {
   pageSize: number;
   isAdmin: boolean;
   shown: boolean;
+  subjectChecked: boolean;
 }
 
 class Library extends Component<BricksListProps, BricksListState> {
@@ -89,6 +91,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       failedRequest: false,
       isAdmin,
       shown: false,
+      subjectChecked: false,
     };
 
     this.loadData();
@@ -237,6 +240,26 @@ class Library extends Component<BricksListProps, BricksListState> {
   filterByClassroom = async (id: number) => {
   }
 
+  filterBySubject(id: number) {
+    let subjectChecked = true;
+    let isChecked = false;
+    const subject = this.state.subjects.find(s => s.id === id);
+    if (subject.checked === true) {
+      isChecked = true;
+      subjectChecked = false;
+    }
+
+    for (let subject of this.state.subjects) {
+      subject.checked = false;
+    }
+
+    if (subject && !isChecked) {
+      subject.checked = true;
+    }
+
+    this.setState({...this.state, subjectChecked});
+  }
+
   clearSubjects = () => {
     const { state } = this;
     const { subjects } = state;
@@ -332,10 +355,32 @@ class Library extends Component<BricksListProps, BricksListState> {
     if (activeClassroomId > 0) {
       const classroom = this.state.classrooms.find(c => c.id === activeClassroomId);
       if (classroom) {
-        return classroom.name;
+        return classroom.name; 
       }
     }
     return "My Library";
+  }
+
+  renderContent() {
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          return <div className="one-subject">
+            <LibrarySubject userId={this.props.user.id} subjectAssignment={subjectAssignment} history={this.props.history} />
+          </div>
+        }
+      }
+    }
+    return <LibrarySubjects
+      userId={this.props.user.id}
+      subjects={this.state.subjects}
+      pageSize={this.state.pageSize}
+      sortedIndex={this.state.sortedIndex}
+      subjectAssignments={this.state.subjectAssignments}
+      history={this.props.history}
+    />
   }
 
   render() {
@@ -367,7 +412,7 @@ class Library extends Component<BricksListProps, BricksListState> {
               handleSortChange={e => this.handleSortChange(e)}
               clearSubjects={() => this.clearSubjects()}
               filterByClassroom={this.filterByClassroom.bind(this)}
-              filterBySubject={() => {}}
+              filterBySubject={this.filterBySubject.bind(this)}
             />
           </Grid>
           <Grid item xs={9} className="brick-row-container">
@@ -394,14 +439,7 @@ class Library extends Component<BricksListProps, BricksListState> {
               </div>
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
-              <LibrarySubjects
-                userId={this.props.user.id}
-                subjects={this.state.subjects}
-                pageSize={this.state.pageSize}
-                sortedIndex={this.state.sortedIndex}
-                subjectAssignments={this.state.subjectAssignments}
-                history={this.props.history}
-              />
+              {this.renderContent()}
             </div>
             {/* pagination removed temporarily 28/01/2021
             <ViewAllPagination

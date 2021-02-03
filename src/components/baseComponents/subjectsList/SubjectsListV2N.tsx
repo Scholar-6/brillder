@@ -54,10 +54,6 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
   }
 
   render() {
-    const {subjects} = this.props;
-    let checkedSubjects = subjects.filter(s => s.checked);
-    let otherSubjects = subjects.filter(s => !s.checked);
-
     return (
       <Grid container direction="row" className="filter-container subjects-filter subjects-filter-v2" ref={this.props.ref}>
         <AnimateHeight
@@ -65,8 +61,7 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
           height={this.props.filterHeight}
           style={{ width: "100%" }}
         >
-          {checkedSubjects.map(this.renderSubjectItem.bind(this))}
-          {otherSubjects.map(this.renderSubjectItem.bind(this))}
+          {this.props.subjects.map(this.renderSubjectItem.bind(this))}
         </AnimateHeight>
       </Grid>
     );
