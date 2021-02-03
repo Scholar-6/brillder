@@ -6,12 +6,12 @@ const quillToHTML = (data: Op[]) => {
         customTag: (format: string, op: DeltaInsertOp) => {
             if(format === "latex") {
                 return `span class="latex"`;
+            } else {
             }
         }
     });
 
     const html = converter.convert();
-
     return html;
 }
 
