@@ -34,10 +34,32 @@
     overflow: auto !important;
     overflow-x: hidden;
     color: var(--theme-dark-blue);
+    font-size: 1.1vw;
     height: calc(100vh - 5.834vw - 2vw) !important;
 
     ol {
       margin-left: 1vw;
+    }
+
+    h1 {
+      margin-top: 1.3vw;
+      margin-bottom: 1.3vw;
+      text-align: center;
+      font-size: 3vw;
+    }
+
+    h2 {
+      font-size: 2.1vw;
+    }
+
+    h3 {
+      font-size: 1.7vw;
+    }
+
+    h1, h2, h3 {
+      letter-spacing: 0;
+      font-family: $font-family-bold;
+      color: var(--theme-orange);
     }
   }
   .MuiButtonBase-root.MuiIconButton-root {
