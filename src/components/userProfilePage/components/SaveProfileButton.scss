@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .save-image {
-  $image-size: 3.5vw;
+  $image-size: 5.3vw;
   cursor: pointer;
   @extend %textCenter;
   height: $image-size;
@@ -32,7 +32,7 @@
   }
 
   svg {
-    $icon-size: 1.6vw;
+    $icon-size: 70%;
     height: $icon-size;
     width: $icon-size;
     color: var(--theme-dark-blue);
