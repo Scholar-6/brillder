@@ -84,15 +84,9 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
     for (let assignment of assignments) {
       const assignmentWidth = this.getAssignmentWidth(assignment, baseAssignmentWidth, baseMargin);
       if (width < totalWidth - assignmentWidth) {
-        console.log(width, assignmentWidth, assignment.brick.title)
         nextPage.push(assignment);
         width += assignmentWidth;
       } else {
-        console.log(width);
-        console.log('----');
-        console.log('----');
-        console.log('----');
-        console.log('----');
         pages.push(nextPage);
         nextPage = [];
         nextPage.push(assignment);
@@ -102,7 +96,6 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
     }
 
     pages.push(nextPage);
-    console.log(pages);
     return pages;
   }
 
