@@ -74,7 +74,9 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
     }
     p.active = true;
     if (p.el.current) {
-      p.el.current.scrollIntoView();
+      p.el.current.scrollIntoView({
+        behavior: "smooth"
+      });
     }
     this.setState({ ...this.state });
   }
