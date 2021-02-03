@@ -7,7 +7,7 @@ import "swiper/swiper.scss";
 import './Library.scss';
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
-import { Brick, Subject } from "model/brick";
+import { Brick, Subject, SubjectAItem } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import { getLibraryBricks } from "services/axios/brick";
@@ -26,7 +26,6 @@ import { getBrickColor } from "services/brick";
 import { getStudentClassrooms } from "services/axios/classroom";
 import { TeachClassroom } from "model/classroom";
 import LibrarySubjects from "./components/LibrarySubjects";
-import LibrarySubject from "./components/LibrarySubject";
 import SingleSubjectAssignments from "./singleSubject/SingleSubjectAssignments";
 
 
@@ -110,7 +109,11 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   async loadData() {
-    const subjects = await this.loadSubjects();
+    const subjects = await this.loadSubjects() as SubjectAItem[];
+    subjects.forEach(s => {
+      s.assignedCount = 0;
+      s.playedCount = 0;
+    })
     let classrooms = await getStudentClassrooms();
     if (classrooms) {
       this.setState({ classrooms });
@@ -130,32 +133,31 @@ class Library extends Component<BricksListProps, BricksListState> {
     return [];
   }
 
-  countSubjectBricks(subjects: any[], assignments: LibraryAssignmentBrick[]) {
-    subjects.forEach((s: any) => {
-      s.publicCount = 0;
-      s.personalCount = 0;
+  countSubjectBricks(subjects: SubjectAItem[], assignments: LibraryAssignmentBrick[]) {
+    subjects.forEach(s => {
+      s.playedCount = 0;
+      s.assignedCount = 0;
     });
     for (let a of assignments) {
       for (let s of subjects) {
         if (s.id === a.brick.subjectId) {
-          if (a.brick.isCore) {
-            s.publicCount += 1;
-          } else {
-            s.personalCount += 1;
+          s.assignedCount += 1;
+          if (a.maxScore) {
+            s.playedCount += 1;
           }
         }
       }
     }
   }
 
-  prepareSubjects(assignments: LibraryAssignmentBrick[], subjects: Subject[]) {
+  prepareSubjects(assignments: LibraryAssignmentBrick[], subjects: SubjectAItem[]) {
     subjects = subjects.filter(s => assignments.find(a => a.brick.subjectId === s.id));
 
     this.countSubjectBricks(subjects, assignments);
     return subjects;
   }
 
-  getAssignmentSubjects(assignments: LibraryAssignmentBrick[], subjects: Subject[]) {
+  getAssignmentSubjects(assignments: LibraryAssignmentBrick[], subjects: SubjectAItem[]) {
     let subjectAssignments: SubjectAssignments[] = [];
     for (let assignment of assignments) {
       const { subjectId } = assignment.brick;
@@ -188,7 +190,7 @@ class Library extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  async getAssignments(subjects: Subject[]) {
+  async getAssignments(subjects: SubjectAItem[]) {
     let rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>();
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
@@ -206,7 +208,7 @@ class Library extends Component<BricksListProps, BricksListState> {
 
   handleSortChange = (e: any) => { };
 
-  getCheckedSubjectIds(subjects: Subject[]) {
+  getCheckedSubjectIds(subjects: SubjectAItem[]) {
     const filterSubjects = [];
     for (let subject of subjects) {
       if (subject.checked) {
@@ -216,7 +218,7 @@ class Library extends Component<BricksListProps, BricksListState> {
     return filterSubjects;
   }
 
-  filter(assignments: LibraryAssignmentBrick[], subjects: Subject[]) {
+  filter(assignments: LibraryAssignmentBrick[], subjects: SubjectAItem[]) {
     let filtered: LibraryAssignmentBrick[] = [];
 
     let filterSubjects = this.getCheckedSubjectIds(subjects);
@@ -407,14 +409,12 @@ class Library extends Component<BricksListProps, BricksListState> {
           <Grid container item xs={3} className="sort-and-filter-container">
             <LibraryFilter
               sortBy={this.state.sortBy}
-              classrooms={this.state.classrooms}
               subjects={this.state.subjects}
               assignments={this.state.rawAssignments}
               isClearFilter={this.state.isClearFilter}
               isClassClearFilter={this.state.isClassClearFilter}
               handleSortChange={e => this.handleSortChange(e)}
               clearSubjects={() => this.clearSubjects()}
-              filterByClassroom={this.filterByClassroom.bind(this)}
               filterBySubject={this.filterBySubject.bind(this)}
             />
           </Grid>

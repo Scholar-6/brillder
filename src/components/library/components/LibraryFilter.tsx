@@ -2,32 +2,27 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 
 import { AssignmentBrick } from "model/assignment";
-import { Subject } from "model/brick";
+import { SubjectAItem } from "model/brick";
 import { SortBy } from "../service/model";
 
-import { TeachClassroom } from "model/classroom";
 import CustomFilterBox from "./CustomFilterBox";
-import ClassroomList from "./ClassroomList";
 import SubjectsListLibrary from "components/baseComponents/subjectsList/SubjectsListLibrary";
 
 interface FilterProps {
   sortBy: SortBy;
-  subjects: Subject[];
+  subjects: SubjectAItem[];
   isClearFilter: boolean;
   isClassClearFilter: boolean;
   assignments: AssignmentBrick[];
-  classrooms: TeachClassroom[];
 
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   clearSubjects(): void;
   filterBySubject(index: number): void;
-  filterByClassroom(id: number): void;
 }
 
 interface FilterState {
   classFilterHeight: string;
   filterHeight: string;
-  activeClassId: number;
 }
 
 class LibraryFilter extends Component<FilterProps, FilterState> {
@@ -36,17 +31,6 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
     this.state = {
       classFilterHeight: "auto",
       filterHeight: "auto",
-      activeClassId: -1
-    }
-  }
-
-  filterByClassroom(id: number) {
-    if (this.state.activeClassId !== id) {
-      this.setState({activeClassId: id});
-      this.props.filterByClassroom(id);
-    } else {
-      this.setState({activeClassId: -1});
-      this.props.filterByClassroom(-1);
     }
   }
 
@@ -83,19 +67,7 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
           </RadioGroup>
         </div>
         <CustomFilterBox
-          label="Filter by Class"
-          isClearFilter={this.props.isClassClearFilter}
-          setHeight={classFilterHeight => this.setState({classFilterHeight})}
-          clear={() => {}}
-        />
-        <ClassroomList
-          activeId={this.state.activeClassId}
-          filterHeight={this.state.classFilterHeight}
-          classrooms={this.props.classrooms}
-          filterByClassroom={this.filterByClassroom.bind(this)}
-        />
-        <CustomFilterBox
-          label="Filter by Subject"
+          label="Filter"
           isClearFilter={this.props.isClearFilter}
           setHeight={filterHeight => this.setState({filterHeight})}
           clear={this.props.clearSubjects}
