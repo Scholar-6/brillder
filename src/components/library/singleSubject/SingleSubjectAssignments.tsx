@@ -3,9 +3,9 @@ import React, { Component } from "react";
 import './SingleSubjectAssignments.scss';
 import { SubjectAssignments } from "../service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
-import SubjectAssignment from "../components/SubjectAssignment";
 import { BrickLengthEnum } from "model/brick";
 import SingleSubjectPagination from "./SingleSubjectPagination";
+import { SingleSubjectAssignment } from "./SingleSubjectAssignment";
 
 interface SingleSubjectProps {
   userId: number;
@@ -31,16 +31,6 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
     if (this.props.subjectAssignment !== props.subjectAssignment) {
       this.setState({ page: 0 });
     }
-  }
-
-  renderAssignment(assignment: LibraryAssignmentBrick, key: number) {
-    return <div key={key}>
-      <SubjectAssignment
-        userId={this.props.userId}
-        subject={this.props.subjectAssignment.subject}
-        history={this.props.history} assignment={assignment}
-      />
-    </div>
   }
 
   findStudent(a: LibraryAssignmentBrick) {
@@ -80,19 +70,10 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
     }
   }
 
-  render() {
+  getPages(assignments: LibraryAssignmentBrick[]) {
     const totalWidth = 68.6;
     const baseMargin = 0.32;
     const baseAssignmentWidth = 1.5;
-
-    let { assignments } = this.props.subjectAssignment;
-
-    assignments.sort(a => {
-      if (a.maxScore && a.maxScore >= 0) {
-        return -1;
-      }
-      return 1;
-    });
 
     let pages = [];
 
@@ -112,19 +93,30 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
     }
 
     pages.push(nextPage);
+    return pages;
+  }
 
-    let start = 1;
-    let end = 0;
-    let i = 0;
-    for (let pageContent of pages) {
-      if (i < this.state.page) {
-        start += pageContent.length;
+  renderAssignment(assignment: LibraryAssignmentBrick, key: number) {
+    return <div key={key}>
+      <SingleSubjectAssignment
+        userId={this.props.userId}
+        subject={this.props.subjectAssignment.subject}
+        history={this.props.history} assignment={assignment}
+      />
+    </div>
+  }
+
+  render() {
+    let { assignments } = this.props.subjectAssignment;
+
+    assignments.sort(a => {
+      if (a.maxScore && a.maxScore >= 0) {
+        return -1;
       }
-      if (i <= this.state.page) {
-        end += pageContent.length;
-      }
-      i++;
-    }
+      return 1;
+    });
+
+    const pages = this.getPages(assignments);
 
     return (
       <div className="bricks-list-container bricks-container-mobile">
@@ -135,11 +127,9 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
             </div>
           </div>
           <SingleSubjectPagination
-            start={start}
-            end={end}
             length={assignments.length}
             page={this.state.page + 1}
-            pages={pages.length}
+            pages={pages}
             next={this.next.bind(this)}
             previous={this.previous.bind(this)}
           />
