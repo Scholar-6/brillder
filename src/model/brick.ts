@@ -49,6 +49,11 @@ export interface SubjectItem extends Subject {
   publicCount: number;
 }
 
+export interface SubjectAItem extends Subject {
+  playedCount: number;
+  assignedCount: number;
+}
+
 export interface Brick {
   id: number;
   subject?: Subject;

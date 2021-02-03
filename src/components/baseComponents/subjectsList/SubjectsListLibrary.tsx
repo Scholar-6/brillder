@@ -3,12 +3,12 @@ import { Grid, FormControlLabel } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
 import "./SubjectsList.scss";
-import { Subject } from "model/brick";
+import { Subject, SubjectAItem } from "model/brick";
 import RadioButton from "../buttons/RadioButton";
 
 interface PublishedSubjectsProps {
   filterHeight: string;
-  subjects: Subject[];
+  subjects: SubjectAItem[];
   ref?: React.RefObject<any>;
   filterBySubject(id: number): void;
 }
