@@ -51,6 +51,7 @@ import Terms from 'components/onboarding/terms/Terms';
 import { connect } from 'react-redux';
 import PlayPreviewRoute from './PlayPreviewRoute';
 import EmailLoginPage from 'components/loginPage/EmailLoginPage';
+import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSubjectPage';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -162,6 +163,7 @@ const App: React.FC<AppProps> = props => {
         <AllUsersRoute path="/user-profile" component={UserProfilePage} />
         <AllUsersRoute path="/user/preference" component={UserPreferencePage} isPreferencePage={true} />
         <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
+        <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
 
         <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
         <AuthRoute path="/login/:privacy" component={LoginPage} />
