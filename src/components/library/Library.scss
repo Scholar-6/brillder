@@ -38,6 +38,9 @@
         }
         .length-20 {
           width: $base-width;
+          .rotated .rotated-text {
+            height: $base-width;
+          }
           .progress-value {
             width: $base-width;
           }
@@ -45,6 +48,9 @@
         .length-40 {
           $width: calc(#{$base-width} * 2);
           width: $width;
+          .rotated .rotated-text {
+            height: $width;
+          }
           .progress-value {
             width: $width
           }
@@ -52,6 +58,9 @@
         .length-60 {
           $width: calc(#{$base-width} * 4);
           width: $width;
+          .rotated .rotated-text {
+            height: $width;
+          }
           .progress-value {
             width: $width;
           }

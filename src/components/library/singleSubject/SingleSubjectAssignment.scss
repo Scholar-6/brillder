@@ -1,0 +1,36 @@
+.single-assignment-progressbar {
+  .rotated-container {
+    position: absolute;
+    bottom: 0;
+    .rotated {
+      transform: rotate(270deg);
+
+      .rotated-text {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        width: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh - 8vh - 3vh);
+        p {
+          color: #C8CACC;
+          font-size: 1vw;
+          white-space: nowrap;
+          overflow: hidden; 
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+  .custom-tooltip.subject-tooltip {
+    margin-top: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh - 8vh - 2vh);
+  }
+  .length-40 .custom-tooltip.subject-tooltip {
+    margin-left: 0.5vw;
+  }
+  .length-60 .custom-tooltip.subject-tooltip {
+    margin-left: 2vw;
+  }
+}
