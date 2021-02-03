@@ -28,8 +28,8 @@ import PostPlay from 'components/postPlay/PostPlay';
 import Library from 'components/library/Library';
 
 import UserProfilePage from 'components/userProfilePage/UserProfile';
-import UserPreferencePage from 'components/userProfilePage/userPreferencePage/UserPreferencePage';
-import UsernamePage from 'components/userProfilePage/usernamePage/UsernamePage';
+import UserPreferencePage from 'components/onboarding/userPreferencePage/UserPreferencePage';
+import UsernamePage from 'components/onboarding/usernamePage/UsernamePage';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
@@ -47,7 +47,7 @@ import map from 'components/map';
 import { isMobile } from 'react-device-detect';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
 import TeachPage from 'components/teach/assignments/TeachPage';
-import Terms from 'components/terms/Terms';
+import Terms from 'components/onboarding/terms/Terms';
 import { connect } from 'react-redux';
 import PlayPreviewRoute from './PlayPreviewRoute';
 import EmailLoginPage from 'components/loginPage/EmailLoginPage';
@@ -161,7 +161,7 @@ const App: React.FC<AppProps> = props => {
 
         <AllUsersRoute path="/user-profile" component={UserProfilePage} />
         <AllUsersRoute path="/user/preference" component={UserPreferencePage} isPreferencePage={true} />
-        <AllUsersRoute path="/user/set-username" component={UsernamePage} />
+        <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
 
         <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
         <AuthRoute path="/login/:privacy" component={LoginPage} />
@@ -170,7 +170,7 @@ const App: React.FC<AppProps> = props => {
         <AuthRoute path={map.ActivateAccount + '/email'} component={EmailActivateAccountPage} />
         <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
 
-        <Route path="/terms" component={Terms} />
+        <Route path={map.TermsPage} component={Terms} />
         <Route component={AuthRedirectRoute} />
       </Switch>
       <VersionLabel />

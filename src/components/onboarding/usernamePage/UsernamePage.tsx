@@ -11,6 +11,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { updateUser } from 'services/axios/user';
 import { User, UserType } from 'model/user';
 import LabelTyping from 'components/baseComponents/LabelTyping';
+import map from 'components/map';
 
 interface InputState {
   value: string;
@@ -79,7 +80,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
       props.history.push('/home');
     } else {
-      props.history.push('/terms');
+      props.history.push(map.TermsPage);
     }
   }
 

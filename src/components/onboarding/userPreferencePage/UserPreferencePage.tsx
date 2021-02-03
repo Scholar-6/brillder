@@ -1,16 +1,17 @@
 import React from 'react';
-
-import { User, UserType } from 'model/user';
+import { Grid, Radio } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { ReduxCombinedState } from 'redux/reducers';
-import userActions from 'redux/actions/user';
+import { useHistory } from 'react-router-dom';
 
 import './UserPreferencePage.scss';
-import { Grid, Radio } from '@material-ui/core';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { useHistory } from 'react-router-dom';
+import { ReduxCombinedState } from 'redux/reducers';
+import userActions from 'redux/actions/user';
+import map from 'components/map';
+import { User, UserType } from 'model/user';
 import { checkAdmin } from 'components/services/brickService';
 import { setUserPreference } from 'services/axios/user';
+
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface UserPreferencePageProps {
   user: User;
@@ -41,7 +42,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
 
   const moveNext = () => {
     if (preference && props.user.rolePreference) {
-      history.push("/user/set-username");
+      history.push(map.TermsPage);
     }
   }
 
@@ -70,7 +71,9 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
   }
 
   return (
-    <Grid className="user-preference-page" container direction="column"
+    <Grid
+      className="user-preference-page"
+      container direction="column"
       justify="center" alignItems="center"
     >
       <Grid className="user-preference-container" item>
