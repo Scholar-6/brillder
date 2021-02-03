@@ -80,7 +80,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
       props.history.push('/home');
     } else {
-      props.history.push(map.TermsPage);
+      props.history.push('/home');
     }
   }
 
