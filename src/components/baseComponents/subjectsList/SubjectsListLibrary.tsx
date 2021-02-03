@@ -3,7 +3,7 @@ import { Grid, FormControlLabel } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
 import "./SubjectsList.scss";
-import { Subject, SubjectAItem } from "model/brick";
+import { SubjectAItem } from "model/brick";
 import RadioButton from "../buttons/RadioButton";
 
 interface PublishedSubjectsProps {
