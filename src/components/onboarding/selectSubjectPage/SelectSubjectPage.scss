@@ -69,12 +69,15 @@
           svg {
             height: 5vh;
             width: 5vh;
+            color: var(--white);
           }
         }
 
         &:hover {
           background: var(--theme-orange);
-          opacity: 0.7;
+          svg {
+            color: var(--white);
+          }
         }
       }
     }
