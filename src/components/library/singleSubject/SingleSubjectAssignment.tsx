@@ -74,8 +74,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
           <div>{brick.title}</div>
         </div>}
         <div className="progress-value default-value" onMouseEnter={() => setHover(true)}></div>
-        <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }}>
-        </div>
+        <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }} />
       </div>
     </div>
   );
