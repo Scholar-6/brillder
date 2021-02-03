@@ -26,6 +26,13 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
       page: 0,
     }
   }
+
+  componentDidUpdate(props: SingleSubjectProps) {
+    if (this.props.subjectAssignment !== props.subjectAssignment) {
+      this.setState({ page: 0 });
+    }
+  }
+
   renderAssignment(assignment: LibraryAssignmentBrick, key: number) {
     return <div key={key}>
       <SubjectAssignment
@@ -64,12 +71,12 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
   }
 
   next() {
-    this.setState({page: this.state.page + 1});
+    this.setState({ page: this.state.page + 1 });
   }
 
   previous() {
     if (this.state.page > 0) {
-      this.setState({page: this.state.page - 1});
+      this.setState({ page: this.state.page - 1 });
     }
   }
 
