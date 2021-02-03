@@ -28,6 +28,9 @@
         }
       }
     }
+    &.white .rotated .rotated-text p {
+      color: var(--white);
+    }
   }
   .custom-tooltip.subject-tooltip {
     margin-top: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh - 8vh - 2vh);

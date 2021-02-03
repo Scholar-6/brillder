@@ -46,12 +46,16 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
 
   className += ' default';
 
-  const renderRotatedTitle = (name: string) => {
+  const renderRotatedTitle = (name: string, height: number) => {
     let className = "rotated-container " + name;
+    let width = 'calc(80.4vh - 13.034vw)';
+    if (height !== 100) {
+      width = `calc((80.4vh - 13.034vw) / 100 * ${height})`
+    }
     return (
       <div className={className}>
         <div className="rotated">
-          <div className="rotated-text">
+          <div className="rotated-text" style={{width}}>
             <p>{brick.title}</p>
           </div>
         </div>
@@ -68,13 +72,15 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
           props.history.push(map.playIntro(brick.id));
         }
       }} style={{ background: color }}>
-        {!height && renderRotatedTitle("")}
+        {!height && renderRotatedTitle("", 100)}
         {hovered && <div className="custom-tooltip subject-tooltip">
           <div className="bold">{subject.name}</div>
           <div>{brick.title}</div>
         </div>}
         <div className="progress-value default-value" onMouseEnter={() => setHover(true)}></div>
-        <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }} />
+        <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }}>
+          {height > 40 && renderRotatedTitle("white", height)}
+        </div>
       </div>
     </div>
   );
