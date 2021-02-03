@@ -56,6 +56,8 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
       width += assignmentWidth * 2;
     } else if (brickLength === BrickLengthEnum.S60min) {
       width += assignmentWidth * 4;
+    } else {
+      width += assignmentWidth * 2;
     }
     return width;
   }
@@ -81,18 +83,26 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
     let nextPage = [];
     for (let assignment of assignments) {
       const assignmentWidth = this.getAssignmentWidth(assignment, baseAssignmentWidth, baseMargin);
-      if (width + assignmentWidth < totalWidth) {
+      if (width < totalWidth - assignmentWidth) {
+        console.log(width, assignmentWidth, assignment.brick.title)
         nextPage.push(assignment);
         width += assignmentWidth;
       } else {
+        console.log(width);
+        console.log('----');
+        console.log('----');
+        console.log('----');
+        console.log('----');
         pages.push(nextPage);
         nextPage = [];
         nextPage.push(assignment);
         width = baseMargin * 2;
+        width += assignmentWidth;
       }
     }
 
     pages.push(nextPage);
+    console.log(pages);
     return pages;
   }
 
