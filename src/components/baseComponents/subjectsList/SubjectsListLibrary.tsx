@@ -14,15 +14,7 @@ interface PublishedSubjectsProps {
 }
 
 class SubjectsListLibrary extends Component<PublishedSubjectsProps> {
-  renderSubjectItem(subject: Subject, i: number) {
-    let count = 0;
-    if (subject.publicCount) {
-      count += subject.publicCount;
-    }
-    if (subject.personalCount) {
-      count += subject.personalCount;
-    }
-
+  renderSubjectItem(subject: SubjectAItem, i: number) {
     let className = "subject-list-v2";
     if (subject.checked) {
       className += ' checked';
@@ -30,7 +22,7 @@ class SubjectsListLibrary extends Component<PublishedSubjectsProps> {
 
     return (
       <Grid key={i} container direction="row" className={className} onClick={() => this.props.filterBySubject(subject.id)}>
-        <Grid item xs={11} className="filter-container subjects-indexes-box">
+        <Grid item xs={10} className="filter-container subjects-indexes-box">
           <FormControlLabel
             checked={subject.checked}
             control={
@@ -39,14 +31,14 @@ class SubjectsListLibrary extends Component<PublishedSubjectsProps> {
             label={subject.name}
           />
         </Grid>
-        <Grid item xs={1} className="published-count">
+        <Grid item xs={2} className="published-count">
           <Grid
             container
             alignContent="center"
             justify="center"
             style={{ height: "100%", margin: "0 0" }}
           >
-            {count && count > 0 ? count : ''}
+            {subject.playedCount} / {subject.assignedCount}
           </Grid>
         </Grid>
       </Grid>
