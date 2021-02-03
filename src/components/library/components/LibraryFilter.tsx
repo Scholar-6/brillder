@@ -103,7 +103,7 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
         <SubjectsListV2N
           subjects={this.props.subjects}
           filterHeight={this.state.filterHeight}
-          filterBySubject={() => {}}
+          filterBySubject={this.props.filterBySubject}
         />
       </div>
     );
