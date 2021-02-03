@@ -1,3 +1,7 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
 .single-assignment-progressbar {
   .rotated-container {
     position: absolute;
@@ -17,6 +21,7 @@
         p {
           color: #C8CACC;
           font-size: 1vw;
+          font-family: $font-family-bold;
           white-space: nowrap;
           overflow: hidden; 
           text-overflow: ellipsis;
