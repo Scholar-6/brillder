@@ -3,14 +3,18 @@
 @import 'src/assets/sass/partials/extensions';
 
 .user-preference-page .user-preference-container .terms-page {
-  max-width: 44vw;
-  height: calc(71vh - 2vw) !important;
-  margin: 3vh 0vw !important;
+  max-width: 56vw;
+  height: 70vh !important;
+  margin: 0 !important;
+  padding-left: 6vw;
+  padding-right: 6vw;
   overflow: hidden;
   color: var(--theme-dark-blue);
+  background: var(--white);
   font-size: 1.1vw;
 
   > div {
+    padding-top: 5vh;
     height: 100%;
     overflow: auto !important;
   }
@@ -51,24 +55,29 @@
 }
 
 .terms-page-container {
-  height: 86vh;
+  padding: 0 !important;
   overflow: hidden;
-  background: white;
+  background: inherit !important;
 
   .bottom-button {
+    background: var(--theme-orange);
+    height: calc(10vh);
     display: flex;
     justify-content: center;
+    align-items: center;
 
     button {
-      position: absolute;
-      bottom: 2vh;
       border: none;
       outline: none;
       border-radius: 1vw;
       padding: 0.5vh 1vw;
       font-size: 1.5vw;
       color: var(--white);
-      background: var(--theme-green);
+      background: inherit;
+
+      &:hover {
+        color: var(--theme-dark-blue);
+      }
     }
   }
 }
