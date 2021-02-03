@@ -77,9 +77,9 @@
     }
 
     .save-button-container {
-      position: absolute;
-      top: 1.9vh;
-      right: 1vw;
+      position: fixed;
+      top: calc(5.834vw + 3.6vh + 1vh);
+      left: 66.5vw;
 
       @include phone_and_tabletP {
         position: fixed;
