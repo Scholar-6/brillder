@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { isMobile } from 'react-device-detect';
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -44,14 +46,13 @@ import BrickWrapper from './BrickWrapper';
 import { setBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'services/zendesk';
 import map from 'components/map';
-import { isMobile } from 'react-device-detect';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
 import TeachPage from 'components/teach/assignments/TeachPage';
 import Terms from 'components/onboarding/terms/Terms';
-import { connect } from 'react-redux';
 import PlayPreviewRoute from './PlayPreviewRoute';
 import EmailLoginPage from 'components/loginPage/EmailLoginPage';
 import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSubjectPage';
+import PublicTerms from 'components/terms/PublicTerms';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -172,7 +173,7 @@ const App: React.FC<AppProps> = props => {
         <AuthRoute path={map.ActivateAccount + '/email'} component={EmailActivateAccountPage} />
         <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
         <Route path={map.TermsPage} component={Terms} />
-        <Route path="/terms" component={Terms} />
+        <Route path="/terms" component={PublicTerms} />
 
         <Route component={AuthRedirectRoute} />
       </Switch>
