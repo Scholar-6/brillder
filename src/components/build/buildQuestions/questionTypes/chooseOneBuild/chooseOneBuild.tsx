@@ -7,7 +7,7 @@ import ChooseOneAnswerComponent from './ChooseOneAnswer';
 import { ChooseOneAnswer } from './types';
 import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
-import { showSameAnswerPopup } from '../service/questionBuild';
+import { generateId, showSameAnswerPopup } from '../service/questionBuild';
 
 export interface ChooseOneData {
   list: ChooseOneAnswer[];
@@ -18,7 +18,7 @@ export interface ChooseOneBuildProps extends UniqueComponentProps {
 }
 
 export const getDefaultChooseOneAnswer = () => {
-  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), checked: false, valueFile: "", id: Math.floor(Math.random() * 256) }));
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), checked: false, valueFile: "", id: generateId() }));
   const list = new Y.Array();
   list.push([newAnswer(), newAnswer(), newAnswer()]);
 
@@ -28,7 +28,7 @@ export const getDefaultChooseOneAnswer = () => {
 const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   locked, editOnly, data, validationRequired, openSameAnswerDialog
 }) => {
-  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), checked: false, valueFile: "", id: Math.floor(Math.random() * 256) }));
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), checked: false, valueFile: "", id: generateId() }));
 
   let list = data.get("list") as Y.Array<any>;
 

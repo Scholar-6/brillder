@@ -12,6 +12,7 @@ import "./QuillLatex";
 import "./QuillAutoLink";
 import "./QuillMediaEmbed";
 import "./QuillImageUpload"
+import quillToHTML from "./QuillToHTML";
 
 function randomEditorId() {
      return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -42,7 +43,6 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
     );
 
     const onChange = (content: string, delta: Delta, source: Sources) => {
-        console.log("data changing");
         // setData(content);
         // callOnChange(content, delta, source);
     }
@@ -78,7 +78,6 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
 
     const ref = React.useCallback((node: ReactQuill) => {
         if(node && props.sharedData) {
-            console.log(props.sharedData);
             const editor = node.getEditor();
             const binding = new QuillBinding(props.sharedData, editor);
         }
@@ -98,7 +97,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
             <ReactQuill
                 theme="snow"
                 // value={props.sharedData ? undefined : (data || "")}
-                onChange={props.sharedData ? undefined : onChange}
+                onChange={onChange}
                 // onBlur={props.onBlur}
                 readOnly={props.disabled}
                 placeholder={props.placeholder}

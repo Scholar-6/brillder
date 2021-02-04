@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ReactSortable } from "react-sortablejs";
+import { ReactSortable, Sortable } from "react-sortablejs";
 import { Grid } from '@material-ui/core';
 
 import './questionComponents.scss';
@@ -21,9 +21,10 @@ import FixedTextComponent from "../components/Text/FixedText";
 import { TextComponentObj } from "../components/Text/interface";
 import * as Y from "yjs";
 import _ from "lodash";
-import { convertObject } from "services/SharedTypeService";
+import { convertArray, convertObject } from "services/SharedTypeService";
 import DeleteComponentDialog from "./deleteComponentDialog";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
+import { generateId } from "../questionTypes/service/questionBuild";
 
 
 type QuestionComponentsProps = {
@@ -70,15 +71,7 @@ const QuestionComponents = ({
   let canRemove = (components.length > 3) ? true : false;
 
   const renderDropBox = (component: Y.Map<any>, index: number) => {
-    const updatingComponent = (compData: any) => {
-      let copyComponents = Object.assign([], components) as any[];
-      copyComponents[index] = compData;
-
-      components.doc!.transact(() => {
-        components.delete(index);
-        components.insert(index, [convertObject(compData)]);
-      })
-    }
+    if(!component) return;
 
     const setEmptyType = () => {
       if (component.get("value")) {
@@ -138,20 +131,49 @@ const QuestionComponents = ({
     );
   }
 
-  const setList = (newComponents: any) => {
-    if (locked) { return; }
-    // create a new doc and sync it with this one.
-    const newDoc = new Y.Doc();
-    const oldUpdate = Y.encodeStateAsUpdate(question);
-    Y.applyUpdate(newDoc, oldUpdate);
+  // Use more atomic method (02/02/2021)
+  // const setList = (newComponents: any) => {
+  //   if (locked) { return; }
+  //   // create a new doc and sync it with this one.
+  //   const newDoc = new Y.Doc();
+  //   const oldUpdate = Y.encodeStateAsUpdate(question);
+  //   Y.applyUpdate(newDoc, oldUpdate);
 
-    const newComponentsArray = new Y.Array();
-    newComponentsArray.push(newComponents);
-    newDoc.getMap().set("questions", newComponentsArray);
+  //   const newComponentsArray = new Y.Array();
+  //   newComponentsArray.push(newComponents.map(convertObject));
+  //   newDoc.getMap().set("questions", newComponentsArray);
+  //   console.log(newDoc.toJSON());
 
-    const newState = Y.encodeStateVector(newDoc);
-    const newUpdate = Y.encodeStateAsUpdate(question, newState);
-    Y.applyUpdate(question, newUpdate);
+  //   const newState = Y.encodeStateVector(newDoc);
+  //   const newUpdate = Y.encodeStateAsUpdate(question, newState);
+  //   Y.applyUpdate(question, newUpdate);
+  // }
+
+  const createNewComponent = (type: QuestionComponentTypeEnum) => {
+    switch(type) {
+      case QuestionComponentTypeEnum.Text:
+        return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Text, value: new Y.Text(), id: generateId() }));
+    }
+  }
+
+  const onAddComponent = (evt: Sortable.SortableEvent) => {
+    if(evt.item.dataset.value && (evt.newIndex !== undefined)) {
+      const newComponent = createNewComponent(parseInt(evt.item.dataset.value))
+      if(newComponent) {
+        components.insert(evt.newIndex, [newComponent]);
+      }
+    }
+  }
+
+  const onUpdateComponent = (evt: Sortable.SortableEvent) => {
+    console.log(evt);
+    if(evt.oldIndex && evt.newIndex) {
+      components.doc?.transact(() => {
+        const component = components.get(evt.oldIndex!).clone() as Y.Map<any>;
+        components.delete(evt.oldIndex!);
+        components.insert(evt.newIndex!, [component]);
+      });
+    }
   }
 
   const hideDialog = () => {
@@ -188,12 +210,14 @@ const QuestionComponents = ({
         list={components.toJSON()}
         animation={150}
         group={{ name: "cloning-group-name", pull: "clone" }}
-        setList={setList}
+        onAdd={onAddComponent}
+        onUpdate={onUpdateComponent}
+        setList={() => {}}
       >
         {
-          components.map((comp: Y.Map<any>, i) => (
-            <Grid key={`${questionId}-${i}`} container direction="row" className={validateDropBox(comp)}>
-              {renderDropBox(comp, i)}
+          components.toJSON().map((comp: any, i: number) => (
+            <Grid key={comp.id} container direction="row" className={validateDropBox(comp)}>
+              {renderDropBox(components.get(i), i)}
             </Grid>
           ))
         }

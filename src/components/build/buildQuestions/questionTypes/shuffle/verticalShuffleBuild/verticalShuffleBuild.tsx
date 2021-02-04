@@ -3,7 +3,7 @@ import * as Y from "yjs";
 
 import './verticalShuffleBuild.scss'
 import { QuestionValueType, UniqueComponentProps } from '../../types';
-import { showSameAnswerPopup } from '../../service/questionBuild';
+import { generateId, showSameAnswerPopup } from '../../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
@@ -15,7 +15,7 @@ import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
 
 export const getDefaultVerticalShuffleAnswer = () => {
-  const newAnswer = () => ({ value: new Y.Text(), id: Math.floor(Math.random() * 256) });
+  const newAnswer = () => ({ value: new Y.Text(), id: generateId() });
   const list = new Y.Array();
   list.push([newAnswer(), newAnswer(), newAnswer()]);
 
@@ -25,7 +25,7 @@ export const getDefaultVerticalShuffleAnswer = () => {
 const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   locked, editOnly, data, validationRequired, openSameAnswerDialog
 }) => {
-  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), id: Math.floor(Math.random() * 256) }));
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), id: generateId() }));
 
   let list = data.get("list") as Y.Array<any>;
 

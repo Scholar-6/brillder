@@ -6,7 +6,7 @@ import './chooseSeveralBuild.scss';
 import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 import {ChooseOneAnswer} from '../chooseOneBuild/types';
 import validator from '../../../questionService/UniqueValidator';
-import { showSameAnswerPopup } from '../service/questionBuild';
+import { generateId, showSameAnswerPopup } from '../service/questionBuild';
 import { convertArray } from 'services/SharedTypeService';
 
 export interface ChooseSeveralData {
@@ -22,7 +22,7 @@ export interface ChooseSeveralBuildProps {
 }
 
 export const getDefaultChooseSeveralAnswer = () => {
-  const newAnswer = () => ({value: new Y.Text(), checked: false, valueFile: '', id: Math.floor(Math.random() * 256) });
+  const newAnswer = () => ({value: new Y.Text(), checked: false, valueFile: '', id: generateId() });
 
   return { list: [newAnswer(), newAnswer(), newAnswer()] };
 }
@@ -30,7 +30,7 @@ export const getDefaultChooseSeveralAnswer = () => {
 const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   locked, editOnly, data, validationRequired, openSameAnswerDialog
 }) => {
-  const newAnswer = () => new Y.Map(Object.entries({value: new Y.Text(), checked: false, valueFile: '', id: Math.floor(Math.random() * 256) }));
+  const newAnswer = () => new Y.Map(Object.entries({value: new Y.Text(), checked: false, valueFile: '', id: generateId() }));
 
   let list = data.get("list") as Y.Array<any>;
 
