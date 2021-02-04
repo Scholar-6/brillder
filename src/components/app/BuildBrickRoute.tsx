@@ -46,7 +46,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
 
     if (!rest.isRedirectedToProfile) {
       if (!user.firstName || !user.lastName) {
-        return <Redirect to="/user-profile" />;
+        return <Redirect to={map.UserProfile} />;
       }
     }
 

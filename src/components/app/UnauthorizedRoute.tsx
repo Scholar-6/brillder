@@ -8,6 +8,7 @@ import { isAuthenticated } from 'model/brick';
 import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
+import map from 'components/map';
 
 interface StudentRouteProps {
   path: string;
@@ -33,7 +34,7 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
 
     if (!rest.isRedirectedToProfile) {
       if (!user.firstName || !user.lastName) {
-        return <Redirect to="/user-profile" />
+        return <Redirect to={map.UserProfile} />
       }
     }
 

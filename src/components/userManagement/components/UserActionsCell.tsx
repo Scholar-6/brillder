@@ -1,6 +1,7 @@
 import React from 'react';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import map from 'components/map';
 
 interface UserActionsCellProps {
   isAdmin: boolean;
@@ -20,7 +21,7 @@ const UserActionsCell: React.FC<UserActionsCellProps> = props => {
         <div className="delete-button svgOnHover" onClick={() => props.onDelete(props.userId)}>
           <SpriteIcon name="trash-outline" className="w100 h100 active text-theme-dark-blue" />
         </div>
-        <div className="edit-button" onClick={() => props.history.push(`/user-profile/${props.userId}`)}>
+        <div className="edit-button" onClick={() => props.history.push(map.UserProfile + `/${props.userId}`)}>
           <SpriteIcon name="edit-outline" className="w100 h100 active text-theme-dark-blue" />
         </div>
       </div>
