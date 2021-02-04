@@ -25,6 +25,7 @@ import HighlightTextButton from "./baseComponents/sidebarButtons/HighlightTextBu
 import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
+import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
 
 
 interface SidebarProps {
@@ -58,12 +59,14 @@ interface SidebarState {
   isCoomingSoonOpen: boolean;
   isAssigningOpen: boolean;
   isAssignedSuccessOpen: boolean;
+  isAssignedFailedOpen: boolean;
   isSharingOpen: boolean;
   isLinkOpen: boolean;
   linkCopiedOpen: boolean;
   inviteOpen: boolean;
   inviteResult: InviteResult;
   selectedItems: any[];
+  failedItems: any[];
 }
 
 class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
@@ -74,6 +77,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       isCoomingSoonOpen: false,
       isAssigningOpen: false,
       isAssignedSuccessOpen: false,
+      isAssignedFailedOpen: false,
       isSharingOpen: false,
       isLinkOpen: false,
       linkCopiedOpen: false,
@@ -83,7 +87,8 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         accessGranted: false,
         name: ''
       },
-      selectedItems: []
+      selectedItems: [],
+      failedItems: []
     }
   }
 
@@ -239,16 +244,32 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {canSee &&
           <AssignPersonOrClassDialog
             isOpen={this.state.isAssigningOpen}
-            success={(items: any[]) => {
-              this.setState({ isAssigningOpen: false, selectedItems: items, isAssignedSuccessOpen: true
-            })}}
+            success={(items: any[], failedItems: any[]) => {
+              if (items.length > 0) {
+                this.setState({ isAssigningOpen: false, selectedItems: items, failedItems, isAssignedSuccessOpen: true});
+              } else if (failedItems.length > 0) {
+                this.setState({ failedItems, isAssignedFailedOpen: true});
+              }
+            }}
             close={() => this.setState({ isAssigningOpen: false })}
           />}
         <AssignSuccessDialog
           isOpen={this.state.isAssignedSuccessOpen}
           brickTitle={this.props.brick.title}
           selectedItems={this.state.selectedItems}
-          close={() => this.setState({isAssignedSuccessOpen: false})}
+          close={() => {
+            if (this.state.failedItems.length > 0) {
+              this.setState({isAssignedSuccessOpen: false, isAssignedFailedOpen: true});
+            } else {
+              this.setState({isAssignedSuccessOpen: false});
+            }
+          }}
+        />
+        <AssignFailedDialog
+          isOpen={this.state.isAssignedFailedOpen}
+          brickTitle={this.props.brick.title}
+          selectedItems={this.state.failedItems}
+          close={() => this.setState({isAssignedFailedOpen: false, failedItems: []})}
         />
         <ShareDialog
           isOpen={this.state.isSharingOpen}
