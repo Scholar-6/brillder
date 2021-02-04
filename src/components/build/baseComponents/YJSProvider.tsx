@@ -18,14 +18,12 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
     const [, forceUpdate] = React.useReducer(x => x + 1, 0);
     
     const handleQuestionChange = React.useCallback((evt: Y.YEvent[], transaction: Y.Transaction) => {
-        console.log(ydoc?.toJSON().brick.questions.map((q: any) => q.toJSON()));
         forceUpdate();
     }, [ydoc]);
 
     React.useEffect(() => {
         const newYDoc = getYDoc(props.brickId);
         newYDoc.getMap("brick").observeDeep((evt, transaction) => {
-            console.log(ydoc?.toJSON().brick);
             forceUpdate();
         });
 

@@ -8,6 +8,7 @@ import { ChooseOneAnswer } from './types';
 import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
 import { generateId, showSameAnswerPopup } from '../service/questionBuild';
+import { convertObject } from 'services/SharedTypeService';
 
 export interface ChooseOneData {
   list: ChooseOneAnswer[];
@@ -17,12 +18,14 @@ export interface ChooseOneBuildProps extends UniqueComponentProps {
   data: Y.Map<any>;
 }
 
-export const getDefaultChooseOneAnswer = () => {
+export const getDefaultChooseOneAnswer = (ymap: Y.Map<any>) => {
   const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), checked: false, valueFile: "", id: generateId() }));
+
   const list = new Y.Array();
   list.push([newAnswer(), newAnswer(), newAnswer()]);
 
-  return new Y.Map(Object.entries({ list }));
+  ymap.set("list", list);
+  return ymap;
 }
 
 const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
@@ -38,7 +41,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   }
 
   if (!list) {
-    data.set("list", getDefaultChooseOneAnswer().get("list"));
+    getDefaultChooseOneAnswer(data);
     list = data.get("list");
   } else if (list.length < 3) {
     addAnswer();

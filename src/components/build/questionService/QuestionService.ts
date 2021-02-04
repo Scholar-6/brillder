@@ -20,6 +20,7 @@ import { getDefaultCategoriseAnswer } from "../buildQuestions/questionTypes/cate
 import { getDefaultMissingWordAnswer } from "../buildQuestions/questionTypes/missingWordBuild/MissingWordBuild";
 import { getDefaultLineHighlightingAnswer } from "../buildQuestions/questionTypes/highlighting/lineHighlightingBuild/LineHighlightingBuild";
 import { getDefaultWordHighlightingAnswer } from "../buildQuestions/questionTypes/highlighting/wordHighlighting/wordHighlighting";
+import { convertAny, convertObject } from "services/SharedTypeService";
 
 
 export interface ApiQuestion {
@@ -36,9 +37,10 @@ export function getNewFirstQuestion(type: number, active: boolean) {
     hint: {
       value: "",
       list: [] as string[],
-      status: HintStatus.None
+      status: HintStatus.All
     },
-    components: [{ type: QuestionComponentTypeEnum.Component }]
+    components: [{ type: QuestionComponentTypeEnum.Component }],
+    firstComponent: { type: QuestionComponentTypeEnum.Text, value: "" }
   } as Question;
 };
 
@@ -49,11 +51,12 @@ export function getNewQuestion(type: number, active: boolean) {
     hint: {
       value: "",
       list: [] as string[],
-      status: HintStatus.None
+      status: HintStatus.All
     },
     components: [{
       type: QuestionComponentTypeEnum.Component
-    }]
+    }],
+    firstComponent: { type: QuestionComponentTypeEnum.Text, value: "" }
   } as Question;
 };
 
@@ -99,31 +102,28 @@ export function removeQuestionByIndex(questions: Y.Array<Y.Doc>, index: number) 
   questions.delete(index);
 }
 
-const defaultFunctions: { [key in QuestionTypeEnum]?: () => any } = {
+const defaultFunctions: { [key in QuestionTypeEnum]?: (ymap: Y.Map<any>) => void } = {
   [QuestionTypeEnum.ChooseOne]: getDefaultChooseOneAnswer,
-  [QuestionTypeEnum.ChooseSeveral]: getDefaultChooseSeveralAnswer,
-  [QuestionTypeEnum.ShortAnswer]: getDefaultShortAnswerAnswer,
-  [QuestionTypeEnum.HorizontalShuffle]: getDefaultHorizontalShuffleAnswer,
-  [QuestionTypeEnum.VerticalShuffle]: getDefaultVerticalShuffleAnswer,
-  [QuestionTypeEnum.PairMatch]: getDefaultPairMatchAnswer,
-  [QuestionTypeEnum.Sort]: getDefaultCategoriseAnswer,
-  [QuestionTypeEnum.MissingWord]: getDefaultMissingWordAnswer,
-  [QuestionTypeEnum.LineHighlighting]: getDefaultLineHighlightingAnswer,
-  [QuestionTypeEnum.WordHighlighting]: getDefaultWordHighlightingAnswer,
+  // [QuestionTypeEnum.ChooseSeveral]: getDefaultChooseSeveralAnswer,
+  // [QuestionTypeEnum.ShortAnswer]: getDefaultShortAnswerAnswer,
+  // [QuestionTypeEnum.HorizontalShuffle]: getDefaultHorizontalShuffleAnswer,
+  // [QuestionTypeEnum.VerticalShuffle]: getDefaultVerticalShuffleAnswer,
+  // [QuestionTypeEnum.PairMatch]: getDefaultPairMatchAnswer,
+  // [QuestionTypeEnum.Sort]: getDefaultCategoriseAnswer,
+  // [QuestionTypeEnum.MissingWord]: getDefaultMissingWordAnswer,
+  // [QuestionTypeEnum.LineHighlighting]: getDefaultLineHighlightingAnswer,
+  // [QuestionTypeEnum.WordHighlighting]: getDefaultWordHighlightingAnswer,
 }
 
 export function setQuestionTypeByIndex(questions: Y.Array<Y.Doc>, index: number, type: QuestionTypeEnum) {
   const question = questions.get(index).getMap();
-  console.log(question);
   const components = question.get("components");
   const uniqueComponentIndex = components.toJSON().findIndex((c: any) => c.type === QuestionComponentTypeEnum.Component);
   console.log(uniqueComponentIndex);
 
   const uniqueComponent = components.get(uniqueComponentIndex) as Y.Map<any>;
-  const newDefault = defaultFunctions[type]?.();
-  Object.entries(newDefault).forEach(([key, value]) => {
-    uniqueComponent.set(key, value);
-  });
+  defaultFunctions[type]?.(uniqueComponent);
+  question.set("type", type);
 
   return questions;
 }

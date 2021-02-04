@@ -87,24 +87,35 @@ export const convertQuestion = (question: Question): Y.Doc => {
     if(question.contentBlocks) {
         const contentBlocks = JSON.parse(question.contentBlocks) as object[];
         yquestion.getMap().set("contentBlocks", convertObject(contentBlocks));
+    } else {
+        yquestion.getMap().set("hint", convertObject(question.hint));
+        yquestion.getMap().set("firstComponent", convertObject(question.firstComponent));
+        yquestion.getMap().set("components", convertArray(question.components));
     }
 
     return yquestion;
 };
 
+export const convertAny = (value: any): Y.Map<any> | Y.Array<any> | Y.Text | any => {
+    if(value === undefined) return undefined;
+    else if (value === null) return null;
+    else if (Array.isArray(value)) {
+        return convertArray(value);
+    } else if (typeof(value) === "object") {
+        return convertObject(value);
+    } else if (typeof(value) === "string") {
+        return convertString(value);
+    } else {
+        return value;
+    }
+}
+
 export const convertObject = (obj: object): Y.Map<any> => {
+    if (obj === undefined) { return undefined as any; }
     const yobject = new Y.Map();
 
     Object.entries(obj).forEach(([key, value]) => {
-        if (Array.isArray(value)) {
-            yobject.set(key, convertArray(value));
-        } else if (typeof(value) === "object") {
-            yobject.set(key, convertObject(value));
-        } else if (typeof(value) === "string") {
-            yobject.set(key, convertString(value));
-        } else {
-            yobject.set(key, value);
-        }
+        yobject.set(key, convertAny(value));
     });
 
     return yobject;

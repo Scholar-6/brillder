@@ -259,7 +259,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
     if (!canEdit) { return; }
     if (locked) { return; }
-    questions.push([convertQuestion(getNewQuestion(QuestionTypeEnum.None, false))]);
+    const newQuestion = convertQuestion(getNewQuestion(QuestionTypeEnum.None, false))
+    questions.push([newQuestion]);
+    console.log(newQuestion);
+    setCurrentQuestionIndex(questions.length - 1);
 
     if (history.location.pathname.slice(-10) === '/synthesis') {
       history.push(`/build/brick/${brickId}/investigation/question`);
