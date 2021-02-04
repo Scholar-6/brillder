@@ -161,7 +161,7 @@ const App: React.FC<AppProps> = props => {
         <BuildRoute path="/home" component={MainPage} location={location} />
 
         <AllUsersRoute path="/user-profile" component={UserProfilePage} />
-        <AllUsersRoute path="/user/preference" component={UserPreferencePage} isPreferencePage={true} />
+        <AllUsersRoute path={map.UserPreference} component={UserPreferencePage} isPreferencePage={true} />
         <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
         <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
 

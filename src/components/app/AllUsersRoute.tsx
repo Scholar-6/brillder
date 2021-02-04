@@ -30,7 +30,7 @@ const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, use
       return <PageLoader content="...Getting User..." />;
     }
     if (!user.rolePreference && !rest.isPreferencePage) {
-      return <Redirect to="/user/preference" />
+      return <Redirect to={map.UserPreference} />
     }
     if (user.firstName === "" || user.lastName === "") {
       if (location.pathname !== "/user-profile") { // Only redirect to the user profile if we're not already there.
