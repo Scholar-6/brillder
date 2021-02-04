@@ -82,7 +82,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
 
     if (saved) {
       await this.props.getUser();
-      this.props.history.push(map.UserProfile);
+      this.props.history.push(map.UserProfile + '?onboardingUser=true');
     } else {
       //this.props.requestFailed("Can`t save user profile");
     }
