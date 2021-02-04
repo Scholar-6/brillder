@@ -14,12 +14,13 @@ import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
 
-export const getDefaultVerticalShuffleAnswer = () => {
-  const newAnswer = () => ({ value: new Y.Text(), id: generateId() });
+export const getDefaultVerticalShuffleAnswer = (ymap: Y.Map<any>) => {
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), id: generateId() }));
+
   const list = new Y.Array();
   list.push([newAnswer(), newAnswer(), newAnswer()]);
 
-  return new Y.Map(Object.entries({ list }));
+  ymap.set("list", list);
 }
 
 const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
@@ -35,7 +36,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   }
 
   if (!list) {
-    data.set("list", getDefaultVerticalShuffleAnswer().get("list"));
+    getDefaultVerticalShuffleAnswer(data);
     list = data.get("list");
   } else if (list.length < 3) {
     addAnswer();
@@ -54,22 +55,23 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   }
 
   const renderAnswer = (answer: any, i: number) => {
+    console.log(answer);
     const setImage = (fileName: string) => {
       if (locked) { return; }
-      answer.value = "";
-      answer.valueFile = fileName;
-      answer.answerType = QuestionValueType.Image;
+      answer.set("value", "");
+      answer.set("valueFile", fileName);
+      answer.set("answerType", QuestionValueType.Image);
     }
 
     let className = 'vertical-answer-box unique-component';
-    if (answer.answerType === QuestionValueType.Image) {
+    if (answer.get("answerType") === QuestionValueType.Image) {
       className += ' big-answer';
     }
 
     let isValid = null;
     if (validationRequired) {
       isValid = true;
-      if ((answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None) && !answer.value) {
+      if ((answer.get("answerType") === QuestionValueType.String || answer.get("answerType") === QuestionValueType.None) && !answer.get("value")) {
         isValid = false;
       }
     }
@@ -78,16 +80,14 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
       className += ' invalid-answer';
     }
 
-    console.log(answer);
-
     return (
       <div className={className} key={answer.get("id")}>
         <RemoveItemButton index={i} length={list.length} onClick={removeFromList} />
         <QuestionImageDropzone
           answer={answer as any}
-          type={answer.answerType || QuestionValueType.None}
+          type={answer.get("answerType") || QuestionValueType.None}
           locked={locked}
-          fileName={answer.valueFile}
+          fileName={answer.get("valueFile")}
           update={setImage}
         />
         <QuillEditor
