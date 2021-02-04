@@ -7,7 +7,7 @@ import "swiper/swiper.scss";
 import './Library.scss';
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
-import { Brick, Subject, SubjectAItem } from "model/brick";
+import { Brick, SubjectAItem } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import { getLibraryBricks } from "services/axios/brick";
