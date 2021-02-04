@@ -122,6 +122,23 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     return res;
   }
 
+  const removeFailedObjs = (failedStudents: any[], failedClasses: any[]) => {
+    return selectedObjs.filter(obj => {
+      if (obj.isStudent) {
+        let found = failedStudents.find(c => c.student.id === obj.id);
+        if (found) {
+          return false;
+        }
+      } else {
+        let found = failedClasses.find(c => c.classroom.id === obj.id)
+        if (found) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }
+
   const assign = async () => {
     const {studentIds, classroomIds} = getSelectedIds();
 
@@ -153,20 +170,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (good) {
       let assignedObjs = Object.assign([], selectedObjs) as any[];
       if (failedItems.length > 0) {
-        assignedObjs = selectedObjs.filter(obj => {
-          if (obj.isStudent) {
-            let found = failedStudents.find(c => c.student.id === obj.id);
-            if (found) {
-              return false;
-            }
-          } else {
-            let found = failedClasses.find(c => c.classroom.id === obj.id)
-            if (found) {
-              return false;
-            }
-          }
-          return true;
-        });
+        assignedObjs = removeFailedObjs(failedStudents, failedClasses);
       }
       props.success(assignedObjs, failedItems);
     } else {
