@@ -32,6 +32,7 @@ import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/Studen
 import NameAndSubjectForm from "../components/NameAndSubjectForm";
 import { Subject } from "model/brick";
 import RadioButton from "components/baseComponents/buttons/RadioButton";
+import map from "components/map";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -463,7 +464,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   renderEmptyTab() {
     const moveToNewUser = () => {
       if (this.state.isAdmin) {
-        this.props.history.push('/user-profile/new');
+        this.props.history.push(map.UserProfile + '/new');
       } else {
         this.setState({cantCreate: true});
       }
@@ -534,7 +535,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     const moveToNewUser = () => {
       if (this.state.isAdmin) {
-        this.props.history.push('/user-profile/new');
+        this.props.history.push(map.UserProfile + '/new');
       } else {
         this.setState({cantCreate: true});
       }

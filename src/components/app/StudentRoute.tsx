@@ -34,7 +34,7 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, inner
 
     if (!rest.isRedirectedToProfile) {
       if (!user.firstName || !user.lastName) {
-        return <Redirect to="/user-profile" />
+        return <Redirect to={map.UserProfile} />
       }
     }
 
