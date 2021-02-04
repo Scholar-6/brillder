@@ -21,10 +21,14 @@ export interface ChooseSeveralBuildProps {
   openSameAnswerDialog(): void;
 }
 
-export const getDefaultChooseSeveralAnswer = () => {
-  const newAnswer = () => ({value: new Y.Text(), checked: false, valueFile: '', id: generateId() });
+export const getDefaultChooseSeveralAnswer = (ymap: Y.Map<any>) => {
+  const newAnswer = () => new Y.Map(Object.entries({value: new Y.Text(), checked: false, valueFile: '', id: generateId() }));
 
-  return { list: [newAnswer(), newAnswer(), newAnswer()] };
+  const list = new Y.Array();
+  list.push([newAnswer(), newAnswer(), newAnswer()]);
+
+  ymap.set("list", list);
+  return ymap;
 }
 
 const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
@@ -35,7 +39,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   let list = data.get("list") as Y.Array<any>;
 
   if (!list) {
-    data.set("list", convertArray(getDefaultChooseSeveralAnswer().list));
+    getDefaultChooseSeveralAnswer(data);
     list = data.get("list");
   } else if (list.length < 3) {
     list.push([newAnswer()]);
