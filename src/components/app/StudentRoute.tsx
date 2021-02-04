@@ -29,7 +29,7 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, inner
     }
 
     if (!user.rolePreference) {
-      return <Redirect to="/user/preference" />
+      return <Redirect to={map.UserPreference} />
     }
 
     if (!rest.isRedirectedToProfile) {

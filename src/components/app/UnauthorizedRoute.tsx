@@ -28,7 +28,7 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
     }
     
     if (!user.rolePreference) {
-      return <Redirect to="/user/preference" />
+      return <Redirect to={map.UserPreference} />
     }
 
     if (!rest.isRedirectedToProfile) {
