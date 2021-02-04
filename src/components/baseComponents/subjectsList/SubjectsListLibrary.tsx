@@ -3,26 +3,18 @@ import { Grid, FormControlLabel } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
 import "./SubjectsList.scss";
-import { Subject } from "model/brick";
+import { SubjectAItem } from "model/brick";
 import RadioButton from "../buttons/RadioButton";
 
 interface PublishedSubjectsProps {
   filterHeight: string;
-  subjects: Subject[];
+  subjects: SubjectAItem[];
   ref?: React.RefObject<any>;
   filterBySubject(id: number): void;
 }
 
-class SubjectsListV2 extends Component<PublishedSubjectsProps> {
-  renderSubjectItem(subject: Subject, i: number) {
-    let count = 0;
-    if (subject.publicCount) {
-      count += subject.publicCount;
-    }
-    if (subject.personalCount) {
-      count += subject.personalCount;
-    }
-
+class SubjectsListLibrary extends Component<PublishedSubjectsProps> {
+  renderSubjectItem(subject: SubjectAItem, i: number) {
     let className = "subject-list-v2";
     if (subject.checked) {
       className += ' checked';
@@ -30,7 +22,7 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
 
     return (
       <Grid key={i} container direction="row" className={className} onClick={() => this.props.filterBySubject(subject.id)}>
-        <Grid item xs={11} className="filter-container subjects-indexes-box">
+        <Grid item xs={10} className="filter-container subjects-indexes-box">
           <FormControlLabel
             checked={subject.checked}
             control={
@@ -39,14 +31,14 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
             label={subject.name}
           />
         </Grid>
-        <Grid item xs={1} className="published-count">
+        <Grid item xs={2} className="published-count">
           <Grid
             container
             alignContent="center"
             justify="center"
             style={{ height: "100%", margin: "0 0" }}
           >
-            {count && count > 0 ? count : ''}
+            {subject.playedCount} / {subject.assignedCount}
           </Grid>
         </Grid>
       </Grid>
@@ -54,10 +46,6 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
   }
 
   render() {
-    const {subjects} = this.props;
-    let checkedSubjects = subjects.filter(s => s.checked);
-    let otherSubjects = subjects.filter(s => !s.checked);
-
     return (
       <Grid container direction="row" className="filter-container subjects-filter subjects-filter-v2" ref={this.props.ref}>
         <AnimateHeight
@@ -65,12 +53,11 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps> {
           height={this.props.filterHeight}
           style={{ width: "100%" }}
         >
-          {checkedSubjects.map(this.renderSubjectItem.bind(this))}
-          {otherSubjects.map(this.renderSubjectItem.bind(this))}
+          {this.props.subjects.map(this.renderSubjectItem.bind(this))}
         </AnimateHeight>
       </Grid>
     );
   }
 }
 
-export default SubjectsListV2;
+export default SubjectsListLibrary;

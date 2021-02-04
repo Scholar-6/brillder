@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { isMobile } from 'react-device-detect';
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -28,8 +30,8 @@ import PostPlay from 'components/postPlay/PostPlay';
 import Library from 'components/library/Library';
 
 import UserProfilePage from 'components/userProfilePage/UserProfile';
-import UserPreferencePage from 'components/userProfilePage/userPreferencePage/UserPreferencePage';
-import UsernamePage from 'components/userProfilePage/usernamePage/UsernamePage';
+import UserPreferencePage from 'components/onboarding/userPreferencePage/UserPreferencePage';
+import UsernamePage from 'components/onboarding/usernamePage/UsernamePage';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
@@ -44,13 +46,13 @@ import BrickWrapper from './BrickWrapper';
 import { setBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'services/zendesk';
 import map from 'components/map';
-import { isMobile } from 'react-device-detect';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
 import TeachPage from 'components/teach/assignments/TeachPage';
-import Terms from 'components/terms/Terms';
-import { connect } from 'react-redux';
+import Terms from 'components/onboarding/terms/Terms';
 import PlayPreviewRoute from './PlayPreviewRoute';
 import EmailLoginPage from 'components/loginPage/EmailLoginPage';
+import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSubjectPage';
+import PublicTerms from 'components/terms/PublicTerms';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -156,12 +158,13 @@ const App: React.FC<AppProps> = props => {
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
         <BuildRoute path={map.AssignmentsPage} component={AssignmentsPage} location={location} />
         <BuildRoute path="/users" component={UsersListPage} location={location} />
-        <BuildRoute path="/user-profile/:userId" component={UserProfilePage} location={location} />
+        <BuildRoute path={map.UserProfile + ':userId'} component={UserProfilePage} location={location} />
         <BuildRoute path="/home" component={MainPage} location={location} />
 
-        <AllUsersRoute path="/user-profile" component={UserProfilePage} />
-        <AllUsersRoute path="/user/preference" component={UserPreferencePage} isPreferencePage={true} />
-        <AllUsersRoute path="/user/set-username" component={UsernamePage} />
+        <AllUsersRoute path={map.UserProfile} component={UserProfilePage} />
+        <AllUsersRoute path={map.UserPreference} component={UserPreferencePage} isPreferencePage={true} />
+        <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
+        <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
 
         <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
         <AuthRoute path="/login/:privacy" component={LoginPage} />
@@ -169,8 +172,9 @@ const App: React.FC<AppProps> = props => {
         <AuthRoute path="/resetPassword" component={ResetPasswordPage} />
         <AuthRoute path={map.ActivateAccount + '/email'} component={EmailActivateAccountPage} />
         <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
+        <Route path={map.TermsPage} component={Terms} />
+        <Route path="/terms" component={PublicTerms} />
 
-        <Route path="/terms" component={Terms} />
         <Route component={AuthRedirectRoute} />
       </Switch>
       <VersionLabel />

@@ -1,5 +1,6 @@
 import './AddUserButton.scss';
 import React from 'react';
+import map from 'components/map';
 
 interface AddUserButtonProps {
   history: any;
@@ -7,7 +8,7 @@ interface AddUserButtonProps {
 
 const AddUserButton: React.FC<AddUserButtonProps> = ({history}) => {
   const moveToNewUser = () => {
-    history.push('/user-profile/new');
+    history.push(map.UserProfile + '/new');
   }
 
   return (

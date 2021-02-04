@@ -174,7 +174,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const renderProfileItem = () => {
     if (page !== PageEnum.Profile) {
       return (
-        <MenuItem className="view-profile menu-item" onClick={() => move("/user-profile", 'View Profile')}>
+        <MenuItem className="view-profile menu-item" onClick={() => move(map.UserProfile, 'View Profile')}>
           <span className="menu-text">View Profile</span>
           <div className="btn btn-transparent svgOnHover">
             <SpriteIcon name="user" className="active text-white" />

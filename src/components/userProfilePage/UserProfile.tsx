@@ -28,6 +28,8 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import UserProfilePreview from "./components/UserProfilePreview";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import ProfileInput from "./components/ProfileInput";
+import ProfileIntroJs from "./components/ProfileIntroJs";
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -42,6 +44,7 @@ const connector = connect(mapState, mapDispatch);
 
 interface UserProfileProps {
   user: User;
+  location: any;
   history: any;
   match: any;
   forgetBrick(): void;
@@ -347,22 +350,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     );
   }
 
-  renderInput(
-    value: string, initClassName: string, placeholder: string,
-    onChange: ((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined,
-    type: string = 'text', shouldBeFilled: boolean = true
-  ) {
-    let className = initClassName + ' style2';
-    if (this.state.validationRequired && !value && shouldBeFilled) {
-      className += ' invalid';
-    }
-    return (
-      <div className="input-block">
-        <input type={type} className={className} value={value} onChange={onChange} placeholder={placeholder} />
-      </div>
-    );
-  }
-
   previewAnimationFinished() {
     this.setState({ previewAnimationFinished: true })
   }
@@ -398,19 +385,27 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               />
               <div className="profile-inputs-container">
                 <div className="input-group">
-                  {this.renderInput(
-                    user.firstName, 'first-name', 'Name', e => this.onFieldChanged(e, UserProfileField.FirstName)
-                  )}
-                  {this.renderInput(
-                    user.lastName, 'last-name', 'Surname', e => this.onFieldChanged(e, UserProfileField.LastName)
-                  )}
+                  <ProfileInput
+                    value={user.firstName} validationRequired={this.state.validationRequired}
+                    className="first-name"  placeholder="Name"
+                    onChange={e => this.onFieldChanged(e, UserProfileField.FirstName)}
+                  />
+                  <ProfileInput
+                    value={user.lastName} validationRequired={this.state.validationRequired}
+                    className="last-name"  placeholder="Surname"
+                    onChange={e => this.onFieldChanged(e, UserProfileField.LastName)}
+                  />
                 </div>
-                {this.renderInput(
-                  user.email, '', 'Email', e => this.onEmailChanged(e), 'email'
-                )}
-                {this.renderInput(
-                  user.password, '', '●●●●●●●●●●●', e => this.onFieldChanged(e, UserProfileField.Password), 'password', false
-                )}
+                <ProfileInput
+                  value={user.email} validationRequired={this.state.validationRequired}
+                  className=""  placeholder="Email" type="email"
+                  onChange={e => this.onEmailChanged(e)}
+                />
+                <ProfileInput
+                  value={user.password} validationRequired={this.state.validationRequired}
+                  className=""  placeholder="●●●●●●●●●●●" type="password" shouldBeFilled={false}
+                  onChange={e => this.onFieldChanged(e, UserProfileField.Password)}
+                />
               </div>
               <div className="profile-roles-container">
                 <div className="roles-title">ROLES</div>
@@ -467,6 +462,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           isOpen={this.state.savedDialogOpen}
           close={this.onProfileSavedDialogClose.bind(this)}
         />
+        <ProfileIntroJs location={this.props.location} />
       </div>
     );
   }

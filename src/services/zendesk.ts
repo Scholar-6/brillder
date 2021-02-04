@@ -1,3 +1,4 @@
+import map from "components/map";
 import { isMobile } from "react-device-detect";
 
 declare global {
@@ -162,7 +163,7 @@ function addZendesk() {
   }
 }
 
-const isProfilePage = (pathName: string) => pathName.search('/user-profile') >= 0;
+const isProfilePage = (pathName: string) => pathName.search(map.UserProfile) >= 0;
 const isViewAllPage = (pathName: string) => pathName === "/play/dashboard";
 const isManageUsersPage = (pathName: string) => pathName === "/users";
 const isPlayPage = (pathName: string) => {

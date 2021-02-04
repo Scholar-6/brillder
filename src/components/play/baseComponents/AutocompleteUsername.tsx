@@ -5,6 +5,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Brick } from "model/brick";
 import { suggestUsername } from "services/axios/user";
 import { UserBase } from "model/user";
+import { fileUrl } from "components/services/uploadFile";
 
 interface AutocompleteProps {
   brick: Brick;
@@ -67,7 +68,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
         {value.map((user, idx) => (
           <Chip
             label={`${user.username}`}
-            avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${user.profileImage}`} />}
+            avatar={<Avatar src={fileUrl(user.profileImage)} />}
             {...getTagProps({ index: idx })}
           />
         ))}
