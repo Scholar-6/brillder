@@ -4,6 +4,8 @@ import 'katex/contrib/mhchem/mhchem';
 
 import React from 'react';
 
+import './Katex.scss';
+
 interface KatexProps {
     latex: string;    
 }

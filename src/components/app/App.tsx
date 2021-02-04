@@ -171,8 +171,9 @@ const App: React.FC<AppProps> = props => {
         <AuthRoute path="/resetPassword" component={ResetPasswordPage} />
         <AuthRoute path={map.ActivateAccount + '/email'} component={EmailActivateAccountPage} />
         <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
-
         <Route path={map.TermsPage} component={Terms} />
+        <Route path="/terms" component={Terms} />
+
         <Route component={AuthRedirectRoute} />
       </Switch>
       <VersionLabel />
