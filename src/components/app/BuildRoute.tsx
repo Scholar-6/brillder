@@ -53,12 +53,12 @@ class BuildRoute extends React.Component<BuildRouteProps> {
       let { user } = props;
 
       if (!user.rolePreference) {
-        return <Redirect to="/user/preference" />;
+        return <Redirect to={map.UserPreference} />;
       }
 
       if (!props.isRedirectedToProfile) {
         if (!user.firstName || !user.lastName) {
-          return <Redirect to="/user-profile" />;
+          return <Redirect to={map.UserProfile} />;
         }
       }
 

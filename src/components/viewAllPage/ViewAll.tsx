@@ -35,8 +35,8 @@ import map from "components/map";
 import NoSubjectDialog from "components/baseComponents/dialogs/NoSubjectDialog";
 import { clearProposal } from "localStorage/proposal";
 import ViewAllMobile from "./ViewAllMobile";
-import CreateOneButton from "components/userProfilePage/components/CreateOneButton";
-import RecommendButton from "components/userProfilePage/components/RecommendBuilderButton";
+import CreateOneButton from "components/viewAllPage/components/CreateOneButton";
+import RecommendButton from "components/viewAllPage/components/RecommendBuilderButton";
 
 import { removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject, getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks, expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks, sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds } from './service/viewAll';
 import { filterByCurretUser } from "components/backToWorkPage/service";

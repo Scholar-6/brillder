@@ -17,7 +17,7 @@ import SpriteIcon from '../SpriteIcon';
 interface AssignPersonOrClassProps {
   brick: Brick;
   isOpen: boolean;
-  success(items: any): void;
+  success(items: any[], failed: any[]): void;
   close(): void;
   requestFailed(e: string): void;
 }
@@ -68,8 +68,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignStudents/${props.brick.id}`,
       {studentsIds },
       { withCredentials: true }
-    ).then(() => {
-      return true;
+    ).then(res => {
+      return res.data as any[];
     })
     .catch(() => {
       props.requestFailed('Can`t assign student to brick');
@@ -82,8 +82,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignClasses/${props.brick.id}`,
       {classesIds},
       { withCredentials: true }
-    ).then(() => {
-      return true;
+    ).then(res => {
+      return res.data as any[];
     }).catch(() => {
       props.requestFailed('Can`t assign class to brick');
       return false;
@@ -106,31 +106,73 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     setAutoCompleteDropdown(false);
   }
 
-  const assign = async () => {
-    let classroomIds:Number[] = [];
-    let studentIds:Number[] = [];
+  const getSelectedIds = () => {
+    let res = {
+      classroomIds: [],
+      studentIds: []
+    } as any;
+
     for (let obj of selectedObjs) {
       if (obj.isStudent) {
-        studentIds.push(obj.id);
+        res.studentIds.push(obj.id);
       } else {
-        classroomIds.push(obj.id);
+        res.classroomIds.push(obj.id);
       }
     }
+    return res;
+  }
+
+  const removeFailedObjs = (failedStudents: any[], failedClasses: any[]) => {
+    return selectedObjs.filter(obj => {
+      if (obj.isStudent) {
+        let found = failedStudents.find(c => c.student.id === obj.id);
+        if (found) {
+          return false;
+        }
+      } else {
+        let found = failedClasses.find(c => c.classroom.id === obj.id)
+        if (found) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }
+
+  const assign = async () => {
+    const {studentIds, classroomIds} = getSelectedIds();
+
+    let failedClasses: any[] = [];
+    let failedStudents: any[] = [];
+    let failedItems: any[] = [];
+
     let good = true;
     if (studentIds.length > 0) {
       let res = await assignToStudents(studentIds);
       if (!res) {
         good = false;
       }
+      if (res instanceof Array && res.length > 0) {
+        failedItems = res;
+        failedStudents = res;
+      }
     }
     if (classroomIds.length > 0) {
       let res = await assignToClasses(classroomIds);
-      if (!res) {
+      if (res === false) {
         good = false;
+      }
+      if (res instanceof Array && res.length > 0) {
+        failedClasses = res;
+        failedItems.push(...res);
       }
     }
     if (good) {
-      props.success(selectedObjs);
+      let assignedObjs = Object.assign([], selectedObjs) as any[];
+      if (failedItems.length > 0) {
+        assignedObjs = removeFailedObjs(failedStudents, failedClasses);
+      }
+      props.success(assignedObjs, failedItems);
     } else {
       props.close();
     }
@@ -156,7 +198,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
               placeholder="Students and Classes"
             />
           )}
-          renderOption={(option: any, { selected }) => (
+          renderOption={(option: any) => (
             <React.Fragment>
               {option.isStudent
                 ? <span><span className="bold">Student</span> {option.firstName} {option.lastName}</span>

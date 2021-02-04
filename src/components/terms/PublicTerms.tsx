@@ -5,7 +5,7 @@ import axios from "axios";
 // @ts-ignore
 import marked from "marked";
 
-import "./Terms.scss";
+import "./PublicTerms.scss";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 
@@ -74,14 +74,16 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
     }
     p.active = true;
     if (p.el.current) {
-      p.el.current.scrollIntoView();
+      p.el.current.scrollIntoView({
+        behavior: "smooth"
+      });
     }
     this.setState({ ...this.state });
   }
 
   render() {
     return (
-      <div className="main-listing dashboard-page terms-page">
+      <div className="main-listing dashboard-page public-terms-page">
         <PageHeadWithMenu
           page={PageEnum.ViewAll}
           user={this.props.user}
