@@ -126,7 +126,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const renderManageClassesItem = () => {
     const {user} = props;
     if (page !== PageEnum.ManageClasses && page !== PageEnum.MainPage && user) {
-      let canSee = checkTeacherOrAdmin(user.roles);
+      let canSee = checkTeacherOrAdmin(user);
       if (!canSee && user.rolePreference) {
         if (user.rolePreference.roleId === RolePreference.Teacher) {
           canSee = true

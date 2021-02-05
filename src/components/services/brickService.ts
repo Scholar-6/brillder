@@ -73,8 +73,11 @@ export function getDateString(inputDateString: string) {
   return `${date}.${month}.${year}`;
 }
 
-export function checkTeacherOrAdmin(roles: UserRole[]) {
-  return roles.some(r => r.roleId === UserType.Teacher || r.roleId === UserType.Admin);
+export function checkTeacherOrAdmin(user: User) {
+  if (user.rolePreference?.roleId === RolePreference.Teacher) {
+    return true;
+  }
+  return user.roles.some(r => r.roleId === UserType.Admin);
 }
 
 export function checkEditor(roles: UserRole[]) {
@@ -163,7 +166,7 @@ export function getAssignmentIcon(brick: Brick) {
 }
 
 export function canTeach(user: User) {
-  let canTeach = checkTeacherOrAdmin(user.roles);  
+  let canTeach = checkTeacherOrAdmin(user);  
   if (!canTeach && user.rolePreference) {
     if (user.rolePreference.roleId === UserType.Teacher) {
       canTeach = true;
