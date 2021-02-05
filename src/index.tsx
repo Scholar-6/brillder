@@ -31,6 +31,8 @@ moment.updateLocale('en', {
   }
 });
 
+console.log('before ReactDOM');
+
 ReactDOM.render(
   <Router>
     <Provider store={store}>
@@ -39,5 +41,7 @@ ReactDOM.render(
   </Router>,
   document.getElementById('root')
 );
+
+console.log('after ReactDOM');
 
 serviceWorker.unregister();
