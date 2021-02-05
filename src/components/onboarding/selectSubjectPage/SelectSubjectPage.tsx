@@ -8,7 +8,7 @@ import './SelectSubjectPage.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import userActions from 'redux/actions/user';
 import { updateUser } from "services/axios/user";
-import { User, UserType } from "model/user";
+import { RolePreference, User, UserType } from "model/user";
 import { SubjectItem } from "model/brick";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
@@ -99,7 +99,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
 
   render() {
     let titleVerb = 'build';
-    if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Teacher) {
+    if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === RolePreference.Teacher) {
       titleVerb = 'teach';
     }
     return (

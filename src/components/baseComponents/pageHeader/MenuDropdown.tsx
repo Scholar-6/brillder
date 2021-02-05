@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import actions from "redux/actions/brickActions";
 
-import { User, UserType } from "model/user";
+import { RolePreference, User, UserType } from "model/user";
 import { PageEnum } from "./PageHeadWithMenu";
 import { clearProposal } from 'localStorage/proposal';
 
@@ -128,7 +128,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     if (page !== PageEnum.ManageClasses && page !== PageEnum.MainPage && user) {
       let canSee = checkTeacherOrAdmin(user.roles);
       if (!canSee && user.rolePreference) {
-        if (user.rolePreference.roleId === UserType.Teacher) {
+        if (user.rolePreference.roleId === RolePreference.Teacher) {
           canSee = true
         }
       }
@@ -197,34 +197,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     }
   }
 
-  /*eslint-disable-next-line*/
-  const renderReportsItem = () => {
-    if (page !== PageEnum.MainPage && props.user.rolePreference?.roleId === UserType.Teacher) {
-      return (
-        <MenuItem className="view-profile menu-item disabled" onClick={() => {}}>
-          <span className="menu-text">Reports</span>
-          <div className="btn btn-transparent svgOnHover">
-            <SpriteIcon name="book-open" className="active text-white" />
-          </div>
-        </MenuItem>
-      );
-    }
-  }
-
-  /*eslint-disable-next-line*/
-  const renderLiveAssignmentItem = () => {
-    if (page !== PageEnum.MainPage && props.user.rolePreference?.roleId === UserType.Teacher) {
-      return (
-        <MenuItem className="view-profile menu-item disabled" onClick={() => {}}>
-          <span className="menu-text">Shared with Me</span>
-          <div className="btn btn-transparent svgOnHover">
-            <SpriteIcon name="student-back-to-work" className="active text-white" />
-          </div>
-        </MenuItem>
-      );
-    }
-  }
-
   return (
     <Menu
       className="menu-dropdown"
@@ -243,10 +215,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         <FullScreenButton />
       </Hidden>
       {renderProfileItem()}
-      {/*
-      {renderReportsItem()}
-      {renderLiveAssignmentItem()}
-      */}
       <MenuItem className="menu-item" onClick={props.onLogout}>
         <span className="menu-text">Logout</span>
         <div className="btn btn-transparent svgOnHover">

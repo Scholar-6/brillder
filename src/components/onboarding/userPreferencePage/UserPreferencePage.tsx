@@ -7,7 +7,7 @@ import './UserPreferencePage.scss';
 import { ReduxCombinedState } from 'redux/reducers';
 import userActions from 'redux/actions/user';
 import map from 'components/map';
-import { User, UserType } from 'model/user';
+import { RolePreference, User, UserType } from 'model/user';
 import { checkAdmin } from 'components/services/brickService';
 import { setUserPreference } from 'services/axios/user';
 
@@ -23,7 +23,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
   const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId);
   const history = useHistory();
 
-  const handleChange = async (roleId: UserType, disabled: boolean) => {
+  const handleChange = async (roleId: RolePreference, disabled: boolean) => {
     if (disabled) {
       return;
     }
@@ -36,7 +36,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
     }
   }
 
-  const renderRadioButton = (roleId: UserType) => {
+  const renderRadioButton = (roleId: RolePreference) => {
     return <Radio checked={preference === roleId} value={roleId} />;
   }
 
@@ -46,7 +46,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
     }
   }
 
-  const RadioContainer: React.FC<{ roleId: UserType, name: string }> = ({ roleId, name, children }) => {
+  const RadioContainer: React.FC<{ roleId: RolePreference | UserType, name: string }> = ({ roleId, name, children }) => {
     let disabled = false;
     if (!isAdmin && roleId === UserType.Institution) {
       disabled = true;
@@ -59,11 +59,11 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
 
     return (
       <div>
-        <div className={className} onClick={() => handleChange(roleId, disabled)}>
-          {renderRadioButton(roleId)}
+        <div className={className} onClick={() => handleChange(roleId as RolePreference, disabled)}>
+          {renderRadioButton(roleId as RolePreference)}
           <span className="radio-text pointer">{name}</span>
         </div>
-        <div className="inner-radio-text pointer" onClick={() => handleChange(roleId, disabled)}>
+        <div className="inner-radio-text pointer" onClick={() => handleChange(roleId as RolePreference, disabled)}>
           {children}
         </div>
       </div>
@@ -81,13 +81,13 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
         <p className="user-preference-subtitle">
           Which of the following best describes you?
         </p>
-        <RadioContainer roleId={UserType.Student} name="Student">
+        <RadioContainer roleId={RolePreference.Student} name="Student">
           I want to play brick content, receive assignments and feedback, or join a course.
         </RadioContainer>
-        <RadioContainer roleId={UserType.Builder} name="Builder">
+        <RadioContainer roleId={RolePreference.Builder} name="Builder">
           I want to build and submit brick content for paid publication.
         </RadioContainer>
-        <RadioContainer roleId={UserType.Teacher} name="Teacher / Tutor">
+        <RadioContainer roleId={RolePreference.Teacher} name="Teacher / Tutor">
           I want to assign brick content, and provide feedback to my students.<br />
           <i>Use my institution's license or start a 30-day free trial for personal use.</i>
         </RadioContainer>
