@@ -53,6 +53,7 @@ import PlayPreviewRoute from './PlayPreviewRoute';
 import EmailLoginPage from 'components/loginPage/EmailLoginPage';
 import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSubjectPage';
 import PublicTerms from 'components/terms/PublicTerms';
+import Warning from 'components/baseComponents/rotateInstruction/Warning';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -125,6 +126,7 @@ const App: React.FC<AppProps> = props => {
   // tablet or ipad show in landscape
   if (isTablet || isIPad13) {
     if (window.screen.orientation && window.screen.orientation.type.match(landscape) || window.orientation === 90 || window.orientation === -90) {
+      return <Warning />
     } else {
       return <RotateInstruction />;
     }
