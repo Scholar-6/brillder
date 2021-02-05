@@ -86,6 +86,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         document.body.requestFullscreen().then(() => {
           this.moveToPlay(brickId);
         });
+      } else {
+        this.moveToPlay(brickId);
       }
     } else {
       this.moveToPlay(brickId);
