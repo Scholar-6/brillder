@@ -264,6 +264,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         document.body.requestFullscreen().then(() => {
           this.moveToPlay(brickId);
         });
+      } else {
+        this.moveToPlay(brickId);
       }
     } else {
       this.moveToPlay(brickId);
