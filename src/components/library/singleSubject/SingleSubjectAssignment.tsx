@@ -77,7 +77,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
           props.history.push(map.playIntro(brick.id));
         }
       }} style={{ background: color }}>
-        {!height && renderRotatedTitle("", 100)}
+        {!height && renderRotatedTitle("left-align", 100)}
         {hovered && <div className="custom-tooltip subject-tooltip">
           <div>{brick.title}</div>
         </div>}
