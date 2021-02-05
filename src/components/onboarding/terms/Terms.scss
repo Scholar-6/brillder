@@ -60,20 +60,46 @@
   background: inherit !important;
 
   .bottom-button {
-    background: var(--theme-orange);
+    background: var(--theme-green);
     height: calc(10vh);
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .MuiSvgIcon-root {
+      color: var(--theme-dark-blue);
+    }
+
+    .MuiButtonBase-root {
+      .MuiIconButton-label {
+        border-radius: 50%;
+      }
+      .MuiTouchRipple-root:hover {
+        background: var(--theme-dark-blue) !important;
+      }
+      margin-right: 0.4vw;
+    }
+    .MuiButtonBase-root {
+      width: 2.5vw;
+      height: 2.5vw;
+    }
+    .MuiSvgIcon-root {
+      width: 1.6vw;
+      height: 1.6vw;
+    }
+    .MuiButtonBase-root:hover {
+      background: var(--theme-dark-blue-alpha3) !important;
+    }
 
     button {
       border: none;
       outline: none;
       border-radius: 1vw;
       padding: 0.5vh 1vw;
-      font-size: 1.5vw;
+      font-size: 1.2vw;
       color: var(--white);
       background: inherit;
+      font-family: $font-family-regular;
 
       &:hover {
         color: var(--theme-dark-blue);

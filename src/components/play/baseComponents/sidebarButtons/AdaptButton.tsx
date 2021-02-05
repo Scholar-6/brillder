@@ -13,7 +13,7 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
   const [hovered, setHover] = React.useState(false);
 
   if (!props.user) { return <span />; }
-  let canSee = checkTeacherOrAdmin(props.user.roles);
+  let canSee = checkTeacherOrAdmin(props.user);
   if (!canSee) { return <span />; }
 
   if (!props.sidebarRolledUp) {

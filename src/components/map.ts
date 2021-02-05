@@ -6,6 +6,7 @@ export const ProposalBase = `${Build}/new-brick`;
 export const ProposalBase2 = `${Build}/brick/:brickId`;
 export const BackToWorkPage = '/back-to-work';
 export const AssignmentsPage = '/assignments';
+export const MyLibrary = '/my-library';
 export const Onboarding = '/onboarding';
 
 export const TermsPage = Onboarding + '/terms';
@@ -103,6 +104,7 @@ export default {
   UserProfile,
   Login,
   MainPage,
+  MyLibrary,
 
   TermsPage,
   SetUsername,

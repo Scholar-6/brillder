@@ -18,6 +18,12 @@ interface InputState {
   valid: boolean | null;
 }
 
+enum AnimationStep {
+  PageLoaded = 1,
+  TitleFinished,
+  FormShowed,
+}
+
 interface UsernamePageProps {
   history: any;
 
@@ -28,6 +34,7 @@ interface UsernamePageProps {
 const UsernamePage: React.FC<UsernamePageProps> = props => {
   const { user } = props;
 
+  const [animationStep, setStep] = React.useState(AnimationStep.PageLoaded);
   const [submited, setSubmited] = React.useState(null as boolean | null);
   const [labelFinished, setLabelFinished] = React.useState(false);
   const [username, setUsername] = React.useState('');
@@ -87,7 +94,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
   const renderGetStartedButton = () => {
     return (
       <div className="submit-button" onClick={move}>
-        <div>Get Started!</div>
+        <div><LabelTyping start={true} value="Get Started!"/></div>
         <SpriteIcon name="arrow-right" className={lastName.value && firstName.value ? 'valid' : 'invalid'} />
       </div>
     );
@@ -95,9 +102,10 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
 
   const renderGenerateButton = () => {
     return (
-      <div className="submit-button" onClick={submit}>
-        <div>Generate!</div>
-        <SpriteIcon name="arrow-right" className={lastName.value && firstName.value ? 'valid' : 'invalid'} />
+      <div className="submit-button" >
+        <button type="button" onClick={submit} className={lastName.value && firstName.value ? 'valid' : 'invalid'}>
+          Generate!
+        </button>
       </div>
     );
   }
@@ -111,26 +119,42 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     );
   }
 
+  const renderEditButton = () => {
+    if (!submited) {
+      return <div />
+    }
+    return <button onClick={() => {
+      setUsername('');
+      setSubmited(null);
+    }}>Edit</button>
+  }
+
   return (
     <div className="username-page">
       <form>
         <div>
-          <h1>Generate a username</h1>
-          <div className="inputs-box">
+          <h1>
+            <LabelTyping start={true} value="Generate a username" onFinish={() => setStep(AnimationStep.TitleFinished)} />
+          </h1>
+          <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
             <Input
               value={firstName.value}
               className={firstName.valid === false && !firstName.value ? 'invalid' : ''}
               onChange={e => setFirstName({ ...firstName, value: e.target.value })}
               placeholder="First Name" />
+            {renderEditButton()}
           </div>
-          <div className="inputs-box">
+          <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
             <Input
               value={lastName.value}
               className={lastName.valid === false && !lastName.value ? 'invalid' : ''}
               onChange={e => setLastName({ ...lastName, value: e.target.value })}
               placeholder="Last Name" />
+            {renderEditButton()}
           </div>
-          {submited === null ? renderGenerateButton() : renderGetStartedButton()}
+          <div className={animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}>
+            {submited === null ? renderGenerateButton() : renderGetStartedButton()}
+          </div>
         </div>
       </form>
       <div className="blue-right-block"></div>

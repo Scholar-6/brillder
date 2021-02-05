@@ -220,7 +220,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     let canSee = false;
     try {
-      canSee = checkTeacherOrAdmin(this.props.user.roles);
+      canSee = checkTeacherOrAdmin(this.props.user);
     } catch { }
 
     const {brick} = this.props;

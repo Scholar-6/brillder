@@ -50,7 +50,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
   constructor(props: PlayProps) {
     super(props);
 
-    const isTeach = checkTeacher(this.props.user.roles);
+    const isTeach = checkTeacher(this.props.user);
     const isAdmin = checkAdmin(this.props.user.roles);
 
     const threeColumns = {

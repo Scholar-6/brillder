@@ -12,12 +12,12 @@
     width: 100%;
     text-align: center;
     color: var(--white);
-    font-family: $font-family-bold;
+    font-family: $font-family-black;
     font-size: 4.5vw;
     line-height: 1;
   }
 
-  .subjects-column {
+  .subjects-column-v2 {
     margin-top: 0;
     padding-left: 5vw;
     padding-right: 5vw;
@@ -43,8 +43,8 @@
       }
 
       &:hover {
-        background: #12326A;
-        opacity: 0.7;
+        color: var(--theme-dark-blue) !important;
+        background: var(--tab-gray);
       }
 
       &.checked {
@@ -57,6 +57,12 @@
 
       &.next-button {
         background: var(--theme-orange);
+
+        .subject-name {
+          font-size:3.7vh;
+          line-height: 1.24;
+          font-family: $font-family-bold;
+        }
 
         .icon.right {
           position: absolute;
@@ -74,9 +80,9 @@
         }
 
         &:hover {
-          background: var(--theme-orange);
+          background: var(--tab-gray) !important;
           svg {
-            color: var(--white);
+            color: var(--theme-dark-blue) !important;
           }
         }
       }
