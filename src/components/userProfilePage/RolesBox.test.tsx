@@ -4,7 +4,7 @@ import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 import RolesBox from "./RolesBox";
-import { UserType } from "model/user";
+import { RolePreference, UserType } from "model/user";
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -20,7 +20,7 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[]}
-        rolePreference={UserType.Student}
+        rolePreference={RolePreference.Student}
         toggleRole={() => {}}
       />
     );
@@ -39,7 +39,7 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[]}
-        rolePreference={UserType.Teacher}
+        rolePreference={RolePreference.Teacher}
         toggleRole={() => {}}
       />
     );
@@ -58,7 +58,7 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[]}
-        rolePreference={UserType.Builder}
+        rolePreference={RolePreference.Builder}
         toggleRole={() => {}}
       />
     );
@@ -77,7 +77,7 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[UserType.Admin]}
-        rolePreference={UserType.Builder}
+        rolePreference={RolePreference.Builder}
         toggleRole={() => {}}
       />
     );
@@ -95,7 +95,7 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[UserType.Admin, UserType.Publisher, UserType.Institution]}
-        rolePreference={UserType.Builder}
+        rolePreference={RolePreference.Builder}
         toggleRole={() => {}}
       />
     );
