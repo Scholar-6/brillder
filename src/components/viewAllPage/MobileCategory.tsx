@@ -82,9 +82,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   move(brickId: number) {
     if (isMobile) {
-      document.body.requestFullscreen().then(() => {
-        this.moveToPlay(brickId);
-      });
+      if (document.body.requestFullscreen) {
+        document.body.requestFullscreen().then(() => {
+          this.moveToPlay(brickId);
+        });
+      }
     } else {
       this.moveToPlay(brickId);
     }
