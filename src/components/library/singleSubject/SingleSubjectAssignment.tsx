@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import './SingleSubjectAssignment.scss';
 import { BrickLengthEnum, Subject } from "model/brick";
@@ -18,25 +18,30 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
   let className = 'assignment'
 
   const { assignment, subject } = props;
+  const [height, setHeight] = React.useState(0);
+
+  setTimeout(() => {
+    const minHeight = 5;
+    let height = 0;
+    if (assignment.lastAttemptScore && assignment.maxScore) {
+      const heightInt = (assignment.lastAttemptScore / assignment.maxScore * 100);
+      if (heightInt < minHeight) {
+        height = minHeight;
+      } else {
+        height = heightInt;
+      }
+    }
+    if (assignment.lastAttemptScore === 0) {
+      height = minHeight;
+    }
+    setHeight(height);
+  }, 200);
 
   const { brick } = props.assignment;
   if (brick.brickLength) {
     className += ' length-' + brick.brickLength;
   } else {
     className += ' length-' + BrickLengthEnum.S40min;
-  }
-  const minHeight = 5;
-  let height = 0;
-  if (assignment.lastAttemptScore && assignment.maxScore) {
-    const heightInt = (assignment.lastAttemptScore / assignment.maxScore * 100);
-    if (heightInt < minHeight) {
-      height = minHeight;
-    } else {
-      height = heightInt;
-    }
-  }
-  if (assignment.lastAttemptScore === 0) {
-    height = minHeight;
   }
 
   let { color } = subject;
