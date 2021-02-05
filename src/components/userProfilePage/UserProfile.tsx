@@ -67,6 +67,7 @@ interface UserProfileState {
   roles: UserRoleItem[];
   validationRequired: boolean;
   emailInvalid: boolean;
+  editPassword: boolean;
 }
 
 class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
@@ -162,7 +163,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
       validationRequired: false,
       emailInvalid: false,
-      previewAnimationFinished: false
+      previewAnimationFinished: false,
+      editPassword: false
     };
   }
 
@@ -183,7 +185,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       emailInvalidOpen: false,
       validationRequired: false,
       emailInvalid: false,
-      previewAnimationFinished: false
+      previewAnimationFinished: false,
+      editPassword: false
     };
   }
 
@@ -401,11 +404,22 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   className=""  placeholder="Email" type="email"
                   onChange={e => this.onEmailChanged(e)}
                 />
-                <ProfileInput
-                  value={user.password} validationRequired={this.state.validationRequired}
-                  className=""  placeholder="●●●●●●●●●●●" type="password" shouldBeFilled={false}
-                  onChange={e => this.onFieldChanged(e, UserProfileField.Password)}
-                />
+                <div className="password-container">
+                  <ProfileInput
+                    value={user.password} validationRequired={this.state.validationRequired}
+                    className=""  placeholder="●●●●●●●●●●●" type="password" shouldBeFilled={false}
+                    onChange={e => this.onFieldChanged(e, UserProfileField.Password)}
+                  />
+                  {!this.state.editPassword &&
+                  <div className="button-container">
+                    <button onClick={() => this.setState({editPassword: true})}>Edit</button>
+                  </div>}
+                  {this.state.editPassword &&
+                  <div className="confirm-container">
+                    <SpriteIcon name="check-icon" className="start" />
+                    <SpriteIcon name="cancel-custom" className="end" />
+                  </div>}
+                </div>
               </div>
               <div className="profile-roles-container">
                 <div className="roles-title">ROLES</div>
