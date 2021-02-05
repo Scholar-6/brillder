@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Grid, Hidden } from "@material-ui/core";
 import { Category } from "../viewAllPage/service/interface";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 import "swiper/swiper.scss";
 
 import './Library.scss';
@@ -190,13 +191,35 @@ class Library extends Component<BricksListProps, BricksListState> {
     }
   }
 
+  preselectSubject(subjects: SubjectAItem[]) {
+    const values = queryString.parse(this.props.location.search);
+    if (values.subjectId) {
+      const subject = subjects.find(s => s.id == parseInt(values.subjectId as string));
+      if (subject) {
+        subject.checked = true;
+        return true;
+      }
+    }
+    return false;
+  }
+
   async getAssignments(subjects: SubjectAItem[]) {
     let rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>();
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const finalAssignments = this.filter(rawAssignments, subjects);
       const subjectAssignments = this.getAssignmentSubjects(finalAssignments, subjects);
-      this.setState({ ...this.state, subjects, subjectAssignments, isLoading: false, rawAssignments, finalAssignments });
+      let preselected = this.preselectSubject(subjects);
+      if (preselected) {
+        this.setState({
+          ...this.state, subjects, subjectAssignments, isLoading: false,
+          rawAssignments, finalAssignments, subjectChecked: true
+        });
+      } else {
+        this.setState({
+          ...this.state, subjects, subjectAssignments, isLoading: false, rawAssignments, finalAssignments
+        });
+      }
     } else {
       this.setState({ failedRequest: true });
     }
@@ -375,7 +398,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       }
     }
     return (
-      <div className="bricks-list-container bricks-container-mobile">
+      <div className="bricks-list-container bricks-container-mobile all-subject-assignments">
         <LibrarySubjects
           userId={this.props.user.id}
           subjects={this.state.subjects}

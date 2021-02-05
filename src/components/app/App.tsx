@@ -3,7 +3,7 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { isMobile } from 'react-device-detect';
+import { isMobile, isIPad13, isTablet } from 'react-device-detect';
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -53,6 +53,7 @@ import PlayPreviewRoute from './PlayPreviewRoute';
 import EmailLoginPage from 'components/loginPage/EmailLoginPage';
 import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSubjectPage';
 import PublicTerms from 'components/terms/PublicTerms';
+import Warning from 'components/baseComponents/rotateInstruction/Warning';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -63,6 +64,12 @@ const App: React.FC<AppProps> = props => {
   const location = useLocation();
   const [zendeskCreated, setZendesk] = React.useState(false);
   const [orientation, setOrientation] = React.useState('');
+
+  useEffect(() => {
+    window.addEventListener("orientationchange", (event:any) => {
+      setOrientation(event.target.screen.orientation ? event.target.screen.orientation.type : event.target.orientation);
+    });
+  }, []);
 
   axios.interceptors.response.use(function (response) {
     return response;
@@ -108,15 +115,21 @@ const App: React.FC<AppProps> = props => {
     return Promise.reject(error);
   });
 
-  if (isMobile) {
+  const landscape = '/^landscape-.+$/';
+  if (!isTablet && !isIPad13 && isMobile) {
     // Apple does not seem to have the window.screen api so we have to use deprecated window.orientation instead.
-    let landscape = '/^landscape-.+$/';
     if (window.screen.orientation && window.screen.orientation.type.match(landscape) || window.orientation === 90 || window.orientation === -90) {
       return <RotateInstruction />;
     }
-    window.addEventListener("orientationchange", (event:any) => {
-      setOrientation(event.target.screen.orientation ? event.target.screen.orientation.type : event.target.orientation);
-    });
+  }
+
+  // tablet or ipad show in landscape
+  if (isTablet || isIPad13) {
+    if (window.screen.orientation && window.screen.orientation.type.match(landscape) || window.orientation === 90 || window.orientation === -90) {
+      return <Warning />
+    } else {
+      return <RotateInstruction />;
+    }
   }
 
   return (

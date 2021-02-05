@@ -8,7 +8,7 @@ import './SelectSubjectPage.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import userActions from 'redux/actions/user';
 import { updateUser } from "services/axios/user";
-import { RolePreference, User, UserType } from "model/user";
+import { RolePreference, User } from "model/user";
 import { SubjectItem } from "model/brick";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";

@@ -1,6 +1,6 @@
 import React from "react";
 
-import './RotateInstruction.scss';
+import './Warning.scss';
 import SpriteIcon from "../SpriteIcon";
 
 interface Props {}
@@ -15,15 +15,12 @@ const RotateInstruction: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="rotate-instruction-page">
+    <div className="rotate-instruction-page ipad-warning">
       <div>
         <div className="rotate-button-container">
-          <div className="rotate-button" onClick={rotateScreen}>
-            <SpriteIcon name="undo" />
-            <div className="dot"></div>
-          </div>
+          <SpriteIcon name="alert-triangle" />
         </div>
-        <div className="rotate-text">We think it will be easier to take in information with your device upright.</div>
+        <div className="rotate-text">Hold tight, Brillder is coming soon on iPad.</div>
       </div>
     </div>
   );

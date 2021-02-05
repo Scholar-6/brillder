@@ -1,4 +1,10 @@
 .my-library {
+  .all-subject-assignments {
+    height: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh) !important;
+    .my-library-list {
+      padding-bottom: 9vh;
+    }
+  }
   .subjects-filter {
     height: 25vh !important;
   }
@@ -13,7 +19,7 @@
     padding-top: 3vh;
     padding-left: 2vw;
     padding-right: 2vw;
-    padding-bottom: 5vh;
+    padding-bottom: 12vh;
     height: 100%;
     .libary-container {
       background: var(--white);
@@ -30,7 +36,7 @@
         .assignment {
           margin-left: $base-side-margin;
           margin-right: $base-side-margin;
-          $base-radius: 0.5vw;
+          $base-radius: 0.35vw;
           border-radius: $base-radius;
           .progress-value {
             border-radius: $base-radius;

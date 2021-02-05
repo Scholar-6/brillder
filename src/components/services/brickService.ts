@@ -1,5 +1,5 @@
 import { Brick, BrickStatus } from 'model/brick';
-import { User, UserType, UserRole } from 'model/user';
+import { User, UserType, UserRole, RolePreference } from 'model/user';
 
 function formatTwoLastDigits(twoLastDigits: number) {
   var formatedTwoLastDigits = "";
@@ -73,8 +73,11 @@ export function getDateString(inputDateString: string) {
   return `${date}.${month}.${year}`;
 }
 
-export function checkTeacherOrAdmin(roles: UserRole[]) {
-  return roles.some(r => r.roleId === UserType.Teacher || r.roleId === UserType.Admin);
+export function checkTeacherOrAdmin(user: User) {
+  if (user.rolePreference?.roleId === RolePreference.Teacher) {
+    return true;
+  }
+  return user.roles.some(r => r.roleId === UserType.Admin);
 }
 
 export function checkEditor(roles: UserRole[]) {
@@ -109,8 +112,8 @@ export function checkPublisher(user: User, brick: Brick) {
   return false;
 }
 
-export function checkTeacher(roles: UserRole[]) {
-  return roles.some(role => role.roleId === UserType.Teacher);
+export function checkTeacher(user: User) {
+  return user.rolePreference?.roleId === RolePreference.Teacher;
 }
 
 export function checkAdmin(roles: UserRole[]) {
@@ -134,13 +137,6 @@ export function canEditBrick(brick: Brick, user: User) {
   }
 }
 
-export function canBuild(user: User) {
-  return user.roles.some(role => {
-    const { roleId } = role;
-    return (roleId === UserType.Builder || roleId === UserType.Publisher || roleId === UserType.Admin);
-  });
-}
-
 export function canEdit(user: User) {
   return user.roles.some(role => {
     const { roleId } = role;
@@ -155,9 +151,12 @@ export function canDelete(userId: number, isAdmin: boolean, brick: Brick) {
 }
 
 export function checkTeacherEditorOrAdmin(user: User) {
+  if (user.rolePreference?.roleId === RolePreference.Teacher) {
+    return true;
+  }
   return user.roles.some(role => {
     const { roleId } = role;
-    return roleId === UserType.Teacher || roleId === UserType.Publisher || roleId === UserType.Admin;
+    return roleId === UserType.Publisher || roleId === UserType.Admin;
   });
 }
 
@@ -170,9 +169,9 @@ export function getAssignmentIcon(brick: Brick) {
 }
 
 export function canTeach(user: User) {
-  let canTeach = checkTeacherOrAdmin(user.roles);  
+  let canTeach = checkTeacherOrAdmin(user);  
   if (!canTeach && user.rolePreference) {
-    if (user.rolePreference.roleId === UserType.Teacher) {
+    if (user.rolePreference.roleId === RolePreference.Teacher) {
       canTeach = true;
     }
   }

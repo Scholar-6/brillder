@@ -260,9 +260,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   move(brickId: number) {
     if (isMobile) {
-      document.body.requestFullscreen().then(() => {
+      if (document.body.requestFullscreen) {
+        document.body.requestFullscreen().then(() => {
+          this.moveToPlay(brickId);
+        });
+      } else {
         this.moveToPlay(brickId);
-      });
+      }
     } else {
       this.moveToPlay(brickId);
     }

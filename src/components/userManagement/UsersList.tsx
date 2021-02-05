@@ -80,9 +80,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       filterExpanded: true,
 
       roles: [
-        { name: "Student", type: UserType.Student, checked: false },
-        { name: "Teacher", type: UserType.Teacher, checked: false },
-        { name: "Builder", type: UserType.Builder, checked: false },
+        { name: "Student", type: RolePreference.Student, checked: false },
+        { name: "Teacher", type: RolePreference.Teacher, checked: false },
+        { name: "Builder", type: RolePreference.Builder, checked: false },
         { name: "Publisher", type: UserType.Publisher, checked: false },
         { name: "Admin", type: UserType.Admin, checked: false },
       ],

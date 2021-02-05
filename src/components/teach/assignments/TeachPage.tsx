@@ -65,7 +65,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
 
-    const isTeach = checkTeacher(this.props.user.roles);
+    const isTeach = checkTeacher(this.props.user);
     const isAdmin = checkAdmin(this.props.user.roles);
 
     this.state = {
