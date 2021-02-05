@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
+import Checkbox from '@material-ui/core/Checkbox';
 import axios from "axios";
 // @ts-ignore
 import marked from "marked";
@@ -81,7 +82,10 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
             </div>
           </div>
           <div className="bottom-button">
-            <button className="" onClick={() => this.props.history.push(map.SetUsername)}>I agree to terms and conditions</button>
+            <Checkbox onClick={() => this.props.history.push(map.SetUsername)} />
+            <span>
+              I am over 13 years old, and agree to the Brillder Terms of Service and Privacy Policy
+            </span>
           </div>
         </Grid>
       </Grid>

@@ -2,6 +2,17 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
+.user-preference-page .user-preference-container .radio-container svg, .user-preference-page .user-preference-container .radio-container input {
+  padding: 0.4vw;
+}
+
+.user-preference-page .user-preference-container .radio-container svg, .user-preference-page .user-preference-container .radio-container {
+  .MuiIconButton-label:hover {
+    background: var(--theme-dark-blue-alpha3) !important;
+    border-radius: 50%;
+  }
+}
+
 .user-preference-page {
   background-color: var(--theme-dark-blue);
   color: var(--theme-dark-blue) !important;
@@ -42,8 +53,8 @@
       padding: 0 !important;
       width: 100%;
       font-size: 3.1vw !important;
-      margin-top: -1vw;
-      font-family: $font-family-bold !important;
+      margin-top: 0vw;
+      font-family: $font-family-black !important;
     }
 
     .user-preference-subtitle {
@@ -82,7 +93,8 @@
     }
 
     .inner-radio-text {
-      margin-left: 5vw;
+      margin-left: 5.8vw;
+      font-size: 1.1vw;
 
       &.last-one {
         font-family: $font-family-regular-italic;
