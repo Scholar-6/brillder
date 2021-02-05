@@ -10,6 +10,8 @@
       transform: rotate(270deg);
 
       .rotated-text {
+        padding-left: 4vh;
+        padding-right: 4vh;
         white-space: nowrap;
         text-overflow: ellipsis;
         position: absolute;
@@ -30,6 +32,12 @@
     }
     &.white .rotated .rotated-text p {
       color: var(--white);
+    }
+
+    &.left-align {
+      .rotated .rotated-text {
+        justify-content: flex-start;
+      }
     }
   }
   .custom-tooltip.subject-tooltip {
