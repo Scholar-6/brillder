@@ -80,7 +80,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   constructor(props: BuildProps) {
     super(props);
 
-    const isTeach = checkTeacher(this.props.user.roles);
+    const isTeach = checkTeacher(this.props.user);
     const isAdmin = checkAdmin(this.props.user.roles);
     const isEditor = checkEditor(this.props.user.roles)
     const isCore = this.getCore(isAdmin, isEditor);
