@@ -325,6 +325,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     if (this.state.isTeacher) {
       return this.renderReportsButton(false);
     } else if (this.state.isAdmin) {
+      if (this.state.isStudent) {
+        return this.renderAssignmentsButton();
+      }
       return this.renderLibraryButton();
     }
     return "";
