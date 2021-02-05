@@ -94,7 +94,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
   const renderGetStartedButton = () => {
     return (
       <div className="submit-button" onClick={move}>
-        <div>Get Started!</div>
+        <div><LabelTyping start={true} value="Get Started!"/></div>
         <SpriteIcon name="arrow-right" className={lastName.value && firstName.value ? 'valid' : 'invalid'} />
       </div>
     );
@@ -103,7 +103,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
   const renderGenerateButton = () => {
     return (
       <div className="submit-button" >
-        <button onClick={submit} className={lastName.value && firstName.value ? 'valid' : 'invalid'}>
+        <button type="button" onClick={submit} className={lastName.value && firstName.value ? 'valid' : 'invalid'}>
           Generate!
         </button>
       </div>
@@ -119,6 +119,16 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     );
   }
 
+  const renderEditButton = () => {
+    if (!submited) {
+      return <div />
+    }
+    return <button onClick={() => {
+      setUsername('');
+      setSubmited(null);
+    }}>Edit</button>
+  }
+
   return (
     <div className="username-page">
       <form>
@@ -132,6 +142,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
               className={firstName.valid === false && !firstName.value ? 'invalid' : ''}
               onChange={e => setFirstName({ ...firstName, value: e.target.value })}
               placeholder="First Name" />
+            {renderEditButton()}
           </div>
           <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
             <Input
@@ -139,6 +150,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
               className={lastName.valid === false && !lastName.value ? 'invalid' : ''}
               onChange={e => setLastName({ ...lastName, value: e.target.value })}
               placeholder="Last Name" />
+            {renderEditButton()}
           </div>
           <div className={animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}>
             {submited === null ? renderGenerateButton() : renderGetStartedButton()}

@@ -48,6 +48,21 @@
     }
 
     .inputs-box {
+      position: relative;
+
+      button {
+        position: absolute;
+        top: calc(3vh - 0.3vw);
+        font-size: 1.8vw;
+        font-family: $font-family-regular;
+        padding: 0vw 1vw;
+        border-radius: 0.7vw;
+        right: -6vw;
+        border: none;
+        outline: none;
+        color: var(--white);
+        background: var(--theme-orange);
+      }
       margin-top: 9vh;
       margin-bottom: 9vh;
 
@@ -135,6 +150,7 @@
       font-family: $font-family-regular;
       margin-top: 14vh;
       letter-spacing: 0.1vw;
+      font-size: 3vw;
 
       button {
         font-size: 2.2vw;
@@ -151,6 +167,20 @@
         &.invalid {
           color: var(--theme-light-blue);
         }
+      }
+
+      svg {
+        height: 5vw;
+        width: 5vw;
+        color: var(--theme-orange);
+
+        &.invalid {
+          color: var(--theme-light-blue);
+        }
+      }
+
+      &:hover {
+        font-family: $font-family-bold;
       }
     }
   }
