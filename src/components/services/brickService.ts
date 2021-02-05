@@ -151,9 +151,12 @@ export function canDelete(userId: number, isAdmin: boolean, brick: Brick) {
 }
 
 export function checkTeacherEditorOrAdmin(user: User) {
+  if (user.rolePreference?.roleId === RolePreference.Teacher) {
+    return true;
+  }
   return user.roles.some(role => {
     const { roleId } = role;
-    return roleId === UserType.Teacher || roleId === UserType.Publisher || roleId === UserType.Admin;
+    return roleId === UserType.Publisher || roleId === UserType.Admin;
   });
 }
 
@@ -168,7 +171,7 @@ export function getAssignmentIcon(brick: Brick) {
 export function canTeach(user: User) {
   let canTeach = checkTeacherOrAdmin(user);  
   if (!canTeach && user.rolePreference) {
-    if (user.rolePreference.roleId === UserType.Teacher) {
+    if (user.rolePreference.roleId === RolePreference.Teacher) {
       canTeach = true;
     }
   }
