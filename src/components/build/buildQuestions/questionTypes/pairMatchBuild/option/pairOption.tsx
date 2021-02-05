@@ -1,4 +1,5 @@
 import React from "react";
+import * as Y from "yjs";
 import { Grid } from "@material-ui/core";
 import {QuestionValueType} from '../../types';
 import {Answer} from '../types';
@@ -12,25 +13,21 @@ export interface PairOptionProps {
   locked: boolean;
   editOnly: boolean;
   index: number;
-  answer: Answer;
+  answer: Y.Map<any>;
   validationRequired: boolean;
-  save(): void;
-  update(): void;
 }
 
 const PairOptionComponent: React.FC<PairOptionProps> = ({
-  locked, editOnly, index, answer, validationRequired, save, update
+  locked, editOnly, index, answer, validationRequired
 }) => {
   const removeImage = () => {
     if (locked) { return; }
-    answer.optionFile = "";
-    answer.optionType = QuestionValueType.None;
-    update();
-    save();
+    answer.set("optionFile", "");
+    answer.set("optionType", QuestionValueType.None);
   }
 
   const renderDeleteButton = () => {
-    if (answer.optionType === QuestionValueType.Image) {
+    if (answer.get("optionType") === QuestionValueType.Image) {
       return (
         <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeImage()}>
           <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
@@ -40,33 +37,22 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     return "";
   }
 
-  const optionChanged = (answer: Answer, value: string) => {
-    if (locked) { return; }
-    answer.option = value;
-    answer.optionFile = "";
-    answer.optionType = QuestionValueType.String;
-    update();
-    save();
-  }
-
   const setImage = (fileName: string) => {
     if (locked) {return;}
-    answer.option = "";
-    answer.optionFile = fileName;
-    answer.optionType = QuestionValueType.Image;
-    update();
-    save();
+    answer.set("option", "");
+    answer.set("optionFile", fileName);
+    answer.set("optionType", QuestionValueType.Image);
   }
 
   let customClass = 'unique-component pair-match-option';
-  if (answer.optionType === QuestionValueType.Image || answer.answerType === QuestionValueType.Image) {
+  if (answer.get("optionType") === QuestionValueType.Image || answer.get("answerType") === QuestionValueType.Image) {
     customClass += ' pair-image';
   }
 
   let isValid = null;
   if (validationRequired) {
     isValid = true;
-    if ((answer.optionType === QuestionValueType.String || answer.optionType === QuestionValueType.None || !answer.optionType) && !answer.option) {
+    if ((answer.get("optionType") === QuestionValueType.String || answer.get("optionType") === QuestionValueType.None || !answer.get("optionType")) && !answer.get("option")) {
       isValid = false;
     }
   }
@@ -80,17 +66,16 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
       <div className={customClass}>
         <QuillEditor
           disabled={locked}
-          data={answer.option}
+          sharedData={answer.get("option")}
           validate={validationRequired}
           toolbar={['latex']}
           isValid={isValid}
           placeholder={"Enter Option " + (index + 1) + "..."}
-          onChange={value => optionChanged(answer, value)}
         />
         <QuestionImageDropZone
           answer={answer as any}
-          type={answer.optionType || QuestionValueType.None}
-          fileName={answer.optionFile}
+          type={answer.get("optionType") || QuestionValueType.None}
+          fileName={answer.get("optionFile")}
           locked={locked}
           update={setImage}
         />

@@ -21,7 +21,7 @@ export const getDefaultHorizontalShuffleAnswer = (ymap: Y.Map<any>) => {
 }
 
 const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
-  locked, editOnly, data, validationRequired, save, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, openSameAnswerDialog
 }) => {
   const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), id: generateId() }));
 

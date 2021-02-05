@@ -1,4 +1,5 @@
 import React from "react";
+import * as Y from "yjs";
 import { Grid } from "@material-ui/core";
 import { QuestionValueType } from '../../types';
 import { Answer } from '../types';
@@ -13,38 +14,25 @@ export interface PairAnswerProps {
   editOnly: boolean;
   index: number;
   length: number;
-  answer: Answer;
+  answer: Y.Map<any>;
   validationRequired: boolean;
   removeFromList(index: number): void;
-  save(): void;
-  update(): void;
   onBlur(): void;
 }
 
 const PairAnswerComponent: React.FC<PairAnswerProps> = ({
   locked, editOnly, index, length, answer, validationRequired,
-  removeFromList, update, save, onBlur
+  removeFromList, onBlur
 }) => {
-  const answerChanged = (answer: Answer, value: string) => {
-    if (locked) { return; }
-    answer.value = value;
-    answer.valueFile = "";
-    answer.answerType = QuestionValueType.String;
-    update();
-    save();
-  }
-
   const removeImage = () => {
     if (locked) { return; }
-    answer.valueFile = "";
-    answer.answerType = QuestionValueType.None;
-    update();
-    save();
+    answer.set("valueFile", "");
+    answer.set("answerType", QuestionValueType.None);
   }
 
   const renderDeleteButton = () => {
     if (locked) { return; }
-    if (answer.answerType === QuestionValueType.Image) {
+    if (answer.get("answerType") === QuestionValueType.Image) {
       return (
         <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeImage()}>
           <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
@@ -63,14 +51,14 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
   }
 
   let customClass = 'unique-component pair-match-answer';
-  if (answer.optionType === QuestionValueType.Image || answer.answerType === QuestionValueType.Image) {
+  if (answer.get("optionType") === QuestionValueType.Image || answer.get("answerType") === QuestionValueType.Image) {
     customClass += ' pair-image';
   }
 
   let isValid = null;
   if (validationRequired) {
     isValid = true;
-    if ((answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None || !answer.answerType) && !answer.value) {
+    if ((answer.get("answerType") === QuestionValueType.String || answer.get("answerType") === QuestionValueType.None || !answer.get("answerType")) && !answer.get("value")) {
       isValid = false;
     }
   }
@@ -81,11 +69,9 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
 
   const setImage = (fileName: string) => {
     if (locked) { return; }
-    answer.value = "";
-    answer.valueFile = fileName;
-    answer.answerType = 2;
-    update();
-    save();
+    answer.set("value", "");
+    answer.set("valueFile", fileName);
+    answer.set("answerType", QuestionValueType.Image);
   }
 
   return (
@@ -94,7 +80,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
         {renderDeleteButton()}
         <QuillEditor
           disabled={locked}
-          data={answer.value}
+          sharedData={answer.get("value")}
           validate={validationRequired}
           isValid={isValid}
           toolbar={['latex']}
@@ -102,12 +88,11 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
           onBlur={() => {
             onBlur();
           }}
-          onChange={value => answerChanged(answer, value)}
         />
         <QuestionImageDropZone
           answer={answer as any}
-          type={answer.answerType || QuestionValueType.None}
-          fileName={answer.valueFile}
+          type={answer.get("answerType") || QuestionValueType.None}
+          fileName={answer.get("valueFile")}
           locked={locked}
           update={setImage}
         />
