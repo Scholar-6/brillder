@@ -1,5 +1,6 @@
 import React from "react";
 
+import './SubjectsColumnV2.scss';
 import { Subject } from "model/brick";
 import { GENERAL_SUBJECT, CURRENT_AFFAIRS_SUBJECT } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -58,7 +59,7 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, next, onClick }) => {
   }
 
   return (
-    <div className="subjects-column">
+    <div className="subjects-column-v2">
       <div style={{width: '100%'}}>
         {list.map((row, i) =>
           <div key={i} className="subject-row">
