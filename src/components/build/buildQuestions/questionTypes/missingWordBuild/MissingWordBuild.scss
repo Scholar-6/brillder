@@ -1,19 +1,27 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .missing-word-build {
-  textarea {
-    width: 88.5%;
-    padding: 0;
-    padding-left: 1%;
-    padding-right: 10%;
-    min-height: 55px;
-    font-size: 1vw;
-    border-radius: 0.4vw !important;
+  .ql-toolbar {
+    display: none;
+  }
+  .quill-document-editor.textarea {
+    .ql-editor {
+      padding: 3%;
+      padding-right: 10%;
+      min-height: 55px;
+      font-size: 1vw;
+      text-align: left;
+      border-radius: 0.4vw !important;
+      border: none !important;
+      font-family: $font-family-regular;
+      p {
+        text-align: left !important;
+      }
+    }
     padding-top: 0.4vh;
-    border: none !important;
-    font-family: $font-family-regular;
+    padding-bottom: 0.4vh;
   }
   @extend %textCenter;
 
@@ -35,16 +43,18 @@
     }
 
     .input-answer {
-      width: 100%;
-      min-height: $answer-height;
-      @extend %textCenter;
-      border: none;
-      background: var(--input-gray);
-      @extend %themeRadius;
-      font-size: $answer-input-text-size;
+      .ql-editor {
+        width: 100%;
+        min-height: $answer-height;
+        @extend %textCenter;
+        border: none;
+        background: var(--input-gray);
+        @extend %themeRadius;
+        font-size: $answer-input-text-size;
 
-      &.invalid::placeholder {
-        color: var(--white);
+        &.invalid::placeholder {
+          color: var(--white);
+        }
       }
     }
   }

@@ -194,7 +194,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           <DragTab
             index={index}
             questionId={question.id}
-            active={question.active}
+            active={props.currentQuestionIndex === index}
             isValid={isValid}
             getHasReplied={getHasReplied}
             selectQuestion={props.selectQuestion}

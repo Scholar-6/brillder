@@ -28,6 +28,7 @@ interface QuillEditorProps {
     validate?: boolean;
     isValid?: boolean | null;
     toolbar: string[];
+    className?: string;
     onChange?(data: string): void;
     onBlur?(): void;
 }
@@ -86,14 +87,17 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
     const valid = (!props.validate || (data && (props.isValid !== false)));
 
     return (
-        <div className={`quill-document-editor${valid ? "" : " content-invalid"}`}>
-            <div className={`ql-toolbar quill-${uniqueId}`}>
-                <div className="ql-formats">
-                {props.toolbar.map((item) => (
-                    <React.Fragment key={item}>{ toolbarItems[item] }</React.Fragment>
-                ))}
+        <div className={`quill-document-editor${valid ? "" : " content-invalid"} ${props.className ?? ""}`}>
+                <div className={`ql-toolbar quill-${uniqueId}`}>
+                {
+                    props.toolbar.length > 0 &&
+                    <div className="ql-formats">
+                    {props.toolbar.map((item) => (
+                        <React.Fragment key={item}>{ toolbarItems[item] }</React.Fragment>
+                    ))}
+                    </div>
+                }
                 </div>
-            </div>
             <ReactQuill
                 theme="snow"
                 // value={props.sharedData ? undefined : (data || "")}
