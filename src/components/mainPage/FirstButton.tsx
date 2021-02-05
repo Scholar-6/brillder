@@ -2,7 +2,7 @@ import React from "react";
 
 import './FirstButton.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { User, UserType } from "model/user";
+import { RolePreference, User } from "model/user";
 import { isMobile } from "react-device-detect";
 import map from "components/map";
 
@@ -17,9 +17,9 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
     const { rolePreference } = props.user;
     if (rolePreference) {
       const {roleId} = rolePreference;
-      if (roleId === UserType.Teacher) {
+      if (roleId === RolePreference.Teacher) {
         return "Assign Bricks";
-      } else if (roleId === UserType.Student) {
+      } else if (roleId === RolePreference.Student) {
         return "View & Play";
       }
     }

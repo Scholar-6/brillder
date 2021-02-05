@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Dialog from "@material-ui/core/Dialog";
 
 import actions from 'redux/actions/requestFailed';
-import { User, UserType, UserStatus } from "model/user";
+import { User, UserType, UserStatus, RolePreference } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
@@ -394,13 +394,13 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     for (let role of user.roles) {
       if (role.roleId === UserType.Admin) {
         type += "A";
-      } else if (role.roleId === UserType.Builder || user.rolePreference?.roleId === UserType.Builder) {
+      } else if (user.rolePreference?.roleId === RolePreference.Builder) {
         type += "B";
       } else if (role.roleId === UserType.Publisher) {
         type += "P";
-      } else if (role.roleId === UserType.Student || user.rolePreference?.roleId === UserType.Student) {
+      } else if (user.rolePreference?.roleId === RolePreference.Student) {
         type += "S";
-      } else if (role.roleId === UserType.Teacher || user.rolePreference?.roleId === UserType.Teacher) {
+      } else if (user.rolePreference?.roleId === RolePreference.Teacher) {
         type += "T";
       }
     }

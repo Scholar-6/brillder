@@ -81,13 +81,13 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
         <p className="user-preference-subtitle">
           Which of the following best describes you?
         </p>
-        <RadioContainer roleId={UserType.Student} name="Student">
+        <RadioContainer roleId={RolePreference.Student} name="Student">
           I want to play brick content, receive assignments and feedback, or join a course.
         </RadioContainer>
-        <RadioContainer roleId={UserType.Builder} name="Builder">
+        <RadioContainer roleId={RolePreference.Builder} name="Builder">
           I want to build and submit brick content for paid publication.
         </RadioContainer>
-        <RadioContainer roleId={UserType.Teacher} name="Teacher / Tutor">
+        <RadioContainer roleId={RolePreference.Teacher} name="Teacher / Tutor">
           I want to assign brick content, and provide feedback to my students.<br />
           <i>Use my institution's license or start a 30-day free trial for personal use.</i>
         </RadioContainer>
