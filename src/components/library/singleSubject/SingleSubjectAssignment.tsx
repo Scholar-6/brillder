@@ -74,7 +74,6 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
       }} style={{ background: color }}>
         {!height && renderRotatedTitle("", 100)}
         {hovered && <div className="custom-tooltip subject-tooltip">
-          <div className="bold">{subject.name}</div>
           <div>{brick.title}</div>
         </div>}
         <div className="progress-value default-value" onMouseEnter={() => setHover(true)}></div>

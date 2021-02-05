@@ -122,7 +122,7 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
     const pages = this.getPages(assignments);
 
     return (
-      <div className="bricks-list-container bricks-container-mobile">
+      <div className="bricks-list-container bricks-container-mobile single-subject-assignments">
         <div className="one-subject">
           <div className="libary-container">
             <div style={{ display: 'flex', flexDirection: 'row' }}>
