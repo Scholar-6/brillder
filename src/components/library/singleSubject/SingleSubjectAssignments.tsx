@@ -119,6 +119,15 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
       return 1;
     });
 
+    assignments.sort((a, b) => {
+      if (a.maxScore && a.maxScore >= 0) {
+        if (new Date(a.brick.updated).getTime() > new Date(b.brick.updated).getTime()) {
+          return -1;
+        }
+      }
+      return 1;
+    });
+
     const pages = this.getPages(assignments);
 
     return (
