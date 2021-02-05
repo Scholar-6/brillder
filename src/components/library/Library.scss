@@ -1,4 +1,10 @@
 .my-library {
+  .all-subject-assignments {
+    height: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh) !important;
+    .my-library-list {
+      padding-bottom: 9vh;
+    }
+  }
   .subjects-filter {
     height: 25vh !important;
   }
