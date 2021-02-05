@@ -64,14 +64,6 @@ const App: React.FC<AppProps> = props => {
   const [zendeskCreated, setZendesk] = React.useState(false);
   const [orientation, setOrientation] = React.useState('');
 
-  useEffect(() => {
-    console.log('init');
-    window.addEventListener("orientationchange", function(event:any) {
-      console.log('orientation changed');
-      setOrientation(event.target.screen.orientation.type);
-    });
-  }, []);
-
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
@@ -117,11 +109,14 @@ const App: React.FC<AppProps> = props => {
   });
 
   if (isMobile) {
-    let orientationType = window.screen.orientation.type;
-    console.log(orientationType, orientation);
-    if (orientationType === 'landscape-secondary' || orientationType === 'landscape-primary') {
+    // Apple does not seem to have the window.screen api so we have to use deprecated window.orientation instead.
+    let landscape = '/^landscape-.+$/';
+    if (window.screen.orientation && window.screen.orientation.type.match(landscape) || window.orientation === 90 || window.orientation === -90) {
       return <RotateInstruction />;
     }
+    window.addEventListener("orientationchange", (event:any) => {
+      setOrientation(event.target.screen.orientation ? event.target.screen.orientation.type : event.target.orientation);
+    });
   }
 
   return (
