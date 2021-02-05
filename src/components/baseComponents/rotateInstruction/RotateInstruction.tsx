@@ -7,9 +7,11 @@ interface Props {}
 
 const RotateInstruction: React.FC<Props> = (props) => {
   const rotateScreen = () => {
-    document.body.requestFullscreen().then(() => {
-      window.screen.orientation.lock('portrait-primary');
-    });
+    if (document.body.requestFullscreen) {
+      document.body.requestFullscreen().then(() => {
+        window.screen.orientation.lock('portrait-primary');
+      });
+    }
   }
 
   return (

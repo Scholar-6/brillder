@@ -73,6 +73,7 @@ class MobileLearn extends Component<Props> {
             searchString=""
             brick={brick} index={i}
             color={color}
+            move={() => this.moveToPlay(assignments[i])}
           />
         );
       }
