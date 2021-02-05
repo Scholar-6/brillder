@@ -1,5 +1,5 @@
 import { Brick, BrickStatus } from 'model/brick';
-import { User, UserType, UserRole } from 'model/user';
+import { User, UserType, UserRole, RolePreference } from 'model/user';
 
 function formatTwoLastDigits(twoLastDigits: number) {
   var formatedTwoLastDigits = "";
@@ -109,8 +109,8 @@ export function checkPublisher(user: User, brick: Brick) {
   return false;
 }
 
-export function checkTeacher(roles: UserRole[]) {
-  return roles.some(role => role.roleId === UserType.Teacher);
+export function checkTeacher(user: User) {
+  return user.rolePreference?.roleId === RolePreference.Teacher;
 }
 
 export function checkAdmin(roles: UserRole[]) {
@@ -132,13 +132,6 @@ export function canEditBrick(brick: Brick, user: User) {
     default:
       return brick.author?.id === user.id || isAdmin;
   }
-}
-
-export function canBuild(user: User) {
-  return user.roles.some(role => {
-    const { roleId } = role;
-    return (roleId === UserType.Builder || roleId === UserType.Publisher || roleId === UserType.Admin);
-  });
 }
 
 export function canEdit(user: User) {
