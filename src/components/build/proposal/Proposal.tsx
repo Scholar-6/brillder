@@ -227,6 +227,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   setLength = (brickLength: BrickLengthEnum) => {
     let brick = { ...this.state.brick, brickLength } as Brick;
     this.saveLocalBrick(brick);
+    this.context?.ydoc.getMap("brick").set("brickLength", brickLength);
     return brick;
   };
 
@@ -350,7 +351,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 length={this.context?.ydoc.getMap("brick").get("brickLength")}
                 canEdit={canEdit}
                 saveLength={this.setLength}
-                saveBrick={this.setLength}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>

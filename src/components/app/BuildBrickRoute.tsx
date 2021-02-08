@@ -73,7 +73,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
               <YJSContext.Consumer>
                 {context => {
                   const brick = context?.json.brick;
-                  if (!brick || !brick.authorId || brick.id !== brickId) {
+                  if (!brick || !brick.author?.id || brick.id !== brickId) {
                     return <PageLoader content="...Getting Brick..." />;
                   }
                   console.log({ ...brick, questions: brick.questions.map((q: any) => q.toJSON()) });

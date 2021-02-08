@@ -290,13 +290,11 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     }
 
     const renderAuthorRow = () => {
-      const authorId = brick.get("authorId");
-      if (!authorId) { return ''; }
+      const author = brick.get("author");
+      if (!author) { return ''; }
 
-      // TODO: Include author in YMap
-      // const { firstName, lastName } = author;
-      const firstName = "William";
-      const lastName = "Gooch";
+      const firstName = author.get("firstName").toString();
+      const lastName = author.get("lastName").toString();
 
       return (
         <div className="names-row">

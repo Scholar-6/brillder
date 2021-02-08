@@ -54,7 +54,6 @@ interface BrickLengthProps {
   canEdit: boolean;
   playStatus: PlayButtonStatus;
   saveLength(value: BrickLengthEnum): any;
-  saveBrick(data: any): void;
   saveAndPreview(): void;
 }
 
@@ -111,7 +110,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
           <NavigationButtons
             step={ProposalStep.BrickLength}
             canSubmit={length !== BrickLengthEnum.None}
-            onSubmit={props.saveBrick}
+            onSubmit={() => {}}
             data={length}
             backLink={props.baseUrl + OpenQuestionRoutePart}
             baseUrl={props.baseUrl}
