@@ -42,7 +42,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   }
 
   componentDidMount() {
-    this.setState({shown: true});
+    this.setState({ shown: true });
   }
 
   componentDidUpdate(props: ClassroomListProps) {
@@ -69,7 +69,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       this.props.reloadClass(classroom.id);
     }
   }
-  
+
   renderClassname() {
     const classroom = this.state.classroom as any;
     let className = 'classroom-title';
@@ -88,13 +88,20 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
       if (c.assignment && c.classroom) {
         return (
-          <div key={i}>
-            <AssignedBrickDescription
-              subjects={this.props.subjects}
-              expand={this.props.expand.bind(this)}
-              key={i} classroom={c.classroom} assignment={c.assignment}
-            />
-          </div>
+          <Grow
+            in={true}
+            key={i}
+            style={{ transformOrigin: "left 0 0" }}
+            timeout={i * 200}
+          >
+            <div>
+              <AssignedBrickDescription
+                subjects={this.props.subjects}
+                expand={this.props.expand.bind(this)}
+                key={i} classroom={c.classroom} assignment={c.assignment}
+              />
+            </div>
+          </Grow>
         );
       }
     }
@@ -112,7 +119,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   }
 
   renderContent() {
-    const {classroom} = this.state;
+    const { classroom } = this.state;
     let items = [] as TeachListItem[];
     this.prepareClassItems(items, classroom);
     let k = 0;
@@ -132,15 +139,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         <div className="fixed-classname">
           {this.renderClassname()}
         </div>
-        <Grow
-          in={this.state.shown}
-          style={{ transformOrigin: "0 0 0" }}
-          timeout={700}
-        >
-          <div>
-            {this.renderContent()}
-          </div>
-        </Grow>
+        {this.renderContent()}
       </div>
     );
   }
