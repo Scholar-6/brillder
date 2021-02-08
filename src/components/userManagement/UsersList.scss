@@ -90,6 +90,12 @@
               &:nth-child(odd) {
                 background: var(--tab-gray);
               }
+              &.yellow {
+                background: var(--theme-yellow);
+              }
+              &.yellow:nth-child(odd) {
+                background-color: rgba($color: #ff9d00, $alpha: 0.5);
+              }
               td {
                 padding-left: 0.5vw;
                 color: var(--theme-dark-blue);
