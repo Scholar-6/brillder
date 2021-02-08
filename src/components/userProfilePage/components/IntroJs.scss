@@ -6,10 +6,25 @@
   font-family: $font-family-regular;
   color: var(--theme-dark-blue);
   font-size: 1.1vw;
+}
 
-  a {
-    outline: none;
-    font-family: $font-family-bold;
+.introjs-tooltipReferenceLayer {
+  .introjs-tooltipbuttons {
+    a {
+      padding: 0.7vh 1.4vh;
+      outline: none !important;
+      font-family: $font-family-bold;
+      box-shadow: none !important;
+      border: none !important;
+      border-radius: 0.4vw;
+    }
+
+    .introjs-donebutton, .introjs-nextbutton {
+      text-shadow: none;
+      background: var(--theme-green) !important;
+      color: var(--theme-dark-blue);
+      border: none !important;
+    }
   }
 }
 

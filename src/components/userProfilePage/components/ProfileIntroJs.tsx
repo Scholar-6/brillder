@@ -10,9 +10,12 @@ import { RolePreference, User } from 'model/user';
 interface Props {
   user: User;
   location: any;
+  history: any;
 }
 
 interface State {
+  nextLabel: string;
+  initialStep: number;
   stepsEnabled: boolean;
   steps: any[];
 }
@@ -36,6 +39,8 @@ class ProfileIntroJs extends React.Component<Props, State> {
     }
 
     this.state = {
+      nextLabel: 'Start Tutorial',
+      initialStep: 0,
       stepsEnabled: false,
       steps: [
         {
@@ -85,9 +90,17 @@ class ProfileIntroJs extends React.Component<Props, State> {
     }, 1000);
   }
 
-  onExit = () => {
+  onExit() {
     this.setState({ stepsEnabled: false });
   };
+
+  onChange(e:any, b:any) {
+    if (e === 0) {
+      this.setState({initialStep: e, nextLabel: 'Start Tutorial'});
+    } else {
+      this.setState({initialStep: e, nextLabel: 'Next'});
+    }
+  }
 
   render() {
     return (
@@ -96,7 +109,13 @@ class ProfileIntroJs extends React.Component<Props, State> {
           enabled={this.state.stepsEnabled}
           steps={this.state.steps}
           initialStep={0}
+          onChange={this.onChange.bind(this)}
           onExit={() => { }}
+          onComplete={() => this.props.history.push('')}
+          options={{
+            nextLabel: this.state.nextLabel,
+            doneLabel: 'Explore Brillder'
+          }}
         />
       </div>
     );
