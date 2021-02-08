@@ -1,4 +1,5 @@
 import React from "react";
+import * as Y from "yjs";
 import { Route } from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core";
 import { connect } from "react-redux";
@@ -35,6 +36,7 @@ import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
 import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
+import { YJSContext } from "../baseComponents/YJSProvider";
 
 interface ProposalProps {
   history: History;
@@ -60,6 +62,9 @@ interface ProposalState {
 }
 
 class Proposal extends React.Component<ProposalProps, ProposalState> {
+  static contextType = YJSContext;
+  context!: React.ContextType<typeof YJSContext>;
+
   constructor(props: ProposalProps) {
     super(props);
     let subjectId = 0;
@@ -96,10 +101,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     if (brick) {
       initBrick = brick;
       setLocalBrick(brick);
-    }
-
-    if (initBrick.id) {
-      this.props.socketStartEditing(initBrick.id); // start editing in socket as well.
     }
 
     this.state = {
@@ -322,7 +323,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 location={history.location}
                 baseUrl={baseUrl}
                 subjects={user.subjects}
-                subjectId={this.state.brick.subjectId ? this.state.brick.subjectId : ""}
+                subjectId={this.context?.ydoc.getMap("brick").get("subjectId")}
                 history={history}
                 saveCore={this.setCore}
                 saveSubject={this.setSubject}
@@ -335,7 +336,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 history={history}
                 baseUrl={baseUrl}
                 playStatus={playStatus}
-                parentState={localBrick}
+                parentState={this.context!.ydoc.getMap("brick")}
                 canEdit={canEdit}
                 subjects={this.state.subjects}
                 saveTitles={this.setTitles}
@@ -346,7 +347,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               <BrickLength
                 baseUrl={baseUrl}
                 playStatus={playStatus}
-                length={localBrick.brickLength}
+                length={this.context?.ydoc.getMap("brick").get("brickLength")}
                 canEdit={canEdit}
                 saveLength={this.setLength}
                 saveBrick={this.setLength}
@@ -358,9 +359,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 baseUrl={baseUrl}
                 playStatus={playStatus}
                 history={history}
-                selectedQuestion={localBrick.openQuestion}
+                selectedQuestion={this.context?.ydoc.getMap("brick").get("openQuestion")}
                 canEdit={canEdit}
-                saveOpenQuestion={this.setOpenQuestion}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
@@ -368,20 +368,17 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               <Brief
                 baseUrl={baseUrl}
                 playStatus={playStatus}
-                parentBrief={localBrick.brief}
+                parentBrief={this.context?.ydoc.getMap("brick").get("brief")}
                 canEdit={canEdit}
-                saveBrief={this.setBrief}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
             <Route path={[map.ProposalPrep, '/build/brick/:brickId/prep']}>
               <Prep
                 playStatus={playStatus}
-                parentPrep={localBrick.prep}
+                parentPrep={this.context?.ydoc.getMap("brick").get("prep")}
                 canEdit={canEdit}
                 baseUrl={baseUrl}
-                savePrep={this.setPrep}
-                saveBrick={this.setPrepAndSave}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
@@ -389,7 +386,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             <Route path={[map.ProposalReview, '/build/brick/:brickId/plan']}>
               <ProposalReview
                 playStatus={playStatus}
-                brick={localBrick}
+                brick={this.context!.ydoc.getMap("brick")}
                 baseUrl={baseUrl}
                 history={history}
                 canEdit={canEdit}

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as Y from "yjs";
 import { Grid, Input, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
@@ -29,7 +30,7 @@ interface BrickTitleProps {
   user: User;
   history: any;
   baseUrl: string;
-  parentState: Brick;
+  parentState: Y.Map<any>;
   canEdit: boolean;
   playStatus: PlayButtonStatus;
   subjects: Subject[];
@@ -105,7 +106,8 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
   onChange(event: React.ChangeEvent<{ value: string }>, value: string) {
     event.stopPropagation();
     const title = event.target.value.substr(0, 49);
-    this.props.saveTitles({ ...this.props.parentState, [value]: title });
+    this.props.parentState.set(value, title);
+    // this.props.saveTitles({ ...this.props.parentState, [value]: title });
   };
 
   moveToRef(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, refName: RefName) {
@@ -138,13 +140,13 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
 
   render() {
     const { parentState, canEdit, baseUrl, saveTitles } = this.props;
-    if (parentState.title) {
-      setBrillderTitle(parentState.title);
+    if (parentState.get("title")) {
+      setBrillderTitle(parentState.get("title"));
     }
 
     let subjectName = '';
     try {
-      const subject = this.props.subjects.find(s => s.id === parentState.subjectId)
+      const subject = this.props.subjects.find(s => s.id === parentState.get("subjectId"))
       if (subject) {
         subjectName = subject.name;
       }
@@ -173,7 +175,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                 <div className="audience-inputs">
                   <Input
                     disabled={!canEdit}
-                    value={parentState.title}
+                    value={parentState.get("title")}
                     onKeyUp={e => this.moveToRef(e, RefName.subTitleRef)}
                     onChange={e => this.onChange(e, "title")}
                     placeholder="Enter Proposed Title Here..."
@@ -183,7 +185,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                   <Input
                     ref={this.state.subTitleRef}
                     disabled={!canEdit}
-                    value={parentState.subTopic}
+                    value={parentState.get("subTopic")}
                     onKeyUp={e => this.moveToRef(e, RefName.altTitleRef)}
                     onChange={e => this.onChange(e, "subTopic")}
                     placeholder="Enter Topic..."
@@ -193,7 +195,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                   <Input
                     ref={this.state.altTitleRef}
                     disabled={!canEdit}
-                    value={parentState.alternativeTopics}
+                    value={parentState.get("alternativeTopics")}
                     onKeyUp={e => {
                       if (enterPressed(e)) {
                         saveTitles(parentState);
@@ -237,7 +239,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
               </div>
             </div>
           </Grid>
-          <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
+          <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState.toJSON()} />
           <Hidden only={['xs', 'sm']}>
             <div className="red-right-block"></div>
           </Hidden>
