@@ -41,21 +41,28 @@ class ClassroomList extends Component<ClassroomListProps> {
       this.props.reloadClasses();
     }
   }
-  
+
   renderClassname(c: TeachListItem, i: number) {
-    const {classroom} = c as any;
+    const { classroom } = c as any;
     let className = 'classroom-title one-of-many';
     if (i === 0) {
-       className += ' first';
+      className += ' first';
     }
     return (
-      <div className={className} key={i}>
-        <NameAndSubjectForm
-          name={classroom!.name}
-          subject={classroom.subject}
-          onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
-        />
-      </div>
+      <Grow
+        in={true}
+        key={i}
+        style={{ transformOrigin: "left 0 0" }}
+        timeout={i * 200}
+      >
+        <div className={className}>
+          <NameAndSubjectForm
+            name={classroom!.name}
+            subject={classroom.subject}
+            onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
+          />
+        </div>
+      </Grow>
     );
   }
 
@@ -63,13 +70,20 @@ class ClassroomList extends Component<ClassroomListProps> {
     if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
       if (c.assignment && c.classroom) {
         return (
-          <div key={i}>
-            <AssignedBrickDescription
-              subjects={this.props.subjects}
-              expand={this.props.expand.bind(this)}
-              key={i} classroom={c.classroom} assignment={c.assignment}
-            />
-          </div>
+          <Grow
+            in={true}
+            key={i}
+            style={{ transformOrigin: "left 0 0" }}
+            timeout={i * 200}
+          >
+            <div>
+              <AssignedBrickDescription
+                subjects={this.props.subjects}
+                expand={this.props.expand.bind(this)}
+                key={i} classroom={c.classroom} assignment={c.assignment}
+              />
+            </div>
+          </Grow>
         );
       }
       return this.renderClassname(c, i);
@@ -93,7 +107,7 @@ class ClassroomList extends Component<ClassroomListProps> {
   }
 
   renderContent() {
-    const {activeClassroom, classrooms} = this.props;
+    const { activeClassroom, classrooms } = this.props;
     let items = [] as TeachListItem[];
     if (activeClassroom) {
       this.prepareClassItems(items, activeClassroom);
@@ -115,15 +129,9 @@ class ClassroomList extends Component<ClassroomListProps> {
 
   render() {
     return (
-      <Grow
-        in={true}
-        style={{ transformOrigin: "0 0 0" }}
-        timeout={700}
-      >
-        <div className="classroom-list">
-          {this.renderContent()}
-        </div>
-      </Grow>
+      <div className="classroom-list">
+        {this.renderContent()}
+      </div>
     );
   }
 }

@@ -7,6 +7,7 @@ interface InputProps {
   validationRequired: boolean;
   shouldBeFilled?: boolean;
   type?: string;
+  disabled?: boolean;
   onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
 }
 
@@ -22,10 +23,10 @@ const ProfileInput: React.FC<InputProps> = props => {
   if (props.validationRequired && !value && shouldBeFilled) {
     className += ' invalid';
   }
- 
+
   return (
     <div className="input-block">
-      <input type={props.type} className={className} value={value} onChange={e => props.onChange && props.onChange(e)} placeholder={props.placeholder} />
+      <input type={props.type} disabled={props.disabled} className={className} value={value} onChange={e => props.onChange && props.onChange(e)} placeholder={props.placeholder} />
     </div>
   );
 }

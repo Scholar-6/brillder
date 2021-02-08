@@ -118,7 +118,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async loadClasses() {
     const classrooms = await getAllClassrooms() as TeachClassroom[] | null;
     if (classrooms) {
-      console.log('reload');
       this.setState({ classrooms, isLoaded: true });
       return classrooms;
     } else {

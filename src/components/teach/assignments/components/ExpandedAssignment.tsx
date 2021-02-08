@@ -39,7 +39,7 @@ interface AssignmentBrickProps {
 class ExpandedAssignment extends Component<
   AssignmentBrickProps,
   AssignemntExpandedState
-> {
+  > {
   constructor(props: AssignmentBrickProps) {
     super(props);
 
@@ -58,7 +58,7 @@ class ExpandedAssignment extends Component<
   }
 
   componentDidMount() {
-    this.setState({shown: true});
+    this.setState({ shown: true });
   }
 
   prepareStudents() {
@@ -67,7 +67,7 @@ class ExpandedAssignment extends Component<
     students.forEach(student => {
       student.studentResult = this.props.stats.byStudent
         .find(s => s.studentId === student.id);
-    
+
       student.studentStatus = this.props.assignment.studentStatus
         .find(s => s.studentId === student.id);
     });
@@ -91,13 +91,13 @@ class ExpandedAssignment extends Component<
       students = this.state.students.sort((a, b) => {
         if (!a.studentStatus) { return 1; }
         if (!b.studentStatus) { return -1; }
-        return b.studentStatus?.avgScore  - a.studentStatus?.avgScore;
+        return b.studentStatus?.avgScore - a.studentStatus?.avgScore;
       });
     } else {
       students = this.state.students.sort((a, b) => {
         if (!a.studentStatus) { return -1; }
         if (!b.studentStatus) { return 1; }
-        return a.studentStatus?.avgScore  - b.studentStatus?.avgScore;
+        return a.studentStatus?.avgScore - b.studentStatus?.avgScore;
       });
     }
     this.setState({ students, sortBy });
@@ -130,7 +130,7 @@ class ExpandedAssignment extends Component<
   }
 
   renderBookIcon(studentId: number) {
-    const {history, assignment} = this.props;
+    const { history, assignment } = this.props;
     const moveToPostPlay = () => history.push(map.postPlay(assignment.brick.id, studentId));
     return (
       <div className="round b-green centered">
@@ -148,18 +148,18 @@ class ExpandedAssignment extends Component<
       try {
         const attempt = studentResult.attempts[0].answers[questionNumber];
         const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
-  
+
         // yellow tick
         if (attempt.correct === true && liveAttempt.correct === false) {
           return <SpriteIcon name="check-icon" className="text-yellow" />;
         } else if (attempt.correct === false && liveAttempt.correct === true) {
           return <SpriteIcon name="check-icon" className="text-yellow" />;
         }
-  
+
         if (attempt.correct === true && liveAttempt.correct === true) {
           return <SpriteIcon name="check-icon" className="text-theme-green" />;
         }
-  
+
         return <SpriteIcon name="cancel" className="text-theme-orange smaller stroke-2" />;
       } catch {
         console.log('can`t parse attempt');
@@ -169,38 +169,45 @@ class ExpandedAssignment extends Component<
   }
 
   renderStudent(student: TeachStudent, i: number) {
-    const {studentStatus, studentResult} = student;
+    const { studentStatus, studentResult } = student;
     return (
-      <tr className="user-row" key={i}>
-        <td className="padding-left-column"></td>
-        <td className="student-status">
-          <div>{this.renderStatus(studentStatus)}</div>
-        </td>
-        <td className="student-book">
-          {studentStatus && <div className="centered">{this.renderBookIcon(student.id)}</div>}
-        </td>
-        <td className={`assigned-student-name`}>
-          {student.firstName} {student.lastName}
-        </td>
-        {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
-          (a, i) =>
-            <td key={i} className="icon-container">
-              <div className="centered">
-                {this.renderQuestionAttemptIcon(studentResult, studentStatus, i)}
-              </div>
-            </td>
-        )}
-        <td>
-          {studentStatus && <div className="centered">{this.renderCommentIcon()}</div>}
-        </td>
-      </tr>
+      <Grow
+        in={true}
+        key={i}
+        style={{ transformOrigin: "left 0 0" }}
+        timeout={i * 200}
+      >
+        <tr className="user-row">
+          <td className="padding-left-column"></td>
+          <td className="student-status">
+            <div>{this.renderStatus(studentStatus)}</div>
+          </td>
+          <td className="student-book">
+            {studentStatus && <div className="centered">{this.renderBookIcon(student.id)}</div>}
+          </td>
+          <td className={`assigned-student-name`}>
+            {student.firstName} {student.lastName}
+          </td>
+          {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
+            (a, i) =>
+              <td key={i} className="icon-container">
+                <div className="centered">
+                  {this.renderQuestionAttemptIcon(studentResult, studentStatus, i)}
+                </div>
+              </td>
+          )}
+          <td>
+            {studentStatus && <div className="centered">{this.renderCommentIcon()}</div>}
+          </td>
+        </tr>
+      </Grow>
     );
   }
 
   renderTableHead() {
-    const {sortBy} = this.state;
+    const { sortBy } = this.state;
     const name = sortBy === SortBy.AvgIncreasing ? "arrow-up" : "arrow-down";
-    
+
     let className = "btn btn-transparent svgOnHover btn-grey-circle";
     if (sortBy === SortBy.AvgIncreasing || sortBy === SortBy.AvgDecreasing) {
       className += " active";
@@ -236,7 +243,7 @@ class ExpandedAssignment extends Component<
   render() {
     const { assignment, classroom, startIndex, pageSize } = this.props;
     let { students } = this.state;
-    
+
     students = students.slice(startIndex, startIndex + pageSize);
 
     return (
@@ -254,13 +261,7 @@ class ExpandedAssignment extends Component<
         <div className="users-table">
           <table cellSpacing="0" cellPadding="0">
             {this.renderTableHead()}
-            <Grow
-              in={this.state.shown}
-              style={{ transformOrigin: "0 0 0" }}
-              timeout={700}
-            >
-              <tbody>{students.map(this.renderStudent.bind(this))}</tbody>
-            </Grow>
+            <tbody>{students.map(this.renderStudent.bind(this))}</tbody>
           </table>
         </div>
       </div>
