@@ -87,25 +87,17 @@ describe("choose one scoring", () => {
         {
           answerType: 1,
           checked: false,
-          index: 3,
+          index: 2,
           soundFile: "",
-          value: '<p style="text-align:justify;"><span class="latex">\tan(x)=1</span></p>',
-          valueFile: ""
-        },
-        {
-          answerType: 1,
-          checked: false,
-          index: 4,
-          soundFile: "",
-          value: '<p style="text-align:justify;"><span class="latex">3\tan(x)=-2</span></p>',
-          valueFile: ""
+          value: '<p><span class="latex">63.4</span></p>',
+          valueFile: "",
         },
         {
           answerType: 1,
           checked: true,
-          index: 7,
+          index: 4,
           soundFile: "",
-          value: '<p style="text-align:justify;"><span class="latex">2\sin(x)=3</span></p>',
+          value: '<p><span class="latex">296.6</span></p>',
           valueFile: ""
         },
         {
@@ -113,73 +105,86 @@ describe("choose one scoring", () => {
           checked: false,
           index: 1,
           soundFile: "",
-          value: '<p style="text-align:justify;"><span class="latex">2\cos(x)=1</span></p>',
+          value: '<p><span class="latex">0</span></p>',
           valueFile: ""
         },
         {
           answerType: 1,
-          checked: false,
+          checked: true,
           index: 8,
           soundFile: "",
-          value: '<p style="text-align:justify;"><span class="latex">\frac{11\sin(x)}5=2</span></p>',
+          value: '<p style="text-align:justify;"><span class="latex">116.6</span></p>',
           valueFile: ""
         },
         {
           answerType: 1,
-          checked: false,
+          checked: true,
           index: 5,
           soundFile: "",
-          value: '<p style="text-align:justify;"><span class="latex">\frac{\tan(x)}5=18</span></p>',
+          value: '<p><span class="latex">180</span></p>',
           valueFile: ""
+        },
+        {
+          answerType: 1,
+          index: 7,
+          soundFile: "",
+          value: '<p style="text-align:justify;"><span class="latex">270</span></p>',
+          valueFile: "",
+        },
+        {
+          answerType: 1,
+          checked: false,
+          index: 9,
+          soundFile: "",
+          value: '<p style="text-align:justify;"><span class="latex">360</span></p>',
+          valueFile: "",
+        },
+        {
+          answerType: 1,
+          checked: false,
+          index: 0,
+          soundFile: "",
+          value: '<p><span class="latex">-63.4</span></p>',
+          valueFile: "",
         },
         {
           answerType: 1,
           checked: false,
           index: 6,
           soundFile: "",
-          value: '<p style="text-align:justify;"><span class="latex">\sin(x)=-\frac12</span></p>',
-          valueFile: ""
+          value: '<p><span class="latex">476.6</span></p>',
+          valueFile: "",
         },
         {
           answerType: 1,
-          checked: true,
-          index: 0,
+          checked: false,
+          index: 3,
           soundFile: "",
-          value: '<p style="text-align:justify;"><span class="latex">\cos(x)=-3</span></p>',
+          value: '<p><span class="latex">90</span></p>',
           valueFile: ""
         },
-        {
-          answerType: 1,
-          checked: true,
-          index: 2,
-          soundFile: "",
-          value: '<p style="text-align:justify;"><span class="latex">\frac{\cos(x)}2=1</span></p>',
-          valueFile: ""
-        }
       ],
       selected: false,
       type: 127
     } as any;
-    // arrange
+
     const mockAttempt: ComponentAttempt<ChooseSeveralAnswer> = {
       answer: [
-        { realIndex: 5, shuffleIndex: 8 },
-        { realIndex: 4, shuffleIndex: 9 },
-        { realIndex: 8, shuffleIndex: 7 }
+        { realIndex: 5, shuffleIndex: 4 },
+        { realIndex: 8, shuffleIndex: 3 },
+        { realIndex: 4, shuffleIndex: 1 },
       ],
-      attempted: true,
-      correct: true,
+      attempted: false,
+      correct: false,
       marks: 0,
       maxMarks: 20,
       questionId: 76699,
     } as any;
 
-    // act
     const result = mark(component, mockAttempt);
 
-    // assert
     expect(result.marks).toStrictEqual(20);
-    expect(result.maxMarks).toStrictEqual(10);
+    expect(result.maxMarks).toStrictEqual(20);
     expect(result.correct).toStrictEqual(false);
   })
 });
