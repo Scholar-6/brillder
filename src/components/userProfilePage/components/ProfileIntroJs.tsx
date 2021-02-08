@@ -43,7 +43,6 @@ class ProfileIntroJs extends React.Component<Props, State> {
           intro: `
            <p>Hi ${props.user.firstName},</p>
            <p>Welcome to your Profile Page!</p>
-           <p>Start Tutorial</p>
           `,
         },
         {
@@ -52,10 +51,13 @@ class ProfileIntroJs extends React.Component<Props, State> {
         },
         {
           element: '.profile-roles-container',
-          intro: `You have selected your preference to be a ${getUserPreferenceName()}. You change your preferences by clicking on the other two radio buttons.`
+          intro: `
+            <p>You have selected your preference to be a ${getUserPreferenceName()}.</p>
+            <p>You can change your preferences by clicking on the other two radio buttons.</p>
+          `
         },
         {
-          element: '.subject-autocomplete-container',
+          element: '.subject-autocomplete',
           intro: 'You can add subjects to your profile in this panel'
         },
         {
@@ -68,7 +70,7 @@ class ProfileIntroJs extends React.Component<Props, State> {
         },
         {
           element: 'html',
-          intro: "That's it for this page! Explore Brillder"
+          intro: "That's it for this page!"
         }
       ]
     }

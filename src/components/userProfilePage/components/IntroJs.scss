@@ -5,7 +5,12 @@
 .introjs-tooltipReferenceLayer * {
   font-family: $font-family-regular;
   color: var(--theme-dark-blue);
-  
+  font-size: 1.1vw;
+
+  a {
+    outline: none;
+    font-family: $font-family-bold;
+  }
 }
 
 .introjs-helperLayer {
