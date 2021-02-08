@@ -5,4 +5,9 @@
 .introjs-tooltipReferenceLayer * {
   font-family: $font-family-regular;
   color: var(--theme-dark-blue);
+  
+}
+
+.introjs-helperLayer {
+  box-shadow: rgba(33, 33, 33, .5) 0px 0px 0px 5000px !important;
 }
