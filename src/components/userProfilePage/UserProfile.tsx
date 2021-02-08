@@ -427,7 +427,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                     value={user.password} validationRequired={this.state.validationRequired}
                     className=""  placeholder="●●●●●●●●●●●" type="password" shouldBeFilled={false}
                     onChange={e => this.onFieldChanged(e, UserProfileField.Password)}
-                    disabled={!this.state.editPassword}
+                    /*disabled={!this.state.editPassword}*/
                   />
                   {!this.state.editPassword &&
                     <div className="button-container">
