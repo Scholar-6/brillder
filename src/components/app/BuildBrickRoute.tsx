@@ -13,6 +13,7 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
 import YJSProvider, { YJSContext } from "components/build/baseComponents/YJSProvider";
 import { toRenderJSON } from "services/SharedTypeService";
+import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "components/build/proposal/model";
 
 interface BuildRouteProps {
   exact?: any;
@@ -60,9 +61,10 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
           const brickId = parseInt(props.match.params.brickId);
 
           // move to investigation
-          const isInvestigation = rest.location.pathname.indexOf('/investigation') !== -1;
-          const isSynthesis = rest.location.pathname.indexOf('/synthesis') !== -1;
-          if (!(isInvestigation || isSynthesis)) {
+          const part = "/" + rest.location.pathname.split("/")[4];
+          const validRoutes = ["/investigation", "/synthesis", TitleRoutePart, OpenQuestionRoutePart, BrickLengthRoutePart, BriefRoutePart, PrepRoutePart, ProposalReviewPart]
+          if (!validRoutes.includes(part)) {
+            console.log(part)
             props.history.push(`/build/brick/${brickId}/investigation`);
             return <PageLoader content="...Getting Brick..." />;
           }
@@ -83,7 +85,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
                   }
 
                   // move to investigation
-                  if (!(isInvestigation || isSynthesis)) {
+                  if (!validRoutes.includes(part)) {
                     props.history.push(`/build/brick/${brickId}/investigation`);
                     return <PageLoader content="...Getting Brick..." />;
                   }

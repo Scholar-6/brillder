@@ -108,11 +108,11 @@ const defaultFunctions: { [key in QuestionTypeEnum]?: (ymap: Y.Map<any>) => void
   // [QuestionTypeEnum.ShortAnswer]: getDefaultShortAnswerAnswer,
   [QuestionTypeEnum.HorizontalShuffle]: getDefaultHorizontalShuffleAnswer,
   [QuestionTypeEnum.VerticalShuffle]: getDefaultVerticalShuffleAnswer,
-  // [QuestionTypeEnum.PairMatch]: getDefaultPairMatchAnswer,
-  // [QuestionTypeEnum.Sort]: getDefaultCategoriseAnswer,
-  // [QuestionTypeEnum.MissingWord]: getDefaultMissingWordAnswer,
+  [QuestionTypeEnum.PairMatch]: getDefaultPairMatchAnswer,
+  [QuestionTypeEnum.Sort]: getDefaultCategoriseAnswer,
+  [QuestionTypeEnum.MissingWord]: getDefaultMissingWordAnswer,
   // [QuestionTypeEnum.LineHighlighting]: getDefaultLineHighlightingAnswer,
-  // [QuestionTypeEnum.WordHighlighting]: getDefaultWordHighlightingAnswer,
+  [QuestionTypeEnum.WordHighlighting]: getDefaultWordHighlightingAnswer,
 }
 
 export function setQuestionTypeByIndex(questions: Y.Array<Y.Doc>, index: number, type: QuestionTypeEnum) {

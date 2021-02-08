@@ -146,7 +146,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const { ydoc, json: yjson } = useContext(YJSContext)!;
-  history.listen((location) => console.log(location.pathname));
+  React.useEffect(() => {
+    const callback = (location: any) => console.log(location.pathname);
+    history.listen(callback);
+  }, []);
   const ybrick = ydoc!.getMap("brick")!;
 
   if(!ybrick) {

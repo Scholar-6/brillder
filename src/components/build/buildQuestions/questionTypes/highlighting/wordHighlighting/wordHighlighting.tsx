@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import * as Y from "yjs";
 
 import '../style.scss';
 import './wordHighlighting.scss'
@@ -8,8 +9,7 @@ import { TextareaAutosize } from '@material-ui/core';
 import { HighlightMode } from '../model';
 import HighlightButton from '../components/HighlightButton';
 import LineStyleDialog from './LineStyleDialog';
-
-
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 export interface WordHighlightingData {
   text: string;
@@ -19,29 +19,27 @@ export interface WordHighlightingData {
 }
 
 export interface WordHighlightingProps extends UniqueComponentProps {
-  data: WordHighlightingData;
+  data: Y.Map<any>;
 }
 
-export const getDefaultWordHighlightingAnswer = () => {
-  return { text: '', isPoem: false, words: [] };
+export const getDefaultWordHighlightingAnswer = (ymap: Y.Map<any>) => {
+  ymap.set("text", new Y.Text());
+  ymap.set("isPoem", false);
+  ymap.set("words", new Y.Array());
 }
 
 const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
-  locked, data, save, updateComponent, validationRequired
+  locked, data, validationRequired
 }) => {
-  const [state, setState] = React.useState(data);
+  const [mode, setMode] = React.useState(HighlightMode.Input);
   const [isOpen, setDialog] = React.useState(false);
 
-  useEffect(() => {
-    if (!data.text) { data.text = ''; }
-    if (!data.words) { data.words = []; }
-    setState(data);
-  }, [data]);
+  console.log(data);
 
-  const update = () => {
-    setState(Object.assign({}, state));
-    updateComponent(state);
-  }
+  useEffect(() => {
+    if (!data.get("text")) { data.set("text", new Y.Text()); }
+    if (!data.get("words")) { data.set("words", new Y.Array()); }
+  }, [data]);
 
   const splitByChar = (text: string, charCode: number) => {
     return text.split(String.fromCharCode(charCode));
@@ -49,136 +47,130 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
 
   const splitByLines = (text: string) => {
     const splited = splitByChar(text, SpecialSymbols.LineFeed);
-    return splited.map(line => {
-      return {text: line, isBreakLine: true, checked: false} as BuildWord;
+    const yarray = new Y.Array();
+    const lines = splited.map(line => {
+      return new Y.Map(Object.entries({text: line, isBreakLine: true, checked: false}));
     });
+    yarray.push(lines);
+    return yarray;
   }
 
-  const addSpace = (words: BuildWord[], index: number) => {
+  const addSpace = (words: Y.Array<any>, index: number) => {
     if (index >= 1) {
-      words.push({text: "\u00A0", notSelectable: true} as BuildWord);
+      words.push([new Y.Map(Object.entries({text: "\u00A0", notSelectable: true}))]);
     }
   }
 
-  const addBreakLine = (lineStrings: string[], word: BuildWord, index: number) => {
+  const addBreakLine = (lineStrings: string[], word: Y.Map<any>, index: number) => {
     if (index === lineStrings.length - 1) {
-      word.isBreakLine = true;
+      word.set("isBreakLine", true);
     }
   }
 
-  const splitByWords = (lines: BuildWord[]) => {
-    let words: BuildWord[] = [];
-    lines.forEach(line => {
-      let lineStrings = splitByChar(line.text, SpecialSymbols.Space);
+  const splitByWords = (lines: Y.Array<any>) => {
+    let words = new Y.Array();
+    lines.forEach((line: Y.Map<any>) => {
+      let lineStrings = splitByChar(line.get("text"), SpecialSymbols.Space);
       for (const index in lineStrings) {
         let intIndex = parseInt(index);
         addSpace(words, intIndex);
-        let word = {text: lineStrings[index], checked: false} as BuildWord;
+        let word = new Y.Map(Object.entries({text: lineStrings[index], checked: false}));
         addBreakLine(lineStrings, word, intIndex);
-        words.push(word);
+        words.push([word]);
       }
     });
     return words;
   }
 
-  const disabledEmptyWord = (word: BuildWord) => {
-    if (!word.text) {
-      word.notSelectable = true;
+  const disabledEmptyWord = (word: Y.Map<any>) => {
+    if (!word.get("text")) {
+      word.set("notSelectable", true);
     }
   }
 
   const addBreakLineInTheEnd = (
-    wordParts: string[], mainWord: BuildWord, partWord: BuildWord, index: number
+    wordParts: string[], mainWord: Y.Map<any>, partWord: Y.Map<any>, index: number
   ) => {
     if (index === wordParts.length - 1) {
-      if (mainWord.isBreakLine) {
-        partWord.isBreakLine = true;
+      if (mainWord.get("isBreakLine")) {
+        partWord.set("isBreakLine", true);
       }
     }
   }
 
-  const addSpecialSignByCode = (words: BuildWord[], signCode: SpecialSymbols, index: number) => {
+  const addSpecialSignByCode = (words: Y.Array<any>, signCode: SpecialSymbols, index: number) => {
     if (index >= 1) {
-      words.push({text: String.fromCharCode(signCode), notSelectable: true} as BuildWord);
+      words.push([new Y.Map(Object.entries({text: String.fromCharCode(signCode), notSelectable: true}))]);
     }
   }
 
-  const splitBySpecialSign = (words: BuildWord[], signCode: SpecialSymbols) => {
-    let finalWords:BuildWord[] = [];
-    words.forEach(word => {
-      let commas = splitByChar(word.text, signCode);
+  const splitBySpecialSign = (words: Y.Array<any>, signCode: SpecialSymbols) => {
+    let finalWords = new Y.Array();
+    words.forEach((word: Y.Map<any>) => {
+      let commas = splitByChar(word.get("text"), signCode);
       if (commas.length >= 2) {
         for (let index in commas) {
-          let loopWord = { text: commas[index] } as BuildWord;
+          let loopWord = new Y.Map(Object.entries({ text: commas[index] }));
           let intIndex = parseInt(index);
           addSpecialSignByCode(finalWords, signCode, intIndex);
           addBreakLineInTheEnd(commas, word, loopWord, intIndex);
           disabledEmptyWord(word);
-          finalWords.push(loopWord);
+          finalWords.push([loopWord]);
         }
       } else {
-        finalWords.push(word);
+        finalWords.push([word]);
       }
     });
     return finalWords;
   }
 
-  const prepareWords = (text: string) => {
-    if (!text) { return []; }
-    const lines = splitByLines(text);
+  const prepareWords = () => {
+    if (!data.get("text").toString()) { return; }
+    const lines = splitByLines(data.get("text").toString());
     const words = splitByWords(lines);
     const wordsByCommas = splitBySpecialSign(words, SpecialSymbols.Comma);
     const wordsByDotsAndComas = splitBySpecialSign(wordsByCommas, SpecialSymbols.Dot);
-    return wordsByDotsAndComas;
+    data.set("words", wordsByDotsAndComas);
+    console.log(data.get("words").toJSON());
   }
 
   const switchMode = () => {
     if (locked) { return; }
-    if (state.mode === HighlightMode.Edit) {
-      state.mode = HighlightMode.Input;
+    if (mode === HighlightMode.Edit) {
+      setMode(HighlightMode.Input);
     } else {
       setDialog(true);
-      state.mode = HighlightMode.Edit;
-      state.words = prepareWords(state.text);
+      setMode(HighlightMode.Edit);
+      prepareWords();
     }
-    update();
-    save();
-  }
-
-  const updateText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (locked) { return; }
-    state.text = e.target.value;
-    update();
   }
 
   const toggleLight = (index:number) => {
     if (locked) { return; }
-    const word = state.words[index];
-    if (word.notSelectable) { return; }
-    state.words[index].checked = !word.checked;
-    update();
-    save();
+    const word = data.get("words").get(index);
+    if (word.get("notSelectable")) { return; }
+    data.get("words").get(index).set("checked", !word.checked);
   }
 
   const renderBox = () => {
-    if (state.mode === HighlightMode.Edit) {
+    if (mode === HighlightMode.Edit) {
       return renderEditBox();
     }
     return renderTextBox();
   }
 
   const getWords = () => {
-    let words = [];
+    let words: any[] = [];
     let i = 0;
-    let i2 = state.words.length + 2;
-    for (let word of state.words) {
+    let i2 = data.get("words").length + 2;
+    data.get("words").forEach((word: Y.Map<any>) => {
       words.push(renderEditWord(word, i));
-      if (word.isBreakLine) {
+      if (word.get("isBreakLine")) {
         words.push(<br key={i2} style={{width: '100%'}} />);
         i2++;
       }
       i++;
-    }
+    });
     return words;
   }
 
@@ -186,40 +178,39 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     return (
       <div className="hightlight-area">
         {
-          state.words ? getWords() : ""
+          data.get("words") ? getWords() : ""
         }
       </div>
     );
   }
 
-  const renderEditWord = (word: BuildWord, index: number) => {
+  const renderEditWord = (word: Y.Map<any>, index: number) => {
     let className = "word";
-    if (word.checked) {
+    if (word.get("checked")) {
       className += " active";
     }
-    if (word.notSelectable) {
+    if (word.get("notSelectable")) {
       className += " disabled";
     }
 
     return (
       <span key={index} className={className} onClick={() => {toggleLight(index)}}>
-        {word.text}
+        {word.get("text")}
       </span>
     );
   }
 
   const renderTextBox = () => {
     let className = "words-input";
-    if (validationRequired && !state.text) {
+    if (validationRequired && !data.get("text")) {
       className += " content-invalid"
     }
     return (
-      <TextareaAutosize
+      <QuillEditor
+        toolbar={[]}
         disabled={locked}
         className={className}
-        onBlur={() => save()}
-        value={state.text}
-        onChange={updateText}
+        sharedData={data.get("text")}
         placeholder="Enter Text Here..."
       />
     );
@@ -231,10 +222,10 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         <div>Click the highlighter to select correct words</div>
       </div>
       <HighlightButton
-        mode={state.mode}
+        mode={mode}
         validationRequired={validationRequired}
-        text={state.text}
-        list={state.words}
+        text={data.get("text").toJSON()}
+        list={data.get("words").toJSON()}
         switchMode={switchMode}
       />
       <div className="input-container">
@@ -242,11 +233,10 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
       </div>
       <LineStyleDialog isOpen={isOpen}
         submit={v => {
-          state.isPoem = v;
-          update();
+          data.set("isPoem", v);
           setDialog(false);
         }}
-        value={data.isPoem}
+        value={data.get("isPoem")}
       />
     </div>
   )
