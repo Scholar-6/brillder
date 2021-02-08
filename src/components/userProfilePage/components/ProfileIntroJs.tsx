@@ -74,7 +74,7 @@ class ProfileIntroJs extends React.Component<Props, State> {
           intro: 'Click here to save changes',
         },
         {
-          element: 'html',
+          element: 'body',
           intro: "That's it for this page!"
         }
       ]
@@ -94,11 +94,11 @@ class ProfileIntroJs extends React.Component<Props, State> {
     this.setState({ stepsEnabled: false });
   };
 
-  onChange(e:any, b:any) {
+  onChange(e: any, b: any) {
     if (e === 0) {
-      this.setState({initialStep: e, nextLabel: 'Start Tutorial'});
+      this.setState({ initialStep: e, nextLabel: 'Start Tutorial' });
     } else {
-      this.setState({initialStep: e, nextLabel: 'Next'});
+      this.setState({ initialStep: e, nextLabel: 'Next' });
     }
   }
 
