@@ -5,10 +5,13 @@
 .introjs-tooltipReferenceLayer * {
   font-family: $font-family-regular;
   color: var(--theme-dark-blue);
-  font-size: 1.1vw;
+  font-size: 1.5vw;
 }
 
 .introjs-tooltipReferenceLayer {
+  p {
+    min-height: 2vw;
+  }
   .introjs-tooltipbuttons {
     a {
       padding: 0.7vh 1.4vh;
@@ -22,7 +25,7 @@
     .introjs-donebutton, .introjs-nextbutton {
       text-shadow: none;
       background: var(--theme-green) !important;
-      color: var(--theme-dark-blue);
+      color: var(--white);
       border: none !important;
     }
   }
