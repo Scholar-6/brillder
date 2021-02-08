@@ -461,7 +461,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 />
               </div>
             </div>
-            <Grid container direction="row" className="big-input-container">
+            <Grid container direction="row" className="big-input-container bio-container">
               <textarea
                 className="style2"
                 value={user.bio}
@@ -500,7 +500,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         <PasswordChangedDialog
           isOpen={this.state.passwordChangedDialog}
           close={() => this.setState({passwordChangedDialog: false})} />
-        <ProfileIntroJs location={this.props.location} />
+        <ProfileIntroJs user={this.props.user} location={this.props.location} />
       </div>
     );
   }
