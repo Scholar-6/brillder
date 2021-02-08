@@ -64,7 +64,7 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
 
   render() {
     return (
-      <div className="big-input-container subject-autocomplete-container">
+      <div className="big-input-container">
         <Autocomplete
           multiple
           value={this.state.selected}
