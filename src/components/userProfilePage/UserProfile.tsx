@@ -500,7 +500,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         <PasswordChangedDialog
           isOpen={this.state.passwordChangedDialog}
           close={() => this.setState({passwordChangedDialog: false})} />
-        <ProfileIntroJs user={this.props.user} location={this.props.location} />
+        <ProfileIntroJs user={this.props.user} history={this.props.history} location={this.props.location} />
       </div>
     );
   }
