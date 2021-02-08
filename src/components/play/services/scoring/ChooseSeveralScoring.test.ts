@@ -80,7 +80,7 @@ describe("choose one scoring", () => {
       expect(result.correct).toStrictEqual(false);
   })
   */
-  it("test for #2706", () => {
+  it("#2706 Correct answer marked wrong in review", () => {
     let component = {
       chosen: false,
       list: [
