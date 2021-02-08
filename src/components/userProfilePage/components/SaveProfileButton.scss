@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .save-image {
-  $image-size: 5.3vw;
+  $image-size: 6.5vw;
   cursor: pointer;
   @extend %textCenter;
   height: $image-size;
