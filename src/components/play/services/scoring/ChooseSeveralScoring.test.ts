@@ -185,6 +185,6 @@ describe("choose one scoring", () => {
 
     expect(result.marks).toStrictEqual(20);
     expect(result.maxMarks).toStrictEqual(20);
-    expect(result.correct).toStrictEqual(false);
+    expect(result.correct).toStrictEqual(true);
   })
 });
