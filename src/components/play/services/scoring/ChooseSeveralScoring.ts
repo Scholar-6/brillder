@@ -5,9 +5,10 @@ const markLiveChoices = (component: any, attempt: ComponentAttempt<ChooseSeveral
     const choices = component.list;
     for (let [index, choice] of choices.entries()) {
         const checked = attempt.answer.findIndex(a => a.shuffleIndex === index) >= 0;
-        if (checked === choice.checked) {
+        if (checked === choice.checked || (checked === false && !choice.checked)) {
             attempt.marks += 2;
         } else {
+            console.log(checked, choice)
             attempt.marks += 0.5;
             attempt.correct = false;
         }

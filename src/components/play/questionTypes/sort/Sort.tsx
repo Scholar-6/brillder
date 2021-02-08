@@ -14,6 +14,7 @@ import { DragAndDropStatus } from '../pairMatch/interface';
 
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import { getValidationClassName } from '../service';
+import MathInHtml from 'components/play/baseComponents/MathInHtml';
 
 
 interface UserCategory {
@@ -206,7 +207,7 @@ class Sort extends CompComponent<SortProps, SortState> {
         />
       );
     }
-    return <div dangerouslySetInnerHTML={{ __html: choice.text}} />;
+    return <MathInHtml value={choice.text} />;
   }
 
   renderChoice(choice: SortAnswer, i: number, choiceIndex: number) {
@@ -230,7 +231,7 @@ class Sort extends CompComponent<SortProps, SortState> {
         <ListItem className="sort-choice-custom">
           <ListItemText>
             {this.renderChoiceContent(choice)}
-            {this.props.isReview || this.props.isPreview ?
+            {this.props.isReview || this.props.isPreview &&
               <ReviewEachHint
                 isPhonePreview={this.props.isPreview}
                 isReview={this.props.isReview}
@@ -238,7 +239,6 @@ class Sort extends CompComponent<SortProps, SortState> {
                 index={choiceIndex}
                 hint={this.props.question.hint}
               />
-              : ""
             }
           </ListItemText>
         </ListItem>
@@ -256,7 +256,9 @@ class Sort extends CompComponent<SortProps, SortState> {
         {
           this.state.userCats.map((cat, i) => (
             <div key={i}>
-              <div className="sort-category" dangerouslySetInnerHTML={{ __html: cat.name}} />
+              <div className="sort-category">
+                <MathInHtml value={cat.name} />
+              </div>
               <div className="sort-category-list-container">
                 {this.props.isBookPreview ? (
                   <div className="sortable-list">

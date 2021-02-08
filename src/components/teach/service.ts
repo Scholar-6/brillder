@@ -14,6 +14,7 @@ export interface ClassroomApi {
   updated: string;
   isActive: boolean;
   assignmentsCount?: number;
+  studentsInvitations?: MUser[];
 }
 
 /**

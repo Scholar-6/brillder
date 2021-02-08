@@ -139,9 +139,21 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
   }
 
+  prepareClassrooms(classrooms: ClassroomApi[]) {
+    for (let classroom of classrooms) {
+      if (classroom.studentsInvitations) {
+        for (let student of classroom.studentsInvitations) {
+          student.hasInvitation = true;
+        }
+        classroom.students = [...classroom.students, ...classroom.studentsInvitations];
+      }
+    }
+  }
+
   async getClassrooms() {
     const classrooms = await getAllClassrooms();
     if (classrooms) {
+      this.prepareClassrooms(classrooms);
       this.setState({
         classrooms,
         activeClassroom: this.state.activeClassroom ? classrooms.find(c => c.id === this.state.activeClassroom!.id) ?? null : null
@@ -438,23 +450,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     return users.slice(pageStart, pageStart + this.state.pageSize);
   }
 
-  renderPagination() {
-    let { users } = this.state;
-    if (this.state.activeClassroom) {
-      users = this.state.activeClassroom.students;
-    }
-    if (this.state.isSearching) {
-      users = this.state.searchUsers;
-    }
-
-    let totalCount = users.length;
-    users = this.getUsersByPage(users);
-
+  renderPagination(visibleUsers: MUser[], users: MUser[]) {
     return (
       <UsersPagination
-        users={users}
+        users={visibleUsers}
         page={this.state.page}
-        totalCount={totalCount}
+        totalCount={users.length}
         pageSize={this.state.pageSize}
         moveToPage={page => this.moveToPage(page)}
       />
@@ -530,7 +531,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     if (!this.state.isLoaded) {
       return <div className="tab-content" />
     }
-
+    const {activeClassroom} = this.state;
     let { users } = this.state;
 
     const moveToNewUser = () => {
@@ -570,22 +571,22 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       );
     }
 
-    if (this.state.activeClassroom) {
-      users = this.state.activeClassroom.students as MUser[];
+    if (activeClassroom) {
+      users = activeClassroom.students as MUser[];
     }
     if (this.state.isSearching) {
       users = this.state.searchUsers;
     }
 
-    users = this.getUsersByPage(users);
+    const visibleUsers = this.getUsersByPage(users);
 
     return (
       <div className="tab-content">
-        {users.length > 0 ? <>
-            {this.state.activeClassroom && this.renderTopRow()}
+        {visibleUsers.length > 0 ? <>
+            {activeClassroom && this.renderTopRow()}
             <StudentTable
-              users={users}
-              isClassroom={!!this.state.activeClassroom}
+              users={visibleUsers}
+              isClassroom={!!activeClassroom}
               selectedUsers={this.state.selectedUsers}
               sortBy={this.state.sortBy}
               isAscending={this.state.isAscending}
@@ -599,7 +600,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           </>:
           this.renderEmptyTab()
         }
-        {this.renderPagination()}
+        {this.renderPagination(visibleUsers, users)}
       </div>
     );
   }

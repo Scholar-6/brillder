@@ -30,6 +30,7 @@ import UserProfilePreview from "./components/UserProfilePreview";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ProfileInput from "./components/ProfileInput";
 import ProfileIntroJs from "./components/ProfileIntroJs";
+import PasswordChangedDialog from "components/baseComponents/dialogs/PasswordChangedDialog";
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -57,6 +58,8 @@ interface UserProfileState {
   noSubjectDialogOpen: boolean;
   savedDialogOpen: boolean;
   emailInvalidOpen: boolean;
+  passwordChangedDialog: boolean;
+
   previewAnimationFinished: boolean;
 
   user: UserProfile;
@@ -160,6 +163,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       noSubjectDialogOpen: false,
       savedDialogOpen: false,
       emailInvalidOpen: false,
+      passwordChangedDialog: false,
 
       validationRequired: false,
       emailInvalid: false,
@@ -183,6 +187,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       noSubjectDialogOpen: false,
       savedDialogOpen: false,
       emailInvalidOpen: false,
+      passwordChangedDialog: false,
+
       validationRequired: false,
       emailInvalid: false,
       previewAnimationFinished: false,
@@ -340,6 +346,18 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({ user });
   }
 
+  async changePassword() {
+    const {user} = this.state;
+    const userToSave = { password: user.password} as any;
+
+    // set current user roles
+    userToSave.roles = this.props.user.roles.map(role => role.roleId);
+
+    //const saved = await updateUser(userToSave);
+
+    //this.setState({ passwordChangedDialog: true });
+  }
+
   renderSubjects(user: UserProfile) {
     if (user.id === -1 || this.state.subjects.length === 0) {
       return;
@@ -409,15 +427,18 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                     value={user.password} validationRequired={this.state.validationRequired}
                     className=""  placeholder="●●●●●●●●●●●" type="password" shouldBeFilled={false}
                     onChange={e => this.onFieldChanged(e, UserProfileField.Password)}
+                    /*disabled={!this.state.editPassword}*/
                   />
                   {!this.state.editPassword &&
-                  <div className="button-container">
-                    <button onClick={() => this.setState({editPassword: true})}>Edit</button>
-                  </div>}
+                    <div className="button-container">
+                      <button onClick={() => this.setState({editPassword: true})}>Edit</button>
+                    </div>}
                   {this.state.editPassword &&
                   <div className="confirm-container">
-                    <SpriteIcon name="check-icon" className="start" />
-                    <SpriteIcon name="cancel-custom" className="end" />
+                    <SpriteIcon name="check-icon" className="start" onClick={this.changePassword.bind(this)} />
+                    <SpriteIcon name="cancel-custom" className="end" onClick={() => {
+                      this.setState({editPassword: false})
+                    }} />
                   </div>}
                 </div>
               </div>
@@ -442,7 +463,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             </div>
             <Grid container direction="row" className="big-input-container">
               <textarea
-                className="style2"
+                className="style2 bio-container"
                 value={user.bio}
                 placeholder="Write a short bio here..."
                 onChange={e => this.onFieldChanged(e as any, UserProfileField.Bio)}
@@ -476,7 +497,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           isOpen={this.state.savedDialogOpen}
           close={this.onProfileSavedDialogClose.bind(this)}
         />
-        <ProfileIntroJs location={this.props.location} />
+        <PasswordChangedDialog
+          isOpen={this.state.passwordChangedDialog}
+          close={() => this.setState({passwordChangedDialog: false})} />
+        <ProfileIntroJs user={this.props.user} history={this.props.history} location={this.props.location} />
       </div>
     );
   }

@@ -91,7 +91,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
         <tbody>
           {users.map((user, i) => {
             return (
-              <tr className="user-row" key={i}>
+              <tr className={user.hasInvitation ? "user-row yellow" : "user-row"} key={i}>
                 <td></td>
                 <td>
                   <span className="user-first-name">{user.firstName} </span>
@@ -104,6 +104,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                         backgroundColor: classroom.subject?.color
                       }}>{classroom.name}</div>)
                     }
+                    {user.hasInvitation && <div key={i} className="classroom-name text-theme-dark-blue" style={{maxWidth: '6vw'}}>Pending</div>}
                   </div>
                 </td>
                 <td className="user-radio-column">
