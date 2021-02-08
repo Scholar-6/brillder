@@ -58,6 +58,7 @@ class ProfileIntroJs extends React.Component<Props, State> {
           element: '.profile-roles-container',
           intro: `
             <p>You have selected your preference to be a ${getUserPreferenceName()}.</p>
+            <p></p>
             <p>You can change your preferences by clicking on the other two radio buttons.</p>
           `
         },
@@ -67,7 +68,7 @@ class ProfileIntroJs extends React.Component<Props, State> {
         },
         {
           element: '.bio-container',
-          intro: 'Add an academic bio in the third person so that the Brillder community can know more about your intellectual background'
+          intro: 'Write an academic bio (in the third person) so that the Brillder community can know more about your intellectual background'
         },
         {
           element: '.save-button-container',
