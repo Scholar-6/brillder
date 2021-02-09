@@ -24,7 +24,7 @@ export const getYDoc = (brickId: number, firstName: string, lastName: string) =>
     const awareness = wsProvider.awareness;
     awareness.setLocalStateField("user", {
         name: `${firstName} ${lastName}`,
-        color: "#00CCCC",
+        color: "#C43C30",
     });
     awareness.on("change", (changes: any) => {
         console.log(Array.from(awareness.getStates().values()));
