@@ -135,7 +135,8 @@
     }
   }
   .user-radio-column {
-    width: 8vw;
+    padding-left: 1vw !important;
+    width: 4vw;
     @extend %radioBlue;
   }
 
