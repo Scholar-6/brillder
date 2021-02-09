@@ -17,7 +17,7 @@ import {
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 import AddButton from './components/AddButton';
-import StudentTable from './components/StudentTable';
+import StudentTable from './studentTable/StudentTable';
 import UsersPagination from './components/UsersPagination';
 import AssignClassDialog from './components/AssignClassDialog';
 import CreateClassDialog from './components/CreateClassDialog';
