@@ -59,29 +59,29 @@ const StudentTableHead: React.FC<StudentTableProps> = props => {
   }
 
   return (
-    <tr>
-      <th className="user-radio-column">
+    <div className="students-table-head">
+      <div className="user-radio-column">
         <Checkbox onMouseOver={onHover} onMouseLeave={onBlur} checked={props.pageStudentsSelected} onClick={props.togglePageStudents} />
         {allHovered && <div className="custom-tooltip">Select All</div>}
-      </th>
-      <th className="user-full-name">
+      </div>
+      <div className="user-full-name">
         <Grid container>
           NAME
           {renderSortArrow(UserSortBy.Name)}
         </Grid>
-      </th>
-      <th className="classes-names">
+      </div>
+      <div className="classes-names">
         <Grid container>CLASSES</Grid>
-      </th>
-      <th className="selected-column">
+      </div>
+      <div className="selected-column">
         {renderAssignButton()}
         <div className="selected-label svgOnHover">
           <span className="selected-count">{props.selectedUsers.length}</span>
           <SpriteIcon name="users-custom" className="active thin" />
           <span>Selected</span>
         </div>
-      </th>
-    </tr>
+      </div>
+    </div>
   );
 }
 
