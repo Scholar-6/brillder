@@ -205,6 +205,11 @@
       display: flex;
       height: 100%;
       @extend %ellipsis;
+
+      &.pending-label {
+        max-width: 6vw;
+        padding: 0 0.7vw;
+      }
     }
   }
   .index-box.hover-light:hover {
