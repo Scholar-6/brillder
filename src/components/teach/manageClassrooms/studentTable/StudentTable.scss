@@ -14,7 +14,15 @@
 
 .manage-classrooms-page {
   .user-radio-column {
+    .MuiButtonBase-root.MuiIconButton-root {
+      padding: 0.35vw !important;
+      .MuiSvgIcon-root {
+        width: 1.3vw !important;
+        height: 1.3vw !important;
+      }
+    }
     .custom-tooltip {
+      margin-top: 3.5vw;
       letter-spacing: 0 !important;
       margin-left: -0.2vw !important;
       z-index: 1000;
