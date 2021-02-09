@@ -26,8 +26,25 @@ interface StudentTableProps {
 const StudentTable: React.FC<StudentTableProps> = props => {
   const { users, sortBy, isAscending } = props;
 
+  const [rerender, setRerender] = React.useState(false);
+
   if (!users) {
     return <div></div>;
+  }
+
+  const onHover = (user: MUser) => {
+    for (const u of users) {
+      user.selectHovered = false;
+    }
+    if (!user.selectHovered) {
+      user.selectHovered = true;
+      setRerender(!rerender);
+    }
+  }
+  
+  const onBlur = (user: MUser) => {
+    user.selectHovered = false;
+    setRerender(!rerender);
   }
 
   const onDragStart = (e: React.DragEvent<HTMLTableRowElement>) => {
@@ -68,7 +85,11 @@ const StudentTable: React.FC<StudentTableProps> = props => {
             return (
               <tr draggable={true} onDragStart={onDragStart} className={user.hasInvitation ? "user-row yellow" : "user-row"} key={i}>
                 <td className="user-radio-column">
-                  <Checkbox checked={user.selected} onClick={() => props.toggleUser(user.id)} />
+                  <Checkbox
+                    checked={user.selected}
+                    onMouseOver={() => onHover(user)} onMouseLeave={() => onBlur(user)}
+                    onClick={() => props.toggleUser(user.id)} />
+                  {user.selectHovered && <div className="custom-tooltip">Select</div>}
                 </td>
                 <td>
                   {user.hasInvitation

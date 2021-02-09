@@ -5,6 +5,7 @@ export interface MUser extends User {
   selected: boolean;
   studyClassrooms: ClassroomApi[];
   hasInvitation: boolean;
+  selectHovered?: boolean;
 }
 
 export enum TeachActiveTab {
