@@ -11,13 +11,13 @@ import { deleteClassroom, getStudents, updateClassroom } from 'services/axios/cl
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import {
-  getAllClassrooms, unassignStudent, createClass, assignStudentsToClassroom, ClassroomApi
+  getAllClassrooms, unassignStudent, createClass, assignStudentsToClassroom, ClassroomApi, assignStudentIdsToClassroom
 } from '../service';
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 import AddButton from './components/AddButton';
-import StudentTable from './components/StudentTable';
+import StudentTable from './studentTable/StudentTable';
 import UsersPagination from './components/UsersPagination';
 import AssignClassDialog from './components/AssignClassDialog';
 import CreateClassDialog from './components/CreateClassDialog';
@@ -321,6 +321,24 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     this.setState({ activeClassroom: null, page: 0, isSearching: false });
   }
 
+  allowDrop(e: any) {
+    e.preventDefault();
+  }
+
+  onDrop(e: React.DragEvent<HTMLDivElement>, classroomId: number) {
+    const dropData = e.dataTransfer.getData("text/plain");
+    if (dropData) {
+      try {
+        const data = JSON.parse(dropData) as { studentIds: number[] };
+        if (data.studentIds.length > 0) {
+          this.assignDroppedStudents(classroomId, data.studentIds);
+        }
+      }
+      catch {}
+    }
+    e.dataTransfer.clearData();
+  }
+
   renderViewAllFilter() {
     let className = "index-box hover-light item-box2";
     if (!this.state.activeClassroom) {
@@ -340,7 +358,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     );
   }
 
-  renderSortAndFilterBox = () => {
+  renderSortAndFilterBox() {
     if (!this.state.isLoaded) {
       return <div></div>;
     }
@@ -366,7 +384,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
               className += " active";
             }
             return (
-              <div key={i} className={className} onClick={() => this.setActiveClassroom(c)}>
+              <div key={i} className={className} onDrop={e => this.onDrop(e, c.id)} onDragOver={this.allowDrop.bind(this)} onClick={() => this.setActiveClassroom(c)}>
                 <FormControlLabel
                   checked={(this.state.activeClassroom && this.state.activeClassroom.id === c.id) ?? false}
                   style={{ color: c.subject?.color ?? "#FFFFFF" }}
@@ -409,6 +427,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   assignSelectedStudents(classroomId: number) {
     this.setState({ assignClassOpen: false });
     assignStudentsToClassroom(classroomId, this.state.selectedUsers).then(res => {
+      if (res) {
+        // assign success
+        this.getClassrooms();
+      } else {
+        // failed
+      }
+    });
+  }
+
+  assignDroppedStudents(classroomId: number, studentIds: number[]) {
+    assignStudentIdsToClassroom(classroomId, studentIds).then(res => {
       if (res) {
         // assign success
         this.getClassrooms();

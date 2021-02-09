@@ -135,7 +135,8 @@
     }
   }
   .user-radio-column {
-    width: 8vw;
+    padding-left: 1vw !important;
+    width: 4vw;
     @extend %radioBlue;
   }
 
@@ -205,6 +206,11 @@
       display: flex;
       height: 100%;
       @extend %ellipsis;
+
+      &.pending-label {
+        max-width: 6vw;
+        padding: 0 0.7vw;
+      }
     }
   }
   .index-box.hover-light:hover {
