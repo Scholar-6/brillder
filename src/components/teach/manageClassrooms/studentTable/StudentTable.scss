@@ -22,10 +22,12 @@
       }
     }
     .custom-tooltip {
-      margin-top: 3.5vw;
+      margin-top: 0.1vw;
       letter-spacing: 0 !important;
-      margin-left: -0.2vw !important;
+      margin-left: -0.4vw !important;
       z-index: 1000;
+      background: var(--theme-dark-blue);
+      color: var(--tab-gray); 
     }
   }
 
@@ -56,6 +58,7 @@
       }
 
       .user-radio-column .custom-tooltip {
+        margin-top: 3.5vw;
         margin-left: -0.75vw !important;
       }
     }
@@ -94,6 +97,18 @@
       }
       &:nth-child(even) {
         background: var(--tab-gray);
+      }
+      &.yellow {
+        background: var(--theme-yellow) !important;
+      }
+      &.yellow:nth-child(odd) {
+        background-color: rgba($color: #ff9d00, $alpha: 0.5) !important;
+      }
+      &.selected {
+        background: var(--highlight-blue);
+      }
+      .user-row-hover:hover {
+        background: rgba(0, 28, 88, 0.15);
       }
     }
   }

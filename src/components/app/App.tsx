@@ -92,6 +92,7 @@ const App: React.FC<AppProps> = props => {
   const theme = React.useMemo(() =>
     createMuiTheme({
       palette: {
+        secondary: { main: "#001c58"},
         primary: { main: "#0B3A7E" }
       },
       breakpoints: {
