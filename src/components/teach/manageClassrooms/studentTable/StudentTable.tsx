@@ -5,6 +5,8 @@ import { UserSortBy } from '../ManageClassrooms';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import StudentTableHead from "./StudentTableHead";
 
+import './StudentTable.scss';
+
 interface StudentTableProps {
   users: MUser[];
   selectedUsers: MUser[];
@@ -28,6 +30,25 @@ const StudentTable: React.FC<StudentTableProps> = props => {
     return <div></div>;
   }
 
+  const onDragStart = (e: React.DragEvent<HTMLTableRowElement>) => {
+    let count = 0;
+    let studentIds:Number[] = [];
+    for (let student of users) {
+      if (student.selected) {
+        studentIds.push(student.id);
+        count += 1;
+      }
+    }
+    var elem = document.createElement("div");
+    elem.id = "student-drag-element";
+    elem.innerHTML = "Dragging " + count + ' students';
+    elem.style.position = "absolute";
+    elem.style.top = "-1000px";
+    document.body.appendChild(elem);
+    e.dataTransfer.setDragImage(elem, 0, 0);
+    e.dataTransfer.setData("text/plain", JSON.stringify({studentIds}));
+  }
+
   return (
     <div className="users-table">
       <table cellSpacing="0" cellPadding="0">
@@ -45,7 +66,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
         <tbody>
           {users.map((user, i) => {
             return (
-              <tr className={user.hasInvitation ? "user-row yellow" : "user-row"} key={i}>
+              <tr draggable={true} onDragStart={onDragStart} className={user.hasInvitation ? "user-row yellow" : "user-row"} key={i}>
                 <td className="user-radio-column">
                   <Checkbox checked={user.selected} onClick={() => props.toggleUser(user.id)} />
                 </td>

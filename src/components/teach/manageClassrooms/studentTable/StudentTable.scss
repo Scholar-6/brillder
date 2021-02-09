@@ -1,0 +1,13 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+#student-drag-element {
+  font-family: $font-family-regular;
+  padding: 1vh 1.2vw;
+  border-radius: 0.3vw;
+  font-size: 1.3vw;
+  opacity: 1 !important;
+  color: var(--white);
+  background: var(--theme-dark-blue);
+}
