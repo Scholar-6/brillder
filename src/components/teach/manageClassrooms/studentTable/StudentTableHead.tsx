@@ -18,6 +18,18 @@ interface StudentTableProps {
 const StudentTableHead: React.FC<StudentTableProps> = props => {
   const { sortBy, isAscending } = props;
 
+  const [allHovered, setAllHover] = React.useState(false);
+
+  const onHover = () => {
+    if (!allHovered) {
+      setAllHover(true);
+    }
+  }
+  
+  const onBlur = () => {
+    setAllHover(false);
+  }
+
   const renderSortArrow = (currentSortBy: UserSortBy) => {
     return (
       <img
@@ -49,7 +61,8 @@ const StudentTableHead: React.FC<StudentTableProps> = props => {
   return (
     <tr>
       <th className="user-radio-column">
-        <Checkbox checked={props.pageStudentsSelected} onClick={props.togglePageStudents} />
+        <Checkbox onMouseOver={onHover} onMouseLeave={onBlur} checked={props.pageStudentsSelected} onClick={props.togglePageStudents} />
+        {allHovered && <div className="custom-tooltip">Select All</div>}
       </th>
       <th className="user-full-name">
         <Grid container>
