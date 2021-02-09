@@ -1,6 +1,5 @@
 import React from "react";
-import { Grid, Radio } from "@material-ui/core";
-
+import { Grid, Checkbox } from "@material-ui/core";
 import { MUser } from "../../model";
 import { UserSortBy } from '../ManageClassrooms';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -59,7 +58,9 @@ const StudentTable: React.FC<StudentTableProps> = props => {
   const renderUserTableHead = () => {
     return (
       <tr>
-        <th className="subject-title">SC</th>
+        <th className="user-radio-column">
+          <Checkbox checked={props.pageStudentsSelected} onClick={props.togglePageStudents} />
+        </th>
         <th className="user-full-name">
           <Grid container>
             NAME
@@ -68,9 +69,6 @@ const StudentTable: React.FC<StudentTableProps> = props => {
         </th>
         <th className="classes-names">
           <Grid container>CLASSES</Grid>
-        </th>
-        <th className="user-radio-column">
-          <Radio checked={props.pageStudentsSelected} onClick={props.togglePageStudents} />
         </th>
         <th className="selected-column">
           {renderAssignButton()}
@@ -92,7 +90,9 @@ const StudentTable: React.FC<StudentTableProps> = props => {
           {users.map((user, i) => {
             return (
               <tr className={user.hasInvitation ? "user-row yellow" : "user-row"} key={i}>
-                <td></td>
+                <td className="user-radio-column">
+                  <Checkbox checked={user.selected} onClick={() => props.toggleUser(user.id)} />
+                </td>
                 <td>
                   {user.hasInvitation
                     ? <div className="user-email">{user.email}</div>
@@ -110,9 +110,6 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                     }
                     {user.hasInvitation && <div key={i} className="classroom-name text-theme-dark-blue pending-label">Pending</div>}
                   </div>
-                </td>
-                <td className="user-radio-column">
-                  <Radio checked={user.selected} onClick={() => props.toggleUser(user.id)} />
                 </td>
                 <td className="selected-column">
                   <div className="action-buttons">
