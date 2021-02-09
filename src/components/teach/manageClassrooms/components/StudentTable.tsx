@@ -94,8 +94,12 @@ const StudentTable: React.FC<StudentTableProps> = props => {
               <tr className={user.hasInvitation ? "user-row yellow" : "user-row"} key={i}>
                 <td></td>
                 <td>
-                  <span className="user-first-name">{user.firstName} </span>
-                  <span className="user-last-name">{user.lastName}</span>
+                  {user.hasInvitation
+                    ? <div className="user-email">{user.email}</div>
+                    : <div>
+                      <span className="user-first-name">{user.firstName} </span>
+                      <span className="user-last-name">{user.lastName}</span>
+                    </div>}
                 </td>
                 <td>
                   <div className="classroom-names">
@@ -104,7 +108,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                         backgroundColor: classroom.subject?.color
                       }}>{classroom.name}</div>)
                     }
-                    {user.hasInvitation && <div key={i} className="classroom-name text-theme-dark-blue" style={{maxWidth: '6vw'}}>Pending</div>}
+                    {user.hasInvitation && <div key={i} className="classroom-name text-theme-dark-blue pending-label">Pending</div>}
                   </div>
                 </td>
                 <td className="user-radio-column">
