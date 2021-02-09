@@ -86,7 +86,6 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         if(node && props.sharedData) {
             const editor = node.getEditor();
             const binding = new QuillBinding(props.sharedData, editor, awareness);
-            console.log(binding);
         }
     }, []);
 

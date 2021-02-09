@@ -220,7 +220,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       return <PageLoader content="...Loading..." />;
     }
   } else if (_.isEmpty(activeQuestion?.toJSON()) || _.isEmpty(activeQuestion?.getMap()?.toJSON())) {
-    console.log("Can`t find active question");
+    if(questions.length <= 0) {
+      if (!canEdit || locked) { return <PageLoader content="...Loading..." />; }
+      const newQuestion = convertQuestion(getNewQuestion(QuestionTypeEnum.None, false))
+      questions.push([newQuestion]);
+      console.log(newQuestion);
+      setCurrentQuestionIndex(questions.length - 1);
+    }
     return <PageLoader content="...Loading..." />;
   }
 
@@ -493,7 +499,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (questions.length > 1) {
       return true;
     }
-    if (questions.get(0).getMap() && questions.get(0).getMap().get("type") !== QuestionTypeEnum.None) {
+    if (questions.get(0)?.getMap() && questions.get(0)?.getMap().get("type") !== QuestionTypeEnum.None) {
       return true;
     }
     return false;
