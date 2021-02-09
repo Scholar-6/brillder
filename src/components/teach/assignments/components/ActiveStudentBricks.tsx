@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Grow } from "@material-ui/core";
 
 import './ActiveStudentBricks.scss';
 import { Assignment, TeachClassroom, TeachStudent } from "model/classroom";
@@ -25,10 +26,7 @@ interface ActiveStudentState {
   assignments: Assignment[];
 }
 
-class ActiveStudentBricks extends Component<
-  ActiveStudentBricksProps,
-  ActiveStudentState
-> {
+class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStudentState> {
   constructor(props: ActiveStudentBricksProps) {
     super(props);
 
@@ -98,14 +96,21 @@ class ActiveStudentBricks extends Component<
             i < this.state.sortedIndex + this.state.pageSize
           ) {
             return (
-              <div key={i}>
-                <AssignedBrickDescription
-                  subjects={this.props.subjects}
-                  expand={() => this.setActiveAssignment(a)}
-                  key={i}
-                  assignment={a as any}
-                />
-              </div>
+              <Grow
+                in={true}
+                key={i}
+                style={{ transformOrigin: "left 0 0" }}
+                timeout={i * 200}
+              >
+                <div>
+                  <AssignedBrickDescription
+                    subjects={this.props.subjects}
+                    expand={() => this.setActiveAssignment(a)}
+                    key={i}
+                    assignment={a as any}
+                  />
+                </div>
+              </Grow>
             );
           }
           return "";
@@ -129,7 +134,7 @@ class ActiveStudentBricks extends Component<
   }
 
   render() {
-    const {activeStudent} = this.props;
+    const { activeStudent } = this.props;
     const { activeAssignment } = this.state;
     return (
       <div className="student-assignments">
