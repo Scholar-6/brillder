@@ -2,7 +2,7 @@ import * as Y from "yjs";
 
 import { WebsocketProvider } from "y-websocket";
 
-export const getYDoc = (brickId: number) => {
+export const getYDoc = (brickId: number, firstName: string, lastName: string) => {
     const ydoc = new Y.Doc({ autoLoad: true });
 
     const wsProvider = new WebsocketProvider(process.env.REACT_APP_WEBSOCKET_HOST!, "brick" + brickId.toString(), ydoc);
@@ -20,6 +20,15 @@ export const getYDoc = (brickId: number) => {
     ydoc.getMap("brick").observe((val) => {
         // console.log(ydoc.toJSON());
     });
+
+    const awareness = wsProvider.awareness;
+    awareness.setLocalStateField("user", {
+        name: `${firstName} ${lastName}`,
+        color: "#00CCCC",
+    });
+    awareness.on("change", (changes: any) => {
+        console.log(Array.from(awareness.getStates().values()));
+    })
     
-    return ydoc;
+    return { ydoc, awareness };
 }

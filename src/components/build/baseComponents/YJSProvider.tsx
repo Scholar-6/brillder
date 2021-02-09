@@ -1,20 +1,26 @@
 import React from "react";
 import { getYDoc } from "socket/yjs";
 import * as Y from "yjs";
-import questionPanelWorkArea from "../buildQuestions/questionPanelWorkArea";
+import { Awareness } from "y-protocols/awareness";
+import { User } from "model/user";
+import { ReduxCombinedState } from "redux/reducers";
+import { connect } from "react-redux";
 
-interface YJSProviderProps {
+interface YJSProviderProps extends React.PropsWithChildren<any> {
     brickId: number;
+    user: User;
 }
 
 interface YJSContext {
     ydoc: Y.Doc;
+    awareness?: Awareness;
     json: any;
 }
 export const YJSContext = React.createContext<YJSContext | null>(null);
 
 const YJSProvider: React.FC<YJSProviderProps> = props => {
     const [ydoc, setYdoc] = React.useState<Y.Doc>();
+    const [awareness, setAwareness] = React.useState<Awareness>();
     const [, forceUpdate] = React.useReducer(x => x + 1, 0);
     
     const handleQuestionChange = React.useCallback((evt: Y.YEvent[], transaction: Y.Transaction) => {
@@ -22,7 +28,7 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
     }, [ydoc]);
 
     React.useEffect(() => {
-        const newYDoc = getYDoc(props.brickId);
+        const { ydoc: newYDoc, awareness: newAwareness } = getYDoc(props.brickId, props.user.firstName, props.user.lastName);
         newYDoc.getMap("brick").observeDeep((evt, transaction) => {
             forceUpdate();
         });
@@ -38,16 +44,22 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
         });
 
         setYdoc(newYDoc);
+        setAwareness(newAwareness);
     }, [props.brickId]);
 
     return (
         <YJSContext.Provider value={ydoc ? {
             ydoc,
             json: ydoc.toJSON(),
+            awareness,
         } : null}>
             {props.children}
         </YJSContext.Provider>
     );
 };
 
-export default YJSProvider;
+const mapState = (state: ReduxCombinedState) => ({
+    user: state.user.user,
+});
+
+export default connect(mapState)(YJSProvider);

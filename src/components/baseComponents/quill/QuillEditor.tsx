@@ -11,8 +11,10 @@ import * as Y from "yjs";
 import "./QuillLatex";
 import "./QuillAutoLink";
 import "./QuillMediaEmbed";
-import "./QuillImageUpload"
+import "./QuillImageUpload";
+import "./QuillCursors";
 import quillToHTML from "./QuillToHTML";
+import { YJSContext } from "components/build/baseComponents/YJSProvider";
 
 function randomEditorId() {
      return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -50,6 +52,8 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
 
     const [uniqueId, setUniqueId] = React.useState(randomEditorId());
     const [data, setData] = React.useState(props.data);
+    const context = React.useContext(YJSContext);
+    const awareness = context?.awareness;
 
     const modules = {
         toolbar: {
@@ -58,6 +62,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         autolink: props.allowLinks,
         mediaembed: props.allowMediaEmbed,
         imageupload: true,
+        cursors: true,
     }
     
     const toolbarItems: { [key: string]: any } = {
@@ -80,7 +85,8 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
     const ref = React.useCallback((node: ReactQuill) => {
         if(node && props.sharedData) {
             const editor = node.getEditor();
-            const binding = new QuillBinding(props.sharedData, editor);
+            const binding = new QuillBinding(props.sharedData, editor, awareness);
+            console.log(binding);
         }
     }, []);
 
