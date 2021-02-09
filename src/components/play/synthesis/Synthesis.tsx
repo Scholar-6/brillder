@@ -15,6 +15,7 @@ import { getPlayPath, getAssignQueryString } from '../service';
 import BrickCounter from '../baseComponents/BrickCounter';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { rightKeyPressed } from 'components/services/key';
+import { getReviewTime, getSpendTime } from '../services/playTimes';
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
@@ -55,16 +56,6 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     props.moveNext();
   }
 
-  const getSpendTime = () => {
-    let timeMinutes = 4;
-    if (brick.brickLength === BrickLengthEnum.S40min) {
-      timeMinutes = 8;
-    } else if (brick.brickLength === BrickLengthEnum.S60min) {
-      timeMinutes = 12;
-    }
-    return timeMinutes;
-  }
-
   const renderSynthesisContent = () => {
     return (
       <div className="synthesis-content">
@@ -96,7 +87,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   }
 
   const renderSpendTime = () => {
-    return <p><span>Aim to spend {getSpendTime()} minutes on this section.</span></p>;
+    return <p><span>Aim to spend {getSpendTime(brick.brickLength)} minutes on this section.</span></p>;
   }
 
   const renderMobile = () => {
@@ -147,7 +138,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
                   {renderSpendTime()}
                   <br />
                   <p>When you’re ready to move on, you will have</p>
-                  <p>3 minutes to try to improve your score.</p>
+                  <p>{getReviewTime(brick.brickLength)} minutes to try to improve your score.</p>
                 </div>
                 {renderFooter()}
               </div>
