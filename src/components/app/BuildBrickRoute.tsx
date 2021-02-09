@@ -64,7 +64,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
           const part = "/" + rest.location.pathname.split("/")[4];
           const validRoutes = ["/investigation", "/synthesis", TitleRoutePart, OpenQuestionRoutePart, BrickLengthRoutePart, BriefRoutePart, PrepRoutePart, ProposalReviewPart]
           if (!validRoutes.includes(part)) {
-            console.log(part)
+            console.log(part);
             props.history.push(`/build/brick/${brickId}/investigation`);
             return <PageLoader content="...Getting Brick..." />;
           }
