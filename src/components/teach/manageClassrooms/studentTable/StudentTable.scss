@@ -129,6 +129,9 @@
       &.selected {
         background: var(--highlight-blue);
       }
+      &.selected:nth-child(odd) {
+        background: rgba(130, 192, 237, 0.5);
+      }
 
       position: relative;
 

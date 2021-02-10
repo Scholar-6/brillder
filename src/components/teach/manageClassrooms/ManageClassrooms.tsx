@@ -53,6 +53,8 @@ interface UsersListState {
   users: MUser[];
   page: number;
   pageSize: number;
+  classPageSize: number;
+  viewAllPageSize: number;
   totalCount: number;
 
   searchString: string;
@@ -86,12 +88,17 @@ interface UsersListState {
 class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   constructor(props: UsersListProps) {
     super(props);
+
+    let pageSize = 14;
+
     this.state = {
       isLoaded: false,
       users: [],
       classrooms: [],
       page: 0,
-      pageSize: 12,
+      pageSize,
+      classPageSize: 12,
+      viewAllPageSize: pageSize,
       totalCount: 0,
       cantCreate: false,
 
@@ -184,6 +191,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       }
       this.setState({ pageStudentsSelected: false, selectedUsers: [] });
     } else {
+      this.unselectAllStudents();
       // select whole page
       this.selectPageStudents();
       this.setState({ pageStudentsSelected: true });
@@ -199,29 +207,33 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   selectPageClassStudents() {
+    const selectedUsers: MUser[] = [];
     const { page, pageSize, activeClassroom } = this.state;
     if (activeClassroom) {
       let index = 0;
       for (let student of activeClassroom.students) {
         if (index >= page * pageSize && index < (page + 1) * pageSize) {
           student.selected = true;
-          this.state.selectedUsers.push(student);
+          selectedUsers.push(student);
         }
         index += 1;
       }
     }
+    this.setState({ selectedUsers });
   }
 
   selectGlobalPageStudents() {
     let index = 0;
     const { page, pageSize } = this.state;
+    const selectedUsers: MUser[] = [];
     for (let student of this.state.users) {
       if (index >= page * pageSize && index < (page + 1) * pageSize) {
         student.selected = true;
-        this.state.selectedUsers.push(student);
+        selectedUsers.push(student);
       }
       index += 1;
     }
+    this.setState({ selectedUsers });
   }
   //#endregion
 
@@ -279,7 +291,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   setActiveClassroom(activeClassroom: ClassroomApi) {
     this.unselectAllStudents();
     activeClassroom.isActive = true;
-    this.setState({ activeClassroom, page: 0, selectedUsers: [], isSearching: false });
+    this.setState({ activeClassroom, page: 0, pageStudentsSelected: false, pageSize: this.state.classPageSize, selectedUsers: [], isSearching: false });
   }
 
   async deleteClass() {
@@ -305,7 +317,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     for (let user of this.state.users) {
       user.selected = false;
     }
-    this.setState({ users: this.state.users });
+    this.setState({ users: this.state.users, selectedUsers: [] });
   }
 
   unselectionClasses() {
@@ -319,7 +331,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   unselectClasses() {
     this.unselectionClasses();
-    this.setState({ activeClassroom: null, page: 0, isSearching: false });
+    this.setState({
+      activeClassroom: null, pageStudentsSelected: false, pageSize: this.state.viewAllPageSize, page: 0, isSearching: false
+    });
   }
 
   onDrop(e: React.DragEvent<HTMLDivElement>, classroomId: number) {
