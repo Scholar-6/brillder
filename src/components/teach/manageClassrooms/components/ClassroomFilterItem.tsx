@@ -6,7 +6,6 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import RadioButton from "components/baseComponents/buttons/RadioButton";
 
 interface FilterItemProps {
-  index: number;
   classroom: any;
   activeClassroom: any;
   setActiveClassroom(classroom: any): void;
@@ -35,7 +34,6 @@ const ClassroomFilterItem: React.FC<FilterItemProps> = props => {
 
   return (
     <div
-      key={props.index}
       className={className}
       onDrop={e => props.onDrop(e, classroom.id)}
       onDragOver={allowDrop} onDragLeave={() => setDropHover(false)}
