@@ -27,6 +27,21 @@
     .inline-names {
       width: calc(#{$width} - 4vw);
     }
+
+    .overflow-fade-end {
+      position: absolute;
+      right: 0vw;
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(229,232,237,1));
+      width: 1vw;
+      height: 100%;
+    }
+    .overflow-fade-start {
+      position: absolute;
+      left: 0vw;
+      background: linear-gradient(90deg, rgba(229,232,237,1), rgba(255,255,255,0));
+      width: 1vw;
+      height: 100%;
+    }
   
     .scroll-button {
       position: absolute;
