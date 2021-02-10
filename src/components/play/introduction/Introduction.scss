@@ -345,9 +345,14 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             // overflow: hidden;
           }
           .question-title {
-            font-size: 2.5vw;
             font-family: $font-family-black;
             color: var(--theme-dark-blue);
+            @include phone_and_tabletL {
+              font-size: 6vw;
+            }
+            @include tabletL {
+              font-size: 2.5vw;
+            }
           }
           .short-answer-input {
             border-radius: 0 !important;
@@ -1232,7 +1237,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           }
         }
       }
-
     }
   }
   .open-question {
@@ -1298,7 +1302,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   @include phone_and_tabletP {
     .brick-container.live-page {
       > .introduction-page {
-      height: calc(100% - 19vw) !important;
+        height: calc(100% - 19vw) !important;
         .MuiTypography-root {
           height: 100% !important;
           .MuiBox-root {
