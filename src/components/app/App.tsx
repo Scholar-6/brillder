@@ -167,7 +167,7 @@ const App: React.FC<AppProps> = props => {
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
         <BuildRoute path={map.AssignmentsPage} component={AssignmentsPage} location={location} />
         <BuildRoute path="/users" component={UsersListPage} location={location} />
-        <BuildRoute path={map.UserProfile + ':userId'} component={UserProfilePage} location={location} />
+        <BuildRoute path={map.UserProfile + '/:userId'} component={UserProfilePage} location={location} />
         <BuildRoute path="/home" component={MainPage} location={location} />
 
         <AllUsersRoute path={map.UserProfile} component={UserProfilePage} />
