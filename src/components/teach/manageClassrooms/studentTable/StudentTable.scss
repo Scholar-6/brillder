@@ -16,6 +16,7 @@
   $classroom-name-width: 44.6vw;
   $user-name-width: 15vw;
   .classes-names {
+    padding-left: 2vw !important;
     width: $classroom-name-width;
   }
   .user-full-name {
