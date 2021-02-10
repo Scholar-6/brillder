@@ -64,6 +64,14 @@
 }
 
 .manage-classrooms-page .users-table {
+  .user-row:hover {
+    .overflow-fade-end {
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(217, 221, 230, 1));
+    }
+    .overflow-fade-start {
+      background: linear-gradient(90deg, rgba(217, 221, 230, 1), rgba(255,255,255,0));
+    }
+  }
   .user-row:nth-child(even) {
     .overflow-fade-end {
       background: linear-gradient(90deg, rgba(255,255,255,0), rgba(229,232,237,1));
@@ -73,14 +81,32 @@
     }
     &:hover {
       .overflow-fade-end {
-        background: linear-gradient(90deg, rgba(255,255,255,0), rgba(229,232,237,1));
+        background: linear-gradient(90deg, rgba(255,255,255,0), rgba(195, 201, 215, 1));
       }
       .overflow-fade-start {
-        background: linear-gradient(90deg, rgba(229,232,237,1), rgba(255,255,255,0));
+        background: linear-gradient(90deg, rgba(195, 201, 215, 1), rgba(255,255,255,0));
       }
     }
   }
+
+  // selected
   .user-row.selected {
+    .overflow-fade-end {
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(192,223,246,1));
+    }
+    .overflow-fade-start {
+      background: linear-gradient(90deg, rgba(192,223,246,1), rgba(255,255,255,0));
+    }
+    &:hover {
+      .overflow-fade-end {
+        background: linear-gradient(90deg, rgba(255,255,255,0), rgba(163,194,222,1));
+      }
+      .overflow-fade-start {
+        background: linear-gradient(90deg, rgba(163,194,222,1), rgba(255,255,255,0));
+      }
+    }
+  }
+  .user-row.selected:nth-child(even) {
     .overflow-fade-end {
       background: linear-gradient(90deg, rgba(255,255,255,0), rgba(130,192,237,1));
     }
@@ -89,10 +115,10 @@
     }
     &:hover {
       .overflow-fade-end {
-        background: linear-gradient(90deg, rgba(255,255,255,0), rgba(130,192,237,0.5));
+        background: linear-gradient(90deg, rgba(255,255,255,0), rgba(111,167,215,1));
       }
       .overflow-fade-start {
-        background: linear-gradient(90deg, rgba(130,192,237,0.5), rgba(255,255,255,0));
+        background: linear-gradient(90deg, rgba(111,167,215,1), rgba(255,255,255,0));
       }
     }
   }
