@@ -12,6 +12,7 @@ import { Popper } from '@material-ui/core';
 interface SubjectAutoCompleteProps {
   subjects: Subject[];
   selected: Subject[];
+  onClick(): void;
   onSubjectChange(subjects: any[]): void;
   requestFailed(e: string): void;
 }
@@ -72,6 +73,7 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
           onChange={(e:any, v: any) => this.onSubjectChange(e, v)}
           getOptionLabel={(option:any) => option.name}
           PopperComponent={SubjectsPopper}
+          onOpen={this.props.onClick}
           noOptionsText="Sorry, try typing something else"
           className="subject-autocomplete"
           renderInput={(params:any) => (

@@ -11,6 +11,7 @@ interface ProfileImageProps {
   profileImage: string;
   setImage(profileImage: string): void;
   deleteImage(): void;
+  suspendIntroJs(): void;
 }
 
 const ProfileImage: React.FC<ProfileImageProps> = (props) => {
@@ -32,6 +33,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
       props.deleteImage();
       openUploadDialog();
     }
+    props.suspendIntroJs();
   }
 
   const openUploadDialog = () => {
