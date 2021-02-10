@@ -220,12 +220,18 @@
   .dialog-footer {
     display: flex;
     justify-content: space-between;
-    gap: 0.5vw;
+
     margin-bottom: 0 !important;
+    @include phone_and_tabletL {
+      gap: 3vw;
+    }
+    @include tabletL {
+      gap: 1vw;
+    }
     button,
     .btn {
       width: 100%;
-      margin: 0 0.5vw;
+      // margin: 0 0.5vw;
       font-family: $font-family-regular !important;
       white-space: nowrap;
       box-sizing: content-box;
@@ -233,11 +239,9 @@
       padding-bottom: 1.5vh;
       @include phone_and_tabletL {
         font-size: 5vw;
-        line-height: 5.2vw;
       }
       @include tabletL {
-        font-size: 2vw;
-        line-height: 2.1vw;
+        font-size: 1.2vw;
       }
       &.bold {
         font-family: $font-family-bold !important;
