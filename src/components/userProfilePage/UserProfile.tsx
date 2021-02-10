@@ -294,6 +294,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
   }
 
+  resumeIntroJs() {
+    if (this.state.introJsSuspended) {
+      this.setState({introJsSuspended: false});
+    }
+  }
+
   renderSubjects(user: UserProfile) {
     if (user.id === -1 || this.state.subjects.length === 0) {
       return;
@@ -341,6 +347,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 setImage={(v) => this.onProfileImageChanged(v)}
                 deleteImage={() => this.onProfileImageChanged('')}
                 suspendIntroJs={this.suspendIntroJs.bind(this)}
+                resumeIntroJs={this.resumeIntroJs.bind(this)}
               />
               <div className="profile-inputs-container">
                 <div className="input-group">
