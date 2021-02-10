@@ -111,7 +111,7 @@ class ProfileIntroJs extends React.Component<Props, State> {
           steps={this.state.steps}
           initialStep={0}
           onChange={this.onChange.bind(this)}
-          onExit={() => { }}
+          onExit={this.onExit.bind(this)}
           onComplete={() => this.props.history.push('')}
           options={{
             nextLabel: this.state.nextLabel,

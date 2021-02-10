@@ -13,24 +13,24 @@ import "./UserProfile.scss";
 import { getGeneralSubject, loadSubjects } from 'components/services/subject';
 import { UpdateUserStatus, UserProfileField, UserRoleItem } from './model';
 import { getUserById, createUser, updateUser, saveProfileImageName } from 'services/axios/user';
-import { isValid, getUserProfile, newStudentProfile } from './service';
-import { User, UserType, UserStatus, UserProfile } from "model/user";
+import { isValid, getUserProfile } from './service';
+import { User, UserType, UserProfile } from "model/user";
 import { Subject } from "model/brick";
-import { checkAdmin, canEdit, isInstitution } from "components/services/brickService";
+import { checkAdmin } from "components/services/brickService";
 
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import SubjectDialog from "./components/SubjectDialog";
-import PhonePreview from "../build/baseComponents/phonePreview/PhonePreview";
 import SaveProfileButton from "./components/SaveProfileButton";
 import ProfileSavedDialog from "./components/ProfileSavedDialog";
 import ProfileImage from "./components/ProfileImage";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
-import UserProfilePreview from "./components/UserProfilePreview";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ProfileInput from "./components/ProfileInput";
 import ProfileIntroJs from "./components/ProfileIntroJs";
 import PasswordChangedDialog from "components/baseComponents/dialogs/PasswordChangedDialog";
+import ProfilePhonePreview from "./components/ProfilePhonePreview";
+import { getExistedUserState, getNewUserState } from "./stateService";
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -83,14 +83,14 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     // check if admin wanna create new user
     if (userId === "new") {
       if (isAdmin) {
-        this.state = this.getNewUserState(isAdmin);
+        this.state = getNewUserState(isAdmin);
       } else {
         props.history.push("/home");
       }
     } else {
       const { user } = props;
 
-      let tempState: UserProfileState = this.getExistedUserState(user, isAdmin);
+      let tempState: UserProfileState = getExistedUserState(user);
       if (userId) {
         this.state = tempState;
         getUserById(userId).then(user => {
@@ -120,80 +120,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.props.requestFailed("Can`t get subjects");
       }
     });
-  }
-
-  getExistedUserState(user: User, isAdmin: boolean) {
-    let isEditor = canEdit(user);
-    let isInstitute = isInstitution(user);
-
-    let isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
-    if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
-      isEditor = false;
-    }
-
-    if (isAdmin) {
-      isEditor = true;
-      isInstitute = true;
-    }
-
-    return {
-      user: {
-        id: -1,
-        username: "",
-        firstName: "",
-        lastName: "",
-        tutorialPassed: false,
-        email: "",
-        password: "",
-        roles: [],
-        subjects: [],
-        status: UserStatus.Pending,
-        bio: '',
-        profileImage: "",
-      },
-      subjects: [],
-      isNewUser: false,
-      isStudent: isOnlyStudent,
-      isAdmin,
-      roles: [
-        { roleId: UserType.Publisher, name: "Publisher", disabled: !isEditor },
-        { roleId: UserType.Institution, name: "Institution", disabled: !isInstitute },
-        { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
-      ],
-      noSubjectDialogOpen: false,
-      savedDialogOpen: false,
-      emailInvalidOpen: false,
-      passwordChangedDialog: false,
-
-      validationRequired: false,
-      emailInvalid: false,
-      previewAnimationFinished: false,
-      editPassword: false
-    };
-  }
-
-  getNewUserState(isAdmin: boolean) {
-    return {
-      user: newStudentProfile(),
-      subjects: [],
-      isNewUser: true,
-      isStudent: false,
-      isAdmin,
-      roles: [
-        { roleId: UserType.Publisher, name: "Publisher", disabled: false },
-        { roleId: UserType.Institution, name: "Institution", disabled: false },
-        { roleId: UserType.Admin, name: "Admin", disabled: false },
-      ],
-      noSubjectDialogOpen: false,
-      savedDialogOpen: false,
-      emailInvalidOpen: false,
-      passwordChangedDialog: false,
-
-      validationRequired: false,
-      emailInvalid: false,
-      previewAnimationFinished: false,
-      editPassword: false
-    };
   }
 
   saveStudentProfile(user: UserProfile) {
@@ -352,7 +278,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
     // set current user roles
     userToSave.roles = this.props.user.roles.map(role => role.roleId);
-
     //const saved = await updateUser(userToSave);
 
     //this.setState({ passwordChangedDialog: true });
@@ -470,16 +395,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               />
             </Grid>
           </div>
-          <div className="profile-phone-preview">
-            <Grid
-              container
-              justify="center"
-              alignContent="center"
-              style={{ height: "100%" }}
-            >
-              <PhonePreview Component={UserProfilePreview} data={{user:this.state.user}} action={this.previewAnimationFinished.bind(this)} />
-            </Grid>
-          </div>
+          <ProfilePhonePreview user={this.state.user} previewAnimationFinished={this.previewAnimationFinished.bind(this)} />
         </Grid>
         <ValidationFailedDialog
           isOpen={this.state.emailInvalidOpen}

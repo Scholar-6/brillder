@@ -41,7 +41,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
 
   const onHover = (user: MUser) => {
     for (const u of users) {
-      user.selectHovered = false;
+      u.selectHovered = false;
     }
     if (!user.selectHovered) {
       user.selectHovered = true;
