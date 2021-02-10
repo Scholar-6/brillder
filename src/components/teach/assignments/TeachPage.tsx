@@ -216,17 +216,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const { classrooms, activeClassroom } = this.state;
     let itemsCount = 0;
     if (activeClassroom) {
-      itemsCount = activeClassroom.assignments.length + 0.5;
+      itemsCount = activeClassroom.assignments.length;
     } else {
       for (const classroom of classrooms) {
-        itemsCount += 0.5;
-        /*eslint-disable-next-line*/
-        for (let a of classroom.assignments) {
-          itemsCount += 1;
-          if (((itemsCount + 0.5) % 6) === 0) {
-            itemsCount += 0.5;
-          }
-        }
+        itemsCount += 1;
+        itemsCount += classroom.assignments.length;
       }
     }
     return itemsCount;

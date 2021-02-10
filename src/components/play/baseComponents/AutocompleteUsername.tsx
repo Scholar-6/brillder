@@ -78,7 +78,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
       getOptionLabel={(option) => `${option.firstName} ${option.lastName} (${option.username})`}
       renderOption={option => (
         <React.Fragment>
-          {option.profileImage ? <img className="autocomplete-profile-image" src={fileUrl(option.profileImage)} /> : <SpriteIcon className="autocomplete-profile-icon" name="user" />}
+          {option.profileImage ? <img alt="" className="autocomplete-profile-image" src={fileUrl(option.profileImage)} /> : <SpriteIcon className="autocomplete-profile-icon" name="user" />}
           {option.firstName} {option.lastName} ({option.username})
         </React.Fragment>
       )}

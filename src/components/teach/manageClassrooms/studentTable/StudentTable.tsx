@@ -1,5 +1,6 @@
 import React from "react";
 import { Checkbox } from "@material-ui/core";
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import { Grow } from "@material-ui/core";
 
 import { MUser } from "../../model";
@@ -8,11 +9,15 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import StudentTableHead from "./StudentTableHead";
 
 import './StudentTable.scss';
+import map from "components/map";
+import ClassroomNames from "./ClassroomNames";
 
 interface StudentTableProps {
+  history: any;
   users: MUser[];
   selectedUsers: MUser[];
   isClassroom: boolean;
+  isAdmin: boolean;
 
   sortBy: UserSortBy;
   isAscending: boolean;
@@ -36,7 +41,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
 
   const onHover = (user: MUser) => {
     for (const u of users) {
-      user.selectHovered = false;
+      u.selectHovered = false;
     }
     if (!user.selectHovered) {
       user.selectHovered = true;
@@ -49,7 +54,11 @@ const StudentTable: React.FC<StudentTableProps> = props => {
     setRerender(!rerender);
   }
 
-  const onDragStart = (e: React.DragEvent<HTMLTableRowElement>) => {
+  const onDragStart = (e: React.DragEvent<HTMLDivElement>, student: MUser) => {
+    if (!student.selected) {
+      props.toggleUser(student.id);
+    }
+
     let count = 0;
     let studentIds: Number[] = [];
     for (let student of users) {
@@ -83,13 +92,15 @@ const StudentTable: React.FC<StudentTableProps> = props => {
         style={{ transformOrigin: "left 0 0" }}
         timeout={i * 200}
       >
-        <div draggable={true} onDragStart={onDragStart} className={className}>
+        <div draggable={true} onDragStart={e => onDragStart(e, user)} onClick={() => props.toggleUser(user.id)} className={className}>
           <div className="user-row-hover">
             <div className="user-radio-column">
+              <div className="drag-icon-container">
+                <DragIndicatorIcon className="user-drag-icon" />
+              </div>
               <Checkbox
                 checked={user.selected}
-                onMouseOver={() => onHover(user)} onMouseLeave={() => onBlur(user)}
-                onClick={() => props.toggleUser(user.id)} />
+                onMouseOver={() => onHover(user)} onMouseLeave={() => onBlur(user)} />
               {user.selectHovered && <div className="custom-tooltip">Select</div>}
             </div>
             <div className="student-name">
@@ -101,22 +112,24 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                 </div>}
             </div>
             <div className="classroom-names">
-              <div>
-                {user.studyClassrooms && user.studyClassrooms.map((classroom, i) =>
-                  <div key={i} className="classroom-name" style={{
-                    backgroundColor: classroom.subject?.color
-                  }}>{classroom.name}</div>)
-                }
-                {user.hasInvitation && <div key={i} className="classroom-name text-theme-dark-blue pending-label">Pending</div>}
-              </div>
+              <ClassroomNames studyClassrooms={user.studyClassrooms} hasInvitation={user.hasInvitation} />
             </div>
             <div className="selected-column">
               <div className="action-buttons">
-                <div className="edit-button svgOnHover">
-                  <SpriteIcon name="edit-outline" className="active" />
-                </div>
+                  <div className="edit-button svgOnHover">
+                    <SpriteIcon
+                      name="edit-outline"
+                      className="active"
+                      onClick={e => {
+                        props.history.push(map.UserProfile + `/${user.id}`);
+                        e.stopPropagation();
+                      }}/>
+                  </div>
                 {props.isClassroom &&
-                  <div className="trash-button svgOnHover" onClick={() => props.unassign(user)}>
+                  <div className="trash-button svgOnHover" onClick={e => {
+                    props.unassign(user);
+                    e.stopPropagation();
+                  }}>
                     <SpriteIcon name="trash-outline" className="active" />
                   </div>
                 }

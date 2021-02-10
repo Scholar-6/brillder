@@ -258,7 +258,7 @@ class ExpandedAssignment extends Component<
             assignment={assignment}
           />
         </div>
-        <div className="users-table">
+        <div className="assignments-table">
           <table cellSpacing="0" cellPadding="0">
             {this.renderTableHead()}
             <tbody>{students.map(this.renderStudent.bind(this))}</tbody>

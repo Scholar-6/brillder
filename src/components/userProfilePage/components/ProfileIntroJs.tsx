@@ -8,6 +8,7 @@ import './IntroJs.scss';
 import { RolePreference, User } from 'model/user';
 
 interface Props {
+  suspended: boolean | undefined;
   user: User;
   location: any;
   history: any;
@@ -17,6 +18,7 @@ interface State {
   nextLabel: string;
   initialStep: number;
   stepsEnabled: boolean;
+  suspended: boolean;
   steps: any[];
 }
 
@@ -42,6 +44,7 @@ class ProfileIntroJs extends React.Component<Props, State> {
       nextLabel: 'Start Tutorial',
       initialStep: 0,
       stepsEnabled: false,
+      suspended: false,
       steps: [
         {
           element: 'body',
@@ -91,6 +94,55 @@ class ProfileIntroJs extends React.Component<Props, State> {
     }, 1000);
   }
 
+  checkIntroJs() {
+    const res = document.getElementsByClassName("introjs-overlay");
+    const res2 = document.getElementsByClassName("introjs-helperLayer");
+    const res3 = document.getElementsByClassName('introjs-tooltipReferenceLayer');
+    if (
+      res.length > 0 && res[0] &&
+      res2.length > 0 && res2[0] &&
+      res3.length > 0 && res3[0]
+    ) {
+      return [res[0] as HTMLDivElement, res2[0] as HTMLDivElement, res3[0] as HTMLDivElement]
+    }
+  }
+
+  hideIntroJs() {
+    const elems = this.checkIntroJs();
+    if (elems) {
+      for (const elem of elems) {
+        elem.style.display = 'none';
+      }
+    }
+  }
+  
+  showIntroJs() {
+    const elems = this.checkIntroJs();
+    if (elems) {
+      for (const elem of elems) {
+        elem.style.display = 'block';
+      }
+    }
+  }
+
+  componentDidUpdate(props: Props) {
+    if (this.props.suspended !== props.suspended) {
+      if (this.props.suspended) {
+        if (!this.state.suspended) {
+          this.setState({suspended: this.props.suspended});
+        }
+        console.log('hide')
+        this.hideIntroJs();
+      } else {
+        console.log('show')
+        if (this.state.suspended) {
+          this.setState({suspended: false});
+        }
+        this.showIntroJs();
+      }
+    }
+  }
+
   onExit() {
     this.setState({ stepsEnabled: false });
   };
@@ -111,7 +163,7 @@ class ProfileIntroJs extends React.Component<Props, State> {
           steps={this.state.steps}
           initialStep={0}
           onChange={this.onChange.bind(this)}
-          onExit={() => { }}
+          onExit={this.onExit.bind(this)}
           onComplete={() => this.props.history.push('')}
           options={{
             nextLabel: this.state.nextLabel,

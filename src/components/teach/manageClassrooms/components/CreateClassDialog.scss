@@ -1,8 +1,9 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
-.create-classroom-dialog, .dialog-box {
+.create-classroom-dialog,
+.dialog-box {
   .dialog-select-container {
     margin-bottom: 2vh !important;
     .MuiInputBase-root {
@@ -22,13 +23,5 @@
   }
   .title {
     font-size: 2vw;
-  }
-  .dialog-footer {
-    button {
-      padding-top: 1.5vh;
-      padding-bottom: 1.5vh;
-      font-size: 2vw;
-      line-height: 1.5;
-    }
   }
 }

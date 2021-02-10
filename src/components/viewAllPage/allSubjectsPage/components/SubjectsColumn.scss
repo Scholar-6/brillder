@@ -24,17 +24,20 @@
       flex-direction: column;
     }
     @include tabletL {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       &:nth-child(even) {
-        width: calc(100% - 12.5%);
-        margin-left: 12.5%;
+        width: calc(100% - 8vw);
+        margin: 0 4vw;
       }
     }
     .subject-item {
       transition: all 300ms ease-out;
       cursor: pointer;
       position: relative;
-      background: white;
-      color: var(--theme-dark-blue);
+      background: var(--theme-dark-blue) !important;
+      color: var(--white) !important;
       @include phone_and_tabletL {
         padding-left: 10vw;
         width: 100%;
@@ -44,12 +47,17 @@
       }
       @include tabletL {
         text-align: center;
-        width: 24%;
-        padding-left: 0;
+        width: 16vw;
         font-size: 1.3vw;
         margin: 0.8vh 0.5%;
         border-radius: 0.8vw;
-        display: inline-block;
+      }
+      &:hover {
+        background: var(--white) !important;
+        color: var(--theme-dark-blue) !important;
+        .icon {
+          color: var(--theme-dark-blue) !important;
+        }
       }
       .round-circle-container {
         left: 0.8vw;
@@ -78,24 +86,12 @@
           }
         }
       }
-
       .subject-name {
         @include phone_and_tabletL {
           padding: 1vh 0;
         }
         @include tabletL {
           padding: 2vh 0;
-        }
-      }
-
-      &:hover {
-        color: white !important;
-        background: var(--theme-dark-blue);
-        .round-circle {
-          background: white !important;
-        }
-        .icon {
-          color: var(--white) !important;
         }
       }
     }
