@@ -71,6 +71,8 @@ interface UserProfileState {
   validationRequired: boolean;
   emailInvalid: boolean;
   editPassword: boolean;
+
+  introJsSuspended?: boolean;
 }
 
 class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
@@ -156,6 +158,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   saveUserProfile() {
     const { user } = this.state;
+
+    this.suspendIntroJs();
+
     if (this.state.isStudent) {
       this.saveStudentProfile(user);
       return;
@@ -283,6 +288,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     //this.setState({ passwordChangedDialog: true });
   }
 
+  suspendIntroJs() {
+    if (!this.state.introJsSuspended) {
+      this.setState({introJsSuspended: true});
+    }
+  }
+
   renderSubjects(user: UserProfile) {
     if (user.id === -1 || this.state.subjects.length === 0) {
       return;
@@ -291,6 +302,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       <SubjectAutocomplete
         selected={user.subjects}
         subjects={this.state.subjects}
+        onClick={this.suspendIntroJs.bind(this)}
         onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
       />
     );
@@ -328,6 +340,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 profileImage={user.profileImage}
                 setImage={(v) => this.onProfileImageChanged(v)}
                 deleteImage={() => this.onProfileImageChanged('')}
+                suspendIntroJs={this.suspendIntroJs.bind(this)}
               />
               <div className="profile-inputs-container">
                 <div className="input-group">
@@ -390,6 +403,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               <textarea
                 className="style2 bio-container"
                 value={user.bio}
+                onClick={this.suspendIntroJs.bind(this)}
                 placeholder="Write a short bio here..."
                 onChange={e => this.onFieldChanged(e as any, UserProfileField.Bio)}
               />
@@ -416,7 +430,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         <PasswordChangedDialog
           isOpen={this.state.passwordChangedDialog}
           close={() => this.setState({passwordChangedDialog: false})} />
-        <ProfileIntroJs user={this.props.user} history={this.props.history} location={this.props.location} />
+        <ProfileIntroJs user={this.props.user} suspended={this.state.introJsSuspended} history={this.props.history} location={this.props.location} />
       </div>
     );
   }

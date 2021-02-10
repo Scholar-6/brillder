@@ -8,6 +8,7 @@ import './IntroJs.scss';
 import { RolePreference, User } from 'model/user';
 
 interface Props {
+  suspended: boolean | undefined;
   user: User;
   location: any;
   history: any;
@@ -89,6 +90,14 @@ class ProfileIntroJs extends React.Component<Props, State> {
       }
       this.setState({ stepsEnabled });
     }, 1000);
+  }
+
+  componentDidUpdate(props: Props) {
+    if (this.props.suspended !== props.suspended) {
+      if (this.props.suspended) {
+        this.setState({stepsEnabled: false});
+      }
+    }
   }
 
   onExit() {
