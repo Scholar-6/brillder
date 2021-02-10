@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormControlLabel, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import './ManageClassrooms.scss';
@@ -31,8 +31,8 @@ import ValidationFailedDialog from "components/baseComponents/dialogs/Validation
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 import NameAndSubjectForm from "../components/NameAndSubjectForm";
 import { Subject } from "model/brick";
-import RadioButton from "components/baseComponents/buttons/RadioButton";
 import map from "components/map";
+import ClassroomFilterItem from "./components/ClassroomFilterItem";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -126,7 +126,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   async loadData() {
     await this.getStudents();
     await this.getClassrooms();
-    this.setState({isLoaded: true});
+    this.setState({ isLoaded: true });
   }
 
   async getStudents() {
@@ -321,10 +321,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     this.setState({ activeClassroom: null, page: 0, isSearching: false });
   }
 
-  allowDrop(e: any) {
-    e.preventDefault();
-  }
-
   onDrop(e: React.DragEvent<HTMLDivElement>, classroomId: number) {
     const dropData = e.dataTransfer.getData("text/plain");
     if (dropData) {
@@ -334,7 +330,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           this.assignDroppedStudents(classroomId, data.studentIds);
         }
       }
-      catch {}
+      catch { }
     }
     e.dataTransfer.clearData();
   }
@@ -378,38 +374,23 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         </div>
         <div className="subject-indexes-box filter-container manage-classrooms-filter">
           {this.renderViewAllFilter()}
-          {this.state.classrooms.map((c, i) => {
-            let className = "index-box hover-light item-box2";
-            if (c.isActive) {
-              className += " active";
-            }
-            return (
-              <div key={i} className={className} onDrop={e => this.onDrop(e, c.id)} onDragOver={this.allowDrop.bind(this)} onClick={() => this.setActiveClassroom(c)}>
-                <FormControlLabel
-                  checked={(this.state.activeClassroom && this.state.activeClassroom.id === c.id) ?? false}
-                  style={{ color: c.subject?.color ?? "#FFFFFF" }}
-                  control={<RadioButton checked={(this.state.activeClassroom && this.state.activeClassroom.id === c.id) ?? false} name={c.name} color={c.subject?.color ?? "#FFFFFF"} />}
-                  label={c.name}
-                />
-                <div className="right-index right-index2">
-                  {c.students.length}
-                  <SpriteIcon name="users" className="active" />
-                  <SpriteIcon
-                    name="trash-outline" 
-                    className="active text-white remove-class"
-                    onClick={() => this.onDeleteClass(c)}
-                  />
-                </div>
-              </div>
-            );
-          })}
+          {this.state.classrooms.map((c, i) =>
+            <ClassroomFilterItem
+              index={i}
+              classroom={c}
+              activeClassroom={this.state.activeClassroom}
+              setActiveClassroom={this.setActiveClassroom.bind(this)}
+              onDeleteClass={this.onDeleteClass.bind(this)}
+              onDrop={this.onDrop.bind(this)}
+            />
+          )}
         </div>
       </div>
     );
   };
 
   sortByLastName() {
-    let {users, isAscending} = this.state;
+    let { users, isAscending } = this.state;
     isAscending = !isAscending;
     if (isAscending) {
       users.sort((a, b) => a.lastName < b.lastName ? -1 : 1);
@@ -496,7 +477,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       if (this.state.isAdmin) {
         this.props.history.push(map.UserProfile + '/new');
       } else {
-        this.setState({cantCreate: true});
+        this.setState({ cantCreate: true });
       }
     }
 
@@ -532,7 +513,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   async updateClassroom(name: string, subject: Subject) {
     if (this.state.activeClassroom) {
-      let success = await updateClassroom({...this.state.activeClassroom, name, subject});
+      let success = await updateClassroom({ ...this.state.activeClassroom, name, subject });
       if (success) {
         this.getClassrooms();
       }
@@ -560,14 +541,14 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     if (!this.state.isLoaded) {
       return <div className="tab-content" />
     }
-    const {activeClassroom} = this.state;
+    const { activeClassroom } = this.state;
     let { users } = this.state;
 
     const moveToNewUser = () => {
       if (this.state.isAdmin) {
         this.props.history.push(map.UserProfile + '/new');
       } else {
-        this.setState({cantCreate: true});
+        this.setState({ cantCreate: true });
       }
     }
 
@@ -612,23 +593,23 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     return (
       <div className="tab-content">
         {visibleUsers.length > 0 ? <>
-            {activeClassroom && this.renderTopRow()}
-            <StudentTable
-              history={this.props.history}
-              users={visibleUsers}
-              isClassroom={!!activeClassroom}
-              isAdmin={this.state.isAdmin}
-              selectedUsers={this.state.selectedUsers}
-              sortBy={this.state.sortBy}
-              isAscending={this.state.isAscending}
-              pageStudentsSelected={this.state.pageStudentsSelected}
-              sort={this.sortByLastName.bind(this)}
-              toggleUser={this.toggleUser.bind(this)}
-              assignToClass={this.openAssignDialog.bind(this)}
-              unassign={this.unassigningStudent.bind(this)}
-              togglePageStudents={this.togglePageStudents.bind(this)}
-            />
-          </>:
+          {activeClassroom && this.renderTopRow()}
+          <StudentTable
+            history={this.props.history}
+            users={visibleUsers}
+            isClassroom={!!activeClassroom}
+            isAdmin={this.state.isAdmin}
+            selectedUsers={this.state.selectedUsers}
+            sortBy={this.state.sortBy}
+            isAscending={this.state.isAscending}
+            pageStudentsSelected={this.state.pageStudentsSelected}
+            sort={this.sortByLastName.bind(this)}
+            toggleUser={this.toggleUser.bind(this)}
+            assignToClass={this.openAssignDialog.bind(this)}
+            unassign={this.unassigningStudent.bind(this)}
+            togglePageStudents={this.togglePageStudents.bind(this)}
+          />
+        </> :
           this.renderEmptyTab()
         }
         {this.renderPagination(visibleUsers, users)}
@@ -698,7 +679,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <ValidationFailedDialog
           isOpen={this.state.cantCreate}
           header="You don`t have permisions to create new user"
-          close={()=> this.setState({cantCreate: false})}
+          close={() => this.setState({ cantCreate: false })}
         />
       </div>
     );
