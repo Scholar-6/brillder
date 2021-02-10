@@ -614,8 +614,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         {visibleUsers.length > 0 ? <>
             {activeClassroom && this.renderTopRow()}
             <StudentTable
+              history={this.props.history}
               users={visibleUsers}
               isClassroom={!!activeClassroom}
+              isAdmin={this.state.isAdmin}
               selectedUsers={this.state.selectedUsers}
               sortBy={this.state.sortBy}
               isAscending={this.state.isAscending}
