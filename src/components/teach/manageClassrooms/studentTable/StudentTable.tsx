@@ -80,7 +80,6 @@ const StudentTable: React.FC<StudentTableProps> = props => {
     if (user.selected) {
       className += ' selected';
     }
-    console.log(props.isAdmin)
     return (
       <Grow
         in={true}
