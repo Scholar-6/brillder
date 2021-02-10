@@ -54,7 +54,11 @@ const StudentTable: React.FC<StudentTableProps> = props => {
     setRerender(!rerender);
   }
 
-  const onDragStart = (e: React.DragEvent<HTMLTableRowElement>) => {
+  const onDragStart = (e: React.DragEvent<HTMLDivElement>, student: MUser) => {
+    if (!student.selected) {
+      props.toggleUser(student.id);
+    }
+
     let count = 0;
     let studentIds: Number[] = [];
     for (let student of users) {
@@ -88,7 +92,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
         style={{ transformOrigin: "left 0 0" }}
         timeout={i * 200}
       >
-        <div draggable={true} onDragStart={onDragStart} className={className}>
+        <div draggable={true} onDragStart={e => onDragStart(e, user)} onClick={() => props.toggleUser(user.id)} className={className}>
           <div className="user-row-hover">
             <div className="user-radio-column">
               <div className="drag-icon-container">
@@ -96,8 +100,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
               </div>
               <Checkbox
                 checked={user.selected}
-                onMouseOver={() => onHover(user)} onMouseLeave={() => onBlur(user)}
-                onClick={() => props.toggleUser(user.id)} />
+                onMouseOver={() => onHover(user)} onMouseLeave={() => onBlur(user)} />
               {user.selectHovered && <div className="custom-tooltip">Select</div>}
             </div>
             <div className="student-name">
@@ -114,10 +117,19 @@ const StudentTable: React.FC<StudentTableProps> = props => {
             <div className="selected-column">
               <div className="action-buttons">
                   <div className="edit-button svgOnHover">
-                    <SpriteIcon name="edit-outline" onClick={() => props.history.push(map.UserProfile + `/${user.id}`)} className="active" />
+                    <SpriteIcon
+                      name="edit-outline"
+                      className="active"
+                      onClick={e => {
+                        props.history.push(map.UserProfile + `/${user.id}`);
+                        e.stopPropagation();
+                      }}/>
                   </div>
                 {props.isClassroom &&
-                  <div className="trash-button svgOnHover" onClick={() => props.unassign(user)}>
+                  <div className="trash-button svgOnHover" onClick={e => {
+                    props.unassign(user);
+                    e.stopPropagation();
+                  }}>
                     <SpriteIcon name="trash-outline" className="active" />
                   </div>
                 }
