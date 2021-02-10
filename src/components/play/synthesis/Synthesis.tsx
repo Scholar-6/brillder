@@ -6,7 +6,6 @@ import './Synthesis.scss';
 import { Brick } from 'model/brick';
 import { useHistory, useLocation } from 'react-router-dom';
 import { PlayStatus } from '../model';
-import { BrickLengthEnum } from 'model/brick';
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
