@@ -837,7 +837,8 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             width: 100%;
             position: relative;
             margin: 0;
-
+            display: flex;
+            justify-content: center;
             > h2 {
               width: 100%;
               margin-top: 0;
@@ -857,23 +858,25 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             > h3 {
               letter-spacing: inherit;
               margin: 0;
-              @include phone_and_tabletP {
+              bottom: 75%;
+              @include phone_and_tabletL {
                 font-size: 6vw;
-                top: -6vw;
               }
-
-              @include tabletP {
-                top: -1vw;
+              @include tabletL {
               }
             }
             > span {
               width: 100%;
               left: 50%;
               transform: translateX(-50%);
-              top: 100%;
-              line-height: 1vw;
+              top: 80%;
               @extend %textCenter;
-              font-size: 1vw;
+              @include phone_and_tabletL {
+                font-size: 6vw;
+              }
+              @include tabletL {
+                font-size: 1vw;
+              }
             }
           }
         }
