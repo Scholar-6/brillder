@@ -11,6 +11,8 @@ interface ProfileImageProps {
   profileImage: string;
   setImage(profileImage: string): void;
   deleteImage(): void;
+  suspendIntroJs(): void;
+  resumeIntroJs(): void;
 }
 
 const ProfileImage: React.FC<ProfileImageProps> = (props) => {
@@ -32,6 +34,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
       props.deleteImage();
       openUploadDialog();
     }
+    props.suspendIntroJs();
   }
 
   const openUploadDialog = () => {
@@ -67,6 +70,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
   const removeImage = () => {
     setDeleteDialog(false);
     props.deleteImage();
+    props.resumeIntroJs();
   }
 
   const uploadCropedFile = () => {
@@ -78,6 +82,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
         const fileName = res.data.fileName;
         props.setImage(fileName);
         setUploadDialog(false);
+        props.resumeIntroJs();
       },
       () => { }
     );
@@ -114,7 +119,10 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
       </div>
       <Dialog
         open={isUploadOpen}
-        onClose={() => setUploadDialog(false)}
+        onClose={() => {
+          setUploadDialog(false);
+          props.resumeIntroJs();
+        }}
         className="dialog-box"
       >
         <div className="dialog-header">
@@ -128,7 +136,10 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
       </Dialog>
       <Dialog
         open={isDeleteOpen}
-        onClose={() => setDeleteDialog(false)}
+        onClose={() => {
+          setDeleteDialog(false);
+          props.resumeIntroJs();
+        }}
         className="dialog-box"
       >
         <div className="dialog-header">
