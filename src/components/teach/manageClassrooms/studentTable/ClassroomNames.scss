@@ -1,9 +1,17 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
 .inline-names-container {
   $width: 44.6vw;
+  width: calc(#{$width} - 4vw);
+  margin-left: 2vw;
+  margin-right: 2vw;
   position: relative;
 
   .inline-names-limiter {
-    width: $width;
+    width: calc(#{$width} - 4vw);
+    overflow-y: hidden;
   }
 
   .inline-names {
@@ -12,13 +20,7 @@
     width: $width;
   }
   &.scrolling {
-    width: calc(#{$width} - 4vw);
-    margin-left: 2vw;
-    margin-right: 2vw;
-  
     .inline-names-limiter {
-      width: calc(#{$width} - 4vw);
-      overflow-y: hidden;
       overflow-x: scroll;
     }
 
@@ -30,6 +32,10 @@
       position: absolute;
       width: 1.5vw;
       height: 1.5vw;
+
+      &:hover {
+        color: var(--theme-orange);
+      }
 
       &.left {
         left: -2vw;

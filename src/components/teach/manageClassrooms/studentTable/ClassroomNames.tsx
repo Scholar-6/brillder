@@ -10,6 +10,8 @@ interface ClassroomNamesProps {
 
 interface State {
   scrollNeeded: boolean;
+  canScrollLeft: boolean;
+  canScrollRight: boolean;
   ref: React.RefObject<HTMLDivElement>;
 }
 
@@ -19,6 +21,8 @@ class ClassroomNames extends React.Component<ClassroomNamesProps, State> {
 
     this.state = {
       scrollNeeded: false,
+      canScrollLeft: false,
+      canScrollRight: false,
       ref: React.createRef<HTMLDivElement>()
     }
   }
@@ -33,14 +37,14 @@ class ClassroomNames extends React.Component<ClassroomNamesProps, State> {
       if (childNode) {
         if (childNode.offsetWidth > parrentNode.offsetWidth) {
           if (!this.state.scrollNeeded) {
-            this.setState({ scrollNeeded: true });
+            this.setState({ scrollNeeded: true, canScrollRight: true });
           }
           return;
         }
       }
     }
     if (this.state.scrollNeeded) {
-      this.setState({scrollNeeded: false});
+      this.setState({ scrollNeeded: false });
     }
   }
 
@@ -67,15 +71,45 @@ class ClassroomNames extends React.Component<ClassroomNamesProps, State> {
     const scrollElement = this.state.ref.current;
     if (scrollElement) {
       scrollElement.scrollBy(scrollValue, 0);
+      console.log('scroll')
+      return true;
+    }
+    return false;
+  }
+
+  checkScrollRight() {
+    const scrollElement = this.state.ref.current;
+    if (scrollElement) {
+      if (scrollElement.scrollWidth - scrollElement.offsetWidth < scrollElement.scrollLeft + 3) {
+        this.setState({ canScrollRight: false });
+      }
     }
   }
 
   scrollRight() {
-    this.scroll(100);
+    const success = this.scroll(100);
+    if (success && !this.state.canScrollLeft) {
+      this.setState({ canScrollLeft: true });
+    }
+
+    this.checkScrollRight();
+  }
+
+  checkScrollLeft() {
+    const scrollElement = this.state.ref.current;
+    if (scrollElement) {
+      if (scrollElement.scrollLeft === 0) {
+        this.setState({ canScrollLeft: false });
+      }
+    }
   }
 
   scrollLeft() {
-    this.scroll(-100);
+    const success = this.scroll(-100);
+    if (success && !this.state.canScrollRight) {
+      this.setState({ canScrollRight: true });
+    }
+    this.checkScrollLeft();
   }
 
   render() {
@@ -89,7 +123,10 @@ class ClassroomNames extends React.Component<ClassroomNamesProps, State> {
 
     return (
       <div className={className}>
-        {scrollNeeded && <SpriteIcon className="scroll-button left" name="arrow-left" onClick={this.scrollLeft.bind(this)} />}
+        {scrollNeeded && this.state.canScrollLeft && <SpriteIcon className="scroll-button left" name="arrow-left" onClick={e => {
+          this.scrollLeft();
+          e.stopPropagation();
+        }} />}
         <div ref={this.state.ref} className="inline-names-limiter">
           <div className="inline-names">
             {props.studyClassrooms && props.studyClassrooms.map((classroom, i) =>
@@ -100,7 +137,10 @@ class ClassroomNames extends React.Component<ClassroomNamesProps, State> {
             {props.hasInvitation && <div className="classroom-name text-theme-dark-blue pending-label">Pending</div>}
           </div>
         </div>
-        {scrollNeeded && <SpriteIcon className="scroll-button right" name="arrow-right" onClick={this.scrollRight.bind(this)}  />}
+        {scrollNeeded && this.state.canScrollRight && <SpriteIcon className="scroll-button right" name="arrow-right" onClick={e => {
+          this.scrollRight();
+          e.stopPropagation();
+        }} />}
       </div>
     );
   }
