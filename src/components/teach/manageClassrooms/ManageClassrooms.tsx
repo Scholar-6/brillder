@@ -376,8 +376,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           {this.renderViewAllFilter()}
           {this.state.classrooms.map((c, i) =>
             <ClassroomFilterItem
-              index={i}
               classroom={c}
+              key={i}
               activeClassroom={this.state.activeClassroom}
               setActiveClassroom={this.setActiveClassroom.bind(this)}
               onDeleteClass={this.onDeleteClass.bind(this)}

@@ -189,18 +189,17 @@
 
   .classroom-names {
     max-width: 19vw;
-    overflow-x: scroll;
     display: flex;
 
     .classroom-name {
-      max-width: 3vw;
+      padding-left: 0.3vw;
+      padding-right: 0.3vw;
       margin-right: 0.1vw;
+      margin-left: 0.1vw;
       background: var(--tab-gray);
       border-radius: 0.3vw;
       display: flex;
       height: 100%;
-      @extend %ellipsis;
-
       &.pending-label {
         max-width: 6vw;
         padding: 0 0.7vw;

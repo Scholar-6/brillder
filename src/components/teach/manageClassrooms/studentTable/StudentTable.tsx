@@ -10,6 +10,7 @@ import StudentTableHead from "./StudentTableHead";
 
 import './StudentTable.scss';
 import map from "components/map";
+import ClassroomNames from "./ClassroomNames";
 
 interface StudentTableProps {
   history: any;
@@ -108,14 +109,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                 </div>}
             </div>
             <div className="classroom-names">
-              <div>
-                {user.studyClassrooms && user.studyClassrooms.map((classroom, i) =>
-                  <div key={i} className="classroom-name" style={{
-                    backgroundColor: classroom.subject?.color
-                  }}>{classroom.name}</div>)
-                }
-                {user.hasInvitation && <div key={i} className="classroom-name text-theme-dark-blue pending-label">Pending</div>}
-              </div>
+              <ClassroomNames studyClassrooms={user.studyClassrooms} hasInvitation={user.hasInvitation} />
             </div>
             <div className="selected-column">
               <div className="action-buttons">
