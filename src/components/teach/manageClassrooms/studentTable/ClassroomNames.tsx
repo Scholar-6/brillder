@@ -26,16 +26,30 @@ class ClassroomNames extends React.Component<ClassroomNamesProps, State> {
   /**
    * Set if scroll status if needed
    * */
-  componentDidMount() {
+  checkScrolling() {
     const parrentNode = this.state.ref.current;
     if (parrentNode && parrentNode.children.length > 0) {
       const childNode = parrentNode.children[0] as HTMLDivElement;
       if (childNode) {
         if (childNode.offsetWidth > parrentNode.offsetWidth) {
-          this.setState({ scrollNeeded: true });
+          if (!this.state.scrollNeeded) {
+            this.setState({ scrollNeeded: true });
+          }
+          return;
         }
       }
     }
+    if (this.state.scrollNeeded) {
+      this.setState({scrollNeeded: false});
+    }
+  }
+
+  componentDidMount() {
+    this.checkScrolling();
+  }
+
+  componentDidUpdate() {
+    this.checkScrolling();
   }
 
   getScrollingComponent() {
