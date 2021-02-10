@@ -74,12 +74,6 @@ const StudentTableHead: React.FC<StudentTableProps> = props => {
         <Grid container>CLASSES</Grid>
       </div>
       <div className="selected-column">
-        {renderAssignButton()}
-        <div className="selected-label svgOnHover">
-          <span className="selected-count">{props.selectedUsers.length}</span>
-          <SpriteIcon name="users-custom" className="active thin" />
-          <span>Selected</span>
-        </div>
       </div>
     </div>
   );

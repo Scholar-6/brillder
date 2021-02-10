@@ -31,14 +31,14 @@
     .overflow-fade-end {
       position: absolute;
       right: 0vw;
-      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(229,232,237,1));
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,1));
       width: 1vw;
       height: 100%;
     }
     .overflow-fade-start {
       position: absolute;
       left: 0vw;
-      background: linear-gradient(90deg, rgba(229,232,237,1), rgba(255,255,255,0));
+      background: linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0));
       width: 1vw;
       height: 100%;
     }
@@ -58,6 +58,41 @@
 
       &.right {
         right: -2vw;
+      }
+    }
+  }
+}
+
+.manage-classrooms-page .users-table {
+  .user-row:nth-child(even) {
+    .overflow-fade-end {
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(229,232,237,1));
+    }
+    .overflow-fade-start {
+      background: linear-gradient(90deg, rgba(229,232,237,1), rgba(255,255,255,0));
+    }
+    &:hover {
+      .overflow-fade-end {
+        background: linear-gradient(90deg, rgba(255,255,255,0), rgba(229,232,237,1));
+      }
+      .overflow-fade-start {
+        background: linear-gradient(90deg, rgba(229,232,237,1), rgba(255,255,255,0));
+      }
+    }
+  }
+  .user-row.selected {
+    .overflow-fade-end {
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(130,192,237,1));
+    }
+    .overflow-fade-start {
+      background: linear-gradient(90deg, rgba(130,192,237,1), rgba(255,255,255,0));
+    }
+    &:hover {
+      .overflow-fade-end {
+        background: linear-gradient(90deg, rgba(255,255,255,0), rgba(130,192,237,0.5));
+      }
+      .overflow-fade-start {
+        background: linear-gradient(90deg, rgba(130,192,237,0.5), rgba(255,255,255,0));
       }
     }
   }
