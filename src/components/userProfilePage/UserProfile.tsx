@@ -213,10 +213,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   onSubjectDialogClose() {
     this.setState({ noSubjectDialogOpen: false });
+    this.resumeIntroJs();
   }
 
   onProfileSavedDialogClose() {
     this.setState({ savedDialogOpen: false });
+    this.resumeIntroJs();
   }
 
   onFieldChanged(e: React.ChangeEvent<HTMLInputElement>, name: UserProfileField) {
@@ -308,7 +310,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       <SubjectAutocomplete
         selected={user.subjects}
         subjects={this.state.subjects}
-        onClick={this.suspendIntroJs.bind(this)}
+        suspendIntroJs={this.suspendIntroJs.bind(this)}
+        resumeIntroJs={this.resumeIntroJs.bind(this)}
         onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
       />
     );
@@ -412,7 +415,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 value={user.bio}
                 onClick={this.suspendIntroJs.bind(this)}
                 placeholder="Write a short bio here..."
-                onChange={e => this.onFieldChanged(e as any, UserProfileField.Bio)}
+                onChange={e => {
+                  this.onFieldChanged(e as any, UserProfileField.Bio)
+                }}
+                onBlur={this.resumeIntroJs.bind(this)}
               />
             </Grid>
           </div>

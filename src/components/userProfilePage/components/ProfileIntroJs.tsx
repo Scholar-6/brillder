@@ -131,8 +131,10 @@ class ProfileIntroJs extends React.Component<Props, State> {
         if (!this.state.suspended) {
           this.setState({suspended: this.props.suspended});
         }
+        console.log('hide')
         this.hideIntroJs();
       } else {
+        console.log('show')
         if (this.state.suspended) {
           this.setState({suspended: false});
         }
