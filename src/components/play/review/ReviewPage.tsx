@@ -72,7 +72,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     }
 
     document.addEventListener("keydown", handleMove, false);
-    
+
     return function cleanup() {
       document.removeEventListener("keydown", handleMove, false);
     };

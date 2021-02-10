@@ -28,9 +28,6 @@
       @include phone_and_tabletP {
         margin: 0.5vh 0vw 0vw 8vw !important;
         width: calc(100% - 8vw) !important;
-        .question-title {
-          font-size: inherit !important;
-        }
       }
     }
   }
