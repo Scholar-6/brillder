@@ -137,6 +137,8 @@ class ClassroomNames extends React.Component<ClassroomNamesProps, State> {
             {props.hasInvitation && <div className="classroom-name text-theme-dark-blue pending-label">Pending</div>}
           </div>
         </div>
+        {scrollNeeded && this.state.canScrollRight && <div className="overflow-fade-end" />}
+        {scrollNeeded && this.state.canScrollLeft && <div className="overflow-fade-start" />}
         {scrollNeeded && this.state.canScrollRight && <SpriteIcon className="scroll-button right" name="arrow-right" onClick={e => {
           this.scrollRight();
           e.stopPropagation();
