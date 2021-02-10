@@ -305,6 +305,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     for (let user of this.state.users) {
       user.selected = false;
     }
+    this.setState({ users: this.state.users });
   }
 
   unselectionClasses() {
@@ -332,7 +333,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       }
       catch { }
     }
-    e.dataTransfer.clearData();
+
+    // clearing data not working on firefox
+    try { e.dataTransfer.clearData() } catch { }
   }
 
   renderViewAllFilter() {
