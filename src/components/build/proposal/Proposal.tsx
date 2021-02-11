@@ -4,9 +4,9 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { connect } from "react-redux";
 import { History } from "history";
 
+import "./Proposal.scss";
 import actions from "redux/actions/brickActions";
 import * as socketActions from "redux/actions/socket";
-import "./Proposal.scss";
 import SubjectPage from "./questionnaire/subject/Subject";
 import BrickTitle from "./questionnaire/brickTitle/brickTitle";
 import OpenQuestion from "./questionnaire/openQuestion/openQuestion";
@@ -204,7 +204,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   setCore = (isCore: boolean) =>
     this.saveLocalBrick({ ...this.state.brick, isCore });
   setSubject = (subjectId: number) =>
-    this.saveLocalBrick({ ...this.state.brick, subjectId });
+    this.saveLocalBrick({ ...this.state.brick, subject: undefined, subjectId });
   setCoreAndSubject = (subjectId: number, isCore: boolean) => 
     this.saveLocalBrick({ ...this.state.brick, subjectId, isCore });
   setTitles = (titles: any) =>
