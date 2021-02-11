@@ -150,7 +150,7 @@ const App: React.FC<AppProps> = props => {
           component={InvestigationBuildPage}
           location={location}
         />
-        <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
+        <BuildBrickRoute path={map.ProposalBase} component={Proposal} location={location} />
         <BuildRoute path="/build/brick/:brickId" component={Proposal} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />

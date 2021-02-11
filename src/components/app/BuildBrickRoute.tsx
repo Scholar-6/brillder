@@ -10,9 +10,8 @@ import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-import map from "components/map";
+import map, { ProposalBase } from "components/map";
 import YJSProvider, { YJSContext } from "components/build/baseComponents/YJSProvider";
-import { toRenderJSON } from "services/SharedTypeService";
 import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "components/build/proposal/model";
 
 interface BuildRouteProps {
@@ -58,12 +57,16 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
         {...rest}
         render={(props) => {
           // fetch brick
-          const brickId = parseInt(props.match.params.brickId);
+          let brickId = parseInt(props.match.params.brickId);
+          brickId = isNaN(brickId) ? -1 : brickId;
 
           // move to investigation
           const part = "/" + rest.location.pathname.split("/")[4];
-          const validRoutes = ["/investigation", "/synthesis", TitleRoutePart, OpenQuestionRoutePart, BrickLengthRoutePart, BriefRoutePart, PrepRoutePart, ProposalReviewPart]
-          if (!validRoutes.includes(part)) {
+          const validRoutes = ["/investigation", "/synthesis", TitleRoutePart, OpenQuestionRoutePart, BrickLengthRoutePart, BriefRoutePart, PrepRoutePart, ProposalReviewPart];
+          const isNewBrickRoute = rest.location.pathname.includes(ProposalBase);
+          if(isNewBrickRoute) {
+            console.log("creating new brick!");
+          } else if (!validRoutes.includes(part)) {
             console.log(part);
             props.history.push(`/build/brick/${brickId}/investigation`);
             return <PageLoader content="...Getting Brick..." />;

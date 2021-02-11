@@ -5,6 +5,7 @@ import { Awareness } from "y-protocols/awareness";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 interface YJSProviderProps extends React.PropsWithChildren<any> {
     brickId: number;
@@ -21,6 +22,7 @@ export const YJSContext = React.createContext<YJSContext | null>(null);
 const YJSProvider: React.FC<YJSProviderProps> = props => {
     const [ydoc, setYdoc] = React.useState<Y.Doc>();
     const [awareness, setAwareness] = React.useState<Awareness>();
+    const history = useHistory();
     const [, forceUpdate] = React.useReducer(x => x + 1, 0);
     
     const handleQuestionChange = React.useCallback((evt: Y.YEvent[], transaction: Y.Transaction) => {
@@ -28,7 +30,7 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
     }, [ydoc]);
 
     React.useEffect(() => {
-        const { ydoc: newYDoc, awareness: newAwareness } = getYDoc(props.brickId, props.user.firstName, props.user.lastName);
+        const { ydoc: newYDoc, awareness: newAwareness } = getYDoc(history, props.brickId, props.user.firstName, props.user.lastName);
         newYDoc.getMap("brick").observeDeep((evt, transaction) => {
             forceUpdate();
         });

@@ -1,11 +1,24 @@
 import * as Y from "yjs";
+import { History } from "history";
 
 import { WebsocketProvider } from "y-websocket";
 
-export const getYDoc = (brickId: number, firstName: string, lastName: string) => {
+export const getYDoc = (history: History, brickId: number, firstName: string, lastName: string) => {
     const ydoc = new Y.Doc({ autoLoad: true });
 
     const wsProvider = new WebsocketProvider(process.env.REACT_APP_WEBSOCKET_HOST!, "brick" + brickId.toString(), ydoc);
+    const normalOnMessage = wsProvider.ws!.onmessage;
+    wsProvider.ws!.onmessage = function (this: WebSocket, ev) {
+        console.log("received message", ev);
+        try {
+            const json = JSON.parse(ev.data);
+            if(json.event === "new-brick") {
+                window.location.href = `/build/brick/${json.brickId}/brick-title`;
+            }
+        } catch {
+            normalOnMessage?.call(this, ev);
+        }
+    };
 
     ydoc.on("subdocs", ({added, removed, loaded}: {
         added: Set<Y.Doc>,
