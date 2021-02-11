@@ -62,11 +62,11 @@ interface BrickRoutingProps {
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  const {history, location, match} = props;
+  const { history, location, match } = props;
   const parsedBrick = parseAndShuffleQuestions(props.brick);
 
   let cashedBuildQuestion = GetCashedBuildQuestion();
-  
+
   const [brick] = React.useState(parsedBrick);
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
@@ -144,7 +144,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const saveBrickAttempt = () => {
-    const {user} = props;
+    const { user } = props;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = user.id;
 
@@ -366,7 +366,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
               item.hint = question.hint.list[index];
             }
           }
-          c.list.map((c:any, i:number) => c.index = i);
+          c.list.map((c: any, i: number) => c.index = i);
           c.list = shuffle(c.list);
         }
       });
@@ -377,7 +377,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             item.index = index;
             item.hint = question.hint.list[index];
           }
-          c.list.map((c:any, i:number) => c.index = i);
+          c.list.map((c: any, i: number) => c.index = i);
           c.list = shuffle(c.list);
         }
       });

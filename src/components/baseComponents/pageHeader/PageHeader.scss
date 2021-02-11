@@ -73,6 +73,7 @@
       .logout-container {
         display: flex;
         align-items: center;
+        transition: all 400ms;
         @include phone_and_tabletP {
           margin: 0;
           width: 100% !important;
@@ -85,7 +86,7 @@
           margin-left: 1vw;
           border-bottom-left-radius: 2vw;
           background: var(--theme-light-blue);
-          jusify-content: flex-end;
+          justify-content: flex-end;
         }
 
         .search-container {
