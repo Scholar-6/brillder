@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import moment from 'moment';
 
 import store from 'redux/store';
+import { isMobile } from 'react-device-detect';
 
 moment.updateLocale('en', {
   relativeTime : {
@@ -31,9 +32,15 @@ moment.updateLocale('en', {
   }
 });
 
+const MobileTheme = React.lazy(() => import('components/app/MobileTheme'));
+const DesktopTheme = React.lazy(() => import('components/app/DesktopTheme'));
+
 ReactDOM.render(
   <Router>
     <Provider store={store}>
+      <React.Suspense fallback={<></>}>
+        {isMobile ? <MobileTheme /> : <DesktopTheme />}
+      </React.Suspense>
       <App/>
     </Provider>
   </Router>,
