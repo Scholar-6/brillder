@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import './SingleSubjectAssignment.scss';
 import { BrickLengthEnum, Subject } from "model/brick";
@@ -51,6 +51,17 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
 
   className += ' default';
 
+  const renderTeacher = (user: any) => {
+    if (user) {
+      return (
+        <div className="teacher-initials">
+          <div>{user.firstName[0]}{user.lastName[0]}</div>
+        </div>
+      );
+    }
+    return <div></div>
+  }
+
   const renderRotatedTitle = (name: string, height: number) => {
     let className = "rotated-container " + name;
     let width = 'calc(80.4vh - 13.034vw)';
@@ -77,6 +88,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
           props.history.push(map.playIntro(brick.id));
         }
       }} style={{ background: color }}>
+        {renderTeacher(null)}
         {!height && renderRotatedTitle("left-align", 100)}
         {hovered && <div className="custom-tooltip subject-tooltip">
           <div>{brick.title}</div>
