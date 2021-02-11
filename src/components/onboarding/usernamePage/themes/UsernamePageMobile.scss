@@ -39,7 +39,7 @@
     .inputs-box {
       margin-top: 9vh;
       margin-bottom: 9vh;
-      position: relative;
+      @extend %posRelative;
       width: 100%;
       margin: 1vw 0;
       button {
@@ -193,7 +193,7 @@
         }
 
         .username {
-          text-align: center;
+          @extend %textCenter;
           font-size: 1.7vw;
           font-family: $font-family-bold;
           text-transform: uppercase;
@@ -203,7 +203,7 @@
         }
 
         .username-help-label {
-          text-align: center;
+          @extend %textCenter;
           font-size: 1.7vw;
           color: var(--theme-dark-blue);
           font-family: $font-family-regular-italic;

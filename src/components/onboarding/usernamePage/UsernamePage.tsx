@@ -133,9 +133,9 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
   }
 
   return (
-    <div className="username-page">
-      <React.Suspense fallback={<></>}>
-        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+    <React.Suspense fallback={<></>}>
+      {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+      <div className="username-page">
         <form>
           <div>
             <h1>
@@ -183,8 +183,8 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
             </div>
           </div>
         </Hidden>
-      </React.Suspense>
-    </div>
+      </div>
+    </React.Suspense>
   );
 };
 
