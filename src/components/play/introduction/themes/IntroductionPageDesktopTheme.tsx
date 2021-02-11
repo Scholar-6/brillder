@@ -1,6 +1,0 @@
-import React from 'react';
-import './IntroductionPageDesktop.scss';
-
-const Theme = () => (<React.Fragment></React.Fragment>);
-
-export default Theme;

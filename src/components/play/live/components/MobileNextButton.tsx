@@ -17,16 +17,16 @@ const MobileNextButton: React.FC<ButtonProps> = ({
     return (
       <button
         type="button" onClick={onClick}
-        className="play-preview svgOnHover play-green mobile-next"
+        className="play-preview svgOnHover play-green"
       >
-        <SpriteIcon name="arrow-right" className="w80 h80 active" />
+        <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
       </button>
     );
   }
   return (
     <button
       type="button" onClick={() => setSubmitAnswers(true)}
-      className="play-preview svgOnHover play-green mobile-next"
+      className="play-preview svgOnHover play-green"
     >
       <SpriteIcon name="check-icon-thin" className="w80 h80 active" />
     </button>
