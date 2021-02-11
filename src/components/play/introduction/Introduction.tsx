@@ -4,6 +4,8 @@ import { Moment } from "moment";
 import queryString from 'query-string';
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
+import "./introduction.scss";
+
 import { Brick, BrickLengthEnum } from "model/brick";
 import { PlayMode } from "../model";
 import { BrickFieldNames } from 'components/build/proposal/model';

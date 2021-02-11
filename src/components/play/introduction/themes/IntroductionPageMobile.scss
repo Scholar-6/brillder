@@ -110,8 +110,27 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         font-family: $font-family-regular;
         position: relative;
         height: 100%;
+        @include phone_and_tabletP {
+          height: 100%;
+          position: relative;
+        }
+        @include tabletP {
+          overflow-y: auto;
+          height: calc(100vh - 15.8vh);
+          padding: 4vh 2vw 4vh 7vw;
+        }
+        .title {
+          @include desktop {
+            font-size: 4vw;
+          }
+        }
         p {
-          font-size: 4.5vw;
+          @include phone_and_tabletP {
+            font-size: 4.5vw;
+          }
+          @include tabletP {
+            font-size: 1.25vw !important;
+          }
         }
         .intro-header {
           @extend %transitionAll600;
@@ -789,7 +808,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         }
         @include tabletP {
           position: absolute;
-          bottom: 7vh;
+          bottom: 10vh;
         }
         .play-preview {
           @include tabletP {
