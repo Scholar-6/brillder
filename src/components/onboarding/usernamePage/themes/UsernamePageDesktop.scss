@@ -44,7 +44,7 @@
     }
 
     .inputs-box {
-      position: relative;
+      @extend %posRelative;
       margin-top: 9vh;
       margin-bottom: 9vh;
       width: 100%;
