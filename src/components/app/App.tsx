@@ -66,7 +66,7 @@ const App: React.FC<AppProps> = props => {
   const [orientation, setOrientation] = React.useState('');
 
   useEffect(() => {
-    window.addEventListener("orientationchange", (event:any) => {
+    window.addEventListener("orientationchange", (event: any) => {
       setOrientation(event.target.screen.orientation ? event.target.screen.orientation.type : event.target.orientation);
     });
   }, []);
@@ -92,7 +92,7 @@ const App: React.FC<AppProps> = props => {
   const theme = React.useMemo(() =>
     createMuiTheme({
       palette: {
-        secondary: { main: "#001c58"},
+        secondary: { main: "#001c58" },
         primary: { main: "#0B3A7E" }
       },
       breakpoints: {
@@ -127,7 +127,7 @@ const App: React.FC<AppProps> = props => {
   // tablet or ipad show in landscape
   if (isTablet || isIPad13) {
     if (window.screen.orientation && window.screen.orientation.type.match(landscape) || window.orientation === 90 || window.orientation === -90) {
-      //return <Warning />
+      return <Warning />
     } else {
       return <RotateInstruction />;
     }
