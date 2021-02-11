@@ -9,11 +9,10 @@ export const getYDoc = (history: History, brickId: number, firstName: string, la
     const wsProvider = new WebsocketProvider(process.env.REACT_APP_WEBSOCKET_HOST!, "brick" + brickId.toString(), ydoc);
     const normalOnMessage = wsProvider.ws!.onmessage;
     wsProvider.ws!.onmessage = function (this: WebSocket, ev) {
-        console.log("received message", ev);
         try {
             const json = JSON.parse(ev.data);
             if(json.event === "new-brick") {
-                window.location.href = `/build/brick/${json.brickId}/brick-title`;
+                window.location.href = `/build/brick/${json.brickId}/subject`;
             }
         } catch {
             normalOnMessage?.call(this, ev);

@@ -202,12 +202,19 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     setLocalBrick(brick);
   }
 
-  setCore = (isCore: boolean) =>
+  setCore = (isCore: boolean) => {
     this.saveLocalBrick({ ...this.state.brick, isCore });
-  setSubject = (subjectId: number) =>
+    this.context?.ydoc.getMap("brick").set("isCore", isCore);
+  }
+  setSubject = (subjectId: number) => {
     this.saveLocalBrick({ ...this.state.brick, subjectId });
-  setCoreAndSubject = (subjectId: number, isCore: boolean) => 
+    this.context?.ydoc.getMap("brick").set("subjectId", subjectId);
+  }
+  setCoreAndSubject = (subjectId: number, isCore: boolean) => {
     this.saveLocalBrick({ ...this.state.brick, subjectId, isCore });
+    this.context?.ydoc.getMap("brick").set("isCore", isCore);
+    this.context?.ydoc.getMap("brick").set("subjectId", subjectId);
+  }
   setTitles = (titles: any) =>
     this.saveLocalBrick({ ...this.state.brick, ...titles });
   setOpenQuestion = (openQuestion: string) =>

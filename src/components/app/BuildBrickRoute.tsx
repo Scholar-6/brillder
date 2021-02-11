@@ -62,7 +62,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
 
           // move to investigation
           const part = "/" + rest.location.pathname.split("/")[4];
-          const validRoutes = ["/investigation", "/synthesis", TitleRoutePart, OpenQuestionRoutePart, BrickLengthRoutePart, BriefRoutePart, PrepRoutePart, ProposalReviewPart];
+          const validRoutes = ["/investigation", "/synthesis", "/subject", TitleRoutePart, OpenQuestionRoutePart, BrickLengthRoutePart, BriefRoutePart, PrepRoutePart, ProposalReviewPart];
           const isNewBrickRoute = rest.location.pathname.includes(ProposalBase);
           if(isNewBrickRoute) {
             console.log("creating new brick!");

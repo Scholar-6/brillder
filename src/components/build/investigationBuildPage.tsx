@@ -105,8 +105,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const { history } = props;
 
-  let proposalRes = validateProposal(props.reduxBrick);
-
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
 
   const [lastQuestionDialog, setLastQuestionDialog] = React.useState(false);
@@ -123,7 +121,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     isLine: false
   });
   const [movingFromSynthesis, setMovingFromSynthesis] = React.useState(false);
-  const [proposalResult, setProposalResult] = React.useState({ isOpen: false, isValid: proposalRes.isValid, url: proposalRes.url });
+  const [proposalInvalidOpen, setProposalInvalidOpen] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
   const [activeQuestionType] = React.useState(QuestionTypeEnum.None);
@@ -157,11 +155,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const questions = ybrick.get("questions") as Y.Array<Y.Doc>;
-
   let synthesis = ybrick.get("synthesis") as Y.Text;
-  /* Synthesis */
 
   const { startEditing, updateBrick } = props;
+
+  const proposalResult = validateProposal(toRenderJSON(ybrick));
 
   let isAuthor = false;
   try {
@@ -345,7 +343,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const moveToReview = () => {
     let invalidQuestion: Y.Doc | undefined;
     questions.forEach(question => {
-      const jsonQuestion = question.getMap().toJSON();
+      const jsonQuestion = toRenderJSON(question.getMap());
       if(!validateQuestion(jsonQuestion)){
         invalidQuestion = question;
       }
@@ -382,7 +380,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         }
       }
     } else {
-      if (proposalRes.isValid) {
+      if (proposalResult.isValid) {
         let buildQuestion = GetCashedBuildQuestion();
 
         if (isSynthesisPage) {
@@ -397,7 +395,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           history.push(`/play-preview/brick/${brickId}/intro`);
         }
       } else {
-        setProposalResult({ ...proposalRes, isOpen: true });
+        setProposalInvalidOpen(true);
       }
     }
   }
@@ -411,7 +409,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const moveToRedTab = () => {
-    const index = getFirstInvalidQuestion(questions.toJSON());
+    const index = getFirstInvalidQuestion(toRenderJSON(questions));
     setCurrentQuestionIndex(index);
   }
 
@@ -543,11 +541,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   let isValid = true;
   questions.forEach(q => {
-    let isQuestionValid = validateQuestion(q as any);
+    let isQuestionValid = validateQuestion(toRenderJSON(q.getMap()));
     if (!isQuestionValid) {
       isValid = false;
     }
   });
+  console.log(isValid);
 
   const switchQuestions = (newQuestions: { id: string }[]) => {
     if (canEdit === true) {
@@ -577,7 +576,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     history.push(`/build/brick/${brickId}/investigation/question-component/${questions.get(questions.length - 1).get("id")}`);
   }
 
-  if (!synthesis || synthesis.toString()) {
+  if (!synthesis || synthesis.toString() === "") {
     isValid = false;
   }
 
@@ -707,8 +706,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           hide={() => hideInvalidBrick()}
         />
         <ProposalInvalidDialog
-          isOpen={proposalResult.isOpen}
-          close={() => setProposalResult({ ...proposalResult, isOpen: false })}
+          isOpen={!proposalResult.isValid && proposalInvalidOpen}
+          close={() => setProposalInvalidOpen(false)}
           submit={() => submitInvalidBrick()}
           hide={() => moveToInvalidProposal()}
         />
@@ -747,6 +746,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     <Switch>
       <Route
         path={[
+          proposalBaseUrl + "/subject",
           proposalBaseUrl + TitleRoutePart,
           proposalBaseUrl + OpenQuestionRoutePart,
           proposalBaseUrl + BrickLengthRoutePart,

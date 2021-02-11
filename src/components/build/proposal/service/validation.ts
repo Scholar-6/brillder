@@ -10,6 +10,7 @@ export function validateProposal(brick: Brick) {
   let isValid = true;
   let url = map.ProposalReview;
   if (!brick.subjectId) {
+    console.log("subject blank");
     url = map.ProposalSubject;
     isValid = false;
   } else if (!brick.title || !brick.subTopic || !brick.alternativeTopics) {
