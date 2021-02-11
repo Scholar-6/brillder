@@ -330,8 +330,15 @@ const LivePage: React.FC<LivePageProps> = ({
         <div className="introduction-page">
           {questions.map(renderQuestionContainer)}
         </div>
-        <MobilePrevButton activeStep={activeStep} onClick={prev} />
-        <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
+        <div className="action-footer">
+          <div>
+            <MobilePrevButton activeStep={activeStep} onClick={prev} />
+          </div>
+          <div className="direction-info text-center"></div>
+          <div>
+            <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
+          </div>
+        </div>
       </Hidden>
       <ShuffleAnswerDialog
         isOpen={isShuffleOpen}
