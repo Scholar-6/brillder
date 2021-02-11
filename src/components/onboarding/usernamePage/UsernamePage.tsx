@@ -97,7 +97,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
   const renderGetStartedButton = () => {
     return (
       <div className="submit-button" onClick={move}>
-        <div><LabelTyping start={true} value="Get Started!"/></div>
+        <div><LabelTyping start={true} value="Get Started!" /></div>
         <SpriteIcon name="arrow-right" className={lastName.value && firstName.value ? 'valid' : 'invalid'} />
       </div>
     );
@@ -136,54 +136,54 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     <div className="username-page">
       <React.Suspense fallback={<></>}>
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
-      </React.Suspense>
-      <form>
-        <div>
-          <h1>
-            <LabelTyping start={true} value="Generate a username" onFinish={() => setStep(AnimationStep.TitleFinished)} />
-          </h1>
-          <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
-            <Input
-              value={firstName.value}
-              className={firstName.valid === false && !firstName.value ? 'invalid' : ''}
-              onChange={e => setFirstName({ ...firstName, value: e.target.value })}
-              placeholder="First Name" />
-            {renderEditButton()}
+        <form>
+          <div>
+            <h1>
+              <LabelTyping start={true} value="Generate a username" onFinish={() => setStep(AnimationStep.TitleFinished)} />
+            </h1>
+            <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
+              <Input
+                value={firstName.value}
+                className={firstName.valid === false && !firstName.value ? 'invalid' : ''}
+                onChange={e => setFirstName({ ...firstName, value: e.target.value })}
+                placeholder="First Name" />
+              {renderEditButton()}
+            </div>
+            <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
+              <Input
+                value={lastName.value}
+                className={lastName.valid === false && !lastName.value ? 'invalid' : ''}
+                onChange={e => setLastName({ ...lastName, value: e.target.value })}
+                placeholder="Last Name" />
+              {renderEditButton()}
+            </div>
+            <div className={animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}>
+              {submited === null ? renderGenerateButton() : renderGetStartedButton()}
+            </div>
           </div>
-          <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
-            <Input
-              value={lastName.value}
-              className={lastName.valid === false && !lastName.value ? 'invalid' : ''}
-              onChange={e => setLastName({ ...lastName, value: e.target.value })}
-              placeholder="Last Name" />
-            {renderEditButton()}
-          </div>
-          <div className={animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}>
-            {submited === null ? renderGenerateButton() : renderGetStartedButton()}
-          </div>
-        </div>
-      </form>
-      <div className="blue-right-block"></div>
-      <Hidden only={['xs', 'sm']}>
-        <div className="proposal-phone-preview phone-username-preview">
-          <div className="phone">
-            <div className="phone-border">
-              <div className="volume volume1"></div>
-              <div className="volume volume2"></div>
-              <div className="volume volume3"></div>
-              <div className="sleep"></div>
-              <div className={username ? 'username-screen screen' : 'screen'}>
-                <div className={username ? 'username-container': 'only-icon-container'}>
-                  <div className="icon-container">
-                    <SpriteIcon name="user" />
+        </form>
+        <div className="blue-right-block"></div>
+        <Hidden only={['xs', 'sm']}>
+          <div className="proposal-phone-preview phone-username-preview">
+            <div className="phone">
+              <div className="phone-border">
+                <div className="volume volume1"></div>
+                <div className="volume volume2"></div>
+                <div className="volume volume3"></div>
+                <div className="sleep"></div>
+                <div className={username ? 'username-screen screen' : 'screen'}>
+                  <div className={username ? 'username-container' : 'only-icon-container'}>
+                    <div className="icon-container">
+                      <SpriteIcon name="user" />
+                    </div>
+                    {username && renderUsername()}
                   </div>
-                  {username && renderUsername()}
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </Hidden>
+        </Hidden>
+      </React.Suspense>
     </div>
   );
 };
