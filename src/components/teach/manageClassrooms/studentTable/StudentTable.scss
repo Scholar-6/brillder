@@ -81,6 +81,10 @@
       color: var(--theme-dark-blue);
       font-size: 1vw;
 
+      .MuiIconButton-root:hover {
+        background: rgba(0, 28, 88, 0.2) !important;
+      }
+
       >div {
         display: flex;
         align-items: center;
