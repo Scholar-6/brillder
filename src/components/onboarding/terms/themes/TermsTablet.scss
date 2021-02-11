@@ -63,7 +63,7 @@
   .bottom-button {
     cursor: pointer;
     transition: all 300ms ease-out;
-    background: var(--tab-gray);
+    background: var(--theme-green);
     height: calc(10vh);
     display: flex;
     justify-content: center;
@@ -88,10 +88,6 @@
     .MuiSvgIcon-root {
       width: 1.6vw;
       height: 1.6vw;
-    }
-
-    &:hover {
-      background: var(--theme-green);
     }
   }
 }
