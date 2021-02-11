@@ -3,8 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import { isMobile } from "react-device-detect";
 import { connect } from "react-redux";
 
-import 'components/play/brick.scss';
 import './PreviewBrickRouting.scss';
+
 import actions from 'redux/actions/brickActions';
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { Brick } from 'model/brick';
