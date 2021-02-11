@@ -11,30 +11,19 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 .play-preview-pages {
   background: var(--theme-dark-blue);
   min-height: 100%;
-
   .sorted-row {
-    .sort-and-filter-container {
-    }
-
     .brick-row-container {
       background-color: var(--white);
-      .brick-container {
-        .MuiGrid-container {
-        }
-      }
     }
   }
-
   .sorted-row.sorted-row-expanded {
     padding-top: $expanded-intro-padding;
     margin-top: 0;
-
     .brick-row-container {
       width: calc(98vw - #{$home-button-size}) !important;
       height: $introduction-expanded-height !important;
     }
   }
-
   .sort-and-filter-container {
     width: calc(17.15vw - 1vw);
     align-items: center;
@@ -56,13 +45,39 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           width: 5vw;
         }
       }
-
       .introduction-page {
         font-family: $font-family-regular;
         position: relative;
         overflow-y: auto;
         height: calc(100vh - 15.8vh);
         padding: 4vh 2vw 4vh 7vw;
+        .title {
+          font-size: 4vw;
+        }
+        h1,
+        p,
+        ul,
+        ol {
+          color: var(--theme-dark-blue);
+        }
+        h1 {
+          text-transform: uppercase;
+          width: 100%;
+          font-family: $font-family-black;
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: flex !important;
+          align-items: center;
+          justify-content: center;
+          margin: 1vw 0;
+          min-height: 5vw;
+          height: 5vw;
+          font-size: 1.95vw;
+          text-align: left;
+          padding-left: 7vw;
+          white-space: nowrap;
+        }
         p {
           font-size: 1.25vw !important;
         }
@@ -70,42 +85,12 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           @extend %transitionAll600;
           margin-bottom: 2vh;
         }
-
         .start-brick-button {
           margin-right: 0px;
-
           > span {
             font-family: $font-family-regular;
             font-size: 25px;
             margin-right: 10px;
-          }
-        }
-
-        h1,
-        p,
-        ul,
-        ol {
-          color: var(--theme-dark-blue);
-        }
-
-        h1 {
-          text-transform: uppercase;
-          width: 100%;
-          font-family: $font-family-black;
-          @include tabletP {
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: flex !important;
-            align-items: center;
-            justify-content: center;
-            margin: 1vw 0;
-            min-height: 5vw;
-            height: 5vw;
-            font-size: 1.95vw;
-            text-align: left;
-            padding-left: 7vw;
-            white-space: nowrap;
           }
         }
         .question-index-container {
@@ -119,21 +104,17 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               background: var(--theme-green);
             }
           }
-
           &.wrong {
             .question-index {
               background: var(--theme-orange);
             }
           }
-
           &.attempted {
             background: var(--highlight-blue);
-
             .question-index {
               background: var(--blue);
             }
           }
-
           .question-index {
             padding: 0;
             background: var(--tab-gray);
@@ -141,34 +122,23 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             font-family: $font-family-black;
             color: var(--theme-dark-blue);
             @extend %textCenter;
-            @include tabletP {
-              line-height: 1.25;
-              font-size: 2vw;
-              width: 2.3vw;
-              height: 2.3vw;
-            }
+            line-height: 1.25;
+            font-size: 2vw;
+            width: 2.3vw;
+            height: 2.3vw;
           }
         }
-
         .question-live-play {
           overflow-y: auto;
           padding-bottom: 2vw;
           position: absolute;
           top: 0;
           width: 100%;
-          @include tabletP {
-            height: calc(100vh - #{$home-button-size} - #{$sorted-row-margin-top});
-            // overflow: hidden;
-          }
+          height: calc(100vh - #{$home-button-size} - #{$sorted-row-margin-top});
           .question-title {
             font-family: $font-family-black;
             color: var(--theme-dark-blue);
-            @include phone_and_tabletL {
-              font-size: 6vw;
-            }
-            @include tabletL {
-              font-size: 2.5vw;
-            }
+            font-size: 2.5vw;
           }
           .short-answer-input {
             border-radius: 0 !important;
@@ -188,41 +158,27 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             }
           }
           &.review-content {
-            @include tabletP {
-              width: calc(100% - 7vw) !important;
-              margin: 0 3vw 1vw 4vw;
-              padding-top: 1.5vh;
-            }
+            width: calc(100% - 7vw) !important;
+            margin: 0 3vw 1vw 4vw;
+            padding-top: 1.5vh;
           }
         }
-
         .swipe-view {
-          @include tabletP {
-            height: calc(100vh - 7.5vw);
-          }
-
+          height: calc(100vh - 7.5vw);
           .react-swipeable-view-container {
-            @include tabletP {
-              height: calc(100vh - 7.5vw);
-            }
-
+            height: calc(100vh - 7.5vw);
             > div {
               overflow-y: hidden !important;
             }
           }
         }
       }
-
       .introduction-info {
         background-color: var(--solitude-light);
         position: relative;
-        @include tabletP {
-          padding: 4vh 2vw;
-          height: $introduction-desktop-height;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
+        padding: 4vh 2vw;
+        height: $introduction-desktop-height;
+        @extend %flexCenter;
         .intro-header {
           font-size: 2vw;
           font-family: $font-family-black;
@@ -242,7 +198,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             display: flex;
             align-items: center;
             min-width: 6vw;
-
             .clock-image {
               width: 2vw;
               height: 2vw;
@@ -266,11 +221,9 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           > ul {
             margin: 0;
           }
-
           > ul {
             margin-top: 0.5vw;
           }
-
           .stepper {
             .step {
               @extend %posRelative;
@@ -311,7 +264,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             }
           }
         }
-
         .max-length {
           font-family: $font-family-regular;
           color: var(--theme-dark-blue);
@@ -319,7 +271,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           font-size: 1.8vw;
         }
       }
-
       &.play-preview-panel {
         color: var(--theme-dark-blue);
         .MuiListItemText-root,
@@ -366,7 +317,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         .MuiStepper-root {
           padding-top: 20px;
           padding-bottom: 16px;
-
           .MuiStepButton-root {
             padding-top: 27px;
             padding-bottom: 10px;
@@ -406,18 +356,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       &.live-page,
       &.synthesis-page,
       &.review-page {
-        .introduction-info {
-          .intro-text-row {
-          }
-          .intro-header {
-            .brick-counter {
-            }
-            .play-clock {
-            }
-          }
-        }
-        .action-footer {
-        }
         .mobile-next {
           top: auto !important;
           bottom: 87px !important;
@@ -430,10 +368,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         }
       }
       &.synthesis-page {
-        .introduction-info {
-          .intro-text-row {
-          }
-        }
         .introduction-page {
           h1 {
             text-transform: capitalize;
@@ -504,11 +438,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               letter-spacing: inherit;
               margin: 0;
               bottom: 75%;
-              @include phone_and_tabletL {
-                font-size: 6vw;
-              }
-              @include tabletL {
-              }
             }
             > span {
               width: 100%;
@@ -540,38 +469,30 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         .circle-progress-second {
           height: 46vh;
           width: 46vh;
-
           .CircularProgressbar-path {
             stroke: #317fe0 !important;
           }
         }
-
         .circle-progress-third {
           height: 42.5vh;
           width: 42.5vh;
-
           .CircularProgressbar-path {
             stroke: #38c36d !important;
           }
         }
-
         .circle-progress {
           height: 50vh;
           width: 50vh;
-
           .CircularProgressbar-path {
             stroke: #ffb55f !important;
           }
-
           svg {
             overflow: overlay;
-
             circle {
               stroke-width: 4.5 !important;
             }
           }
         }
-
         .score-circle {
           left: 0;
           top: 0;
@@ -579,7 +500,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           height: inherit;
           position: absolute;
         }
-
         .score-data {
           position: absolute;
           height: $introduction-desktop-height;
@@ -677,8 +597,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       font-size: 1.15vw;
     }
   }
-
-  // class for desktop only
   .sorted-row-expanded {
     .introduction-page {
       height: $introduction-expanded-height !important;
@@ -712,7 +630,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     .intro-text-row {
       padding-top: 0 !important;
     }
-
     .stepper {
       width: 100%;
       display: flex;

@@ -11,8 +11,10 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 .play-preview-pages {
   background: var(--theme-dark-blue);
   min-height: 100%;
-  .brick-row-container {
-    background-color: var(--white);
+  .sorted-row {
+    .brick-row-container {
+      background-color: var(--white);
+    }
   }
   .sorted-row.sorted-row-expanded {
     padding-top: $expanded-intro-padding;
@@ -608,10 +610,8 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     .circle-progress-container {
       margin-top: 0 !important;
       height: $introduction-expanded-height !important;
-
       .score-data {
         height: $introduction-expanded-height !important;
-
         > div {
           height: $introduction-expanded-height !important;
         }
