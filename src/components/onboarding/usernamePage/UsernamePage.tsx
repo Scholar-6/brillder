@@ -2,7 +2,7 @@ import React from 'react';
 import { Hidden } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Input } from "@material-ui/core";
-
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
 import './UsernamePage.scss';
 import { ReduxCombinedState } from "redux/reducers";
@@ -30,6 +30,9 @@ interface UsernamePageProps {
   user: User;
   getUser(): Promise<User>;
 }
+
+const MobileTheme = React.lazy(() => import('./themes/UsernamePageMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/UsernamePageTabletTheme'));
 
 const UsernamePage: React.FC<UsernamePageProps> = props => {
   const { user } = props;
@@ -131,6 +134,9 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
 
   return (
     <div className="username-page">
+      <React.Suspense fallback={<></>}>
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile && <MobileTheme />}
+      </React.Suspense>
       <form>
         <div>
           <h1>

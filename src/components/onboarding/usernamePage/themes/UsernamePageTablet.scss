@@ -1,3 +1,7 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
 .username-page {
   background-color: var(--theme-dark-blue);
   color: var(--white) !important;
@@ -13,7 +17,14 @@
   }
 
   .blue-right-block {
-    display: none;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    background: var(--theme-light-blue);
+    height: 74.9vh;
+    width: 43.8vw;
+    border-top-left-radius: 2vw;
+    z-index: 1;
   }
 
   form {
@@ -33,9 +44,9 @@
     }
 
     .inputs-box {
+      position: relative;
       margin-top: 9vh;
       margin-bottom: 9vh;
-      position: relative;
       width: 100%;
       margin: 1vw 0;
       button {
@@ -99,7 +110,8 @@
         width: 100%;
         padding: 0 0 0.8vw 0;
         border: 0;
-        font-size: 6.3vw;
+        font-size: 3.3vw;
+        // font-size: 1.6vw;
       }
 
       input {
