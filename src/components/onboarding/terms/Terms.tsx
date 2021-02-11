@@ -6,10 +6,10 @@ import axios from "axios";
 // @ts-ignore
 import marked from "marked";
 
-import "./Terms.scss";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import map from "components/map";
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
 interface BricksListProps {
   user: User;
@@ -27,6 +27,10 @@ interface Part {
 interface BricksListState {
   parts: Part[];
 }
+
+const MobileTheme = React.lazy(() => import('./themes/TermsMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/TermsTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/TermsDesktopTheme'));
 
 class TermsPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
@@ -68,27 +72,30 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
 
   render() {
     return (
-      <Grid
-        className="user-preference-page"
-        container direction="column"
-        justify="center" alignItems="center"
-      >
-        <Grid className="user-preference-container terms-page-container" item>
-          <div className="terms-page">
-            <div>
-              {this.state.parts.map((p) => (
-                <div ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
-              ))}
+      <React.Suspense fallback={<></>}>
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+        <Grid
+          className="user-preference-page"
+          container direction="column"
+          justify="center" alignItems="center"
+        >
+          <Grid className="user-preference-container terms-page-container" item>
+            <div className="terms-page">
+              <div>
+                {this.state.parts.map((p) => (
+                  <div ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="bottom-button" onClick={() => this.props.history.push(map.SetUsername)}>
-            <Checkbox color="secondary" />
-            <span>
-              I am over 13 years old, and agree to the Brillder Terms of Service and Privacy Policy
+            <div className="bottom-button" onClick={() => this.props.history.push(map.SetUsername)}>
+              <Checkbox color="secondary" />
+              <span>
+                I am over 13 years old, and agree to the Brillder Terms of Service and Privacy Policy
             </span>
-          </div>
+            </div>
+          </Grid>
         </Grid>
-      </Grid>
+      </React.Suspense>
     );
   }
 }

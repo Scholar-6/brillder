@@ -3,15 +3,15 @@
 @import 'src/assets/sass/partials/extensions';
 
 .terms-page {
-  max-width: 56vw;
-  height: 70vh !important;
+  font-size: 3vw;
+  height: calc(95% - 6vw);
+  max-width: 100%;
   margin: 0 !important;
   padding-left: 6vw;
   padding-right: 6vw;
   overflow: hidden;
   color: var(--theme-dark-blue);
   background: var(--white);
-  font-size: 1.1vw;
 
   >div {
     padding-top: 5vh;
@@ -63,20 +63,16 @@
   .bottom-button {
     cursor: pointer;
     transition: all 300ms ease-out;
-    background: var(--tab-gray);
-    height: calc(10vh);
+    background: var(--theme-green);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.3vw;
-
-    .MuiIconButton-colorSecondary {
-      color: #001c58 !important;
-    }
+    font-size: 2.5vw;
+    height: calc(5% + 6vw);
 
     .MuiButtonBase-root {
-      width: 2.5vw;
-      height: 2.5vw;
+      width: 4.6vw;
+      height: 4.6vw;
 
       .MuiIconButton-label {
         border-radius: 50%;
@@ -85,47 +81,13 @@
       margin-right: 0.4vw;
     }
 
+    .MuiIconButton-colorSecondary {
+      color: #001c58 !important;
+    }
+
     .MuiSvgIcon-root {
-      width: 1.6vw;
-      height: 1.6vw;
-    }
-
-    &:hover {
-      background: var(--theme-green);
-    }
-  }
-}
-
-// below is mobile
-@include phone_and_tabletP {
-  .terms-page {
-    border-radius: 8vw;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    font-size: 3vw;
-    height: 80%;
-    max-width: 100%;
-  }
-
-  .terms-page-container {
-    .bottom-button {
-      font-size: 2.4vw;
-
-      .MuiButtonBase-root {
-        width: 4.6vw;
-        height: 4.6vw;
-
-        .MuiIconButton-label {
-          border-radius: 50%;
-        }
-
-        margin-right: 0.4vw;
-      }
-
-      .MuiSvgIcon-root {
-        width: 3vw;
-        height: 3vw;
-      }
+      width: 3vw;
+      height: 3vw;
     }
   }
 }

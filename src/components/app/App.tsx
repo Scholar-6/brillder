@@ -127,7 +127,7 @@ const App: React.FC<AppProps> = props => {
   // tablet or ipad show in landscape
   if (isTablet || isIPad13) {
     if (window.screen.orientation && window.screen.orientation.type.match(landscape) || window.orientation === 90 || window.orientation === -90) {
-      // return <Warning />
+      return <Warning />
     } else {
       return <RotateInstruction />;
     }
