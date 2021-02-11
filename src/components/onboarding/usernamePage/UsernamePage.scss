@@ -2,14 +2,6 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-@include phone_and_tabletP {
-  @import './UsernamePageMobile.scss';
-}
-
-@include tabletP {
-  @import './UsernamePageTablet.scss';
-}
-
 // mobile is bellow
 @include phone_and_tabletP {
   background-color: var(--theme-dark-blue);
