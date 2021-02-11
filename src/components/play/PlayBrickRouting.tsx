@@ -3,8 +3,8 @@ import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
-import { isMobile } from "react-device-detect";
 import queryString from 'query-string';
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
 import "./brick.scss";
 
@@ -64,6 +64,10 @@ interface BrickRoutingProps {
   user: User;
   getUser(): Promise<any>;
 }
+
+const MobileTheme = React.lazy(() => import('./themes/BrickPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/BrickPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/BrickPageDesktopTheme'));
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const parsedBrick = parseAndShuffleQuestions(props.brick);
@@ -327,29 +331,32 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   return (
-    <div className="play-preview-pages">
-      {renderHead()}
-      <div className={className}>
-        <PlayLeftSidebar
-          history={props.history}
-          brick={brick}
-          mode={mode}
-          sidebarRolledUp={sidebarRolledUp}
-          empty={finalStep}
-          setMode={setMode}
-          toggleSidebar={setSidebar}
-        />
-        <div className="brick-row-container">
-          {renderRouter()}
+    <React.Suspense fallback={<></>}>
+      {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+      <div className="play-preview-pages">
+        {renderHead()}
+        <div className={className}>
+          <PlayLeftSidebar
+            history={props.history}
+            brick={brick}
+            mode={mode}
+            sidebarRolledUp={sidebarRolledUp}
+            empty={finalStep}
+            setMode={setMode}
+            toggleSidebar={setSidebar}
+          />
+          <div className="brick-row-container">
+            {renderRouter()}
+          </div>
         </div>
+        <UnauthorizedUserDialog
+          isOpen={unauthorizedOpen}
+          login={() => props.history.push('/')}
+          again={again}
+          close={() => setUnauthorized(false)}
+        />
       </div>
-      <UnauthorizedUserDialog
-        isOpen={unauthorizedOpen}
-        login={() => props.history.push('/')}
-        again={again}
-        close={() => setUnauthorized(false)}
-      />
-    </div>
+    </React.Suspense>
   );
 };
 
@@ -411,7 +418,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             item.index = index;
             item.hint = question.hint.list[index];
           }
-          c.list.map((c:any, i:number) => c.index = i);
+          c.list.map((c: any, i: number) => c.index = i);
           c.list = shuffle(c.list);
         }
       });
