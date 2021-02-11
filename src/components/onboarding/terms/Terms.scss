@@ -2,7 +2,7 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-.user-preference-page .user-preference-container .terms-page {
+.terms-page {
   max-width: 56vw;
   height: 70vh !important;
   margin: 0 !important;
@@ -13,8 +13,9 @@
   background: var(--white);
   font-size: 1.1vw;
 
-  > div {
+  >div {
     padding-top: 5vh;
+    padding-bottom: 4vh;
     height: 100%;
     overflow: auto !important;
   }
@@ -60,49 +61,70 @@
   background: inherit !important;
 
   .bottom-button {
-    background: var(--theme-green);
+    cursor: pointer;
+    transition: all 300ms ease-out;
+    background: var(--tab-gray);
     height: calc(10vh);
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.3vw;
 
-    .MuiSvgIcon-root {
-      color: var(--theme-dark-blue);
+    .MuiIconButton-colorSecondary {
+      color: #001c58 !important;
     }
 
-    .MuiButtonBase-root {
-      .MuiIconButton-label {
-        border-radius: 50%;
-      }
-      .MuiTouchRipple-root:hover {
-        background: var(--theme-dark-blue) !important;
-      }
-      margin-right: 0.4vw;
-    }
     .MuiButtonBase-root {
       width: 2.5vw;
       height: 2.5vw;
+
+      .MuiIconButton-label {
+        border-radius: 50%;
+      }
+
+      margin-right: 0.4vw;
     }
+
     .MuiSvgIcon-root {
       width: 1.6vw;
       height: 1.6vw;
     }
-    .MuiButtonBase-root:hover {
-      background: var(--theme-dark-blue-alpha3) !important;
+
+    &:hover {
+      background: var(--theme-green);
     }
+  }
+}
 
-    button {
-      border: none;
-      outline: none;
-      border-radius: 1vw;
-      padding: 0.5vh 1vw;
-      font-size: 1.2vw;
-      color: var(--white);
-      background: inherit;
-      font-family: $font-family-regular;
+// below is mobile
+@include phone_and_tabletP {
+  .terms-page {
+    border-radius: 8vw;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    font-size: 3vw;
+    height: 80%;
+    max-width: 100%;
+  }
 
-      &:hover {
-        color: var(--theme-dark-blue);
+  .terms-page-container {
+    .bottom-button {
+      font-size: 2.4vw;
+
+      .MuiButtonBase-root {
+        width: 4.6vw;
+        height: 4.6vw;
+
+        .MuiIconButton-label {
+          border-radius: 50%;
+        }
+
+        margin-right: 0.4vw;
+      }
+
+      .MuiSvgIcon-root {
+        width: 3vw;
+        height: 3vw;
       }
     }
   }
