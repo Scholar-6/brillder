@@ -8,8 +8,8 @@
   height: 100%;
 
   .hidden {
-    transition: all 2000ms ease-out !important;
     opacity: 0;
+    transition: all 2000ms ease-out !important;
   }
 
   .shown {
