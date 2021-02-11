@@ -7,6 +7,7 @@ import queryString from 'query-string';
 import { Moment } from 'moment';
 
 import "./Live.scss";
+
 import { Question, QuestionTypeEnum } from "model/question";
 import QuestionLive from "../questionPlay/QuestionPlay";
 import { PlayStatus, ComponentAttempt } from "../model";
@@ -84,7 +85,7 @@ const LivePage: React.FC<LivePageProps> = ({
     }
 
     document.addEventListener("keydown", handleMove, false);
-    
+
     return function cleanup() {
       document.removeEventListener("keydown", handleMove, false);
     };
