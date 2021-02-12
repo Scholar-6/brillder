@@ -53,7 +53,7 @@ class BuildRoute extends React.Component<BuildRouteProps> {
       let { user } = props;
 
       if (!user.rolePreference) {
-        return <Redirect to={map.UserPreference} />;
+        return <Redirect to={map.TermsPage} />;
       }
 
       if (!props.isRedirectedToProfile) {

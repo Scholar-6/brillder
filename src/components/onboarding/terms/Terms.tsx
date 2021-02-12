@@ -87,7 +87,7 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
                 ))}
               </div>
             </div>
-            <div className="bottom-button" onClick={() => this.props.history.push(map.SetUsername)}>
+            <div className="bottom-button" onClick={() => this.props.history.push(map.UserPreference)}>
               <Checkbox color="secondary" />
               <span>
                 I am over 13 years old, and agree to the Brillder Terms of Service and Privacy Policy
