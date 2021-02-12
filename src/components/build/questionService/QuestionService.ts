@@ -184,11 +184,9 @@ export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]
 }
 
 export function setLastQuestionId(brick: Brick, questions: Question[]) {
-  console.log(brick.questions.length)
   const savedQuestions = brick.questions;
   const updatedQuestions = deactiveQuestions(questions);
   const lastIndex = updatedQuestions.length - 1;
-  console.log(lastIndex);
   updatedQuestions[lastIndex].active = true;
   updatedQuestions[lastIndex].id = savedQuestions[lastIndex].id;
   return updatedQuestions;

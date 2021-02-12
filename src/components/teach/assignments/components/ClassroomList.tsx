@@ -47,7 +47,6 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
 
   componentDidUpdate(props: ClassroomListProps) {
     if (this.props.activeClassroom !== props.activeClassroom) {
-      console.log('refresh')
       this.setState({ shown: false });
       setTimeout(() => {
         this.setState({ shown: true, classroom: this.props.activeClassroom });
