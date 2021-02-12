@@ -28,7 +28,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       }
     }
     .brick-row-container {
-      background-color: var(--white);
+      background-color: var(--white) i !important;
       border-radius: 0;
       height: $back-to-work-height-mobile-view;
       transition: 700ms width;
@@ -783,10 +783,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       text-align: center;
       font-size: 6vw;
     }
-    .intro-text-row {
-      padding-top: 0 !important;
-    }
-
     .stepper {
       width: 100%;
       display: flex;
