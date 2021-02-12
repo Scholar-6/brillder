@@ -19,7 +19,6 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import AddButton from './components/AddButton';
 import StudentTable from './studentTable/StudentTable';
 import UsersPagination from './components/UsersPagination';
-import AssignClassDialog from './components/AssignClassDialog';
 import CreateClassDialog from './components/CreateClassDialog';
 import DeleteClassDialog from './components/DeleteClassDialog';
 import InviteStudentEmailDialog from './components/InviteStudentEmailDialog';
@@ -69,7 +68,6 @@ interface UsersListState {
   isAscending: boolean;
 
   createClassOpen: boolean;
-  assignClassOpen: boolean;
   deleteClassOpen: boolean;
 
   selectedUsers: MUser[];
@@ -113,7 +111,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       isAdmin: checkAdmin(props.user.roles),
 
       createClassOpen: false,
-      assignClassOpen: false,
       deleteClassOpen: false,
 
       classroomToRemove: null,
@@ -247,10 +244,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     } else {
       this.setState({ ...this.state, searchString });
     }
-  }
-
-  openAssignDialog() {
-    this.setState({ assignClassOpen: true });
   }
 
   search() {
@@ -427,7 +420,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   };
 
   assignSelectedStudents(classroomId: number) {
-    this.setState({ assignClassOpen: false });
     assignStudentsToClassroom(classroomId, this.state.selectedUsers).then(res => {
       if (res) {
         // assign success
@@ -614,7 +606,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             pageStudentsSelected={this.state.pageStudentsSelected}
             sort={this.sortByLastName.bind(this)}
             toggleUser={this.toggleUser.bind(this)}
-            assignToClass={this.openAssignDialog.bind(this)}
             unassign={this.unassigningStudent.bind(this)}
             togglePageStudents={this.togglePageStudents.bind(this)}
           />
@@ -648,13 +639,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             {this.renderTabContent()}
           </Grid>
         </Grid>
-        <AssignClassDialog
-          users={this.state.selectedUsers}
-          classrooms={this.state.classrooms}
-          isOpen={this.state.assignClassOpen}
-          submit={classroomId => this.assignSelectedStudents(classroomId)}
-          close={() => { this.setState({ assignClassOpen: false }) }}
-        />
         <DeleteClassDialog
           isOpen={this.state.deleteClassOpen}
           submit={() => this.deleteClass()}
@@ -675,9 +659,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           submit={() => this.unassignStudent(this.state.unassignStudent)}
         />
         <InviteStudentEmailDialogV2
-          isOpen={false}//{this.state.inviteToClassOpen}
+          isOpen={this.state.inviteToClassOpen}
           close={(numInvited) => this.setState({ inviteEmailOpen: false, numStudentsInvited: numInvited })}
-          classrooms={this.state.classrooms}
         />
         {this.state.activeClassroom && <>
           <InviteStudentEmailDialog

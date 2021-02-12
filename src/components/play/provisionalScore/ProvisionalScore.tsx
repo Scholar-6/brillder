@@ -34,7 +34,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
   constructor(props: ProvisionalScoreProps) {
     super(props);
 
-    const {attempts} = props;
+    const { attempts } = props;
 
     const score = attempts.reduce((acc, answer) => {
       if (!answer || !answer.marks) {
@@ -67,9 +67,9 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
     let percentages = Math.round((this.state.score * 100) / this.state.maxScore);
     const interval = setInterval(() => {
       if (this.state.value < percentages - 3) {
-        this.setState({value: this.state.value + step});
+        this.setState({ value: this.state.value + step });
       } else {
-        this.setState({value: percentages});
+        this.setState({ value: percentages });
         clearInterval(interval);
       }
     }, 100);
@@ -119,7 +119,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
     return (
       <div className="action-footer">
         <div></div>
-        <div className="direction-info">
+        <div className="direction-info text-center">
           <h2>Synthesis</h2>
         </div>
         <div>
@@ -144,11 +144,11 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
 
   render() {
     const { status, brick, attempts } = this.props;
-  
+
     if (status === PlayStatus.Live) {
       this.moveToIntro();
     }
-  
+
     return (
       <div>
         <Hidden only={['xs']}>

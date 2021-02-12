@@ -5,12 +5,10 @@ import TextField from '@material-ui/core/TextField';
 import "./InviteStudentEmailDialog.scss";
 import { Chip } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { ClassroomApi } from 'components/teach/service';
-import axios from 'axios';
+//import axios from 'axios';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 interface InviteStudentEmailProps {
-  classrooms: ClassroomApi[];
   isOpen: boolean;
   close(numInvited: number): void;
 }
@@ -38,7 +36,6 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
 
   const onSubmit = React.useCallback(async () => {
     const currentEmails = emails;
-    console.log(44)
     if (!emailRegex.test(currentEmail)) {
       if (emails.length <= 0) {
         setEmailInvalid(true);

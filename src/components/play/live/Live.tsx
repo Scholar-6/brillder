@@ -7,6 +7,7 @@ import queryString from 'query-string';
 import { Moment } from 'moment';
 
 import "./Live.scss";
+
 import { Question, QuestionTypeEnum } from "model/question";
 import QuestionLive from "../questionPlay/QuestionPlay";
 import { PlayStatus, ComponentAttempt } from "../model";
@@ -84,7 +85,7 @@ const LivePage: React.FC<LivePageProps> = ({
     }
 
     document.addEventListener("keydown", handleMove, false);
-    
+
     return function cleanup() {
       document.removeEventListener("keydown", handleMove, false);
     };
@@ -329,8 +330,15 @@ const LivePage: React.FC<LivePageProps> = ({
         <div className="introduction-page">
           {questions.map(renderQuestionContainer)}
         </div>
-        <MobilePrevButton activeStep={activeStep} onClick={prev} />
-        <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
+        <div className="action-footer">
+          <div>
+            <MobilePrevButton activeStep={activeStep} onClick={prev} />
+          </div>
+          <div className="direction-info text-center"></div>
+          <div>
+            <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
+          </div>
+        </div>
       </Hidden>
       <ShuffleAnswerDialog
         isOpen={isShuffleOpen}

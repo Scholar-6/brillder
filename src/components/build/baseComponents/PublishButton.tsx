@@ -51,7 +51,6 @@ const PublishButton: React.FC<ButtonProps> = props => {
         close={() => setState(PublishStatus.None)}
         submit={async () => {
           let success = await publishBrick(brick.id);
-          console.log(success);
           if (success) {
             setState(PublishStatus.Published)
           }

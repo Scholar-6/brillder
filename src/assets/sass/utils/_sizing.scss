@@ -55,6 +55,9 @@
 }
 .m-l-02 {
   margin-left: 0.2vw !important;
+  @include phone_and_tabletP {
+    margin-left: 1vw !important;
+  }
 }
 .m-l-03 {
   margin-left: 0.3vw !important;
