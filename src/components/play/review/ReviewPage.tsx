@@ -7,7 +7,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Moment } from "moment";
 
 import "./ReviewPage.scss";
-import sprite from "assets/img/icons-sprite.svg";
 import { Question } from "model/question";
 import { PlayStatus } from "../model";
 import { PlayMode } from "../model";

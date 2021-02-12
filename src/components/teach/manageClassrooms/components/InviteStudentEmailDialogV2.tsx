@@ -6,7 +6,7 @@ import "./InviteStudentEmailDialog.scss";
 import { Chip } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { ClassroomApi } from 'components/teach/service';
-import axios from 'axios';
+//import axios from 'axios';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 interface InviteStudentEmailProps {
