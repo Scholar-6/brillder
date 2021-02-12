@@ -29,7 +29,7 @@ const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, use
       rest.getUser();
       return <PageLoader content="...Getting User..." />;
     }
-    if (!user.rolePreference && !rest.isPreferencePage) {
+    if (!user.userPreference && !rest.isPreferencePage) {
       return <Redirect to={map.UserPreference} />
     }
     if (user.firstName === "" || user.lastName === "") {

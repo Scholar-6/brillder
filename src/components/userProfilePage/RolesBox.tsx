@@ -1,4 +1,4 @@
-import { RolePreference, UserPreference } from "model/user";
+import { UserPreferenceEnum } from "model/user";
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 
@@ -7,13 +7,13 @@ import { setUserPreference } from 'services/axios/user';
 import { UserRoleItem } from "./model";
 
 interface BoxState {
-  rolePreference?: RolePreference;
+  preferenceId?: UserPreferenceEnum;
 }
 
 interface BoxProps {
   roles: any[];
   userRoles: any[];
-  rolePreference?: any;
+  preferenceId: UserPreferenceEnum;
   toggleRole(roleId: number, disabled: boolean): void;
 }
 
@@ -22,14 +22,14 @@ class RolesBox extends Component<BoxProps, BoxState> {
     super(props);
 
     this.state = {
-      rolePreference: props.rolePreference,
+      preferenceId: props.preferenceId,
     };
   }
 
-  async onPreferenceChange(rolePreference: RolePreference) {
-    const success = await setUserPreference(rolePreference as any);
+  async onPreferenceChange(preferenceId: UserPreferenceEnum) {
+    const success = await setUserPreference(preferenceId);
     if (success) {
-      this.setState({ rolePreference });
+      this.setState({ preferenceId });
     }
   }
 
@@ -52,14 +52,14 @@ class RolesBox extends Component<BoxProps, BoxState> {
   }
 
   render() {
-    const { rolePreference } = this.state;
+    const { preferenceId } = this.state;
     return (
       <Grid container className="roles-box">
         <Grid item>
           <FormControlLabel
             className="filter-container"
-            checked={rolePreference === RolePreference.Student}
-            onClick={() => this.onPreferenceChange(RolePreference.Student)}
+            checked={preferenceId === UserPreferenceEnum.Student}
+            onClick={() => this.onPreferenceChange(UserPreferenceEnum.Student)}
             control={<Radio className="filter-radio" />}
             label="Student"
           />
@@ -67,8 +67,8 @@ class RolesBox extends Component<BoxProps, BoxState> {
         <Grid item>
           <FormControlLabel
             className="filter-container"
-            checked={rolePreference === RolePreference.Teacher}
-            onClick={() => this.onPreferenceChange(RolePreference.Teacher)}
+            checked={preferenceId === UserPreferenceEnum.Teacher}
+            onClick={() => this.onPreferenceChange(UserPreferenceEnum.Teacher)}
             control={<Radio className="filter-radio" />}
             label="Teacher"
           />
@@ -76,8 +76,8 @@ class RolesBox extends Component<BoxProps, BoxState> {
         <Grid item>
           <FormControlLabel
             className="filter-container"
-            checked={rolePreference === RolePreference.Builder}
-            onClick={() => this.onPreferenceChange(RolePreference.Builder)}
+            checked={preferenceId === UserPreferenceEnum.Builder}
+            onClick={() => this.onPreferenceChange(UserPreferenceEnum.Builder)}
             control={<Radio className="filter-radio" />}
             label="Builder"
           />

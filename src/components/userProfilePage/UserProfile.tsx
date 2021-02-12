@@ -395,7 +395,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 <RolesBox
                   roles={this.state.roles}
                   userRoles={this.state.user.roles}
-                  rolePreference={this.props.user.rolePreference?.roleId}
+                  preferenceId={this.props.user.userPreference.preferenceId}
                   toggleRole={this.toggleRole.bind(this)}
                 />
               </div>

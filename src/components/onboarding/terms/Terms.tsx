@@ -82,8 +82,8 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
           <Grid className="user-preference-container terms-page-container" item>
             <div className="terms-page">
               <div>
-                {this.state.parts.map((p) => (
-                  <div ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
+                {this.state.parts.map((p, key) => (
+                  <div ref={p.el} key={key} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
                 ))}
               </div>
             </div>

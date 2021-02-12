@@ -8,7 +8,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import userActions from "redux/actions/user";
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { updateUser } from 'services/axios/user';
-import { User, UserType } from 'model/user';
+import { User, UserPreferenceEnum, UserType } from 'model/user';
 import LabelTyping from 'components/baseComponents/LabelTyping';
 import map from 'components/map';
 
@@ -87,7 +87,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
   }
 
   const move = () => {
-    if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
+    if (user.userPreference && user.userPreference.preferenceId === UserPreferenceEnum.Student) {
       props.history.push('/home');
     } else {
       props.history.push(map.SelectSubjectPage);
