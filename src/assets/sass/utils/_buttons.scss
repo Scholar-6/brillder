@@ -85,10 +85,7 @@
 
 .play-preview,
 .user-preference-next {
-  width: 4.5vw;
-  height: 4.5vw;
   font-size: 1.15vw;
-
   letter-spacing: 0.05vw;
   z-index: 1000;
   cursor: pointer;
@@ -101,8 +98,13 @@
     bottom: calc(85px);
     right: 5vw;
   }
+  @include tabletP {
+    padding: 2.5vw !important;
+    height: 5.2vw;
+    width: 5.2vw;
+  }
   &:after {
-    content: "";
+    content: '';
     @extend %floatToCenter;
     @extend %radCircle;
     z-index: -1;
@@ -111,22 +113,17 @@
       height: calc(100% + 3vw);
     }
     @include tabletP {
-      width: calc(100% + 1vw);
-      height: calc(100% + 1vw);
+      width: calc(100% + 1.7vw);
+      height: calc(100% + 1.7vw);
     }
   }
   .svg {
     z-index: 1;
-    @include phone_and_tabletP {
-      margin-left: 1vw;
-    }
-    @include tabletP {
-      margin-left: 0.3vw;
-    }
   }
   &.play-green,
   &.play-gray,
-  &.play-white {
+  &.play-white,
+  &.roller-red {
     &:hover {
       animation-duration: 1s;
       animation-delay: 0s;
@@ -166,11 +163,24 @@
     }
   }
   &.bg-tab-gray {
+    &:after {
+      background-color: var(--tab-gray-alpha3);
+    }
     .svg {
       color: var(--gray);
     }
+  }
+  &.roller-red {
+    background-color: var(--theme-orange);
     &:after {
-      background-color: var(--tab-gray-alpha3);
+      background-color: var(--theme-orange-alpha5);
+    }
+    &:hover {
+      animation-name: pulse-orange;
+      animation-iteration-count: 5;
+    }
+    .svg {
+      color: var(--white);
     }
   }
   .svg {

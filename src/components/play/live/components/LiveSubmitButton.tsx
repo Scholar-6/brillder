@@ -31,10 +31,7 @@ const LiveSubmitButton: React.FC<ButtonProps> = ({
       className="play-preview svgOnHover play-green"
       onClick={() => setSubmitAnswers(true)}
     >
-      <svg className="svg w80 h80 active" style={{ margin: 0 }}>
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#check-icon-thin"} />
-      </svg>
+      <SpriteIcon name="check-icon-thin" className="w80 h80 active m-l-02" />
     </button>
   );
 };

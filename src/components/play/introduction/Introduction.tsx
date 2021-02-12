@@ -2,9 +2,7 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 import { Moment } from "moment";
 import queryString from 'query-string';
-import { isIPad13, isMobile, isTablet } from 'react-device-detect';
-
-import "./introduction.scss";
+import { isMobile } from 'react-device-detect';
 
 import { Brick, BrickLengthEnum } from "model/brick";
 import { PlayMode } from "../model";
@@ -21,11 +19,6 @@ import { rightKeyPressed } from "components/services/key";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 
 const moment = require("moment");
-
-const MobileTheme = React.lazy(() => import('./themes/IntroductionPageMobileTheme'));
-const TabletTheme = React.lazy(() => import('./themes/IntroductionPageTabletTheme'));
-const DesktopTheme = React.lazy(() => import('./themes/IntroductionPageDesktopTheme'));
-
 interface IntroductionProps {
   isPlayPreview?: boolean;
   startTime?: Moment;
@@ -143,9 +136,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderDesktopPlayText = () => {
     if (resume) {
       return (
-        <div className="direction-info">
-          <h2>Resume</h2>
-        </div>
+        <h2>Resume</h2>
       );
     }
     return (
@@ -160,17 +151,19 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     return (
       <div className="action-footer">
         <div></div>
-        <Hidden only={["xs"]}>
-          {renderDesktopPlayText()}
-        </Hidden>
+        <div className="direction-info text-center">
+          <Hidden only={["xs"]}>
+            {renderDesktopPlayText()}
+          </Hidden>
+        </div>
         <div>
           <button
             type="button"
             className={state.prepExpanded ? "play-preview svgOnHover play-green" : "play-preview svgOnHover play-gray"}
             onClick={startBrick}
           >
-            <SpriteIcon name="play-thin" className="w80 h80 svg-default" />
-            <SpriteIcon name="play-thick" className="w80 h80 colored" />
+            <SpriteIcon name="play-thin" className="w80 h80 svg-default m-l-02" />
+            <SpriteIcon name="play-thick" className="w80 h80 colored m-l-02" />
           </button>
         </div>
       </div>
@@ -301,59 +294,56 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   };
 
   return (
-    <React.Suspense fallback={<></>}>
-      {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
-      <div className="brick-container">
-        <Hidden only={["xs"]}>
-          <Grid container direction="row">
-            <Grid item sm={8} xs={12}>
-              {renderBrickCircle(color)}
-              <div className="introduction-page" style={{ paddingTop: '2.4vh' }}>
-                {renderHeader()}
-                <div className="open-question">
-                  <MathInHtml value={brick.openQuestion} />
-                </div>
-                <div className="intro-content">
-                  {renderBriefTitle()}
-                  {renderBriefExpandText()}
-                  {renderPrepTitle()}
-                  {renderPrepExpandText()}
-                </div>
+    <div className="brick-container">
+      <Hidden only={["xs"]}>
+        <Grid container direction="row">
+          <Grid item sm={8} xs={12}>
+            {renderBrickCircle(color)}
+            <div className="introduction-page" style={{ paddingTop: '2.4vh' }}>
+              {renderHeader()}
+              <div className="open-question">
+                <MathInHtml value={brick.openQuestion} />
               </div>
-            </Grid>
-            <Grid item sm={4} xs={12}>
-              <div className="introduction-info">
-                {renderTimer()}
-                <IntroductionDetails brickLength={brick.brickLength} />
-                {renderPlayButton()}
+              <div className="intro-content">
+                {renderBriefTitle()}
+                {renderBriefExpandText()}
+                {renderPrepTitle()}
+                {renderPrepExpandText()}
               </div>
-            </Grid>
+            </div>
           </Grid>
-        </Hidden>
-        <Hidden only={["sm", "md", "lg", "xl"]}>
-          <div className="introduction-page">
-            {renderMobileHeader()}
+          <Grid item sm={4} xs={12}>
             <div className="introduction-info">
-              {!state.prepExpanded &&
-                <div>
-                  <Hidden only={["sm", "md", "lg", "xl"]}>
-                    {renderTimer()}
-                  </Hidden>
-                  <IntroductionDetails brickLength={brick.brickLength} />
-                </div>
-              }
+              {renderTimer()}
+              <IntroductionDetails brickLength={brick.brickLength} />
               {renderPlayButton()}
             </div>
-            <div className="intro-content">
-              {renderBriefTitle()}
-              {renderBriefExpandText()}
-              {renderPrepTitle()}
-              {renderPrepExpandText()}
-            </div>
+          </Grid>
+        </Grid>
+      </Hidden>
+      <Hidden only={["sm", "md", "lg", "xl"]}>
+        <div className="introduction-page">
+          {renderMobileHeader()}
+          <div className="introduction-info">
+            {!state.prepExpanded &&
+              <div>
+                <Hidden only={["sm", "md", "lg", "xl"]}>
+                  {renderTimer()}
+                </Hidden>
+                <IntroductionDetails brickLength={brick.brickLength} />
+              </div>
+            }
+            {renderPlayButton()}
           </div>
-        </Hidden>
-      </div>
-    </React.Suspense>
+          <div className="intro-content">
+            {renderBriefTitle()}
+            {renderBriefExpandText()}
+            {renderPrepTitle()}
+            {renderPrepExpandText()}
+          </div>
+        </div>
+      </Hidden>
+    </div>
   );
 };
 
