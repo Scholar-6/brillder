@@ -17,6 +17,12 @@
     }
   }
 
+  .brick-row-container.view-all-subjects {
+    .subjects-column {
+      display: flex;
+    }
+  }
+
   .desktop-no-bricks {
     .no-found-help-text {
       color: var(--theme-dark-blue);

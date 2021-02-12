@@ -1,7 +1,6 @@
 import React from 'react';
 import { Grid, Radio } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
 import './UserPreferencePage.scss';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -15,13 +14,13 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface UserPreferencePageProps {
   user: User;
+  history: any;
   getUser(): void;
 }
 
 const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
   const isAdmin = checkAdmin(props.user.roles);
   const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId);
-  const history = useHistory();
 
   const handleChange = async (roleId: RolePreference, disabled: boolean) => {
     if (disabled) {
@@ -42,7 +41,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
 
   const moveNext = () => {
     if (preference && props.user.rolePreference) {
-      history.push(map.TermsPage);
+      props.history.push(map.SetUsername);
     }
   }
 
