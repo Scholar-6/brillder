@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
 import "swiper/swiper.scss";
 
-import './SelectSubjectPage.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import userActions from 'redux/actions/user';
 import { updateUser } from "services/axios/user";
@@ -28,6 +28,10 @@ interface AllSubjectsState {
   subjects: SubjectItem[];
   failedRequest: boolean;
 }
+
+const MobileTheme = React.lazy(() => import('./themes/SubjectMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/SubjectTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/SubjectDesktopTheme'));
 
 class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
   constructor(props: AllSubjectsProps) {
@@ -54,7 +58,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
   }
 
   async submit() {
-    const {user} = this.props;
+    const { user } = this.props;
 
     let subjects = [];
     let general = this.state.subjects.find(s => s.name === GENERAL_SUBJECT);
@@ -94,7 +98,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     if (subject) {
       subject.checked = !subject.checked;
     }
-    this.setState({subjects});
+    this.setState({ subjects });
   }
 
   render() {
@@ -103,14 +107,17 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
       titleVerb = 'teach';
     }
     return (
-      <Grid container direction="row" className="select-subject-page">
-        <h1>What kind of bricks will you {titleVerb}?</h1>
-        <SubjectsColumnV2
-          subjects={this.state.subjects}
-          next={this.submit.bind(this)}
-          onClick={this.onSubjectSelected.bind(this)}
-        />
-      </Grid>
+      <React.Suspense fallback={<></>}>
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+        <Grid container direction="row" className="select-subject-page">
+          <h1>What kind of bricks will you {titleVerb}?</h1>
+          <SubjectsColumnV2
+            subjects={this.state.subjects}
+            next={this.submit.bind(this)}
+            onClick={this.onSubjectSelected.bind(this)}
+          />
+        </Grid>
+      </React.Suspense>
     );
   }
 }
