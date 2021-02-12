@@ -81,6 +81,10 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
       const updatedUser = await props.getUser();
       setSubmited(true);
       setUsername(updatedUser.username);
+      if (isMobile) {
+        props.history.push(map.MobileUsername);
+        return;
+      }
     } else {
       //this.props.requestFailed("Can`t save user profile");
     }
