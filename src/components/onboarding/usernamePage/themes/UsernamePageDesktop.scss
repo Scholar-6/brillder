@@ -8,8 +8,8 @@
   height: 100%;
 
   .hidden {
-    transition: all 2000ms ease-out !important;
     opacity: 0;
+    transition: all 2000ms ease-out !important;
   }
 
   .shown {
@@ -17,7 +17,14 @@
   }
 
   .blue-right-block {
-    display: none;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    background: var(--theme-light-blue);
+    height: 74.9vh;
+    width: 43.8vw;
+    border-top-left-radius: 2vw;
+    z-index: 1;
   }
 
   form {
@@ -37,9 +44,9 @@
     }
 
     .inputs-box {
+      @extend %posRelative;
       margin-top: 9vh;
       margin-bottom: 9vh;
-      @extend %posRelative;
       width: 100%;
       margin: 1vw 0;
       button {
@@ -103,7 +110,8 @@
         width: 100%;
         padding: 0 0 0.8vw 0;
         border: 0;
-        font-size: 6.3vw;
+        font-size: 3.3vw;
+        // font-size: 1.6vw;
       }
 
       input {
@@ -193,7 +201,7 @@
         }
 
         .username {
-          @extend %textCenter;
+          text-align: center;
           font-size: 1.7vw;
           font-family: $font-family-bold;
           text-transform: uppercase;
@@ -203,7 +211,7 @@
         }
 
         .username-help-label {
-          @extend %textCenter;
+          text-align: center;
           font-size: 1.7vw;
           color: var(--theme-dark-blue);
           font-family: $font-family-regular-italic;

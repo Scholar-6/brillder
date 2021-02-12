@@ -109,11 +109,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       .introduction-page {
         font-family: $font-family-regular;
         position: relative;
-        @include desktop {
-          .title {
-            font-size: 4vw;
-          }
-        }
+        height: 100%;
         @include phone_and_tabletP {
           height: 100%;
           position: relative;
@@ -122,6 +118,11 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           overflow-y: auto;
           height: calc(100vh - 15.8vh);
           padding: 4vh 2vw 4vh 7vw;
+        }
+        .title {
+          @include desktop {
+            font-size: 4vw;
+          }
         }
         p {
           @include phone_and_tabletP {
@@ -807,7 +808,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         }
         @include tabletP {
           position: absolute;
-          bottom: 5vw;
+          bottom: 10vh;
         }
         .play-preview {
           @include tabletP {

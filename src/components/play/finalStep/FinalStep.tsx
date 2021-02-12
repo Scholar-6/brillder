@@ -76,11 +76,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   }
 
   const moveNext = () => {
-    if (isAuthor || isAdmin || isEditor) {
-      history.push(`${map.ViewAllPage}?isCore=${brick.isCore}`);
-    } else {
-      history.push(`${map.ViewAllPage}?isCore=${brick.isCore}`);
-    }
+    history.push(map.postPlay(brick.id, user.id));
   }
 
   return (
