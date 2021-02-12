@@ -81,7 +81,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
       const updatedUser = await props.getUser();
       setSubmited(true);
       setUsername(updatedUser.username);
-      if (isMobile) {
+      if (!(isIPad13 || isTablet) && isMobile) {
         props.history.push(map.MobileUsername);
         return;
       }
