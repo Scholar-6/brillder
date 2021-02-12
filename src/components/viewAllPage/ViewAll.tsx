@@ -5,8 +5,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import queryString from 'query-string';
 import { Route, Switch } from 'react-router-dom';
 import "swiper/swiper.scss";
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
-import "./ViewAll.scss";
 import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
@@ -30,7 +30,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 import { getBrickColor } from "services/brick";
-import { isMobile } from "react-device-detect";
 import map from "components/map";
 import NoSubjectDialog from "components/baseComponents/dialogs/NoSubjectDialog";
 import { clearProposal } from "localStorage/proposal";
@@ -84,6 +83,10 @@ interface ViewAllState {
   isAllSubjects: boolean;
   isViewAll: boolean;
 }
+
+const MobileTheme = React.lazy(() => import('./themes/ViewAllPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/ViewAllPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/ViewAllPageDesktopTheme'));
 
 class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   constructor(props: ViewAllProps) {
@@ -472,7 +475,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const { searchString } = this.state;
     this.setState({ shown: false });
     let bricks: Brick[] | null = [];
-    const {pathname} = this.props.location;
+    const { pathname } = this.props.location;
     if (pathname.slice(pathname.length - 13, pathname.length) === '/all-subjects') {
       this.props.history.push(map.ViewAllPage + '?searchString=' + searchString);
     }
@@ -923,52 +926,55 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     return (
-      <div className={pageClass}>
-        <Hidden only={["sm", "md", "lg", "xl"]}>
-          <Switch>
-            <Route exec path={map.AllSubjects}>
-              {this.renderAllSubjectsPage()}
-            </Route>
-            <Route exec path={map.ViewAllPage}>
-              {this.renderMobilePage(expandedBrick)}
-            </Route>
-          </Switch>
-        </Hidden>
-        <Hidden only={["xs"]}>
-          <PageHeadWithMenu
-            page={PageEnum.ViewAll}
-            user={this.props.user}
-            placeholder={"Search Subjects, Topics, Titles & more"}
-            history={this.props.history}
-            search={() => this.search()}
-            searching={(v) => this.searching(v)}
+      <React.Suspense fallback={<></>}>
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+        <div className={pageClass}>
+          <Hidden only={["sm", "md", "lg", "xl"]}>
+            <Switch>
+              <Route exec path={map.AllSubjects}>
+                {this.renderAllSubjectsPage()}
+              </Route>
+              <Route exec path={map.ViewAllPage}>
+                {this.renderMobilePage(expandedBrick)}
+              </Route>
+            </Switch>
+          </Hidden>
+          <Hidden only={["xs"]}>
+            <PageHeadWithMenu
+              page={PageEnum.ViewAll}
+              user={this.props.user}
+              placeholder={"Search Subjects, Topics, Titles & more"}
+              history={this.props.history}
+              search={() => this.search()}
+              searching={(v) => this.searching(v)}
+            />
+            <Switch>
+              <Route exec path={map.AllSubjects}>
+                {this.renderAllSubjectsPage()}
+              </Route>
+              <Route exec path={map.ViewAllPage}>
+                {this.renderDesktopViewAllPage(bricks)}
+              </Route>
+            </Switch>
+          </Hidden>
+          <DeleteBrickDialog
+            isOpen={this.state.deleteDialogOpen}
+            brickId={this.state.deleteBrickId}
+            close={() => this.handleDeleteClose()}
+            onDelete={(brickId) => this.delete(brickId)}
           />
-          <Switch>
-            <Route exec path={map.AllSubjects}>
-              {this.renderAllSubjectsPage()}
-            </Route>
-            <Route exec path={map.ViewAllPage}>
-              {this.renderDesktopViewAllPage(bricks)}
-            </Route>
-          </Switch>
-        </Hidden>
-        <DeleteBrickDialog
-          isOpen={this.state.deleteDialogOpen}
-          brickId={this.state.deleteBrickId}
-          close={() => this.handleDeleteClose()}
-          onDelete={(brickId) => this.delete(brickId)}
-        />
-        <FailedRequestDialog
-          isOpen={this.state.failedRequest}
-          close={() => this.setState({ ...this.state, failedRequest: false })}
-        />
-        <NoSubjectDialog
-          isOpen={this.state.noSubjectOpen}
-          subject={this.state.activeSubject}
-          history={this.props.history}
-          close={() => this.setState({ noSubjectOpen: false })}
-        />
-      </div >
+          <FailedRequestDialog
+            isOpen={this.state.failedRequest}
+            close={() => this.setState({ ...this.state, failedRequest: false })}
+          />
+          <NoSubjectDialog
+            isOpen={this.state.noSubjectOpen}
+            subject={this.state.activeSubject}
+            history={this.props.history}
+            close={() => this.setState({ noSubjectOpen: false })}
+          />
+        </div >
+      </React.Suspense>
     );
   }
 }
