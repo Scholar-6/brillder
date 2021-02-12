@@ -39,11 +39,12 @@ export interface UserBase {
   bio: string;
   status: UserStatus;
   profileImage: string;
+  userPreference?: UserPreference;
 }
 
 export interface User extends UserBase {
   roles: UserRole[];
-  userPreference?: UserPreference;
+  userPreference: UserPreference;
   hasPlayedBrick: boolean;
 }
 
