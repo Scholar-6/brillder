@@ -1,4 +1,4 @@
-import { RolePreference } from "model/user";
+import { RolePreference, UserPreference } from "model/user";
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 
@@ -27,7 +27,7 @@ class RolesBox extends Component<BoxProps, BoxState> {
   }
 
   async onPreferenceChange(rolePreference: RolePreference) {
-    const success = await setUserPreference(rolePreference);
+    const success = await setUserPreference(rolePreference as any);
     if (success) {
       this.setState({ rolePreference });
     }

@@ -1,6 +1,6 @@
 import {get, put, post} from './index';
 
-import { RolePreference, User } from 'model/user';
+import { User, UserPreferenceEnum } from 'model/user';
 import { UpdateUserStatus } from 'components/userProfilePage/model';
 import { Editor } from 'model/brick';
 
@@ -72,9 +72,9 @@ export const getUserByUserName = async (userName: string) => {
   }
 }
 
-export const setUserPreference = async (roleId: RolePreference) => {
+export const setUserPreference = async (preferenceId: UserPreferenceEnum) => {
   try {
-    const data = await put<any>(`/user/rolePreference/${roleId}`, {});
+    const data = await put<any>(`/user/rolePreference/${preferenceId}`, {});
     return data === "OK" ? true : false;
   } catch (e) {
     return false;

@@ -13,6 +13,12 @@ export enum RolePreference {
   Builder,
 }
 
+export enum UserPreferenceEnum {
+  Student = 1,
+  Teacher,
+  Builder,
+}
+
 export enum UserStatus {
   Pending,
   Active,
@@ -22,6 +28,10 @@ export enum UserStatus {
 export interface UserRole {
   roleId: number;
   name?: string;
+}
+
+export interface UserPreference {
+  preferenceId: UserPreferenceEnum;
 }
 
 export interface UserBase {
@@ -39,7 +49,8 @@ export interface UserBase {
 
 export interface User extends UserBase {
   roles: UserRole[];
-  rolePreference?: UserRole;
+  rolePreference: UserRole;
+  userPreference?: UserPreference;
   hasPlayedBrick: boolean;
 }
 
