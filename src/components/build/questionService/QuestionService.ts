@@ -147,7 +147,6 @@ const defaultFunctions: { [key in QuestionTypeEnum]?: () => any } = {
 
 export function setQuestionTypeByIndex(questions: Question[], index: number, type: QuestionTypeEnum) {
   const uniqueComponentIndex = questions[index].components.findIndex(c => c.type === QuestionComponentTypeEnum.Component);
-  console.log(uniqueComponentIndex);
   return update(questions, {
     [index]: {
       type: { $set: type },
