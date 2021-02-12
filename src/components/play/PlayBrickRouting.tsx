@@ -6,8 +6,6 @@ import { connect } from "react-redux";
 import queryString from 'query-string';
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
-import "./brick.scss";
-
 import Introduction from "./introduction/Introduction";
 import Live from "./live/Live";
 import ProvisionalScore from "./provisionalScore/ProvisionalScore";
