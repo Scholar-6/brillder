@@ -2,7 +2,6 @@ import React from "react";
 import { Grid, Checkbox } from "@material-ui/core";
 import { MUser } from "../../model";
 import { UserSortBy } from '../ManageClassrooms';
-import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface StudentTableProps {
   selectedUsers: MUser[];
@@ -11,7 +10,6 @@ interface StudentTableProps {
   pageStudentsSelected: boolean;
 
   sort(sortBy: UserSortBy): void;
-  assignToClass(): void;
   togglePageStudents(): void;
 }
 
@@ -45,17 +43,6 @@ const StudentTableHead: React.FC<StudentTableProps> = props => {
         onClick={() => props.sort(currentSortBy)}
       />
     );
-  }
-
-  const renderAssignButton = () => {
-    if (props.selectedUsers.length >= 1) {
-      return (
-        <div className="class-assign-button svgOnHover" onClick={props.assignToClass}>
-          <SpriteIcon name="plus" className="active" />
-        </div>
-      )
-    }
-    return "";
   }
 
   return (

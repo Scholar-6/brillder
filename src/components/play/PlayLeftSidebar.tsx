@@ -135,7 +135,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   share() {
-    this.setState({isSharingOpen: true});
+    this.setState({ isSharingOpen: true });
   }
 
   openAssignDialog() {
@@ -159,7 +159,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   onAdaptDialog() {
-    this.setState({isAdaptBrickOpen: true});
+    this.setState({ isAdaptBrickOpen: true });
   }
 
   renderButtons() {
@@ -223,13 +223,13 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       canSee = checkTeacherOrAdmin(this.props.user);
     } catch { }
 
-    const {brick} = this.props;
-    const {inviteResult} = this.state;
+    const { brick } = this.props;
+    const { inviteResult } = this.state;
 
     let isAuthor = false;
     try {
       isAuthor = brick.author.id === this.props.user.id;
-    } catch {}
+    } catch { }
 
     const link = `/play/brick/${brick.id}/intro`;
 
@@ -238,7 +238,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         <CommingSoonDialog isOpen={this.state.isCoomingSoonOpen} close={() => this.toggleCommingSoon()} />
         <AdaptBrickDialog
           isOpen={this.state.isAdaptBrickOpen}
-          close={() => this.setState({isAdaptBrickOpen: false})}
+          close={() => this.setState({ isAdaptBrickOpen: false })}
           submit={this.createBrickCopy.bind(this)}
         />
         {canSee &&
@@ -246,9 +246,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
             isOpen={this.state.isAssigningOpen}
             success={(items: any[], failedItems: any[]) => {
               if (items.length > 0) {
-                this.setState({ isAssigningOpen: false, selectedItems: items, failedItems, isAssignedSuccessOpen: true});
+                this.setState({ isAssigningOpen: false, selectedItems: items, failedItems, isAssignedSuccessOpen: true });
               } else if (failedItems.length > 0) {
-                this.setState({ failedItems, isAssignedFailedOpen: true});
+                this.setState({ failedItems, isAssignedFailedOpen: true });
               }
             }}
             close={() => this.setState({ isAssigningOpen: false })}
@@ -259,9 +259,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           selectedItems={this.state.selectedItems}
           close={() => {
             if (this.state.failedItems.length > 0) {
-              this.setState({isAssignedSuccessOpen: false, isAssignedFailedOpen: true});
+              this.setState({ isAssignedSuccessOpen: false, isAssignedFailedOpen: true });
             } else {
-              this.setState({isAssignedSuccessOpen: false});
+              this.setState({ isAssignedSuccessOpen: false });
             }
           }}
         />
@@ -269,33 +269,33 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           isOpen={this.state.isAssignedFailedOpen}
           brickTitle={this.props.brick.title}
           selectedItems={this.state.failedItems}
-          close={() => this.setState({isAssignedFailedOpen: false, failedItems: []})}
+          close={() => this.setState({ isAssignedFailedOpen: false, failedItems: [] })}
         />
         <ShareDialog
           isOpen={this.state.isSharingOpen}
-          link={() => { this.setState({isSharingOpen: false, isLinkOpen: true }) }}
-          invite={() => { this.setState({isSharingOpen: false, inviteOpen: true})}}
-          close={() => this.setState({isSharingOpen: false})}
+          link={() => { this.setState({ isSharingOpen: false, isLinkOpen: true }) }}
+          invite={() => { this.setState({ isSharingOpen: false, inviteOpen: true }) }}
+          close={() => this.setState({ isSharingOpen: false })}
         />
         <LinkDialog
           isOpen={this.state.isLinkOpen}
           link={document.location.host + link}
-          submit={() => this.setState({isLinkOpen: false, linkCopiedOpen: true})}
-          close={() => this.setState({isLinkOpen: false})}
+          submit={() => this.setState({ isLinkOpen: false, linkCopiedOpen: true })}
+          close={() => this.setState({ isLinkOpen: false })}
         />
         <LinkCopiedDialog
           isOpen={this.state.linkCopiedOpen}
-          close={()=> this.setState({linkCopiedOpen: false})}
+          close={() => this.setState({ linkCopiedOpen: false })}
         />
         <InviteDialog
           canEdit={true} brick={brick} isOpen={this.state.inviteOpen} hideAccess={true} isAuthor={isAuthor}
-          submit={name => this.setState({ inviteResult: { isOpen: true, name, accessGranted: false }})}
-          close={() => this.setState({inviteOpen: false})}
+          submit={name => this.setState({ inviteResult: { isOpen: true, name, accessGranted: false } })}
+          close={() => this.setState({ inviteOpen: false })}
         />
         <InvitationSuccessDialog
           isAuthor={isAuthor}
           isOpen={inviteResult.isOpen} name={inviteResult.name} accessGranted={inviteResult.accessGranted}
-          close={() => this.setState({inviteResult: { isOpen: false, name: '', accessGranted: false }})}
+          close={() => this.setState({ inviteResult: { isOpen: false, name: '', accessGranted: false } })}
         />
       </div>
     );

@@ -8,7 +8,6 @@ const markLiveChoices = (component: any, attempt: ComponentAttempt<ChooseSeveral
         if (checked === choice.checked || (checked === false && !choice.checked)) {
             attempt.marks += 2;
         } else {
-            console.log(checked, choice)
             attempt.marks += 0.5;
             attempt.correct = false;
         }

@@ -11,6 +11,7 @@ export const Onboarding = '/onboarding';
 
 export const TermsPage = Onboarding + '/terms';
 export const SetUsername = Onboarding + '/set-username';
+export const MobileUsername = Onboarding + '/mobile-username';
 export const SelectSubjectPage = Onboarding + '/select-subjects';
 export const UserPreference = Onboarding + '/user-preference';
 export const UserProfile = Onboarding + '/profile-page';
@@ -108,6 +109,7 @@ export default {
 
   TermsPage,
   SetUsername,
+  MobileUsername,
   SelectSubjectPage,
   UserPreference,
 

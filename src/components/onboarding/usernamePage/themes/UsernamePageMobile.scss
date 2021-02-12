@@ -23,15 +23,17 @@
   form {
     display: flex;
     height: 100%;
+    width: calc(100% - 10vw);
     margin-left: 10vw;
     align-items: center;
 
     > div {
+      width: calc(100% - 10vw);
       min-height: calc(23vh + 22vw);
     }
 
     h1 {
-      font-size: 4vw;
+      font-size: 8.5vw;
       font-family: $font-family-black;
       letter-spacing: 0.1vw;
     }
@@ -40,16 +42,16 @@
       margin-top: 9vh;
       margin-bottom: 9vh;
       @extend %posRelative;
-      width: 100%;
+      width: 90%;
       margin: 1vw 0;
       button {
         position: absolute;
         top: calc(3vh - 0.3vw);
-        font-size: 1.8vw;
+        font-size: 5vw;
         font-family: $font-family-regular;
         padding: 0vw 1vw;
         border-radius: 0.7vw;
-        right: -6vw;
+        right: -12vw;
         border: none;
         outline: none;
         color: var(--white);
@@ -110,7 +112,7 @@
         margin-top: 3vh;
         margin-bottom: 3vh;
         width: 100%;
-        font-size: 1.8vw;
+        font-size: 6vw;
         color: var(--white);
         text-transform: capitalize;
       }
@@ -130,11 +132,11 @@
       font-family: $font-family-bold;
 
       button {
-        font-size: 2.5vw;
+        font-size: 8vw;
         border: none;
         outline: none;
         border-radius: 1.5vw;
-        padding: 1.1vh 2.5vw;
+        padding: 1.2vh 5vw;
         background: var(--theme-orange);
         font-family: $font-family-bold;
         transition: all 300ms ease-out !important;

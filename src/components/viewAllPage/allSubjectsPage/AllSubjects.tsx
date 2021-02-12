@@ -97,7 +97,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
           />
           : this.props.user ? <AllSubjectsSidebar /> : <UnauthorizedSidebar />
         }
-        <Grid item xs={9} className="brick-row-container">
+        <Grid item xs={9} className="brick-row-container view-all-subjects">
           <SubjectsColumn
             subjects={this.state.totalSubjects}
             viewAll={() => {

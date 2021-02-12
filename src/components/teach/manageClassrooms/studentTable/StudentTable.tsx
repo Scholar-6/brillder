@@ -25,7 +25,6 @@ interface StudentTableProps {
 
   toggleUser(userId: number): void;
   sort(sortBy: UserSortBy): void;
-  assignToClass(): void;
   unassign(student: MUser): void;
   togglePageStudents(): void;
 }
@@ -149,7 +148,6 @@ const StudentTable: React.FC<StudentTableProps> = props => {
         isAscending={isAscending}
         pageStudentsSelected={props.pageStudentsSelected}
         sort={props.sort}
-        assignToClass={props.assignToClass}
         togglePageStudents={props.togglePageStudents}
       />
       {users.map(renderStudent)}

@@ -54,6 +54,7 @@ import EmailLoginPage from 'components/loginPage/EmailLoginPage';
 import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSubjectPage';
 import PublicTerms from 'components/terms/PublicTerms';
 import Warning from 'components/baseComponents/rotateInstruction/Warning';
+import MobileUsernamePage from 'components/onboarding/mobileUsernamePage/MobileUsernamePage';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -173,6 +174,7 @@ const App: React.FC<AppProps> = props => {
         <AllUsersRoute path={map.UserProfile} component={UserProfilePage} />
         <AllUsersRoute path={map.UserPreference} component={UserPreferencePage} isPreferencePage={true} />
         <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
+        <AllUsersRoute path={map.MobileUsername} component={MobileUsernamePage} />
         <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
 
         <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />

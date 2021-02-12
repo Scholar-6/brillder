@@ -71,7 +71,6 @@ class ClassroomNames extends React.Component<ClassroomNamesProps, State> {
     const scrollElement = this.state.ref.current;
     if (scrollElement) {
       scrollElement.scrollBy(scrollValue, 0);
-      console.log('scroll')
       return true;
     }
     return false;

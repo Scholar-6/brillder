@@ -13,7 +13,6 @@ import ExitButton from "./ExitButton";
 import InviteDialog from "./dialogs/InviteDialog";
 import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
 import { User } from "model/user";
-import { checkAdmin } from "components/services/brickService";
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { rightKeyPressed } from "components/services/key";
@@ -56,12 +55,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
   const link = `/play/brick/${brick.id}/intro`;
 
-  let isAdmin = checkAdmin(user.roles);
-  let isEditor = false;
-  try {
-    isEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
-  } catch {}
-  
   let isAuthor = false;
   try {
     isAuthor = brick.author.id === user.id;

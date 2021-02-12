@@ -1,9 +1,9 @@
 import React from "react";
 
-import './SubjectsColumnV2.scss';
 import { Subject } from "model/brick";
 import { GENERAL_SUBJECT, CURRENT_AFFAIRS_SUBJECT } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isIPad13, isMobile, isTablet } from "react-device-detect";
 
 interface Props {
   subjects: Subject[];
@@ -16,16 +16,23 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, next, onClick }) => {
   let isOdd = false;
   let row = [];
 
+  let max1 = 3;
+  let max2 = 4;
+
+  if (!(isIPad13 || isTablet) && isMobile) {
+    max1 = 2;
+    max2 = 3;
+  }
   for (let subject of subjects) {
     if (subject.name === GENERAL_SUBJECT || subject.name === CURRENT_AFFAIRS_SUBJECT) {
       continue;
     }
     row.push(subject);
-    if (isOdd && row.length >= 3) {
+    if (isOdd && row.length >= max1) {
       isOdd = false;
       list.push(row);
       row = [];
-    } else if (!isOdd && row.length >= 4) {
+    } else if (!isOdd && row.length >= max2) {
       isOdd = true;
       list.push(row);
       row = [];
@@ -60,13 +67,15 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, next, onClick }) => {
 
   return (
     <div className="subjects-column-v2">
-      <div style={{width: '100%'}}>
+      <div style={{ width: '100%' }}>
         {list.map((row, i) =>
           <div key={i} className="subject-row">
             {row.map((s, j) => renderSubject(s, j))}
-            {i === list.length - 1 && renderNextButton()}
           </div>
         )}
+        <div className="subject-row">
+          {renderNextButton()}
+        </div>
       </div>
     </div>
   );

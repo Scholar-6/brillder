@@ -58,6 +58,9 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
     const {brick} = this.props;
     const {brickStatus} = this.state;
     let disabled = brickStatus === BrickStatus.Build || brickStatus === BrickStatus.Publish;
+    if (!this.props.isValid) {
+      disabled = true;
+    }
 
     if (this.props.isAdmin) {
       return <ReturnToEditorButton disabled={disabled} brick={brick} history={this.props.history} />;

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { isMobile } from "react-device-detect";
 import { connect } from "react-redux";
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
-import 'components/play/brick.scss';
 import './PreviewBrickRouting.scss';
+
 import actions from 'redux/actions/brickActions';
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { Brick } from 'model/brick';
@@ -60,6 +60,10 @@ interface BrickRoutingProps {
   location: any;
   fetchBrick(brickId: number): void;
 }
+
+const MobileTheme = React.lazy(() => import('../play/themes/BrickPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('../play/themes/BrickPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('../play/themes/BrickPageDesktopTheme'));
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const { history, location, match } = props;
@@ -238,93 +242,96 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   return (
-    <div className="play-preview-pages">
-      {renderHead()}
-      <div className={className}>
-        <PlayLeftSidebar
-          history={history}
-          brick={brick}
-          sidebarRolledUp={sidebarRolledUp}
-          toggleSidebar={setSidebar}
-          isPreview={true}
-          moveToBuild={moveToBuild}
-        />
-        <div className="brick-row-container">
-          <Switch>
-            <Route exac path="/play-preview/brick/:brickId/intro">
-              <Introduction
-                location={location}
-                brick={brick}
-                isPlayPreview={true}
-                startTime={startTime}
-                setStartTime={setStartTime}
-                moveNext={moveToLive}
-              />
-            </Route>
-            <Route exac path="/play-preview/brick/:brickId/live">
-              <Live
-                status={status}
-                attempts={attempts}
-                previewQuestionIndex={getBuildQuestionNumber()}
-                isPlayPreview={true}
-                brick={brick}
-                questions={brick.questions}
-                updateAttempts={updateAttempts}
-                finishBrick={finishBrick}
-                endTime={liveEndTime}
-                setEndTime={time => {
-                  if (liveEndTime === null) {
-                    setLiveEndTime(time);
-                  }
-                }}
-              />
-            </Route>
-            <Route exac path="/play-preview/brick/:brickId/provisionalScore">
-              <ProvisionalScore
-                history={history}
-                location={location}
-                status={status}
-                brick={brick}
-                attempts={attempts}
-                isPlayPreview={true}
-              />
-            </Route>
-            <Route exac path="/play-preview/brick/:brickId/synthesis">
-              <Synthesis status={status} brick={brick} isPlayPreview={true} moveNext={moveToReview} />
-            </Route>
-            <Route exac path="/play-preview/brick/:brickId/review">
-              <Review
-                isPlayPreview={true}
-                status={status}
-                questions={brick.questions}
-                brickId={brick.id}
-                startTime={startTime}
-                brickLength={brick.brickLength}
-                updateAttempts={updateReviewAttempts}
-                attempts={attempts}
-                finishBrick={finishReview}
-              />
-            </Route>
-            <Route exac path="/play-preview/brick/:brickId/ending">
-              <Ending
-                location={location}
-                status={status}
-                history={history}
-                brick={brick}
-                brickAttempt={brickAttempt}
-                saveAttempt={saveBrickAttempt}
-              />
-            </Route>
-            <Route exac path="/play-preview/brick/:brickId/build-complete">
-              <BuildCompletePage brick={brick} history={history} />
-            </Route>
-            <Route exac path="/play-preview/brick/:brickId/submit">
-              <FinalStep user={props.user} status={status} history={history} location={location} />
-            </Route>
-          </Switch>
+    <React.Suspense fallback={<></>}>
+      {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+      <div className="play-preview-pages">
+        {renderHead()}
+        <div className={className}>
+          <PlayLeftSidebar
+            history={history}
+            brick={brick}
+            sidebarRolledUp={sidebarRolledUp}
+            toggleSidebar={setSidebar}
+            isPreview={true}
+            moveToBuild={moveToBuild}
+          />
+          <div className="brick-row-container">
+            <Switch>
+              <Route exac path="/play-preview/brick/:brickId/intro">
+                <Introduction
+                  location={location}
+                  brick={brick}
+                  isPlayPreview={true}
+                  startTime={startTime}
+                  setStartTime={setStartTime}
+                  moveNext={moveToLive}
+                />
+              </Route>
+              <Route exac path="/play-preview/brick/:brickId/live">
+                <Live
+                  status={status}
+                  attempts={attempts}
+                  previewQuestionIndex={getBuildQuestionNumber()}
+                  isPlayPreview={true}
+                  brick={brick}
+                  questions={brick.questions}
+                  updateAttempts={updateAttempts}
+                  finishBrick={finishBrick}
+                  endTime={liveEndTime}
+                  setEndTime={time => {
+                    if (liveEndTime === null) {
+                      setLiveEndTime(time);
+                    }
+                  }}
+                />
+              </Route>
+              <Route exac path="/play-preview/brick/:brickId/provisionalScore">
+                <ProvisionalScore
+                  history={history}
+                  location={location}
+                  status={status}
+                  brick={brick}
+                  attempts={attempts}
+                  isPlayPreview={true}
+                />
+              </Route>
+              <Route exac path="/play-preview/brick/:brickId/synthesis">
+                <Synthesis status={status} brick={brick} isPlayPreview={true} moveNext={moveToReview} />
+              </Route>
+              <Route exac path="/play-preview/brick/:brickId/review">
+                <Review
+                  isPlayPreview={true}
+                  status={status}
+                  questions={brick.questions}
+                  brickId={brick.id}
+                  startTime={startTime}
+                  brickLength={brick.brickLength}
+                  updateAttempts={updateReviewAttempts}
+                  attempts={attempts}
+                  finishBrick={finishReview}
+                />
+              </Route>
+              <Route exac path="/play-preview/brick/:brickId/ending">
+                <Ending
+                  location={location}
+                  status={status}
+                  history={history}
+                  brick={brick}
+                  brickAttempt={brickAttempt}
+                  saveAttempt={saveBrickAttempt}
+                />
+              </Route>
+              <Route exac path="/play-preview/brick/:brickId/build-complete">
+                <BuildCompletePage brick={brick} history={history} />
+              </Route>
+              <Route exac path="/play-preview/brick/:brickId/submit">
+                <FinalStep user={props.user} status={status} history={history} location={location} />
+              </Route>
+            </Switch>
+          </div>
         </div>
       </div>
-    </div>
+    </React.Suspense>
   );
 }
 
