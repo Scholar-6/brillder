@@ -120,7 +120,9 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
   const renderUsername = () => {
     return (
       <div>
-        <LabelTyping value="Your username will be" className="username-help-label" start={true} onFinish={() => setLabelFinished(true)} />
+        <LabelTyping
+          value={user.rolePreference?.roleId === UserType.Builder ? "Use this username to connect with people to create and assign bricks" : "Your username will be"}
+          className="username-help-label" start={true} onFinish={() => setLabelFinished(true)} />
         <LabelTyping value={username} className="username" start={labelFinished} />
       </div>
     );
