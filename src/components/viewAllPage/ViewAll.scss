@@ -9,6 +9,14 @@
   width: 100%;
   font-family: $font-family-regular;
 
+  .brick-row-container {
+    background: var(--tab-gray);
+
+    .subjects-column {
+      display: block;
+    }
+  }
+
   .desktop-no-bricks {
     .no-found-help-text {
       color: var(--theme-dark-blue);
@@ -16,9 +24,6 @@
       font-family: $font-family-regular-italic;
       margin-left: 1.7vw;
       margin-bottom: 1.9vh;
-    }
-    .subjects-column {
-      align-items: flex-start;
     }
   }
 

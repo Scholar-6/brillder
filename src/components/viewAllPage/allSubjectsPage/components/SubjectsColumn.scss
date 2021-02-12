@@ -36,8 +36,8 @@
       transition: all 300ms ease-out;
       cursor: pointer;
       position: relative;
-      background: var(--theme-dark-blue) !important;
-      color: var(--white) !important;
+      background: var(--white) !important;
+      color: var(--theme-dark-blue) !important;
       @include phone_and_tabletL {
         padding-left: 10vw;
         width: 100%;
@@ -53,8 +53,8 @@
         border-radius: 0.8vw;
       }
       &:hover {
-        background: var(--white) !important;
-        color: var(--theme-dark-blue) !important;
+        background: var(--theme-dark-blue) !important;
+        color: var(--white) !important;
         .icon {
           color: var(--theme-dark-blue) !important;
         }
