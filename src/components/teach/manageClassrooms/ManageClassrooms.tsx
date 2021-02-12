@@ -661,7 +661,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <InviteStudentEmailDialogV2
           isOpen={false}//{this.state.inviteToClassOpen}
           close={(numInvited) => this.setState({ inviteEmailOpen: false, numStudentsInvited: numInvited })}
-          classrooms={this.state.classrooms}
         />
         {this.state.activeClassroom && <>
           <InviteStudentEmailDialog

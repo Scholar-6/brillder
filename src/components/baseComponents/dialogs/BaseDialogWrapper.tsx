@@ -35,7 +35,6 @@ class BaseDialogWrapper extends Component<DialogProps, DialogState> {
     if (this.props.open) {
       if (enterPressed(e)) {
         e.stopPropagation();
-        console.log('click');
         this.props.submit();
       }
     }

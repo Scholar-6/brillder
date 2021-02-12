@@ -38,7 +38,6 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
 
   const onSubmit = React.useCallback(async () => {
     const currentEmails = emails;
-    console.log(44)
     if (!emailRegex.test(currentEmail)) {
       if (emails.length <= 0) {
         setEmailInvalid(true);
