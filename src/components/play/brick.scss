@@ -60,6 +60,7 @@
       .minimize-icon {
         margin: 1vw 1vw 0 1vw;
         justify-content: flex-end;
+        cursor: pointer;
         .svg {
           color: var(--theme-orange);
         }
@@ -119,13 +120,15 @@
       }
       .share-button {
         background: var(--theme-dark-blue);
-        span, svg {
+        span,
+        svg {
           color: var(--white);
           stroke-width: 2 !important;
         }
         &:hover {
           background: var(--tab-gray);
-          span, svg {
+          span,
+          svg {
             color: var(--theme-dark-blue) !important;
           }
         }
