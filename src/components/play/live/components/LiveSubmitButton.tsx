@@ -1,6 +1,5 @@
 import React from "react";
 
-import sprite from "assets/img/icons-sprite.svg";
 import { Question } from "model/question";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
