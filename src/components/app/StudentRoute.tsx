@@ -28,7 +28,7 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, inner
       return <PageLoader content="...Getting User..." />;
     }
 
-    if (!user.rolePreference) {
+    if (!user.userPreference) {
       return <Redirect to={map.UserPreference} />
     }
 

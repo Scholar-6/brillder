@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Dialog from "@material-ui/core/Dialog";
 
 import actions from 'redux/actions/requestFailed';
-import { User, UserType, UserStatus, RolePreference } from "model/user";
+import { User, UserType, UserStatus, UserPreferenceEnum } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
@@ -80,9 +80,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       filterExpanded: true,
 
       roles: [
-        { name: "Student", type: RolePreference.Student, checked: false },
-        { name: "Teacher", type: RolePreference.Teacher, checked: false },
-        { name: "Builder", type: RolePreference.Builder, checked: false },
+        { name: "Student", type: UserPreferenceEnum.Student, checked: false },
+        { name: "Teacher", type: UserPreferenceEnum.Teacher, checked: false },
+        { name: "Builder", type: UserPreferenceEnum.Builder, checked: false },
         { name: "Publisher", type: UserType.Publisher, checked: false },
         { name: "Admin", type: UserType.Admin, checked: false },
       ],
@@ -394,13 +394,13 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     for (let role of user.roles) {
       if (role.roleId === UserType.Admin) {
         type += "A";
-      } else if (user.rolePreference?.roleId === RolePreference.Builder) {
+      } else if (user.userPreference?.preferenceId === UserPreferenceEnum.Builder) {
         type += "B";
       } else if (role.roleId === UserType.Publisher) {
         type += "P";
-      } else if (user.rolePreference?.roleId === RolePreference.Student) {
+      } else if (user.userPreference?.preferenceId === UserPreferenceEnum.Student) {
         type += "S";
-      } else if (user.rolePreference?.roleId === RolePreference.Teacher) {
+      } else if (user.userPreference?.preferenceId === UserPreferenceEnum.Teacher) {
         type += "T";
       }
     }

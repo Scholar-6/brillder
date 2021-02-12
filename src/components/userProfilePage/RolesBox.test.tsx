@@ -4,7 +4,7 @@ import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 import RolesBox from "./RolesBox";
-import { RolePreference, UserType } from "model/user";
+import { UserPreferenceEnum, UserType } from "model/user";
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -20,7 +20,7 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[]}
-        rolePreference={RolePreference.Student}
+        preferenceId={UserPreferenceEnum.Student}
         toggleRole={() => {}}
       />
     );
@@ -39,7 +39,7 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[]}
-        rolePreference={RolePreference.Teacher}
+        preferenceId={UserPreferenceEnum.Teacher}
         toggleRole={() => {}}
       />
     );
@@ -58,7 +58,7 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[]}
-        rolePreference={RolePreference.Builder}
+        preferenceId={UserPreferenceEnum.Builder}
         toggleRole={() => {}}
       />
     );
@@ -77,7 +77,7 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[UserType.Admin]}
-        rolePreference={RolePreference.Builder}
+        preferenceId={UserPreferenceEnum.Builder}
         toggleRole={() => {}}
       />
     );
@@ -95,7 +95,7 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[UserType.Admin, UserType.Publisher, UserType.Institution]}
-        rolePreference={RolePreference.Builder}
+        preferenceId={UserPreferenceEnum.Builder}
         toggleRole={() => {}}
       />
     );
@@ -108,5 +108,4 @@ describe("Roles Box", () => {
     expect(component.props().children[4].props.children.props.checked).toBe(true);
     expect(component.props().children[5].props.children.props.checked).toBe(true);
   });
-
 });

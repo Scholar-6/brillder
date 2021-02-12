@@ -7,12 +7,6 @@ export enum UserType {
   Institution,
 }
 
-export enum RolePreference {
-  Student = 1,
-  Teacher,
-  Builder,
-}
-
 export enum UserPreferenceEnum {
   Student = 1,
   Teacher,

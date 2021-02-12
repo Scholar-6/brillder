@@ -5,7 +5,7 @@ import 'intro.js/introjs.css';
 import { Steps } from 'intro.js-react';
 
 import './IntroJs.scss';
-import { RolePreference, User } from 'model/user';
+import { User, UserPreferenceEnum } from 'model/user';
 
 interface Props {
   suspended: boolean | undefined;
@@ -27,13 +27,13 @@ class ProfileIntroJs extends React.Component<Props, State> {
     super(props);
 
     const getUserPreferenceName = () => {
-      if (props.user.rolePreference) {
-        const { roleId } = props.user.rolePreference;
-        if (roleId === RolePreference.Student) {
+      if (props.user.userPreference) {
+        const { preferenceId } = props.user.userPreference;
+        if (preferenceId === UserPreferenceEnum.Student) {
           return 'Student';
-        } else if (roleId === RolePreference.Teacher) {
+        } else if (preferenceId === UserPreferenceEnum.Teacher) {
           return "Teacher";
-        } else if (roleId === RolePreference.Builder) {
+        } else if (preferenceId === UserPreferenceEnum.Builder) {
           return 'Builder';
         }
       }

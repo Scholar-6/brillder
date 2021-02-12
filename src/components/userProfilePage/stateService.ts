@@ -1,4 +1,4 @@
-import { User, UserType, UserStatus } from 'model/user';
+import { User, UserType, UserStatus, UserPreferenceEnum } from 'model/user';
 import { checkAdmin, canEdit, isInstitution } from "components/services/brickService";
 import { newStudentProfile } from './service';
 
@@ -31,9 +31,9 @@ export const getExistedUserState = (user: User) => {
   let isEditor = canEdit(user);
   let isInstitute = isInstitution(user);
 
-  let isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
-  if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
-    isEditor = false;
+  let isOnlyStudent  = false;
+  if (user.userPreference && user.userPreference.preferenceId === UserPreferenceEnum.Student) {
+    isOnlyStudent = true;
   }
 
   if (isAdmin) {

@@ -40,7 +40,7 @@ const PlayPreviewRoute: React.FC<PreviewRouteProps> = ({
 
     let { user } = rest;
 
-    if (!user.rolePreference) {
+    if (!user.userPreference) {
       return <Redirect to={map.UserPreference} />;
     }
 

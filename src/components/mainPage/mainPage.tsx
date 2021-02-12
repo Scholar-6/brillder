@@ -7,7 +7,7 @@ import 'swiper/swiper.scss';
 import "./mainPage.scss";
 import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
-import { RolePreference, User } from "model/user";
+import { User, UserPreferenceEnum } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { clearProposal } from "localStorage/proposal";
 import map from 'components/map';
@@ -82,10 +82,10 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   constructor(props: MainPageProps) {
     super(props);
 
-    const {rolePreference} = props.user;
+    const {userPreference} = props.user;
 
-    const isStudent = rolePreference?.roleId === RolePreference.Student;
-    const isBuilder = rolePreference?.roleId === RolePreference.Builder;
+    const isStudent = userPreference?.preferenceId === UserPreferenceEnum.Student;
+    const isBuilder = userPreference?.preferenceId === UserPreferenceEnum.Builder;
 
     this.state = {
       createHober: false,
@@ -100,7 +100,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isBuilderActive: false,
       isSwiping: false,
 
-      isTeacher: rolePreference?.roleId === RolePreference.Teacher,
+      isTeacher: userPreference?.preferenceId === UserPreferenceEnum.Teacher,
       isAdmin: checkAdmin(props.user.roles),
       isStudent,
       isBuilder,
