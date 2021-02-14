@@ -116,6 +116,7 @@ function addZendesk() {
   var head = document.getElementsByTagName('head').item(0);
   if (head) {
     window.zESettings = {
+      cookies: false,
       webWidget: {
         chat: {
           prechatForm: {
@@ -145,6 +146,7 @@ function addZendesk() {
 
     // prefill zendesk fields
     window.zESettings = {
+      cookies: false,
       webWidget: {
         contactForm: {
           fields: [
