@@ -49,6 +49,7 @@
     "@vx/stats": "0.0.198",
     "@wiris/mathtype-ckeditor5": "https://github.com/Scholar-6/html-integrations/raw/ckeditor5-packed/packages/mathtype-ckeditor5/wiris-mathtype-ckeditor5-7.24.1.tgz",
     "axios": ">=0.21.1",
+    "caniuse-lite": "^1.0.30001187",
     "dot-prop": "^4.2.1",
     "dotenv": "^8.2.0",
     "html-to-react": "^1.4.5",
