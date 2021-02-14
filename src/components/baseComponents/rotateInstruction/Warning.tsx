@@ -5,7 +5,7 @@ import SpriteIcon from "../SpriteIcon";
 
 interface Props {}
 
-const RotateInstruction: React.FC<Props> = (props) => {
+const Warning: React.FC<Props> = (props) => {
   return (
     <div className="rotate-instruction-page ipad-warning">
       <div>
@@ -18,4 +18,4 @@ const RotateInstruction: React.FC<Props> = (props) => {
   );
 }
 
-export default RotateInstruction;
+export default Warning;
