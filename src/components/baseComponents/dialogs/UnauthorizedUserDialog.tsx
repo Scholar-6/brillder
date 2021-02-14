@@ -12,8 +12,8 @@ const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue">
       <div className="dialog-header">
-        <div className="bold" style={{width: '35vw'}}>Before you can review your answers and learn how to improve your score, you need to create an account.</div>
-        <div className="bold" style={{width: '35vw'}}>Creating an account is free, no obligations.</div>
+        <div className="bold">Before you can review your answers and learn how to improve your score, you need to create an account.</div>
+        <div className="bold">Creating an account is free, no obligations.</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button" onClick={props.login}>
