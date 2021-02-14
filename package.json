@@ -101,7 +101,6 @@
     "y-websocket": "^1.3.8",
     "yjs": "^13.4.7"
   },
-  "proxy": "http://local-brillder.brillder.com:3000",
   "scripts": {
     "start": "react-app-rewired start --scripts-version react-scripts",
     "build": "react-app-rewired build --scripts-version react-scripts",
