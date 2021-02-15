@@ -207,7 +207,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   if(currentQuestionIndex !== -1) {
     activeQuestion = questions.get(currentQuestionIndex);
     if(activeQuestion) {
-      activeQuestion.load();
+      questions.map((q: Y.Doc) => q.load());
     }
   }
   if (isSynthesisPage || isProposalPage) {
@@ -350,7 +350,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     });
 
     // synthesis invalid
-    if (!synthesis && !invalidQuestion) {
+    if ((!synthesis || synthesis.toString().trim()) === "" && !invalidQuestion) {
       setSubmitDialog(true);
       return;
     }
@@ -576,7 +576,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     history.push(`/build/brick/${brickId}/investigation/question-component/${questions.get(questions.length - 1).get("id")}`);
   }
 
-  if (!synthesis || synthesis.toString() === "") {
+  if (!synthesis || synthesis.toString().trim() === "") {
     isValid = false;
   }
 
