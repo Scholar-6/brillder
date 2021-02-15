@@ -85,6 +85,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [unauthorizedOpen, setUnauthorized] = React.useState(false);
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [searchString, setSearchString] = React.useState("");
+  const [attemptId, setAttemptId] = React.useState<string>();
 
   setBrillderTitle(brick.title);
 
@@ -115,15 +116,21 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setBrickAttempt(ba);
     setReviewAttempts(Object.assign([], attempts));
     setStatus(PlayStatus.Review);
+    saveBrickAttempt(ba);
   };
 
   const finishReview = () => {
     var ba = calcBrickReviewAttempt(brick, reviewAttempts, brickAttempt);
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
+    saveBrickAttempt(ba);
   };
 
-  const saveBrickAttempt = () => {
+  const finishBrick = () => {
+    props.history.push(`/play/brick/${brick.id}/finalStep`);
+  }
+
+  const createBrickAttempt = async (brickAttempt: BrickAttempt) => {
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
@@ -135,15 +142,42 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
       brickAttempt,
       { withCredentials: true }
-    ).then(async () => {
+    ).then(async (response) => {
       if (!props.user.hasPlayedBrick) {
         await props.getUser();
       }
-      props.history.push(`/play/brick/${brick.id}/finalStep`);
+      setAttemptId(response.data);
     }).catch(() => {
       setFailed(true);
     });
   };
+
+  const saveBrickAttempt = async (brickAttempt: BrickAttempt) => {
+    console.log(brick);
+    if(!attemptId) {
+      return createBrickAttempt(brickAttempt);
+    }
+
+    brickAttempt.brick = brick;
+    brickAttempt.brickId = brick.id;
+    brickAttempt.studentId = props.user.id;
+    let values = queryString.parse(location.search);
+    if (values.assignmentId) {
+      brickAttempt.assignmentId = parseInt(values.assignmentId as string);
+    }
+    return axios.put(
+      process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
+      { id: attemptId, body: brickAttempt },
+      { withCredentials: true }
+    ).then(async (response) => {
+      if (!props.user.hasPlayedBrick) {
+        await props.getUser();
+      }
+      setAttemptId(response.data);
+    }).catch(() => {
+      setFailed(true);
+    });
+  }
 
   const setSidebar = (state?: boolean) => {
     if (typeof state === "boolean") {
@@ -304,7 +338,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brick={brick}
             history={props.history}
             brickAttempt={brickAttempt}
-            saveAttempt={saveBrickAttempt}
+            move={finishBrick}
           />
         </Route>
         <Route exac path="/play/brick/:brickId/finalStep">

@@ -32,7 +32,7 @@ interface EndingProps {
   history: any;
   location: any;
   brickAttempt: BrickAttempt;
-  saveAttempt(): void;
+  move(): void;
 }
 
 class EndingPage extends React.Component<EndingProps, EndingState> {
@@ -109,7 +109,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   }
 
   handleMove() {
-    this.props.saveAttempt();
+    this.props.move();
   }
 
   renderProgressBars() {
@@ -186,7 +186,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
           <button
             type="button"
             className="play-preview svgOnHover play-green"
-            onClick={this.props.saveAttempt}
+            onClick={this.props.move}
           >
             <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
           </button>
