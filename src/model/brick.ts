@@ -54,6 +54,11 @@ export interface SubjectAItem extends Subject {
   assignedCount: number;
 }
 
+export interface KeyWord {
+  id?: number;
+  name: string;
+}
+
 export interface Brick {
   id: number;
   subject?: Subject;
@@ -80,6 +85,7 @@ export interface Brick {
   status: BrickStatus;
   attemptsCount: number;
   locked: boolean;
+  keywords: KeyWord[];
   isCore?: boolean;
   hasNotifications?: boolean;
 

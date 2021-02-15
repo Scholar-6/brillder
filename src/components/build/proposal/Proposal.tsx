@@ -10,7 +10,7 @@ import * as socketActions from "redux/actions/socket";
 import SubjectPage from "./questionnaire/subject/Subject";
 import BrickTitle from "./questionnaire/brickTitle/brickTitle";
 import OpenQuestion from "./questionnaire/openQuestion/openQuestion";
-import { BrickLengthEnum, Subject } from "model/brick";
+import { BrickLengthEnum, KeyWord, Subject } from "model/brick";
 import BrickLength from "./questionnaire/brickLength/brickLength";
 import Brief from "./questionnaire/brief/brief";
 import Prep from "./questionnaire/prep/prep";
@@ -152,8 +152,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
         history.push(baseUrl + ProposalReviewPart);
       }
     } else if (leftKeyPressed(e)) {
-      console.log(pathname, pathname.slice(-BrickLengthRoutePart.length), BrickLengthRoutePart);
-
       if (pathname.slice(-OpenQuestionRoutePart.length) === OpenQuestionRoutePart) {
         history.push(baseUrl + TitleRoutePart)
       } else if (pathname.slice(-BrickLengthRoutePart.length) === BrickLengthRoutePart) {
@@ -209,6 +207,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.saveLocalBrick({ ...this.state.brick, subjectId, isCore });
   setTitles = (titles: any) =>
     this.saveLocalBrick({ ...this.state.brick, ...titles });
+  setKeywords = (keywords: KeyWord[]) =>
+    this.saveLocalBrick({ ...this.state.brick, keywords});
   setOpenQuestion = (openQuestion: string) =>
     this.saveLocalBrick({ ...this.state.brick, openQuestion } as Brick);
   setBrief = (brief: string) =>
@@ -340,6 +340,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 canEdit={canEdit}
                 subjects={this.state.subjects}
                 saveTitles={this.setTitles}
+                setKeywords={this.setKeywords}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>

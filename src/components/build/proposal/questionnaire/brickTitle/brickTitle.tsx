@@ -3,7 +3,7 @@ import { Grid, Input, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "../../model";
-import { Brick, Subject } from "model/brick";
+import { Brick, KeyWord, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
 import { enterPressed } from "components/services/key";
@@ -19,6 +19,7 @@ import a from 'indefinite';
 import map from "components/map";
 import { User } from "model/user";
 import AddSubjectDialog from "./AddSubjectDialog";
+import KeyWordsComponent from "./KeyWords";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
@@ -34,6 +35,7 @@ interface BrickTitleProps {
   playStatus: PlayButtonStatus;
   subjects: Subject[];
   saveTitles(data: any): void;
+  setKeywords(keywords: KeyWord[]): void;
   saveAndPreview(): void;
 }
 
@@ -180,6 +182,8 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                   />
                 </div>
                 <div className="audience-inputs">
+                  <KeyWordsComponent keyWords={parentState.keywords} onChange={this.props.setKeywords.bind(this)} />
+                  {/*
                   <Input
                     ref={this.state.subTitleRef}
                     disabled={!canEdit}
@@ -187,7 +191,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                     onKeyUp={e => this.moveToRef(e, RefName.altTitleRef)}
                     onChange={e => this.onChange(e, "subTopic")}
                     placeholder="Enter Topic..."
-                  />
+                  />*/}
                 </div>
                 <div className="audience-inputs">
                   <Input
