@@ -127,8 +127,8 @@ const App: React.FC<AppProps> = props => {
     return Promise.reject(error);
   });
 
-  if (isIPad13) {
-    return <Warning />
+  if (isIPad13) { 
+    //return <Warning />
   } else if (isMobile && horizontal) {
     return <RotateInstruction />;
   } 
