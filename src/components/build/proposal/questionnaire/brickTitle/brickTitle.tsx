@@ -182,7 +182,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                   />
                 </div>
                 <div className="audience-inputs">
-                  <KeyWordsComponent keyWords={parentState.keywords} onChange={this.props.setKeywords.bind(this)} />
+                  <KeyWordsComponent disabled={!canEdit} keyWords={parentState.keywords} onChange={this.props.setKeywords.bind(this)} />
                   {/*
                   <Input
                     ref={this.state.subTitleRef}
