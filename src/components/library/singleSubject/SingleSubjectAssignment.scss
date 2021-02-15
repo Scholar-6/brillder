@@ -2,8 +2,8 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
+$level-size: 6vh;
 .single-assignment-progressbar {
-  $level-size: 6vh;
   .rotated-container {
     position: absolute;
     bottom: 0;
@@ -72,30 +72,6 @@
       text-transform: uppercase;
       background: var(--white);
       color: var(--theme-dark-blue);
-    }
-  }
-  .progress-value {
-    .academic-lines {
-      .start-lines, .end-lines {
-        display: flex;
-        align-items: center;
-        height: $level-size;
-        > div {
-          width: 100%;
-        }
-        .level {
-          background: var(--tab-gray);
-          width: 100%;
-          margin-top: 0.5vh;
-          margin-bottom: 0.5vh;
-          height: 0.7vh;
-        }
-      }
-      .end-lines {
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-      }
     }
   }
 }

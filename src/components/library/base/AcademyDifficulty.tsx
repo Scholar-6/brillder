@@ -1,4 +1,5 @@
 import React from "react";
+import './AcademyDifficulty.scss';
 import { AcademicLevel } from "model/brick";
 
 interface LibrarySubjectsProps {
