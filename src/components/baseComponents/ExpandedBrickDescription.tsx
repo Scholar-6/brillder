@@ -73,10 +73,8 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           <div className="link-description">
             <SearchText searchString={searchString} text={brick.title} />
           </div>
-          <div className="link-info">
-            <SearchText searchString={searchString} text={brick.subTopic} />
-            |
-            <SearchText searchString={searchString} text={brick.alternativeTopics} />
+          <div className="link-info key-words">
+            {brick.keywords && brick.keywords.map((k, i) => <div key={i} className="key-word">{k.name}</div>)}
           </div>
           <div className="link-info">
             <AuthorSearchRow searchString={searchString} brick={brick} />

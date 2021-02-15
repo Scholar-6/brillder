@@ -8,7 +8,7 @@ import "./Proposal.scss";
 import actions from "redux/actions/brickActions";
 import * as socketActions from "redux/actions/socket";
 import SubjectPage from "./questionnaire/subject/Subject";
-import BrickTitle from "./questionnaire/brickTitle/BrickTitle";
+import BrickTitle from "./questionnaire/brickTitle/brickTitle";
 import OpenQuestion from "./questionnaire/openQuestion/openQuestion";
 import { AcademicLevel, BrickLengthEnum, KeyWord, Subject } from "model/brick";
 import BrickLength from "./questionnaire/brickLength/brickLength";
@@ -71,15 +71,11 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     let initBrick = {
       subjectId,
       brickLength: BrickLengthEnum.None,
-      topic: "",
-      subTopic: "",
-      alternativeTopics: "",
       title: "",
       openQuestion: "",
       brief: "",
       prep: "",
       synthesis: "",
-      alternativeSubject: "",
     } as Brick;
 
     if (user) {
