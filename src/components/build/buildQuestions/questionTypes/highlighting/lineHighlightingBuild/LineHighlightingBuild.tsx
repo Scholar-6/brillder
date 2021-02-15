@@ -77,7 +77,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
           {
             data.get("lines").map((line: Y.Map<any>, i: number) =>
               <div key={i} className={line.get("checked") ? "line active" : "line"} onClick={() => {toggleLight(i)}}>
-                {line.get("text")}
+                {line.get("text").toString()}
               </div>
             )
           }

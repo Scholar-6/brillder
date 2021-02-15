@@ -193,7 +193,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
 
     return (
       <span key={index} className={className} onClick={() => {toggleLight(index)}}>
-        {word.get("text")}
+        {word.get("text").toString()}
       </span>
     );
   }
