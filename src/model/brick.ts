@@ -61,11 +61,15 @@ export interface KeyWord {
 
 export enum AcademicLevel {
   Default = 0,
-  Fisrt = 1,
+  First = 1,
   Second,
   Third,
   Fourth
 }
+
+export const AcademicLevelLabels = [
+  '', 'I', 'II', 'III', 'IV'
+];
 
 export interface Brick {
   id: number;
