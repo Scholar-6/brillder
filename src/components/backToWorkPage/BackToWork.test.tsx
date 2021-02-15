@@ -62,7 +62,6 @@ describe("Back to Work Page", () => {
     let bricks = [
       {
         alternativeSubject: "",
-        alternativeTopics: "Combustion",
         attemptsCount: 31,
         author: { email: "1235@i.ua", firstName: "name", id: 7, username: "name3", lastName: "lastname" },
         brickLength: 60,
@@ -86,7 +85,6 @@ describe("Back to Work Page", () => {
       },
       {
         alternativeSubject: "",
-        alternativeTopics: "Combustion",
         attemptsCount: 31,
         author: { email: "1235@i.ua", firstName: "name", id: 7, username: "name3", lastName: "lastname" },
         brickLength: 60,
@@ -125,7 +123,6 @@ describe("Back to Work Page", () => {
     let title = brickContainers[index].getElementsByClassName("link-description")[0];
     expect(title.textContent).toBe(bricks[index].title);
     let subtitles = brickContainers[index].getElementsByClassName("link-info")[0];
-    expect(subtitles.textContent).toBe(bricks[index].subTopic + ' | ' + bricks[index].alternativeTopics);
     let authorRow = brickContainers[index].getElementsByClassName("link-info")[1];
     expect(authorRow.textContent).toBe(bricks[index].author.firstName + ' ' + bricks[index].author.lastName + ' | 17.03.20 | 60 mins');
   });
