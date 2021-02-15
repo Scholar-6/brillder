@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import * as Y from "yjs";
 import Snackbar from "@material-ui/core/Snackbar";
 
 import "./shortAnswerBuild.scss";
@@ -13,58 +14,47 @@ import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 
 export interface ShortAnswerBuildProps extends UniqueComponentProps {
-  data: ShortAnswerData;
+  data: Y.Map<any>;
 }
 
-export const getDefaultShortAnswerAnswer = () => {
-  return { list: [{ value: "" }] };
+export const getDefaultShortAnswerAnswer = (ymap: Y.Map<any>) => {
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text() }));
+
+  const list = new Y.Array();
+  list.push([newAnswer()]);
+
+  ymap.set("list", list);
+  return ymap;
 }
 
 const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
   locked, editOnly, data, save, ...props
 }) => {
-  if (!data.list) data.list = getDefaultShortAnswerAnswer().list;
-
-  const [state, setState] = React.useState(data);
   const [limitOverflow, setLimitOverflow] = React.useState(false);
 
-  useEffect(() => setState(data), [data]);
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text() }));
 
-  const update = () => {
-    setState(Object.assign({}, state));
-    props.updateComponent(state);
-  };
-
-  const changed = (shortAnswer: ShortAnswerItem, htmlValue: string) => {
-    if (locked) return;
-    shortAnswer.value = htmlValue;
-    const valueString = stripHtml(htmlValue);
-    update();
-    const res = valueString.split(" ");
-    if (res.length <= 3) {
-      setLimitOverflow(false);
-    } else {
-      setLimitOverflow(true);
-    }
-    save();
-  };
+  let list = data.get("list") as Y.Array<any>;
 
   const addShortAnswer = () => {
     if (locked) return;
-    state.list.push({ value: "" });
-    update();
-    save();
+    list.push([newAnswer()]);
   };
+
+  if (!list) {
+    getDefaultShortAnswerAnswer(data);
+    list = data.get("list");
+  } else if (list.length < 1) {
+    addShortAnswer();
+  }
 
   const removeFromList = (index: number) => {
     if (locked) return;
-    state.list.splice(index, 1);
-    update();
-    save();
+    list.delete(index, 1);
   };
 
   const renderDeleteButton = (index: number) => {
-    if (state.list.length > 1) {
+    if (list.length > 1) {
       return (
         <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(index)}>
           <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
@@ -73,10 +63,10 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
     }
   }
 
-  const renderShortAnswer = (answer: ShortAnswerItem, index: number) => {
+  const renderShortAnswer = (answer: Y.Map<any>, index: number) => {
     let className = "short-answer-box";
     if (props.validationRequired) {
-      if (!answer.value) {
+      if (!answer.get("value")) {
         className += ' invalid-answer';
       }
     }
@@ -86,9 +76,8 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
         <QuillEditor
           disabled={locked}
           validate={props.validationRequired}
-          data={answer.value}
+          sharedData={answer.get("value")}
           toolbar={["superscript", "subscript"]}
-          onChange={(value) => changed(answer, value)}
         />
       </div>
     );
@@ -100,7 +89,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
         Take care to choose an unambiguous answer. <br/>
         Specify the required form and whether an article is expected.
       </div>
-      {state.list.map((shortAnswer, i) => renderShortAnswer(shortAnswer, i))}
+      {list.map((shortAnswer: Y.Map<any>, i) => renderShortAnswer(shortAnswer, i))}
       <AddAnswerButton
         locked={locked}
         addAnswer={addShortAnswer}

@@ -58,7 +58,6 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
-    console.log("removing " + index);
     list.delete(index, 1);
   }
 
