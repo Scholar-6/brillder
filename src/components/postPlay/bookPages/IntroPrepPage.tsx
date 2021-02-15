@@ -15,7 +15,7 @@ interface IntroductionState {
   prepExpanded: boolean;
 }
 
-const IntroPage: React.FC<IntroPageProps> = ({brick, color, ...props}) => {
+const IntroPage: React.FC<IntroPageProps> = ({ brick, color, ...props }) => {
   const [state, setState] = React.useState({
     prepExpanded: true,
   } as IntroductionState);
@@ -30,11 +30,11 @@ const IntroPage: React.FC<IntroPageProps> = ({brick, color, ...props}) => {
       <div className="expand-title">
         <span>Prep</span>
         <div className="centered text-white" onClick={e => {
-            togglePrep(e);
-            e.stopPropagation();
-            e.preventDefault();
-          }}>
-          <div className={state.prepExpanded ? "round-icon b-green": "round-icon b-yellow"}>
+          togglePrep(e);
+          e.stopPropagation();
+          e.preventDefault();
+        }}>
+          <div className={state.prepExpanded ? "round-icon b-green" : "round-icon b-yellow"}>
             <SpriteIcon name="arrow-down" className="arrow" />
           </div>
         </div>
@@ -49,7 +49,7 @@ const IntroPage: React.FC<IntroPageProps> = ({brick, color, ...props}) => {
           <HighlightQuoteHtml
             value={brick.prep}
             mode={PlayMode.Normal}
-            onHighlight={() => {}}
+            onHighlight={() => { }}
           />
         </div>
       );
@@ -59,11 +59,11 @@ const IntroPage: React.FC<IntroPageProps> = ({brick, color, ...props}) => {
 
   return (
     <div className="book-page introduction-prep" onClick={props.onClick} >
-      <div className="question-page play-preview-pages" style={{background: 'inherit'}}>
+      <div className="question-page play-preview-pages" style={{ background: 'inherit' }}>
         {brick &&
           <Grid container direction="row">
-            <div className="introduction-page" style={{paddingTop: '2.4vh'}}>
-              <div className="intro-content">
+            <div className="introduction-page" style={{ paddingTop: '2.4vh' }}>
+              <div className="introduction-content">
                 {renderPrepTitle()}
                 {renderPrepExpandText()}
               </div>

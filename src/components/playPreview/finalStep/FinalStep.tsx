@@ -74,7 +74,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   let isAuthor = false;
   try {
     isAuthor = brick.author.id === user.id;
-  } catch {}
+  } catch { }
 
   const isAdmin = checkAdmin(user.roles);
   const isPublisher = checkPublisher(user, brick);
@@ -95,7 +95,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   }
 
   const removeEditor = async (editor: Editor) => {
-    if(brick.editors) {
+    if (brick.editors) {
       const newEditors = brick.editors.filter(e => e.id !== editor.id);
       await props.assignEditor(brick, newEditors.map(e => e.id));
       props.fetchBrick(brick.id);
@@ -108,7 +108,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         size={3}
         firstLabel="an internal user"
         secondLabel="to edit this brick"
-        onClick={()=> setInvite(true)}
+        onClick={() => setInvite(true)}
       />
     );
   }
@@ -183,7 +183,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   }
 
   const renderAdminColumns = () => {
-    const {status} = brick;
+    const { status } = brick;
     return (
       <Grid className="share-row" container direction="row" justify="center">
         {renderInviteColumn()}
@@ -235,8 +235,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
     if (isCurrentEditor && brick.status === BrickStatus.Build) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
-          { renderReturnToAuthorColumn() }
-          { renderSendToPublisherColumn() }
+          { renderReturnToAuthorColumn()}
+          { renderSendToPublisherColumn()}
         </Grid>
       );
     }
@@ -244,7 +244,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <Grid className="share-row" container direction="row" justify="center">
         {renderInviteColumn()}
-        { canPublish && brick.status === BrickStatus.Review && renderReturnToEditorColumn() }
+        { canPublish && brick.status === BrickStatus.Review && renderReturnToEditorColumn()}
       </Grid>
     );
   }
@@ -253,30 +253,30 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <div className="editors-row">
         {brick.editors && brick.editors.length > 0
-        ? (
-          <div>
-            {brick.editors.map((e, i) =>
-              <Chip
-                key={i}
-                avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${e.profileImage}`} />}
-                label={`${e.firstName} ${e.lastName}`}
-                onDelete={brick.editors?.length === 1 ? undefined : () => removeEditor(e)}
-              />
-            )}
-            {brick.editors.length === 1
-              ? <span> is editing this brick</span>
-              : <span> are editing this brick</span>
-            }
-          </div>
-        )
-        : 'Invite an editor to begin the publication process'
-      }
-    </div>
-  );
-}
+          ? (
+            <div>
+              {brick.editors.map((e, i) =>
+                <Chip
+                  key={i}
+                  avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${e.profileImage}`} />}
+                  label={`${e.firstName} ${e.lastName}`}
+                  onDelete={brick.editors?.length === 1 ? undefined : () => removeEditor(e)}
+                />
+              )}
+              {brick.editors.length === 1
+                ? <span> is editing this brick</span>
+                : <span> are editing this brick</span>
+              }
+            </div>
+          )
+          : 'Invite an editor to begin the publication process'
+        }
+      </div>
+    );
+  }
 
-return (
-  <div>
+  return (
+    <div>
       <Hidden only={['xs']}>
         <div className="brick-container final-step-page">
           <Grid container direction="row">
@@ -317,23 +317,23 @@ return (
       </Hidden>
       <Hidden only={['sm', 'md', 'lg', 'xl']}>
         <div className="brick-container mobile-final-step-page final-step-page">
-          <div className="introduction-info">
-            <div className="intro-text-row"></div>
-          </div>
           <div className="introduction-page">
+            <div className="introduction-info">
+              <div className="intro-text-row"></div>
+            </div>
+            <ExitButton onClick={() => history.push(map.BackToWorkPage)} />
           </div>
-          <ExitButton onClick={() => history.push(map.BackToWorkPage)} />
         </div>
       </Hidden>
       <LinkDialog
         isOpen={linkOpen} link={document.location.host + link}
         submit={() => setCopiedLink(true)} close={() => setLink(false)}
       />
-      <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
+      <LinkCopiedDialog isOpen={linkCopiedOpen} close={() => setCopiedLink(false)} />
       <ShareDialog
         isOpen={shareOpen}
         link={() => { setShare(false); setLink(true) }}
-        invite={() => { setShare(false); setInvite(true)}}
+        invite={() => { setShare(false); setInvite(true) }}
         close={() => setShare(false)}
       />
       <InviteEditorDialog

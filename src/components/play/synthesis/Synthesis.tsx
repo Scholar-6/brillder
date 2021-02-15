@@ -41,7 +41,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     }
 
     document.addEventListener("keydown", handleMove, false);
-    
+
     return function cleanup() {
       document.removeEventListener("keydown", handleMove, false);
     };
@@ -100,9 +100,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
       <div className="brick-container synthesis-page mobile-synthesis-page">
         <div className="introduction-page">
           <div className="intro-header expanded-intro-header">
-            <div className="intro-header">
-              <BrickCounter isArrowUp={true} startTime={startTime} />
-            </div>
+            <BrickCounter isArrowUp={true} startTime={startTime} />
             <div className="flex f-align-center">
               <div className="left-brick-circle">
                 <div className="round-button" style={{ background: `${color}` }}></div>
@@ -111,9 +109,11 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
             </div>
             <span>{renderSpendTime()}</span>
           </div>
-          {renderSynthesisContent()}
+          <div className="introduction-content">
+            {renderSynthesisContent()}
+            {renderFooter()}
+          </div>
         </div>
-        {renderFooter()}
       </div>
     );
   }

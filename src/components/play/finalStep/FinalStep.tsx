@@ -47,7 +47,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     }
 
     document.addEventListener("keydown", handleMove, false);
-    
+
     return function cleanup() {
       document.removeEventListener("keydown", handleMove, false);
     };
@@ -58,7 +58,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   let isAuthor = false;
   try {
     isAuthor = brick.author.id === user.id;
-  } catch {}
+  } catch { }
 
   const renderActionColumns = () => {
     return (
@@ -106,12 +106,12 @@ const FinalStep: React.FC<FinalStepProps> = ({
       </Hidden>
       <Hidden only={['sm', 'md', 'lg', 'xl']}>
         <div className="brick-container mobile-final-step-page final-step-page">
-          <div className="introduction-info">
-            <div className="intro-text-row"></div>
-          </div>
           <div className="introduction-page">
+            <div className="introduction-info">
+              <div className="intro-text-row"></div>
+            </div>
+            <ExitButton onClick={() => history.push(map.ViewAllPage)} />
           </div>
-          <ExitButton onClick={() => history.push(map.ViewAllPage)} />
         </div>
       </Hidden>
       <LinkDialog
@@ -126,11 +126,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
         isAuthor={isAuthor}
         isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={inviteSuccess.accessGranted}
         close={() => setInviteSuccess({ isOpen: false, name: '', accessGranted: false })} />
-      <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
+      <LinkCopiedDialog isOpen={linkCopiedOpen} close={() => setCopiedLink(false)} />
       <ShareDialog
         isOpen={shareOpen}
         link={() => { setShare(false); setLink(true) }}
-        invite={() => { setShare(false); setInvite(true)}}
+        invite={() => { setShare(false); setInvite(true) }}
         close={() => setShare(false)}
       />
     </div>
