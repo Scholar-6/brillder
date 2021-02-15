@@ -6,7 +6,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyWord } from "model/brick";
 
 interface KeyWordsProps {
-  disabled: boolean;
   keyWords: KeyWord[];
   onChange(keyWords: KeyWord[]): void;
 }
@@ -32,12 +31,10 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
   }
 
   addKeyWord() {
-    if (!this.props.disabled) {
-      const {keyWords} = this.state;
-      keyWords.push({ name: this.state.keyWord });
-      this.setState({ keyWord: '', keyWords });
-      this.props.onChange(keyWords);
-    }
+    const {keyWords} = this.state;
+    keyWords.push({ name: this.state.keyWord });
+    this.setState({ keyWord: '', keyWords });
+    this.props.onChange(keyWords);
   }
 
   checkKeyword(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -48,7 +45,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
   }
 
   removeKeyWord(i: number) {
-    if (i > -1 && !this.props.disabled) {
+    if (i > -1) {
       const { keyWords } = this.state;
       keyWords.splice(i, 1);
       this.setState({ keyWords });
@@ -69,7 +66,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
     return (
       <div className="key-words">
         {this.state.keyWords.map(this.renderKeyWord.bind(this))}
-        <input disabled={this.props.disabled} value={this.state.keyWord} onKeyDown={this.checkKeyword.bind(this)} onChange={e => this.setState({ keyWord: e.target.value })} />
+        <input value={this.state.keyWord} onKeyDown={this.checkKeyword.bind(this)} onChange={e => this.setState({ keyWord: e.target.value })} />
       </div>
     );
   }

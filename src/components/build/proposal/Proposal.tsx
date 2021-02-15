@@ -8,7 +8,7 @@ import "./Proposal.scss";
 import actions from "redux/actions/brickActions";
 import * as socketActions from "redux/actions/socket";
 import SubjectPage from "./questionnaire/subject/Subject";
-import BrickTitle from "./questionnaire/brickTitle/brickTitle";
+import BrickTitle from "./questionnaire/brickTitle/BrickTitle";
 import OpenQuestion from "./questionnaire/openQuestion/openQuestion";
 import { BrickLengthEnum, KeyWord, Subject } from "model/brick";
 import BrickLength from "./questionnaire/brickLength/brickLength";
