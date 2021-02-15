@@ -9,9 +9,22 @@
     padding-left: 1.6vw;
     color: var(--theme-dark-blue);
   }
-  .users-table {
+  .assignments-table {
     $table-height: calc(64vh - 6.5vw);
     height: calc(#{$table-height} + 5vh) !important;
+
+    table {
+      width: 100%;
+    }
+
+    thead tr {
+      height: calc(#{$table-height / 15}) !important;
+    }
+
+    table tr.user-row:nth-child(odd) {
+      background: var(--tab-gray);
+    }
+
     .user-row {
       height: calc(#{$table-height / 8}) !important;
     }
@@ -27,7 +40,8 @@
     }
 
     .assigned-student-name {
-      padding-left: 0.7vw !important;
+      color: var(--theme-dark-blue);
+      padding-left: 0.85vw !important;
       width: 18vw;
     }
     .circle-td {

@@ -1,3 +1,4 @@
+import map from "components/map";
 import { isMobile } from "react-device-detect";
 
 declare global {
@@ -115,6 +116,7 @@ function addZendesk() {
   var head = document.getElementsByTagName('head').item(0);
   if (head) {
     window.zESettings = {
+      cookies: false,
       webWidget: {
         chat: {
           prechatForm: {
@@ -144,6 +146,7 @@ function addZendesk() {
 
     // prefill zendesk fields
     window.zESettings = {
+      cookies: false,
       webWidget: {
         contactForm: {
           fields: [
@@ -162,7 +165,7 @@ function addZendesk() {
   }
 }
 
-const isProfilePage = (pathName: string) => pathName.search('/user-profile') >= 0;
+const isProfilePage = (pathName: string) => pathName.search(map.UserProfile) >= 0;
 const isViewAllPage = (pathName: string) => pathName === "/play/dashboard";
 const isManageUsersPage = (pathName: string) => pathName === "/users";
 const isPlayPage = (pathName: string) => {

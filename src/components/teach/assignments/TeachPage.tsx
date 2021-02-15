@@ -65,7 +65,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
 
-    const isTeach = checkTeacher(this.props.user.roles);
+    const isTeach = checkTeacher(this.props.user);
     const isAdmin = checkAdmin(this.props.user.roles);
 
     this.state = {
@@ -118,7 +118,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async loadClasses() {
     const classrooms = await getAllClassrooms() as TeachClassroom[] | null;
     if (classrooms) {
-      console.log('reload');
       this.setState({ classrooms, isLoaded: true });
       return classrooms;
     } else {
@@ -217,17 +216,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const { classrooms, activeClassroom } = this.state;
     let itemsCount = 0;
     if (activeClassroom) {
-      itemsCount = activeClassroom.assignments.length + 0.5;
+      itemsCount = activeClassroom.assignments.length;
     } else {
       for (const classroom of classrooms) {
-        itemsCount += 0.5;
-        /*eslint-disable-next-line*/
-        for (let a of classroom.assignments) {
-          itemsCount += 1;
-          if (((itemsCount + 0.5) % 6) === 0) {
-            itemsCount += 0.5;
-          }
-        }
+        itemsCount += 1;
+        itemsCount += classroom.assignments.length;
       }
     }
     return itemsCount;

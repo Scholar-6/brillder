@@ -1,10 +1,9 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
-import { isMobile } from "react-device-detect";
 import { Moment } from "moment";
 import queryString from 'query-string';
+import { isMobile } from 'react-device-detect';
 
-import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";
 import { PlayMode } from "../model";
 import { BrickFieldNames } from 'components/build/proposal/model';
@@ -20,8 +19,6 @@ import { rightKeyPressed } from "components/services/key";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 
 const moment = require("moment");
-
-
 interface IntroductionProps {
   isPlayPreview?: boolean;
   startTime?: Moment;
@@ -139,9 +136,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderDesktopPlayText = () => {
     if (resume) {
       return (
-        <div className="direction-info">
-          <h2>Resume</h2>
-        </div>
+        <h2>Resume</h2>
       );
     }
     return (
@@ -156,17 +151,19 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     return (
       <div className="action-footer">
         <div></div>
-        <Hidden only={["xs"]}>
-          {renderDesktopPlayText()}
-        </Hidden>
+        <div className="direction-info text-center">
+          <Hidden only={["xs"]}>
+            {renderDesktopPlayText()}
+          </Hidden>
+        </div>
         <div>
           <button
             type="button"
             className={state.prepExpanded ? "play-preview svgOnHover play-green" : "play-preview svgOnHover play-gray"}
             onClick={startBrick}
           >
-            <SpriteIcon name="play-thin" className="w80 h80 svg-default" />
-            <SpriteIcon name="play-thick" className="w80 h80 colored" />
+            <SpriteIcon name="play-thin" className="w80 h80 svg-default m-l-02" />
+            <SpriteIcon name="play-thick" className="w80 h80 colored m-l-02" />
           </button>
         </div>
       </div>
@@ -175,10 +172,10 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
   const renderBriefTitle = () => {
     return (
-      <div className="expand-title" style={{marginTop: '4vh'}}>
+      <div className="expand-title" style={{ marginTop: '4vh' }}>
         <span>Brief</span>
         <div className="centered text-white" onClick={toggleBrief}>
-          <div className={state.briefExpanded ? "round-icon b-green": "round-icon b-yellow"}>
+          <div className={state.briefExpanded ? "round-icon b-green" : "round-icon b-yellow"}>
             <SpriteIcon name="arrow-down" className="arrow" />
           </div>
         </div>
@@ -191,7 +188,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <div className="expand-title">
         <span>Prep</span>
         <div className="centered text-white" onClick={togglePrep}>
-          <div className={state.prepExpanded ? "round-icon b-green": "round-icon b-yellow"}>
+          <div className={state.prepExpanded ? "round-icon b-green" : "round-icon b-yellow"}>
             <SpriteIcon name="arrow-down" className="arrow" />
           </div>
         </div>
@@ -302,7 +299,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <Grid container direction="row">
           <Grid item sm={8} xs={12}>
             {renderBrickCircle(color)}
-            <div className="introduction-page" style={{paddingTop: '2.4vh'}}>
+            <div className="introduction-page" style={{ paddingTop: '2.4vh' }}>
               {renderHeader()}
               <div className="open-question">
                 <MathInHtml value={brick.openQuestion} />
@@ -324,7 +321,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           </Grid>
         </Grid>
       </Hidden>
-
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="introduction-page">
           {renderMobileHeader()}

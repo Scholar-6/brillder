@@ -70,12 +70,6 @@
     padding-right: 0 !important;
   }
 
-  .user-full-name {
-    width: 20vw !important;
-  }
-  .classes-names {
-    width: 50vw;
-  }
   .selected-column {
     width: 11vw;
     letter-spacing: 0;
@@ -135,7 +129,8 @@
     }
   }
   .user-radio-column {
-    width: 8vw;
+    padding-left: 1.2vw !important;
+    width: 4vw;
     @extend %radioBlue;
   }
 
@@ -194,17 +189,21 @@
 
   .classroom-names {
     max-width: 19vw;
-    overflow-x: scroll;
     display: flex;
 
     .classroom-name {
-      max-width: 3vw;
+      padding-left: 0.3vw;
+      padding-right: 0.3vw;
       margin-right: 0.1vw;
+      margin-left: 0.1vw;
       background: var(--tab-gray);
       border-radius: 0.3vw;
       display: flex;
       height: 100%;
-      @extend %ellipsis;
+      &.pending-label {
+        max-width: 6vw;
+        padding: 0 0.7vw;
+      }
     }
   }
   .index-box.hover-light:hover {

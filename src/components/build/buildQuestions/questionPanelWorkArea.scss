@@ -348,7 +348,7 @@
         width: 1.5vw;
         height: 1.5vw;
         position: absolute;
-        right: 0.25vw;
+        right: 2.4vw;
         cursor: pointer;
       }
     }
@@ -454,5 +454,11 @@
         width: 2vw;
       }
     }
+  }
+}
+
+.poem-dialog {
+  .MuiButtonBase-root:hover {
+    background: var(--theme-dark-blue-alpha1) !important;
   }
 }

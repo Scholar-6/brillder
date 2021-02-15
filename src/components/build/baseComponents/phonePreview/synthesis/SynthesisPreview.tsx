@@ -27,7 +27,6 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
 }) => {
   if (!data.synthesis) {
     const {brickLength} = data;
-    console.log(brickLength);
     return (
       <div className="phone-preview-component synthesis-preview">
         <div className="synthesis-title" style={{ textAlign: "center" }}>

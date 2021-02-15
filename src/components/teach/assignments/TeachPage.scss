@@ -44,6 +44,7 @@
     }
     &.one-of-many {
       margin-top: 1vh;
+      height: calc(calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35);
       margin-left: 0.6vw;
     }
   }
@@ -220,7 +221,6 @@
       .index-box {
         margin: 0 0 0.5vw 0;
         height: auto !important;
-        min-height: 3.4vh;
 
         .right-index {
           right: 1vw !important;

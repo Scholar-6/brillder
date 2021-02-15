@@ -1,9 +1,12 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .notification-popup {
   margin: 0.5vw;
+  right: 0 !important;
+  left: unset !important;
+  top: 12vh !important;
   .MuiPopover-paper {
     background-color: var(--theme-light-blue);
     box-shadow: none !important;
@@ -93,6 +96,7 @@
           }
           .notif-desc {
             color: var(--dark-gray);
+            word-break: break-word;
             font-family: $font-family-regular;
           }
         }

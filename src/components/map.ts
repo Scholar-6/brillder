@@ -2,11 +2,20 @@ export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
 export const Build = '/build';
 export const MainPage = '/home';
-export const UserProfile = '/user-profile';
 export const ProposalBase = `${Build}/new-brick`;
 export const ProposalBase2 = `${Build}/brick/:brickId`;
 export const BackToWorkPage = '/back-to-work';
 export const AssignmentsPage = '/assignments';
+export const MyLibrary = '/my-library';
+export const Onboarding = '/onboarding';
+
+export const TermsPage = Onboarding + '/terms';
+export const SetUsername = Onboarding + '/set-username';
+export const MobileUsername = Onboarding + '/mobile-username';
+export const SelectSubjectPage = Onboarding + '/select-subjects';
+export const UserPreference = Onboarding + '/user-preference';
+export const UserProfile = Onboarding + '/profile-page';
+
 
 export const BackToWorkTeachTab = BackToWorkPage + '/teach';
 export const BackToWorkBuildTab = BackToWorkPage + '/build';
@@ -14,6 +23,7 @@ export const BackToWorkLearnTab = BackToWorkPage + '/learn';
 
 export const TeachAssignedTab = '/teach/assigned';
 export const ManageClassroomsTab = '/teach/manage-classrooms';
+
 
 export const ViewAllPage = '/play/dashboard';
 export const AllSubjects = ViewAllPage + '/all-subjects';
@@ -95,6 +105,13 @@ export default {
   UserProfile,
   Login,
   MainPage,
+  MyLibrary,
+
+  TermsPage,
+  SetUsername,
+  MobileUsername,
+  SelectSubjectPage,
+  UserPreference,
 
   ProposalBase,
   ProposalSubject,

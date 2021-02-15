@@ -13,18 +13,18 @@ interface FooterProps {
   setSubmitAnswers(status: boolean): void;
 }
 
-const LiveActionFooter: React.FC<FooterProps> = ({ questions, activeStep, ...props}) => {
+const LiveActionFooter: React.FC<FooterProps> = ({ questions, activeStep, ...props }) => {
   const renderCenterText = () => {
     if (questions.length - 1 > activeStep) {
       return (
-        <div className="direction-info">
+        <div className="direction-info text-center">
           <h2 className="text-center">Next</h2>
           <span>Don’t panic, you can<br />always come back</span>
         </div>
       );
     }
     return (
-      <div className="direction-info">
+      <div className="direction-info text-center">
         <h2 className="text-center">Submit</h2>
         <span>How do you think it went?</span>
       </div>

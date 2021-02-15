@@ -24,6 +24,7 @@
 
     .option-container {
       width: 100%;
+      overflow: scroll;
 
       p {
         text-align: center !important;
@@ -58,6 +59,7 @@
     flex-wrap: wrap;
     width: 50%;
     .pair-match-play-choice {
+      cursor: pointer;
       .MuiListItem-root {
         padding-top:4px !important;
         padding-bottom:4px !important;

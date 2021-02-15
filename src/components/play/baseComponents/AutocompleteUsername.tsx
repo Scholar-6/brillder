@@ -2,9 +2,12 @@ import React from "react";
 import { Avatar, Chip, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
+import './AutocompleteUsername.scss';
 import { Brick } from "model/brick";
 import { suggestUsername } from "services/axios/user";
 import { UserBase } from "model/user";
+import { fileUrl } from "components/services/uploadFile";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface AutocompleteProps {
   brick: Brick;
@@ -25,8 +28,6 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
 
   return (
     <Autocomplete
-      // I commented out these because they were throwing errors in the build and was not sure how to fix them 29/10/20
-      // TODO: fix the autosuggest for users
       multiple
       disabled={!props.canEdit}
       value={users}
@@ -67,7 +68,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
         {value.map((user, idx) => (
           <Chip
             label={`${user.username}`}
-            avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${user.profileImage}`} />}
+            avatar={<Avatar src={fileUrl(user.profileImage)} />}
             {...getTagProps({ index: idx })}
           />
         ))}
@@ -75,6 +76,12 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
       }}
       filterOptions={(options) => options}
       getOptionLabel={(option) => `${option.firstName} ${option.lastName} (${option.username})`}
+      renderOption={option => (
+        <React.Fragment>
+          {option.profileImage ? <img alt="" className="autocomplete-profile-image" src={fileUrl(option.profileImage)} /> : <SpriteIcon className="autocomplete-profile-icon" name="user" />}
+          {option.firstName} {option.lastName} ({option.username})
+        </React.Fragment>
+      )}
     />
   );
 };

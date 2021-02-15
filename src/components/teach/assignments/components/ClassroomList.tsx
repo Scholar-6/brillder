@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Grow } from "@material-ui/core";
 
 import './ClassroomList.scss';
 import { ReduxCombinedState } from "redux/reducers";
@@ -25,7 +26,34 @@ interface ClassroomListProps {
   reloadClass(id: number): void;
 }
 
-class ClassroomList extends Component<ClassroomListProps> {
+interface ListState {
+  classroom: TeachClassroom;
+  shown: boolean;
+}
+
+class ClassroomList extends Component<ClassroomListProps, ListState> {
+  constructor(props: ClassroomListProps) {
+    super(props);
+
+    this.state = {
+      classroom: props.activeClassroom,
+      shown: false
+    }
+  }
+
+  componentDidMount() {
+    this.setState({ shown: true });
+  }
+
+  componentDidUpdate(props: ClassroomListProps) {
+    if (this.props.activeClassroom !== props.activeClassroom) {
+      this.setState({ shown: false });
+      setTimeout(() => {
+        this.setState({ shown: true, classroom: this.props.activeClassroom });
+      }, 700);
+    }
+  }
+
   async updateClassroom(classroom: TeachClassroom, name: string, subject: Subject) {
     let classroomApi = {
       id: classroom.id,
@@ -40,9 +68,9 @@ class ClassroomList extends Component<ClassroomListProps> {
       this.props.reloadClass(classroom.id);
     }
   }
-  
+
   renderClassname() {
-    const classroom = this.props.activeClassroom as any;
+    const classroom = this.state.classroom as any;
     let className = 'classroom-title';
     return (
       <div className={className}>
@@ -59,13 +87,20 @@ class ClassroomList extends Component<ClassroomListProps> {
     if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
       if (c.assignment && c.classroom) {
         return (
-          <div key={i}>
-            <AssignedBrickDescription
-              subjects={this.props.subjects}
-              expand={this.props.expand.bind(this)}
-              key={i} classroom={c.classroom} assignment={c.assignment}
-            />
-          </div>
+          <Grow
+            in={true}
+            key={i}
+            style={{ transformOrigin: "left 0 0" }}
+            timeout={i * 200}
+          >
+            <div>
+              <AssignedBrickDescription
+                subjects={this.props.subjects}
+                expand={this.props.expand.bind(this)}
+                key={i} classroom={c.classroom} assignment={c.assignment}
+              />
+            </div>
+          </Grow>
         );
       }
     }
@@ -83,9 +118,9 @@ class ClassroomList extends Component<ClassroomListProps> {
   }
 
   renderContent() {
-    const {activeClassroom} = this.props;
+    const { classroom } = this.state;
     let items = [] as TeachListItem[];
-    this.prepareClassItems(items, activeClassroom);
+    this.prepareClassItems(items, classroom);
     let k = 0;
     return items.map(item => {
       if (item.classroom && item.assignment === null) {

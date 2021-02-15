@@ -60,14 +60,12 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
 
   return (
     <div className="subjects-column">
-      <div style={{width: '100%'}}>
-        {list.map((row, i) =>
-          <div key={i} className="subject-row">
-            {row.map((s, j) => renderSubject(s, j))}
-            {i === list.length - 1 && renderViewAllButton()}
-          </div>
-        )}
-      </div>
+      {list.map((row, i) =>
+        <div key={i} className="subject-row">
+          {row.map((s, j) => renderSubject(s, j))}
+          {i === list.length - 1 && renderViewAllButton()}
+        </div>
+      )}
     </div>
   );
 };

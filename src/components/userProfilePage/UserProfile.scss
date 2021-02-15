@@ -77,9 +77,9 @@
     }
 
     .save-button-container {
-      position: absolute;
-      top: 1.9vh;
-      right: 1vw;
+      position: fixed;
+      top: calc(5.834vw + 3.6vh + 1vh);
+      left: 65.5vw;
 
       @include phone_and_tabletP {
         position: fixed;
@@ -221,6 +221,54 @@
         .MuiFormControlLabel-label {
           color: var(--theme-dark-blue) !important;
           font-family: $font-family-regular;
+        }
+
+        input {
+          line-height: 1.45;
+        }
+
+        .password-container {
+          position: relative;
+          .button-container {
+            position: absolute;
+            top: 0;
+            right: 0.5vw;
+            height: calc(3.6vh + 2.1vw);
+            display: flex;
+            align-items: center;
+            button {
+              border-radius: 0.6vw;
+              height: 1.7vw;
+              font-size: 1.1vw;
+              font-family: $font-family-regular;
+              color: var(--theme-dark-blue);
+              padding-left: 0.6vw;
+              padding-right: 0.6vw;
+              border: none;
+              outline: none;
+              background: var(--tab-gray);
+            }
+          }
+          .confirm-container {
+            svg {
+              cursor: pointer;
+              height: 2vw;
+              width: 2vw;
+            }
+            .start {
+              position: absolute;
+              bottom: -2.4vw;
+              left: 0.5vw;
+              color: var(--theme-green);
+            }
+            .end {
+              position: absolute;
+              bottom: -2.4vw;
+              right: 0.4vw;
+              stroke-width: 3;
+              color: var(--theme-orange);
+            }
+          }
         }
       }
 

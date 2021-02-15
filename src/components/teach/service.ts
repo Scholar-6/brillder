@@ -14,6 +14,7 @@ export interface ClassroomApi {
   updated: string;
   isActive: boolean;
   assignmentsCount?: number;
+  studentsInvitations?: MUser[];
 }
 
 /**
@@ -87,10 +88,9 @@ export const getAllStudents = async () => {
 /**
  * Assign students to class
  * @param classroomId classroom id
- * @param students students to assign. all should have id
+ * @param studentsIds studentIds to assign
  */
-export const assignStudentsToClassroom = async (classroomId: number, students: any[]) => {
-  let studentsIds = students.map(s => s.id);
+export const assignStudentIdsToClassroom = async (classroomId: number, studentsIds: number[]) => {
   try {
     const res = await axios.post(
       process.env.REACT_APP_BACKEND_HOST + "/classrooms/students/" + classroomId,
@@ -105,6 +105,16 @@ export const assignStudentsToClassroom = async (classroomId: number, students: a
   catch (e) {
     return false;
   }
+}
+
+/**
+ * Assign students to class
+ * @param classroomId classroom id
+ * @param students students to assign. all should have id
+ */
+export const assignStudentsToClassroom = async (classroomId: number, students: any[]) => {
+  const studentsIds = students.map(s => s.id);
+  return await assignStudentIdsToClassroom(classroomId, studentsIds);
 }
 
 export const unassignStudent = async (classroomId: number, studentId: number) => {

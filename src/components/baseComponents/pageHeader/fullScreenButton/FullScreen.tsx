@@ -28,7 +28,9 @@ const FullScreenButton: React.FC<Props> = () => {
     if (fullscreen) {
       document.exitFullscreen();
     } else {
-      document.body.requestFullscreen();
+      if (document.body.requestFullscreen) {
+        document.body.requestFullscreen();
+      }
     }
   }
 

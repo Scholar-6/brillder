@@ -8,7 +8,7 @@ import actions from 'redux/actions/requestFailed';
 
 import './BuildPage.scss';
 import { Brick, BrickStatus } from "model/brick";
-import { User, UserType } from "model/user";
+import { RolePreference, User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ThreeColumns, Filters, SortBy } from '../../model';
 import { getBricks, searchBricks, getCurrentUserBricks } from "services/axios/brick";
@@ -80,7 +80,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   constructor(props: BuildProps) {
     super(props);
 
-    const isTeach = checkTeacher(this.props.user.roles);
+    const isTeach = checkTeacher(this.props.user);
     const isAdmin = checkAdmin(this.props.user.roles);
     const isEditor = checkEditor(this.props.user.roles)
     const isCore = this.getCore(isAdmin, isEditor);
@@ -553,7 +553,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const {history} = this.props;
     if (isMobile) {
       const {rolePreference} = this.props.user;
-      if (rolePreference?.roleId === UserType.Teacher) {
+      if (rolePreference?.roleId === RolePreference.Teacher) {
         history.push(map.BackToWorkTeachTab);
       } else {
         history.push(map.BackToWorkLearnTab);

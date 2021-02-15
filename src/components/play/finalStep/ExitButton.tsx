@@ -7,12 +7,12 @@ interface InviteProps {
 
 const ExitButton: React.FC<InviteProps> = props => {
   return (
-    <div className="action-footer" style={{bottom: '10.5vh'}}>
+    <div className="action-footer">
       <div></div>
-      <div className="direction-info">
-        Exit
+      <div className="direction-info text-center">
+        <h2>Exit</h2>
       </div>
-      <div style={{marginLeft: 0, marginRight: '1.7vw'}}>
+      <div>
         <button
           type="button"
           className="play-preview svgOnHover roller-red"

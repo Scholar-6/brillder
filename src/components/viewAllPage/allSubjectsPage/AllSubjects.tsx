@@ -20,6 +20,7 @@ interface AllSubjectsProps {
   history: any;
   location: any;
   filterByOneSubject(subjectId: number): void;
+  checkSubjectsWithBricks(): void;
 }
 
 interface AllSubjectsState {
@@ -72,8 +73,8 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
     const { subjects } = this.state;
     const subject = subjects.find(s => s.id === subjectId);
     if (subject) {
-      this.props.history.push(map.ViewAllPage + `?subjectId=${subject.id}`);
       this.props.filterByOneSubject(subject.id);
+      this.props.history.push(map.ViewAllPage + `?subjectId=${subject.id}`);
     }
   }
 
@@ -96,10 +97,13 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
           />
           : this.props.user ? <AllSubjectsSidebar /> : <UnauthorizedSidebar />
         }
-        <Grid item xs={9} className="brick-row-container">
+        <Grid item xs={9} className="brick-row-container view-all-subjects">
           <SubjectsColumn
             subjects={this.state.totalSubjects}
-            viewAll={() => this.props.history.push(map.ViewAllPage + `?isViewAll=${true}`)}
+            viewAll={() => {
+              this.props.checkSubjectsWithBricks();
+              this.props.history.push(map.ViewAllPage + `?isViewAll=${true}`);
+            }}
             onClick={this.onSubjectSelected.bind(this)}
           />
         </Grid>

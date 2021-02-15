@@ -12,12 +12,14 @@ import YoutubeAndMathQuote from 'components/play/baseComponents/YoutubeAndMathQu
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import { toRenderJSON } from "services/SharedTypeService";
+import { BrickLengthEnum } from "model/brick";
 
 
 interface PrepProps {
   parentPrep: Y.Text;
   canEdit: boolean;
   baseUrl: string;
+  brickLength: BrickLengthEnum;
   playStatus: PlayButtonStatus;
   saveAndPreview(): void;
 }
@@ -34,6 +36,31 @@ const PrepPreviewComponent: React.FC<any> = ({ data }) => {
 }
 
 const PrepComponent: React.FC<PrepProps> = ({ parentPrep, ...props }) => {
+  const isVisible = () => {
+    if (props.brickLength) {
+      if (props.brickLength === BrickLengthEnum.S20min) {
+        return true;
+      } else if (props.brickLength === BrickLengthEnum.S40min) {
+        return true;
+      } else if (props.brickLength === BrickLengthEnum.S60min) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  const getPrepLength = () => {
+    if (props.brickLength) {
+      if (props.brickLength === BrickLengthEnum.S20min) {
+        return 5;
+      } else if (props.brickLength === BrickLengthEnum.S40min) {
+        return 10;
+      } else if (props.brickLength === BrickLengthEnum.S60min) {
+        return 15;
+      }
+    }
+  }
+
   return (
     <div className="tutorial-page prep-page-questionary">
       <Navigation
@@ -58,6 +85,11 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, ...props }) => {
               'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'image'
             ]}
           />
+          {isVisible() &&
+            <div className="prep-bottom-help-text">
+              This should take the student no longer than {getPrepLength()} minutes in total
+            </div>
+          }
           <NavigationButtons
             step={ProposalStep.Prep}
             canSubmit={true}
