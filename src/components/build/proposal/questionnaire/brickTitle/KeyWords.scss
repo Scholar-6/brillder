@@ -37,5 +37,9 @@
     color: var(--theme-dark-blue);
     width: auto !important;
     min-width: 4vw;
+    &::placeholder {
+      color: var(--theme-dark-blue);
+      opacity: 0.42;
+    }
   }
 }

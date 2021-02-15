@@ -59,6 +59,14 @@ export interface KeyWord {
   name: string;
 }
 
+export enum AcademicLevel {
+  Default = 0,
+  Fisrt = 1,
+  Second,
+  Third,
+  Fourth
+}
+
 export interface Brick {
   id: number;
   subject?: Subject;
@@ -88,6 +96,7 @@ export interface Brick {
   keywords: KeyWord[];
   isCore?: boolean;
   hasNotifications?: boolean;
+  academicLevel: AcademicLevel;
 
   assignments?: Assignment[];
 

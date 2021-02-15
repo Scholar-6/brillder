@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Grid, Input, Hidden } from "@material-ui/core";
 
-import './brickTitle.scss';
+import './BrickTitle.scss';
 import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "../../model";
-import { Brick, KeyWord, Subject } from "model/brick";
+import { AcademicLevel, Brick, KeyWord, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
 import { enterPressed } from "components/services/key";
@@ -20,6 +20,7 @@ import map from "components/map";
 import { User } from "model/user";
 import AddSubjectDialog from "./AddSubjectDialog";
 import KeyWordsComponent from "./KeyWords";
+import DifficultySelect from "./DifficultySelect";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
@@ -36,6 +37,7 @@ interface BrickTitleProps {
   subjects: Subject[];
   saveTitles(data: any): void;
   setKeywords(keywords: KeyWord[]): void;
+  setAcademicLevel(level: AcademicLevel): void;
   saveAndPreview(): void;
 }
 
@@ -183,30 +185,9 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                 </div>
                 <div className="audience-inputs">
                   <KeyWordsComponent disabled={!canEdit} keyWords={parentState.keywords} onChange={this.props.setKeywords.bind(this)} />
-                  {/*
-                  <Input
-                    ref={this.state.subTitleRef}
-                    disabled={!canEdit}
-                    value={parentState.subTopic}
-                    onKeyUp={e => this.moveToRef(e, RefName.altTitleRef)}
-                    onChange={e => this.onChange(e, "subTopic")}
-                    placeholder="Enter Topic..."
-                  />*/}
                 </div>
                 <div className="audience-inputs">
-                  <Input
-                    ref={this.state.altTitleRef}
-                    disabled={!canEdit}
-                    value={parentState.alternativeTopics}
-                    onKeyUp={e => {
-                      if (enterPressed(e)) {
-                        saveTitles(parentState);
-                        this.props.history.push(baseUrl + OpenQuestionRoutePart);
-                      }
-                    }}
-                    onChange={e => this.onChange(e, "alternativeTopics")}
-                    placeholder="Enter Subtopic(s)..."
-                  />
+                  <DifficultySelect disabled={!canEdit} level={parentState.academicLevel} onChange={this.props.setAcademicLevel.bind(this)} />
                 </div>
               </Grid>
             </form>

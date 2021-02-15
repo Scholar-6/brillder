@@ -1,75 +1,37 @@
-import React, { Component } from "react";
+import React from "react";
+import { Select, MenuItem } from "@material-ui/core";
 
-import './KeyWords.scss';
-import { enterPressed, spaceKeyPressed } from "components/services/key";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { KeyWord } from "model/brick";
+import './DifficultySelect.scss';
+import { AcademicLevel } from "model/brick";
 
-interface KeyWordsProps {
-  keyWords: KeyWord[];
-  onChange(keyWords: KeyWord[]): void;
+interface DifficultySelectProps {
+  disabled: boolean;
+  level: AcademicLevel;
+  onChange(keyWords: AcademicLevel): void;
 }
 
-interface KeyWordsState {
-  keyWords: KeyWord[];
-  keyWord: string;
-}
-
-class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
-  constructor(props: any) {
-    super(props);
-
-    let keyWords = [];
-    if (props.keyWords) {
-      keyWords = props.keyWords;
-    }
-
-    this.state = {
-      keyWords,
-      keyWord: ''
-    }
+const KeyWordsComponent: React.FC<DifficultySelectProps> = (props) => {
+  let {level} = props;
+  if (!level) {
+    level = 0;
   }
 
-  addKeyWord() {
-    const {keyWords} = this.state;
-    keyWords.push({ name: this.state.keyWord });
-    this.setState({ keyWord: '', keyWords });
-    this.props.onChange(keyWords);
+  let className = 'difficulty-select';
+  if (level === 0) {
+    className += ' current-placeholder';
   }
 
-  checkKeyword(e: React.KeyboardEvent<HTMLInputElement>) {
-    let pressed = enterPressed(e) || spaceKeyPressed(e);
-    if (pressed) {
-      this.addKeyWord();
-    }
-  }
-
-  removeKeyWord(i: number) {
-    if (i > -1) {
-      const { keyWords } = this.state;
-      keyWords.splice(i, 1);
-      this.setState({ keyWords });
-      this.props.onChange(keyWords);
-    }
-  }
-
-  renderKeyWord(k: KeyWord, i: number) {
-    return (
-      <div key={i} className='key-word'>
-        {k.name}
-        <SpriteIcon name="cancel-custom" onClick={() => this.removeKeyWord(i)} />
-      </div>
-    )
-  }
-
-  render() {
-    return (
-      <div className="key-words">
-        {this.state.keyWords.map(this.renderKeyWord.bind(this))}
-        <input value={this.state.keyWord} onKeyDown={this.checkKeyword.bind(this)} onChange={e => this.setState({ keyWord: e.target.value })} />
-      </div>
-    );
-  }
+  return (
+    <div className={className}>
+      <Select value={level} disabled={props.disabled} onChange={e => props.onChange(e.target.value as AcademicLevel)}>
+        <MenuItem disabled style={{display: 'none'}} value={AcademicLevel.Default}>Select level</MenuItem>
+        <MenuItem value={AcademicLevel.Fisrt}>I - level</MenuItem>
+        <MenuItem value={AcademicLevel.Second}>II - level</MenuItem>
+        <MenuItem value={AcademicLevel.Third}>III - level</MenuItem>
+        <MenuItem value={AcademicLevel.Fourth}>IV - level</MenuItem>
+      </Select>
+    </div>
+  );
 }
 
 export default KeyWordsComponent;
