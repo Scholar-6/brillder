@@ -71,6 +71,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     let initBrick = {
       subjectId,
       brickLength: BrickLengthEnum.None,
+      topic: "",
+      subTopic: "",
+      alternativeTopics: "",
       title: "",
       openQuestion: "",
       brief: "",
