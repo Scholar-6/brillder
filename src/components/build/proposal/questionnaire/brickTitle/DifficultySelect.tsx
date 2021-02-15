@@ -10,7 +10,7 @@ interface DifficultySelectProps {
   onChange(keyWords: AcademicLevel): void;
 }
 
-const KeyWordsComponent: React.FC<DifficultySelectProps> = (props) => {
+const DifficultySelect: React.FC<DifficultySelectProps> = (props) => {
   let {level} = props;
   if (!level) {
     level = 0;
@@ -34,4 +34,4 @@ const KeyWordsComponent: React.FC<DifficultySelectProps> = (props) => {
   );
 }
 
-export default KeyWordsComponent;
+export default DifficultySelect;

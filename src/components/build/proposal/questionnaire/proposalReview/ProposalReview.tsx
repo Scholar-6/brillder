@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import { History } from 'history';
 
 import './ProposalReview.scss';
-import { Brick, BrickStatus } from "model/brick";
+import { AcademicLevel, Brick, BrickStatus, KeyWord } from "model/brick";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 
@@ -20,6 +20,8 @@ import { Transition } from "react-transition-group";
 import NextButton from "./NextButton";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import CopiedDialog from "./CopiedDialog";
+import DifficultySelect from "../brickTitle/DifficultySelect";
+import KeyWordsComponent from "../brickTitle/KeyWords";
 
 export enum BookState {
   TitlesPage,
@@ -35,6 +37,8 @@ interface ProposalProps {
   baseUrl: string;
   saveBrick(): void;
   setBrickField(name: BrickFieldNames, value: string): void;
+  setKeywords(keywords: KeyWord[]): void;
+  setAcademicLevel(a: AcademicLevel): void;
   saveAndPreview(): void;
 }
 
@@ -343,8 +347,8 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 {this.renderEditableTextarea(BrickFieldNames.title)}
                 {brick.adaptedFrom && '(ADAPTED)'}
               </div>
-              <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
-              <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
+              <div><KeyWordsComponent disabled={!this.props.canEdit} keyWords={this.props.brick.keywords} onChange={this.props.setKeywords} /></div>
+              <div><DifficultySelect disabled={!this.props.canEdit} level={this.props.brick.academicLevel} onChange={this.props.setAcademicLevel} /></div>
               <p className="text-title m-t-3 bold">Open Question:</p>
               {this.renderOpenQuestionField()}
               <p className="text-title brick-length m-t-3">

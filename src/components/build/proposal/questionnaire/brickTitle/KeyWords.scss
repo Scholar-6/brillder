@@ -36,6 +36,7 @@
   input {
     color: var(--theme-dark-blue);
     width: auto !important;
+    font-size: 1.6vw;
     min-width: 4vw;
     &::placeholder {
       color: var(--theme-dark-blue);

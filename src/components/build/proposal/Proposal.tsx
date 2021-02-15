@@ -401,6 +401,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 canEdit={canEdit}
                 user={user}
                 setBrickField={this.setBrickField}
+                setKeywords={this.setKeywords}
+                setAcademicLevel={this.setAcademicLevel}
                 saveBrick={this.saveAndMove}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
