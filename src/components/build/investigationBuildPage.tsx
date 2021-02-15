@@ -77,8 +77,7 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
   reduxBrick: Brick;
   startEditing(brickId: number): void;
   changeQuestion(questionId?: number): void;
-  saveBrick(brick: any): any;
-  updateBrick(brick: any): any;
+  forgetBrick(): void;
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
@@ -108,7 +107,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
 
   const [lastQuestionDialog, setLastQuestionDialog] = React.useState(false);
-  const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
@@ -143,6 +141,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     isSynthesisPage = true;
   }
 
+  /* Proposal */
+  const validRoutes = ["/investigation", "/synthesis", "/subject", TitleRoutePart, OpenQuestionRoutePart, BrickLengthRoutePart, BriefRoutePart, PrepRoutePart, ProposalReviewPart];
+  const isProposalPage = validRoutes.includes(props.location.pathname.split("/")[4]);
+
   const { ydoc, json: yjson } = useContext(YJSContext)!;
   React.useEffect(() => {
     const callback = (location: any) => console.log(location.pathname);
@@ -156,8 +158,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const questions = ybrick.get("questions") as Y.Array<Y.Doc>;
   let synthesis = ybrick.get("synthesis") as Y.Text;
-
-  const { startEditing, updateBrick } = props;
 
   const proposalResult = validateProposal(toRenderJSON(ybrick));
 
@@ -210,7 +210,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       activeQuestion.load();
     }
   }
-  if (isSynthesisPage === true) {
+  if (isSynthesisPage || isProposalPage) {
     if (activeQuestion) {
       if (movingFromSynthesis === false) {
         setCurrentQuestionIndex(-1);
@@ -382,6 +382,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } else {
       if (proposalResult.isValid) {
         let buildQuestion = GetCashedBuildQuestion();
+        props.forgetBrick();
 
         if (isSynthesisPage) {
           history.push(`/play-preview/brick/${brickId}/intro`);
@@ -546,7 +547,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       isValid = false;
     }
   });
-  console.log(isValid);
 
   const switchQuestions = (newQuestions: { id: string }[]) => {
     if (canEdit === true) {
@@ -772,8 +772,7 @@ const mapState = (state: ReduxCombinedState) => ({
 const mapDispatch = (dispatch: any) => ({
   startEditing: (brickId: number) => dispatch(socketStartEditing(brickId)),
   changeQuestion: (questionId?: number) => dispatch(socketNavigateToQuestion(questionId)),
-  saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
-  updateBrick: (brick: any) => dispatch(socketUpdateBrick(brick))
+  forgetBrick: () => dispatch(actions.forgetBrick()),
 });
 
 const connector = connect(mapState, mapDispatch);

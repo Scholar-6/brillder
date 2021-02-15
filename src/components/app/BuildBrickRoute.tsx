@@ -26,6 +26,7 @@ interface BuildRouteProps {
   getUser(): void;
   isAuthorized(): void;
   fetchBrick(id: number): void;
+  createNewBrick(authorId: number): void;
 }
 
 const BuildBrickRoute: React.FC<BuildRouteProps> = ({
@@ -65,7 +66,13 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
           const validRoutes = ["/investigation", "/synthesis", "/subject", TitleRoutePart, OpenQuestionRoutePart, BrickLengthRoutePart, BriefRoutePart, PrepRoutePart, ProposalReviewPart];
           const isNewBrickRoute = rest.location.pathname.includes(ProposalBase);
           if(isNewBrickRoute) {
-            console.log("creating new brick!");
+            if(!(rest.brick && rest.brick.id)) {
+              console.log("creating new brick!");
+              rest.createNewBrick(user.id);
+              return <PageLoader content="...Creating brick..." />
+            } else {
+              return <Redirect to={`/build/brick/${rest.brick.id}/subject`} />;
+            }
           } else if (!validRoutes.includes(part)) {
             console.log(part);
             props.history.push(`/build/brick/${brickId}/investigation`);
@@ -119,6 +126,17 @@ const mapDispatch = (dispatch: any) => ({
   isAuthorized: () => dispatch(actions.isAuthorized()),
   fetchBrick: (id: number) => dispatch(brickActions.fetchBrick(id)),
   getUser: () => dispatch(userActions.getUser()),
+  createNewBrick: (authorId: number) => dispatch(brickActions.createBrick({
+    created: new Date(),
+    updated: new Date(),
+    topic: "",
+    subTopic: "",
+    title: "",
+    brief: "",
+    prep: "",
+    synthesis: "",
+    author: { id: authorId },
+  })),
 });
 
 const connector = connect(mapState, mapDispatch);

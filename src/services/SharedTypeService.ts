@@ -53,6 +53,9 @@ export const convertBrick = (brick: Brick): Y.Doc => {
     ybrick.set("created", brick.created.valueOf());
     ybrick.set("updated", brick.updated.valueOf());
     ybrick.set("title", brick.title);
+    ybrick.set("topic", brick.topic);
+    ybrick.set("subTopic", brick.subTopic);
+    ybrick.set("alternativeTopics", brick.alternativeTopics);
 
     const yopenquestion = new Y.Text();
     yopenquestion.insert(0, brick.openQuestion);
