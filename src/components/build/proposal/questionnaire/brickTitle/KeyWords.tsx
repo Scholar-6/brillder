@@ -69,7 +69,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
     return (
       <div className="key-words">
         {this.state.keyWords.map(this.renderKeyWord.bind(this))}
-        <input disabled={this.props.disabled} value={this.state.keyWord} placeholder="Enter Key Word..." onKeyDown={this.checkKeyword.bind(this)} onChange={e => this.setState({ keyWord: e.target.value })} />
+        <input disabled={this.props.disabled} value={this.state.keyWord} placeholder="Keyword(s)" onKeyDown={this.checkKeyword.bind(this)} onChange={e => this.setState({ keyWord: e.target.value })} />
       </div>
     );
   }

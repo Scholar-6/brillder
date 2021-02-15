@@ -75,11 +75,7 @@ export interface Brick {
   id: number;
   subject?: Subject;
   subjectId: number;
-  topic: string;
-  subTopic: string;
   title: string;
-  alternativeTopics: string;
-  alternativeSubject: string;
   created: string;
   updated: string;
   openQuestion: string;

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Grid, Input, Hidden } from "@material-ui/core";
 
-import './BrickTitle.scss';
+import './brickTitle.scss';
 import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "../../model";
-import { AcademicLevel, Brick, KeyWord, Subject } from "model/brick";
+import { AcademicLevel, Author, Brick, KeyWord, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
 import { enterPressed } from "components/services/key";
@@ -47,12 +47,24 @@ interface BrickTitleState {
   altTitleRef: React.RefObject<HTMLDivElement>;
 }
 
-const BrickTitlePreviewComponent: React.FC<any> = (props) => {
-  let { subTopic, alternativeTopics, title, author } = props.data;
+interface PreviewProps {
+  data: Brick;
+}
+
+const BrickTitlePreviewComponent: React.FC<PreviewProps> = (props) => {
+  let { keywords, title, author } = props.data;
 
   const date = new Date();
   const dateString = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
 
+  if (!title && (!keywords || keywords.length < 0)) {
+    return (
+      <Grid container alignContent="flex-start" className="phone-preview-component">
+        <SpriteIcon name="search-flip" className="active titles-image big" />
+      </Grid>
+    );
+  }
+  
   const renderAuthorRow = () => {
     let data = "";
     if (author) {
@@ -63,12 +75,8 @@ const BrickTitlePreviewComponent: React.FC<any> = (props) => {
     return data;
   }
 
-  if (!title && !subTopic && !alternativeTopics) {
-    return (
-      <Grid container alignContent="flex-start" className="phone-preview-component">
-        <SpriteIcon name="search-flip" className="active titles-image big" />
-      </Grid>
-    );
+  const renderKeyWords = () => {
+    return <div className="key-words">{keywords.map((k, i) => <div key={i} className="key-word">{k.name}</div>)}</div>
   }
 
   return (
@@ -81,11 +89,10 @@ const BrickTitlePreviewComponent: React.FC<any> = (props) => {
           {title ? title : 'BRICK TITLE'}
         </div>
         <div className="brick-topics">
-          <span className={subTopic ? 'topic-filled' : ''}>
-            {subTopic ? subTopic : 'Topic'}
-          </span> | <span className={alternativeTopics ? 'topic-filled' : ''}>
-            {alternativeTopics ? alternativeTopics : 'Subtopic(s)'}
-          </span>
+          {keywords && 
+            <span className={keywords.length > 0 ? 'topic-filled' : ''}>
+              {keywords.length > 0 ? renderKeyWords() : 'Keyword(s)'}
+            </span>}
         </div>
         <div className="author-row">
           {renderAuthorRow()}
@@ -194,7 +201,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <div className="tutorial-pagination">
               {this.props.user.subjects.length > 1
                 ?
-                <div className="centered">
+                <div className="centered"q>
                   <PrevButton
                     to={map.ProposalSubject}
                     isActive={true}
