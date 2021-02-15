@@ -10,7 +10,7 @@ import * as socketActions from "redux/actions/socket";
 import SubjectPage from "./questionnaire/subject/Subject";
 import BrickTitle from "./questionnaire/brickTitle/BrickTitle";
 import OpenQuestion from "./questionnaire/openQuestion/openQuestion";
-import { BrickLengthEnum, KeyWord, Subject } from "model/brick";
+import { AcademicLevel, BrickLengthEnum, KeyWord, Subject } from "model/brick";
 import BrickLength from "./questionnaire/brickLength/brickLength";
 import Brief from "./questionnaire/brief/brief";
 import Prep from "./questionnaire/prep/prep";
@@ -209,6 +209,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.saveLocalBrick({ ...this.state.brick, ...titles });
   setKeywords = (keywords: KeyWord[]) =>
     this.saveLocalBrick({ ...this.state.brick, keywords});
+  setAcademicLevel = (academicLevel: AcademicLevel) =>
+    this.saveLocalBrick({ ...this.state.brick, academicLevel});
   setOpenQuestion = (openQuestion: string) =>
     this.saveLocalBrick({ ...this.state.brick, openQuestion } as Brick);
   setBrief = (brief: string) =>
@@ -341,6 +343,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 subjects={this.state.subjects}
                 saveTitles={this.setTitles}
                 setKeywords={this.setKeywords}
+                setAcademicLevel={this.setAcademicLevel}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
