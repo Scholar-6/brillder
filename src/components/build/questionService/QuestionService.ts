@@ -111,7 +111,7 @@ const defaultFunctions: { [key in QuestionTypeEnum]?: (ymap: Y.Map<any>) => void
   [QuestionTypeEnum.PairMatch]: getDefaultPairMatchAnswer,
   [QuestionTypeEnum.Sort]: getDefaultCategoriseAnswer,
   [QuestionTypeEnum.MissingWord]: getDefaultMissingWordAnswer,
-  // [QuestionTypeEnum.LineHighlighting]: getDefaultLineHighlightingAnswer,
+  [QuestionTypeEnum.LineHighlighting]: getDefaultLineHighlightingAnswer,
   [QuestionTypeEnum.WordHighlighting]: getDefaultWordHighlightingAnswer,
 }
 
