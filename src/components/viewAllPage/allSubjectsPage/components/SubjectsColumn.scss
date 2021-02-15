@@ -3,7 +3,6 @@
 @import 'src/assets/sass/partials/extensions';
 
 .subjects-column {
-  height: 100%;
   display: flex;
   align-items: center;
   margin-left: 2vw;
@@ -14,8 +13,9 @@
     margin: 5vh 0;
     height: calc(100% - 10vh);
   }
-  @include tabletL {
+  @include tabletP {
     justify-content: center;
+    height: 100%;
   }
   .subject-row {
     width: 100%;
