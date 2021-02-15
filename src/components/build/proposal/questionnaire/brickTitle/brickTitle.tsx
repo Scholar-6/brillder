@@ -201,7 +201,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <div className="tutorial-pagination">
               {this.props.user.subjects.length > 1
                 ?
-                <div className="centered"q>
+                <div className="centered">
                   <PrevButton
                     to={map.ProposalSubject}
                     isActive={true}
