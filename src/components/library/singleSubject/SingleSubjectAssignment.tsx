@@ -5,6 +5,7 @@ import { AcademicLevel, BrickLengthEnum, Subject } from "model/brick";
 import { LibraryAssignmentBrick } from "model/assignment";
 import map from "components/map";
 import { GENERAL_SUBJECT } from "components/services/subject";
+import { AcademyDifficulty } from "../base/AcademyDifficulty";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -20,6 +21,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
   const { assignment, subject } = props;
   const [height, setHeight] = React.useState(0);
 
+  // animate height
   setTimeout(() => {
     const minHeight = 5;
     let height = 0;
@@ -62,32 +64,6 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
     return <div></div>
   }
 
-  const renderLines = (a: AcademicLevel) => {
-    let levels = [];
-
-    for (let i = AcademicLevel.First; i <= a; i ++) {
-      levels.push(<div key={i} className="level"></div>)
-    }
-    return levels;
-  }
-
-  const renderAcademicLines = (a: AcademicLevel) => {
-    return (
-      <div className="academic-lines">
-        <div className="start-lines">
-          <div>
-            {renderLines(a)}
-          </div>
-        </div>
-        <div className="end-lines">
-          <div>
-            {renderLines(a)}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   const renderRotatedTitle = (name: string, height: number) => {
     let className = "rotated-container " + name;
     let width = 'calc(80.4vh - 13.034vw)';
@@ -122,7 +98,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
         <div className="progress-value default-value" onMouseEnter={() => setHover(true)}></div>
         <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }}>
           {height > 40 && renderRotatedTitle("white", height)}
-          {height > 40 && assignment.brick.academicLevel >= AcademicLevel.First && renderAcademicLines(assignment.brick.academicLevel)}
+          {height > 40 && assignment.brick.academicLevel >= AcademicLevel.First && <AcademyDifficulty a={assignment.brick.academicLevel} />}
         </div>
       </div>
     </div>
