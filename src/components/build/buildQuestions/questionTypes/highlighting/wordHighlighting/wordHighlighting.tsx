@@ -216,13 +216,12 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
 
   const renderPoemToggle = () => {
     let className = 'poem-toggle';
-    if (state.isPoem) {
+    if (data.get("isPoem")) {
       className += ' active';
     }
     return (
       <div className={className} onClick={() => {
-        state.isPoem = !state.isPoem;
-        update();
+        data.set("isPoem", !data.get("isPoem"));
       }}>
         br
       </div>
