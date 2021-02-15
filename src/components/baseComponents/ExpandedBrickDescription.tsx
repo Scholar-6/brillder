@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import './ExpandedBrickDescription.scss';
-import { Brick } from "model/brick";
+import { AcademicLevel, AcademicLevelLabels, Brick } from "model/brick";
 
 import { canDelete } from "components/services/brickService";
 
@@ -49,11 +49,19 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
   render() {
     const { color, brick, searchString } = this.props;
 
+    let label = '';
+    if (!this.props.circleIcon) {
+      if (brick.academicLevel > AcademicLevel.First) {
+        label = AcademicLevelLabels[brick.academicLevel];
+      }
+    }
+
     return (
       <div className="expanded-brick-info" onClick={() => this.props.move(brick.id)}>
         <div className="circle-container">
           <BrickCircle
             color={color}
+            label={label}
             circleIcon={this.props.circleIcon}
             circleClass={this.props.circleClass}
             iconColor={this.props.iconColor}

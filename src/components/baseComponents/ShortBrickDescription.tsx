@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import './ShortBrickDescription.scss';
-import { Brick } from "model/brick";
+import { AcademicLevel, AcademicLevelLabels, Brick } from "model/brick";
 
 import SpriteIcon from "./SpriteIcon";
 import sprite from 'assets/img/icons-sprite.svg';
@@ -156,6 +156,13 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
       className += " mobile-short-" + index;
     }
 
+    let label = '';
+    if (!this.props.circleIcon) {
+      if (brick.academicLevel > AcademicLevel.First) {
+        label = AcademicLevelLabels[brick.academicLevel];
+      }
+    }
+
     if (isMobile) {
       return (
         <div>
@@ -168,6 +175,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
                   circleClass={this.props.circleClass}
                   iconColor={this.props.iconColor}
                   canHover={true}
+                  label={label}
                   onClick={() => this.props.move ? this.props.move() : {}}
                 />
               )
@@ -190,6 +198,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
                 ? ( 
                    <BrickCircle
                     color={color}
+                    label={label}
                     circleIcon={this.props.circleIcon}
                     circleClass={this.props.circleClass}
                     iconColor={this.props.iconColor}

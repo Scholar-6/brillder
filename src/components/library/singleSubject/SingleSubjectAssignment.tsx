@@ -65,7 +65,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
   const renderLines = (a: AcademicLevel) => {
     let levels = [];
 
-    for (let i = AcademicLevel.Fisrt; i <= a; i ++) {
+    for (let i = AcademicLevel.First; i <= a; i ++) {
       levels.push(<div key={i} className="level"></div>)
     }
     return levels;
@@ -122,7 +122,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
         <div className="progress-value default-value" onMouseEnter={() => setHover(true)}></div>
         <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }}>
           {height > 40 && renderRotatedTitle("white", height)}
-          {height > 40 && assignment.brick.academicLevel >= AcademicLevel.Fisrt && renderAcademicLines(assignment.brick.academicLevel)}
+          {height > 40 && assignment.brick.academicLevel >= AcademicLevel.First && renderAcademicLines(assignment.brick.academicLevel)}
         </div>
       </div>
     </div>
