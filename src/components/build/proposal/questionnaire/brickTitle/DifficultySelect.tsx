@@ -25,10 +25,10 @@ const KeyWordsComponent: React.FC<DifficultySelectProps> = (props) => {
     <div className={className}>
       <Select value={level} disabled={props.disabled} onChange={e => props.onChange(e.target.value as AcademicLevel)}>
         <MenuItem disabled style={{display: 'none'}} value={AcademicLevel.Default}>Select level</MenuItem>
-        <MenuItem value={AcademicLevel.Fisrt}>I - level</MenuItem>
-        <MenuItem value={AcademicLevel.Second}>II - level</MenuItem>
-        <MenuItem value={AcademicLevel.Third}>III - level</MenuItem>
-        <MenuItem value={AcademicLevel.Fourth}>IV - level</MenuItem>
+        <MenuItem value={AcademicLevel.Fisrt}>I: Foundation (GCSE equiv.)</MenuItem>
+        <MenuItem value={AcademicLevel.Second}>II: Core 1 (AS equiv.)</MenuItem>
+        <MenuItem value={AcademicLevel.Third}>III: Core 2 (A-Level / IB equiv.)</MenuItem>
+        <MenuItem value={AcademicLevel.Fourth}>IV: Extension (Oxbridge equiv.)</MenuItem>
       </Select>
     </div>
   );
