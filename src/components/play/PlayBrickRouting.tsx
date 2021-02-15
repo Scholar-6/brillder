@@ -116,7 +116,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setBrickAttempt(ba);
     setReviewAttempts(Object.assign([], attempts));
     setStatus(PlayStatus.Review);
-    saveBrickAttempt(ba);
   };
 
   const finishReview = () => {
@@ -218,6 +217,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const moveToReview = () => {
     if (props.user) {
+      saveBrickAttempt(brickAttempt);
       const playPath = getPlayPath(false, brick.id);
       props.history.push(`${playPath}/review${getAssignQueryString(location)}`);
     } else {
