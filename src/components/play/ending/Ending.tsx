@@ -244,14 +244,16 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
         </Hidden>
         <Hidden only={["sm", "md", "lg", "xl"]}>
           <div className="brick-container play-preview-panel ending-page mobile-ending-page">
-            <div className="introduction-info">
-              <div className="intro-text-row">
-                <span className="heading">Final Score : Agg.</span>
-                {this.renderStepper()}
+            <div className="introduction-page">
+              <div className="introduction-info">
+                <div className="intro-text-row">
+                  <span className="heading">Final Score : Agg.</span>
+                  {this.renderStepper()}
+                </div>
               </div>
+              {this.renderProgressBars()}
+              {this.renderFooter()}
             </div>
-            <div className="introduction-page">{this.renderProgressBars()}</div>
-            {this.renderFooter()}
           </div>
         </Hidden>
       </div>
