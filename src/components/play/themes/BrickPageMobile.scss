@@ -253,7 +253,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             position: relative;
             border-radius: 1vh;
             margin: 0 4vw;
-            min-height: 17vh;
+            height: 17vh;
             .intro-header {
               font-size: 2vw;
               font-family: $font-family-black;
@@ -310,14 +310,14 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           }
           .introduction-content {
             padding: 0 4vw;
-            min-height: calc(100vh - 37vh - 80px);
+            height: calc(100vh - 37vh - 80px);
             overflow-y: auto;
           }
           .intro-header.expanded-intro-header ~ .introduction-info {
-            min-height: auto;
+            height: auto;
           }
           .intro-header.expanded-intro-header ~ .introduction-content {
-            min-height: calc(100vh - 86px - 80px);
+            height: calc(100vh - 86px - 80px);
           }
           .action-footer {
             display: flex;
@@ -581,7 +581,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               }
             }
             .introduction-content {
-              min-height: calc(100vh - 86px - 80px);
+              height: calc(100vh - 86px - 80px);
             }
           }
           .fotter-text {
@@ -843,7 +843,9 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     color: var(--theme-dark-blue);
     font-family: $font-family-regular;
     margin: 0 0 1vh 0;
-    // font-size: 6vw;
+    font-size: 6vw;
+    // height: 30vh;
+    overflow-y: auto;
     &.prep-box {
       margin-bottom: 21vh;
     }
