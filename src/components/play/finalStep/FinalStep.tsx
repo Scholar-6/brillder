@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import "./FinalStep.scss";
-import { Brick } from "model/brick";
+import { Brick, isAuthenticated } from "model/brick";
 
 import Clock from "../baseComponents/Clock";
 import ShareDialog from './dialogs/ShareDialog';
@@ -19,14 +19,16 @@ import { rightKeyPressed } from "components/services/key";
 
 interface FinalStepProps {
   brick: Brick;
-  history: any;
   user: User;
+  history: any;
+  moveNext(): void;
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
   brick,
   user,
   history,
+  moveNext,
 }) => {
   const [shareOpen, setShare] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
@@ -66,10 +68,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
         <ShareColumn onClick={() => setShare(true)} />
       </Grid>
     );
-  }
-
-  const moveNext = () => {
-    history.push(map.postPlay(brick.id, user.id));
   }
 
   return (
