@@ -45,10 +45,16 @@ export const getYDoc = (history: History, brickId: number, firstName: string, la
     // this gives it enough time to load from the database.
     // a bit of a hack, but I couldn't find any other way to force it to sync.
     setTimeout(() => {
-        const encoder = encoding.createEncoder()
-        encoding.writeVarUint(encoder, 0)
-        syncProtocol.writeSyncStep1(encoder, ydoc)
-        wsProvider.ws!.send(encoding.toUint8Array(encoder))
+        try {
+            if(wsProvider.synced === false) {
+                const encoder = encoding.createEncoder();
+                encoding.writeVarUint(encoder, 0);
+                syncProtocol.writeSyncStep1(encoder, ydoc);
+                wsProvider.ws!.send(encoding.toUint8Array(encoder));
+            }
+        } catch (e) {
+            console.log("couldn't access ws");
+        }
     }, 100);
     
     return { ydoc, awareness };
