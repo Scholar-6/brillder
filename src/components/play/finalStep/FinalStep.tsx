@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import "./FinalStep.scss";
-import { Brick, isAuthenticated } from "model/brick";
+import { Brick } from "model/brick";
 
 import Clock from "../baseComponents/Clock";
 import ShareDialog from './dialogs/ShareDialog';

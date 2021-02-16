@@ -347,7 +347,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 {this.renderEditableTextarea(BrickFieldNames.title)}
                 {brick.adaptedFrom && '(ADAPTED)'}
               </div>
-              <div><KeyWordsComponent disabled={!this.props.canEdit} keyWords={this.props.brick.keywords} onChange={this.props.setKeywords} /></div>
+              <div><KeyWordsComponent isHashtags={true} disabled={!this.props.canEdit} keyWords={this.props.brick.keywords} onChange={this.props.setKeywords} /></div>
               <div><DifficultySelect disabled={!this.props.canEdit} level={this.props.brick.academicLevel} onChange={this.props.setAcademicLevel} /></div>
               <p className="text-title m-t-3 bold">Open Question:</p>
               {this.renderOpenQuestionField()}
