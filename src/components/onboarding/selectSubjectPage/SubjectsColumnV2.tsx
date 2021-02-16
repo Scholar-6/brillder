@@ -71,11 +71,9 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, next, onClick }) => {
         {list.map((row, i) =>
           <div key={i} className="subject-row">
             {row.map((s, j) => renderSubject(s, j))}
+            {i === list.length - 1 && renderNextButton()}
           </div>
         )}
-        <div className="subject-row">
-          {renderNextButton()}
-        </div>
       </div>
     </div>
   );
