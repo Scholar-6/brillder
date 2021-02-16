@@ -45,7 +45,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           </div>
           <div className="link-info">
             <div className="key-words">
-              {brick.keywords.map((k, i) => <div key={i} className="key-word">{k.name}</div>)}
+              {brick.keywords && brick.keywords.map((k, i) => <div key={i} className="key-word">{k.name}</div>)}
             </div>
             <div>{getAuthorRow(brick)}</div>
             <div className="expand-open-question"><MathInHtml value={brick.openQuestion} /></div>
