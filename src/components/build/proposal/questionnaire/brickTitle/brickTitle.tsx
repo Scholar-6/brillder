@@ -76,10 +76,6 @@ const BrickTitlePreviewComponent: React.FC<PreviewProps> = (props) => {
     return data;
   }
 
-  const renderKeyWords = () => {
-    return <div className="key-words">{keywords.map((k, i) => <div key={i} className="key-word">{k.name}</div>)}</div>
-  }
-
   return (
     <Grid container alignContent="flex-start" className="phone-preview-component title">
       <Grid container justify="center">
