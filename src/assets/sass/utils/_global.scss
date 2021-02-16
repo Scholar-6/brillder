@@ -399,6 +399,7 @@ h3 {
 }
 
 .centered-y-start-x {
+  height: 100% !important;
   @extend %flexToYCenter;
   align-items: flex-start !important;
 }

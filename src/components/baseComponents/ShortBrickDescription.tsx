@@ -4,7 +4,6 @@ import './ShortBrickDescription.scss';
 import { AcademicLevel, AcademicLevelLabels, Brick } from "model/brick";
 
 import SpriteIcon from "./SpriteIcon";
-import sprite from 'assets/img/icons-sprite.svg';
 import SearchText from "./SearchText";
 import AuthorSearchRow from "./AuthorRow";
 import { User, UserType } from "model/user";
