@@ -18,7 +18,7 @@ import PageHeadWithMenu, {
   PageEnum,
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
-import { Brick } from "model/brick";
+import { Brick, isAuthenticated } from "model/brick";
 import { PlayStatus, BrickAttempt } from "./model";
 import {
   Question,
@@ -60,7 +60,9 @@ interface BrickRoutingProps {
   // redux
   brick: Brick;
   user: User;
+  isAuthenticated: isAuthenticated;
   getUser(): Promise<any>;
+  setUser(user: User): void;
 }
 
 const MobileTheme = React.lazy(() => import('./themes/BrickPageMobileTheme'));
@@ -85,6 +87,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [unauthorizedOpen, setUnauthorized] = React.useState(false);
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [searchString, setSearchString] = React.useState("");
+  const [attemptId, setAttemptId] = React.useState<string>();
+  const [userToken, setUserToken] = React.useState<string>(); // used for unauthenticated user.
 
   setBrillderTitle(brick.title);
 
@@ -121,9 +125,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     var ba = calcBrickReviewAttempt(brick, reviewAttempts, brickAttempt);
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
+    saveBrickAttempt(ba);
   };
 
-  const saveBrickAttempt = () => {
+  const finishBrick = () => {
+    props.history.push(`/play/brick/${brick.id}/finalStep`);
+  }
+
+  const createBrickAttempt = async (brickAttempt: BrickAttempt) => {
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
@@ -133,17 +142,44 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
     return axios.post(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
-      brickAttempt,
+      { brickAttempt, userId: props.user.id },
       { withCredentials: true }
-    ).then(async () => {
-      if (!props.user.hasPlayedBrick) {
+    ).then(async (response) => {
+      if (!props.user.hasPlayedBrick && props.isAuthenticated === isAuthenticated.True) {
         await props.getUser();
       }
-      props.history.push(`/play/brick/${brick.id}/finalStep`);
+      setAttemptId(response.data);
     }).catch(() => {
       setFailed(true);
     });
   };
+
+  const saveBrickAttempt = async (brickAttempt: BrickAttempt) => {
+    console.log(brick);
+    if(!attemptId) {
+      return createBrickAttempt(brickAttempt);
+    }
+
+    brickAttempt.brick = brick;
+    brickAttempt.brickId = brick.id;
+    brickAttempt.studentId = props.user.id;
+    let values = queryString.parse(location.search);
+    if (values.assignmentId) {
+      brickAttempt.assignmentId = parseInt(values.assignmentId as string);
+    }
+    return axios.put(
+      process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
+      { id: attemptId, userId: props.user.id, body: brickAttempt },
+      { withCredentials: true }
+    ).then(async (response) => {
+      if (!props.user.hasPlayedBrick && props.isAuthenticated === isAuthenticated.True) {
+        await props.getUser();
+      }
+      setAttemptId(response.data);
+    }).catch(() => {
+      setFailed(true);
+    });
+  }
 
   const setSidebar = (state?: boolean) => {
     if (typeof state === "boolean") {
@@ -184,11 +220,35 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const moveToReview = () => {
     if (props.user) {
+      saveBrickAttempt(brickAttempt);
       const playPath = getPlayPath(false, brick.id);
       props.history.push(`${playPath}/review${getAssignQueryString(location)}`);
     } else {
       // unauthorized users finish it here. show popup
       setUnauthorized(true);
+    }
+  }
+
+  const moveToPostPlay = () => {
+    if(props.isAuthenticated === isAuthenticated.True) {
+      props.history.push(map.postPlay(brick.id, props.user.id));
+    } else if (userToken) {
+      props.history.push(map.ActivateAccount + "?token=" + userToken);
+    }
+  }
+
+  const createInactiveAccount = async (email: string) => {
+    if (!props.user) {
+      // create a new account for an unauthorized user.
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/createUser`, { email }); // should be done without credentials!
+        const { user, token } = response.data;
+        props.setUser(user);
+        setUnauthorized(false);
+        setUserToken(token);
+      } catch (e) {
+        console.log("couldn't create new account");
+      }
     }
   }
 
@@ -304,7 +364,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brick={brick}
             history={props.history}
             brickAttempt={brickAttempt}
-            saveAttempt={saveBrickAttempt}
+            move={finishBrick}
           />
         </Route>
         <Route exac path="/play/brick/:brickId/finalStep">
@@ -312,6 +372,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             user={props.user}
             brick={brick}
             history={props.history}
+            moveNext={moveToPostPlay}
           />
         </Route>
         <ValidationFailedDialog
@@ -349,7 +410,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </div>
         <UnauthorizedUserDialog
           isOpen={unauthorizedOpen}
-          login={() => props.history.push('/')}
+          login={(email) => createInactiveAccount(email)}
           again={again}
           close={() => setUnauthorized(false)}
         />
@@ -443,11 +504,13 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-  brick: state.brick.brick
+  brick: state.brick.brick,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
+  setUser: (user: User) => dispatch(userActions.setUser(user)),
 });
 
 const connector = connect(mapState, mapDispatch);

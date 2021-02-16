@@ -1,10 +1,11 @@
 import React from "react";
 
 import './SingleSubjectAssignment.scss';
-import { BrickLengthEnum, Subject } from "model/brick";
+import { AcademicLevel, BrickLengthEnum, Subject } from "model/brick";
 import { LibraryAssignmentBrick } from "model/assignment";
 import map from "components/map";
 import { GENERAL_SUBJECT } from "components/services/subject";
+import { AcademyDifficulty } from "../base/AcademyDifficulty";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -20,6 +21,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
   const { assignment, subject } = props;
   const [height, setHeight] = React.useState(0);
 
+  // animate height
   setTimeout(() => {
     const minHeight = 5;
     let height = 0;
@@ -96,6 +98,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
         <div className="progress-value default-value" onMouseEnter={() => setHover(true)}></div>
         <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }}>
           {height > 40 && renderRotatedTitle("white", height)}
+          {height > 40 && assignment.brick.academicLevel >= AcademicLevel.First && <AcademyDifficulty a={assignment.brick.academicLevel} />}
         </div>
       </div>
     </div>

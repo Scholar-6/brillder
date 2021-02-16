@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import queryString from 'query-string';
 import "swiper/swiper.scss";
-
-import "../ViewAll.scss";
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import { User } from "model/user";
 import { Subject, SubjectItem } from "model/brick";
 import { getSubjects } from "services/axios/subject";
@@ -32,6 +31,10 @@ interface AllSubjectsState {
   isAllSubjects: boolean;
   failedRequest: boolean;
 }
+
+const MobileTheme = React.lazy(() => import('../themes/ViewAllPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('../themes/ViewAllPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('../themes/ViewAllPageDesktopTheme'));
 
 class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
   constructor(props: AllSubjectsProps) {
@@ -80,34 +83,37 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
 
   render() {
     return (
-      <Grid container direction="row" className="sorted-row">
-        {this.state.showFilters ?
-          <ViewAllFilter
-            user={this.props.user}
-            sortBy={SortBy.Date}
-            subjects={this.state.subjects}
-            userSubjects={this.props.user ? this.props.user.subjects : []}
-            isCore={true}
-            isClearFilter={() => { }}
-            isAllSubjects={this.state.isAllSubjects}
-            setAllSubjects={isAllSubjects => this.setState({ isAllSubjects })}
-            handleSortChange={() => { }}
-            clearSubjects={() => { }}
-            filterBySubject={id => this.onSubjectSelected(id)}
-          />
-          : this.props.user ? <AllSubjectsSidebar /> : <UnauthorizedSidebar />
-        }
-        <Grid item xs={9} className="brick-row-container view-all-subjects">
-          <SubjectsColumn
-            subjects={this.state.totalSubjects}
-            viewAll={() => {
-              this.props.checkSubjectsWithBricks();
-              this.props.history.push(map.ViewAllPage + `?isViewAll=${true}`);
-            }}
-            onClick={this.onSubjectSelected.bind(this)}
-          />
+      <React.Suspense fallback={<></>}>
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+        <Grid container direction="row" className="sorted-row">
+          {this.state.showFilters ?
+            <ViewAllFilter
+              user={this.props.user}
+              sortBy={SortBy.Date}
+              subjects={this.state.subjects}
+              userSubjects={this.props.user ? this.props.user.subjects : []}
+              isCore={true}
+              isClearFilter={() => { }}
+              isAllSubjects={this.state.isAllSubjects}
+              setAllSubjects={isAllSubjects => this.setState({ isAllSubjects })}
+              handleSortChange={() => { }}
+              clearSubjects={() => { }}
+              filterBySubject={id => this.onSubjectSelected(id)}
+            />
+            : this.props.user ? <AllSubjectsSidebar /> : <UnauthorizedSidebar />
+          }
+          <Grid item xs={9} className="brick-row-container view-all-subjects">
+            <SubjectsColumn
+              subjects={this.state.totalSubjects}
+              viewAll={() => {
+                this.props.checkSubjectsWithBricks();
+                this.props.history.push(map.ViewAllPage + `?isViewAll=${true}`);
+              }}
+              onClick={this.onSubjectSelected.bind(this)}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </React.Suspense>
     );
   }
 }

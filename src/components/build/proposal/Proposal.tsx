@@ -10,7 +10,7 @@ import * as socketActions from "redux/actions/socket";
 import SubjectPage from "./questionnaire/subject/Subject";
 import BrickTitle from "./questionnaire/brickTitle/brickTitle";
 import OpenQuestion from "./questionnaire/openQuestion/openQuestion";
-import { BrickLengthEnum, Subject } from "model/brick";
+import { AcademicLevel, BrickLengthEnum, KeyWord, Subject } from "model/brick";
 import BrickLength from "./questionnaire/brickLength/brickLength";
 import Brief from "./questionnaire/brief/brief";
 import Prep from "./questionnaire/prep/prep";
@@ -79,7 +79,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       brief: "",
       prep: "",
       synthesis: "",
-      alternativeSubject: "",
     } as Brick;
 
     if (user) {
@@ -152,8 +151,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
         history.push(baseUrl + ProposalReviewPart);
       }
     } else if (leftKeyPressed(e)) {
-      console.log(pathname, pathname.slice(-BrickLengthRoutePart.length), BrickLengthRoutePart);
-
       if (pathname.slice(-OpenQuestionRoutePart.length) === OpenQuestionRoutePart) {
         history.push(baseUrl + TitleRoutePart)
       } else if (pathname.slice(-BrickLengthRoutePart.length) === BrickLengthRoutePart) {
@@ -209,6 +206,10 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.saveLocalBrick({ ...this.state.brick, subjectId, isCore });
   setTitles = (titles: any) =>
     this.saveLocalBrick({ ...this.state.brick, ...titles });
+  setKeywords = (keywords: KeyWord[]) =>
+    this.saveLocalBrick({ ...this.state.brick, keywords});
+  setAcademicLevel = (academicLevel: AcademicLevel) =>
+    this.saveLocalBrick({ ...this.state.brick, academicLevel});
   setOpenQuestion = (openQuestion: string) =>
     this.saveLocalBrick({ ...this.state.brick, openQuestion } as Brick);
   setBrief = (brief: string) =>
@@ -340,6 +341,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 canEdit={canEdit}
                 subjects={this.state.subjects}
                 saveTitles={this.setTitles}
+                setKeywords={this.setKeywords}
+                setAcademicLevel={this.setAcademicLevel}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
@@ -397,6 +400,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 canEdit={canEdit}
                 user={user}
                 setBrickField={this.setBrickField}
+                setKeywords={this.setKeywords}
+                setAcademicLevel={this.setAcademicLevel}
                 saveBrick={this.saveAndMove}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />

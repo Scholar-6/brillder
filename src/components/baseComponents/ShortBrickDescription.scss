@@ -38,16 +38,13 @@
         }
         .short-brick-info {
           padding: 0 3vw;
-          .link-info {
-            width: 100%;
-          }
           @extend %linkDescription;
           .link-info {
+            width: 100%;
             color: var(--theme-light-blue);
             line-height: 1.3;
             font-family: $font-family-regular;
             margin-bottom: 0.1vh;
-            width: 100%;
             @extend %ellipsis;
             @include phone_and_tabletP {
               font-size: 3.8vw;
@@ -82,35 +79,70 @@
 }
 
 .short-description {
-  .play-button {
-    position: absolute;
-    top: 0;
-    height: 2.1vw;
-    width: 2.1vw;
-    @extend %flexCenter;
+  cursor: pointer;
+  padding-left: 1vw;
+  border-radius: 1vw;
+  background: var(--white);
 
-    svg {
-      color: var(--white) !important;
-      height: 0;
-      margin-left: 14%;
+  .label-circle-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--white);
+    font-size: 1vw;
+    transition: all 300ms ease-out;
+  }
+
+  .round-button-icon {
+    .label-circle-text {
+      display: none;
+      font-size: 0;
       width: 0;
+      height: 0;
     }
   }
-  .circle-hovered {
-    .round-button {
-      .svg {
-        display: none;
+
+  .hover-delete-icon {
+    position: absolute;
+    top:1.6vh;
+    right: 1.6vh;
+  }
+  .centered-brick-description {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    
+    .link-info {
+      font-size: 0.8vw !important;
+    }
+  }
+  &:hover {
+    background: var(--tab-gray);
+    .hover-delete-icon {
+      height: 3.5vw;
+      svg {
+        height: 1vw !important;
+        width: 1vw !important;
       }
     }
-    .play-button {
-      .svg {
-        cursor: pointer;
-        color: var(--white) !important;
-        height: 80%;
-        margin-left: 16%;
-        width: 70%;
-        transition: all 0.2s ease-in-out;
+    .label-circle-text {
+      font-size: 1.3vw !important;
+    }
+    .round-button-icon {
+      svg {
+        width: 0 !important;
+        height: 0 !important;
+      }
+      .label-circle-text {
+        display: flex;
+        width: 100%;
+        font-size: 1.3vw;
       }
     }
+  }
+  &.no-hover {
+    background: inherit !important;
   }
 }

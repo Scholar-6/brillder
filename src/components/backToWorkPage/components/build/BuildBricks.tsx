@@ -44,7 +44,7 @@ interface BuildBricksProps {
 class BuildBricks extends Component<BuildBricksProps> {
   renderGroupedBricks = (data: any[]) => {
     return data.map((item, i) => {
-      const {brick}: {brick: Brick} = item;
+      const { brick }: { brick: Brick } = item;
       let circleIcon = '';
       let iconColor = '';
       if (brick.editors && brick.editors.findIndex(e => e.id === this.props.user.id) >= 0) {
@@ -57,7 +57,7 @@ class BuildBricks extends Component<BuildBricksProps> {
       }
 
       if (brick.isEmptyColumn) {
-        switch(brick.columnStatus) {
+        switch (brick.columnStatus) {
           case BrickStatus.Draft:
             return this.renderFirstEmptyColumn();
           case BrickStatus.Build:
@@ -73,13 +73,13 @@ class BuildBricks extends Component<BuildBricksProps> {
 
       // render first row as description
       if (this.props.loaded) {
-        const {threeColumns} = this.props;
-        if (i === 0 ) {
+        const { threeColumns } = this.props;
+        if (i === 0) {
           return <BrickColDescription key={item.key} label="Draft Bricks" color="color1" number={threeColumns.red.finalBricks.length - 1} />;
         } else if (i === 1) {
           return <BrickColDescription key={item.key} label="Submitted to Editor(s)" color="color3" number={threeColumns.yellow.finalBricks.length} />;
         } else if (i === 2) {
-          return <BrickColDescription key={item.key} label="Pending Publication" color="color2" number={threeColumns.green.finalBricks.length} isGreen={true}/>;
+          return <BrickColDescription key={item.key} label="Pending Publication" color="color2" number={threeColumns.green.finalBricks.length} isGreen={true} />;
         }
       }
 
@@ -107,13 +107,13 @@ class BuildBricks extends Component<BuildBricksProps> {
     const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize, this.props.finalBricks)
 
     return data.map(item => {
-      const {brick} = item;
+      const { brick } = item;
       let circleIcon = '';
       let iconColor = '';
-      if (brick.editors && brick.editors.findIndex((e:any) => e.id === this.props.user.id) >= 0) {
-        circleIcon="edit-outline";
+      if (brick.editors && brick.editors.findIndex((e: any) => e.id === this.props.user.id) >= 0) {
+        circleIcon = "edit-outline";
       }
-      
+
       return <BrickBlock
         brick={item.brick}
         index={item.index}
@@ -133,7 +133,7 @@ class BuildBricks extends Component<BuildBricksProps> {
   }
 
   isThreeColumnsEmpty = () => {
-    const {threeColumns} = this.props;
+    const { threeColumns } = this.props;
     if (threeColumns.green.finalBricks.length > 0) {
       return false;
     } else if (threeColumns.red.finalBricks.length > 0) {
@@ -150,7 +150,7 @@ class BuildBricks extends Component<BuildBricksProps> {
   }
 
   isThreeColumns() {
-    const {filters} = this.props;
+    const { filters } = this.props;
     return !filters.publish && filters.build && filters.review && filters.draft;
   }
 
@@ -243,11 +243,13 @@ class BuildBricks extends Component<BuildBricksProps> {
       }
     }
     return (
-      <div className="brick-container color1" style={{width: '4vw'}}>
-        <div className="absolute-container" style={{width: '4vw'}}>
-          <div className="short-description" style={{width: '4vw'}}>
+      <div className="brick-container color1" style={{ width: '4vw' }}>
+        <div className="absolute-container" style={{ width: '4vw' }}>
+          <div className="short-description no-hover" style={{ width: '4vw' }}>
+          <div className="brick-circle-container">
             <div className="left-brick-circle">
               <div className="round-button">{count}</div>
+            </div>
             </div>
           </div>
         </div>
@@ -263,11 +265,13 @@ class BuildBricks extends Component<BuildBricksProps> {
       }
     }
     return (
-      <div className="brick-container color3" style={{width: '4vw'}}>
-        <div className="absolute-container" style={{width: '4vw'}}>
-          <div className="short-description" style={{width: '4vw'}}>
-            <div className="left-brick-circle">
-              <div className="round-button">{count}</div>
+      <div className="brick-container color3" style={{ width: '4vw' }}>
+        <div className="absolute-container" style={{ width: '4vw' }}>
+          <div className="short-description no-hover" style={{ width: '4vw' }}>
+            <div className="brick-circle-container">
+              <div className="left-brick-circle">
+                <div className="round-button">{count}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -285,9 +289,12 @@ class BuildBricks extends Component<BuildBricksProps> {
     return (
       <div className="brick-container color2">
         <div className="absolute-container">
-          <div className="short-description">
+          <div className="short-description no-hover">
+          <div className="brick-circle-container">
+
             <div className="left-brick-circle skip-top-right-border">
               <div className="round-button text-theme-green">{count}</div>
+            </div>
             </div>
           </div>
         </div>
@@ -329,7 +336,7 @@ class BuildBricks extends Component<BuildBricksProps> {
       }
       return (
         <div className="fixed-first-brick">
-          <BrickColDescription label="Pending Publication" color="color2" number={count} isGreen={true}/>
+          <BrickColDescription label="Pending Publication" color="color2" number={count} isGreen={true} />
         </div>
       );
     } else if (!this.props.filters.draft && this.props.filters.review && this.props.filters.build) {

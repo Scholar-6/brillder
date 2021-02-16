@@ -113,6 +113,12 @@
         font-size: 0.65vw;
       }
 
+      .key-word {
+        font-size: 0.65vw;
+        padding-left: 0.2vw;
+        padding-right: 0.2vw;
+      }
+
       .brick-topics {
         width: 15.5vw;
         @extend %ellipsis;
@@ -122,6 +128,10 @@
         color: var(--white) !important;
       }
     }
+  }
+  .tutorial-pagination {
+    padding-top: 12vh;
+    position: relative !important;
   }
 }
 .select-profile-subject {
