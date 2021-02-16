@@ -40,6 +40,9 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
   const [animationStep, setStep] = React.useState(AnimationStep.PageLoaded);
   const [submited, setSubmited] = React.useState(null as boolean | null);
   const [labelFinished, setLabelFinished] = React.useState(false);
+  const [secondFinished, setSecondFinished] = React.useState(false);
+  const [thirdFinished, setThirdFinished] = React.useState(false);
+  const [fourthFinished, setFourthFinished] = React.useState(false);
   const [username, setUsername] = React.useState('');
   const [firstName, setFirstName] = React.useState({ value: user.firstName ? user.firstName : '', valid: null } as InputState);
   const [lastName, setLastName] = React.useState({ value: user.lastName ? user.lastName : '', valid: null } as InputState);
@@ -121,9 +124,30 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     return (
       <div>
         <LabelTyping
-          value={user.rolePreference?.roleId === UserType.Builder ? "Use this username to connect with people to create and assign bricks" : "Your username will be"}
+          value="Your username will be"
           className="username-help-label" start={true} onFinish={() => setLabelFinished(true)} />
-        <LabelTyping value={username} className="username" start={labelFinished} />
+        <LabelTyping value={username} className="username" start={labelFinished} onFinish={() => setSecondFinished(true)} />
+        {user.rolePreference?.roleId === UserType.Builder &&
+          <div>
+            <LabelTyping
+              start={secondFinished}
+              value="Use this username to"
+              className="username-help-label"
+              onFinish={() => setThirdFinished(true)}
+            />
+            <LabelTyping
+              start={thirdFinished}
+              value="connect with people to"
+              className="username-help-label"
+              onFinish={() => setFourthFinished(true)}
+            />
+            <LabelTyping
+              start={fourthFinished}
+              value="create and assign bricks"
+              className="username-help-label"
+            />
+          </div>
+        }
       </div>
     );
   }
