@@ -216,7 +216,7 @@
   }
   .create-button {
     cursor: pointer;
-    margin-left: 12vw;
+    margin-left: 14.4vw;
     svg {
       @extend %transitionAll300;
       margin-top: calc(#{$bricks-height / 90});
