@@ -39,19 +39,6 @@ interface ShortDescriptionProps {
 
 
 class ShortBrickDescription extends Component<ShortDescriptionProps> {
-  renderRoler() {
-    return (
-      <div className="left-brick-roller">
-        <div className="btn btn-transparent roller-button svgOnHover">
-          <svg className="svg w100 h100 active stroke-2">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#award"} className="text-theme-green" />
-          </svg>
-        </div>
-      </div>
-    );
-  }
-
   renderIcon() {
     const { circleIcon, iconColor } = this.props;
     let svgClass = 'svg active ';
@@ -70,30 +57,6 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     return "";
   }
 
-  renderCircle(color: string) {
-    let className = "left-brick-circle";
-
-    if (this.props.circleClass) {
-      className += ' ' + this.props.circleClass;
-    }
-
-    if (color === "color3") {
-    } else if (color === "color2") {
-      className += ' skip-top-right-border';
-    }
-
-    return (
-      <div className={className}>
-        <div className="round-button" style={{ background: `${color}` }}>
-          {this.renderIcon()}
-        </div>
-        <div className="play-button">
-          <SpriteIcon name="play-thick" onClick={() => this.props.move ? this.props.move() : {}} />
-        </div>
-      </div>
-    );
-  }
-
   // mobile only
   renderPlayButton() {
     return (
@@ -110,8 +73,8 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
         <div className="link-description">
           <SearchText searchString={searchString} text={brick.title} />
         </div>
-        <div className="link-info key-words">
-          {brick.keywords && brick.keywords.map((k, i) => <div key={i} className="key-word">{k.name}</div>)}
+        <div className="link-info">
+          {brick.keywords && brick.keywords.map((k, i) => <div key={i} className="key-word">#{k.name}</div>)}
         </div>
         <div className="link-info">
           <AuthorSearchRow searchString={searchString} brick={brick} />
@@ -171,7 +134,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
         <div>
           <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
             {color
-              ? (
+              && (
                 <BrickCircle
                   color={color}
                   circleIcon={this.props.circleIcon}
@@ -182,7 +145,6 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
                   onClick={() => this.props.move ? this.props.move() : {}}
                 />
               )
-              : this.renderRoler()
             }
             {this.renderShortBrickInfo(searchString, brick)}
             {isExpanded ? this.renderPlayButton() : ""}
@@ -194,8 +156,8 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     return (
       <div className={className} onClick={() => this.props.move ? this.props.move() : {}}>
         {this.renderDeleteButton(this.props.brick)}
-        {color
-          ? (
+        {color && (
+          <div className="brick-circle-container">
             <BrickCircle
               color={color}
               label={label}
@@ -205,9 +167,8 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
               canHover={true}
               onClick={() => this.props.move ? this.props.move() : {}}
             />
-          )
-          : this.renderRoler()
-        }
+          </div>
+        )}
         {this.renderShortBrickInfo(searchString, brick)}
         {isExpanded ? this.renderPlayButton() : ""}
       </div>
