@@ -2,6 +2,7 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
+$level-size: 6vh;
 .single-assignment-progressbar {
   .rotated-container {
     position: absolute;
@@ -10,8 +11,8 @@
       transform: rotate(270deg);
 
       .rotated-text {
-        padding-left: 4vh;
-        padding-right: 4vh;
+        padding-left: $level-size;
+        padding-right: $level-size;
         white-space: nowrap;
         text-overflow: ellipsis;
         position: absolute;

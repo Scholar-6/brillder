@@ -1,6 +1,5 @@
 import React from "react";
 
-import './SubjectsColumn.scss';
 import { Subject } from "model/brick";
 import { GENERAL_SUBJECT, CURRENT_AFFAIRS_SUBJECT } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";

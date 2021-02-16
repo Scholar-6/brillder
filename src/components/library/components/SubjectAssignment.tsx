@@ -1,10 +1,11 @@
 import React from "react";
 
 import './SubjectAssignment.scss';
-import { BrickLengthEnum, Subject } from "model/brick";
+import { AcademicLevel, BrickLengthEnum, Subject } from "model/brick";
 import { LibraryAssignmentBrick } from "model/assignment";
 import map from "components/map";
 import { GENERAL_SUBJECT } from "components/services/subject";
+import { AcademyDifficulty } from "../base/AcademyDifficulty";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -60,7 +61,9 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           <div>{brick.title}</div>
         </div>}
         <div className="progress-value default-value" onMouseEnter={() => setHover(true)} />
-        <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }} />
+        <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }}>
+          {height > 40 && assignment.brick.academicLevel >= AcademicLevel.First && <AcademyDifficulty a={assignment.brick.academicLevel} className="smaller" />}
+        </div>
       </div>
     </div>
   );

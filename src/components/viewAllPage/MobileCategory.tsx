@@ -1,10 +1,10 @@
-import "./ViewAll.scss";
 import React, { Component } from "react";
 import { Box, Grid, Grow } from "@material-ui/core";
 import { connect } from "react-redux";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
 import { Brick } from "model/brick";
 import { User } from "model/user";
@@ -18,9 +18,12 @@ import ShortBrickDescription from "components/baseComponents/ShortBrickDescripti
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
-import { isMobile } from "react-device-detect";
 import { getPublicBricks, searchPublicBricks } from "services/axios/brick";
 
+
+const MobileTheme = React.lazy(() => import('./themes/ViewAllPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/ViewAllPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/ViewAllPageDesktopTheme'));
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -150,7 +153,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (brick.expanded) {
       className += " brick-hover";
     }
-    
+
     return (
       <Grow
         in={this.state.shown}
@@ -206,7 +209,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   hide() {
     this.state.bricks.map(b => b.expanded = false);
-    this.setState({...this.state});
+    this.setState({ ...this.state });
   }
 
   renderMobileBricks(expandedBrick: Brick | undefined) {
@@ -225,7 +228,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     return (
       <Swiper slidesPerView={2}>
-        {bricksList.map((b, i) => 
+        {bricksList.map((b, i) =>
           <SwiperSlide key={i} onClick={() => this.handleClick(i)} style={{ width: '50vw' }}>
             {b}
           </SwiperSlide>
@@ -235,6 +238,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   render() {
+
     let expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
 
     let pageClass = 'main-listing dashboard-page mobile-category';
@@ -243,38 +247,41 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
 
     return (
-      <div className={pageClass}>
-        <div className="page-navigation">
-          <div className="btn btn-transparent glasses svgOnHover">
-            <SpriteIcon name="glasses" className="w100 h100 active text-theme-dark-blue" />
+      <React.Suspense fallback={<></>}>
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+        <div className={pageClass}>
+          <div className="page-navigation">
+            <div className="btn btn-transparent glasses svgOnHover">
+              <SpriteIcon name="glasses" className="w100 h100 active text-theme-dark-blue" />
+            </div>
+            <div className="breadcrumbs">New</div>
           </div>
-          <div className="breadcrumbs">New</div>
-        </div>
-        <PageHeadWithMenu
-          page={PageEnum.ViewAll}
-          user={this.props.user}
-          placeholder={"Search Ongoing Projects & Published Bricks…"}
-          history={this.props.history}
-          search={() => this.search()}
-          searching={(v: string) => this.searching(v)}
-        />
-        <div className="mobile-scroll-bricks">
-          {this.renderMobileBricks(expandedBrick)}
-        </div>
-        <Grid container direction="row" className="sorted-row">
-          <Grid item xs={9} className="brick-row-container">
-            <div className="brick-row-title" onClick={() => this.props.history.push('/play/dashboard')}>
-              <button className="btn btn-transparent svgOnHover">
-                <span>New</span>
-                <SpriteIcon name="arrow-down" className="active text-theme-dark-blue" />
-              </button>
-            </div>
-            <div className="bricks-list-container">
-              {this.renderSortedBricks()}
-            </div>
+          <PageHeadWithMenu
+            page={PageEnum.ViewAll}
+            user={this.props.user}
+            placeholder={"Search Ongoing Projects & Published Bricks…"}
+            history={this.props.history}
+            search={() => this.search()}
+            searching={(v: string) => this.searching(v)}
+          />
+          <div className="mobile-scroll-bricks">
+            {this.renderMobileBricks(expandedBrick)}
+          </div>
+          <Grid container direction="row" className="sorted-row">
+            <Grid item xs={9} className="brick-row-container">
+              <div className="brick-row-title" onClick={() => this.props.history.push('/play/dashboard')}>
+                <button className="btn btn-transparent svgOnHover">
+                  <span>New</span>
+                  <SpriteIcon name="arrow-down" className="active text-theme-dark-blue" />
+                </button>
+              </div>
+              <div className="bricks-list-container">
+                {this.renderSortedBricks()}
+              </div>
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
+        </div>
+      </React.Suspense>
     );
   }
 }

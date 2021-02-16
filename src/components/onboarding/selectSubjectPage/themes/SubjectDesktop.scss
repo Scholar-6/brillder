@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .select-subject-page {
   width: 100%;
@@ -27,7 +27,7 @@
     overflow: hidden;
 
     .subject-item {
-      background: #12326A;
+      background: #12326a;
       border-radius: 1vw;
 
       .round-circle-container .round-circle {
@@ -59,7 +59,7 @@
         background: var(--theme-orange);
 
         .subject-name {
-          font-size:3.7vh;
+          font-size: 3.7vh;
           line-height: 1.24;
           font-family: $font-family-bold;
         }
@@ -90,8 +90,6 @@
   }
 }
 
-
-
 .subjects-column-v2 {
   height: 100%;
   @extend %flexToYCenter;
@@ -115,7 +113,7 @@
       margin-bottom: 0.8vh;
       text-align: center;
       color: var(--theme-dark-blue);
-      
+
       .round-circle-container {
         left: 0.8vw;
         position: absolute;

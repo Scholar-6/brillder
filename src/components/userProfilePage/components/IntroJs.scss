@@ -8,6 +8,21 @@
   font-size: 1.5vw;
 }
 
+.introjs-tooltip {
+  max-width: 30vw !important;
+  border-radius: 0.4vw;
+  .introjs-tooltiptext {
+    padding-left: 1.1vw;
+    padding-right: 1.1vw;
+  }
+  .introjs-tooltipbuttons {
+    padding: 0.6vw;
+  }
+  .introjs-prevbutton {
+    margin-right: 0.6vw;
+  }
+}
+
 .introjs-tooltipReferenceLayer {
   p {
     min-height: 2vw;

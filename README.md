@@ -16,11 +16,14 @@ Run the project locally (Windows and Linux) and connect to the dev-api:
 ** windows C:\Windows\System32\Drivers\etc\hosts  
 `127.0.0.1 local-brillder.scholar6.org` 
 * create .env file with the following values  
-        REACT_APP_BACKEND_HOST=https://dev-api.scholar6.org  
+        REACT_APP_BACKEND_HOST=https://dev-api.brillder.com  
         REACT_APP_ZENDESK_ID=33210b3d-b3d5-43ba-9b07-70acce8c10b6  
         REACT_APP_VERSION=$npm_package_version  
         REACT_APP_BUILD_AUTO_SAVE_DELAY=500  
         REACT_APP_DESMOS_API_KEY=dcb31709b452b1cf9dc26972add0fda6  
+        HOST=local-brillder.brillder.com  
+        PORT=3000
+        PUBLIC_URL=/play/dashboard/all-subjects  
 * `npm install`  
 * `npm start`  
 * Go to http://local-brillder.scholar6.org:3000  

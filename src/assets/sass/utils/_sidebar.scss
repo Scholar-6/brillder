@@ -3,7 +3,7 @@
   padding-right: 0;
 
   @include phone_and_tabletP {
-    height: $height-mobile-view;
+    height: 100vh;
     background: var(--white);
   }
 
@@ -383,7 +383,7 @@
       @include phone_and_tabletP {
         font-size: 5vw;
         font-family: $font-family-bold;
-        padding: 3vw;
+        padding: 3vw 3vw 3vw 6vw;
         margin-bottom: 0.5vh;
         border-bottom: 0.2vh solid var(--solitude-light);
         z-index: 10;
@@ -418,14 +418,18 @@
         overflow-y: auto;
         padding: 3vw 0;
       }
-
       @include tabletP {
         padding-left: 1vw;
         padding-right: 1vw;
         height: $bricks-height;
         overflow: auto;
       }
-
+      .subjects-column {
+        @include tabletP {
+          height: inherit;
+          display: block;
+        }
+      }
       &.bricks-container-mobile {
         overflow: hidden;
 
@@ -493,7 +497,6 @@
           .short-brick-info {
             @extend %ellipsis;
             margin-left: 3vw;
-            width: 100%;
             display: flex;
             flex-direction: column;
             @extend %linkDescription;
@@ -504,12 +507,11 @@
               width: 100%;
               @include phone_and_tabletP {
                 font-size: 3.8vw;
-                width: 75vw;
               }
               @include tabletP {
                 display: flex;
                 font-size: 0.9vw;
-                width: 19vw;
+                width: 100%;
               }
               > span {
                 margin: 0 0.3vw;
@@ -565,7 +567,8 @@
               position: absolute;
               width: 95%;
             }
-            .short-description, .expanded-brick-info {
+            .short-description,
+            .expanded-brick-info {
               display: flex;
               width: 100%;
               height: 100%;
@@ -583,16 +586,22 @@
                 }
               }
 
+              .brick-circle-container {
+                position: absolute;
+                top: 0;
+                display: flex;
+                align-items: center;
+                height: 100%;
+              }
+
               .left-brick-circle {
                 @include phone_and_tabletP {
                   height: 9.5vw;
                   width: 9.5vw;
                 }
                 @include tabletP {
-                  position: absolute;
-                  top: 1.3vh;
-                  height: 2.1vw;
                   width: 2.1vw;
+                  height: 2.1vw;
                   border-radius: 50%;
                 }
                 .round-button {
@@ -617,7 +626,7 @@
 
               &.mobile-expanded {
                 .short-brick-info {
-                  width: calc(100% - 10vw - 15vw) !important;
+                  width: calc(100% - 11vw - 15vw) !important;
                 }
 
                 .play-button-link {

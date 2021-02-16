@@ -3,7 +3,7 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { isMobile, isIPad13, isTablet } from 'react-device-detect';
+import { isMobile, isIPad13} from 'react-device-detect';
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -64,11 +64,21 @@ const App: React.FC<AppProps> = props => {
   setBrillderTitle();
   const location = useLocation();
   const [zendeskCreated, setZendesk] = React.useState(false);
-  const [orientation, setOrientation] = React.useState('');
+  const isHorizontal = () => {
+    // Apple does not seem to have the window.screen api so we have to use deprecated window.orientation instead.
+    if (window.orientation && typeof window.orientation === "number" && Math.abs(window.orientation) === 90 ) {
+      return true;
+    }
+    if (window.screen.orientation && window.screen.orientation.type.includes('/^landscape-.+$/') === true) {
+      return true;
+    }
+    return false;
+  };
+  const [horizontal, setHorizontal] = React.useState(isHorizontal());
 
   useEffect(() => {
     window.addEventListener("orientationchange", (event: any) => {
-      setOrientation(event.target.screen.orientation ? event.target.screen.orientation.type : event.target.orientation);
+      setHorizontal(isHorizontal());
     });
   }, []);
 
@@ -117,22 +127,11 @@ const App: React.FC<AppProps> = props => {
     return Promise.reject(error);
   });
 
-  const landscape = '/^landscape-.+$/';
-  if (!isTablet && !isIPad13 && isMobile) {
-    // Apple does not seem to have the window.screen api so we have to use deprecated window.orientation instead.
-    if (window.screen.orientation && window.screen.orientation.type.match(landscape) || window.orientation === 90 || window.orientation === -90) {
-      return <RotateInstruction />;
-    }
-  }
-
-  // tablet or ipad show in landscape
-  if (isTablet || isIPad13) {
-    if (window.screen.orientation && window.screen.orientation.type.match(landscape) || window.orientation === 90 || window.orientation === -90) {
-      return <Warning />
-    } else {
-      return <RotateInstruction />;
-    }
-  }
+  if (isIPad13) { 
+    //return <Warning />
+  } else if (isMobile && horizontal) {
+    return <RotateInstruction />;
+  } 
 
   return (
     <ThemeProvider theme={theme}>

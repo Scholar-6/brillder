@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { Box, Grid, Hidden } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import queryString from 'query-string';
 import { Route, Switch } from 'react-router-dom';
 import "swiper/swiper.scss";
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
-import "./ViewAll.scss";
 import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
@@ -20,7 +20,6 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
-import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import ViewAllFilter, { SortBy } from "./components/ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
@@ -30,7 +29,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 import { getBrickColor } from "services/brick";
-import { isMobile } from "react-device-detect";
 import map from "components/map";
 import NoSubjectDialog from "components/baseComponents/dialogs/NoSubjectDialog";
 import { clearProposal } from "localStorage/proposal";
@@ -84,6 +82,10 @@ interface ViewAllState {
   isAllSubjects: boolean;
   isViewAll: boolean;
 }
+
+const MobileTheme = React.lazy(() => import('./themes/ViewAllPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/ViewAllPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/ViewAllPageDesktopTheme'));
 
 class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   constructor(props: ViewAllProps) {
@@ -472,7 +474,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const { searchString } = this.state;
     this.setState({ shown: false });
     let bricks: Brick[] | null = [];
-    const {pathname} = this.props.location;
+    const { pathname } = this.props.location;
     if (pathname.slice(pathname.length - 13, pathname.length) === '/all-subjects') {
       this.props.history.push(map.ViewAllPage + '?searchString=' + searchString);
     }
@@ -503,42 +505,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       }
     }, 1400);
   }
-
-  renderExpandedBrick(color: string, brick: Brick) {
-    return (
-      <ExpandedBrickDescription
-        userId={this.props.user.id}
-        isAdmin={this.state.isAdmin}
-        searchString=""
-        color={color}
-        brick={brick}
-        move={(brickId) => this.move(brickId)}
-        onDelete={brickId => this.handleDeleteOpen(brickId)}
-      />
-    );
-  }
-
-  renderBrickContainer = (brick: Brick, key: number) => {
-    let color = getBrickColor(brick);
-
-    return (
-      <div key={key} className="main-brick-container">
-        <Box className="brick-container">
-          <div
-            className={`absolute-container brick-row-0 ${brick.expanded ? "brick-hover" : ""}`}
-            onMouseEnter={() => this.yourBricksMouseHover(key)}
-            onMouseLeave={() => this.yourBricksMouseLeave()}
-          >
-            {brick.expanded ? (
-              this.renderExpandedBrick(color, brick)
-            ) : (
-                <ShortBrickDescription searchString="" brick={brick} />
-              )}
-          </div>
-        </Box>
-      </div>
-    );
-  };
 
   renderSortedBricks = (bricks: Brick[]) => {
     let data = prepareVisibleBricks(
@@ -622,18 +588,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
   //region Mobile
-
-  renderYourBrickRow = () => {
-    let bricksList = [];
-    let index = 0;
-    for (let i = index; i < index + 3; i++) {
-      const { yourBricks } = this.state;
-      if (yourBricks[i]) {
-        bricksList.push(this.renderBrickContainer(yourBricks[i], i));
-      }
-    }
-    return bricksList;
-  };
 
   renderEmptyCategory(name: string) {
     return (
@@ -785,7 +739,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         </div>
       );
     }
-    return <div className="bricks-list">{this.renderYourBrickRow()}</div>;
   }
 
   renderDesktopBricksPanel(filterSubjects: number[], bricks: Brick[]) {
@@ -923,52 +876,55 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     return (
-      <div className={pageClass}>
-        <Hidden only={["sm", "md", "lg", "xl"]}>
-          <Switch>
-            <Route exec path={map.AllSubjects}>
-              {this.renderAllSubjectsPage()}
-            </Route>
-            <Route exec path={map.ViewAllPage}>
-              {this.renderMobilePage(expandedBrick)}
-            </Route>
-          </Switch>
-        </Hidden>
-        <Hidden only={["xs"]}>
-          <PageHeadWithMenu
-            page={PageEnum.ViewAll}
-            user={this.props.user}
-            placeholder={"Search Subjects, Topics, Titles & more"}
-            history={this.props.history}
-            search={() => this.search()}
-            searching={(v) => this.searching(v)}
+      <React.Suspense fallback={<></>}>
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+        <div className={pageClass}>
+          <Hidden only={["sm", "md", "lg", "xl"]}>
+            <Switch>
+              <Route exec path={map.AllSubjects}>
+                {this.renderAllSubjectsPage()}
+              </Route>
+              <Route exec path={map.ViewAllPage}>
+                {this.renderMobilePage(expandedBrick)}
+              </Route>
+            </Switch>
+          </Hidden>
+          <Hidden only={["xs"]}>
+            <PageHeadWithMenu
+              page={PageEnum.ViewAll}
+              user={this.props.user}
+              placeholder={"Search Subjects, Topics, Titles & more"}
+              history={this.props.history}
+              search={() => this.search()}
+              searching={(v) => this.searching(v)}
+            />
+            <Switch>
+              <Route exec path={map.AllSubjects}>
+                {this.renderAllSubjectsPage()}
+              </Route>
+              <Route exec path={map.ViewAllPage}>
+                {this.renderDesktopViewAllPage(bricks)}
+              </Route>
+            </Switch>
+          </Hidden>
+          <DeleteBrickDialog
+            isOpen={this.state.deleteDialogOpen}
+            brickId={this.state.deleteBrickId}
+            close={() => this.handleDeleteClose()}
+            onDelete={(brickId) => this.delete(brickId)}
           />
-          <Switch>
-            <Route exec path={map.AllSubjects}>
-              {this.renderAllSubjectsPage()}
-            </Route>
-            <Route exec path={map.ViewAllPage}>
-              {this.renderDesktopViewAllPage(bricks)}
-            </Route>
-          </Switch>
-        </Hidden>
-        <DeleteBrickDialog
-          isOpen={this.state.deleteDialogOpen}
-          brickId={this.state.deleteBrickId}
-          close={() => this.handleDeleteClose()}
-          onDelete={(brickId) => this.delete(brickId)}
-        />
-        <FailedRequestDialog
-          isOpen={this.state.failedRequest}
-          close={() => this.setState({ ...this.state, failedRequest: false })}
-        />
-        <NoSubjectDialog
-          isOpen={this.state.noSubjectOpen}
-          subject={this.state.activeSubject}
-          history={this.props.history}
-          close={() => this.setState({ noSubjectOpen: false })}
-        />
-      </div >
+          <FailedRequestDialog
+            isOpen={this.state.failedRequest}
+            close={() => this.setState({ ...this.state, failedRequest: false })}
+          />
+          <NoSubjectDialog
+            isOpen={this.state.noSubjectOpen}
+            subject={this.state.activeSubject}
+            history={this.props.history}
+            close={() => this.setState({ noSubjectOpen: false })}
+          />
+        </div >
+      </React.Suspense>
     );
   }
 }

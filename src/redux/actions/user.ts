@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { User } from 'model/user';
 import { Action, Dispatch } from 'redux';
 
 import types from '../types';
@@ -35,4 +36,8 @@ const getUser = () => {
   }
 }
 
-export default { getUser }
+const setUser = (user: User) => {
+  return getUserSuccess(user);
+}
+
+export default { getUser, setUser }

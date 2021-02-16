@@ -34,7 +34,7 @@ describe("Ending play", () => {
         location={{pathname: ''}}
         history={historyMock}
         brickAttempt={attempt}
-        saveAttempt={() => { }}
+        move={() => { }}
       />
     );
   });
