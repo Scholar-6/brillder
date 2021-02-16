@@ -9,6 +9,7 @@ import AuthorSearchRow from "./AuthorRow";
 import { User, UserType } from "model/user";
 import BrickCircle from "./BrickCircle";
 import { canDelete } from "components/services/brickService";
+import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
 
 interface ShortDescriptionProps {
   brick: Brick;
@@ -73,7 +74,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
           <SearchText searchString={searchString} text={brick.title} />
         </div>
         <div className="link-info">
-          {brick.keywords && brick.keywords.map((k, i) => <div key={i} className="key-word">#{k.name}</div>)}
+          <KeyWordsPreview keywords={brick.keywords} />
         </div>
         <div className="link-info">
           <AuthorSearchRow searchString={searchString} brick={brick} />
