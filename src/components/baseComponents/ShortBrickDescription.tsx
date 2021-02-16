@@ -169,7 +169,9 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
             />
           </div>
         )}
-        {this.renderShortBrickInfo(searchString, brick)}
+        <div className="centered-brick-description">
+          {this.renderShortBrickInfo(searchString, brick)}
+        </div>
         {isExpanded ? this.renderPlayButton() : ""}
       </div>
     );
