@@ -28,11 +28,6 @@
       background: var(--white) !important;
       border: 0.25vw solid var(--theme-yellow) !important;
     }
-    .circle-hovered .play-button {
-      svg {
-        color: var(--theme-yellow) !important;
-      }
-    }
     .expanded-brick-info {
       .bin-button,
       .play-button {

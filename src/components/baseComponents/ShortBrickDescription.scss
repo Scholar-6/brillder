@@ -84,6 +84,16 @@
   border-radius: 1vw;
   background: var(--white);
 
+  .label-circle-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--white);
+    font-size: 1vw;
+    transition: all 300ms ease-out;
+  }
+
   .play-button {
     position: absolute;
     top: 0;
@@ -98,27 +108,20 @@
       width: 0;
     }
   }
-  .circle-hovered {
-    .round-button {
-      .svg {
-        display: none;
-      }
-    }
-    .play-button {
-      .svg {
-        cursor: pointer;
-        color: var(--white) !important;
-        height: 80%;
-        margin-left: 16%;
-        width: 70%;
-        transition: all 0.2s ease-in-out;
-      }
-    }
-  }
   .hover-delete-icon {
     position: absolute;
     top:1.6vh;
     right: 1.6vh;
+  }
+  .centered-brick-description {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    
+    .link-info {
+      font-size: 0.8vw !important;
+    }
   }
   &:hover {
     background: var(--tab-gray);
@@ -128,6 +131,9 @@
         height: 1vw !important;
         width: 1vw !important;
       }
+    }
+    .label-circle-text {
+      font-size: 1.3vw;
     }
   }
 }
