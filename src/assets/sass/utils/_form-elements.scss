@@ -13,7 +13,7 @@ input {
     @include placeholder {
       color: var(--theme-dark-blue);
     }
-    &[type='password'] {
+    &[type="password"] {
       @include placeholder {
         > div {
           font-size: 4vw;
@@ -67,8 +67,8 @@ input {
       font-size: 1.5vw;
     }
   }
-  input[type='email']::placeholder,
-  input[type='password']::placeholder {
+  input[type="email"]::placeholder,
+  input[type="password"]::placeholder {
     color: rgb(141, 154, 180);
   }
   .hide-password-icon-container {
@@ -110,7 +110,8 @@ input {
   }
 }
 
-.MuiAutocomplete-root {
+.MuiAutocomplete-root,
+.MuiTextField-root.dialog-input {
   width: 100%;
   margin: 0 !important;
   margin-bottom: 3vh !important;
