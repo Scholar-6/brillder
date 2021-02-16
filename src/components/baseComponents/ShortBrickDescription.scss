@@ -79,6 +79,11 @@
 }
 
 .short-description {
+  cursor: pointer;
+  padding-left: 1vw;
+  border-radius: 1vw;
+  background: var(--white);
+
   .play-button {
     position: absolute;
     top: 0;
@@ -107,6 +112,21 @@
         margin-left: 16%;
         width: 70%;
         transition: all 0.2s ease-in-out;
+      }
+    }
+  }
+  .hover-delete-icon {
+    position: absolute;
+    top:1.6vh;
+    right: 1.6vh;
+  }
+  &:hover {
+    background: var(--tab-gray);
+    .hover-delete-icon {
+      height: 3.5vw;
+      svg {
+        height: 1vw !important;
+        width: 1vw !important;
       }
     }
   }
