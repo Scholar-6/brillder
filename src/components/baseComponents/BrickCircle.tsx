@@ -26,6 +26,7 @@ class BrickCircle extends Component<BrickCircleProps> {
       return (
         <div className="round-button-icon">
           <SpriteIcon name={circleIcon} className={svgClass} />
+          <div className="label-circle-text show-on-hover">{this.props.label}</div>
         </div>
       );
     }

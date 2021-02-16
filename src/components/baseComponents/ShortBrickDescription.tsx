@@ -123,10 +123,8 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     }
 
     let label = '';
-    if (!this.props.circleIcon) {
-      if (brick.academicLevel > AcademicLevel.First) {
-        label = AcademicLevelLabels[brick.academicLevel];
-      }
+    if (brick.academicLevel > AcademicLevel.First) {
+      label = AcademicLevelLabels[brick.academicLevel];
     }
 
     if (isMobile) {
