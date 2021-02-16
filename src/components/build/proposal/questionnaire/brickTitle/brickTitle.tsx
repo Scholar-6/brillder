@@ -37,7 +37,6 @@ interface BrickTitleProps {
   playStatus: PlayButtonStatus;
   subjects: Subject[];
   saveTitles(data: any): void;
-  setKeywords(keywords: KeyWord[]): void;
   setAcademicLevel(level: AcademicLevel): void;
   saveAndPreview(): void;
 }
@@ -216,7 +215,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                     onChange={e => this.onChange(e, "alternativeTopics")}
                     placeholder="Enter Subtopic(s)..."
                   />
-                  <KeyWordsComponent disabled={!canEdit} keyWords={parentState.get("keywords")} onChange={this.props.setKeywords.bind(this)} />
+                  <KeyWordsComponent disabled={!canEdit} keyWords={parentState.get("keywords")} />
                 </div>
                 <div className="audience-inputs">
                   <DifficultySelect disabled={!canEdit} level={parentState.get("academicLevel")} onChange={this.props.setAcademicLevel.bind(this)} />

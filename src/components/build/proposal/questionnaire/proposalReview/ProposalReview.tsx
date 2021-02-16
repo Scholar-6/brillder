@@ -39,7 +39,6 @@ interface ProposalProps {
   baseUrl: string;
   saveBrick(): void;
   setBrickField(name: BrickFieldNames, value: string): void;
-  setKeywords(keywords: KeyWord[]): void;
   setAcademicLevel(a: AcademicLevel): void;
   saveAndPreview(): void;
 }
@@ -338,8 +337,8 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 {/* TODO: Add adaptedFrom field */}
                 {brick.get("adaptedFrom") && '(ADAPTED)'}
               </div>
-              <div><KeyWordsComponent disabled={!this.props.canEdit} keyWords={this.props.brick.keywords} onChange={this.props.setKeywords} /></div>
-              <div><DifficultySelect disabled={!this.props.canEdit} level={this.props.brick.academicLevel} onChange={this.props.setAcademicLevel} /></div>
+              <div><KeyWordsComponent disabled={!this.props.canEdit} keyWords={this.props.brick.get("keywords")} /></div>
+              <div><DifficultySelect disabled={!this.props.canEdit} level={this.props.brick.get("academicLevel")} onChange={this.props.setAcademicLevel} /></div>
               <p className="text-title m-t-3 bold">Open Question:</p>
               {this.renderOpenQuestionField()}
               <p className="text-title brick-length m-t-3">

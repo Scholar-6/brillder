@@ -216,8 +216,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.saveLocalBrick({ ...this.state.brick, ...titles });
   setKeywords = (keywords: KeyWord[]) =>
     this.saveLocalBrick({ ...this.state.brick, keywords});
-  setAcademicLevel = (academicLevel: AcademicLevel) =>
-    this.saveLocalBrick({ ...this.state.brick, academicLevel});
   setOpenQuestion = (openQuestion: string) =>
     this.saveLocalBrick({ ...this.state.brick, openQuestion } as Brick);
   setBrief = (brief: string) =>
@@ -238,6 +236,11 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.context?.ydoc.getMap("brick").set("brickLength", brickLength);
     return brick;
   };
+
+  setAcademicLevel = (academicLevel: AcademicLevel) => {
+    this.saveLocalBrick({ ...this.state.brick, academicLevel});
+    this.context?.ydoc.getMap("brick").set("academicLevel", academicLevel);
+  }
 
   setLengthAndSave = (brickLength: BrickLengthEnum) => {
     const canEdit = canEditBrick(this.state.brick, this.props.user);
@@ -349,7 +352,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 canEdit={canEdit}
                 subjects={this.state.subjects}
                 saveTitles={this.setTitles}
-                setKeywords={this.setKeywords}
                 setAcademicLevel={this.setAcademicLevel}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
@@ -403,7 +405,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 canEdit={canEdit}
                 user={user}
                 setBrickField={this.setBrickField}
-                setKeywords={this.setKeywords}
                 setAcademicLevel={this.setAcademicLevel}
                 saveBrick={this.saveAndMove}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
