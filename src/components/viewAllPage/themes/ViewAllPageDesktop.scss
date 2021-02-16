@@ -113,18 +113,23 @@
         }
         .subject-row {
           width: 100%;
+          @include tabletL {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:nth-child(even) {
+              width: calc(100% - 8vw);
+              margin: 0 4vw;
+            }
+          }
           .subject-item {
             transition: all 300ms ease-out;
             cursor: pointer;
             position: relative;
             color: var(--white) !important;
             background: var(--theme-dark-blue) !important;
-
-            transition: all 300ms ease-out;
-            cursor: pointer;
-            position: relative;
-            color: var(--theme-dark-blue) !important;
-            background: var(--white) !important;
+            // color: var(--theme-dark-blue) !important;
+            // background: var(--white) !important;
             @include tabletL {
               text-align: center;
               width: 16vw;
