@@ -17,8 +17,7 @@ const TitlePage: React.FC<TitlePageProps> = ({brick, color}) => {
         </Grid>
         <div className="proposal-titles">
           <div className="title">{brick.title}</div>
-          <div>{brick.subTopic}</div>
-          <div>{brick.alternativeTopics}</div>
+          <div className="key-words">{brick.keywords && brick.keywords.map((k, i) => <div className="key-word">{k.name}</div>)}</div>
         </div>
       </div>
     </div>

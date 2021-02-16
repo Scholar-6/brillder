@@ -185,14 +185,12 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-        <div className="introduction-page">
-          <div className={indexClassName}>
-            <div className="question-index">{index + 1}</div>
-          </div>
-          <div className="question-live-play review-content">
-            <div className="question-title">{renderReviewTitle(attempt)}</div>
-            {renderQuestion(question, index)}
-          </div>
+        <div className={indexClassName}>
+          <div className="question-index">{index + 1}</div>
+        </div>
+        <div className="question-live-play review-content">
+          <div className="question-title">{renderReviewTitle(attempt)}</div>
+          {renderQuestion(question, index)}
         </div>
       </TabPanel>
     );
@@ -248,19 +246,45 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
 
   return (
     <div className="brick-container play-preview-panel review-page">
-      <Grid container direction="row">
-        <Grid item sm={8} xs={12}>
-          <Hidden only={['xs']}>
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={activeStep}
-              className="swipe-view"
-              onChangeIndex={handleStep}
-            >
-              {questions.map(renderQuestionContainer)}
-            </SwipeableViews>
-          </Hidden>
-          <Hidden only={["sm", "md", "lg", "xl"]}>
+      <div className="introduction-page">
+        <Hidden only={['xs']}>
+          <Grid container direction="row">
+            <Grid item sm={8} xs={12}>
+              <SwipeableViews
+                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                index={activeStep}
+                className="swipe-view"
+                onChangeIndex={handleStep}
+              >
+                {questions.map(renderQuestionContainer)}
+              </SwipeableViews>
+            </Grid>
+            <Grid item sm={4} xs={12}>
+              <div className="introduction-info">
+                <CountDown brickLength={props.brickLength} endTime={null} setEndTime={() => { }} onEnd={onEnd} />
+                <div className="action-footer">
+                  <div>{renderPrevButton()}</div>
+                  {renderCenterText()}
+                  <div>{renderNextButton()}</div>
+                </div>
+              </div>
+            </Grid>
+          </Grid>
+        </Hidden>
+        <Hidden only={["sm", "md", "lg", "xl"]}>
+          <div className="intro-header expanded-intro-header">
+            <div className="intro-text-row text-center">
+              <span className="heading">Review</span>
+              <ReviewStepper
+                questions={questions}
+                attempts={attempts}
+                handleStep={handleStep}
+              />
+            </div>
+          </div>
+          <div className="introduction-info">
+          </div>
+          <div className="introduction-content">
             {questions.map(renderQuestionContainer)}
             <div className="action-footer">
               <div>
@@ -271,36 +295,14 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
               </div>
             </div>
-          </Hidden>
-        </Grid>
-        <Grid item sm={4} xs={12}>
-          <div className="introduction-info">
-            <CountDown brickLength={props.brickLength} endTime={null} setEndTime={() => { }} onEnd={onEnd} />
-            <div className="intro-text-row f-align-self-start m-t-5">
-              <Hidden only={['sm', 'md', 'lg', 'xl']}>
-                <span className="heading">Review</span>
-              </Hidden>
-              <ReviewStepper
-                questions={questions}
-                attempts={attempts}
-                handleStep={handleStep}
-              />
-            </div>
-            <Hidden only={['xs']}>
-              <div className="action-footer">
-                <div>{renderPrevButton()}</div>
-                {renderCenterText()}
-                <div>{renderNextButton()}</div>
-              </div>
-            </Hidden>
           </div>
-        </Grid>
-      </Grid>
-      <SubmitAnswersDialog
-        isOpen={isSubmitOpen}
-        submit={submitAndMove}
-        close={() => setSubmitAnswers(false)}
-      />
+        </Hidden>
+        <SubmitAnswersDialog
+          isOpen={isSubmitOpen}
+          submit={submitAndMove}
+          close={() => setSubmitAnswers(false)}
+        />
+      </div>
     </div>
   );
 };

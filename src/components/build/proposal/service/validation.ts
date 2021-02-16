@@ -13,7 +13,7 @@ export function validateProposal(brick: Brick) {
   if (!brick.subjectId) {
     url = map.ProposalSubject;
     isValid = false;
-  } else if (!brick.title || !brick.subTopic || !brick.alternativeTopics) {
+  } else if (!brick.title || brick.academicLevel < 1 || brick.keywords.length === 0) {
     url = map.ProposalTitle;
     isValid = false;
   } else if (!stripHtml(brick.openQuestion)) {

@@ -4,6 +4,7 @@ import SpriteIcon from "./SpriteIcon";
 
 interface BrickCircleProps {
   color: string;
+  label: string;
   circleIcon?: string;
   circleClass?: string;
   iconColor?: string;
@@ -51,7 +52,7 @@ class BrickCircle extends Component<BrickCircleProps, State> {
         </div>
       );
     }
-    return "";
+    return <div className="label-circle-text">{this.props.label}</div>;
   }
 
   render() {

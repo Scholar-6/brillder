@@ -14,8 +14,6 @@ export enum BrickFieldNames {
   brief = "brief",
   prep = "prep",
   title = "title",
-  subTopic = "subTopic",
-  alternativeTopics = "alternativeTopics",
   synthesis = "synthesis"
 };
 

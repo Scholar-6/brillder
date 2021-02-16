@@ -180,16 +180,18 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
         </Hidden>
         <Hidden only={['sm', 'md', 'lg', 'xl',]}>
           <div className="brick-container play-preview-panel provisional-score-page mobile-provisional-score">
-            <div className="introduction-info">
-              <div className="intro-text-row">
-                <span className="heading">Provisional Score</span>
-                {this.renderStepper()}
+            <div className="introduction-page">
+              <div className="introduction-info">
+                <div className="intro-text-row">
+                  <span className="heading">Provisional Score</span>
+                  {this.renderStepper()}
+                </div>
+              </div>
+              <div className="introduction-content">
+                {this.renderProgressBar()}
+                {this.renderFooter()}
               </div>
             </div>
-            <div className="introduction-page">
-              {this.renderProgressBar()}
-            </div>
-            {this.renderFooter()}
           </div>
         </Hidden>
       </div>

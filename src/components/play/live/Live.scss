@@ -7,24 +7,6 @@
 }
 
 .live-page {
-  @include phone_and_tabletP {
-    height: calc(100% - 60px) !important;
-    overflow-y: hidden !important;
-  }
-
-  .introduction-page {
-    @include phone_and_tabletP {
-      height: calc(100vh - 60px - 19vw) !important;
-    }
-
-    .question-index-container,
-    .question-title {
-      @include phone_and_tabletP {
-        display: none;
-      }
-    }
-  }
-
   .edited-step-icon {
     color: var(--black-blue);
     border-radius: 100%;
@@ -51,7 +33,6 @@
 }
 
 .post-play-page {
-
   .lines-container,
   .words-container {
     font-size: 0.85vw !important;

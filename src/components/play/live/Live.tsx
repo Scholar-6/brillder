@@ -235,16 +235,14 @@ const LivePage: React.FC<LivePageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-        <div className="introduction-page">
-          <PulsingCircleNumber
-            isPulsing={true}
-            edited={question.edited}
-            number={index + 1}
-          />
-          <div className="question-live-play review-content">
-            <div className="question-title">Investigation</div>
-            {renderQuestion(question, index)}
-          </div>
+        <PulsingCircleNumber
+          isPulsing={true}
+          edited={question.edited}
+          number={index + 1}
+        />
+        <div className="question-live-play review-content">
+          <div className="question-title">Investigation</div>
+          {renderQuestion(question, index)}
         </div>
       </TabPanel>
     );
@@ -288,69 +286,70 @@ const LivePage: React.FC<LivePageProps> = ({
 
   return (
     <div className="brick-container play-preview-panel live-page">
-      <Hidden only={["xs"]}>
-        <Grid container direction="row">
-          <Grid item xs={8}>
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={activeStep}
-              className="swipe-view"
-              style={{ width: "100%" }}
-              onChangeIndex={handleStep}
-            >
-              {questions.map(renderQuestionContainer)}
-            </SwipeableViews>
-          </Grid>
-          <Grid item xs={4}>
-            <div className="introduction-info">
-              {renderCountDown()}
-              <div className="intro-text-row f-align-self-start m-t-5">
-                {renderStepper()}
+      <div className="introduction-page">
+        <Hidden only={["xs"]}>
+          <Grid container direction="row">
+            <Grid item xs={8}>
+              <SwipeableViews
+                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                index={activeStep}
+                className="swipe-view"
+                style={{ width: "100%" }}
+                onChangeIndex={handleStep}
+              >
+                {questions.map(renderQuestionContainer)}
+              </SwipeableViews>
+            </Grid>
+            <Grid item xs={4}>
+              <div className="introduction-info">
+                {renderCountDown()}
+                <div className="intro-text-row f-align-self-start m-t-5">
+                  {renderStepper()}
+                </div>
+                <LiveActionFooter
+                  questions={questions}
+                  activeStep={activeStep}
+                  prev={prev}
+                  next={next}
+                  setSubmitAnswers={setSubmitAnswers}
+                />
               </div>
-              <LiveActionFooter
-                questions={questions}
-                activeStep={activeStep}
-                prev={prev}
-                next={next}
-                setSubmitAnswers={setSubmitAnswers}
-              />
-            </div>
+            </Grid>
           </Grid>
-        </Grid>
-      </Hidden>
-
-      <Hidden only={["sm", "md", "lg", "xl"]}>
-        <div className="introduction-info">
-          {renderCountDown()}
-          <div className="intro-text-row">
-            <span className="heading">Investigation</span>
-            {renderStepper()}
+        </Hidden>
+        <Hidden only={["sm", "md", "lg", "xl"]}>
+          <div className="introduction-info">
+            {renderCountDown()}
+            <div className="intro-text-row">
+              <span className="heading">Investigation</span>
+              {renderStepper()}
+            </div>
           </div>
-        </div>
-        <div className="introduction-page">
-          {questions.map(renderQuestionContainer)}
-        </div>
-        <div className="action-footer">
-          <div>
-            <MobilePrevButton activeStep={activeStep} onClick={prev} />
+          <div className="introduction-content">
+            {questions.map(renderQuestionContainer)}
+            <div className="action-footer">
+              <div>
+                <MobilePrevButton activeStep={activeStep} onClick={prev} />
+              </div>
+              <div className="direction-info text-center"></div>
+              <div>
+                <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
+              </div>
+            </div>
           </div>
-          <div className="direction-info text-center"></div>
-          <div>
-            <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
-          </div>
-        </div>
-      </Hidden>
-      <ShuffleAnswerDialog
-        isOpen={isShuffleOpen}
-        submit={() => nextFromShuffle()}
-        hide={() => setShuffleDialog(false)}
-        close={() => cleanAndNext()}
-      />
-      <SubmitAnswersDialog
-        isOpen={isSubmitOpen}
-        submit={submitAndMove}
-        close={() => setSubmitAnswers(false)}
-      />
+        </Hidden>
+        <ShuffleAnswerDialog
+          isOpen={isShuffleOpen}
+          submit={() => nextFromShuffle()}
+          hide={() => setShuffleDialog(false)}
+          close={() => cleanAndNext()}
+        />
+        <SubmitAnswersDialog
+          isOpen={isSubmitOpen}
+          submit={submitAndMove}
+          close={() => setSubmitAnswers(false)}
+        />
+      </div>
     </div>
   );
 };

@@ -32,7 +32,7 @@ interface EndingProps {
   history: any;
   location: any;
   brickAttempt: BrickAttempt;
-  saveAttempt(): void;
+  move(): void;
 }
 
 class EndingPage extends React.Component<EndingProps, EndingState> {
@@ -109,7 +109,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   }
 
   handleMove() {
-    this.props.saveAttempt();
+    this.props.move();
   }
 
   renderProgressBars() {
@@ -186,7 +186,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
           <button
             type="button"
             className="play-preview svgOnHover play-green"
-            onClick={this.props.saveAttempt}
+            onClick={this.props.move}
           >
             <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
           </button>
@@ -244,14 +244,16 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
         </Hidden>
         <Hidden only={["sm", "md", "lg", "xl"]}>
           <div className="brick-container play-preview-panel ending-page mobile-ending-page">
-            <div className="introduction-info">
-              <div className="intro-text-row">
-                <span className="heading">Final Score : Agg.</span>
-                {this.renderStepper()}
+            <div className="introduction-page">
+              <div className="introduction-info">
+                <div className="intro-text-row">
+                  <span className="heading">Final Score : Agg.</span>
+                  {this.renderStepper()}
+                </div>
               </div>
+              {this.renderProgressBars()}
+              {this.renderFooter()}
             </div>
-            <div className="introduction-page">{this.renderProgressBars()}</div>
-            {this.renderFooter()}
           </div>
         </Hidden>
       </div>

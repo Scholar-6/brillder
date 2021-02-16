@@ -151,11 +151,9 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     return (
       <div className="action-footer">
         <div></div>
-        <div className="direction-info text-center">
-          <Hidden only={["xs"]}>
-            {renderDesktopPlayText()}
-          </Hidden>
-        </div>
+        <Hidden only={["xs"]}>
+          {renderDesktopPlayText()}
+        </Hidden>
         <div>
           <button
             type="button"
@@ -299,12 +297,12 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <Grid container direction="row">
           <Grid item sm={8} xs={12}>
             {renderBrickCircle(color)}
-            <div className="introduction-page" style={{ paddingTop: '2.4vh' }}>
+            <div className="introduction-page">
               {renderHeader()}
               <div className="open-question">
                 <MathInHtml value={brick.openQuestion} />
               </div>
-              <div className="intro-content">
+              <div className="introduction-content">
                 {renderBriefTitle()}
                 {renderBriefExpandText()}
                 {renderPrepTitle()}
@@ -327,15 +325,13 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <div className="introduction-info">
             {!state.prepExpanded &&
               <div>
-                <Hidden only={["sm", "md", "lg", "xl"]}>
-                  {renderTimer()}
-                </Hidden>
+                {renderTimer()}
                 <IntroductionDetails brickLength={brick.brickLength} />
               </div>
             }
             {renderPlayButton()}
           </div>
-          <div className="intro-content">
+          <div className="introduction-content">
             {renderBriefTitle()}
             {renderBriefExpandText()}
             {renderPrepTitle()}
