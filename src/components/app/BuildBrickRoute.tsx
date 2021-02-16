@@ -67,14 +67,12 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
           const isNewBrickRoute = rest.location.pathname.includes(ProposalBase);
           if(isNewBrickRoute) {
             if(!(rest.brick && rest.brick.id)) {
-              console.log("creating new brick!");
               rest.createNewBrick(user.id);
               return <PageLoader content="...Creating brick..." />
             } else {
               return <Redirect to={`/build/brick/${rest.brick.id}/subject`} />;
             }
           } else if (!validRoutes.includes(part)) {
-            console.log(part);
             props.history.push(`/build/brick/${brickId}/investigation`);
             return <PageLoader content="...Getting Brick..." />;
           }
@@ -86,7 +84,6 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
                   if (!brick || !brick.author?.id || brick.id !== brickId) {
                     return <PageLoader content="...Getting Brick..." />;
                   }
-                  console.log({ ...brick, questions: brick.questions.map((q: any) => q.toJSON()) });
 
                   const reduxBrick = rest.brick;
                   if (!reduxBrick || !reduxBrick.author || reduxBrick.id !== brickId) {

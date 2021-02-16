@@ -2,6 +2,8 @@ import * as Y from "yjs";
 import { History } from "history";
 
 import { WebsocketProvider } from "y-websocket";
+import * as encoding from "lib0/encoding.js";
+import * as syncProtocol from "y-protocols/sync.js";
 
 export const getYDoc = (history: History, brickId: number, firstName: string, lastName: string) => {
     const ydoc = new Y.Doc({ autoLoad: true });
@@ -15,6 +17,7 @@ export const getYDoc = (history: History, brickId: number, firstName: string, la
                 window.location.href = `/build/brick/${json.brickId}/subject`;
             }
         } catch {
+            // the event isn't JSON, so just call the usual event handler
             normalOnMessage?.call(this, ev);
         }
     };
@@ -29,10 +32,6 @@ export const getYDoc = (history: History, brickId: number, firstName: string, la
         });
     });
 
-    ydoc.getMap("brick").observe((val) => {
-        // console.log(ydoc.toJSON());
-    });
-
     const awareness = wsProvider.awareness;
     awareness.setLocalStateField("user", {
         name: `${firstName} ${lastName}`,
@@ -40,7 +39,17 @@ export const getYDoc = (history: History, brickId: number, firstName: string, la
     });
     awareness.on("change", (changes: any) => {
         console.log(Array.from(awareness.getStates().values()));
-    })
+    });
+
+    // sync the document 100ms after initialization.
+    // this gives it enough time to load from the database.
+    // a bit of a hack, but I couldn't find any other way to force it to sync.
+    setTimeout(() => {
+        const encoder = encoding.createEncoder()
+        encoding.writeVarUint(encoder, 0)
+        syncProtocol.writeSyncStep1(encoder, ydoc)
+        wsProvider.ws!.send(encoding.toUint8Array(encoder))
+    }, 100);
     
     return { ydoc, awareness };
 }
