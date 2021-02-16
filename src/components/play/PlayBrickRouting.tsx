@@ -404,9 +404,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             setMode={setMode}
             toggleSidebar={setSidebar}
           />
-          <div className="brick-row-container">
-            {renderRouter()}
-          </div>
+          {renderRouter()}
         </div>
         <UnauthorizedUserDialog
           isOpen={unauthorizedOpen}
