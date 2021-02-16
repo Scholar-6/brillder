@@ -111,6 +111,8 @@
           justify-content: center;
           height: 100%;
         }
+        .subject-row {
+          width: 100%;
         .subject-item {
           transition: all 300ms ease-out;
           cursor: pointer;
@@ -126,6 +128,25 @@
               margin: 0 4vw;
             }
           }
+          .subject-item {
+            transition: all 300ms ease-out;
+            cursor: pointer;
+            position: relative;
+            color: var(--white) !important;
+            background: var(--theme-dark-blue) !important;
+            @include tabletL {
+              text-align: center;
+              width: 16vw;
+              font-size: 1.3vw;
+              margin: 0.8vh 0.5%;
+              border-radius: 0.8vw;
+            }
+            &:hover {
+              color: var(--theme-dark-blue) !important;
+              background: var(--tab-gray) !important;
+              .icon {
+                color: var(--theme-dark-blue) !important;
+              }
           &:hover {
             color: var(--white) !important;
             background: var(--theme-dark-blue) !important;
