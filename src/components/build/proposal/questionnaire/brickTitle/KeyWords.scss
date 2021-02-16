@@ -10,17 +10,19 @@
   flex-wrap: wrap;
   flex-basis: 100%;
   .key-word {
-    font-size: 1.25vw;
     line-height: 1.5;
-    padding-left: 1vw;
-    margin-left: 0.25vw;
-    margin-right: 0.25vw;
-    margin-bottom: 0.8vw;
-    border-radius: 2vw;
-    background: #e0e0e0;
     display: flex;
     align-items: center;
-
+    font-size: 1vw;
+    @include phone_and_tabletP {
+      // margin-left: 0.25vw;
+      // margin-right: 0.25vw;
+      // margin-bottom: 0.8vw;
+      font-size: 4vw;
+      // padding-left: 1vw;
+      // border-radius: 2vw;
+      // background: #e0e0e0;
+    }
     svg {
       cursor: pointer;
       margin-left: 0.3vw;
