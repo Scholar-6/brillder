@@ -1,0 +1,30 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.brick-status-circle {
+  .hover-brick-circle {
+    position: absolute;
+    $padding: -0.3vw;
+    top: $padding;
+    left: $padding;
+    $size: 2.7vw;
+    height: $size;
+    width: $size;
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+  .round-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .label-circle-text {
+      color: var(--white);
+      font-size: 1.1vw;
+      @include phone_and_tabletP {
+        font-size: 5vw;
+      }
+    }
+  }
+}
