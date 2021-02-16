@@ -262,6 +262,13 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
             <Grid item sm={4} xs={12}>
               <div className="introduction-info">
                 <CountDown brickLength={props.brickLength} endTime={null} setEndTime={() => { }} onEnd={onEnd} />
+                <div className="intro-text-row f-align-self-start m-t-5">
+                  <ReviewStepper
+                    questions={questions}
+                    attempts={attempts}
+                    handleStep={handleStep}
+                  />
+                </div>
                 <div className="action-footer">
                   <div>{renderPrevButton()}</div>
                   {renderCenterText()}

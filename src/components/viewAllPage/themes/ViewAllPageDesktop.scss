@@ -111,8 +111,12 @@
           justify-content: center;
           height: 100%;
         }
-        .subject-row {
-          width: 100%;
+        .subject-item {
+          transition: all 300ms ease-out;
+          cursor: pointer;
+          position: relative;
+          color: var(--theme-dark-blue) !important;
+          background: var(--white) !important;
           @include tabletL {
             display: flex;
             justify-content: center;
@@ -122,25 +126,11 @@
               margin: 0 4vw;
             }
           }
-          .subject-item {
-            transition: all 300ms ease-out;
-            cursor: pointer;
-            position: relative;
+          &:hover {
             color: var(--white) !important;
             background: var(--theme-dark-blue) !important;
-            @include tabletL {
-              text-align: center;
-              width: 16vw;
-              font-size: 1.3vw;
-              margin: 0.8vh 0.5%;
-              border-radius: 0.8vw;
-            }
-            &:hover {
-              color: var(--theme-dark-blue) !important;
-              background: var(--tab-gray) !important;
-              .icon {
-                color: var(--theme-dark-blue) !important;
-              }
+            .icon {
+              color: var(--white) !important;
             }
             .round-circle-container {
               left: 0.8vw;
@@ -219,7 +209,7 @@
   }
   .create-button {
     cursor: pointer;
-    margin-left: 12vw;
+    margin-left: 14.4vw;
     svg {
       @extend %transitionAll300;
       margin-top: calc(#{$bricks-height / 90});

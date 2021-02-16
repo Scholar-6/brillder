@@ -4,9 +4,11 @@ import './KeyWords.scss';
 import { enterPressed, spaceKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyWord } from "model/brick";
+import KeyWordsPlay from "./KeywordsPlay";
 
 interface KeyWordsProps {
   disabled: boolean;
+  isHashtags?: boolean;
   keyWords: KeyWord[];
   onChange(keyWords: KeyWord[]): void;
 }
@@ -68,7 +70,10 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
   render() {
     return (
       <div className="key-words">
-        {this.state.keyWords.map(this.renderKeyWord.bind(this))}
+        {this.props.isHashtags
+          ? <KeyWordsPlay keywords={this.state.keyWords} />
+          : this.state.keyWords.map(this.renderKeyWord.bind(this))
+        }
         <input disabled={this.props.disabled} value={this.state.keyWord} placeholder="Keyword(s)" onKeyDown={this.checkKeyword.bind(this)} onChange={e => this.setState({ keyWord: e.target.value })} />
       </div>
     );
