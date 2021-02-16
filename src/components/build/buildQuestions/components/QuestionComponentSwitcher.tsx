@@ -90,6 +90,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
             openSameAnswerDialog={props.openSameAnswerDialog}
           />
           <HintComponent
+            key={props.questionIndex + "-hint"}
             index={props.questionIndex}
             hint={hint}
             locked={locked}
