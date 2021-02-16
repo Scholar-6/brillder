@@ -245,7 +245,7 @@ class BuildBricks extends Component<BuildBricksProps> {
     return (
       <div className="brick-container color1" style={{ width: '4vw' }}>
         <div className="absolute-container" style={{ width: '4vw' }}>
-          <div className="short-description" style={{ width: '4vw' }}>
+          <div className="short-description no-hover" style={{ width: '4vw' }}>
           <div className="brick-circle-container">
             <div className="left-brick-circle">
               <div className="round-button">{count}</div>
@@ -267,7 +267,7 @@ class BuildBricks extends Component<BuildBricksProps> {
     return (
       <div className="brick-container color3" style={{ width: '4vw' }}>
         <div className="absolute-container" style={{ width: '4vw' }}>
-          <div className="short-description" style={{ width: '4vw' }}>
+          <div className="short-description no-hover" style={{ width: '4vw' }}>
             <div className="brick-circle-container">
               <div className="left-brick-circle">
                 <div className="round-button">{count}</div>
@@ -289,7 +289,7 @@ class BuildBricks extends Component<BuildBricksProps> {
     return (
       <div className="brick-container color2">
         <div className="absolute-container">
-          <div className="short-description">
+          <div className="short-description no-hover">
           <div className="brick-circle-container">
 
             <div className="left-brick-circle skip-top-right-border">
