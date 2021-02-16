@@ -272,7 +272,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           }
         }
 
-        .intro-content {
+        .introduction-content {
           @include phone_and_tabletP {
             padding: 0 4vw;
             height: calc(100vh - 60px - 86px);
@@ -691,35 +691,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       &.live-page,
       &.synthesis-page,
       &.review-page {
-        .introduction-info {
-          .intro-text-row {
-            @include phone_and_tabletP {
-              padding-top: 0 !important;
-            }
-          }
-          .intro-header {
-            .brick-counter {
-              @include phone_and_tabletP {
-                position: absolute !important;
-                right: -2vw !important;
-                top: -1vw !important;
-                display: block !important;
-              }
-            }
-            .play-clock {
-              @include phone_and_tabletP {
-                display: none !important;
-              }
-            }
-          }
-        }
-        .action-footer {
-          @include phone_and_tabletP {
-            width: 100%;
-            justify-content: center !important;
-            align-items: center !important;
-          }
-        }
         .mobile-next {
           top: auto !important;
           bottom: 87px !important;
