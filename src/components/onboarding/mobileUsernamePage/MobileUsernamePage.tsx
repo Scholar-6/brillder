@@ -13,11 +13,12 @@ interface UsernamePageProps {
   user: User;
 }
 
-const UsernamePage: React.FC<UsernamePageProps> = props => {
+const MobileUsernamePage: React.FC<UsernamePageProps> = props => {
   const { user } = props;
   const { username } = user;
 
   const [labelFinished, setLabelFinished] = React.useState(false);
+  const [secondFinished, setSecondFinished] = React.useState(false);
 
   const move = () => {
     if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
@@ -31,9 +32,18 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     return (
       <div>
         <LabelTyping
-          value={user.rolePreference?.roleId === UserType.Builder ? "Use this username to connect with people to create and assign bricks" : "Your username will be"}
+          value="Your username will be"
           className="username-help-label" start={true} onFinish={() => setLabelFinished(true)} />
-        <LabelTyping value={username} className="username" start={labelFinished} />
+        <LabelTyping value={username} className="username" start={labelFinished} onFinish={() => setSecondFinished(true)} />
+        {user.rolePreference?.roleId === UserType.Builder &&
+        <div>
+          <LabelTyping
+            start={secondFinished}
+            value="Use this username to connect with people to create and assign bricks"
+            className="username-help-label"
+          />
+          </div>
+        }
       </div>
     );
   }
@@ -56,4 +66,4 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
-export default connect(mapState)(UsernamePage);
+export default connect(mapState)(MobileUsernamePage);
