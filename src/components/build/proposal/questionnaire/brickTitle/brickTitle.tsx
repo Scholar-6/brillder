@@ -21,6 +21,7 @@ import { User } from "model/user";
 import AddSubjectDialog from "./AddSubjectDialog";
 import KeyWordsComponent from "./KeyWords";
 import DifficultySelect from "./DifficultySelect";
+import KeyWordsPlay from "./KeywordsPlay";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
@@ -91,7 +92,7 @@ const BrickTitlePreviewComponent: React.FC<PreviewProps> = (props) => {
         <div className="brick-topics">
           {keywords && 
             <span className={keywords.length > 0 ? 'topic-filled' : ''}>
-              {keywords.length > 0 ? renderKeyWords() : 'Keyword(s)'}
+              {keywords.length > 0 ? <KeyWordsPlay keywords={keywords} /> : 'Keyword(s)'}
             </span>}
         </div>
         <div className="author-row">
