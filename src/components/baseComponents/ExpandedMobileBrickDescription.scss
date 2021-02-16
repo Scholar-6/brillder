@@ -8,6 +8,23 @@
     height: calc(39.5vh);
     padding: 4vh 8vw 0 8vw;
     background: transparent;
+    .expand-button {
+      position: fixed;
+      top: 1vw;
+      left: 1vw;
+      border-radius: 50%;
+      background: var(--white);
+      height: 9vw;
+      width: 9vw;
+      color: var(--theme-dark-blue);
+      z-index: 9999;
+      svg {
+        padding: 1.5vw;
+        height: 6vw;
+        width: 6vw;
+        transform: scale(-1, 1);
+      }
+    }
     .brick-icons {
       @extend %flexCenter;
       margin-bottom: 2vh;
