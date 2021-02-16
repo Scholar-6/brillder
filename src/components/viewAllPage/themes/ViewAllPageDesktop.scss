@@ -124,8 +124,8 @@
           transition: all 300ms ease-out;
           cursor: pointer;
           position: relative;
-          color: var(--white) !important;
-          background: var(--theme-dark-blue) !important;
+          color: var(--theme-dark-blue) !important;
+          background: var(--white) !important;
           @include tabletL {
             text-align: center;
             width: 16vw;
@@ -134,10 +134,10 @@
             border-radius: 0.8vw;
           }
           &:hover {
-            color: var(--theme-dark-blue) !important;
-            background: var(--tab-gray) !important;
+            color: var(--white) !important;
+            background: var(--theme-dark-blue) !important;
             .icon {
-              color: var(--theme-dark-blue) !important;
+              color: var(--white) !important;
             }
           }
           .round-circle-container {
