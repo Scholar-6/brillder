@@ -76,13 +76,12 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     >
       <div className="main-brick-container" onMouseLeave={props.handleMouseLeave}>
         <Box className={`brick-container ${color}`}>
-          <div className={`absolute-container brick-row-${row} ${brick.expanded ? "brick-hover" : ""}`}>
+          <div className="absolute-container">
             <ShortBrickDescription
               user={props.user}
               searchString={props.searchString}
               circleIcon={props.circleIcon}
               iconColor={props.iconColor}
-              onMouseEnter={props.handleMouseHover}
               handleDeleteOpen={props.handleDeleteOpen}
               move={move}
               color={color}
