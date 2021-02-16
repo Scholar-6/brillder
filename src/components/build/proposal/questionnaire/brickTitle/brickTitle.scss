@@ -104,9 +104,6 @@
         margin-bottom: 0.5vh;
         width: 15.5vw;
         @extend %ellipsis;
-        &.uppercase {
-          text-transform: uppercase;
-        }
       }
       .topic-filled {
         color: var(--white);
