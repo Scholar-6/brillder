@@ -83,41 +83,6 @@
   padding-left: 1vw;
   border-radius: 1vw;
   background: var(--white);
-
-  .label-circle-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: var(--white);
-    font-size: 1vw;
-    transition: all 300ms ease-out;
-  }
-
-  .round-button-icon {
-    .label-circle-text {
-      display: none;
-      font-size: 0;
-      width: 0;
-      height: 0;
-    }
-  }
-
-  .hover-delete-icon {
-    position: absolute;
-    top:1.6vh;
-    right: 1.6vh;
-  }
-  .centered-brick-description {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    align-items: center;
-    
-    .link-info {
-      font-size: 0.8vw !important;
-    }
-  }
   &:hover {
     background: var(--tab-gray);
     .hover-delete-icon {
@@ -144,5 +109,39 @@
   }
   &.no-hover {
     background: inherit !important;
+  }
+  .label-circle-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--white);
+    font-size: 1vw;
+    transition: all 300ms ease-out;
+  }
+
+  .round-button-icon {
+    .label-circle-text {
+      display: none;
+      font-size: 0;
+      width: 0;
+      height: 0;
+    }
+  }
+
+  .hover-delete-icon {
+    position: absolute;
+    top: 1.6vh;
+    right: 1.6vh;
+  }
+  .centered-brick-description {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+
+    .link-info {
+      font-size: 0.8vw !important;
+    }
   }
 }
