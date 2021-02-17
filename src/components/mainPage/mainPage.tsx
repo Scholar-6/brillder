@@ -20,14 +20,14 @@ import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getAssignedBricks, getCurrentUserBricks } from "services/axios/brick";
 import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
-import TeachButton from "./TeachButton";
-import FirstButton from "./FirstButton";
+import TeachButton from "./components/TeachButton";
+import FirstButton from "./components/FirstButton";
 import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/DesktopVersionDialogV2";
 import { isMobile } from "react-device-detect";
 import MobileButtonWrap from "./MobileButtonWrap";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
-import LibraryButton from "./LibraryButton";
-import BlocksIcon from "./BlocksIcon";
+import LibraryButton from "./components/LibraryButton";
+import BlocksIcon from "./components/BlocksIcon";
 
 
 const mapState = (state: ReduxCombinedState) => ({
