@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import { User } from "model/user";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { generateId } from "../buildQuestions/questionTypes/service/questionBuild";
+import { toRenderJSON } from "services/SharedTypeService";
 
 interface Question {
   id: number;
@@ -160,7 +161,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       index: number,
       comlumns: number
     ) => {
-      const question = yquestion.toJSON();
+      const question = toRenderJSON(yquestion.getMap());
       let titleClassNames = "drag-tile-container";
       let cols = 2;
       if (index === props.currentQuestionIndex) {

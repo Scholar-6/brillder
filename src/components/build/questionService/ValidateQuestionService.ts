@@ -70,6 +70,7 @@ export function validateQuestion(question: Question) {
   const {type, hint, components} = question;
 
   if (!question.firstComponent || !question.firstComponent.value || !stripHtml(question.firstComponent.value)) {
+    console.log(question);
     return false;
   }
 
