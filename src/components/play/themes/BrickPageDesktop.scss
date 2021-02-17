@@ -544,9 +544,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         }
         &.final-step-page {
           color: var(--theme-dark-blue) !important;
-          .introduction-info {
-            height: auto;
-          }
           .round-button {
             background: var(--theme-green) !important;
             svg {
