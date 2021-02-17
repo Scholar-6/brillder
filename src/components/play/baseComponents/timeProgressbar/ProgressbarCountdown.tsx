@@ -13,7 +13,6 @@ interface CounterProps {
 
 interface CounterState {
   value: number;
-  startTime: Moment;
   isCounting: boolean;
   timerInterval: number;
   isDeadlineSoon: boolean;
@@ -26,7 +25,6 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
     this.state = {
       value: 0,
       isCounting: false,
-      startTime: this.props.endTime.clone().subtract(this.props.duration),
       timerInterval: this.setTimer(),
       isDeadlineSoon: false
     }
@@ -53,7 +51,7 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
       if (dif._milliseconds < 31000 && this.state.isDeadlineSoon === false) {
         this.setState({ ...this.state, isDeadlineSoon: true })
       }
-    }, 1000);
+    }, 300);
   }
 
   render() {
@@ -61,9 +59,7 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
     if (this.state.isDeadlineSoon) {
       className += ' deadline-soon';
     }
-    return (
-      <LinearProgress className={className} variant="determinate" value={this.state.value} />
-    );
+    return <LinearProgress className={className} variant="determinate" value={this.state.value} />;
   }
 }
 

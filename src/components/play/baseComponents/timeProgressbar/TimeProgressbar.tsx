@@ -57,9 +57,7 @@ const TimeProgressbar: React.FC<CounterProps> = (props) => {
     endTime = getEndTime();
   }
 
-  return (
-    <ProgressbarCountdown onEnd={props.onEnd} duration={duration} endTime={endTime} />
-  );
+  return <ProgressbarCountdown onEnd={props.onEnd} duration={duration} endTime={endTime} />;
 };
 
 export default TimeProgressbar;
