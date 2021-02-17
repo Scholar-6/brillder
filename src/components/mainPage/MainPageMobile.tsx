@@ -121,7 +121,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       }}>
         <button className="btn btn-transparent text-theme-orange zoom-item">
           <BlocksIcon />
-          <span className="item-description">Assignments</span>
+          <span className="item-description">
+            {this.props.user.rolePreference?.roleId === UserType.Teacher ? 'Shared with Me' : 'Assignments'}
+          </span>
         </button>
       </div>
     );
@@ -192,8 +194,10 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
     const renderTeachButtons = () => {
       const buttons = [];
+      buttons.push(firstButton());
+      buttons.push(<SwiperSlide><TeachButton history={this.props.history} disabled={true} /></SwiperSlide>);
+      buttons.push(<SwiperSlide>{this.renderCreateButton()}</SwiperSlide>);
       buttons.push(<SwiperSlide>{this.renderAssignmentsButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide><TeachButton history={this.props.history} disabled={this.state.isSwiping} /></SwiperSlide>);
       return buttons;
     }
 
