@@ -309,7 +309,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const deleteQuestionByIndex = (index: number) => {
     removeQuestionByIndex(questions, index);
     setDeleteDialog(false);
-    setCurrentQuestionIndex(deleteQuestionIndex - 1);
+    setCurrentQuestionIndex(deleteQuestionIndex <= 0 ? 0 : deleteQuestionIndex - 1);
   }
 
   const removeQuestion = (index: number) => {
