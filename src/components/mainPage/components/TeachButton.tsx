@@ -5,6 +5,7 @@ import './TeachButton.scss';
 interface TeachButtonProps {
   history: any;
   disabled?: boolean;
+  onMobileClick?(): void;
 }
 
 const TeachButton: React.FC<TeachButtonProps> = props => {
@@ -99,6 +100,9 @@ const TeachButton: React.FC<TeachButtonProps> = props => {
         if (!props.disabled) {
           props.history.push(map.ManageClassroomsTab);
         }
+        if (props.onMobileClick) {
+          props.onMobileClick();
+        }
       }}
     >
       <svg
@@ -114,7 +118,7 @@ const TeachButton: React.FC<TeachButtonProps> = props => {
         {renderLeftSmile()}
         {renderRightSmile()}
       </svg>
-      <span>Manage Classes</span>
+      <span className="item-description">Manage Classes</span>
     </div>  
   )
 }

@@ -136,11 +136,13 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderDesktopPlayText = () => {
     if (resume) {
       return (
-        <h2>Resume</h2>
+        <div>
+          <h2>Resume</h2>
+        </div>
       );
     }
     return (
-      <div className="direction-info">
+      <div>
         <h3>Ready?</h3>
         <h2>Play Brick</h2>
       </div>
@@ -151,9 +153,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     return (
       <div className="action-footer">
         <div></div>
-        <Hidden only={["xs"]}>
-          {renderDesktopPlayText()}
-        </Hidden>
+        <div className="direction-info">
+          <Hidden only={["xs"]}>
+            {renderDesktopPlayText()}
+          </Hidden>
+        </div>
         <div>
           <button
             type="button"
@@ -292,53 +296,55 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   };
 
   return (
-    <div className="brick-container">
-      <Hidden only={["xs"]}>
-        <Grid container direction="row">
-          <Grid item sm={8} xs={12}>
-            {renderBrickCircle(color)}
-            <div className="introduction-page">
-              {renderHeader()}
-              <div className="open-question">
-                <MathInHtml value={brick.openQuestion} />
+    <div className="brick-row-container">
+      <div className="brick-container">
+        <Hidden only={["xs"]}>
+          <Grid container direction="row">
+            <Grid item sm={8} xs={12}>
+              {renderBrickCircle(color)}
+              <div className="introduction-page">
+                {renderHeader()}
+                <div className="open-question">
+                  <MathInHtml value={brick.openQuestion} />
+                </div>
+                <div className="introduction-content">
+                  {renderBriefTitle()}
+                  {renderBriefExpandText()}
+                  {renderPrepTitle()}
+                  {renderPrepExpandText()}
+                </div>
               </div>
-              <div className="introduction-content">
-                {renderBriefTitle()}
-                {renderBriefExpandText()}
-                {renderPrepTitle()}
-                {renderPrepExpandText()}
-              </div>
-            </div>
-          </Grid>
-          <Grid item sm={4} xs={12}>
-            <div className="introduction-info">
-              {renderTimer()}
-              <IntroductionDetails brickLength={brick.brickLength} />
-              {renderPlayButton()}
-            </div>
-          </Grid>
-        </Grid>
-      </Hidden>
-      <Hidden only={["sm", "md", "lg", "xl"]}>
-        <div className="introduction-page">
-          {renderMobileHeader()}
-          <div className="introduction-info">
-            {!state.prepExpanded &&
-              <div>
+            </Grid>
+            <Grid item sm={4} xs={12}>
+              <div className="introduction-info">
                 {renderTimer()}
                 <IntroductionDetails brickLength={brick.brickLength} />
+                {renderPlayButton()}
               </div>
-            }
-            {renderPlayButton()}
+            </Grid>
+          </Grid>
+        </Hidden>
+        <Hidden only={["sm", "md", "lg", "xl"]}>
+          <div className="introduction-page">
+            {renderMobileHeader()}
+            <div className="introduction-info">
+              {!state.prepExpanded &&
+                <div>
+                  {renderTimer()}
+                  <IntroductionDetails brickLength={brick.brickLength} />
+                </div>
+              }
+              {renderPlayButton()}
+            </div>
+            <div className="introduction-content">
+              {renderBriefTitle()}
+              {renderBriefExpandText()}
+              {renderPrepTitle()}
+              {renderPrepExpandText()}
+            </div>
           </div>
-          <div className="introduction-content">
-            {renderBriefTitle()}
-            {renderBriefExpandText()}
-            {renderPrepTitle()}
-            {renderPrepExpandText()}
-          </div>
-        </div>
-      </Hidden>
+        </Hidden>
+      </div>
     </div>
   );
 };

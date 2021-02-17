@@ -37,18 +37,14 @@ const LiveStepper: React.FC<StepperProps> = ({ questions, ...props }) => {
     return (
       <div key={key} className={className} onClick={props.handleStep(index - 1)}>
         <span>{questionIndex}</span>
-        {
-          question.edited
-            ? <PulsingCircle isPulsing={props.previousStep === questionIndex - 1} />
-            : ""
-        }
+        {question.edited && <PulsingCircle isPulsing={props.previousStep === questionIndex - 1} />}
       </div>
     );
   };
 
   return (
     <div className="stepper">
-      <div className="step current" onClick={props.moveToPrep}>Prep</div>
+      <div className="step current prep-step" onClick={props.moveToPrep}>Prep</div>
       {questions.map(renderQuestionStep)}
     </div>
   );

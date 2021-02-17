@@ -351,6 +351,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             questions={brick.questions}
             brickId={brick.id}
             startTime={startTime}
+            brick={brick}
             brickLength={brick.brickLength}
             updateAttempts={updateReviewAttempts}
             attempts={attempts}
@@ -404,9 +405,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             setMode={setMode}
             toggleSidebar={setSidebar}
           />
-          <div className="brick-row-container">
-            {renderRouter()}
-          </div>
+          {renderRouter()}
         </div>
         <UnauthorizedUserDialog
           isOpen={unauthorizedOpen}

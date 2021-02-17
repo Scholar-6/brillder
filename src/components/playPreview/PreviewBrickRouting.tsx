@@ -255,80 +255,79 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             isPreview={true}
             moveToBuild={moveToBuild}
           />
-          <div className="brick-row-container">
-            <Switch>
-              <Route exac path="/play-preview/brick/:brickId/intro">
-                <Introduction
-                  location={location}
-                  brick={brick}
-                  isPlayPreview={true}
-                  startTime={startTime}
-                  setStartTime={setStartTime}
-                  moveNext={moveToLive}
-                />
-              </Route>
-              <Route exac path="/play-preview/brick/:brickId/live">
-                <Live
-                  status={status}
-                  attempts={attempts}
-                  previewQuestionIndex={getBuildQuestionNumber()}
-                  isPlayPreview={true}
-                  brick={brick}
-                  questions={brick.questions}
-                  updateAttempts={updateAttempts}
-                  finishBrick={finishBrick}
-                  endTime={liveEndTime}
-                  setEndTime={time => {
-                    if (liveEndTime === null) {
-                      setLiveEndTime(time);
-                    }
-                  }}
-                />
-              </Route>
-              <Route exac path="/play-preview/brick/:brickId/provisionalScore">
-                <ProvisionalScore
-                  history={history}
-                  location={location}
-                  status={status}
-                  brick={brick}
-                  attempts={attempts}
-                  isPlayPreview={true}
-                />
-              </Route>
-              <Route exac path="/play-preview/brick/:brickId/synthesis">
-                <Synthesis status={status} brick={brick} isPlayPreview={true} moveNext={moveToReview} />
-              </Route>
-              <Route exac path="/play-preview/brick/:brickId/review">
-                <Review
-                  isPlayPreview={true}
-                  status={status}
-                  questions={brick.questions}
-                  brickId={brick.id}
-                  startTime={startTime}
-                  brickLength={brick.brickLength}
-                  updateAttempts={updateReviewAttempts}
-                  attempts={attempts}
-                  finishBrick={finishReview}
-                />
-              </Route>
-              <Route exac path="/play-preview/brick/:brickId/ending">
-                <Ending
-                  location={location}
-                  status={status}
-                  history={history}
-                  brick={brick}
-                  brickAttempt={brickAttempt}
-                  move={saveBrickAttempt}
-                />
-              </Route>
-              <Route exac path="/play-preview/brick/:brickId/build-complete">
-                <BuildCompletePage brick={brick} history={history} />
-              </Route>
-              <Route exac path="/play-preview/brick/:brickId/submit">
-                <FinalStep user={props.user} status={status} history={history} location={location} />
-              </Route>
-            </Switch>
-          </div>
+          <Switch>
+            <Route exac path="/play-preview/brick/:brickId/intro">
+              <Introduction
+                location={location}
+                brick={brick}
+                isPlayPreview={true}
+                startTime={startTime}
+                setStartTime={setStartTime}
+                moveNext={moveToLive}
+              />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/live">
+              <Live
+                status={status}
+                attempts={attempts}
+                previewQuestionIndex={getBuildQuestionNumber()}
+                isPlayPreview={true}
+                brick={brick}
+                questions={brick.questions}
+                updateAttempts={updateAttempts}
+                finishBrick={finishBrick}
+                endTime={liveEndTime}
+                setEndTime={time => {
+                  if (liveEndTime === null) {
+                    setLiveEndTime(time);
+                  }
+                }}
+              />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/provisionalScore">
+              <ProvisionalScore
+                history={history}
+                location={location}
+                status={status}
+                brick={brick}
+                attempts={attempts}
+                isPlayPreview={true}
+              />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/synthesis">
+              <Synthesis status={status} brick={brick} isPlayPreview={true} moveNext={moveToReview} />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/review">
+              <Review
+                isPlayPreview={true}
+                status={status}
+                questions={brick.questions}
+                brick={brick}
+                brickId={brick.id}
+                startTime={startTime}
+                brickLength={brick.brickLength}
+                updateAttempts={updateReviewAttempts}
+                attempts={attempts}
+                finishBrick={finishReview}
+              />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/ending">
+              <Ending
+                location={location}
+                status={status}
+                history={history}
+                brick={brick}
+                brickAttempt={brickAttempt}
+                move={saveBrickAttempt}
+              />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/build-complete">
+              <BuildCompletePage brick={brick} history={history} />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/submit">
+              <FinalStep user={props.user} status={status} history={history} location={location} />
+            </Route>
+          </Switch>
         </div>
       </div>
     </React.Suspense>

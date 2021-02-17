@@ -4,6 +4,7 @@ import './LibraryButton.scss';
 
 interface ButtonProps {
   history: any;
+  isMobile?: boolean;
   isActive: boolean;
   isSwiping: boolean;
   onClick(): void;
@@ -41,9 +42,20 @@ const LibraryButton: React.FC<ButtonProps> = props => {
     }
   }
 
+  let className = 'btn btn-transparent';
+  if (isActive) {
+    className += ' active zoom-item text-theme-orange svgOnHover';
+  } else {
+    if (props.isMobile) {
+      className += ' text-theme-light-blue';
+    } else {
+      className += ' text-theme-dark-blue';
+    }
+  }
+
   return (
     <div className="my-library-button" onClick={onClick}>
-      <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange svgOnHover' : 'text-theme-dark-blue'}`}>
+      <button className={className}>
         {renderLibraryIcon()}
         <div>
           <span className={`item-description ${isActive ? '' : 'disabled'}`}>My Library</span>
