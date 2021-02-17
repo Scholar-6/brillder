@@ -3,7 +3,7 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { isMobile, isIPad13} from 'react-device-detect';
+import { isMobile, isIPad13, isTablet} from 'react-device-detect';
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -126,6 +126,10 @@ const App: React.FC<AppProps> = props => {
   }, function (error) {
     return Promise.reject(error);
   });
+
+  if ((isIPad13 || isTablet) && !horizontal) {
+    return <RotateInstruction />;
+  }
 
   if (isIPad13) { 
     //return <Warning />
