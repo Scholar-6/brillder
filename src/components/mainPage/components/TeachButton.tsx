@@ -5,6 +5,7 @@ import './TeachButton.scss';
 interface TeachButtonProps {
   history: any;
   disabled?: boolean;
+  onMobileClick?(): void;
 }
 
 const TeachButton: React.FC<TeachButtonProps> = props => {
@@ -98,6 +99,9 @@ const TeachButton: React.FC<TeachButtonProps> = props => {
       onClick={() => {
         if (!props.disabled) {
           props.history.push(map.ManageClassroomsTab);
+        }
+        if (props.onMobileClick) {
+          props.onMobileClick();
         }
       }}
     >

@@ -88,8 +88,15 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   renderCreateButton() {
     return (
-      <div className="create-item-container">
-        <button className="btn btn-transparent zoom-item svgOnHover">
+      <div className="create-item-container" onClick={() => {
+        if (!this.state.isSwiping) {
+          this.setState({
+            isDesktopOpen: true,
+            secondaryLabel: ''
+          });
+        }
+      }}>
+        <button className="btn btn-transparent zoom-item">
           <SpriteIcon name="trowel-home" className="text-theme-light-blue" />
           <span className="item-description">Build Bricks</span>
         </button>
@@ -100,7 +107,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   renderLibraryButton() {
     return (
       <LibraryButton
-        isActive={false} isMobile={true} history={this.props.history} isSwiping={this.state.isSwiping}
+        isActive={true} isMobile={true} history={this.props.history} isSwiping={this.state.isSwiping}
         onClick={() => this.setState({ isMyLibraryOpen: true })}
         onMobileClick={() => {
           this.setState({
@@ -195,7 +202,14 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     const renderTeachButtons = () => {
       const buttons = [];
       buttons.push(firstButton());
-      buttons.push(<SwiperSlide><TeachButton history={this.props.history} disabled={true} /></SwiperSlide>);
+      buttons.push(<SwiperSlide><TeachButton history={this.props.history} disabled={true} onMobileClick={() => {
+        if (!this.state.isSwiping) {
+          this.setState({
+            isDesktopOpen: true,
+            secondaryLabel: ''
+          });
+        }
+      }} /></SwiperSlide>);
       buttons.push(<SwiperSlide>{this.renderCreateButton()}</SwiperSlide>);
       buttons.push(<SwiperSlide>{this.renderAssignmentsButton()}</SwiperSlide>);
       return buttons;
@@ -203,7 +217,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
     return (
       <div className="mobile-main-page">
-        <button className="btn btn-transparent prev-image svgOnHover" onClick={() => this.swipePrev()}>
+        <button className="btn btn-transparent prev-image" onClick={() => this.swipePrev()}>
           <SpriteIcon name="arrow-up" className="w100 h100 active text-white" />
         </button>
         <Swiper
@@ -221,7 +235,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           {user.rolePreference?.roleId === UserType.Builder && renderBuildButtons()}
           {user.rolePreference?.roleId === UserType.Teacher && renderTeachButtons()}
         </Swiper>
-        <button className="btn btn-transparent next-image svgOnHover" onClick={() => this.swipeNext()}>
+        <button className="btn btn-transparent next-image" onClick={() => this.swipeNext()}>
           <SpriteIcon name="arrow-down" className="w100 h100 active text-white" />
         </button>
       </div>
