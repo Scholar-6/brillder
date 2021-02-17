@@ -27,6 +27,7 @@ import MobileNextButton from './components/MobileNextButton';
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import MobilePrevButton from "./components/MobilePrevButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -301,20 +302,34 @@ const LivePage: React.FC<LivePageProps> = ({
                 >
                   {questions.map(renderQuestionContainer)}
                 </SwipeableViews>
-                <div className="new-layout-footer" style={{display: 'none'}}>
-                  <div className="time-slider"></div>
+                <div className="new-layout-footer" style={{ display: 'none' }}>
+                  <div className="time-container">
+                    <TimeProgressbar
+                      isLive={true}
+                      onEnd={onEnd}
+                      endTime={props.endTime}
+                      brickLength={brick.brickLength}
+                      setEndTime={props.setEndTime}
+                    />
+                  </div>
                   <div className="title-column">
                     <div>
                       <div className="subject">{brick.subject?.name}</div>
-                      <div className="subject">{brick.title}</div>
+                      <div>{brick.title}</div>
                     </div>
                   </div>
                   <div className="new-navigation-buttons">
-                    <div className="n-btn back">
+                    <div className="n-btn back" onClick={prev}>
                       <SpriteIcon name="arrow-left" />
                       Back
                     </div>
-                    <div className="n-btn next">
+                    <div className="n-btn next" onClick={() => {
+                      if (questions.length - 1 > activeStep) {
+                        next();
+                      } else {
+                        setSubmitAnswers(true);
+                      }
+                    }}>
                       Next
                       <SpriteIcon name="arrow-right" />
                     </div>
