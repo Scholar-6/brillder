@@ -123,7 +123,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     }
 
     let label = '';
-    if (brick.academicLevel > AcademicLevel.First) {
+    if (brick.academicLevel >= AcademicLevel.First) {
       label = AcademicLevelLabels[brick.academicLevel];
     }
 
