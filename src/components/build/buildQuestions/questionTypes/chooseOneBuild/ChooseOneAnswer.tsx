@@ -3,10 +3,8 @@ import * as Y from "yjs";
 import Checkbox from "@material-ui/core/Checkbox";
 
 import './ChooseOneAnswer.scss';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import QuestionImageDropzone from "components/build/baseComponents/questionImageDropzone/QuestionImageDropzone";
 import { QuestionValueType } from "../types";
-import { ChooseOneAnswer } from './types';
 import RemoveItemButton from "../components/RemoveItemButton";
 import SoundRecord from "../sound/SoundRecord";
 import DeleteDialog from "components/baseComponents/deleteBrickDialog/DeleteDialog";
@@ -132,6 +130,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           placeholder="Enter Answer..."
           toolbar={['latex']}
           validate={validationRequired}
+          onBlur={onBlur}
         />
         <SoundRecord
           locked={locked}

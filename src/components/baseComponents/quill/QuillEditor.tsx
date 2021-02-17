@@ -46,8 +46,8 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
     );
 
     const onChange = (content: string, delta: Delta, source: Sources) => {
-        // setData(content);
-        // callOnChange(content, delta, source);
+        if(!props.sharedData) setData(content);
+        callOnChange(content, delta, source);
     }
 
     const [uniqueId, setUniqueId] = React.useState(randomEditorId());
@@ -107,7 +107,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
                 theme="snow"
                 // value={props.sharedData ? undefined : (data || "")}
                 onChange={onChange}
-                // onBlur={props.onBlur}
+                onBlur={props.onBlur}
                 readOnly={props.disabled}
                 placeholder={props.placeholder}
                 modules={modules}
