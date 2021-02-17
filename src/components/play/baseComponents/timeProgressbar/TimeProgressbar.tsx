@@ -1,9 +1,7 @@
 import React from "react";
 
-import "./BrickCounter.scss";
-import CounterDown from "./CounterDown";
+import ProgressbarCountdown from "./ProgressbarCountdown";
 import { BrickLengthEnum } from "model/brick";
-import Clock from "./Clock";
 import { Moment } from 'moment';
 const moment = require("moment");
 // TODO: try combining this into import { Moment }, * as moment from 'moment';
@@ -16,7 +14,7 @@ interface CounterProps {
   setEndTime(time: Moment): void;
 }
 
-const CountDown: React.FC<CounterProps> = (props) => {
+const TimeProgressbar: React.FC<CounterProps> = (props) => {
   const getLiveDuration = () => {
     let durationMins = 8;
     if (props.brickLength === BrickLengthEnum.S40min) {
@@ -57,11 +55,8 @@ const CountDown: React.FC<CounterProps> = (props) => {
   }
 
   return (
-    <div className="intro-header">
-      <CounterDown onEnd={props.onEnd} endTime={endTime} />
-      <Clock brickLength={props.brickLength} />
-    </div>
+    <ProgressbarCountdown onEnd={props.onEnd} endTime={endTime} />
   );
 };
 
-export default CountDown;
+export default TimeProgressbar;
