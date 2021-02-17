@@ -351,6 +351,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             questions={brick.questions}
             brickId={brick.id}
             startTime={startTime}
+            brick={brick}
             brickLength={brick.brickLength}
             updateAttempts={updateReviewAttempts}
             attempts={attempts}
