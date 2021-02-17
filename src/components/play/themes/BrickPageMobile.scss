@@ -335,7 +335,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               position: relative;
               min-height: 5vh;
               margin: 0 3vw;
-              min-width: 18vw;
+              width: 52vw;
               &:first-child {
                 transform: scale(0.7);
               }
@@ -376,6 +376,9 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               }
               .play-preview {
                 @extend %floatToCenter;
+                &:focus {
+                  transform: translate(-50%, -50%) scale(0.7);
+                }
               }
             }
           }

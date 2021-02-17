@@ -130,6 +130,50 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               }
             }
           }
+          .prep-button {
+            cursor: pointer;
+            position: relative;
+            justify-content: center;
+            color: var(--tab-gray);
+            svg {
+              color: var(--tab-gray);
+              padding: 0 0.5vw;
+              padding-top: 1vh;
+              padding-bottom: 0.2vw;
+              width: calc(#{$icons-size} * 1.4) !important;
+              height: calc(#{$icons-size} * 1.4) !important;
+            }
+            div {
+              width: 100%;
+              position: absolute;
+              bottom: -0.3vw;
+              font-size: 1vw;
+              text-align: center;
+              line-height: 1;
+              font-family: $font-family-regular;
+            }
+
+            &:hover {
+              color: var(--white);
+              svg {
+                color: var(--white);
+              }
+            }
+          }
+          .grey-line {
+            display: flex;
+            justify-content: center;
+            margin-top: calc(1vh + 1vw);
+            width: 100%;
+            height: 0.2vh;
+
+            > div {
+              width: 90%;
+              border-radius: 0.2vh;
+              height: 0.4vh;
+              background: var(--tab-gray);
+            }
+          }
           .share-button {
             background: var(--theme-dark-blue);
             span,
@@ -544,9 +588,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         }
         &.final-step-page {
           color: var(--theme-dark-blue) !important;
-          .introduction-info {
-            height: auto;
-          }
           .round-button {
             background: var(--theme-green) !important;
             svg {
@@ -1035,4 +1076,199 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 .open-question {
   font-size: 1.25vw;
   color: var(--theme-dark-blue);
+}
+
+// #2781 new play live and review theme
+.play-preview-pages .sorted-row.sorted-row-expanded .live-container,
+.play-preview-pages .sorted-row.sorted-row-expanded .review-container {
+  position: relative;
+  $width: calc(100vw - #{$home-button-size} - 8vw - 7vw - 2.1vw);
+  width: $width !important;
+  $header-height: 4vw;
+  $foter-height: 4vw;
+  height: calc(100vh - #{$header-height}) !important;
+  margin-right: 8vw;
+  margin-left: 7vw;
+  border-radius: 2vw !important;
+
+  .introduction-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 0 !important;
+    width: 100%;
+    height: 0 !important;
+
+    .prep-step {
+      display: none !important;
+    }
+
+    .intro-header {
+      display: none;
+    }
+
+    .stepper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--tab-gray) !important;
+      height: 4vw !important;
+      padding: 0 !important;
+
+      .blue-circle-main-container {
+        display: none;
+      }
+
+      .step {
+        justify-content: center !important;
+        max-width: 4vw;
+        span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 2vw !important;
+          height: 2vw;
+          border-radius: 50%;
+        }
+        &.completed {
+          span {
+            color: var(--white);
+            background: var(--blue);
+          }
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+        &.current {
+          span {
+            color: var(--white);
+            background: var(--theme-dark-blue);
+          }
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
+  .question-index-container {
+    display: none;
+  }
+
+  .swipe-view {
+    width: $width !important;
+  }
+
+  .introduction-page {
+    height: calc(100vh - 4vw) !important;
+    padding-left: 0 !important;
+     .question-live-play {
+      margin-top: $header-height !important;
+      height: calc(100vh - 4vw - #{$header-height} - #{$foter-height}) !important;
+      .question-title {
+        display: none;
+      }
+    }
+  }
+  .new-layout-footer {
+    position: absolute;
+    bottom: 0;
+    display: flex !important;
+    flex-direction: row;
+    height: $foter-height;
+    width: $width;
+    background: var(--tab-gray);
+
+    .time-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(#{$width} / 3);
+      height: $foter-height;
+    }
+    .title-column {
+      width: calc(#{$width} / 3);
+      display: flex;
+      align-items: center;
+      font-size: 1vw;
+      .subject {
+        font-size: 1.2vw;
+        font-family: $font-family-bold;
+      }
+    }
+    .new-navigation-buttons {
+      width: calc(#{$width} / 3);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .n-btn {
+        cursor: pointer;
+        transition: all 300ms ease-out;
+        display: flex;
+        align-items: center;
+        font-size: 1.8vw;
+        font-family: $font-family-bold;
+        margin-left: 3vw;
+        margin-right: 3vw;
+
+        svg {
+          transition: all 300ms ease-out;
+          stroke-width: 3;
+          width: 2.1vw;
+          height: 2.1vw;
+        }
+        &.next {
+          &:hover {
+            margin-right: 2vw;
+            svg {
+              margin-left: 1vw;
+            }
+          }
+        }
+        &.back {
+          color: var(--dark-gray);
+          &:hover {
+            color: var(--theme-dark-blue);
+            //margin-right: 2vw;
+            svg {
+              margin-right: 1vw;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// only review
+.play-preview-pages .sorted-row.sorted-row-expanded .review-container {
+  .introduction-info {
+    .stepper {
+      .step {
+        svg {
+          display: none;
+        }
+        &.success {
+          span {
+            color: var(--white);
+            background: var(--theme-green);
+          }
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+        &.failed {
+          span {
+            color: var(--white);
+            background: var(--theme-orange);
+          }
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
 }

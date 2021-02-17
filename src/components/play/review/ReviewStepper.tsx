@@ -32,7 +32,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
     // render step for invalid question
     if (!attempt) {
       return (
-        <div className="step" key={key} onClick={handleStep(index - 1)}>
+        <div className="step failed" key={key} onClick={handleStep(index - 1)}>
           <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
           <SpriteIcon name="cancel" className="active text-theme-orange" />
         </div>
@@ -41,7 +41,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
 
     // render step normal questions
     return (
-      <div className="step" key={key} onClick={handleStep(index - 1)}>
+      <div className={`step ${attempt.correct ? 'success' : 'failed'}`} key={key} onClick={handleStep(index - 1)}>
         <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}

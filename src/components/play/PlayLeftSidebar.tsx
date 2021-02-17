@@ -108,6 +108,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   renderToggleButton() {
     if (this.props.sidebarRolledUp) {
+      if (this.isLive()) {
+        return <div />
+      }
       return (
         <div className="minimize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
           <SpriteIcon name="maximize" className="active" />
@@ -162,6 +165,26 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     this.setState({ isAdaptBrickOpen: true });
   }
 
+  isLive() {
+    return this.props.history.location.pathname.slice(-5) === '/live';
+  }
+
+  renderPrepButton() {
+    const isLive = this.isLive();
+    if (isLive && this.props.sidebarRolledUp) {
+      return (
+        <div>
+          <div className="prep-button" onClick={() => this.props.history.push(map.playIntro(this.props.brick.id))}>
+            <SpriteIcon name="file-text" />
+            <div>Prep</div>
+          </div>
+          {<div className="grey-line"><div /></div>}
+        </div>
+      );
+    }
+    return <div />
+  }
+
   renderButtons() {
     if (this.props.isPreview) {
       if (this.props.sidebarRolledUp) {
@@ -200,6 +223,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           sidebarRolledUp={this.props.sidebarRolledUp}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />
+        {this.renderPrepButton()}
         <ShareButton sidebarRolledUp={this.props.sidebarRolledUp} share={this.share.bind(this)} />
         <AssignButton
           sidebarRolledUp={this.props.sidebarRolledUp}

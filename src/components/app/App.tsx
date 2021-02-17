@@ -3,7 +3,7 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { isMobile, isIPad13} from 'react-device-detect';
+import { isMobile, isIPad13, isTablet} from 'react-device-detect';
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -55,6 +55,7 @@ import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSub
 import PublicTerms from 'components/terms/PublicTerms';
 import Warning from 'components/baseComponents/rotateInstruction/Warning';
 import MobileUsernamePage from 'components/onboarding/mobileUsernamePage/MobileUsernamePage';
+import RotateIPadInstruction from 'components/baseComponents/rotateInstruction/RotateIPadInstruction';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -126,6 +127,10 @@ const App: React.FC<AppProps> = props => {
   }, function (error) {
     return Promise.reject(error);
   });
+
+  if ((isIPad13 || isTablet) && !horizontal) {
+    return <RotateIPadInstruction />;
+  }
 
   if (isIPad13) { 
     //return <Warning />

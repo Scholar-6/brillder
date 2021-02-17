@@ -111,8 +111,6 @@
         overflow: auto;
         margin: 5vh 0 7vh 0;
         height: calc(100vh - 12vh);
-        @include phone_and_tabletL {
-        }
         .subject-row {
           width: 100%;
           @include phone_and_tabletL {

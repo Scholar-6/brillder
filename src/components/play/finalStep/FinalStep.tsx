@@ -71,7 +71,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   }
 
   return (
-    <div>
+    <div className="brick-row-container">
       <Hidden only={['xs']}>
         <div className="brick-container final-step-page">
           <Grid container direction="row">
