@@ -1162,6 +1162,8 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       justify-content: flex-end;
 
       .n-btn {
+        cursor: pointer;
+        transition: all 300ms ease-out;
         display: flex;
         align-items: center;
         font-size: 1.8vw;
@@ -1170,9 +1172,28 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         margin-right: 3vw;
 
         svg {
+          transition: all 300ms ease-out;
           stroke-width: 3;
           width: 2.1vw;
           height: 2.1vw;
+        }
+        &.next {
+          &:hover {
+            margin-right: 2vw;
+            svg {
+              margin-left: 1vw;
+            }
+          }
+        }
+        &.back {
+          color: var(--dark-gray);
+          &:hover {
+            color: var(--theme-dark-blue);
+            //margin-right: 2vw;
+            svg {
+              margin-right: 1vw;
+            }
+          }
         }
       }
     }
