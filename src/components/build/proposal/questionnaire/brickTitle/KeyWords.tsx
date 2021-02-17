@@ -5,10 +5,12 @@ import './KeyWords.scss';
 import { enterPressed, spaceKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyWord } from "model/brick";
+import KeyWordsPlay from "./KeywordsPlay";
 
 interface KeyWordsProps {
   disabled: boolean;
   keyWords: Y.Array<any>;
+  isHashtags?: boolean;
 }
 
 interface KeyWordsState {
@@ -56,7 +58,10 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
   render() {
     return (
       <div className="key-words">
-        {this.props.keyWords.toJSON().map(this.renderKeyWord.bind(this))}
+        {this.props.isHashtags
+          ? <KeyWordsPlay keywords={this.props.keyWords.toJSON()} />
+          : this.props.keyWords.toJSON().map(this.renderKeyWord.bind(this))
+        }
         <input disabled={this.props.disabled} value={this.state.keyWord} placeholder="Keyword(s)" onKeyDown={this.checkKeyword.bind(this)} onChange={e => this.setState({ keyWord: e.target.value })} />
       </div>
     );

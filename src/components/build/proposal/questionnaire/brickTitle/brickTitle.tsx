@@ -4,7 +4,7 @@ import { Grid, Input, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "../../model";
-import { AcademicLevel, Author, Brick, KeyWord, Subject } from "model/brick";
+import { AcademicLevel, Brick, KeyWord, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
 import { enterPressed } from "components/services/key";
@@ -22,6 +22,7 @@ import { User } from "model/user";
 import AddSubjectDialog from "./AddSubjectDialog";
 import KeyWordsComponent from "./KeyWords";
 import DifficultySelect from "./DifficultySelect";
+import KeyWordsPlay from "./KeywordsPlay";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
@@ -75,10 +76,6 @@ const BrickTitlePreviewComponent: React.FC<PreviewProps> = (props) => {
     return data;
   }
 
-  const renderKeyWords = () => {
-    return <div className="key-words">{keywords.map((k, i) => <div key={i} className="key-word">{k.name}</div>)}</div>
-  }
-
   return (
     <Grid container alignContent="flex-start" className="phone-preview-component title">
       <Grid container justify="center">
@@ -91,7 +88,7 @@ const BrickTitlePreviewComponent: React.FC<PreviewProps> = (props) => {
         <div className="brick-topics">
           {keywords && 
             <span className={keywords.length > 0 ? 'topic-filled' : ''}>
-              {keywords.length > 0 ? renderKeyWords() : 'Keyword(s)'}
+              {keywords.length > 0 ? <KeyWordsPlay keywords={keywords} /> : 'Keyword(s)'}
             </span>}
         </div>
         <div className="author-row">

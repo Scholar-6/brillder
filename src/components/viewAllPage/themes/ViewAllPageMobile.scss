@@ -3,27 +3,6 @@
 @import 'src/assets/sass/partials/extensions';
 
 .dashboard-page {
-  .expand-button {
-    position: fixed;
-    top: 1vw;
-    left: 1vw;
-    border-radius: 50%;
-    background: var(--white);
-    $size: 9vw;
-    height: $size;
-    width: $size;
-    color: var(--theme-dark-blue);
-
-    svg {
-      $size: 6vw;
-      padding: 1.5vw;
-      height: $size;
-      width: $size;
-      transform: scale(-1, 1);
-    }
-  }
-}
-.dashboard-page {
   overflow: hidden;
   font-family: $font-family-regular;
   &.expanded {
@@ -289,8 +268,4 @@
     height: calc(100vh - 46vh - 5vw - 2.6vh);
     overflow-y: scroll;
   }
-}
-
-.uppercase {
-  text-transform: uppercase;
 }

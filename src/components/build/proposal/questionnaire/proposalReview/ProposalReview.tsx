@@ -337,7 +337,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 {/* TODO: Add adaptedFrom field */}
                 {brick.get("adaptedFrom") && '(ADAPTED)'}
               </div>
-              <div><KeyWordsComponent disabled={!this.props.canEdit} keyWords={this.props.brick.get("keywords")} /></div>
+              <div><KeyWordsComponent isHashtags={true} disabled={!this.props.canEdit} keyWords={this.props.brick.get("keywords")} /></div>
               <div><DifficultySelect disabled={!this.props.canEdit} level={this.props.brick.get("academicLevel")} onChange={this.props.setAcademicLevel} /></div>
               <p className="text-title m-t-3 bold">Open Question:</p>
               {this.renderOpenQuestionField()}

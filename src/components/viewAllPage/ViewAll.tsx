@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Grid, Hidden } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import queryString from 'query-string';
@@ -20,7 +20,6 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
-import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import ViewAllFilter, { SortBy } from "./components/ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
@@ -507,42 +506,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }, 1400);
   }
 
-  renderExpandedBrick(color: string, brick: Brick) {
-    return (
-      <ExpandedBrickDescription
-        userId={this.props.user.id}
-        isAdmin={this.state.isAdmin}
-        searchString=""
-        color={color}
-        brick={brick}
-        move={(brickId) => this.move(brickId)}
-        onDelete={brickId => this.handleDeleteOpen(brickId)}
-      />
-    );
-  }
-
-  renderBrickContainer = (brick: Brick, key: number) => {
-    let color = getBrickColor(brick);
-
-    return (
-      <div key={key} className="main-brick-container">
-        <Box className="brick-container">
-          <div
-            className={`absolute-container brick-row-0 ${brick.expanded ? "brick-hover" : ""}`}
-            onMouseEnter={() => this.yourBricksMouseHover(key)}
-            onMouseLeave={() => this.yourBricksMouseLeave()}
-          >
-            {brick.expanded ? (
-              this.renderExpandedBrick(color, brick)
-            ) : (
-                <ShortBrickDescription searchString="" brick={brick} />
-              )}
-          </div>
-        </Box>
-      </div>
-    );
-  };
-
   renderSortedBricks = (bricks: Brick[]) => {
     let data = prepareVisibleBricks(
       this.state.sortedIndex,
@@ -625,18 +588,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
   //region Mobile
-
-  renderYourBrickRow = () => {
-    let bricksList = [];
-    let index = 0;
-    for (let i = index; i < index + 3; i++) {
-      const { yourBricks } = this.state;
-      if (yourBricks[i]) {
-        bricksList.push(this.renderBrickContainer(yourBricks[i], i));
-      }
-    }
-    return bricksList;
-  };
 
   renderEmptyCategory(name: string) {
     return (
@@ -788,7 +739,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         </div>
       );
     }
-    return <div className="bricks-list">{this.renderYourBrickRow()}</div>;
   }
 
   renderDesktopBricksPanel(filterSubjects: number[], bricks: Brick[]) {
