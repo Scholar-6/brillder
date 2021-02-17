@@ -1138,7 +1138,10 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     width: $width;
     background: var(--tab-gray);
 
-    .time-slider {
+    .time-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: calc(#{$width} / 3);
       height: $foter-height;
     }
@@ -1148,6 +1151,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       align-items: center;
       font-size: 1vw;
       .subject {
+        font-size: 1.2vw;
         font-family: $font-family-bold;
       }
     }
