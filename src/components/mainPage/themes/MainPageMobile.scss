@@ -2,33 +2,8 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
-@-webkit-keyframes rotating {
-  from {
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-@keyframes rotating {
-  from {
-    -ms-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -ms-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+.mainPageMobile ~ .beta-text {
+  display: none;
 }
 
 .mainPageMobile {
@@ -41,7 +16,12 @@
   font-family: $font-family-black;
 
   .manage-classes {
-    #Path_8, #Ellipse_12, #Ellipse_12-2, #Path_8-4, .right-smile {
+
+    #Path_8,
+    #Ellipse_12,
+    #Ellipse_12-2,
+    #Path_8-4,
+    .right-smile {
       fill: var(--theme-light-blue) !important;
     }
 
@@ -49,12 +29,16 @@
       display: none;
     }
 
-    #Path_8-2, #Path_8-3 {
+    #Path_8-2,
+    #Path_8-3 {
       fill: var(--theme-dark-blue) !important;
     }
-    .right-class-icon, .left-class-icon {
+
+    .right-class-icon,
+    .left-class-icon {
       color: var(--theme-dark-blue) !important;
     }
+
     .item-description {
       padding: 0;
       @extend %textCenter;
@@ -73,9 +57,11 @@
     width: auto;
     @extend %flexCenter;
     flex-direction: column;
+
     @include tabletP {
       padding: 5vh 0;
     }
+
     .eye-glass-icon,
     .btn {
       display: flex;
@@ -83,18 +69,14 @@
       justify-content: flex-end;
       @extend %textCenter;
       flex-direction: column;
+
       .svg {
         @extend %removePosition;
-        @include phone_and_tabletP {
-          width: 150px;
-          height: 120px;
-        }
-        @include tabletP {
-          width: 13vw;
-          height: 6vw;
-        }
+        width: 150px;
+        height: 120px;
       }
     }
+
     &.student-back-work {
       .btn .svg {
         @include laptop {
@@ -103,32 +85,30 @@
         }
       }
     }
+
     .item-description {
       padding: 0;
       @extend %textCenter;
       margin: 0;
       font-family: $font-family-light;
       color: var(--tab-gray);
-      @include phone_and_tabletP {
-        font-size: 25px;
-        letter-spacing: 5px;
-      }
-      @include tabletP {
-        font-size: 1.2vw;
-        letter-spacing: 0.3vw;
-      }
+      font-size: 25px;
+      letter-spacing: 5px;
     }
   }
+
   .create-item-container {
     .btn .svg {
       @extend %transitionAll300;
     }
+
     @include tabletP {
       .btn .svg {
         height: 7.5vw;
       }
     }
   }
+
   .create-item-container,
   .back-item-container {
     @include tabletP {
@@ -166,6 +146,7 @@
     height: 100%;
     @extend %flexCenter;
     flex-direction: column;
+
     .prev-image,
     .next-image {
       width: 20%;
@@ -173,43 +154,50 @@
       margin: 0;
       opacity: 0.5;
     }
+
     .prev-image {
       margin-top: 10px;
     }
+
     .next-image {
       margin-bottom: 10px;
     }
+
     .swiper-container {
       width: 100%;
       height: calc(80%) !important;
       padding: 1vh 0;
+
       .swiper-slide {
         width: 100%;
         @extend %flexCenter;
         height: calc(26%);
         opacity: 0.65;
+
         &.swiper-slide-next {
           transform: scale(1);
           @extend %transitionAll300;
           opacity: 1;
         }
+
         &:not(.swiper-slide-next) {
           transform: scale(0.85);
           pointer-events: none;
         }
+
         .view-item-container {
-          @include phone_and_tabletP {
-            .svg {
-              width: 230px;
-            }
+          .svg {
+            width: 230px;
           }
         }
+
         .back-item-container {
           .svg {
             padding-top: 5px;
             width: 230px;
           }
         }
+
         .manage-classes {
           .svg {
             width: 150px;
