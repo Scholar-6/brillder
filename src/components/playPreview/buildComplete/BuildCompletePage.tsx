@@ -85,54 +85,56 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
     }
 
     return (
-      <div className="brick-container build-complete-page">
-        <Grid container direction="row">
-          <Grid item xs={8}>
-            <div className="introduction-page">
-              <div className="intro-header">
-                <div className="left-brick-circle">
-                  <div className="round-button">
-                    <SpriteIcon name="trowel" className="active" />
+      <div className="brick-row-container">
+        <div className="brick-container build-complete-page">
+          <Grid container direction="row">
+            <Grid item xs={8}>
+              <div className="introduction-page">
+                <div className="intro-header">
+                  <div className="left-brick-circle">
+                    <div className="round-button">
+                      <SpriteIcon name="trowel" className="active" />
+                    </div>
                   </div>
-                </div>
-                <h2>You’ve just built a brick!</h2>
-                <p className="complete-brick-name">
-                  What would you like to do with <span className="bold uppercase">‘{brick.title}’</span>?
+                  <h2>You’ve just built a brick!</h2>
+                  <p className="complete-brick-name">
+                    What would you like to do with <span className="bold uppercase">‘{brick.title}’</span>?
                 </p>
-                <div className="radio-container" onClick={() => this.setState({ isCore: false })}>
-                  <Radio checked={this.state.isCore === false} />
-                  <span className="radio-text pointer">Keep Control</span>
-                  <SpriteIcon name="key" className="active" />
+                  <div className="radio-container" onClick={() => this.setState({ isCore: false })}>
+                    <Radio checked={this.state.isCore === false} />
+                    <span className="radio-text pointer">Keep Control</span>
+                    <SpriteIcon name="key" className="active" />
+                  </div>
+                  <div className="inner-radio-text pointer" onClick={() => this.setState({ isCore: false })}>
+                    Share on your favourite platforms, invite anyone to play or comment
                 </div>
-                <div className="inner-radio-text pointer" onClick={() => this.setState({ isCore: false })}>
-                  Share on your favourite platforms, invite anyone to play or comment
+                  <div className="radio-container pointer" onClick={() => this.setState({ isCore: true })} >
+                    <Radio checked={this.state.isCore === true} />
+                    <span className="radio-text">Educate the World</span>
+                    <SpriteIcon name="globe" className="active" />
+                  </div>
+                  <div className="inner-radio-text pointer" onClick={() => this.setState({ isCore: true })}>
+                    Submit to a subject specialist, receive editorial feedback,
+                    be considered for our core library and paid for your work!
                 </div>
-                <div className="radio-container pointer" onClick={() => this.setState({ isCore: true })} >
-                  <Radio checked={this.state.isCore === true} />
-                  <span className="radio-text">Educate the World</span>
-                  <SpriteIcon name="globe" className="active" />
+                  <div className="inner-radio-text last-one">
+                    Users who breach our <span className="bold">submission guidelines</span> for appropriate content may be blocked from Brillder and/or reported to relevant authorities.
                 </div>
-                <div className="inner-radio-text pointer" onClick={() => this.setState({ isCore: true })}>
-                  Submit to a subject specialist, receive editorial feedback,
-                  be considered for our core library and paid for your work!
-                </div>
-                <div className="inner-radio-text last-one">
-                  Users who breach our <span className="bold">submission guidelines</span> for appropriate content may be blocked from Brillder and/or reported to relevant authorities.
                 </div>
               </div>
-            </div>
+            </Grid>
+            <Grid item xs={4}>
+              <div className="introduction-info">
+                <div className="intro-header">
+                  <Clock brickLength={brick.brickLength} />
+                </div>
+                <div className="intro-text-row">
+                </div>
+                {this.renderFooter()}
+              </div>
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <div className="introduction-info">
-              <div className="intro-header">
-                <Clock brickLength={brick.brickLength} />
-              </div>
-              <div className="intro-text-row">
-              </div>
-              {this.renderFooter()}
-            </div>
-          </Grid>
-        </Grid>
+        </div>
       </div>
     );
   }
