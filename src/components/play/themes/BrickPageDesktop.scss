@@ -134,7 +134,9 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             cursor: pointer;
             position: relative;
             justify-content: center;
+            color: var(--tab-gray);
             svg {
+              color: var(--tab-gray);
               padding: 0 0.5vw;
               padding-top: 1vh;
               padding-bottom: 0.2vw;
@@ -149,6 +151,13 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               text-align: center;
               line-height: 1;
               font-family: $font-family-regular;
+            }
+
+            &:hover {
+              color: var(--white);
+              svg {
+                color: var(--white);
+              }
             }
           }
           .grey-line {
