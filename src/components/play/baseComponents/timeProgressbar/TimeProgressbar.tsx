@@ -35,27 +35,30 @@ const TimeProgressbar: React.FC<CounterProps> = (props) => {
     return moment.duration(durationMins, "minutes");
   }
 
-  const getEndTime = () => {
-    let duration = {};
+  const getDuration = () => {
     if (props.isLive) {
-      duration = getLiveDuration();
+      return getLiveDuration();
     } else {
-      duration = getReviewDuration();
+      return getReviewDuration();
     }
+  }
 
+  const getEndTime = () => {
+    let duration = getDuration();
     const endTime = moment().add(duration);
-    props.setEndTime(endTime);
     return endTime;
   }
 
   let {endTime} = props;
+
+  const duration = getDuration().asMilliseconds();
 
   if (!props.endTime) {
     endTime = getEndTime();
   }
 
   return (
-    <ProgressbarCountdown onEnd={props.onEnd} endTime={endTime} />
+    <ProgressbarCountdown onEnd={props.onEnd} duration={duration} endTime={endTime} />
   );
 };
 

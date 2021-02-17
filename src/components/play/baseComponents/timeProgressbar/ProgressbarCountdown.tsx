@@ -6,12 +6,14 @@ let moment = require('moment');
 
 
 interface CounterProps {
+  duration: number;
   endTime: Moment;
   onEnd(): void;
 }
 
 interface CounterState {
-  milliseconds: number;
+  value: number;
+  startTime: Moment;
   isCounting: boolean;
   timerInterval: number;
   isDeadlineSoon: boolean;
@@ -22,8 +24,9 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
     super(props);
 
     this.state = {
-      milliseconds: 0,
+      value: 0,
       isCounting: false,
+      startTime: this.props.endTime.clone().subtract(this.props.duration),
       timerInterval: this.setTimer(),
       isDeadlineSoon: false
     }
@@ -33,12 +36,16 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
     clearInterval(this.state.timerInterval);
   }
 
+  setValue(difference: number) {
+    let value = ((this.props.duration - difference) / this.props.duration) * 100;
+    this.setState({ value, isCounting: true });
+  }
+
   setTimer() {
     return setInterval(() => {
       let now = moment();
       let dif = moment.duration(this.props.endTime.diff(now));
-      let milliseconds = (Math.round(dif.milliseconds() / 10));
-      this.setState({ milliseconds, isCounting: true });
+      this.setValue(dif._milliseconds);
       if (dif._milliseconds < 1000) {
         this.props.onEnd();
         clearInterval(this.state.timerInterval);
@@ -55,7 +62,7 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
       className += ' deadline-soon';
     }
     return (
-      <LinearProgress className={className} variant="determinate" value={50} />
+      <LinearProgress className={className} variant="determinate" value={this.state.value} />
     );
   }
 }
