@@ -121,8 +121,8 @@
             transition: all 300ms ease-out;
             cursor: pointer;
             position: relative;
-            background: var(--theme-dark-blue);
-            color: var(--white);
+            background: var(--white) !important;
+            color: var(--theme-dark-blue) !important;
             @include phone_and_tabletL {
               padding-left: 10vw;
               width: 100%;
