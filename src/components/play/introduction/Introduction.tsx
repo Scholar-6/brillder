@@ -136,11 +136,13 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderDesktopPlayText = () => {
     if (resume) {
       return (
-        <h2>Resume</h2>
+        <div>
+          <h2>Resume</h2>
+        </div>
       );
     }
     return (
-      <div className="direction-info">
+      <div>
         <h3>Ready?</h3>
         <h2>Play Brick</h2>
       </div>
