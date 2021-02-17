@@ -1037,8 +1037,9 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   color: var(--theme-dark-blue);
 }
 
-// #2781 new play theme
-.play-preview-pages .sorted-row.sorted-row-expanded .live-container {
+// #2781 new play live and review theme
+.play-preview-pages .sorted-row.sorted-row-expanded .live-container,
+.play-preview-pages .sorted-row.sorted-row-expanded .review-container {
   position: relative;
   $width: calc(100vw - #{$home-button-size} - 8vw - 7vw - 2.1vw);
   width: $width !important;
@@ -1193,6 +1194,37 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             svg {
               margin-right: 1vw;
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+// only review
+.play-preview-pages .sorted-row.sorted-row-expanded .review-container {
+  .introduction-info {
+    .stepper {
+      .step {
+        svg {
+          display: none;
+        }
+        &.success {
+          span {
+            color: var(--white);
+            background: var(--theme-green);
+          }
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+        &.failed {
+          span {
+            color: var(--white);
+            background: var(--theme-orange);
+          }
+          &:hover {
+            opacity: 0.5;
           }
         }
       }

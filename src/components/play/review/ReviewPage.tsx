@@ -245,7 +245,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   }
 
   return (
-    <div className="brick-row-container">
+    <div className="brick-row-container review-container">
       <div className="brick-container play-preview-panel review-page">
         <div className="introduction-page">
           <Hidden only={['xs']}>
