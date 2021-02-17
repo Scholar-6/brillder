@@ -34,8 +34,6 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
 }) => {
   const [isOpen, setDialog] = React.useState(false);
 
-  console.log(data);
-
   useEffect(() => {
     if (!data.get("text")) { data.set("text", new Y.Text()); }
     if (!data.get("words")) { data.set("words", new Y.Array()); }

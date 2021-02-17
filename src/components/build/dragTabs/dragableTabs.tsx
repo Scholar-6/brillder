@@ -2,7 +2,7 @@ import React from "react";
 import * as Y from "yjs";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridList from "@material-ui/core/GridList";
-import { ReactSortable } from "react-sortablejs";
+import { ReactSortable, Sortable } from "react-sortablejs";
 
 import "./DragableTabs.scss";
 import { validateQuestion } from "../questionService/ValidateQuestionService";
@@ -15,6 +15,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
 import { User } from "model/user";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
+import { generateId } from "../buildQuestions/questionTypes/service/questionBuild";
 
 interface Question {
   id: number;
@@ -44,6 +45,7 @@ interface DragTabsProps {
 
 interface TabsState {
   handleKey(e: any): void;
+  sortableId: number;
 }
 
 class DragableTabs extends React.Component<DragTabsProps, TabsState> {
@@ -51,7 +53,8 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     super(props);
 
     this.state = {
-      handleKey: this.handleKey.bind(this)
+      handleKey: this.handleKey.bind(this),
+      sortableId: generateId(),
     }
   }
 
@@ -104,7 +107,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     let isInit = true;
     let isSynthesisPresent = true;
     const { props } = this;
-    const { isSynthesisPage, synthesis } = props;
+    const { isSynthesisPage, synthesis, yquestions } = props;
 
     const getHasSynthesisReplied = () => {
       const replies = props.comments
@@ -220,6 +223,19 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
         isInit = false;
       }
     };
+    
+    const onUpdateQuestions = (evt: Sortable.SortableEvent) => {
+      if(evt.oldIndex >= 0 && evt.newIndex >= 0) {
+        console.log(evt);
+        yquestions.doc?.transact(() => {
+          const question = yquestions.get(evt.oldIndex!);
+          yquestions.delete(evt.oldIndex!);
+          yquestions.insert(evt.newIndex!, [question]);
+        });
+        // WARNING: using same hacky solution as questionComponents.tsx
+        this.setState({ ...this.state, sortableId: generateId() });
+      }
+    }
 
     const renderSynthesisTab = () => {
       let className = 'drag-tile-container';
@@ -273,10 +289,12 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           }}
         >
           <ReactSortable
+            key={this.state.sortableId}
             list={props.yquestions.map((q: Y.Doc) => ({ id: q.guid }))}
             className="drag-container"
             group="tabs-group"
-            setList={setQuestions}
+            onUpdate={onUpdateQuestions}
+            setList={() => {}}
           >
             {props.yquestions.map((question: Y.Doc, i) =>
               renderQuestionTab(props.yquestions, question, i, columns)
