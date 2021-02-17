@@ -52,9 +52,9 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
       <div className="action-footer">
         <div></div>
         <div className="direction-info">
-          Next
+          <h2>Next</h2>
         </div>
-        <div style={{ marginLeft: 0, marginRight: '1.7vw' }}>
+        <div>
           <button
             type="button"
             className="play-preview svgOnHover play-green"
