@@ -114,7 +114,7 @@ const TeachButton: React.FC<TeachButtonProps> = props => {
         {renderLeftSmile()}
         {renderRightSmile()}
       </svg>
-      <span>Manage Classes</span>
+      <span className="item-description">Manage Classes</span>
     </div>  
   )
 }
