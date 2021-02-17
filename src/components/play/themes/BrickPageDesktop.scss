@@ -130,6 +130,41 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               }
             }
           }
+          .prep-button {
+            cursor: pointer;
+            position: relative;
+            justify-content: center;
+            svg {
+              padding: 0 0.5vw;
+              padding-top: 1vh;
+              padding-bottom: 0.2vw;
+              width: calc(#{$icons-size} * 1.4) !important;
+              height: calc(#{$icons-size} * 1.4) !important;
+            }
+            div {
+              width: 100%;
+              position: absolute;
+              bottom: -0.3vw;
+              font-size: 1vw;
+              text-align: center;
+              line-height: 1;
+              font-family: $font-family-regular;
+            }
+          }
+          .grey-line {
+            display: flex;
+            justify-content: center;
+            margin-top: calc(1vh + 1vw);
+            width: 100%;
+            height: 0.2vh;
+
+            > div {
+              width: 90%;
+              border-radius: 0.2vh;
+              height: 0.4vh;
+              background: var(--tab-gray);
+            }
+          }
           .share-button {
             background: var(--theme-dark-blue);
             span,
