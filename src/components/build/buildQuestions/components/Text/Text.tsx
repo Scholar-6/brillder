@@ -22,6 +22,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, d
       <QuillEditor
         disabled={locked}
         sharedData={data.get("value")}
+        validate={props.validationRequired}
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
           'latex', 'bulletedList', 'numberedList', 'blockQuote'

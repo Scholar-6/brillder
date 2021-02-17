@@ -89,7 +89,9 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         }
     }, []);
 
-    const valid = (!props.validate || (data && (props.isValid !== false)));
+    const valid = (!props.validate || (
+        ((data?.trim().length || props.sharedData?.toString().trim().length) ?? "") > 0 && (props.isValid !== false)
+    ));
 
     return (
         <div className={`quill-document-editor${valid ? "" : " content-invalid"} ${props.className ?? ""}`}>
