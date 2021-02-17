@@ -302,6 +302,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 isPlayPreview={true}
                 status={status}
                 questions={brick.questions}
+                brick={brick}
                 brickId={brick.id}
                 startTime={startTime}
                 brickLength={brick.brickLength}

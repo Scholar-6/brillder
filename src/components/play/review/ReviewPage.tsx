@@ -10,7 +10,7 @@ import "./ReviewPage.scss";
 import { Question } from "model/question";
 import { PlayStatus } from "../model";
 import { PlayMode } from "../model";
-import { BrickLengthEnum } from "model/brick";
+import { Brick, BrickLengthEnum } from "model/brick";
 import { getPlayPath, getAssignQueryString, scrollToStep } from "../service";
 
 import ReviewStepper from "./ReviewStepper";
@@ -23,10 +23,12 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import MobilePrevButton from "../live/components/MobilePrevButton";
 import MobileNextButton from "../live/components/MobileNextButton";
+import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 
 interface ReviewPageProps {
   status: PlayStatus;
   brickId: number;
+  brick: Brick;
   questions: Question[];
   brickLength: BrickLengthEnum;
   startTime?: Moment;
@@ -259,6 +261,39 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 >
                   {questions.map(renderQuestionContainer)}
                 </SwipeableViews>
+                <div className="new-layout-footer" style={{ display: 'none' }}>
+                  <div className="time-container">
+                    <TimeProgressbar
+                      isLive={true}
+                      onEnd={onEnd}
+                      endTime={null}
+                      brickLength={props.brickLength}
+                      setEndTime={() => {}}
+                    />
+                  </div>
+                  <div className="title-column">
+                    <div>
+                      <div className="subject">{props.brick.subject?.name}</div>
+                      <div>{props.brick.title}</div>
+                    </div>
+                  </div>
+                  <div className="new-navigation-buttons">
+                    <div className="n-btn back" onClick={prev}>
+                      <SpriteIcon name="arrow-left" />
+                      Back
+                    </div>
+                    <div className="n-btn next" onClick={() => {
+                      if (questions.length - 1 > activeStep) {
+                        next();
+                      } else {
+                        setSubmitAnswers(true);
+                      }
+                    }}>
+                      Next
+                      <SpriteIcon name="arrow-right" />
+                    </div>
+                  </div>
+                </div>
               </Grid>
               <Grid item sm={4} xs={12}>
                 <div className="introduction-info">
