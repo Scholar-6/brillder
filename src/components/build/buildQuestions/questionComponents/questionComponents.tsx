@@ -51,6 +51,12 @@ const QuestionComponents = ({
 
   const questionData = question.getMap();
   const questionId = questionData.get("id");
+
+  // WARNING: very hacky solution!
+  // Unfortunately react-sortablejs has some weird behaviour when interacting with YJS.
+  // My solution is to generate a unique ID for the sortable everytime two components are swapped.
+  // This forces a re-render of that component so that it retains the correct ordering, rather than swapping them back.
+  const [sortableId, setSortableId] = React.useState(generateId());
   
   let firstComponent = questionData.get("firstComponent") as Y.Map<any>;
   if (!firstComponent.get("type") || firstComponent.get("type") !== QuestionComponentTypeEnum.Text) {
@@ -166,13 +172,14 @@ const QuestionComponents = ({
   }
 
   const onUpdateComponent = (evt: Sortable.SortableEvent) => {
-    console.log(evt);
-    if(evt.oldIndex && evt.newIndex) {
+    if(evt.oldIndex >= 0 && evt.newIndex >= 0) {
+      console.log(evt);
       components.doc?.transact(() => {
         const component = components.get(evt.oldIndex!).clone() as Y.Map<any>;
         components.delete(evt.oldIndex!);
         components.insert(evt.newIndex!, [component]);
       });
+      setSortableId(generateId());
     }
   }
 
@@ -207,6 +214,7 @@ const QuestionComponents = ({
         />
       </Grid>
       <ReactSortable
+        key={sortableId}
         list={components.toJSON()}
         animation={150}
         group={{ name: "cloning-group-name", pull: "clone" }}
