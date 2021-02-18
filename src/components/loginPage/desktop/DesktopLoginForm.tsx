@@ -1,7 +1,7 @@
 import React from "react";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 
-import TypingInput from "./TypingInput";
+import TypingInput from "../components/TypingInput";
 import { enterPressed } from "components/services/key";
 
 interface LoginsState {
