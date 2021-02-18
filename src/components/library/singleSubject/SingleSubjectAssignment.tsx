@@ -1,6 +1,5 @@
 import React from "react";
 
-import './SingleSubjectAssignment.scss';
 import { AcademicLevel, BrickLengthEnum, Subject } from "model/brick";
 import { LibraryAssignmentBrick } from "model/assignment";
 import map from "components/map";
@@ -73,7 +72,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
     return (
       <div className={className}>
         <div className="rotated">
-          <div className="rotated-text" style={{width}}>
+          <div className="rotated-text" style={{ width }}>
             <p>{brick.title}</p>
           </div>
         </div>
