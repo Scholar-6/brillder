@@ -3,6 +3,7 @@ import React from "react";
 import "../Live.scss";
 import { Question } from "model/question";
 import PulsingCircle from './PulsingCircle';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface StepperProps {
   activeStep: number;
@@ -13,6 +14,8 @@ interface StepperProps {
 }
 
 const LiveStepper: React.FC<StepperProps> = ({ questions, ...props }) => {
+  const [stepperRef] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+
   let questionIndex = 0;
 
   const isAttempted = (question: Question) => {
@@ -38,14 +41,43 @@ const LiveStepper: React.FC<StepperProps> = ({ questions, ...props }) => {
       <div key={key} className={className} onClick={props.handleStep(index - 1)}>
         <span>{questionIndex}</span>
         {question.edited && <PulsingCircle isPulsing={props.previousStep === questionIndex - 1} />}
+        <div className="underline"><div/></div>
       </div>
     );
   };
 
+  const getStepSize = () => {
+    try {
+      return window.innerWidth / 25.7;
+    } catch {
+      return 50;
+    }
+  }
+
+  const scrollBack = () => {
+    try {
+      if (stepperRef.current) {
+        let el = stepperRef.current;
+        el.scrollBy(-getStepSize(), 0);
+      }
+    } catch {}
+  }
+  
+  const scrollNext = () => {
+    try {
+      if (stepperRef.current) {
+        let el = stepperRef.current;
+        el.scrollBy(getStepSize(), 0);
+      }
+    } catch {}
+  }
+
   return (
-    <div className="stepper">
+    <div className="stepper" ref={stepperRef}>
+      {questions.length > 19 && <div className="scroll-back-button" style={{display: 'none'}}><SpriteIcon onClick={scrollBack} name="arrow-left" /></div>}
       <div className="step current prep-step" onClick={props.moveToPrep}>Prep</div>
       {questions.map(renderQuestionStep)}
+      {questions.length > 19 && <div className="scroll-next-button" style={{display: 'none'}}><SpriteIcon name="arrow-right" onClick={scrollNext} /></div>}
     </div>
   );
 };
