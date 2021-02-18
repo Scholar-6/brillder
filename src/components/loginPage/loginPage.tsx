@@ -11,7 +11,7 @@ import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import RegisterButton from "./components/RegisterButton";
 import MobileLoginPage from "./MobileLogin";
 import map from "components/map";
-import LoginDesktopPage from "./LoginDesktopPage";
+import LoginDesktopPage from "./desktop/LoginDesktopPage";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
 
 const mapDispatch = (dispatch: any) => ({
