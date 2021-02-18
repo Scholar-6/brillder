@@ -5,7 +5,6 @@
 $expanded-intro-padding: 2vw;
 $introduction-desktop-height: calc(100vh - #{$expanded-intro-padding} - #{$page-head-height});
 $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
-$play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 .MuiExpansionPanelDetails-root {
   padding-top: 0 !important;
@@ -577,15 +576,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             }
           }
         }
-        &.live-page,
-        &.synthesis-page,
-        &.review-page {
-          .mobile-next {
-            top: auto !important;
-            bottom: 87px !important;
-            right: 13px !important;
-          }
-        }
         &.final-step-page {
           color: var(--theme-dark-blue) !important;
           .round-button {
@@ -747,18 +737,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             height: calc(100vh - 27.6vh);
             margin: 12vh 3vw 1vw 4vw;
           }
-          &.mobile-synthesis-page {
-            .direction-info {
-              display: none;
-            }
-            .introduction-page {
-              .intro-header {
-                h1 {
-                  text-transform: capitalize !important;
-                }
-              }
-            }
-          }
         }
         .action-footer {
           display: flex;
@@ -791,24 +769,24 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               margin: 0;
               display: flex;
               justify-content: center;
-              > h2 {
+              h2 {
                 width: 100%;
                 margin-top: 0;
                 margin-bottom: 0;
                 font-family: $font-family-bold;
                 font-size: 2.6vw;
               }
-              > h3,
-              > span {
+              h3,
+              span {
                 position: absolute;
                 color: var(--theme-dark-blue);
               }
-              > h3 {
+              h3 {
                 letter-spacing: inherit;
                 margin: 0;
                 bottom: 75%;
               }
-              > span {
+              span {
                 width: 100%;
                 left: 50%;
                 transform: translateX(-50%);
