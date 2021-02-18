@@ -302,6 +302,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                     <ReviewStepper
                       questions={questions}
                       attempts={attempts}
+                      activeStep={activeStep}
                       handleStep={handleStep}
                     />
                   </div>
