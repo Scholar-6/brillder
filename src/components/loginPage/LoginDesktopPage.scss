@@ -1,0 +1,196 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+@import 'src/assets/sass/component/authpages';
+
+.login-desktop-page {
+  display: flex;
+  flex-direction: row;
+  background: var(--theme-dark-blue);
+  height: 100%;
+
+  .left-part {
+    display: flex;
+    padding-bottom: 13vh;
+    flex-direction: column;
+    background: #12326A;
+    width: 45vw;
+    height: 100%;
+    align-content: center;
+    justify-content: center;
+
+    .logo {
+      $logo-width: 11.3vw;
+      margin-bottom: 5.6vh;
+      .logo-image {
+        width: $logo-width;
+      }
+
+      .logo-text-image {
+        width: $logo-width;
+        margin-top: 3.5vh;
+      }
+    }
+
+    .button-box {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      transition: width ease-in-out 300ms;
+    }
+
+    .email-button,
+    .google-button-desktop {
+      border: none;
+      @extend %flexCenter;
+      padding: 2.2vh;
+
+      .svg {
+        transition: all 0.2s ease-in-out;
+        margin-right: 1vw;
+      }
+
+      .MuiButton-label {
+        justify-content: flex-start;
+      }
+    }
+
+    .email-button {
+      background: var(--theme-orange);
+
+      .svg,
+      span {
+        color: var(--white);
+      }
+
+      &:hover {
+        background: var(--theme-dark-blue);
+      }
+    }
+    $button-width: 20vw;
+
+    .google-button-desktop,
+    .email-button {
+      position: relative;
+      font-size: 1.4vw;
+      font-family: $font-family-regular;
+      border-radius: 0.5vw;
+      transition: all 450ms ease-out;
+      width: $button-width;
+
+      svg {
+        position: absolute !important;
+        height: 100%;
+        left: 2vw;
+        width: 2vw;
+        height: 2vw;
+      }
+    }
+
+    .google-button-desktop {
+      background: var(--white);
+      color: var(--theme-dark-blue);
+    }
+    .email-button {
+      margin-top: 3vh;
+    }
+    .text-box {
+      padding-left: 1.4vw;
+      margin-top: 2vh;
+      width: calc(#{$button-width} + 2vw);
+      position: relative;
+      display: flex;
+      color: var(--white);
+      font-family: $font-family-regular;
+      letter-spacing: 0.1vw;
+      font-size: 1.3vw;
+
+      .join-button {
+        cursor: pointer;
+        position: absolute;
+        top: -0.1vw;
+        left: 13vw;
+        display: flex;
+        align-items: center;
+        font-family: $font-family-bold;
+
+        svg {
+          transition: all 300ms ease-out;
+          width: 2vw;
+          height: 2vw;
+        }
+        &:hover {
+          svg {
+            margin-left: 1vw;
+          }
+        }
+      }
+    }
+  }
+}
+
+// right part
+.login-desktop-page .right-part {
+  height: 100%;
+  display: relative;
+  .container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55vw;
+    .phone {
+      margin-bottom: 2vh;
+      transform: perspective(70vw) rotateY(-25deg);
+      height: 72vh;
+      z-index: 100;
+    }
+  }
+  .bricks-container {
+    position: absolute;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    top: 24.5%;
+    width: 55vw;
+    height: 80%;
+    .row {
+      display: flex;
+      justify-content: center;
+    }
+    .block {
+      display: inline-block;
+      width: 8vw;
+      height: 7.3vh;
+      margin: 0.4vw;
+      border-radius: 0.6vw;
+      background: #12326A;
+    }
+  }
+  .icons-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 55vw;
+    .glasses {
+      position: absolute;
+      top: 12vh;
+      left: 9.2vw;
+      width: 17vh;
+    }
+    .teach-icon {
+      position: absolute;
+      top: 8.5vh;
+      right: 9.5vw;
+      width: 19vh;
+      transform: rotateZ(13deg);
+    }
+    .trowel-login {
+      position: absolute;
+      right: 11vw;
+      width: 19vh;
+      bottom: 24vh;
+      transform: rotateZ(-1deg);
+    }
+  }
+}
