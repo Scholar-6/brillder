@@ -1303,15 +1303,11 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             background: var(--theme-dark-blue);
           }
         }
-        &.success {
-          .underline {
-            background: var(--theme-green);
-          }
+        &.success .underline > div {
+          background: var(--theme-green);
         }
-        &.failed {
-          .underline {
-            background: var(--theme-orange);
-          }
+        &.failed .underline > div {
+          background: var(--theme-orange);
         }
         &:hover {
           opacity: 0.5;
