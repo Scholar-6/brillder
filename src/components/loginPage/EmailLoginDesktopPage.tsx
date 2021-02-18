@@ -11,9 +11,8 @@ import LoginLogo from './components/LoginLogo';
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import WrongLoginDialog from "./components/WrongLoginDialog";
 import DesktopLoginForm from "./components/DesktopLoginForm";
-import MobileEmailLogin from './MobileEmailLogin';
-import { isIPad13, isTablet, isMobile } from "react-device-detect";
-import EmailLoginDesktopPage from "./EmailLoginDesktopPage";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import TeachIcon from "components/mainPage/components/TeachIcon";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -27,7 +26,7 @@ interface LoginProps {
   match: any;
 }
 
-const EmailLoginPage: React.FC<LoginProps> = (props) => {
+const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
   let initPolicyOpen = false;
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
     initPolicyOpen = true;
@@ -77,7 +76,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
     } else {
       const { response } = data;
       if (response) {
-        if (response.status === 500 ) {
+        if (response.status === 500) {
           toggleAlertMessage(true);
           setAlertMessage("Server error");
         } else if (response.status === 401) {
@@ -121,67 +120,65 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
     });
   };
 
-  if (isIPad13 || isTablet) {
-    return <EmailLoginDesktopPage history={props.history} match={props.match} />
-  }
-  if (!isMobile) {
-    return <EmailLoginDesktopPage history={props.history} match={props.match} />
-  }
-
   return (
-    <Grid
-      className="auth-page login-page"
-      container
-      item
-      justify="center"
-      alignItems="center"
-    >
-      <Hidden only={["xs"]}>
-        <div className="choose-login-desktop">
-          <Grid container direction="row" className="first-row">
-            <div className="first-col"></div>
-            <div className="second-col"></div>
-            <div className="third-col"></div>
-          </Grid>
-          <Grid container direction="row" className="second-row">
-            <div className="first-col">
-              <LoginLogo />
-            </div>
-            <div className="second-col">
-              <DesktopLoginForm
-                email={email}
-                setEmail={setEmail}
-                password={password}
-                setPassword={setPassword}
-                passwordHidden={passwordHidden}
-                setHidden={setHidden}
-                handleSubmit={handleLoginSubmit}
-                register={() => register(email, password)}
-              />
-            </div>
-          </Grid>
-          <Grid container direction="row" className="third-row">
-            <div className="first-col"></div>
-            <div className="second-col">
-              <span className="policy-text" onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
-            </div>
-            <div className="third-col"></div>
-          </Grid>
+    <div className="login-desktop-page email-desktop-page">
+      <div className="left-part">
+        <div className="logo">
+          <LoginLogo />
         </div>
-      </Hidden>
-      <MobileEmailLogin
-        history={props.history}
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        passwordHidden={passwordHidden}
-        setHidden={setHidden}
-        register={register}
-        login={login}
-        handleLoginSubmit={handleLoginSubmit}
-        setPolicyDialog={setPolicyDialog}
-      />
+        <div className="button-box">
+          <DesktopLoginForm
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            passwordHidden={passwordHidden}
+            setHidden={setHidden}
+            handleSubmit={handleLoginSubmit}
+            register={() => register(email, password)}
+          />
+        </div>
+      </div>
+      <div className="right-part">
+        <div className="container">
+          <img className="phone" alt="" src="/images/login/LoginPhone3_4view.svg" />
+        </div>
+        <div className="bricks-container">
+          <div>
+            <div className="row">
+              <div className="block" />
+              <div className="block" />
+              <div className="block" />
+              <div className="block" />
+            </div>
+            <div className="row">
+              <div className="block" />
+              <div className="block" />
+              <div className="block" />
+            </div>
+            <div className="row">
+              <div className="block" />
+              <div className="block" />
+              <div className="block" />
+              <div className="block" />
+            </div>
+            <div className="row">
+              <div className="block" />
+              <div className="block" />
+              <div className="block" />
+            </div>
+            <div className="row">
+              <div className="block" />
+              <div className="block" />
+            </div>
+          </div>
+        </div>
+        <div className="icons-container">
+          <img alt="" className="glasses" src="/images/login/rotatedGlasses.svg" />
+          <TeachIcon />
+          <SpriteIcon name="trowel-home" className="trowel-login text-theme-orange" />
+        </div>
+      </div>
       <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -192,8 +189,8 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
         action={<React.Fragment></React.Fragment>}
       />
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
-    </Grid>
+    </div>
   );
 };
 
-export default connector(EmailLoginPage);
+export default connector(EmailLoginDesktopPage);

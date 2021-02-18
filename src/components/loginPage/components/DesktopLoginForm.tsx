@@ -76,7 +76,6 @@ class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
         </div>
         <div className="input-block">
           <div className="button-box">
-            <button type="button" className="sign-up-button" onClick={this.props.register}>Sign up</button>
             <button type="submit" className="sign-in-button">Sign in</button>
           </div>
         </div>
