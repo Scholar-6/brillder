@@ -1,6 +1,5 @@
 import React from "react";
 
-import './SubjectAssignment.scss';
 import { AcademicLevel, BrickLengthEnum, Subject } from "model/brick";
 import { LibraryAssignmentBrick } from "model/assignment";
 import map from "components/map";

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import './LibrarySubjects.scss';
 import { SubjectAssignments } from "../service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
 import { SubjectAssignment } from "./SubjectAssignment";
@@ -30,7 +29,7 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
 
   findStudent(a: LibraryAssignmentBrick) {
     if (a.brick.assignments && a.brick.assignments.length > 0) {
-      const {assignments} = a.brick;
+      const { assignments } = a.brick;
       for (let a2 of assignments) {
         if (a2.student) {
           if (a2.student.id === this.props.userId) {
@@ -43,7 +42,7 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
   }
 
   render() {
-    let {assignments} = this.props.subjectAssignment;
+    let { assignments } = this.props.subjectAssignment;
 
     assignments.sort(a => {
       if (a.maxScore && a.maxScore >= 0) {
@@ -51,10 +50,10 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
       }
       return 1;
     });
-    
+
     return (
       <div className="libary-container">
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div>
           {assignments.map(this.renderAssignment.bind(this))}
         </div>
       </div>
