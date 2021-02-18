@@ -24,6 +24,8 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
   handleStep,
   attempts,
 }) => {
+  const [stepperRef] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+
   let questionIndex = 0;
 
   const renderQuestionStep = (key: number) => {
@@ -71,11 +73,39 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
   let className = 'stepper';
   if (isMobile && noScrolling) {
     className += ' inline';
-  }  
+  }
+
+  const getStepSize = () => {
+    try {
+      return window.innerWidth / 25.7;
+    } catch {
+      return 50;
+    }
+  }
+
+  const scrollBack = () => {
+    try {
+      if (stepperRef.current) {
+        let el = stepperRef.current;
+        el.scrollBy(-getStepSize(), 0);
+      }
+    } catch {}
+  }
+  
+  const scrollNext = () => {
+    try {
+      if (stepperRef.current) {
+        let el = stepperRef.current;
+        el.scrollBy(getStepSize(), 0);
+      }
+    } catch {}
+  }
 
   return (
-    <div className={className}>
+    <div className={className} ref={stepperRef}>
+      {questions.length > 19 && <div className="scroll-back-button" style={{display: 'none'}}><SpriteIcon onClick={scrollBack} name="arrow-left" /></div>}
       {questions.map((q, index) => renderQuestionStep(index))}
+      {questions.length > 19 && <div className="scroll-next-button" style={{display: 'none'}}><SpriteIcon name="arrow-right" onClick={scrollNext} /></div>}
     </div>
   );
 };

@@ -48,7 +48,7 @@ const LiveStepper: React.FC<StepperProps> = ({ questions, ...props }) => {
 
   const getStepSize = () => {
     try {
-      return window.innerWidth / 26;
+      return window.innerWidth / 25.7;
     } catch {
       return 50;
     }
