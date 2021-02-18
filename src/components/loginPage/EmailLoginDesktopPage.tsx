@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Snackbar, Hidden } from "@material-ui/core";
+import { Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
