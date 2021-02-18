@@ -3,7 +3,6 @@ import React from "react";
 import { Question } from "model/question";
 import { ComponentAttempt } from "../model";
 
-import sprite from "assets/img/icons-sprite.svg";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isMobile } from "react-device-detect";
 
