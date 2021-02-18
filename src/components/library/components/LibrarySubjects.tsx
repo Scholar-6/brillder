@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import { Subject } from "model/brick";
-import './LibrarySubjects.scss';
 
 import { SubjectAssignments } from "../service/model";
 import LibrarySubject from "./LibrarySubject";
@@ -35,13 +34,13 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, State> {
 
   countPages() {
     this.props.subjectAssignments.forEach(s => {
-      
+
     });
   }
 
   renderSubjectAssignments(item: SubjectAssignments, key: number) {
     const width = getSubjectWidth(item);
-    return <div key={key} className="libary-container-1" style={{width: width + 'vw', display: 'inline-flex'}}>
+    return <div key={key} className="libary-container-1">
       <LibrarySubject userId={this.props.userId} subjectAssignment={item} history={this.props.history} />
     </div>
   }
