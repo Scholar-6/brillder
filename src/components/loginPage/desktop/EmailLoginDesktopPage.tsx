@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { Grid, Snackbar, Hidden } from "@material-ui/core";
+import { Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
 
-import "./loginPage.scss";
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
-import LoginLogo from './components/LoginLogo';
+import LoginLogo from '../components/LoginLogo';
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
-import WrongLoginDialog from "./components/WrongLoginDialog";
-import DesktopLoginForm from "./components/DesktopLoginForm";
+import WrongLoginDialog from "../components/WrongLoginDialog";
+import DesktopLoginForm from "./DesktopLoginForm";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachIcon from "components/mainPage/components/TeachIcon";
 

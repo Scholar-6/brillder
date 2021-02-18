@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import 'swiper/swiper.scss';
 
 import './themes/MainPageMobile.scss';

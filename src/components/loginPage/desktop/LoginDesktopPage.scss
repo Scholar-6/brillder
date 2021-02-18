@@ -168,6 +168,15 @@
   }
 }
 
+@keyframes phone-animate {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 // right part
 .login-desktop-page .right-part {
   height: 100%;
@@ -180,11 +189,14 @@
     align-items: center;
     justify-content: center;
     width: 55vw;
-    .phone {
+    svg {
       margin-bottom: 2vh;
       transform: perspective(70vw) rotateY(-25deg);
       height: 72vh;
       z-index: 10;
+    }
+    #phone-image {
+      animation: phone-animate 2s;
     }
   }
   .bricks-container {

@@ -4,12 +4,13 @@ import { History } from "history";
 
 import './LoginDesktopPage.scss';
 import actions from "redux/actions/auth";
-import LoginLogo from './components/LoginLogo';
+import LoginLogo from '../components/LoginLogo';
 import map from "components/map";
-import GoogleDesktopButton from "./components/GoogleDesktopButton";
-import RegisterDesktopButton from "./components/RegisterDesktopButton";
+import GoogleDesktopButton from "./GoogleDesktopButton";
+import RegisterDesktopButton from "./RegisterDesktopButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachIcon from "components/mainPage/components/TeachIcon";
+import PhoneIcon from "./PhoneIcon";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -70,7 +71,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
       </div>
       <div className="right-part">
         <div className="container">
-          <img className="phone" alt="" src="/images/login/LoginPhone3_4view.svg" />
+          <PhoneIcon />
         </div>
         <div className="bricks-container">
           <div>
