@@ -8,10 +8,11 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isMobile } from "react-device-detect";
 
 interface ReviewStepperProps {
-  noScrolling?: boolean;
   attempts: ComponentAttempt<any>[];
   questions: Question[];
+  noScrolling?: boolean;
   isEnd?: boolean;
+  activeStep?: number;
   handleStep(questionIndex: number): any;
 }
 
@@ -19,6 +20,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
   isEnd,
   noScrolling,
   questions,
+  activeStep,
   handleStep,
   attempts,
 }) => {
@@ -29,29 +31,39 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
     questionIndex++;
     let index = questionIndex;
 
+    let className = 'step';
+
+    if (activeStep !== undefined && activeStep !== null && activeStep + 1 === questionIndex) {
+      className += ' current'
+    }
+
     // render step for invalid question
     if (!attempt) {
+      className += ' failed';
       return (
-        <div className="step failed" key={key} onClick={handleStep(index - 1)}>
+        <div className={className} key={key} onClick={handleStep(index - 1)}>
           <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
           <SpriteIcon name="cancel" className="active text-theme-orange" />
+          <div className="underline"><div/></div>
         </div>
       );
     }
 
+    if (attempt.correct) {
+      className += ' success';
+    } else {
+      className += ' failed';
+    }
+
     // render step normal questions
     return (
-      <div className={`step ${attempt.correct ? 'success' : 'failed'}`} key={key} onClick={handleStep(index - 1)}>
+      <div className={className} key={key} onClick={handleStep(index - 1)}>
         <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use
-            href={attempt.correct ? sprite + "#ok" : sprite + "#cancel"}
-            className={
-              attempt.correct ? "text-theme-green" : "text-theme-orange"
-            }
-          />
-        </svg>
+        <SpriteIcon
+          name={attempt.correct ? "#ok" : "#cancel"}
+          className={`svg active ${attempt.correct ? "text-theme-green" : "text-theme-orange"}`}
+        />
+        <div className="underline"><div/></div>
       </div>
     );
   };
