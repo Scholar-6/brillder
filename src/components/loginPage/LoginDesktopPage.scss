@@ -3,19 +3,60 @@
 @import 'src/assets/sass/partials/extensions';
 @import 'src/assets/sass/component/authpages';
 
+.login-desktop-page ~ .beta-text {
+  z-index: 13;
+}
+
 .login-desktop-page {
   display: flex;
   flex-direction: row;
   background: var(--theme-dark-blue);
   height: 100%;
 
+  .left-part-join {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    height: 100%;
+    width: 55vw;
+
+    h1 {
+      text-align: center;
+      color: var(--white);
+      margin-top: 8.5vh;
+      margin-bottom: 7vh;
+      font-size: 2.8vw;
+      letter-spacing: 0.1vw;
+      font-family: $font-family-bold;
+    }
+    .image-container {
+      display: flex;
+      justify-content: center;
+
+      img {
+        height: 55vh;
+      }
+    }
+  }
+
   .left-part {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 11;
     display: flex;
     flex-direction: column;
     background: #12326A;
     width: 45vw;
     height: 100%;
     padding-top: 12.4vh;
+    transition: all 500ms ease-out;
+
+    &.right {
+      position: absolute;
+      left: 55vw;
+    }
 
     .logo {
       $logo-width: 11.3vw;
@@ -130,6 +171,8 @@
 // right part
 .login-desktop-page .right-part {
   height: 100%;
+  position: absolute;
+  left: 45vw;
   display: relative;
   .container {
     height: 100%;
@@ -141,7 +184,7 @@
       margin-bottom: 2vh;
       transform: perspective(70vw) rotateY(-25deg);
       height: 72vh;
-      z-index: 100;
+      z-index: 10;
     }
   }
   .bricks-container {

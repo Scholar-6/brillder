@@ -17,11 +17,9 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(null, mapDispatch);
 
-export enum LoginState {
-  ChooseLoginAnimation,
-  ChooseLogin,
-  ButtonsAnimation,
-  Login
+export enum LoginPage {
+  Default,
+  Join,
 }
 
 interface LoginProps {
@@ -35,22 +33,21 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
     initPolicyOpen = true;
   }
-  const [loginState, setLoginState] = useState(LoginState.ChooseLoginAnimation);
+  const [page, setPage] = useState(LoginPage.Default);
 
   const moveToLogin = () => {
     props.history.push(map.Login + '/email');
   }
 
-  const movingToLogin = () => {
-    setLoginState(LoginState.ButtonsAnimation);
-    setTimeout(() => {
-      moveToLogin();
-    }, 450);
-  }
-
   return (
     <div className="login-desktop-page">
-      <div className="left-part">
+      <div className="left-part-join">
+        <h1>Join the revolution</h1>
+        <div className="image-container">
+          <img alt="" src="/images/login/PhoneWheellogin.svg" />
+        </div>
+      </div>
+      <div className={`left-part ${page === LoginPage.Join && 'right'}`}>
         <div className="logo">
           <LoginLogo />
         </div>
@@ -60,15 +57,16 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
         <div className="button-box">
           <RegisterDesktopButton onClick={moveToLogin} />
         </div>
+        {page === LoginPage.Default && 
         <div className="button-box">
           <div className="text-box">
             <span>New to Brillder?</span>
-            <div className="join-button">
+            <div className="join-button" onClick={() => setPage(LoginPage.Join)}>
               Join Now
               <SpriteIcon name="arrow-right" />
             </div>
           </div>
-        </div>
+        </div>}
       </div>
       <div className="right-part">
         <div className="container">
