@@ -11,13 +11,11 @@
 
   .left-part {
     display: flex;
-    padding-bottom: 13vh;
     flex-direction: column;
     background: #12326A;
     width: 45vw;
     height: 100%;
-    align-content: center;
-    justify-content: center;
+    padding-top: 12.4vh;
 
     .logo {
       $logo-width: 11.3vw;
@@ -147,13 +145,14 @@
     }
   }
   .bricks-container {
+    $top: 24.5%;
     position: absolute;
     display: flex;
     align-content: center;
     justify-content: center;
-    top: 24.5%;
+    top: $top;
     width: 55vw;
-    height: 80%;
+    height: calc(100% - #{$top});
     .row {
       display: flex;
       justify-content: center;
@@ -192,5 +191,34 @@
       bottom: 24vh;
       transform: rotateZ(-1deg);
     }
+  }
+}
+
+// email input form
+.login-desktop-page .button-box form {
+  input {
+    color: var(--white);
+    text-align: center;
+    width: 20vw !important;
+    padding: 2.3vh 1vw !important;
+    background: var(--theme-dark-blue);
+    margin-bottom: 1vh;
+  }
+  button {
+    border: none;
+    outline: none;
+    background: var(--theme-orange);
+    width: 100% !important;
+    font-family: $font-family-bold;
+    color: var(--white);
+    font-size: 1.7vw;
+    line-height: 1.3;
+    padding: 2.3vh 1vw !important;
+    border-radius: 1.7vh;
+  }
+}
+
+.email-desktop-page {
+  .left-part {
   }
 }
