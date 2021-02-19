@@ -311,5 +311,11 @@
     line-height: 1.3;
     padding: 2.3vh 1vw !important;
     border-radius: 1.7vh;
+    transition: all 300ms ease-out;
+
+    &:hover {
+      color: var(--theme-orange);
+      background: var(--white);
+    }
   }
 }
