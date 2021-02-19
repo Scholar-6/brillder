@@ -27,7 +27,6 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoginWrong, setLoginWrong] = React.useState(false);
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -46,7 +45,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
       return;
     }
 
-    sendLogin(email, password);
+    register(email, password);
   }
 
   const sendLogin = async (email: string, password: string) => {
@@ -69,11 +68,6 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         if (response.status === 500) {
           toggleAlertMessage(true);
           setAlertMessage("Server error");
-        } else if (response.status === 401) {
-          const { msg } = response.data;
-          if (msg === "INVALID_EMAIL_OR_PASSWORD") {
-            setLoginWrong(true);
-          }
         }
       } else {
         toggleAlertMessage(true);
@@ -128,7 +122,6 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
           register={() => register(email, password)}
         />
       </div>
-      <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={alertShown}
