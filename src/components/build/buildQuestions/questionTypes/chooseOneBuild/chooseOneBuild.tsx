@@ -50,10 +50,12 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   const onChecked = (event: any) => {
     if (locked) { return; }
     const index = event.target.value;
-    list.forEach(answer => {
-      answer.set("checked", false);
+    list.doc!.transact(() => {
+      list.forEach(answer => {
+        answer.set("checked", false);
+      });
+      list.get(index).set("checked", true);
     });
-    list.get(index).set("checked", true);
   }
 
   const removeFromList = (index: number) => {

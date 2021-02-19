@@ -100,12 +100,14 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
   const onChecked = (choice: Y.Map<any>, event: any) => {
     if (locked) { return; }
     const index = event.target.value;
-    choice.get("answers").forEach((answer: Y.Map<any>) => {
-      if(answer.get("checked") !== false) {
-        answer.set("checked", false);
-      }
+    choice.doc!.transact(() => {
+      choice.get("answers").forEach((answer: Y.Map<any>) => {
+        if(answer.get("checked") !== false) {
+          answer.set("checked", false);
+        }
+      });
+      choice.get("answers").get(index).set("checked", true);
     });
-    choice.get("answers").get(index).set("checked", true);
   }
 
   const getInputClass = (answer: Y.Map<any>) => {

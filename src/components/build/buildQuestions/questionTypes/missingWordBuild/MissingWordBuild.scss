@@ -33,6 +33,7 @@
       padding: 0.45vw;
       left: 0.1vw;
       top: 1vw;
+      z-index: 100;
       span {
         svg {
           height: $bin-size !important;
