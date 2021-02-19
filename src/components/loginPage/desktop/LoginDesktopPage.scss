@@ -213,9 +213,18 @@
       animation: phone-animate 2s;
     }
   }
+  $top: 24.5%;
+
+  @keyframes appear {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 70%;
+    }
+  }
 
   .bricks-container {
-    $top: 24.5%;
     position: absolute;
     display: flex;
     align-content: center;
@@ -223,15 +232,22 @@
     top: $top;
     width: 55vw;
     height: calc(100% - #{$top});
+    .inner {
+      width: 70%;
+      animation: appear 1400ms ease-in-out;
+    }
     .row {
+      width: 100%;
       display: flex;
       justify-content: center;
     }
     .block {
       display: inline-block;
       width: 8vw;
+      width: 20%;
       height: 7.3vh;
       margin: 0.4vw;
+      margin: 0.7%;
       border-radius: 0.6vw;
       background: #12326A;
     }

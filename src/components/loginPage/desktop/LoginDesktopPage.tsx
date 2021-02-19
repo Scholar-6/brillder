@@ -105,7 +105,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
           <PhoneIcon />
         </div>
         <div className="bricks-container">
-          <div>
+          <div className="inner">
             <div className="row">
               <div className="block" />
               <div className="block" />
