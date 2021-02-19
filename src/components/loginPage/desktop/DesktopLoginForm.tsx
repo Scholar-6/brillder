@@ -9,6 +9,8 @@ interface LoginsState {
 }
 
 interface LoginFormProps {
+  buttonLabel?: string;
+
   email: string;
   setEmail(email: string): void;
 
@@ -76,7 +78,7 @@ class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
         </div>
         <div className="input-block">
           <div className="button-box">
-            <button type="submit" className="sign-in-button">Sign in</button>
+            <button type="submit" className="sign-in-button">{this.props.buttonLabel ? this.props.buttonLabel : 'Sign in'}</button>
           </div>
         </div>
       </form>

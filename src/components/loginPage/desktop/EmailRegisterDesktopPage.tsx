@@ -9,9 +9,6 @@ import { login } from "services/axios/auth";
 import LoginLogo from '../components/LoginLogo';
 import WrongLoginDialog from "../components/WrongLoginDialog";
 import DesktopLoginForm from "./DesktopLoginForm";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
-import TeachIcon from "components/mainPage/components/TeachIcon";
-import PhoneIcon from "./PhoneIcon";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -21,11 +18,10 @@ const connector = connect(null, mapDispatch);
 
 interface LoginProps {
   history: History;
-  match: any;
   loginSuccess(): void;
 }
 
-const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
+const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
@@ -115,63 +111,22 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
   };
 
   return (
-    <div className="login-desktop-page email-desktop-page">
-      <div className="left-part">
-        <div className="logo">
-          <LoginLogo />
-        </div>
-        <div className="button-box">
-          <DesktopLoginForm
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            passwordHidden={passwordHidden}
-            setHidden={setHidden}
-            handleSubmit={handleLoginSubmit}
-            register={() => register(email, password)}
-          />
-        </div>
+    <div className="left-part right">
+      <div className="logo">
+        <LoginLogo />
       </div>
-      <div className="right-part">
-        <div className="container">
-          <PhoneIcon />
-        </div>
-        <div className="bricks-container">
-          <div>
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-            </div>
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-            </div>
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-            </div>
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-            </div>
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-            </div>
-          </div>
-        </div>
-        <div className="icons-container">
-          <img alt="" className="glasses floating1" src="/images/login/rotatedGlasses.svg" />
-          <TeachIcon className="floating3" />
-          <SpriteIcon name="trowel-home" className="trowel-login text-theme-orange floating2" />
-        </div>
+      <div className="button-box">
+        <DesktopLoginForm
+          buttonLabel="Sign up"
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          passwordHidden={passwordHidden}
+          setHidden={setHidden}
+          handleSubmit={handleLoginSubmit}
+          register={() => register(email, password)}
+        />
       </div>
       <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
       <Snackbar
@@ -186,4 +141,4 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
   );
 };
 
-export default connector(EmailLoginDesktopPage);
+export default connector(EmailRegisterDesktopPage);
