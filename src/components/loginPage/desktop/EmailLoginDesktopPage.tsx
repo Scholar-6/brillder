@@ -7,7 +7,6 @@ import axios from "axios";
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
 import LoginLogo from '../components/LoginLogo';
-import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import WrongLoginDialog from "../components/WrongLoginDialog";
 import DesktopLoginForm from "./DesktopLoginForm";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -27,16 +26,11 @@ interface LoginProps {
 }
 
 const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
-  let initPolicyOpen = false;
-  if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
-    initPolicyOpen = true;
-  }
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
   const [isLoginWrong, setLoginWrong] = React.useState(false);
 
   const validateForm = () => {
@@ -188,7 +182,6 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
       />
-      <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
     </div>
   );
 };

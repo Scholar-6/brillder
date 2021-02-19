@@ -11,6 +11,7 @@ import RegisterDesktopButton from "./RegisterDesktopButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachIcon from "components/mainPage/components/TeachIcon";
 import PhoneIcon from "./PhoneIcon";
+import TypingLabel from "components/baseComponents/TypingLabel";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -30,10 +31,6 @@ interface LoginProps {
 }
 
 const LoginDesktopPage: React.FC<LoginProps> = (props) => {
-  let initPolicyOpen = false;
-  if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
-    initPolicyOpen = true;
-  }
   const [page, setPage] = useState(LoginPage.Default);
 
   const moveToLogin = () => {
@@ -42,12 +39,15 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
 
   return (
     <div className="login-desktop-page">
-      <div className="left-part-join">
-        <h1>Join the revolution</h1>
-        <div className="image-container">
-          <img alt="" src="/images/login/PhoneWheellogin.svg" />
-        </div>
-      </div>
+      {page === LoginPage.Join &&
+        <div className="left-part-join">
+          <h1>
+            <TypingLabel className="" onEnd={() => { }} label="Join the revolution" />
+          </h1>
+          <div className="image-container spinning">
+            <img alt="" src="/images/login/PhoneWheellogin.svg" />
+          </div>
+        </div>}
       <div className={`left-part ${page === LoginPage.Join && 'right'}`}>
         <div className="logo">
           <LoginLogo />
@@ -58,16 +58,16 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
         <div className="button-box">
           <RegisterDesktopButton onClick={moveToLogin} />
         </div>
-        {page === LoginPage.Default && 
-        <div className="button-box">
-          <div className="text-box">
-            <span>New to Brillder?</span>
-            <div className="join-button" onClick={() => setPage(LoginPage.Join)}>
-              Join Now
+        {page === LoginPage.Default &&
+          <div className="button-box">
+            <div className="text-box">
+              <span>New to Brillder?</span>
+              <div className="join-button" onClick={() => setPage(LoginPage.Join)}>
+                Join Now
               <SpriteIcon name="arrow-right" />
+              </div>
             </div>
-          </div>
-        </div>}
+          </div>}
       </div>
       <div className="right-part">
         <div className="container">

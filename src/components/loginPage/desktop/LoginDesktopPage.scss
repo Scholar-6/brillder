@@ -38,6 +38,19 @@
         height: 55vh;
       }
     }
+
+    @keyframes spinning {
+      0% {
+        transform: rotateZ(0deg);
+      }
+      100% {
+        transform: rotateZ(360deg);
+      }
+    }
+
+    .spinning {
+      animation: spinning 5s infinite linear;
+    }
   }
 
   .left-part {
