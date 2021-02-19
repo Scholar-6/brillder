@@ -244,3 +244,59 @@
     overflow-y: scroll;
   }
 }
+
+// swiper
+.main-listing.dashboard-page .mobile-scroll-bricks {
+  .swiper-container {
+    height: 100% !important;
+    .swiper-slide {
+      width: 100vw !important;
+    }
+    .brick-circle-container {
+      margin-bottom: 2vh;
+      .round-button {
+        width: 25vw !important;
+        height: 25vw !important;
+      }
+    }
+    .label-circle-text {
+      font-size: 10vw !important;
+    }
+    .short-description {
+      padding: 4vh 8vw 0 8vw;
+      height: 100% !important;
+      width: 100vw !important;
+      .centered-brick-description {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+      }
+      .short-brick-info {
+        max-width: 57vw;
+        min-width: 43vw;
+        .link-info {
+          font-size: 4vw !important;
+        }
+        .link-description {
+          font-size: 4vw !important;
+        }
+      }
+    }
+  }
+}
+
+// bricks list
+.main-listing.dashboard-page .bricks-list-container {
+  padding-top: 0 !important;
+  .brick-container {
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    .short-description {
+      padding: 0 4vw !important;
+      .short-brick-info {
+        padding-top: 1.5vw;
+        padding-bottom: 1.5vw;
+      }
+    }
+  }
+}
