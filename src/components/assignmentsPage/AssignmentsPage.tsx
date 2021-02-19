@@ -22,6 +22,10 @@ export interface BackToWorkProps {
   forgetBrick(): void;
 }
 
+const MobileTheme = React.lazy(() => import('./themes/AssignmentsMobilePage'));
+const DesktopTheme = React.lazy(() => import('./themes/AssignmentsDesktopPage'));
+
+
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   constructor(props: BackToWorkProps) {
     super(props);
@@ -53,17 +57,20 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   render() {
     return (
-      <div className="main-listing student-assignments-page">
-        <PageHeadWithMenu
-          page={PageEnum.BackToWork}
-          user={this.props.user}
-          placeholder="Search Ongoing Projects & Published Bricks…"
-          history={this.props.history}
-          search={() => this.search()}
-          searching={(v: string) => this.searching(v)}
-        />
-        <PlayPage history={this.props.history} />
-      </div>
+      <React.Suspense fallback={<></>}>
+        {isMobile ? <MobileTheme /> : <DesktopTheme />}
+        <div className="main-listing student-assignments-page">
+          <PageHeadWithMenu
+            page={PageEnum.BackToWork}
+            user={this.props.user}
+            placeholder="Search Ongoing Projects & Published Bricks…"
+            history={this.props.history}
+            search={() => this.search()}
+            searching={(v: string) => this.searching(v)}
+          />
+          <PlayPage history={this.props.history} />
+        </div>
+      </React.Suspense>
     );
   }
 }
