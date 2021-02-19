@@ -1061,6 +1061,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .play-preview-pages .sorted-row.sorted-row-expanded .live-container,
 .play-preview-pages .sorted-row.sorted-row-expanded .provisional-container,
 .play-preview-pages .sorted-row.sorted-row-expanded .synthesis-container,
+.play-preview-pages .sorted-row.sorted-row-expanded .ending-container,
+.play-preview-pages .sorted-row.sorted-row-expanded .complete-container,
 .play-preview-pages .sorted-row.sorted-row-expanded .review-container {
   position: relative;
   $width: calc(100vw - #{$home-button-size} - 8vw - 7vw - 2.1vw);
