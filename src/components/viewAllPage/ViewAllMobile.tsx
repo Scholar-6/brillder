@@ -33,8 +33,7 @@ class ViewAllMobile extends Component<ViewAllProps> {
       <div className="main-brick-container">
         <Box className="brick-container">
           <div
-            className={`sorted-brick absolute-container brick-row-${row} ${brick.expanded ? "brick-hover" : ""
-              }`}
+            className={`sorted-brick absolute-container brick-row-${row} ${brick.expanded ? "brick-hover" : ""}`}
             onClick={() => this.props.handleMobileClick(key)}
           >
             <ShortBrickDescription
