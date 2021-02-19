@@ -215,7 +215,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     }
 
     return (
-      <div className="brick-row-container">
+      <div className="brick-row-container ending-container">
         <Hidden only={["xs"]}>
           <div className="brick-container play-preview-panel ending-page">
             <Grid container direction="row">
