@@ -12,6 +12,7 @@ import WrongLoginDialog from "../components/WrongLoginDialog";
 import DesktopLoginForm from "./DesktopLoginForm";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachIcon from "components/mainPage/components/TeachIcon";
+import PhoneIcon from "./PhoneIcon";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -140,7 +141,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
       </div>
       <div className="right-part">
         <div className="container">
-          <img className="phone" alt="" src="/images/login/LoginPhone3_4view.svg" />
+          <PhoneIcon />
         </div>
         <div className="bricks-container">
           <div>
