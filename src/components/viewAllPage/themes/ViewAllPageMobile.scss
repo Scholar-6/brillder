@@ -47,10 +47,6 @@
             background: var(--white);
           }
 
-          &.not-active:hover {
-            background: var(--off-white) !important;
-          }
-
           &:nth-child(odd) {
             margin-right: 0.4%;
           }
@@ -111,54 +107,41 @@
         overflow: auto;
         margin: 5vh 0 7vh 0;
         height: calc(100vh - 12vh);
-        .subject-row {
-          width: 100%;
+        .subject-item {
+          transition: all 300ms ease-out;
+          cursor: pointer;
+          position: relative;
+          background: var(--white) !important;
+          color: var(--theme-dark-blue) !important;
           @include phone_and_tabletL {
-            display: flex;
-            flex-direction: column;
+            padding-left: 10vw;
+            width: 100%;
+            font-size: 5vw;
+            margin: 0;
+            border-bottom: 1px solid var(--tab-gray);
           }
-          .subject-item {
-            transition: all 300ms ease-out;
-            cursor: pointer;
-            position: relative;
-            background: var(--white) !important;
-            color: var(--theme-dark-blue) !important;
-            @include phone_and_tabletL {
-              padding-left: 10vw;
-              width: 100%;
-              font-size: 5vw;
-              margin: 0;
-              border-bottom: 1px solid var(--tab-gray);
+          .round-circle-container {
+            left: 3vw;
+            position: absolute;
+            height: 100%;
+            @extend %flexCenter;
+            .round-circle {
+              border-radius: 50%;
+              width: 5vw;
+              height: 5vw;
             }
-            &:hover {
-              background: var(--theme-dark-blue) !important;
-              color: var(--white) !important;
-              .icon {
-                color: var(--theme-dark-blue) !important;
-              }
-            }
-            .round-circle-container {
-              left: 0.8vw;
-              position: absolute;
-              height: 100%;
-              @extend %flexCenter;
-              .round-circle {
-                border-radius: 50%;
+            &.icon {
+              color: var(--theme-orange);
+              svg {
                 width: 5vw;
                 height: 5vw;
               }
-              &.icon {
-                color: var(--theme-orange);
-                svg {
-                  width: 5vw;
-                  height: 5vw;
-                }
-              }
             }
-            .subject-name {
-              @include phone_and_tabletL {
-                padding: 1vh 0;
-              }
+          }
+          .subject-name {
+            @include phone_and_tabletL {
+              padding: 1vh 0;
+              padding-left: 2vw;
             }
           }
         }
@@ -236,12 +219,6 @@
       @extend %transitionAll300;
       margin-top: calc(#{$bricks-height / 90});
       max-height: calc(#{$bricks-height / 12});
-    }
-
-    &:hover {
-      svg {
-        transform: rotate(10deg);
-      }
     }
   }
 
