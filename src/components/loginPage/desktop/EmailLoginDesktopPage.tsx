@@ -174,9 +174,9 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
           </div>
         </div>
         <div className="icons-container">
-          <img alt="" className="glasses" src="/images/login/rotatedGlasses.svg" />
-          <TeachIcon />
-          <SpriteIcon name="trowel-home" className="trowel-login text-theme-orange" />
+          <img alt="" className="glasses floating1" src="/images/login/rotatedGlasses.svg" />
+          <TeachIcon className="floating3" />
+          <SpriteIcon name="trowel-home" className="trowel-login text-theme-orange floating2" />
         </div>
       </div>
       <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
