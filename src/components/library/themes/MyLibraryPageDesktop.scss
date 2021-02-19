@@ -3,6 +3,11 @@
 @import 'src/assets/sass/partials/extensions';
 
 .my-library {
+  .subject-title {
+    font-size: 2.5vw !important;
+    letter-spacing: 0.5vw !important;
+  }
+ 
   .all-subject-assignments {
     height: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh) !important;
     .my-library-list {
