@@ -1057,7 +1057,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 // #2781 new play live and review theme
+
 .play-preview-pages .sorted-row.sorted-row-expanded .live-container,
+.play-preview-pages .sorted-row.sorted-row-expanded .provisional-container,
+.play-preview-pages .sorted-row.sorted-row-expanded .synthesis-container,
 .play-preview-pages .sorted-row.sorted-row-expanded .review-container {
   position: relative;
   $width: calc(100vw - #{$home-button-size} - 8vw - 7vw - 2.1vw);
@@ -1069,18 +1072,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   margin-left: 7vw;
   border-radius: 2vw !important;
 
-  .introduction-info {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding-top: 0 !important;
-    width: 100%;
-    height: 0 !important;
-
-    .intro-header {
-      display: none;
-    }
-  }
   .question-index-container {
     display: none;
   }
@@ -1197,6 +1188,18 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   $stepper-height: 4vw;
   $step-height: 2.4vw;
   $step-container-width: 3.81vw;
+  .introduction-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 0 !important;
+    width: 100%;
+    height: 0 !important;
+
+    .intro-header {
+      display: none;
+    }
+  }
   .intro-text-row {
     position: absolute;
     top: 0;
@@ -1319,5 +1322,29 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     .scroll-next-button {
       right: 0;
     }
+  }
+}
+
+// only provisional score
+.play-preview-pages .sorted-row.sorted-row-expanded .provisional-container {
+  .circle-progress-container {
+    $height: calc(100vh - 4vw - 2vw - 3vw);
+    height: $height !important;
+    .circle-progress {
+      height: $height !important;
+    }
+    .score-data {
+      height: $height !important;
+      > div {
+        height: $height !important;
+      }
+    }
+  }
+}
+
+// only synthesis score
+.play-preview-pages .sorted-row.sorted-row-expanded .synthesis-container {
+  .synthesis-content {
+    height: calc(100vh - 4vw - 12vh) !important;
   }
 }

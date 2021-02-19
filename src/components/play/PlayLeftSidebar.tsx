@@ -108,7 +108,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   renderToggleButton() {
     if (this.props.sidebarRolledUp) {
-      if (this.isLive()) {
+      if (this.isLive() || this.isProvisional() || this.isSynthesis() || this.isEnding()) {
         return <div />
       }
       return (
@@ -167,6 +167,18 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   isLive() {
     return this.props.history.location.pathname.slice(-5) === '/live';
+  }
+
+  isProvisional() {
+    return this.props.history.location.pathname.slice(-17) === '/provisionalScore';
+  }
+
+  isSynthesis() {
+    return this.props.history.location.pathname.slice(-10) === '/synthesis';
+  }
+
+  isEnding() {
+    return this.props.history.location.pathname.slice(-7) === '/ending';
   }
 
   renderPrepButton() {
