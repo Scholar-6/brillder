@@ -40,6 +40,7 @@ import { removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortA
 import { filterByCurretUser } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 import AllSubjects from "./allSubjectsPage/AllSubjects";
+import MobileCategory from "./MobileCategory";
 
 
 interface ViewAllProps {
@@ -861,6 +862,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (expandedBrick) {
         pageClass += ' expanded';
       }
+    }
+
+    // render phone version
+    if (isMobile && !(isIPad13 || isTablet)) {
+      return <MobileCategory history={this.props.history} />;
     }
 
     return (
