@@ -12,30 +12,6 @@ interface Props {
 }
 
 const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
-  let list = [];
-  let isOdd = false;
-  let row = [];
-
-  for (let subject of subjects) {
-    if (subject.name === GENERAL_SUBJECT || subject.name === CURRENT_AFFAIRS_SUBJECT) {
-      continue;
-    }
-    row.push(subject);
-    if (isOdd && row.length >= 3) {
-      isOdd = false;
-      list.push(row);
-      row = [];
-    } else if (!isOdd && row.length >= 4) {
-      isOdd = true;
-      list.push(row);
-      row = [];
-    }
-  }
-
-  if (row.length > 0) {
-    list.push(row);
-  }
-
   const renderSubject = (s: Subject, key: number) => {
     return (
       <div key={key} className="subject-item" onClick={() => onClick(s.id)}>
@@ -58,17 +34,53 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
     )
   }
 
+  const renderDesktop = () => {
+    let list = [];
+    let isOdd = false;
+    let row = [];
+
+    for (let subject of subjects) {
+      if (subject.name === GENERAL_SUBJECT || subject.name === CURRENT_AFFAIRS_SUBJECT) {
+        continue;
+      }
+      row.push(subject);
+      if (isOdd && row.length >= 3) {
+        isOdd = false;
+        list.push(row);
+        row = [];
+      } else if (!isOdd && row.length >= 4) {
+        isOdd = true;
+        list.push(row);
+        row = [];
+      }
+    }
+
+    if (row.length > 0) {
+      list.push(row);
+    }
+
+    return (
+      <div className="subjects-column">
+        {list.map((row, i) =>
+          <div key={i} className="subject-row">
+            {row.map((s, j) => renderSubject(s, j))}
+            {i === list.length - 1 && renderViewAllButton()}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // render tablet and desktop verion
+  if (!isMobile || (isIPad13 || isTablet)) {
+    return renderDesktop();
+  }
+
+  // render phone version
   return (
     <div className="subjects-column">
-      {list.map((row, i) =>
-        <div key={i} className="subject-row">
-          {/* for phones*/}
-          { (isMobile && !(isIPad13 || isTablet)) && i === 0 && renderViewAllButton()}
-          {row.map((s, j) => renderSubject(s, j))}
-          {/* for desktop*/}
-          { (!isMobile || (isIPad13 || isTablet)) && i === list.length - 1 && renderViewAllButton()}
-        </div>
-      )}
+      {renderViewAllButton()}
+      {subjects.map((s, i) => renderSubject(s, i))}
     </div>
   );
 };

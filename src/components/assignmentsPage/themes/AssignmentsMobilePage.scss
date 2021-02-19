@@ -3,10 +3,11 @@
 @import "src/assets/sass/partials/extensions";
 
 .student-assignments-page {
-  .index-box:hover {
-    background: var(--light-blue-alpha3) !important;
+  .left-brick-circle.brick-status-circle.skip-top-right-border {
+    border-radius: 50%;
   }
-  .index-box.active:hover {
+  .color1 .round-button{
+    border-radius: 50%;
     background: var(--theme-orange) !important;
   }
 }

@@ -40,6 +40,7 @@ import { removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortA
 import { filterByCurretUser } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 import AllSubjects from "./allSubjectsPage/AllSubjects";
+import MobileCategory from "./MobileCategory";
 
 
 interface ViewAllProps {
@@ -873,7 +874,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                 {this.renderAllSubjectsPage()}
               </Route>
               <Route exec path={map.ViewAllPage}>
-                {this.renderMobilePage(expandedBrick)}
+                <MobileCategory history={this.props.history} location={this.props.location}/>
               </Route>
             </Switch>
           </Hidden>
