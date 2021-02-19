@@ -20,9 +20,9 @@ const mapDispatch = (dispatch: any) => ({
 const connector = connect(null, mapDispatch);
 
 interface LoginProps {
-  loginSuccess(): void;
   history: History;
   match: any;
+  loginSuccess(): void;
 }
 
 const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {

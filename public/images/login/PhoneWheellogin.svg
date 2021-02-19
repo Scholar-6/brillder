@@ -686,8 +686,8 @@
       <path id="Rectangle_1078-36" data-name="Rectangle 1078" d="M14,0H114a0,0,0,0,1,0,0V109a14,14,0,0,1-14,14H14A14,14,0,0,1,0,109V14A14,14,0,0,1,14,0Z" transform="translate(1357 307.871)" fill="#fff"/>
       <rect id="Image_2-36" data-name="Image 2" width="68" height="71" transform="translate(1380 199.872)" fill="url(#pattern)"/>
       <text id="LEARN-36" data-name="LEARN" transform="translate(1371 342.872)" fill="#001c55" font-size="22" font-family="BrandonGrotesque-Black, Brandon Grotesque" font-weight="800" letter-spacing="0.16em"><tspan x="0" y="0">LEARN</tspan></text>
-      <text id="TEACH-36" data-name="TEACH" transform="translate(1370 370.872)" fill="#001c55" font-size="20" font-family="BrandonGrotesque-Black, Brandon Grotesque" font-weight="800" letter-spacing="0.16em"><tspan x="0" y="0">TEACH</tspan></text>
-      <text id="BUILD-36" data-name="BUILD" transform="translate(1372 400.872)" fill="#001c55" font-size="21" font-family="BrandonGrotesque-Black, Brandon Grotesque" font-weight="800" letter-spacing="0.16em"><tspan x="0" y="0">BUILD</tspan></text>
+      <text id="TEACH-36" data-name="TEACH" transform="translate(1371 370.889)" fill="#001c55" font-size="22" font-family="BrandonGrotesque-Black, Brandon Grotesque" font-weight="800" letter-spacing="0.16em"><tspan x="0" y="0">TEACH</tspan></text>
+      <text id="BUILD-36" data-name="BUILD" transform="translate(1371 400.854)" fill="#001c55" font-size="22" font-family="BrandonGrotesque-Black, Brandon Grotesque" font-weight="800" letter-spacing="0.22em"><tspan x="0" y="0">BUILD</tspan></text>
     </g>
   </g>
 </svg>
