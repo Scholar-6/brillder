@@ -3,8 +3,8 @@ import { Box, Grid, Grow } from "@material-ui/core";
 import { connect } from "react-redux";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import { Swiper, SwiperSlide } from 'swiper/react';
+import queryString from 'query-string';
 import 'swiper/swiper.scss';
-import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
 import { Brick } from "model/brick";
 import { User } from "model/user";
@@ -22,8 +22,6 @@ import { getPublicBricks, searchPublicBricks } from "services/axios/brick";
 
 
 const MobileTheme = React.lazy(() => import('./themes/ViewAllPageMobileTheme'));
-const TabletTheme = React.lazy(() => import('./themes/ViewAllPageTabletTheme'));
-const DesktopTheme = React.lazy(() => import('./themes/ViewAllPageDesktopTheme'));
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -39,6 +37,7 @@ const connector = connect(mapState, mapDispatch);
 interface BricksListProps {
   user: User;
   history: any;
+  location: any;
   forgetBrick(): void;
   requestFailed(e: string): void;
 }
@@ -48,17 +47,40 @@ interface BricksListState {
   searchString: string;
   isSearching: boolean;
   finalBricks: Brick[];
+  isViewAll: boolean;
+  subjectId: number;
   shown: boolean;
 }
 
 class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props);
+
+    const values = queryString.parse(props.location.search);
+    const searchString = values.searchString as string || '';
+    if (!values.isViewAll && !values.subjectId && !values.searchString) {
+      this.props.history.push(map.AllSubjects);
+    }
+
+    let isViewAll = false;
+    if (values.isViewAll) {
+      isViewAll = true;
+    }
+
+    let subjectId = -1;
+    if (values.subjectId) {
+      try {
+        subjectId = parseInt(values.subjectId as string);
+      } catch {}
+    }
+
     this.state = {
       bricks: [],
       finalBricks: [],
-      searchString: "",
+      searchString: searchString,
       isSearching: false,
+      isViewAll,
+      subjectId,
       shown: false,
     };
 
@@ -68,11 +90,16 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   async loadData() {
     const bricks = await getPublicBricks();
     if (bricks) {
+      let finalBricks = bricks;
+      if (this.state.subjectId > 0) {
+        finalBricks = bricks.filter(b => b.subjectId === this.state.subjectId);
+        console.log(finalBricks)
+      }
       this.setState({
         ...this.state,
         bricks,
         shown: true,
-        finalBricks: bricks,
+        finalBricks,
       });
     } else {
       this.props.requestFailed("Can`t get bricks");
@@ -84,14 +111,10 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   move(brickId: number) {
-    if (isMobile) {
-      if (document.body.requestFullscreen) {
-        document.body.requestFullscreen().then(() => {
-          this.moveToPlay(brickId);
-        });
-      } else {
+    if (document.body.requestFullscreen) {
+      document.body.requestFullscreen().then(() => {
         this.moveToPlay(brickId);
-      }
+      });
     } else {
       this.moveToPlay(brickId);
     }
@@ -213,25 +236,27 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       return this.renderExpandedBrick(expandedBrick);
     }
 
-    let sorted = this.state.finalBricks.sort((a, b) => new Date(a.updated).getTime() - new Date(b.updated).getTime());
+    const sorted = this.state.finalBricks.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
 
-    let bricksList:any[] = [];
+    let bricksList: any[] = [];
     for (let i = 0; i < sorted.length; i++) {
       const brick = sorted[i]
       if (brick) {
         const color = getBrickColor(brick);
         const circleIcon = getAssignmentIcon(brick);
         bricksList.push({
-          brick: brick,
+          brick,
           elem: <ShortBrickDescription circleIcon={circleIcon} searchString="" brick={brick} index={i} color={color} />
         });
       }
     }
 
+
     return (
       <Swiper slidesPerView={1}>
         {bricksList.map((b, i) =>
           <SwiperSlide key={i} onClick={() => this.handleClick(b.brick.id)}>
+            {i === 0 && <div className="week-brick">{b.brick.subject?.name} brick of the week</div>}
             {b.elem}
           </SwiperSlide>
         )}
@@ -249,7 +274,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     return (
       <React.Suspense fallback={<></>}>
-        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+        <MobileTheme />
         <div className={pageClass}>
           <PageHeadWithMenu
             page={PageEnum.ViewAll}

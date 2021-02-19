@@ -251,6 +251,15 @@
     height: 100% !important;
     .swiper-slide {
       width: 100vw !important;
+
+      .week-brick {
+        color: var(--theme-dark-blue);
+        text-align: center;
+        position: absolute;
+        width: 100vw;
+        font-size: 5vw;
+        font-family: $font-family-bold;
+      }
     }
     .brick-circle-container {
       margin-bottom: 2vh;
@@ -263,6 +272,7 @@
       font-size: 10vw !important;
     }
     .short-description {
+      background: none !important;
       padding: 4vh 8vw 0 8vw;
       height: 100% !important;
       width: 100vw !important;
