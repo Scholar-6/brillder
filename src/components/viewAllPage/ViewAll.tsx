@@ -864,11 +864,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       }
     }
 
-    // render phone version
-    if (isMobile && !(isIPad13 || isTablet)) {
-      return <MobileCategory history={this.props.history} />;
-    }
-
     return (
       <React.Suspense fallback={<></>}>
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
@@ -879,7 +874,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                 {this.renderAllSubjectsPage()}
               </Route>
               <Route exec path={map.ViewAllPage}>
-                {this.renderMobilePage(expandedBrick)}
+                <MobileCategory history={this.props.history} />
               </Route>
             </Switch>
           </Hidden>
