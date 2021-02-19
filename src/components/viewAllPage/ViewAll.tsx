@@ -874,7 +874,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                 {this.renderAllSubjectsPage()}
               </Route>
               <Route exec path={map.ViewAllPage}>
-                <MobileCategory history={this.props.history} />
+                <MobileCategory history={this.props.history} location={this.props.location}/>
               </Route>
             </Switch>
           </Hidden>
