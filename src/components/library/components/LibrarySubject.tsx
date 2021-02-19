@@ -53,7 +53,7 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
 
     return (
       <div className="libary-container">
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
           {assignments.map(this.renderAssignment.bind(this))}
         </div>
       </div>
