@@ -6,6 +6,7 @@ import './AssignmentsPage.scss';
 import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import PlayPage from './components/play/PlayPage';
+import { isMobile } from "react-device-detect";
 
 interface BackToWorkState {
   searchString: string;

@@ -53,7 +53,6 @@ import PlayPreviewRoute from './PlayPreviewRoute';
 import EmailLoginPage from 'components/loginPage/EmailLoginPage';
 import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSubjectPage';
 import PublicTerms from 'components/terms/PublicTerms';
-import Warning from 'components/baseComponents/rotateInstruction/Warning';
 import MobileUsernamePage from 'components/onboarding/mobileUsernamePage/MobileUsernamePage';
 import RotateIPadInstruction from 'components/baseComponents/rotateInstruction/RotateIPadInstruction';
 
@@ -182,8 +181,8 @@ const App: React.FC<AppProps> = props => {
         <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
 
         <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
-        <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path={map.Login} component={LoginPage} />
+        <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path="/resetPassword" component={ResetPasswordPage} />
         <AuthRoute path={map.ActivateAccount + '/email'} component={EmailActivateAccountPage} />
         <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
