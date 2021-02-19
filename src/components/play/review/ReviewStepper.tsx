@@ -3,7 +3,6 @@ import React from "react";
 import { Question } from "model/question";
 import { ComponentAttempt } from "../model";
 
-import sprite from "assets/img/icons-sprite.svg";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isMobile } from "react-device-detect";
 
@@ -62,7 +61,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
       <div className={className} key={key} onClick={handleStep(index - 1)}>
         <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
         <SpriteIcon
-          name={attempt.correct ? "#ok" : "#cancel"}
+          name={attempt.correct ? "ok" : "cancel"}
           className={`svg active ${attempt.correct ? "text-theme-green" : "text-theme-orange"}`}
         />
         <div className="underline"><div/></div>

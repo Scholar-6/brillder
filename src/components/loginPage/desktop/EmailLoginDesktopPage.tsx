@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { Grid, Snackbar, Hidden } from "@material-ui/core";
+import { Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
 
-import "./loginPage.scss";
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
-import LoginLogo from './components/LoginLogo';
-import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
-import WrongLoginDialog from "./components/WrongLoginDialog";
-import DesktopLoginForm from "./desktop/DesktopLoginForm";
-import MobileEmailLogin from './MobileEmailLogin';
-import { isIPad13, isTablet, isMobile } from "react-device-detect";
-import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
+import LoginLogo from '../components/LoginLogo';
+import WrongLoginDialog from "../components/WrongLoginDialog";
+import DesktopLoginForm from "./DesktopLoginForm";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import TeachIcon from "components/mainPage/components/TeachIcon";
+import PhoneIcon from "./PhoneIcon";
+import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -22,22 +21,23 @@ const mapDispatch = (dispatch: any) => ({
 const connector = connect(null, mapDispatch);
 
 interface LoginProps {
-  loginSuccess(): void;
   history: History;
   match: any;
+  loginSuccess(): void;
 }
 
-const EmailLoginPage: React.FC<LoginProps> = (props) => {
+const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
   let initPolicyOpen = false;
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
     initPolicyOpen = true;
   }
+  const [isPolicyOpen, setPolicyDialog] = useState(initPolicyOpen);
+
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
   const [isLoginWrong, setLoginWrong] = React.useState(false);
 
   const validateForm = () => {
@@ -77,7 +77,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
     } else {
       const { response } = data;
       if (response) {
-        if (response.status === 500 ) {
+        if (response.status === 500) {
           toggleAlertMessage(true);
           setAlertMessage("Server error");
         } else if (response.status === 401) {
@@ -121,67 +121,76 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
     });
   };
 
-  if (isIPad13 || isTablet) {
-    return <EmailLoginDesktopPage history={props.history} match={props.match} />
-  }
-  if (!isMobile) {
-    return <EmailLoginDesktopPage history={props.history} match={props.match} />
+  const renderPrivacyPolicy = () => {
+    return (
+      <div className="policy-text">
+        <span onClick={() => setPolicyDialog(true)}>
+          Privacy Policy
+        </span>
+      </div>
+    );
   }
 
   return (
-    <Grid
-      className="auth-page login-page"
-      container
-      item
-      justify="center"
-      alignItems="center"
-    >
-      <Hidden only={["xs"]}>
-        <div className="choose-login-desktop">
-          <Grid container direction="row" className="first-row">
-            <div className="first-col"></div>
-            <div className="second-col"></div>
-            <div className="third-col"></div>
-          </Grid>
-          <Grid container direction="row" className="second-row">
-            <div className="first-col">
-              <LoginLogo />
-            </div>
-            <div className="second-col">
-              <DesktopLoginForm
-                email={email}
-                setEmail={setEmail}
-                password={password}
-                setPassword={setPassword}
-                passwordHidden={passwordHidden}
-                setHidden={setHidden}
-                handleSubmit={handleLoginSubmit}
-                register={() => register(email, password)}
-              />
-            </div>
-          </Grid>
-          <Grid container direction="row" className="third-row">
-            <div className="first-col"></div>
-            <div className="second-col">
-              <span className="policy-text" onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
-            </div>
-            <div className="third-col"></div>
-          </Grid>
+    <div className="login-desktop-page email-desktop-page">
+      <div className="left-part">
+        <div className="logo">
+          <LoginLogo />
         </div>
-      </Hidden>
-      <MobileEmailLogin
-        history={props.history}
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        passwordHidden={passwordHidden}
-        setHidden={setHidden}
-        register={register}
-        login={login}
-        handleLoginSubmit={handleLoginSubmit}
-        setPolicyDialog={setPolicyDialog}
-      />
+        <div className="button-box">
+          <DesktopLoginForm
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            passwordHidden={passwordHidden}
+            setHidden={setHidden}
+            handleSubmit={handleLoginSubmit}
+            register={() => register(email, password)}
+          />
+        </div>
+      </div>
+      <div className="right-part">
+        <div className="container">
+          <PhoneIcon />
+        </div>
+        <div className="bricks-container">
+          <div className="inner">
+            <div className="row">
+              <div className="block" />
+              <div className="block" />
+              <div className="block" />
+              <div className="block" />
+            </div>
+            <div className="row">
+              <div className="block" />
+              <div className="block" />
+              <div className="block" />
+            </div>
+            <div className="row">
+              <div className="block" />
+              <div className="block" />
+              <div className="block" />
+              <div className="block" />
+            </div>
+            <div className="row">
+              <div className="block" />
+              <div className="block" />
+              <div className="block" />
+            </div>
+            <div className="row">
+              <div className="block" />
+              <div className="block" />
+            </div>
+          </div>
+        </div>
+        <div className="icons-container">
+          <img alt="" className="glasses floating1" src="/images/login/rotatedGlasses.svg" />
+          <TeachIcon className="floating3" />
+          <SpriteIcon name="trowel-home" className="trowel-login text-theme-orange floating2" />
+        </div>
+      </div>
+      {renderPrivacyPolicy()}
       <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -192,8 +201,8 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
         action={<React.Fragment></React.Fragment>}
       />
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
-    </Grid>
+    </div>
   );
 };
 
-export default connector(EmailLoginPage);
+export default connector(EmailLoginDesktopPage);

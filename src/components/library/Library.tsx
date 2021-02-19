@@ -197,7 +197,7 @@ class Library extends Component<BricksListProps, BricksListState> {
   preselectSubject(subjects: SubjectAItem[]) {
     const values = queryString.parse(this.props.location.search);
     if (values.subjectId) {
-      const subject = subjects.find(s => s.id == parseInt(values.subjectId as string));
+      const subject = subjects.find(s => s.id === parseInt(values.subjectId as string));
       if (subject) {
         subject.checked = true;
         return true;

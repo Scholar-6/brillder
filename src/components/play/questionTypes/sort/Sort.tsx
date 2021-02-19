@@ -72,7 +72,18 @@ class Sort extends CompComponent<SortProps, SortState> {
       this.prepareChoices(userCats);
     }
 
+    if (props.answers) {
+      this.diselectChoices(userCats);
+      this.prepareChoices(userCats);
+    }
+
     this.state = { status: DragAndDropStatus.None, userCats, choices: this.getChoices() };
+  }
+
+  diselectChoices(userCats: UserCategory[]) {
+    for (let category of userCats) {
+      category.choices = [];
+    }
   }
 
   componentDidUpdate(prevProp: SortProps) {
@@ -118,6 +129,10 @@ class Sort extends CompComponent<SortProps, SortState> {
     }
   }
 
+  /**
+   * When user selected choices in question and go back to this question.
+   * move choices in exact positions user drag them in.
+   */
   prepareChoices(userCats: UserCategory[]) {
     const {answer} = this.props.attempt;
     Object.keys(answer).forEach(value => {

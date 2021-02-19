@@ -250,12 +250,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       <React.Suspense fallback={<></>}>
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
         <div className={pageClass}>
-          <div className="page-navigation">
-            <div className="btn btn-transparent glasses svgOnHover">
-              <SpriteIcon name="glasses" className="w100 h100 active text-theme-dark-blue" />
-            </div>
-            <div className="breadcrumbs">New</div>
-          </div>
           <PageHeadWithMenu
             page={PageEnum.ViewAll}
             user={this.props.user}

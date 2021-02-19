@@ -3,6 +3,7 @@ import React from "react";
 import { Subject } from "model/brick";
 import { GENERAL_SUBJECT, CURRENT_AFFAIRS_SUBJECT } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isIPad13, isMobile, isTablet } from "react-device-detect";
 
 interface Props {
   subjects: Subject[];
@@ -61,8 +62,11 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
     <div className="subjects-column">
       {list.map((row, i) =>
         <div key={i} className="subject-row">
+          {/* for phones*/}
+          { (isMobile && !(isIPad13 || isTablet)) && i === 0 && renderViewAllButton()}
           {row.map((s, j) => renderSubject(s, j))}
-          {i === list.length - 1 && renderViewAllButton()}
+          {/* for desktop*/}
+          { (!isMobile || (isIPad13 || isTablet)) && i === list.length - 1 && renderViewAllButton()}
         </div>
       )}
     </div>

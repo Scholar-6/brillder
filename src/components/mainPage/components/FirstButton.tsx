@@ -3,7 +3,6 @@ import React from "react";
 import './FirstButton.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { RolePreference, User } from "model/user";
-import { isMobile } from "react-device-detect";
 import map from "components/map";
 
 interface FirstButtonProps {
@@ -31,11 +30,7 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
       className="view-item-container zoom-item"
       onClick={() => {
         if (!props.disabled) {
-          if (isMobile) {
-            props.history.push("/play/dashboard/1");
-          } else {
-            props.history.push(map.AllSubjects);
-          }
+          props.history.push(map.AllSubjects);
         }
       }}
     >

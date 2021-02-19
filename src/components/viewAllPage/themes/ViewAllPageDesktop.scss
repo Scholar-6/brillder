@@ -244,6 +244,21 @@
     font-family: $font-family-bold;
     font-size: 1.9vw;
   }
+  // #2776 zoom brick on hover
+  .brick-container {
+    display: flex;
+    align-items: center;
+    justify-content: center !important;
+    .absolute-container {
+      width: 100%;
+      height: 4.8vw;
+      transition: all 300ms ease-out;
+    }
+    .absolute-container:hover {
+      width: 100% !important;
+      height: 4.8vw !important;
+    }
+  }
 }
 
 .mobile-category {
