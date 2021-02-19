@@ -4,7 +4,6 @@ import { Subject } from "model/brick";
 
 import { SubjectAssignments } from "../service/model";
 import LibrarySubject from "./LibrarySubject";
-import { getSubjectWidth } from "../service/css";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -29,7 +28,6 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, State> {
   }
 
   componentDidUpdate() {
-    //let pages = this.countPages();
   }
 
   countPages() {
@@ -39,16 +37,12 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, State> {
   }
 
   renderSubjectAssignments(item: SubjectAssignments, key: number) {
-    const width = getSubjectWidth(item);
     return <div key={key} className="libary-container-1">
       <LibrarySubject userId={this.props.userId} subjectAssignment={item} history={this.props.history} />
     </div>
   }
 
   render() {
-    //const margin = 0.5 * 2;
-    //const maxWidth = 69.1;
-
     return (
       <div className="my-library-list">
         {this.props.subjectAssignments.map(this.renderSubjectAssignments.bind(this))}
