@@ -207,11 +207,13 @@
       transform: perspective(70vw) rotateY(-25deg);
       height: 72vh;
       z-index: 10;
+      font-family: $font-family-black;
     }
     #phone-image {
       animation: phone-animate 2s;
     }
   }
+
   .bricks-container {
     $top: 24.5%;
     position: absolute;

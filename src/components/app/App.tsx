@@ -180,8 +180,8 @@ const App: React.FC<AppProps> = props => {
         <AllUsersRoute path={map.MobileUsername} component={MobileUsernamePage} />
         <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
 
-        <AuthRoute path={map.Login} component={LoginPage} />
         <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
+        <AuthRoute path={map.Login} component={LoginPage} />
         <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path="/resetPassword" component={ResetPasswordPage} />
         <AuthRoute path={map.ActivateAccount + '/email'} component={EmailActivateAccountPage} />
