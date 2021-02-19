@@ -12,6 +12,7 @@ import DesktopLoginForm from "./DesktopLoginForm";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachIcon from "components/mainPage/components/TeachIcon";
 import PhoneIcon from "./PhoneIcon";
+import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -26,6 +27,12 @@ interface LoginProps {
 }
 
 const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
+  let initPolicyOpen = false;
+  if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
+    initPolicyOpen = true;
+  }
+  const [isPolicyOpen, setPolicyDialog] = useState(initPolicyOpen);
+
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
@@ -114,6 +121,16 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
     });
   };
 
+  const renderPrivacyPolicy = () => {
+    return (
+      <div className="policy-text">
+        <span onClick={() => setPolicyDialog(true)}>
+          Privacy Policy
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div className="login-desktop-page email-desktop-page">
       <div className="left-part">
@@ -138,7 +155,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
           <PhoneIcon />
         </div>
         <div className="bricks-container">
-          <div>
+          <div className="inner">
             <div className="row">
               <div className="block" />
               <div className="block" />
@@ -173,6 +190,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
           <SpriteIcon name="trowel-home" className="trowel-login text-theme-orange floating2" />
         </div>
       </div>
+      {renderPrivacyPolicy()}
       <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -182,6 +200,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
       />
+      <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
     </div>
   );
 };
