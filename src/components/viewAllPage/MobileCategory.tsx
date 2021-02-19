@@ -102,19 +102,15 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     finalBricks.forEach(brick => brick.expanded = false);
   }
 
-  handleClick(index: number) {
-    let { finalBricks } = this.state;
-    if (finalBricks[index].expanded === true) {
-      finalBricks[index].expanded = false;
+  handleClick(id: number) {
+    const { finalBricks } = this.state;
+    const brick = finalBricks.find(b => b.id == id);
+    if (brick) {
+      const isExpanded = brick.expanded;
+      finalBricks.forEach(brick => brick.expanded = false);
+      brick.expanded = !isExpanded;
       this.setState({ ...this.state });
-      return;
     }
-    this.hideBricks();
-    finalBricks.forEach(brick => brick.expanded = false);
-    if (!finalBricks[index].expandFinished) {
-      finalBricks[index].expanded = true;
-    }
-    this.setState({ ...this.state });
   }
 
   searching(searchString: string) {
@@ -162,7 +158,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       >
         <div key={key} className="main-brick-container">
           <Box className="brick-container">
-            <div className={className} onClick={() => this.handleClick(key)}>
+            <div className={className} onClick={() => this.handleClick(brick.id)}>
               <ShortBrickDescription
                 brick={brick}
                 color={color}
@@ -216,21 +212,27 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (expandedBrick) {
       return this.renderExpandedBrick(expandedBrick);
     }
-    let bricksList = [];
-    for (let i = 0; i < this.state.finalBricks.length; i++) {
-      const brick = this.state.finalBricks[i]
+
+    let sorted = this.state.finalBricks.sort((a, b) => new Date(a.updated).getTime() - new Date(b.updated).getTime());
+
+    let bricksList:any[] = [];
+    for (let i = 0; i < sorted.length; i++) {
+      const brick = sorted[i]
       if (brick) {
         const color = getBrickColor(brick);
         const circleIcon = getAssignmentIcon(brick);
-        bricksList.push(<ShortBrickDescription circleIcon={circleIcon} searchString="" brick={brick} index={i} color={color} />);
+        bricksList.push({
+          brick: brick,
+          elem: <ShortBrickDescription circleIcon={circleIcon} searchString="" brick={brick} index={i} color={color} />
+        });
       }
     }
 
     return (
       <Swiper slidesPerView={1}>
         {bricksList.map((b, i) =>
-          <SwiperSlide key={i} onClick={() => this.handleClick(i)}>
-            {b}
+          <SwiperSlide key={i} onClick={() => this.handleClick(b.brick.id)}>
+            {b.elem}
           </SwiperSlide>
         )}
       </Swiper>
@@ -238,7 +240,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   render() {
-
     let expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
 
     let pageClass = 'main-listing dashboard-page mobile-category';
