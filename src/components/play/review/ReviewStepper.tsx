@@ -61,7 +61,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
       <div className={className} key={key} onClick={handleStep(index - 1)}>
         <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
         <SpriteIcon
-          name={attempt.correct ? "#ok" : "#cancel"}
+          name={attempt.correct ? "ok" : "cancel"}
           className={`svg active ${attempt.correct ? "text-theme-green" : "text-theme-orange"}`}
         />
         <div className="underline"><div/></div>
