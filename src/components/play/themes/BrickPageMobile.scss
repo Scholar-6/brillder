@@ -130,7 +130,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             font-family: $font-family-regular;
             color: var(--theme-dark-blue);
             margin-left: 4vw;
-            width: calc(96vw);
           }
           .stepper {
             width: 100%;
@@ -898,6 +897,17 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
 }
 
+// only review
+.play-preview-pages .sorted-row .review-page {
+    .stepper {
+      .step {
+        svg {
+          display: none !important;
+        }
+      }
+  }
+}
+
 
 // play phone footer
 .play-preview-pages {
@@ -970,13 +980,11 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     margin-top: 0 !important;
     width: 100%;
     height: $stepper-height;
-    display: flex !important;
-    align-items: center;
     background: var(--tab-gray) !important;
     padding-left: 2.2vw !important;
     padding-right: 2.2vw !important;
   }
-  .introduction-info .stepper {
+  .stepper {
     width: 100%;
     margin-top: 0.7vw;
     background: inherit !important;
