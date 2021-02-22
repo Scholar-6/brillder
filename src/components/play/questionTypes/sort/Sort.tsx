@@ -32,7 +32,7 @@ interface SortProps extends CompQuestionProps {
   question: Question;
   component: SortComponent;
   attempt: ComponentAttempt<any>;
-  answers: number;
+  answers: any;
   isPreview?: boolean;
 }
 
@@ -72,7 +72,19 @@ class Sort extends CompComponent<SortProps, SortState> {
       this.prepareChoices(userCats);
     }
 
+    // this is bad but it fixed issue. input answers should not be array.
+    if (props.answers && props.answers.length !== 0) {
+      this.diselectChoices(userCats);
+      this.prepareChoices(userCats);
+    }
+
     this.state = { status: DragAndDropStatus.None, userCats, choices: this.getChoices() };
+  }
+
+  diselectChoices(userCats: UserCategory[]) {
+    for (let category of userCats) {
+      category.choices = [];
+    }
   }
 
   componentDidUpdate(prevProp: SortProps) {
@@ -118,6 +130,10 @@ class Sort extends CompComponent<SortProps, SortState> {
     }
   }
 
+  /**
+   * When user selected choices in question and go back to this question.
+   * move choices in exact positions user drag them in.
+   */
   prepareChoices(userCats: UserCategory[]) {
     const {answer} = this.props.attempt;
     Object.keys(answer).forEach(value => {

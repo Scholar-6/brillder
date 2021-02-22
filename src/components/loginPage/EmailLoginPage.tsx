@@ -10,8 +10,10 @@ import { login } from "services/axios/auth";
 import LoginLogo from './components/LoginLogo';
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import WrongLoginDialog from "./components/WrongLoginDialog";
-import DesktopLoginForm from "./components/DesktopLoginForm";
+import DesktopLoginForm from "./desktop/DesktopLoginForm";
 import MobileEmailLogin from './MobileEmailLogin';
+import { isIPad13, isTablet, isMobile } from "react-device-detect";
+import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -118,6 +120,13 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       setAlertMessage("Connection problem");
     });
   };
+
+  if (isIPad13 || isTablet) {
+    return <EmailLoginDesktopPage history={props.history} match={props.match} />
+  }
+  if (!isMobile) {
+    return <EmailLoginDesktopPage history={props.history} match={props.match} />
+  }
 
   return (
     <Grid

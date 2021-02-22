@@ -6,6 +6,7 @@ import './AssignmentsPage.scss';
 import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import PlayPage from './components/play/PlayPage';
+import { isMobile } from "react-device-detect";
 
 interface BackToWorkState {
   searchString: string;
@@ -20,6 +21,10 @@ export interface BackToWorkProps {
   location: any;
   forgetBrick(): void;
 }
+
+const MobileTheme = React.lazy(() => import('./themes/AssignmentsMobilePage'));
+const DesktopTheme = React.lazy(() => import('./themes/AssignmentsDesktopPage'));
+
 
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   constructor(props: BackToWorkProps) {
@@ -52,17 +57,20 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   render() {
     return (
-      <div className="main-listing student-assignments-page">
-        <PageHeadWithMenu
-          page={PageEnum.BackToWork}
-          user={this.props.user}
-          placeholder="Search Ongoing Projects & Published Bricks…"
-          history={this.props.history}
-          search={() => this.search()}
-          searching={(v: string) => this.searching(v)}
-        />
-        <PlayPage history={this.props.history} />
-      </div>
+      <React.Suspense fallback={<></>}>
+        {isMobile ? <MobileTheme /> : <DesktopTheme />}
+        <div className="main-listing student-assignments-page">
+          <PageHeadWithMenu
+            page={PageEnum.BackToWork}
+            user={this.props.user}
+            placeholder="Search Ongoing Projects & Published Bricks…"
+            history={this.props.history}
+            search={() => this.search()}
+            searching={(v: string) => this.searching(v)}
+          />
+          <PlayPage history={this.props.history} />
+        </div>
+      </React.Suspense>
     );
   }
 }

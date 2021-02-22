@@ -4,8 +4,7 @@ import { Category } from "../viewAllPage/service/interface";
 import { connect } from "react-redux";
 import queryString from 'query-string';
 import "swiper/swiper.scss";
-
-import './Library.scss';
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
 import { Brick, SubjectAItem } from "model/brick";
@@ -62,6 +61,10 @@ interface BricksListState {
   shown: boolean;
   subjectChecked: boolean;
 }
+
+const MobileTheme = React.lazy(() => import('./themes/MyLibraryPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/MyLibraryPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/MyLibraryPageDesktopTheme'));
 
 class Library extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
@@ -194,7 +197,7 @@ class Library extends Component<BricksListProps, BricksListState> {
   preselectSubject(subjects: SubjectAItem[]) {
     const values = queryString.parse(this.props.location.search);
     if (values.subjectId) {
-      const subject = subjects.find(s => s.id == parseInt(values.subjectId as string));
+      const subject = subjects.find(s => s.id === parseInt(values.subjectId as string));
       if (subject) {
         subject.checked = true;
         return true;
@@ -418,60 +421,63 @@ class Library extends Component<BricksListProps, BricksListState> {
     const filterSubjects = this.getCheckedSubjectIds(this.state.subjects);
     const { history } = this.props;
     return (
-      <div className="main-listing dashboard-page my-library">
-        {this.renderMobileGlassIcon()}
-        <PageHeadWithMenu
-          page={PageEnum.MyLibrary}
-          user={this.props.user}
-          placeholder={"Search Ongoing Projects & Published Bricks…"}
-          history={this.props.history}
-          search={() => this.search()}
-          searching={(v) => this.searching(v)}
-        />
-        <Grid container direction="row" className="sorted-row">
-          <Grid container item xs={3} className="sort-and-filter-container">
-            <LibraryFilter
-              sortBy={this.state.sortBy}
-              subjects={this.state.subjects}
-              assignments={this.state.rawAssignments}
-              isClearFilter={this.state.isClearFilter}
-              isClassClearFilter={this.state.isClassClearFilter}
-              handleSortChange={e => this.handleSortChange(e)}
-              clearSubjects={() => this.clearSubjects()}
-              filterBySubject={this.filterBySubject.bind(this)}
-            />
-          </Grid>
-          <Grid item xs={9} className="brick-row-container">
-            <Hidden only={["xs"]}>
-              <div className={
-                `
+      <React.Suspense fallback={<></>}>
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+        <div className="main-listing dashboard-page my-library">
+          {this.renderMobileGlassIcon()}
+          <PageHeadWithMenu
+            page={PageEnum.MyLibrary}
+            user={this.props.user}
+            placeholder={"Search Ongoing Projects & Published Bricks…"}
+            history={this.props.history}
+            search={() => this.search()}
+            searching={(v) => this.searching(v)}
+          />
+          <Grid container direction="row" className="sorted-row">
+            <Grid container item xs={3} className="sort-and-filter-container">
+              <LibraryFilter
+                sortBy={this.state.sortBy}
+                subjects={this.state.subjects}
+                assignments={this.state.rawAssignments}
+                isClearFilter={this.state.isClearFilter}
+                isClassClearFilter={this.state.isClassClearFilter}
+                handleSortChange={e => this.handleSortChange(e)}
+                clearSubjects={() => this.clearSubjects()}
+                filterBySubject={this.filterBySubject.bind(this)}
+              />
+            </Grid>
+            <Grid item xs={9} className="brick-row-container">
+              <Hidden only={["xs"]}>
+                <div className={
+                  `
                     brick-row-title main-title uppercase
                     ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}
                   `
-              }
-              >
-                {this.renderMainTitle(filterSubjects)}
-              </div>
-            </Hidden>
-            <Hidden only={["sm", "md", "lg", "xl"]}>
-              <div
-                className="brick-row-title"
-                onClick={() => history.push(`/play/dashboard/${Category.New}`)}
-              >
-                <button className="btn btn-transparent svgOnHover">
-                  <span>New</span>
-                  <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" />
-                </button>
-              </div>
-            </Hidden>
-            {this.renderContent()}
+                }
+                >
+                  {this.renderMainTitle(filterSubjects)}
+                </div>
+              </Hidden>
+              <Hidden only={["sm", "md", "lg", "xl"]}>
+                <div
+                  className="brick-row-title"
+                  onClick={() => history.push(`/play/dashboard/${Category.New}`)}
+                >
+                  <button className="btn btn-transparent svgOnHover">
+                    <span>New</span>
+                    <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" />
+                  </button>
+                </div>
+              </Hidden>
+              {this.renderContent()}
+            </Grid>
           </Grid>
-        </Grid>
-        <FailedRequestDialog
-          isOpen={this.state.failedRequest}
-          close={() => this.setState({ ...this.state, failedRequest: false })}
-        />
-      </div>
+          <FailedRequestDialog
+            isOpen={this.state.failedRequest}
+            close={() => this.setState({ ...this.state, failedRequest: false })}
+          />
+        </div>
+      </React.Suspense>
     );
   }
 }

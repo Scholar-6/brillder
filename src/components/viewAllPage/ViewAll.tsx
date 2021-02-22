@@ -40,6 +40,7 @@ import { removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortA
 import { filterByCurretUser } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 import AllSubjects from "./allSubjectsPage/AllSubjects";
+import MobileCategory from "./MobileCategory";
 
 
 interface ViewAllProps {
@@ -600,17 +601,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
 
-  renderMobileGlassIcon() {
-    return (
-      <div className="page-navigation">
-        <div className="btn btn-transparent glasses svgOnHover">
-          <SpriteIcon name="glasses" className="w100 h100 active text-theme-dark-blue" />
-        </div>
-        <div className="breadcrumbs">All</div>
-      </div>
-    );
-  }
-
   toggleCore() {
     const isCore = !this.state.isCore;
     this.setState({ isCore, shown: false, sortedIndex: 0 });
@@ -794,7 +784,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   renderMobilePage(expandedBrick: Brick | undefined) {
     return (
       <div>
-        {this.renderMobileGlassIcon()}
         <PageHeadWithMenu
           page={PageEnum.ViewAll}
           user={this.props.user}
@@ -885,7 +874,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                 {this.renderAllSubjectsPage()}
               </Route>
               <Route exec path={map.ViewAllPage}>
-                {this.renderMobilePage(expandedBrick)}
+                <MobileCategory history={this.props.history} location={this.props.location}/>
               </Route>
             </Switch>
           </Hidden>

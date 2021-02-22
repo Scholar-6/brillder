@@ -1,0 +1,13 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.student-assignments-page {
+  .left-brick-circle.brick-status-circle.skip-top-right-border {
+    border-radius: 50%;
+  }
+  .color1 .round-button{
+    border-radius: 50%;
+    background: var(--theme-orange) !important;
+  }
+}

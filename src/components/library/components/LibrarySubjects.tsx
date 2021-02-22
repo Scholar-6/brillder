@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import { Subject } from "model/brick";
-import './LibrarySubjects.scss';
 
 import { SubjectAssignments } from "../service/model";
 import LibrarySubject from "./LibrarySubject";
@@ -30,12 +29,11 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, State> {
   }
 
   componentDidUpdate() {
-    //let pages = this.countPages();
   }
 
   countPages() {
     this.props.subjectAssignments.forEach(s => {
-      
+
     });
   }
 
@@ -47,9 +45,6 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, State> {
   }
 
   render() {
-    //const margin = 0.5 * 2;
-    //const maxWidth = 69.1;
-
     return (
       <div className="my-library-list">
         {this.props.subjectAssignments.map(this.renderSubjectAssignments.bind(this))}

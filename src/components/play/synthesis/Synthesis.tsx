@@ -119,7 +119,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   }
 
   return (
-    <div style={{ height: '100%' }}>
+    <div className="brick-row-container synthesis-container">
       <Hidden only={['xs']}>
         <div className="brick-container play-preview-panel synthesis-page">
           <Grid container direction="row">
