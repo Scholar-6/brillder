@@ -32,7 +32,7 @@ interface SortProps extends CompQuestionProps {
   question: Question;
   component: SortComponent;
   attempt: ComponentAttempt<any>;
-  answers: number;
+  answers: any;
   isPreview?: boolean;
 }
 
@@ -72,7 +72,8 @@ class Sort extends CompComponent<SortProps, SortState> {
       this.prepareChoices(userCats);
     }
 
-    if (props.answers) {
+    // this is bad but it fixed issue. input answers should not be array.
+    if (props.answers && props.answers.length !== 0) {
       this.diselectChoices(userCats);
       this.prepareChoices(userCats);
     }
