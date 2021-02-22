@@ -24,6 +24,7 @@ import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import MobilePrevButton from "../live/components/MobilePrevButton";
 import MobileNextButton from "../live/components/MobileNextButton";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
+import { isPhone } from "services/phone";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -246,6 +247,21 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     );
   }
 
+  const renderPhoneButtons = () => {
+    return (
+      <div className="action-footer mobile-footer-fixed-buttons">
+        <SpriteIcon name="arrow-left" className="mobile-back-button" onClick={prev} />
+        <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={() => {
+          if (questions.length - 1 > activeStep) {
+            next();
+          } else {
+            setSubmitAnswers(true);
+          }
+        }} />
+      </div>
+    );
+  }
+
   return (
     <div className="brick-row-container review-container">
       <div className="brick-container play-preview-panel review-page">
@@ -268,7 +284,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                       onEnd={onEnd}
                       endTime={null}
                       brickLength={props.brickLength}
-                      setEndTime={() => {}}
+                      setEndTime={() => { }}
                     />
                   </div>
                   <div className="title-column">
@@ -330,15 +346,17 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
             </div>
             <div className="introduction-content">
               {questions.map(renderQuestionContainer)}
-              <div className="action-footer">
-                <div>
-                  <MobilePrevButton activeStep={activeStep} onClick={prev} />
-                </div>
-                <div className="direction-info text-center"></div>
-                <div>
-                  <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
-                </div>
-              </div>
+              {isPhone()
+                ? renderPhoneButtons()
+                : <div className="action-footer">
+                  <div>
+                    <MobilePrevButton activeStep={activeStep} onClick={prev} />
+                  </div>
+                  <div className="direction-info text-center"></div>
+                  <div>
+                    <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
+                  </div>
+                </div>}
             </div>
           </Hidden>
           <SubmitAnswersDialog
