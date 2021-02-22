@@ -75,6 +75,11 @@
     overflow-y: auto;
     width: 48vw;
     height: calc(100vh - 12vh - 2vw - #{$page-head-height});
+    
+    ul, li, ol {
+      font-size: 1.25vw;
+    }
+
     @include tabletP {
       margin: 12vh 3vw 1vw 4vw;
     }

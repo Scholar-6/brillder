@@ -12,6 +12,7 @@
     display: inline;
     color: var(--theme-dark-blue);
     font-size: 1.25vw;
+
     .missing-select {
       margin-left: 10px;
       margin-right: 10px;
@@ -21,8 +22,25 @@
       color: var(--theme-dark-blue);
     }
   }
+
   .question-hint-global {
     margin-top: 8px;
+  }
+
+  @include phone_and_tabletP {
+    .missing-word-choice {
+      font-size: 4.5vw !important;
+    }
+
+    .MuiInputBase-input {
+      padding: 2vw 4vw !important;
+      font-size: 4.5vw !important;
+    }
+
+    .MuiSvgIcon-root {
+      height: 5.5vw !important;
+      width: 5.5vw !important;
+    }
   }
 }
 
