@@ -1348,5 +1348,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .play-preview-pages .sorted-row.sorted-row-expanded .synthesis-container {
   .synthesis-content {
     height: calc(100vh - 4vw - 12vh) !important;
+    width: 44.5vw !important;
   }
 }
