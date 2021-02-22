@@ -28,6 +28,7 @@ import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import MobilePrevButton from "./components/MobilePrevButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
+import { isIPad13, isMobile, isTablet } from "react-device-detect";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -286,6 +287,28 @@ const LivePage: React.FC<LivePageProps> = ({
     );
   }
 
+  const isPhone = () => {
+    if (isMobile && !(isTablet || isIPad13)) {
+      return true;
+    }
+    return false;
+  }
+
+  const renderMobileButtons = () => {
+    return (
+      <div className="action-footer mobile-footer-fixed-buttons">
+        <SpriteIcon name="arrow-left" className="mobile-back-button" onClick={prev} />
+        <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={() => {
+          if (questions.length - 1 > activeStep) {
+            next();
+          } else {
+            setSubmitAnswers(true);
+          }
+        }} />
+      </div>
+    );
+  }
+
   return (
     <div className="brick-row-container live-container">
       <div className="brick-container play-preview-panel live-page">
@@ -363,15 +386,16 @@ const LivePage: React.FC<LivePageProps> = ({
             </div>
             <div className="introduction-content">
               {questions.map(renderQuestionContainer)}
-              <div className="action-footer">
-                <div>
-                  <MobilePrevButton activeStep={activeStep} onClick={prev} />
-                </div>
-                <div className="direction-info text-center"></div>
-                <div>
-                  <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
-                </div>
-              </div>
+              {isPhone() ? renderMobileButtons() :
+                <div className="action-footer">
+                  <div>
+                    <MobilePrevButton activeStep={activeStep} onClick={prev} />
+                  </div>
+                  <div className="direction-info text-center"></div>
+                  <div>
+                    <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
+                  </div>
+                </div>}
             </div>
           </Hidden>
           <ShuffleAnswerDialog

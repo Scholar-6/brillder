@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 import { Moment } from "moment";
 import queryString from 'query-string';
-import { isMobile } from 'react-device-detect';
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
 import { Brick, BrickLengthEnum } from "model/brick";
 import { PlayMode } from "../model";
@@ -150,6 +150,13 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   }
 
   const renderPlayButton = () => {
+    if (isMobile && !(isTablet || isIPad13)) {
+      return (
+        <div className="action-footer mobile-footer-fixed-buttons">
+          <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={startBrick} />
+        </div>
+      );
+    }
     return (
       <div className="action-footer">
         <div></div>
@@ -296,7 +303,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   };
 
   return (
-    <div className="brick-row-container">
+    <div className="brick-row-container real-introduction-page">
       <div className="brick-container">
         <Hidden only={["xs"]}>
           <Grid container direction="row">

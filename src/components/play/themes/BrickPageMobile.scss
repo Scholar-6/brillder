@@ -924,3 +924,26 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     }
   }
 }
+
+// #2782 prev and next button for mobile in play
+.action-footer.mobile-footer-fixed-buttons {
+  z-index: 299999;
+  position: fixed;
+  bottom: 0 !important;
+  right: 0 !important;
+  width: calc(100% / 7) !important;
+  overflow: visible !important;
+  .mobile-next-button, .mobile-back-button {
+    z-index: 299999;
+    position: fixed;
+    bottom: 0 !important;
+    width: calc(100% / 7) !important;
+    height: 20vw !important;
+  }
+  .mobile-next-button {
+    right: 0 !important;
+  }
+  .mobile-back-button {
+    right: calc(100% / 7 * 2) !important;
+  }
+}
