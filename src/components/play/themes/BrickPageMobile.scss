@@ -897,3 +897,30 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     margin-left: 0;
   }
 }
+
+
+// play phone footer
+.play-preview-pages {
+  .phone-play-footer {
+    display: flex;
+    align-items: center;
+    z-index: 199999;
+    $height: 20vw;
+    position: absolute;
+    bottom: 0;
+    background: var(--tab-gray);
+    height: $height;
+    width: 100%;
+    svg {
+      stroke-width: 2;
+      color: var(--theme-dark-blue);
+      width: calc(100% / 7);
+      height: $height / 1.6;
+    }
+
+    svg.rotate-90 {
+      color: var(--theme-orange);
+      transform: rotate(90deg);
+    }
+  }
+}

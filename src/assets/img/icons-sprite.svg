@@ -13,6 +13,11 @@
     <line x1="19" y1="12" x2="5" y2="12"></line>
     <polyline points="12 19 5 12 12 5"></polyline>
   </svg>
+  <svg id="arrow-left-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"></circle>
+    <polyline points="12 8 8 12 12 16"></polyline>
+    <line x1="16" y1="12" x2="8" y2="12"></line>
+  </svg>
   <svg id="arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="9 18 15 12 9 6"></polyline>
   </svg>

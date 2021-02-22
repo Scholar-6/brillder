@@ -64,20 +64,6 @@
   }
 }
 
-#launcher {
-  position: fixed;
-  width: 5.5vw !important;
-  margin-left: 0.9vw !important;
-  margin-bottom: 14px !important;
-  left: 0;
-
-  @include phone_and_tabletP {
-    margin: 1vw !important;
-    width: 52px !important;
-    height: 50px !important;
-  }
-}
-
 .youtube-link {
   margin-top: 1vw;
   height: 3vw;
