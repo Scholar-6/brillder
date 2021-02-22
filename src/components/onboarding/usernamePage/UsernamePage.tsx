@@ -41,8 +41,6 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
   const [submited, setSubmited] = React.useState(null as boolean | null);
   const [labelFinished, setLabelFinished] = React.useState(false);
   const [secondFinished, setSecondFinished] = React.useState(false);
-  const [thirdFinished, setThirdFinished] = React.useState(false);
-  const [fourthFinished, setFourthFinished] = React.useState(false);
   const [username, setUsername] = React.useState('');
   const [firstName, setFirstName] = React.useState({ value: user.firstName ? user.firstName : '', valid: null } as InputState);
   const [lastName, setLastName] = React.useState({ value: user.lastName ? user.lastName : '', valid: null } as InputState);
@@ -103,7 +101,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
 
   const renderGetStartedButton = () => {
     return (
-      <div className="submit-button" onClick={move}>
+      <div className="submit-button arrow-button" onClick={move}>
         <div><LabelTyping start={true} value="Get Started!" /></div>
         <SpriteIcon name="arrow-right" className={lastName.value && firstName.value ? 'valid' : 'invalid'} />
       </div>
@@ -129,23 +127,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
         <LabelTyping value={username} className="username" start={labelFinished} onFinish={() => setSecondFinished(true)} />
         {user.rolePreference?.roleId === UserType.Builder &&
           <div>
-            <LabelTyping
-              start={secondFinished}
-              value="Use this username to"
-              className="username-help-label"
-              onFinish={() => setThirdFinished(true)}
-            />
-            <LabelTyping
-              start={thirdFinished}
-              value="connect with people to"
-              className="username-help-label"
-              onFinish={() => setFourthFinished(true)}
-            />
-            <LabelTyping
-              start={fourthFinished}
-              value="create and assign bricks"
-              className="username-help-label"
-            />
+            <p className="username-help-label" style={{opacity: secondFinished ? '1' : '0'}}>Use this username to connect with people to create and assign bricks</p>
           </div>
         }
       </div>
@@ -156,10 +138,10 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     if (!submited) {
       return <div />
     }
-    return <button onClick={() => {
+    return <SpriteIcon name="edit-outline" onClick={() => {
       setUsername('');
       setSubmited(null);
-    }}>Edit</button>
+    }} />
   }
 
   return (

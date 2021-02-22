@@ -49,7 +49,9 @@
       margin-bottom: 9vh;
       width: 100%;
       margin: 1vw 0;
-      button {
+      svg {
+        cursor: pointer;
+        width: 4.5vw;
         position: absolute;
         top: calc(3vh - 0.3vw);
         font-size: 1.8vw;
@@ -59,8 +61,10 @@
         right: -6vw;
         border: none;
         outline: none;
-        color: var(--white);
-        background: var(--theme-orange);
+        color: var(--theme-orange);
+        &:hover {
+          color: var(--white);
+        }
       }
 
       .MuiInput-underline {
@@ -154,14 +158,26 @@
           color: var(--theme-light-blue);
         }
       }
+    }
 
+    .arrow-button {
+      position: relative;
       svg {
+        position: absolute;
+        right: 5vw;
         height: 5vw;
         width: 5vw;
         color: var(--theme-orange);
+        transition: all 300ms ease-out;
 
         &.invalid {
           color: var(--theme-light-blue);
+        }
+      }
+
+      &:hover {
+        svg {
+          right: 4vw;
         }
       }
     }
@@ -211,10 +227,12 @@
         }
 
         .username-help-label {
+          margin-top: 1vh;
           text-align: center;
           font-size: 1.7vw;
           color: var(--theme-dark-blue);
           font-family: $font-family-regular-italic;
+          transition: all 300ms ease-out;
         }
 
         svg {
