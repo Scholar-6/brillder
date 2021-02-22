@@ -124,12 +124,13 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               }
             }
           }
-          .heading {
-            text-align: center;
+          .phone-stepper-head {
+            text-align: left;
             font-size: 6vw;
-            font-family: $font-family-bold;
+            font-family: $font-family-regular;
             color: var(--theme-dark-blue);
-            margin-left: 1.5vw;
+            margin-left: 4vw;
+            width: calc(96vw);
           }
           .stepper {
             width: 100%;
@@ -563,7 +564,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             .intro-text-row {
               .stepper {
                 flex-direction: row !important;
-                background-color: var(--solitude-light) !important;
                 padding: 2vw;
                 .step {
                   font-size: 4vw !important;
@@ -945,5 +945,149 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
   .mobile-back-button {
     right: calc(100% / 7 * 2) !important;
+  }
+}
+
+// stepper in play
+.play-preview-pages .sorted-row .live-page,
+.play-preview-pages .sorted-row .review-page {
+  $stepper-height: 25vw;
+  $step-height: 10vw;
+  $step-container-width: 12vw;
+  .introduction-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 0 !important;
+    width: 100%;
+    height: 0 !important;
+  }
+  .intro-text-row {
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 0 !important;
+    width: 100%;
+    height: $stepper-height;
+    display: flex !important;
+    align-items: center;
+    background: var(--tab-gray) !important;
+    padding-left: 2.2vw !important;
+    padding-right: 2.2vw !important;
+  }
+  .introduction-info .stepper {
+    width: 100%;
+    margin-top: 0.7vw;
+    background: inherit !important;
+    height: calc(#{$step-height} + 0.7vw) !important;
+    padding: 0 !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: block !important;
+    white-space: nowrap;
+
+    .blue-circle-main-container {
+      display: none;
+    }
+  
+    .step {
+      display: inline-block !important;
+      width: $step-container-width;
+      padding-left: calc((#{$step-container-width} - #{$step-height}) / 2);
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $step-height !important;
+        height: $step-height;
+        border-radius: 50%;
+      }
+      &.completed {
+        span {
+          color: var(--white);
+          background: var(--blue);
+        }
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+      &.success {
+        span {
+          color: var(--tab-gray);
+          background: var(--theme-green);
+        }
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+      &.failed {
+        span {
+          color: var(--tab-gray);
+          background: var(--theme-orange);
+        }
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+      &.current {
+        span {
+          color: var(--white);
+          background: var(--theme-dark-blue);
+        }
+        .underline {
+          position: absolute;
+          bottom: -0.5vw;
+          width: $step-height;
+          display: flex;
+          justify-content: center;
+          > div {
+            border-radius: 0.4vw;
+            width: 1.3vw;
+            height: 0.2vw;
+            background: var(--theme-dark-blue);
+          }
+        }
+        &.success .underline > div {
+          background: var(--theme-green);
+        }
+        &.failed .underline > div {
+          background: var(--theme-orange);
+        }
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+    .prep-step {
+      display: none !important;
+    }
+
+    // scroll buttons
+    $scroll-button-size: 2vw;
+
+    .scroll-back-button, .scroll-next-button {
+      position: absolute;
+      top: 0;
+      width: 2.5vw;
+      height: $stepper-height;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      svg {
+        cursor: pointer;
+        width: $scroll-button-size;
+        height: $scroll-button-size;
+      }
+    }
+    .scroll-back-button {
+      left: 0;
+    }
+    .scroll-next-button {
+      right: 0;
+    }
+  }
+  .introduction-content {
+    margin-top: 25vw !important;
   }
 }

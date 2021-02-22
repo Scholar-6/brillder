@@ -4,6 +4,7 @@ import "../Live.scss";
 import { Question } from "model/question";
 import PulsingCircle from './PulsingCircle';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isPhone } from "services/phone";
 
 interface StepperProps {
   activeStep: number;
@@ -70,6 +71,14 @@ const LiveStepper: React.FC<StepperProps> = ({ questions, ...props }) => {
         el.scrollBy(getStepSize(), 0);
       }
     } catch {}
+  }
+
+  if (isPhone()) {
+    return (
+      <div className="stepper" ref={stepperRef}>
+        {questions.map(renderQuestionStep)}
+      </div>
+    );
   }
 
   return (
