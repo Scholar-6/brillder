@@ -5,7 +5,6 @@ import '../style.scss';
 import './wordHighlighting.scss'
 import { UniqueComponentProps } from '../../types';
 import { BuildWord, SpecialSymbols } from 'components/interfaces/word';
-import { TextareaAutosize } from '@material-ui/core';
 import { HighlightMode } from '../model';
 import HighlightButton from '../components/HighlightButton';
 import LineStyleDialog from './LineStyleDialog';

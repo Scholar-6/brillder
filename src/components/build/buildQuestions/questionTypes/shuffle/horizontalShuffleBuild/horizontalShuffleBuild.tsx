@@ -21,7 +21,7 @@ export const getDefaultHorizontalShuffleAnswer = (ymap: Y.Map<any>) => {
 }
 
 const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
-  locked, editOnly, data, validationRequired, openSameAnswerDialog
+  locked, data, validationRequired, openSameAnswerDialog
 }) => {
   const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), id: generateId() }));
 
@@ -37,13 +37,6 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
     list = data.get("list");
   } else if (list.length < 3) {
     addAnswer();
-  }
-
-  const changed = (answer: any, value: string) => {
-    if (locked) { return; }
-    answer.value = value;
-    answer.valueFile = "";
-    answer.answerType = QuestionValueType.String;
   }
 
   const removeFromList = (index: number) => {

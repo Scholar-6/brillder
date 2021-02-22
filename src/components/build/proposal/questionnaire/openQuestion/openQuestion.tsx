@@ -9,7 +9,6 @@ import NavigationButtons from '../../components/navigationButtons/NavigationButt
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from "components/play/baseComponents/MathInHtml";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import { toRenderJSON } from "services/SharedTypeService";

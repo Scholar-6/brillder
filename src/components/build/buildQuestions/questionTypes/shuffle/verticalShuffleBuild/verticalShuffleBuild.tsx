@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as Y from "yjs";
 
 import './verticalShuffleBuild.scss'
@@ -6,7 +6,6 @@ import { QuestionValueType, UniqueComponentProps } from '../../types';
 import { generateId, showSameAnswerPopup } from '../../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import RemoveItemButton from '../../components/RemoveItemButton';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
@@ -40,13 +39,6 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     list = data.get("list");
   } else if (list.length < 3) {
     addAnswer();
-  }
-
-  const changed = (answer: any, value: string) => {
-    if (locked) { return; }
-    answer.value = value;
-    answer.valueFile = "";
-    answer.answerType = QuestionValueType.String;
   }
 
   const removeFromList = (index: number) => {

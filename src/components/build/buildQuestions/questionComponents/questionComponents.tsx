@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ReactSortable, Sortable } from "react-sortablejs";
 import { Grid } from '@material-ui/core';
 
@@ -14,14 +14,12 @@ import MissingWordComponent from '../questionTypes/missingWordBuild/MissingWordB
 import PairMatchComponent from '../questionTypes/pairMatchBuild/pairMatchBuild';
 import VerticalShuffleComponent from '../questionTypes/shuffle/verticalShuffleBuild/verticalShuffleBuild';
 import WordHighlightingComponent from '../questionTypes/highlighting/wordHighlighting/wordHighlighting';
-import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/question';
+import { QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/question';
 import { getNonEmptyComponent } from "../../questionService/ValidateQuestionService";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import FixedTextComponent from "../components/Text/FixedText";
-import { TextComponentObj } from "../components/Text/interface";
 import * as Y from "yjs";
 import _ from "lodash";
-import { convertArray, convertObject } from "services/SharedTypeService";
 import DeleteComponentDialog from "./deleteComponentDialog";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import { generateId } from "../questionTypes/service/questionBuild";

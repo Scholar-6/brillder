@@ -1,9 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import * as Y from "yjs";
 import { Grid } from '@material-ui/core';
 
 import './pairMatchBuild.scss'
-import {Answer} from './types';
 import { UniqueComponentProps } from '../types';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';

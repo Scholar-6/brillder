@@ -6,7 +6,7 @@ import queryString from 'query-string';
 import { History } from 'history';
 
 import './ProposalReview.scss';
-import { AcademicLevel, Brick, BrickStatus, KeyWord } from "model/brick";
+import { AcademicLevel, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 

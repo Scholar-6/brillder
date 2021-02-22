@@ -1,6 +1,6 @@
 import { Delta, Sources } from "quill";
-import React, { Component, MutableRefObject } from "react";
-import ReactQuill, {Quill} from "react-quill"; 
+import React from "react";
+import ReactQuill from "react-quill"; 
 import { QuillBinding } from "y-quill";
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
@@ -13,7 +13,6 @@ import "./QuillAutoLink";
 import "./QuillMediaEmbed";
 import "./QuillImageUpload";
 import "./QuillCursors";
-import quillToHTML from "./QuillToHTML";
 import { YJSContext } from "components/build/baseComponents/YJSProvider";
 
 function randomEditorId() {

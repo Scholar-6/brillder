@@ -2,7 +2,7 @@ import React from 'react';
 import Y from "yjs";
 
 import sprite from "assets/img/icons-sprite.svg";
-import { QuestionComponentTypeEnum, Hint, QuestionTypeEnum } from 'model/question';
+import { QuestionComponentTypeEnum, QuestionTypeEnum } from 'model/question';
 import TextComponent from './Text/Text'
 import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'

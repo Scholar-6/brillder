@@ -2,7 +2,7 @@
 
 import * as Y from "yjs";
 import {
-  HintStatus, Question, QuestionTypeEnum
+  HintStatus, QuestionTypeEnum
 } from "model/question";
 import {getUniqueComponent} from './QuestionService';
 

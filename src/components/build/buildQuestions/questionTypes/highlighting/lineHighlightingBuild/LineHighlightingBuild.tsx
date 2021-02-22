@@ -4,7 +4,6 @@ import * as Y from "yjs";
 import '../style.scss';
 import './LineHighlightingBuild.scss'
 import { UniqueComponentProps } from '../../types';
-import { TextareaAutosize } from '@material-ui/core';
 
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import { HighlightMode } from '../model';

@@ -10,8 +10,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Radio } from "@material-ui/core";
 import { BrickLengthEnum } from "model/brick";
 import Katex from "components/baseComponents/katex/Katex";
-import quillToHTML from "components/baseComponents/quill/QuillToHTML";
-import { DeltaOperation } from "quill";
 
 interface SynthesisPreviewData {
   synthesis: string;

@@ -3,7 +3,6 @@ import Y from "yjs";
 import { Grid } from '@material-ui/core';
 
 import './Quote.scss'
-import DocumentCKEditor from 'components/baseComponents/ckeditor/DocumentEditor';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 

@@ -1,5 +1,3 @@
-import * as Y from "yjs";
-
 export enum QuestionValueType {
   None,
   String,

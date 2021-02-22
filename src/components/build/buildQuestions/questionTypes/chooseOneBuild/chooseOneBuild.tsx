@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as Y from "yjs";
 
 import './chooseOneBuild.scss';
@@ -8,7 +8,6 @@ import { ChooseOneAnswer } from './types';
 import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
 import { generateId, showSameAnswerPopup } from '../service/questionBuild';
-import { convertObject } from 'services/SharedTypeService';
 
 export interface ChooseOneData {
   list: ChooseOneAnswer[];

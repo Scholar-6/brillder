@@ -1,4 +1,3 @@
-import update from "immutability-helper";
 import * as Y from "yjs";
 
 import { validateQuestion } from "./ValidateQuestionService";
@@ -13,14 +12,12 @@ import { Brick } from "model/brick";
 import { getDefaultChooseOneAnswer } from "../buildQuestions/questionTypes/chooseOneBuild/chooseOneBuild";
 import { getDefaultChooseSeveralAnswer } from "../buildQuestions/questionTypes/chooseSeveralBuild/chooseSeveralBuild";
 import { getDefaultHorizontalShuffleAnswer } from "../buildQuestions/questionTypes/shuffle/horizontalShuffleBuild/horizontalShuffleBuild";
-import { getDefaultShortAnswerAnswer } from "../buildQuestions/questionTypes/shortAnswerBuild/shortAnswerBuild";
 import { getDefaultVerticalShuffleAnswer } from "../buildQuestions/questionTypes/shuffle/verticalShuffleBuild/verticalShuffleBuild";
 import { getDefaultPairMatchAnswer } from "../buildQuestions/questionTypes/pairMatchBuild/pairMatchBuild";
 import { getDefaultCategoriseAnswer } from "../buildQuestions/questionTypes/categoriseBuild/categoriseBuild";
 import { getDefaultMissingWordAnswer } from "../buildQuestions/questionTypes/missingWordBuild/MissingWordBuild";
 import { getDefaultLineHighlightingAnswer } from "../buildQuestions/questionTypes/highlighting/lineHighlightingBuild/LineHighlightingBuild";
 import { getDefaultWordHighlightingAnswer } from "../buildQuestions/questionTypes/highlighting/wordHighlighting/wordHighlighting";
-import { convertAny, convertObject } from "services/SharedTypeService";
 
 
 export interface ApiQuestion {

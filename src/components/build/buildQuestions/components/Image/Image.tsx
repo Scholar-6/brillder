@@ -5,7 +5,7 @@ import { Grid } from '@material-ui/core';
 import './Image.scss'
 import {fileUrl, uploadFile} from 'components/services/uploadFile';
 import ImageDialog from './ImageDialog';
-import { ImageAlign, ImageComponentData } from './model';
+import { ImageAlign } from './model';
 import ImageCloseDialog from './ImageCloseDialog';
 
 

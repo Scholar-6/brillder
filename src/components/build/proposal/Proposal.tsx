@@ -1,7 +1,5 @@
 import React from "react";
-import * as Y from "yjs";
 import { Route } from "react-router-dom";
-import { MuiThemeProvider } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 

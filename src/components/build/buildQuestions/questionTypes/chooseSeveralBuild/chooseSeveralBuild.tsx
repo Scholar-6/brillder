@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import * as Y from "yjs";
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 
@@ -7,7 +7,6 @@ import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 import {ChooseOneAnswer} from '../chooseOneBuild/types';
 import validator from '../../../questionService/UniqueValidator';
 import { generateId, showSameAnswerPopup } from '../service/questionBuild';
-import { convertArray } from 'services/SharedTypeService';
 
 export interface ChooseSeveralData {
   list: ChooseOneAnswer[];

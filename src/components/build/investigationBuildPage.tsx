@@ -1,8 +1,7 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Redirect, RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
-import update from "immutability-helper";
 import { connect } from "react-redux";
 import queryString from 'query-string';
 
@@ -13,30 +12,22 @@ import {
   QuestionTypeEnum,
 } from "model/question";
 import actions from "redux/actions/brickActions";
-import { socketUpdateBrick, socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
+import { socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
 import { isHighlightInvalid, validateHint, validateQuestion } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
-  getNewFirstQuestion,
-  getActiveQuestion,
-  cashBuildQuestion,
   removeQuestionByIndex,
   setQuestionTypeByIndex,
-  setLastQuestionId,
   getFirstInvalidQuestion,
-  parseQuestion,
   getUniqueComponent,
 } from "./questionService/QuestionService";
-import { convertToQuestionType, stripHtml } from "./questionService/ConvertService";
+import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick, checkAdmin, checkPublisher } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { validateProposal } from 'components/build/proposal/service/validation';
-import { TextComponentObj } from "./buildQuestions/components/Text/interface";
-import { useSocket } from "socket/socket";
-import { applyBrickDiff, getBrickDiff } from "components/services/diff";
 import UndoRedoService from "components/services/UndoRedoService";
 import { Brick } from "model/brick";
 

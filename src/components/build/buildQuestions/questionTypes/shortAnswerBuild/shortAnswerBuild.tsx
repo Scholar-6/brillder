@@ -1,13 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import * as Y from "yjs";
 import Snackbar from "@material-ui/core/Snackbar";
 
 import "./shortAnswerBuild.scss";
 import { UniqueComponentProps } from "../types";
-import { ShortAnswerData, ShortAnswerItem } from "./interface";
 
-import { stripHtml } from "components/build/questionService/ConvertService";
-import DocumentWirisCKEditor from "components/baseComponents/ckeditor/DocumentWirisEditor";
 import AddAnswerButton from "components/build/baseComponents/addAnswerButton/AddAnswerButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";

@@ -2,7 +2,6 @@ import React from 'react';
 import Y from "yjs";
 
 import './Text.scss'
-import { TextComponentObj } from './interface';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 
