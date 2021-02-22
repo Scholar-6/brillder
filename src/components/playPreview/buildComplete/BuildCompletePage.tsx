@@ -114,8 +114,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                     <SpriteIcon name="globe" className="active" />
                   </div>
                   <div className="inner-radio-text pointer" onClick={() => this.setState({ isCore: true })}>
-                    Submit to a subject specialist, receive editorial feedback,
-                    be considered for our core library and paid for your work!
+                    Submit for peer review, be considered for our core catalogue and get paid for your work
                 </div>
                   <div className="inner-radio-text last-one">
                     Users who breach our <span className="bold">submission guidelines</span> for appropriate content may be blocked from Brillder and/or reported to relevant authorities.
