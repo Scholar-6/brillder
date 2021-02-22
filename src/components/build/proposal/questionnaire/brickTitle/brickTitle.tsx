@@ -189,29 +189,6 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                   />
                 </div>
                 <div className="audience-inputs">
-                  <Input
-                    ref={this.state.subTitleRef}
-                    disabled={!canEdit}
-                    value={parentState.get("subTopic")}
-                    onKeyUp={e => this.moveToRef(e, RefName.altTitleRef)}
-                    onChange={e => this.onChange(e, "subTopic")}
-                    placeholder="Enter Topic..."
-                  />
-                </div>
-                <div className="audience-inputs">
-                  <Input
-                    ref={this.state.altTitleRef}
-                    disabled={!canEdit}
-                    value={parentState.get("alternativeTopics")}
-                    onKeyUp={e => {
-                      if (enterPressed(e)) {
-                        saveTitles(parentState);
-                        this.props.history.push(baseUrl + OpenQuestionRoutePart);
-                      }
-                    }}
-                    onChange={e => this.onChange(e, "alternativeTopics")}
-                    placeholder="Enter Subtopic(s)..."
-                  />
                   <KeyWordsComponent disabled={!canEdit} keyWords={parentState.get("keywords")} />
                 </div>
                 <div className="audience-inputs">
