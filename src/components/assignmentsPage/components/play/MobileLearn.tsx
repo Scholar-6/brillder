@@ -6,11 +6,9 @@ import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 import { User } from "model/user";
 import { getAssignmentIcon } from "components/services/brickService";
 
-import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageHeadWithMenu, {
   PageEnum,
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 
@@ -137,7 +135,8 @@ class MobileLearn extends Component<Props> {
 
 
   render() {
-    const {history, assignments} = this.props;
+    const assignments = this.props.assignments.sort((a, b) => a.status - b.status);
+    const {history} = this.props;
     const expandedBrick = assignments.find(a => a.brick.expanded === true);
 
     let pageClass = "main-listing dashboard-page mobile-category learn-mobile-tab";
@@ -166,7 +165,7 @@ class MobileLearn extends Component<Props> {
               </button>
             </div>
             <div className="bricks-list-container">
-              {this.renderSortedBricks(this.props.assignments)}
+              {this.renderSortedBricks(assignments)}
             </div>
           </Grid>
         </Grid>
