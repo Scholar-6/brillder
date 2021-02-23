@@ -1,59 +1,47 @@
 import React from 'react'
+import * as Y from "yjs";
 import { Grid } from '@material-ui/core';
 
 import './horizontalShuffleBuild.scss'
 import { QuestionValueType, UniqueComponentProps } from '../../types';
-import { showSameAnswerPopup } from '../../service/questionBuild';
+import { generateId, showSameAnswerPopup } from '../../service/questionBuild';
 
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import RemoveItemButton from '../../components/RemoveItemButton';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
-export const getDefaultHorizontalShuffleAnswer = () => {
-  const newAnswer = () => ({ value: "" });
-  return { list: [newAnswer(), newAnswer(), newAnswer()] };
+export const getDefaultHorizontalShuffleAnswer = (ymap: Y.Map<any>) => {
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), id: generateId() }));
+
+  const list = new Y.Array();
+  list.push([newAnswer(), newAnswer(), newAnswer()]);
+
+  ymap.set("list", list);
 }
 
 const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, data, validationRequired, openSameAnswerDialog
 }) => {
-  const newAnswer = () => ({ value: "" });
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), id: generateId() }));
 
-  if (!data.list) {
-    data.list = getDefaultHorizontalShuffleAnswer().list;
-  } else if (data.list.length < 3) {
-    data.list.push(newAnswer());
-    updateComponent(data);
-  }
-
-  const [state, setState] = React.useState(data);
-
-  const update = () => {
-    setState(Object.assign({}, state));
-    updateComponent(state);
-  }
-
-  const changed = (answer: any, value: string) => {
-    if (locked) { return; }
-    answer.value = value;
-    answer.valueFile = "";
-    answer.answerType = QuestionValueType.String;
-    update();
-  }
+  let list = data.get("list") as Y.Array<any>;
 
   const addAnswer = () => {
     if (locked) { return; }
-    state.list.push({ value: "" });
-    update();
-    save();
+    list.push([newAnswer()]);
+  }
+
+  if (!list) {
+    getDefaultHorizontalShuffleAnswer(data);
+    list = data.get("list");
+  } else if (list.length < 3) {
+    addAnswer();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
-    state.list.splice(index, 1);
-    update();
-    save();
+    list.delete(index);
   }
 
   const renderAnswer = (answer: any, i: number) => {
@@ -61,22 +49,20 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
 
     const setImage = (fileName: string) => {
       if (locked) { return; }
-      answer.value = "";
-      answer.valueFile = fileName;
-      answer.answerType = QuestionValueType.Image;
-      update();
-      save();
+      answer.set("value", "");
+      answer.set("valueFile", fileName);
+      answer.set("answerType", QuestionValueType.Image);
     }
 
     let className = `horizontal-shuffle-box unique-component horizontal-column-${column}`;
-    if (answer.answerType === QuestionValueType.Image) {
+    if (answer.get("answerType") === QuestionValueType.Image) {
       className += ' big-answer';
     }
 
     let isValid = null;
     if (validationRequired) {
       isValid = true;
-      if (answer.answerType === QuestionValueType.String && !answer.value) {
+      if (answer.get("answerType") === QuestionValueType.String && !answer.get("value")) {
         isValid = false;
       }
     }
@@ -86,28 +72,26 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
     }
 
     return (
-      <Grid container item xs={4} key={i}>
+      <Grid container item xs={4} key={answer.get("id")}>
         <div className={className}>
-          <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
+          <RemoveItemButton index={i} length={list.length} onClick={removeFromList} />
           <QuestionImageDropzone
             answer={answer as any}
-            type={answer.answerType || QuestionValueType.None}
+            type={answer.get("answerType") || QuestionValueType.None}
             locked={locked}
-            fileName={answer.valueFile}
+            fileName={answer.get("valueFile")}
             update={setImage}
           />
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={locked}
-            editOnly={editOnly}
-            data={answer.value}
-            isValid={isValid}
+            sharedData={answer.get("value")}
+            validate={validationRequired}
             toolbar={['latex']}
+            isValid={isValid}
             placeholder={"Enter A" + (i + 1) + "..."}
             onBlur={() => {
-              showSameAnswerPopup(i, state.list, openSameAnswerDialog);
-              save();
+              showSameAnswerPopup(i, list.toJSON(), openSameAnswerDialog);
             }}
-            onChange={value => changed(answer, value)}
           />
         </div>
       </Grid>
@@ -122,7 +106,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
       </div>
       <Grid container direction="row" className="answers-container">
         {
-          state.list.map((answer: any, i: number) => renderAnswer(answer, i))
+          list.map((answer: any, i: number) => renderAnswer(answer, i))
         }
       </Grid>
       <AddAnswerButton

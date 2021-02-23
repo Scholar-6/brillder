@@ -642,7 +642,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             if (s.id === subjectId) {
               clearProposal();
               this.props.forgetBrick();
-              this.props.history.push(map.ProposalSubject + '?selectedSubject=' + subjectId);
+              this.props.history.push(map.ProposalBase + '?selectedSubject=' + subjectId);
             } else {
               this.setState({ noSubjectOpen: true, activeSubject: filterSubjects[0] });
             }

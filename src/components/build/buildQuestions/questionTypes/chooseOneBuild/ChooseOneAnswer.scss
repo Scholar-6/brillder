@@ -7,7 +7,7 @@
   width: 100%;
   margin-top: 0.17vw;
   margin-bottom: 0.17vw;
-  .document-editor {
+  .quill-document-editor {
     height: calc(100% - 0.4vh);
   }
 
@@ -70,10 +70,16 @@
   }
 
   .choose-empty {
-    .ck-content {
+    .ql-editor {
       padding-top: 2vh !important;
-      padding-right: 9vw !important;
+      padding-right: 10.5vw !important;
+      padding-left: 2vw !important;
       min-height: 7vh !important;
+      &.ql-blank:before {
+        padding-right: 10.5vw !important;
+        padding-left: 2vw !important;
+        min-height: 7vh !important;
+      }
     }
     .question-image-drop {
       height: 100%;

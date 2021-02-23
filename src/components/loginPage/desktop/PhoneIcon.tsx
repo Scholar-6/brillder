@@ -1,4 +1,3 @@
-import TypingLabel from "components/baseComponents/TypingLabel";
 import React from "react";
 
 interface PhoneIconProps {

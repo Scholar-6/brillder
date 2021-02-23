@@ -404,22 +404,6 @@
         padding-top: 0 !important;
         margin-left: 2vw;
         margin-right: 2vw;
-
-        .document-editor {
-          width: 100%;
-          .ck-toolbar {
-            .ck-toolbar__items {
-              background-color: var(--solitude-light) !important;
-            }
-          }
-          .ck-editor {
-            width: 100% !important;
-            .ck-content {
-              background-color: var(--tab-gray);
-              padding: 1vw;
-            }
-          }
-        }
       }
     }
 

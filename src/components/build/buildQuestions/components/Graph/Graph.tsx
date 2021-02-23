@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Y from "yjs";
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
 //@ts-ignore
 import Desmos from 'desmos';
@@ -8,6 +9,7 @@ import { Fab, SvgIcon, Tooltip } from '@material-ui/core';
 import GraphDialog from './GraphDialog';
 
 import sprite from 'assets/img/icons-sprite.svg';
+import { convertObject } from 'services/SharedTypeService';
 
 export interface GraphSettings {
     showSidebar: boolean;
@@ -22,9 +24,8 @@ const settingNames: (keyof GraphSettings)[] = ["showSidebar", "showSettings", "a
 interface GraphProps {
     locked: boolean;
     index: number;
-    data: any;
-    save(): void;
-    updateComponent(component: any, index: number): void;
+    data: Y.Map<any>;
+
     // phone preview
     onFocus(): void;
 }
@@ -33,10 +34,8 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
     const graphRef = React.useRef<HTMLDivElement>(null);
     const [calculator, setCalculator] = React.useState<any>(null);
 
-    const initialProps = React.useRef(props);
-
-    const [graphState, setGraphState] = React.useState<any>(props.data.graphState ?? null);
-    const [graphSettings, setGraphSettings] = React.useState<GraphSettings>(props.data.graphSettings ?? {
+    const [graphState, setGraphState] = React.useState<any>(props.data.toJSON().graphState ?? null);
+    const [graphSettings, setGraphSettings] = React.useState<GraphSettings>(props.data.toJSON().graphSettings ?? {
         showSidebar: false,
         showSettings: false,
         allowPanning: false,
@@ -76,12 +75,8 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
     }, [graphState, graphSettings, calculator]);
 
     useEffect(() => {
-        let comp = Object.assign({}, initialProps.current.data);
-        comp.graphState = graphState;
-        comp.graphSettings = graphSettings;
-        console.log("Saving...")
-        initialProps.current.updateComponent(comp, initialProps.current.index);
-        initialProps.current.save();
+        props.data.set("graphState", convertObject(graphState));
+        props.data.set("graphSettings", convertObject(graphSettings));
     }, [graphState, graphSettings]);
 
     const setGraphSetting = (evt: React.MouseEvent<HTMLElement>, newSettings: string[]) => {

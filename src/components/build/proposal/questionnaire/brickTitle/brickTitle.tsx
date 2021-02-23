@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import * as Y from "yjs";
 import { Grid, Input, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "../../model";
-import { AcademicLevel, Brick, KeyWord, Subject } from "model/brick";
+import { AcademicLevel, Brick, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
 import { enterPressed } from "components/services/key";
@@ -32,12 +33,11 @@ interface BrickTitleProps {
   user: User;
   history: any;
   baseUrl: string;
-  parentState: Brick;
+  parentState: Y.Map<any>;
   canEdit: boolean;
   playStatus: PlayButtonStatus;
   subjects: Subject[];
   saveTitles(data: any): void;
-  setKeywords(keywords: KeyWord[]): void;
   setAcademicLevel(level: AcademicLevel): void;
   saveAndPreview(): void;
 }
@@ -113,7 +113,8 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
   onChange(event: React.ChangeEvent<{ value: string }>, value: string) {
     event.stopPropagation();
     const title = event.target.value.substr(0, 49);
-    this.props.saveTitles({ ...this.props.parentState, [value]: title });
+    this.props.parentState.set(value, title);
+    // this.props.saveTitles({ ...this.props.parentState, [value]: title });
   };
 
   moveToRef(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, refName: RefName) {
@@ -146,13 +147,13 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
 
   render() {
     const { parentState, canEdit, baseUrl, saveTitles } = this.props;
-    if (parentState.title) {
-      setBrillderTitle(parentState.title);
+    if (parentState.get("title")) {
+      setBrillderTitle(parentState.get("title"));
     }
 
     let subjectName = '';
     try {
-      const subject = this.props.subjects.find(s => s.id === parentState.subjectId)
+      const subject = this.props.subjects.find(s => s.id === parentState.get("subjectId"))
       if (subject) {
         subjectName = subject.name;
       }
@@ -181,17 +182,17 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                 <div className="audience-inputs">
                   <Input
                     disabled={!canEdit}
-                    value={parentState.title}
+                    value={parentState.get("title")}
                     onKeyUp={e => this.moveToRef(e, RefName.subTitleRef)}
                     onChange={e => this.onChange(e, "title")}
                     placeholder="Enter Proposed Title Here..."
                   />
                 </div>
                 <div className="audience-inputs">
-                  <KeyWordsComponent disabled={!canEdit} keyWords={parentState.keywords} onChange={this.props.setKeywords.bind(this)} />
+                  <KeyWordsComponent disabled={!canEdit} keyWords={parentState.get("keywords")} />
                 </div>
                 <div className="audience-inputs">
-                  <DifficultySelect disabled={!canEdit} level={parentState.academicLevel} onChange={this.props.setAcademicLevel.bind(this)} />
+                  <DifficultySelect disabled={!canEdit} level={parentState.get("academicLevel")} onChange={this.props.setAcademicLevel.bind(this)} />
                 </div>
               </Grid>
             </form>
@@ -226,7 +227,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
               </div>
             </div>
           </Grid>
-          <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
+          <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState.toJSON()} />
           <Hidden only={['xs', 'sm']}>
             <div className="red-right-block"></div>
           </Hidden>
