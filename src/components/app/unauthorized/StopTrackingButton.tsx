@@ -12,7 +12,7 @@ const StopTrackingButton: React.FC<StudentRouteProps> = (props) => {
   }
 
   const deleteAllCookies = () => {
-    var cookies = document.cookie.split(";");
+    const cookies = document.cookie.split(";");
 
     for (var i = 0; i < cookies.length; i++) {
       var cookie = cookies[i];

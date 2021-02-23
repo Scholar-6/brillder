@@ -11,6 +11,7 @@ import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import map from 'components/map';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import StopTrackingButton from './StopTrackingButton';
+import { getCookies, clearCookiePolicy, acceptCookies } from 'localStorage/cookies';
 
 interface StudentRouteProps {
   path: string;
@@ -24,7 +25,8 @@ interface StudentRouteProps {
 }
 
 const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, innerComponent, user, ...rest }) => {
-  let [cookieOpen, setCookiePopup] = React.useState(true);
+  const cookiesAccepted = getCookies();
+  const [cookieOpen, setCookiePopup] = React.useState(!cookiesAccepted);
 
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!user) {
@@ -50,8 +52,14 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
     return (
       <div>
         <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />
-        <StopTrackingButton shown={!cookieOpen} onClick={() => setCookiePopup(true)} />
-        <CookiePolicyDialog isOpen={cookieOpen} close={() => setCookiePopup(false)} />
+        <StopTrackingButton shown={!cookieOpen} onClick={() => {
+          clearCookiePolicy();
+          setCookiePopup(true);
+        }} />
+        <CookiePolicyDialog isOpen={cookieOpen} close={() => {
+          acceptCookies();
+          setCookiePopup(false);
+        }} />
       </div>
     );
   }
