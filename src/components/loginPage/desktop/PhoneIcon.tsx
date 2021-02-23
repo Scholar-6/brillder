@@ -31,20 +31,20 @@ class PhoneIcon extends React.Component<PhoneIconProps, PhoneIconState> {
   componentDidMount() {
     this.printLetter(0, 'LEARN', StateKeysEnum.learn, () => {
       this.printLetter(0, 'TEACH', StateKeysEnum.teach, () => {
-        this.printLetter(0, 'BUILD', StateKeysEnum.build, () => {});
+        this.printLetter(0, 'BUILD', StateKeysEnum.build, () => { });
       });
     });
 
     setTimeout(() => {
-      this.setState({animation: true});
+      this.setState({ animation: true });
     }, 100);
   }
 
-  randDelay (min: number, max: number) {
+  randDelay(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  printLetter (index: number, label: string, key: StateKeysEnum, onEnded: Function) {
+  printLetter(index: number, label: string, key: StateKeysEnum, onEnded: Function) {
     setTimeout(() => {
       try {
         this.setState({ ...this.state, [key]: this.state[key] + label[index] });
@@ -53,7 +53,7 @@ class PhoneIcon extends React.Component<PhoneIconProps, PhoneIconState> {
         } else {
           onEnded();
         }
-      } catch {}
+      } catch { }
     }, this.randDelay(50, 90));
   };
 
@@ -63,7 +63,7 @@ class PhoneIcon extends React.Component<PhoneIconProps, PhoneIconState> {
         <defs>
           <filter id="Rectangle_574" x="0" y="0" width="321.145" height="739.506" filterUnits="userSpaceOnUse">
             <feGaussianBlur stdDeviation="5" result="blur" />
-            <feFlood flood-opacity="0.161" />
+            <feFlood floodOpacity="0.161" />
             <feComposite operator="in" in2="blur" />
             <feComposite in="SourceGraphic" />
           </filter>
@@ -84,7 +84,7 @@ class PhoneIcon extends React.Component<PhoneIconProps, PhoneIconState> {
           </g>
           <path id="Rectangle_1077" d="M14,0H255.073a14,14,0,0,1,14,14V287.955a0,0,0,0,1,0,0H14a14,14,0,0,1-14-14V14A14,14,0,0,1,14,0Z" transform="translate(1371.507 181.948)" fill="#193366" />
           <path id="Rectangle_1078" d="M14,0H268.676a0,0,0,0,1,0,0V275.887a14,14,0,0,1-14,14H14a14,14,0,0,1-14-14V14A14,14,0,0,1,14,0Z" transform="translate(1371.706 498.533)" fill="#fff" />
-          <image id="phone-image" width="156.603" height="164.358" transform="translate(1427.337 248.523)" href="/images/choose-login/logo.png"/>
+          <image id="phone-image" width="156.603" height="164.358" transform="translate(1427.337 248.523)" href="/images/choose-login/logo.png" />
           <text id="LEARN" transform="translate(1405.162 553.787)" fill="#001c55" font-size="54" letter-spacing="0.16em">
             <tspan x="0" y="0">{this.state.learn}</tspan>
           </text>

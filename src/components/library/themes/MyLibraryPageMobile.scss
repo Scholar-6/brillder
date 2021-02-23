@@ -18,25 +18,26 @@
       height: 100%;
       padding: 2vw;
       margin: 2vw;
+      overflow-x: auto;
       .libary-container-1 {
         height: 30vh;
         margin-left: 0.5vw;
         margin-right: 0.5vw;
-        max-width: 100%;
+        // max-width: 100%;
         display: inline-flex;
         .libary-container {
-          width: max-content;
-          max-width: 100%;
+          // width: max-content;
+          // max-width: 100%;
           height: 90%;
           display: flex;
           background: var(--tab-gray);
           border-radius: 1vw;
           padding: 1.5vw;
           > div {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            overflow: auto;
+            // width: 100%;
+            // display: flex;
+            // flex-direction: row;
+            // overflow: auto;
           }
         }
         .assignment-progressbar {

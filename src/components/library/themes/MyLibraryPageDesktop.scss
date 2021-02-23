@@ -7,7 +7,7 @@
     font-size: 2.5vw !important;
     letter-spacing: 0.5vw !important;
   }
- 
+
   .all-subject-assignments {
     height: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh) !important;
     .my-library-list {
@@ -67,7 +67,7 @@
             height: $width;
           }
           .progress-value {
-            width: $width
+            width: $width;
           }
         }
         .length-60 {
@@ -105,11 +105,11 @@ $level-size: 6vh;
         text-transform: uppercase;
         width: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh - 8vh - 3vh);
         p {
-          color: #C8CACC;
+          color: #c8cacc;
           font-size: 1vw;
           font-family: $font-family-bold;
           white-space: nowrap;
-          overflow: hidden; 
+          overflow: hidden;
           text-overflow: ellipsis;
         }
       }
@@ -178,11 +178,12 @@ $level-size: 6vh;
   padding-top: 2%;
   margin-left: 1.5vw;
   margin-right: 2vw;
-  overflow: scroll;
+  overflow-x: auto;
   .libary-container-1 {
     height: calc(100% / 3);
     margin-left: 0.5vw;
     margin-right: 0.5vw;
+    display: inline-flex;
     .libary-container {
       height: 90%;
       display: flex;
@@ -254,7 +255,7 @@ $level-size: 6vh;
     color: var(--tab-gray);
     margin-top: calc((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 2.5vh) / 4);
     text-align: center;
-    transform: translate(-25%, 0); 
+    transform: translate(-25%, 0);
     z-index: 1000;
   }
 }
@@ -262,7 +263,8 @@ $level-size: 6vh;
 .progress-value {
   $level-size: 6vh;
   .academic-lines {
-    .start-lines, .end-lines {
+    .start-lines,
+    .end-lines {
       display: flex;
       align-items: center;
       height: $level-size;
@@ -284,7 +286,8 @@ $level-size: 6vh;
     }
 
     &.smaller {
-      .start-lines, .end-lines {
+      .start-lines,
+      .end-lines {
         height: 3vh;
       }
       .level {
