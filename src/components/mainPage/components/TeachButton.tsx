@@ -74,7 +74,7 @@ const TeachButton: React.FC<TeachButtonProps> = props => {
           d="M12,21s3.9,5.206,10.411,5.206S32.823,21,32.823,21"
           transform="translate(28.051 56.102)"
           fill="none" stroke="#c43c30" stroke-linecap="round"
-          stroke-linejoin="round" stroke-width="6"/>
+          strokeLinecap="round" stroke-width="6"/>
       </g>
     );
   }
@@ -86,7 +86,7 @@ const TeachButton: React.FC<TeachButtonProps> = props => {
           d="M12,21s3.9,5.206,10.411,5.206S32.823,21,32.823,21"
           transform="translate(28.051 56.102)"
           fill="none" stroke-linecap="round"
-          stroke-linejoin="round" stroke-width="6"/>
+          strokeLinecap="round" stroke-width="6"/>
       </g>
     );
   }

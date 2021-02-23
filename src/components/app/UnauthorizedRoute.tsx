@@ -29,7 +29,7 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
     }
     
     if (!user.rolePreference) {
-      return <Redirect to={map.TermsPage} />
+      return <Redirect to={map.TermsSignUp} />
     }
 
     if (!rest.isRedirectedToProfile) {

@@ -8,8 +8,9 @@ export const BackToWorkPage = '/back-to-work';
 export const AssignmentsPage = '/assignments';
 export const MyLibrary = '/my-library';
 export const Onboarding = '/onboarding';
+export const TermsPage = '/terms'
 
-export const TermsPage = Onboarding + '/terms';
+export const TermsSignUp = Onboarding + '/terms';
 export const SetUsername = Onboarding + '/set-username';
 export const MobileUsername = Onboarding + '/mobile-username';
 export const SelectSubjectPage = Onboarding + '/select-subjects';
@@ -108,6 +109,7 @@ export default {
   MyLibrary,
 
   TermsPage,
+  TermsSignUp,
   SetUsername,
   MobileUsername,
   SelectSubjectPage,

@@ -14,9 +14,9 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachIcon from "components/mainPage/components/TeachIcon";
 import PhoneIcon from "./PhoneIcon";
 import TypingLabel from "components/baseComponents/TypingLabel";
-import { EmailSignPage, JoinPage, RegisterPage } from "./routes";
+import { EmailSignPage, JoinPage, RegisterPage, TermsPage } from "./routes";
 import EmailRegisterDesktopPage from "./EmailRegisterDesktopPage";
-import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
+import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -54,16 +54,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
   const moveToLogin = () => history.push(EmailSignPage);
   const moveToJoin = () => history.push(JoinPage);
   const moveToRegister = () => history.push(RegisterPage);
-
-  const renderPrivacyPolicy = () => {
-    return (
-      <div className="policy-text">
-        <span onClick={() => setPolicyDialog(true)}>
-          Privacy Policy
-        </span>
-      </div>
-    );
-  }
+  const moveToTerms = () => history.push(TermsPage);
 
   return (
     <div className="login-desktop-page">
@@ -156,7 +147,15 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
           <SpriteIcon name="trowel-home" className="trowel-login text-theme-orange floating2" />
         </div>
       </div>
-      {renderPrivacyPolicy()}
+      <div className="policy-text">
+        <span>
+          <a href={window.location.hostname + TermsPage} onClick={(e) => {e.preventDefault(); moveToTerms();}}>Terms</a>
+        </span>
+      </div>
+      <div className="policy-text">
+        <span onClick={() => setPolicyDialog(true)}>
+        </span>
+      </div>
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
     </div>
   );

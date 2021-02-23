@@ -41,7 +41,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
     let { user } = rest;
 
     if (!user.rolePreference) {
-      return <Redirect to={map.TermsPage} />;
+      return <Redirect to={map.TermsSignUp} />;
     }
 
     if (!rest.isRedirectedToProfile) {
