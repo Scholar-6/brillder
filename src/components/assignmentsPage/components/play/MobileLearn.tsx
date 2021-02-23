@@ -147,12 +147,6 @@ class MobileLearn extends Component<Props> {
 
     return (
       <div className={pageClass}>
-        <div className="page-navigation">
-          <div className="btn btn-transparent glasses svgOnHover">
-            <SpriteIcon name="glasses" className="w100 h100 active text-theme-dark-blue" />
-          </div>
-          <div className="breadcrumbs">New</div>
-        </div>
         <PageHeadWithMenu
           page={PageEnum.ViewAll}
           user={this.props.user}
@@ -168,8 +162,7 @@ class MobileLearn extends Component<Props> {
           <Grid item xs={9} className="brick-row-container">
             <div className="brick-row-title">
               <button className="btn btn-transparent svgOnHover" style={{width: '100vw'}}>
-                <span style={{textTransform: 'uppercase'}}>Learn</span>
-                <PrivateCoreToggle isCore={this.props.isCore} onSwitch={this.props.onCoreSwitch} />
+                <span style={{textTransform: 'uppercase'}}>Assignments</span>
               </button>
             </div>
             <div className="bricks-list-container">
