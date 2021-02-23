@@ -21,7 +21,7 @@ const StopTrackingButton: React.FC<StudentRouteProps> = (props) => {
       document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
 
-    props.onClick
+    props.onClick();
   }
 
   return <button className="stop-cookie-tracking" onClick={deleteAllCookies}>Stop Tracking</button>
