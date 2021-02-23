@@ -1351,3 +1351,26 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     width: 44.5vw !important;
   }
 }
+
+// choose one and serveral hover answers.
+.choose-choice {
+  transition: all 300ms ease-out;
+}
+.choose-choice:hover {
+  background: rgba(130,192,237,0.5) !important;
+  padding: 0.2vw !important;
+  &.active {
+    background: var(--highlight-blue) !important;
+  }
+}
+
+// vertical shuffle hover
+.question-unique-play.vertical-shuffle-play {
+  .vertical-content {
+    transition: all 300ms ease-out;
+  }
+  .vertical-content:hover {
+    padding: 0.2vw !important;
+    background: rgba(130,192,237,0.5) !important;
+  }
+}
