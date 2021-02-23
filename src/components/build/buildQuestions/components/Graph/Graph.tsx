@@ -34,8 +34,6 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
     const graphRef = React.useRef<HTMLDivElement>(null);
     const [calculator, setCalculator] = React.useState<any>(null);
 
-    const initialProps = React.useRef(props);
-
     const [graphState, setGraphState] = React.useState<any>(props.data.toJSON().graphState ?? null);
     const [graphSettings, setGraphSettings] = React.useState<GraphSettings>(props.data.toJSON().graphSettings ?? {
         showSidebar: false,

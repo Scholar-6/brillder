@@ -105,7 +105,6 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
   }
 
   render() {
-    let isInit = true;
     let isSynthesisPresent = true;
     const { props } = this;
     const { isSynthesisPage, synthesis, yquestions } = props;
@@ -213,17 +212,6 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     if (isSynthesisPage) {
       columns = props.yquestions.length * 2 + 2;
     }
-
-    const setQuestions = (newQuestions: { id: string }[], d: any) => {
-      if (isInit === false) {
-        let switched = newQuestions.find((q, i) => props.yquestions.get(i).getMap().get("id") !== q.id);
-        if (switched) {
-          props.setQuestions(newQuestions);
-        }
-      } else {
-        isInit = false;
-      }
-    };
     
     const onUpdateQuestions = (evt: Sortable.SortableEvent) => {
       if((evt.oldIndex ?? -1 >= 0) && (evt.newIndex ?? -1 >= 0)) {

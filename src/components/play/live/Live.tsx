@@ -28,7 +28,6 @@ import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import MobilePrevButton from "./components/MobilePrevButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
-import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import { isPhone } from "services/phone";
 
 interface LivePageProps {

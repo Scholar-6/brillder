@@ -300,7 +300,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       }
     }
 
-    const localBrick = this.state.brick;
     const { user } = this.props;
 
     let playStatus = PlayButtonStatus.Hidden;

@@ -86,18 +86,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     initSuggestionExpanded = true;
   }
 
-  let initQuestionId = -1;
-  if (params.questionId) {
-    try {
-      let questionId = parseInt(params.questionId);
-      if (questionId >= 1) {
-        initQuestionId = questionId;
-      }
-    } catch {
-      console.log('can`t parse question id');
-    }
-  }
-
   const { history } = props;
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
@@ -121,7 +109,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [activeQuestionType] = React.useState(QuestionTypeEnum.None);
   const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
   const [isSaving, setSavingStatus] = React.useState(false);
-  const [hasSaveError, setSaveError] = React.useState(false);
   const [skipTutorialOpen, setSkipDialog] = React.useState(false);
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
@@ -289,7 +276,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setQuestionType = (type: QuestionTypeEnum) => {
     if (locked) { return; }
     var index = getQuestionIndex(activeQuestion);
-    const updatedQuestions = setQuestionTypeByIndex(questions, index, type);
+    setQuestionTypeByIndex(questions, index, type);
   };
 
   const convertQuestionTypes = (type: QuestionTypeEnum) => {
@@ -552,7 +539,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       Y.applyUpdate(newDoc, oldUpdate);
 
       const newQuestionsArray = new Y.Array();
-      const qs = newQuestions.map(question =>
+      newQuestions.map(question =>
         questions
           .map((q: Y.Doc) => ({ guid: q.guid, doc: Y.Doc }))
           .find(q => q.guid === question.id)?.doc
@@ -650,7 +637,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               </Grid>
             </Grid>
           </Grid>
-          <LastSave updated={new Date(ybrick.get("updated")).toString()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} saveError={hasSaveError} />
+          <LastSave updated={new Date(ybrick.get("updated")).toString()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} saveError={false} />
           <Route path="/build/brick/:brickId/investigation/" exact>
             <Redirect to={`/build/brick/${ybrick.get("id")}/investigation/question`} />
           </Route>

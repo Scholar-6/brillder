@@ -49,7 +49,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         callOnChange(content, delta, source);
     }
 
-    const [uniqueId, setUniqueId] = React.useState(randomEditorId());
+    const [uniqueId] = React.useState(randomEditorId());
     const [data, setData] = React.useState(props.data);
     const context = React.useContext(YJSContext);
     const awareness = context?.awareness;
@@ -84,7 +84,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
     const ref = React.useCallback((node: ReactQuill) => {
         if(node && props.sharedData) {
             const editor = node.getEditor();
-            const binding = new QuillBinding(props.sharedData, editor, awareness);
+            new QuillBinding(props.sharedData, editor, awareness);
         }
     }, []);
 
