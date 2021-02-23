@@ -15,10 +15,10 @@ import TermsLink from "components/baseComponents/TermsLink"
 import TeachIcon from "components/mainPage/components/TeachIcon";
 import PhoneIcon from "./PhoneIcon";
 import TypingLabel from "components/baseComponents/TypingLabel";
-import { FirstPage, EmailSignPage, JoinPage, RegisterPage } from "./routes";
 import EmailRegisterDesktopPage from "./EmailRegisterDesktopPage";
-import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import Delayed from "components/services/Delayed";
+import { FirstPage, EmailSignPage, JoinPage, RegisterPage, TermsPage } from "./routes";
+import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -57,6 +57,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
   const moveToEmailLogin = () => history.push(EmailSignPage);
   const moveToJoin = () => history.push(JoinPage);
   const moveToRegister = () => history.push(RegisterPage);
+  const moveToTerms = () => history.push(TermsPage);
 
   return (
     <div className="login-desktop-page">
@@ -161,10 +162,6 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
         </div>
       </div>
       <TermsLink history={props.history}/>
-      <div className="policy-text">
-        <span onClick={() => setPolicyDialog(true)}>
-        </span>
-      </div>
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
     </div>
   );

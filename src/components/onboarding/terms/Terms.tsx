@@ -32,7 +32,7 @@ const MobileTheme = React.lazy(() => import('./themes/TermsMobileTheme'));
 const TabletTheme = React.lazy(() => import('./themes/TermsTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/TermsDesktopTheme'));
 
-class TermsPage extends Component<BricksListProps, BricksListState> {
+class TermsSignUp extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props);
 
@@ -104,4 +104,4 @@ const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
 });
 
-export default connect(mapState)(TermsPage);
+export default connect(mapState)(TermsSignUp);
