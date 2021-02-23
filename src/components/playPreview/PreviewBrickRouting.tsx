@@ -217,6 +217,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0 || publish > 0 || finish > 0) {
       isMobileHidden = true;
     }
+    if (live && !sidebarRolledUp) {
+      toggleSideBar(true);
+    }
 
     if (!isMobile && sidebarRolledUp) {
       return <HomeButton link="/home" />;

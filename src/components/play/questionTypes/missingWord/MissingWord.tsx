@@ -8,6 +8,7 @@ import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/model";
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 
 interface MissingWordProps extends CompQuestionProps {
@@ -95,7 +96,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       >
         {choice.answers.map((a: any, i: number) => (
           <MenuItem key={i} value={i}>
-            {a.value}
+            {stripHtml(a.value)}
           </MenuItem>
         ))}
       </Select>
@@ -144,9 +145,9 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
         {component.choices.map((choice: any, index: number) => (
           <div key={index} className="missing-word-choice">
             <span>
-              {choice.before}
+              {stripHtml(choice.before)}
               {this.renderSelect(choice, index)}
-              {choice.after}
+              {stripHtml(choice.after)}
             </span>
             <Grid container direction="row" justify="center">
               {this.renderEachHint(index)}

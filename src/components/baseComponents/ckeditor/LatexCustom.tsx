@@ -85,7 +85,7 @@ export default class LatexCustom extends Plugin {
             model: 'latex',
             view: {
                 name: 'span',
-                classes: 'latex-edit'
+                classes: 'latex'
             },
         });
     }

@@ -1,0 +1,74 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.quill-document-editor {
+  border-radius: $editor-radius;
+  background-color: var(--tab-gray);
+  height: calc(100% - 0.2vh);
+  position: relative;
+  overflow: hidden;
+
+  .ql-toolbar {
+    border: none !important;
+    padding: 1vh 0.5vw;
+    .ql-formats {
+      background-color: var(--tab-gray) !important;
+      font-size: initial;
+      button,
+      .ql-picker {
+        padding: 0;
+        margin: 0;
+        margin-left: 0.1vw;
+        margin-right: 0.1vw;
+        line-height: 1;
+        svg {
+          color: var(--theme-dark-blue) !important;
+          width: var(--ck-icon-size);
+          height: var(--ck-icon-size);
+          * {
+            stroke: currentColor;
+          }
+        }
+      }
+    }
+  }
+
+  .ql-container {
+    height: 100% !important;
+    border: none !important;
+    word-break: break-word !important;
+    font-size: inherit;
+    font-family: inherit;
+
+    .ql-editor {
+      height: 100%;
+      margin: 0;
+      padding: 6vh 1vw 1vh 2.2vw;
+      box-shadow: none !important;
+      @extend %textCenter;
+      border: 0 !important;
+      color: var(--theme-dark-blue);
+      background: var(--solitude-light) !important;
+      font-size: 1.05vw;
+      border: none !important;
+      background-color: var(--solitude-light) !important;
+      padding: 1vw;
+      p {
+        text-align: left;
+      }
+    }
+  }
+  &.content-invalid {
+    .ql-container {
+      .ql-editor {
+        background: var(--theme-orange) !important;
+        &.ql-blank {
+          &:before {
+            color: var(--white);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import * as Y from "yjs";
 import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import './MissingWordBuild.scss'
 import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
-import { showSameAnswerPopup } from '../service/questionBuild';
+import { generateId, showSameAnswerPopup } from '../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 
 interface Answer {
@@ -24,16 +26,20 @@ export interface MissingChoice {
 }
 
 export interface MissingWordComponentProps extends UniqueComponentProps {
-  data: {
-    choices: MissingChoice[];
-  };
+  data: Y.Map<any>;
 }
 
-export const getDefaultMissingWordAnswer = () => {
-  const newAnswer = () => ({ value: "", checked: false });
-  const newChoice = () => ({ before: "", answers: [newAnswer(), newAnswer(), newAnswer()], after: "", height: "0%" })
+export const getDefaultMissingWordAnswer = (ymap: Y.Map<any>) => {
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), checked: false, id: generateId() }));
+  const newChoice = () => {
+    const answers = new Y.Array();
+    answers.push([newAnswer(), newAnswer(), newAnswer()]);
+    return new Y.Map(Object.entries({ before: new Y.Text(), answers, after: new Y.Text(), height: "0%", id: generateId() }));
+  };
 
-  return { choices: [newChoice()] };
+  const choices = new Y.Array();
+  choices.push([newChoice()]);
+  ymap.set("choices", choices);
 }
 
 const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
@@ -42,158 +48,137 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
   const [height, setHeight] = React.useState('0%');
   useEffect(() => calculateHeight());
 
-  const newAnswer = () => ({ value: "", checked: false });
-  const newChoice = () => ({ before: "", answers: [newAnswer(), newAnswer(), newAnswer()], after: "", height: "0%" })
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), checked: false, id: generateId() }));
+  const newChoice = () => {
+    const answers = new Y.Array();
+    answers.push([newAnswer(), newAnswer(), newAnswer()]);
+    return new Y.Map(Object.entries({ before: new Y.Text(), answers, after: new Y.Text(), height: "0%", id: generateId() }));
+  };
 
-  if (!data.choices) {
-    data.choices = getDefaultMissingWordAnswer().choices;
+  let choices = data.get("choices") as Y.Array<any>;
+
+  if (!choices) {
+    getDefaultMissingWordAnswer(data);
+    choices = data.get("choices");
   }
-
-  const [state, setState] = React.useState(data);
-
-  useEffect(() => { setState(data) }, [data]);
 
   const calculateHeight = () => {
     let showButton = true;
-    for (let choice of state.choices) {
-      choice.height = "auto";
-      for (let answer of choice.answers) {
-        if (answer.value === "") {
+    choices.forEach((choice: Y.Map<any>) => {
+      let autoHeight = true;
+      choice.get("answers").forEach((answer: Y.Map<any>) => {
+        if (answer.get("value").toString() === "") {
           showButton = false;
-          choice.height = "0%";
+          autoHeight = false;
         }
+      });
+      if(autoHeight && choice.get("height") !== "auto") {
+        choice.set("height", "auto");
+      } else if (!autoHeight && choice.get("height") !== "0%") {
+        choice.set("height", "0%");
       }
-    }
+    });
     showButton === true ? setHeight('auto') : setHeight('0%');
-    setState(state);
   }
 
-  const update = () => {
-    setState(Object.assign({}, state));
-    updateComponent(state);
+  const addAnswer = (choice: Y.Map<any>) => {
+    choice.get("answers").push([newAnswer()]);
   }
 
-  const answerChanged = (answer: any, event: any) => {
-    answer.value = event.target.value;
-    update();
-  }
-
-  const addAnswer = (choice: MissingChoice) => {
-    choice.answers.push(newAnswer());
-    update();
-    save();
-  }
-
-  const removeAnswer = (choice: MissingChoice, index: number) => {
-    choice.answers.splice(index, 1);
-    update();
-    save();
+  const removeAnswer = (choice: Y.Map<any>, index: number) => {
+    choice.get("answers").delete(index);
   }
 
   const addChoice = () => {
-    state.choices.push(newChoice());
-    update();
-    save();
+    choices.push([newChoice()]);
   }
 
   const removeChoice = (index: number) => {
-    state.choices.splice(index, 1);
-    update();
-    save();
+    choices.delete(index);
   }
 
-  const beforeChanged = (choice: MissingChoice, event: any) => {
-    choice.before = event.target.value;
-    update();
-  }
-
-  const afterChanged = (choice: MissingChoice, event: any) => {
-    choice.after = event.target.value;
-    update();
-  }
-
-  const onChecked = (choice: MissingChoice, event: any) => {
+  const onChecked = (choice: Y.Map<any>, event: any) => {
     if (locked) { return; }
     const index = event.target.value;
-    for (let answer of choice.answers) {
-      answer.checked = false;
-    }
-    choice.answers[index].checked = true;
-    update();
-    save();
+    choice.doc!.transact(() => {
+      choice.get("answers").forEach((answer: Y.Map<any>) => {
+        if(answer.get("checked") !== false) {
+          answer.set("checked", false);
+        }
+      });
+      choice.get("answers").get(index).set("checked", true);
+    });
   }
 
-  const getInputClass = (answer: any) => {
+  const getInputClass = (answer: Y.Map<any>) => {
     let name = "input-answer";
-    if (validationRequired && !answer.value) {
+    if (validationRequired && !answer.get("value").toString()) {
       name += " invalid";
     }
     return name;
   }
 
-  const getAnswerClass = (answer: any) => {
+  const getAnswerClass = (answer: Y.Map<any>) => {
     let name = "";
-    if (validationRequired && !answer.value) {
+    if (validationRequired && !answer.get("value").toString()) {
       name += " invalid-answer";
     }
     return name;
   }
 
-  const renderChoice = (choice: MissingChoice, key: number) => {
-    let checkBoxValid = !!validator.getChecked(choice.answers);
+  const renderChoice = (choice: Y.Map<any>, key: number) => {
+    let checkBoxValid = !!validator.getChecked(choice.get("answers").toJSON());
 
     return (
-      <div className="choose-several-box" key={key}>
-        <textarea
-          value={choice.before}
-          onChange={(event) => { beforeChanged(choice, event) }}
+      <div className="choose-several-box" key={choice.get("id")}>
+        <QuillEditor
+          className="textarea"
+          toolbar={[]}
+          sharedData={choice.get("before")}
           disabled={locked}
-          rows={3}
-          placeholder="Text before missing word..."></textarea>
+          placeholder="Text before missing word..." />
         {
-          (state.choices.length > 1)
+          (choices.length > 1)
             && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeChoice(key)}>
               <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
             </button>
         }
         {
-          choice.answers.map((answer, i) => {
+          choice.get("answers").map((answer: Y.Map<any>, i: number) => {
             return (
-              <div style={{ position: 'relative' }} className={getAnswerClass(answer)} key={i}>
+              <div style={{ position: 'relative' }} className={getAnswerClass(answer)} key={answer.get("id")}>
                 {
-                  (choice.answers.length > 3) && <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, i)} />
+                  (choice.get("answers").length > 3) && <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, i)} />
                 }
                 <Checkbox
                   className={`left-ckeckbox ${(validationRequired && !checkBoxValid) ? "checkbox-invalid" : ""}`}
                   disabled={locked}
-                  checked={answer.checked}
+                  checked={answer.get("checked")}
                   onChange={(e) => onChecked(choice, e)} value={i}
                 />
-                <input
+                <QuillEditor
+                  toolbar={[]}
                   placeholder="Enter Answer..."
                   className={getInputClass(answer)}
                   disabled={locked}
-                  value={answer.value}
-                  onChange={(event: any) => {
-                    answerChanged(answer, event);
-                  }}
+                  sharedData={answer.get("value")}
                   onBlur={() => {
-                    showSameAnswerPopup(i, choice.answers, openSameAnswerDialog);
+                    showSameAnswerPopup(i, choice.get("answers").toJSON(), openSameAnswerDialog);
                   }}
                 />
               </div>
             );
           })
         }
-        <textarea
-          value={choice.after}
+        <QuillEditor
+          className="textarea"
+          toolbar={[]}
+          sharedData={choice.get("after")}
           disabled={locked}
-          rows={3}
           placeholder="Text after missing word..."
-          onChange={(event) => { afterChanged(choice, event) }}>
-        </textarea>
+        />
         <AddAnswerButton
-          locked={locked} addAnswer={() => { addAnswer(choice) }} height={choice.height}
+          locked={locked} addAnswer={() => { addAnswer(choice) }} height={choice.get("height")}
           label="+ ANSWER"
         />
       </div>
@@ -201,12 +186,12 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
   }
 
   return (
-    <div className="missing-word-build">
+    <div className="missing-word-build unique-component">
       <div className="component-title">
         Tick Correct Answer
       </div>
       {
-        state.choices.map((choice, i) => renderChoice(choice, i))
+        choices.map((choice: Y.Map<any>, i) => renderChoice(choice, i))
       }
       <AddAnswerButton
         locked={locked} addAnswer={addChoice} height={height}
