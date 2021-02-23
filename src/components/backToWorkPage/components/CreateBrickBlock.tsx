@@ -18,7 +18,7 @@ const CreateBrickBlock:React.FC<BlockProps> = props => {
     <div className="main-brick-container create-link" key={-32} onClick={() => {
       clearProposal();
       props.forgetBrick();
-      props.history.push(map.ProposalSubject + '?isCore=' + props.isCore);
+      props.history.push(map.ProposalBase + '?isCore=' + props.isCore);
     }}>
       <SpriteIcon name="trowel" />
       <span>Create A New Brick</span>

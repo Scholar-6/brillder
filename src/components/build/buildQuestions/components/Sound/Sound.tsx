@@ -1,4 +1,5 @@
 import React from "react";
+import Y from "yjs";
 import "./Sound.scss";
 import Dropzone from "./Dropzone";
 import PauseButton from "./components/buttons/PauseButton";
@@ -12,9 +13,8 @@ import ValidationFailedDialog from "components/baseComponents/dialogs/Validation
 interface SoundProps {
   locked: boolean;
   index: number;
-  data: any;
-  save(): void;
-  updateComponent(component: any, index: number): void;
+  data: Y.Map<any>;
+
   //phone preview
   onFocus(): void;
 }
@@ -41,8 +41,8 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
 
     let initAudio = new Audio();
     let initStatus = AudioStatus.Start;
-    if (props.data && props.data.value) {
-      initAudio = new Audio(fileUrl(props.data.value));
+    if (props.data && props.data.get("value")) {
+      initAudio = new Audio(fileUrl(props.data.get("value")));
       initStatus = AudioStatus.Recorded;
     }
 
@@ -114,11 +114,8 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
       uploadFile(
         file,
         (res: any) => {
-          let comp = Object.assign({}, this.props.data);
-          comp.value = res.data.fileName;
+          this.props.data.set("value", res.data.fileName);
           this.setRecorded();
-          this.props.updateComponent(comp, this.props.index);
-          this.props.save();
         },
         () => {
           this.setState({cantSave: true});

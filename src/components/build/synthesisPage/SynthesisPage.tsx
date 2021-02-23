@@ -1,5 +1,5 @@
-import React from 'react'
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
+import React from 'react';
+import * as Y from "yjs";
 
 import './SynthesisPage.scss';
 import { Grid } from '@material-ui/core';
@@ -14,22 +14,21 @@ import UndoRedoService from 'components/services/UndoRedoService';
 import RedoButton from '../baseComponents/redoButton';
 import UndoButton from '../baseComponents/UndoButton';
 import CountSynthesis from './WordsCount';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 
 export interface SynthesisProps {
   currentBrick: Brick;
   locked: boolean;
   editOnly: boolean;
-  synthesis: string;
+  synthesis: Y.Text;
   undoRedoService: UndoRedoService;
   initSuggestionExpanded: boolean;
-  onSynthesisChange(text: string): void;
   undo(): void;
   redo(): void;
 }
 
 interface SynthesisState {
-  synthesis: string;
   scrollArea: any;
   canScroll: boolean;
   ref: React.RefObject<HTMLDivElement>;
@@ -40,7 +39,6 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
   constructor(props: SynthesisProps) {
     super(props);
     this.state = {
-      synthesis: props.synthesis,
       canScroll: false,
       scrollArea: null,
       ref: React.createRef() as React.RefObject<HTMLDivElement>,
@@ -53,7 +51,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
       try {
         let {current} = this.state.ref;
         if (current) {
-          let scrollArea = current.getElementsByClassName("ck-content")[0];
+          let scrollArea = current.getElementsByClassName("ql-editor")[0];
           let canScroll = false;
           if (scrollArea.scrollHeight > scrollArea.clientHeight) {
             canScroll = true;
@@ -84,21 +82,16 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
     this.setState({ ...this.state, commentsShown })
   }
 
-  componentDidUpdate(prevProps: SynthesisProps) {
-    if (prevProps.synthesis !== this.props.synthesis) {
-      this.setState({ ...this.state, synthesis: this.props.synthesis });
-    }
-  }
-
   onSynthesisChange(text: string) {
     const {scrollArea} = this.state;
-    let canScroll = false;
-    if (scrollArea.scrollHeight > scrollArea.clientHeight) {
-      canScroll = true;
-    }
+    if(scrollArea) {
+      let canScroll = false;
+      if (scrollArea.scrollHeight > scrollArea.clientHeight) {
+        canScroll = true;
+      }
 
-    this.setState({ synthesis: text, canScroll });
-    this.props.onSynthesisChange(text);
+      this.setState({ canScroll });
+    }
   }
 
   render() {
@@ -116,22 +109,13 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
         <div className="inner-question-type" ref={this.state.ref}>
           <Grid container direction="row" alignItems="stretch">
             <Grid item xs className="synthesis-input-container">
-              <DocumentWirisCKEditor
+              <QuillEditor
                 disabled={this.props.locked}
-                editOnly={this.props.editOnly}
-                data={this.state.synthesis}
-                placeholder=""
-                colorsExpanded={true}
+                sharedData={this.props.synthesis}
                 toolbar={[
-                  'bold', 'italic', 'fontColor',
-                  'superscript', 'subscript', 'strikethrough',
-                  'latex', 'insertTable', 'alignment',
-                  'bulletedList', 'numberedList', 'uploadImageCustom', 'addComment'
+                  'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
+                  'latex', 'bulletedList', 'numberedList', 'blockQuote'
                 ]}
-                blockQuote={true}
-                defaultAlignment="justify"
-                onBlur={() => { }}
-                onChange={this.onSynthesisChange.bind(this)}
               />
             </Grid>
             { !this.state.commentsShown &&
@@ -154,7 +138,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                     />
                   </div>
                   <div style={{width: "100%"}}>
-                    <CountSynthesis value={this.state.synthesis} />
+                    <CountSynthesis value={this.props.synthesis.toJSON()} />
                   </div>
                 </div>
               </Grid>

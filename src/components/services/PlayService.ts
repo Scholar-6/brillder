@@ -1,6 +1,6 @@
 import { Question, QuestionTypeEnum } from 'model/question';
 import { ComponentAttempt } from 'components/play/model';
-import {getUniqueComponent} from 'components/build/questionService/QuestionService';
+import {getJSONUniqueComponent as getUniqueComponent} from 'components/build/questionService/QuestionService';
 
 /* Used by Play brick routing to initialise the answer value for each 
    answer type */

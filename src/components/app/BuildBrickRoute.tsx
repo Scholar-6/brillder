@@ -10,7 +10,9 @@ import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-import map from "components/map";
+import map, { ProposalBase } from "components/map";
+import YJSProvider, { YJSContext } from "components/build/baseComponents/YJSProvider";
+import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "components/build/proposal/model";
 
 interface BuildRouteProps {
   exact?: any;
@@ -24,6 +26,7 @@ interface BuildRouteProps {
   getUser(): void;
   isAuthorized(): void;
   fetchBrick(id: number): void;
+  createNewBrick(authorId: number): void;
 }
 
 const BuildBrickRoute: React.FC<BuildRouteProps> = ({
@@ -55,25 +58,49 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
         {...rest}
         render={(props) => {
           // fetch brick
-          const brickId = parseInt(props.match.params.brickId);
-          if (!rest.brick || !rest.brick.author || rest.brick.id !== brickId) {
-            rest.fetchBrick(brickId);
-            return <PageLoader content="...Getting Brick..." />;
-          }
+          let brickId = parseInt(props.match.params.brickId);
+          brickId = isNaN(brickId) ? -1 : brickId;
 
           // move to investigation
-          const found = rest.location.pathname.indexOf('/investigation');
-          if (found === -1) {
-            const isSynthesis = rest.location.pathname.indexOf('/synthesis');
-            if (isSynthesis) {
-              return <Component {...props} />;
+          const part = "/" + rest.location.pathname.split("/")[4];
+          const validRoutes = ["/investigation", "/synthesis", "/subject", TitleRoutePart, OpenQuestionRoutePart, BrickLengthRoutePart, BriefRoutePart, PrepRoutePart, ProposalReviewPart];
+          const isNewBrickRoute = rest.location.pathname.includes(ProposalBase);
+          if(isNewBrickRoute) {
+            if(!(rest.brick && rest.brick.id)) {
+              rest.createNewBrick(user.id);
+              return <PageLoader content="...Creating brick..." />
+            } else {
+              return <Redirect to={`/build/brick/${rest.brick.id}/subject`} />;
             }
-
+          } else if (!validRoutes.includes(part)) {
             props.history.push(`/build/brick/${brickId}/investigation`);
             return <PageLoader content="...Getting Brick..." />;
           }
+          return (
+            <YJSProvider brickId={brickId}>
+              <YJSContext.Consumer>
+                {context => {
+                  const brick = context?.json.brick;
+                  if (!brick || !brick.author?.id || brick.id !== brickId) {
+                    return <PageLoader content="...Getting Brick..." />;
+                  }
 
-          return <Component {...props} />;
+                  const reduxBrick = rest.brick;
+                  if (!reduxBrick || !reduxBrick.author || reduxBrick.id !== brickId) {
+                    rest.fetchBrick(brickId);
+                    return <PageLoader content="...Getting Brick..." />;
+                  }
+
+                  // move to investigation
+                  if (!validRoutes.includes(part)) {
+                    props.history.push(`/build/brick/${brickId}/investigation`);
+                    return <PageLoader content="...Getting Brick..." />;
+                  }
+                  return <Component {...props} />
+                }}
+              </YJSContext.Consumer>
+            </YJSProvider>
+          );
         }}
       />
     );
@@ -96,6 +123,17 @@ const mapDispatch = (dispatch: any) => ({
   isAuthorized: () => dispatch(actions.isAuthorized()),
   fetchBrick: (id: number) => dispatch(brickActions.fetchBrick(id)),
   getUser: () => dispatch(userActions.getUser()),
+  createNewBrick: (authorId: number) => dispatch(brickActions.createBrick({
+    created: new Date(),
+    updated: new Date(),
+    topic: "",
+    subTopic: "",
+    title: "",
+    brief: "",
+    prep: "",
+    synthesis: "",
+    author: { id: authorId },
+  })),
 });
 
 const connector = connect(mapState, mapDispatch);

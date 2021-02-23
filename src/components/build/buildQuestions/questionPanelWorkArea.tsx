@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react'
-import { Grid, Select, FormControl } from '@material-ui/core';
-import { MenuItem } from "material-ui";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Grid, Select, FormControl, MenuItem } from '@material-ui/core';
 import { ReactSortable } from "react-sortablejs";
 
 import QuestionComponents from './questionComponents/questionComponents';
 import { getNonEmptyComponent } from '../questionService/ValidateQuestionService';
 import './questionPanelWorkArea.scss';
-import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionTypeObj } from 'model/question';
+import { QuestionTypeEnum, QuestionComponentTypeEnum, QuestionTypeObj } from 'model/question';
 import DragBox from './drag/dragBox';
-import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import LockComponent from './lock/Lock';
 import CommentPanel from 'components/baseComponents/comments/CommentPanel';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
@@ -17,13 +14,14 @@ import { Comment, CommentLocation } from 'model/comments';
 import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { User } from 'model/user';
-import { TextComponentObj } from './components/Text/interface';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Brick } from 'model/brick';
 import UndoRedoService from 'components/services/UndoRedoService';
 import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoButton from '../baseComponents/UndoButton';
 import RedoButton from '../baseComponents/redoButton';
+
+import * as Y from "yjs";
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -34,23 +32,19 @@ export interface QuestionProps {
   brickId: number;
   currentBrick: Brick;
   canEdit: boolean;
-  question: Question;
+  yquestion: Y.Doc;
   history: any;
   questionsCount: number;
-  synthesis: string;
+  synthesis: Y.Text;
   validationRequired: boolean;
   comments: Comment[] | null;
   currentUser: User;
   isAuthor: boolean;
   initSuggestionExpanded: boolean;
   undoRedoService: UndoRedoService;
-  saveBrick(): void;
-  setQuestion(index: number, question: Question): void;
-  updateFirstComponent(component: TextComponentObj): void;
-  updateComponents(components: any[]): void;
   setQuestionType(type: QuestionTypeEnum): void;
   nextOrNewQuestion(): void;
-  getQuestionIndex(question: Question): number;
+  getQuestionIndex(question: Y.Doc): number;
   setPreviousQuestion(): void;
   toggleLock(): void;
   undo(): void;
@@ -62,7 +56,7 @@ export interface QuestionProps {
 }
 
 const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
-  brickId, question, history, validationRequired, locked, getQuestionIndex, ...props
+  brickId, yquestion, history, validationRequired, locked, getQuestionIndex, ...props
 }) => {
   const [componentTypes, setComponentType] = React.useState([
     { id: 1, type: QuestionComponentTypeEnum.Text },
@@ -74,24 +68,16 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   const [isCommingSoonOpen, setCommingSoon] = React.useState(false);
   const [commentsShown, setCommentsShown] = React.useState(props.initSuggestionExpanded);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
-  const { type } = question;
 
-  const setQuestionHint = (hintState: HintState) => {
-    if (locked) { return; }
-    const index = getQuestionIndex(question);
-    const updatedQuestion = Object.assign({}, question) as Question;
-    updatedQuestion.hint.value = hintState.value;
-    updatedQuestion.hint.list = hintState.list;
-    updatedQuestion.hint.status = hintState.status;
-    props.setQuestion(index, updatedQuestion);
-  }
+  const question = yquestion.getMap();
+  const type = question.get("type");
 
   let typeArray: string[] = Object.keys(QuestionTypeObj);
-  let index = getQuestionIndex(question);
+  let index = getQuestionIndex(yquestion);
 
   let showHelpArrow = false;
   if (index === 0 && props.isAuthor) {
-    showHelpArrow = getNonEmptyComponent(question.components);
+    showHelpArrow = getNonEmptyComponent((question.get("components") as Y.Array<any>).toJSON());
   }
 
   //#region Scroll
@@ -127,7 +113,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   //#endregion
 
   return (
-    <MuiThemeProvider>
       <div className={showHelpArrow ? "build-question-page unselectable" : "build-question-page unselectable active"} style={{ width: '100%', height: '94%' }}>
         {showHelpArrow && <div className="help-arrow-text">Drag</div>}
         {showHelpArrow && <img alt="arrow" className="help-arrow" src="/images/investigation-arrow.png" />}
@@ -191,13 +176,9 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               editOnly={!props.canEdit}
               brickId={brickId}
               history={history}
-              question={question}
+              question={yquestion}
               validationRequired={validationRequired}
               componentFocus={props.componentFocus}
-              saveBrick={props.saveBrick}
-              updateFirstComponent={props.updateFirstComponent}
-              updateComponents={props.updateComponents}
-              setQuestionHint={setQuestionHint}
             />
           </Grid>
           <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
@@ -216,7 +197,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 <div className="comment-button-container">
                   <CommentButton
                     location={CommentLocation.Question}
-                    questionId={question.id}
+                    questionId={question.get("id")}
                     setCommentsShown={() => setCommentsShown(true)}
                   />
                 </div>
@@ -259,7 +240,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 currentBrick={props.currentBrick}
                 setCommentsShown={setCommentsShown}
                 haveBackButton={true}
-                currentQuestionId={question.id}
+                currentQuestionId={question.get("id")}
               />
             </Grid>
           </Grid>
@@ -273,7 +254,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
         </div>
         <CommingSoonDialog isOpen={isCommingSoonOpen} close={() => setCommingSoon(false)} />
       </div>
-    </MuiThemeProvider>
   );
 }
 
