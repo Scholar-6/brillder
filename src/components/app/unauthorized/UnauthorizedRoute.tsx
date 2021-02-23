@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 
@@ -27,6 +27,26 @@ interface StudentRouteProps {
 const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, innerComponent, user, ...rest }) => {
   const cookiesAccepted = getCookies();
   const [cookieOpen, setCookiePopup] = React.useState(!cookiesAccepted);
+
+  const setMatomoTagManager = () => {
+    const windowLink = window as any;
+    const _mtm = windowLink._mtm = windowLink._mtm || [];
+    _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+    const d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript';
+    g.async=true;
+    g.src='https://matomo.brillder.com/js/container_UkdV64XH.js';
+    if (s.parentNode) {
+      s.parentNode.insertBefore(g,s);
+    }
+    console.log('start matomoto manager');
+  }
+
+  useEffect(() => {
+    if (cookiesAccepted) {
+      setMatomoTagManager();
+    }
+  }, [])
 
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!user) {
@@ -59,6 +79,7 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
         <CookiePolicyDialog isOpen={cookieOpen} close={() => {
           acceptCookies();
           setCookiePopup(false);
+          setMatomoTagManager();
         }} />
       </div>
     );
