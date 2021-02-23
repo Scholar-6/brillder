@@ -9,6 +9,7 @@ import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import map from 'components/map';
+import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 
 interface StudentRouteProps {
   path: string;
@@ -22,6 +23,8 @@ interface StudentRouteProps {
 }
 
 const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, innerComponent, user, ...rest }) => {
+  let [cookieOpen, setCookiePopup] = React.useState(true);
+
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!user) {
       rest.getUser();
@@ -43,7 +46,12 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
     rest.isAuthorized()
     return <PageLoader content="...Checking rights..." />;
   } else {
-    return <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />;
+    return (
+      <div>
+        <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />
+        <CookiePolicyDialog isOpen={cookieOpen} close={() => setCookiePopup(false)} />
+      </div>
+    );
   }
 }
 
