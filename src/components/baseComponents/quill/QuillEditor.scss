@@ -31,6 +31,17 @@
           }
         }
       }
+      .ql-picker-options {
+        padding: 0 !important;
+        width: 6.5vw;
+        .ql-picker-item {
+          margin: 0.2vw;
+          padding: 0;
+          border-radius: 0.2vw;
+          width: 1.2vw;
+          height: 1.2vw;
+        }
+      }
     }
   }
 
