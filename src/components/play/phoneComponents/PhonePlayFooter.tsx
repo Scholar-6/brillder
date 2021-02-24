@@ -31,7 +31,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     <SpriteIcon name="file-text" onClick={() => props.history.push(map.playIntro(props.brick.id))} />
     <SpriteIcon name="highlighter" onClick={setHighlightMode} />
     <SpriteIcon name="" onClick={() => {}} />
-    <SpriteIcon name="more" className="rotate-90" onClick={() => alert('good')} />
+    <SpriteIcon name="more" className="rotate-90" onClick={() = {}} />
   </div>;
 }
 
