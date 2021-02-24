@@ -8,8 +8,9 @@ export const BackToWorkPage = '/back-to-work';
 export const AssignmentsPage = '/assignments';
 export const MyLibrary = '/my-library';
 export const Onboarding = '/onboarding';
+export const TermsPage = '/terms'
 
-export const TermsPage = Onboarding + '/terms';
+export const TermsSignUp = Onboarding + '/terms';
 export const SetUsername = Onboarding + '/set-username';
 export const MobileUsername = Onboarding + '/mobile-username';
 export const SelectSubjectPage = Onboarding + '/select-subjects';
@@ -53,13 +54,13 @@ export const investigationSynthesisSuggestions = (brickId: number) => {
 }
 
 // proposal pages
-export const ProposalSubject = `${ProposalBase}/subject`;
-export const ProposalTitle = `${ProposalBase}/brick-title`;
-export const ProposalOpenQuestion = `${ProposalBase}/open-question`;
-export const ProposalBrief = `${ProposalBase}/brief`;
-export const ProposalPrep = `${ProposalBase}/prep`;
-export const ProposalLength = `${ProposalBase}/length`;
-export const ProposalReview = `${ProposalBase}/plan`;
+export const ProposalSubject = `${ProposalBase2}/subject`;
+export const ProposalTitle = `${ProposalBase2}/brick-title`;
+export const ProposalOpenQuestion = `${ProposalBase2}/open-question`;
+export const ProposalBrief = `${ProposalBase2}/brief`;
+export const ProposalPrep = `${ProposalBase2}/prep`;
+export const ProposalLength = `${ProposalBase2}/length`;
+export const ProposalReview = `${ProposalBase2}/plan`;
 
 export const ProposalReview2 = `${ProposalBase2}/plan`;
 
@@ -108,6 +109,7 @@ export default {
   MyLibrary,
 
   TermsPage,
+  TermsSignUp,
   SetUsername,
   MobileUsername,
   SelectSubjectPage,
