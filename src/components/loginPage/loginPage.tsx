@@ -12,6 +12,7 @@ import RegisterButton from "./components/RegisterButton";
 import MobileLoginPage from "./MobileLogin";
 import map from "components/map";
 import LoginDesktopPage from "./desktop/LoginDesktopPage";
+import TermsLink from "components/baseComponents/TermsLink";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
 
 const mapDispatch = (dispatch: any) => ({
@@ -98,7 +99,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           <Grid container direction="row" className="third-row">
             <div className="first-col"></div>
             <div className="second-col">
-              <span className="policy-text" onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
+              <TermsLink history={props.history}/>
             </div>
             <div className="third-col"></div>
           </Grid>
