@@ -98,7 +98,7 @@ const HintComponent: React.FC<HintProps> = ({
   }
 
   const renderToggleButton = () => {
-    const {list} = props.component;
+    let list = props.component.get("list") as Y.Array<any>;
     if (
       !list || list.length <= 1 ||
       props.questionType === QuestionTypeEnum.WordHighlighting ||

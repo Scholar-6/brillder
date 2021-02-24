@@ -43,8 +43,9 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
 
   const getNumberOfAnswers = (data: any) => {
     let count = 1;
-    if (data.list && data.list.length) {
-      return data.list.length;
+    const list = data.get("list") as Y.Array<any>;
+    if (list && list.length) {
+      return list.length;
     }
     return count;
   }
