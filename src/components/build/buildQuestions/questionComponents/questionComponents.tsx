@@ -159,6 +159,12 @@ const QuestionComponents = ({
         return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Text, value: new Y.Text(), id: generateId() }));
       case QuestionComponentTypeEnum.Quote:
         return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Quote, value: new Y.Text(), id: generateId() }));
+      case QuestionComponentTypeEnum.Image:
+        return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Image, value: '', id: generateId() }));
+      case QuestionComponentTypeEnum.Sound:
+        return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Sound, value: '', id: generateId() }));
+      case QuestionComponentTypeEnum.Graph:
+        return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Graph, value: '', id: generateId() }));
     }
   }
 
@@ -224,7 +230,7 @@ const QuestionComponents = ({
       >
         {
           components.toJSON().map((comp: any, i: number) => (
-            <Grid key={comp.id} container direction="row" className={validateDropBox(comp)}>
+            <Grid key={i} container direction="row" className={validateDropBox(comp)}>
               {renderDropBox(components.get(i), i)}
             </Grid>
           ))
