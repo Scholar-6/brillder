@@ -68,7 +68,15 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         bold: <button className="ql-bold" />,
         italic: <button className="ql-italic" />,
         strikethrough: <button className="ql-strike" />,
-        fontColor: <select className="ql-color" />,
+        fontColor: <select className="ql-color">
+          <option value="#C43C30">Red</option>
+          <option value="#0681DB">Blue</option>
+          <option value="#30C474">Green</option>
+          <option value="#FF9D00">Yellow</option>
+          <option value="#6A2E15">Brown</option>
+          <option value="#4523FF">Purple</option>
+          <option value="#FC7502">Orange</option>
+        </select>,
         subscript: <button className="ql-script" value="sub" />,
         superscript: <button className="ql-script" value="super" />,
         align: <select className="ql-align" />,
