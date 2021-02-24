@@ -4,7 +4,7 @@ import { Subject } from "model/brick";
 
 import { SubjectAssignments } from "../service/model";
 import LibrarySubject from "./LibrarySubject";
-import { getSubjectWidth } from "../service/css";
+import { getPhoneSubjectWidth } from "../service/css";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -19,7 +19,7 @@ interface State {
   page: number;
 }
 
-class LibrarySubjects extends Component<LibrarySubjectsProps, State> {
+class LibraryPhoneSubjects extends Component<LibrarySubjectsProps, State> {
   constructor(props: LibrarySubjectsProps) {
     super(props);
 
@@ -38,8 +38,8 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, State> {
   }
 
   renderSubjectAssignments(item: SubjectAssignments, key: number) {
-    const width = getSubjectWidth(item);
-    return <div key={key} className="libary-container-1">
+    const width = getPhoneSubjectWidth(item);
+    return <div key={key} className="libary-container-1" style={{width: width + 'vw', display: 'inline-flex'}}>
       <LibrarySubject userId={this.props.userId} subjectAssignment={item} history={this.props.history} />
     </div>
   }
@@ -53,4 +53,4 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, State> {
   }
 }
 
-export default LibrarySubjects;
+export default LibraryPhoneSubjects;
