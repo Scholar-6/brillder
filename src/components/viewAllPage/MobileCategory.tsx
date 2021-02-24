@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import queryString from 'query-string';
 import 'swiper/swiper.scss';
 
-import { Brick } from "model/brick";
+import { Brick, Subject } from "model/brick";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
@@ -19,6 +19,8 @@ import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDe
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
 import { getPublicBricks, searchPublicBricks } from "services/axios/brick";
+import { getSubjects } from "services/axios/subject";
+import BrickCircle from "components/baseComponents/BrickCircle";
 
 
 const MobileTheme = React.lazy(() => import('./themes/ViewAllPageMobileTheme'));
@@ -48,6 +50,7 @@ interface BricksListState {
   isSearching: boolean;
   finalBricks: Brick[];
   isViewAll: boolean;
+  subjects: Subject[];
   subjectId: number;
   shown: boolean;
 }
@@ -71,7 +74,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (values.subjectId) {
       try {
         subjectId = parseInt(values.subjectId as string);
-      } catch {}
+      } catch { }
     }
 
     this.state = {
@@ -80,6 +83,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       searchString: searchString,
       isSearching: false,
       isViewAll,
+      subjects: [],
       subjectId,
       shown: false,
     };
@@ -90,20 +94,28 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   async loadData() {
     const bricks = await getPublicBricks();
     if (bricks) {
+      const subjects:Subject[] = [];
       let finalBricks = bricks;
+      for (let brick of bricks) {
+        let res = subjects.find(s => s.id === brick.subjectId);
+        if (!res) {
+          subjects.push({...brick.subject} as Subject);
+        }
+      }
       if (this.state.subjectId > 0) {
         finalBricks = bricks.filter(b => b.subjectId === this.state.subjectId);
-        console.log(finalBricks)
       }
       this.setState({
         ...this.state,
         bricks,
+        subjects,
         shown: true,
         finalBricks,
       });
     } else {
       this.props.requestFailed("Can`t get bricks");
     }
+    const subjects = await getSubjects();
   }
 
   moveToPlay(brickId: number) {
@@ -164,7 +176,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  renderBrick = (brick: Brick, key: number) => {
+  renderBrick(brick: Brick, key: number) {
     const color = !brick.subject ? "#B0B0AD" : brick.subject.color;
     const circleIcon = getAssignmentIcon(brick);
     let className = 'sorted-brick absolute-container';
@@ -175,6 +187,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     return (
       <Grow
+        key={key}
         in={this.state.shown}
         style={{ transformOrigin: "0 0 0" }}
         timeout={key * 150}
@@ -196,7 +209,41 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         </div>
       </Grow>
     );
-  };
+  }
+
+  selectSubject(subject: Subject) {
+    const finalBricks = this.state.bricks.filter(b => b.subject?.id === subject.id);
+    this.setState({finalBricks});
+  }
+
+  renderSubject(subject: Subject, key: number) {
+    const {color} = subject;
+
+    return (
+      <Grow
+        key={key}
+        in={this.state.shown}
+        style={{ transformOrigin: "0 0 0" }}
+        timeout={key * 150}
+      >
+        <div key={key} className="main-brick-container">
+          <Box className="brick-container">
+            <div className='sorted-brick absolute-container' onClick={() => this.selectSubject(subject)}>
+              <div className="short-description subject">
+                <BrickCircle
+                  color={color}
+                  canHover={true}
+                  label=""
+                  onClick={() => {}}
+                />
+                <span>{subject.name}</span>
+              </div>
+            </div>
+          </Box>
+        </div>
+      </Grow>
+    );
+  }
 
   renderSortedBricks = () => {
     let bricksList = [];
@@ -232,6 +279,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderMobileBricks(expandedBrick: Brick | undefined) {
+    if (this.state.finalBricks.length === 0) {
+      return <div className="bricks-no-found bold">Sorry, no bricks found</div>
+    }
     if (expandedBrick) {
       return this.renderExpandedBrick(expandedBrick);
     }
@@ -251,7 +301,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       }
     }
 
-
     return (
       <Swiper slidesPerView={1}>
         {bricksList.map((b, i) =>
@@ -261,6 +310,37 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           </SwiperSlide>
         )}
       </Swiper>
+    );
+  }
+
+  renderSubjects() {
+    return (
+      <Grid item xs={9} className="brick-row-container">
+        <div className="brick-row-title" onClick={() => this.props.history.push('/play/dashboard')}>
+          <button className="btn btn-transparent svgOnHover">
+            <span>Try one of the following:</span>
+          </button>
+        </div>
+        <div className="bricks-list-container no-bottom-padding">
+          {this.state.subjects.map(this.renderSubject.bind(this))}
+        </div>
+      </Grid>
+    );
+  }
+
+  renderBricks() {
+    return (
+      <Grid item xs={9} className="brick-row-container">
+        <div className="brick-row-title" onClick={() => this.props.history.push('/play/dashboard')}>
+          <button className="btn btn-transparent svgOnHover">
+            <span>New</span>
+            <SpriteIcon name="arrow-down" className="active text-theme-dark-blue" />
+          </button>
+        </div>
+        <div className="bricks-list-container">
+          {this.renderSortedBricks()}
+        </div>
+      </Grid>
     );
   }
 
@@ -288,17 +368,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             {this.renderMobileBricks(expandedBrick)}
           </div>
           <Grid container direction="row" className="sorted-row">
-            <Grid item xs={9} className="brick-row-container">
-              <div className="brick-row-title" onClick={() => this.props.history.push('/play/dashboard')}>
-                <button className="btn btn-transparent svgOnHover">
-                  <span>New</span>
-                  <SpriteIcon name="arrow-down" className="active text-theme-dark-blue" />
-                </button>
-              </div>
-              <div className="bricks-list-container">
-                {this.renderSortedBricks()}
-              </div>
-            </Grid>
+            {this.state.finalBricks.length === 0 ? this.renderSubjects() : this.renderBricks()}
           </Grid>
         </div>
       </React.Suspense>

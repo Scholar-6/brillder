@@ -155,7 +155,7 @@
           color: var(--theme-orange);
         }
         &.invalid {
-          color: var(--theme-light-blue);
+          background: var(--theme-light-blue);
         }
       }
     }

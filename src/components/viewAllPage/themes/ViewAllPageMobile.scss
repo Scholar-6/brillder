@@ -175,6 +175,13 @@
     position: absolute;
   }
 
+  .bricks-no-found {
+    text-align: center;
+    width: 100%;
+    font-size: 9vw;
+    color: var(--theme-dark-blue);
+  }
+
   .main-title {
     @extend %transitionAll300;
     max-width: 55vw;
@@ -240,7 +247,7 @@
   }
 
   .bricks-list-container {
-    height: calc(100vh - 46vh - 5vw - 2.6vh);
+    height: calc(100vh - 39.5vh - 6vw - 5vw - 60px);
     overflow-y: scroll;
   }
 }
@@ -298,6 +305,9 @@
 // bricks list
 .main-listing.dashboard-page .bricks-list-container {
   padding-top: 0 !important;
+  &.no-bottom-padding {
+    padding-bottom: 0 !important;
+  }
   .brick-container {
     margin-bottom: 0 !important;
     padding: 0 !important;
@@ -310,6 +320,22 @@
       .label-circle-text {
         font-size: 6vw !important;
       }
+    }
+  }
+  .short-description.subject {
+    font-size: 5vw !important;
+    padding-top: 1vh !important;
+    padding-bottom: 1vh !important;
+    border-top: 1px solid var(--tab-gray);
+    border-bottom: 1px solid var(--tab-gray);
+
+    .left-brick-circle {
+      width: 5vw !important;
+      height: 5vw !important;
+    }
+
+    span {
+      margin-left: 5vw;
     }
   }
 }
