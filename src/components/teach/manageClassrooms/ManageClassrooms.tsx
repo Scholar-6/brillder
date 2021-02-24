@@ -159,8 +159,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   async getClassrooms() {
-    const classrooms = await getAllClassrooms();
+    let classrooms = await getAllClassrooms();
     if (classrooms) {
+      classrooms = classrooms.filter(c => c.subjectId);
       this.prepareClassrooms(classrooms);
       this.setState({
         classrooms,
