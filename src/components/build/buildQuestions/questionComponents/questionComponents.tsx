@@ -163,8 +163,8 @@ const QuestionComponents = ({
         return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Image, value: '', id: generateId() }));
       case QuestionComponentTypeEnum.Sound:
         return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Sound, value: '', id: generateId() }));
-      case QuestionComponentTypeEnum.Graph:
-        return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Graph, value: '', id: generateId() }));
+      //case QuestionComponentTypeEnum.Graph:
+      //  return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Graph, value: null, id: generateId() }));
     }
   }
 
