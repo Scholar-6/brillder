@@ -39,7 +39,7 @@ import BuildBrickRoute from './BuildBrickRoute';
 import StudentRoute from './StudentRoute';
 import AuthRedirectRoute from './AuthRedirectRoute';
 import AllUsersRoute from './AllUsersRoute';
-import UnauthorizedRoute from './UnauthorizedRoute';
+import UnauthorizedRoute from './unauthorized/UnauthorizedRoute';
 
 import BrickWrapper from './BrickWrapper';
 
