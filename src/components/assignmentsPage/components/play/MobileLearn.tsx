@@ -54,10 +54,10 @@ class MobileLearn extends Component<Props> {
   }
 
   renderMobileBricks(expandedBrick: AssignmentBrick | undefined) {
-    const {assignments} = this.props;
     if (expandedBrick) {
       return this.renderExpandedBrick(expandedBrick);
     }
+    const assignments = this.props.assignments.sort((a, b) => new Date(a.brick.updated).getTime() - new Date(b.brick.updated).getTime());
     let bricksList = [];
     for (let i = 0; i < assignments.length; i++) {
       const brick = assignments[i].brick;
