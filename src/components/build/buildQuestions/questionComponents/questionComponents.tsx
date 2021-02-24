@@ -157,6 +157,8 @@ const QuestionComponents = ({
     switch(type) {
       case QuestionComponentTypeEnum.Text:
         return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Text, value: new Y.Text(), id: generateId() }));
+      case QuestionComponentTypeEnum.Quote:
+        return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Quote, value: new Y.Text(), id: generateId() }));
     }
   }
 
