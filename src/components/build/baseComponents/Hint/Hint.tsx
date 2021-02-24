@@ -1,5 +1,6 @@
 import React from 'react';
 import Y from "yjs";
+import * as Yjs from "yjs";
 import { withStyles } from '@material-ui/core/styles';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
@@ -75,7 +76,7 @@ const HintComponent: React.FC<HintProps> = ({
 
     if (props.hint.toJSON().list.length < props.count) {
       let list = props.hint.get("list") as Y.Array<any>;
-      const newItems = Array.from({ length: props.count - list.length }).map(() => "");
+      const newItems = Array.from({ length: props.count - list.length }).map(() => new Yjs.Text());
       list.push(newItems);
     }
 
