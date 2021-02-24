@@ -22,7 +22,7 @@ interface ImageProps {
 const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   const [isOpen, setOpen] = React.useState(false);
   const [file, setFile] = React.useState(null as File | null);
-  const [fileName, setFileName] = React.useState(props.data.get("value"));
+  const [fileName, setFileName] = React.useState(props.data.get("value").toString());
   const [isCloseOpen, setCloseDialog] = React.useState(false);
   const [invalid, setInvalid] = React.useState(props.validationRequired && !props.data.get("value"));
 
