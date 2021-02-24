@@ -16,7 +16,6 @@ import { SortBy, SubjectAssignments } from "./service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
 
 import LibraryFilter from "./components/LibraryFilter";
-//import ViewAllPagination from "../viewAllPage/ViewAllPagination";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
@@ -26,7 +25,9 @@ import { getBrickColor } from "services/brick";
 import { getStudentClassrooms } from "services/axios/classroom";
 import { TeachClassroom } from "model/classroom";
 import LibrarySubjects from "./components/LibrarySubjects";
+import LibraryPhoneSubjects from "./components/LibraryPhoneSubjects";
 import SingleSubjectAssignments from "./singleSubject/SingleSubjectAssignments";
+import { isPhone } from "services/phone";
 
 
 interface BricksListProps {
@@ -402,7 +403,7 @@ class Library extends Component<BricksListProps, BricksListState> {
     }
     return (
       <div className="bricks-list-container bricks-container-mobile all-subject-assignments">
-        <LibrarySubjects
+        {isPhone() ? <LibraryPhoneSubjects
           userId={this.props.user.id}
           subjects={this.state.subjects}
           pageSize={this.state.pageSize}
@@ -410,6 +411,15 @@ class Library extends Component<BricksListProps, BricksListState> {
           subjectAssignments={this.state.subjectAssignments}
           history={this.props.history}
         />
+          :
+          <LibrarySubjects
+            userId={this.props.user.id}
+            subjects={this.state.subjects}
+            pageSize={this.state.pageSize}
+            sortedIndex={this.state.sortedIndex}
+            subjectAssignments={this.state.subjectAssignments}
+            history={this.props.history}
+          />}
       </div>
     );
   }

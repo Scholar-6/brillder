@@ -219,7 +219,6 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
       const iframe = getZendeskIframe();
       if (iframe) {
         try {
-          console.log(55)
           initZendeskStyling(iframe);
           setZendeskMode(iframe, location);
           clearInterval(interval);
