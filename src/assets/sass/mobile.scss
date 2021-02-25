@@ -96,3 +96,17 @@
   margin-left: -0.25vw !important;
   margin-right: 2vw !important;
 }
+.time-container {
+  z-index: 20000;
+  positioN: fixed;
+  bottom: 22vw;
+  width: 100vw !important;
+  .timer-progressbar {
+    width: 90vw !important;
+    border-radius: 2vw !important;
+    height: 4vw !important;
+    .MuiLinearProgress-bar {
+      height: 4vw !important;
+    }
+  }
+}

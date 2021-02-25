@@ -153,7 +153,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (isMobile && !(isTablet || isIPad13)) {
       return (
         <div className="action-footer mobile-footer-fixed-buttons">
-          <SpriteIcon name="arrow-right-circle" className="mobile-next-button" onClick={startBrick} />
+          <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={startBrick} />
         </div>
       );
     }

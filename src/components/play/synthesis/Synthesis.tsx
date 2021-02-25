@@ -89,7 +89,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   const renderPhoneButton = () => {
     return (
       <div className="action-footer mobile-footer-fixed-buttons">
-        <SpriteIcon name="arrow-right-circle" className="mobile-next-button" onClick={reviewBrick} />
+        <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={reviewBrick} />
       </div>
     );
   }

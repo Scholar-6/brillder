@@ -135,7 +135,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
   renderPhoneButton() {
     return (
       <div className="action-footer mobile-footer-fixed-buttons">
-        <SpriteIcon name="arrow-right-circle" className="mobile-next-button" onClick={this.moveToSynthesis.bind(this)} />
+        <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={this.moveToSynthesis.bind(this)} />
       </div>
     );
   }
