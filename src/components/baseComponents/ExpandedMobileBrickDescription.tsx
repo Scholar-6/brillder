@@ -30,7 +30,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
       <div className="expanded-mobile-brick-info">
         {this.props.hide &&
           <div className="expand-button" onClick={this.props.hide}>
-            <SpriteIcon name="minimize" />
+            <SpriteIcon name="corner-up-left" />
           </div>
         }
         <div className={"brick-icons " + this.props.circleClass}>

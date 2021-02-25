@@ -15,6 +15,7 @@ import BrickCounter from '../baseComponents/BrickCounter';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { rightKeyPressed } from 'components/services/key';
 import { getReviewTime, getSpendTime } from '../services/playTimes';
+import { isPhone } from 'services/phone';
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
@@ -85,6 +86,14 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     );
   }
 
+  const renderPhoneButton = () => {
+    return (
+      <div className="action-footer mobile-footer-fixed-buttons">
+        <SpriteIcon name="arrow-right-circle" className="mobile-next-button" onClick={reviewBrick} />
+      </div>
+    );
+  }
+
   const renderSpendTime = () => {
     return <p><span>Aim to spend {getSpendTime(brick.brickLength)} minutes on this section.</span></p>;
   }
@@ -111,7 +120,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
           </div>
           <div className="introduction-content">
             {renderSynthesisContent()}
-            {renderFooter()}
+            {isPhone() ? renderPhoneButton() : renderFooter()}
           </div>
         </div>
       </div>

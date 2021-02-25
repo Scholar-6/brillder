@@ -56,14 +56,14 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         .introduction-page {
           font-family: $font-family-regular;
           position: relative;
-          height: calc(100vh - 60px) !important;
+          height: 100% !important;
           // overflow-y: hidden !important;
           .intro-desktop-title {
             width: 100vw;
             text-align: center;
             display: block;
             margin-top: 2vh;
-            margin-bottom: 3vh;
+            margin-bottom: 0;
             font-family: $font-family-black;
             font-size: 3vh !important;
             max-width: 90vw !important;
@@ -811,7 +811,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     .round-icon {
       border-radius: 50%;
       margin: 0 1.8vw 0 1vw;
-      overflow: hidden;
       position: relative;
       transition: 500ms transform ease-in-out;
       width: 6.9vw;
@@ -875,7 +874,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   max-width: 47.3vw;
   color: var(--theme-dark-blue);
   margin-top: 0;
-  height: 5vw;
   margin-bottom: 0;
   text-align: left;
 }
@@ -950,10 +948,10 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     height: 20vw !important;
   }
   .mobile-next-button {
-    right: 0 !important;
+    right: 2vw !important;
   }
   .mobile-back-button {
-    right: calc(100% / 7 * 2) !important;
+    right: calc(100% / 7 * 2 - 2vw) !important;
   }
 }
 
@@ -1096,5 +1094,30 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
   .introduction-content {
     margin-top: 25vw !important;
+  }
+}
+
+// introduction flexbox
+.brick-container {
+  height: calc(100% - 20vw) !important;
+  .introduction-page {
+    display: flex !important;
+    flex-flow: column;
+    .intro-header {
+      flex: 0 1 auto !important;
+    }
+    .introduction-info {
+      flex: 0 1 auto;
+    }
+    .introduction-content {
+      height: auto !important;
+      flex: 0 1 auto;
+      .expand-title {
+        margin-bottom: 2vh;
+      }
+      .expanded-text.prep-box {
+        margin-bottom: 0 !important;
+      }
+    }
   }
 }
