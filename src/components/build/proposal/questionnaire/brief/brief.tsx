@@ -1,5 +1,6 @@
 /*eslint no-useless-escape: "off"*/
 import React from "react";
+import * as Y from "yjs";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './brief.scss';
@@ -7,17 +8,17 @@ import NavigationButtons from '../../components/navigationButtons/NavigationButt
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep, PlayButtonStatus, BrickLengthRoutePart } from "../../model";
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import { toRenderJSON } from "services/SharedTypeService";
 
 
 interface BriefProps {
   baseUrl: string;
-  parentBrief: string;
+  parentBrief: Y.Text;
   playStatus: PlayButtonStatus;
   canEdit: boolean;
-  saveBrief(brief: string): void;
   saveAndPreview(): void;
 }
 
@@ -32,7 +33,7 @@ const BriefPreviewComponent: React.FC<any> = ({ data }) => {
   );
 }
 
-const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief, ...props }) => {
+const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, ...props }) => {
   return (
     <div className="tutorial-page brief-page">
       <Navigation
@@ -40,7 +41,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
         step={ProposalStep.Brief}
         playStatus={props.playStatus}
         saveAndPreview={props.saveAndPreview}
-        onMove={() => saveBrief(parentBrief)}
+        onMove={() => {}}
       />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid className="left-block">
@@ -48,28 +49,25 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
             <SpriteIcon name="crosshair" />
           </div>
           <h1>Outline the purpose of this brick.</h1>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!canEdit}
-            data={parentBrief}
-            link={true}
-            placeholder="Enter Brief Here..."
+            sharedData={parentBrief}
+            allowLinks={true}
             toolbar={[
               'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList'
             ]}
-            onBlur={() => { }}
-            onChange={saveBrief}
           />
           <NavigationButtons
             step={ProposalStep.Brief}
             canSubmit={true}
             data={parentBrief}
-            onSubmit={saveBrief}
+            onSubmit={() => {}}
             baseUrl={props.baseUrl}
             backLink={props.baseUrl + BrickLengthRoutePart}
           />
           <h2 className="pagination-text m-0">3 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={BriefPreviewComponent} data={parentBrief} />
+        <ProposalPhonePreview Component={BriefPreviewComponent} data={toRenderJSON(parentBrief)} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

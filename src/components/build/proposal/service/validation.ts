@@ -1,5 +1,6 @@
 import { Brick } from "model/brick";
 import map from 'components/map';
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 export interface ValidateProposalResult {
   isValid: boolean;
@@ -15,18 +16,19 @@ export function validateProposal(brick: Brick) {
   } else if (!brick.title || brick.academicLevel < 1 || brick.keywords.length === 0) {
     url = map.ProposalTitle;
     isValid = false;
-  } else if (!brick.openQuestion) {
+  } else if (!stripHtml(brick.openQuestion)) {
     url = map.ProposalOpenQuestion;
     isValid = false;
-  } else if (!brick.brief) {
+  } else if (!stripHtml(brick.brief)) {
     url = map.ProposalBrief;
     isValid = false;
-  } else if (!brick.prep) {
+  } else if (!stripHtml(brick.prep)) {
     url = map.ProposalPrep;
     isValid = false;
   } else if (!brick.brickLength) {
     url = map.ProposalLength;
     isValid = false;
   }
+  url = url.replace(":brickId", brick.id.toString());
   return { isValid, url };
 }

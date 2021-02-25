@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as Y from "yjs";
 
 import './KeyWords.scss';
 import { enterPressed, spaceKeyPressed } from "components/services/key";
@@ -8,13 +9,11 @@ import KeyWordsPlay from "./KeywordsPlay";
 
 interface KeyWordsProps {
   disabled: boolean;
+  keyWords: Y.Array<any>;
   isHashtags?: boolean;
-  keyWords: KeyWord[];
-  onChange(keyWords: KeyWord[]): void;
 }
 
 interface KeyWordsState {
-  keyWords: KeyWord[];
   keyWord: string;
 }
 
@@ -22,23 +21,15 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
   constructor(props: any) {
     super(props);
 
-    let keyWords = [];
-    if (props.keyWords) {
-      keyWords = props.keyWords;
-    }
-
     this.state = {
-      keyWords,
       keyWord: ''
     }
   }
 
   addKeyWord() {
     if (!this.props.disabled) {
-      const {keyWords} = this.state;
-      keyWords.push({ name: this.state.keyWord });
-      this.setState({ keyWord: '', keyWords });
-      this.props.onChange(keyWords);
+      this.props.keyWords.push([new Y.Map(Object.entries({ name: this.state.keyWord }))]);
+      this.setState({ keyWord: '' });
     }
   }
 
@@ -51,10 +42,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
 
   removeKeyWord(i: number) {
     if (i > -1 && !this.props.disabled) {
-      const { keyWords } = this.state;
-      keyWords.splice(i, 1);
-      this.setState({ keyWords });
-      this.props.onChange(keyWords);
+      this.props.keyWords.delete(i, 1);
     }
   }
 
@@ -71,8 +59,8 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
     return (
       <div className="key-words">
         {this.props.isHashtags
-          ? <KeyWordsPlay keywords={this.state.keyWords} />
-          : this.state.keyWords.map(this.renderKeyWord.bind(this))
+          ? <KeyWordsPlay keywords={this.props.keyWords.toJSON()} />
+          : this.props.keyWords.toJSON().map(this.renderKeyWord.bind(this))
         }
         <input disabled={this.props.disabled} value={this.state.keyWord} placeholder="Keyword(s)" onKeyDown={this.checkKeyword.bind(this)} onChange={e => this.setState({ keyWord: e.target.value })} />
       </div>

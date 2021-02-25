@@ -28,6 +28,10 @@ ul, ol {
   list-style-position: inside;
 }
 
+s {
+	text-decoration: line-through;
+}
+
 abbr[title],
 abbr[data-original-title] {
 	cursor: help;

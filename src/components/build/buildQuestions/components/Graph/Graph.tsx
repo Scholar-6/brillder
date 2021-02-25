@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Y from "yjs";
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
 //@ts-ignore
 import Desmos from 'desmos';
@@ -8,6 +9,8 @@ import { Fab, SvgIcon, Tooltip } from '@material-ui/core';
 import GraphDialog from './GraphDialog';
 
 import sprite from 'assets/img/icons-sprite.svg';
+import { convertObject } from 'services/SharedTypeService';
+import _ from 'lodash';
 
 export interface GraphSettings {
     showSidebar: boolean;
@@ -22,9 +25,8 @@ const settingNames: (keyof GraphSettings)[] = ["showSidebar", "showSettings", "a
 interface GraphProps {
     locked: boolean;
     index: number;
-    data: any;
-    save(): void;
-    updateComponent(component: any, index: number): void;
+    data: Y.Map<any>;
+
     // phone preview
     onFocus(): void;
 }
@@ -32,17 +34,8 @@ interface GraphProps {
 const GraphComponent: React.FC<GraphProps> = (props) => {
     const graphRef = React.useRef<HTMLDivElement>(null);
     const [calculator, setCalculator] = React.useState<any>(null);
-
-    const initialProps = React.useRef(props);
-
-    const [graphState, setGraphState] = React.useState<any>(props.data.graphState ?? null);
-    const [graphSettings, setGraphSettings] = React.useState<GraphSettings>(props.data.graphSettings ?? {
-        showSidebar: false,
-        showSettings: false,
-        allowPanning: false,
-        trace: false,
-        pointsOfInterest: false
-    });
+    const value = props.data.get("value") as Y.Map<any>;
+    const graphState = value.get("graphState").toJSON() ?? null;
 
     const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
 
@@ -73,24 +66,27 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
         if(calculator) {
           calculator.setState(state);
         }
-    }, [graphState, graphSettings, calculator]);
+    }, [graphState, calculator]);
 
-    useEffect(() => {
-        let comp = Object.assign({}, initialProps.current.data);
-        comp.graphState = graphState;
-        comp.graphSettings = graphSettings;
-        console.log("Saving...")
-        initialProps.current.updateComponent(comp, initialProps.current.index);
-        initialProps.current.save();
-    }, [graphState, graphSettings]);
+    const setGraphState = React.useCallback((state: object) => {
+        value.doc!.transact(() => {
+            if(state && !_.isEmpty(state)) {
+                const ystate = convertObject(state);
+                value.set("graphState", ystate);
+            }
+        });
+    }, [value]);
 
     const setGraphSetting = (evt: React.MouseEvent<HTMLElement>, newSettings: string[]) => {
-        setGraphSettings(Object.fromEntries(settingNames.map(name => 
-            [name, newSettings.findIndex(s => s === name) !== -1])) as any);
+        value.doc!.transact(() => {
+            settingNames.map(name => {
+                value.get("graphSettings").set(name, newSettings.findIndex(s => s === name) !== -1);
+            });
+        });
     }
 
     const getGraphSettings = () => {
-        const settings = settingNames.filter(name => graphSettings[name] === true);
+        const settings = settingNames.filter(name => value.get("graphSettings").toJSON()[name] === true);
         return settings;
     }
 
@@ -101,11 +97,10 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
         
         <GraphDialog
             graphState={graphState}
-            graphSettings={graphSettings}
+            graphSettings={value.get("graphSettings").toJSON()}
             isOpen={dialogOpen}
             close={() => setDialogOpen(false)}
             setGraphState={setGraphState}
-            setGraphSettings={setGraphSettings}
         />
         <div className="question-component-graph-settings">
             <Tooltip title="Add / Edit Expressions">
@@ -149,7 +144,7 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
                         </SvgIcon>
                     </Tooltip>
                 </ToggleButton>
-                <ToggleButton value="pointsOfInterest" disabled={!graphSettings.trace}>
+                <ToggleButton value="pointsOfInterest" disabled={!value.get("graphSettings").toJSON().trace}>
                     <Tooltip title="Show Points of Interest">
                         <SvgIcon fontSize="large">
                             <svg className="svg active" viewBox="0 0 24 24">

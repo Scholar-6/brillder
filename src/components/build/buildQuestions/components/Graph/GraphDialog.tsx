@@ -13,7 +13,6 @@ interface GraphDialogProps {
   graphSettings: GraphSettings;
   close(): void;
   setGraphState(state: any): void;
-  setGraphSettings(settings: GraphSettings): void;
 }
 
 const GraphDialog: React.FC<GraphDialogProps> = props => {

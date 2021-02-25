@@ -1,15 +1,15 @@
 import React from "react";
+import * as Y from "yjs";
 import Checkbox from "@material-ui/core/Checkbox";
 
 import './ChooseOneAnswer.scss';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import QuestionImageDropzone from "components/build/baseComponents/questionImageDropzone/QuestionImageDropzone";
 import { QuestionValueType } from "../types";
-import { ChooseOneAnswer } from './types';
 import RemoveItemButton from "../components/RemoveItemButton";
 import SoundRecord from "../sound/SoundRecord";
 import DeleteDialog from "components/baseComponents/deleteBrickDialog/DeleteDialog";
 import RemoveButton from "../components/RemoveButton";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 
 export interface ChooseOneAnswerProps {
@@ -17,55 +17,55 @@ export interface ChooseOneAnswerProps {
   editOnly: boolean;
   index: number;
   length: number;
-  answer: ChooseOneAnswer;
+  answer: Y.Map<any>;
   validationRequired: boolean;
   checkBoxValid: boolean;
-  save(): void;
   removeFromList(index: number): void;
   onChecked(event: any, checked: boolean): void;
-  update(): void;
   onBlur(): void;
 }
 
 const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   locked, editOnly, index, length, answer, validationRequired, checkBoxValid,
-  removeFromList, update, save, onChecked, onBlur
+  removeFromList, onChecked, onBlur
 }) => {
   const [clearOpen, setClear] = React.useState(false);
 
   const setImage = (fileName: string) => {
     if (locked) { return; }
-    answer.value = "";
-    answer.soundFile = "";
-    answer.valueFile = fileName;
-    answer.answerType = QuestionValueType.Image;
-    update();
-    save();
+    answer.set("value", "");
+    answer.set("soundFile", "");
+    answer.set("valueFile", fileName);
+    answer.set("answerType", QuestionValueType.Image);
   }
 
   const setSound = (soundFile: string, caption: string) => {
     if (locked) { return; }
-    answer.value = '';
-    answer.valueFile = '';
-    answer.soundFile = soundFile;
-    answer.soundCaption = caption;
-    answer.answerType = QuestionValueType.Sound;
-    update();
-    save();
+    answer.set("value", "");
+    answer.set("valueFile", "");
+    answer.set("soundFile", soundFile);
+    answer.set("soundCaption", caption);
+    answer.set("answerType", QuestionValueType.Sound);
   }
 
-  const onTextChanged = (answer: ChooseOneAnswer, value: string) => {
+  const setText = () => {
     if (locked) { return; }
-    answer.value = value;
-    answer.valueFile = "";
-    answer.soundFile = "";
-    answer.answerType = QuestionValueType.String;
-    update();
+    answer.set("value", new Y.Text());
+    answer.set("valueFile", "");
+    answer.set("soundFile", "");
+    answer.set("answerType", QuestionValueType.String);
+    onBlur();
   }
+
+  React.useEffect(() => {
+    if(answer.get("answerType") === QuestionValueType.String && !answer.get("value")) {
+      answer.set("value", new Y.Text());
+    } 
+  }, [answer]);
 
   let containerClass = "";
   let className = 'choose-one-box unique-component';
-  if (answer.answerType === QuestionValueType.Image) {
+  if (answer.get("answerType") === QuestionValueType.Image) {
     className += ' big-answer';
     containerClass = 'big-box';
   }
@@ -78,38 +78,38 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   }
 
   if (validationRequired) {
-    if (!answer.value && (answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None)) {
+    if (!answer.get("value") && (answer.get("answerType") === QuestionValueType.String || answer.get("answerType") === QuestionValueType.None)) {
       className += ' invalid-answer';
     }
   }
 
-  const renderAnswerType = (answer: ChooseOneAnswer) => {
-    if (answer.answerType === QuestionValueType.Sound) {
+  const renderAnswerType = () => {
+    if (answer.get("answerType") === QuestionValueType.Sound) {
       return (
         <div className="choose-sound">
           <SoundRecord
             locked={locked}
-            answer={answer}
+            answer={answer.toJSON()}
             save={setSound}
-            clear={() => onTextChanged(answer, '')}
+            clear={() => setText()}
           />
         </div>
       );
-    } else if (answer.answerType === QuestionValueType.Image) {
+    } else if (answer.get("answerType") === QuestionValueType.Image) {
       return (
         <div className="choose-image">
           <RemoveButton onClick={() => setClear(true)} />
           <QuestionImageDropzone
             answer={answer as any}
-            type={answer.answerType || QuestionValueType.None}
+            type={answer.get("answerType") || QuestionValueType.None}
             locked={locked}
-            fileName={answer.valueFile}
+            fileName={answer.get("valueFile")}
             update={setImage}
           />
           <DeleteDialog
             isOpen={clearOpen}
             label="Delete image?"
-            submit={() => onTextChanged(answer, '')}
+            submit={() => setText()}
             close={() => setClear(false)}
           />
         </div>
@@ -119,29 +119,24 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
       <div className="choose-empty">
         <QuestionImageDropzone
           answer={answer as any}
-          type={answer.answerType || QuestionValueType.None}
+          type={answer.get("answerType") || QuestionValueType.None}
           locked={locked}
-          fileName={answer.valueFile}
+          fileName={answer.get("valueFile")}
           update={setImage}
         />
-        <DocumentWirisCKEditor
+        <QuillEditor
           disabled={locked}
-          editOnly={editOnly}
-          data={answer.value}
-          toolbar={['latex']}
+          sharedData={answer.get("value")}
           placeholder="Enter Answer..."
-          validationRequired={validationRequired}
-          onBlur={() => {
-            onBlur();
-            save();
-          }}
-          onChange={value => onTextChanged(answer, value)}
+          toolbar={['latex']}
+          validate={validationRequired}
+          onBlur={onBlur}
         />
         <SoundRecord
           locked={locked}
-          answer={answer}
+          answer={answer.toJSON()}
           save={setSound}
-          clear={() => onTextChanged(answer, '')}
+          clear={() => setText()}
         />
       </div>
     );
@@ -149,19 +144,19 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
 
   return (
     <div className={className}>
-      {answer.answerType !== QuestionValueType.Sound && answer.answerType !== QuestionValueType.Image &&
+      {answer.get("answerType") !== QuestionValueType.Sound && answer.get("answerType") !== QuestionValueType.Image &&
         <RemoveItemButton index={index} length={length} onClick={removeFromList} />
       }
       <div className={"checkbox-container " + containerClass}>
         <Checkbox
           className={checkboxClass}
           disabled={locked}
-          checked={answer.checked}
+          checked={answer.get("checked")}
           onChange={onChecked}
           value={index}
         />
       </div>
-      {renderAnswerType(answer)}
+      {renderAnswerType()}
     </div>
   );
 };

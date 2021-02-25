@@ -1,26 +1,26 @@
 import React from "react";
+import * as Y from "yjs";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './prep.scss';
 import { ProposalStep, PlayButtonStatus, BriefRoutePart } from "../../model";
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import YoutubeAndMathQuote from 'components/play/baseComponents/YoutubeAndMathQuote';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import { toRenderJSON } from "services/SharedTypeService";
 import { BrickLengthEnum } from "model/brick";
 
 
 interface PrepProps {
-  parentPrep: string;
+  parentPrep: Y.Text;
   canEdit: boolean;
   baseUrl: string;
   brickLength: BrickLengthEnum;
   playStatus: PlayButtonStatus;
-  savePrep(prep: string): void;
-  saveBrick(prep: string): void;
   saveAndPreview(): void;
 }
 
@@ -35,7 +35,7 @@ const PrepPreviewComponent: React.FC<any> = ({ data }) => {
   );
 }
 
-const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) => {
+const PrepComponent: React.FC<PrepProps> = ({ parentPrep, ...props }) => {
   const isVisible = () => {
     if (props.brickLength) {
       if (props.brickLength === BrickLengthEnum.S20min) {
@@ -68,7 +68,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
         baseUrl={props.baseUrl}
         playStatus={props.playStatus}
         saveAndPreview={props.saveAndPreview}
-        onMove={() => savePrep(parentPrep)}
+        onMove={() => {}}
       />
       <Grid container direction="row" alignItems="flex-start">
         <Grid className="left-block">
@@ -76,19 +76,14 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             <img className="size2" alt="titles" src="/images/new-brick/prep.png" />
           </div>
           <h1>Add engaging and relevant <br /> preparatory material.</h1>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!props.canEdit}
-            data={parentPrep}
-            placeholder="Enter Instructions, Links to Videos and Webpages Here…"
-            mediaEmbed={true}
-            link={true}
+            sharedData={parentPrep}
+            allowMediaEmbed={true}
+            allowLinks={true}
             toolbar={[
-              'bold', 'italic', 'fontColor', 'latex',
-              'bulletedList', 'numberedList', 'uploadImageCustom'
+              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'image'
             ]}
-            blockQuote={true}
-            onBlur={() => { }}
-            onChange={savePrep}
           />
           {isVisible() &&
             <div className="prep-bottom-help-text">
@@ -99,13 +94,13 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             step={ProposalStep.Prep}
             canSubmit={true}
             data={parentPrep}
-            onSubmit={props.saveBrick}
+            onSubmit={() => {}}
             backLink={props.baseUrl + BriefRoutePart}
             baseUrl={props.baseUrl}
           />
           <h2 className="pagination-text">4 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={PrepPreviewComponent} data={parentPrep} />
+        <ProposalPhonePreview Component={PrepPreviewComponent} data={toRenderJSON(parentPrep)} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

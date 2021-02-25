@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .question-type {
   position: relative;
@@ -88,6 +88,13 @@
         p {
           text-align: left;
         }
+      }
+    }
+  }
+  .quill-document-editor {
+    .ql-container {
+      .ql-editor {
+        height: 70vh;
       }
     }
   }
@@ -201,7 +208,8 @@
 }
 
 .question-build-text-editor {
-  .ck.ck-button, a.ck.ck-button {
+  .ck.ck-button,
+  a.ck.ck-button {
     padding: 0 !important;
   }
 }

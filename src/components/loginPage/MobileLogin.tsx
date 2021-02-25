@@ -6,6 +6,7 @@ import { LoginState } from "./loginPage";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import GoogleButton from "./components/GoogleButton";
 import RegisterButton from "./components/RegisterButton";
+import TermsLink from "components/baseComponents/TermsLink";
 
 interface MobileLoginState {
   animationFinished: boolean;
@@ -40,9 +41,7 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
   renderPrivacyPolicy() {
     return (
       <div className="mobile-policy-text">
-        <span onClick={() => this.props.setPolicyDialog(true)}>
-          Privacy Policy
-        </span>
+        <TermsLink history={this.props.history}/>
       </div>
     );
   }

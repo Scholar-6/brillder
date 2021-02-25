@@ -22,7 +22,7 @@ export const getSubjectWidth = (subjectAssignment: SubjectAssignments) => {
 export const getPhoneSubjectWidth = (subjectAssignment: SubjectAssignments) => {
   const paddingWidth = 0.8 * 2;
   const marginWidth = 0.4 * 2;
-  const baseWidth = 1.6;
+  const baseWidth = 3.2;
   let width = paddingWidth;
   for (let a of subjectAssignment.assignments) {
     width += marginWidth;
