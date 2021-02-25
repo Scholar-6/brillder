@@ -1252,3 +1252,13 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   padding-right: 2vw;
   font-size: 5vw !important;
 }
+
+// short answer .ck-editor
+.short-answer-input {
+  .ck-editor {
+    height: 20vw !important;
+  }
+  .ck-toolbar {
+    width: 10vw !important;
+  }
+}
