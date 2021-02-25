@@ -114,7 +114,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
               <div className="left-brick-circle">
                 <div className="round-button" style={{ background: `${color}` }}></div>
               </div>
-              <span className="heading">Synthesis</span>
+              <span className="heading synthesis-title">Synthesis</span>
             </div>
             <span>{renderSpendTime()}</span>
           </div>

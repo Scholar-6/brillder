@@ -1098,13 +1098,17 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 }
 
 // introduction flexbox
-.brick-container {
+.play-preview-pages .brick-container {
   height: calc(100% - 20vw) !important;
   .introduction-page {
     display: flex !important;
     flex-flow: column;
     .intro-header {
       flex: 0 1 auto !important;
+      .synthesis-title {
+        color: var(--theme-dark-blue);
+        margin-left: 1.5vw;
+      }
     }
     .introduction-info {
       flex: 0 1 auto;
@@ -1117,6 +1121,38 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       }
       .expanded-text.prep-box {
         margin-bottom: 0 !important;
+      }
+    }
+  }
+}
+
+// live flexbox 
+.play-preview-pages .brick-row-container .brick-container.live-page {
+  .introduction-page {
+    .introduction-info {
+      flex: 0 1 25vw !important;
+    }
+    .introduction-content {
+      flex: 0 1 calc(100% - 25vw) !important;
+      margin-top: 0 !important;
+      .question-live-play.review-content {
+        overflow: visible !important;
+      }
+    }
+  }
+}
+
+// review flexbox
+.play-preview-pages .brick-row-container .brick-container.review-page {
+  .introduction-page {
+    .intro-header {
+      flex: 0 1 25vw !important;
+    }
+    .introduction-content {
+      flex: 0 1 calc(100% - 25vw) !important;
+      margin-top: 0 !important;
+      .question-live-play.review-content {
+        overflow: visible !important;
       }
     }
   }
