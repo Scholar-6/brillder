@@ -5,6 +5,7 @@ import { ComponentAttempt } from "../model";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isMobile } from "react-device-detect";
+import { isPhone } from "services/phone";
 
 interface ReviewStepperProps {
   attempts: ComponentAttempt<any>[];
@@ -98,6 +99,14 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
         el.scrollBy(getStepSize(), 0);
       }
     } catch {}
+  }
+
+  if (isPhone()) {
+    return (
+      <div className={className} ref={stepperRef}>
+        {questions.map((q, index) => renderQuestionStep(index))}
+      </div>
+    );
   }
 
   return (

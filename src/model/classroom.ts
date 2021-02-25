@@ -1,5 +1,5 @@
 import { User, UserBase } from "./user";
-import { Brick } from "./brick";
+import { Brick, Subject } from "./brick";
 import { AssignmentStudent } from "./stats";
 
 export enum ClassroomStatus {
@@ -61,5 +61,7 @@ export interface StudentStatus {
 
 export interface TeachClassroom extends Classroom {
   active: boolean;
+  subjectId: number;
+  subject: Subject;
   isClass?: boolean;
 }

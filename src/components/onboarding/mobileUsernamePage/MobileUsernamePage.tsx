@@ -36,14 +36,9 @@ const MobileUsernamePage: React.FC<UsernamePageProps> = props => {
           className="username-help-label" start={true} onFinish={() => setLabelFinished(true)} />
         <LabelTyping value={username} className="username" start={labelFinished} onFinish={() => setSecondFinished(true)} />
         {user.rolePreference?.roleId === UserType.Builder &&
-        <div>
-          <LabelTyping
-            start={secondFinished}
-            value="Use this username to connect with people to create and assign bricks"
-            className="username-help-label"
-          />
-          </div>
-        }
+          <div>
+            <p className="animation-300" style={{ opacity: secondFinished ? "1" : '0' }}>Use this username to connect with people to create and assign bricks</p>
+          </div>}
       </div>
     );
   }
@@ -55,9 +50,9 @@ const MobileUsernamePage: React.FC<UsernamePageProps> = props => {
           <SpriteIcon name="user" />
         </div>
         {username && renderUsername()}
-        {labelFinished && <div className="submit-button" onClick={move}>
+        {secondFinished && <div className="submit-button" onClick={move}>
           <div><LabelTyping start={true} value="Get Started!" /></div>
-          <SpriteIcon name="arrow-right"/>
+          <SpriteIcon name="arrow-right" />
         </div>}
       </div>
     </div>

@@ -12,6 +12,7 @@ import ReviewStepper from '../review/ReviewStepper';
 import Clock from '../baseComponents/Clock';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { rightKeyPressed } from 'components/services/key';
+import { isPhone } from 'services/phone';
 
 interface ProvisionalScoreState {
   value: number;
@@ -131,6 +132,14 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
     );
   }
 
+  renderPhoneButton() {
+    return (
+      <div className="action-footer mobile-footer-fixed-buttons">
+        <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={this.moveToSynthesis.bind(this)} />
+      </div>
+    );
+  }
+
   renderStepper() {
     return (
       <ReviewStepper
@@ -189,7 +198,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
               </div>
               <div className="introduction-content">
                 {this.renderProgressBar()}
-                {this.renderFooter()}
+                {isPhone() ? this.renderPhoneButton() : this.renderFooter()}
               </div>
             </div>
           </div>

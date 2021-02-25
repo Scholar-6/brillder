@@ -39,10 +39,7 @@ interface UsersListProps {
 }
 
 enum UserSortBy {
-  None,
   Name,
-  Role,
-  Status,
 }
 
 interface UsersListState {
@@ -92,7 +89,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       isSearching: false,
       filterHeight: "auto",
 
-      sortBy: UserSortBy.None,
+      sortBy: UserSortBy.Name,
       isAscending: false,
       isAdmin: checkAdmin(props.user.roles),
       isClearFilter: false,
@@ -115,29 +112,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     page: number,
     subjects: number[] = [],
     roleFilters: any = [],
-    sortBy: UserSortBy = UserSortBy.None,
     isAscending: any = null,
     search: string = ""
   ) {
     let searchString = "";
-    let orderBy = null;
-
-    if (sortBy === UserSortBy.None) {
-      sortBy = this.state.sortBy;
-    }
+    const orderBy = "user.lastName";
 
     if (isAscending === null) {
       isAscending = this.state.isAscending;
-    }
-
-    if (sortBy) {
-      if (sortBy === UserSortBy.Name) {
-        orderBy = "user.lastName";
-      } else if (sortBy === UserSortBy.Status) {
-        orderBy = "user.status";
-      } else if (sortBy === UserSortBy.Role) {
-        orderBy = "user.roles";
-      }
     }
 
     if (search) {
@@ -269,7 +251,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       0,
       filterSubjects,
       [],
-      this.state.sortBy,
       this.state.isAscending,
       searchString
     );
@@ -415,10 +396,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       this.setState({ ...this.state, isAscending });
     } else {
       isAscending = false;
-      this.setState({ ...this.state, isAscending, sortBy });
+      this.setState({ ...this.state, isAscending });
     }
     let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(this.state.page, filterSubjects, [], sortBy, isAscending);
+    this.getUsers(this.state.page, filterSubjects, [], isAscending);
   }
 
   renderSortArrow(currentSortBy: UserSortBy) {
@@ -454,13 +435,11 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         <th>
           <Grid container>
             ROLE
-            {this.renderSortArrow(UserSortBy.Role)}
           </Grid>
         </th>
         <th>
           <Grid container>
             ACTIVE?
-            {this.renderSortArrow(UserSortBy.Status)}
           </Grid>
         </th>
         <th className="edit-button-column"></th>

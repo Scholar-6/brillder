@@ -28,6 +28,7 @@ import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import MobilePrevButton from "./components/MobilePrevButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
+import { isPhone } from "services/phone";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -286,6 +287,21 @@ const LivePage: React.FC<LivePageProps> = ({
     );
   }
 
+  const renderMobileButtons = () => {
+    return (
+      <div className="action-footer mobile-footer-fixed-buttons">
+        <SpriteIcon name="arrow-left" className="mobile-back-button" onClick={prev} />
+        <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={() => {
+          if (questions.length - 1 > activeStep) {
+            next();
+          } else {
+            setSubmitAnswers(true);
+          }
+        }} />
+      </div>
+    );
+  }
+
   return (
     <div className="brick-row-container live-container">
       <div className="brick-container play-preview-panel live-page">
@@ -357,21 +373,31 @@ const LivePage: React.FC<LivePageProps> = ({
             <div className="introduction-info">
               {renderCountDown()}
               <div className="intro-text-row">
-                <span className="heading">Investigation</span>
+                <span className="phone-stepper-head"><span className="bold">{brick.subject?.name}</span> {brick.title}</span>
                 {renderStepper()}
               </div>
             </div>
             <div className="introduction-content">
               {questions.map(renderQuestionContainer)}
-              <div className="action-footer">
-                <div>
-                  <MobilePrevButton activeStep={activeStep} onClick={prev} />
-                </div>
-                <div className="direction-info text-center"></div>
-                <div>
-                  <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
-                </div>
-              </div>
+              {isPhone() ? renderMobileButtons() :
+                <div className="action-footer">
+                  <div>
+                    <MobilePrevButton activeStep={activeStep} onClick={prev} />
+                  </div>
+                  <div className="direction-info text-center"></div>
+                  <div>
+                    <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
+                  </div>
+                </div>}
+                <div className="time-container">
+                    <TimeProgressbar
+                      isLive={true}
+                      onEnd={onEnd}
+                      endTime={props.endTime}
+                      brickLength={brick.brickLength}
+                      setEndTime={props.setEndTime}
+                    />
+                  </div>
             </div>
           </Hidden>
           <ShuffleAnswerDialog

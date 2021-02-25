@@ -131,6 +131,11 @@
       }
     }
   }
+  .users-pagination {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
 }
 
 .user-list-page ~ .beta-text {

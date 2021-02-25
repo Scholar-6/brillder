@@ -1,0 +1,21 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.stop-cookie-tracking {
+  position: fixed;
+  bottom: 2vh;
+  right: 10vw;
+  border: none;
+  outline: none;
+  font-size: 1.4vw;
+  border-radius: 0.5vw;
+  padding: 0.4vw;
+  color: var(--white);
+  transition: all 300ms ease-out;
+  background: var(--theme-orange);
+
+  &:hover {
+    background: var(--theme-dark-blue);
+  }
+}

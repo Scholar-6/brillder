@@ -19,10 +19,10 @@
       color: var(--theme-dark-blue);
       z-index: 9999;
       svg {
+        stroke-width: 2;
         padding: 1.5vw;
         height: 6vw;
         width: 6vw;
-        transform: scale(-1, 1);
       }
     }
     .brick-icons {
