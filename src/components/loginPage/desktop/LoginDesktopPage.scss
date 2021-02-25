@@ -43,7 +43,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 11;
     display: flex;
     flex-direction: column;
     background: #12326a;
@@ -51,6 +50,7 @@
     height: 100%;
     padding-top: 12.4vh;
     transition: all 500ms ease-out;
+    z-index: 11;
     &.right {
       position: absolute;
       left: 55vw;
@@ -165,7 +165,7 @@
     left: 45vw;
     $top: 24.5%;
     display: relative;
-    z-index: 12;
+    z-index: 10;
     .container {
       height: 100%;
       display: flex;
