@@ -650,7 +650,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         }
       }
     } else {
-      this.props.history.push(map.ProposalSubject);
+      this.props.history.push(map.ProposalBase);
     }
   }
 

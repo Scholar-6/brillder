@@ -257,7 +257,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   creatingBrick() {
     this.props.forgetBrick();
-    this.props.history.push(map.ProposalSubject);
+    this.props.history.push(map.ProposalBase);
   }
 
   renderExpandedBrick(brick: Brick) {
