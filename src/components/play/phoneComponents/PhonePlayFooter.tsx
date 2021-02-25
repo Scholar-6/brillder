@@ -72,6 +72,10 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     return history.location.pathname.slice(-6) === '/intro';
   }
 
+  const isFinalStep = () => {
+    return history.location.pathname.slice(-10) === '/finalStep';
+  }
+
   const renderPopups = () => {
     let canSee = false;
     try {
