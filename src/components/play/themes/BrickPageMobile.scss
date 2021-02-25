@@ -1222,3 +1222,33 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     }
   }
 }
+
+// finalStep page
+.brick-row-container.complete-container {
+  .introduction-page {
+    h2 {
+      width: 100%;
+      font-family: $font-family-bold;
+      text-align: center;
+    }
+    .share-column {
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      justify-content: center;
+      svg {
+        width: 20vw !important;
+        height: 20vw !important;
+      }
+      .link-text {
+        font-size: 5vw !important;
+      }
+    }
+  }
+}
+
+.play-preview-pages .sorted-row .brick-row-container .brick-container.final-step-page p {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  font-size: 5vw !important;
+}
