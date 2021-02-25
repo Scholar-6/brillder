@@ -10,6 +10,7 @@ import EndingStepper from "./EndingStepper";
 import Clock from "../baseComponents/Clock";
 import { getPlayPath, getAssignQueryString } from "../service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isPhone } from "services/phone";
 
 interface EndingState {
   oldScore: number;
@@ -195,6 +196,14 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     );
   }
 
+  renderPhoneButton() {
+    return (
+      <div className="action-footer mobile-footer-fixed-buttons">
+        <SpriteIcon name="arrow-right-circle" className="mobile-next-button" onClick={this.props.move} />
+      </div>
+    );
+  }
+
   renderStepper() {
     return (
       <EndingStepper
@@ -252,7 +261,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                 </div>
               </div>
               {this.renderProgressBars()}
-              {this.renderFooter()}
+              {isPhone() ? this.renderPhoneButton() : this.renderFooter()}
             </div>
           </div>
         </Hidden>
