@@ -17,6 +17,14 @@ import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDi
 import ShareDialog from '../finalStep/dialogs/ShareDialog';
 import LinkDialog from '../finalStep/dialogs/LinkDialog';
 import LinkCopiedDialog from '../finalStep/dialogs/LinkCopiedDialog';
+import InviteDialog from '../finalStep/dialogs/InviteDialog';
+import InvitationSuccessDialog from '../finalStep/dialogs/InvitationSuccessDialog';
+
+interface InviteResult {
+  isOpen: boolean;
+  accessGranted: boolean;
+  name: string;
+}
 
 interface FooterProps {
   brick: Brick;
@@ -35,7 +43,11 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
   const [linkOpen, setLink] = React.useState(false);
   const [linkSuccess, setLinkSuccess] = React.useState(false);
   const [invite, setInvite] = React.useState(false);
-  const [inviteSuccess, setInviteSuccess] = React.useState(false);
+  const [inviteResult, setInviteResult] = React.useState({
+    isOpen: false,
+    accessGranted: false,
+    name: ''
+  } as InviteResult);
 
   const [assign, setAssign] = React.useState(false);
   const [assignItems, setAssignItems] = React.useState([] as any[]);
@@ -64,6 +76,11 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     let canSee = false;
     try {
       canSee = checkTeacherOrAdmin(props.user);
+    } catch { }
+
+    let isAuthor = false;
+    try {
+      isAuthor = brick.author.id === props.user.id;
     } catch { }
 
     const link = `/play/brick/${brick.id}/intro`;
@@ -130,6 +147,18 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
       <LinkCopiedDialog
         isOpen={linkSuccess}
         close={() => setLinkSuccess(false)}
+      />
+      <InviteDialog
+        canEdit={true} brick={brick} isOpen={invite} hideAccess={true} isAuthor={isAuthor}
+        submit={name => {
+          setInviteResult({ isOpen: true, name, accessGranted: false });
+        }}
+        close={() => setInvite(false)}
+      />
+      <InvitationSuccessDialog
+        isAuthor={isAuthor}
+        isOpen={inviteResult.isOpen} name={inviteResult.name} accessGranted={inviteResult.accessGranted}
+        close={() => setInviteResult({isOpen: false, name: '', accessGranted: false})}
       />
     </div>
   }
