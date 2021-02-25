@@ -163,8 +163,17 @@ const QuestionComponents = ({
         return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Image, value: '', id: generateId() }));
       case QuestionComponentTypeEnum.Sound:
         return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Sound, value: '', id: generateId() }));
-      //case QuestionComponentTypeEnum.Graph:
-      //  return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Graph, value: null, id: generateId() }));
+      case QuestionComponentTypeEnum.Graph:
+       return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Graph, value: new Y.Map(Object.entries({
+          graphSettings: new Y.Map(Object.entries({
+            showSidebar: false,
+            showSettings: false,
+            allowPanning: false,
+            trace: false,
+            pointsOfInterest: false,
+          })),
+          graphState: undefined,
+       })), id: generateId() }));
     }
   }
 
