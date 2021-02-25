@@ -269,10 +269,13 @@ const setMobilePlayButtonStyle = (iframe: any) => {
     div.style.marginLeft = '0';
     div.style.width = '100%';
     div.style.height = '80%';
+
     const button = innerDoc.getElementsByTagName("button")[0];
     button.style.maxWidth = '76vw';
     button.style.padding = '0';
     button.style.paddingLeft = '0';
+
+    // make button full size and position
     const btnContent = button.getElementsByClassName("u-inlineBlock")[0];
     btnContent.style.display = 'flex';
     btnContent.style.alignItems = 'center';
@@ -281,10 +284,18 @@ const setMobilePlayButtonStyle = (iframe: any) => {
     btnContent.style.height = '100vw';
     btnContent.style.padding = '0';
     btnContent.style.paddingRight = "0";
+
     const helpText = innerDoc.getElementsByClassName("label-3kk12");
     helpText[0].style.display = 'none';
+
+    // make icon fyll size
     const icon = innerDoc.getElementsByTagName('svg')[0];
     icon.style.height = '100%';
     icon.style.width = '100%';
+
+    // hide icon white circle
+    let g = icon.getElementById("Layer_4");
+    let whiteCircle = g.children[g.children.length - 1];
+    whiteCircle.style.fillOpacity = '0';
   } catch { }
 }
