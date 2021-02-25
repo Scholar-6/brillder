@@ -127,6 +127,10 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           .phone-stepper-head {
             text-align: left;
             font-size: 6vw;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 90vw;
             font-family: $font-family-regular;
             color: var(--theme-dark-blue);
             margin-left: 4vw;
@@ -932,6 +936,25 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
 }
 
+// phone menu in play
+.phone-down-play-menu {
+  .MuiPaper-root.MuiMenu-paper.MuiPopover-paper {
+    bottom: 22vw !important;
+    left: auto !important;
+    right: 4vw !important;
+    top: calc(100% - 20vw - 26vw) !important;
+    .MuiList-root {
+      padding: 0 !important;
+    }
+    .MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button {
+      padding: 1vw 10vw !important;
+      line-height: 1 !important;
+      min-height: 12vw !important;
+      font-size: 8vw !important;
+    }
+  }
+}
+
 // #2782 prev and next button for mobile in play
 .action-footer.mobile-footer-fixed-buttons {
   z-index: 299999;
@@ -1107,6 +1130,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       flex: 0 1 auto !important;
       .synthesis-title {
         color: var(--theme-dark-blue);
+        font-family: $font-family-bold;
         margin-left: 1.5vw;
       }
     }
@@ -1154,6 +1178,39 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       .question-live-play.review-content {
         overflow: visible !important;
       }
+    }
+  }
+}
+
+// assign brick to class or student dialog styles
+.MuiDialog-root.dialog-box.light-blue.assign-dialog {
+  .dialog-header {
+    > div {
+      width: 100% !important;
+    }
+    input {
+      font-size: 7vw !important;
+    }
+    .MuiAutocomplete-root .MuiChip-label {
+      font-size: 6vw !important;
+    }
+    .MuiSvgIcon-root.MuiChip-deleteIcon {
+      width: 7vw !important;
+      height: 7vw !important;
+      margin-right: 1vw;
+    }
+  }
+  .dialog-footer {
+    .btn {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    .label {
+      font-size: 7vw !important;
+    }
+    .svg {
+      width: 7vw;
+      height: 7vw;
     }
   }
 }
