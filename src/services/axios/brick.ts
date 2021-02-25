@@ -165,6 +165,18 @@ export const returnToEditor = async (brickId: number) => {
   }
 }
 
+/**
+ * return false or null if error. brick if success
+ * @param brickId BrickId to adapt
+ */
+export const adaptBrick = async (brickId: number) => {
+  try {
+    const copyBrick = await post<Brick>(`/brick/adapt/${brickId}`, {});
+    return copyBrick;
+  } catch {
+    return false;
+  }
+}
 
 export default {
   sendToPublisher

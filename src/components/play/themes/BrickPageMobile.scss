@@ -127,6 +127,10 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           .phone-stepper-head {
             text-align: left;
             font-size: 6vw;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 90vw;
             font-family: $font-family-regular;
             color: var(--theme-dark-blue);
             margin-left: 4vw;
@@ -909,15 +913,20 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 // play phone footer
 .play-preview-pages {
   .phone-play-footer {
-    display: flex;
-    align-items: center;
-    z-index: 199999;
+    z-index: 19999;
     $height: 20vw;
     position: absolute;
     bottom: 0;
     background: var(--tab-gray);
-    height: $height;
+    height: 30vw;
     width: 100%;
+    > div {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      bottom: 0;
+      height: 20vw;
+    }
     svg {
       stroke-width: 2;
       color: var(--theme-dark-blue);
@@ -928,6 +937,28 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     svg.rotate-90 {
       color: var(--theme-orange);
       transform: rotate(90deg);
+    }
+  }
+}
+
+// phone menu in play
+.phone-down-play-menu {
+  .MuiPaper-root {
+    width: 55vw !important;
+  }
+  .MuiPaper-root.MuiMenu-paper.MuiPopover-paper {
+    bottom: 20vw !important;
+    left: auto !important;
+    right: 0 !important;
+    background: var(--tab-gray) !important;
+    .MuiList-root {
+      padding: 0 !important;
+    }
+    .MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button {
+      padding: 1vw 10vw !important;
+      line-height: 1 !important;
+      min-height: 12vw !important;
+      font-size: 8vw !important;
     }
   }
 }
@@ -1099,7 +1130,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 // introduction flexbox
 .play-preview-pages .brick-container {
-  height: calc(100% - 20vw) !important;
+  height: calc(100% - 30vw) !important;
   .introduction-page {
     display: flex !important;
     flex-flow: column;
@@ -1107,6 +1138,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       flex: 0 1 auto !important;
       .synthesis-title {
         color: var(--theme-dark-blue);
+        font-family: $font-family-bold;
         margin-left: 1.5vw;
       }
     }
@@ -1155,5 +1187,79 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         overflow: visible !important;
       }
     }
+  }
+}
+
+// assign brick to class or student dialog styles
+.MuiDialog-root.dialog-box.light-blue.assign-dialog {
+  .dialog-header {
+    > div {
+      width: 100% !important;
+    }
+    input {
+      font-size: 7vw !important;
+    }
+    .MuiAutocomplete-root .MuiChip-label {
+      font-size: 6vw !important;
+    }
+    .MuiSvgIcon-root.MuiChip-deleteIcon {
+      width: 7vw !important;
+      height: 7vw !important;
+      margin-right: 1vw;
+    }
+  }
+  .dialog-footer {
+    .btn {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    .label {
+      font-size: 7vw !important;
+    }
+    .svg {
+      width: 7vw;
+      height: 7vw;
+    }
+  }
+}
+
+// finalStep page
+.brick-row-container.complete-container {
+  .introduction-page {
+    h2 {
+      width: 100%;
+      font-family: $font-family-bold;
+      text-align: center;
+    }
+    .share-column {
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      justify-content: center;
+      svg {
+        width: 20vw !important;
+        height: 20vw !important;
+      }
+      .link-text {
+        font-size: 5vw !important;
+      }
+    }
+  }
+}
+
+.play-preview-pages .sorted-row .brick-row-container .brick-container.final-step-page p {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  font-size: 5vw !important;
+}
+
+// short answer .ck-editor
+.short-answer-input .document-editor {
+  .ck-editor {
+    height: 20vw !important;
+    width: calc(100% - 10vw) !important;
+  }
+  .ck-toolbar {
+    width: 10vw !important;
   }
 }

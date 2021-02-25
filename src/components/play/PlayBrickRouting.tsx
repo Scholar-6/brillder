@@ -273,6 +273,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const renderPhoneFooter = () => {
     return <PhonePlayFooter
       brick={brick}
+      user={props.user}
       history={props.history}
       mode={mode}
       setMode={setMode}
