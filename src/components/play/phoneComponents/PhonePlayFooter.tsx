@@ -14,6 +14,7 @@ interface FooterProps {
 }
 
 const PhonePlayFooter: React.FC<FooterProps> = (props) => {
+  const {history} = props;
   const setHighlightMode = () => {
     if (props.setMode) {
       if (props.mode === PlayMode.Highlighting) {
@@ -24,14 +25,17 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     }
   }
 
+  const isIntro = () => {
+    return history.location.pathname.slice(-6) === '/intro';
+  }
 
   return <div className="phone-play-footer">
     <SpriteIcon name="" />
-    <SpriteIcon name="arrow-left-circle" onClick={() => props.history.push(map.ViewAllPage + `?subjectId=${props.brick.subject?.id}`)} />
-    <SpriteIcon name="file-text" onClick={() => props.history.push(map.playIntro(props.brick.id))} />
+    <SpriteIcon name="corner-up-left" onClick={() => history.push(map.ViewAllPage + `?subjectId=${props.brick.subject?.id}`)} />
+    {isIntro() ? <SpriteIcon name="" /> : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(props.brick.id))} /> }
     <SpriteIcon name="highlighter" onClick={setHighlightMode} />
     <SpriteIcon name="" onClick={() => {}} />
-    <SpriteIcon name="more" className="rotate-90" onClick={() => alert('good')} />
+    <SpriteIcon name="more" className="rotate-90" onClick={() => {}} />
   </div>;
 }
 
