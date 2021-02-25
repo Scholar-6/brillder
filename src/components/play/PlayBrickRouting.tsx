@@ -42,6 +42,7 @@ import { User } from "model/user";
 import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
+import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
 
 
 function shuffle(a: any[]) {
@@ -269,6 +270,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setSearchString(v);
   }
 
+  const renderPhoneFooter = () => {
+    return <PhonePlayFooter
+      brick={brick}
+      user={props.user}
+      history={props.history}
+      mode={mode}
+      setMode={setMode}
+    />;
+  }
+
   const renderHead = () => {
     let isMobileHidden = false;
     const live = location.pathname.search("/live");
@@ -301,6 +312,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       />
     );
   };
+
   const renderRouter = () => {
     return (
       <Switch>
@@ -394,7 +406,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     <React.Suspense fallback={<></>}>
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
       <div className="play-preview-pages">
-        {renderHead()}
+        {(isMobile && !(isIPad13 || isTablet))
+          ? renderPhoneFooter()
+          : renderHead()
+        }
         <div className={className}>
           <PlayLeftSidebar
             history={props.history}

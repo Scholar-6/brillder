@@ -56,14 +56,14 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         .introduction-page {
           font-family: $font-family-regular;
           position: relative;
-          height: calc(100vh - 60px) !important;
+          height: 100% !important;
           // overflow-y: hidden !important;
           .intro-desktop-title {
             width: 100vw;
             text-align: center;
             display: block;
             margin-top: 2vh;
-            margin-bottom: 3vh;
+            margin-bottom: 0;
             font-family: $font-family-black;
             font-size: 3vh !important;
             max-width: 90vw !important;
@@ -124,12 +124,16 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               }
             }
           }
-          .heading {
-            text-align: center;
+          .phone-stepper-head {
+            text-align: left;
             font-size: 6vw;
-            font-family: $font-family-bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 90vw;
+            font-family: $font-family-regular;
             color: var(--theme-dark-blue);
-            margin-left: 1.5vw;
+            margin-left: 4vw;
           }
           .stepper {
             width: 100%;
@@ -203,7 +207,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             align-items: center;
             padding: 4vw;
             position: relative;
-            min-height: 20vh;
             > .intro-header {
               position: absolute;
               right: 0vw;
@@ -563,7 +566,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             .intro-text-row {
               .stepper {
                 flex-direction: row !important;
-                background-color: var(--solitude-light) !important;
                 padding: 2vw;
                 .step {
                   font-size: 4vw !important;
@@ -813,7 +815,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     .round-icon {
       border-radius: 50%;
       margin: 0 1.8vw 0 1vw;
-      overflow: hidden;
       position: relative;
       transition: 500ms transform ease-in-out;
       width: 6.9vw;
@@ -877,7 +878,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   max-width: 47.3vw;
   color: var(--theme-dark-blue);
   margin-top: 0;
-  height: 5vw;
   margin-bottom: 0;
   text-align: left;
 }
@@ -895,5 +895,371 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 .mobile-next {
   .svg {
     margin-left: 0;
+  }
+}
+
+// only review
+.play-preview-pages .sorted-row .review-page {
+    .stepper {
+      .step {
+        svg {
+          display: none !important;
+        }
+      }
+  }
+}
+
+
+// play phone footer
+.play-preview-pages {
+  .phone-play-footer {
+    z-index: 19999;
+    $height: 20vw;
+    position: absolute;
+    bottom: 0;
+    background: var(--tab-gray);
+    height: 30vw;
+    width: 100%;
+    > div {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      bottom: 0;
+      height: 20vw;
+    }
+    svg {
+      stroke-width: 2;
+      color: var(--theme-dark-blue);
+      width: calc(100% / 7);
+      height: $height / 1.6;
+    }
+
+    svg.rotate-90 {
+      color: var(--theme-orange);
+      transform: rotate(90deg);
+    }
+  }
+}
+
+// phone menu in play
+.phone-down-play-menu {
+  .MuiPaper-root {
+    width: 55vw !important;
+  }
+  .MuiPaper-root.MuiMenu-paper.MuiPopover-paper {
+    bottom: 20vw !important;
+    left: auto !important;
+    right: 0 !important;
+    background: var(--tab-gray) !important;
+    .MuiList-root {
+      padding: 0 !important;
+    }
+    .MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button {
+      padding: 1vw 10vw !important;
+      line-height: 1 !important;
+      min-height: 12vw !important;
+      font-size: 8vw !important;
+    }
+  }
+}
+
+// #2782 prev and next button for mobile in play
+.action-footer.mobile-footer-fixed-buttons {
+  z-index: 299999;
+  position: fixed;
+  bottom: 0 !important;
+  right: 0 !important;
+  width: calc(100% / 7) !important;
+  overflow: visible !important;
+  .mobile-next-button, .mobile-back-button {
+    z-index: 299999;
+    position: fixed;
+    bottom: 0 !important;
+    width: calc(100% / 7) !important;
+    height: 20vw !important;
+  }
+  .mobile-next-button {
+    right: 2vw !important;
+  }
+  .mobile-back-button {
+    right: calc(100% / 7 * 2 - 2vw) !important;
+  }
+}
+
+// stepper in play
+.play-preview-pages .sorted-row .live-page,
+.play-preview-pages .sorted-row .review-page {
+  $stepper-height: 25vw;
+  $step-height: 10vw;
+  $step-container-width: 12vw;
+  .introduction-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 0 !important;
+    width: 100%;
+    height: 0 !important;
+  }
+  .intro-text-row {
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 0 !important;
+    width: 100%;
+    height: $stepper-height;
+    background: var(--tab-gray) !important;
+    padding-left: 2.2vw !important;
+    padding-right: 2.2vw !important;
+  }
+  .stepper {
+    width: 100%;
+    margin-top: 0.7vw;
+    background: inherit !important;
+    height: calc(#{$step-height} + 0.7vw) !important;
+    padding: 0 !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: block !important;
+    white-space: nowrap;
+
+    .blue-circle-main-container {
+      display: none;
+    }
+  
+    .step {
+      display: inline-block !important;
+      width: $step-container-width;
+      padding-left: calc((#{$step-container-width} - #{$step-height}) / 2);
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $step-height !important;
+        height: $step-height;
+        border-radius: 50%;
+      }
+      &.completed {
+        span {
+          color: var(--white);
+          background: var(--blue);
+        }
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+      &.success {
+        span {
+          color: var(--tab-gray);
+          background: var(--theme-green);
+        }
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+      &.failed {
+        span {
+          color: var(--tab-gray);
+          background: var(--theme-orange);
+        }
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+      &.current {
+        span {
+          color: var(--white);
+          background: var(--theme-dark-blue);
+        }
+        .underline {
+          position: absolute;
+          bottom: -0.5vw;
+          width: $step-height;
+          display: flex;
+          justify-content: center;
+          > div {
+            border-radius: 0.4vw;
+            width: 1.3vw;
+            height: 0.2vw;
+            background: var(--theme-dark-blue);
+          }
+        }
+        &.success .underline > div {
+          background: var(--theme-green);
+        }
+        &.failed .underline > div {
+          background: var(--theme-orange);
+        }
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+    .prep-step {
+      display: none !important;
+    }
+
+    // scroll buttons
+    $scroll-button-size: 2vw;
+
+    .scroll-back-button, .scroll-next-button {
+      position: absolute;
+      top: 0;
+      width: 2.5vw;
+      height: $stepper-height;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      svg {
+        cursor: pointer;
+        width: $scroll-button-size;
+        height: $scroll-button-size;
+      }
+    }
+    .scroll-back-button {
+      left: 0;
+    }
+    .scroll-next-button {
+      right: 0;
+    }
+  }
+  .introduction-content {
+    margin-top: 25vw !important;
+  }
+}
+
+// introduction flexbox
+.play-preview-pages .brick-container {
+  height: calc(100% - 30vw) !important;
+  .introduction-page {
+    display: flex !important;
+    flex-flow: column;
+    .intro-header {
+      flex: 0 1 auto !important;
+      .synthesis-title {
+        color: var(--theme-dark-blue);
+        font-family: $font-family-bold;
+        margin-left: 1.5vw;
+      }
+    }
+    .introduction-info {
+      flex: 0 1 auto;
+    }
+    .introduction-content {
+      height: auto !important;
+      flex: 0 1 auto;
+      .expand-title {
+        margin-bottom: 2vh;
+      }
+      .expanded-text.prep-box {
+        margin-bottom: 0 !important;
+      }
+    }
+  }
+}
+
+// live flexbox 
+.play-preview-pages .brick-row-container .brick-container.live-page {
+  .introduction-page {
+    .introduction-info {
+      flex: 0 1 25vw !important;
+    }
+    .introduction-content {
+      flex: 0 1 calc(100% - 25vw) !important;
+      margin-top: 0 !important;
+      .question-live-play.review-content {
+        overflow: visible !important;
+      }
+    }
+  }
+}
+
+// review flexbox
+.play-preview-pages .brick-row-container .brick-container.review-page {
+  .introduction-page {
+    .intro-header {
+      flex: 0 1 25vw !important;
+    }
+    .introduction-content {
+      flex: 0 1 calc(100% - 25vw) !important;
+      margin-top: 0 !important;
+      .question-live-play.review-content {
+        overflow: visible !important;
+      }
+    }
+  }
+}
+
+// assign brick to class or student dialog styles
+.MuiDialog-root.dialog-box.light-blue.assign-dialog {
+  .dialog-header {
+    > div {
+      width: 100% !important;
+    }
+    input {
+      font-size: 7vw !important;
+    }
+    .MuiAutocomplete-root .MuiChip-label {
+      font-size: 6vw !important;
+    }
+    .MuiSvgIcon-root.MuiChip-deleteIcon {
+      width: 7vw !important;
+      height: 7vw !important;
+      margin-right: 1vw;
+    }
+  }
+  .dialog-footer {
+    .btn {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    .label {
+      font-size: 7vw !important;
+    }
+    .svg {
+      width: 7vw;
+      height: 7vw;
+    }
+  }
+}
+
+// finalStep page
+.brick-row-container.complete-container {
+  .introduction-page {
+    h2 {
+      width: 100%;
+      font-family: $font-family-bold;
+      text-align: center;
+    }
+    .share-column {
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      justify-content: center;
+      svg {
+        width: 20vw !important;
+        height: 20vw !important;
+      }
+      .link-text {
+        font-size: 5vw !important;
+      }
+    }
+  }
+}
+
+.play-preview-pages .sorted-row .brick-row-container .brick-container.final-step-page p {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  font-size: 5vw !important;
+}
+
+// short answer .ck-editor
+.short-answer-input .document-editor {
+  .ck-editor {
+    height: 20vw !important;
+    width: calc(100% - 10vw) !important;
+  }
+  .ck-toolbar {
+    width: 10vw !important;
   }
 }

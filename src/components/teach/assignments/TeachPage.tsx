@@ -116,8 +116,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async loadClasses() {
-    const classrooms = await getAllClassrooms() as TeachClassroom[] | null;
+    let classrooms = await getAllClassrooms() as TeachClassroom[] | null;
     if (classrooms) {
+      classrooms = classrooms.filter(c => c.subjectId);
       this.setState({ classrooms, isLoaded: true });
       return classrooms;
     } else {

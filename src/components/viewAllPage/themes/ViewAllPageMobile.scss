@@ -175,6 +175,13 @@
     position: absolute;
   }
 
+  .bricks-no-found {
+    text-align: center;
+    width: 100%;
+    font-size: 9vw;
+    color: var(--theme-dark-blue);
+  }
+
   .main-title {
     @extend %transitionAll300;
     max-width: 55vw;
@@ -240,7 +247,7 @@
   }
 
   .bricks-list-container {
-    height: calc(100vh - 46vh - 5vw - 2.6vh);
+    height: calc(100vh - 39.5vh - 6vw - 5vw - 60px);
     overflow-y: scroll;
   }
 }
@@ -256,6 +263,7 @@
         color: var(--theme-dark-blue);
         text-align: center;
         position: absolute;
+        top: 5%;
         width: 100vw;
         font-size: 5vw;
         font-family: $font-family-bold;
@@ -298,18 +306,55 @@
 // bricks list
 .main-listing.dashboard-page .bricks-list-container {
   padding-top: 0 !important;
+  &.no-bottom-padding {
+    padding-bottom: 0 !important;
+  }
   .brick-container {
     margin-bottom: 0 !important;
     padding: 0 !important;
     .short-description {
       padding: 0 4vw !important;
       .short-brick-info {
+        max-width: 78vw !important;
         padding-top: 1.5vw;
         padding-bottom: 1.5vw;
+
+        .key-words-play {
+          max-width: 78vw;
+          display: block;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
       .label-circle-text {
         font-size: 6vw !important;
       }
     }
+  }
+  .short-description.subject {
+    font-size: 5vw !important;
+    padding-top: 1vh !important;
+    padding-bottom: 1vh !important;
+    border-top: 1px solid var(--tab-gray);
+    border-bottom: 1px solid var(--tab-gray);
+
+    .left-brick-circle {
+      width: 5vw !important;
+      height: 5vw !important;
+    }
+
+    span {
+      margin-left: 5vw;
+    }
+  }
+}
+
+.mobile-category .expanded-mobile-brick-info {
+  .key-words-play {
+    max-width: 60vw;
+    display: block;
+    overflow:hidden;
+    text-overflow: ellipsis;
   }
 }

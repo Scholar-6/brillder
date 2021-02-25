@@ -6,11 +6,9 @@ import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 import { User } from "model/user";
 import { getAssignmentIcon } from "components/services/brickService";
 
-import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageHeadWithMenu, {
   PageEnum,
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 
@@ -56,10 +54,10 @@ class MobileLearn extends Component<Props> {
   }
 
   renderMobileBricks(expandedBrick: AssignmentBrick | undefined) {
-    const {assignments} = this.props;
     if (expandedBrick) {
       return this.renderExpandedBrick(expandedBrick);
     }
+    const assignments = this.props.assignments.sort((a, b) => new Date(a.brick.updated).getTime() - new Date(b.brick.updated).getTime());
     let bricksList = [];
     for (let i = 0; i < assignments.length; i++) {
       const brick = assignments[i].brick;
@@ -137,7 +135,8 @@ class MobileLearn extends Component<Props> {
 
 
   render() {
-    const {history, assignments} = this.props;
+    const assignments = this.props.assignments.sort((a, b) => a.status - b.status);
+    const {history} = this.props;
     const expandedBrick = assignments.find(a => a.brick.expanded === true);
 
     let pageClass = "main-listing dashboard-page mobile-category learn-mobile-tab";
@@ -147,12 +146,6 @@ class MobileLearn extends Component<Props> {
 
     return (
       <div className={pageClass}>
-        <div className="page-navigation">
-          <div className="btn btn-transparent glasses svgOnHover">
-            <SpriteIcon name="glasses" className="w100 h100 active text-theme-dark-blue" />
-          </div>
-          <div className="breadcrumbs">New</div>
-        </div>
         <PageHeadWithMenu
           page={PageEnum.ViewAll}
           user={this.props.user}
@@ -168,12 +161,11 @@ class MobileLearn extends Component<Props> {
           <Grid item xs={9} className="brick-row-container">
             <div className="brick-row-title">
               <button className="btn btn-transparent svgOnHover" style={{width: '100vw'}}>
-                <span style={{textTransform: 'uppercase'}}>Learn</span>
-                <PrivateCoreToggle isCore={this.props.isCore} onSwitch={this.props.onCoreSwitch} />
+                <span style={{textTransform: 'uppercase'}}>Assignments</span>
               </button>
             </div>
             <div className="bricks-list-container">
-              {this.renderSortedBricks(this.props.assignments)}
+              {this.renderSortedBricks(assignments)}
             </div>
           </Grid>
         </Grid>

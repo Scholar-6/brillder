@@ -292,10 +292,9 @@ class PlayPage extends Component<PlayProps, PlayState> {
     } else {
       filters.viewAll = true;
     }
-    const finalAssignments = this.getFilteredAssignemnts(assignments);
-    const threeColumns = service.prepareThreeAssignmentRows(finalAssignments);
+    const threeColumns = service.prepareThreeAssignmentRows(assignments);
 
-    this.setState({activeClassroomId: classroomId, finalAssignments, threeColumns, filters, sortedIndex: 0});
+    this.setState({activeClassroomId: classroomId, finalAssignments: assignments, threeColumns, filters, sortedIndex: 0});
   }
 
   //#region mobile functions
