@@ -199,7 +199,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   renderPhoneButton() {
     return (
       <div className="action-footer mobile-footer-fixed-buttons">
-        <SpriteIcon name="arrow-right-circle" className="mobile-next-button" onClick={this.props.move} />
+        <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={this.props.move} />
       </div>
     );
   }

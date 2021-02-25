@@ -913,15 +913,20 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 // play phone footer
 .play-preview-pages {
   .phone-play-footer {
-    display: flex;
-    align-items: center;
-    z-index: 199999;
+    z-index: 19999;
     $height: 20vw;
     position: absolute;
     bottom: 0;
     background: var(--tab-gray);
-    height: $height;
+    height: 30vw;
     width: 100%;
+    > div {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      bottom: 0;
+      height: 20vw;
+    }
     svg {
       stroke-width: 2;
       color: var(--theme-dark-blue);
@@ -1125,7 +1130,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 // introduction flexbox
 .play-preview-pages .brick-container {
-  height: calc(100% - 20vw) !important;
+  height: calc(100% - 30vw) !important;
   .introduction-page {
     display: flex !important;
     flex-flow: column;
