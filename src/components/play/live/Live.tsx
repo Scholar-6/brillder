@@ -291,8 +291,8 @@ const LivePage: React.FC<LivePageProps> = ({
   const renderMobileButtons = () => {
     return (
       <div className="action-footer mobile-footer-fixed-buttons">
-        <SpriteIcon name="arrow-left" className="mobile-back-button" onClick={prev} />
-        <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={() => {
+        <SpriteIcon name="arrow-left-circle" className="mobile-back-button" onClick={prev} />
+        <SpriteIcon name="arrow-right-circle" className="mobile-next-button" onClick={() => {
           if (questions.length - 1 > activeStep) {
             next();
           } else {
