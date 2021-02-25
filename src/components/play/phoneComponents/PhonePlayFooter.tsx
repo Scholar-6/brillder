@@ -123,7 +123,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         setAssign(true);
         setMenu(false);
       }}>
-        Assign Birck
+        Assign Brick
       </MenuItem>
     </Menu>
     {renderPopups()}
