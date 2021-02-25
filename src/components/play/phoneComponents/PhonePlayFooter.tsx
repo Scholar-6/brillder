@@ -14,6 +14,9 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
 import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
+import ShareDialog from '../finalStep/dialogs/ShareDialog';
+import LinkDialog from '../finalStep/dialogs/LinkDialog';
+import LinkCopiedDialog from '../finalStep/dialogs/LinkCopiedDialog';
 
 interface FooterProps {
   brick: Brick;
@@ -27,8 +30,12 @@ interface FooterProps {
 }
 
 const PhonePlayFooter: React.FC<FooterProps> = (props) => {
-  const {brick} = props;
+  const { brick } = props;
   const [share, setShare] = React.useState(false);
+  const [linkOpen, setLink] = React.useState(false);
+  const [linkSuccess, setLinkSuccess] = React.useState(false);
+  const [invite, setInvite] = React.useState(false);
+  const [inviteSuccess, setInviteSuccess] = React.useState(false);
 
   const [assign, setAssign] = React.useState(false);
   const [assignItems, setAssignItems] = React.useState([] as any[]);
@@ -58,6 +65,8 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     try {
       canSee = checkTeacherOrAdmin(props.user);
     } catch { }
+
+    const link = `/play/brick/${brick.id}/intro`;
 
     return <div>
       {canSee && <div>
@@ -97,6 +106,31 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
           }}
         />
       </div>}
+      <ShareDialog
+        isOpen={share}
+        link={() => {
+          setShare(false);
+          setLink(true);
+        }}
+        invite={() => {
+          setShare(false);
+          setInvite(true);
+        }}
+        close={() => setShare(false)}
+      />
+      <LinkDialog
+        isOpen={linkOpen}
+        link={document.location.host + link}
+        submit={() => {
+          setLink(false);
+          setLinkSuccess(true);
+        }}
+        close={() => setLink(false)}
+      />
+      <LinkCopiedDialog
+        isOpen={linkSuccess}
+        close={() => setLinkSuccess(false)}
+      />
     </div>
   }
 
