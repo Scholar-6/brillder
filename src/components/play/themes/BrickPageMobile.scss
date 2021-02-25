@@ -938,11 +938,14 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 // phone menu in play
 .phone-down-play-menu {
+  .MuiPaper-root {
+    width: 55vw !important;
+  }
   .MuiPaper-root.MuiMenu-paper.MuiPopover-paper {
-    bottom: 22vw !important;
+    bottom: 20vw !important;
     left: auto !important;
-    right: 4vw !important;
-    top: calc(100% - 20vw - 26vw) !important;
+    right: 0 !important;
+    background: var(--tab-gray) !important;
     .MuiList-root {
       padding: 0 !important;
     }

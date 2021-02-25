@@ -171,7 +171,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     <SpriteIcon name="" />
     <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
     <Menu
-      className="phone-down-play-menu"
+      className="phone-down-play-menu menu-dropdown"
       keepMounted
       open={menuOpen}
       onClose={() => setMenu(false)}
