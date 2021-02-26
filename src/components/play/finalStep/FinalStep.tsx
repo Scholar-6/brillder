@@ -105,6 +105,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
       <Hidden only={['sm', 'md', 'lg', 'xl']}>
         <div className="brick-container mobile-final-step-page final-step-page">
           <div className="introduction-page">
+            <div className="top-icon-container">
+              <div className="icon-background">
+                <SpriteIcon name="star" />
+              </div>
+            </div>
             <p>Well done for completing</p>
             <p>“{brick.title}”!</p>
             {renderActionColumns()}

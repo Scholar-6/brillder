@@ -1245,15 +1245,34 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 .play-preview-pages .sorted-row .brick-row-container .brick-container.final-step-page {
   .introduction-page {
     margin-top: 5vh !important;
-  }
-  p {
-    padding-left: 2vw;
-    padding-right: 2vw;
-    font-size: 8vw !important;
-    margin-top: 0 !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    .top-icon-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 5vh;
+      .icon-background {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 15vw;
+        height: 15vw;
+        border-radius: 50%;
+        background: var(--theme-green);
+      }
+      svg {
+        width: 10vw;
+        height: 10vw;
+        color: var(--white);
+      }
+    }
+    p {
+      padding-left: 2vw;
+      padding-right: 2vw;
+      font-size: 8vw !important;
+      margin-top: 0 !important;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
 
