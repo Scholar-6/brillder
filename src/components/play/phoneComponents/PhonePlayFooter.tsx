@@ -174,10 +174,12 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
 
   return <div className="phone-play-footer">
     <div>
+      {/* Requires 6 SpriteIcons to keep spacing correct  */}
       <SpriteIcon name="" />
       <SpriteIcon name="corner-up-left" onClick={() => history.push(map.ViewAllPage + `?subjectId=${brick.subject?.id}`)} />
       {(isIntro()) ? <SpriteIcon name="" /> : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id))} />}
-      <SpriteIcon name="highlighter" onClick={setHighlightMode} />
+      {/* <SpriteIcon name="highlighter" onClick={setHighlightMode} /> */}
+      <SpriteIcon name="" />
       <SpriteIcon name="" />
       <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
       <Menu
