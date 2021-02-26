@@ -1272,3 +1272,10 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     }
   }
 }
+// introduction flex box
+.real-introduction-page {
+  height: calc(100vh - 30vw) !important;
+  .brick-container {
+    height: 100% !important;
+  }
+}
