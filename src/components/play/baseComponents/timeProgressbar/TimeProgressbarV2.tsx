@@ -10,9 +10,8 @@ interface CounterProps {
   isLive?: boolean;
   isIntro?: boolean;
   brickLength: BrickLengthEnum;
-  endTime: any;
+  startTime: any;
   onEnd(): void;
-  setEndTime(time: Moment): void;
 }
 
 const TimeProgressbar: React.FC<CounterProps> = (props) => {
@@ -59,19 +58,18 @@ const TimeProgressbar: React.FC<CounterProps> = (props) => {
 
   const getEndTime = () => {
     let duration = getDuration();
-    const endTime = moment().add(duration);
+    let endTime = moment().add(duration);
+    if (startTime) {
+      endTime = startTime.add(duration);
+    }
     return endTime;
   }
 
-  let {endTime} = props;
-
+  let {startTime} = props;
+  
   const duration = getDuration().asMilliseconds();
+  let endTime = getEndTime();
 
-  console.log('wefwef')
-
-  if (!props.endTime) {
-    endTime = getEndTime();
-  }
 
   return <ProgressbarCountdown onEnd={props.onEnd} duration={duration} endTime={endTime} />;
 };

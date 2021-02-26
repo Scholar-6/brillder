@@ -55,6 +55,7 @@ import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSub
 import PublicTerms from 'components/terms/PublicTerms';
 import MobileUsernamePage from 'components/onboarding/mobileUsernamePage/MobileUsernamePage';
 import RotateIPadInstruction from 'components/baseComponents/rotateInstruction/RotateIPadInstruction';
+import Warning from 'components/baseComponents/rotateInstruction/Warning';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -132,7 +133,7 @@ const App: React.FC<AppProps> = props => {
   }
 
   if (isIPad13) { 
-    //return <Warning />
+    return <Warning />
   } else if (isMobile && horizontal) {
     return <RotateInstruction />;
   } 
