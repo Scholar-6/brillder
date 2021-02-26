@@ -1249,13 +1249,13 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 }
 
 // short answer .ck-editor
-.short-answer-input .document-editor {
+.question-unique-play.short-answer-live .short-answer-input .document-editor {
   .ck-editor {
-    height: 20vw !important;
+    height: 40vw !important;
     width: calc(100% - 15vw) !important;
   }
   .ck-toolbar {
-    width: 15vw !important;
+    width: 30vw !important;
   }
 }
 
