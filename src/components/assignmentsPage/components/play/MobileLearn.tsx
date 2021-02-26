@@ -139,7 +139,7 @@ class MobileLearn extends Component<Props> {
     const {history} = this.props;
     const expandedBrick = assignments.find(a => a.brick.expanded === true);
 
-    let pageClass = "main-listing dashboard-page mobile-category learn-mobile-tab";
+    let pageClass = "main-listing dashboard-page mobile-category learn-mobile-tab student-mobile-assignments-page";
     if (expandedBrick) {
       pageClass += " expanded"
     }
