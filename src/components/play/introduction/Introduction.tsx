@@ -346,8 +346,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             <div className="introduction-content">
               {renderBriefTitle()}
               {renderBriefExpandText()}
-              {renderPrepTitle()}
-              {renderPrepExpandText()}
+              {state.prepExpanded && renderPrepTitle()}
+              {state.prepExpanded && renderPrepExpandText()}
             </div>
           </div>
         </Hidden>
