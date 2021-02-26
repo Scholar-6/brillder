@@ -357,6 +357,15 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                     <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
                   </div>
                 </div>}
+              <div className="time-container">
+                <TimeProgressbar
+                  isLive={true}
+                  onEnd={onEnd}
+                  endTime={null}
+                  brickLength={props.brickLength}
+                  setEndTime={() => { }}
+                />
+              </div>
             </div>
           </Hidden>
           <SubmitAnswersDialog
