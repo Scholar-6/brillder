@@ -65,3 +65,15 @@
     }
   }
 }
+
+.cookie-policy-dialog {
+  .MuiDialog-paper {
+    height: auto !important;
+  }
+  .private-policy-content {
+    height: auto !important;
+  }
+  button {
+    margin-bottom: 2.5vh;
+  }
+}

@@ -17,6 +17,8 @@ import MathInHtml from "../baseComponents/MathInHtml";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
+import { isPhone } from "services/phone";
+import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 
 const moment = require("moment");
 interface IntroductionProps {
@@ -73,6 +75,10 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     };
   });
 
+  const hideBrief = () => {
+    setState({ ...state, briefExpanded: false });
+  }
+
   const toggleBrief = () => {
     setState({ ...state, briefExpanded: !state.briefExpanded });
   };
@@ -85,6 +91,26 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (!state.prepExpanded && state.duration) {
       let time = moment().subtract(state.duration);
       props.setStartTime(time);
+    }
+
+    // phone has diferent logic.
+    if (isPhone()) {
+      if (state.prepExpanded) {
+        setState({
+          ...state,
+          isStopped: true,
+          briefExpanded: true,
+          prepExpanded: !state.prepExpanded,
+        });
+      } else {
+        setState({
+          ...state,
+          isStopped: false,
+          briefExpanded: false,
+          prepExpanded: !state.prepExpanded,
+        });
+      }
+      return;
     }
 
     if (state.prepExpanded) {
@@ -272,7 +298,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     return (
       <div className="intro-header">
         <Hidden only={["sm", "md", "lg", "xl"]}>
-          {renderTimer()}
           {renderBrickCircle(color)}
         </Hidden>
         <div className="intro-desktop-title">{brick.title}</div>
@@ -285,7 +310,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       return (
         <div className="intro-header expanded-intro-header">
           <Hidden only={["sm", "md", "lg", "xl"]}>
-            {renderTimer()}
             <div className="flex f-align-center">
               {renderBrickCircle(color)}
               <h1>{brick.title}</h1>
@@ -335,24 +359,30 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <div className="introduction-page">
             {renderMobileHeader()}
             <div className="introduction-info">
-              {!state.prepExpanded &&
+              {!state.prepExpanded ?
                 <div>
-                  {renderTimer()}
                   <IntroductionDetails brickLength={brick.brickLength} />
                 </div>
-              }
+                : <div className="time-container">
+              <TimeProgressbarV2
+                isIntro={true}
+                onEnd={() => { }}
+                startTime={props.startTime}
+                brickLength={brick.brickLength}
+              />
+            </div>}
               {renderPlayButton()}
-            </div>
-            <div className="introduction-content">
-              {renderBriefTitle()}
-              {renderBriefExpandText()}
-              {renderPrepTitle()}
-              {renderPrepExpandText()}
-            </div>
+          </div>
+          <div className="introduction-content">
+            {renderBriefTitle()}
+            {renderBriefExpandText()}
+            {state.prepExpanded && renderPrepTitle()}
+            {state.prepExpanded && renderPrepExpandText()}
+          </div>
           </div>
         </Hidden>
-      </div>
     </div>
+    </div >
   );
 };
 
