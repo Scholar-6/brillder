@@ -28,10 +28,11 @@ const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
           setInvalid(true);
         }
       }}>
-        <input
+        <TextField
+          variant="standard"
           placeholder="Enter your email address here"
           type="email"
-          className={`base-form-input dialog-input ${emailInvalid ? 'm-input-theme-orange' : ''}`}
+          className={`dialog-input ${emailInvalid ? 'input-theme-orange' : ''}`}
           value={email}
           onChange={evt => setEmail(evt.target.value)}
         />
