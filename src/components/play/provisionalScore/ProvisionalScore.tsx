@@ -192,7 +192,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
             <div className="introduction-page">
               <div className="introduction-info">
                 <div className="intro-text-row">
-                  <span className="heading">Provisional Score</span>
+                  <span className="heading text-center">Provisional Score</span>
                   {this.renderStepper()}
                 </div>
               </div>
