@@ -303,7 +303,7 @@
   }
 }
 
-// bricks list
+// bricks list (bottom)
 .main-listing.dashboard-page .bricks-list-container {
   padding-top: 0 !important;
   &.no-bottom-padding {
@@ -329,6 +329,16 @@
       }
       .label-circle-text {
         font-size: 6vw !important;
+      }
+    }
+
+    // expanded
+    .short-description.mobile-expanded {
+      background: var(--tab-gray) !important;
+      .play-button-link {
+        svg {
+          color: var(--theme-dark-blue) !important;
+        }
       }
     }
   }
