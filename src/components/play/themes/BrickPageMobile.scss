@@ -1242,10 +1242,19 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
 }
 
-.play-preview-pages .sorted-row .brick-row-container .brick-container.final-step-page p {
-  padding-left: 2vw;
-  padding-right: 2vw;
-  font-size: 5vw !important;
+.play-preview-pages .sorted-row .brick-row-container .brick-container.final-step-page {
+  .introduction-page {
+    margin-top: 5vh !important;
+  }
+  p {
+    padding-left: 2vw;
+    padding-right: 2vw;
+    font-size: 8vw !important;
+    margin-top: 0 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 // short answer .ck-editor
