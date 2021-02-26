@@ -116,7 +116,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
             <div className="introduction-info">
               <div className="intro-text-row"></div>
             </div>
-            <ExitButton onClick={() => history.push(map.ViewAllPage)} />
+            {/* Moved to play/phoneComponents/PhonePlayFooter.tsx 
+              <ExitButton onClick={() => history.push(map.ViewAllPage)} />  */}
           </div>
         </div>
       </Hidden>
