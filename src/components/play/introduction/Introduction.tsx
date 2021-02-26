@@ -298,7 +298,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     return (
       <div className="intro-header">
         <Hidden only={["sm", "md", "lg", "xl"]}>
-          {renderTimer()}
           {renderBrickCircle(color)}
         </Hidden>
         <div className="intro-desktop-title">{brick.title}</div>
@@ -311,7 +310,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       return (
         <div className="intro-header expanded-intro-header">
           <Hidden only={["sm", "md", "lg", "xl"]}>
-            {renderTimer()}
             <div className="flex f-align-center">
               {renderBrickCircle(color)}
               <h1>{brick.title}</h1>
