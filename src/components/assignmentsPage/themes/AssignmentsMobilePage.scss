@@ -59,4 +59,9 @@
   .MuiGrid-root.sorted-row.MuiGrid-container {
     height: auto !important;
   }
+  .bricks-list-container {
+    .short-brick-info {
+      width: 80vw !important;
+    }
+  }
 }
