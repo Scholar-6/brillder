@@ -37,3 +37,17 @@
     }
   }
 }
+
+.base-form-input {
+  background: var(--white);
+}
+
+.m-input-theme-orange {
+  .MuiInputBase-root.MuiInput-root {
+    color: var(--white) !important;
+    background: var(--theme-orange) !important;
+    input {
+      color: var(--white) !important;
+    }
+  }
+}
