@@ -368,3 +368,15 @@
     text-overflow: ellipsis;
   }
 }
+
+// all subjects page height
+.dashboard-all-subjects {
+  height: calc(100% - 60px) !important;
+  .brick-row-container {
+    height: 100%;
+    .subjects-column {
+      margin: 0 !important;
+      height: 100% !important;
+    }
+  }
+}
