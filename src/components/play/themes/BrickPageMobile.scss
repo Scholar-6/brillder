@@ -1279,3 +1279,9 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     height: 100% !important;
   }
 }
+
+.youtube-video {
+  iframe {
+    height: auto !important;
+  }
+}
