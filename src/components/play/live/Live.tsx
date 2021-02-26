@@ -389,6 +389,15 @@ const LivePage: React.FC<LivePageProps> = ({
                     <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
                   </div>
                 </div>}
+                <div className="time-container">
+                    <TimeProgressbar
+                      isLive={true}
+                      onEnd={onEnd}
+                      endTime={props.endTime}
+                      brickLength={brick.brickLength}
+                      setEndTime={props.setEndTime}
+                    />
+                  </div>
             </div>
           </Hidden>
           <ShuffleAnswerDialog

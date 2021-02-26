@@ -263,6 +263,7 @@
         color: var(--theme-dark-blue);
         text-align: center;
         position: absolute;
+        top: 5%;
         width: 100vw;
         font-size: 5vw;
         font-family: $font-family-bold;
@@ -314,8 +315,17 @@
     .short-description {
       padding: 0 4vw !important;
       .short-brick-info {
+        max-width: 78vw !important;
         padding-top: 1.5vw;
         padding-bottom: 1.5vw;
+
+        .key-words-play {
+          max-width: 78vw;
+          display: block;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
       .label-circle-text {
         font-size: 6vw !important;
@@ -337,5 +347,14 @@
     span {
       margin-left: 5vw;
     }
+  }
+}
+
+.mobile-category .expanded-mobile-brick-info {
+  .key-words-play {
+    max-width: 60vw;
+    display: block;
+    overflow:hidden;
+    text-overflow: ellipsis;
   }
 }
