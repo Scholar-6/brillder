@@ -1285,3 +1285,19 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     height: auto !important;
   }
 }
+.play-preview-pages {
+  .brick-container.play-preview-panel.provisional-score-page.mobile-provisional-score {
+    .introduction-content {
+      .question-live-play {
+        overflow: hidden;
+        height: calc(100vh - 17vh - 30vw);
+      }
+    }
+  }
+  
+  .brick-container.synthesis-page.mobile-synthesis-page {
+    .synthesis-content {
+      height: auto;
+    }
+  }
+}
