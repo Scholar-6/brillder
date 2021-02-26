@@ -1309,3 +1309,11 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     }
   }
 }
+
+// only ending page scroll fix
+.play-preview-pages .sorted-row .brick-row-container .brick-container.ending-page .introduction-page .question-live-play {
+  overflow: hidden !important;
+  .circle-progress-container {
+    height: 100% !important;
+  }
+}

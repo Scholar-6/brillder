@@ -92,7 +92,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       props.setStartTime(time);
     }
 
-    // phone has diferent logic
+    // phone has diferent logic.
     if (isPhone()) {
       if (state.prepExpanded) {
         setState({
