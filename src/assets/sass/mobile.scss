@@ -110,3 +110,21 @@
     }
   }
 }
+
+.stop-cookie-tracking {
+  position: fixed;
+  bottom: 2vh;
+  right: 20vw;
+  border: none;
+  outline: none;
+  font-size: 6vw;
+  border-radius: 2vw;
+  padding: 0.5vh 2vw;
+  color: var(--white);
+  transition: all 300ms ease-out;
+  background: var(--theme-orange);
+
+  &:hover {
+    background: var(--theme-dark-blue);
+  }
+}

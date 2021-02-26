@@ -72,6 +72,10 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     return history.location.pathname.slice(-6) === '/intro';
   }
 
+  const isSynthesis = () => {
+    return history.location.pathname.slice(-10) === '/synthesis';
+  }
+
   const isFinalStep = () => {
     return history.location.pathname.slice(-10) === '/finalStep';
   }
@@ -167,11 +171,12 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     </div>
   }
 
+
   return <div className="phone-play-footer">
     <div>
       <SpriteIcon name="" />
       <SpriteIcon name="corner-up-left" onClick={() => history.push(map.ViewAllPage + `?subjectId=${brick.subject?.id}`)} />
-      {isIntro() ? <SpriteIcon name="" /> : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id))} />}
+      {(isIntro()) ? <SpriteIcon name="" /> : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id))} />}
       <SpriteIcon name="highlighter" onClick={setHighlightMode} />
       <SpriteIcon name="" />
       <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
