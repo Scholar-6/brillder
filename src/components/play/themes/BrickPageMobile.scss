@@ -1244,7 +1244,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 .play-preview-pages .sorted-row .brick-row-container .brick-container.final-step-page {
   .introduction-page {
-    margin-top: 5vh !important;
+    margin-top: 4vw !important;
     .top-icon-container {
       display: flex;
       justify-content: center;
@@ -1253,8 +1253,8 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 15vw;
-        height: 15vw;
+        width: 17vw;
+        height: 17vw;
         border-radius: 50%;
         background: var(--theme-green);
       }
