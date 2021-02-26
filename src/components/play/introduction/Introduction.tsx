@@ -17,6 +17,7 @@ import MathInHtml from "../baseComponents/MathInHtml";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
+import { isPhone } from "services/phone";
 
 const moment = require("moment");
 interface IntroductionProps {
@@ -73,6 +74,10 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     };
   });
 
+  const hideBrief = () => {
+    setState({ ...state, briefExpanded: false });
+  }
+
   const toggleBrief = () => {
     setState({ ...state, briefExpanded: !state.briefExpanded });
   };
@@ -85,6 +90,26 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (!state.prepExpanded && state.duration) {
       let time = moment().subtract(state.duration);
       props.setStartTime(time);
+    }
+
+    // phone has diferent logic
+    if (isPhone()) {
+      if (state.prepExpanded) {
+        setState({
+          ...state,
+          isStopped: true,
+          briefExpanded: true,
+          prepExpanded: !state.prepExpanded,
+        });
+      } else {
+        setState({
+          ...state,
+          isStopped: false,
+          briefExpanded: false,
+          prepExpanded: !state.prepExpanded,
+        });
+      }
+      return;
     }
 
     if (state.prepExpanded) {
