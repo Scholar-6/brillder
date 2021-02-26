@@ -8,6 +8,7 @@ const moment = require("moment");
 
 interface CounterProps {
   isLive?: boolean;
+  isIntro?: boolean;
   brickLength: BrickLengthEnum;
   endTime: any;
   onEnd(): void;
@@ -35,7 +36,20 @@ const TimeProgressbar: React.FC<CounterProps> = (props) => {
     return moment.duration(durationMins, "minutes");
   }
 
+  const getIntroDuration = () => {
+    let durationMins = 5;
+    if (props.brickLength === BrickLengthEnum.S40min) {
+      durationMins = 10;
+    } else if (props.brickLength === BrickLengthEnum.S60min) {
+      durationMins = 15;
+    }
+    return moment.duration(durationMins, "minutes");
+  }
+
   const getDuration = () => {
+    if (props.isIntro) {
+      return getIntroDuration();
+    }
     if (props.isLive) {
       return getLiveDuration();
     } else {
@@ -52,6 +66,8 @@ const TimeProgressbar: React.FC<CounterProps> = (props) => {
   let {endTime} = props;
 
   const duration = getDuration().asMilliseconds();
+
+  console.log('wefwef')
 
   if (!props.endTime) {
     endTime = getEndTime();
