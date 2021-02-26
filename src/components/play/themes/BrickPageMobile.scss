@@ -1136,11 +1136,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     flex-flow: column;
     .intro-header {
       flex: 0 1 auto !important;
-      .synthesis-title {
-        color: var(--theme-dark-blue);
-        font-family: $font-family-bold;
-        margin-left: 1.5vw;
-      }
     }
     .introduction-info {
       flex: 0 1 auto;
@@ -1261,5 +1256,19 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
   .ck-toolbar {
     width: 15vw !important;
+  }
+}
+
+// titles font size
+.play-preview-pages .brick-container {
+  .introduction-page {
+    .heading {
+      font-size: 7vw !important;
+    }
+    .synthesis-title {
+      color: var(--theme-dark-blue);
+      font-family: $font-family-bold;
+      margin-left: 1.5vw;
+    }
   }
 }
