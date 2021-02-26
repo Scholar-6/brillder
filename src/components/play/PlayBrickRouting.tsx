@@ -277,6 +277,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       history={props.history}
       mode={mode}
       setMode={setMode}
+      moveToPostPlay={moveToPostPlay}
     />;
   }
 
