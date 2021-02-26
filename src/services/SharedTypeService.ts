@@ -99,45 +99,39 @@ export const convertQuestion = (question: Question): Y.Doc => {
     return yquestion;
 };
 
-export const convertAny = (value: any): Y.Map<any> | Y.Array<any> | Y.Text | any => {
-    if(value === undefined) return undefined;
-    else if (value === null) return null;
-    else if (Array.isArray(value)) {
-        return convertArray(value);
+export const convertAny = (value: any, convertStrings: boolean = true, addId = true): Y.Map<any> | Y.Array<any> | Y.Text | any => {
+    if (value === undefined) { return undefined; } else if (value === null) { return null; } else if (Array.isArray(value)) {
+        return convertArray(value, convertStrings, addId);
     } else if (typeof(value) === "object") {
-        return convertObject(value);
-    } else if (typeof(value) === "string") {
+        return convertObject(value, convertStrings, addId);
+    } else if (typeof(value) === "string" && convertStrings) {
         return convertString(value);
     } else {
         return value;
     }
-}
+};
 
-export const convertObject = (obj: object): Y.Map<any> => {
+export const convertObject = (obj: object, convertStrings: boolean = true, addId = true): Y.Map<any> => {
     if (obj === undefined) { return undefined as any; }
     const yobject = new Y.Map();
 
     Object.entries(obj).forEach(([key, value]) => {
-        yobject.set(key, convertAny(value));
+        yobject.set(key, convertAny(value, convertStrings, addId));
     });
+
+    if (!yobject.get("id") && addId) {
+        yobject.set("id", Math.floor(Math.random() * 1024));
+    } else if (yobject.get("id") && !addId) {
+        yobject.delete("id");
+    }
 
     return yobject;
 };
 
-export const convertArray = (arr: any[]): Y.Array<any> => {
+export const convertArray = (arr: any[], convertStrings: boolean = true, addId = true): Y.Array<any> => {
     const yarray = new Y.Array();
 
-    yarray.push(arr.map((value) => {
-        if (Array.isArray(value)) {
-            return convertArray(value);
-        } else if (typeof(value) === "object") {
-            return convertObject(value);
-        } else if (typeof(value) === "string") {
-            return convertString(value);
-        } else {
-            return value;
-        }
-    }));
+    yarray.push(arr.map((value) => convertAny(value, convertStrings, addId)));
 
     return yarray;
 };
