@@ -18,7 +18,7 @@ import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 import { isPhone } from "services/phone";
-import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
+import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 
 const moment = require("moment");
 interface IntroductionProps {
@@ -366,12 +366,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   <IntroductionDetails brickLength={brick.brickLength} />
                 </div>
                 : <div className="time-container">
-              <TimeProgressbar
+              <TimeProgressbarV2
                 isIntro={true}
                 onEnd={() => { }}
-                endTime={null}
+                startTime={props.startTime}
                 brickLength={brick.brickLength}
-                setEndTime={() => { }}
               />
             </div>}
               {renderPlayButton()}

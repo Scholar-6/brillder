@@ -80,12 +80,12 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     return history.location.pathname.slice(-10) === '/finalStep';
   }
 
-  const renderPopups = () => {
-    let canSee = false;
-    try {
-      canSee = checkTeacherOrAdmin(props.user);
-    } catch { }
+  let canSee = false;
+  try {
+    canSee = checkTeacherOrAdmin(props.user);
+  } catch { }
 
+  const renderPopups = () => {
     let isAuthor = false;
     try {
       isAuthor = brick.author.id === props.user.id;
@@ -192,12 +192,13 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         }}>
           Share Brick
       </MenuItem>
+        {canSee &&
         <MenuItem onClick={() => {
           setAssign(true);
           setMenu(false);
         }}>
           Assign Brick
-      </MenuItem>
+      </MenuItem>}
       </Menu>
       {renderPopups()}
     </div>
