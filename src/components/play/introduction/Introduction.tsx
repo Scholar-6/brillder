@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 import { isPhone } from "services/phone";
+import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 
 const moment = require("moment");
 interface IntroductionProps {
@@ -360,24 +361,31 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <div className="introduction-page">
             {renderMobileHeader()}
             <div className="introduction-info">
-              {!state.prepExpanded &&
+              {!state.prepExpanded ?
                 <div>
-                  {renderTimer()}
                   <IntroductionDetails brickLength={brick.brickLength} />
                 </div>
-              }
+                : <div className="time-container">
+              <TimeProgressbar
+                isIntro={true}
+                onEnd={() => { }}
+                endTime={null}
+                brickLength={brick.brickLength}
+                setEndTime={() => { }}
+              />
+            </div>}
               {renderPlayButton()}
-            </div>
-            <div className="introduction-content">
-              {renderBriefTitle()}
-              {renderBriefExpandText()}
-              {state.prepExpanded && renderPrepTitle()}
-              {state.prepExpanded && renderPrepExpandText()}
-            </div>
+          </div>
+          <div className="introduction-content">
+            {renderBriefTitle()}
+            {renderBriefExpandText()}
+            {state.prepExpanded && renderPrepTitle()}
+            {state.prepExpanded && renderPrepExpandText()}
+          </div>
           </div>
         </Hidden>
-      </div>
     </div>
+    </div >
   );
 };
 
