@@ -7,32 +7,39 @@ import { GraphSettings } from './Graph';
 
 import './GraphDialog.scss';
 
-interface GraphDialogProps {
-  isOpen: boolean;
+interface GraphContainerProps {
   graphState: any;
-  graphSettings: GraphSettings;
-  close(): void;
   setGraphState(state: any): void;
-  setGraphSettings(settings: GraphSettings): void;
 }
 
-const GraphDialog: React.FC<GraphDialogProps> = props => {
+const GraphContainer: React.FC<GraphContainerProps> = props => {
   const graphCallback = React.useCallback(elt => {
     if(elt) {
       var calculator = Desmos.GraphingCalculator(elt, {
         fontSize: Desmos.FontSizes.VERY_SMALL,
         administerSecretFolders: true
       });
-      if(initialProps.current.graphState) {
-        calculator.setState(initialProps.current.graphState);
+      if(props.graphState) {
+        calculator.setState(props.graphState);
       }
       calculator.observeEvent('change', () => {
-        initialProps.current.setGraphState(calculator.getState());
+        props.setGraphState(calculator.getState());
       });
     }
-  }, [])
+  }, []);
 
-  const initialProps = React.useRef(props);
+  return <div className="graph-dialog-desmos" ref={graphCallback} />
+};
+
+interface GraphDialogProps {
+  isOpen: boolean;
+  graphState: any;
+  graphSettings: GraphSettings;
+  close(): void;
+  setGraphState(state: any): void;
+}
+
+const GraphDialog: React.FC<GraphDialogProps> = props => {
 
   return (
   <Dialog
@@ -40,7 +47,10 @@ const GraphDialog: React.FC<GraphDialogProps> = props => {
     onClose={props.close}
     className="dialog-box light-blue graph-dialog"
   >
-    <div className="graph-dialog-desmos" ref={graphCallback} />
+    <GraphContainer
+      graphState={props.graphState}
+      setGraphState={props.setGraphState}
+    />
   </Dialog>
   );
 };

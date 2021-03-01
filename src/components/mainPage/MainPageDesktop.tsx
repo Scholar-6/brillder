@@ -15,6 +15,7 @@ import { checkAdmin } from "components/services/brickService";
 import WelcomeComponent from './WelcomeComponent';
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
+import TermsLink from "components/baseComponents/TermsLink";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getAssignedBricks, getCurrentUserBricks } from "services/axios/brick";
 import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
@@ -76,7 +77,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     super(props);
 
     const { rolePreference } = props.user;
-
     const isStudent = rolePreference?.roleId === RolePreference.Student;
     const isBuilder = rolePreference?.roleId === RolePreference.Builder;
 
@@ -129,7 +129,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   creatingBrick() {
     clearProposal();
     this.props.forgetBrick();
-    this.props.history.push(map.ProposalSubject);
+    this.props.history.push(map.ProposalBase);
   }
 
   renderCreateButton(disabled?: boolean) {
@@ -341,9 +341,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
           notificationExpanded={this.state.notificationExpanded}
           toggleNotification={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
         />
-        <div className="policy-text">
-          <span onClick={() => this.setPolicyDialog(true)}>Privacy Policy</span>
-        </div>
+        <TermsLink history={this.props.history}/>
       </Hidden>
     );
   }

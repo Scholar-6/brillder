@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .vertical-shuffle-build {
   @extend %textCenter;
@@ -8,5 +8,10 @@
     position: relative;
     width: 100%;
     margin-bottom: 0.4vh;
+    .quill-document-editor {
+      .ql-editor {
+        padding-top: 5vh;
+      }
+    }
   }
 }

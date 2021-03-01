@@ -67,7 +67,7 @@
         font-weight: 600;
         text-transform: uppercase;
         font-family: $font-family-light;
-        transition: font-family .2s ease;
+        transition: font-family 0.2s ease;
         color: var(--theme-orange);
         .custom-tooltip {
           margin-left: -1.4vw;
@@ -76,8 +76,9 @@
           margin-top: 4.9vw;
           font-family: $font-family-regular;
         }
-        
-        .svg, .profile-image-border {
+
+        .svg,
+        .profile-image-border {
           height: 3vw;
           width: 3vw;
           margin-right: 1vw;
@@ -103,7 +104,7 @@
         }
       }
       .notifications-text {
-        margin-top: 4.3vw;//10vh;
+        margin-top: 4.3vw; //10vh;
         letter-spacing: 0.1vw;
         font-family: $font-family-light;
         font-size: 1.5vw;

@@ -22,11 +22,12 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
   }
 
   const replyType = props.getHasReplied();
+  const isValid = props.synthesis.trim().length > 0;
 
   return (
     <Grid
       className={`drag-tile ${
-        props.validationRequired && !props.synthesis ? "invalid" : ""
+        props.validationRequired && !isValid ? "invalid" : ""
         }`}
       container
       alignContent="center"

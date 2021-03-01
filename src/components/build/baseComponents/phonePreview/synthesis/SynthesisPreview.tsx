@@ -64,7 +64,7 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
     );
   }
 
-  var arr = parseSynthesisDataToArray(data.synthesis);
+  const arr = parseSynthesisDataToArray(data.synthesis);
 
   const renderMath = (data: string, i: number) => {
     return <MathJax math={data} key={i} />;

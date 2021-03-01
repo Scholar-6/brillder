@@ -1168,6 +1168,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 
+.play-preview-pages .sorted-row-expanded {
+  height: 100vh;
+}
+
 // only review
 .play-preview-pages .sorted-row.sorted-row-expanded .review-container {
   .introduction-info {

@@ -180,7 +180,7 @@ const App: React.FC<AppProps> = props => {
           component={InvestigationBuildPage}
           location={location}
         />
-        <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
+        <BuildBrickRoute path={map.ProposalBase} component={Proposal} location={location} />
         <BuildRoute path="/build/brick/:brickId" component={Proposal} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
@@ -201,8 +201,8 @@ const App: React.FC<AppProps> = props => {
         <AuthRoute path="/resetPassword" component={ResetPasswordPage} />
         <AuthRoute path={map.ActivateAccount + '/email'} component={EmailActivateAccountPage} />
         <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
-        <Route path={map.TermsPage} component={Terms} />
-        <Route path="/terms" component={PublicTerms} />
+        <Route path={map.TermsSignUp} component={Terms} />
+        <Route path={map.TermsPage} component={PublicTerms} />
 
         <Route component={AuthRedirectRoute} />
       </Switch>
