@@ -57,6 +57,8 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   let initAnswers: any[] = [];
   const [answers, setAnswers] = React.useState(initAnswers);
   const [isSubmitOpen, setSubmitAnswers] = React.useState(false);
+  const [questionScrollRef] = React.useState(React.createRef<HTMLDivElement>());
+
   const theme = useTheme();
   let playPath = getPlayPath(props.isPlayPreview, brickId);
 
@@ -119,6 +121,15 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     if (activeStep === 0) {
       return;
     }
+
+    // phone scroll to top
+    if (isPhone()) {
+      const {current} = questionScrollRef;
+      if (current) {
+        current.scrollTo({top: 0});
+      }
+    }
+
     setActiveAnswer();
     questions[activeStep].edited = true;
     setActiveStep(update(activeStep, { $set: activeStep - 1 }));
@@ -130,6 +141,14 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     questions[activeStep].edited = true;
     setActiveStep(update(activeStep, { $set: activeStep + 1 }));
     scrollToStep(activeStep + 2);
+
+    // phone scroll to top
+    if (isPhone()) {
+      const {current} = questionScrollRef;
+      if (current) {
+        current.scrollTo({top: 0});
+      }
+    }
 
     if (activeStep >= questions.length - 1) {
       setSubmitAnswers(true);
@@ -344,7 +363,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
             </div>
             <div className="introduction-info">
             </div>
-            <div className="introduction-content">
+            <div className="introduction-content" ref={questionScrollRef}>
               {questions.map(renderQuestionContainer)}
               {isPhone()
                 ? renderPhoneButtons()
