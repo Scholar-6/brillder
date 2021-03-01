@@ -4,7 +4,7 @@ import { Moment } from "moment";
 import queryString from 'query-string';
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
-import { Brick, BrickLengthEnum } from "model/brick";
+import { AcademicLevelLabels, Brick, BrickLengthEnum } from "model/brick";
 import { PlayMode } from "../model";
 import { BrickFieldNames } from 'components/build/proposal/model';
 
@@ -289,7 +289,9 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderBrickCircle = (color: string) => {
     return (
       <div className="left-brick-circle">
-        <div className="round-button" style={{ background: `${color}` }} />
+        <div className="round-button" style={{ background: `${color}` }}>
+          {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
+        </div>
       </div>
     );
   }
