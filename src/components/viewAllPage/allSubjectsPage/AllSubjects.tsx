@@ -85,7 +85,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
     return (
       <React.Suspense fallback={<></>}>
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
-        <Grid container direction="row" className="sorted-row">
+        <Grid container direction="row" className="sorted-row dashboard-all-subjects">
           {this.state.showFilters ?
             <ViewAllFilter
               user={this.props.user}

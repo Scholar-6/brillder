@@ -256,7 +256,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
             <div className="introduction-page">
               <div className="introduction-info">
                 <div className="intro-text-row">
-                  <span className="heading">Final Score : Agg.</span>
+                  <span className="heading text-center">Final Score : Agg.</span>
                   {this.renderStepper()}
                 </div>
               </div>
