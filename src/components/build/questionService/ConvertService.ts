@@ -5,12 +5,17 @@ import {
   HintStatus, QuestionTypeEnum
 } from "model/question";
 import {getUniqueComponent} from './QuestionService';
+import { convertString } from "services/SharedTypeService";
 
 
 export function stripHtml(html: string) {
   const div = document.createElement("div");
   div.innerHTML = html;
   return div.textContent || div.innerText || "";
+}
+
+export function stripYHtml(html: Y.Text) {
+  return convertString(stripHtml(html.toString()));
 }
 
 const stripRegex = /<(?!\/?(?:sup|sub))[^>]*>/g
@@ -24,7 +29,7 @@ function stripHtmlList(list: Y.Array<Y.Map<any>>) {
     list.forEach(item => {
       const value = item.get("value");
       if (value) {
-        item.set("value", stripHtml(value));
+        item.set("value", stripYHtml(value));
       }
     });
   }
@@ -57,10 +62,10 @@ export function convertToShortAnswer(question: Y.Doc) {
   const component = getUniqueComponent(updatedQuestion);
   const list = component.get("list") as Y.Array<any>;
   if (list && list.length > 0) {
-    list.delete(1, list.length - 2);
+    list.delete(1, list.length - 1);
     const firstValue = list.get(0).get("value");
     if (firstValue) {
-      list.get(0).set("value", stripHtml(firstValue));
+      list.get(0).set("value", stripYHtml(firstValue));
     }
   }
   return updatedQuestion;
