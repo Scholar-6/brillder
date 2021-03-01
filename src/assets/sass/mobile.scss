@@ -97,16 +97,37 @@
   margin-right: 2vw !important;
 }
 .time-container {
+  $height: 3vw;
+  $width: 94vw;
   z-index: 20000;
+  left: 3vw;
   positioN: fixed;
-  bottom: 22vw;
-  width: 100vw !important;
+  bottom: 19vw;
+  width: $width !important;
   .timer-progressbar {
-    width: 90vw !important;
-    border-radius: 2vw !important;
-    height: 4vw !important;
+    width: $width !important;
+    border-radius: 1.5vw !important;
+    height: $height !important;
     .MuiLinearProgress-bar {
-      height: 4vw !important;
+      height: $height !important;
     }
+  }
+}
+
+.stop-cookie-tracking {
+  position: fixed;
+  bottom: 2vh;
+  right: 20vw;
+  border: none;
+  outline: none;
+  font-size: 6vw;
+  border-radius: 2vw;
+  padding: 0.5vh 2vw;
+  color: var(--white);
+  transition: all 300ms ease-out;
+  background: var(--theme-orange);
+
+  &:hover {
+    background: var(--theme-dark-blue);
   }
 }

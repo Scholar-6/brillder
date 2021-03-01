@@ -55,6 +55,8 @@ import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSub
 import PublicTerms from 'components/terms/PublicTerms';
 import MobileUsernamePage from 'components/onboarding/mobileUsernamePage/MobileUsernamePage';
 import RotateIPadInstruction from 'components/baseComponents/rotateInstruction/RotateIPadInstruction';
+import Warning from 'components/baseComponents/rotateInstruction/Warning';
+import { isPhone } from 'services/phone';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -81,6 +83,19 @@ const App: React.FC<AppProps> = props => {
       setHorizontal(isHorizontal());
     });
   }, []);
+
+  // lock screen for phone
+  if (isPhone()) {
+    document.onclick = function (e) {
+      if (document.body.requestFullscreen && !document.fullscreenElement) {
+        let res = document.body.requestFullscreen();
+        res.then(() => {
+          window.screen.orientation.lock('portrait');
+          console.log('lock screen');
+        });
+      }
+    }
+  }
 
   axios.interceptors.response.use(function (response) {
     return response;
@@ -132,7 +147,7 @@ const App: React.FC<AppProps> = props => {
   }
 
   if (isIPad13) { 
-    //return <Warning />
+    return <Warning />
   } else if (isMobile && horizontal) {
     return <RotateInstruction />;
   } 

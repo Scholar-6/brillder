@@ -871,10 +871,18 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           <Hidden only={["sm", "md", "lg", "xl"]}>
             <Switch>
               <Route exec path={map.AllSubjects}>
+                <PageHeadWithMenu
+                  page={PageEnum.ViewAll}
+                  user={this.props.user}
+                  placeholder={"Search Ongoing Projects & Published Bricks…"}
+                  history={this.props.history}
+                  search={() => this.search()}
+                  searching={(v: string) => this.searching(v)}
+                />
                 {this.renderAllSubjectsPage()}
               </Route>
               <Route exec path={map.ViewAllPage}>
-                <MobileCategory history={this.props.history} location={this.props.location}/>
+                <MobileCategory history={this.props.history} location={this.props.location} />
               </Route>
             </Switch>
           </Hidden>
