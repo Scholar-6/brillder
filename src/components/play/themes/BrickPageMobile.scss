@@ -1,4 +1,5 @@
 @import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mobile-variables';
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
@@ -918,7 +919,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     position: absolute;
     bottom: 0;
     background: var(--tab-gray);
-    height: 30vw;
+    height: $play-footer-height;
     width: 100%;
     > div {
       display: flex;
@@ -947,7 +948,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     width: 55vw !important;
   }
   .MuiPaper-root.MuiMenu-paper.MuiPopover-paper {
-    bottom: 30vw !important;
+    bottom: $play-footer-height !important;
     left: auto !important;
     right: 0 !important;
     background: var(--tab-gray) !important;
@@ -1130,7 +1131,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 // introduction flexbox
 .play-preview-pages .brick-container {
-  height: calc(100% - 30vw) !important;
+  height: calc(100% - #{$play-footer-height}) !important;
   .introduction-page {
     display: flex !important;
     flex-flow: column;
@@ -1310,7 +1311,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 }
 // introduction flex box
 .real-introduction-page {
-  height: calc(100vh - 30vw) !important;
+  height: calc(100vh - #{$play-footer-height}) !important;
   .brick-container {
     height: 100% !important;
   }
@@ -1333,7 +1334,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     .introduction-content {
       .question-live-play {
         overflow: hidden;
-        height: calc(100vh - 17vh - 30vw);
+        height: calc(100vh - 17vh - #{$play-footer-height});
       }
     }
   }
