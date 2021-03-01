@@ -57,7 +57,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 11;
+    z-index: 20;
     display: flex;
     flex-direction: column;
     background: #12326A;
@@ -202,11 +202,13 @@
     align-items: center;
     justify-content: center;
     width: 55vw;
+    .loginPhone {
+      z-index: 10;
+    }
     svg {
       margin-bottom: 2vh;
       transform: perspective(70vw) rotateY(-25deg);
       height: 72vh;
-      z-index: 10;
       font-family: $font-family-black;
     }
     #phone-image {
