@@ -129,11 +129,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const isProposalPage = validRoutes.includes(props.location.pathname.split("/")[4]);
 
   const { ydoc, json: yjson } = useContext(YJSContext)!;
-  React.useEffect(() => {
-    const callback = (location: any) => console.log(location.pathname);
-    history.listen(callback);
-  }, []);
   const ybrick = ydoc!.getMap("brick")!;
+  props.startEditing(ybrick.get("id"));
 
   if(!ybrick) {
     return <PageLoader content="Getting brick..." />
