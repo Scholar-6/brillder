@@ -34,7 +34,6 @@ interface FooterProps {
   moveToPostPlay(): void;
   mode: PlayMode;
   setMode(mode: PlayMode): void;
-
   fetchBrick(brickId: number): void;
 }
 
@@ -58,16 +57,6 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
 
   const [menuOpen, setMenu] = React.useState(false);
   const { history } = props;
-
-  const setHighlightMode = () => {
-    if (props.setMode) {
-      if (props.mode === PlayMode.Highlighting) {
-        props.setMode(PlayMode.Normal);
-      } else {
-        props.setMode(PlayMode.Highlighting);
-      }
-    }
-  }
 
   const isIntro = () => {
     return history.location.pathname.slice(-6) === '/intro';
@@ -201,12 +190,11 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="" />
         <SpriteIcon name="corner-up-left" onClick={() => history.push(map.ViewAllPage + `?subjectId=${brick.subject?.id}`)} />
         {(isIntro()) ? <SpriteIcon name="" /> : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id))} />}
-        {/* <SpriteIcon name="highlighter" onClick={setHighlightMode} /> */}
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
       </div>
-    )
+    );
   }
 
   return <div className="phone-play-footer"> 
