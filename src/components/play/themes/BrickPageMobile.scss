@@ -225,8 +225,8 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               .left-brick-circle {
                 .round-button {
                   transition: all 300ms;
-                  height: 8vw;
-                  width: 8vw;
+                  height: 12vw;
+                  width: 12vw;
                 }
               }
 
@@ -245,7 +245,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               p {
                 transition: all 300ms;
                 width: 100%;
-                padding-left: 9.5vw;
+                padding-left: 14vw;
               }
               .play-clock {
                 display: none;
@@ -1351,5 +1351,34 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   overflow: hidden !important;
   .circle-progress-container {
     height: 100% !important;
+  }
+}
+
+//
+.play-preview-pages {
+  .play-footer-label {
+    z-index: 1000000;
+    left: 40vw;
+    position: fixed;
+    bottom: 6vw;
+    font-size: 7vw;
+    color: var(--theme-dark-blue);
+    font-family: $font-family-regular;
+  }
+}
+
+// academic level
+.play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .intro-header {
+  .left-brick-circle .round-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10vw;
+  }
+
+  &.expanded-intro-header {
+    .left-brick-circle .round-button {
+      font-size: 8vw;
+    }
   }
 }

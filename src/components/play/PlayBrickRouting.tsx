@@ -327,6 +327,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             moveNext={moveToLive}
             onHighlight={onHighlight}
           />
+          {(isMobile && !(isIPad13 || isTablet)) && <div className="play-footer-label">Play Brick</div>}
+          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/live">
           <Live
@@ -344,6 +346,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               }
             }}
           />
+          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/provisionalScore">
           <ProvisionalScore
@@ -353,9 +356,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brick={brick}
             attempts={attempts}
           />
+          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/synthesis">
           <Synthesis mode={mode} status={status} brick={brick} moveNext={moveToReview} onHighlight={onHighlight} />
+          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/review">
           <Review
@@ -370,6 +375,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             attempts={attempts}
             finishBrick={finishReview}
           />
+          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/ending">
           <Ending
@@ -380,6 +386,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brickAttempt={brickAttempt}
             move={finishBrick}
           />
+          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/finalStep">
           <FinalStep
@@ -388,6 +395,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history={props.history}
             moveNext={moveToPostPlay}
           />
+          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
         </Route>
         <ValidationFailedDialog
           isOpen={saveFailed}
@@ -408,7 +416,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
       <div className="play-preview-pages">
         {(isMobile && !(isIPad13 || isTablet))
-          ? renderPhoneFooter()
+          ? <div />
           : renderHead()
         }
         <div className={className}>
