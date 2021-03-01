@@ -256,7 +256,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             position: relative;
             border-radius: 1vh;
             margin: 0 4vw;
-            height: 17vh;
+            height: max-content;
             .intro-header {
               font-size: 2vw;
               font-family: $font-family-black;
@@ -900,15 +900,14 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 // only review
 .play-preview-pages .sorted-row .review-page {
-    .stepper {
-      .step {
-        svg {
-          display: none !important;
-        }
+  .stepper {
+    .step {
+      svg {
+        display: none !important;
       }
+    }
   }
 }
-
 
 // play phone footer
 .play-preview-pages {
@@ -971,7 +970,8 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   right: 0 !important;
   width: calc(100% / 7) !important;
   overflow: visible !important;
-  .mobile-next-button, .mobile-back-button {
+  .mobile-next-button,
+  .mobile-back-button {
     z-index: 299999;
     position: fixed;
     bottom: 0 !important;
@@ -1026,7 +1026,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     .blue-circle-main-container {
       display: none;
     }
-  
+
     .step {
       display: inline-block !important;
       width: $step-container-width;
@@ -1102,7 +1102,8 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     // scroll buttons
     $scroll-button-size: 2vw;
 
-    .scroll-back-button, .scroll-next-button {
+    .scroll-back-button,
+    .scroll-next-button {
       position: absolute;
       top: 0;
       width: 2.5vw;
@@ -1153,7 +1154,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
 }
 
-// live flexbox 
+// live flexbox
 .play-preview-pages .brick-row-container .brick-container.live-page {
   .introduction-page {
     .introduction-info {
@@ -1337,7 +1338,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       }
     }
   }
-  
+
   .brick-container.synthesis-page.mobile-synthesis-page {
     .synthesis-content {
       height: auto;
@@ -1346,7 +1347,12 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 }
 
 // only ending page scroll fix
-.play-preview-pages .sorted-row .brick-row-container .brick-container.ending-page .introduction-page .question-live-play {
+.play-preview-pages
+  .sorted-row
+  .brick-row-container
+  .brick-container.ending-page
+  .introduction-page
+  .question-live-play {
   overflow: hidden !important;
   .circle-progress-container {
     height: 100% !important;
