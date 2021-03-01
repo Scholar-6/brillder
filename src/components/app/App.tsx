@@ -87,7 +87,7 @@ const App: React.FC<AppProps> = props => {
   // lock screen for phone
   if (isPhone()) {
     document.onclick = function (e) {
-      if (document.body.requestFullscreen) {
+      if (document.body.requestFullscreen && !document.fullscreenElement) {
         let res = document.body.requestFullscreen();
         res.then(() => {
           window.screen.orientation.lock('portrait');
