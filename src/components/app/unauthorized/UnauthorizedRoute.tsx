@@ -12,6 +12,7 @@ import map from 'components/map';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import StopTrackingButton from './StopTrackingButton';
 import { getCookies, clearCookiePolicy, acceptCookies } from 'localStorage/cookies';
+import { isPhone } from 'services/phone';
 
 interface StudentRouteProps {
   path: string;
@@ -65,11 +66,13 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
           clearCookiePolicy();
           setCookiePopup(true);
         }} />
+        {/* for phones button and popup is in menus */}
+        {!isPhone() &&
         <CookiePolicyDialog isOpen={cookieOpen} close={() => {
           acceptCookies();
           setCookiePopup(false);
           setMatomoTagManager();
-        }} />
+        }} />}
       </div>
     );
   }

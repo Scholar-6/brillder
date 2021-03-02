@@ -3,12 +3,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { connect } from 'react-redux';
 
+import { isAuthenticated } from 'model/brick';
 import { PlayMode } from '../model';
 import map from 'components/map';
 import { Brick } from 'model/brick';
 import { User } from 'model/user';
 import actions from "redux/actions/brickActions";
 import { checkTeacherOrAdmin } from 'components/services/brickService';
+import { getCookies, clearCookiePolicy, acceptCookies } from 'localStorage/cookies';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
@@ -19,6 +21,8 @@ import LinkDialog from '../finalStep/dialogs/LinkDialog';
 import LinkCopiedDialog from '../finalStep/dialogs/LinkCopiedDialog';
 import InviteDialog from '../finalStep/dialogs/InviteDialog';
 import InvitationSuccessDialog from '../finalStep/dialogs/InvitationSuccessDialog';
+import { ReduxCombinedState } from 'redux/reducers';
+import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 
 interface InviteResult {
   isOpen: boolean;
@@ -28,6 +32,7 @@ interface InviteResult {
 
 interface FooterProps {
   brick: Brick;
+  isAuthenticated: isAuthenticated;
   history: any;
   user: User;
   moveToPostPlay(): void;
@@ -37,7 +42,15 @@ interface FooterProps {
 }
 
 const PhonePlayFooter: React.FC<FooterProps> = (props) => {
+  let isInitCookieOpen = false;
+
+  console.log(props.isAuthenticated, getCookies());
+  if (props.isAuthenticated !== isAuthenticated.True && !getCookies()) {
+    isInitCookieOpen = true;
+  }
+
   const { brick } = props;
+  const [cookieOpen, setCookiePopup] = React.useState(isInitCookieOpen);
   const [share, setShare] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
   const [linkSuccess, setLinkSuccess] = React.useState(false);
@@ -171,23 +184,9 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
             history.push(map.ViewAllPage)
             return props.moveToPostPlay;
           }}
-          >
+        >
           <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
         </button>
-      </div>
-    );
-  }
-
-  const renderIntro = () => {
-    return (
-      <div>
-        <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
-        <SpriteIcon name="" />
-        <SpriteIcon name="corner-up-left" onClick={() => history.push(map.ViewAllPage + `?subjectId=${brick.subject?.id}`)} />
-        <SpriteIcon name="" />
-        <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
-        <SpriteIcon name="" />
-        <SpriteIcon name="" />
       </div>
     );
   }
@@ -206,9 +205,26 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     );
   }
 
-  return <div className="phone-play-footer"> 
+  const deleteAllCookies = () => {
+    const cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i];
+      var eqPos = cookie.indexOf("=");
+      var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+    clearCookiePolicy();
+  }
+
+  let canStopTrack = false;
+  if (props.isAuthenticated !== isAuthenticated.True && getCookies()) {
+    canStopTrack = true;
+  }
+
+  return <div className="phone-play-footer">
     <div>
-      {(isFinalStep()) ? renderFinalStep() : renderEveryOtherStep() }
+      {(isFinalStep()) ? renderFinalStep() : renderEveryOtherStep()}
       <Menu
         className="phone-down-play-menu menu-dropdown"
         keepMounted
@@ -219,24 +235,39 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
           setShare(true);
           setMenu(false);
         }}>
-          Share Brick
-      </MenuItem>
+          Share Brick <SpriteIcon name="" />
+        </MenuItem>
         {canSee &&
-        <MenuItem onClick={() => {
-          setAssign(true);
-          setMenu(false);
-        }}>
-          Assign Brick
-      </MenuItem>}
+          <MenuItem onClick={() => {
+            setAssign(true);
+            setMenu(false);
+          }}>
+            Assign Brick <SpriteIcon name="" />
+          </MenuItem>}
+        {canStopTrack &&
+          <MenuItem onClick={() => {
+            deleteAllCookies();
+            setMenu(false);
+            setCookiePopup(true);
+          }}>
+            Stop Tracking <SpriteIcon name="feather-x-octagon" />
+          </MenuItem>}
       </Menu>
       {renderPopups()}
+      <CookiePolicyDialog isOpen={cookieOpen} close={() => {
+        acceptCookies();
+        setCookiePopup(false);
+      }} />
     </div>
   </div>;
 }
 
+const mapState = (state: ReduxCombinedState) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
 
 const mapDispatch = (dispatch: any) => ({
   fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
 });
 
-export default connect(null, mapDispatch)(PhonePlayFooter);
+export default connect(mapState, mapDispatch)(PhonePlayFooter);
