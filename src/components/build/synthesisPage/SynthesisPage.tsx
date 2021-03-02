@@ -114,7 +114,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 sharedData={this.props.synthesis}
                 toolbar={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-                  'latex', 'bulletedList', 'numberedList', 'blockQuote'
+                  'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
                 ]}
               />
             </Grid>
