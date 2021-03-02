@@ -1017,7 +1017,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     width: 100%;
     margin-top: 0.7vw;
     background: inherit !important;
-    height: calc(#{$step-height} + 0.7vw) !important;
+    height: calc(#{$step-height} + 4.4vw) !important;
     padding: 0 !important;
     overflow-x: auto;
     overflow-y: hidden;
@@ -1074,14 +1074,14 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         }
         .underline {
           position: absolute;
-          bottom: -0.5vw;
+          bottom: -1.5vw;
           width: $step-height;
           display: flex;
           justify-content: center;
           > div {
-            border-radius: 0.4vw;
-            width: 1.3vw;
-            height: 0.2vw;
+            border-radius: 0.8vw;
+            width: 6vw;
+            height: 0.8vw;
             background: var(--theme-dark-blue);
           }
         }
