@@ -36,6 +36,7 @@ interface FooterProps {
   isAuthenticated: isAuthenticated;
   history: any;
   user: User;
+  menuOpen?: boolean;
   moveToPostPlay(): void;
   mode: PlayMode;
   setMode(mode: PlayMode): void;
@@ -45,7 +46,6 @@ interface FooterProps {
 const PhonePlayFooter: React.FC<FooterProps> = (props) => {
   let isInitCookieOpen = false;
 
-  console.log(props.isAuthenticated, getCookies());
   if (props.isAuthenticated !== isAuthenticated.True && !getCookies()) {
     isInitCookieOpen = true;
   }
@@ -69,7 +69,8 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
   const [assignSuccess, setAssignSuccess] = React.useState(false);
   const [assignFailed, setAssignFailed] = React.useState(false);
 
-  const [menuOpen, setMenu] = React.useState(false);
+  let initMenuOpen = props.menuOpen ? true : false;
+  const [menuOpen, setMenu] = React.useState(initMenuOpen);
   const { history } = props;
 
   const isIntro = () => {
