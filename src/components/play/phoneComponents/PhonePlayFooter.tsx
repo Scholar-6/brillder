@@ -235,14 +235,14 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
           setShare(true);
           setMenu(false);
         }}>
-          Share Brick <SpriteIcon name="" />
+          Share Brick <SpriteIcon name="feather-share" />
         </MenuItem>
         {canSee &&
           <MenuItem onClick={() => {
             setAssign(true);
             setMenu(false);
           }}>
-            Assign Brick <SpriteIcon name="" />
+            Assign Brick <SpriteIcon name="copy" />
           </MenuItem>}
         {canStopTrack &&
           <MenuItem onClick={() => {
