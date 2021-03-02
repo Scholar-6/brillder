@@ -319,7 +319,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             style={{ width: "100%", height: "100%" }}
             className="proposal-router"
           >
-            <Route path={[map.ProposalSubject, '/build/brick/:brickId/subject']}>
+            <Route path={[map.ProposalSubject, map.ProposalBase + '/subject']}>
               <SubjectPage
                 location={history.location}
                 baseUrl={baseUrl}
@@ -331,7 +331,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveData={this.setCoreAndSubject}
               />
             </Route>
-            <Route path={[map.ProposalTitle, '/build/brick/:brickId/brick-title']}>
+            <Route path={[map.ProposalTitle, map.ProposalBase + '/brick-title']}>
               <BrickTitle
                 user={user}
                 history={history}
@@ -346,7 +346,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={[map.ProposalLength, '/build/brick/:brickId/length']}>
+            <Route path={[map.ProposalLength, map.ProposalBase + '/length']}>
               <BrickLength
                 baseUrl={baseUrl}
                 playStatus={playStatus}
@@ -357,7 +357,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={[map.ProposalOpenQuestion, '/build/brick/:brickId/open-question']}>
+            <Route path={[map.ProposalOpenQuestion, map.ProposalBase + '/open-question']}>
               <OpenQuestion
                 baseUrl={baseUrl}
                 playStatus={playStatus}
@@ -368,7 +368,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={[map.ProposalBrief, '/build/brick/:brickId/brief']}>
+            <Route path={[map.ProposalBrief, map.ProposalBase + '/brief']}>
               <Brief
                 baseUrl={baseUrl}
                 playStatus={playStatus}
@@ -378,7 +378,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={[map.ProposalPrep, '/build/brick/:brickId/prep']}>
+            <Route path={[map.ProposalPrep, map.ProposalBase + '/prep']}>
               <Prep
                 playStatus={playStatus}
                 parentPrep={localBrick.prep}
@@ -391,7 +391,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               />
             </Route>
             
-            <Route path={[map.ProposalReview, '/build/brick/:brickId/plan']}>
+            <Route path={[map.ProposalReview, map.ProposalBase + '/plan']}>
               <ProposalReview
                 playStatus={playStatus}
                 brick={localBrick}

@@ -64,6 +64,8 @@ export const ProposalReview = `${ProposalBase2}/plan`;
 
 export const ProposalReview2 = `${ProposalBase2}/plan`;
 
+// new brick link
+export const ProposalSubjectLink = `${ProposalBase}/subject`;
 
 // play preview
 export const PlayPreviewBase = '/play-preview/brick';
@@ -124,6 +126,7 @@ export default {
   ProposalLength,
   ProposalReview,
   ProposalReview2,
+  ProposalSubjectLink,
 
   BackToWorkPage,
   AssignmentsPage,
