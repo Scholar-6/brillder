@@ -13,3 +13,15 @@ export function setupMatomo() {
   }
   console.log('matomo manager downloaded');
 }
+
+export function enableTracking() {
+  if (_mtm) {
+    try {
+      _mtm.push({"event": "start-tracking"});
+      _mtm.push({'tracking-enabled': true});
+      console.log('matomo start tracking');
+    } catch {
+      console.log('matomo start tracking error');
+    }
+  }
+}
