@@ -260,7 +260,7 @@ const SubjectPage: React.FC<SubjectProps> = ({
     } else {
       saveSubject(subjectId);
     }
-    return <Redirect to={map.ProposalTitle} />
+    return <Redirect to={map.ProposalTitleLink} />
   }
 
   if (values.selectedSubject) {
@@ -345,7 +345,7 @@ const SubjectPage: React.FC<SubjectProps> = ({
         {subject &&
           <Grid className='tutorial-pagination'>
             <div className="centered text-theme-dark-blue bold" style={{ fontSize: '2vw', marginRight: '2vw' }}
-              onClick={() => { saveSubject(subject); history.push(map.ProposalTitle) }}>
+              onClick={() => { saveSubject(subject); history.push(map.ProposalTitleLink) }}>
               Next
             </div>
             <NextButton

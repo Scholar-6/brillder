@@ -1387,3 +1387,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   color: var(--white);
   font-size: 3vw;
 }
+
+// words hover
+.words-container {
+  .word:hover {
+    background: red !important;
+  }
+}

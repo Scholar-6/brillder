@@ -129,7 +129,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   creatingBrick() {
     clearProposal();
     this.props.forgetBrick();
-    this.props.history.push(map.ProposalSubject);
+    this.props.history.push(map.ProposalSubjectLink);
   }
 
   renderCreateButton(disabled?: boolean) {
