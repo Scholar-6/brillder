@@ -25,3 +25,27 @@ export function enableTracking() {
     }
   }
 }
+
+export function trackSignUp() {
+  if (_mtm) {
+    try {
+      _mtm.push({"event": "synthesis-signup"});
+    } catch {
+      console.log('matomo sign up tracking error');
+    }
+  }
+}
+
+export function disableTracking() {
+  if (_mtm) {
+    try {
+      _mtm.push({"event": "stop-tracking"});
+      _mtm.push({'tracking-enabled': false});
+      console.log('matomo disable tracking');
+    } catch {
+      console.log('matomo disable tracking error');
+    }
+  }
+}
+
+

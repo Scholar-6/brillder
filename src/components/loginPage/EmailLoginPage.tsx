@@ -15,6 +15,7 @@ import MobileEmailLogin from './MobileEmailLogin';
 import TermsLink from "components/baseComponents/TermsLink";
 import { isIPad13, isTablet, isMobile } from "react-device-detect";
 import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
+import { trackSignUp } from "services/matomo";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -114,6 +115,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       }
 
       if (data === "OK") {
+        trackSignUp();
         sendLogin(email, password);
       }
     }).catch((e) => {
