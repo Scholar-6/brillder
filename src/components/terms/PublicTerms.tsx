@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Checkbox, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import axios from "axios";
 // @ts-ignore
