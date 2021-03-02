@@ -1,35 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
-
-@-webkit-keyframes rotating {
-  from {
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-@keyframes rotating {
-  from {
-    -ms-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -ms-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .mainPage {
   $welcome-col-width: 35.2vw;
@@ -175,7 +146,6 @@
     @include tabletP {
       padding: 5vh 0;
     }
-    .eye-glass-icon,
     .btn {
       display: flex;
       align-items: center;
@@ -226,6 +196,118 @@
       }
     }
   }
+
+  .view-item-container {
+    .eye-glass-icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      @extend %textCenter;
+      flex-direction: column;
+      svg {
+        width: 13vw;
+        height: 6vw;
+      }
+      .eye-glass-frame {
+        svg {
+          @extend %removePosition;
+        }
+      }
+      $eye-size: 5.5vw;
+      $pupil-size: 1.5vw;
+      .glass-eyes-left,
+      .glass-eyes-right {
+        width: $eye-size;
+        height: $eye-size;
+        transition-delay: 200ms;
+        @extend %transitionAll300;
+        @extend %floatToYCenter;
+        @extend %flexCenter;
+        opacity: 0;
+        > svg {
+          width: 60%;
+          height: 60%;
+        }
+        .glass-left-inside,
+        .glass-right-inside {
+          width: $pupil-size;
+          height: $pupil-size;
+          @extend %flexCenter;
+          @extend %transitionAll300;
+          transform: translate(0);
+          opacity: 0;
+          svg {
+            width: 100%;
+            height: 100%;
+            background-color: var(--white);
+            border-radius: 50%;
+            // @extend %removePosition;
+            opacity: 0;
+            &.eye-pupil {
+              animation-name: eye-movement;
+              animation-duration: 4s;
+              animation-delay: 4s;
+              animation-timing-function: linear;
+              animation-iteration-count: infinite;
+            }
+            &.aperture {
+              animation: rotating 2s linear infinite;
+            }
+          }
+        }
+      }
+      .glass-eyes-left {
+        left: 0.6vw;
+      }
+      .glass-eyes-right {
+        right: 0.6vw;
+      }
+    }
+    &:hover {
+      .eye-glass-icon {
+        .glass-eyes-left,
+        .glass-eyes-right {
+          opacity: 1;
+          > svg {
+            opacity: 1;
+            visibility: visible;
+          }
+          .glass-right-inside,
+          .glass-left-inside {
+            opacity: 1;
+            svg {
+              &.eye-pupil {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+    }
+    &:active {
+      .eye-glass-icon {
+        .glass-eyes-left,
+        .glass-eyes-right {
+          opacity: 1;
+          > .svg {
+            opacity: 1;
+            visibility: visible;
+          }
+          .glass-left-inside,
+          .glass-right-inside {
+            opacity: 1;
+            svg {
+              &.aperture {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   .create-item-container {
     .btn .svg {
       @extend %transitionAll300;
@@ -249,24 +331,12 @@
       }
     }
   }
-
+  @extend %policy-text;
   .policy-text {
     position: fixed;
-    cursor: pointer;
-    vertical-align: middle;
-    text-align: right;
-    padding-right: 2.5vw;
-    color: var(--tab-gray);
-    font-family: $font-family-regular;
     bottom: 2.4vh;
-    line-height: 2vw;
     right: 10vw;
-    font-size: 1.6vw;
-    span:hover {
-      color: var(--theme-orange) !important;
-    }
   }
-
   .dialog-box {
     .MuiDialog-container {
       padding: 0 !important;
@@ -274,7 +344,6 @@
   }
 }
 
-// mobile
 .mainPage {
   .mobile-main-page {
     width: 100%;
@@ -337,5 +406,23 @@
         }
       }
     }
+  }
+}
+
+@keyframes eye-movement {
+  0% {
+    transform: translateX(0.4vw);
+  }
+  15% {
+    transform: translateX(-0.4vw);
+  }
+  25% {
+    transform: translateX(-0.4vw);
+  }
+  50% {
+    transform: translateX(0.4vw);
+  }
+  100% {
+    transform: translateX(0.4vw);
   }
 }

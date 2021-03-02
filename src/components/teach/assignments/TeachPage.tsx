@@ -110,7 +110,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async loadData() {
     let subjects = await getSubjects();
     if (subjects) {
-      this.setState({subjects});
+      this.setState({ subjects });
     }
     this.loadClasses();
   }
@@ -131,7 +131,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (classrooms) {
       const classroom = classrooms.find(c => c.id === id);
       if (classroom) {
-        this.setState({activeClassroom: classroom});
+        this.setState({ activeClassroom: classroom });
       }
     }
   }
@@ -149,7 +149,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   setActiveStudent(activeStudent: TeachStudent) {
-    this.setState({activeStudent, sortedIndex: 0});
+    this.setState({ activeStudent, sortedIndex: 0 });
   }
 
   setActiveClassroom(id: number | null) {
@@ -174,7 +174,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         const assignmentStats = await getAssignmentStats(assignment.id);
         this.setState({ sortedIndex: 0, activeClassroom: classroom, activeAssignment: assignment, assignmentStats });
       }
-    }    
+    }
   }
 
   collapseClasses() {
@@ -238,7 +238,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   renderAssignmentPagination = (classroom: TeachClassroom) => {
-    const {assignmentPageSize} = this.state;
+    const { assignmentPageSize } = this.state;
     const itemsCount = classroom.students.length;
     return <BackPagePagination
       sortedIndex={this.state.sortedIndex}
@@ -252,7 +252,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   renderTeachPagination = () => {
     let itemsCount = 0;
-    const {pageSize, activeClassroom} = this.state;
+    const { pageSize, activeClassroom } = this.state;
     if (this.state.activeStudent) {
       return "";
     } else if (activeClassroom && this.state.activeAssignment) {
@@ -308,7 +308,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (!this.state.isLoaded) {
       return <div className="tab-content" />
     }
-    
+
     if (this.state.isLoaded && (this.state.classrooms.length === 0 || (this.state.activeClassroom && this.state.activeClassroom?.assignments.length === 0))) {
       return this.renderEmptyTabContent();
     }
@@ -345,15 +345,15 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 reloadClass={this.loadClass.bind(this)}
               />
               :
-            <ClassroomsList
-              subjects={this.state.subjects}
-              expand={this.setActiveAssignment.bind(this)}
-              startIndex={this.state.sortedIndex}
-              classrooms={this.state.classrooms}
-              activeClassroom={this.state.activeClassroom}
-              pageSize={this.state.pageSize}
-              reloadClasses={this.loadClasses.bind(this)}
-            />
+              <ClassroomsList
+                subjects={this.state.subjects}
+                expand={this.setActiveAssignment.bind(this)}
+                startIndex={this.state.sortedIndex}
+                classrooms={this.state.classrooms}
+                activeClassroom={this.state.activeClassroom}
+                pageSize={this.state.pageSize}
+                reloadClasses={this.loadClasses.bind(this)}
+              />
         }
         {this.renderTeachPagination()}
       </div>
@@ -361,7 +361,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   render() {
-    const {history} = this.props;
+    const { history } = this.props;
 
     return (
       <div className="main-listing user-list-page manage-classrooms-page">
@@ -370,24 +370,24 @@ class TeachPage extends Component<TeachProps, TeachState> {
           placeholder="Search by Name, Email or Subject"
           user={this.props.user}
           history={history}
-          search={() => {}}
-          searching={v => {}}
+          search={() => { }}
+          searching={v => { }}
         />
-      <Grid container direction="row" className="sorted-row back-to-work-teach">
-        <TeachFilterSidebar
-          classrooms={this.state.classrooms}
-          isLoaded={this.state.isLoaded}
-          activeStudent={this.state.activeStudent}
-          activeClassroom={this.state.activeClassroom}
-          setActiveClassroom={this.setActiveClassroom.bind(this)}
-          setActiveStudent={this.setActiveStudent.bind(this)}
-          filterChanged={this.teachFilterUpdated.bind(this)}
-        />
-        <Grid item xs={9} className="brick-row-container">
-          <TeachTab activeTab={TeachActiveTab.Assignments} history={history} assignmentsEnabled={true} />
-          {this.renderTabContent()}
+        <Grid container direction="row" className="sorted-row back-to-work-teach">
+          <TeachFilterSidebar
+            classrooms={this.state.classrooms}
+            isLoaded={this.state.isLoaded}
+            activeStudent={this.state.activeStudent}
+            activeClassroom={this.state.activeClassroom}
+            setActiveClassroom={this.setActiveClassroom.bind(this)}
+            setActiveStudent={this.setActiveStudent.bind(this)}
+            filterChanged={this.teachFilterUpdated.bind(this)}
+          />
+          <Grid item xs={9} className="brick-row-container">
+            <TeachTab activeTab={TeachActiveTab.Assignments} history={history} assignmentsEnabled={true} />
+            {this.renderTabContent()}
+          </Grid>
         </Grid>
-      </Grid>
       </div>
     );
   }

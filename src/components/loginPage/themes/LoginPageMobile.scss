@@ -142,22 +142,11 @@
 
 .second-col {
   position: relative;
+  @extend %policy-text;
   .policy-text {
     position: absolute;
-    cursor: pointer;
-    vertical-align: middle;
-    text-align: right;
-    padding-right: 2.5vw;
-    color: var(--tab-gray);
-    font-family: $font-family-regular;
     bottom: 2.4vh;
-    line-height: 2vw;
-    font-size: 1.6vw;
     right: 0;
-
-    span:hover {
-      color: var(--theme-orange) !important;
-    }
   }
 }
 

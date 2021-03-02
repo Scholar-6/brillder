@@ -36,10 +36,6 @@
     }
   }
 
-  .beta-text {
-    color: var(--theme-dark-blue);
-  }
-
   $book-height: 60vh;
 
   .prep-page {
@@ -555,7 +551,7 @@
       }
     }
     .comment-text {
-     width: auto !important;
+      width: auto !important;
     }
     &.hovered {
       width: 50vw;
@@ -742,4 +738,8 @@
       margin: 25%;
     }
   }
+}
+
+.proposal-page ~ .beta-text {
+  color: var(--theme-dark-blue);
 }
