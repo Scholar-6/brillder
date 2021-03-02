@@ -944,10 +944,19 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       padding: 0 !important;
     }
     .MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button {
-      padding: 1vw 10vw !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1vw 0vw !important;
       line-height: 1 !important;
       min-height: 12vw !important;
-      font-size: 8vw !important;
+      font-size: 6vw !important;
+
+      svg {
+        margin-left: 1vw;
+        width: 7vw;
+        height: 7vw;
+      }
     }
   }
 }
