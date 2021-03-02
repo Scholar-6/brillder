@@ -52,6 +52,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
         <PairOptionComponent
           index={i} locked={locked} editOnly={editOnly} answer={answer}
           validationRequired={validationRequired}
+          onBlur={() => showSameAnswerPopup(i, list.toJSON(), openSameAnswerDialog)}
         />
         <PairAnswerComponent
           index={i} length={list.length} locked={locked} editOnly={editOnly} answer={answer}

@@ -1,4 +1,5 @@
 import React from "react";
+import * as Y from "yjs";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { History } from "history";
@@ -35,6 +36,8 @@ import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { YJSContext } from "../baseComponents/YJSProvider";
+import YoutubeAndMathInHtml from "components/play/baseComponents/YoutubeAndMath";
+import { toRenderJSON } from "services/SharedTypeService";
 
 interface ProposalProps {
   history: History;
@@ -45,6 +48,7 @@ interface ProposalProps {
   brick: Brick;
   user: User;
   saveBrick(brick: Brick): Promise<Brick | null>;
+  fetchBrick(brickId: number): Promise<Brick | null>;
   createBrick(brick: Brick): Promise<Brick | null>;
   socketStartEditing(brickId: number): void;
 }
@@ -263,9 +267,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   };
 
   async saveAndPreview(playStatus: PlayButtonStatus) {
-    if (this.state.brick.id && playStatus === PlayButtonStatus.Valid) {
-      await this.props.saveBrick(this.state.brick);
-      this.props.history.push(map.playPreviewIntro(this.state.brick.id));
+    if (this.context && playStatus === PlayButtonStatus.Valid) {
+      await this.props.fetchBrick(this.context.json.brick.id);
+      this.props.history.push(map.playPreviewIntro(this.context.json.brick.id));
     }
   }
 
@@ -304,16 +308,11 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
 
     let playStatus = PlayButtonStatus.Hidden;
     const { brick } = this.props;
-    if (brick && brick.questions && brick.questions.length > 0) {
+    const ybrick = this.context?.ydoc.getMap("brick");
+    if (ybrick && ybrick.get("questions") && ybrick.get("questions").length > 0) {
       playStatus = PlayButtonStatus.Valid;
-      const parsedQuestions: Question[] = [];
-      for (const question of brick.questions) {
-        try {
-          parseQuestion(question as ApiQuestion, parsedQuestions);
-        } catch (e) { }
-      }
-      parsedQuestions.forEach((q) => {
-        let isQuestionValid = validateQuestion(q as any);
+      ybrick.get("questions").forEach((q: Y.Doc) => {
+        let isQuestionValid = validateQuestion(toRenderJSON(q.getMap()) as any);
         if (!isQuestionValid) {
           playStatus = PlayButtonStatus.Invalid;
         }
@@ -426,6 +425,7 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
+  fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
   createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
   socketStartEditing: (brickId: number) => dispatch(socketActions.socketStartEditing(brickId)),
 });
