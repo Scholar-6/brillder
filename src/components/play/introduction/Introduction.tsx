@@ -176,10 +176,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   }
 
   const renderPlayButton = () => {
-    if (isMobile && !(isTablet || isIPad13)) {
+    if (isPhone()) {
       return (
         <div className="action-footer mobile-footer-fixed-buttons">
           <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={startBrick} />
+          {(isMobile && !(isIPad13 || isTablet)) && <div className="play-footer-label" onClick={startBrick}>Play Brick</div>}      
         </div>
       );
     }
@@ -373,7 +374,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 brickLength={brick.brickLength}
               />
             </div>}
-              {renderPlayButton()}
+            {renderPlayButton()}
           </div>
           <div className="introduction-content">
             {renderBriefTitle()}

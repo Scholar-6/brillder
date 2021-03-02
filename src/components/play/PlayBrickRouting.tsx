@@ -327,7 +327,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             moveNext={moveToLive}
             onHighlight={onHighlight}
           />
-          {(isMobile && !(isIPad13 || isTablet)) && <div className="play-footer-label">Play Brick</div>}
           {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/live">
