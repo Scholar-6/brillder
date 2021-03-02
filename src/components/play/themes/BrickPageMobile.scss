@@ -964,7 +964,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   .mobile-back-button {
     z-index: 299999;
     position: fixed;
-    bottom: 0 !important;
+    bottom: 0.5vw !important;
     width: calc(100% / 7) !important;
     height: 20vw !important;
   }
@@ -973,6 +973,10 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
   .mobile-back-button {
     right: calc(100% / 7 * 2 - 2vw) !important;
+  }
+  .intro-mobile-next-button {
+    width: 11vw !important;
+    right: 43vw !important;
   }
 }
 
@@ -1341,12 +1345,13 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 .play-preview-pages {
   .play-footer-label {
     z-index: 1000000;
-    left: 40vw;
+    left: 44vw;
+    max-width: 30vw;
     position: fixed !important;
     bottom: 5.3vw;
     font-size: 7vw;
     color: var(--theme-dark-blue);
-    font-family: $font-family-regular;
+    font-family: $font-family-bold;
   }
 }
 

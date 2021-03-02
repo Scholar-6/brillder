@@ -178,6 +178,20 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     );
   }
 
+  const renderIntro = () => {
+    return (
+      <div>
+        <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
+        <SpriteIcon name="" />
+        <SpriteIcon name="corner-up-left" onClick={() => history.push(map.ViewAllPage + `?subjectId=${brick.subject?.id}`)} />
+        <SpriteIcon name="" />
+        <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
+        <SpriteIcon name="" />
+        <SpriteIcon name="" />
+      </div>
+    );
+  }
+
   const renderEveryOtherStep = () => {
     return (
       <div>
