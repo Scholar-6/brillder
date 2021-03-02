@@ -11,12 +11,14 @@ import map from "components/map";
 import GoogleDesktopButton from "./GoogleDesktopButton";
 import RegisterDesktopButton from "./RegisterDesktopButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import TermsLink from "components/baseComponents/TermsLink"
 import TeachIcon from "components/mainPage/components/TeachIcon";
 import PhoneIcon from "./PhoneIcon";
 import TypingLabel from "components/baseComponents/TypingLabel";
-import { EmailSignPage, JoinPage, RegisterPage } from "./routes";
 import EmailRegisterDesktopPage from "./EmailRegisterDesktopPage";
-import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
+import Delayed from "components/services/Delayed";
+import { FirstPage, EmailSignPage, JoinPage, RegisterPage, TermsPage } from "./routes";
+import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -51,19 +53,11 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
     page = LoginPage.Register;
   }
 
-  const moveToLogin = () => history.push(EmailSignPage);
+  const moveToFirstPage = () => history.push(FirstPage)
+  const moveToEmailLogin = () => history.push(EmailSignPage);
   const moveToJoin = () => history.push(JoinPage);
   const moveToRegister = () => history.push(RegisterPage);
-
-  const renderPrivacyPolicy = () => {
-    return (
-      <div className="policy-text">
-        <span onClick={() => setPolicyDialog(true)}>
-          Privacy Policy
-        </span>
-      </div>
-    );
-  }
+  const moveToTerms = () => history.push(TermsPage);
 
   return (
     <div className="login-desktop-page">
@@ -91,6 +85,17 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
             <div className="button-box">
               <RegisterDesktopButton label="Register with email" onClick={moveToRegister} />
             </div>
+            <Delayed waitBeforeShow={500}>
+            <div className="button-box">
+              <div className="text-box">
+                <div className="signin-button" onClick={moveToFirstPage}>
+                  <SpriteIcon name="arrow-left" />
+                  Sign In 
+                </div>
+                <span>Already a member?</span>
+              </div>
+            </div>
+            </Delayed>
           </div>
         </Route>
         <Route exact path={map.Login}>
@@ -102,13 +107,13 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
               <GoogleDesktopButton label="Sign in with Google" />
             </div>
             <div className="button-box">
-              <RegisterDesktopButton label="Sign in with email" onClick={moveToLogin} />
+              <RegisterDesktopButton label="Sign in with email" onClick={moveToEmailLogin} />
             </div>
             <div className="button-box">
               <div className="text-box">
                 <span>New to Brillder?</span>
                 <div className="join-button" onClick={moveToJoin}>
-                  Join Now
+                   Join Now
                   <SpriteIcon name="arrow-right" />
                 </div>
               </div>
@@ -156,7 +161,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
           <SpriteIcon name="trowel-home" className="trowel-login text-theme-orange floating2" />
         </div>
       </div>
-      {renderPrivacyPolicy()}
+      <TermsLink history={props.history}/>
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
     </div>
   );

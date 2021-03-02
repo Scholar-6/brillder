@@ -3,7 +3,7 @@ import { Grid, Hidden } from '@material-ui/core';
 import moment from 'moment';
 
 import './Synthesis.scss';
-import { Brick } from 'model/brick';
+import { AcademicLevelLabels, Brick } from 'model/brick';
 import { useHistory, useLocation } from 'react-router-dom';
 import { PlayStatus } from '../model';
 import TimerWithClock from "../baseComponents/TimerWithClock";
@@ -112,7 +112,9 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
             <BrickCounter isArrowUp={true} startTime={startTime} />
             <div className="flex f-align-center">
               <div className="left-brick-circle">
-                <div className="round-button" style={{ background: `${color}` }}></div>
+                <div className="round-button" style={{ background: `${color}` }}>
+                  {AcademicLevelLabels[brick.academicLevel]}
+                </div>
               </div>
               <span className="heading synthesis-title">Synthesis</span>
             </div>
