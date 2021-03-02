@@ -773,22 +773,11 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             svg {
               stroke-width: 1.5 !important;
             }
-            &:hover {
-              svg {
-                stroke-width: 1.8 !important;
-              }
-            }
           }
         }
         &.mobile-synthesis-page {
           .synthesis-content {
-            // padding: 0;
-            // width: calc(100vw - 4vw);
             width: 100%;
-            // padding: 4vw 4vw 60px 4vw;
-            // margin-bottom: 20vh;
-            // height: calc(95% - 20vw - 80px) !important;
-            // height: calc(100% - 21vw) !important;
           }
         }
       }
@@ -1045,26 +1034,17 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           color: var(--white);
           background: var(--blue);
         }
-        &:hover {
-          opacity: 0.5;
-        }
       }
       &.success {
         span {
           color: var(--tab-gray);
           background: var(--theme-green);
         }
-        &:hover {
-          opacity: 0.5;
-        }
       }
       &.failed {
         span {
           color: var(--tab-gray);
           background: var(--theme-orange);
-        }
-        &:hover {
-          opacity: 0.5;
         }
       }
       &.current {
@@ -1090,9 +1070,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         }
         &.failed .underline > div {
           background: var(--theme-orange);
-        }
-        &:hover {
-          opacity: 0.5;
         }
       }
     }
