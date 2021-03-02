@@ -269,7 +269,7 @@ const SubjectPage: React.FC<SubjectProps> = ({
       let res = subjects.find(s => s.id === subjectId);
       if (res) {
         saveSubject(res.id);
-        return <Redirect to={map.ProposalTitle} />
+        return <Redirect to={map.ProposalTitleLink} />
       }
     } catch { }
   }
