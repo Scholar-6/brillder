@@ -20,7 +20,7 @@ const EmptyFilterSidebar:React.FC<Props> = props => {
          <div className="back-hover-area back-hover-area-filter" onClick={() => {
            clearProposal();
            props.forgetBrick();
-           let link = map.ProposalSubject;
+           let link = map.ProposalSubjectLink;
            if (props.isCore === true) {
              link += '?isCore=true';
            } else if (props.isCore === false) {
