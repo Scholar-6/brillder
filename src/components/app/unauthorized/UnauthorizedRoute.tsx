@@ -70,7 +70,7 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
     return <PageLoader content="...Checking rights..." />;
   } else {
     return (
-      <div>
+      <div className="unauthrozied-container">
         <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />
         <StopTrackingButton shown={!cookieOpen} onClick={() => {
           clearCookiePolicy();
