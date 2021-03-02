@@ -3,6 +3,7 @@ import { Hidden } from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Button from "@material-ui/core/Button";
 import { History } from "history";
+import TermsLink from "components/baseComponents/TermsLink";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
@@ -23,15 +24,6 @@ interface MobileLoginProps {
 }
 
 class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
-  renderPrivacyPolicy() {
-    return (
-      <div className="mobile-policy-text">
-        <span onClick={() => this.props.setPolicyDialog(true)}>
-          Privacy Policy
-        </span>
-      </div>
-    );
-  }
 
   renderSignInPage() {
     return (
@@ -96,7 +88,9 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
               Sign in
               </Button>
           </div>
-          {this.renderPrivacyPolicy()}
+          <div className="mobile-policy-text">
+            <TermsLink history={this.props.history}/>
+          </div>
         </form>
       </div>
     );

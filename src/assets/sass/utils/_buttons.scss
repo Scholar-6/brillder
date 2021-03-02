@@ -95,7 +95,7 @@
   @include phone_and_tabletP {
     width: 17vw;
     height: 17vw;
-    bottom: calc(85px);
+    bottom: calc(10px);
     right: 5vw;
   }
   @include tabletP {
@@ -198,4 +198,17 @@
 
 .stroke-2 {
   stroke-width: 2;
+}
+
+.policy-text {
+  cursor: pointer;
+  position: fixed;
+  bottom: calc(2.4vh + 0.2vw);
+  right: 20vw;
+  z-index: 2000;
+  font-size: 1.6vw;
+  color: var(--white);
+  a {
+    color: var(--white);
+  }
 }

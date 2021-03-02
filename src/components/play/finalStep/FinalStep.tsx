@@ -12,10 +12,16 @@ import ShareColumn from "./ShareColumn";
 import ExitButton from "./ExitButton";
 import InviteDialog from "./dialogs/InviteDialog";
 import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
+import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
+import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
+import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
+
 import { User } from "model/user";
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { rightKeyPressed } from "components/services/key";
+import AssignBrickColumn from "./AssignBrickColumn";
+import { checkTeacherOrAdmin } from "components/services/brickService";
 
 interface FinalStepProps {
   brick: Brick;
@@ -30,10 +36,16 @@ const FinalStep: React.FC<FinalStepProps> = ({
   history,
   moveNext,
 }) => {
-  const [shareOpen, setShare] = React.useState(false);
+  const [shareOpen, setShare] = React.useState(false);  
   const [linkOpen, setLink] = React.useState(false);
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
+
+  const [assign, setAssign] = React.useState(false);
+  const [assignItems, setAssignItems] = React.useState([] as any[]);
+  const [assignFailedItems, setAssignFailedItems] = React.useState([] as any[]);
+  const [assignSuccess, setAssignSuccess] = React.useState(false);
+  const [assignFailed, setAssignFailed] = React.useState(false);
 
   const [inviteSuccess, setInviteSuccess] = React.useState({
     isOpen: false,
@@ -62,10 +74,16 @@ const FinalStep: React.FC<FinalStepProps> = ({
     isAuthor = brick.author.id === user.id;
   } catch { }
 
+  let canSee = false;
+  try {
+    canSee = checkTeacherOrAdmin(user);
+  } catch { }
+
   const renderActionColumns = () => {
     return (
       <Grid className="share-row" container direction="row" justify="center">
         <ShareColumn onClick={() => setShare(true)} />
+        <AssignBrickColumn onClick={() => setAssign(true)} />
       </Grid>
     );
   }
@@ -116,7 +134,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
             <div className="introduction-info">
               <div className="intro-text-row"></div>
             </div>
-            <ExitButton onClick={() => history.push(map.ViewAllPage)} />
+            {/* Moved to play/phoneComponents/PhonePlayFooter.tsx 
+              <ExitButton onClick={() => history.push(map.ViewAllPage)} />  */}
           </div>
         </div>
       </Hidden>
@@ -139,6 +158,43 @@ const FinalStep: React.FC<FinalStepProps> = ({
         invite={() => { setShare(false); setInvite(true) }}
         close={() => setShare(false)}
       />
+       {canSee && <div>
+        <AssignPersonOrClassDialog
+          isOpen={assign}
+          success={(items: any[], failedItems: any[]) => {
+            if (items.length > 0) {
+              setAssign(false);
+              setAssignItems(items);
+              setAssignFailedItems(failedItems);
+              setAssignSuccess(true);
+            } else if (failedItems.length > 0) {
+              setAssignFailedItems(failedItems);
+              setAssignFailed(true);
+            }
+          }}
+          close={() => setAssign(false)}
+        />
+        <AssignSuccessDialog
+          isOpen={assignSuccess}
+          brickTitle={brick.title}
+          selectedItems={assignItems}
+          close={() => {
+            setAssignSuccess(false);
+            if (assignFailedItems.length > 0) {
+              setAssignFailed(true);
+            }
+          }}
+        />
+        <AssignFailedDialog
+          isOpen={assignFailed}
+          brickTitle={brick.title}
+          selectedItems={assignFailedItems}
+          close={() => {
+            setAssignFailedItems([]);
+            setAssignFailed(false);
+          }}
+        />
+      </div>}
     </div>
   );
 };
