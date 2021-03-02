@@ -122,3 +122,16 @@
 .stop-cookie-tracking {
   display: none;
 }
+
+// global footer fix
+.menu-dropdown .MuiPaper-root {
+  width: 58vw !important;
+  .menu-text {
+    font-size: 6vw !important;
+  }
+}
+
+// main page adjustments for biger menu
+.mainPageMobile .main-page-menu.menu-expanded {
+  width: 58vw !important;
+}
