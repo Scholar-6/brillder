@@ -48,6 +48,7 @@ interface ProposalProps {
   brick: Brick;
   user: User;
   saveBrick(brick: Brick): Promise<Brick | null>;
+  fetchBrick(brickId: number): Promise<Brick | null>;
   createBrick(brick: Brick): Promise<Brick | null>;
   socketStartEditing(brickId: number): void;
 }
@@ -266,9 +267,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   };
 
   async saveAndPreview(playStatus: PlayButtonStatus) {
-    if (this.state.brick.id && playStatus === PlayButtonStatus.Valid) {
-      await this.props.saveBrick(this.state.brick);
-      this.props.history.push(map.playPreviewIntro(this.state.brick.id));
+    if (this.context && playStatus === PlayButtonStatus.Valid) {
+      await this.props.fetchBrick(this.context.json.brick.id);
+      this.props.history.push(map.playPreviewIntro(this.context.json.brick.id));
     }
   }
 
@@ -424,6 +425,7 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
+  fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
   createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
   socketStartEditing: (brickId: number) => dispatch(socketActions.socketStartEditing(brickId)),
 });

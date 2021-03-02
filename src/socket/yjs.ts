@@ -38,7 +38,7 @@ export const getYDoc = (history: History, brickId: number, firstName: string, la
         color: "#C43C30",
     });
     awareness.on("change", (changes: any) => {
-        console.log(Array.from(awareness.getStates().values()));
+        // console.log(Array.from(awareness.getStates().values()));
     });
 
     // sync the document 100ms after initialization.
