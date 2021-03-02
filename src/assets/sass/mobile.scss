@@ -8,6 +8,11 @@
   height: 50px;
 }
 
+// #2870 unauthorized dashbaord scrolling fix
+.unauthrozied-container {
+  height: 100%;
+}
+
 .MuiAutocomplete-popper {
   .MuiAutocomplete-option {
     font-size: 7vw;
