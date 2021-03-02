@@ -7,7 +7,7 @@ import axios from "axios";
 import "./activateAccountPage.scss";
 import actions from "redux/actions/auth";
 import LoginLogo from 'components/loginPage/components/LoginLogo';
-import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
+import TermsLink from 'components/baseComponents/TermsLink';
 import { Redirect, useLocation } from "react-router-dom";
 import DesktopActivateForm from "./DesktopActivateForm";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
@@ -26,10 +26,6 @@ interface EmailActivateAccountProps {
 }
 
 const EmailActivateAccountPage: React.FC<EmailActivateAccountProps> = (props) => {
-  let initPolicyOpen = false;
-  if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
-    initPolicyOpen = true;
-  }
   const [alertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
@@ -41,7 +37,6 @@ const EmailActivateAccountPage: React.FC<EmailActivateAccountProps> = (props) =>
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [valid, setValid] = useState<boolean>();
-  const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
 
   const validateForm = () => {
     if (password.length > 0) {
@@ -116,7 +111,7 @@ const EmailActivateAccountPage: React.FC<EmailActivateAccountProps> = (props) =>
             <Grid container direction="row" className="third-row">
               <div className="first-col"></div>
               <div className="second-col">
-                <span className="policy-text" onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
+                <TermsLink history={props.history}/>
               </div>
               <div className="third-col"></div>
             </Grid>
@@ -130,7 +125,6 @@ const EmailActivateAccountPage: React.FC<EmailActivateAccountProps> = (props) =>
           message={alertMessage}
           action={<React.Fragment></React.Fragment>}
         />
-        <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
       </>
       : <Redirect to={map.Login} />}
     </Grid>

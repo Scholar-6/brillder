@@ -30,7 +30,7 @@ const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
       }}>
         <TextField
           variant="standard"
-          placeholder="Enter your email address here"
+          placeholder="Enter your email to create an account"
           type="email"
           className={`dialog-input ${emailInvalid ? 'input-theme-orange' : ''}`}
           value={email}

@@ -13,6 +13,7 @@ import RegisterButton from "components/loginPage/components/RegisterButton";
 import map from "components/map";
 import { Redirect, useLocation } from "react-router-dom";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import TermsLink from "components/baseComponents/TermsLink";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -114,7 +115,7 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
             <Grid container direction="row" className="third-row">
               <div className="first-col"></div>
               <div className="second-col">
-                <span className="policy-text" onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
+                <TermsLink history={props.history}/>
               </div>
               <div className="third-col"></div>
             </Grid>

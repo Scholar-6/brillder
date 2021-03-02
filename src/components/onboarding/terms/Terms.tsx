@@ -32,7 +32,7 @@ const MobileTheme = React.lazy(() => import('./themes/TermsMobileTheme'));
 const TabletTheme = React.lazy(() => import('./themes/TermsTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/TermsDesktopTheme'));
 
-class TermsPage extends Component<BricksListProps, BricksListState> {
+class TermsSignUp extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props);
 
@@ -90,7 +90,7 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
             <div className="bottom-button" onClick={() => this.props.history.push(map.UserPreference)}>
               <Checkbox color="secondary" />
               <span>
-                I am over 13 years old, and agree to the Brillder Terms of Service and Privacy Policy
+                I am over 13 years old, and agree to these Terms
             </span>
             </div>
           </Grid>
@@ -104,4 +104,4 @@ const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
 });
 
-export default connect(mapState)(TermsPage);
+export default connect(mapState)(TermsSignUp);
