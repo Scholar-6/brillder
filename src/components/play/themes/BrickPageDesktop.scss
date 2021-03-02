@@ -1378,3 +1378,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     background: rgba(130,192,237,0.5) !important;
   }
 }
+
+// academic level
+.play-preview-pages .brick-container .left-brick-circle .round-button {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 3vw;
+}

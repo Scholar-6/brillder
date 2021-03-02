@@ -57,6 +57,7 @@ import MobileUsernamePage from 'components/onboarding/mobileUsernamePage/MobileU
 import RotateIPadInstruction from 'components/baseComponents/rotateInstruction/RotateIPadInstruction';
 import Warning from 'components/baseComponents/rotateInstruction/Warning';
 import { isPhone } from 'services/phone';
+import { setupMatomo } from 'services/matomo';
 
 interface AppProps {
   setLogoutSuccess(): void;
@@ -82,6 +83,9 @@ const App: React.FC<AppProps> = props => {
     window.addEventListener("orientationchange", (event: any) => {
       setHorizontal(isHorizontal());
     });
+
+    // download mamoto
+    setupMatomo();
   }, []);
 
   // lock screen for phone
@@ -97,6 +101,7 @@ const App: React.FC<AppProps> = props => {
     }
   }
 
+  // intercept api errors to prevent redirect.
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
