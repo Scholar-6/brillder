@@ -23,6 +23,7 @@ import InviteDialog from '../finalStep/dialogs/InviteDialog';
 import InvitationSuccessDialog from '../finalStep/dialogs/InvitationSuccessDialog';
 import { ReduxCombinedState } from 'redux/reducers';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
+import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
 
 interface InviteResult {
   isOpen: boolean;
@@ -50,6 +51,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
   }
 
   const { brick } = props;
+  const [exitPlay, setExit] = React.useState(false);
   const [cookieOpen, setCookiePopup] = React.useState(isInitCookieOpen);
   const [share, setShare] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
@@ -196,7 +198,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
       <div>
         <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
         <SpriteIcon name="" />
-        <SpriteIcon name="corner-up-left" onClick={() => history.push(map.ViewAllPage + `?subjectId=${brick.subject?.id}`)} />
+        <SpriteIcon name="corner-up-left" onClick={() => setExit(true)} />
         {(isIntro()) ? <SpriteIcon name="" /> : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id))} />}
         <SpriteIcon name="" />
         <SpriteIcon name="" />
@@ -258,6 +260,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         acceptCookies();
         setCookiePopup(false);
       }} />
+      <ExitPlayDialog isOpen={exitPlay} history={history} subjectId={brick.subject?.id || brick.subjectId} close={() => setExit(false)} />
     </div>
   </div>;
 }
