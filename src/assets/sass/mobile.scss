@@ -8,6 +8,11 @@
   height: 50px;
 }
 
+// #2870 unauthorized dashbaord scrolling fix
+.unauthrozied-container {
+  height: 100%;
+}
+
 .MuiAutocomplete-popper {
   .MuiAutocomplete-option {
     font-size: 7vw;
@@ -101,7 +106,7 @@
   $width: 94vw;
   z-index: 20000;
   left: 3vw;
-  positioN: fixed;
+  position: fixed;
   bottom: 19vw;
   width: $width !important;
   .timer-progressbar {
@@ -115,19 +120,18 @@
 }
 
 .stop-cookie-tracking {
-  position: fixed;
-  bottom: 2vh;
-  right: 20vw;
-  border: none;
-  outline: none;
-  font-size: 6vw;
-  border-radius: 2vw;
-  padding: 0.5vh 2vw;
-  color: var(--white);
-  transition: all 300ms ease-out;
-  background: var(--theme-orange);
+  display: none;
+}
 
-  &:hover {
-    background: var(--theme-dark-blue);
+// global footer fix
+.menu-dropdown .MuiPaper-root {
+  width: 58vw !important;
+  .menu-text {
+    font-size: 6vw !important;
   }
+}
+
+// main page adjustments for biger menu
+.mainPageMobile .main-page-menu.menu-expanded {
+  width: 58vw !important;
 }

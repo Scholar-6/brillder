@@ -14,6 +14,7 @@ import TeachIcon from "components/mainPage/components/TeachIcon";
 import PhoneIcon from "./PhoneIcon";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import TermsLink from "components/baseComponents/TermsLink";
+import { trackSignUp } from "services/matomo";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -114,6 +115,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
       }
 
       if (data === "OK") {
+        trackSignUp();
         sendLogin(email, password);
       }
     }).catch((e) => {

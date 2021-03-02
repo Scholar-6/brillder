@@ -89,9 +89,7 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
             </div>
             <div className="bottom-button" onClick={() => this.props.history.push(map.UserPreference)}>
               <Checkbox color="secondary" />
-              <span>
-                I am over 13 years old, and agree to these Terms
-            </span>
+              <span>I am over 13 years old, and agree to these Terms</span>
             </div>
           </Grid>
         </Grid>

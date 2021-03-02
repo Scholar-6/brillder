@@ -10,7 +10,7 @@ export const getReviewTime = (brickLength: BrickLengthEnum) => {
   return timeMinutes;
 }
 
-export const getSpendTime = (brickLength: BrickLengthEnum) => {
+export const getSynthesisTime = (brickLength: BrickLengthEnum) => {
   let timeMinutes = 4;
   if (brickLength === BrickLengthEnum.S40min) {
     timeMinutes = 8;
