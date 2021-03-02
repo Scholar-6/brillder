@@ -113,13 +113,6 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
               {this.state.parts.map((p) => (
                 <div ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
               ))}
-              <div className="condition-box">
-                <Checkbox />
-                I agree to terms and conditions
-              </div>
-              <div className="condition-button">
-                <button onClick={() => this.props.history.push('/')}>Accept</button>
-              </div>
             </div>
           </Grid>
         </Grid>
