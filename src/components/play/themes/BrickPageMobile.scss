@@ -1342,8 +1342,8 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   .play-footer-label {
     z-index: 1000000;
     left: 40vw;
-    position: fixed;
-    bottom: 6vw;
+    position: fixed !important;
+    bottom: 5.3vw;
     font-size: 7vw;
     color: var(--theme-dark-blue);
     font-family: $font-family-regular;
@@ -1356,6 +1356,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--white);
     font-size: 10vw;
   }
 
