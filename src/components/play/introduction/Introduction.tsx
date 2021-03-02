@@ -176,7 +176,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       return (
         <div className="action-footer mobile-footer-fixed-buttons">
           <SpriteIcon name="play-thick" className="mobile-next-button intro-mobile-next-button" onClick={startBrick} />
-          {(isMobile && !(isIPad13 || isTablet)) && <div className="play-footer-label bold" onClick={startBrick}>Play</div>}      
         </div>
       );
     }
