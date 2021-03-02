@@ -13,6 +13,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TeachIcon from "components/mainPage/components/TeachIcon";
 import PhoneIcon from "./PhoneIcon";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
+import TermsLink from "components/baseComponents/TermsLink";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -123,11 +124,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
 
   const renderPrivacyPolicy = () => {
     return (
-      <div className="policy-text">
-        <span onClick={() => setPolicyDialog(true)}>
-          Privacy Policy
-        </span>
-      </div>
+      <TermsLink history={props.history}/>
     );
   }
 
