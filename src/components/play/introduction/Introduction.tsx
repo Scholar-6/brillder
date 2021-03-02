@@ -75,10 +75,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     };
   });
 
-  const hideBrief = () => {
-    setState({ ...state, briefExpanded: false });
-  }
-
   const toggleBrief = () => {
     setState({ ...state, briefExpanded: !state.briefExpanded });
   };

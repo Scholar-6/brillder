@@ -2,7 +2,6 @@ import React from "react";
 
 import ProgressbarCountdown from "./ProgressbarCountdown";
 import { BrickLengthEnum } from "model/brick";
-import { Moment } from 'moment';
 const moment = require("moment");
 // TODO: try combining this into import { Moment }, * as moment from 'moment';
 

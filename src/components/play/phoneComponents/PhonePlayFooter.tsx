@@ -19,7 +19,6 @@ import LinkDialog from '../finalStep/dialogs/LinkDialog';
 import LinkCopiedDialog from '../finalStep/dialogs/LinkCopiedDialog';
 import InviteDialog from '../finalStep/dialogs/InviteDialog';
 import InvitationSuccessDialog from '../finalStep/dialogs/InvitationSuccessDialog';
-import ExitButton from "components/play/finalStep/ExitButton";
 
 interface InviteResult {
   isOpen: boolean;
@@ -60,10 +59,6 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
 
   const isIntro = () => {
     return history.location.pathname.slice(-6) === '/intro';
-  }
-
-  const isSynthesis = () => {
-    return history.location.pathname.slice(-10) === '/synthesis';
   }
 
   const isFinalStep = () => {
