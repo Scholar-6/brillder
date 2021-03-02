@@ -12,6 +12,7 @@ import map from 'components/map';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import StopTrackingButton from './StopTrackingButton';
 import { getCookies, clearCookiePolicy, acceptCookies } from 'localStorage/cookies';
+import { isPhone } from 'services/phone';
 
 interface StudentRouteProps {
   path: string;
@@ -29,17 +30,6 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
   const [cookieOpen, setCookiePopup] = React.useState(!cookiesAccepted);
 
   const setMatomoTagManager = () => {
-    const windowLink = window as any;
-    const _mtm = windowLink._mtm = windowLink._mtm || [];
-    _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
-    const d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript';
-    g.async=true;
-    g.src='https://matomo.brillder.com/js/container_UkdV64XH.js';
-    if (s.parentNode) {
-      s.parentNode.insertBefore(g,s);
-    }
-    console.log('start matomoto manager');
   }
 
   useEffect(() => {
@@ -70,17 +60,19 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
     return <PageLoader content="...Checking rights..." />;
   } else {
     return (
-      <div>
+      <div className="unauthrozied-container">
         <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />
         <StopTrackingButton shown={!cookieOpen} onClick={() => {
           clearCookiePolicy();
           setCookiePopup(true);
         }} />
+        {/* for phones button and popup is in menus */}
+        {!isPhone() &&
         <CookiePolicyDialog isOpen={cookieOpen} close={() => {
           acceptCookies();
           setCookiePopup(false);
           setMatomoTagManager();
-        }} />
+        }} />}
       </div>
     );
   }

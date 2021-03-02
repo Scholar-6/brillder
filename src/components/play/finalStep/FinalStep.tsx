@@ -17,7 +17,6 @@ import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccess
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
 
 import { User } from "model/user";
-import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { rightKeyPressed } from "components/services/key";
 import AssignBrickColumn from "./AssignBrickColumn";

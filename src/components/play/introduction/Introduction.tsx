@@ -75,10 +75,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     };
   });
 
-  const hideBrief = () => {
-    setState({ ...state, briefExpanded: false });
-  }
-
   const toggleBrief = () => {
     setState({ ...state, briefExpanded: !state.briefExpanded });
   };
@@ -176,10 +172,10 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   }
 
   const renderPlayButton = () => {
-    if (isMobile && !(isTablet || isIPad13)) {
+    if (isPhone()) {
       return (
         <div className="action-footer mobile-footer-fixed-buttons">
-          <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={startBrick} />
+          <SpriteIcon name="play-thick" className="mobile-next-button intro-mobile-next-button" onClick={startBrick} />
         </div>
       );
     }
@@ -373,7 +369,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 brickLength={brick.brickLength}
               />
             </div>}
-              {renderPlayButton()}
+            {renderPlayButton()}
           </div>
           <div className="introduction-content">
             {renderBriefTitle()}

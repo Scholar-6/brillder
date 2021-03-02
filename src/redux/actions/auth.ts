@@ -6,8 +6,10 @@ import { Action, Dispatch } from 'redux';
 import {LoginModel} from 'model/auth';
 import { socketLogout } from './socket';
 import notificationActions from './notifications';
+import { enableTracking, disableTracking } from 'services/matomo';
 
 const loginSuccess = () => {
+  enableTracking();
   return { type: types.LOGIN_SUCCESS } as Action
 }
 
@@ -44,6 +46,7 @@ const login = (model:LoginModel) => {
 }
 
 const logoutSuccess = () => {
+  disableTracking();
   return {
     type: types.LOGOUT_SUCCESS,
   } as Action

@@ -48,7 +48,7 @@ interface ViewAllProps {
   notifications: Notification[] | null;
   history: any;
   location: any;
-  forgetBrick(): void;
+  forgetBrick(): Promise<any>;
 }
 
 interface ViewAllState {
@@ -631,7 +631,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return 'My subjects';
   }
 
-  moveToCreateOne() {
+  async moveToCreateOne() {
     const filterSubjects = getCheckedSubjects(this.state.subjects);
     if (filterSubjects.length === 1) {
       const subjectId = filterSubjects[0].id;
@@ -641,8 +641,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           for (let s of subjects) {
             if (s.id === subjectId) {
               clearProposal();
-              this.props.forgetBrick();
-              this.props.history.push(map.ProposalSubject + '?selectedSubject=' + subjectId);
+              await this.props.forgetBrick();
+              this.props.history.push(map.ProposalSubjectLink  + '?selectedSubject=' + subjectId);
             } else {
               this.setState({ noSubjectOpen: true, activeSubject: filterSubjects[0] });
             }
@@ -650,7 +650,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         }
       }
     } else {
-      this.props.history.push(map.ProposalSubject);
+      this.props.history.push(map.ProposalSubjectLink);
     }
   }
 

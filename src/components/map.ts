@@ -8,7 +8,7 @@ export const BackToWorkPage = '/back-to-work';
 export const AssignmentsPage = '/assignments';
 export const MyLibrary = '/my-library';
 export const Onboarding = '/onboarding';
-export const TermsPage = '/terms'
+export const TermsPage = '/terms';
 
 export const TermsSignUp = Onboarding + '/terms';
 export const SetUsername = Onboarding + '/set-username';
@@ -64,6 +64,9 @@ export const ProposalReview = `${ProposalBase2}/plan`;
 
 export const ProposalReview2 = `${ProposalBase2}/plan`;
 
+// new brick link
+export const ProposalSubjectLink = `${ProposalBase}/subject`;
+export const ProposalTitleLink = `${ProposalBase}/brick-title`;
 
 // play preview
 export const PlayPreviewBase = '/play-preview/brick';
@@ -124,6 +127,8 @@ export default {
   ProposalLength,
   ProposalReview,
   ProposalReview2,
+  ProposalSubjectLink,
+  ProposalTitleLink,
 
   BackToWorkPage,
   AssignmentsPage,

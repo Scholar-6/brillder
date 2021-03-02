@@ -1362,7 +1362,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 .choose-choice:hover {
   background: rgba(130,192,237,0.5) !important;
-  padding: 0.2vw !important;
   &.active {
     background: var(--highlight-blue) !important;
   }
@@ -1374,7 +1373,22 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     transition: all 300ms ease-out;
   }
   .vertical-content:hover {
-    padding: 0.2vw !important;
     background: rgba(130,192,237,0.5) !important;
+  }
+}
+
+// academic level
+.play-preview-pages .brick-container .left-brick-circle .round-button {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 3vw;
+}
+
+// words hover
+.words-container {
+  .word:hover {
+    background: red !important;
   }
 }
