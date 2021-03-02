@@ -25,18 +25,12 @@ import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames, BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PlayButtonStatus, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./model";
 import { validateQuestion } from "components/build/questionService/ValidateQuestionService";
-import {
-  parseQuestion,
-  ApiQuestion,
-} from "components/build/questionService/QuestionService";
 import map from "components/map";
 
 import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
-import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { YJSContext } from "../baseComponents/YJSProvider";
-import YoutubeAndMathInHtml from "components/play/baseComponents/YoutubeAndMath";
 import { toRenderJSON } from "services/SharedTypeService";
 
 interface ProposalProps {
