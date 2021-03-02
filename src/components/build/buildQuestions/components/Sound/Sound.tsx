@@ -127,8 +127,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
   render() {
     const { locked } = this.props;
     const { status } = this.state;
-    let canDelete =
-      status === AudioStatus.Start || status === AudioStatus.Recording;
+    let canDelete = status === AudioStatus.Start || status === AudioStatus.Recording;
     
     return (
       <div className="react-recording" onClick={this.props.onFocus}>
