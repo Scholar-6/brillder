@@ -175,8 +175,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (isPhone()) {
       return (
         <div className="action-footer mobile-footer-fixed-buttons">
-          <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={startBrick} />
-          {(isMobile && !(isIPad13 || isTablet)) && <div className="play-footer-label" onClick={startBrick}>Play Brick</div>}      
+          <SpriteIcon name="play-thick" className="mobile-next-button intro-mobile-next-button" onClick={startBrick} />
+          {(isMobile && !(isIPad13 || isTablet)) && <div className="play-footer-label bold" onClick={startBrick}>Play</div>}      
         </div>
       );
     }
