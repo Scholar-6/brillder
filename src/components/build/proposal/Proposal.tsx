@@ -1,4 +1,5 @@
 import React from "react";
+import * as Y from "yjs";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { History } from "history";
@@ -35,6 +36,8 @@ import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { YJSContext } from "../baseComponents/YJSProvider";
+import YoutubeAndMathInHtml from "components/play/baseComponents/YoutubeAndMath";
+import { toRenderJSON } from "services/SharedTypeService";
 
 interface ProposalProps {
   history: History;
@@ -304,16 +307,11 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
 
     let playStatus = PlayButtonStatus.Hidden;
     const { brick } = this.props;
-    if (brick && brick.questions && brick.questions.length > 0) {
+    const ybrick = this.context?.ydoc.getMap("brick");
+    if (ybrick && ybrick.get("questions") && ybrick.get("questions").length > 0) {
       playStatus = PlayButtonStatus.Valid;
-      const parsedQuestions: Question[] = [];
-      for (const question of brick.questions) {
-        try {
-          parseQuestion(question as ApiQuestion, parsedQuestions);
-        } catch (e) { }
-      }
-      parsedQuestions.forEach((q) => {
-        let isQuestionValid = validateQuestion(q as any);
+      ybrick.get("questions").forEach((q: Y.Doc) => {
+        let isQuestionValid = validateQuestion(toRenderJSON(q.getMap()) as any);
         if (!isQuestionValid) {
           playStatus = PlayButtonStatus.Invalid;
         }
