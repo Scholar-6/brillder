@@ -15,9 +15,9 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     height: 100%;
     width: 55vw;
+    z-index: 10;
     h1 {
       text-align: center;
       color: var(--white);
@@ -50,9 +50,8 @@
     height: 100%;
     padding-top: 12.4vh;
     transition: all 500ms ease-out;
-    z-index: 11;
+    z-index: 1000;
     &.right {
-      position: absolute;
       left: 55vw;
     }
     .logo {
@@ -86,7 +85,6 @@
         justify-content: flex-start;
       }
     }
-
     .email-button {
       background: var(--theme-orange);
 
@@ -100,7 +98,6 @@
       }
     }
     $button-width: 20vw;
-
     .google-button-desktop,
     .email-button {
       position: relative;
@@ -118,7 +115,6 @@
         height: 2vw;
       }
     }
-
     .google-button-desktop {
       background: var(--white);
       color: var(--theme-dark-blue);
@@ -164,8 +160,7 @@
     position: absolute;
     left: 45vw;
     $top: 24.5%;
-    display: relative;
-    z-index: 10;
+    z-index: 100;
     .container {
       height: 100%;
       display: flex;

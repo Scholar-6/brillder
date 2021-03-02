@@ -19,6 +19,7 @@ import LinkDialog from '../finalStep/dialogs/LinkDialog';
 import LinkCopiedDialog from '../finalStep/dialogs/LinkCopiedDialog';
 import InviteDialog from '../finalStep/dialogs/InviteDialog';
 import InvitationSuccessDialog from '../finalStep/dialogs/InvitationSuccessDialog';
+import ExitButton from "components/play/finalStep/ExitButton";
 
 interface InviteResult {
   isOpen: boolean;
@@ -30,10 +31,9 @@ interface FooterProps {
   brick: Brick;
   history: any;
   user: User;
-
+  moveToPostPlay(): void;
   mode: PlayMode;
   setMode(mode: PlayMode): void;
-
   fetchBrick(brickId: number): void;
 }
 
@@ -58,30 +58,24 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
   const [menuOpen, setMenu] = React.useState(false);
   const { history } = props;
 
-  const setHighlightMode = () => {
-    if (props.setMode) {
-      if (props.mode === PlayMode.Highlighting) {
-        props.setMode(PlayMode.Normal);
-      } else {
-        props.setMode(PlayMode.Highlighting);
-      }
-    }
-  }
-
   const isIntro = () => {
     return history.location.pathname.slice(-6) === '/intro';
+  }
+
+  const isSynthesis = () => {
+    return history.location.pathname.slice(-10) === '/synthesis';
   }
 
   const isFinalStep = () => {
     return history.location.pathname.slice(-10) === '/finalStep';
   }
 
-  const renderPopups = () => {
-    let canSee = false;
-    try {
-      canSee = checkTeacherOrAdmin(props.user);
-    } catch { }
+  let canSee = false;
+  try {
+    canSee = checkTeacherOrAdmin(props.user);
+  } catch { }
 
+  const renderPopups = () => {
     let isAuthor = false;
     try {
       isAuthor = brick.author.id === props.user.id;
@@ -167,14 +161,45 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     </div>
   }
 
-  return <div className="phone-play-footer">
+  const renderFinalStep = () => {
+    return (
+      <div>
+        <SpriteIcon name="" />
+        <SpriteIcon name="" />
+        <SpriteIcon name="" />
+        <SpriteIcon name="" />
+        <SpriteIcon name="" />
+        <button
+          type="button"
+          className="play-preview svgOnHover roller-red"
+          onClick={() => {
+            history.push(map.ViewAllPage)
+            return props.moveToPostPlay;
+          }}
+          >
+          <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
+        </button>
+      </div>
+    );
+  }
+
+  const renderEveryOtherStep = () => {
+    return (
+      <div>
+        <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
+        <SpriteIcon name="" />
+        <SpriteIcon name="corner-up-left" onClick={() => history.push(map.ViewAllPage + `?subjectId=${brick.subject?.id}`)} />
+        {(isIntro()) ? <SpriteIcon name="" /> : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id))} />}
+        <SpriteIcon name="" />
+        <SpriteIcon name="" />
+        <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
+      </div>
+    );
+  }
+
+  return <div className="phone-play-footer"> 
     <div>
-      <SpriteIcon name="" />
-      <SpriteIcon name="corner-up-left" onClick={() => history.push(map.ViewAllPage + `?subjectId=${brick.subject?.id}`)} />
-      {isIntro() ? <SpriteIcon name="" /> : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id))} />}
-      <SpriteIcon name="highlighter" onClick={setHighlightMode} />
-      <SpriteIcon name="" />
-      <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
+      {(isFinalStep()) ? renderFinalStep() : renderEveryOtherStep() }
       <Menu
         className="phone-down-play-menu menu-dropdown"
         keepMounted
@@ -187,12 +212,13 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         }}>
           Share Brick
       </MenuItem>
+        {canSee &&
         <MenuItem onClick={() => {
           setAssign(true);
           setMenu(false);
         }}>
           Assign Brick
-      </MenuItem>
+      </MenuItem>}
       </Menu>
       {renderPopups()}
     </div>

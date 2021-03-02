@@ -66,6 +66,7 @@ const LivePage: React.FC<LivePageProps> = ({
   const [isShuffleOpen, setShuffleDialog] = React.useState(false);
   const [isTimeover, setTimeover] = React.useState(false);
   const [isSubmitOpen, setSubmitAnswers] = React.useState(false);
+  const [questionScrollRef] = React.useState(React.createRef<HTMLDivElement>());
   let initAnswers: any[] = [];
 
   const [answers, setAnswers] = React.useState(initAnswers);
@@ -146,6 +147,14 @@ const LivePage: React.FC<LivePageProps> = ({
       handleStep(activeStep - 1)();
       scrollToStep(activeStep);
     }
+
+    // phone scroll to top
+    if (isPhone()) {
+      const {current} = questionScrollRef;
+      if (current) {
+        current.scrollTo({top: 0});
+      }
+    }
   }
 
   const nextFromShuffle = () => {
@@ -184,6 +193,14 @@ const LivePage: React.FC<LivePageProps> = ({
     }
     handleStep(activeStep + 1)();
     scrollToStep(activeStep + 2);
+
+    // phone scroll to top
+    if (isPhone()) {
+      const {current} = questionScrollRef;
+      if (current) {
+        current.scrollTo({top: 0});
+      }
+    }
 
     if (activeStep >= questions.length - 1) {
       setSubmitAnswers(true);
@@ -377,7 +394,7 @@ const LivePage: React.FC<LivePageProps> = ({
                 {renderStepper()}
               </div>
             </div>
-            <div className="introduction-content">
+            <div className="introduction-content" ref={questionScrollRef}>
               {questions.map(renderQuestionContainer)}
               {isPhone() ? renderMobileButtons() :
                 <div className="action-footer">
@@ -389,15 +406,15 @@ const LivePage: React.FC<LivePageProps> = ({
                     <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
                   </div>
                 </div>}
-                <div className="time-container">
-                    <TimeProgressbar
-                      isLive={true}
-                      onEnd={onEnd}
-                      endTime={props.endTime}
-                      brickLength={brick.brickLength}
-                      setEndTime={props.setEndTime}
-                    />
-                  </div>
+              <div className="time-container">
+                <TimeProgressbar
+                  isLive={true}
+                  onEnd={onEnd}
+                  endTime={props.endTime}
+                  brickLength={brick.brickLength}
+                  setEndTime={props.setEndTime}
+                />
+              </div>
             </div>
           </Hidden>
           <ShuffleAnswerDialog
