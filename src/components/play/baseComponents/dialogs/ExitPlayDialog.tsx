@@ -18,7 +18,7 @@ const ExitPlayDialog: React.FC<InvitationProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <div>Exit? Your brick attempt will not be saved. Options:</div>
+        <div>Exit? Your attempt will not be saved.</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button" onClick={() => {
