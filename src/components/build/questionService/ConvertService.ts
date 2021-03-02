@@ -6,6 +6,11 @@ import {
 } from "model/question";
 import {getUniqueComponent} from './QuestionService';
 import { convertString } from "services/SharedTypeService";
+import { getDefaultCategoriseAnswer } from "../buildQuestions/questionTypes/categoriseBuild/categoriseBuild";
+import { getDefaultMissingWordAnswer } from "../buildQuestions/questionTypes/missingWordBuild/MissingWordBuild";
+import { getDefaultWordHighlightingAnswer } from "../buildQuestions/questionTypes/highlighting/wordHighlighting/wordHighlighting";
+import { getDefaultLineHighlightingAnswer } from "../buildQuestions/questionTypes/highlighting/lineHighlightingBuild/LineHighlightingBuild";
+import { HighlightMode } from "../buildQuestions/questionTypes/highlighting/model";
 
 
 export function stripHtml(html: string) {
@@ -52,6 +57,8 @@ export function getQuestionIndex(questions: Y.Array<Y.Doc>, question: Y.Doc) {
 
 export function convertToSort(question: Y.Doc) {
   const updatedQuestion = setQuestionType(question, QuestionTypeEnum.Sort);
+  const component = getUniqueComponent(question);
+  getDefaultCategoriseAnswer(component);
   updatedQuestion.getMap().get("hint").set("status", HintStatus.All);
   updatedQuestion.getMap().get("hint").set("list", new Y.Array());
   return updatedQuestion;
@@ -99,6 +106,41 @@ export function convertToPairMatch(question: Y.Doc) {
   return stripHtmlQuestionList(updatedQuestion);
 }
 
+export function convertToMissingWord(question: Y.Doc) {
+  const updatedQuestion = setQuestionType(question, QuestionTypeEnum.MissingWord);
+  const component = getUniqueComponent(updatedQuestion);
+  getDefaultMissingWordAnswer(component);
+  return updatedQuestion;
+}
+
+export function convertToWordHighlighting(question: Y.Doc) {
+  const text = getUniqueComponent(question).get("text");
+  const updatedQuestion = setQuestionType(question, QuestionTypeEnum.WordHighlighting);
+  const component = getUniqueComponent(updatedQuestion);
+  if(text) {
+    component.delete("lines");
+    component.set("words", new Y.Array());
+    component.set("mode", HighlightMode.Input)
+  } else {
+    getDefaultWordHighlightingAnswer(component);
+  }
+  return updatedQuestion;
+}
+
+export function convertToLineHighlighting(question: Y.Doc) {
+  const text = getUniqueComponent(question).get("text");
+  const updatedQuestion = setQuestionType(question, QuestionTypeEnum.LineHighlighting);
+  const component = getUniqueComponent(updatedQuestion);
+  if(text) {
+    component.delete("words");
+    component.set("lines", new Y.Array());
+    component.set("mode", HighlightMode.Input)
+  } else {
+    getDefaultLineHighlightingAnswer(component);
+  }
+  return updatedQuestion;
+}
+
 
 export function convertToQuestionType(
   questions: Y.Array<Y.Doc>, question: Y.Doc, type: QuestionTypeEnum,
@@ -127,6 +169,15 @@ export function convertToQuestionType(
       break;
     case QuestionTypeEnum.PairMatch:
       updatedQuestion = convertToPairMatch(question);
+      break;
+    case QuestionTypeEnum.MissingWord:
+      updatedQuestion = convertToMissingWord(question);
+      break;
+    case QuestionTypeEnum.WordHighlighting:
+      updatedQuestion = convertToWordHighlighting(question);
+      break;
+    case QuestionTypeEnum.LineHighlighting:
+      updatedQuestion = convertToLineHighlighting(question);
       break;
     default:
       updatedQuestion = setQuestionType(question, type);
