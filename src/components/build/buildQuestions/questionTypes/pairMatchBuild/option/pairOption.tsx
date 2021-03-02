@@ -13,10 +13,11 @@ export interface PairOptionProps {
   index: number;
   answer: Y.Map<any>;
   validationRequired: boolean;
+  onBlur(): void;
 }
 
 const PairOptionComponent: React.FC<PairOptionProps> = ({
-  locked, editOnly, index, answer, validationRequired
+  locked, editOnly, index, answer, validationRequired, onBlur
 }) => {
   const removeImage = () => {
     if (locked) { return; }
@@ -69,6 +70,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
           toolbar={['latex']}
           isValid={isValid}
           placeholder={"Enter Option " + (index + 1) + "..."}
+          onBlur={onBlur}
         />
         <QuestionImageDropZone
           answer={answer as any}
