@@ -518,8 +518,8 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               border-left: 0.3vw solid var(--tab-gray);
               padding-left: 1.8vw;
             }
-            ul > li {
-              font-size: 1.25vw;
+            li {
+              font-size: 4.5vw;
             }
           }
           .MuiBox-root {
@@ -721,7 +721,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           }
           .editors-row {
             margin-top: 1vh;
-            font-size: 1.25vw;
+            font-size: 4.5vw;
             font-family: $font-family-bold;
             display: flex;
             justify-content: center;
@@ -878,7 +878,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
 }
 .open-question {
-  font-size: 1.25vw;
+  font-size: 4.5vw;
   color: var(--theme-dark-blue);
 }
 
@@ -1369,4 +1369,12 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 .final-assign-brick-column {
   margin-top: 10%;
+}
+
+// bullets size in play
+.play-preview-pages .synthesis-content,
+.play-preview-pages .introduction-content {
+  li {
+    font-size: 4.5vw !important;
+  }
 }
