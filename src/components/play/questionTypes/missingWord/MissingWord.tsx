@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid, Select } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import CompComponent from "../Comp";
 import "./MissingWord.scss";
@@ -91,10 +92,11 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       <Select
         className="missing-select"
         value={value}
+        IconComponent={ExpandMoreIcon}
         onChange={e => this.setUserAnswer(e, index)}
       >
         {choice.answers.map((a: any, i: number) => (
-          <MenuItem key={i} value={i}>
+          <MenuItem key={i} className="missing-choice" value={i}>
             {a.value}
           </MenuItem>
         ))}
