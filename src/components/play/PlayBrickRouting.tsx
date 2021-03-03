@@ -253,7 +253,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         setUserToken(token);
       } else {
         setInvalidEmail(true);
-        console.log('set invalid');
       }
     }
   }
