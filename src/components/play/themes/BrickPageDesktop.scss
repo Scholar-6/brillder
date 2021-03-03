@@ -1420,3 +1420,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     background: rgba(130, 192, 237, 0.5) !important;
   }
 }
+
+// horizontal shuffle hover
+.play-preview-pages .horizontal-shuffle-answer:hover {
+  background: rgba(130, 192, 237, 0.5) !important;
+}
