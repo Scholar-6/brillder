@@ -1413,3 +1413,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     background: rgba(130, 192, 237, 0.5) !important;
   }
 }
+
+// categorize hover
+.play-preview-pages .sort-category-list-container {
+  .sortable-item:hover {
+    background: rgba(130, 192, 237, 0.5) !important;
+  }
+}
