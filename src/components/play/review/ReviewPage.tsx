@@ -155,7 +155,11 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     }
   };
 
-  const onEnd = () => moveNext();
+  const onEnd = () => {
+    if (!props.isPlayPreview) {
+      moveNext();
+    }
+  }
 
   const moveNext = () => {
     handleStep(activeStep)();
