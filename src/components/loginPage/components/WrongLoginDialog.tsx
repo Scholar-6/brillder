@@ -11,7 +11,7 @@ const WrongLoginDialog: React.FC<WrongLoginDialogProps> = props => {
   return (
     <BaseDialogWrapper open={props.isOpen} close={props.close} submit={props.submit}>
       <div className="dialog-header">
-        <div>We don't appear to have a record of you yet</div>
+        <div>We don't appear to have a record of you yet.</div>
         <div>Sign up?</div>
       </div>
       <div className="dialog-footer">
