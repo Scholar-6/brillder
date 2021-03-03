@@ -1,6 +1,5 @@
 import React from "react";
 
-import './FirstButton.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { RolePreference, User } from "model/user";
 import map from "components/map";
@@ -15,7 +14,7 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
   const renderViewAllLabel = () => {
     const { rolePreference } = props.user;
     if (rolePreference) {
-      const {roleId} = rolePreference;
+      const { roleId } = rolePreference;
       if (roleId === RolePreference.Teacher) {
         return "Assign Bricks";
       } else if (roleId === RolePreference.Student) {
@@ -35,23 +34,21 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
       }}
     >
       <div className="eye-glass-icon">
-        <div className="svgOnHover">
+        <div className="eye-glass-frame svgOnHover">
           <SpriteIcon name="glasses-home" className="active text-theme-orange" />
         </div>
         <div className="glass-eyes-left svgOnHover">
-          <svg className="svg active" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-            <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
-          </svg>
+          <SpriteIcon name="eye-ball" className="eye-ball text-white" />
           <div className="glass-left-inside">
-            <SpriteIcon name="aperture" className="aperture" />
+            <SpriteIcon name="eye-pupil" className="eye-pupil text-theme-dark-blue" />
+            {/* <SpriteIcon name="aperture" className="aperture text-theme-dark-blue" /> */}
           </div>
         </div>
         <div className="glass-eyes-right svgOnHover">
-          <svg className="svg active" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-            <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
-          </svg>
+          <SpriteIcon name="eye-ball" className="eye-ball text-white" />
           <div className="glass-right-inside">
-            <SpriteIcon name="aperture" className="aperture" />
+            <SpriteIcon name="eye-pupil" className="eye-pupil text-theme-dark-blue" />
+            {/* <SpriteIcon name="aperture" className="aperture text-theme-dark-blue" /> */}
           </div>
         </div>
       </div>

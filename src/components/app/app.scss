@@ -13,6 +13,7 @@
   letter-spacing: 0.4vw;
   font-family: $font-family-black;
   @extend %flexCenter;
+  z-index: 9999;
   @include phone_and_tabletP {
     min-height: 5.3vw;
   }

@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .mainPageMobile ~ .beta-text {
   display: none;
@@ -16,7 +16,6 @@
   font-family: $font-family-black;
 
   .manage-classes {
-
     #Path_8,
     #Ellipse_12,
     #Ellipse_12-2,
@@ -67,15 +66,12 @@
     @include tabletP {
       padding: 5vh 0;
     }
-
-    .eye-glass-icon,
     .btn {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       @extend %textCenter;
       flex-direction: column;
-
       .svg {
         @extend %removePosition;
         width: 150px;
@@ -100,6 +96,47 @@
       color: var(--tab-gray);
       font-size: 25px;
       letter-spacing: 5px;
+    }
+  }
+
+  .view-item-container {
+    .eye-glass-icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      @extend %textCenter;
+      flex-direction: column;
+      svg {
+        width: 50vw !important;
+        height: 20vw !important;
+      }
+      .eye-glass-frame {
+        svg {
+          @extend %removePosition;
+        }
+      }
+      $eye-size: 10.5vw;
+      .glass-eyes-left,
+      .glass-eyes-right {
+        width: $eye-size;
+        height: $eye-size;
+        @extend %floatToYCenter;
+        @extend %flexCenter;
+        svg {
+          display: none !important;
+        }
+        .glass-left-inside,
+        .glass-right-inside {
+          display: none !important;
+        }
+      }
+      .glass-eyes-left {
+        left: 8vw;
+      }
+      .glass-eyes-right {
+        right: 8vw;
+      }
     }
   }
 
