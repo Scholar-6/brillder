@@ -20,13 +20,7 @@ const MobileUsernamePage: React.FC<UsernamePageProps> = props => {
   const [labelFinished, setLabelFinished] = React.useState(false);
   const [secondFinished, setSecondFinished] = React.useState(false);
 
-  const move = () => {
-    if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
-      props.history.push('/home');
-    } else {
-      props.history.push(map.SelectSubjectPage);
-    }
-  }
+  const move = () => props.history.push(map.SelectSubjectPage);
 
   const renderUsername = () => {
     return (

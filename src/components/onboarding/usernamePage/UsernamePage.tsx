@@ -91,13 +91,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     }
   }
 
-  const move = () => {
-    if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
-      props.history.push('/home');
-    } else {
-      props.history.push(map.SelectSubjectPage);
-    }
-  }
+  const move = () => props.history.push(map.SelectSubjectPage);
 
   const renderGetStartedButton = () => {
     return (
