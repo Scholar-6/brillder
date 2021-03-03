@@ -14,6 +14,8 @@ import "./QuillMediaEmbed";
 import "./QuillImageUpload";
 import "./QuillCursors";
 import { YJSContext } from "components/build/baseComponents/YJSProvider";
+import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
+import ImageUpload from "./QuillImageUpload";
 
 function randomEditorId() {
      return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -30,6 +32,7 @@ interface QuillEditorProps {
     isValid?: boolean | null;
     toolbar: string[];
     className?: string;
+    imageDialog?: boolean;
     onChange?(data: string): void;
     onBlur?(): void;
 }
@@ -51,6 +54,15 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
 
     const [uniqueId] = React.useState(randomEditorId());
     const [data, setData] = React.useState(props.data);
+
+    const [imageDialogFile, setImageDialogFile] = React.useState<File>();
+    const [imageModule, setImageModule] = React.useState<ImageUpload>();
+    React.useEffect(() => {
+        if(imageModule) {
+            imageModule.openDialog = (file: File) => setImageDialogFile(file);
+        }
+    }, [imageModule])
+
     const context = React.useContext(YJSContext);
     const awareness = context?.awareness;
 
@@ -93,6 +105,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         if(node && props.sharedData) {
             const editor = node.getEditor();
             new QuillBinding(props.sharedData, editor, awareness);
+            setImageModule(editor.getModule("imageupload") as ImageUpload);
         }
     }, []);
 
@@ -121,6 +134,19 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
                 placeholder={props.placeholder}
                 modules={modules}
                 ref={ref}
+            />
+            <ImageDialog
+                initData={{} as any}
+                initFile={imageDialogFile ?? null}
+                open={Boolean(imageDialogFile)}
+                upload={(...args) => {
+                    if(imageModule) {
+                        imageModule.uploadImages.bind(imageModule)(...args);
+                    }
+                    setImageDialogFile(undefined);
+                }}
+                updateData={console.log}
+                setDialog={open => setImageDialogFile(undefined)}
             />
         </div>
     );
