@@ -40,6 +40,7 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
       parts: [],
     };
 
+
     axios.get("/terms.md").then((r) => {
       if (r.data) {
         const partContents = r.data.split(/(?=\n# )/g);
@@ -58,6 +59,23 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
         this.setState({ parts });
       }
     });
+
+    let res = this.fetchHeader("/terms.md",'Last-Modified');
+    console.log(res);
+  }
+
+  fetchHeader(url: string, wch: string) {
+    try {
+      var req = new XMLHttpRequest();
+      req.open("HEAD", url, false);
+      req.send(null);
+      if (req.status == 200) {
+        return req.getResponseHeader(wch);
+      }
+      else return false;
+    } catch (er) {
+      return er.message;
+    }
   }
 
   getTitle(content: string) {
