@@ -2,6 +2,7 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
+$base-font-size: 1.25vw;
 $expanded-intro-padding: 2vw;
 $introduction-desktop-height: calc(100vh - #{$expanded-intro-padding} - #{$page-head-height});
 $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
@@ -263,7 +264,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
           }
           p {
-            font-size: 1.25vw !important;
+            font-size: $base-font-size !important;
           }
           .intro-header {
             @extend %transitionAll600;
@@ -530,7 +531,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               padding-left: 1.8vw;
             }
             ul > li {
-              font-size: 1.25vw;
+              font-size: $base-font-size;
             }
           }
           .MuiBox-root {
@@ -553,7 +554,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             height: $introduction-desktop-height;
             padding-left: 1vw;
             .sort-category {
-              font-size: 1.25vw !important;
+              font-size: $base-font-size !important;
             }
             .question-index-container ~ h1 {
               text-align: center;
@@ -594,7 +595,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           }
           .editors-row {
             margin-top: 1vh;
-            font-size: 1.25vw;
+            font-size: $base-font-size;
             font-family: $font-family-bold;
             display: flex;
             justify-content: center;
@@ -1056,7 +1057,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 .open-question {
-  font-size: 1.25vw;
+  font-size: $base-font-size;
   color: var(--theme-dark-blue);
 }
 
@@ -1424,4 +1425,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 // horizontal shuffle hover
 .play-preview-pages .horizontal-shuffle-answer:hover {
   background: rgba(130, 192, 237, 0.5) !important;
+}
+
+// missing choice dropdown font 
+.missing-choice {
+  padding: 0.25vw 1vw;
+  font-size: $base-font-size;
 }
