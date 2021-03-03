@@ -957,6 +957,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       font-size: 1vw;
     }
   }
+  
+  .prep-title {
+    margin-top: 3vh;
+  }
   .expanded-text {
     width: 100%;
     color: var(--theme-dark-blue);
