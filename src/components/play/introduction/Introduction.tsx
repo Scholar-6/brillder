@@ -216,7 +216,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
   const renderPrepTitle = () => {
     return (
-      <div className="expand-title">
+      <div className="expand-title prep-title">
         <span>Prep</span>
         <div className="centered text-white" onClick={togglePrep}>
           <div className={state.prepExpanded ? "round-icon b-green" : "round-icon b-yellow"}>

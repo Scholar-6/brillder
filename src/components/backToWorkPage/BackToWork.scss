@@ -357,7 +357,7 @@
   // margin-bottom: 1vh;
   .classrooms-filter {
     padding-bottom: 7vh;
-    height: $filter-height;
+    height: calc(100% - 2vw - 4vh);
     // height: calc(#{$filter-height} + #{$classes-label-height});
     overflow-y: scroll;
     transition: 500ms all;
