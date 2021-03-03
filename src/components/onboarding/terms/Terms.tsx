@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import Checkbox from '@material-ui/core/Checkbox';
-import axios from "axios";
+import queryString from 'query-string';
 // @ts-ignore
 import marked from "marked";
 
@@ -10,11 +10,16 @@ import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import map from "components/map";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
+import { acceptTerms } from "services/axios/user";
+import userActions from 'redux/actions/user';
+import { getTerms } from "services/axios/terms";
 
 interface BricksListProps {
   user: User;
   history: any;
   location: any;
+
+  getUser(): Promise<any>;
 }
 
 interface Part {
@@ -26,6 +31,7 @@ interface Part {
 
 interface BricksListState {
   parts: Part[];
+  lastModifiedDate: string;
 }
 
 const MobileTheme = React.lazy(() => import('./themes/TermsMobileTheme'));
@@ -38,43 +44,29 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
 
     this.state = {
       parts: [],
+      lastModifiedDate: ''
     };
 
-
-    axios.get("/terms.md").then((r) => {
-      if (r.data) {
-        const partContents = r.data.split(/(?=\n# )/g);
-        const parts = [];
-
-        for (let partContent of partContents) {
-          let part = {
-            title: this.getTitle(partContent),
-            active: false,
-            content: partContent,
-            el: React.createRef() as React.RefObject<HTMLDivElement>
-          } as Part;
-          parts.push(part);
-        }
-
-        this.setState({ parts });
-      }
-    });
-
-    let res = this.fetchHeader("/terms.md",'Last-Modified');
-    console.log(res);
+    this.getTerms();
   }
 
-  fetchHeader(url: string, wch: string) {
-    try {
-      var req = new XMLHttpRequest();
-      req.open("HEAD", url, false);
-      req.send(null);
-      if (req.status == 200) {
-        return req.getResponseHeader(wch);
+  async getTerms() {
+    const r = await getTerms();
+    if (r) {
+      const partContents = r.data.split(/(?=\n# )/g);
+      const parts = [];
+
+      for (let partContent of partContents) {
+        let part = {
+          title: this.getTitle(partContent),
+          active: false,
+          content: partContent,
+          el: React.createRef() as React.RefObject<HTMLDivElement>
+        } as Part;
+        parts.push(part);
       }
-      else return false;
-    } catch (er) {
-      return er.message;
+
+      this.setState({ parts, lastModifiedDate: r.lastModifiedDate });
     }
   }
 
@@ -105,7 +97,18 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
                 ))}
               </div>
             </div>
-            <div className="bottom-button" onClick={() => this.props.history.push(map.UserPreference)}>
+            <div className="bottom-button" onClick={async() => {
+              const success = await acceptTerms(this.state.lastModifiedDate);
+              if (success) {
+                await this.props.getUser();
+                const values = queryString.parse(this.props.history.location.search);
+                if (values.onlyAcceptTerms) {
+                  this.props.history.push('/home');
+                } else {
+                  this.props.history.push(map.UserPreference);
+                }
+              }
+            }}>
               <Checkbox color="secondary" />
               <span>I am over 13 years old, and agree to these Terms</span>
             </div>
@@ -120,4 +123,9 @@ const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
 });
 
-export default connect(mapState)(TermsSignUp);
+
+const mapDispatch = (dispatch: any) => ({
+  getUser: () => dispatch(userActions.getUser()),
+});
+
+export default connect(mapState, mapDispatch)(TermsSignUp);

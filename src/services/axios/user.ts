@@ -104,3 +104,18 @@ export const createUserByEmail = async(email: string) => {
     return null;
   }
 }
+
+/**
+ * Accept terms and conditions
+ */
+export const acceptTerms = async(termsAndConditionsAcceptedVersion: string) => {
+  try {
+    const data = await post<string>('/user/termsAndConditions', { termsAndConditionsAcceptedVersion });
+    if (data === "OK") {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    return null;
+  }
+}

@@ -41,6 +41,7 @@ export interface User extends UserBase {
   roles: UserRole[];
   rolePreference?: UserRole;
   hasPlayedBrick: boolean;
+  termsAndConditionsAcceptedVersion: string;
 }
 
 export interface UserProfile extends UserBase {

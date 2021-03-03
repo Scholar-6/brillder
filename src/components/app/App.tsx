@@ -58,14 +58,22 @@ import RotateIPadInstruction from 'components/baseComponents/rotateInstruction/R
 import Warning from 'components/baseComponents/rotateInstruction/Warning';
 import { isPhone } from 'services/phone';
 import { setupMatomo } from 'services/matomo';
+import { ReduxCombinedState } from 'redux/reducers';
+import { User } from 'model/user';
+import { getTerms } from 'services/axios/terms';
 
 interface AppProps {
+  user: User;
   setLogoutSuccess(): void;
 }
 
 const App: React.FC<AppProps> = props => {
   setBrillderTitle();
   const location = useLocation();
+  const [termsData, setTermsData] = React.useState({
+    isLoading: false,
+    termsVersion: ''
+  });
   const [zendeskCreated, setZendesk] = React.useState(false);
   const isHorizontal = () => {
     // Apple does not seem to have the window.screen api so we have to use deprecated window.orientation instead.
@@ -155,7 +163,28 @@ const App: React.FC<AppProps> = props => {
     return <Warning />
   } else if (isMobile && horizontal) {
     return <RotateInstruction />;
-  } 
+  }
+
+  // get terms version
+  if (props.user && props.user.termsAndConditionsAcceptedVersion && !termsData.termsVersion && !termsData.isLoading) {
+    setTermsData({isLoading: true, termsVersion: ''});
+    getTerms().then(r => {
+      if (r) {
+        console.log('terms loaded', props.user, r);
+        setTermsData({isLoading: false, termsVersion: r.lastModifiedDate});
+      } else {
+        setTermsData({isLoading: false, termsVersion: ''});
+      }
+    });
+  }
+
+  // redirect if to terms when file updated
+  if (termsData.termsVersion && props.user && props.user.termsAndConditionsAcceptedVersion) {
+    console.log(termsData.termsVersion, props.user.termsAndConditionsAcceptedVersion);
+    if (termsData.termsVersion !== props.user.termsAndConditionsAcceptedVersion) {
+      window.location.href= map.TermsSignUp + '?onlyAcceptTerms=true';
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -217,8 +246,12 @@ const App: React.FC<AppProps> = props => {
   );
 }
 
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+});
+
 const mapDispatch = (dispatch: any) => ({
   setLogoutSuccess: () => dispatch(actions.setLogoutSuccess()),
 });
 
-export default connect(null, mapDispatch)(App);
+export default connect(mapState, mapDispatch)(App);
