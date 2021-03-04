@@ -141,19 +141,29 @@
 }
 
 //#2889 short answer updated. rounded and text centered.
-.short-answer-input .document-editor {
-  $border-radius: 2.5vw;
-  .ck-editor {
-    border-top-left-radius: $border-radius;
-    border-bottom-left-radius: $border-radius;
-    .ck-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+.short-answer-live {
+  $border-radius: 2vw;
+  .short-answer-input {
+    width: 100% !important;
+    margin-bottom: 1.5vh;
+    .document-editor {
+      .ck-editor {
+        border-top-left-radius: $border-radius;
+        border-bottom-left-radius: $border-radius;
+        .ck-content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      .ck-toolbar {
+        border-top-right-radius: $border-radius !important;
+        border-bottom-right-radius: $border-radius !important;
+      }
     }
   }
-  .ck-toolbar {
-    border-top-right-radius: $border-radius !important;
-    border-bottom-right-radius: $border-radius !important;
+  .question-hint-global {
+    border-radius: $border-radius;
+    padding: 2vw;
   }
 }
