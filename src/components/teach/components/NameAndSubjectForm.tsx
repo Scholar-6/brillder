@@ -113,6 +113,11 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           className="w100 h100 active"
         />
       </span>
+      <div className="assign-button-container">
+        <div className="btn" onClick={() => {}}>
+          Assign a new brick
+        </div>
+      </div>
     </div>
   );
 }
