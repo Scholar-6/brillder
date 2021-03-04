@@ -84,7 +84,7 @@ class TimeDropdowns extends React.Component<any, State> {
         MenuProps={{ classes: { paper: 'select-time-list' } }}
         onChange={e => setChoice(e.target.value)}
       >
-        {choices.map((c, i) => <MenuItem value={c}>{c}</MenuItem>)}
+        {choices.map((c, i) => <MenuItem value={c} key={i}>{c}</MenuItem>)}
       </Select>
     );
   }
