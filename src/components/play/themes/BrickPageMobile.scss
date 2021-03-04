@@ -11,10 +11,6 @@
   }
 }
 
-$expanded-intro-padding: 2vw;
-$introduction-desktop-height: calc(100vh - #{$expanded-intro-padding} - #{$page-head-height});
-$introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
-
 $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 .play-preview-pages {
@@ -68,11 +64,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             font-family: $font-family-black;
             font-size: 3vh !important;
             max-width: 90vw !important;
-          }
-          .title {
-            @include desktop {
-              font-size: 4vw;
-            }
           }
           p {
             font-size: 4.5vw;
@@ -146,7 +137,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               display: block;
               .step {
                 min-width: 11.5vw !important;
-                font-size: 4vw !important;
                 display: inline-block !important;
               }
             }
@@ -214,39 +204,54 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               top: 2vw;
               width: 100%;
             }
+            // introduction and synthesis header
             &.expanded-intro-header {
-              align-items: flex-start;
-              padding: 3vw;
+              padding: 5vw 3vw;
+              display: flex;
+              flex-direction: row;
+              align-items: stretch;
               background-color: var(--solitude-light);
-              min-height: 86px;
+              .vertical-center {
+                display: flex;
+                align-items: center;
+                .left-brick-circle {
+                  margin: 0;
+                  .round-button {
+                    transition: all 300ms;
+                    height: 12vw;
+                    width: 12vw;
+                  }
+                }
+              }
               .intro-text-row {
                 width: 100%;
               }
-              .left-brick-circle {
-                .round-button {
+
+              .r-title-container {
+                padding-left: 2vw;
+                max-width: 80vw;
+                h1 {
                   transition: all 300ms;
-                  height: 12vw;
-                  width: 12vw;
+                  margin: 0;
+                  width: 100%;
+                  font-size: 4.5vw !important;
+                  text-align: left !important;
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                }
+  
+                p {
+                  transition: all 300ms;
+                  width: 100%;
+                }
+      
+                .synthesis-title {
+                  color: var(--theme-dark-blue);
+                  font-family: $font-family-bold;
                 }
               }
-
-              h1 {
-                transition: all 300ms;
-                margin: 0;
-                width: calc(100vw - 38vw);
-                font-size: 4.5vw !important;
-                text-align: left !important;
-                padding-left: 2vw !important;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              }
-
-              p {
-                transition: all 300ms;
-                width: 100%;
-                padding-left: 14vw;
-              }
+              
               .play-clock {
                 display: none;
               }
@@ -294,6 +299,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               flex-direction: column;
               justify-content: center;
               padding: 3vw;
+              padding-bottom: 1vw;
               font-size: 4.4vw;
               margin-top: 0 !important;
               > p,
@@ -569,7 +575,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
                 flex-direction: row !important;
                 padding: 2vw;
                 .step {
-                  font-size: 4vw !important;
+                  font-size: 6vw !important;
                   .svg {
                     height: 4vw !important;
                     width: 4vw !important;
@@ -743,7 +749,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           }
 
           .share-row {
-            margin-top: 8.5vh;
+            margin-top: 7.5vh;
 
             .button-container {
               @extend %flexToXCenter;
@@ -927,6 +933,15 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       color: var(--theme-orange);
       transform: rotate(90deg);
     }
+    .exit-text {
+      position: fixed;
+      z-index: 100000;
+      bottom: 6vw;
+      font-size: 9vw;
+      left: calc(50% - 10vw);
+      font-family: $font-family-bold;
+      color: var(--theme-dark-blue);
+    }
   }
 }
 
@@ -946,8 +961,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     .MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button {
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 1vw 0vw !important;
+      justify-content: space-between;
       line-height: 1 !important;
       min-height: 12vw !important;
       font-size: 6vw !important;
@@ -993,7 +1007,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 // stepper in play
 .play-preview-pages .sorted-row .live-page,
 .play-preview-pages .sorted-row .review-page {
-  $stepper-height: 25vw;
+  $stepper-height: 26vw;
   $step-height: 10vw;
   $step-container-width: 12vw;
   .introduction-info {
@@ -1294,11 +1308,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   .introduction-page {
     .heading {
       font-size: 7vw !important;
-    }
-    .synthesis-title {
-      color: var(--theme-dark-blue);
-      font-family: $font-family-bold;
-      margin-left: 1.5vw;
     }
   }
 }
