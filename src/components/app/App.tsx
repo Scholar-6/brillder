@@ -102,8 +102,10 @@ const App: React.FC<AppProps> = props => {
       if (document.body.requestFullscreen && !document.fullscreenElement) {
         let res = document.body.requestFullscreen();
         res.then(() => {
-          window.screen.orientation.lock('portrait');
-          console.log('lock screen');
+          if (window.screen.orientation && window.screen.orientation.lock) {
+            window.screen.orientation.lock('portrait');
+            console.log('lock screen');
+          }
         });
       }
     }
