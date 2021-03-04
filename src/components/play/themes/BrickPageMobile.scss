@@ -11,10 +11,6 @@
   }
 }
 
-$expanded-intro-padding: 2vw;
-$introduction-desktop-height: calc(100vh - #{$expanded-intro-padding} - #{$page-head-height});
-$introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
-
 $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 .play-preview-pages {
@@ -68,11 +64,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             font-family: $font-family-black;
             font-size: 3vh !important;
             max-width: 90vw !important;
-          }
-          .title {
-            @include desktop {
-              font-size: 4vw;
-            }
           }
           p {
             font-size: 4.5vw;
@@ -146,7 +137,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               display: block;
               .step {
                 min-width: 11.5vw !important;
-                font-size: 4vw !important;
                 display: inline-block !important;
               }
             }
@@ -570,7 +560,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
                 flex-direction: row !important;
                 padding: 2vw;
                 .step {
-                  font-size: 4vw !important;
+                  font-size: 6vw !important;
                   .svg {
                     height: 4vw !important;
                     width: 4vw !important;
