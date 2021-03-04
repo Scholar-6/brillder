@@ -126,8 +126,11 @@
 // global footer fix
 .menu-dropdown .MuiPaper-root {
   width: 58vw !important;
-  .menu-text {
-    font-size: 6vw !important;
+  .menu-item {
+    padding: 1vw 4vw !important;
+    .menu-text {
+      font-size: 6vw !important;
+    }
   }
 }
 

@@ -961,8 +961,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     .MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button {
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 1vw 0vw !important;
+      justify-content: space-between;
       line-height: 1 !important;
       min-height: 12vw !important;
       font-size: 6vw !important;
