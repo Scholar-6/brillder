@@ -4,6 +4,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import './AssignPersonOrClass.scss';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -24,10 +26,12 @@ interface AssignPersonOrClassProps {
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [value] = React.useState("");
+  const [deadlineDate, setDeadline] = React.useState('');
   const [selectedObjs, setSelected] = React.useState<any[]>([]);
   const [students, setStudents] = React.useState<UserBase[]>([]);
   const [classes, setClasses] = React.useState<Classroom[]>([]);
   const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
+  const [haveDeadline, toggleDeadline] = React.useState(null as boolean | null);
 
   const getAllStudents = React.useCallback(async () => {
     let students = await getStudents();
@@ -66,21 +70,21 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const assignToStudents = async (studentsIds: Number[]) => {
     return await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignStudents/${props.brick.id}`,
-      {studentsIds },
+      { studentsIds },
       { withCredentials: true }
     ).then(res => {
       return res.data as any[];
     })
-    .catch(() => {
-      props.requestFailed('Can`t assign student to brick');
-      return false;
-    });
+      .catch(() => {
+        props.requestFailed('Can`t assign student to brick');
+        return false;
+      });
   }
 
   const assignToClasses = async (classesIds: Number[]) => {
     return await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignClasses/${props.brick.id}`,
-      {classesIds},
+      { classesIds },
       { withCredentials: true }
     ).then(res => {
       return res.data as any[];
@@ -140,7 +144,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }
 
   const assign = async () => {
-    const {studentIds, classroomIds} = getSelectedIds();
+    const { studentIds, classroomIds } = getSelectedIds();
 
     let failedClasses: any[] = [];
     let failedStudents: any[] = [];
@@ -181,9 +185,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
       <div className="dialog-header">
-        <div className="bold">Who would you like to assign this brick to?</div>
+        <div className="r-popup-title bold">Who would you like to assign this brick to?</div>
         <Autocomplete
           multiple
+          freeSolo
           open={autoCompleteOpen}
           options={[...classes, ...students]}
           onChange={(e: any, c: any) => classroomSelected(c)}
@@ -195,7 +200,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
               onChange={e => onClassroomInput(e)}
               variant="standard"
               label="Students and Classes: "
-              placeholder="Students and Classes"
+              placeholder="Search for students and classes"
             />
           )}
           renderOption={(option: any) => (
@@ -207,8 +212,13 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             </React.Fragment>
           )}
         />
-        <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
-          <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{width: 'auto'}}>
+        <div className="r-popup-title bold">When is it due?</div>
+        <div className={haveDeadline ? 'r-day-date-row' : 'r-day-date-row r-hidden'}>
+          <div>
+          </div>
+        </div>
+        <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
+          <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{ width: 'auto' }}>
             <div className="centered">
               <span className="label">Assign Brick</span>
               <SpriteIcon name="file-plus" />

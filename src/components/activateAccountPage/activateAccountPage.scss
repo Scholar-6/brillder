@@ -147,6 +147,9 @@
     position: absolute;
     bottom: 2.4vh;
     right: 0;
+    span:hover {
+      color: var(--theme-orange) !important;
+    }
   }
 }
 

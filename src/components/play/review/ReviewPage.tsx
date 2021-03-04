@@ -155,7 +155,11 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     }
   };
 
-  const onEnd = () => moveNext();
+  const onEnd = () => {
+    if (!props.isPlayPreview) {
+      moveNext();
+    }
+  }
 
   const moveNext = () => {
     handleStep(activeStep)();
@@ -357,6 +361,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 <ReviewStepper
                   questions={questions}
                   attempts={attempts}
+                  activeStep={activeStep}
                   handleStep={handleStep}
                 />
               </div>

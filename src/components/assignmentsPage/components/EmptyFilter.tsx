@@ -19,7 +19,7 @@ const EmptyFilterSidebar:React.FC<Props> = props => {
          <div className="back-hover-area back-hover-area-filter" onClick={() => {
            clearProposal();
            props.forgetBrick();
-           props.history.push(map.ProposalBase);
+           props.history.push(map.ProposalSubjectLink);
          }}>
             <div className="create-icon svgOnHover">
               <SpriteIcon name="trowel" className="w100 h100 active" />

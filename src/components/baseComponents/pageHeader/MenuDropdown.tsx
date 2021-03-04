@@ -10,7 +10,7 @@ import { PageEnum } from "./PageHeadWithMenu";
 import { clearProposal } from 'localStorage/proposal';
 
 
-import map, { ProposalBase, ProposalSubject } from "components/map";
+import map, { ProposalSubjectLink } from "components/map";
 import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
 import SpriteIcon from "../SpriteIcon";
 import { Hidden } from "@material-ui/core";
@@ -68,11 +68,11 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const creatingBrick = () => {
     let isPlay = checkPlay();
     if (isPlay) {
-      setPlaySkip({ isOpen: true, link: ProposalBase, label: 'Start Building' });
+      setPlaySkip({ isOpen: true, link: ProposalSubjectLink, label: 'Start Building' });
     } else {
       clearProposal();
       props.forgetBrick();
-      move(ProposalBase, '');
+      move(ProposalSubjectLink, '');
     }
   };
 
@@ -225,7 +225,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         isOpen={playSkip.isOpen}
         label={playSkip.label}
         submit={() => {
-          if (playSkip.link === ProposalBase) {
+          if (playSkip.link === ProposalSubjectLink) {
             clearProposal();
             props.forgetBrick();
           }

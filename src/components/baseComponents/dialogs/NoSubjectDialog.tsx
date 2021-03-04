@@ -39,7 +39,7 @@ const NoSubjectDialog: React.FC<DialogProps> = (props) => {
     await updateUser(updatedUser);
     await props.getUser();
 
-    props.history.push(map.ProposalBase + '?selectedSubject=' + props.subject.id);
+    props.history.push(map.ProposalSubjectLink + '?selectedSubject=' + props.subject.id);
     props.close();
   }
   return (

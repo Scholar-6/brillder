@@ -20,13 +20,7 @@ const MobileUsernamePage: React.FC<UsernamePageProps> = props => {
   const [labelFinished, setLabelFinished] = React.useState(false);
   const [secondFinished, setSecondFinished] = React.useState(false);
 
-  const move = () => {
-    if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
-      props.history.push('/home');
-    } else {
-      props.history.push(map.SelectSubjectPage);
-    }
-  }
+  const move = () => props.history.push(map.SelectSubjectPage);
 
   const renderUsername = () => {
     return (
@@ -37,7 +31,7 @@ const MobileUsernamePage: React.FC<UsernamePageProps> = props => {
         <LabelTyping value={username} className="username" start={labelFinished} onFinish={() => setSecondFinished(true)} />
         {user.rolePreference?.roleId === UserType.Builder &&
           <div>
-            <p className="animation-300" style={{ opacity: secondFinished ? "1" : '0' }}>Use this username to connect with people to create and assign bricks</p>
+            <p className="username-fade-text animation-300" style={{ opacity: secondFinished ? "1" : '0' }}>Use it to connect with people to create and assign bricks</p>
           </div>}
       </div>
     );

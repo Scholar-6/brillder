@@ -134,7 +134,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
         </div>
         <div className="icon-container" onClick={() => {
           if (this.props.user.subjects.length > 1) {
-            this.props.history.push(map.ProposalSubject);
+            this.props.history.push(map.ProposalSubjectLink);
           } else {
             this.setState({subjectSelectOpen: true});
           }

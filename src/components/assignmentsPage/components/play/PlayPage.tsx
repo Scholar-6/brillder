@@ -130,7 +130,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
     for (let c of classrooms) {
       c.assignmentsCount = 0;
       for (let a of assignments) {
-        if (a.classroom && a.classroom.id === c.id && a.brick.isCore) {
+        if (a.classroom && a.classroom.id === c.id) {
           c.assignmentsCount += 1;
         }
       }
@@ -318,10 +318,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
           assignments={this.state.finalAssignments}
           user={this.props.user}
           history={this.props.history}
-
-          isCore={true}
           onCoreSwitch={() => {}}
-
           handleClick={this.handleMobileClick.bind(this)}
         />
       );

@@ -209,7 +209,9 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const onEnd = () => {
     setTimeover(true);
-    moveNext();
+    if (!props.isPlayPreview) {
+      moveNext();
+    }
   }
 
   const moveNext = () => {

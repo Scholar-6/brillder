@@ -63,9 +63,6 @@ interface MainPageState {
   isBackToWorkOpen: boolean;
   isTryBuildOpen: boolean;
 
-  // for builder
-  isBuilderActive: boolean;
-
   // for mobile popopup
   isDesktopOpen: boolean;
   secondaryLabel: string;
@@ -89,7 +86,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isMyLibraryOpen: false,
       isBackToWorkOpen: false,
       isTryBuildOpen: false,
-      isBuilderActive: false,
 
       isTeacher: rolePreference?.roleId === RolePreference.Teacher,
       isAdmin: checkAdmin(props.user.roles),
@@ -103,8 +99,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
     if (isStudent) {
       this.preparationForStudent();
-    } else if (isBuilder) {
-      this.preparationForBuilder();
     }
   }
 
@@ -115,13 +109,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     }
   }
 
-  async preparationForBuilder() {
-    let bricks = await getCurrentUserBricks();
-    if (bricks && bricks.length > 0) {
-      this.setState({ isBuilderActive: true });
-    }
-  }
-
   setPolicyDialog(isPolicyOpen: boolean) {
     this.setState({ isPolicyOpen });
   }
@@ -129,7 +116,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   creatingBrick() {
     clearProposal();
     this.props.forgetBrick();
-    this.props.history.push(map.ProposalBase);
+    this.props.history.push(map.ProposalSubjectLink);
   }
 
   renderCreateButton(disabled?: boolean) {

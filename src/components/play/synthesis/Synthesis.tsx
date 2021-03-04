@@ -3,7 +3,7 @@ import { Grid, Hidden } from '@material-ui/core';
 import moment from 'moment';
 
 import './Synthesis.scss';
-import { Brick } from 'model/brick';
+import { AcademicLevelLabels, Brick } from 'model/brick';
 import { useHistory, useLocation } from 'react-router-dom';
 import { PlayStatus } from '../model';
 import TimerWithClock from "../baseComponents/TimerWithClock";
@@ -14,8 +14,9 @@ import { getPlayPath, getAssignQueryString } from '../service';
 import BrickCounter from '../baseComponents/BrickCounter';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { rightKeyPressed } from 'components/services/key';
-import { getReviewTime, getSpendTime } from '../services/playTimes';
+import { getReviewTime, getSynthesisTime } from '../services/playTimes';
 import { isPhone } from 'services/phone';
+import TimeProgressbarV2 from '../baseComponents/timeProgressbar/TimeProgressbarV2';
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
@@ -95,7 +96,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   }
 
   const renderSpendTime = () => {
-    return <p><span>Aim to spend {getSpendTime(brick.brickLength)} minutes on this section.</span></p>;
+    return <p><span>Aim to spend {getSynthesisTime(brick.brickLength)} minutes on this section.</span></p>;
   }
 
   const renderMobile = () => {
@@ -109,10 +110,11 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
       <div className="brick-container synthesis-page mobile-synthesis-page">
         <div className="introduction-page">
           <div className="intro-header expanded-intro-header">
-            <BrickCounter isArrowUp={true} startTime={startTime} />
             <div className="flex f-align-center">
               <div className="left-brick-circle">
-                <div className="round-button" style={{ background: `${color}` }}></div>
+                <div className="round-button" style={{ background: `${color}` }}>
+                  {AcademicLevelLabels[brick.academicLevel]}
+                </div>
               </div>
               <span className="heading synthesis-title">Synthesis</span>
             </div>
@@ -122,6 +124,9 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
             {renderSynthesisContent()}
             {isPhone() ? renderPhoneButton() : renderFooter()}
           </div>
+          <div className="time-container">
+            <TimeProgressbarV2 isSynthesis={true} startTime={startTime} onEnd={() => {}} brickLength={brick.brickLength} />
+          </div>
         </div>
       </div>
     );
@@ -129,7 +134,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
 
   return (
     <div className="brick-row-container synthesis-container">
-      <Hidden only={['xs']}>
+      {isPhone() ? renderMobile() :
         <div className="brick-container play-preview-panel synthesis-page">
           <Grid container direction="row">
             <Grid item xs={8}>
@@ -153,10 +158,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
             </Grid>
           </Grid>
         </div>
-      </Hidden>
-      <Hidden only={['sm', 'md', 'lg', 'xl']}>
-        {renderMobile()}
-      </Hidden>
+      }
     </div>
   );
 }

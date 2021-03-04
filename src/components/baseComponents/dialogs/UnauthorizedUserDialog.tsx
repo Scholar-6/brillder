@@ -3,6 +3,7 @@ import Dialog from "@material-ui/core/Dialog";
 import { TextField } from "@material-ui/core";
 
 interface UnauthorizedProps {
+  emailInvalid: boolean | null; // null - before submit
   isOpen: boolean;
   login(email: string): void;
   again(): void;
@@ -11,7 +12,8 @@ interface UnauthorizedProps {
 
 const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
   const [email, setEmail] = React.useState("");
-  const [emailInvalid, setInvalid] = React.useState(false);
+
+  console.log(props.emailInvalid);
 
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue set-user-email-dialog">
@@ -20,19 +22,14 @@ const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
         <div className="bold">Creating an account is free, no obligations.</div>
       </div>
       <form onSubmit={(e) => {
-        console.log(55);
         e.preventDefault();
-        if (email && email.length > 0) {
-          props.login(email);
-        } else {
-          setInvalid(true);
-        }
+        props.login(email);
       }}>
         <TextField
           variant="standard"
-          placeholder="Enter your email address here"
+          placeholder="Enter your email to create an account"
           type="email"
-          className={`dialog-input ${emailInvalid ? 'input-theme-orange' : ''}`}
+          className={`dialog-input ${props.emailInvalid ? 'm-input-theme-orange' : ''}`}
           value={email}
           onChange={evt => setEmail(evt.target.value)}
         />

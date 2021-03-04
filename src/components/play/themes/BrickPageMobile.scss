@@ -518,8 +518,8 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               border-left: 0.3vw solid var(--tab-gray);
               padding-left: 1.8vw;
             }
-            ul > li {
-              font-size: 1.25vw;
+            li {
+              font-size: 4.5vw;
             }
           }
           .MuiBox-root {
@@ -721,7 +721,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           }
           .editors-row {
             margin-top: 1vh;
-            font-size: 1.25vw;
+            font-size: 4.5vw;
             font-family: $font-family-bold;
             display: flex;
             justify-content: center;
@@ -743,7 +743,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           }
 
           .share-row {
-            margin-top: 12.5vh;
+            margin-top: 8.5vh;
 
             .button-container {
               @extend %flexToXCenter;
@@ -773,22 +773,11 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             svg {
               stroke-width: 1.5 !important;
             }
-            &:hover {
-              svg {
-                stroke-width: 1.8 !important;
-              }
-            }
           }
         }
         &.mobile-synthesis-page {
           .synthesis-content {
-            // padding: 0;
-            // width: calc(100vw - 4vw);
             width: 100%;
-            // padding: 4vw 4vw 60px 4vw;
-            // margin-bottom: 20vh;
-            // height: calc(95% - 20vw - 80px) !important;
-            // height: calc(100% - 21vw) !important;
           }
         }
       }
@@ -889,7 +878,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
 }
 .open-question {
-  font-size: 1.25vw;
+  font-size: 4.5vw;
   color: var(--theme-dark-blue);
 }
 
@@ -955,10 +944,20 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       padding: 0 !important;
     }
     .MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button {
-      padding: 1vw 10vw !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1vw 0vw !important;
       line-height: 1 !important;
       min-height: 12vw !important;
-      font-size: 8vw !important;
+      font-size: 6vw !important;
+
+      svg {
+        margin-left: 1vw;
+        width: 7vw;
+        height: 7vw;
+        stroke-width: 2;
+      }
     }
   }
 }
@@ -975,7 +974,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   .mobile-back-button {
     z-index: 299999;
     position: fixed;
-    bottom: 0 !important;
+    bottom: 0.5vw !important;
     width: calc(100% / 7) !important;
     height: 20vw !important;
   }
@@ -984,6 +983,10 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
   .mobile-back-button {
     right: calc(100% / 7 * 2 - 2vw) !important;
+  }
+  .intro-mobile-next-button {
+    width: 11vw !important;
+    right: 43vw !important;
   }
 }
 
@@ -1017,7 +1020,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     width: 100%;
     margin-top: 0.7vw;
     background: inherit !important;
-    height: calc(#{$step-height} + 0.7vw) !important;
+    height: calc(#{$step-height} + 4.4vw) !important;
     padding: 0 !important;
     overflow-x: auto;
     overflow-y: hidden;
@@ -1045,26 +1048,17 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           color: var(--white);
           background: var(--blue);
         }
-        &:hover {
-          opacity: 0.5;
-        }
       }
       &.success {
         span {
           color: var(--tab-gray);
           background: var(--theme-green);
         }
-        &:hover {
-          opacity: 0.5;
-        }
       }
       &.failed {
         span {
           color: var(--tab-gray);
           background: var(--theme-orange);
-        }
-        &:hover {
-          opacity: 0.5;
         }
       }
       &.current {
@@ -1074,14 +1068,14 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         }
         .underline {
           position: absolute;
-          bottom: -0.5vw;
+          bottom: -1.5vw;
           width: $step-height;
           display: flex;
           justify-content: center;
           > div {
-            border-radius: 0.4vw;
-            width: 1.3vw;
-            height: 0.2vw;
+            border-radius: 0.8vw;
+            width: 6vw;
+            height: 0.8vw;
             background: var(--theme-dark-blue);
           }
         }
@@ -1090,9 +1084,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         }
         &.failed .underline > div {
           background: var(--theme-orange);
-        }
-        &:hover {
-          opacity: 0.5;
         }
       }
     }
@@ -1250,6 +1241,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     .top-icon-container {
       display: flex;
       justify-content: center;
+      margin-top: 2vh;
       margin-bottom: 5vh;
       .icon-background {
         display: flex;
@@ -1364,12 +1356,13 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 .play-preview-pages {
   .play-footer-label {
     z-index: 1000000;
-    left: 40vw;
-    position: fixed;
-    bottom: 6vw;
+    left: 44vw;
+    max-width: 30vw;
+    position: fixed !important;
+    bottom: 5.3vw;
     font-size: 7vw;
     color: var(--theme-dark-blue);
-    font-family: $font-family-regular;
+    font-family: $font-family-bold;
   }
 }
 
@@ -1379,6 +1372,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--white);
     font-size: 10vw;
   }
 
@@ -1386,5 +1380,17 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     .left-brick-circle .round-button {
       font-size: 8vw;
     }
+  }
+}
+
+.final-assign-brick-column {
+  margin-top: 16%;
+}
+
+// bullets size in play
+.play-preview-pages .synthesis-content,
+.play-preview-pages .introduction-content {
+  li {
+    font-size: 4.5vw !important;
   }
 }

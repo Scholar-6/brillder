@@ -57,14 +57,23 @@ import MobileUsernamePage from 'components/onboarding/mobileUsernamePage/MobileU
 import RotateIPadInstruction from 'components/baseComponents/rotateInstruction/RotateIPadInstruction';
 import Warning from 'components/baseComponents/rotateInstruction/Warning';
 import { isPhone } from 'services/phone';
+import { setupMatomo } from 'services/matomo';
+import { ReduxCombinedState } from 'redux/reducers';
+import { User } from 'model/user';
+import { getTerms } from 'services/axios/terms';
 
 interface AppProps {
+  user: User;
   setLogoutSuccess(): void;
 }
 
 const App: React.FC<AppProps> = props => {
   setBrillderTitle();
   const location = useLocation();
+  const [termsData, setTermsData] = React.useState({
+    isLoading: false,
+    termsVersion: ''
+  });
   const [zendeskCreated, setZendesk] = React.useState(false);
   const isHorizontal = () => {
     // Apple does not seem to have the window.screen api so we have to use deprecated window.orientation instead.
@@ -82,6 +91,9 @@ const App: React.FC<AppProps> = props => {
     window.addEventListener("orientationchange", (event: any) => {
       setHorizontal(isHorizontal());
     });
+
+    // download mamoto
+    setupMatomo();
   }, []);
 
   // lock screen for phone
@@ -90,13 +102,16 @@ const App: React.FC<AppProps> = props => {
       if (document.body.requestFullscreen && !document.fullscreenElement) {
         let res = document.body.requestFullscreen();
         res.then(() => {
-          window.screen.orientation.lock('portrait');
-          console.log('lock screen');
+          if (window.screen.orientation && window.screen.orientation.lock) {
+            window.screen.orientation.lock('portrait');
+            console.log('lock screen');
+          }
         });
       }
     }
   }
 
+  // intercept api errors to prevent redirect.
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
@@ -142,15 +157,36 @@ const App: React.FC<AppProps> = props => {
     return Promise.reject(error);
   });
 
-  if ((isIPad13 || isTablet) && !horizontal) {
+  // If is tablet and portrait tell them to go to landscape
+  if ( isTablet && !horizontal) {
     return <RotateIPadInstruction />;
   }
-
-  if (isIPad13) { 
-    return <Warning />
-  } else if (isMobile && horizontal) {
+  
+  // If is mobile and landscape tell them to go to portrait
+  if (isMobile && horizontal) {
     return <RotateInstruction />;
-  } 
+  }
+
+  // get terms version
+  if (props.user && props.user.termsAndConditionsAcceptedVersion && !termsData.termsVersion && !termsData.isLoading) {
+    setTermsData({isLoading: true, termsVersion: ''});
+    getTerms().then(r => {
+      if (r) {
+        console.log('terms loaded', props.user, r);
+        setTermsData({isLoading: false, termsVersion: r.lastModifiedDate});
+      } else {
+        setTermsData({isLoading: false, termsVersion: ''});
+      }
+    });
+  }
+
+  // redirect if to terms when file updated
+  if (termsData.termsVersion && props.user && props.user.termsAndConditionsAcceptedVersion) {
+    console.log(termsData.termsVersion, props.user.termsAndConditionsAcceptedVersion);
+    if (termsData.termsVersion !== props.user.termsAndConditionsAcceptedVersion) {
+      window.location.href= map.TermsSignUp + '?onlyAcceptTerms=true';
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -212,8 +248,12 @@ const App: React.FC<AppProps> = props => {
   );
 }
 
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+});
+
 const mapDispatch = (dispatch: any) => ({
   setLogoutSuccess: () => dispatch(actions.setLogoutSuccess()),
 });
 
-export default connect(null, mapDispatch)(App);
+export default connect(mapState, mapDispatch)(App);

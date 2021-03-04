@@ -8,7 +8,7 @@ import "swiper/swiper.scss";
 import { ReduxCombinedState } from "redux/reducers";
 import userActions from 'redux/actions/user';
 import { updateUser } from "services/axios/user";
-import { RolePreference, User } from "model/user";
+import { RolePreference, User, UserType } from "model/user";
 import { SubjectItem } from "model/brick";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
@@ -86,7 +86,11 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
 
     if (saved) {
       await this.props.getUser();
-      this.props.history.push(map.UserProfile + '?onboardingUser=true');
+      if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
+      this.props.history.push('/home');
+      } else {
+        this.props.history.push(map.UserProfile + '?onboardingUser=true');
+      }
     } else {
       //this.props.requestFailed("Can`t save user profile");
     }

@@ -267,8 +267,7 @@ class Library extends Component<BricksListProps, BricksListState> {
     return this.state.subjects.some(r => r.checked);
   }
 
-  filterByClassroom = async (id: number) => {
-  }
+  filterByClassroom = async (id: number) => { }
 
   filterBySubject(id: number) {
     let subjectChecked = true;
