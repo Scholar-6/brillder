@@ -91,3 +91,17 @@
     background: var(--theme-dark-blue);
   }
 }
+
+.dialog-header {
+  .r-popup-title {
+    font-size: 2vw;
+  }
+  .r-radio-row {
+    .MuiTypography-root {
+      font-size: 1.4vw;
+    }
+    .MuiSvgIcon-root {
+      color: var(--white) !important;
+    }
+  }
+}

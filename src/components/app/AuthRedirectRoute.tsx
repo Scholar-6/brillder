@@ -4,8 +4,8 @@ import queryString from 'query-string';
 import { connect } from 'react-redux';
 
 import map from 'components/map';
-import actions from '../../redux/actions/auth';
-import userActions from '../../redux/actions/user';
+import actions from 'redux/actions/auth';
+import userActions from 'redux/actions/user';
 import { isAuthenticated } from 'model/brick';
 import { User, UserType } from 'model/user';
 import { UserLoginType } from 'model/auth';

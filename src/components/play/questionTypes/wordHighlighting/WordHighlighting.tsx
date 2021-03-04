@@ -62,6 +62,11 @@ class WordHighlighting extends CompComponent<
   }
 
   renderWordPreview(word: PlayWord, index: number) {
+    // don`t show spaces
+    if (word.notSelectable && !word.isBreakLine) {
+      return <span />;
+    }
+  
     return (
       <span key={index} className={word.checked ? "correct word" : "word"}>
         {word.text}
@@ -106,6 +111,11 @@ class WordHighlighting extends CompComponent<
       } else {
         className += " wrong";
       }
+    }
+
+    // don`t show spaces
+    if (word.notSelectable && !word.isBreakLine) {
+      return <span />;
     }
 
     return (
