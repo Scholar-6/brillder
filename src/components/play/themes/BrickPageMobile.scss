@@ -918,6 +918,15 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       color: var(--theme-orange);
       transform: rotate(90deg);
     }
+    .exit-text {
+      position: fixed;
+      z-index: 100000;
+      bottom: 6vw;
+      font-size: 9vw;
+      left: calc(50% - 10vw);
+      font-family: $font-family-bold;
+      color: var(--theme-dark-blue);
+    }
   }
 }
 
