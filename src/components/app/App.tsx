@@ -155,13 +155,13 @@ const App: React.FC<AppProps> = props => {
     return Promise.reject(error);
   });
 
-  if ((isIPad13 || isTablet) && !horizontal) {
+  // If is tablet and portrait tell them to go to landscape
+  if ( isTablet && !horizontal) {
     return <RotateIPadInstruction />;
   }
-
-  if (isIPad13) { 
-    return <Warning />
-  } else if (isMobile && horizontal) {
+  
+  // If is mobile and landscape tell them to go to portrait
+  if (isMobile && horizontal) {
     return <RotateInstruction />;
   }
 
