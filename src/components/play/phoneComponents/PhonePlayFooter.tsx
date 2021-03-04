@@ -77,6 +77,10 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     return history.location.pathname.slice(-6) === '/intro';
   }
 
+  const isSynthesis = () => {
+    return history.location.pathname.slice(-10) === '/synthesis';
+  }
+
   const isFinalScore = () => {
     return history.location.pathname.slice(-7) === '/ending';
   }
@@ -205,7 +209,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
         <SpriteIcon name="" />
         <SpriteIcon name="corner-up-left" onClick={() => setExit(true)} />
-        {(isIntro() || isFinalScore()) ? <SpriteIcon name="" /> : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id))} />}
+        {(isIntro() || isFinalScore() || isSynthesis()) ? <SpriteIcon name="" /> : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id))} />}
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
