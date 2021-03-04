@@ -535,8 +535,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       <Grid container alignItems="stretch" direction="row">
         <Grid item xs>
           <NameAndSubjectForm
-            name={this.state.activeClassroom!.name}
-            subject={this.state.activeClassroom!.subject}
+            classroom={this.state.activeClassroom}
             onChange={this.updateClassroom.bind(this)}
           />
         </Grid>

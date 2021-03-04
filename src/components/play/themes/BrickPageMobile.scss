@@ -297,7 +297,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               color: var(--theme-dark-blue);
               display: flex;
               flex-direction: column;
-              justify-content: center;
               padding: 3vw;
               padding-bottom: 1vw;
               font-size: 4.4vw;
@@ -749,7 +748,10 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           }
 
           .share-row {
-            margin-top: 7.5vh;
+            margin-top: 0vh;
+            height: 55vh;
+            display: flex;
+            align-items: center;
 
             .button-container {
               @extend %flexToXCenter;
@@ -1024,6 +1026,8 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     top: 0;
     left: 0;
     margin-top: 0 !important;
+    padding-top: 3vw!important;
+    padding-bottom: 1vw !important;
     width: 100%;
     height: $stepper-height;
     background: var(--tab-gray) !important;
@@ -1032,9 +1036,9 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
   .stepper {
     width: 100%;
-    margin-top: 0.7vw;
+    margin-top: 0;
     background: inherit !important;
-    height: calc(#{$step-height} + 4.4vw) !important;
+    height: calc(#{$step-height} + 2vw) !important;
     padding: 0 !important;
     overflow-x: auto;
     overflow-y: hidden;
@@ -1393,7 +1397,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 }
 
 .final-assign-brick-column {
-  margin-top: 16%;
+  margin-top: 30%;
 }
 
 // bullets size in play

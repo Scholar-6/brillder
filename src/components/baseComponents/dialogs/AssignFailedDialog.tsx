@@ -25,7 +25,6 @@ const AssignFailedDialog: React.FC<DialogProps> = props => {
   }
 
   let index = 0;
-  console.log(props.selectedItems);
   for (let item of props.selectedItems) {
     if (item.classroom) {
       itemsText += capitalize(item.classroom.name);
