@@ -85,7 +85,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         <Grid className="share-row" container direction="row" justify="center">
           <div>
             <ShareColumn onClick={() => setShare(true)} />
-            <AssignBrickColumn onClick={() => setAssign(true)} />
+            {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
           </div>
         </Grid>
       );
@@ -93,7 +93,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <Grid className="share-row" container direction="row" justify="center">
         <ShareColumn onClick={() => setShare(true)} />
-        <AssignBrickColumn onClick={() => setAssign(true)} />
+        {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
       </Grid>
     );
   }
