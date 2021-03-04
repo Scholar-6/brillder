@@ -233,6 +233,10 @@
           color: var(--theme-dark-blue);
           font-family: $font-family-regular-italic;
           transition: all 300ms ease-out;
+
+          &.smaller {
+            font-size: 1.4vw;
+          }
         }
 
         svg {

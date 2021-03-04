@@ -11,7 +11,9 @@ export function setupMatomo() {
   if (s.parentNode) {
     s.parentNode.insertBefore(g,s);
   }
-  console.log('matomo manager downloaded');
+  g.onload = () => {
+    console.log('matomo manager loaded (shouldn`t apper twice)');
+  }
 }
 
 export function enableTracking() {

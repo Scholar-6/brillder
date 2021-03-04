@@ -43,6 +43,7 @@ import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
+import { createUserByEmail } from "services/axios/user";
 
 
 function shuffle(a: any[]) {
@@ -89,7 +90,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [searchString, setSearchString] = React.useState("");
   const [attemptId, setAttemptId] = React.useState<string>();
-  const [userToken, setUserToken] = React.useState<string>(); // used for unauthenticated user.
+
+  // used for unauthenticated user.
+  const [userToken, setUserToken] = React.useState<string>();
+  const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
   setBrillderTitle(brick.title);
 
@@ -241,14 +245,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const createInactiveAccount = async (email: string) => {
     if (!props.user) {
       // create a new account for an unauthorized user.
-      try {
-        const response = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/createUser`, { email }); // should be done without credentials!
-        const { user, token } = response.data;
+      let data = await createUserByEmail(email);
+      if (data) {
+        const { user, token } = data;
         props.setUser(user);
         setUnauthorized(false);
         setUserToken(token);
-      } catch (e) {
-        console.log("couldn't create new account");
+      } else {
+        setInvalidEmail(true);
       }
     }
   }
@@ -435,6 +439,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </div>
         <UnauthorizedUserDialog
           isOpen={unauthorizedOpen}
+          emailInvalid={emailInvalid}
           login={(email) => createInactiveAccount(email)}
           again={again}
           close={() => setUnauthorized(false)}

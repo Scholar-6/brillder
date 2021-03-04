@@ -424,18 +424,13 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   renderUserTableHead() {
     return (
       <tr>
-        <th className="subject-title">SC</th>
+        <th className="subject-title">JOINED</th>
         <th className="user-full-name">
-          <Grid container>
-            NAME
-            {this.renderSortArrow(UserSortBy.Name)}
-          </Grid>
+          <Grid container>NAME {this.renderSortArrow(UserSortBy.Name)}</Grid>
         </th>
         <th className="email-column">EMAIL</th>
         <th>
-          <Grid container>
-            ROLE
-          </Grid>
+          <Grid container>ROLE</Grid>
         </th>
         <th>
           <Grid container>

@@ -80,3 +80,42 @@ export const setUserPreference = async (roleId: RolePreference) => {
     return false;
   }
 }
+
+export interface CreateByEmailRes {
+  user: User;
+  token: string;
+  errors: any[];
+}
+
+/**
+ * This backend call is weard return different stuff
+ * When invalid sometimes return status 400 sometimes 200 with errors array in body.
+ * @param email string
+ */
+export const createUserByEmail = async(email: string) => {
+  try {
+    const data = await post<CreateByEmailRes>('/auth/createUser/', { email });
+    // return null when errors to make same logic work
+    if (data && data.errors) {
+      return null;
+    }
+    return data;
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * Accept terms and conditions
+ */
+export const acceptTerms = async(termsAndConditionsAcceptedVersion: string) => {
+  try {
+    const data = await post<string>('/user/termsAndConditions', { termsAndConditionsAcceptedVersion });
+    if (data === "OK") {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    return null;
+  }
+}

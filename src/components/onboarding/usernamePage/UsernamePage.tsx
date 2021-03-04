@@ -11,6 +11,7 @@ import { updateUser } from 'services/axios/user';
 import { User, UserType } from 'model/user';
 import LabelTyping from 'components/baseComponents/LabelTyping';
 import map from 'components/map';
+import { isPhone } from 'services/phone';
 
 interface InputState {
   value: string;
@@ -91,13 +92,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     }
   }
 
-  const move = () => {
-    if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
-      props.history.push('/home');
-    } else {
-      props.history.push(map.SelectSubjectPage);
-    }
-  }
+  const move = () => props.history.push(map.SelectSubjectPage);
 
   const renderGetStartedButton = () => {
     return (
@@ -127,7 +122,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
         <LabelTyping value={username} className="username" start={labelFinished} onFinish={() => setSecondFinished(true)} />
         {user.rolePreference?.roleId === UserType.Builder &&
           <div>
-            <p className="username-help-label" style={{opacity: secondFinished ? '1' : '0'}}>Use this username to connect with people to create and assign bricks</p>
+            <p className="username-help-label smaller" style={{ opacity: secondFinished ? '1' : '0' }}>Use it to connect with people to create and assign bricks</p>
           </div>
         }
       </div>
@@ -144,6 +139,13 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     }} />
   }
 
+  const clear = () => {
+    setSubmited(null);
+    setUsername('');
+    setLabelFinished(false);
+    setSecondFinished(false);
+  }
+
   return (
     <React.Suspense fallback={<></>}>
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
@@ -157,7 +159,10 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
               <Input
                 value={firstName.value}
                 className={firstName.valid === false && !firstName.value ? 'invalid' : ''}
-                onChange={e => setFirstName({ ...firstName, value: e.target.value })}
+                onChange={e => {
+                  setFirstName({ ...firstName, value: e.target.value });
+                  clear();
+                }}
                 placeholder="First Name" />
               {renderEditButton()}
             </div>
@@ -165,7 +170,10 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
               <Input
                 value={lastName.value}
                 className={lastName.valid === false && !lastName.value ? 'invalid' : ''}
-                onChange={e => setLastName({ ...lastName, value: e.target.value })}
+                onChange={e => {
+                  setLastName({ ...lastName, value: e.target.value });
+                  clear();
+                }}
                 placeholder="Last Name" />
               {renderEditButton()}
             </div>
@@ -175,7 +183,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
           </div>
         </form>
         <div className="blue-right-block"></div>
-        <Hidden only={['xs', 'sm']}>
+        {!isPhone() && <Hidden only={['xs', 'sm']}>
           <div className="proposal-phone-preview phone-username-preview">
             <div className="phone">
               <div className="phone-border">
@@ -194,7 +202,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
               </div>
             </div>
           </div>
-        </Hidden>
+        </Hidden>}
       </div>
     </React.Suspense>
   );
