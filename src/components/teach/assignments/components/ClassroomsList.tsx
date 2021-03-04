@@ -57,8 +57,7 @@ class ClassroomList extends Component<ClassroomListProps> {
       >
         <div className={className}>
           <NameAndSubjectForm
-            name={classroom!.name}
-            subject={classroom.subject}
+            classroom={classroom}
             onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
           />
         </div>

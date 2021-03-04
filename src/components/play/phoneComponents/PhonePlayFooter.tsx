@@ -77,6 +77,14 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     return history.location.pathname.slice(-6) === '/intro';
   }
 
+  const isSynthesis = () => {
+    return history.location.pathname.slice(-10) === '/synthesis';
+  }
+
+  const isFinalScore = () => {
+    return history.location.pathname.slice(-7) === '/ending';
+  }
+
   const isFinalStep = () => {
     return history.location.pathname.slice(-10) === '/finalStep';
   }
@@ -182,7 +190,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="" />
         <button
           type="button"
-          className="play-preview svgOnHover roller-red"
+          className="play-preview svgOnHover roller-red m-b-10"
           onClick={() => {
             history.push(map.ViewAllPage)
             return props.moveToPostPlay;
@@ -190,6 +198,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         >
           <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
         </button>
+        <span className="exit-text">Exit</span>
       </div>
     );
   }
@@ -200,7 +209,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
         <SpriteIcon name="" />
         <SpriteIcon name="corner-up-left" onClick={() => setExit(true)} />
-        {(isIntro()) ? <SpriteIcon name="" /> : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id))} />}
+        {(isIntro() || isFinalScore() || isSynthesis()) ? <SpriteIcon name="" /> : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id))} />}
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
@@ -245,7 +254,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
             setAssign(true);
             setMenu(false);
           }}>
-            Assign Brick <SpriteIcon name="copy" />
+            Assign Brick <SpriteIcon name="file-plus" />
           </MenuItem>}
         {canStopTrack &&
           <MenuItem onClick={() => {

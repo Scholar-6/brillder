@@ -15,6 +15,7 @@ import { Classroom } from 'model/classroom';
 import { Brick } from 'model/brick';
 import { getClassrooms, getStudents } from 'services/axios/classroom';
 import SpriteIcon from '../SpriteIcon';
+import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
@@ -26,7 +27,7 @@ interface AssignPersonOrClassProps {
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [value] = React.useState("");
-  const [deadlineDate, setDeadline] = React.useState('');
+  const [deadlineDate, setDeadline] = React.useState(null as null | Date);
   const [selectedObjs, setSelected] = React.useState<any[]>([]);
   const [students, setStudents] = React.useState<UserBase[]>([]);
   const [classes, setClasses] = React.useState<Classroom[]>([]);
@@ -213,8 +214,21 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           )}
         />
         <div className="r-popup-title bold">When is it due?</div>
+        <div className="r-radio-buttons">
+          <FormControlLabel
+            checked={haveDeadline === false}
+            control={<Radio onClick={() => toggleDeadline(false)}/>}
+            label="No deadline"
+          />
+          <FormControlLabel
+            checked={haveDeadline === true}
+            control={<Radio onClick={() => toggleDeadline(true)}/>}
+            label="Set date"
+          />
+        </div>
         <div className={haveDeadline ? 'r-day-date-row' : 'r-day-date-row r-hidden'}>
           <div>
+            <TimeDropdowns onChange={setDeadline} />
           </div>
         </div>
         <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
