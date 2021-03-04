@@ -52,7 +52,6 @@ interface ViewAllProps {
 }
 
 interface ViewAllState {
-  yourBricks: Array<Brick>;
   bricks: Array<Brick>;
   searchBricks: Array<Brick>;
   searchString: string;
@@ -112,7 +111,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     this.state = {
-      yourBricks: [],
       bricks: [],
       sortBy: SortBy.Date,
       subjects: [],
@@ -225,14 +223,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadBricks(values?: queryString.ParsedQuery<string>) {
-    const currentBricks = await getCurrentUserBricks();
-    if (currentBricks) {
-      let yourBricks = prepareYourBricks(currentBricks);
-      this.setState({ ...this.state, yourBricks });
-    } else {
-      this.setState({ ...this.state, failedRequest: true });
-    }
-
     const bricks = await getPublishedBricks();
     if (bricks) {
       let bs = sortAllBricks(bricks);
@@ -383,21 +373,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   hideBricks() {
-    const { finalBricks, yourBricks } = this.state;
+    const { finalBricks } = this.state;
     hideBricks(finalBricks);
-    hideBricks(yourBricks);
-  }
-
-  yourBricksMouseHover(index: number) {
-    let { yourBricks } = this.state;
-    this.hideBricks();
-    expandBrick(yourBricks, index);
-    this.setState({ ...this.state });
-  }
-
-  yourBricksMouseLeave() {
-    this.hideBricks();
-    this.setState({ ...this.state });
   }
 
   handleMouseHover(index: number) {
@@ -550,44 +527,45 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     });
   };
 
+  // 2020-03-04 no longer used
   //region Mobile
-  renderMobileExpandedBrick(brick: Brick) {
-    let color = getBrickColor(brick);
+  // renderMobileExpandedBrick(brick: Brick) {
+  //   let color = getBrickColor(brick);
 
-    return (
-      <ExpandedMobileBrick
-        brick={brick}
-        color={color}
-        move={(brickId) => this.move(brickId)}
-      />
-    );
-  }
+  //   return (
+  //     <ExpandedMobileBrick
+  //       brick={brick}
+  //       color={color}
+  //       move={(brickId) => this.move(brickId)}
+  //     />
+  //   );
+  // }
 
-  renderMobileUpperBricks(expandedBrick: Brick | undefined) {
-    if (expandedBrick) {
-      return this.renderMobileExpandedBrick(expandedBrick);
-    }
+  // renderMobileUpperBricks(expandedBrick: Brick | undefined) {
+  //   if (expandedBrick) {
+  //     return this.renderMobileExpandedBrick(expandedBrick);
+  //   }
 
-    let bricksList = [];
-    for (const brick of this.state.yourBricks) {
-      bricksList.push(
-        <ShortBrickDescription
-          brick={brick}
-          searchString=""
-          onClick={() => this.handleYourMobileClick(brick)}
-        />
-      );
-    }
-    return (
-      <Swiper slidesPerView={2}>
-        {bricksList.map((b, i) => (
-          <SwiperSlide key={i} style={{ width: "50vw" }}>
-            {b}
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    );
-  }
+  //   let bricksList = [];
+  //   for (const brick of this.state.yourBricks) {
+  //     bricksList.push(
+  //       <ShortBrickDescription
+  //         brick={brick}
+  //         searchString=""
+  //         onClick={() => this.handleYourMobileClick(brick)}
+  //       />
+  //     );
+  //   }
+  //   return (
+  //     <Swiper slidesPerView={2}>
+  //       {bricksList.map((b, i) => (
+  //         <SwiperSlide key={i} style={{ width: "50vw" }}>
+  //           {b}
+  //         </SwiperSlide>
+  //       ))}
+  //     </Swiper>
+  //   );
+  // }
   //region Mobile
 
   renderEmptyCategory(name: string) {
@@ -781,33 +759,34 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
 
-  renderMobilePage(expandedBrick: Brick | undefined) {
-    return (
-      <div>
-        <PageHeadWithMenu
-          page={PageEnum.ViewAll}
-          user={this.props.user}
-          placeholder={"Search Subjects, Topics, Titles & more"}
-          history={this.props.history}
-          search={() => this.search()}
-          searching={(v) => this.searching(v)}
-        />
-        <div className="mobile-scroll-bricks">
-          {this.renderMobileUpperBricks(expandedBrick)}
-        </div>
-        <Grid container direction="row" className="sorted-row">
-          <ViewAllMobile
-            sortedIndex={this.state.sortedIndex}
-            pageSize={this.state.pageSize}
-            finalBricks={this.state.finalBricks}
-            history={this.props.history}
-            handleMobileClick={this.handleMobileClick.bind(this)}
-            move={this.move.bind(this)}
-          />
-        </Grid>
-      </div>
-    );
-  }
+  // 2020-03-04 no longer used
+  // renderMobilePage(expandedBrick: Brick | undefined) {
+  //   return (
+  //     <div>
+  //       <PageHeadWithMenu
+  //         page={PageEnum.ViewAll}
+  //         user={this.props.user}
+  //         placeholder={"Search Subjects, Topics, Titles & more"}
+  //         history={this.props.history}
+  //         search={() => this.search()}
+  //         searching={(v) => this.searching(v)}
+  //       />
+  //       <div className="mobile-scroll-bricks">
+  //         {this.renderMobileUpperBricks(expandedBrick)}
+  //       </div>
+  //       <Grid container direction="row" className="sorted-row">
+  //         <ViewAllMobile
+  //           sortedIndex={this.state.sortedIndex}
+  //           pageSize={this.state.pageSize}
+  //           finalBricks={this.state.finalBricks}
+  //           history={this.props.history}
+  //           handleMobileClick={this.handleMobileClick.bind(this)}
+  //           move={this.move.bind(this)}
+  //         />
+  //       </Grid>
+  //     </div>
+  //   );
+  // }
 
   renderDesktopViewAllPage(bricks: Brick[]) {
     return (
@@ -855,10 +834,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     let expandedBrick = undefined;
     let pageClass = "main-listing dashboard-page";
     if (isMobile) {
-      expandedBrick = this.state.yourBricks.find(b => b.expanded === true);
-      if (!expandedBrick) {
-        expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
-      }
+      expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
       if (expandedBrick) {
         pageClass += ' expanded';
       }
