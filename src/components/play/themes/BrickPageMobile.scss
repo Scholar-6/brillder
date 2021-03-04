@@ -743,7 +743,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           }
 
           .share-row {
-            margin-top: 12.5vh;
+            margin-top: 8.5vh;
 
             .button-container {
               @extend %flexToXCenter;
@@ -1241,6 +1241,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     .top-icon-container {
       display: flex;
       justify-content: center;
+      margin-top: 2vh;
       margin-bottom: 5vh;
       .icon-background {
         display: flex;
@@ -1383,7 +1384,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 }
 
 .final-assign-brick-column {
-  margin-top: 10%;
+  margin-top: 16%;
 }
 
 // bullets size in play
