@@ -294,6 +294,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               flex-direction: column;
               justify-content: center;
               padding: 3vw;
+              padding-bottom: 1vw;
               font-size: 4.4vw;
               margin-top: 0 !important;
               > p,
@@ -993,7 +994,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 // stepper in play
 .play-preview-pages .sorted-row .live-page,
 .play-preview-pages .sorted-row .review-page {
-  $stepper-height: 25vw;
+  $stepper-height: 26vw;
   $step-height: 10vw;
   $step-container-width: 12vw;
   .introduction-info {
