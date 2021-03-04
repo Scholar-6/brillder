@@ -307,17 +307,13 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (state.prepExpanded) {
       return (
         <div className="intro-header expanded-intro-header">
-          <Hidden only={["sm", "md", "lg", "xl"]}>
-            <div className="flex f-align-center">
-              {renderBrickCircle(color)}
-              <h1>{brick.title}</h1>
-            </div>
-          </Hidden>
-          <Hidden only={["xs"]}>
+          <div className="vertical-center">
             {renderBrickCircle(color)}
+          </div>
+          <div className="r-title-container">
             <h1>{brick.title}</h1>
-          </Hidden>
-          <p><PrepareText brickLength={brick.brickLength} /></p>
+            <p><PrepareText brickLength={brick.brickLength} /></p>
+          </div>
         </div>
       );
     }
@@ -379,8 +375,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           </div>
           </div>
         </Hidden>
+      </div>
     </div>
-    </div >
   );
 };
 

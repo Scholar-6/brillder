@@ -160,57 +160,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
               top: 3vw;
             }
           }
-          &.expanded-intro-header {
-            @include phone_and_tabletP {
-              align-items: flex-start;
-              padding: 3vw;
-              background-color: var(--solitude-light);
-              height: 86px;
-            }
-
-            @include tabletP {
-            }
-
-            .brick-counter {
-              @include phone_and_tabletP {
-                transition: all 300ms;
-                font-size: 6vw !important;
-                padding-right: 1vw !important;
-              }
-            }
-
-            .left-brick-circle {
-              .round-button {
-                @include phone_and_tabletP {
-                  transition: all 300ms;
-                  height: 8vw;
-                  width: 8vw;
-                }
-              }
-            }
-
-            h1 {
-              @include phone_and_tabletP {
-                transition: all 300ms;
-                margin: 0;
-                width: calc(100vw - 38vw);
-                font-size: 4.5vw !important;
-                text-align: left !important;
-                padding-left: 2vw !important;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              }
-            }
-
-            p {
-              @include phone_and_tabletP {
-                transition: all 300ms;
-                width: 100%;
-                padding-left: 9.5vw;
-              }
-            }
-          }
 
           .play-clock {
             @include phone_and_tabletP {
