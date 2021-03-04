@@ -3,23 +3,40 @@ import { fileUrl, uploadFile } from "components/services/uploadFile";
 import { DeltaStatic, RangeStatic } from "quill";
 import Delta from "quill-delta";
 import { Quill } from "react-quill";
-import { returnToAuthor } from "services/axios/brick";
 import { ImageAlign } from "components/build/buildQuestions/components/Image/model";
 
 const ImageBlot = Quill.import('formats/image');
 export class CustomImageBlot extends ImageBlot {
     static blotName = 'customImage';
-    static tagName = 'img';
+    static tagName = 'div';
+    static className = 'customImage';
 
     static create(value: any) {
-        let node = super.create();
+        const node: Element = super.create();
 
-        node.setAttribute('src', value.url);
+        node.className = node.className + " image-play-container2" + ((value.imageAlign === ImageAlign.center) ? " center" : "");
+        node.setAttribute('data-url', value.url);
         node.setAttribute('data-source', value.imageSource);
         node.setAttribute('data-caption', value.imageCaption);
         node.setAttribute('data-align', value.imageAlign);
         node.setAttribute('data-height', value.imageHeight);
         node.setAttribute('data-permission', value.imagePermission);
+
+        const containerNode = document.createElement("div");
+        containerNode.className = "image-play-container";
+
+        const imageNode = document.createElement("img");
+        imageNode.className = "image-play";
+        imageNode.setAttribute('style', `height: ${value.imageHeight}vh`);
+        imageNode.setAttribute('src', value.url);
+        containerNode.appendChild(imageNode);
+
+        const captionNode = document.createElement("figcaption");
+        captionNode.className = "image-caption";
+        captionNode.textContent = value.imageCaption;
+        containerNode.appendChild(captionNode);
+
+        node.appendChild(containerNode);
 
         return node;
     }
@@ -27,7 +44,7 @@ export class CustomImageBlot extends ImageBlot {
     static value(node: any) {
         var blot = {} as any;
         
-        blot.url = node.getAttribute('src');
+        blot.url = node.getAttribute('data-url');
         blot.imageSource = node.getAttribute('data-source');
         blot.imageCaption = node.getAttribute('data-caption');
         blot.imageAlign = node.getAttribute('data-align');
@@ -76,11 +93,13 @@ export default class ImageUpload {
 
     async uploadImages(file: File, source: string, caption: string, align: ImageAlign, height: number) {
         const length = this.quill.getLength();
+        const range = this.quill.getSelection(true);
         const res = await new Promise<any>((resolve, reject) => uploadFile(file, resolve, reject));
         const fileName = res.data.fileName;
 
         const update = new Delta()
-            .retain(length)
+            .retain(range.index)
+            .delete(range.length)
             .insert({ customImage: {
                 url: fileUrl(fileName),
                 imageSource: source,
