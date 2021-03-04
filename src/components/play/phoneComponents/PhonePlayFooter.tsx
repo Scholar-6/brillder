@@ -250,7 +250,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
             setAssign(true);
             setMenu(false);
           }}>
-            Assign Brick <SpriteIcon name="copy" />
+            Assign Brick <SpriteIcon name="file-plus" />
           </MenuItem>}
         {canStopTrack &&
           <MenuItem onClick={() => {
