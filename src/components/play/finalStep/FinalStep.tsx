@@ -21,6 +21,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { rightKeyPressed } from "components/services/key";
 import AssignBrickColumn from "./AssignBrickColumn";
 import { checkTeacherOrAdmin } from "components/services/brickService";
+import { isPhone } from "services/phone";
 
 interface FinalStepProps {
   brick: Brick;
@@ -79,10 +80,20 @@ const FinalStep: React.FC<FinalStepProps> = ({
   } catch { }
 
   const renderActionColumns = () => {
+    if (isPhone()) {
+      return (
+        <Grid className="share-row" container direction="row" justify="center">
+          <div>
+            <ShareColumn onClick={() => setShare(true)} />
+            {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
+          </div>
+        </Grid>
+      );
+    }
     return (
       <Grid className="share-row" container direction="row" justify="center">
         <ShareColumn onClick={() => setShare(true)} />
-        <AssignBrickColumn onClick={() => setAssign(true)} />
+        {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
       </Grid>
     );
   }

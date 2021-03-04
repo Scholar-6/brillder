@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Grid, Hidden } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import moment from 'moment';
 
 import './Synthesis.scss';
@@ -11,7 +11,6 @@ import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/build/proposal/model';
 import { getPlayPath, getAssignQueryString } from '../service';
-import BrickCounter from '../baseComponents/BrickCounter';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { rightKeyPressed } from 'components/services/key';
 import { getReviewTime, getSynthesisTime } from '../services/playTimes';
@@ -99,6 +98,30 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     return <p><span>Aim to spend {getSynthesisTime(brick.brickLength)} minutes on this section.</span></p>;
   }
 
+  const renderBrickCircle = (color: string) => {
+    return (
+      <div className="left-brick-circle">
+        <div className="round-button" style={{ background: `${color}` }}>
+          {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
+        </div>
+      </div>
+    );
+  }
+
+  const renderMobileHeader = (color: string) => {
+    return (
+      <div className="intro-header expanded-intro-header">
+        <div className="vertical-center">
+          {renderBrickCircle(color)}
+        </div>
+        <div className="r-title-container">
+          <span className="heading synthesis-title">Synthesis</span>
+          <span>{renderSpendTime()}</span>
+        </div>
+      </div>
+    );
+  }
+
   const renderMobile = () => {
     let color = "#B0B0AD";
 
@@ -109,17 +132,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     return (
       <div className="brick-container synthesis-page mobile-synthesis-page">
         <div className="introduction-page">
-          <div className="intro-header expanded-intro-header">
-            <div className="flex f-align-center">
-              <div className="left-brick-circle">
-                <div className="round-button" style={{ background: `${color}` }}>
-                  {AcademicLevelLabels[brick.academicLevel]}
-                </div>
-              </div>
-              <span className="heading synthesis-title">Synthesis</span>
-            </div>
-            <span>{renderSpendTime()}</span>
-          </div>
+          {renderMobileHeader(color)}
           <div className="introduction-content">
             {renderSynthesisContent()}
             {isPhone() ? renderPhoneButton() : renderFooter()}

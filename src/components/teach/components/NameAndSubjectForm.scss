@@ -96,4 +96,27 @@
       color: var(--theme-orange) !important;
     }
   }
+  .assign-button-container {
+    margin-left: 3vw;
+    .btn {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding-left: 1vw;
+      padding-right: 1vw;
+      background: var(--theme-dark-blue);
+      color: var(--white);
+
+      &:hover {
+        background: var(--theme-orange);
+      }
+
+      .svg {
+        fill: var(--white);
+        color: white;
+        width: 1.8vw;
+        height: 1.8vw;
+      }
+    }
+  }
 }

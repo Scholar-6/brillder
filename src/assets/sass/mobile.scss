@@ -126,12 +126,47 @@
 // global footer fix
 .menu-dropdown .MuiPaper-root {
   width: 58vw !important;
-  .menu-text {
-    font-size: 6vw !important;
+  .menu-item {
+    padding: 1vw 4vw !important;
+    .menu-text {
+      font-size: 6vw !important;
+    }
   }
 }
 
 // main page adjustments for biger menu
 .mainPageMobile .main-page-menu.menu-expanded {
   width: 58vw !important;
+}
+
+.svg {
+  overflow: visible !important;
+}
+
+//#2889 short answer updated. rounded and text centered.
+.short-answer-live {
+  $border-radius: 2vw;
+  .short-answer-input {
+    width: 100% !important;
+    margin-bottom: 1.5vh;
+    .document-editor {
+      .ck-editor {
+        border-top-left-radius: $border-radius;
+        border-bottom-left-radius: $border-radius;
+        .ck-content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      .ck-toolbar {
+        border-top-right-radius: $border-radius !important;
+        border-bottom-right-radius: $border-radius !important;
+      }
+    }
+  }
+  .question-hint-global {
+    border-radius: $border-radius;
+    padding: 2vw;
+  }
 }

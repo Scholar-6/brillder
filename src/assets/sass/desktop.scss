@@ -104,4 +104,19 @@
       color: var(--white) !important;
     }
   }
+  .r-day-date-row {
+    transition: all 300ms ease-out;
+    overflow: hidden;
+    &.r-hidden {
+      height: 0;
+    }
+  }
+  .r-radio-buttons {
+    .MuiTypography-root {
+      font-size: 1.3vw;
+    }
+    .MuiSvgIcon-root {
+      color: var(--white);
+    }
+  }
 }

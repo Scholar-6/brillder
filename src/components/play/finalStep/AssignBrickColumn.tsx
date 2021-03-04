@@ -13,9 +13,9 @@ const AssignBrickColumn: React.FC<ShareProps> = props => {
     <Grid className="share-column final-assign-brick-column" onClick={props.onClick} container item xs={props.size ? props.size : 5} justify="center">
       <div>
         <div className="button-container">
-          <SpriteIcon name="file-plus" className="active" />
+          <SpriteIcon name="feather-file-plus" className="active" />
         </div>
-        <div className="link-text" >Assign brick</div>
+        <div className="link-text">Assign brick</div>
       </div>
     </Grid>
   );

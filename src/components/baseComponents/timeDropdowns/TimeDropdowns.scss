@@ -1,0 +1,18 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.select-date {
+  cursor: pointer;
+  background: var(--white);
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
+  color: var(--theme-dark-blue) !important;
+  max-height: 10vw;
+
+  optgroup {
+    overflow: scroll;
+    max-height: 10vw;
+    height: 10vw;
+  }
+}
