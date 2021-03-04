@@ -15,7 +15,6 @@ import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDe
 interface Props {
   history: any;
   assignments: AssignmentBrick[];
-  isCore: boolean;
   shown: boolean;
   user: User;
 
