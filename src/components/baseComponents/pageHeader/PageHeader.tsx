@@ -12,7 +12,6 @@ import MoreButton from './MoreButton';
 import SpriteIcon from '../SpriteIcon';
 import { isAuthenticated } from 'model/assignment';
 import map from 'components/map';
-import StopTrackingPhoneButton from 'components/app/unauthorized/UnauthorizedMenu';
 import UnauthorizedMenu from 'components/app/unauthorized/UnauthorizedMenu';
 
 
@@ -120,10 +119,14 @@ class PageHeader extends Component<UsersListProps, MyState> {
                     <SpriteIcon name="search" className="w100 h100 active text-theme-orange" />
                   </div>
                 }
-                <div className="btn btn-transparent tracking-button" onClick={() => this.setState({dropdownShown: true})}>
-                  <SpriteIcon name="settings" className="w80 h80 text-theme-orange" />
-                </div>
-                <UnauthorizedMenu isOpen={this.state.dropdownShown} closeDropdown={this.hideDropdown.bind(this)} />
+                {!this.props.isAuthenticated &&
+                  <div className="btn btn-transparent tracking-button" onClick={() => this.setState({dropdownShown: true})}>
+                    <SpriteIcon name="settings" className="w80 h80 text-theme-orange" />
+                  </div>
+                }
+                {!this.props.isAuthenticated &&
+                  <UnauthorizedMenu isOpen={this.state.dropdownShown} closeDropdown={this.hideDropdown.bind(this)} />
+                }
               </div>
               {
                 !searchVisible && this.props.isAuthenticated === isAuthenticated.True &&
