@@ -1407,3 +1407,59 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     font-size: 4.5vw !important;
   }
 }
+
+
+// fix for cutoff
+.brief-title {
+  display: flex;
+  align-items: center;
+  $size: 6.9vw;
+  color: var(--theme-dark-blue);
+
+  > span {
+    font-size: 7vw;
+  }
+
+  .round-icon {
+    cursor: pointer;
+    margin-left: 5vw;
+    margin-right: 4vw;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $size;
+    height: $size;
+
+    transition: 500ms transform ease-in-out;
+
+    &.fill-green {
+      color: var(--theme-green);
+    }
+  
+    &.fill-yellow {
+      color: var(--theme-yellow);
+      transform: rotate(-90deg);
+    }
+
+    .svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .arrow {
+      top: 10%;
+      left: 10%;
+      width: 80%;
+      height: 80%;
+      color: var(--white);
+      z-index: 10;
+    }
+  }
+
+  .italic {
+    font-size: 4.5vw;
+  }
+}
