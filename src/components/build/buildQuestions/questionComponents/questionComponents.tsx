@@ -223,7 +223,7 @@ const QuestionComponents = ({
   return (
   <QuillEditorContext.Provider value={editorIdState}>
     <div className="questions">
-      <QuillGlobalToolbar />
+      <QuillGlobalToolbar availableOptions={["bold", "italic", "bulletedList"]} />
       <Grid container direction="row" className={validateDropBox(firstComponent)}>
         <FixedTextComponent
           locked={locked}

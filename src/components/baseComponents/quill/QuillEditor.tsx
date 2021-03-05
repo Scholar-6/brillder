@@ -32,6 +32,7 @@ interface QuillEditorProps {
     validate?: boolean;
     isValid?: boolean | null;
     toolbar: string[];
+    showToolbar?: boolean;
     className?: string;
     imageDialog?: boolean;
     onChange?(data: string): void;
@@ -70,9 +71,9 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
     const awareness = context?.awareness;
 
     const modules = {
-        toolbar: {
+        toolbar: (props.showToolbar ?? true) ? {
             container: `.quill-${uniqueId}`,
-        },
+        } : false,
         autolink: props.allowLinks,
         mediaembed: props.allowMediaEmbed,
         imageupload: true,
@@ -118,6 +119,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
 
     return (
         <div className={`quill-document-editor${valid ? "" : " content-invalid"} quill-id-${uniqueId} ${props.className ?? ""}`}>
+            {(props.showToolbar ?? true) &&
                 <div className={`ql-toolbar quill-${uniqueId}`}>
                 {
                     props.toolbar.length > 0 &&
@@ -128,6 +130,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
                     </div>
                 }
                 </div>
+            }
             <ReactQuill
                 theme="snow"
                 // value={props.sharedData ? undefined : (data || "")}

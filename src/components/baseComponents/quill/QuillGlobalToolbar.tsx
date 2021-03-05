@@ -4,9 +4,10 @@ import { Quill } from 'react-quill';
 import QuillGlobalToolbarButton from './QuillGlobalToolbarButton';
 import { QuillEditorContext } from './QuillEditorContext';
 import { RangeStatic } from 'quill';
+import _ from 'lodash';
 
 interface QuillGlobalToolbarProps {
-    // availableOptions: string[];
+    availableOptions: string[];
     // enabledOptions: string[];
 }
 
@@ -49,9 +50,9 @@ const QuillGlobalToolbar: React.FC<QuillGlobalToolbarProps> = props => {
 
     const format = React.useMemo(() => quill?.getFormat(), [quill, id]);
 
-    const toolbarItems: { [key: string]: any } = {
-        bold: <button className="ql-bold" />,
-        italic: <button className="ql-italic" />,
+    const toolbarItems: { [key: string]: any } = React.useMemo(() => ({
+        bold: <QuillGlobalToolbarButton name="bold" handler={quillHandler} format={format} />,
+        italic: <QuillGlobalToolbarButton name="italic" handler={quillHandler} format={format} />,
         strikethrough: <button className="ql-strike" />,
         fontColor: <select className="ql-color">
           <option value="#C43C30">Red</option>
@@ -66,23 +67,21 @@ const QuillGlobalToolbar: React.FC<QuillGlobalToolbarProps> = props => {
         superscript: <button className="ql-script" value="super" />,
         align: <select className="ql-align" />,
         blockQuote: <button className="ql-blockquote" />,
-        bulletedList: <button className="ql-list" value="bullet" />,
+        bulletedList: <QuillGlobalToolbarButton name="list" value="bullet" handler={quillHandler} format={format} />,
         numberedList: <button className="ql-list" value="ordered" />,
         latex: (<button className="ql-latex">
             <LatexIcon />
         </button>),
         image: <button className="ql-image" />,
-    };
+    }), [quillHandler, format]);
 
     return (
         <div className="ql-global-toolbar">
             <div className="ql-formats">
-                <QuillGlobalToolbarButton name="bold" handler={quillHandler} format={format} />
-                <QuillGlobalToolbarButton name="italic" handler={quillHandler} format={format} />
-                <QuillGlobalToolbarButton name="list" value="bullet" handler={quillHandler} format={format} />
+                {props.availableOptions.map(option => toolbarItems[option])}
             </div>
         </div>
     );
 };
 
-export default QuillGlobalToolbar;
+export default React.memo(QuillGlobalToolbar, _.isEqual);

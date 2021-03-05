@@ -63,6 +63,7 @@ const HintComponent: React.FC<HintProps> = ({
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
               'latex', 'insertTable', 'uploadImageCustom'
             ]}
+            showToolbar={false}
             validate={validationRequired}
           />
         </div>
@@ -90,6 +91,7 @@ const HintComponent: React.FC<HintProps> = ({
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
               'latex', 'imageUploadCustom'
             ]}
+            showToolbar={false}
             validate={validationRequired}
           />
         </div>

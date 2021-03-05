@@ -64,7 +64,9 @@ export default class ImageUpload {
         this.quill = quill;
         this.openDialog = options.openDialog;
         const toolbar = quill.getModule("toolbar");
-        toolbar.addHandler("image", this.uploadHandler.bind(this));
+        if(toolbar) {
+            toolbar.addHandler("image", this.uploadHandler.bind(this));
+        }
     }
 
     uploadHandler() {
