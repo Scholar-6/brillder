@@ -11,7 +11,7 @@
 
   height: 100%;
   padding-left: 0.7vw;
-  padding-top: 1vh;
+  padding-top: 2.5vh;
 }
 
 .name-subject-form {
@@ -105,28 +105,34 @@
     align-items: center;
   }
   .assign-button-container {
-    margin-left: 3vw;
+    margin-left: 1vw;
     .btn {
       cursor: pointer;
       display: flex;
       align-items: center;
       padding-left: 1vw;
       padding-right: 1vw;
-      background: var(--theme-dark-blue);
-      color: var(--white);
+      background: var(--tab-gray);
+      color: var(--theme-dark-blue);
+      letter-spacing: 0;
 
-      &:hover {
-        background: var(--theme-orange);
-      }
 
       .svg {
         fill: var(--white);
         margin-left: 0.5vw;
-        color: white;
+        color: var(--theme-dark-blue);
         width: 1.8vw;
         height: 1.8vw;
         stroke-width: 2;
       }
+      &:hover {
+        color: var(--white);
+        background: var(--theme-orange);
+        .svg {
+          color: var(--white);
+        }
+      }
+
     }
   }
 }
