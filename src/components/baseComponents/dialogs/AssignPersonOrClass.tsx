@@ -76,8 +76,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     }
     return await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignStudents/${props.brick.id}`,
-      { studentsIds },
-      data
+      data,
+      { withCredentials: true }
     ).then(res => {
       return res.data as any[];
     }).catch(() => {
@@ -87,9 +87,13 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }
 
   const assignToClasses = async (classesIds: Number[]) => {
+    let data = { classesIds } as any;
+    if (haveDeadline) {
+      data.deadline = deadlineDate;
+    }
     return await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignClasses/${props.brick.id}`,
-      { classesIds },
+      data,
       { withCredentials: true }
     ).then(res => {
       return res.data as any[];
