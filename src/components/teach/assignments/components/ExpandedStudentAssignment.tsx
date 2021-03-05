@@ -177,7 +177,7 @@ class ExpandedStudentAssignment extends Component<
             assignment={this.props.assignment}
           />
         </div>
-        <div className="users-table">
+        <div className="assignments-table">
           <table cellSpacing="0" cellPadding="0">
             {this.renderTableHead()}
             <tbody>{this.renderStudent(this.props.student)}</tbody>

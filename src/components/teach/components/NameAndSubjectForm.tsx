@@ -3,15 +3,18 @@ import AssignBrickClass from 'components/baseComponents/dialogs/AssignBrickClass
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
 import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import StudentInviteSuccessDialog from 'components/play/finalStep/dialogs/StudentInviteSuccessDialog';
 import { Subject } from 'model/brick';
 import { User } from 'model/user';
 import React from 'react';
 import { connect } from 'react-redux';
 import { ReduxCombinedState } from 'redux/reducers';
+import InviteStudentEmailDialogV2 from '../manageClassrooms/components/InviteStudentEmailDialogV2';
 
 import "./NameAndSubjectForm.scss";
 
 interface NameAndSubjectFormProps {
+  buttonsInvisible?: boolean;
   classroom: any;
   onChange(name: string, subject: Subject): void;
   user: User;
@@ -22,6 +25,8 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
   const [isOpen, togglePopup] = React.useState(false);
   const [successResult, setSuccess] = React.useState({ isOpen: false, brick: null } as any);
   const [failResult, setFailed] = React.useState({ isOpen: false, brick: null } as any);
+  const [inviteOpen, setInvite] = React.useState(false);
+  const [numStudentsInvited, setInvitedCount] = React.useState(0);
 
   const [name, setName] = React.useState<string>();
   const [subjectIndex, setSubjectIndex] = React.useState<number>();
@@ -33,7 +38,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
     if(props.classroom.subject) {
       setSubjectIndex(props.user.subjects.findIndex(s => s.id === props.classroom.subject.id));
     }
-  }, [props.classroom!.name, props.classroom.subject, props.user.subjects]);
+  }, [props.classroom, props.user.subjects]);
 
   const submit = React.useCallback(() => {
     if(name && (subjectIndex !== undefined) && props.user.subjects[subjectIndex]) {
@@ -117,12 +122,21 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           className="w100 h100 active"
         />
       </span>
-      <div className="assign-button-container">
-        <div className="btn" onClick={() => togglePopup(true)}>
-          Assign a new brick
-          <SpriteIcon name="file-plus" />
-        </div>
-      </div>
+      {!props.buttonsInvisible &&
+        <div className="classroom-btns-container">
+          <div className="assign-button-container">
+            <div className="btn" onClick={() => togglePopup(true)}>
+              Assign a new brick
+              <SpriteIcon name="file-plus" />
+            </div>
+          </div>
+          <div className="assign-button-container">
+            <div className="btn" onClick={() => setInvite(true)}>
+              Add New Student
+              <SpriteIcon name="user-plus" />
+            </div>
+          </div>
+        </div>}
       <AssignBrickClass
         isOpen={isOpen}
         classroomId={props.classroom.id}
@@ -141,6 +155,17 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
         brickTitle={failResult.brick?.title}
         selectedItems={[{classroom: props.classroom}]}
         close={() => setFailed({isOpen: false, brick: null})}
+      />
+      <InviteStudentEmailDialogV2
+        isOpen={inviteOpen}
+        close={(numInvited) => {
+          setInvite(false);
+          setInvitedCount(numInvited);
+        }}
+      />
+      <StudentInviteSuccessDialog
+        numStudentsInvited={numStudentsInvited}
+        close={() => setInvitedCount(0)}
       />
     </div>
   );
