@@ -27,6 +27,7 @@ interface AssignPersonOrClassProps {
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [value] = React.useState("");
+  /*eslint-disable-next-line*/
   const [deadlineDate, setDeadline] = React.useState(null as null | Date);
   const [selectedObjs, setSelected] = React.useState<any[]>([]);
   const [students, setStudents] = React.useState<UserBase[]>([]);

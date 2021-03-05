@@ -27,6 +27,7 @@ interface AssignPersonOrClassProps {
 const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [bricks, setBricks] = React.useState([] as any[]);
   const [brick, setBrick] = React.useState(null as any);
+  /*eslint-disable-next-line*/
   const [deadlineDate, setDeadline] = React.useState(null as null | Date);
   const [haveDeadline, toggleDeadline] = React.useState(null as boolean | null);
 
