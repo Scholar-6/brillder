@@ -26,6 +26,7 @@ interface IntroductionProps {
   startTime?: Moment;
   brick: Brick;
   location: any;
+  history: any;
 
   setStartTime(startTime: any): void;
   moveNext(): void;
@@ -44,10 +45,11 @@ export interface IntroductionState {
 }
 
 const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
+  let isPrep = props.location.pathname.slice(-5) === '/prep';
   const values = queryString.parse(props.location.search);
   let initPrepExpanded = false;
   let resume = false;
-  if (values.prepExtanded === 'true') {
+  if (values.prepExtanded === 'true' || isPrep) {
     initPrepExpanded = true;
   }
   if (values.resume === 'true') {
@@ -99,6 +101,10 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           prepExpanded: !state.prepExpanded,
         });
       } else {
+        if (!isPrep) {
+          // move to prep page
+          props.history.push(`/play/brick/${brick.id}/prep`);
+        }
         setState({
           ...state,
           isStopped: false,
@@ -175,7 +181,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (isPhone()) {
       return (
         <div className="action-footer mobile-footer-fixed-buttons">
-          <SpriteIcon name="play-thick" className="mobile-next-button intro-mobile-next-button" onClick={startBrick} />
+          <SpriteIcon name={isPrep ? "arrow-right" : "play-thick"} className="mobile-next-button intro-mobile-next-button" onClick={startBrick} />
         </div>
       );
     }
