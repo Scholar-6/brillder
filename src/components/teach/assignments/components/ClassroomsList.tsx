@@ -12,6 +12,7 @@ import { updateClassroom } from "services/axios/classroom";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
+  notFirst?: boolean; // not first class in list
   assignment: Assignment | null;
 }
 
@@ -56,10 +57,13 @@ class ClassroomList extends Component<ClassroomListProps> {
         timeout={i * 200}
       >
         <div className={className}>
+          <div>
+          {c.notFirst && <div className="upper-line"/>}
           <NameAndSubjectForm
             classroom={classroom}
             onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
           />
+          </div>
         </div>
       </Grow>
     );
@@ -90,9 +94,10 @@ class ClassroomList extends Component<ClassroomListProps> {
     return "";
   }
 
-  prepareClassItems(items: TeachListItem[], classroom: TeachClassroom) {
+  prepareClassItems(items: TeachListItem[], classroom: TeachClassroom, notFirst: boolean) {
     let item: TeachListItem = {
       classroom,
+      notFirst,
       assignment: null
     };
     items.push(item);
@@ -109,10 +114,12 @@ class ClassroomList extends Component<ClassroomListProps> {
     const { activeClassroom, classrooms } = this.props;
     let items = [] as TeachListItem[];
     if (activeClassroom) {
-      this.prepareClassItems(items, activeClassroom);
+      this.prepareClassItems(items, activeClassroom, false);
     } else {
+      let notFirst = false;
       for (let classroom of classrooms) {
-        this.prepareClassItems(items, classroom);
+        this.prepareClassItems(items, classroom, notFirst);
+        notFirst = true;
       }
     }
     return items.map(this.renderTeachListItem.bind(this));
