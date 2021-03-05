@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 
@@ -28,15 +28,6 @@ interface StudentRouteProps {
 const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, innerComponent, user, ...rest }) => {
   const cookiesAccepted = getCookies();
   const [cookieOpen, setCookiePopup] = React.useState(!cookiesAccepted);
-
-  const setMatomoTagManager = () => {
-  }
-
-  useEffect(() => {
-    if (cookiesAccepted) {
-      setMatomoTagManager();
-    }
-  }, [])
 
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!user) {
@@ -71,7 +62,6 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
         <CookiePolicyDialog isOpen={cookieOpen} close={() => {
           acceptCookies();
           setCookiePopup(false);
-          setMatomoTagManager();
         }} />}
       </div>
     );
