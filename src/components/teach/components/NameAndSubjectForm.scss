@@ -82,6 +82,10 @@
     font-size: 1.5vw;
     font-family: $font-family-regular;
     text-transform: capitalize;
+    max-width: 14vw;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     color: var(--theme-dark-blue);
   }
 
@@ -95,6 +99,10 @@
     &:hover {
       color: var(--theme-orange) !important;
     }
+  }
+  .classroom-btns-container {
+    display: flex;
+    align-items: center;
   }
   .assign-button-container {
     margin-left: 3vw;
@@ -113,9 +121,11 @@
 
       .svg {
         fill: var(--white);
+        margin-left: 0.5vw;
         color: white;
         width: 1.8vw;
         height: 1.8vw;
+        stroke-width: 2;
       }
     }
   }
