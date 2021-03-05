@@ -27,6 +27,9 @@
   <svg id="arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="6 9 12 15 18 9"></polyline>
   </svg>
+  <svg id="circle-filled" viewBox="0 0 24 24"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="12" fill="currentColor" stroke-width="0"></circle>
+  </svg>
   <svg id="double-dot" viewBox="0 0 24 24" stroke="none" fill="currentColor">
     <circle cx="12" cy="12" r="12" className="outer-circle" />
     <circle cx="12" cy="12" r="6" className="inner-circle" />

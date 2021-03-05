@@ -203,16 +203,30 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
   const renderBriefTitle = () => {
     return (
-      <div className="expand-title" style={{ marginTop: '4vh' }}>
+      <div className="expand-title brief-title" style={{ marginTop: '4vh' }}>
         <span>Brief</span>
         <div className="centered text-white" onClick={toggleBrief}>
           <div className={state.briefExpanded ? "round-icon b-green" : "round-icon b-yellow"}>
             <SpriteIcon name="arrow-down" className="arrow" />
           </div>
+          {!state.briefExpanded && <span className="italic">Click to expand</span>}
         </div>
       </div>
     );
   };
+
+  const renderMobileBriefTitle = () => {
+    return (
+      <div className="brief-title" style={{ marginTop: '4vh' }}>
+        <span className="bold">Brief</span>
+        <div className={state.briefExpanded ? "round-icon fill-green" : "round-icon fill-yellow"} onClick={toggleBrief}>
+          <SpriteIcon name="circle-filled" className="circle" />
+          <SpriteIcon name="arrow-down" className="arrow" />
+        </div>
+        {!state.briefExpanded && <span className="italic" onClick={toggleBrief}>Click to expand</span>}
+      </div>
+    );
+  }
 
   const renderPrepTitle = () => {
     return (
@@ -368,7 +382,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             {renderPlayButton()}
           </div>
           <div className="introduction-content">
-            {renderBriefTitle()}
+            {renderMobileBriefTitle()}
             {renderBriefExpandText()}
             {state.prepExpanded && renderPrepTitle()}
             {state.prepExpanded && renderPrepExpandText()}
