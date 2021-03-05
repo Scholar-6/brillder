@@ -33,13 +33,29 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
     }
   }
 
-  addKeyWord() {
-    if (!this.props.disabled) {
-      const {keyWords} = this.state;
-      keyWords.push({ name: this.state.keyWord });
-      this.setState({ keyWord: '', keyWords });
-      this.props.onChange(keyWords);
+  checkIfPresent() {
+    const {keyWord} = this.state;
+    for (let keyword of this.state.keyWords) {
+      if (keyword.name.trim() == keyWord.trim()) {
+        return true;
+      }
     }
+    return false;
+  }
+
+  addKeyWord() {
+    if (this.props.disabled) { return; }
+
+    const present = this.checkIfPresent();
+    if (present) {
+      this.setState({ keyWord: '' });
+      return;
+    }
+
+    const {keyWords} = this.state;
+    keyWords.push({ name: this.state.keyWord });
+    this.setState({ keyWord: '', keyWords });
+    this.props.onChange(keyWords);
   }
 
   checkKeyword(e: React.KeyboardEvent<HTMLInputElement>) {
