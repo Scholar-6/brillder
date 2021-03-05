@@ -44,6 +44,8 @@ class TimeDropdowns extends React.Component<any, State> {
       month: 1,
       day: 1
     }
+
+    props.onChange(new Date(1, 1, start));
   }
 
   getDays(month: number, year: number) {
