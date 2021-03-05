@@ -33,7 +33,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
     if(props.classroom.subject) {
       setSubjectIndex(props.user.subjects.findIndex(s => s.id === props.classroom.subject.id));
     }
-  }, [props.classroom!.name, props.classroom.subject, props.user.subjects]);
+  }, [props.classroom, props.user.subjects]);
 
   const submit = React.useCallback(() => {
     if(name && (subjectIndex !== undefined) && props.user.subjects[subjectIndex]) {
