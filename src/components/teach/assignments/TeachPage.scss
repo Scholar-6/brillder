@@ -11,6 +11,13 @@
     padding-top: calc(3vh + 1.5vw);
   }
 
+  .teach-sort-box {
+    height: 100%;
+    .classrooms-filter {
+      height: calc(100% - 4vh - 1vw - 1.9vw) !important;
+    }
+  }
+
   .index-box {
     @extend %flexToYCenter;
     // padding-top: 0 !important;
@@ -46,6 +53,15 @@
       margin-top: 1vh;
       height: calc(calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35);
       margin-left: 0.6vw;
+    }
+
+    .upper-line {
+      $line-height: 0.4vh;
+      width: 100%;
+      margin-left: -0.6vw;
+      border-radius: $line-height;
+      height: $line-height;
+      background: var(--tab-gray);
     }
   }
   .sort-box {

@@ -477,6 +477,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     let bricks: Brick[] | null = [];
     const { pathname } = this.props.location;
     if (pathname.slice(pathname.length - 13, pathname.length) === '/all-subjects') {
+      this.setState({isSearching: true})
       this.props.history.push(map.ViewAllPage + '?searchString=' + searchString);
     }
     if (this.props.user) {
@@ -882,7 +883,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                 {this.renderAllSubjectsPage()}
               </Route>
               <Route exec path={map.ViewAllPage}>
-                <MobileCategory history={this.props.history} location={this.props.location} />
+                <MobileCategory history={this.props.history} isSearching={this.state.isSearching} location={this.props.location} />
               </Route>
             </Switch>
           </Hidden>

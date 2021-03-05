@@ -13,9 +13,12 @@ import { Brick } from 'model/brick';
 import SpriteIcon from '../SpriteIcon';
 import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
 import { getPublishedBricks } from 'services/axios/brick';
+import map from 'components/map';
+import { useHistory } from 'react-router';
 
 interface AssignPersonOrClassProps {
   classroomId: number;
+  subjectId: number;
   isOpen: boolean;
   success(brick: Brick): void;
   failed(brick: Brick): void;
@@ -27,8 +30,11 @@ interface AssignPersonOrClassProps {
 const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [bricks, setBricks] = React.useState([] as any[]);
   const [brick, setBrick] = React.useState(null as any);
+  /*eslint-disable-next-line*/
   const [deadlineDate, setDeadline] = React.useState(null as null | Date);
   const [haveDeadline, toggleDeadline] = React.useState(null as boolean | null);
+
+  const history = useHistory();
 
   const loadBricks = async () => {
     let bricks = await getPublishedBricks();
@@ -68,7 +74,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
       <div className="dialog-header">
-        <div className="r-popup-title bold">Select brick</div>
+        <div className="r-popup-title bold">Already know what you're looking for?</div>
         <Autocomplete
           freeSolo
           value={brick}
@@ -82,10 +88,12 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
               {...params}
               variant="standard"
               label="Bricks: "
-              placeholder="Bricks"
+              placeholder="Search for a brick you know, or try your luck!"
             />
           )}
         />
+        {brick ?
+        <div>
         <div className="r-popup-title bold">When is it due?</div>
         <div className="r-radio-buttons">
           <FormControlLabel
@@ -98,14 +106,15 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
             control={<Radio onClick={() => toggleDeadline(true)}/>}
             label="Set date"
           />
+          {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
         </div>
-        <div className={haveDeadline ? 'r-day-date-row' : 'r-day-date-row r-hidden'}>
-          <div>
-            <TimeDropdowns onChange={setDeadline} />
-          </div>
-        </div>
+        </div> :
+        <div>
+          Prefer to browse our public catalogue? Click the
+          <SpriteIcon name="glasses" className="glasses" onClick={() => history.push(map.ViewAllPage + '?subjectId=' + props.subjectId)} /> to explore
+          </div>}
         <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
-          <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{ width: 'auto' }}>
+          <button className={brick ? "btn btn-md bg-theme-orange yes-button icon-button" : "btn btn-md b-dark-blue text-theme-light-blue yes-button icon-button"} onClick={assign} style={{ width: 'auto' }}>
             <div className="centered">
               <span className="label">Assign Brick</span>
               <SpriteIcon name="file-plus" />

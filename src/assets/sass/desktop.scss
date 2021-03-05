@@ -112,11 +112,21 @@
     }
   }
   .r-radio-buttons {
+    margin-top: 1vw;
     .MuiTypography-root {
       font-size: 1.3vw;
     }
     .MuiSvgIcon-root {
       color: var(--white);
+    }
+    .MuiSelect-root {
+      font-size: 1.2vw;
+    }
+    .MuiInputBase-input {
+      padding: 0.2vw;
+    }
+    .MuiInputBase-root {
+      background: var(--theme-dark-blue) !important;
     }
   }
 }

@@ -1,5 +1,4 @@
 import { Brick } from "model/brick";
-import map from 'components/map';
 
 export interface ValidateProposalResult {
   isValid: boolean;

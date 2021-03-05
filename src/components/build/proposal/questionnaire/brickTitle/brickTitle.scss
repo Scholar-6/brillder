@@ -65,12 +65,10 @@
     .input-container {
       @extend %flexCenter;
       flex-direction: column;
-      @include tabletL {
-        margin: 3vh 0 8.5vh $margin-desktop-left;
-        width: 43vw;
-        font-size: 1.4vw;
-        border: transparent;
-      }
+      margin: 0 0 8.5vh $margin-desktop-left;
+      width: 43vw;
+      font-size: 1.4vw;
+      border: transparent;
       .audience-inputs {
         @extend %buildInputs;
       }
@@ -127,7 +125,7 @@
     }
   }
   .tutorial-pagination {
-    padding-top: 12vh;
+    padding-top: 9.8vh;
     position: relative !important;
   }
 }

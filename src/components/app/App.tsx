@@ -3,7 +3,7 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { isMobile, isIPad13, isTablet} from 'react-device-detect';
+import { isMobileOnly, isTablet} from 'react-device-detect';
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -55,7 +55,6 @@ import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSub
 import PublicTerms from 'components/terms/PublicTerms';
 import MobileUsernamePage from 'components/onboarding/mobileUsernamePage/MobileUsernamePage';
 import RotateIPadInstruction from 'components/baseComponents/rotateInstruction/RotateIPadInstruction';
-import Warning from 'components/baseComponents/rotateInstruction/Warning';
 import { isPhone } from 'services/phone';
 import { setupMatomo } from 'services/matomo';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -162,8 +161,8 @@ const App: React.FC<AppProps> = props => {
     return <RotateIPadInstruction />;
   }
   
-  // If is mobile and landscape tell them to go to portrait
-  if (isMobile && horizontal) {
+  // // If is mobile and landscape tell them to go to portrait
+  else if (isMobileOnly && horizontal) {
     return <RotateInstruction />;
   }
 
@@ -172,7 +171,6 @@ const App: React.FC<AppProps> = props => {
     setTermsData({isLoading: true, termsVersion: ''});
     getTerms().then(r => {
       if (r) {
-        console.log('terms loaded', props.user, r);
         setTermsData({isLoading: false, termsVersion: r.lastModifiedDate});
       } else {
         setTermsData({isLoading: false, termsVersion: ''});
