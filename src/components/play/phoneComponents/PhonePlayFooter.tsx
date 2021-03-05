@@ -77,6 +77,10 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     return history.location.pathname.slice(-6) === '/intro';
   }
 
+  const isPrep = () => {
+    return history.location.pathname.slice(-5) === '/prep';
+  }
+
   const isSynthesis = () => {
     return history.location.pathname.slice(-10) === '/synthesis';
   }
@@ -100,7 +104,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
       isAuthor = brick.author.id === props.user.id;
     } catch { }
 
-    const link = `/play/brick/${brick.id}/intro`;
+    const link = `/play/brick/${brick.id}/prep`;
 
     return <div>
       {canSee && <div>
@@ -209,7 +213,9 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
         <SpriteIcon name="" />
         <SpriteIcon name="corner-up-left" onClick={() => setExit(true)} />
-        {(isIntro() || isFinalScore() || isSynthesis()) ? <SpriteIcon name="" /> : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id))} />}
+        {(isIntro() || isPrep() || isFinalScore() || isSynthesis())
+          ? <SpriteIcon name="" />
+          : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id) + '?prepExtanded=true&resume=true')} />}
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />

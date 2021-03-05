@@ -39,18 +39,27 @@
 }
 
 .brick-title-page {
-  .key-word {
-    padding-left: 0.6vw;
-    height: 2.5vw;
-    font-size: 1.6vw;
-    line-height: 1;
-    margin-right: 0.5vw;
-    margin-bottom: 0.5vw;
-    background: var(--tab-gray);
-    border-radius: 0.9vw;
-    svg {
-      width: 1.1vw;
-      height: 1.1vw;
+  .key-words {
+    max-height: 5.8vw;
+    overflow: scroll;
+    .key-word {
+      padding-left: 0.6vw;
+      height: 2.5vw;
+      font-size: 1.6vw;
+      line-height: 1;
+      margin-right: 0.5vw;
+      margin-bottom: 0.5vw;
+      background: var(--tab-gray);
+      border-radius: 0.9vw;
+      svg {
+        width: 1.1vw;
+        height: 1.1vw;
+      }
+    }
+    input {
+      height: 2.6vw;
+      line-height: 2;
+      padding-bottom: 0 !important;
     }
   }
 }

@@ -17,7 +17,7 @@ import PhoneIcon from "./PhoneIcon";
 import TypingLabel from "components/baseComponents/TypingLabel";
 import EmailRegisterDesktopPage from "./EmailRegisterDesktopPage";
 import Delayed from "components/services/Delayed";
-import { FirstPage, EmailSignPage, JoinPage, RegisterPage, TermsPage } from "./routes";
+import { FirstPage, EmailSignPage, JoinPage, RegisterPage } from "./routes";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
 
 const mapDispatch = (dispatch: any) => ({
@@ -57,7 +57,6 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
   const moveToEmailLogin = () => history.push(EmailSignPage);
   const moveToJoin = () => history.push(JoinPage);
   const moveToRegister = () => history.push(RegisterPage);
-  const moveToTerms = () => history.push(TermsPage);
 
   return (
     <div className="login-desktop-page">

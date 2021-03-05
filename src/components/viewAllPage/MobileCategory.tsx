@@ -19,7 +19,6 @@ import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDe
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
 import { getPublicBricks, searchPublicBricks } from "services/axios/brick";
-import { getSubjects } from "services/axios/subject";
 import BrickCircle from "components/baseComponents/BrickCircle";
 
 
@@ -40,6 +39,7 @@ interface BricksListProps {
   user: User;
   history: any;
   location: any;
+  isSearching: boolean;
   forgetBrick(): void;
   requestFailed(e: string): void;
 }
@@ -61,7 +61,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
-    if (!values.isViewAll && !values.subjectId && !values.searchString) {
+    if (!values.isViewAll && !values.subjectId && !values.searchString && !this.props.isSearching) {
       this.props.history.push(map.AllSubjects);
     }
 
@@ -81,7 +81,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       bricks: [],
       finalBricks: [],
       searchString: searchString,
-      isSearching: false,
+      isSearching: this.props.isSearching ? this.props.isSearching : false,
       isViewAll,
       subjects: [],
       subjectId,
@@ -115,7 +115,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     } else {
       this.props.requestFailed("Can`t get bricks");
     }
-    const subjects = await getSubjects();
   }
 
   moveToPlay(brickId: number) {

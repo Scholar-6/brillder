@@ -535,6 +535,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       <Grid container alignItems="stretch" direction="row">
         <Grid item xs>
           <NameAndSubjectForm
+            buttonsInvisible={true}
             classroom={this.state.activeClassroom}
             onChange={this.updateClassroom.bind(this)}
           />

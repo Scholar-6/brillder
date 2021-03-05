@@ -91,11 +91,11 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
         </div>
         <MenuDropdown
           dropdownShown={this.state.dropdownShown}
-          hideDropdown={() => this.hideDropdown()}
+          hideDropdown={this.hideDropdown.bind(this)}
           user={this.props.user}
           page={PageEnum.MainPage}
           history={this.props.history}
-          onLogout={() => this.handleLogoutOpen()}
+          onLogout={this.handleLogoutOpen.bind(this)}
         />
         {isMobile ? (
           <NotificationPanel
