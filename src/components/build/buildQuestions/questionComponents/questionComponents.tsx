@@ -23,6 +23,8 @@ import _ from "lodash";
 import DeleteComponentDialog from "./deleteComponentDialog";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import { generateId } from "../questionTypes/service/questionBuild";
+import QuillGlobalToolbar from "components/baseComponents/quill/QuillGlobalToolbar";
+import { QuillEditorContext } from "components/baseComponents/quill/QuillEditorContext";
 
 
 type QuestionComponentsProps = {
@@ -46,6 +48,7 @@ const QuestionComponents = ({
   const [removeIndex, setRemovedIndex] = useState(-1);
   const [dialogOpen, setDialog] = useState(false);
   const [sameAnswerDialogOpen, setSameAnswerDialog] = useState(false);
+  const editorIdState = useState("");
 
   const questionData = question.getMap();
   const questionId = questionData.get("id");
@@ -218,7 +221,9 @@ const QuestionComponents = ({
   }
 
   return (
+  <QuillEditorContext.Provider value={editorIdState}>
     <div className="questions">
+      <QuillGlobalToolbar />
       <Grid container direction="row" className={validateDropBox(firstComponent)}>
         <FixedTextComponent
           locked={locked}
@@ -253,6 +258,7 @@ const QuestionComponents = ({
         close={hideSameAnswerDialog}
       />
     </div>
+  </QuillEditorContext.Provider>
   );
 }
 

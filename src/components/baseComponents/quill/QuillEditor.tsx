@@ -16,6 +16,7 @@ import "./QuillCursors";
 import { YJSContext } from "components/build/baseComponents/YJSProvider";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import ImageUpload from "./QuillImageUpload";
+import { QuillEditorContext } from "./QuillEditorContext";
 
 function randomEditorId() {
      return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -38,6 +39,8 @@ interface QuillEditorProps {
 }
 
 const QuillEditor: React.FC<QuillEditorProps> = (props) => {
+    const [currentQuillId, setCurrentQuillId] = React.useContext(QuillEditorContext);
+
     const callOnChange = React.useCallback(
         _.debounce((content: string, delta: Delta, source: Sources) => {
             if(props.onChange) {
@@ -114,7 +117,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
     ));
 
     return (
-        <div className={`quill-document-editor${valid ? "" : " content-invalid"} ${props.className ?? ""}`}>
+        <div className={`quill-document-editor${valid ? "" : " content-invalid"} quill-id-${uniqueId} ${props.className ?? ""}`}>
                 <div className={`ql-toolbar quill-${uniqueId}`}>
                 {
                     props.toolbar.length > 0 &&
@@ -130,6 +133,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
                 // value={props.sharedData ? undefined : (data || "")}
                 onChange={onChange}
                 onBlur={props.onBlur}
+                onFocus={() => setCurrentQuillId(uniqueId)}
                 readOnly={props.disabled}
                 placeholder={props.placeholder}
                 modules={modules}

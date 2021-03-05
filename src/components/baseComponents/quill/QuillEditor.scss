@@ -2,6 +2,54 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
+.ql-global-toolbar {
+  border: none !important;
+  border-radius: $editor-radius;
+  background-color: var(--tab-gray) !important;
+  padding: 1vh 0.5vw;
+  .ql-formats {
+    background-color: var(--tab-gray) !important;
+    font-size: initial;
+    button,
+    .ql-picker {
+      padding: 0;
+      margin: 0;
+      margin-left: 0.1vw;
+      margin-right: 0.1vw;
+      line-height: 1;
+      background: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+      height: 24px;
+      width: 28px;
+      &.active svg {
+        color: var(--blue) !important;
+      }
+      svg {
+        color: var(--theme-dark-blue) !important;
+        width: var(--ck-icon-size);
+        height: var(--ck-icon-size);
+        * {
+          stroke: currentColor;
+        }
+      }
+    }
+    .ql-picker-options {
+      padding: 0 !important;
+      width: 6.5vw;
+      .ql-picker-item {
+        margin: 0.2vw;
+        padding: 0;
+        border-radius: 0.2vw;
+        width: 1.2vw;
+        height: 1.2vw;
+      }
+    }
+  }
+}
+
 .quill-document-editor {
   border-radius: $editor-radius;
   background-color: var(--tab-gray);
