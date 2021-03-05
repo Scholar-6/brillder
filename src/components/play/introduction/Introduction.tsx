@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 import { Moment } from "moment";
 import queryString from 'query-string';
-import { isIPad13, isMobile, isTablet } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 
 import { AcademicLevelLabels, Brick, BrickLengthEnum } from "model/brick";
 import { PlayMode } from "../model";

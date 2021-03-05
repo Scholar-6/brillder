@@ -19,7 +19,6 @@ import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDe
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
 import { getPublicBricks, searchPublicBricks } from "services/axios/brick";
-import { getSubjects } from "services/axios/subject";
 import BrickCircle from "components/baseComponents/BrickCircle";
 
 
@@ -115,7 +114,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     } else {
       this.props.requestFailed("Can`t get bricks");
     }
-    const subjects = await getSubjects();
   }
 
   moveToPlay(brickId: number) {
