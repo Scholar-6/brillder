@@ -11,6 +11,13 @@
     padding-top: calc(3vh + 1.5vw);
   }
 
+  .teach-sort-box {
+    height: 100%;
+    .classrooms-filter {
+      height: calc(100% - 4vh - 1vw - 1.9vw) !important;
+    }
+  }
+
   .index-box {
     @extend %flexToYCenter;
     // padding-top: 0 !important;
