@@ -25,6 +25,11 @@
       font-family: $font-family-bold;
     }
   }
+  .glasses {
+    cursor: pointer;
+    width: 3vw !important;
+    color: var(--theme-orange);
+  }
 }
 
 span.bold {
