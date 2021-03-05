@@ -324,9 +324,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const renderRouter = () => {
     return (
       <Switch>
-        <Route exac path="/play/brick/:brickId/intro">
+        <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
           <Introduction
             location={props.location}
+            history={props.history}
             mode={mode}
             brick={brick}
             startTime={startTime}
