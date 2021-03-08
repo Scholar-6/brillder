@@ -71,7 +71,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
     const awareness = context?.awareness;
 
     const modules = {
-        toolbar: (props.showToolbar ?? true) ? {
+        toolbar: (props.showToolbar ?? false) ? {
             container: `.quill-${uniqueId}`,
         } : false,
         autolink: props.allowLinks,
@@ -119,7 +119,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
 
     return (
         <div className={`quill-document-editor${valid ? "" : " content-invalid"} quill-id-${uniqueId} ${props.className ?? ""}`}>
-            {(props.showToolbar ?? true) &&
+            {(props.showToolbar ?? false) &&
                 <div className={`ql-toolbar quill-${uniqueId}`}>
                 {
                     props.toolbar.length > 0 &&

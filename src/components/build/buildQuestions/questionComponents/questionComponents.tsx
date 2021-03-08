@@ -226,7 +226,7 @@ const QuestionComponents = ({
       <QuillGlobalToolbar
         availableOptions={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
+          'latex', 'bulletedList', 'numberedList', 'blockQuote'
         ]}
       />
       <Grid container direction="row" className={validateDropBox(firstComponent)}>
