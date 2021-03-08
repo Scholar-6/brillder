@@ -78,6 +78,11 @@
       &:last-child {
         margin-bottom: 0;
       }
+      .hint-container-label {
+        background-color: var(--tab-gray);
+        padding: 0.35vw;
+        font-weight: bolder;
+      }
       .quill-document-editor {
         border-radius: 0 !important;
         width: 100%;

@@ -5,6 +5,7 @@ import QuillGlobalToolbarButton from './QuillGlobalToolbarButton';
 import { QuillEditorContext } from './QuillEditorContext';
 import { RangeStatic } from 'quill';
 import _ from 'lodash';
+import QuillGlobalToolbarSelect from './QuillGlobalToolbarSelect';
 
 interface QuillGlobalToolbarProps {
     availableOptions: string[];
@@ -53,8 +54,8 @@ const QuillGlobalToolbar: React.FC<QuillGlobalToolbarProps> = props => {
     const toolbarItems: { [key: string]: any } = React.useMemo(() => ({
         bold: <QuillGlobalToolbarButton name="bold" handler={quillHandler} format={format} />,
         italic: <QuillGlobalToolbarButton name="italic" handler={quillHandler} format={format} />,
-        strikethrough: <button className="ql-strike" />,
-        fontColor: <select className="ql-color">
+        strikethrough: <QuillGlobalToolbarButton name="strike" handler={quillHandler} format={format} />,
+        fontColor: <QuillGlobalToolbarSelect name="color" handler={quillHandler} format={format}>
           <option value="#C43C30">Red</option>
           <option value="#0681DB">Blue</option>
           <option value="#30C474">Green</option>
@@ -62,17 +63,15 @@ const QuillGlobalToolbar: React.FC<QuillGlobalToolbarProps> = props => {
           <option value="#6A2E15">Brown</option>
           <option value="#4523FF">Purple</option>
           <option value="#FC7502">Orange</option>
-        </select>,
-        subscript: <button className="ql-script" value="sub" />,
-        superscript: <button className="ql-script" value="super" />,
+        </QuillGlobalToolbarSelect>,
+        subscript: <QuillGlobalToolbarButton name="script" value="sub" handler={quillHandler} format={format} />,
+        superscript: <QuillGlobalToolbarButton name="script" value="super" handler={quillHandler} format={format} />,
         align: <select className="ql-align" />,
-        blockQuote: <button className="ql-blockquote" />,
+        blockQuote: <QuillGlobalToolbarButton name="blockquote" handler={quillHandler} format={format} />,
         bulletedList: <QuillGlobalToolbarButton name="list" value="bullet" handler={quillHandler} format={format} />,
-        numberedList: <button className="ql-list" value="ordered" />,
-        latex: (<button className="ql-latex">
-            <LatexIcon />
-        </button>),
-        image: <button className="ql-image" />,
+        numberedList: <QuillGlobalToolbarButton name="list" value="ordered" handler={quillHandler} format={format} />,
+        latex: <QuillGlobalToolbarButton name="latex" handler={quillHandler} format={format} />,
+        image: <QuillGlobalToolbarButton name="image" handler={() => false} format={format} />,
     }), [quillHandler, format]);
 
     return (

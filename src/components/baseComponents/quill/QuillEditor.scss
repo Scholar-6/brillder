@@ -39,13 +39,25 @@
     .ql-picker-options {
       padding: 0 !important;
       width: 6.5vw;
+      display: none;
+      border: 1px solid transparent;
+      box-shadow: rgba(0, 0, 0, 0.2) 0 2px 8px;
+      position: absolute;
+      background-color: #fff;
       .ql-picker-item {
         margin: 0.2vw;
         padding: 0;
         border-radius: 0.2vw;
         width: 1.2vw;
         height: 1.2vw;
+        display: inline-block;
       }
+    }
+    .ql-picker.ql-expanded .ql-picker-options {
+      display: block;
+      margin-top: -1px;
+      // top: 100%;
+      z-index: 1;
     }
   }
 }
