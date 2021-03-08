@@ -262,6 +262,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             <Route exac path="/play-preview/brick/:brickId/intro">
               <Introduction
                 location={location}
+                history={history}
                 brick={brick}
                 isPlayPreview={true}
                 startTime={startTime}

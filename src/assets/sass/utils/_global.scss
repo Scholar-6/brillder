@@ -403,3 +403,14 @@ h3 {
   @extend %flexToYCenter;
   align-items: flex-start !important;
 }
+
+.MuiInputBase-input {
+  text-transform: unset !important;
+}
+
+.MuiInputBase-input::placeholder {
+}
+
+.inline {
+  display: inline;
+}

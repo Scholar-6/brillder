@@ -140,6 +140,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
       <AssignBrickClass
         isOpen={isOpen}
         classroomId={props.classroom.id}
+        subjectId={props.classroom.subjectId || props.classroom.subject.id}
         success={brick => setSuccess({isOpen: true, brick})}
         failed={brick => setFailed({isOpen: true, brick})}
         close={() => togglePopup(false)}

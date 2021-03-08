@@ -44,6 +44,8 @@ class TimeDropdowns extends React.Component<any, State> {
       month: 1,
       day: 1
     }
+
+    props.onChange(new Date(1, 1, start));
   }
 
   getDays(month: number, year: number) {
@@ -76,10 +78,10 @@ class TimeDropdowns extends React.Component<any, State> {
     this.onChange(newYear, this.state.month, this.state.day);
   }
 
-  renderSelect(value: number, choices: number[], setChoice: Function) {
+  renderSelect(value: number, choices: number[], setChoice: Function, className: string) {
     return (
       <Select
-        className="select-date"
+        className={"select-date " + className}
         value={value}
         MenuProps={{ classes: { paper: 'select-time-list' } }}
         onChange={e => setChoice(e.target.value)}
@@ -91,10 +93,10 @@ class TimeDropdowns extends React.Component<any, State> {
 
   render() {
     return (
-      <div>
-        {this.renderSelect(this.state.day, this.state.days, (newDay: number) => this.setDay(newDay))}
-        {this.renderSelect(this.state.month, this.state.months, (newMonth: number) => this.setMonth(newMonth))}
-        {this.renderSelect(this.state.year, this.state.years, (newYear: number) => this.setYear(newYear))}
+      <div className="inline">
+        {this.renderSelect(this.state.day, this.state.days, (newDay: number) => this.setDay(newDay), 'first')}
+        {this.renderSelect(this.state.month, this.state.months, (newMonth: number) => this.setMonth(newMonth), 'second')}
+        {this.renderSelect(this.state.year, this.state.years, (newYear: number) => this.setYear(newYear), 'last')}
       </div>
     );
   }

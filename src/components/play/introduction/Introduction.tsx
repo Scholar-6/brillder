@@ -26,6 +26,7 @@ interface IntroductionProps {
   startTime?: Moment;
   brick: Brick;
   location: any;
+  history: any;
 
   setStartTime(startTime: any): void;
   moveNext(): void;
@@ -44,10 +45,11 @@ export interface IntroductionState {
 }
 
 const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
+  let isPrep = props.location.pathname.slice(-5) === '/prep';
   const values = queryString.parse(props.location.search);
   let initPrepExpanded = false;
   let resume = false;
-  if (values.prepExtanded === 'true') {
+  if (values.prepExtanded === 'true' || isPrep) {
     initPrepExpanded = true;
   }
   if (values.resume === 'true') {
@@ -99,6 +101,10 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           prepExpanded: !state.prepExpanded,
         });
       } else {
+        if (!isPrep) {
+          // move to prep page
+          props.history.push(`/play/brick/${brick.id}/prep`);
+        }
         setState({
           ...state,
           isStopped: false,
@@ -175,7 +181,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (isPhone()) {
       return (
         <div className="action-footer mobile-footer-fixed-buttons">
-          <SpriteIcon name="play-thick" className="mobile-next-button intro-mobile-next-button" onClick={startBrick} />
+          <SpriteIcon name={isPrep ? "arrow-right" : "play-thick"} className="mobile-next-button intro-mobile-next-button" onClick={startBrick} />
         </div>
       );
     }
@@ -203,16 +209,30 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
   const renderBriefTitle = () => {
     return (
-      <div className="expand-title" style={{ marginTop: '4vh' }}>
+      <div className="expand-title brief-title" style={{ marginTop: '4vh' }}>
         <span>Brief</span>
         <div className="centered text-white" onClick={toggleBrief}>
           <div className={state.briefExpanded ? "round-icon b-green" : "round-icon b-yellow"}>
             <SpriteIcon name="arrow-down" className="arrow" />
           </div>
+          {!state.briefExpanded && <span className="italic">Click to expand</span>}
         </div>
       </div>
     );
   };
+
+  const renderMobileBriefTitle = () => {
+    return (
+      <div className="brief-title" style={{ marginTop: '4vh' }}>
+        <span className="bold">Brief</span>
+        <div className={state.briefExpanded ? "round-icon fill-green" : "round-icon fill-yellow"} onClick={toggleBrief}>
+          <SpriteIcon name="circle-filled" className="circle" />
+          <SpriteIcon name="arrow-down" className="arrow" />
+        </div>
+        {!state.briefExpanded && <span className="italic" onClick={toggleBrief}>Click to expand</span>}
+      </div>
+    );
+  }
 
   const renderPrepTitle = () => {
     return (
@@ -368,7 +388,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             {renderPlayButton()}
           </div>
           <div className="introduction-content">
-            {renderBriefTitle()}
+            {renderMobileBriefTitle()}
             {renderBriefExpandText()}
             {state.prepExpanded && renderPrepTitle()}
             {state.prepExpanded && renderPrepExpandText()}

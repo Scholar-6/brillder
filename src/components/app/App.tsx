@@ -3,7 +3,7 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { isMobile, isTablet} from 'react-device-detect';
+import { isMobileOnly, isTablet} from 'react-device-detect';
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -161,8 +161,8 @@ const App: React.FC<AppProps> = props => {
     return <RotateIPadInstruction />;
   }
   
-  // If is mobile and landscape tell them to go to portrait
-  if (isMobile && horizontal) {
+  // // If is mobile and landscape tell them to go to portrait
+  else if (isMobileOnly && horizontal) {
     return <RotateInstruction />;
   }
 

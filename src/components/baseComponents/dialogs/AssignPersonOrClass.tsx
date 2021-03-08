@@ -70,23 +70,30 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }, [value, getAllStudents, getClasses]);
 
   const assignToStudents = async (studentsIds: Number[]) => {
+    let data = { studentsIds } as any;
+    if (haveDeadline) {
+      data.deadline = deadlineDate;
+    }
     return await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignStudents/${props.brick.id}`,
-      { studentsIds },
+      data,
       { withCredentials: true }
     ).then(res => {
       return res.data as any[];
-    })
-      .catch(() => {
-        props.requestFailed('Can`t assign student to brick');
-        return false;
-      });
+    }).catch(() => {
+      props.requestFailed('Can`t assign student to brick');
+      return false;
+    });
   }
 
   const assignToClasses = async (classesIds: Number[]) => {
+    let data = { classesIds } as any;
+    if (haveDeadline) {
+      data.deadline = deadlineDate;
+    }
     return await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignClasses/${props.brick.id}`,
-      { classesIds },
+      data,
       { withCredentials: true }
     ).then(res => {
       return res.data as any[];
@@ -218,12 +225,12 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         <div className="r-radio-buttons">
           <FormControlLabel
             checked={haveDeadline === false}
-            control={<Radio onClick={() => toggleDeadline(false)}/>}
+            control={<Radio onClick={() => toggleDeadline(false)} />}
             label="No deadline"
           />
           <FormControlLabel
             checked={haveDeadline === true}
-            control={<Radio onClick={() => toggleDeadline(true)}/>}
+            control={<Radio onClick={() => toggleDeadline(true)} />}
             label="Set date"
           />
         </div>
