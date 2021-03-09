@@ -220,19 +220,9 @@
     }
     // tooltip
     .css-custom-tooltip {
-      position: absolute;
       bottom: -1.25vw;
       left: -1.5vw;
       width: 6.4vw !important;
-      opacity: 0;
-      font-size: 1.05vw;
-      transition: all 300ms ease-out;
-      border-radius: 0.5vw;
-      color: var(--theme-dark-blue);
-      background: var(--tab-gray);
-      padding-left: 0.5vw;
-      display: block;
-      position: absolute;
     }
     &.completed:hover {
       .css-custom-tooltip {

@@ -121,12 +121,14 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           name="edit-outline"
           className="w100 h100 active"
         />
+        <div className="css-custom-tooltip">Edit Class Name or Subject</div>
       </span>
       {!props.buttonsInvisible &&
         <div className="classroom-btns-container">
           <div className="assign-button-container">
             <div className="btn icon-button" onClick={() => setInvite(true)}>
               <SpriteIcon name="user-plus" />
+              <div className="css-custom-tooltip">Add New Student</div>
             </div>
           </div>
           <div className="assign-button-container">

@@ -89,9 +89,8 @@
   }
 
   .edit-icon {
+    position: relative;
     cursor: pointer;
-    width: 1.7vw;
-    height: 1.7vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,8 +106,18 @@
       height: 1.8vw !important;
     }
 
+    .css-custom-tooltip {
+      bottom: -2vw;
+      left: -4vw;
+      background: var(--off-white);
+      width: 12.5vw !important;
+    }
+
     &:hover {
       color: var(--theme-orange) !important;
+      .css-custom-tooltip {
+        opacity: 1;
+      }
     }
   }
   .classroom-btns-container {
@@ -128,6 +137,7 @@
       background: var(--off-white);
       color: var(--theme-dark-blue);
       letter-spacing: 0;
+      position: relative;
 
       .svg {
         fill: var(--off-white);
@@ -137,13 +147,23 @@
         height: 1.8vw;
         stroke-width: 2;
       }
+      .css-custom-tooltip {
+        bottom: -2vw;
+        left: -2.1vw;
+        background: var(--off-white);
+        width: 8.4vw !important;
+      }
+
       &:hover {
         color: var(--off-white);
         background: var(--theme-orange);
         .svg {
           color: var(--off-white);
         }
-      }      
+        .css-custom-tooltip {
+          opacity: 1;
+        }
+      }
     }
     .icon-button {
       .svg {
