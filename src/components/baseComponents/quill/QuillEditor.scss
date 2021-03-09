@@ -35,6 +35,16 @@
           stroke: currentColor;
         }
       }
+      &:disabled,
+      &.disabled {
+        svg {
+          color: var(--dark-gray) !important;
+          cursor: default;
+        }
+      }
+    }
+    input.ql-image {
+      display: none;
     }
     .ql-picker-options {
       padding: 0 !important;

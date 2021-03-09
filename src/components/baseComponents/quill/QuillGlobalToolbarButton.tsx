@@ -13,10 +13,11 @@ interface QuillGlobalToolbarButtonProps {
 const QuillGlobalToolbarButton: React.FC<QuillGlobalToolbarButtonProps> = props => {
     return (
         <button
+            disabled={!props.enabled}
             className={`ql-${props.name}${props.value ? `-${props.value}` : ""}${(props.format?.[props.name] && (!props.value || props.format?.[props.name] === props.value)) ? " active" : ""}`}
             onClick={(evt) => {
                 evt.preventDefault();
-                return props.handler(props.name, props.value) ?? false;
+                return props.enabled && (props.handler(props.name, props.value) ?? false);
             }}
         >
             <SpriteIcon name={"ql-" + props.name + (props.value ? `-${props.value}` : "")} />
