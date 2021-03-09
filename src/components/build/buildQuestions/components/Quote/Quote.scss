@@ -1,13 +1,14 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .question-build-quote-editor {
   width: 100%;
-  .document-editor {
-    .ck-editor {
+  .quill-document-editor {
+    .ql-container {
       width: 100% !important;
-      .ck-content {
+      .ql-editor {
+        margin-top: 3vh;
         padding: 1vw;
         text-align: left;
         background-color: var(--tab-gray);
@@ -32,7 +33,7 @@
       position: absolute;
       top: 0;
       z-index: 1;
-      height: 4vh;
+      height: 3vh;
       font-size: 1.1vw;
     }
   }
