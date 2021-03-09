@@ -31,7 +31,6 @@ import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/Studen
 import NameAndSubjectForm from "../components/NameAndSubjectForm";
 import { Subject } from "model/brick";
 import ClassroomFilterItem from "./components/ClassroomFilterItem";
-import InviteStudentEmailDialogV2 from "./components/InviteStudentEmailDialogV2";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -63,6 +62,7 @@ interface UsersListState {
 
   isAdmin: boolean;
   classrooms: ClassroomApi[];
+  individualClassroom: ClassroomApi | undefined;
 
   sortBy: UserSortBy;
   isAscending: boolean;
@@ -77,9 +77,8 @@ interface UsersListState {
   unassignStudent: MUser | null;
   unassignOpen: boolean;
 
-  inviteEmailOpen: boolean;
   inviteIdividualOpen: boolean;
-  inviteToClassOpen: boolean;
+  inviteOpen: boolean;
   numStudentsInvited: number;
 
   pageStudentsSelected: boolean;
@@ -95,6 +94,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       isLoaded: false,
       users: [],
       classrooms: [],
+      individualClassroom: undefined,
       page: 0,
       pageSize,
       classPageSize: 12,
@@ -120,8 +120,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       unassignStudent: null,
       unassignOpen: false,
 
-      inviteEmailOpen: false,
-      inviteToClassOpen: false,
+      inviteOpen: false,
       inviteIdividualOpen: false,
       numStudentsInvited: 0,
 
@@ -161,10 +160,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   async getClassrooms() {
     let classrooms = await getAllClassrooms();
     if (classrooms) {
-      classrooms = classrooms.filter(c => c.subjectId);
       this.prepareClassrooms(classrooms);
+      const individualClassroom = classrooms.find(c => c.subjectId === null && c.name === 'individuals');
+      classrooms = classrooms.filter(c => c.subjectId);
       this.setState({
         classrooms,
+        individualClassroom,
         activeClassroom: this.state.activeClassroom ? classrooms.find(c => c.id === this.state.activeClassroom!.id) ?? null : null
       });
     } else {
@@ -373,7 +374,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     if (!this.state.isLoaded) {
       return <div></div>;
     }
-    if (this.state.isLoaded && this.state.users.length === 0 && this.state.classrooms.length === 0) {
+    const {individualClassroom} = this.state;
+    const noClassroom = this.state.users.length === 0 && this.state.classrooms.length === 0;
+    const haveIndividualStudents = individualClassroom && (
+      individualClassroom.students.length > 0 || (individualClassroom.studentsInvitations && individualClassroom.studentsInvitations.length > 0)
+    );
+    if (this.state.isLoaded && noClassroom && !haveIndividualStudents) {
       return <EmptyFilter />;
     }
     return (
@@ -474,6 +480,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     return users.slice(pageStart, pageStart + this.state.pageSize);
   }
 
+  invitationSuccess(numInvited: number) {
+    this.setState({ inviteOpen: false, numStudentsInvited: numInvited });
+    if (numInvited > 0) {
+      this.loadData();
+    }
+  }
+
   renderPagination(visibleUsers: MUser[], users: MUser[]) {
     return (
       <UsersPagination
@@ -487,7 +500,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   inviteStudent() {
-    this.setState({ inviteEmailOpen: true });
+    this.setState({ inviteOpen: true });
   }
 
   renderEmptyTab() {
@@ -500,7 +513,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                 <SpriteIcon
                   name="users-custom"
                   className="stroke-1"
-                  onClick={() => this.setState({ inviteEmailOpen: true })}
+                  onClick={() => this.setState({ inviteOpen: true })}
                 />
               </div>
               <div className="bold">+ Invite Students</div>
@@ -510,7 +523,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                 <SpriteIcon
                   name="user-plus"
                   className="stroke-1"
-                  onClick={() => {this.setState({inviteToClassOpen: true})}}
+                  onClick={() => { this.setState({ inviteOpen: true }) }}
                 />
               </div>
               <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -541,7 +554,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           />
         </Grid>
         <Grid item>
-          <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
+          <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteOpen: true })} />
         </Grid>
       </Grid>
     );
@@ -573,7 +586,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                 <SpriteIcon
                   name="user-plus"
                   className="stroke-1"
-                  onClick={() => this.setState({ inviteToClassOpen: true })}
+                  onClick={() => this.setState({ inviteOpen: true })}
                 />
               </div>
               <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -659,21 +672,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           close={() => this.setState({ unassignOpen: false })}
           submit={() => this.unassignStudent(this.state.unassignStudent)}
         />
-        <InviteStudentEmailDialogV2
-          isOpen={this.state.inviteToClassOpen}
-          close={(numInvited) => this.setState({ inviteEmailOpen: false, numStudentsInvited: numInvited })}
+        {(this.state.activeClassroom || this.state.individualClassroom) && <div>
+        <InviteStudentEmailDialog
+          isOpen={this.state.inviteOpen}
+          close={(numInvited) => this.invitationSuccess(numInvited)}
+          classroom={this.state.activeClassroom || this.state.individualClassroom}
         />
-        {this.state.activeClassroom && <>
-          <InviteStudentEmailDialog
-            isOpen={this.state.inviteEmailOpen}
-            close={(numInvited) => this.setState({ inviteEmailOpen: false, numStudentsInvited: numInvited })}
-            classroom={this.state.activeClassroom}
-          />
-          <StudentInviteSuccessDialog
-            numStudentsInvited={this.state.numStudentsInvited}
-            close={() => this.setState({ numStudentsInvited: 0 })}
-          />
-        </>}
+        <StudentInviteSuccessDialog
+          numStudentsInvited={this.state.numStudentsInvited}
+          close={() => this.setState({ numStudentsInvited: 0 })}
+        />
+        </div>}
         <ValidationFailedDialog
           isOpen={this.state.cantCreate}
           header="You don`t have permisions to create new user"

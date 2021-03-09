@@ -10,7 +10,7 @@ import axios from 'axios';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 interface InviteStudentEmailProps {
-  classroom: ClassroomApi;
+  classroom: ClassroomApi | undefined;
   isOpen: boolean;
   close(numInvited: number): void;
 }
@@ -28,7 +28,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
       setEmailInvalid(true);
       return;
     }
-    setEmails(emails => [ ...emails, currentEmail]);
+    setEmails(emails => [...emails, currentEmail]);
     setCurrentEmail("");
   }, [currentEmail]);
 
@@ -37,23 +37,25 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
   }
 
   const onSubmit = React.useCallback(async () => {
-    const currentEmails = emails;
-    if (!emailRegex.test(currentEmail)) {
-      if (emails.length <= 0) {
-        setEmailInvalid(true);
-        return;
+    if (props.classroom) {
+      const currentEmails = emails;
+      if (!emailRegex.test(currentEmail)) {
+        if (emails.length <= 0) {
+          setEmailInvalid(true);
+          return;
+        }
+      } else {
+        setEmails(emails => [...emails, currentEmail]);
+        currentEmails.push(currentEmail);
+        setCurrentEmail("");
       }
-    } else {
-      setEmails(emails => [ ...emails, currentEmail ]);
-      currentEmails.push(currentEmail);
-      setCurrentEmail("");
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_HOST}/classrooms/students/${props.classroom.id}/new`,
+        { emails: currentEmails },
+        { withCredentials: true }
+      );
+      props.close(currentEmails.length);
     }
-    await axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/classrooms/students/${props.classroom.id}/new`,
-      { emails: currentEmails },
-      { withCredentials: true }
-    );
-    props.close(currentEmails.length);
   }, [emails, currentEmail])
 
   return (
@@ -68,7 +70,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
             {...params}
             onChange={e => setCurrentEmail(e.target.value)}
             onKeyPress={e => {
-              if(e.key === "Enter") {
+              if (e.key === "Enter") {
                 onAddEmail();
               }
             }}
@@ -89,8 +91,8 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
             ))}
           </>}
         />
-        <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
-          <button className="btn btn-md bg-theme-orange yes-button icon-button" style={{width: 'auto'}} onClick={onSubmit}>
+        <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
+          <button className="btn btn-md bg-theme-orange yes-button icon-button" style={{ width: 'auto' }} onClick={onSubmit}>
             <div className="centered">
               <span className="label">Invite Students</span>
               <SpriteIcon name="send" />
