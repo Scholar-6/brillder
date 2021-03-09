@@ -105,6 +105,7 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
                 <div>
                   <AssignedBrickDescription
                     subjects={this.props.subjects}
+                    isStudentAssignment={true}
                     expand={() => this.setActiveAssignment(a)}
                     key={i}
                     assignment={a as any}

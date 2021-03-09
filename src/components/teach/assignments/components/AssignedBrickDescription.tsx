@@ -13,6 +13,7 @@ interface AssignedDescriptionProps {
   classroom?: TeachClassroom;
   assignment: Assignment;
   isExpanded?: boolean;
+  isStudentAssignment?: boolean;
   move?(): void;
   expand?(classroomId: number, assignmentId: number): void;
   minimize?(): void;
@@ -76,6 +77,33 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     return <SpriteIcon name="reminder" className="active reminder-icon finished" />;
   }
 
+  getTotalStudentsCount() {
+    const {classroom} = this.props;
+    let studentsCount = 0;
+    if (classroom) {
+      studentsCount = classroom.students.length;
+    }
+    return studentsCount;
+  }
+
+  getCompleteStudents() {
+    const { byStatus } = this.props.assignment;
+    let studentsCompleted = 0;
+    if (byStatus) {
+      studentsCompleted = byStatus[1] ? byStatus[1].count : 0;
+    }
+    return studentsCompleted;
+  }
+
+  getAverageScore() {
+    const { byStatus } = this.props.assignment;
+    let average = '—';
+    if (byStatus) {
+      average = byStatus[1] ? Math.round(byStatus[1].avgScore).toString() : '—';
+    }
+    return average;
+  }
+
   render() {
     let subjectId = this.props.assignment.brick.subjectId;
     let color = getSubjectColor(this.props.subjects, subjectId);
@@ -84,20 +112,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
       color = "#B0B0AD";
     }
 
-    let { assignment, classroom } = this.props;
+    let { assignment } = this.props;
     const { brick, byStatus } = assignment;
     let className = "assigned-brick-description";
-    let studentsCount = 0;
-    if (classroom) {
-      studentsCount = classroom.students.length;
-    }
-
-    let second = 0;
-    let average = 0;
-    if (byStatus) {
-      second = byStatus[1] ? byStatus[1].count : 0;
-      average = byStatus[1] ? Math.round(byStatus[1].avgScore) : 0;
-    }
 
     return (
       <div className={className} style={{ display: 'flex' }}>
@@ -119,12 +136,13 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
           {this.renderStatus(assignment)}
         </div>
         <div className="assignment-second-part">
-          <div className="users-complete-count">
-            <span>{second}/{studentsCount}</span>
-            <SpriteIcon name="users" className="text-theme-dark-blue" />
-          </div>
+          {!this.props.isStudentAssignment &&
+            <div className="users-complete-count">
+              <span>{this.getCompleteStudents()}/{this.getTotalStudentsCount()}</span>
+              <SpriteIcon name="users" className="text-theme-dark-blue" />
+            </div>}
           <div className="average">
-            Avg: {average}
+            Avg: {this.getAverageScore()}
           </div>
         </div>
         <div className="teach-brick-actions-container">
