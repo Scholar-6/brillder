@@ -129,10 +129,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
         </div>
         <div className="teach-brick-actions-container">
           <div className="archive-button-container">
-            <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#archive"} className="text-gray" />
-            </svg>
+            <SpriteIcon name="archive" className="text-gray" />
           </div>
         </div>
       </div>

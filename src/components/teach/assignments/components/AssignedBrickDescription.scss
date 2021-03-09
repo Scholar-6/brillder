@@ -169,6 +169,18 @@
     @extend %flexCenter;
     width: 3vw;
   }
+  .archive-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%;
+    .svg {
+      width: 2.1vw;
+      height: 2.1vw;
+    }
+  }
 }
 
 .teach-circles-container {
