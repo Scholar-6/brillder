@@ -83,6 +83,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
       if (length !== studentStatus.length) {
         return <SpriteIcon name="reminder" className="active reminder-icon" onClick={this.sendNotifications.bind(this)} />;
       }
+    } else {
+      // if assignment
+      console.log(assignment);
     }
     return <SpriteIcon name="reminder" className="active reminder-icon finished" />;
   }
@@ -111,6 +114,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
       if (length !== studentStatus.length) {
         return false;
       }
+    } else {
+      // if assignment
+
     }
     return true;
   }
