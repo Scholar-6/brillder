@@ -159,6 +159,10 @@
       width: 2vw;
       height: 2vw;
       background: var(--theme-yellow);
+
+      &.finished {
+        background: var(--tab-gray);
+      }
     }
   }
   .teach-brick-actions-container {

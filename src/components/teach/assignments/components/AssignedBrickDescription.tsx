@@ -60,7 +60,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
         return <SpriteIcon name="reminder" className="active reminder-icon" />;
       }
     }
-    return '';
+    return <SpriteIcon name="reminder" className="active reminder-icon finished" />;
   }
 
   render() {
