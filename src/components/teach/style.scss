@@ -76,6 +76,7 @@
 
     .classroom-list-buttons {
       position: absolute;
+      z-index: 10;
       top: calc(6.6vh + 1.8vh);
       right: 1vw;
       display: flex;

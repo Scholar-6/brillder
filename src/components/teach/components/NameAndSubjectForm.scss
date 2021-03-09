@@ -140,8 +140,12 @@
         .svg {
           color: var(--white);
         }
+      }      
+    }
+    .icon-button {
+      .svg {
+        margin: 0;
       }
-
     }
     .icon-button {
       .svg {

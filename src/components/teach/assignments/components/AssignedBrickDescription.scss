@@ -159,11 +159,27 @@
       width: 2vw;
       height: 2vw;
       background: var(--theme-yellow);
+
+      &.finished {
+        background: var(--tab-gray);
+      }
     }
   }
   .teach-brick-actions-container {
     @extend %flexCenter;
     width: 3vw;
+  }
+  .archive-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%;
+    .svg {
+      width: 2.1vw;
+      height: 2.1vw;
+    }
   }
 }
 

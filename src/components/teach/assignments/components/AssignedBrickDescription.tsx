@@ -19,6 +19,11 @@ interface AssignedDescriptionProps {
 }
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
+
+  sendNotifications() {
+    //#2888 this should send notifications to students.
+  }
+
   renderVertical(assignmentId: number, color: string) {
     const { isExpanded } = this.props;
     return (
@@ -53,14 +58,22 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     );
   }
 
-  renderStatus(studentStatus: StudentStatus[]) {
+  renderStatus(assignment: Assignment) {
+    if (assignment.deadline) {
+      let endTime = new Date(assignment.deadline).getTime();
+      let nowTime = new Date().getTime();
+      if (endTime < nowTime) {
+        return <SpriteIcon name="reminder" className="active reminder-icon bg-theme-orange" />;
+      }
+    }
+    const {studentStatus} = assignment;
     if (this.props.classroom) {
       let { length } = this.props.classroom.students;
       if (length !== studentStatus.length) {
-        return <SpriteIcon name="reminder" className="active reminder-icon" />;
+        return <SpriteIcon name="reminder" className="active reminder-icon" onClick={this.sendNotifications.bind(this)} />;
       }
     }
-    return '';
+    return <SpriteIcon name="reminder" className="active reminder-icon finished" />;
   }
 
   render() {
@@ -103,7 +116,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
           </div>
         </div>
         <div className="reminder-container">
-          {this.renderStatus(assignment.studentStatus)}
+          {this.renderStatus(assignment)}
         </div>
         <div className="assignment-second-part">
           <div className="users-complete-count">
@@ -116,10 +129,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
         </div>
         <div className="teach-brick-actions-container">
           <div className="archive-button-container">
-            <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#archive"} className="text-gray" />
-            </svg>
+            <SpriteIcon name="archive" className="text-gray" />
           </div>
         </div>
       </div>
