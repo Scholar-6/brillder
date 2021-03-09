@@ -70,7 +70,6 @@ export default class ImageUpload {
     }
 
     uploadHandler(toolbarNode: any) {
-        console.log(toolbarNode);
         if(!toolbarNode) return;
         let fileInput = toolbarNode.querySelector("input.ql-image[type=file]");
         if (fileInput === null) {

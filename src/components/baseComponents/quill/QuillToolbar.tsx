@@ -43,7 +43,6 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         if(!props.quill) return;
         if(format === "image") {
             const imageUpload = props.quill.getModule("imageupload") as ImageUpload
-            console.log(toolbarNode.current)
             imageUpload.uploadHandler(toolbarNode.current);
             return true;
         }
