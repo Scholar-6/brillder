@@ -125,15 +125,14 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
       {!props.buttonsInvisible &&
         <div className="classroom-btns-container">
           <div className="assign-button-container">
-            <div className="btn" onClick={() => togglePopup(true)}>
-              Assign a new brick
-              <SpriteIcon name="file-plus" />
+            <div className="btn icon-button" onClick={() => setInvite(true)}>
+              <SpriteIcon name="user-plus" />
             </div>
           </div>
           <div className="assign-button-container">
-            <div className="btn" onClick={() => setInvite(true)}>
-              Add New Student
-              <SpriteIcon name="user-plus" />
+            <div className="btn" onClick={() => togglePopup(true)}>
+              Assign a new brick
+              <SpriteIcon name="file-plus" />
             </div>
           </div>
         </div>}

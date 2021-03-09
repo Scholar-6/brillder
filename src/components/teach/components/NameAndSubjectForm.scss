@@ -11,7 +11,6 @@
 
   height: 100%;
   padding-left: 0.7vw;
-  padding-top: 2.5vh;
 }
 
 .name-subject-form {
@@ -82,7 +81,7 @@
     font-size: 1.5vw;
     font-family: $font-family-regular;
     text-transform: capitalize;
-    max-width: 14vw;
+    max-width: 25vw;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -93,8 +92,20 @@
     cursor: pointer;
     width: 1.7vw;
     height: 1.7vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.6vw;
+    height: 2.6vw;
+    background: var(--white);
     color: var(--theme-dark-blue) !important;
     margin-left: 1vw;
+    border-radius: 0.6vw;
+
+    .svg {
+      width: 1.8vw !important;
+      height: 1.8vw !important;
+    }
 
     &:hover {
       color: var(--theme-orange) !important;
@@ -112,10 +123,10 @@
       align-items: center;
       padding-left: 1vw;
       padding-right: 1vw;
-      background: var(--tab-gray);
+      height: 2.6vw;
+      background: var(--white);
       color: var(--theme-dark-blue);
       letter-spacing: 0;
-
 
       .svg {
         fill: var(--white);
@@ -131,8 +142,12 @@
         .svg {
           color: var(--white);
         }
+      }      
+    }
+    .icon-button {
+      .svg {
+        margin: 0;
       }
-
     }
   }
 }
