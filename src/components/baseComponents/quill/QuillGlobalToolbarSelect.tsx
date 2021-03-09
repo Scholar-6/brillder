@@ -23,14 +23,14 @@ const QuillGlobalToolbarSelect: React.FC<QuillGlobalToolbarSelectProps> = props 
     return (
         <span
             
-            className={`ql-picker ql-${props.name}${expanded ? " ql-expanded" : ""}${props.enabled ? "" : " disabled"}`}
+            className={`picker q-${props.name}${expanded ? " ql-expanded" : ""}${props.enabled ? "" : " disabled"}`}
             // onClick={() => props.handler(props.name, "") ?? false}
             onClick={() => props.enabled && setExpanded(e => !e)}
         >
-            <span className="ql-picker-label">
+            <span className="picker-label">
                 <SpriteIcon name={"ql-" + props.name} />
             </span>
-            <span id={`ql-picker-options-${uniqueId}`} className="ql-picker-options">
+            <span id={`picker-options-${uniqueId}`} className="picker-options">
                 { props.children && React.Children.map(props.children as any, getItem) }
             </span>
         </span>

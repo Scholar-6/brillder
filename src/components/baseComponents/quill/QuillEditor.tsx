@@ -1,6 +1,6 @@
 import { Delta, Sources } from "quill";
 import React from "react";
-import ReactQuill from "react-quill"; 
+import ReactQuill, { Quill } from "react-quill"; 
 import { QuillBinding } from "y-quill";
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
@@ -17,6 +17,7 @@ import { YJSContext } from "components/build/baseComponents/YJSProvider";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import ImageUpload from "./QuillImageUpload";
 import { QuillEditorContext } from "./QuillEditorContext";
+import QuillToolbar from "./QuillToolbar";
 
 function randomEditorId() {
      return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -58,6 +59,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
 
     const [uniqueId] = React.useState(randomEditorId());
     const [data, setData] = React.useState(props.data);
+    const [quill, setQuill] = React.useState<Quill | null>(null);
 
     const [imageDialogFile, setImageDialogFile] = React.useState<File>();
     const [imageModule, setImageModule] = React.useState<ImageUpload>();
@@ -110,6 +112,9 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
             const editor = node.getEditor();
             new QuillBinding(props.sharedData, editor, awareness);
             setImageModule(editor.getModule("imageupload") as ImageUpload);
+            if(quill !== editor) {
+                setQuill(editor);
+            }
         }
     }, []);
 
@@ -120,16 +125,22 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
     return (
         <div className={`quill-document-editor${valid ? "" : " content-invalid"} quill-id-${uniqueId} ${props.className ?? ""}`}>
             {(props.showToolbar ?? false) &&
-                <div className={`ql-toolbar quill-${uniqueId}`}>
-                {
-                    props.toolbar.length > 0 &&
-                    <div className="ql-formats">
-                    {props.toolbar.map((item) => (
-                        <React.Fragment key={item}>{ toolbarItems[item] }</React.Fragment>
-                    ))}
-                    </div>
-                }
-                </div>
+                // <div className={`ql-toolbar quill-${uniqueId}`}>
+                // {
+                //     props.toolbar.length > 0 &&
+                //     <div className="ql-formats">
+                //     {props.toolbar.map((item) => (
+                //         <React.Fragment key={item}>{ toolbarItems[item] }</React.Fragment>
+                //     ))}
+                //     </div>
+                // }
+                // </div>
+                <QuillToolbar
+                    quill={quill}
+                    quillId={uniqueId}
+                    toolbar={props.toolbar}
+                    enabled={props.toolbar}
+                />
             }
             <ReactQuill
                 theme="snow"

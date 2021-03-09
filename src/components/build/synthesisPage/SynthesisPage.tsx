@@ -114,15 +114,16 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
         <div className="inner-question-type" ref={this.state.ref}>
           <Grid container direction="row" alignItems="stretch">
             <Grid item xs className="synthesis-input-container">
-              <QuillGlobalToolbar
+              {/* <QuillGlobalToolbar
                 availableOptions={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
                   'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
                 ]}
-              />
+              /> */}
               <QuillEditor
                 disabled={this.props.locked}
                 sharedData={this.props.synthesis}
+                showToolbar={true}
                 toolbar={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
                   'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'

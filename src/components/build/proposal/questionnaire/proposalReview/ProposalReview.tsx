@@ -229,6 +229,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         <QuillEditor
           disabled={!this.props.canEdit}
           sharedData={brick.get(name)}
+          showToolbar={true}
           toolbar={[
             'bold', 'italic', 'latex'
           ]}
@@ -249,6 +250,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         <QuillEditor
           disabled={!this.props.canEdit}
           sharedData={brick.get(name)}
+          showToolbar={true}
           allowLinks={true}
           toolbar={[
             'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList'
@@ -270,6 +272,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         <QuillEditor
           disabled={!this.props.canEdit}
           sharedData={brick.get("prep")}
+          showToolbar={true}
           allowMediaEmbed={true}
           allowLinks={true}
           toolbar={[

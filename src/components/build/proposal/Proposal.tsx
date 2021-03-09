@@ -32,6 +32,7 @@ import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { YJSContext } from "../baseComponents/YJSProvider";
 import { toRenderJSON } from "services/SharedTypeService";
+import { QuillEditorContext } from "components/baseComponents/quill/QuillEditorContext";
 
 interface ProposalProps {
   history: History;
