@@ -6,6 +6,8 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
+import { InputBase, ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
+
 
 import './AssignBrickClass.scss';
 import actions from 'redux/actions/requestFailed';
@@ -43,7 +45,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
     }
   }
 
-  useEffect(() => {loadBricks()}, []);
+  useEffect(() => { loadBricks() }, []);
 
   const assignToClasses = async (classesIds: Number[]) => {
     if (!brick || !brick.id) {
@@ -79,11 +81,27 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
           freeSolo
           value={brick}
           options={bricks}
-          onChange={(e:any, v: any) => setBrick(v)}
-          getOptionLabel={(option:any) => option.title}
+          onChange={(e: any, v: any) => setBrick(v)}
           noOptionsText="Sorry, try typing something else"
           className="subject-autocomplete"
-          renderInput={(params:any) => (
+          getOptionLabel={(option:any) => option.title}
+          renderOption={(brick: Brick) => (
+            <React.Fragment>
+              <MenuItem>
+                <ListItemIcon>
+                  <SvgIcon>
+                    <SpriteIcon
+                      name="circle-filled"
+                      className="w100 h100 active"
+                      style={{ color: brick.subject?.color || '' }}
+                    />
+                  </SvgIcon>
+                </ListItemIcon>
+                <ListItemText>{brick.title}</ListItemText>
+              </MenuItem>
+            </React.Fragment>
+          )}
+          renderInput={(params: any) => (
             <TextField
               {...params}
               variant="standard"
@@ -93,25 +111,29 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
           )}
         />
         {brick ?
-        <div>
-        <div className="r-popup-title bold">When is it due?</div>
-        <div className="r-radio-buttons">
-          <FormControlLabel
-            checked={haveDeadline === false}
-            control={<Radio onClick={() => toggleDeadline(false)}/>}
-            label="No deadline"
-          />
-          <FormControlLabel
-            checked={haveDeadline === true}
-            control={<Radio onClick={() => toggleDeadline(true)}/>}
-            label="Set date"
-          />
-          {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
-        </div>
-        </div> :
-        <div>
-          Prefer to browse our public catalogue? Click the
-          <SpriteIcon name="glasses" className="glasses" onClick={() => history.push(map.ViewAllPage + '?subjectId=' + props.subjectId)} /> to explore
+          <div>
+            <div className="r-popup-title bold">When is it due?</div>
+            <div className="r-radio-buttons">
+              <FormControlLabel
+                checked={haveDeadline === false}
+                control={<Radio onClick={() => toggleDeadline(false)} />}
+                label="No deadline"
+              />
+              <FormControlLabel
+                checked={haveDeadline === true}
+                control={<Radio onClick={() => toggleDeadline(true)} />}
+                label="Set date"
+              />
+              {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
+            </div>
+          </div> :
+          <div>
+            <p>Prefer to browse our public catalogue?</p>
+            <p>
+              Click the
+              <SpriteIcon name="glasses" className="glasses" onClick={() => history.push(map.ViewAllPage + '?subjectId=' + props.subjectId)} />
+              to explore
+            </p>
           </div>}
         <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
           <button className={brick ? "btn btn-md bg-theme-orange yes-button icon-button" : "btn btn-md b-dark-blue text-theme-light-blue yes-button icon-button"} onClick={assign} style={{ width: 'auto' }}>

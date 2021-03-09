@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
-import sprite from "assets/img/icons-sprite.svg";
-import { TeachClassroom, Assignment, StudentStatus } from "model/classroom";
+import { TeachClassroom, Assignment } from "model/classroom";
 import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
@@ -13,12 +12,24 @@ interface AssignedDescriptionProps {
   classroom?: TeachClassroom;
   assignment: Assignment;
   isExpanded?: boolean;
+  isStudentAssignment?: boolean;
   move?(): void;
   expand?(classroomId: number, assignmentId: number): void;
   minimize?(): void;
 }
 
-class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
+interface State {
+  archiveHovered: boolean;
+}
+
+class AssignedBrickDescription extends Component<AssignedDescriptionProps, State> {
+  constructor(props: AssignedDescriptionProps) {
+    super(props);
+
+    this.state = {
+      archiveHovered: false
+    }
+  }
 
   sendNotifications() {
     //#2888 this should send notifications to students.
@@ -72,8 +83,60 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
       if (length !== studentStatus.length) {
         return <SpriteIcon name="reminder" className="active reminder-icon" onClick={this.sendNotifications.bind(this)} />;
       }
+    } else {
+      // if assignment
+      console.log(assignment);
     }
     return <SpriteIcon name="reminder" className="active reminder-icon finished" />;
+  }
+
+  getTotalStudentsCount() {
+    const {classroom} = this.props;
+    let studentsCount = 0;
+    if (classroom) {
+      studentsCount = classroom.students.length;
+    }
+    return studentsCount;
+  }
+
+  isCompleted() {
+    const {assignment} = this.props;
+    if (assignment.deadline) {
+      let endTime = new Date(assignment.deadline).getTime();
+      let nowTime = new Date().getTime();
+      if (endTime < nowTime) {
+        return true;
+      }
+    }
+    const {studentStatus} = assignment;
+    if (this.props.classroom) {
+      let { length } = this.props.classroom.students;
+      if (length !== studentStatus.length) {
+        return false;
+      }
+    } else {
+      // if assignment
+
+    }
+    return true;
+  }
+
+  getCompleteStudents() {
+    const { byStatus } = this.props.assignment;
+    let studentsCompleted = 0;
+    if (byStatus) {
+      studentsCompleted = byStatus[1] ? byStatus[1].count : 0;
+    }
+    return studentsCompleted;
+  }
+
+  getAverageScore() {
+    const { byStatus } = this.props.assignment;
+    let average = '—';
+    if (byStatus) {
+      average = byStatus[1] ? Math.round(byStatus[1].avgScore).toString() : '—';
+    }
+    return average;
   }
 
   render() {
@@ -84,20 +147,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
       color = "#B0B0AD";
     }
 
-    let { assignment, classroom } = this.props;
-    const { brick, byStatus } = assignment;
+    let { assignment } = this.props;
+    const { brick } = assignment;
     let className = "assigned-brick-description";
-    let studentsCount = 0;
-    if (classroom) {
-      studentsCount = classroom.students.length;
-    }
-
-    let second = 0;
-    let average = 0;
-    if (byStatus) {
-      second = byStatus[1] ? byStatus[1].count : 0;
-      average = byStatus[1] ? Math.round(byStatus[1].avgScore) : 0;
-    }
 
     return (
       <div className={className} style={{ display: 'flex' }}>
@@ -119,17 +171,24 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
           {this.renderStatus(assignment)}
         </div>
         <div className="assignment-second-part">
-          <div className="users-complete-count">
-            <span>{second}/{studentsCount}</span>
-            <SpriteIcon name="users" className="text-theme-dark-blue" />
-          </div>
+          {!this.props.isStudentAssignment &&
+            <div className="users-complete-count">
+              <span>{this.getCompleteStudents()}/{this.getTotalStudentsCount()}</span>
+              <SpriteIcon name="users" className="text-theme-dark-blue" />
+            </div>}
           <div className="average">
-            Avg: {average}
+            Avg: {this.getAverageScore()}
           </div>
         </div>
-        <div className="teach-brick-actions-container">
+        <div className={`teach-brick-actions-container ${this.isCompleted() ? 'completed' : ''}`}>
           <div className="archive-button-container">
+            <div className="green-hover">
+              <div />
+            </div>
             <SpriteIcon name="archive" className="text-gray" />
+          </div>
+          <div className="css-custom-tooltip">
+            Archive brick
           </div>
         </div>
       </div>
