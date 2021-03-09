@@ -6,6 +6,7 @@ import { TeachClassroom, TeachStudent } from "model/classroom";
 import { TeachFilters } from '../../model';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import EmptyFilter from "../filter/EmptyFilter";
+import RadioButton from "components/baseComponents/buttons/RadioButton";
 
 enum TeachFilterFields {
   Assigned = 'assigned',
@@ -115,6 +116,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
       <div key={i} className="classes-box">
         <div className={"index-box " + (c.active ? "active" : "")} onClick={() => this.toggleClassroom(c)}>
           <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
+            <RadioButton checked={c.active} color={c.subject.color} name={c.subject.name} />
             <span>{c.name}</span>
             {
               c.active &&
