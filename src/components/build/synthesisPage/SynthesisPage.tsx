@@ -15,6 +15,8 @@ import RedoButton from '../baseComponents/redoButton';
 import UndoButton from '../baseComponents/UndoButton';
 import CountSynthesis from './WordsCount';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import QuillGlobalToolbar from 'components/baseComponents/quill/QuillGlobalToolbar';
+import { QuillEditorContext } from 'components/baseComponents/quill/QuillEditorContext';
 
 
 export interface SynthesisProps {
@@ -32,6 +34,7 @@ interface SynthesisState {
   scrollArea: any;
   canScroll: boolean;
   ref: React.RefObject<HTMLDivElement>;
+  currentEditorId: string;
   commentsShown: boolean;
 }
 
@@ -42,6 +45,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
       canScroll: false,
       scrollArea: null,
       ref: React.createRef() as React.RefObject<HTMLDivElement>,
+      currentEditorId: "",
       commentsShown: props.initSuggestionExpanded
     }
   }
@@ -98,6 +102,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
     const {canScroll} = this.state;
 
     return (
+    <QuillEditorContext.Provider value={[this.state.currentEditorId, (editorId: string) => this.setState(state => ({ ...state, currentEditorId: editorId }))]}>
       <div className="question-type synthesis-page">
         <div className="top-scroll-area">
           <div className="top-button-container">
@@ -109,9 +114,16 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
         <div className="inner-question-type" ref={this.state.ref}>
           <Grid container direction="row" alignItems="stretch">
             <Grid item xs className="synthesis-input-container">
+              {/* <QuillGlobalToolbar
+                availableOptions={[
+                  'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
+                  'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
+                ]}
+              /> */}
               <QuillEditor
                 disabled={this.props.locked}
                 sharedData={this.props.synthesis}
+                showToolbar={true}
                 toolbar={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
                   'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
@@ -161,6 +173,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
           </div>
         </div>
       </div>
+    </QuillEditorContext.Provider>
     );
   }
 }

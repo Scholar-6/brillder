@@ -64,12 +64,14 @@ export default class ImageUpload {
         this.quill = quill;
         this.openDialog = options.openDialog;
         const toolbar = quill.getModule("toolbar");
-        toolbar.addHandler("image", this.uploadHandler.bind(this));
+        if(toolbar) {
+            toolbar.addHandler("image", this.uploadHandler.bind(this, toolbar.container));
+        }
     }
 
-    uploadHandler() {
-        const toolbar = this.quill.getModule("toolbar");
-        let fileInput = toolbar.container.querySelector("input.ql-image[type=file]");
+    uploadHandler(toolbarNode: any) {
+        if(!toolbarNode) return;
+        let fileInput = toolbarNode.querySelector("input.ql-image[type=file]");
         if (fileInput === null) {
             fileInput = document.createElement("input");
             fileInput.setAttribute("type", "file");
@@ -80,7 +82,7 @@ export default class ImageUpload {
                     this.imageSelected(Array.from(fileInput.files));
                 }
             });
-            toolbar.container.appendChild(fileInput);
+            toolbarNode.appendChild(fileInput);
         }
         fileInput.click();
     }

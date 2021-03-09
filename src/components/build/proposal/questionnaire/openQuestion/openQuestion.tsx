@@ -57,6 +57,7 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           <QuillEditor
             disabled={!props.canEdit}
             sharedData={selectedQuestion}
+            showToolbar={true}
             toolbar={[
               'bold', 'italic', 'latex'
             ]}

@@ -52,6 +52,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, ...props }
           <QuillEditor
             disabled={!canEdit}
             sharedData={parentBrief}
+            showToolbar={true}
             allowLinks={true}
             toolbar={[
               'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList'

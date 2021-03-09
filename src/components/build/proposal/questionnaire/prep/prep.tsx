@@ -79,6 +79,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, ...props }) => {
           <QuillEditor
             disabled={!props.canEdit}
             sharedData={parentPrep}
+            showToolbar={true}
             allowMediaEmbed={true}
             allowLinks={true}
             toolbar={[
