@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
-import sprite from "assets/img/icons-sprite.svg";
-import { TeachClassroom, Assignment, StudentStatus } from "model/classroom";
+import { TeachClassroom, Assignment } from "model/classroom";
 import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
@@ -19,7 +18,18 @@ interface AssignedDescriptionProps {
   minimize?(): void;
 }
 
-class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
+interface State {
+  archiveHovered: boolean;
+}
+
+class AssignedBrickDescription extends Component<AssignedDescriptionProps, State> {
+  constructor(props: AssignedDescriptionProps) {
+    super(props);
+
+    this.state = {
+      archiveHovered: false
+    }
+  }
 
   sendNotifications() {
     //#2888 this should send notifications to students.
@@ -86,6 +96,25 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     return studentsCount;
   }
 
+  isCompleted() {
+    const {assignment} = this.props;
+    if (assignment.deadline) {
+      let endTime = new Date(assignment.deadline).getTime();
+      let nowTime = new Date().getTime();
+      if (endTime < nowTime) {
+        return true;
+      }
+    }
+    const {studentStatus} = assignment;
+    if (this.props.classroom) {
+      let { length } = this.props.classroom.students;
+      if (length !== studentStatus.length) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   getCompleteStudents() {
     const { byStatus } = this.props.assignment;
     let studentsCompleted = 0;
@@ -113,7 +142,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     }
 
     let { assignment } = this.props;
-    const { brick, byStatus } = assignment;
+    const { brick } = assignment;
     let className = "assigned-brick-description";
 
     return (
@@ -145,9 +174,15 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             Avg: {this.getAverageScore()}
           </div>
         </div>
-        <div className="teach-brick-actions-container">
+        <div className={`teach-brick-actions-container ${this.isCompleted() ? 'completed' : ''}`}>
           <div className="archive-button-container">
+            <div className="green-hover">
+              <div />
+            </div>
             <SpriteIcon name="archive" className="text-gray" />
+          </div>
+          <div className="css-custom-tooltip">
+            Archive brick
           </div>
         </div>
       </div>
