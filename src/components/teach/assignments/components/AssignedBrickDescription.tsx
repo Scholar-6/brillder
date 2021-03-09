@@ -58,7 +58,15 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     );
   }
 
-  renderStatus(studentStatus: StudentStatus[]) {
+  renderStatus(assignment: Assignment) {
+    if (assignment.deadline) {
+      let endTime = new Date(assignment.deadline).getTime();
+      let nowTime = new Date().getTime();
+      if (endTime < nowTime) {
+        return <SpriteIcon name="reminder" className="active reminder-icon bg-theme-orange" />;
+      }
+    }
+    const {studentStatus} = assignment;
     if (this.props.classroom) {
       let { length } = this.props.classroom.students;
       if (length !== studentStatus.length) {
@@ -108,7 +116,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
           </div>
         </div>
         <div className="reminder-container">
-          {this.renderStatus(assignment.studentStatus)}
+          {this.renderStatus(assignment)}
         </div>
         <div className="assignment-second-part">
           <div className="users-complete-count">
