@@ -19,6 +19,11 @@ interface AssignedDescriptionProps {
 }
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
+
+  sendNotifications() {
+    //#2888 this should send notifications to students.
+  }
+
   renderVertical(assignmentId: number, color: string) {
     const { isExpanded } = this.props;
     return (
@@ -57,7 +62,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     if (this.props.classroom) {
       let { length } = this.props.classroom.students;
       if (length !== studentStatus.length) {
-        return <SpriteIcon name="reminder" className="active reminder-icon" />;
+        return <SpriteIcon name="reminder" className="active reminder-icon" onClick={this.sendNotifications.bind(this)} />;
       }
     }
     return <SpriteIcon name="reminder" className="active reminder-icon finished" />;
