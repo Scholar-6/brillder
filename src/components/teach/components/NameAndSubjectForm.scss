@@ -12,7 +12,7 @@
   height: 100%;
   padding-left: 0.7vw;
 }
-
+ 
 
 .name-subject-form {
   .MuiOutlinedInput-input {
@@ -98,7 +98,7 @@
     justify-content: center;
     width: 2.6vw;
     height: 2.6vw;
-    background: var(--white);
+    background: var(--off-white);
     color: var(--theme-dark-blue) !important;
     margin-left: 1vw;
     border-radius: 0.6vw;
@@ -120,17 +120,18 @@
     margin-left: 1vw;
     .btn {
       cursor: pointer;
+      font-family: $font-family-regular;
       display: flex;
       align-items: center;
       padding-left: 1vw;
       padding-right: 1vw;
       height: 2.6vw;
-      background: var(--white);
+      background: var(--off-white);
       color: var(--theme-dark-blue);
       letter-spacing: 0;
 
       .svg {
-        fill: var(--white);
+        fill: var(--off-white);
         margin-left: 0.5vw;
         color: var(--theme-dark-blue);
         width: 1.8vw;
@@ -138,10 +139,10 @@
         stroke-width: 2;
       }
       &:hover {
-        color: var(--white);
+        color: var(--off-white);
         background: var(--theme-orange);
         .svg {
-          color: var(--white);
+          color: var(--off-white);
         }
       }      
     }
