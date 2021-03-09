@@ -168,17 +168,76 @@
   .teach-brick-actions-container {
     @extend %flexCenter;
     width: 3vw;
-  }
-  .archive-button-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3vw;
-    height: 3vw;
-    border-radius: 50%;
-    .svg {
-      width: 2.1vw;
-      height: 2.1vw;
+    position: relative;
+    .archive-button-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3vw;
+      height: 3vw;
+      border-radius: 50%;
+      .svg {
+        position: absolute;
+        top: 0.4vw;
+        left: 0.4vw;
+        width: 2.1vw;
+        height: 2.1vw;
+      }
+    }
+    
+    &.completed {
+      .archive-button-container {
+        cursor: pointer;
+        background: var(--theme-green);
+        .svg {
+          color: var(--white) !important;
+        }
+      }
+    }
+    &.completed {
+      .green-hover {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+  
+        > div {
+          transition: all 300ms ease-out;
+          width: 3vw;
+          height: 3vw;
+          border-radius: 50%;
+          background: var(--theme-green-alpha3);
+        }
+      }
+    }
+    &.completed:hover {
+      .green-hover {
+        > div {
+          width: 4vw;
+          height: 4vw;
+        }
+      }
+    }
+    // tooltip
+    .css-custom-tooltip {
+      position: absolute;
+      bottom: -1.25vw;
+      left: -1.5vw;
+      width: 6.4vw !important;
+      opacity: 0;
+      font-size: 1.05vw;
+      transition: all 300ms ease-out;
+      border-radius: 0.5vw;
+      color: var(--theme-dark-blue);
+      background: var(--tab-gray);
+      padding-left: 0.5vw;
+      display: block;
+      position: absolute;
+    }
+    &.completed:hover {
+      .css-custom-tooltip {
+        opacity: 1;
+      }
     }
   }
 }
