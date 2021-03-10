@@ -190,7 +190,7 @@ const QuestionComponents = ({
   }
 
   const onUpdateComponent = (evt: Sortable.SortableEvent) => {
-    if((evt.oldIndex ?? -1 >= 0) && (evt.newIndex ?? -1 >= 0)) {
+    if(((evt.oldIndex ?? -1) >= 0) && ((evt.newIndex ?? -1) >= 0)) {
       console.log(evt);
       components.doc?.transact(() => {
         const component = components.get(evt.oldIndex!).clone() as Y.Map<any>;
