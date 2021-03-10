@@ -7,6 +7,7 @@ import QuillGlobalToolbarSelect from './QuillGlobalToolbarSelect';
 import ImageUpload from './QuillImageUpload';
 
 interface QuillToolbarProps {
+    className?: string;
     quill: Quill | null;
     quillId?: string;
     toolbar: string[];
@@ -71,7 +72,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
     }), []);
 
     return (
-        <div className={`ql-custom-toolbar${props.quillId ? ` quill-${props.quillId}` : ""}`}>
+        <div className={`ql-custom-toolbar${props.quillId ? ` quill-${props.quillId}` : ""} ${props.className}`}>
             <div className="formats" ref={toolbarNode}>
                 {props.toolbar.map(option => {
                     const Item = toolbarItems[option]

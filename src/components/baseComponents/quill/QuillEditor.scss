@@ -7,6 +7,14 @@
   border-radius: $editor-radius;
   background-color: var(--tab-gray) !important;
   padding: 1vh 0.5vw !important;
+  &.ql-global-toolbar {
+    position: fixed;
+    transform: translateX(0);
+    height: 4vh;
+    top: 0.2vw;
+    left: 0.2vw;
+    right: 0.2vw;
+  }
   .formats {
     background-color: var(--tab-gray) !important;
     font-size: 16px;

@@ -37,6 +37,7 @@ const QuillGlobalToolbar: React.FC<QuillGlobalToolbarProps> = props => {
 
     return (
         <QuillToolbar
+            className="ql-global-toolbar"
             quill={quill}
             toolbar={props.availableOptions}
             enabled={enabled}
