@@ -32,8 +32,7 @@
   &.btn {
     color: var(--white);
     &:hover {
-      color: var(--theme-orange) !important;
-      background: var(--white) !important;
+      background: var(--theme-light-blue) !important;
     }
   }
 }
