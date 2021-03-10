@@ -1,20 +1,10 @@
 import React from 'react';
 import { Quill } from 'react-quill';
 import QuillGlobalToolbarButton from './QuillGlobalToolbarButton';
-import { QuillEditorContext } from './QuillEditorContext';
 import { RangeStatic } from 'quill';
 import _ from 'lodash';
 import QuillGlobalToolbarSelect from './QuillGlobalToolbarSelect';
 import ImageUpload from './QuillImageUpload';
-
-const getReactPropsByNode = (node: any) => {
-    for(const key in node) {
-        if(key.startsWith("__reactInternalInstance$")) {
-            return node[key]._debugOwner.memoizedProps;
-        }
-    }
-    return null;
-}
 
 interface QuillToolbarProps {
     quill: Quill | null;
