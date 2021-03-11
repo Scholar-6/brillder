@@ -64,6 +64,7 @@ interface SidebarState {
   isLinkOpen: boolean;
   linkCopiedOpen: boolean;
   inviteOpen: boolean;
+  isAdapting: boolean;
   inviteResult: InviteResult;
   selectedItems: any[];
   failedItems: any[];
@@ -73,6 +74,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   constructor(props: SidebarProps) {
     super(props);
     this.state = {
+      isAdapting: false,
       isAdaptBrickOpen: false,
       isCoomingSoonOpen: false,
       isAssigningOpen: false,
@@ -146,6 +148,11 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   async createBrickCopy() {
+    // prevent multiple clicking
+    if (this.state.isAdapting) {
+      return;
+    }
+    this.setState({isAdapting: true});
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/adapt/${this.props.brick.id}`,
       {},
@@ -155,10 +162,11 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     await this.props.fetchBrick(copyBrick.id);
     if (copyBrick) {
-      this.props.history.push(map.ProposalReview + '?bookHovered=true&copied=true');
+      this.props.history.push(`/build/brick/${copyBrick.id}/plan?bookHovered=true&copied=true`);
     } else {
       console.log('can`t copy');
     }
+    this.setState({isAdapting: false})
   }
 
   onAdaptDialog() {

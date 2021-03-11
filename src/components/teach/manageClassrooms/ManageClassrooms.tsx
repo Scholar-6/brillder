@@ -554,7 +554,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     const { activeClassroom } = this.state;
     let { users } = this.state;
 
-    if (this.state.isLoaded && users.length === 0 && this.state.classrooms.length === 0) {
+    if (this.state.isLoaded && users.length === 0) {
       return (
         <div className="tab-content">
           <div className="tab-content-centered">

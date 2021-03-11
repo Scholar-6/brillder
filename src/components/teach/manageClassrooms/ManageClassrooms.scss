@@ -215,9 +215,26 @@
   .radio-checked {
     color: var(--white) !important;
     fill: var(--white) !important;
+    width: 1.25vw;
+    height: 1.25vw;
   }
   .index-box.active .remove-class:hover {
     color: var(--theme-dark-blue) !important;
+  }
+  .filter-class-name {
+    max-width: 11.5vw;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+  }
+  .student-row {
+    .student-name {
+      max-width: 100%;
+      font-size: 1.05vw;
+      white-space: nowrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
 
