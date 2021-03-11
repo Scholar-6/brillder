@@ -19,7 +19,6 @@ import { getNonEmptyComponent } from "../../questionService/ValidateQuestionServ
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import FixedTextComponent from "../components/Text/FixedText";
 import * as Y from "yjs";
-import _ from "lodash";
 import DeleteComponentDialog from "./deleteComponentDialog";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import { generateId } from "../questionTypes/service/questionBuild";
