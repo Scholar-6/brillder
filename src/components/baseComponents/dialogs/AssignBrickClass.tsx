@@ -6,7 +6,7 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { InputBase, ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
+import { ListItemIcon, ListItemText, MenuItem, SvgIcon } from '@material-ui/core';
 
 
 import './AssignBrickClass.scss';
@@ -74,7 +74,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   }
 
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog assign-dialog-new">
       <div className="dialog-header">
         <div className="r-popup-title bold">Already know what you're looking for?</div>
         <Autocomplete
@@ -129,11 +129,29 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
           </div> :
           <div>
             <p>Prefer to browse our public catalogue?</p>
-            <p>
+            <div className="text-with-glasses">
               Click the
-              <SpriteIcon name="glasses" className="glasses" onClick={() => history.push(map.ViewAllPage + '?subjectId=' + props.subjectId)} />
+              <div className="glasses">
+                <div className="eye-glass-icon" onClick={() => history.push(map.ViewAllPage + '?subjectId=' + props.subjectId)} >
+                  <div className="eye-glass-frame svgOnHover">
+                    <SpriteIcon name="glasses-home" className="active text-theme-orange" />
+                  </div>
+                  <div className="glass-eyes-left svgOnHover">
+                    <SpriteIcon name="eye-ball" className="active eye-ball text-white" />
+                    <div className="glass-left-inside">
+                      <SpriteIcon name="eye-pupil" className="active eye-pupil text-theme-dark-blue" />
+                    </div>
+                  </div>
+                  <div className="glass-eyes-right svgOnHover">
+                    <SpriteIcon name="eye-ball" className="active eye-ball text-white" />
+                    <div className="glass-right-inside">
+                      <SpriteIcon name="eye-pupil" className="active eye-pupil text-theme-dark-blue" />
+                    </div>
+                  </div>
+                </div>
+              </div>
               to explore
-            </p>
+            </div>
           </div>}
         <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
           <button className={brick ? "btn btn-md bg-theme-orange yes-button icon-button" : "btn btn-md b-dark-blue text-theme-light-blue yes-button icon-button"} onClick={assign} style={{ width: 'auto' }}>
