@@ -442,6 +442,25 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     );
   }
 
+  formatDate(date: string) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+  renderDate(stringDate: string) {
+    if (!stringDate) { return '—'; }
+    return <div>{this.formatDate(stringDate)}</div>;
+  }
+
   renderUsers() {
     if (!this.state.users) {
       return "";
@@ -454,7 +473,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             {this.state.users.map((user: any, i: number) => {
               return (
                 <tr className="user-row" key={i}>
-                  <td></td>
+                  <td className="joing-date">
+                    {this.renderDate(user.created)}
+                  </td>
                   <td>
                     <span className="user-first-name">{user.firstName} </span>
                     <span className="user-last-name">{user.lastName}</span>
