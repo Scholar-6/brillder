@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .prep-page-questionary {
   .left-block {
@@ -25,6 +25,9 @@
       margin-left: 0vw;
       stroke-width: 1;
       height: 15vw;
+    }
+    .image-caption {
+      color: var(--text-white);
     }
   }
   .typing-text {
