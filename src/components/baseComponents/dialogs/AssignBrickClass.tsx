@@ -6,7 +6,7 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { InputBase, ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
+import { ListItemIcon, ListItemText, MenuItem, SvgIcon } from '@material-ui/core';
 
 
 import './AssignBrickClass.scss';
