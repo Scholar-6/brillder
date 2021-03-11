@@ -53,15 +53,6 @@
       margin-bottom: 1vh;
       height: calc(calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35 - 2vh);
     }
-
-    .upper-line {
-      $line-height: 0.4vh;
-      width: 100%;
-      margin-left: -0.6vw;
-      border-radius: $line-height;
-      height: $line-height;
-      background: var(--tab-gray);
-    }
   }
   .sort-box {
     width: 100%;
