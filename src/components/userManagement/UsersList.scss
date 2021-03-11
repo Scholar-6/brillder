@@ -67,8 +67,11 @@
               }
 
               .subject-title {
-                padding-left: 1vw;
-                width: 5%;
+                padding-left: 0.8vw;
+                width: 11.5%;
+                .sort-button {
+                  margin-left: 0;
+                }
               }
               .user-full-name {
                 width: 30%;
@@ -135,6 +138,9 @@
     position: absolute;
     bottom: 0;
     width: 100%;
+  }
+  .joing-date {
+    padding-left: 1.2vw !important;
   }
 }
 

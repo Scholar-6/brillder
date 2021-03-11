@@ -130,3 +130,21 @@
     }
   }
 }
+
+// tooltip
+.css-custom-tooltip {
+  position: absolute;
+  opacity: 0;
+  font-size: 1.05vw;
+  transition: all 300ms ease-out;
+  border-radius: 0.5vw;
+  color: var(--theme-dark-blue);
+  background: var(--tab-gray);
+  padding-left: 0.5vw;
+  display: block;
+  position: absolute;
+}
+
+.short-brick-info {
+  width: calc(100% - 4.4vw);
+}

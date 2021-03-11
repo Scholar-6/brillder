@@ -20,10 +20,8 @@
 
   .index-box {
     @extend %flexToYCenter;
-    // padding-top: 0 !important;
-    // padding-bottom: 0 !important;
     height: 4.7vh !important;
-    font-size: 2vh !important;
+    font-size: 1.05vw !important;
     font-family: $font-family-regular;
   }
   .white-box {
@@ -46,22 +44,14 @@
     text-transform: capitalize;
     > div {
       width: 100%;
-      line-height: 1.8;
-      padding-left: 1.6vw;
+      height: 100%;
+      background: var(--tab-gray);
+      padding-left: 1.55vw;
     }
     &.one-of-many {
       margin-top: 1vh;
-      height: calc(calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35);
-      margin-left: 0.6vw;
-    }
-
-    .upper-line {
-      $line-height: 0.4vh;
-      width: 100%;
-      margin-left: -0.6vw;
-      border-radius: $line-height;
-      height: $line-height;
-      background: var(--tab-gray);
+      margin-bottom: 1vh;
+      height: calc(calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35 - 2vh);
     }
   }
   .sort-box {

@@ -58,7 +58,6 @@ class ClassroomList extends Component<ClassroomListProps> {
       >
         <div className={className}>
           <div>
-          {c.notFirst && <div className="upper-line"/>}
           <NameAndSubjectForm
             classroom={classroom}
             onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}

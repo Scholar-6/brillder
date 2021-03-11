@@ -27,6 +27,10 @@ export const getGeneralSubject = (subjects: Subject[]) => {
 export const getSubjectColor = (subjects: Subject[], subjectId: number) => {
   for (const s of subjects) {
     if (s.id === subjectId) {
+      if (s.name === GENERAL_SUBJECT) {
+        return '#001c58';
+      }
+    
       return s.color;
     }
   }

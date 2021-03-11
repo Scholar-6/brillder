@@ -32,8 +32,32 @@
   &.btn {
     color: var(--white);
     &:hover {
-      color: var(--theme-orange) !important;
-      background: var(--white) !important;
+      background: var(--theme-light-blue) !important;
+    }
+  }
+}
+
+.dialog-box {
+  .bg-theme-orange {
+    background-color: var(--theme-orange) !important;
+    &.btn {
+      color: var(--white);
+      &:hover {
+        background: var(--theme-light-blue) !important;
+      }
+    }
+  }
+}
+
+.dialog-box.light-blue {
+  .bg-theme-orange {
+    background-color: var(--theme-orange) !important;
+    &.btn {
+      color: var(--white);
+      &:hover {
+        color: var(--theme-orange);
+        background: var(--white) !important;
+      }
     }
   }
 }
