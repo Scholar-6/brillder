@@ -19,7 +19,6 @@ import { getNonEmptyComponent } from "../../questionService/ValidateQuestionServ
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import FixedTextComponent from "../components/Text/FixedText";
 import * as Y from "yjs";
-import _ from "lodash";
 import DeleteComponentDialog from "./deleteComponentDialog";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import { generateId } from "../questionTypes/service/questionBuild";
@@ -190,7 +189,7 @@ const QuestionComponents = ({
   }
 
   const onUpdateComponent = (evt: Sortable.SortableEvent) => {
-    if((evt.oldIndex ?? -1 >= 0) && (evt.newIndex ?? -1 >= 0)) {
+    if(((evt.oldIndex ?? -1) >= 0) && ((evt.newIndex ?? -1) >= 0)) {
       console.log(evt);
       components.doc?.transact(() => {
         const component = components.get(evt.oldIndex!).clone() as Y.Map<any>;

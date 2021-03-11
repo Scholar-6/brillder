@@ -1,22 +1,17 @@
 import React from 'react';
-import { ReactComponent as LatexIcon } from "assets/img/latex.svg";
 import { Quill } from 'react-quill';
-import QuillGlobalToolbarButton from './QuillGlobalToolbarButton';
 import { QuillEditorContext } from './QuillEditorContext';
-import { RangeStatic } from 'quill';
 import _ from 'lodash';
-import QuillGlobalToolbarSelect from './QuillGlobalToolbarSelect';
-import ImageUpload from './QuillImageUpload';
 import QuillToolbar from './QuillToolbar';
 
-const getReactPropsByNode = (node: any) => {
-    for(const key in node) {
-        if(key.startsWith("__reactInternalInstance$")) {
-            return node[key]._debugOwner.memoizedProps;
-        }
-    }
-    return null;
-}
+// const getReactPropsByNode = (node: any) => {
+//     for(const key in node) {
+//         if(key.startsWith("__reactInternalInstance$")) {
+//             return node[key]._debugOwner.memoizedProps;
+//         }
+//     }
+//     return null;
+// }
 
 interface QuillGlobalToolbarProps {
     availableOptions: string[];
@@ -31,14 +26,18 @@ const QuillGlobalToolbar: React.FC<QuillGlobalToolbarProps> = props => {
         const element = elements[0];
         const editorElement = element.getElementsByClassName("quill")[0].getElementsByClassName("ql-container")[0];
         const newQuill = Quill.find(editorElement) as Quill;
-        const reactProps = getReactPropsByNode(element);
-        const toolbar = reactProps.toolbar;
+        // const reactProps = getReactPropsByNode(element);
+        // const toolbar = reactProps.toolbar;
+        const toolbarString = element.getAttribute("data-toolbar");
+        if(!toolbarString) return [newQuill, []];
 
+        const toolbar = toolbarString.split(",");
         return [newQuill, toolbar];
     }, [currentQuillId]);
 
     return (
         <QuillToolbar
+            className="ql-global-toolbar"
             quill={quill}
             toolbar={props.availableOptions}
             enabled={enabled}

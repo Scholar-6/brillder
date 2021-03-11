@@ -123,7 +123,10 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
     ));
 
     return (
-        <div className={`quill-document-editor${valid ? "" : " content-invalid"} quill-id-${uniqueId} ${props.className ?? ""}`}>
+        <div
+            className={`quill-document-editor${valid ? "" : " content-invalid"} quill-id-${uniqueId} ${props.className ?? ""}`}
+            data-toolbar={props.toolbar}
+        >
             {(props.showToolbar ?? false) &&
                 // <div className={`ql-toolbar quill-${uniqueId}`}>
                 // {

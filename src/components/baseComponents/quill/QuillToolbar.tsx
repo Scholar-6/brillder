@@ -1,22 +1,13 @@
 import React from 'react';
 import { Quill } from 'react-quill';
 import QuillGlobalToolbarButton from './QuillGlobalToolbarButton';
-import { QuillEditorContext } from './QuillEditorContext';
 import { RangeStatic } from 'quill';
 import _ from 'lodash';
 import QuillGlobalToolbarSelect from './QuillGlobalToolbarSelect';
 import ImageUpload from './QuillImageUpload';
 
-const getReactPropsByNode = (node: any) => {
-    for(const key in node) {
-        if(key.startsWith("__reactInternalInstance$")) {
-            return node[key]._debugOwner.memoizedProps;
-        }
-    }
-    return null;
-}
-
 interface QuillToolbarProps {
+    className?: string;
     quill: Quill | null;
     quillId?: string;
     toolbar: string[];
@@ -81,7 +72,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
     }), []);
 
     return (
-        <div className={`ql-custom-toolbar${props.quillId ? ` quill-${props.quillId}` : ""}`}>
+        <div className={`ql-custom-toolbar${props.quillId ? ` quill-${props.quillId}` : ""} ${props.className}`}>
             <div className="formats" ref={toolbarNode}>
                 {props.toolbar.map(option => {
                     const Item = toolbarItems[option]

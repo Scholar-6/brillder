@@ -38,7 +38,6 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
 
   const setImage = (fileName: string) => {
     if (locked) {return;}
-    answer.set("option", "");
     answer.set("optionFile", fileName);
     answer.set("optionType", QuestionValueType.Image);
   }

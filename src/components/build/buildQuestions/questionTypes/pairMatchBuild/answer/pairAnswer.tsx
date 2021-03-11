@@ -67,7 +67,6 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
 
   const setImage = (fileName: string) => {
     if (locked) { return; }
-    answer.set("value", "");
     answer.set("valueFile", fileName);
     answer.set("answerType", QuestionValueType.Image);
   }
