@@ -109,7 +109,8 @@
     .css-custom-tooltip {
       bottom: -2vw;
       left: -4vw;
-      background: var(--off-white);
+      color: var(--tab-gray);
+      background: var(--theme-dark-blue);
       width: 12.5vw !important;
     }
 
@@ -150,7 +151,8 @@
       .css-custom-tooltip {
         bottom: -2vw;
         left: -2.1vw;
-        background: var(--off-white);
+        color: var(--tab-gray);
+        background: var(--theme-dark-blue);
         width: 8.4vw !important;
       }
 
