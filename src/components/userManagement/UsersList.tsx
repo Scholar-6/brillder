@@ -40,6 +40,7 @@ interface UsersListProps {
 
 enum UserSortBy {
   Name,
+  Joined
 }
 
 interface UsersListState {
@@ -97,7 +98,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       deleteUserId: -1
     };
 
-    this.getUsers(this.state.page);
+    this.getUsers(this.state.page, this.state.sortBy);
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
       withCredentials: true,
@@ -110,13 +111,18 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   getUsers(
     page: number,
+    sortBy: UserSortBy,
     subjects: number[] = [],
     roleFilters: any = [],
     isAscending: any = null,
     search: string = ""
   ) {
     let searchString = "";
-    const orderBy = "user.lastName";
+    let orderBy = "user.lastName";
+
+    if (sortBy === UserSortBy.Joined) {
+      orderBy = "user.created";
+    }
 
     if (isAscending === null) {
       isAscending = this.state.isAscending;
@@ -249,6 +255,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     let filterSubjects = this.getCheckedSubjectIds();
     this.getUsers(
       0,
+      this.state.sortBy,
       filterSubjects,
       [],
       this.state.isAscending,
@@ -260,7 +267,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     role.checked = !role.checked;
     let filterSubjects = this.getCheckedSubjectIds();
     let roles = this.getCheckedRoles();
-    this.getUsers(0, filterSubjects, roles);
+    this.getUsers(0, this.state.sortBy, filterSubjects, roles);
     this.setState({...this.state});
   }
 
@@ -287,7 +294,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   filter() {
     let filterSubjects = this.getCheckedSubjectIds();
     let filterRoles = this.getCheckedRoles();
-    this.getUsers(0, filterSubjects, filterRoles);
+    this.getUsers(0, this.state.sortBy, filterSubjects, filterRoles);
   }
 
   //region Hide / Expand / Clear Filter
@@ -359,14 +366,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     const {page} = this.state;
     this.setState({ ...this.state, page: page + 1 });
     let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(page + 1, filterSubjects);
+    this.getUsers(page + 1, this.state.sortBy, filterSubjects);
   }
 
   previousPage() {
     const {page} = this.state;
     this.setState({ ...this.state, page: page - 1 });
     let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(page - 1, filterSubjects);
+    this.getUsers(page - 1, this.state.sortBy, filterSubjects);
   }
 
   renderUserType(user: User) {
@@ -396,10 +403,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       this.setState({ ...this.state, isAscending });
     } else {
       isAscending = false;
-      this.setState({ ...this.state, isAscending });
+      this.setState({ ...this.state, sortBy: sortBy, isAscending });
     }
     let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(this.state.page, filterSubjects, [], isAscending);
+    this.getUsers(this.state.page, sortBy, filterSubjects, [], isAscending);
   }
 
   renderSortArrow(currentSortBy: UserSortBy) {
@@ -424,7 +431,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   renderUserTableHead() {
     return (
       <tr>
-        <th className="subject-title">JOINED</th>
+        <th className="subject-title">
+          <Grid container>JOINED {this.renderSortArrow(UserSortBy.Joined)}</Grid>
+        </th>
         <th className="user-full-name">
           <Grid container>NAME {this.renderSortArrow(UserSortBy.Name)}</Grid>
         </th>
