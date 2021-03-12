@@ -536,14 +536,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     );
   }
 
-  renderAddButton() {
-    return (
-      <div className="upper-fixed-button">
-        <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteOpen: true })} />
-      </div>
-    );
-  }
-
   renderTabContent() {
     if (!this.state.isLoaded) {
       return <div className="tab-content" />
@@ -601,7 +593,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     return (
       <div className="tab-content">
-        {activeClassroom ? this.renderTopRow() : this.renderAddButton()}
+        {activeClassroom && this.renderTopRow()}
         <StudentTable
           history={this.props.history}
           users={visibleUsers}
