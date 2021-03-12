@@ -14,6 +14,8 @@ import map from "components/map";
 import { Redirect, useLocation } from "react-router-dom";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import TermsLink from "components/baseComponents/TermsLink";
+import { isPhone } from "services/phone";
+import DesktopActivateAccountPage from "./DesktopActivateAccountPage";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -86,6 +88,10 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
         <GoogleButton />
       </div>
     );
+  }
+
+  if (!isPhone()) {
+    return <DesktopActivateAccountPage history={props.history} token={token} match={props.match} />;
   }
 
   return (

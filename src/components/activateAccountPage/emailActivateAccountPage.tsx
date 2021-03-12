@@ -13,6 +13,9 @@ import DesktopActivateForm from "./DesktopActivateForm";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
 import { UserType } from "model/user";
+import { isPhone } from "services/phone";
+import EmailLoginDesktopPage from "./EmailLoginDesktopPage";
+import MobileEmailLogin from "./MobileEmailLogin";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -42,20 +45,13 @@ const EmailActivateAccountPage: React.FC<EmailActivateAccountProps> = (props) =>
   const [password, setPassword] = useState("");
   const [valid, setValid] = useState<boolean>();
 
-  const validateForm = () => {
-    if (password.length > 0) {
-      return true;
-    }
-    return "Fill required fields";
-  };
-
   const verifyToken = async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
       setValid(true);
       setEmail(response.data.email);
       setDefaultPreference(response.data.defaultPreference);
-    } catch(e) {
+    } catch (e) {
       console.log(e.response.statusCode);
       setValid(false);
     }
@@ -65,22 +61,35 @@ const EmailActivateAccountPage: React.FC<EmailActivateAccountProps> = (props) =>
     verifyToken();
   }, [token, setValid]);
 
-  const resetPassword = React.useCallback(async () => {
+  const resetPassword = React.useCallback(async (e: any, password: string) => {
+    e.preventDefault();
+    console.log(password)
     try {
-      if(validateForm() === true) {
+      if (password.length > 0) {
         await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/changePassword/${token}`, { password: password }, { withCredentials: true });
         props.loginSuccess();
         props.setDefaultPreference(defaultPreference);
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
-  }, [ token, password ])
+  }, [token, password])
 
-  if(!valid && valid !== false) {
+  if (!valid && valid !== false) {
     return <PageLoader content="Checking token..." />
   }
 
+  if (!valid) {
+    return <Redirect to={map.Login} />;
+  }
+
+  if (!email) {
+    return <PageLoader content="Checking token..." />
+  }
+
+  if (!isPhone()) {
+    return <EmailLoginDesktopPage history={props.history} email={email} match={props.match} handleSubmit={resetPassword} />
+  }
 
   return (
     <Grid
@@ -90,49 +99,27 @@ const EmailActivateAccountPage: React.FC<EmailActivateAccountProps> = (props) =>
       justify="center"
       alignItems="center"
     >
-      {valid ?
-      <>
-        <Hidden only={["xs"]}>
-          <div className="choose-login-desktop">
-            <Grid container direction="row" className="first-row">
-              <div className="first-col"></div>
-              <div className="second-col"></div>
-              <div className="third-col"></div>
-            </Grid>
-            <Grid container direction="row" className="second-row">
-              <div className="first-col">
-                <LoginLogo />
-              </div>
-              <div className="second-col">
-                <DesktopActivateForm
-                  email={email}
-                  password={password}
-                  setPassword={setPassword}
-                  passwordHidden={passwordHidden}
-                  setHidden={setHidden}
-                  handleSubmit={resetPassword}
-                />
-              </div>
-            </Grid>
-            <Grid container direction="row" className="third-row">
-              <div className="first-col"></div>
-              <div className="second-col">
-                <TermsLink history={props.history}/>
-              </div>
-              <div className="third-col"></div>
-            </Grid>
-          </div>
-        </Hidden>
-        <Snackbar
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          open={alertShown}
-          autoHideDuration={1500}
-          onClose={() => toggleAlertMessage(false)}
-          message={alertMessage}
-          action={<React.Fragment></React.Fragment>}
-        />
-      </>
-      : <Redirect to={map.Login} />}
+      <MobileEmailLogin
+        history={props.history}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        passwordHidden={passwordHidden}
+        setHidden={setHidden}
+        register={() => {}}
+        login={() => {}}
+        handleLoginSubmit={() => {}}
+        setPolicyDialog={() => {}}
+      />
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={alertShown}
+        autoHideDuration={1500}
+        onClose={() => toggleAlertMessage(false)}
+        message={alertMessage}
+        action={<React.Fragment></React.Fragment>}
+      />
     </Grid>
   );
 };
