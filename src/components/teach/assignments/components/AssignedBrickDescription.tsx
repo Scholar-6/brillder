@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
-import { TeachClassroom, Assignment } from "model/classroom";
+import { TeachClassroom, Assignment, StudentStatus } from "model/classroom";
 import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
@@ -85,8 +85,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         return <SpriteIcon name="reminder" className="active reminder-icon" onClick={this.sendNotifications.bind(this)} />;
       }
     } else {
-      // if assignment
-      console.log(assignment);
+      // if student assignment
+      if (!this.isStudentCompleted(studentStatus)) {
+        return <SpriteIcon name="reminder" className="active reminder-icon" onClick={this.sendNotifications.bind(this)} />;
+      }
     }
     return <SpriteIcon name="reminder" className="active reminder-icon finished" />;
   }
@@ -116,8 +118,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         return false;
       }
     } else {
-      // if assignment
-
+      // if student assignment
+      if (!this.isStudentCompleted(studentStatus)) {
+        return false;
+      }
     }
     return true;
   }
@@ -148,11 +152,15 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     );
   }
 
+  isStudentCompleted(studentStatus: StudentStatus[]) {
+    return !(!studentStatus || studentStatus.length !== 1 || studentStatus[0].status <= 0)
+  }
+
   renderStudentStatus() {
     if (!this.props.isStudent) { return <div/> }
     const {studentStatus} = this.props.assignment;
 
-    if (!studentStatus || studentStatus.length !== 1 || studentStatus[0].status <= 0) { return this.renderNoAttempt() }
+    if (!this.isStudentCompleted(studentStatus)) { return this.renderNoAttempt() }
 
     return (
       <div className="status-text-centered">
