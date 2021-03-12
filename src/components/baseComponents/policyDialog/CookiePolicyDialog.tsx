@@ -23,7 +23,10 @@ const CookiePolicyDialog: React.FC<PolicyDialogProps> = (props) => {
         </p>
       </div>
       <button className="btn btn-md bg-theme-orange yes-button" onClick={accept}>
-        <span>Accept Cookies</span>
+        <span>Keep exploring</span>
+      </button>
+      <button className="btn btn-md bg-theme-orange yes-button" onClick={accept}>
+        <span>Disable and stop session</span>
       </button>
     </Dialog>
   );

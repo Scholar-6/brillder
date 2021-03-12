@@ -1,3 +1,4 @@
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import React from 'react';
 import './StopTrackingButton.scss';
 
@@ -24,7 +25,9 @@ const StopTrackingButton: React.FC<StudentRouteProps> = (props) => {
     props.onClick();
   }
 
-  return <button className="stop-cookie-tracking" onClick={deleteAllCookies}>Stop Tracking</button>
+  return <div className="stop-cookie-tracking" onClick={deleteAllCookies}>
+    <SpriteIcon name="settings" />
+  </div>
 }
 
 

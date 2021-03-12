@@ -490,37 +490,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     this.setState({ inviteEmailOpen: true });
   }
 
-  renderEmptyTab() {
-    return (
-      <div className="tab-content">
-        <div className="tab-content-centered">
-          {this.state.activeClassroom ?
-            <div>
-              <div className="icon-container">
-                <SpriteIcon
-                  name="users-custom"
-                  className="stroke-1"
-                  onClick={() => this.setState({ inviteEmailOpen: true })}
-                />
-              </div>
-              <div className="bold">+ Invite Students</div>
-            </div>
-            : <div>
-              <div className="icon-container">
-                <SpriteIcon
-                  name="user-plus"
-                  className="stroke-1"
-                  onClick={() => {this.setState({inviteToClassOpen: true})}}
-                />
-              </div>
-              <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            </div>
-          }
-        </div>
-      </div>
-    );
-  }
-
   async updateClassroom(name: string, subject: Subject) {
     if (this.state.activeClassroom) {
       let success = await updateClassroom({ ...this.state.activeClassroom, name, subject });
@@ -568,16 +537,29 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
               </div>
               <div className="bold">+ Create Class</div>
             </div>
-            <div>
-              <div className="icon-container">
-                <SpriteIcon
-                  name="user-plus"
-                  className="stroke-1"
-                  onClick={() => this.setState({ inviteToClassOpen: true })}
-                />
+            {this.state.activeClassroom ?
+              <div>
+                <div className="icon-container">
+                  <SpriteIcon
+                    name="users-custom"
+                    className="stroke-1"
+                    onClick={() => this.setState({ inviteEmailOpen: true })}
+                  />
+                </div>
+                <div className="bold">+ Invite Students</div>
               </div>
-              <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            </div>
+              :
+              <div>
+                <div className="icon-container">
+                  <SpriteIcon
+                    name="user-plus"
+                    className="stroke-1"
+                    onClick={() => this.setState({ inviteToClassOpen: true })}
+                  />
+                </div>
+                <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
+              </div>
+            }
           </div>
         </div>
       );
@@ -594,25 +576,21 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     return (
       <div className="tab-content">
-        {visibleUsers.length > 0 ? <>
-          {activeClassroom && this.renderTopRow()}
-          <StudentTable
-            history={this.props.history}
-            users={visibleUsers}
-            isClassroom={!!activeClassroom}
-            isAdmin={this.state.isAdmin}
-            selectedUsers={this.state.selectedUsers}
-            sortBy={this.state.sortBy}
-            isAscending={this.state.isAscending}
-            pageStudentsSelected={this.state.pageStudentsSelected}
-            sort={this.sortByLastName.bind(this)}
-            toggleUser={this.toggleUser.bind(this)}
-            unassign={this.unassigningStudent.bind(this)}
-            togglePageStudents={this.togglePageStudents.bind(this)}
-          />
-        </> :
-          this.renderEmptyTab()
-        }
+        {activeClassroom && this.renderTopRow()}
+        <StudentTable
+          history={this.props.history}
+          users={visibleUsers}
+          isClassroom={!!activeClassroom}
+          isAdmin={this.state.isAdmin}
+          selectedUsers={this.state.selectedUsers}
+          sortBy={this.state.sortBy}
+          isAscending={this.state.isAscending}
+          pageStudentsSelected={this.state.pageStudentsSelected}
+          sort={this.sortByLastName.bind(this)}
+          toggleUser={this.toggleUser.bind(this)}
+          unassign={this.unassigningStudent.bind(this)}
+          togglePageStudents={this.togglePageStudents.bind(this)}
+        />
         {this.renderPagination(visibleUsers, users)}
       </div>
     );
@@ -661,7 +639,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         />
         <InviteStudentEmailDialogV2
           isOpen={this.state.inviteToClassOpen}
-          close={(numInvited) => this.setState({ inviteEmailOpen: false, numStudentsInvited: numInvited })}
+          close={(numInvited) => this.setState({ inviteToClassOpen: false, numStudentsInvited: numInvited })}
         />
         {this.state.activeClassroom && <>
           <InviteStudentEmailDialog
