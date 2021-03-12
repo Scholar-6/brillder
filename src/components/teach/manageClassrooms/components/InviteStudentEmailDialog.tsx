@@ -1,13 +1,12 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import "./InviteStudentEmailDialog.scss";
-import { Chip } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { ClassroomApi } from 'components/teach/service';
 import axios from 'axios';
+import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
+import { User } from 'model/user';
 
 interface InviteStudentEmailProps {
   classroom: ClassroomApi;
@@ -20,41 +19,41 @@ const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 
 const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
   const [currentEmail, setCurrentEmail] = React.useState("");
-  const [emails, setEmails] = React.useState<string[]>([]);
+  const [users, setUsers] = React.useState<User[]>([]);
   const [emailInvalid, setEmailInvalid] = React.useState<boolean>(false);
 
-  const onAddEmail = React.useCallback(() => {
+  const onAddUser = React.useCallback(() => {
     if (!emailRegex.test(currentEmail)) {
       setEmailInvalid(true);
       return;
     }
-    setEmails(emails => [ ...emails, currentEmail]);
+    setUsers(users => [ ...users, { email: currentEmail} as User]);
     setCurrentEmail("");
   }, [currentEmail]);
 
-  const onDeleteEmail = (email: string) => {
-    setEmails(emails => emails.filter(e => e !== email));
+  const onDeleteUser = (user: User) => {
+    setUsers(users => users.filter(u => u.id !== user.id));
   }
 
   const onSubmit = React.useCallback(async () => {
-    const currentEmails = emails;
+    const currentUsers = users;
     if (!emailRegex.test(currentEmail)) {
-      if (emails.length <= 0) {
+      if (users.length <= 0) {
         setEmailInvalid(true);
         return;
       }
     } else {
-      setEmails(emails => [ ...emails, currentEmail ]);
-      currentEmails.push(currentEmail);
+      setUsers(users => [ ...users, { email: currentEmail } as User ]);
+      currentUsers.push({ email: currentEmail} as User);
       setCurrentEmail("");
     }
     await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/classrooms/students/${props.classroom.id}/new`,
-      { emails: currentEmails },
+      { emails: currentUsers.map(u => u.email) },
       { withCredentials: true }
     );
-    props.close(currentEmails.length);
-  }, [emails, currentEmail])
+    props.close(currentUsers.length);
+  }, [users, currentEmail])
 
   return (
     <Dialog open={props.isOpen} onClose={() => props.close(0)} className="dialog-box light-blue invite-email-dialog">
@@ -63,6 +62,16 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
       </div>
       <div className="dialog-header">
         <div className="bold">Invite students by email.</div>
+        <AutocompleteUsernameButEmail
+          editorError=""
+          placeholder="hello"
+          onBlur={() => {}}
+          users={users}
+          onAddEmail={onAddUser}
+          onChange={email => setCurrentEmail(email)}
+          setUsers={users => setUsers(users as User[])}
+        />
+        {/*
         <Autocomplete
           multiple
           options={[] as string[]}
@@ -91,7 +100,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
               />
             ))}
           </>}
-        />
+        />*/}
         <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
           <button className="btn btn-md bg-theme-orange yes-button icon-button" style={{width: 'auto'}} onClick={onSubmit}>
             <div className="centered">
