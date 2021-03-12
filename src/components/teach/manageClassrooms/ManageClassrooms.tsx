@@ -46,12 +46,6 @@ export enum UserSortBy {
   Name,
 }
 
-enum SidebarTabEnum {
-  None,
-  Classes,
-  Individuals
-}
-
 interface UsersListState {
   isLoaded: boolean;
   users: MUser[];
@@ -87,7 +81,6 @@ interface UsersListState {
   numStudentsInvited: number;
 
   pageStudentsSelected: boolean;
-  sidebarTab: SidebarTabEnum;
 }
 
 class ManageClassrooms extends Component<UsersListProps, UsersListState> {
@@ -129,15 +122,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       inviteOpen: false,
       numStudentsInvited: 0,
 
-      pageStudentsSelected: false,
-      sidebarTab: SidebarTabEnum.Classes
+      pageStudentsSelected: false
     };
 
     this.loadData();
   }
 
   async loadData() {
-    console.log('load data');
     await this.getStudents();
     await this.getClassrooms();
     this.setState({ isLoaded: true });
@@ -401,11 +392,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       <div className="sort-box">
         <div className="filter-container sort-by-box">
           <div style={{ display: 'flex' }}>
-            <div className={this.state.sidebarTab === SidebarTabEnum.Classes ? 'class-header' : 'record-header'} style={{ width: '50%' }} onClick={() => this.setState({ sidebarTab: SidebarTabEnum.Classes})}>
+            <div className="class-header" style={{ width: '50%' }}>
               CLASSES
-            </div>
-            <div className={this.state.sidebarTab === SidebarTabEnum.Classes ? 'record-header' : 'class-header'} style={{ width: '50%', textAlign: 'right' }} onClick={() => this.setState({ sidebarTab: SidebarTabEnum.Individuals})}>
-              INDIVIDUALS
             </div>
           </div>
         </div>
@@ -582,7 +570,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
               </div>
               <div className="bold">+ Create Class</div>
             </div>
-            {this.state.activeClassroom ?
+            {this.state.activeClassroom &&
               <div>
                 <div className="icon-container">
                   <SpriteIcon
@@ -592,17 +580,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                   />
                 </div>
                 <div className="bold">+ Invite Students</div>
-              </div>
-              :
-              <div>
-                <div className="icon-container">
-                  <SpriteIcon
-                    name="user-plus"
-                    className="stroke-1"
-                    onClick={() => this.setState({ inviteOpen: true })}
-                  />
-                </div>
-                <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
               </div>
             }
           </div>
@@ -621,13 +598,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       users.push(...individualClassroom.students)
     }
     const visibleUsers = this.getUsersByPage(users);
-
-    if (this.state.sidebarTab === SidebarTabEnum.Individuals) {
-      return (
-        <div className="tab-content">
-        </div>
-      );
-    }
 
     return (
       <div className="tab-content">
