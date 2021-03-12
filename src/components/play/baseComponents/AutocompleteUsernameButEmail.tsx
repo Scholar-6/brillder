@@ -64,7 +64,7 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
             }
             props.onChange(value);
           }}
-          placeholder="Type part of username or full email"
+          placeholder="Enter emails here"
           variant="outlined"
         />
       )}
