@@ -14,16 +14,22 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface UserPreferencePageProps {
   user: User;
+  defaultPreference?: UserType;
   history: any;
   getUser(): void;
 }
 
 const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
   const isAdmin = checkAdmin(props.user.roles);
-  const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId);
+  const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId ?? props.defaultPreference);
 
+  React.useEffect(() => {
+      if(preference) {
+          handleChange(preference, false);
+      }
+  }, [props.defaultPreference]);
   const handleChange = async (roleId: RolePreference, disabled: boolean) => {
-    if (disabled) {
+    if (disabled || !roleId) {
       return;
     }
     setPreference(roleId);
@@ -107,7 +113,8 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
 };
 
 const mapState = (state: ReduxCombinedState) => ({
-  user: state.user.user
+  user: state.user.user,
+  defaultPreference: state.auth.defaultPreference
 });
 
 const mapDispatch = (dispatch: any) => ({
