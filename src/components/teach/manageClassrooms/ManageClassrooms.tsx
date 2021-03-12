@@ -174,8 +174,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   createClass(name: string, subject: Subject) {
     createClass(name, subject).then(newClassroom => {
       if (newClassroom) {
+        this.unselectionClasses();
         this.state.classrooms.push(newClassroom);
-        this.setState({ ...this.state });
+        newClassroom.isActive = true;
+        this.setState({ ...this.state, activeClassroom: newClassroom });
       } else {
         // creation failed
       }
@@ -350,7 +352,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderViewAllFilter() {
-    const {individualClassroom} = this.state;
+    const { individualClassroom } = this.state;
     let className = "index-box hover-light item-box2";
     if (!this.state.activeClassroom) {
       className += " active";
@@ -378,7 +380,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   renderSortAndFilterBox() {
     if (!this.state.isLoaded) return <div></div>;
 
-    const {individualClassroom} = this.state;
+    const { individualClassroom } = this.state;
     const noClassroom = this.state.users.length === 0 && this.state.classrooms.length === 0;
     const haveIndividualStudents = individualClassroom && (
       individualClassroom.students.length > 0 || (individualClassroom.studentsInvitations && individualClassroom.studentsInvitations.length > 0)
@@ -521,7 +523,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   renderTopRow() {
     return (
-      <Grid container alignItems="stretch" direction="row">
+      <Grid container alignItems="stretch" direction="row" className="selected-class-name">
         <Grid item xs>
           <NameAndSubjectForm
             buttonsInvisible={true}
@@ -542,7 +544,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
     const { activeClassroom, individualClassroom } = this.state;
     let users = Object.assign([], this.state.users) as MUser[];
-    console.log(users);
 
     const haveIndividualStudents = individualClassroom && (
       individualClassroom.students.length > 0 || (individualClassroom.studentsInvitations && individualClassroom.studentsInvitations.length > 0)
@@ -551,18 +552,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     if (this.state.isLoaded && users.length === 0 && !haveIndividualStudents) {
       return (
         <div className="tab-content">
+          {this.state.activeClassroom &&
+            <div>{this.renderTopRow()}</div>
+          }
           <div className="tab-content-centered">
-            <div>
-              <div className="icon-container">
-                <SpriteIcon
-                  name="users-custom"
-                  className="stroke-1"
-                  onClick={() => this.setState({ createClassOpen: true })}
-                />
-              </div>
-              <div className="bold">+ Create Class</div>
-            </div>
-            {this.state.activeClassroom &&
+            {this.state.activeClassroom ?
               <div>
                 <div className="icon-container">
                   <SpriteIcon
@@ -572,6 +566,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                   />
                 </div>
                 <div className="bold">+ Invite Students</div>
+              </div>
+              :
+              <div className="new-class-container" onClick={() => this.setState({ createClassOpen: true })}>
+                <div className="icon-container">
+                  <SpriteIcon
+                    name="users-custom"
+                    className="stroke-1"
+                  />
+                </div>
+                <div className="bold-hover">+ Create Class</div>
+                <div className="text-center f-s-2 m-t-2vh">You can invite between 1 and 50 students to a class</div>
               </div>
             }
           </div>
