@@ -61,7 +61,8 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
         <SpriteIcon name="cancel" className="w100 h100 active" />
       </div>
       <div className="dialog-header">
-        <div className="bold">Invite students by email.</div>
+        <div className="bold m-b-10">Invite students by email.</div>
+        <div className="text-center f-s-2">You can invite between 1 and 50 students to a class</div>
         <AutocompleteUsernameButEmail
           editorError=""
           placeholder="hello"
@@ -104,7 +105,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
         <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
           <button className="btn btn-md bg-theme-orange yes-button icon-button" style={{width: 'auto'}} onClick={onSubmit}>
             <div className="centered">
-              <span className="label">Invite Students</span>
+              <span className="label">Send Invites</span>
               <SpriteIcon name="send" />
             </div>
           </button>

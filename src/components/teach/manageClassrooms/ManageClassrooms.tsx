@@ -16,7 +16,6 @@ import {
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
-import AddButton from './components/AddButton';
 import StudentTable from './studentTable/StudentTable';
 import UsersPagination from './components/UsersPagination';
 import CreateClassDialog from './components/CreateClassDialog';
@@ -516,9 +515,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             classroom={this.state.activeClassroom}
             onChange={this.updateClassroom.bind(this)}
           />
-        </Grid>
-        <Grid item>
-          <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteOpen: true })} />
         </Grid>
       </Grid>
     );
