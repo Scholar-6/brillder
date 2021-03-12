@@ -109,6 +109,8 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     let titleVerb = 'build';
     if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === RolePreference.Teacher) {
       titleVerb = 'teach';
+    } else if(this.props.user.rolePreference && this.props.user.rolePreference.roleId === RolePreference.Student) {
+      titleVerb = 'play';
     }
     return (
       <React.Suspense fallback={<></>}>
