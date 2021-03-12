@@ -147,6 +147,11 @@
       @extend %flexCenter;
       font-size: 1.5vw;
     }
+    .status-text-centered {
+      margin-left: 0.3vw;
+      @extend %flexCenter;
+      font-size: 1.5vw;
+    }
   }
   .reminder-container {
     width: 4vw;

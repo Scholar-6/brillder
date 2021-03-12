@@ -4,6 +4,13 @@
 
 .invite-email-dialog {
   .MuiDialog-container {
+    padding-left: 25vw !important;
+  }
+  .MuiPaper-root {
+    width: 55vw;
+    min-width: 55vw;
+  }
+  .MuiDialog-container {
     padding-left: 20vw;
     padding-top: $page-head-height;
   }
@@ -27,6 +34,34 @@
       .MuiAutocomplete-popupIndicator {
         height: 100%;
         border-radius: 0;
+      }
+    }
+  }
+
+  .dialog-header > div {
+    width: 100% !important;
+  }
+
+  .MuiAutocomplete-root {
+    width: 100% !important;
+    max-height: 30vh !important;
+    overflow-y: scroll;
+  }
+  .dialog-footer {
+    padding-top: 1vh;
+    width: 100% !important;
+    button {
+      padding-left: 5vw;
+      padding-right: 5vw;
+      .label {
+        letter-spacing: 0;
+        font-size: 1.5vw;
+        font-family: $font-family-bold !important;
+      }
+      .svg {
+        margin-left: 1.5vw;
+        width: 1.5vw;
+        height: 1.5vw;
       }
     }
   }

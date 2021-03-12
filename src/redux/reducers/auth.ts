@@ -1,12 +1,14 @@
 import types from '../types';
 import { isAuthenticated } from 'model/brick';
 import { UserLoginType } from 'model/auth';
+import { UserType } from 'model/user';
 
 
 export interface AuthState {
   isAuthenticated: isAuthenticated;
   userType: UserLoginType;
   isRedirectedToProfile: boolean;
+  defaultPreference?: UserType;
   error: string;
 }
 
@@ -14,6 +16,7 @@ const AccountInitialState: AuthState = {
   isAuthenticated: isAuthenticated.None,
   userType: UserLoginType.None,
   isRedirectedToProfile: false,
+  defaultPreference: undefined,
   error: ""
 }
 
@@ -21,6 +24,8 @@ export default (state = AccountInitialState, action: any) => {
   switch (action.type) {
     case types.AUTH_PROFILE_REDIRECT:
       return {...state, isRedirectedToProfile: true } as AuthState;
+    case types.AUTH_DEFAULT_PREFERENCE:
+      return {...state, defaultPreference: action.defaultPreference } as AuthState;
     case types.LOGIN_SUCCESS:
       return { ...state, isAuthenticated: isAuthenticated.True, userType: action.userType } as AuthState
     case types.LOGIN_FAILURE:
