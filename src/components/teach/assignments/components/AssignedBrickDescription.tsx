@@ -12,6 +12,7 @@ interface AssignedDescriptionProps {
   classroom?: TeachClassroom;
   assignment: Assignment;
   isExpanded?: boolean;
+  isStudent?: boolean;
   isStudentAssignment?: boolean;
   move?(): void;
   expand?(classroomId: number, assignmentId: number): void;
@@ -139,6 +140,27 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     return average;
   }
 
+  renderNoAttempt() {
+    return (
+      <div className="status-text-centered">
+        Not Attempted
+      </div>
+    );
+  }
+
+  renderStudentStatus() {
+    if (!this.props.isStudent) { return <div/> }
+    const {studentStatus} = this.props.assignment;
+
+    if (!studentStatus || studentStatus.length !== 1 || studentStatus[0].status <= 0) { return this.renderNoAttempt() }
+
+    return (
+      <div className="status-text-centered">
+        Completed
+      </div>
+    );
+  }
+
   render() {
     let subjectId = this.props.assignment.brick.subjectId;
     let color = getSubjectColor(this.props.subjects, subjectId);
@@ -179,6 +201,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           <div className="average">
             Avg: {this.getAverageScore()}
           </div>
+          {this.renderStudentStatus()}
         </div>
         <div className={`teach-brick-actions-container ${this.isCompleted() ? 'completed' : ''}`}>
           <div className="archive-button-container">
