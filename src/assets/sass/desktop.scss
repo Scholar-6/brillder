@@ -75,20 +75,32 @@
 }
 
 .stop-cookie-tracking {
+  cursor: pointer;
   position: fixed;
-  bottom: 2vh;
-  right: 10vw;
+  bottom: 14px;
+  left: calc(5.5vw + 0.6vw + 20px + 0.5vw);
   border: none;
+  height: 2.3vw;
+  display: flex;
+  align-items: center;
   outline: none;
   font-size: 1.4vw;
   border-radius: 0.5vw;
-  padding: 0.4vw;
-  color: var(--white);
-  transition: all 300ms ease-out;
-  background: var(--theme-orange);
+  padding: 0;
+  border: none;
+  outline: none;
+  background: inherit;
 
+  svg {
+    width: 2vw;
+    height: 2vw;
+    color: var(--white);
+    transition: all 300ms ease-out;
+  }
   &:hover {
-    background: var(--theme-dark-blue);
+    svg {
+      color: var(--theme-orange);
+    }
   }
 }
 
