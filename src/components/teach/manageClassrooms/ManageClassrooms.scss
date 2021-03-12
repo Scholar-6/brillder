@@ -12,6 +12,31 @@
     }
   }
 
+  .new-class-container {
+    cursor: pointer;
+    .bold-hover {
+      font-size: 2vw;
+      text-align: center;
+    }
+  }
+
+  .selected-class-name {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    > div {
+      background: var(--tab-gray);
+    }
+  }
+
+  .new-class-container:hover {
+    .bold-hover {
+      font-family: $font-family-bold;
+    }
+    svg {
+      stroke-width: 1.6 !important;
+    }
+  }
+
   .brick-row-container {
     background: inherit !important;
 
