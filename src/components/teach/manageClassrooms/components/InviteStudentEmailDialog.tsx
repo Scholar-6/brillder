@@ -1,13 +1,15 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import "./InviteStudentEmailDialog.scss";
 import { Chip } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { ClassroomApi } from 'components/teach/service';
 import axios from 'axios';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+
+import { enterPressed } from "components/services/key";
 
 interface InviteStudentEmailProps {
   classroom: ClassroomApi;
@@ -58,6 +60,9 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
 
   return (
     <Dialog open={props.isOpen} onClose={() => props.close(0)} className="dialog-box light-blue invite-email-dialog">
+      <div className="close-button svgOnHover" onClick={() => props.close(0)}>
+        <SpriteIcon name="cancel" className="w100 h100 active" />
+      </div>
       <div className="dialog-header">
         <div className="bold">Invite students by email.</div>
         <Autocomplete
@@ -68,7 +73,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
             {...params}
             onChange={e => setCurrentEmail(e.target.value)}
             onKeyPress={e => {
-              if(e.key === "Enter") {
+              if(e.key === "Enter" || e.key === ' ') {
                 onAddEmail();
               }
             }}
