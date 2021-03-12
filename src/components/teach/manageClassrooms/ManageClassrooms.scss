@@ -4,6 +4,19 @@
 
 .manage-classrooms-page {
   $base-filter-padding-left: 2vw;
+  .tab-content {
+    position: relative;
+    .upper-fixed-button {
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 1000;
+      .create-user-button-wrap {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+      }
+    }
+  }
   .manage-classrooms-filter {
     height: calc(94vh - #{$page-head-height} - 5.9vh - 6.5vw) !important;
     overflow: auto;
@@ -49,6 +62,10 @@
 
     .class-header {
       font-family: $font-family-bold;
+    }
+    
+    .record-header {
+      cursor: pointer;
     }
   }
 

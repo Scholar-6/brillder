@@ -46,6 +46,12 @@ export enum UserSortBy {
   Name,
 }
 
+enum SidebarTabEnum {
+  None,
+  Classes,
+  Individuals
+}
+
 interface UsersListState {
   isLoaded: boolean;
   users: MUser[];
@@ -81,6 +87,7 @@ interface UsersListState {
   numStudentsInvited: number;
 
   pageStudentsSelected: boolean;
+  sidebarTab: SidebarTabEnum;
 }
 
 class ManageClassrooms extends Component<UsersListProps, UsersListState> {
@@ -122,7 +129,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       inviteOpen: false,
       numStudentsInvited: 0,
 
-      pageStudentsSelected: false
+      pageStudentsSelected: false,
+      sidebarTab: SidebarTabEnum.Classes
     };
 
     this.loadData();
@@ -393,8 +401,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       <div className="sort-box">
         <div className="filter-container sort-by-box">
           <div style={{ display: 'flex' }}>
-            <div className="class-header" style={{ width: '50%' }}>CLASSES</div>
-            <div className="record-header" style={{ width: '50%', textAlign: 'right' }}>INDIVIDUALS</div>
+            <div className={this.state.sidebarTab === SidebarTabEnum.Classes ? 'class-header' : 'record-header'} style={{ width: '50%' }} onClick={() => this.setState({ sidebarTab: SidebarTabEnum.Classes})}>
+              CLASSES
+            </div>
+            <div className={this.state.sidebarTab === SidebarTabEnum.Classes ? 'record-header' : 'class-header'} style={{ width: '50%', textAlign: 'right' }} onClick={() => this.setState({ sidebarTab: SidebarTabEnum.Individuals})}>
+              INDIVIDUALS
+            </div>
           </div>
         </div>
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
@@ -536,6 +548,14 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     );
   }
 
+  renderAddButton() {
+    return (
+      <div className="upper-fixed-button">
+        <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteOpen: true })} />
+      </div>
+    );
+  }
+
   renderTabContent() {
     if (!this.state.isLoaded) {
       return <div className="tab-content" />
@@ -602,9 +622,16 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
     const visibleUsers = this.getUsersByPage(users);
 
+    if (this.state.sidebarTab === SidebarTabEnum.Individuals) {
+      return (
+        <div className="tab-content">
+        </div>
+      );
+    }
+
     return (
       <div className="tab-content">
-        {activeClassroom && this.renderTopRow()}
+        {activeClassroom ? this.renderTopRow() : this.renderAddButton()}
         <StudentTable
           history={this.props.history}
           users={visibleUsers}
