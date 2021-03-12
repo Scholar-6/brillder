@@ -16,7 +16,6 @@ import {
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
-import AddButton from './components/AddButton';
 import StudentTable from './studentTable/StudentTable';
 import UsersPagination from './components/UsersPagination';
 import CreateClassDialog from './components/CreateClassDialog';
@@ -31,7 +30,6 @@ import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/Studen
 import NameAndSubjectForm from "../components/NameAndSubjectForm";
 import { Subject } from "model/brick";
 import ClassroomFilterItem from "./components/ClassroomFilterItem";
-import InviteStudentEmailDialogV2 from "./components/InviteStudentEmailDialogV2";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -77,9 +75,7 @@ interface UsersListState {
   unassignStudent: MUser | null;
   unassignOpen: boolean;
 
-  inviteEmailOpen: boolean;
-  inviteIdividualOpen: boolean;
-  inviteToClassOpen: boolean;
+  inviteOpen: boolean;
   numStudentsInvited: number;
 
   pageStudentsSelected: boolean;
@@ -120,9 +116,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       unassignStudent: null,
       unassignOpen: false,
 
-      inviteEmailOpen: false,
-      inviteToClassOpen: false,
-      inviteIdividualOpen: false,
+      inviteOpen: false,
       numStudentsInvited: 0,
 
       pageStudentsSelected: false
@@ -161,8 +155,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   async getClassrooms() {
     let classrooms = await getAllClassrooms();
     if (classrooms) {
-      classrooms = classrooms.filter(c => c.subjectId);
       this.prepareClassrooms(classrooms);
+      classrooms = classrooms.filter(c => c.subjectId);
       this.setState({
         classrooms,
         activeClassroom: this.state.activeClassroom ? classrooms.find(c => c.id === this.state.activeClassroom!.id) ?? null : null
@@ -175,8 +169,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   createClass(name: string, subject: Subject) {
     createClass(name, subject).then(newClassroom => {
       if (newClassroom) {
+        this.unselectionClasses();
         this.state.classrooms.push(newClassroom);
-        this.setState({ ...this.state });
+        newClassroom.isActive = true;
+        this.setState({ ...this.state, activeClassroom: newClassroom });
       } else {
         // creation failed
       }
@@ -355,6 +351,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     if (!this.state.activeClassroom) {
       className += " active";
     }
+
     return (
       <div className={className} onClick={() => this.unselectClasses()}>
         View All
@@ -370,18 +367,21 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderSortAndFilterBox() {
-    if (!this.state.isLoaded) {
-      return <div></div>;
-    }
-    if (this.state.isLoaded && this.state.users.length === 0 && this.state.classrooms.length === 0) {
+    if (!this.state.isLoaded) return <div></div>;
+
+    const noClassroom = this.state.users.length === 0 && this.state.classrooms.length === 0;
+
+    if (this.state.isLoaded && noClassroom) {
       return <EmptyFilter />;
     }
+
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box">
           <div style={{ display: 'flex' }}>
-            <div className="class-header" style={{ width: '50%' }}>CLASSES</div>
-            <div className="record-header" style={{ width: '50%', textAlign: 'right' }}>INDIVIDUALS</div>
+            <div className="class-header" style={{ width: '50%' }}>
+              CLASSES
+            </div>
           </div>
         </div>
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
@@ -474,6 +474,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     return users.slice(pageStart, pageStart + this.state.pageSize);
   }
 
+  invitationSuccess(numInvited: number) {
+    this.setState({ inviteOpen: false, numStudentsInvited: numInvited });
+    if (numInvited > 0) {
+      this.loadData();
+    }
+  }
+
   renderPagination(visibleUsers: MUser[], users: MUser[]) {
     return (
       <UsersPagination
@@ -487,38 +494,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   inviteStudent() {
-    this.setState({ inviteEmailOpen: true });
-  }
-
-  renderEmptyTab() {
-    return (
-      <div className="tab-content">
-        <div className="tab-content-centered">
-          {this.state.activeClassroom ?
-            <div>
-              <div className="icon-container">
-                <SpriteIcon
-                  name="users-custom"
-                  className="stroke-1"
-                  onClick={() => this.setState({ inviteEmailOpen: true })}
-                />
-              </div>
-              <div className="bold">+ Invite Students</div>
-            </div>
-            : <div>
-              <div className="icon-container">
-                <SpriteIcon
-                  name="user-plus"
-                  className="stroke-1"
-                  onClick={() => {this.setState({inviteToClassOpen: true})}}
-                />
-              </div>
-              <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            </div>
-          }
-        </div>
-      </div>
-    );
+    this.setState({ inviteOpen: true });
   }
 
   async updateClassroom(name: string, subject: Subject) {
@@ -532,16 +508,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   renderTopRow() {
     return (
-      <Grid container alignItems="stretch" direction="row">
+      <Grid container alignItems="stretch" direction="row" className="selected-class-name">
         <Grid item xs>
           <NameAndSubjectForm
             buttonsInvisible={true}
             classroom={this.state.activeClassroom}
             onChange={this.updateClassroom.bind(this)}
           />
-        </Grid>
-        <Grid item>
-          <AddButton isAdmin={this.state.isAdmin} onOpen={() => this.setState({ inviteEmailOpen: true })} />
         </Grid>
       </Grid>
     );
@@ -552,32 +525,40 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       return <div className="tab-content" />
     }
     const { activeClassroom } = this.state;
-    let { users } = this.state;
+    let users = Object.assign([], this.state.users) as MUser[];
 
-    if (this.state.isLoaded && users.length === 0) {
+    let classHasStudents = activeClassroom && activeClassroom.students.length > 0;
+
+    if (this.state.isLoaded && users.length === 0 && !classHasStudents) {
       return (
         <div className="tab-content">
+          {this.state.activeClassroom &&
+            <div>{this.renderTopRow()}</div>
+          }
           <div className="tab-content-centered">
-            <div>
-              <div className="icon-container">
-                <SpriteIcon
-                  name="users-custom"
-                  className="stroke-1"
-                  onClick={() => this.setState({ createClassOpen: true })}
-                />
+            {this.state.activeClassroom ?
+              <div>
+                <div className="icon-container m-l-012">
+                  <SpriteIcon
+                    name="user-plus"
+                    className="stroke-1"
+                    onClick={() => this.setState({ inviteOpen: true })}
+                  />
+                </div>
+                <div className="bold">+ Invite Students</div>
               </div>
-              <div className="bold">+ Create Class</div>
-            </div>
-            <div>
-              <div className="icon-container">
-                <SpriteIcon
-                  name="user-plus"
-                  className="stroke-1"
-                  onClick={() => this.setState({ inviteToClassOpen: true })}
-                />
+              :
+              <div className="new-class-container" onClick={() => this.setState({ createClassOpen: true })}>
+                <div className="icon-container">
+                  <SpriteIcon
+                    name="users-custom"
+                    className="stroke-1"
+                  />
+                </div>
+                <div className="bold-hover">+ Create Class</div>
+                <div className="text-center f-s-2 m-t-2vh">You can invite between 1 and 50 students to a class</div>
               </div>
-              <div className="bold">+ Invite Pupil&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            </div>
+            }
           </div>
         </div>
       );
@@ -586,6 +567,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     if (activeClassroom) {
       users = activeClassroom.students as MUser[];
     }
+
     if (this.state.isSearching) {
       users = this.state.searchUsers;
     }
@@ -594,25 +576,21 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     return (
       <div className="tab-content">
-        {visibleUsers.length > 0 ? <>
-          {activeClassroom && this.renderTopRow()}
-          <StudentTable
-            history={this.props.history}
-            users={visibleUsers}
-            isClassroom={!!activeClassroom}
-            isAdmin={this.state.isAdmin}
-            selectedUsers={this.state.selectedUsers}
-            sortBy={this.state.sortBy}
-            isAscending={this.state.isAscending}
-            pageStudentsSelected={this.state.pageStudentsSelected}
-            sort={this.sortByLastName.bind(this)}
-            toggleUser={this.toggleUser.bind(this)}
-            unassign={this.unassigningStudent.bind(this)}
-            togglePageStudents={this.togglePageStudents.bind(this)}
-          />
-        </> :
-          this.renderEmptyTab()
-        }
+        {activeClassroom && this.renderTopRow()}
+        <StudentTable
+          history={this.props.history}
+          users={visibleUsers}
+          isClassroom={!!activeClassroom}
+          isAdmin={this.state.isAdmin}
+          selectedUsers={this.state.selectedUsers}
+          sortBy={this.state.sortBy}
+          isAscending={this.state.isAscending}
+          pageStudentsSelected={this.state.pageStudentsSelected}
+          sort={this.sortByLastName.bind(this)}
+          toggleUser={this.toggleUser.bind(this)}
+          unassign={this.unassigningStudent.bind(this)}
+          togglePageStudents={this.togglePageStudents.bind(this)}
+        />
         {this.renderPagination(visibleUsers, users)}
       </div>
     );
@@ -620,6 +598,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   render() {
     const { history } = this.props;
+
+    const {activeClassroom} = this.state;
 
     return (
       <div className="main-listing user-list-page manage-classrooms-page manage-classrooms-checkboxes">
@@ -659,21 +639,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           close={() => this.setState({ unassignOpen: false })}
           submit={() => this.unassignStudent(this.state.unassignStudent)}
         />
-        <InviteStudentEmailDialogV2
-          isOpen={this.state.inviteToClassOpen}
-          close={(numInvited) => this.setState({ inviteEmailOpen: false, numStudentsInvited: numInvited })}
-        />
-        {this.state.activeClassroom && <>
+        {activeClassroom && <div>
           <InviteStudentEmailDialog
-            isOpen={this.state.inviteEmailOpen}
-            close={(numInvited) => this.setState({ inviteEmailOpen: false, numStudentsInvited: numInvited })}
-            classroom={this.state.activeClassroom}
+            isOpen={this.state.inviteOpen}
+            close={(numInvited) => this.invitationSuccess(numInvited)}
+            classroom={activeClassroom}
           />
           <StudentInviteSuccessDialog
             numStudentsInvited={this.state.numStudentsInvited}
             close={() => this.setState({ numStudentsInvited: 0 })}
           />
-        </>}
+        </div>}
         <ValidationFailedDialog
           isOpen={this.state.cantCreate}
           header="You don`t have permisions to create new user"

@@ -45,7 +45,7 @@ class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
       this.props.handleSubmit(e);
     }
   }
-
+  
   render() {
     let className = 'content-box expanded';
     return (

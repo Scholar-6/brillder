@@ -7,6 +7,7 @@ import {LoginModel} from 'model/auth';
 import { socketLogout } from './socket';
 import notificationActions from './notifications';
 import { enableTracking, disableTracking } from 'services/matomo';
+import {UserType} from 'model/user';
 
 const loginSuccess = () => {
   enableTracking();
@@ -123,5 +124,11 @@ const redirectedToProfile = () => {
   }
 }
 
+const setDefaultPreference = (defaultPreference: UserType | undefined) => {
+  return {
+    type: types.AUTH_DEFAULT_PREFERENCE,
+    defaultPreference
+  }
+}
 
-export default { login, logout, loginSuccess, setLogoutSuccess, isAuthorized, redirectedToProfile }
+export default { login, logout, loginSuccess, setLogoutSuccess, isAuthorized, redirectedToProfile, setDefaultPreference }
