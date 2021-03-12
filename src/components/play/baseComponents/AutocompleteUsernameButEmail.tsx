@@ -14,10 +14,12 @@ interface AutocompleteProps {
   onBlur(): void;
 
   users: UserBase[];
+  onChange(email: string): void;
+  onAddEmail(): void;
   setUsers(users: UserBase[]): void;
 }
 
-const AutocompleteUsername: React.FC<AutocompleteProps> = ({
+const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
   users, setUsers,
   ...props
 }) => {
@@ -34,6 +36,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
           setUsers(value);
         }
       }}
+      noOptionsText="User not found. Try to type the name of person"
       renderInput={(params) => (
         <TextField
           {...params}
@@ -41,6 +44,11 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
           helperText={props.editorError}
           fullWidth
           onBlur={() => props.onBlur()}
+          onKeyPress={e => {
+            if(e.key === "Enter" || e.key === ' ') {
+              props.onAddEmail();
+            }
+          }}
           onChange={(evt) => {
             const { value } = evt.target;
             if (value.length >= 3) {
@@ -54,8 +62,9 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
             } else {
               setSuggestions([]);
             }
+            props.onChange(value);
           }}
-          placeholder={props.placeholder}
+          placeholder="Type part of username or full email"
           variant="outlined"
         />
       )}
@@ -63,7 +72,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
         return <>
         {value.map((user, idx) => (
           <Chip
-            label={`${user.username}`}
+            label={`${user.username || user.email}`}
             avatar={<Avatar src={fileUrl(user.profileImage)} />}
             {...getTagProps({ index: idx })}
           />
@@ -82,4 +91,4 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
   );
 };
 
-export default AutocompleteUsername;
+export default AutocompleteUsernameButEmail;

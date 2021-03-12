@@ -9,7 +9,7 @@ import { User } from 'model/user';
 import React from 'react';
 import { connect } from 'react-redux';
 import { ReduxCombinedState } from 'redux/reducers';
-import InviteStudentEmailDialogV2 from '../manageClassrooms/components/InviteStudentEmailDialogV2';
+import InviteStudentEmailDialog from '../manageClassrooms/components/InviteStudentEmailDialog';
 
 import "./NameAndSubjectForm.scss";
 
@@ -158,9 +158,10 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           selectedItems={[{ classroom: props.classroom }]}
           close={() => setFailed({ isOpen: false, brick: null })}
         />
-        <InviteStudentEmailDialogV2
+        <InviteStudentEmailDialog
           isOpen={inviteOpen}
-          close={(numInvited) => {
+          classroom={props.classroom}
+          close={(numInvited: number) => {
             setInvite(false);
             setInvitedCount(numInvited);
           }}
