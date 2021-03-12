@@ -9,8 +9,6 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { ClassroomApi } from 'components/teach/service';
 import axios from 'axios';
 
-import { enterPressed } from "components/services/key";
-
 interface InviteStudentEmailProps {
   classroom: ClassroomApi;
   isOpen: boolean;
