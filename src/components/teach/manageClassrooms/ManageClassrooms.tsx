@@ -62,7 +62,6 @@ interface UsersListState {
 
   isAdmin: boolean;
   classrooms: ClassroomApi[];
-  individualClassroom: ClassroomApi | undefined;
 
   sortBy: UserSortBy;
   isAscending: boolean;
@@ -93,7 +92,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       isLoaded: false,
       users: [],
       classrooms: [],
-      individualClassroom: undefined,
       page: 0,
       pageSize,
       classPageSize: 12,
@@ -159,11 +157,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     let classrooms = await getAllClassrooms();
     if (classrooms) {
       this.prepareClassrooms(classrooms);
-      const individualClassroom = classrooms.find(c => c.subjectId === null && c.name === 'individuals');
       classrooms = classrooms.filter(c => c.subjectId);
       this.setState({
         classrooms,
-        individualClassroom,
         activeClassroom: this.state.activeClassroom ? classrooms.find(c => c.id === this.state.activeClassroom!.id) ?? null : null
       });
     } else {
@@ -352,22 +348,16 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderViewAllFilter() {
-    const { individualClassroom } = this.state;
     let className = "index-box hover-light item-box2";
     if (!this.state.activeClassroom) {
       className += " active";
-    }
-
-    let individualCount = 0;
-    if (individualClassroom && individualClassroom.students) {
-      individualCount += individualClassroom.students.length;
     }
 
     return (
       <div className={className} onClick={() => this.unselectClasses()}>
         View All
         <div className="right-index right-index2">
-          {this.state.users.length + individualCount}
+          {this.state.users.length}
           <SpriteIcon name="users" className="active" />
           <div className="classrooms-box">
             {this.state.classrooms.length}
@@ -380,13 +370,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   renderSortAndFilterBox() {
     if (!this.state.isLoaded) return <div></div>;
 
-    const { individualClassroom } = this.state;
     const noClassroom = this.state.users.length === 0 && this.state.classrooms.length === 0;
-    const haveIndividualStudents = individualClassroom && (
-      individualClassroom.students.length > 0 || (individualClassroom.studentsInvitations && individualClassroom.studentsInvitations.length > 0)
-    );
 
-    if (this.state.isLoaded && noClassroom && !haveIndividualStudents) {
+    if (this.state.isLoaded && noClassroom) {
       return <EmptyFilter />;
     }
 
@@ -542,14 +528,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     if (!this.state.isLoaded) {
       return <div className="tab-content" />
     }
-    const { activeClassroom, individualClassroom } = this.state;
+    const { activeClassroom } = this.state;
     let users = Object.assign([], this.state.users) as MUser[];
 
-    const haveIndividualStudents = individualClassroom && (
-      individualClassroom.students.length > 0 || (individualClassroom.studentsInvitations && individualClassroom.studentsInvitations.length > 0)
-    );
+    let classHasStudents = activeClassroom && activeClassroom.students.length > 0;
 
-    if (this.state.isLoaded && users.length === 0 && !haveIndividualStudents) {
+    if (this.state.isLoaded && users.length === 0 && !classHasStudents) {
       return (
         <div className="tab-content">
           {this.state.activeClassroom &&
@@ -558,9 +542,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           <div className="tab-content-centered">
             {this.state.activeClassroom ?
               <div>
-                <div className="icon-container">
+                <div className="icon-container m-l-012">
                   <SpriteIcon
-                    name="users-custom"
+                    name="user-plus"
                     className="stroke-1"
                     onClick={() => this.setState({ inviteOpen: true })}
                   />
@@ -587,13 +571,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     if (activeClassroom) {
       users = activeClassroom.students as MUser[];
     }
+
     if (this.state.isSearching) {
       users = this.state.searchUsers;
     }
 
-    if (!this.state.activeClassroom && individualClassroom) {
-      users.push(...individualClassroom.students)
-    }
     const visibleUsers = this.getUsersByPage(users);
 
     return (
@@ -621,7 +603,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   render() {
     const { history } = this.props;
 
-    const classroom = this.state.activeClassroom || this.state.individualClassroom;
+    const {activeClassroom} = this.state;
 
     return (
       <div className="main-listing user-list-page manage-classrooms-page manage-classrooms-checkboxes">
@@ -661,11 +643,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           close={() => this.setState({ unassignOpen: false })}
           submit={() => this.unassignStudent(this.state.unassignStudent)}
         />
-        {classroom && <div>
+        {activeClassroom && <div>
           <InviteStudentEmailDialog
             isOpen={this.state.inviteOpen}
             close={(numInvited) => this.invitationSuccess(numInvited)}
-            classroom={classroom}
+            classroom={activeClassroom}
           />
           <StudentInviteSuccessDialog
             numStudentsInvited={this.state.numStudentsInvited}
