@@ -171,6 +171,7 @@ class ExpandedStudentAssignment extends Component<
       <div className="expanded-assignment classroom-list">
         <div>
           <AssignedBrickDescription
+            isStudent={true}
             isExpanded={true}
             subjects={this.props.subjects}
             minimize={this.props.minimize}
