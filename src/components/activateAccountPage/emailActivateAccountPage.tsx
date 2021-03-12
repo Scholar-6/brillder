@@ -12,15 +12,18 @@ import { Redirect, useLocation } from "react-router-dom";
 import DesktopActivateForm from "./DesktopActivateForm";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
+import { UserType } from "model/user";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
+  setDefaultPreference: (defaultPreference?: UserType) => dispatch(actions.setDefaultPreference(defaultPreference)),
 });
 
 const connector = connect(null, mapDispatch);
 
 interface EmailActivateAccountProps {
   loginSuccess(): void;
+  setDefaultPreference(defaultPreference?: UserType): void;
   history: History;
   match: any;
 }
@@ -35,6 +38,7 @@ const EmailActivateAccountPage: React.FC<EmailActivateAccountProps> = (props) =>
   const token = params.get("token");
 
   const [email, setEmail] = useState("");
+  const [defaultPreference, setDefaultPreference] = useState<UserType | undefined>();
   const [password, setPassword] = useState("");
   const [valid, setValid] = useState<boolean>();
 
@@ -49,7 +53,8 @@ const EmailActivateAccountPage: React.FC<EmailActivateAccountProps> = (props) =>
     try {
       const response = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
       setValid(true);
-      setEmail(response.data);
+      setEmail(response.data.email);
+      setDefaultPreference(response.data.defaultPreference);
     } catch(e) {
       console.log(e.response.statusCode);
       setValid(false);
@@ -65,6 +70,7 @@ const EmailActivateAccountPage: React.FC<EmailActivateAccountProps> = (props) =>
       if(validateForm() === true) {
         await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/changePassword/${token}`, { password: password }, { withCredentials: true });
         props.loginSuccess();
+        props.setDefaultPreference(defaultPreference);
       }
     } catch(e) {
       console.log(e);
