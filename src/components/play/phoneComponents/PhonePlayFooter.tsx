@@ -24,6 +24,7 @@ import InvitationSuccessDialog from '../finalStep/dialogs/InvitationSuccessDialo
 import { ReduxCombinedState } from 'redux/reducers';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
+import { ProposalStep } from 'components/build/proposal/model';
 
 interface InviteResult {
   isOpen: boolean;
@@ -53,6 +54,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
   const { brick } = props;
   const [exitPlay, setExit] = React.useState(false);
   const [cookieOpen, setCookiePopup] = React.useState(isInitCookieOpen);
+  const [cookieReOpen, setCookieReOpen] = React.useState(false);
   const [share, setShare] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
   const [linkSuccess, setLinkSuccess] = React.useState(false);
@@ -267,12 +269,13 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
             deleteAllCookies();
             setMenu(false);
             setCookiePopup(true);
+            setCookieReOpen(true);
           }}>
             Stop Tracking <SpriteIcon name="feather-x-octagon" />
           </MenuItem>}
       </Menu>
       {renderPopups()}
-      <CookiePolicyDialog isOpen={cookieOpen} close={() => {
+      <CookiePolicyDialog isOpen={cookieOpen} isReOpened={cookieReOpen} close={() => {
         acceptCookies();
         setCookiePopup(false);
       }} />
