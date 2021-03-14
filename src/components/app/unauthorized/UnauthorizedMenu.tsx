@@ -32,6 +32,7 @@ const UnauthorizedMenu: React.FC<StudentRouteProps> = (props) => {
     }
     clearCookiePolicy();
     setCookiePopup(true);
+    setCookieReOpen(true);
   }
 
   return (
