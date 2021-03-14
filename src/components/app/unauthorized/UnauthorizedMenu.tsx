@@ -20,6 +20,7 @@ const UnauthorizedMenu: React.FC<StudentRouteProps> = (props) => {
   }
 
   const [cookieOpen, setCookiePopup] = React.useState(isInitCookieOpen);
+  const [cookieReOpen, setCookieReOpen] = React.useState(false);
   const deleteAllCookies = () => {
     const cookies = document.cookie.split(";");
 
@@ -47,7 +48,7 @@ const UnauthorizedMenu: React.FC<StudentRouteProps> = (props) => {
           </div>
         </MenuItem>
       </Menu>
-      <CookiePolicyDialog isOpen={cookieOpen} close={() => {
+      <CookiePolicyDialog isOpen={cookieOpen} isReOpened={cookieReOpen} close={() => {
         acceptCookies();
         setCookiePopup(false);
       }}
