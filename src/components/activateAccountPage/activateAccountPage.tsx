@@ -56,7 +56,6 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
       setValid(true);
       setEmail(response.data.email);
     } catch(e) {
-      console.log(e.response.statusCode);
       setValid(false);
       props.history.push(map.Login);
     }
