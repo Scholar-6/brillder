@@ -59,7 +59,6 @@ class BuildBricks extends Component<BuildBricksProps, State> {
   }
 
   componentDidMount() {
-
     const {current} = this.state.bricksRef;
     if (current) {
       current.addEventListener('wheel', this.state.onBricksWheel, false);

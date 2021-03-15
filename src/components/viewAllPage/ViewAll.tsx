@@ -82,6 +82,9 @@ interface ViewAllState {
   shown: boolean;
   isAllSubjects: boolean;
   isViewAll: boolean;
+
+  bricksRef: React.RefObject<any>;
+  onBricksWheel(e: any): void;
 }
 
 const MobileTheme = React.lazy(() => import('./themes/ViewAllPageMobileTheme'));
@@ -137,7 +140,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       shown: false,
       isAllSubjects: true,
       isViewAll,
-      handleKey: this.handleKey.bind(this)
+      handleKey: this.handleKey.bind(this),
+
+      bricksRef: React.createRef<any>(),
+      onBricksWheel: this.onBricksWheel.bind(this)
     };
 
     this.loadData(values);
@@ -151,6 +157,16 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (notifications.length > oldNotifications.length) {
         this.loadBricks();
       }
+    }
+    this.addWheelListener();
+  }
+
+  onBricksWheel(e: any) {
+    console.log('wheel')
+    if (e.wheelDeltaY < 0) {
+      this.moveAllNext();
+    } else {
+      this.moveAllBack();
     }
   }
 
@@ -168,12 +184,24 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     });
   }
 
+  addWheelListener() {
+    const {current} = this.state.bricksRef;
+    if (current) {
+      current.addEventListener('wheel', this.state.onBricksWheel, false);
+    }
+  }
+
   componentDidMount() {
     document.addEventListener("keydown", this.state.handleKey, false);
+    this.addWheelListener();
   }
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.state.handleKey, false);
+    const {current} = this.state.bricksRef;
+    if (current) {
+      current.removeEventListener('wheel', this.state.onBricksWheel, false);
+    }
   }
 
   async handleKey(e: any) {
@@ -742,7 +770,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       return this.renderNoBricks();
     }
     return (
-      <div className="bricks-list-container bricks-container-mobile">
+      <div className="bricks-list-container bricks-container-mobile" ref={this.state.bricksRef}>
         {this.renderFirstRow(filterSubjects, bricks)}
         <div className="bricks-list">{this.renderSortedBricks(bricks)}</div>
       </div>
