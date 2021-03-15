@@ -44,14 +44,15 @@ class DesktopActivateForm extends React.Component<ActivateFormProps, LoginsState
   render() {
     let className = 'content-box expanded';
     return (
-      <div className={className}>
+      <form onSubmit={this.props.handleSubmit} className={className}>
         <div className="input-block">
           <TypingInput
+            required
             type="email"
+            disabled={true}
             className="login-field"
             placeholder="Email"
             value={this.props.email}
-            disabled={true}
           />
         </div>
         <div className="input-block">
@@ -72,10 +73,10 @@ class DesktopActivateForm extends React.Component<ActivateFormProps, LoginsState
         </div>
         <div className="input-block">
           <div className="button-box">
-            <button onClick={this.props.handleSubmit} className="sign-in-button">Get Started</button>
+            <button type="submit" onClick={this.props.handleSubmit} className="sign-in-button">Get Started</button>
           </div>
         </div>
-      </div>
+      </form>
     );
   }
 };
