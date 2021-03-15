@@ -115,6 +115,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
             </div>
             <div className="selected-column">
               <div className="action-buttons">
+                {props.isAdmin &&
                   <div className="edit-button svgOnHover">
                     <SpriteIcon
                       name="edit-outline"
@@ -123,7 +124,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                         props.history.push(map.UserProfile + `/${user.id}`);
                         e.stopPropagation();
                       }}/>
-                  </div>
+                  </div>}
                 {props.isClassroom &&
                   <div className="trash-button svgOnHover" onClick={e => {
                     props.unassign(user);

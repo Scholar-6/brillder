@@ -18,6 +18,7 @@ interface NameAndSubjectFormProps {
   classroom: any;
   onChange(name: string, subject: Subject): void;
   user: User;
+  onInvited?(): void;
 }
 
 const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
@@ -164,6 +165,9 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           close={(numInvited: number) => {
             setInvite(false);
             setInvitedCount(numInvited);
+            if (props && props.onInvited) {
+              props.onInvited();
+            }
           }}
         />
         <StudentInviteSuccessDialog
