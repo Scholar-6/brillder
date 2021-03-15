@@ -23,7 +23,6 @@ import InvestigationBuildPage from 'components/build/investigationBuildPage'
 import LoginPage from '../loginPage/loginPage';
 import ResetPasswordPage from '../resetPasswordPage/ResetPasswordPage';
 import ActivateAccountPage from '../activateAccountPage/activateAccountPage';
-import EmailActivateAccountPage from '../activateAccountPage/emailActivateAccountPage';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
 import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';
 import PostPlay from 'components/postPlay/PostPlay';
@@ -233,7 +232,6 @@ const App: React.FC<AppProps> = props => {
         <AuthRoute path={map.Login} component={LoginPage} />
         <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path="/resetPassword" component={ResetPasswordPage} />
-        <AuthRoute path={map.ActivateAccount + '/email'} component={EmailActivateAccountPage} />
         <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
         <Route path={map.TermsSignUp} component={Terms} />
         <Route path={map.TermsPage} component={PublicTerms} />

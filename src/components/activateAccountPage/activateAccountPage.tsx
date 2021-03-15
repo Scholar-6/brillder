@@ -40,6 +40,8 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
     initPolicyOpen = true;
   }
+
+  const [email, setEmail] = useState('');
   const [isPolicyOpen, setPolicyDialog] = useState(initPolicyOpen);
   const [loginState, setLoginState] = useState(LoginState.ChooseLoginAnimation);
   const [valid, setValid] = React.useState<boolean>();
@@ -50,8 +52,9 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
 
   const verifyToken = async () => {
     try {
-      await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
       setValid(true);
+      setEmail(response.data.email);
     } catch(e) {
       console.log(e.response.statusCode);
       setValid(false);
@@ -90,8 +93,12 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
     );
   }
 
+  if (!email) {
+    return <div />;
+  }
+
   if (!isPhone()) {
-    return <DesktopActivateAccountPage history={props.history} token={token} match={props.match} />;
+    return <DesktopActivateAccountPage history={props.history} token={token} match={props.match} email={email} />;
   }
 
   return (
