@@ -47,12 +47,14 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
       currentUsers.push({ email: currentEmail } as User);
       setCurrentEmail("");
     }
-    await axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/classrooms/students/${props.classroom.id}/new`,
-      { emails: currentUsers.map(u => u.email) },
-      { withCredentials: true }
-    );
-    props.close(currentUsers.length);
+    if (props.classroom) {
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_HOST}/classrooms/students/${props.classroom.id}/new`,
+        { emails: currentUsers.map(u => u.email) },
+        { withCredentials: true }
+      );
+      props.close(currentUsers.length);
+    }
   }, [users, currentEmail])
 
   return (
