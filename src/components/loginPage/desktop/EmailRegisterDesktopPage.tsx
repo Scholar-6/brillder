@@ -18,6 +18,7 @@ const connector = connect(null, mapDispatch);
 
 interface LoginProps {
   history: History;
+  email?: string;
   loginSuccess(): void;
 }
 
@@ -25,7 +26,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(props.email || "");
   const [password, setPassword] = useState("");
   const [isLoginWrong, setLoginWrong] = React.useState(false);
 

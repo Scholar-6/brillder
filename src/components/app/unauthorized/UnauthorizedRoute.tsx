@@ -28,6 +28,7 @@ interface StudentRouteProps {
 const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, innerComponent, user, ...rest }) => {
   const cookiesAccepted = getCookies();
   const [cookieOpen, setCookiePopup] = React.useState(!cookiesAccepted);
+  const [cookieReOpen, setCookieReOpen] = React.useState(false);
 
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!user) {
@@ -56,10 +57,11 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
         <StopTrackingButton shown={!cookieOpen} onClick={() => {
           clearCookiePolicy();
           setCookiePopup(true);
+          setCookieReOpen(true);
         }} />
         {/* for phones button and popup is in menus */}
         {!isPhone() &&
-        <CookiePolicyDialog isOpen={cookieOpen} close={() => {
+        <CookiePolicyDialog isOpen={cookieOpen} isReOpened={cookieReOpen} close={() => {
           acceptCookies();
           setCookiePopup(false);
         }} />}

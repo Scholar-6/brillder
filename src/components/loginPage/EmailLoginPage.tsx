@@ -12,9 +12,9 @@ import WrongLoginDialog from "./components/WrongLoginDialog";
 import DesktopLoginForm from "./desktop/DesktopLoginForm";
 import MobileEmailLogin from './MobileEmailLogin';
 import TermsLink from "components/baseComponents/TermsLink";
-import { isIPad13, isTablet, isMobile } from "react-device-detect";
 import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
 import { trackSignUp } from "services/matomo";
+import { isPhone } from "services/phone";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -127,10 +127,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
     });
   };
 
-  if (isIPad13 || isTablet) {
-    return <EmailLoginDesktopPage history={props.history} match={props.match} />
-  }
-  if (!isMobile) {
+  if (!isPhone()) {
     return <EmailLoginDesktopPage history={props.history} match={props.match} />
   }
 
