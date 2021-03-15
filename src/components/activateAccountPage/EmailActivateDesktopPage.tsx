@@ -7,7 +7,7 @@ import axios from "axios";
 import actions from "redux/actions/auth";
 import LoginLogo from 'components/loginPage/components/LoginLogo';
 import WrongLoginDialog from "components/loginPage/components/WrongLoginDialog";
-import DesktopLoginForm from "components/loginPage/desktop/DesktopLoginForm";
+import DesktopActivateForm from "./DesktopActivateForm";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -67,16 +67,13 @@ const EmailActivateDesktopPage: React.FC<LoginProps> = (props) => {
         <LoginLogo />
       </div>
       <div className="button-box">
-        <DesktopLoginForm
-          buttonLabel="Sign up"
+        <DesktopActivateForm
           email={email}
-          setEmail={setEmail}
           password={password}
           setPassword={setPassword}
           passwordHidden={passwordHidden}
           setHidden={setHidden}
           handleSubmit={handleLoginSubmit}
-          register={() => resetPassword(password)}
         />
       </div>
       <WrongLoginDialog isOpen={isLoginWrong} submit={() => {}} close={() => setLoginWrong(false)} />
