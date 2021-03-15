@@ -6,6 +6,7 @@ import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { sendAssignmentReminder } from "services/axios/brick";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
@@ -33,7 +34,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   }
 
   sendNotifications() {
-    //#2888 this should send notifications to students.
+    sendAssignmentReminder(this.props.assignment.id);
   }
 
   renderVertical(assignmentId: number, color: string) {
