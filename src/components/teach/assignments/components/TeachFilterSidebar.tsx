@@ -154,7 +154,6 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
         <div className="filter-container sort-by-box">
           <div style={{ display: 'flex' }}>
             <div className="class-header" style={{ width: '50%' }}>CLASSES</div>
-            <div className="individuals-header" style={{ width: '50%', textAlign: 'right' }}>INDIVIDUALS</div>
           </div>
         </div>
         <div className="filter-container indexes-box classrooms-filter">

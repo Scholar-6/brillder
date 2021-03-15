@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
-import { TeachClassroom, Assignment } from "model/classroom";
+import { TeachClassroom, Assignment, StudentStatus } from "model/classroom";
 import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { assignmentArchive, sendAssignmentReminder } from "services/axios/brick";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
   classroom?: TeachClassroom;
   assignment: Assignment;
   isExpanded?: boolean;
+  isStudent?: boolean;
   isStudentAssignment?: boolean;
   move?(): void;
   expand?(classroomId: number, assignmentId: number): void;
@@ -32,7 +34,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   }
 
   sendNotifications() {
-    //#2888 this should send notifications to students.
+    sendAssignmentReminder(this.props.assignment.id);
   }
 
   renderVertical(assignmentId: number, color: string) {
@@ -84,8 +86,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         return <SpriteIcon name="reminder" className="active reminder-icon" onClick={this.sendNotifications.bind(this)} />;
       }
     } else {
-      // if assignment
-      console.log(assignment);
+      // if student assignment
+      if (!this.isStudentCompleted(studentStatus)) {
+        return <SpriteIcon name="reminder" className="active reminder-icon" onClick={this.sendNotifications.bind(this)} />;
+      }
     }
     return <SpriteIcon name="reminder" className="active reminder-icon finished" />;
   }
@@ -115,8 +119,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         return false;
       }
     } else {
-      // if assignment
-
+      // if student assignment
+      if (!this.isStudentCompleted(studentStatus)) {
+        return false;
+      }
     }
     return true;
   }
@@ -137,6 +143,36 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
       average = byStatus[1] ? Math.round(byStatus[1].avgScore).toString() : '—';
     }
     return average;
+  }
+
+  async assignmentArchive() {
+    let res = await assignmentArchive(this.props.assignment.id);
+    console.log(res);
+  }
+
+  renderNoAttempt() {
+    return (
+      <div className="status-text-centered">
+        Not Attempted
+      </div>
+    );
+  }
+
+  isStudentCompleted(studentStatus: StudentStatus[]) {
+    return !(!studentStatus || studentStatus.length !== 1 || studentStatus[0].status <= 0)
+  }
+
+  renderStudentStatus() {
+    if (!this.props.isStudent) { return <div/> }
+    const {studentStatus} = this.props.assignment;
+
+    if (!this.isStudentCompleted(studentStatus)) { return this.renderNoAttempt() }
+
+    return (
+      <div className="status-text-centered">
+        Completed
+      </div>
+    );
   }
 
   render() {
@@ -179,13 +215,18 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           <div className="average">
             Avg: {this.getAverageScore()}
           </div>
+          {this.renderStudentStatus()}
         </div>
         <div className={`teach-brick-actions-container ${this.isCompleted() ? 'completed' : ''}`}>
           <div className="archive-button-container">
             <div className="green-hover">
               <div />
             </div>
-            <SpriteIcon name="archive" className="text-gray" />
+            <SpriteIcon name="archive" onClick={() => {
+              if (this.isCompleted()) {
+                this.assignmentArchive();
+              }
+            }} className="text-gray" />
           </div>
           <div className="css-custom-tooltip">
             Archive brick
