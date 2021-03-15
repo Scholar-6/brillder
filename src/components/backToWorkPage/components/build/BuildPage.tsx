@@ -205,21 +205,29 @@ class BuildPage extends Component<BuildProps, BuildState> {
     return filters.build && filters.review && filters.draft;
   }
 
+  moveBack() {
+    if (this.isThreeColumns()) {
+      this.moveThreeColumnsBack();
+    } else {
+      this.moveAllBack();
+    }
+  }
+
+  moveNext() {
+    if (this.isThreeColumns()) {
+      this.moveThreeColumnsNext();
+    } else {
+      this.moveAllNext();
+    }
+  }
+
   handleKey(e: any) {
     // only public page
     if (this.state.filters.isCore) {
       if (upKeyPressed(e)) {
-        if (this.isThreeColumns()) {
-          this.moveThreeColumnsBack();
-        } else {
-          this.moveAllBack();
-        }
+        this.moveBack();
       } else if (downKeyPressed(e)) {
-        if (this.isThreeColumns()) {
-          this.moveThreeColumnsNext();
-        } else {
-          this.moveAllNext();
-        }
+        this.moveNext();
       }
     }
   }
@@ -672,6 +680,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 searchString={searchString}
                 published={published}
                 isCorePage={false}
+                moveNext={this.moveNext.bind(this)}
+                moveBack={this.moveBack.bind(this)}
                 switchPublish={this.switchPublish.bind(this)}
                 handleDeleteOpen={this.handleDeleteOpen.bind(this)}
                 handleMouseHover={this.handleMouseHover.bind(this)}
