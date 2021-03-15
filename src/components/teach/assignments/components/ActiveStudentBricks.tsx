@@ -14,6 +14,7 @@ import ExpandedStudentAssignment from "./ExpandedStudentAssignment";
 interface ActiveStudentBricksProps {
   classroom: TeachClassroom | null;
   subjects: Subject[];
+  isArchive: boolean;
   activeStudent: TeachStudent;
 }
 
@@ -24,6 +25,7 @@ interface ActiveStudentState {
   activeAssignment: Assignment | null;
   assignmentStats: any;
   assignments: Assignment[];
+  archived: Assignment[];
 }
 
 class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStudentState> {
@@ -37,8 +39,9 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
       activeAssignment: null,
       assignmentStats: null,
       assignments: [],
+      archived: []
     };
-    this.loadAssignments(props.activeStudent.id);
+    this.loadAssignments();
   }
 
   /**
@@ -46,14 +49,16 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
    */
   componentDidUpdate(prevProps: ActiveStudentBricksProps) {
     if (this.props.activeStudent !== prevProps.activeStudent) {
-      this.loadAssignments(this.props.activeStudent.id);
+      this.loadAssignments();
     }
   }
 
-  async loadAssignments(studentId: number) {
-    let res = (await getStudentAssignments(studentId)) as Assignment[] | null;
+  async loadAssignments() {
+    let res = (await getStudentAssignments(this.props.activeStudent.id)) as Assignment[] | null;
     if (res) {
-      this.setState({ isLoaded: true, assignments: res });
+      const archived = res.filter(res => res.studentStatus && res.studentStatus.length > 0 &&  res.studentStatus[0].status === 3);
+      const assignments = res.filter(res => !res.studentStatus || !res.studentStatus[0] ||  res.studentStatus[0].status < 3);
+      this.setState({ isLoaded: true, assignments, archived });
     }
   }
 
@@ -69,8 +74,8 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
     });
   }
 
-  renderPagination() {
-    const itemsCount = this.state.assignments.length;
+  renderPagination(assignments: Assignment[]) {
+    const itemsCount = assignments.length;
     return (
       <BackPagePagination
         sortedIndex={this.state.sortedIndex}
@@ -87,10 +92,10 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
     this.setState({ sortedIndex: 0, activeAssignment: a, assignmentStats });
   }
 
-  renderStudentAssignments() {
+  renderStudentAssignments(assignments: Assignment[]) {
     return (
-      <div className="classroom-list">
-        {this.state.assignments.map((a, i) => {
+      <div className="classroom-list 66">
+        {assignments.map((a, i) => {
           if (
             i >= this.state.sortedIndex &&
             i < this.state.sortedIndex + this.state.pageSize
@@ -110,6 +115,7 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
                     expand={() => this.setActiveAssignment(a)}
                     key={i}
                     assignment={a as any}
+                    archive={this.loadAssignments.bind(this)}
                   />
                 </div>
               </Grow>
@@ -136,6 +142,11 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
   }
 
   render() {
+    let list = this.state.assignments;
+    if (this.props.isArchive) {
+      list = this.state.archived;
+    }
+    console.log(list)
     const { activeStudent } = this.props;
     const { activeAssignment } = this.state;
     return (
@@ -145,8 +156,8 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
         </div>
         {activeAssignment
           ? this.renderExpandedAssignment(activeAssignment)
-          : this.renderStudentAssignments()}
-        {this.renderPagination()}
+          : this.renderStudentAssignments(list)}
+        {this.renderPagination(list)}
       </div>
     );
   }

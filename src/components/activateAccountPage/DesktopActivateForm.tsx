@@ -50,7 +50,7 @@ class DesktopActivateForm extends React.Component<ActivateFormProps, LoginsState
             required
             type="email"
             disabled={true}
-            className="login-field"
+            className="login-field blue-disable"
             placeholder="Email"
             value={this.props.email}
           />
@@ -61,7 +61,7 @@ class DesktopActivateForm extends React.Component<ActivateFormProps, LoginsState
             type={this.props.passwordHidden ? "password" : "text"}
             className="login-field password"
             value={this.props.password}
-            placeholder="Password"
+            placeholder="Enter a password"
             onChange={this.props.setPassword}
           />
           <div className="hide-password-icon-container">

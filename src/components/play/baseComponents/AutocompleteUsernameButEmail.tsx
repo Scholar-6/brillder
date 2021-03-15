@@ -56,7 +56,7 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
             }}
             onChange={(evt) => {
               const { value } = evt.target;
-              if (value.length >= 3) {
+              if (value.length >= 2) {
                 suggestUsername(value).then((res) => {
                   if (res && res.length > 0) {
                     setSuggestions(res);
@@ -90,7 +90,7 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
       renderOption={option => (
         <React.Fragment>
           {option.profileImage ? <img alt="" className="autocomplete-profile-image" src={fileUrl(option.profileImage)} /> : <SpriteIcon className="autocomplete-profile-icon" name="user" />}
-          {option.firstName} {option.lastName} ({option.username})
+          {option.username}
         </React.Fragment>
       )}
     />
