@@ -32,6 +32,8 @@ interface BuildBricksProps {
 
   switchPublish(): void;
 
+  moveNext(): void;
+  moveBack(): void;
 
   // brick events
   handleDeleteOpen(brickId: number): void;
@@ -41,7 +43,43 @@ interface BuildBricksProps {
   onThreeColumnsMouseLeave(brickId: number, status: BrickStatus): void;
 }
 
-class BuildBricks extends Component<BuildBricksProps> {
+interface State {
+  bricksRef: React.RefObject<any>;
+  onBricksWheel(e: any): void;
+}
+
+class BuildBricks extends Component<BuildBricksProps, State> {
+  constructor(props: BuildBricksProps) {
+    super(props);
+
+    this.state = {
+      bricksRef: React.createRef<any>(),
+      onBricksWheel: this.onBricksWheel.bind(this)
+    }
+  }
+
+  componentDidMount() {
+    const {current} = this.state.bricksRef;
+    if (current) {
+      current.addEventListener('wheel', this.state.onBricksWheel, false);
+    }
+  }
+
+  componentWillUnmount() {
+    const {current} = this.state.bricksRef;
+    if (current) {
+      current.removeEventListener('wheel', this.state.onBricksWheel, false);
+    }
+  }
+
+  onBricksWheel(e: any) {
+    if (e.wheelDeltaY < 0) {
+      this.props.moveNext();
+    } else {
+      this.props.moveBack();
+    }
+  }
+
   renderGroupedBricks = (data: any[]) => {
     return data.map((item, i) => {
       const { brick }: { brick: Brick } = item;
@@ -388,7 +426,7 @@ class BuildBricks extends Component<BuildBricksProps> {
           publishedCount={this.props.published}
           onSwitch={this.props.switchPublish}
         />
-        <div className={`bricks-list ${this.isThreeColumns() ? 'three-columns' : 'list'}`}>
+        <div className={`bricks-list ${this.isThreeColumns() ? 'three-columns' : 'list'}`} ref={this.state.bricksRef}>
           {!this.isThreeColumns() && this.renderDescriptions()}
           {this.renderBricks()}
         </div>

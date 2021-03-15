@@ -514,6 +514,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             buttonsInvisible={true}
             classroom={this.state.activeClassroom}
             onChange={this.updateClassroom.bind(this)}
+            onInvited={this.loadData.bind(this)}
           />
         </Grid>
       </Grid>

@@ -8,13 +8,14 @@ import "swiper/swiper.scss";
 import { ReduxCombinedState } from "redux/reducers";
 import userActions from 'redux/actions/user';
 import { updateUser } from "services/axios/user";
-import { RolePreference, User, UserType } from "model/user";
+import { User } from "model/user";
 import { SubjectItem } from "model/brick";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
 import { GENERAL_SUBJECT } from "components/services/subject";
 
 import SubjectsColumnV2 from "./SubjectsColumnV2";
+import { isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 
 
 interface AllSubjectsProps {
@@ -86,8 +87,10 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
 
     if (saved) {
       await this.props.getUser();
-      if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
-      this.props.history.push('/home');
+      if (isStudentPreference(user)) {
+        this.props.history.push('/home');
+      } else if (isTeacherPreference(user)) {
+        this.props.history.push(map.ManageClassroomsTab);
       } else {
         this.props.history.push(map.UserProfile + '?onboardingUser=true');
       }
@@ -107,9 +110,9 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
 
   render() {
     let titleVerb = 'build';
-    if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === RolePreference.Teacher) {
+    if (isTeacherPreference(this.props.user)) {
       titleVerb = 'teach';
-    } else if(this.props.user.rolePreference && this.props.user.rolePreference.roleId === RolePreference.Student) {
+    } else if(isStudentPreference(this.props.user)) {
       titleVerb = 'play';
     }
     return (

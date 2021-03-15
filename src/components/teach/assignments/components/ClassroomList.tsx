@@ -97,6 +97,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
                 subjects={this.props.subjects}
                 expand={this.props.expand.bind(this)}
                 key={i} classroom={c.classroom} assignment={c.assignment}
+                archive={() => {}}
               />
             </div>
           </Grow>
