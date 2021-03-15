@@ -39,6 +39,44 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         justify-content: flex-end;
         flex-direction: column;
         width: 100%;
+        .share-button,
+        .assign-small,
+        .adapt-small {
+          overflow: visible !important;
+          position: relative;
+          .custom-tooltip {
+            z-index: 100;
+            bottom: -3vw;
+          }
+        }
+        .highlight-button {
+          position: relative;
+          span {
+            transition: all 300ms ease-out !important;
+          }
+          .custom-tooltip {
+            z-index: 100;
+            bottom: -3vw;
+          }
+          &.active {
+            span,
+            .svg {
+              color: var(--theme-yellow);
+            }
+            &:hover {
+              span,
+              .svg {
+                color: var(--white);
+              }
+            }
+          }
+          &:hover {
+            span,
+            .svg {
+              color: var(--theme-yellow);
+            }
+          }
+        }
         .sidebar-button {
           font-family: $font-family-bold !important;
           width: 100%;
@@ -957,7 +995,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       font-size: 1vw;
     }
   }
-  
+
   .prep-title {
     margin-top: 3vh;
   }
@@ -1015,7 +1053,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     .stepper {
       width: 100%;
       display: flex;
-      box-sizing: border-box;
       flex-wrap: wrap;
       > .step {
         color: var(--dark-gray);
@@ -1065,8 +1102,28 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   color: var(--theme-dark-blue);
 }
 
-// #2781 new play live and review theme
+// choose one and serveral hover answers.
+.choose-choice {
+  transition: all 300ms ease-out;
+}
+.choose-choice:hover {
+  background: rgba(130, 192, 237, 0.5) !important;
+  &.active {
+    background: var(--highlight-blue) !important;
+  }
+}
 
+// vertical shuffle hover
+.question-unique-play.vertical-shuffle-play {
+  .vertical-content {
+    transition: all 300ms ease-out;
+  }
+  .vertical-content:hover {
+    background: rgba(130, 192, 237, 0.5) !important;
+  }
+}
+
+// #2781 new play live and review theme
 .play-preview-pages .sorted-row.sorted-row-expanded .live-container,
 .play-preview-pages .sorted-row.sorted-row-expanded .provisional-container,
 .play-preview-pages .sorted-row.sorted-row-expanded .synthesis-container,
@@ -1094,7 +1151,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   .introduction-page {
     height: calc(100vh - 4vw) !important;
     padding-left: 0 !important;
-     .question-live-play {
+    .question-live-play {
       margin-top: $header-height !important;
       height: calc(100vh - 4vw - #{$header-height} - #{$foter-height}) !important;
       .question-title {
@@ -1185,14 +1242,13 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
   }
   .introduction-page {
-     .question-live-play {
+    .question-live-play {
       .question-title {
         display: block;
       }
     }
   }
 }
-
 // stepper in play
 .play-preview-pages .sorted-row.sorted-row-expanded .live-container,
 .play-preview-pages .sorted-row.sorted-row-expanded .review-container {
@@ -1237,7 +1293,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     .blue-circle-main-container {
       display: none;
     }
-  
+
     .step {
       display: inline-block !important;
       width: $step-container-width;
@@ -1313,7 +1369,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     // scroll buttons
     $scroll-button-size: 2vw;
 
-    .scroll-back-button, .scroll-next-button {
+    .scroll-back-button,
+    .scroll-next-button {
       position: absolute;
       top: 0;
       width: 2.5vw;
@@ -1335,7 +1392,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
   }
 }
-
 // only provisional score
 .play-preview-pages .sorted-row.sorted-row-expanded .provisional-container {
   .circle-progress-container {
@@ -1352,7 +1408,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
   }
 }
-
 // only synthesis score
 .play-preview-pages .sorted-row.sorted-row-expanded .synthesis-container {
   .synthesis-content {
@@ -1360,28 +1415,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     width: 44.5vw !important;
   }
 }
-
-// choose one and serveral hover answers.
-.choose-choice {
-  transition: all 300ms ease-out;
-}
-.choose-choice:hover {
-  background: rgba(130,192,237,0.5) !important;
-  &.active {
-    background: var(--highlight-blue) !important;
-  }
-}
-
-// vertical shuffle hover
-.question-unique-play.vertical-shuffle-play {
-  .vertical-content {
-    transition: all 300ms ease-out;
-  }
-  .vertical-content:hover {
-    background: rgba(130,192,237,0.5) !important;
-  }
-}
-
 // academic level
 .play-preview-pages .brick-container .left-brick-circle .round-button {
   display: flex !important;
@@ -1390,7 +1423,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   color: var(--white);
   font-size: 3vw;
 }
-
 // words hover
 .play-preview-pages .words-container {
   .word {
@@ -1404,7 +1436,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     background: rgba(130, 192, 237, 0.5) !important;
   }
 }
-
 // lines hover
 .play-preview-pages .lines-container {
   .line {
@@ -1418,20 +1449,18 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     background: rgba(130, 192, 237, 0.5) !important;
   }
 }
-
 // categorize hover
 .play-preview-pages .sort-category-list-container {
   .sortable-item:hover {
     background: rgba(130, 192, 237, 0.5) !important;
   }
 }
-
 // horizontal shuffle hover
 .play-preview-pages .horizontal-shuffle-answer:hover {
   background: rgba(130, 192, 237, 0.5) !important;
 }
 
-// missing choice dropdown font 
+// missing choice dropdown font
 .missing-choice {
   padding: 0.25vw 1vw;
   font-size: $base-font-size;

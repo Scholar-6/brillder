@@ -219,15 +219,6 @@
       top: 2vh;
     }
   }
-  .zEWidget-launcher {
-    @include phone_and_tabletP {
-      background-color: red !important;
-      left: 5% !important;
-      bottom: -1vh !important;
-      width: 17vw !important;
-      opacity: 0 !important;
-    }
-  }
   .users-pagination,
   .bricks-pagination {
     height: $pagination-size;
