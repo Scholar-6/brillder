@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { Grid, Hidden } from "@material-ui/core";
+import { connect } from 'react-redux';
 
 import "./FinalStep.scss";
 import { Brick } from "model/brick";
+import actions from "redux/actions/brickActions";
 
 import Clock from "../baseComponents/Clock";
 import ShareDialog from './dialogs/ShareDialog';
@@ -15,11 +17,14 @@ import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
 import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
+import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
+import axios from "axios";
 
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { rightKeyPressed } from "components/services/key";
 import AssignBrickColumn from "./AssignBrickColumn";
+import AdaptBrickColumn from "./AdaptBrickColumn";
 import { checkTeacherOrAdmin } from "components/services/brickService";
 import { isPhone } from "services/phone";
 
@@ -28,6 +33,7 @@ interface FinalStepProps {
   user: User;
   history: any;
   moveNext(): void;
+  fetchBrick(brickId: number): Promise<Brick | null>;
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
@@ -35,7 +41,9 @@ const FinalStep: React.FC<FinalStepProps> = ({
   user,
   history,
   moveNext,
-}) => {
+  fetchBrick
+}) => 
+{
   const [shareOpen, setShare] = React.useState(false);  
   const [linkOpen, setLink] = React.useState(false);
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
@@ -46,6 +54,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const [assignFailedItems, setAssignFailedItems] = React.useState([] as any[]);
   const [assignSuccess, setAssignSuccess] = React.useState(false);
   const [assignFailed, setAssignFailed] = React.useState(false);
+  const [isAdaptBrickOpen, setIsAdaptBrickOpen] = React.useState(false);
+  const [isAdapting, setIsAdapting] = React.useState(false);
 
   const [inviteSuccess, setInviteSuccess] = React.useState({
     isOpen: false,
@@ -79,6 +89,28 @@ const FinalStep: React.FC<FinalStepProps> = ({
     canSee = checkTeacherOrAdmin(user);
   } catch { }
 
+  let createBrickCopy = async function() {
+    // prevent multiple clicking
+    if (isAdapting) {
+      return;
+    }
+    setIsAdapting(true);
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/brick/adapt/${brick.id}`,
+      {},
+      { withCredentials: true }
+    );
+    const copyBrick = response.data as Brick;
+
+    await fetchBrick(copyBrick.id);
+    if (copyBrick) {
+      history.push(`/build/brick/${copyBrick.id}/plan?bookHovered=true&copied=true`);
+    } else {
+      console.log('can`t copy');
+    }
+    setIsAdapting(false)
+  }
+
   const renderActionColumns = () => {
     if (isPhone()) {
       return (
@@ -86,6 +118,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
           <div>
             <ShareColumn onClick={() => setShare(true)} />
             {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
+            {canSee && <AdaptBrickColumn onClick={() => setIsAdaptBrickOpen(true)} />}
           </div>
         </Grid>
       );
@@ -94,6 +127,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       <Grid className="share-row" container direction="row" justify="center">
         <ShareColumn onClick={() => setShare(true)} />
         {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
+        {canSee && <AdaptBrickColumn onClick={() => setIsAdaptBrickOpen(true)} />}
       </Grid>
     );
   }
@@ -168,6 +202,12 @@ const FinalStep: React.FC<FinalStepProps> = ({
         invite={() => { setShare(false); setInvite(true) }}
         close={() => setShare(false)}
       />
+      {canSee && <div>
+        <AdaptBrickDialog
+          isOpen={isAdaptBrickOpen}
+          close={() => setIsAdaptBrickOpen(false)}
+          submit={() => createBrickCopy()}
+        /> </div>}
        {canSee && <div>
         <AssignPersonOrClassDialog
           isOpen={assign}
@@ -209,4 +249,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
   );
 };
 
-export default FinalStep;
+const mapDispatch = (dispatch: any) => ({
+  fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
+});
+
+export default connect(null, mapDispatch)(FinalStep);
