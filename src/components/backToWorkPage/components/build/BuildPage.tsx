@@ -34,6 +34,7 @@ import { isMobile } from "react-device-detect";
 import map from "components/map";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { SubjectItem } from "../personalBuild/model";
+import { isTeacherPreference } from "components/services/preferenceService";
 
 interface BuildProps {
   searchString: string;
@@ -560,8 +561,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   render() {
     const {history} = this.props;
     if (isMobile) {
-      const {rolePreference} = this.props.user;
-      if (rolePreference?.roleId === RolePreference.Teacher) {
+      if (isTeacherPreference(this.props.user)) {
         history.push(map.BackToWorkTeachTab);
       } else {
         history.push(map.BackToWorkLearnTab);
