@@ -56,7 +56,7 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
             }}
             onChange={(evt) => {
               const { value } = evt.target;
-              if (value.length >= 3) {
+              if (value.length >= 2) {
                 suggestUsername(value).then((res) => {
                   if (res && res.length > 0) {
                     setSuggestions(res);
