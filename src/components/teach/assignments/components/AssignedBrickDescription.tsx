@@ -6,7 +6,7 @@ import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { sendAssignmentReminder } from "services/axios/brick";
+import { archiveAssignment, sendAssignmentReminder } from "services/axios/brick";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
@@ -18,6 +18,7 @@ interface AssignedDescriptionProps {
   move?(): void;
   expand?(classroomId: number, assignmentId: number): void;
   minimize?(): void;
+  archive(): void;
 }
 
 interface State {
@@ -138,17 +139,24 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
   getAverageScore() {
     const { byStatus } = this.props.assignment;
-    let average = '—';
+    let average = '';
     if (byStatus) {
-      average = byStatus[1] ? Math.round(byStatus[1].avgScore).toString() : '—';
+      average = byStatus[1] ? 'Avg: ' + Math.round(byStatus[1].avgScore).toString() : '';
     }
     return average;
+  }
+
+  async archiveAssignment() {
+    const res = await archiveAssignment(this.props.assignment.id);
+    if (res) {
+      this.props.archive();
+    }
   }
 
   renderNoAttempt() {
     return (
       <div className="status-text-centered">
-        Not Attempted
+        Not yet attempted
       </div>
     );
   }
@@ -208,12 +216,12 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
               <SpriteIcon name="users" className="text-theme-dark-blue" />
             </div>}
           <div className="average">
-            Avg: {this.getAverageScore()}
+            {this.getAverageScore()}
           </div>
           {this.renderStudentStatus()}
         </div>
         <div className={`teach-brick-actions-container ${this.isCompleted() ? 'completed' : ''}`}>
-          <div className="archive-button-container">
+          <div className="archive-button-container" onClick={this.archiveAssignment.bind(this)}>
             <div className="green-hover">
               <div />
             </div>
