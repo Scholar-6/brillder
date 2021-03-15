@@ -6,7 +6,7 @@ import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { sendAssignmentReminder } from "services/axios/brick";
+import { assignmentArchive, sendAssignmentReminder } from "services/axios/brick";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
@@ -145,6 +145,11 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     return average;
   }
 
+  async assignmentArchive() {
+    let res = await assignmentArchive(this.props.assignment.id);
+    console.log(res);
+  }
+
   renderNoAttempt() {
     return (
       <div className="status-text-centered">
@@ -217,7 +222,11 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
             <div className="green-hover">
               <div />
             </div>
-            <SpriteIcon name="archive" className="text-gray" />
+            <SpriteIcon name="archive" onClick={() => {
+              if (this.isCompleted()) {
+                this.assignmentArchive();
+              }
+            }} className="text-gray" />
           </div>
           <div className="css-custom-tooltip">
             Archive brick

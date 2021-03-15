@@ -186,6 +186,14 @@ export const sendAssignmentReminder = async (assignmentId: number) => {
   }
 }
 
+export const assignmentArchive = async (assignmentId: number) => {
+  try {
+    return await post<any>(`/brick/assignment/${assignmentId}/archive`, {});
+  } catch {
+    return false;
+  }
+}
+
 export default {
   sendToPublisher
 }
