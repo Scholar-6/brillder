@@ -130,9 +130,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
           .stepper {
             width: 100%;
             display: flex;
-            box-sizing: border-box;
             overflow-y: hidden;
-
             &.inline {
               display: block;
               .step {
@@ -240,18 +238,18 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
                   overflow: hidden;
                   text-overflow: ellipsis;
                 }
-  
+
                 p {
                   transition: all 300ms;
                   width: 100%;
                 }
-      
+
                 .synthesis-title {
                   color: var(--theme-dark-blue);
                   font-family: $font-family-bold;
                 }
               }
-              
+
               .play-clock {
                 display: none;
               }
@@ -1026,7 +1024,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     top: 0;
     left: 0;
     margin-top: 0 !important;
-    padding-top: 3vw!important;
+    padding-top: 3vw !important;
     padding-bottom: 1vw !important;
     width: 100%;
     height: $stepper-height;
@@ -1408,7 +1406,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
 }
 
-
 // fix for cutoff
 .brief-title {
   display: flex;
@@ -1436,7 +1433,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     &.fill-green {
       color: var(--theme-green);
     }
-  
+
     &.fill-yellow {
       color: var(--theme-yellow);
       transform: rotate(-90deg);
