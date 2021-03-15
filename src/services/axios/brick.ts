@@ -178,6 +178,14 @@ export const adaptBrick = async (brickId: number) => {
   }
 }
 
+export const sendAssignmentReminder = async (assignmentId: number) => {
+  try {
+    return await post<any>(`/brick/assignment/${assignmentId}/reminder`, {});
+  } catch {
+    return false;
+  }
+}
+
 export default {
   sendToPublisher
 }
