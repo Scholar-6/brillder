@@ -93,7 +93,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
       if (isStudentPreference(user)) {
         this.props.history.push('/home');
       } else if (isTeacherPreference(user)) {
-        this.props.history.push(map.ManageClassroomsTab);
+        this.props.history.push(map.MainPage);
       } else {
         this.props.history.push(map.UserProfile + '?onboardingUser=true');
       }
