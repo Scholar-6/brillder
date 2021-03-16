@@ -30,6 +30,8 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 import SuccessDialog from "components/baseComponents/dialogs/SuccessDialog";
+import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog";
+import NameAndSubjectForm from "../components/NameAndSubjectForm";
 
 
 interface TeachProps {
@@ -59,6 +61,7 @@ interface TeachState {
   isSearching: boolean;
   isLoaded: boolean;
   remindersDialogShown: boolean;
+  createClassOpen: boolean;
 
   filters: TeachFilters;
   handleKey(e: any): void;
@@ -93,6 +96,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       isLoaded: false,
 
       remindersDialogShown: false,
+      createClassOpen: false,
 
       totalCount: 0,
       isSearching: false,
@@ -332,6 +336,24 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   renderEmptyTabContent() {
     const { activeClassroom } = this.state;
+    if (this.state.classrooms.length === 0) {
+      return (
+        <div className="tab-content">
+          <div className={"tab-content-centered " + (activeClassroom ? 'empty-tab-content' : '')}>
+            <div className="new-class-container" onClick={() => this.setState({ createClassOpen: true })}>
+              <div className="icon-container">
+                <SpriteIcon
+                  name="users-custom"
+                  className="stroke-1"
+                />
+              </div>
+              <div className="bold-hover">+ Create Class</div>
+              <div className="text-center f-s-2 m-t-2vh">You can invite between 1 and 50 students to a class</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="tab-content">
         <div className={"tab-content-centered " + (activeClassroom ? 'empty-tab-content' : '')}>
@@ -451,6 +473,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             isLoaded={this.state.isLoaded}
             activeStudent={this.state.activeStudent}
             activeClassroom={this.state.activeClassroom}
+            isArchive={this.state.isArchive}
             setActiveClassroom={this.setActiveClassroom.bind(this)}
             setActiveStudent={this.setActiveStudent.bind(this)}
             filterChanged={this.teachFilterUpdated.bind(this)}
@@ -465,6 +488,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
           header="Reminder(s) sent!"
           isOpen={this.state.remindersDialogShown}
           close={() => this.setState(state => ({ ...state, remindersDialogShown: false }))}
+        />
+        <CreateClassDialog
+          isOpen={this.state.createClassOpen}
+          submit={(name, subject) => {
+            this.createClass(name, subject);
+            this.setState({ createClassOpen: false })
+          }}
+          close={() => { this.setState({ createClassOpen: false }) }}
         />
       </div>
     );

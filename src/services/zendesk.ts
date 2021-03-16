@@ -1,5 +1,6 @@
 import map from "components/map";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
+import { isPhone } from "./phone";
 
 declare global {
   interface Window { zESettings: any; }
@@ -8,7 +9,26 @@ declare global {
 const getZendeskIframe = () => document.getElementById("launcher") as any;
 const getWidgetIframe = () => document.getElementById("webWidget") as any;
 
+const attachStyleCss = (iframe: any, path: string) => {
+  try {
+    const cssLink = document.createElement("link");
+    cssLink.href = path; 
+    cssLink.rel = "stylesheet";
+    cssLink.type = "text/css";
+    const innnerDoc = iframe.contentDocument || iframe.contentWindow;
+    innnerDoc.head.appendChild(cssLink);
+  } catch (e) {
+    console.log('can`t attach zendesk styles' , e);
+  }
+}
+
 const initZendeskStyling = (iframe: any) => {
+  if (isPhone()) {
+    attachStyleCss(iframe, '/zendesk/zendesk_mobile.css');
+  }
+  if (isTablet || isIPad13) {
+    attachStyleCss(iframe, '/zendesk/zendesk_tablet.css');
+  }
   if (isMobile) { return; }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
   // iframe.style.height = '2.3vw';

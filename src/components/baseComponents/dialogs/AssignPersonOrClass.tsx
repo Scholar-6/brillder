@@ -233,11 +233,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             control={<Radio onClick={() => toggleDeadline(true)} />}
             label="Set date"
           />
-        </div>
-        <div className={haveDeadline ? 'r-day-date-row' : 'r-day-date-row r-hidden'}>
-          <div>
-            <TimeDropdowns onChange={setDeadline} />
-          </div>
+          {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
         </div>
         <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
           <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{ width: 'auto' }}>

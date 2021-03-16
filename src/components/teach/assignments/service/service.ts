@@ -1,7 +1,7 @@
 import { Assignment, TeachClassroom } from "model/classroom";
 import { TeachListItem } from "../components/ClassroomsList";
 
-const isArchived = (assignment: Assignment) => {
+export const isArchived = (assignment: Assignment) => {
   return assignment.studentStatus && assignment.studentStatus.length > 0 && assignment.studentStatus[0].status == 3;
 }
 

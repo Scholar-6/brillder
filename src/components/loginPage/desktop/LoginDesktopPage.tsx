@@ -68,7 +68,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
             <TypingLabel className="" onEnd={() => { }} label="Join the revolution" />
           </h1>
           <div className="image-container spinning">
-            <LoginWheel />
+            <img alt="" src="/images/login/PhoneWheellogin.svg" />
           </div>
         </div>}
       <Switch>
