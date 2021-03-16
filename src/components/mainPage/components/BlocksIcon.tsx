@@ -14,7 +14,11 @@ const BlocksIcon: React.FC<FirstButtonProps> = props => {
     className += ' hovered';
   }
   return (
-    <div className={className} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+    <div className={className} onMouseEnter={() => {
+      if (!props.disabled) {
+        setHover(true)
+      }
+    }} onMouseLeave={() => setHover(false)}>
       <div className="stack-blocks">
         <div className="bl bl-1" />
         <div className="bl bl-2" />
