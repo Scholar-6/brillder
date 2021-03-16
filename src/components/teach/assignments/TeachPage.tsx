@@ -45,6 +45,7 @@ interface TeachState {
   isAdmin: boolean;
   isArchive: boolean;
   pageSize: number;
+  classPageSize: number;
   assignmentPageSize: number;
   sortedIndex: number;
   classrooms: TeachClassroom[];
@@ -91,6 +92,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       subjects: [],
 
       pageSize: 6,
+      classPageSize: 5,
       assignmentPageSize: 8,
       sortedIndex: 0,
       handleKey: this.handleKey.bind(this),
@@ -140,6 +142,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
     let pageSize = this.state.pageSize;
     if (!this.state.activeStudent && this.state.activeClassroom && this.state.activeAssignment) {
       pageSize = this.state.assignmentPageSize;
+    }
+    if (this.state.activeClassroom) {
+      pageSize = this.state.classPageSize;
     }
     if (upKeyPressed(e)) {
       this.moveBack(pageSize);
@@ -252,7 +257,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   renderTeachPagination = () => {
     let itemsCount = 0;
-    const { pageSize, activeClassroom } = this.state;
+    let pageSize = this.state.pageSize;
+    const { activeClassroom } = this.state;
+
     if (this.state.activeStudent) {
       return "";
     } else if (activeClassroom && this.state.activeAssignment) {
@@ -260,9 +267,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
     } else {
       itemsCount = this.getTotalCount();
     }
+
+    if (activeClassroom) {
+      pageSize = this.state.classPageSize;
+    }
+
     return <BackPagePagination
       sortedIndex={this.state.sortedIndex}
-      pageSize={this.state.pageSize}
+      pageSize={pageSize}
       bricksLength={itemsCount}
       isRed={this.state.sortedIndex === 0}
       moveNext={() => this.moveNext(pageSize)}
@@ -272,7 +284,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   //#endregion
 
   renderEmptyTabContent() {
-    const {activeClassroom} = this.state;
+    const { activeClassroom } = this.state;
     return (
       <div className="tab-content">
         <div className={"tab-content-centered " + (activeClassroom ? 'empty-tab-content' : '')}>
@@ -346,7 +358,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 expand={this.setActiveAssignment.bind(this)}
                 startIndex={this.state.sortedIndex}
                 activeClassroom={activeClassroom}
-                pageSize={this.state.pageSize}
+                pageSize={this.state.classPageSize}
                 reloadClass={this.loadClass.bind(this)}
               />
               :

@@ -77,6 +77,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         <NameAndSubjectForm
           classroom={classroom}
           onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
+          onAssigned={() => this.props.reloadClass(classroom.id)}
         />
       </div>
     );
@@ -121,21 +122,13 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     const { classroom } = this.state;
     let items = [] as TeachListItem[];
     this.prepareClassItems(items, classroom);
-    let k = 0;
-    return items.map(item => {
-      if (item.classroom && item.assignment === null) {
-        k += 0.5;
-      } else {
-        k += 1;
-      }
-      return this.renderTeachListItem(item, k);
-    });
+    return items.map((item, i) => this.renderTeachListItem(item, i));
   }
 
   render() {
     return (
       <div className="classroom-list one-classroom-assignments">
-        <div className="fixed-classname">
+        <div className="classroom-title one-of-many first">
           {this.renderClassname()}
         </div>
         {this.renderContent()}
