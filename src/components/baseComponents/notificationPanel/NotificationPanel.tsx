@@ -61,7 +61,11 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
     const { history } = this.props;
     if (history) {
       if (notification.type === NotificationType.BrickPublished) {
-        history.push(map.ViewAllPage);
+        if(notification.brick) {
+          history.push(map.SubjectBricksPage(notification.brick.subjectId));
+        } else {
+          history.push(map.AllSubjects);
+        }
       } else if (notification.type === NotificationType.BrickSubmittedForReview) {
         history.push(map.BackToWorkPage);
       }

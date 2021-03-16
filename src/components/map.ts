@@ -28,6 +28,8 @@ export const ManageClassroomsTab = '/teach/manage-classrooms';
 
 export const ViewAllPage = '/play/dashboard';
 export const AllSubjects = ViewAllPage + '/all-subjects';
+export const SubjectBricksPage = (subjectId: number) =>
+  `/play/dashboard?subjectId=${subjectId}`
 
 const investigation = (brickId: number) => {
   return `/build/brick/${brickId}/investigation`;
@@ -141,6 +143,7 @@ export default {
 
   ViewAllPage,
   AllSubjects,
+  SubjectBricksPage,
 
   postPlay,
   playAssignment,
