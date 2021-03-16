@@ -10,62 +10,20 @@
   }
 }
 
-$expanded-intro-padding: 2vw;
+$expanded-intro-padding: 2vh;
 $introduction-desktop-height: calc(100vh - #{$expanded-intro-padding} - #{$page-head-height});
 $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
 $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 .play-preview-pages {
-  background: var(--theme-dark-blue);
-  min-height: 100%;
-
-  .sorted-row {
-    @include phone_and_tabletP {
-      height: $back-to-work-height-mobile-view;
-      overflow: hidden;
-    }
-    .sort-and-filter-container {
-      @include phone_and_tabletP {
-        height: $back-to-work-height-mobile-view;
-      }
-    }
-
-    .brick-row-container {
-      background-color: var(--white);
-
-      @include phone_and_tabletP {
-        border-radius: 0;
-        height: $back-to-work-height-mobile-view;
-      }
-
-      .brick-container {
-        .MuiGrid-container {
-          @include phone_and_tabletP {
-            display: flex;
-            flex-direction: column;
-          }
-        }
-      }
-    }
-  }
-
   .sorted-row.sorted-row-expanded {
     padding-top: $expanded-intro-padding;
     margin-top: 0;
-
+    // padding-top: 0;
     .brick-row-container {
       width: calc(98vw - #{$home-button-size}) !important;
       height: $introduction-expanded-height !important;
-    }
-
-    @include phone_and_tabletL {
-      padding-top: 0;
-
-      .brick-row-container {
-        height: 100% !important;
-        width: 100% !important;
-      }
     }
   }
 
