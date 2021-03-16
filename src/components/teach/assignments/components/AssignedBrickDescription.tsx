@@ -100,7 +100,19 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           return <SpriteIcon name="reminder" className="active reminder-icon bg-theme-orange" onClick={this.sendNotifications.bind(this)} />;
         }
       } else {
-        return <SpriteIcon name="reminder" className="active reminder-icon" onClick={this.sendNotifications.bind(this)} />;
+        return (
+          <div className="reminder-brick-actions-container completed">
+          <div className="reminder-button-container" onClick={this.archiveAssignment.bind(this)}>
+            <div className="green-hover">
+              <div />
+            </div>
+            <SpriteIcon name="reminder" className="active reminder-icon" onClick={this.sendNotifications.bind(this)} />
+          </div>
+          <div className="css-custom-tooltip">
+            Archive brick
+          </div>
+        </div>
+        );
       }
     }
   }
