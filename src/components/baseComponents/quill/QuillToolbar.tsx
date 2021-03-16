@@ -68,7 +68,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         bulletedList: (props: any) => <QuillGlobalToolbarButton name="list" value="bullet" {...props} />,
         numberedList: (props: any) => <QuillGlobalToolbarButton name="list" value="ordered" {...props} />,
         latex: (props: any) => <QuillGlobalToolbarButton name="latex" {...props} />,
-        image: (props: any) => <QuillGlobalToolbarButton name="image" {...props} />,
+        image: (props: any) => <QuillGlobalToolbarButton name="image" icon="image" {...props} />,
     }), []);
 
     return (

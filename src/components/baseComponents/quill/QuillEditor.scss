@@ -80,6 +80,10 @@
   }
 }
 
+svg#image {
+  stroke-width: 1.5;
+}
+
 .quill-document-editor {
   border-radius: $editor-radius;
   background-color: var(--tab-gray);

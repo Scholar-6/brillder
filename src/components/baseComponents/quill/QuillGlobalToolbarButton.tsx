@@ -4,6 +4,7 @@ import SpriteIcon from '../SpriteIcon';
 interface QuillGlobalToolbarButtonProps {
     name: string;
     value?: string;
+    icon?: string;
     
     enabled?: boolean;
     handler(name: string, value?: string): boolean | undefined;
@@ -20,7 +21,7 @@ const QuillGlobalToolbarButton: React.FC<QuillGlobalToolbarButtonProps> = props 
                 return props.enabled && (props.handler(props.name, props.value) ?? false);
             }}
         >
-            <SpriteIcon name={"ql-" + props.name + (props.value ? `-${props.value}` : "")} />
+            <SpriteIcon name={props.icon ? props.icon : ("ql-" + props.name + (props.value ? `-${props.value}` : ""))} />
         </button>
     );
 };
