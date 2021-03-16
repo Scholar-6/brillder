@@ -14,13 +14,14 @@ import InviteStudentEmailDialog from '../manageClassrooms/components/InviteStude
 import "./NameAndSubjectForm.scss";
 
 interface NameAndSubjectFormProps {
-  buttonsInvisible?: boolean;
   classroom: any;
   onChange(name: string, subject: Subject): void;
   user: User;
   onInvited?(): void;
   onAssigned?(): void;
+  moveToAssignemts?(): void;
   isArchive?: boolean;  // for assignments
+  isStudents?: boolean; // for manage classes page
 }
 
 const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
@@ -152,13 +153,14 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
               <div className="css-custom-tooltip">Add New Student</div>
             </div>
           </div>
-          {!props.buttonsInvisible &&
-            <div className="assign-button-container">
-              <div className="btn" onClick={() => togglePopup(true)}>
-                Assign a new brick
-              <SpriteIcon name="file-plus" />
-              </div>
-            </div>}
+          <div className="assign-button-container">
+            <div className="btn" onClick={() => {
+              togglePopup(true);
+            }}>
+              Assign a new brick
+            <SpriteIcon name="file-plus" />
+            </div>
+          </div>
         </div>
         <AssignBrickClass
           isOpen={isOpen}
@@ -168,6 +170,9 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
             setSuccess({ isOpen: true, brick })
             if (props.onAssigned) {
               props.onAssigned();
+            }
+            if (props.isStudents) {
+              props.moveToAssignemts && props.moveToAssignemts();
             }
           }}
           failed={brick => setFailed({ isOpen: true, brick })}
