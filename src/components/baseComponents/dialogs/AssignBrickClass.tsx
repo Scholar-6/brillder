@@ -64,8 +64,8 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   }
 
   const assign = async () => {
-    let res = await assignToClasses([props.classroomId]);
-    if (res) {
+    const res = await assignToClasses([props.classroomId]); // empty array if succss
+    if (res === false) {
       props.failed(brick);
     } else {
       props.success(brick);

@@ -440,6 +440,7 @@
     @extend %flexCenter;
     color: var(--theme-light-blue);
     .glasses-icon-container {
+      margin-top: 5vh;
       @extend %transitionAll300;
       .glass-eyes-inside {
         @extend %transitionAll300;
@@ -502,5 +503,8 @@
       text-align: center;
       font-size: 1.5vw;
     }
+  }
+  .empty-tab-content {
+    height: 80%;
   }
 }

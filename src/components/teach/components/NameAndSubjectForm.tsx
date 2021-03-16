@@ -19,6 +19,7 @@ interface NameAndSubjectFormProps {
   onChange(name: string, subject: Subject): void;
   user: User;
   onInvited?(): void;
+  onAssigned?(): void;
 }
 
 const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
@@ -143,7 +144,12 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           isOpen={isOpen}
           classroomId={props.classroom.id}
           subjectId={props.classroom.subjectId || props.classroom.subject.id}
-          success={brick => setSuccess({ isOpen: true, brick })}
+          success={brick => {
+            setSuccess({ isOpen: true, brick })
+            if (props.onAssigned) {
+              props.onAssigned();
+            }
+          }}
           failed={brick => setFailed({ isOpen: true, brick })}
           close={() => togglePopup(false)}
         />
