@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import 'swiper/swiper.scss';
 
 import MainPageMobile from "./MainPageMobile";
 import MainPageDesktop from './MainPageDesktop';
+import { isPhone } from "services/phone";
 
 interface MainPageProps {
   history: any;
@@ -11,7 +11,7 @@ interface MainPageProps {
 
 class MainPage extends Component<MainPageProps> {
   render() {
-    if (isMobile && !(isTablet || isIPad13)) {
+    if (isPhone()) {
       return <MainPageMobile history={this.props.history} />
     }
     return <MainPageDesktop history={this.props.history} />

@@ -25,9 +25,16 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
     return "View All Bricks";
   }
 
+  let className = "view-item-container";
+  if (props.disabled) {
+    className += " disabled";
+  } else {
+    className += ' zoom-item'
+  }
+
   return (
     <div
-      className="view-item-container zoom-item"
+      className={className}
       onClick={() => {
         if (!props.disabled) {
           props.history.push(map.AllSubjects);

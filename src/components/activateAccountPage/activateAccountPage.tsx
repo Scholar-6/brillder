@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Grid, Hidden } from "@material-ui/core";
-import { connect } from "react-redux";
 import { History } from "history";
 import axios from 'axios';
 
 import "./activateAccountPage.scss";
-import actions from "redux/actions/auth";
 import LoginLogo from 'components/loginPage/components/LoginLogo';
 import GoogleButton from "components/loginPage/components/GoogleButton";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
@@ -16,12 +14,6 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import TermsLink from "components/baseComponents/TermsLink";
 import { isPhone } from "services/phone";
 import DesktopActivateAccountPage from "./DesktopActivateAccountPage";
-
-const mapDispatch = (dispatch: any) => ({
-  loginSuccess: () => dispatch(actions.loginSuccess()),
-});
-
-const connector = connect(null, mapDispatch);
 
 export enum LoginState {
   ChooseLoginAnimation,
@@ -141,4 +133,4 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
   );
 };
 
-export default connector(ActivateAccountPage);
+export default ActivateAccountPage;
