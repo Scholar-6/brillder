@@ -9,6 +9,7 @@ const getZendeskIframe = () => document.getElementById("launcher") as any;
 const getWidgetIframe = () => document.getElementById("webWidget") as any;
 
 const initZendeskStyling = (iframe: any) => {
+  /*
   if (isMobile) { return; }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
   iframe.style.height = '2.3vw';
@@ -64,6 +65,7 @@ const initZendeskStyling = (iframe: any) => {
 
   style.type = 'text/css';
   style.appendChild(document.createTextNode(css));
+  */
 }
 
 export function minimizeZendeskButton(iframe?: any) {
@@ -72,6 +74,7 @@ export function minimizeZendeskButton(iframe?: any) {
     iframe = getZendeskIframe();
     if (!iframe) { return; }
   }
+  /*
   iframe.style.height = '2.6vw';
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
   let div = innerDoc.querySelectorAll('#Embed > div')[0]
@@ -85,9 +88,11 @@ export function minimizeZendeskButton(iframe?: any) {
   let helpText = innerDoc.getElementsByClassName("label-3kk12");
   helpText[0].style.opacity = 0;
   helpText[0].style.width = 0;
+  */
 }
 
 export function maximizeZendeskButton(iframe?: any) {
+  /*
   if (isMobile) { return; }
   if (!iframe) {
     iframe = getZendeskIframe();
@@ -106,6 +111,7 @@ export function maximizeZendeskButton(iframe?: any) {
   let helpText = innerDoc.getElementsByClassName("label-3kk12");
   helpText[0].style.opacity = 1;
   helpText[0].style.width = "100%";
+  */
 }
 
 function addZendesk() {
@@ -179,7 +185,7 @@ const isPlayPage = (pathName: string) => {
 function setZendeskMode(iframe: any, location: any) {
   const { pathname } = location;
   if (isMobile) {
-    setMobilePlayButton(iframe, pathname);
+    //setMobilePlayButton(iframe, pathname);
     return;
   }
   // #1332 small mode only in viewAll and manageUsers pages
@@ -195,9 +201,9 @@ function setZendeskMode(iframe: any, location: any) {
 
   try {
     if (isBigMode && !isIgnorePage) {
-      maximizeZendeskButton(iframe);
+      //maximizeZendeskButton(iframe);
     } else if (!isIgnorePage) {
-      minimizeZendeskButton(iframe);
+      //minimizeZendeskButton(iframe);
     }
   } catch { }
 }
@@ -238,6 +244,7 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
  * Button size and position are from .\src\components\play\themes\BrickPageMobile.scss
  */
 const setMobilePlayButton = (iframe: any, pathname: string) => {
+  /*
   if (!isMobile && (isTablet || isIPad13)) {
     return;
   }
@@ -247,6 +254,7 @@ const setMobilePlayButton = (iframe: any, pathname: string) => {
   }
 
   setMobilePlayButtonStyle(iframe);
+  */
 }
 
 const setMobilePlayButtonStyle = (iframe: any) => {
@@ -256,6 +264,7 @@ const setMobilePlayButtonStyle = (iframe: any) => {
   }
 
   try {
+    /*
     const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
     iframe.style.display = 'flex';
     iframe.style.alignItems = 'center';
@@ -297,5 +306,6 @@ const setMobilePlayButtonStyle = (iframe: any) => {
     let g = icon.getElementById("Layer_4");
     let whiteCircle = g.children[g.children.length - 1];
     whiteCircle.style.fillOpacity = '0';
+    */
   } catch { }
 }

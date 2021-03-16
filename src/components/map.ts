@@ -23,6 +23,7 @@ export const BackToWorkBuildTab = BackToWorkPage + '/build';
 export const BackToWorkLearnTab = BackToWorkPage + '/learn';
 
 export const TeachAssignedTab = '/teach/assigned';
+export const TeachAssignedArchiveTab = TeachAssignedTab + '/archive';
 export const ManageClassroomsTab = '/teach/manage-classrooms';
 
 
@@ -137,6 +138,7 @@ export default {
   BackToWorkLearnTab,
 
   TeachAssignedTab,
+  TeachAssignedArchiveTab,
   ManageClassroomsTab,
 
   ViewAllPage,

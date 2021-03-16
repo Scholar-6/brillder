@@ -153,7 +153,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
         <form>
           <div>
             <h1>
-              <LabelTyping start={true} value="Generate a username" onFinish={() => setStep(AnimationStep.TitleFinished)} />
+              <LabelTyping start={true} value="Get your username" onFinish={() => setStep(AnimationStep.TitleFinished)} />
             </h1>
             <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
               <Input

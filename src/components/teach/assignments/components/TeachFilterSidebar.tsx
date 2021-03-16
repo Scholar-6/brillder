@@ -7,6 +7,8 @@ import { TeachFilters } from '../../model';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import EmptyFilter from "../filter/EmptyFilter";
 import RadioButton from "components/baseComponents/buttons/RadioButton";
+import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
+import { Subject } from "model/brick";
 
 enum TeachFilterFields {
   Assigned = 'assigned',
@@ -21,12 +23,15 @@ interface FilterSidebarProps {
   setActiveStudent(s: TeachStudent): void;
   setActiveClassroom(id: number | null): void;
   filterChanged(filters: TeachFilters): void;
+  createClass(name: string, subject: Subject): void;
 }
 
 interface FilterSidebarState {
   filterExpanded: boolean;
   filters: TeachFilters;
   isClearFilter: boolean;
+
+  createClassOpen: boolean;
 
   // empty filter
   firstStarted: boolean;
@@ -46,7 +51,9 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
       },
       firstStarted: true,
       secondStarted: false,
-      thirdStarted: false
+      thirdStarted: false,
+
+      createClassOpen: false
     };
   }
 
@@ -158,6 +165,9 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             <div className="class-header" style={{ width: '50%' }}>CLASSES</div>
           </div>
         </div>
+        <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
+          + Create Class
+        </div>
         <div className="filter-container indexes-box classrooms-filter">
           <div
             className={"index-box " + (!this.props.activeClassroom ? "active" : "")}
@@ -192,6 +202,14 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     return (
       <Grid container item xs={3} className="sort-and-filter-container teach-assigned">
         {this.renderContent()}
+        <CreateClassDialog
+          isOpen={this.state.createClassOpen}
+          submit={(name, subject) => {
+            this.props.createClass(name, subject);
+            this.setState({ createClassOpen: false })
+          }}
+          close={() => { this.setState({ createClassOpen: false }) }}
+        />
       </Grid>
     );
   }
