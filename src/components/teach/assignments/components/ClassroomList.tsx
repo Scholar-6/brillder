@@ -24,6 +24,7 @@ interface ClassroomListProps {
   activeClassroom: TeachClassroom;
   expand(classroomId: number, assignmentId: number): void;
   reloadClass(id: number): void;
+  onRemind?(): void;
 }
 
 interface ListState {
@@ -99,6 +100,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
                 expand={this.props.expand.bind(this)}
                 key={i} classroom={c.classroom} assignment={c.assignment}
                 archive={() => {}}
+                onRemind={this.props.onRemind}
               />
             </div>
           </Grow>
