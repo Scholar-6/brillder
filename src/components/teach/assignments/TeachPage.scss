@@ -475,13 +475,8 @@
         transform: scale(1.2);
         .glass-eyes-inside {
           opacity: 1;
-
           .aperture {
-            -webkit-animation: rotating 2s linear infinite;
-            -moz-animation: rotating 2s linear infinite;
-            -ms-animation: rotating 2s linear infinite;
-            -o-animation: rotating 2s linear infinite;
-            animation: rotating 2s linear infinite;
+            @include animation(rotating 2s linear infinite)
           }
         }
       }

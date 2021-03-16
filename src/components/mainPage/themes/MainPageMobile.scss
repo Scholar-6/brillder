@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .mainPageMobile ~ .beta-text {
   display: none;
@@ -16,7 +16,6 @@
   font-family: $font-family-black;
 
   .manage-classes {
-
     #Path_8,
     #Ellipse_12,
     #Ellipse_12-2,
@@ -67,19 +66,20 @@
     @include tabletP {
       padding: 5vh 0;
     }
-
-    .eye-glass-icon,
     .btn {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       @extend %textCenter;
       flex-direction: column;
-
       .svg {
         @extend %removePosition;
         width: 150px;
         height: 120px;
+        @include phone_and_tabletP {
+          width: 150px;
+          height: 120px;
+        }
       }
     }
 
@@ -120,6 +120,117 @@
     @include tabletP {
       .item-description {
         margin-top: 0.5vw;
+      }
+    }
+  }
+
+  .glasses {
+    cursor: pointer;
+    display: inline;
+    margin: 0 0.3vw;
+    width: 4vw !important;
+    color: var(--theme-orange);
+    svg {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .eye-glass-icon {
+    $shift: 10px;
+    $eye-size: 92px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    @extend %textCenter;
+    flex-direction: column;
+    .svg {
+      @extend %removePosition;
+      width: 150px;
+      height: 120px;
+    }
+    .eye-glass-frame {
+      svg {
+        @extend %removePosition;
+      }
+    }
+    .glass-eyes-left,
+    .glass-eyes-right {
+      width: $eye-size;
+      height: $eye-size;
+      transition-delay: 200ms;
+      @extend %transitionAll300;
+      @extend %floatToYCenter;
+      @extend %flexCenter;
+      opacity: 0;
+      > svg {
+        width: 60%;
+        height: 60%;
+        &.aperture {
+          animation-delay: 3s;
+        }
+        &.eye-pupil {
+          animation-delay: 0s;
+        }
+      }
+      .glass-left-inside,
+      .glass-right-inside {
+        width: $eye-size;
+        height: $eye-size;
+        @extend %flexCenter;
+        @extend %transitionAll300;
+        transform: translate(0);
+        opacity: 0;
+        svg {
+          width: 30%;
+          height: 100%;
+          background-color: var(--white);
+          border-radius: 50%;
+          opacity: 0;
+          color: var(--theme-dark-blue);
+          &.eye-pupil {
+            animation-name: eye-movement-2;
+            animation-duration: 4s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+          }
+          &.aperture {
+            @include animation(rotating 2s linear infinite);
+            animation-delay: 4s;
+          }
+        }
+      }
+      .glass-left-inside {
+        svg {
+          height: 100% !important;
+        }
+      }
+    }
+    .glass-eyes-left {
+      left: $shift;
+    }
+    .glass-eyes-right {
+      right: $shift;
+    }
+    // hover
+    &:hover {
+      .glass-eyes-left,
+      .glass-eyes-right {
+        opacity: 1;
+        > svg {
+          opacity: 1;
+          visibility: visible;
+        }
+        .glass-right-inside,
+        .glass-left-inside {
+          opacity: 1;
+          svg {
+            &.eye-pupil {
+              opacity: 1;
+            }
+          }
+        }
       }
     }
   }

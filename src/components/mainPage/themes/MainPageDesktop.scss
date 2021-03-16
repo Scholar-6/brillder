@@ -1,35 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
-
-@-webkit-keyframes rotating {
-  from {
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-@keyframes rotating {
-  from {
-    -ms-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -ms-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .mainPage {
   $welcome-col-width: 35.2vw;
@@ -67,7 +38,7 @@
         font-weight: 600;
         text-transform: uppercase;
         font-family: $font-family-light;
-        transition: font-family .2s ease;
+        transition: font-family 0.2s ease;
         color: var(--theme-orange);
         .custom-tooltip {
           margin-left: -1.4vw;
@@ -76,8 +47,9 @@
           margin-top: 4.9vw;
           font-family: $font-family-regular;
         }
-        
-        .svg, .profile-image-border {
+
+        .svg,
+        .profile-image-border {
           height: 3vw;
           width: 3vw;
           margin-right: 1vw;
@@ -103,7 +75,7 @@
         }
       }
       .notifications-text {
-        margin-top: 4.3vw;//10vh;
+        margin-top: 4.3vw; //10vh;
         letter-spacing: 0.1vw;
         font-family: $font-family-light;
         font-size: 1.5vw;
@@ -174,7 +146,6 @@
     @include tabletP {
       padding: 5vh 0;
     }
-    .eye-glass-icon,
     .btn {
       display: flex;
       align-items: center;
@@ -182,22 +153,33 @@
       @extend %textCenter;
       flex-direction: column;
       .svg {
+        @extend %transitionAll300;
         @extend %removePosition;
-        @include phone_and_tabletP {
-          width: 150px;
-          height: 120px;
+        width: 13vw;
+        height: 6vw;
+      }
+    }
+    &.disabled {
+      div {
+        cursor: initial !important;
+      }
+      svg {
+        cursor: initial !important;
+        color: var(--theme-dark-blue) !important;
+      }
+      &:hover {
+        .btn svg {
+          transform: rotate(0) !important;
         }
-        @include tabletP {
-          width: 13vw;
-          height: 6vw;
-        }
+      }
+      .item-description {
+        font-family: $font-family-light !important;
       }
     }
     &.student-back-work {
-      .btn .svg {
-        @include laptop {
-          width: 13vw;
-          height: 6vw;
+      &.disabled {
+        .blocks-icon .bl {
+          background: var(--theme-light-blue) !important;
         }
       }
     }
@@ -225,14 +207,19 @@
       }
     }
   }
+  .view-item-container {
+    &.disabled {
+      .eye-glass-icon {
+        .glass-eyes-left,
+        .glass-eyes-right {
+          display: none;
+        }
+      }
+    }
+  }
   .create-item-container {
     .btn .svg {
-      @extend %transitionAll300;
-    }
-    @include tabletP {
-      .btn .svg {
-        height: 7.5vw;
-      }
+      height: 7.5vw;
       &:hover {
         .btn svg {
           transform: rotate(10deg) !important;
@@ -245,6 +232,114 @@
     @include tabletP {
       .item-description {
         margin-top: 0.5vw;
+      }
+    }
+  }
+
+  .glasses {
+    cursor: pointer;
+    display: inline;
+    margin: 0 0.3vw;
+    width: 4vw !important;
+    color: var(--theme-orange);
+    svg {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  .eye-glass-icon {
+    $eye-ball: 5.5vw;
+    $eye-pupil: 1.6vw;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    @extend %textCenter;
+    flex-direction: column;
+    .svg {
+      width: 13vw;
+      height: 6vw;
+    }
+    > .svgOnHover {
+      &:first-child {
+        .svg {
+          @extend %removePosition;
+        }
+      }
+    }
+    .eye-glass-frame {
+      svg {
+        @extend %removePosition;
+      }
+    }
+    .glass-eyes-left,
+    .glass-eyes-right {
+      width: $eye-ball;
+      height: $eye-ball;
+      position: absolute;
+      top: 0.2vw;
+      @extend %flexCenter;
+      animation: blink 2.4s infinite;
+      opacity: 0;
+      > svg {
+        width: 60%;
+        height: 60%;
+      }
+      .glass-left-inside,
+      .glass-right-inside {
+        position: relative;
+        width: $eye-pupil;
+        height: $eye-pupil;
+        opacity: 0;
+        svg {
+          // @extend %floatToXCenter;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-color: var(--white);
+          border-radius: 50%;
+          color: var(--theme-dark-blue);
+          &.eye-pupil {
+            animation-name: eye-movement-desktop;
+            animation-duration: 5s;
+            animation-timing-function: ease-out;
+            animation-iteration-count: infinite;
+            animation-delay: 0;
+          }
+          &.aperture {
+            animation-name: rotating;
+            animation-duration: 4s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-delay: 5s;
+          }
+        }
+      }
+    }
+    .glass-eyes-left {
+      left: 0.6vw;
+    }
+    .glass-eyes-right {
+      right: 0.5vw;
+    }
+    // hover
+    &:hover {
+      .glass-eyes-left,
+      .glass-eyes-right {
+        opacity: 1;
+        svg {
+          opacity: 1;
+          visibility: visible;
+        }
+        .glass-right-inside,
+        .glass-left-inside {
+          opacity: 1;
+          svg {
+            opacity: 1;
+          }
+        }
       }
     }
   }
@@ -336,45 +431,5 @@
         }
       }
     }
-  }
-}
-
-// disabled view button
-.view-item-container.disabled {
-  .glass-eyes-left, .glass-eyes-right {
-    display: none;
-  }
-  .eye-glass-icon svg {
-    color: var(--theme-dark-blue) !important;
-  }
-  .item-description {
-    font-family: $font-family-light !important;
-  }
-}
-
-// create disabled
-.create-item-container.disabled {
-  svg {
-    cursor:initial !important;
-    color: var(--theme-dark-blue) !important;
-  }
-  .item-description {
-    font-family: $font-family-light !important;
-  }
-
-  &:hover {
-    .btn svg {
-      transform: rotate(0) !important;
-    }
-  }
-}
-
-// shared with me disabled 
-.student-back-work.disabled {
-  div {
-    cursor: initial !important;
-  }
-  .blocks-icon .bl {
-    background: var(--theme-light-blue) !important;
   }
 }
