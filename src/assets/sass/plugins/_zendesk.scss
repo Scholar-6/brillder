@@ -1,6 +1,15 @@
 #launcher {
-  position: fixed;
+  left: 0 !important;
+  // #launcher body {
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  // }
   .wrapper-AtBcr {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
