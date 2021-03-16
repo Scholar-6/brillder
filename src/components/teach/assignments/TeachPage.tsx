@@ -449,6 +449,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             isLoaded={this.state.isLoaded}
             activeStudent={this.state.activeStudent}
             activeClassroom={this.state.activeClassroom}
+            isArchive={this.state.isArchive}
             setActiveClassroom={this.setActiveClassroom.bind(this)}
             setActiveStudent={this.setActiveStudent.bind(this)}
             filterChanged={this.teachFilterUpdated.bind(this)}
