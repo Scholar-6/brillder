@@ -15,6 +15,7 @@ interface AssignedDescriptionProps {
   isExpanded?: boolean;
   isStudent?: boolean;
   isStudentAssignment?: boolean;
+  isArchive?:boolean;
   move?(): void;
   expand?(classroomId: number, assignmentId: number): void;
   minimize?(): void;
