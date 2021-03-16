@@ -73,9 +73,10 @@ class BuildBricks extends Component<BuildBricksProps, State> {
   }
 
   onBricksWheel(e: any) {
-    if (e.wheelDeltaY < 0) {
+    const wheelCoef = 40;
+    if (e.wheelDeltaY < -wheelCoef) {
       this.props.moveNext();
-    } else {
+    } else if (e.wheelDeltaY > wheelCoef){
       this.props.moveBack();
     }
   }

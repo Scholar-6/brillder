@@ -86,7 +86,9 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     this.props.setActiveClassroom(null);
   }
 
-  toggleClassroom(activeClassroom: TeachClassroom) {
+  toggleClassroom(e: any, activeClassroom: TeachClassroom) {
+    e.stopPropagation();
+    e.preventDefault();
     let active = !activeClassroom.active;
     if (active === true) {
       this.props.setActiveClassroom(activeClassroom.id);
@@ -114,7 +116,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
   renderClassroom(c: TeachClassroom, i: number) {
     return (
       <div key={i} className="classes-box">
-        <div className={"index-box " + (c.active ? "active" : "")} onClick={() => this.toggleClassroom(c)} title={c.name}>
+        <div className={"index-box " + (c.active ? "active" : "")} onClick={e => this.toggleClassroom(e, c)} title={c.name}>
           <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
             <RadioButton checked={c.active} color={c.subject.color} name={c.subject.name} />
             <span className="filter-class-name">{c.name}</span>
