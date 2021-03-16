@@ -61,15 +61,18 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
   async submit() {
     const { user } = this.props;
 
-    let subjects = [];
-    let general = this.state.subjects.find(s => s.name === GENERAL_SUBJECT);
-    if (general) {
-      subjects.push(general.id);
-    }
+    const subjects = [];
 
-    for (let subject of this.state.subjects) {
+    for (const subject of this.state.subjects) {
       if (subject.checked) {
         subjects.push(subject.id);
+      }
+    }
+
+    if (subjects.length === 0) {
+      const general = this.state.subjects.find(s => s.name === GENERAL_SUBJECT);
+      if (general) {
+        subjects.push(general.id);
       }
     }
 
@@ -79,7 +82,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
-      subjects: subjects
+      subjects
     } as any;
 
 
@@ -90,7 +93,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
       if (isStudentPreference(user)) {
         this.props.history.push('/home');
       } else if (isTeacherPreference(user)) {
-        this.props.history.push(map.ManageClassroomsTab);
+        this.props.history.push(map.MainPage);
       } else {
         this.props.history.push(map.UserProfile + '?onboardingUser=true');
       }
