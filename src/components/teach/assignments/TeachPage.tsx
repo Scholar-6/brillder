@@ -68,8 +68,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
 
-    const isTeach = checkTeacher(this.props.user);
-    const isAdmin = checkAdmin(this.props.user.roles);
+    const isTeach = checkTeacher(props.user);
+    const isAdmin = checkAdmin(props.user.roles);
+
+    const pathname = props.history.location.pathname as string;
+    let isArchive = pathname.search('/archive') >= 0;
+    console.log(pathname, isArchive);
 
     this.state = {
       isAdmin,
@@ -238,12 +242,32 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   renderArchiveButton() {
     let className = this.state.isArchive ? "active" : "";
-    return <div className={className} onClick={() => this.setState({ isArchive: true })}>ARCHIVE</div>;
+    return (
+      <div
+        className={className}
+        onClick={() => {
+          this.props.history.push(map.TeachAssignedArchiveTab);
+          this.setState({ isArchive: true });
+        }}
+      >
+        ARCHIVE
+      </div>
+    );
   }
 
   renderLiveBricksButton() {
     let className = this.state.isArchive ? "" : "active";
-    return <div className={className} onClick={() => this.setState({ isArchive: false })}>LIVE BRICKS</div>;
+    return (
+      <div
+        className={className}
+        onClick={() => {
+          this.props.history.push(map.TeachAssignedTab);
+          this.setState({ isArchive: false })
+        }}
+      >
+        LIVE BRICKS
+      </div>
+    );
   }
 
   renderAssignmentPagination = (classroom: TeachClassroom) => {
