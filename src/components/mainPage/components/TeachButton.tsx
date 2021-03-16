@@ -98,7 +98,7 @@ const TeachButton: React.FC<TeachButtonProps> = props => {
       onMouseLeave={() => setLeaved(true)}
       onClick={() => {
         if (!props.disabled) {
-          props.history.push(map.ManageClassroomsTab);
+          props.history.push(map.TeachAssignedTab);
         }
         if (props.onMobileClick) {
           props.onMobileClick();
