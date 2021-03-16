@@ -133,7 +133,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     if (!submited) {
       return <div />
     }
-    return <SpriteIcon name="edit-outline" onClick={() => {
+    return <SpriteIcon name="edit-outline" className="back-to-type" onClick={() => {
       setUsername('');
       setSubmited(null);
     }} />
@@ -153,7 +153,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
         <form>
           <div>
             <h1>
-              <LabelTyping start={true} value="Generate a username" onFinish={() => setStep(AnimationStep.TitleFinished)} />
+              <LabelTyping start={true} value="Get your username" onFinish={() => setStep(AnimationStep.TitleFinished)} />
             </h1>
             <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
               <Input

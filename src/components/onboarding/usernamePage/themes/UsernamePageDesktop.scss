@@ -112,15 +112,15 @@
       input,
       textarea {
         width: 100%;
-        padding: 0 0 0.8vw 0;
+        padding: 0 0 0vw 0;
         border: 0;
         font-size: 3.3vw;
         // font-size: 1.6vw;
       }
 
       input {
-        margin-top: 3vh;
-        margin-bottom: 3vh;
+        margin-top: 6vh;
+        margin-bottom: 2vh;
         width: 100%;
         font-size: 1.8vw;
         color: var(--white);
@@ -129,6 +129,10 @@
       .MuiInputBase-root.MuiInput-root.invalid {
         background: var(--theme-orange);
       }
+
+      .back-to-type {
+        height: calc(9vh + 1.8vw);
+      }
     }
 
     .submit-button {
@@ -136,7 +140,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 14vh;
+      margin-top: 10vh;
       letter-spacing: 0.1vw;
       font-size: 3vw;
       font-family: $font-family-bold;
@@ -164,7 +168,7 @@
       position: relative;
       svg {
         position: absolute;
-        right: 5vw;
+        right: 4vw;
         height: 5vw;
         width: 5vw;
         color: var(--theme-orange);
@@ -177,7 +181,7 @@
 
       &:hover {
         svg {
-          right: 4vw;
+          right: 3vw;
         }
       }
     }
