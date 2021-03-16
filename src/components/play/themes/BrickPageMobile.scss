@@ -14,8 +14,6 @@
 $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 .play-preview-pages {
-  background: var(--theme-dark-blue);
-  min-height: 100%;
   .sorted-row {
     height: $back-to-work-height-mobile-view;
     overflow: hidden;
@@ -216,6 +214,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
                   margin: 0;
                   .round-button {
                     transition: all 300ms;
+                    font-size: 8vw;
                     height: 12vw;
                     width: 12vw;
                   }
@@ -614,6 +613,10 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             .direction-info {
               display: none;
             }
+            .synthesis-content {
+              width: 100%;
+            height: auto;
+            }
           }
         }
         &.mobile-synthesis-page,
@@ -781,11 +784,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
             }
           }
         }
-        &.mobile-synthesis-page {
-          .synthesis-content {
-            width: 100%;
-          }
-        }
+
       }
     }
     &.sorted-row-expanded {
@@ -894,16 +893,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
 }
 
-// only review
-.play-preview-pages .sorted-row .review-page {
-  .stepper {
-    .step {
-      svg {
-        display: none !important;
-      }
-    }
-  }
-}
 
 // play phone footer
 .play-preview-pages {
@@ -1137,62 +1126,93 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
 }
 
-// introduction flexbox
-.play-preview-pages .brick-container {
-  height: calc(100% - #{$play-footer-height}) !important;
-  .introduction-page {
-    display: flex !important;
-    flex-flow: column;
-    .intro-header {
-      flex: 0 1 auto !important;
-    }
-    .introduction-info {
-      flex: 0 1 auto;
-    }
-    .introduction-content {
-      height: auto !important;
-      flex: 0 1 auto;
-      .expand-title {
-        margin-bottom: 2vh;
+.play-preview-pages {
+  // introduction flexbox
+  .brick-container {
+    height: calc(100% - #{$play-footer-height}) !important;
+    .introduction-page {
+      display: flex !important;
+      flex-flow: column;
+      // titles font size
+      .heading {
+        font-size: 7vw !important;
       }
-      .expanded-text.prep-box {
-        margin-bottom: 0 !important;
+      // academic level
+      .intro-header {
+        flex: 0 1 auto !important;
+        .left-brick-circle .round-button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--white);
+          font-size: 10vw;
+        }
+      }
+
+      .introduction-info {
+        flex: 0 1 auto;
+      }
+      .introduction-content {
+        height: auto !important;
+        flex: 0 1 auto;
+        .expand-title {
+          margin-bottom: 2vh;
+        }
+        .expanded-text.prep-box {
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+    &.play-preview-panel.provisional-score-page.mobile-provisional-score {
+      .introduction-content {
+        .question-live-play {
+          overflow: hidden;
+          height: calc(100vh - 17vh - #{$play-footer-height});
+        }
+      }
+    }
+    // live flexbox
+    &.live-page {
+      .introduction-page {
+        .introduction-info {
+          flex: 0 1 25vw !important;
+        }
+        .introduction-content {
+          flex: 0 1 calc(100% - 25vw) !important;
+          margin-top: 0 !important;
+          .question-live-play.review-content {
+            overflow: visible !important;
+          }
+        }
+      }
+    }
+    // review flexbox
+    &.review-page {
+      .introduction-page {
+        .intro-header {
+          flex: 0 1 25vw !important;
+        }
+        .introduction-content {
+          flex: 0 1 calc(100% - 25vw) !important;
+          margin-top: 0 !important;
+          .question-live-play.review-content {
+            overflow: visible !important;
+          }
+        }
+      }
+      // only review
+      .stepper {
+        .step {
+          svg {
+            display: none !important;
+          }
+        }
       }
     }
   }
 }
 
-// live flexbox
-.play-preview-pages .brick-row-container .brick-container.live-page {
-  .introduction-page {
-    .introduction-info {
-      flex: 0 1 25vw !important;
-    }
-    .introduction-content {
-      flex: 0 1 calc(100% - 25vw) !important;
-      margin-top: 0 !important;
-      .question-live-play.review-content {
-        overflow: visible !important;
-      }
-    }
-  }
-}
 
-// review flexbox
-.play-preview-pages .brick-row-container .brick-container.review-page {
-  .introduction-page {
-    .intro-header {
-      flex: 0 1 25vw !important;
-    }
-    .introduction-content {
-      flex: 0 1 calc(100% - 25vw) !important;
-      margin-top: 0 !important;
-      .question-live-play.review-content {
-        overflow: visible !important;
-      }
-    }
-  }
-}
 
 // assign brick to class or student dialog styles
 .MuiDialog-root.dialog-box.light-blue.assign-dialog {
@@ -1304,15 +1324,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     }
   }
 }
-
-// titles font size
-.play-preview-pages .brick-container {
-  .introduction-page {
-    .heading {
-      font-size: 7vw !important;
-    }
-  }
-}
 // introduction flex box
 .real-introduction-page {
   height: calc(100vh - #{$play-footer-height}) !important;
@@ -1331,22 +1342,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     left: 0;
     width: 100%;
     height: 100%;
-  }
-}
-.play-preview-pages {
-  .brick-container.play-preview-panel.provisional-score-page.mobile-provisional-score {
-    .introduction-content {
-      .question-live-play {
-        overflow: hidden;
-        height: calc(100vh - 17vh - #{$play-footer-height});
-      }
-    }
-  }
-
-  .brick-container.synthesis-page.mobile-synthesis-page {
-    .synthesis-content {
-      height: auto;
-    }
   }
 }
 
@@ -1377,22 +1372,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
 }
 
-// academic level
-.play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .intro-header {
-  .left-brick-circle .round-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    font-size: 10vw;
-  }
 
-  &.expanded-intro-header {
-    .left-brick-circle .round-button {
-      font-size: 8vw;
-    }
-  }
-}
 
 .final-assign-brick-column {
   margin-top: 30%;
