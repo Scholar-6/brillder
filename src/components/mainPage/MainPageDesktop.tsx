@@ -25,6 +25,8 @@ import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/Desk
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import LibraryButton from "./components/LibraryButton";
 import BlocksIcon from "./components/BlocksIcon";
+import { isPhone } from "services/phone";
+import ReportsAlertDialog from "components/baseComponents/dialogs/ReportsAlertDialog";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -62,6 +64,7 @@ interface MainPageState {
   isMyLibraryOpen: boolean;
   isBackToWorkOpen: boolean;
   isTryBuildOpen: boolean;
+  isReportLocked: boolean;
 
   // for mobile popopup
   isDesktopOpen: boolean;
@@ -86,6 +89,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isMyLibraryOpen: false,
       isBackToWorkOpen: false,
       isTryBuildOpen: false,
+      isReportLocked: false,
 
       isTeacher: rolePreference?.roleId === RolePreference.Teacher,
       isAdmin: checkAdmin(props.user.roles),
@@ -227,10 +231,14 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   renderReportsButton(isActive: boolean) {
     return (
       <div className="back-item-container student-back-work" onClick={() => {
-        this.setState({
-          isDesktopOpen: true,
-          secondaryLabel: 'Reports have ' + this.state.secondPart
-        });
+        if (isPhone()) {
+          this.setState({
+            isDesktopOpen: true,
+            secondaryLabel: 'Reports have ' + this.state.secondPart
+          });
+        } else {
+          this.setState({ isReportLocked: true });
+        }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : 'text-theme-light-blue'}`}>
           <SpriteIcon name="book-open" />
@@ -350,6 +358,10 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
           label="Play a brick to unlock this feature"
           isOpen={this.state.isTryBuildOpen}
           close={() => this.setState({ isTryBuildOpen: false })} />
+        <ReportsAlertDialog
+          isOpen={this.state.isReportLocked}
+          close={() => this.setState({ isReportLocked: false })} />
+        />
         <DesktopVersionDialogV2
           isOpen={this.state.isDesktopOpen} secondaryLabel={this.state.secondaryLabel}
           onClick={() => this.setState({ isDesktopOpen: false })}
