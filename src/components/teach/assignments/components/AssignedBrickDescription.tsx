@@ -91,7 +91,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     }
     if (everyoneFinished) {
       // everyone has completed the assignment, so the button is disabled.
-      return <SpriteIcon name="reminder" className="active reminder-icon finished" />;
+      return <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2 finished" />;
     } else {
       if (assignment.deadline) {
         let endTime = new Date(assignment.deadline).getTime();
@@ -106,7 +106,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
             <div className="green-hover">
               <div />
             </div>
-            <SpriteIcon name="reminder" className="active reminder-icon" onClick={this.sendNotifications.bind(this)} />
+            <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2" onClick={this.sendNotifications.bind(this)} />
           </div>
           <div className="css-custom-tooltip">
             Archive brick
