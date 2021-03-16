@@ -48,7 +48,7 @@ const initZendeskStyling = (iframe: any) => {
         overflow: hidden;
         pointer-events: none;
         cursor: not-allowed;
-        
+
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
