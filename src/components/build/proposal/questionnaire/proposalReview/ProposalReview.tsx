@@ -276,7 +276,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           allowMediaEmbed={true}
           allowLinks={true}
           toolbar={[
-            'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList'
+            'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
           ]}
         />
       );

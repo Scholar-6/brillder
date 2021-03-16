@@ -83,7 +83,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, ...props }) => {
             allowMediaEmbed={true}
             allowLinks={true}
             toolbar={[
-              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'image'
+              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
             ]}
           />
           {isVisible() &&
