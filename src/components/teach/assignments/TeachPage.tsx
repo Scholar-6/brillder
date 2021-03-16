@@ -29,6 +29,7 @@ import { getSubjects } from "services/axios/subject";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
+import SuccessDialog from "components/baseComponents/dialogs/SuccessDialog";
 
 
 interface TeachProps {
@@ -57,6 +58,7 @@ interface TeachState {
   subjects: Subject[];
   isSearching: boolean;
   isLoaded: boolean;
+  remindersDialogShown: boolean;
 
   filters: TeachFilters;
   handleKey(e: any): void;
@@ -86,6 +88,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
       assignmentStats: null,
       activeStudent: null,
       isLoaded: false,
+
+      remindersDialogShown: false,
 
       totalCount: 0,
       isSearching: false,
@@ -340,6 +344,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             isArchive={this.state.isArchive}
             classroom={activeClassroom}
             activeStudent={this.state.activeStudent}
+            onRemind={() => this.setState(state => ({ ...state, remindersDialogShown: true }))}
           />
           : this.state.activeAssignment && this.state.assignmentStats && activeClassroom ?
             <ExpandedAssignment
@@ -351,6 +356,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
               pageSize={this.state.assignmentPageSize}
               history={this.props.history}
               minimize={() => this.unselectAssignment()}
+              onRemind={() => this.setState(state => ({ ...state, remindersDialogShown: true }))}
             />
             : activeClassroom ?
               <ClassroomList
@@ -360,6 +366,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 activeClassroom={activeClassroom}
                 pageSize={this.state.classPageSize}
                 reloadClass={this.loadClass.bind(this)}
+                onRemind={() => this.setState(state => ({ ...state, remindersDialogShown: true }))}
               />
               :
               <ClassroomsList
@@ -370,6 +377,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 activeClassroom={activeClassroom}
                 pageSize={this.state.pageSize}
                 reloadClasses={this.loadClasses.bind(this)}
+                onRemind={() => this.setState(state => ({ ...state, remindersDialogShown: true }))}
               />
         }
         {this.renderTeachPagination()}
@@ -405,6 +413,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
             {this.renderTabContent()}
           </Grid>
         </Grid>
+        <SuccessDialog // reminder sent dialog
+          header="Reminder(s) sent!"
+          isOpen={this.state.remindersDialogShown}
+          close={() => this.setState(state => ({ ...state, remindersDialogShown: false}))}
+        />
       </div>
     );
   }
