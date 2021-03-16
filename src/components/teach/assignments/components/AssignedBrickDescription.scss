@@ -162,8 +162,6 @@
       cursor: pointer;
       padding: 0.25vw;
       stroke-width: 1.5;
-      width: 2vw;
-      height: 2vw;
       background: var(--theme-yellow);
 
       &.finished {
@@ -228,6 +226,69 @@
     // tooltip
     .css-custom-tooltip {
       bottom: -1.25vw;
+      left: -1.5vw;
+      width: 6.4vw !important;
+    }
+    &.completed:hover {
+      .css-custom-tooltip {
+        opacity: 1;
+      }
+    }
+  }
+  .reminder-brick-actions-container {
+    @extend %flexCenter;
+    width: 3vw;
+    position: relative;
+    .reminder-button-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3vw;
+      height: 3vw;
+      border-radius: 50%;
+      .svg {
+        position: absolute;
+        width: 2.1vw;
+        height: 2.1vw;
+      }
+    }
+
+    &.completed {
+      .archive-button-container {
+        cursor: pointer;
+        background: var(--theme-green);
+        .svg {
+          color: var(--white) !important;
+        }
+      }
+    }
+    &.completed {
+      .green-hover {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        > div {
+          transition: all 300ms ease-out;
+          width: 2.1vw;
+          height: 2.1vw;
+          border-radius: 50%;
+          background: var(--theme-yellow-alpha3);
+        }
+      }
+    }
+    &.completed:hover {
+      .green-hover {
+        > div {
+          width: 3.3vw;
+          height: 3.3vw;
+        }
+      }
+    }
+    // tooltip
+    .css-custom-tooltip {
+      bottom: -1.8vw;
       left: -1.5vw;
       width: 6.4vw !important;
     }
