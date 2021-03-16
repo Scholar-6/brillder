@@ -87,7 +87,10 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
           users={users}
           onAddEmail={onAddUser}
           onChange={email => checkSpaces(email.trim())}
-          setUsers={users => setUsers(users as User[])}
+          setUsers={users => {
+            setCurrentEmail('');
+            setUsers(users as User[]);
+          }}
         />
         <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
           <button className="btn btn-md bg-theme-orange yes-button icon-button" style={{width: 'auto'}} onClick={onSubmit}>
