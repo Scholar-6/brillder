@@ -92,3 +92,8 @@
 .blue-disable {
   color: var(--blue-disable) !important;
 }
+
+.orange-theme-circle {
+  border: 0.2vw solid var(--theme-orange) !important;
+  background: inherit !important;
+}
