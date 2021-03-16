@@ -112,6 +112,7 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
                   <AssignedBrickDescription
                     subjects={this.props.subjects}
                     isStudent={true}
+                    isArchive={this.props.isArchive}
                     isStudentAssignment={true}
                     expand={() => this.setActiveAssignment(a)}
                     key={i}
@@ -148,7 +149,6 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
     if (this.props.isArchive) {
       list = this.state.archived;
     }
-    console.log(list)
     const { activeStudent } = this.props;
     const { activeAssignment } = this.state;
     return (
