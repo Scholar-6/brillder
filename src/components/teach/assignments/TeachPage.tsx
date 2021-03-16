@@ -72,14 +72,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const isAdmin = checkAdmin(props.user.roles);
 
     const pathname = props.history.location.pathname as string;
-    let isArchive = pathname.search('/archive') >= 0;
-    console.log(pathname, isArchive);
+    const isArchive = pathname.search('/archive') >= 0;
+    console.log(isArchive)
 
     this.state = {
       isAdmin,
       isTeach,
 
-      isArchive: false,
+      isArchive,
 
       filters: {
         assigned: false,
@@ -241,7 +241,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   renderArchiveButton() {
-    let className = this.state.isArchive ? "active" : "";
+    const className = this.state.isArchive ? "active" : "";
     return (
       <div
         className={className}
@@ -256,7 +256,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   renderLiveBricksButton() {
-    let className = this.state.isArchive ? "" : "active";
+    const className = this.state.isArchive ? "" : "active";
     return (
       <div
         className={className}
