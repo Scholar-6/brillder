@@ -217,7 +217,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           </div>
         </div>
         <div className="reminder-container">
-          {this.renderStatus(assignment)}
+          {!this.props.isArchive && this.renderStatus(assignment)}
         </div>
         <div className="assignment-second-part">
           {!this.props.isStudentAssignment &&
@@ -230,6 +230,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           </div>
           {this.renderStudentStatus()}
         </div>
+        {!this.props.isArchive &&
         <div className={`teach-brick-actions-container ${this.isCompleted() ? 'completed' : ''}`}>
           <div className="archive-button-container" onClick={this.archiveAssignment.bind(this)}>
             <div className="green-hover">
@@ -240,7 +241,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           <div className="css-custom-tooltip">
             Archive brick
           </div>
-        </div>
+        </div>}
       </div>
     );
   }
