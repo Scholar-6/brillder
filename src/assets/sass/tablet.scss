@@ -1,8 +1,10 @@
 #launcher {
   width: 110px !important;
+  *width: 110px !important;
   height: 110px !important;
-  margin-left: 0.9vw !important;
-  margin-bottom: 14px !important;
+  *height: 110px !important;
+  margin: 14px !important;
+  *margin: 14px !important;
 }
 
 .short-description {

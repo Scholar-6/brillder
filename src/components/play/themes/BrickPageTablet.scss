@@ -10,16 +10,13 @@
   }
 }
 
-$expanded-intro-padding: 2vw;
+$expanded-intro-padding: 2vh;
 $introduction-desktop-height: calc(100vh - #{$expanded-intro-padding} - #{$page-head-height});
 $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
 $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 
 .play-preview-pages {
-  background: var(--theme-dark-blue);
-  min-height: 100%;
-
   .sorted-row.sorted-row-expanded {
     padding-top: $expanded-intro-padding;
     margin-top: 0;
