@@ -1,7 +1,7 @@
 import { AssignmentBrick } from 'model/assignment';
 import { Brick, BrickStatus } from 'model/brick';
 
-import {get, put, post, axiosDelete} from './index';
+import { get, put, post, axiosDelete } from './index';
 
 export const getPublicBrickById = async (id: number) => {
   try {
@@ -49,7 +49,7 @@ export const getPublishedBricks = async () => {
  */
 export const getCurrentUserBricks = async () => {
   try {
-    return (await get<Brick[]>("/bricks/currentUser/short"))?.filter(b => b.status !== BrickStatus.Deleted); 
+    return (await get<Brick[]>("/bricks/currentUser/short"))?.filter(b => b.status !== BrickStatus.Deleted);
   } catch (e) {
     return null;
   }
@@ -57,7 +57,7 @@ export const getCurrentUserBricks = async () => {
 
 export const getAssignedBricks = async () => {
   try {
-    return await get<AssignmentBrick[]>("/bricks/assigned"); 
+    return await get<AssignmentBrick[]>("/bricks/assigned");
   } catch (e) {
     return null;
   }
@@ -69,7 +69,7 @@ export const getLibraryBricks = async <T>(classroomId?: number) => {
     if (classroomId) {
       obj = { classroomId };
     }
-    return await post<T[]>("/play/library", obj); 
+    return await post<T[]>("/play/library", obj);
   } catch (e) {
     return null;
   }
@@ -93,7 +93,7 @@ export const searchBricks = async (searchString: string = '') => {
 
 export const searchPublicBricks = async (searchString: string = '') => {
   try {
-    return await post<Brick[]>("/bricks/search/public", {searchString});
+    return await post<Brick[]>("/bricks/search/public", { searchString });
   } catch {
     return null;
   }
@@ -113,7 +113,7 @@ export const publishBrick = async (brickId: number) => {
 
 export const inviteUser = async (brickId: number, userId: number) => {
   try {
-    await post<Brick>(`/brick/inviteToBrick/${brickId}`, {userIds: [userId]});
+    await post<Brick>(`/brick/inviteToBrick/${brickId}`, { userIds: [userId] });
     return true;
   } catch {
     return false;

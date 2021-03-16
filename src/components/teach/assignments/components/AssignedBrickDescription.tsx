@@ -76,7 +76,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   }
 
   renderStatus(assignment: Assignment) {
-    const {studentStatus} = assignment;
+    const { studentStatus } = assignment;
     let everyoneFinished = true;
     if (this.props.classroom) {
       let { length } = this.props.classroom.students;
@@ -106,7 +106,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   }
 
   getTotalStudentsCount() {
-    const {classroom} = this.props;
+    const { classroom } = this.props;
     let studentsCount = 0;
     if (classroom) {
       studentsCount = classroom.students.length;
@@ -115,7 +115,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   }
 
   isCompleted() {
-    const {assignment} = this.props;
+    const { assignment } = this.props;
     if (assignment.deadline) {
       let endTime = new Date(assignment.deadline).getTime();
       let nowTime = new Date().getTime();
@@ -123,7 +123,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         return true;
       }
     }
-    const {studentStatus} = assignment;
+    const { studentStatus } = assignment;
     if (this.props.classroom) {
       let { length } = this.props.classroom.students;
       if (length !== studentStatus.length) {
@@ -176,8 +176,8 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   }
 
   renderStudentStatus() {
-    if (!this.props.isStudent) { return <div/> }
-    const {studentStatus} = this.props.assignment;
+    if (!this.props.isStudent) { return <div /> }
+    const { studentStatus } = this.props.assignment;
 
     if (!this.isStudentCompleted(studentStatus)) { return this.renderNoAttempt() }
 
@@ -235,7 +235,11 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
             <div className="green-hover">
               <div />
             </div>
-            <SpriteIcon name="archive" className="text-gray" />
+            <SpriteIcon name="archive" onClick={() => {
+              if (this.isCompleted()) {
+                this.assignmentArchive();
+              }
+            }} className="text-gray" />
           </div>
           <div className="css-custom-tooltip">
             Archive brick

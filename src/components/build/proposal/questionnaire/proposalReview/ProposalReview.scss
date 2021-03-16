@@ -407,11 +407,11 @@
 
         .document-editor {
           width: 100%;
-          .ck-toolbar {
-            .ck-toolbar__items {
-              background-color: var(--solitude-light) !important;
-            }
-          }
+          // .ck-toolbar {
+          //   .ck-toolbar__items {
+          //     background-color: var(--solitude-light) !important;
+          //   }
+          // }
           .ck-editor {
             width: 100% !important;
             .ck-content {
@@ -527,11 +527,11 @@
         margin-bottom: 1vh;
         .document-editor {
           width: 100%;
-          .ck-toolbar {
-            .ck-toolbar__items {
-              background-color: var(--solitude-light) !important;
-            }
-          }
+          // .ck-toolbar {
+          //   .ck-toolbar__items {
+          //     background-color: var(--solitude-light) !important;
+          //   }
+          // }
           .ck-editor {
             width: 100% !important;
             .ck-content {
@@ -572,7 +572,7 @@
       }
     }
     .comment-text {
-     width: auto !important;
+      width: auto !important;
     }
     &.hovered {
       width: 50vw;
