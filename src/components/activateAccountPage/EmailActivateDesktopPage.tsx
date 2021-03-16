@@ -8,6 +8,9 @@ import actions from "redux/actions/auth";
 import LoginLogo from 'components/loginPage/components/LoginLogo';
 import WrongLoginDialog from "components/loginPage/components/WrongLoginDialog";
 import DesktopActivateForm from "./DesktopActivateForm";
+import { UserPreference } from "components/map";
+import { setUserPreference } from "services/axios/user";
+import { RolePreference } from "model/user";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -29,6 +32,7 @@ const EmailActivateDesktopPage: React.FC<LoginProps> = (props) => {
   const [email, setEmail] = useState(props.email || "");
   const [password, setPassword] = useState("");
   const [isLoginWrong, setLoginWrong] = React.useState(false);
+  const [isSubmiting, setSubmiting] = React.useState(false);
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -51,14 +55,18 @@ const EmailActivateDesktopPage: React.FC<LoginProps> = (props) => {
   }
 
   const resetPassword = async (password: string) => {
+    if (isSubmiting) { return; }
+    setSubmiting(true);
     try {
       if (password.length > 0) {
         await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/changePassword/${props.token}`, { password: password }, { withCredentials: true });
+        await setUserPreference(RolePreference.Student);
         props.loginSuccess();
       }
     } catch (e) {
       console.log(e);
     }
+    setSubmiting(false);
   }
 
   return (
