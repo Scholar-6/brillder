@@ -9,6 +9,7 @@ import { TeachClassroom, Assignment } from "model/classroom";
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import NameAndSubjectForm from "components/teach/components/NameAndSubjectForm";
 import { updateClassroom } from "services/axios/classroom";
+import { convertClassAssignments } from "../service/service";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -99,10 +100,6 @@ class ClassroomList extends Component<ClassroomListProps> {
     return "";
   }
 
-  isArchived(assignment: Assignment) {
-    return assignment.studentStatus && assignment.studentStatus.length > 0 && assignment.studentStatus[0].status == 3;
-  }
-
   prepareClassItems(items: TeachListItem[], classroom: TeachClassroom, notFirst: boolean) {
     let item: TeachListItem = {
       classroom,
@@ -110,22 +107,7 @@ class ClassroomList extends Component<ClassroomListProps> {
       assignment: null
     };
     items.push(item);
-    for (let assignment of classroom.assignments) {
-      let item: TeachListItem = {
-        classroom,
-        assignment
-      };
-
-      if (this.isArchived(assignment)) {
-        if (this.props.isArchive) {
-          items.push(item);
-        }
-      } else {
-        if (!this.props.isArchive) {
-          items.push(item);
-        }
-      }
-    }
+    convertClassAssignments(items, classroom, this.props.isArchive);
   }
 
   renderContent() {
