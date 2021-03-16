@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import queryString from 'query-string';
+import 'intro.js/introjs.css';
+// @ts-ignore
+import { Steps } from 'intro.js-react';
+
 
 import './themes/MainPageDesktop.scss';
 import actions from "redux/actions/auth";
@@ -73,6 +77,10 @@ interface MainPageState {
   isDesktopOpen: boolean;
   secondaryLabel: string;
   secondPart: string;
+
+  // intro
+  stepsEnabled: boolean;
+  steps: any[];
 }
 
 class MainPageDesktop extends Component<MainPageProps, MainPageState> {
@@ -109,7 +117,15 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
       isDesktopOpen: false,
       secondaryLabel: '',
-      secondPart: ' not yet been optimised for mobile devices.'
+      secondPart: ' not yet been optimised for mobile devices.',
+      stepsEnabled: isBoarding,
+      steps: [{
+        element: '.manage-classes',
+        intro: `<p>Click on the Manage Classes icon to begin</p>`,
+      },{
+        element: '.manage-classes',
+        intro: `<p>Click on the Manage Classes icon to begin</p>`,
+      }]
     } as any;
 
     if (isStudent) {
@@ -268,7 +284,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     if (!isActive) {
       className += ' disabled';
     }
-    console.log(isActive);
     return (
       <div className={className} onClick={() => {
         if (!isActive) {
@@ -320,9 +335,19 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     return "";
   }
 
-  renderDesktopPage() {
+  onIntroExit() {
+    this.setState({stepsEnabled: false});
+  }
+
+  onIntroChanged(e: any) {
+    if (e != 0) {
+      this.setState({stepsEnabled: false});
+    }
+  }
+
+  render() {
     return (
-      <Hidden>
+      <Grid container direction="row" className="mainPage">
         <div className="welcome-col">
           <WelcomeComponent
             user={this.props.user}
@@ -357,14 +382,14 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
           toggleNotification={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
         />
         <TermsLink history={this.props.history}/>
-      </Hidden>
-    );
-  }
-
-  render() {
-    return (
-      <Grid container direction="row" className="mainPage">
-        {this.renderDesktopPage()}
+        <Steps
+          enabled={this.state.stepsEnabled}
+          steps={this.state.steps}
+          initialStep={0}
+          onChange={this.onIntroChanged.bind(this)}
+          onExit={this.onIntroExit.bind(this)}
+          onComplete={() => {}}
+        />
         <PolicyDialog isOpen={this.state.isPolicyOpen} close={() => this.setPolicyDialog(false)} />
         <LockedDialog
           label="Play a brick to unlock this feature"
