@@ -18,6 +18,9 @@ interface NameAndSubjectFormProps {
   classroom: any;
   onChange(name: string, subject: Subject): void;
   user: User;
+  onInvited?(): void;
+  onAssigned?(): void;
+  isArchive?: boolean;  // for assignments
 }
 
 const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
@@ -46,6 +49,25 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
       setEdit(false);
     }
   }, [name, subjectIndex, props]);
+
+  if (props.isArchive) {
+    return (
+      <div className="name-subject-display">
+        <div className="subject-icon">
+          <SpriteIcon
+            name={(props.classroom.subject?.color ?? "#FFFFFF") === "#FFFFFF" ? "circle-empty" : "circle-filled"}
+            className="w100 h100 active"
+            style={{
+              color: (props.classroom.subject?.color ?? "#FFFFFF") === "#FFFFFF" ?
+                "var(--theme-dark-blue)" :
+                props.classroom.subject.color
+            }}
+          />
+        </div>
+        <h1 className="name-display">{props.classroom!.name}</h1>
+      </div>
+    );
+  }
 
   return edit ?
     (
@@ -142,7 +164,12 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           isOpen={isOpen}
           classroomId={props.classroom.id}
           subjectId={props.classroom.subjectId || props.classroom.subject.id}
-          success={brick => setSuccess({ isOpen: true, brick })}
+          success={brick => {
+            setSuccess({ isOpen: true, brick })
+            if (props.onAssigned) {
+              props.onAssigned();
+            }
+          }}
           failed={brick => setFailed({ isOpen: true, brick })}
           close={() => togglePopup(false)}
         />
@@ -164,6 +191,9 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           close={(numInvited: number) => {
             setInvite(false);
             setInvitedCount(numInvited);
+            if (props && props.onInvited) {
+              props.onInvited();
+            }
           }}
         />
         <StudentInviteSuccessDialog

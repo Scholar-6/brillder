@@ -1,5 +1,6 @@
 import map from "components/map";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
+import { isPhone } from "./phone";
 
 declare global {
   interface Window { zESettings: any; }
@@ -8,10 +9,29 @@ declare global {
 const getZendeskIframe = () => document.getElementById("launcher") as any;
 const getWidgetIframe = () => document.getElementById("webWidget") as any;
 
+const attachStyleCss = (iframe: any, path: string) => {
+  try {
+    const cssLink = document.createElement("link");
+    cssLink.href = path; 
+    cssLink.rel = "stylesheet";
+    cssLink.type = "text/css";
+    const innnerDoc = iframe.contentDocument || iframe.contentWindow;
+    innnerDoc.head.appendChild(cssLink);
+  } catch (e) {
+    console.log('can`t attach zendesk styles' , e);
+  }
+}
+
 const initZendeskStyling = (iframe: any) => {
+  if (isPhone()) {
+    attachStyleCss(iframe, '/zendesk/zendesk_mobile.css');
+  }
+  if (isTablet || isIPad13) {
+    attachStyleCss(iframe, '/zendesk/zendesk_tablet.css');
+  }
   if (isMobile) { return; }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-  iframe.style.height = '2.3vw';
+  // iframe.style.height = '2.3vw';
   let div = innerDoc.querySelectorAll('#Embed > div')[0]
   div.style.position = "absolute";
   div.style.width = '100%';
@@ -48,7 +68,7 @@ const initZendeskStyling = (iframe: any) => {
         overflow: hidden;
         pointer-events: none;
         cursor: not-allowed;
-        
+
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -72,7 +92,7 @@ export function minimizeZendeskButton(iframe?: any) {
     iframe = getZendeskIframe();
     if (!iframe) { return; }
   }
-  iframe.style.height = '2.6vw';
+  // iframe.style.height = '2.6vw';
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
   let div = innerDoc.querySelectorAll('#Embed > div')[0]
   div.style.marginLeft = '13%';
@@ -94,7 +114,7 @@ export function maximizeZendeskButton(iframe?: any) {
     if (!iframe) { return; }
   }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-  iframe.style.height = '2.3vw';
+  // iframe.style.height = '2.3vw';
   let div = innerDoc.querySelectorAll('#Embed > div')[0]
   div.style.marginLeft = '0';
   div.style.width = '100%';
@@ -179,7 +199,7 @@ const isPlayPage = (pathName: string) => {
 function setZendeskMode(iframe: any, location: any) {
   const { pathname } = location;
   if (isMobile) {
-    setMobilePlayButton(iframe, pathname);
+    //setMobilePlayButton(iframe, pathname);
     return;
   }
   // #1332 small mode only in viewAll and manageUsers pages
@@ -195,9 +215,9 @@ function setZendeskMode(iframe: any, location: any) {
 
   try {
     if (isBigMode && !isIgnorePage) {
-      maximizeZendeskButton(iframe);
+      //maximizeZendeskButton(iframe);
     } else if (!isIgnorePage) {
-      minimizeZendeskButton(iframe);
+      //minimizeZendeskButton(iframe);
     }
   } catch { }
 }
@@ -260,8 +280,8 @@ const setMobilePlayButtonStyle = (iframe: any) => {
     iframe.style.display = 'flex';
     iframe.style.alignItems = 'center';
     iframe.style.justifyContent = 'center';
-    iframe.style.width = '12.5%';
-    iframe.style.height = '20vw';
+    // iframe.style.width = '12.5%';
+    // iframe.style.height = '20vw';
     const div = innerDoc.querySelectorAll('#Embed > div')[0]
     div.style.position = 'absolute';
     div.style.bottom = '0';

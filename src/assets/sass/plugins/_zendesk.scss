@@ -1,9 +1,28 @@
 #launcher {
+  left: 0 !important;
+  // #launcher body {
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  // }
   .wrapper-AtBcr {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     text-align: center !important;
     padding: 0 !important;
+  }
+}
+.zEWidget-launcher {
+  @include phone_and_tabletP {
+    background-color: var(--theme-orange) !important;
+    left: 5% !important;
+    bottom: -1vh !important;
+    width: 17vw !important;
+    opacity: 0 !important;
   }
 }

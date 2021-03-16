@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Grid, Hidden } from "@material-ui/core";
-import { connect } from "react-redux";
 import { History } from "history";
 import axios from 'axios';
 
 import "./activateAccountPage.scss";
-import actions from "redux/actions/auth";
 import LoginLogo from 'components/loginPage/components/LoginLogo';
 import GoogleButton from "components/loginPage/components/GoogleButton";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
@@ -16,12 +14,6 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import TermsLink from "components/baseComponents/TermsLink";
 import { isPhone } from "services/phone";
 import DesktopActivateAccountPage from "./DesktopActivateAccountPage";
-
-const mapDispatch = (dispatch: any) => ({
-  loginSuccess: () => dispatch(actions.loginSuccess()),
-});
-
-const connector = connect(null, mapDispatch);
 
 export enum LoginState {
   ChooseLoginAnimation,
@@ -40,6 +32,8 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
     initPolicyOpen = true;
   }
+
+  const [email, setEmail] = useState('');
   const [isPolicyOpen, setPolicyDialog] = useState(initPolicyOpen);
   const [loginState, setLoginState] = useState(LoginState.ChooseLoginAnimation);
   const [valid, setValid] = React.useState<boolean>();
@@ -50,11 +44,12 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
 
   const verifyToken = async () => {
     try {
-      await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
       setValid(true);
+      setEmail(response.data.email);
     } catch(e) {
-      console.log(e.response.statusCode);
       setValid(false);
+      props.history.push(map.Login);
     }
   }
 
@@ -90,8 +85,12 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
     );
   }
 
+  if (!email) {
+    return <div />;
+  }
+
   if (!isPhone()) {
-    return <DesktopActivateAccountPage history={props.history} token={token} match={props.match} />;
+    return <DesktopActivateAccountPage history={props.history} token={token} match={props.match} email={email} />;
   }
 
   return (
@@ -134,4 +133,4 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
   );
 };
 
-export default connector(ActivateAccountPage);
+export default ActivateAccountPage;
