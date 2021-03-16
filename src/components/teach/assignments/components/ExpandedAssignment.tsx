@@ -34,6 +34,7 @@ interface AssignmentBrickProps {
   assignment: Assignment;
   history: any;
   minimize(): void;
+  onRemind?(): void;
 }
 
 class ExpandedAssignment extends Component<
@@ -257,6 +258,7 @@ class ExpandedAssignment extends Component<
             classroom={classroom}
             assignment={assignment}
             archive={() => {}}
+            onRemind={this.props.onRemind}
           />
         </div>
         <div className="assignments-table">

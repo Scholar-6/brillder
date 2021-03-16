@@ -19,6 +19,7 @@ interface AssignedDescriptionProps {
   expand?(classroomId: number, assignmentId: number): void;
   minimize?(): void;
   archive(): void;
+  onRemind?(): void;
 }
 
 interface State {
@@ -36,6 +37,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
   sendNotifications() {
     sendAssignmentReminder(this.props.assignment.id);
+    this.props.onRemind?.();
   }
 
   renderVertical(assignmentId: number, color: string) {
