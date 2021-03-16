@@ -68,6 +68,8 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
         }
       } else if (notification.type === NotificationType.BrickSubmittedForReview) {
         history.push(map.BackToWorkPage);
+      } else if (notification.type === NotificationType.StudentAssignedBrick) {
+        history.push(map.AssignmentsPage);
       }
 
       if (notification.brick && notification.brick.id) {
@@ -89,9 +91,7 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
         } else if (notification.type === NotificationType.ReturnedToEditor) {
           history.push(map.InvestigationBuild(brick.id));
         } else if (notification.type === NotificationType.AssignedToEdit) {
-          this.props.forgetBrick();
-          await this.props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
+          history.push(map.InvestigationBuild(brick.id));
         } else if (notification.type === NotificationType.ReturnedToAuthor) {
           this.props.forgetBrick();
           await this.props.fetchBrick(notification.brick.id);
