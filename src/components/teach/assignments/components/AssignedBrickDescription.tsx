@@ -19,6 +19,7 @@ interface AssignedDescriptionProps {
   expand?(classroomId: number, assignmentId: number): void;
   minimize?(): void;
   archive(): void;
+  onRemind?(): void;
 }
 
 interface State {
@@ -36,6 +37,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
   sendNotifications() {
     sendAssignmentReminder(this.props.assignment.id);
+    this.props.onRemind?.();
   }
 
   renderVertical(assignmentId: number, color: string) {
@@ -73,26 +75,33 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   }
 
   renderStatus(assignment: Assignment) {
-    if (assignment.deadline) {
-      let endTime = new Date(assignment.deadline).getTime();
-      let nowTime = new Date().getTime();
-      if (endTime < nowTime) {
-        return <SpriteIcon name="reminder" className="active reminder-icon bg-theme-orange" />;
-      }
-    }
     const { studentStatus } = assignment;
+    let everyoneFinished = true;
     if (this.props.classroom) {
       let { length } = this.props.classroom.students;
       if (length !== studentStatus.length) {
-        return <SpriteIcon name="reminder" className="active reminder-icon" onClick={this.sendNotifications.bind(this)} />;
+        everyoneFinished = false;
       }
     } else {
       // if student assignment
       if (!this.isStudentCompleted(studentStatus)) {
+        everyoneFinished = false;
+      }
+    }
+    if (everyoneFinished) {
+      // everyone has completed the assignment, so the button is disabled.
+      return <SpriteIcon name="reminder" className="active reminder-icon finished" />;
+    } else {
+      if (assignment.deadline) {
+        let endTime = new Date(assignment.deadline).getTime();
+        let nowTime = new Date().getTime();
+        if (endTime < nowTime) {
+          return <SpriteIcon name="reminder" className="active reminder-icon bg-theme-orange" onClick={this.sendNotifications.bind(this)} />;
+        }
+      } else {
         return <SpriteIcon name="reminder" className="active reminder-icon" onClick={this.sendNotifications.bind(this)} />;
       }
     }
-    return <SpriteIcon name="reminder" className="active reminder-icon finished" />;
   }
 
   getTotalStudentsCount() {
