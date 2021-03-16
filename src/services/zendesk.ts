@@ -9,8 +9,8 @@ const getZendeskIframe = () => document.getElementById("launcher") as any;
 const getWidgetIframe = () => document.getElementById("webWidget") as any;
 
 const initZendeskStyling = (iframe: any) => {
-  if (isMobile) { return; }
   /*
+  if (isMobile) { return; }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
   iframe.style.height = '2.3vw';
   let div = innerDoc.querySelectorAll('#Embed > div')[0]
@@ -185,7 +185,7 @@ const isPlayPage = (pathName: string) => {
 function setZendeskMode(iframe: any, location: any) {
   const { pathname } = location;
   if (isMobile) {
-    setMobilePlayButton(iframe, pathname);
+    //setMobilePlayButton(iframe, pathname);
     return;
   }
   // #1332 small mode only in viewAll and manageUsers pages
@@ -201,9 +201,9 @@ function setZendeskMode(iframe: any, location: any) {
 
   try {
     if (isBigMode && !isIgnorePage) {
-      maximizeZendeskButton(iframe);
+      //maximizeZendeskButton(iframe);
     } else if (!isIgnorePage) {
-      minimizeZendeskButton(iframe);
+      //minimizeZendeskButton(iframe);
     }
   } catch { }
 }
@@ -244,6 +244,7 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
  * Button size and position are from .\src\components\play\themes\BrickPageMobile.scss
  */
 const setMobilePlayButton = (iframe: any, pathname: string) => {
+  /*
   if (!isMobile && (isTablet || isIPad13)) {
     return;
   }
@@ -253,6 +254,7 @@ const setMobilePlayButton = (iframe: any, pathname: string) => {
   }
 
   setMobilePlayButtonStyle(iframe);
+  */
 }
 
 const setMobilePlayButtonStyle = (iframe: any) => {
