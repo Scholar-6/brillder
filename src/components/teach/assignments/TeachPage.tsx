@@ -371,6 +371,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
               :
               <ClassroomsList
                 subjects={this.state.subjects}
+                isArchive={this.state.isArchive}
                 expand={this.setActiveAssignment.bind(this)}
                 startIndex={this.state.sortedIndex}
                 classrooms={this.state.classrooms}
