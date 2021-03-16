@@ -7,7 +7,7 @@
 }
 
 .assign-dialog {
-  .dialog-header>div {
+  .dialog-header > div {
     width: 50vw !important;
 
     .MuiInputBase-input.MuiInput-input {
@@ -35,13 +35,21 @@ span.bold {
 }
 
 .assign-dialog-new {
-  input::placeholder {
-    color: #000 !important;
+  .glasses {
+    cursor: pointer;
+    display: inline;
+    margin: 0 0.3vw;
+    width: 4vw !important;
+    color: var(--theme-orange);
+    svg {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
+
   .text-with-glasses {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 }
-

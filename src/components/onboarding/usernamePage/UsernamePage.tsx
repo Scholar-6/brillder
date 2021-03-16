@@ -133,7 +133,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     if (!submited) {
       return <div />
     }
-    return <SpriteIcon name="edit-outline" onClick={() => {
+    return <SpriteIcon name="edit-outline" className="back-to-type" onClick={() => {
       setUsername('');
       setSubmited(null);
     }} />

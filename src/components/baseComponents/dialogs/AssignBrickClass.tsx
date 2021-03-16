@@ -105,7 +105,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
             <TextField
               {...params}
               variant="standard"
-              label="Bricks: "
+              label=""
               placeholder="Search for a brick you know, or try your luck!"
             />
           )}
