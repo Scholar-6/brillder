@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="760px" height="38px" viewBox="0 0 760 38" preserveAspectRatio="none" xml:space="preserve" style="display: none;">
-	<svg id="arrow-up" viewBox="0 0 38 38">
-		<path d="M7.525,28.263L19,16.813l11.475,11.449L34,24.737l-15-15l-15,15L7.525,28.263z"/>
-	</svg>
-	<svg id="arrow-down" viewBox="0 0 38 38">
-		<path d="M30.475,9.737L19,21.188L7.525,9.739L4,13.264l15,15l15-15L30.475,9.737z"/>
-	</svg>
-</svg>
