@@ -344,16 +344,18 @@ class TeachPage extends Component<TeachProps, TeachState> {
                   <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                     <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
                   </svg>
-                  <div className="glass-left-inside">
-                    <SpriteIcon name="aperture" className="aperture" />
+                  <div className="glass-left-inside svgOnHover">
+                    {/* <SpriteIcon name="aperture" className="aperture" /> */}
+                    <SpriteIcon name="eye-pupil" className="eye-pupil" />
                   </div>
                 </div>
                 <div className="glass-eyes-right svgOnHover">
                   <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                     <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
                   </svg>
-                  <div className="glass-right-inside">
-                    <SpriteIcon name="aperture" className="aperture" />
+                  <div className="glass-right-inside svgOnHover">
+                    {/* <SpriteIcon name="aperture" className="aperture" /> */}
+                    <SpriteIcon name="eye-pupil" className="eye-pupil" />
                   </div>
                 </div>
               </div>
@@ -462,7 +464,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         <SuccessDialog // reminder sent dialog
           header="Reminder(s) sent!"
           isOpen={this.state.remindersDialogShown}
-          close={() => this.setState(state => ({ ...state, remindersDialogShown: false}))}
+          close={() => this.setState(state => ({ ...state, remindersDialogShown: false }))}
         />
       </div>
     );

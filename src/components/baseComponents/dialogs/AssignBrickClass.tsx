@@ -84,7 +84,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
           onChange={(e: any, v: any) => setBrick(v)}
           noOptionsText="Sorry, try typing something else"
           className="subject-autocomplete"
-          getOptionLabel={(option:any) => option.title}
+          getOptionLabel={(option: any) => option.title}
           renderOption={(brick: Brick) => (
             <React.Fragment>
               <MenuItem>
@@ -139,13 +139,15 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
                   <div className="glass-eyes-left svgOnHover">
                     <SpriteIcon name="eye-ball" className="active eye-ball text-white" />
                     <div className="glass-left-inside">
-                      <SpriteIcon name="eye-pupil" className="active eye-pupil text-theme-dark-blue" />
+                      {/* <SpriteIcon name="aperture" className="aperture" /> */}
+                      <SpriteIcon name="eye-pupil" className="eye-pupil" />
                     </div>
                   </div>
                   <div className="glass-eyes-right svgOnHover">
                     <SpriteIcon name="eye-ball" className="active eye-ball text-white" />
                     <div className="glass-right-inside">
-                      <SpriteIcon name="eye-pupil" className="active eye-pupil text-theme-dark-blue" />
+                      {/* <SpriteIcon name="aperture" className="aperture" /> */}
+                      <SpriteIcon name="eye-pupil" className="eye-pupil" />
                     </div>
                   </div>
                 </div>
