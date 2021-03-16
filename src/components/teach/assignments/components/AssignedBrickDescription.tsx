@@ -235,11 +235,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
             <div className="green-hover">
               <div />
             </div>
-            <SpriteIcon name="archive" onClick={() => {
-              if (this.isCompleted()) {
-                this.assignmentArchive();
-              }
-            }} className="text-gray" />
+            <SpriteIcon name="archive" className="text-gray" />
           </div>
           <div className="css-custom-tooltip">
             Archive brick
