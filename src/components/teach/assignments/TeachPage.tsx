@@ -9,7 +9,7 @@ import actions from 'redux/actions/requestFailed';
 import { User } from "model/user";
 import { Subject } from "model/brick";
 import { TeachClassroom, TeachStudent } from "model/classroom";
-import { getAllClassrooms } from "components/teach/service";
+import { createClass, getAllClassrooms } from "components/teach/service";
 import { checkAdmin, checkTeacher } from "components/services/brickService";
 import { TeachFilters } from '../model';
 import { Assignment } from "model/classroom";
@@ -73,7 +73,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
     const pathname = props.history.location.pathname as string;
     const isArchive = pathname.search('/archive') >= 0;
-    console.log(isArchive)
 
     this.state = {
       isAdmin,
@@ -125,11 +124,22 @@ class TeachPage extends Component<TeachProps, TeachState> {
     this.loadClasses();
   }
 
-  async loadClasses() {
+  async loadClasses(activeClassId?: number) {
     let classrooms = await getAllClassrooms() as TeachClassroom[] | null;
     if (classrooms) {
       classrooms = classrooms.filter(c => c.subjectId);
-      this.setState({ classrooms, isLoaded: true });
+
+      let { activeClassroom } = this.state;
+
+      if (activeClassId) {
+        const classroom = classrooms.find(c => c.id == activeClassId);
+        if (classroom) {
+          activeClassroom = classroom;
+          activeClassroom.active = true;
+        }
+      }
+
+      this.setState({ classrooms, activeClassroom, isLoaded: true });
       return classrooms;
     } else {
       this.props.requestFailed('can`t get classrooms');
@@ -223,6 +233,15 @@ class TeachPage extends Component<TeachProps, TeachState> {
     let index = this.state.sortedIndex;
     if (index >= pageSize) {
       this.setState({ ...this.state, sortedIndex: index - pageSize });
+    }
+  }
+
+  async createClass(name: string, subject: Subject) {
+    const newClassroom = await createClass(name, subject);
+    if (newClassroom) {
+      await this.loadClasses(newClassroom.id);
+    } else {
+      // creation failed
     }
   }
 
@@ -433,6 +452,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             setActiveClassroom={this.setActiveClassroom.bind(this)}
             setActiveStudent={this.setActiveStudent.bind(this)}
             filterChanged={this.teachFilterUpdated.bind(this)}
+            createClass={this.createClass.bind(this)}
           />
           <Grid item xs={9} className="brick-row-container">
             <TeachTab activeTab={TeachActiveTab.Assignments} history={history} assignmentsEnabled={true} />
