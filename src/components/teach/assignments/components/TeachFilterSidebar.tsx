@@ -9,6 +9,7 @@ import EmptyFilter from "../filter/EmptyFilter";
 import RadioButton from "components/baseComponents/buttons/RadioButton";
 import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
 import { Subject } from "model/brick";
+import { isArchived } from "../service/service";
 
 enum TeachFilterFields {
   Assigned = 'assigned',
@@ -24,19 +25,14 @@ interface FilterSidebarProps {
   setActiveClassroom(id: number | null): void;
   filterChanged(filters: TeachFilters): void;
   createClass(name: string, subject: Subject): void;
+  isArchive: boolean;
 }
 
 interface FilterSidebarState {
   filterExpanded: boolean;
   filters: TeachFilters;
   isClearFilter: boolean;
-
   createClassOpen: boolean;
-
-  // empty filter
-  firstStarted: boolean;
-  secondStarted: boolean;
-  thirdStarted: boolean;
 }
 
 class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
@@ -49,18 +45,8 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
         assigned: false,
         completed: false
       },
-      firstStarted: true,
-      secondStarted: false,
-      thirdStarted: false,
-
       createClassOpen: false
     };
-  }
-
-  componentDidUpdate(prevProps: FilterSidebarProps) {
-    if (prevProps.isLoaded === false && this.props.isLoaded === true) {
-      //this.setState({firstStarted: true});
-    }
   }
 
   hideFilter() { this.setState({ filterExpanded: false }) }
@@ -138,7 +124,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             {c.students.length}
             <SpriteIcon name="users" className="active" />
             <div className="classrooms-box">
-              {c.assignments.length}
+              {this.getClassAssignedCount(c)}
             </div>
           </div>
         </div>
@@ -147,12 +133,29 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     );
   }
 
+  getClassAssignedCount(classroom: TeachClassroom) {
+    let classBricks = 0;
+    for (const assignment of classroom.assignments) {
+      const archived = isArchived(assignment);
+      if (this.props.isArchive) {
+        if (archived) {
+          classBricks += 1;
+        }
+      } else {
+        if (!archived) {
+          classBricks += 1;
+        }
+      }
+    }
+    return classBricks;
+  }
+
   renderClassesBox() {
     let totalBricks = 0;
     let totalCount = 0;
     for (let classroom of this.props.classrooms) {
       totalCount += classroom.students.length;
-      totalBricks += classroom.assignments.length;
+      totalBricks += this.getClassAssignedCount(classroom);
     }
     let className = "sort-box teach-sort-box";
     if (!this.state.filterExpanded) {
