@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import queryString from 'query-string';
 import "swiper/swiper.scss";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
+
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
 import { Brick, SubjectAItem } from "model/brick";

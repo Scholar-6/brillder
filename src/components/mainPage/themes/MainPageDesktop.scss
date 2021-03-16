@@ -338,3 +338,43 @@
     }
   }
 }
+
+// disabled view button
+.view-item-container.disabled {
+  .glass-eyes-left, .glass-eyes-right {
+    display: none;
+  }
+  .eye-glass-icon svg {
+    color: var(--theme-dark-blue) !important;
+  }
+  .item-description {
+    font-family: $font-family-light !important;
+  }
+}
+
+// create disabled
+.create-item-container.disabled {
+  svg {
+    cursor:initial !important;
+    color: var(--theme-dark-blue) !important;
+  }
+  .item-description {
+    font-family: $font-family-light !important;
+  }
+
+  &:hover {
+    .btn svg {
+      transform: rotate(0) !important;
+    }
+  }
+}
+
+// shared with me disabled 
+.student-back-work.disabled {
+  div {
+    cursor: initial !important;
+  }
+  .blocks-icon .bl {
+    background: var(--theme-light-blue) !important;
+  }
+}
