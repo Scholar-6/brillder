@@ -29,10 +29,15 @@ import { getSubjects } from "services/axios/subject";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
-import SuccessDialog from "components/baseComponents/dialogs/SuccessDialog";
+import ReminderSuccessDialog from "components/baseComponents/dialogs/ReminderSuccessDialog";
 import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog";
-import NameAndSubjectForm from "../components/NameAndSubjectForm";
 
+
+interface RemindersData {
+  isOpen: boolean;
+  count: number;
+  isDeadlinePassed: boolean;
+}
 
 interface TeachProps {
   history: any;
@@ -60,7 +65,7 @@ interface TeachState {
   subjects: Subject[];
   isSearching: boolean;
   isLoaded: boolean;
-  remindersDialogShown: boolean;
+  remindersData: RemindersData;
   createClassOpen: boolean;
 
   filters: TeachFilters;
@@ -95,7 +100,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
       activeStudent: null,
       isLoaded: false,
 
-      remindersDialogShown: false,
+      remindersData: {
+        isOpen: false,
+        count: 0,
+        isDeadlinePassed: false
+      },
       createClassOpen: false,
 
       totalCount: 0,
@@ -387,6 +396,10 @@ class TeachPage extends Component<TeachProps, TeachState> {
     );
   }
 
+  setReminderNotification(count: number, isDeadlinePassed: boolean) {
+    this.setState(state => ({ ...state, remindersData: { isOpen: true, count, isDeadlinePassed } }));
+  }
+
   renderTabContent() {
     if (!this.state.isLoaded) {
       return <div className="tab-content" />
@@ -409,7 +422,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             isArchive={this.state.isArchive}
             classroom={activeClassroom}
             activeStudent={this.state.activeStudent}
-            onRemind={() => this.setState(state => ({ ...state, remindersDialogShown: true }))}
+            onRemind={this.setReminderNotification.bind(this)}
           />
           : this.state.activeAssignment && this.state.assignmentStats && activeClassroom ?
             <ExpandedAssignment
@@ -421,7 +434,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
               pageSize={this.state.assignmentPageSize}
               history={this.props.history}
               minimize={() => this.unselectAssignment()}
-              onRemind={() => this.setState(state => ({ ...state, remindersDialogShown: true }))}
+              onRemind={this.setReminderNotification.bind(this)}
             />
             : activeClassroom ?
               <ClassroomList
@@ -432,7 +445,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 activeClassroom={activeClassroom}
                 pageSize={this.state.classPageSize}
                 reloadClass={this.loadClass.bind(this)}
-                onRemind={() => this.setState(state => ({ ...state, remindersDialogShown: true }))}
+                onRemind={this.setReminderNotification.bind(this)}
               />
               :
               <ClassroomsList
@@ -444,7 +457,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 activeClassroom={activeClassroom}
                 pageSize={this.state.pageSize}
                 reloadClasses={this.loadClasses.bind(this)}
-                onRemind={() => this.setState(state => ({ ...state, remindersDialogShown: true }))}
+                onRemind={this.setReminderNotification.bind(this)}
               />
         }
         {this.renderTeachPagination()}
@@ -454,6 +467,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   render() {
     const { history } = this.props;
+    const {remindersData} = this.state;
 
     return (
       <div className="main-listing user-list-page manage-classrooms-page">
@@ -482,10 +496,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
             {this.renderTabContent()}
           </Grid>
         </Grid>
-        <SuccessDialog // reminder sent dialog
-          header="Reminder(s) sent!"
-          isOpen={this.state.remindersDialogShown}
-          close={() => this.setState(state => ({ ...state, remindersDialogShown: false }))}
+        <ReminderSuccessDialog
+          header={`Reminder${remindersData.count > 1 ? 's' : ''} sent!`}
+          isOpen={remindersData.isOpen}
+          isDeadlinePassed={remindersData.isDeadlinePassed}
+          close={() => this.setState(state => ({ ...state, remindersData: { ...remindersData, isOpen: false } }))}
         />
          <CreateClassDialog
           isOpen={this.state.createClassOpen}

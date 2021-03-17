@@ -23,3 +23,11 @@ export const convertClassAssignments = (items: any[], classroom: TeachClassroom,
     }
   }
 }
+
+export const getTotalStudentsCount = (classroom?: TeachClassroom | null) => {
+  let studentsCount = 0;
+  if (classroom) {
+    studentsCount = classroom.students.length;
+  }
+  return studentsCount;
+}

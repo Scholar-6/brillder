@@ -26,7 +26,7 @@ interface ClassroomListProps {
   isArchive: boolean;
   expand(classroomId: number, assignmentId: number): void;
   reloadClass(id: number): void;
-  onRemind?(): void;
+  onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
 
 interface ListState {

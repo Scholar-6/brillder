@@ -92,6 +92,8 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
           this.props.forgetBrick();
           await this.props.fetchBrick(notification.brick.id);
           history.push(map.ProposalReview);
+        } else if (notification.type === NotificationType.RemindedToPlayBrick) {
+          history.push(map.playIntro(notification.brick.id));
         }
       }
     }
