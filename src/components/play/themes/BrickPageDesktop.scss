@@ -1735,6 +1735,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       display: flex;
       justify-content: center;
       button {
+        transition: all 300ms ease-out;
         border: none;
         outline: none;
         font-size: 1.7vw;
@@ -1742,6 +1743,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         padding: 1.4vh 1.9vw;
         color: var(--white);
         background: var(--theme-orange);
+        &:hover {
+          background: var(--theme-green);
+        }
       }
     }
   }
