@@ -30,14 +30,15 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
     <Autocomplete
       multiple
       value={users}
-      options={suggestions}
+      options={[] as UserBase[]}
+      open={false}
       style={{ background: "inherit" }}
       onChange={(e: any, value: UserBase[]) => {
         if (value) {
           setUsers(value);
         }
       }}
-      noOptionsText="User not found. Try to type the name of person"
+      // noOptionsText="User not found. Try to type the name of person"
       renderInput={(params) => {
         const inputProps = params.inputProps as any;
         inputProps.value = props.currentEmail;
