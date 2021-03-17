@@ -31,6 +31,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 import ReminderSuccessDialog from "components/baseComponents/dialogs/ReminderSuccessDialog";
 import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog";
+import { isArchived } from "./service/service";
 
 
 interface RemindersData {
@@ -272,6 +273,66 @@ class TeachPage extends Component<TeachProps, TeachState> {
     return itemsCount;
   }
 
+  getArchiveClassCount(classroom: TeachClassroom) {
+    let count = 0;
+    for (const assignment of classroom.assignments) {
+      const archived = isArchived(assignment);
+      if (archived) {
+        count += 1;
+      }
+    }
+    return count;
+  }
+
+  getArchiveClassesCount() {
+    let count = 0;
+    for (const classroom of this.state.classrooms) {
+      count += this.getArchiveClassCount(classroom);
+    }
+    return count;
+  }
+
+  getArchivedAssigmentsCount() {
+    if (this.state.activeStudent) {
+      return '';
+    }
+    if (this.state.activeClassroom) {
+      return this.getArchiveClassCount(this.state.activeClassroom);
+    } else {
+      return this.getArchiveClassesCount();
+    }
+  }
+
+  getLiveClassCount(classroom: TeachClassroom) {
+    let count = 0;
+    for (const assignment of classroom.assignments) {
+      const archived = isArchived(assignment);
+      if (!archived) {
+        count += 1;
+      }
+    }
+    return count;
+  }
+
+  getLiveClassesCount() {
+    let count = 0;
+    for (const classroom of this.state.classrooms) {
+      count += this.getLiveClassCount(classroom);
+    }
+    return count;
+  }
+
+  getLiveAssignmentsCount() {
+    if (this.state.activeStudent) {
+      return '';
+    }
+    if (this.state.activeClassroom) {
+      return this.getLiveClassCount(this.state.activeClassroom);
+    } else {
+      return this.getLiveClassesCount();
+    }
+  }
+
   renderArchiveButton() {
     const className = this.state.isArchive ? "active" : "";
     return (
@@ -282,7 +343,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           this.setState({ isArchive: true });
         }}
       >
-        ARCHIVE
+        {this.getArchivedAssigmentsCount()} ARCHIVED
       </div>
     );
   }
@@ -297,7 +358,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           this.setState({ isArchive: false })
         }}
       >
-        LIVE BRICKS
+        {this.getLiveAssignmentsCount()} LIVE BRICKS
       </div>
     );
   }
