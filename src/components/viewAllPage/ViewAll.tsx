@@ -41,6 +41,7 @@ import { filterByCurretUser } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 import AllSubjects from "./allSubjectsPage/AllSubjects";
 import MobileCategory from "./MobileCategory";
+import { playCover } from "components/play/routes";
 
 
 interface ViewAllProps {
@@ -162,7 +163,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   onBricksWheel(e: any) {
-    console.log('wheel')
     if (e.wheelDeltaY < 0) {
       this.moveAllNext();
     } else {
@@ -286,7 +286,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   moveToPlay(brickId: number) {
-    this.props.history.push(map.playIntro(brickId));
+    this.props.history.push(playCover(brickId));
   }
 
   move(brickId: number) {
@@ -342,11 +342,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return bricks;
   }
 
-  //region Hide / Expand / Clear Filter
   isFilterClear() {
     return this.state.subjects.some(r => r.checked);
   }
-  //endregion
 
   filterBySubject(id: number) {
     toggleSubject(this.state.subjects, id);
