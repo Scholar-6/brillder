@@ -140,14 +140,14 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
                   </div>
                   <div className="glass-eyes-left svgOnHover">
                     <SpriteIcon name="eye-ball" className="active eye-ball text-white" />
-                    <div className="glass-left-inside">
+                    <div className="glass-right-inside svgOnHover">
                       {/* <SpriteIcon name="aperture" className="aperture" /> */}
                       <SpriteIcon name="eye-pupil" className="eye-pupil" />
                     </div>
                   </div>
                   <div className="glass-eyes-right svgOnHover">
                     <SpriteIcon name="eye-ball" className="active eye-ball text-white" />
-                    <div className="glass-right-inside">
+                    <div className="glass-right-inside svgOnHover">
                       {/* <SpriteIcon name="aperture" className="aperture" /> */}
                       <SpriteIcon name="eye-pupil" className="eye-pupil" />
                     </div>
