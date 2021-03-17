@@ -47,21 +47,8 @@ const DesktopActivateAccountPage: React.FC<LoginProps> = (props) => {
         </div>
       </div>
       <Switch>
-        <Route exact path={ActivateAccountEmail}>
-          <EmailActivateDesktopPage history={history} email={props.email} token={props.token || ''} />
-        </Route>
         <Route exact path={ActivateAccount}>
-          <div className="left-part right">
-            <div className="logo">
-              <LoginLogo />
-            </div>
-            <div className="button-box">
-              <GoogleDesktopButton label="Register with Google" />
-            </div>
-            <div className="button-box">
-              <RegisterDesktopButton label="Register with email" onClick={moveToRegister} />
-            </div>
-          </div>
+          <EmailActivateDesktopPage history={history} email={props.email} token={props.token || ''} />
         </Route>
       </Switch>
       <TermsLink history={history} />
