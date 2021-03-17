@@ -506,12 +506,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
   }
 
-  renderTopRow() {
+  renderTopRow(inviteHidden?: boolean) {
     return (
       <Grid container alignItems="stretch" direction="row" className="selected-class-name">
         <Grid item xs>
           <NameAndSubjectForm
             isStudents={true}
+            inviteHidden={inviteHidden}
             moveToAssignemts={() => this.props.history.push('/teach/assigned')}
             classroom={this.state.activeClassroom}
             onChange={this.updateClassroom.bind(this)}
@@ -519,6 +520,28 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           />
         </Grid>
       </Grid>
+    );
+  }
+
+  renderClassEmptyStudents() {
+    return (
+      <div className="tab-content">
+        {this.state.activeClassroom &&
+          <div>{this.renderTopRow(true)}</div>
+        }
+        <div className="tab-content-centered">
+          <div>
+            <div className="icon-container m-l-012">
+              <SpriteIcon
+                name="user-plus"
+                className="stroke-1"
+                onClick={() => this.setState({ inviteOpen: true })}
+              />
+            </div>
+            <div className="bold">+ Invite Students</div>
+          </div>
+        </div>
+      </div>
     );
   }
 
@@ -531,6 +554,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     let classHasStudents = activeClassroom && activeClassroom.students.length > 0;
 
+    if (activeClassroom && !classHasStudents) {
+      return this.renderClassEmptyStudents();
+    }
+
     if (this.state.isLoaded && users.length === 0 && !classHasStudents) {
       return (
         <div className="tab-content">
@@ -538,29 +565,16 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             <div>{this.renderTopRow()}</div>
           }
           <div className="tab-content-centered">
-            {this.state.activeClassroom ?
-              <div>
-                <div className="icon-container m-l-012">
-                  <SpriteIcon
-                    name="user-plus"
-                    className="stroke-1"
-                    onClick={() => this.setState({ inviteOpen: true })}
-                  />
-                </div>
-                <div className="bold">+ Invite Students</div>
+            <div className="new-class-container" onClick={() => this.setState({ createClassOpen: true })}>
+              <div className="icon-container">
+                <SpriteIcon
+                  name="users-custom"
+                  className="stroke-1"
+                />
               </div>
-              :
-              <div className="new-class-container" onClick={() => this.setState({ createClassOpen: true })}>
-                <div className="icon-container">
-                  <SpriteIcon
-                    name="users-custom"
-                    className="stroke-1"
-                  />
-                </div>
-                <div className="bold-hover">+ Create Class</div>
-                <div className="text-center f-s-2 m-t-2vh">You can invite between 1 and 50 students to a class</div>
-              </div>
-            }
+              <div className="bold-hover">+ Create Class</div>
+              <div className="text-center f-s-2 m-t-2vh">You can invite between 1 and 50 students to a class</div>
+            </div>
           </div>
         </div>
       );
@@ -601,7 +615,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   render() {
     const { history } = this.props;
 
-    const {activeClassroom} = this.state;
+    const { activeClassroom } = this.state;
 
     return (
       <div className="main-listing user-list-page manage-classrooms-page manage-classrooms-checkboxes">

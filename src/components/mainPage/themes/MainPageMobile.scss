@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .mainPageMobile ~ .beta-text {
   display: none;
@@ -16,7 +16,6 @@
   font-family: $font-family-black;
 
   .manage-classes {
-
     #Path_8,
     #Ellipse_12,
     #Ellipse_12-2,
@@ -67,19 +66,20 @@
     @include tabletP {
       padding: 5vh 0;
     }
-
-    .eye-glass-icon,
     .btn {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       @extend %textCenter;
       flex-direction: column;
-
       .svg {
         @extend %removePosition;
         width: 150px;
         height: 120px;
+        @include phone_and_tabletP {
+          width: 150px;
+          height: 120px;
+        }
       }
     }
 
@@ -121,6 +121,18 @@
       .item-description {
         margin-top: 0.5vw;
       }
+    }
+  }
+
+  .glasses {
+    cursor: pointer;
+    display: inline;
+    margin: 0 0.3vw;
+    width: 4vw !important;
+    color: var(--theme-orange);
+    svg {
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 

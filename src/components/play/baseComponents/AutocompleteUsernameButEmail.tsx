@@ -52,7 +52,12 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
             onBlur={() => props.onBlur()}
             onKeyPress={e => {
               if (e.key === "Enter" || e.key === ' ') {
-                props.onAddEmail();
+                const user = users.find(u => u.email.toLocaleLowerCase() === props.currentEmail.toLocaleLowerCase());
+                if (user) {
+                  return;
+                } else {
+                  props.onAddEmail();
+                }
               }
             }}
             onChange={(evt) => {

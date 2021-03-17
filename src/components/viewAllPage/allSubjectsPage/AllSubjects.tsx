@@ -18,6 +18,7 @@ interface AllSubjectsProps {
   user: User;
   history: any;
   location: any;
+  setViewAll(): void;
   filterByOneSubject(subjectId: number): void;
   checkSubjectsWithBricks(): void;
 }
@@ -107,6 +108,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               subjects={this.state.totalSubjects}
               viewAll={() => {
                 this.props.checkSubjectsWithBricks();
+                this.props.setViewAll();
                 this.props.history.push(map.ViewAllPage + `?isViewAll=${true}`);
               }}
               onClick={this.onSubjectSelected.bind(this)}

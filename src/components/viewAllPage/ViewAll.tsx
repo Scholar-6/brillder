@@ -41,6 +41,7 @@ import { filterByCurretUser } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 import AllSubjects from "./allSubjectsPage/AllSubjects";
 import MobileCategory from "./MobileCategory";
+import { playCover } from "components/play/routes";
 
 
 interface ViewAllProps {
@@ -162,7 +163,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   onBricksWheel(e: any) {
-    console.log('wheel')
     if (e.wheelDeltaY < 0) {
       this.moveAllNext();
     } else {
@@ -286,7 +286,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   moveToPlay(brickId: number) {
-    this.props.history.push(map.playIntro(brickId));
+    this.props.history.push(playCover(brickId));
   }
 
   move(brickId: number) {
@@ -342,18 +342,19 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return bricks;
   }
 
-  //region Hide / Expand / Clear Filter
   isFilterClear() {
     return this.state.subjects.some(r => r.checked);
   }
-  //endregion
 
   filterBySubject(id: number) {
-    toggleSubject(this.state.subjects, id);
-    toggleSubject(this.state.userSubjects, id);
+    const subject = this.state.subjects.find(s => s.id === id);
+    if (!subject) { return; }
+    const checked = subject.checked;
+    this.state.subjects.forEach(s => s.checked = false);
+    
+    subject.checked = !checked;
 
-    let checked = this.state.subjects.find(s => s.checked === true);
-    if (!checked) {
+    if (!subject.checked) {
       this.props.history.push(map.AllSubjects + '?filter=true');
     }
 
@@ -867,6 +868,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       user={this.props.user}
       history={this.props.history} location={this.props.location}
       filterByOneSubject={this.filterByOneSubject.bind(this)}
+      setViewAll={() => this.setState({isViewAll: true})}
       checkSubjectsWithBricks={() => this.checkSubjectsWithBricks(this.state.subjects)}
     />
   }
