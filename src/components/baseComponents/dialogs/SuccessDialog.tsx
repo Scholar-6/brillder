@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "../SpriteIcon";
 
 interface SuccessDialogProps {
   isOpen: boolean;
@@ -28,10 +28,7 @@ const SuccessDialog: React.FC<SuccessDialogProps> = props => {
           <ListItemText primary={props.header} className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="circle-check">
-              <svg className="svg active stroke-2" style={{marginBottom: '0.3vw'}}>
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#" + (props.icon ? props.icon : "ok")} />
-              </svg>
+              <SpriteIcon name={props.icon ? props.icon : "ok"} className="active stroke-2" />
             </Avatar>
           </ListItemAvatar>
         </ListItem>
