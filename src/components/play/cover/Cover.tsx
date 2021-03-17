@@ -8,9 +8,11 @@ import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
-import { isPhone } from "services/phone";
+import { User } from "model/user";
+import { checkPublisher } from "components/services/brickService";
 
 interface IntroductionProps {
+  user: User;
   brick: Brick;
   location: any;
   history: any;
@@ -42,8 +44,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
 
   const renderPlayButton = () => {
-    if (isPhone()) {
-    }
     return (
       <div>
         <div className="font-black">Are you ready to learn?</div>
@@ -66,6 +66,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     );
   };
 
+  const isPublisher = checkPublisher(props.user, brick);
+
   return (
     <div className="brick-row-container cover-page">
       <div className="brick-container">
@@ -80,7 +82,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               </div>
               <div className="centered">
                 <Image
-                  locked={false}
+                  locked={!isPublisher}
                   index={0}
                   data={{
                     value: '',

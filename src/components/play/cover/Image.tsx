@@ -76,6 +76,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   return (
     <div className="image-drag-n-drop" onClick={props.onFocus}>
       <div className={className} onClick={() => {
+        if (locked) { return; }
         if (props.data.value) {
           setOpen(true);
         } else {

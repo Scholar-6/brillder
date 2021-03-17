@@ -333,6 +333,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       <Switch>
         <Route exac path={coverRoute}>
           <Cover
+            user={props.user}
             location={props.location}
             history={props.history}
             brick={brick}
