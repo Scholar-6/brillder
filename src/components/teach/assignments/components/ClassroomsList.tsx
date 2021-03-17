@@ -27,7 +27,7 @@ interface ClassroomListProps {
   activeClassroom: TeachClassroom | null;
   expand(classroomId: number, assignmentId: number): void;
   reloadClasses(): void;
-  onRemind?(): void;
+  onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
 
 class ClassroomList extends Component<ClassroomListProps> {
@@ -64,6 +64,7 @@ class ClassroomList extends Component<ClassroomListProps> {
           <NameAndSubjectForm
             classroom={classroom}
             isArchive={this.props.isArchive}
+            onAssigned={() => this.props.reloadClasses()}
             onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
           />
           </div>
@@ -88,7 +89,7 @@ class ClassroomList extends Component<ClassroomListProps> {
                 isArchive={this.props.isArchive}
                 expand={this.props.expand.bind(this)}
                 key={i} classroom={c.classroom} assignment={c.assignment}
-                archive={() => {}}
+                archive={() => this.props.reloadClasses()}
                 onRemind={this.props.onRemind}
               />
             </div>

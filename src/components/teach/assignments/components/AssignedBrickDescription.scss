@@ -258,13 +258,11 @@
       }
     }
 
-    &.completed {
-      .archive-button-container {
-        cursor: pointer;
-        background: var(--theme-green);
-        .svg {
-          color: var(--white) !important;
-        }
+    &.completed .archive-button-container {
+      cursor: pointer;
+      background: var(--theme-green);
+      .svg {
+        color: var(--white) !important;
       }
     }
     &.completed {
@@ -282,6 +280,12 @@
         }
       }
     }
+    &.deadline .reminder-icon {
+      background: var(--theme-orange);
+    }
+    &.deadline .green-hover > div {
+      background: var(--theme-orange-alpha3);
+    }
     &.completed:hover {
       .green-hover {
         > div {
@@ -293,8 +297,11 @@
     // tooltip
     .css-custom-tooltip {
       bottom: -1.8vw;
-      left: -1.5vw;
-      width: 6.4vw !important;
+      left: -2.3vw;
+      padding: 0 !important;
+      text-align: center;
+      width: 7.7vw !important;
+      z-index: 100;
     }
     &.completed:hover {
       .css-custom-tooltip {
