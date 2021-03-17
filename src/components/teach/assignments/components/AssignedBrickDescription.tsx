@@ -7,6 +7,7 @@ import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { archiveAssignment, sendAssignmentReminder } from "services/axios/brick";
+import { getTotalStudentsCount } from "../service/service";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
@@ -15,12 +16,12 @@ interface AssignedDescriptionProps {
   isExpanded?: boolean;
   isStudent?: boolean;
   isStudentAssignment?: boolean;
-  isArchive?:boolean;
+  isArchive?: boolean;
   move?(): void;
   expand?(classroomId: number, assignmentId: number): void;
   minimize?(): void;
   archive(): void;
-  onRemind?(): void;
+  onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
 
 interface State {
@@ -38,7 +39,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
   sendNotifications() {
     sendAssignmentReminder(this.props.assignment.id);
-    this.props.onRemind?.();
+    const count = getTotalStudentsCount(this.props.classroom);
+    const passed = this.isDeadlinePassed(this.props.assignment);
+    this.props.onRemind?.(count, passed);
   }
 
   renderVertical(assignmentId: number, color: string) {
@@ -75,6 +78,16 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     );
   }
 
+  isDeadlinePassed(assignment: Assignment) {
+    if (!assignment.deadline) { return false; }
+    const endTime = new Date(assignment.deadline).getTime();
+    const nowTime = new Date().getTime();
+    if (endTime < nowTime) {
+      return true;
+    }
+    return false;
+  }
+
   renderStatus(assignment: Assignment) {
     const { studentStatus } = assignment;
     let everyoneFinished = true;
@@ -94,36 +107,26 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
       return <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2 finished" />;
     } else {
       if (assignment.deadline) {
-        let endTime = new Date(assignment.deadline).getTime();
-        let nowTime = new Date().getTime();
-        if (endTime < nowTime) {
-          return <SpriteIcon name="reminder" className="active reminder-icon bg-theme-orange" onClick={this.sendNotifications.bind(this)} />;
+        if (this.isDeadlinePassed(assignment)) {
+          return <SpriteIcon name="reminder" className="active reminder-icon bg-theme-orange reminder-icon2" onClick={this.sendNotifications.bind(this)} />;
         }
       } else {
+        const isPlural = getTotalStudentsCount(this.props.classroom) > 1 ? true : false;
         return (
           <div className="reminder-brick-actions-container completed">
-          <div className="reminder-button-container" onClick={this.archiveAssignment.bind(this)}>
-            <div className="green-hover">
-              <div />
+            <div className="reminder-button-container" onClick={this.archiveAssignment.bind(this)}>
+              <div className="green-hover">
+                <div />
+              </div>
+              <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2" onClick={this.sendNotifications.bind(this)} />
             </div>
-            <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2" onClick={this.sendNotifications.bind(this)} />
+            <div className="css-custom-tooltip">
+              Send Reminder{isPlural ? 's' : ''}
+            </div>
           </div>
-          <div className="css-custom-tooltip">
-            Archive brick
-          </div>
-        </div>
         );
       }
     }
-  }
-
-  getTotalStudentsCount() {
-    const { classroom } = this.props;
-    let studentsCount = 0;
-    if (classroom) {
-      studentsCount = classroom.students.length;
-    }
-    return studentsCount;
   }
 
   isCompleted() {
@@ -234,7 +237,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         <div className="assignment-second-part">
           {!this.props.isStudentAssignment &&
             <div className="users-complete-count">
-              <span>{this.getCompleteStudents()}/{this.getTotalStudentsCount()}</span>
+              <span>{this.getCompleteStudents()}/{getTotalStudentsCount(this.props.classroom)}</span>
               <SpriteIcon name="users" className="text-theme-dark-blue" />
             </div>}
           <div className="average">
@@ -243,17 +246,17 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           {this.renderStudentStatus()}
         </div>
         {!this.props.isArchive &&
-        <div className={`teach-brick-actions-container ${this.isCompleted() ? 'completed' : ''}`}>
-          <div className="archive-button-container" onClick={this.archiveAssignment.bind(this)}>
-            <div className="green-hover">
-              <div />
+          <div className={`teach-brick-actions-container ${this.isCompleted() ? 'completed' : ''}`}>
+            <div className="archive-button-container" onClick={this.archiveAssignment.bind(this)}>
+              <div className="green-hover">
+                <div />
+              </div>
+              <SpriteIcon name="archive" className="text-gray" />
             </div>
-            <SpriteIcon name="archive" className="text-gray" />
+            <div className="css-custom-tooltip">
+              Archive brick
           </div>
-          <div className="css-custom-tooltip">
-            Archive brick
-          </div>
-        </div>}
+          </div>}
       </div>
     );
   }
