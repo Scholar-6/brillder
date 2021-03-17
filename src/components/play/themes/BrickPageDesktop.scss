@@ -1465,3 +1465,69 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   padding: 0.25vw 1vw;
   font-size: $base-font-size;
 }
+
+
+// cover page styles
+.play-preview-pages .sorted-row .brick-row-container.cover-page .brick-container {
+  color: var(--theme-dark-blue);
+
+  .introduction-page {
+    padding-top: 3.5vh;
+    padding-left: 3.5vh;
+  
+    .first-row {
+      display: flex;
+      align-items: center;
+      font-family: $font-family-black;
+      font-size: 1.1vw;
+  
+      .brick-id-container {
+        border-radius: 0.7vw;
+        padding: 1vh 0.8vw;
+        color: var(--white);
+        background: var(--theme-orange);
+      }
+      .question {
+        color: var(--theme-dark-blue);
+        margin-left: 2vw;
+      }
+      svg {
+        width: 2vw;
+        height: 2vw;
+        margin-left: 0.7vw;
+      }
+    }
+    .brick-title {
+      margin-top: 3.6vh;
+      font-size: 2.6vw;
+      @extend %ellipsis;
+      text-transform: uppercase;
+      font-family: $font-family-black;
+    }
+    .author-row {
+      font-size: 1.5vw;
+      @extend %ellipsis;
+      text-transform: capitalize;
+    }
+    .keywords-row {
+      font-size: 1.1vw;
+    }
+  }
+  .introduction-info {
+    font-size: 1.6vw;
+    .c-next-btn-container {
+      margin-top: 4vh;
+      display: flex;
+      justify-content: center;
+      button {
+        border: none;
+        outline: none;
+        font-size: 1.7vw;
+        border-radius: 0.7vw;
+        padding: 1.4vh 1.9vw;
+        color: var(--white);
+        background: var(--theme-orange);
+      }
+    }
+  }
+}
