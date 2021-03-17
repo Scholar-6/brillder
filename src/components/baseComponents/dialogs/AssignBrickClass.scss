@@ -51,58 +51,12 @@ span.bold {
           animation: none;
           transform: scale(0.23);
           top: -2.1vw;
-          // width: 1.3vw;
-          // height: auto;
-          // top: 0.55vh !important;
-          // @extend %removeAnimation;
-          // .eye-ball {
-          //   width: auto;
-          //   height: 0.8vw;
-          //   margin: 0 !important;
-          //   // position: relative;
-          //   @extend %removePosition;
-          //   top: 0 !important;
-          // }
-          // .glass-left-inside,
-          // .glass-right-inside {
-          //   width: 1vw;
-          //   height: 0.5vw;
-          //   position: absolute;
-          //   display: flex;
-          //   > svg {
-          //     // @extend %floatToCenter;
-          //     width: 0.4vw;
-          //     height: 0.4vw;
-          //     position: absolute !important;
-          //     top: 0.23vw !important;
-          //     animation-delay: 0s !important;
-          //     margin: 0;
-          //     @extend %removeAnimation;
-          //   }
-          // }
-          // .glass-left-inside {
-          //   > svg {
-          //     left: 0.1vw !important;
-          //   }
-          // }
-          // .glass-right-inside {
-          //   > svg {
-          //     left: unset !important;
-          //     right: 0.1vw !important;
-          //   }
-          // }
         }
         .glass-eyes-left {
           left: -1.61vw !important;
-          // .eye-ball {
-          //   left: 0 !important;
-          // }
         }
         .glass-eyes-right {
           right: -1.5vw !important;
-          // .eye-ball {
-          //   right: 0 !important;
-          // }
         }
       }
     }
