@@ -1,5 +1,7 @@
 import React from "react";
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
+
+import DynamicFont from 'react-dynamic-font';
 
 import { Brick } from "model/brick";
 
@@ -75,7 +77,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <Grid item sm={8} xs={12}>
             <div className="introduction-page">
               {renderFirstRow()}
-              <div className="brick-title">{brick.title}</div>
+              <div className="brick-title"><DynamicFont content={brick.title} /></div>
               <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
               <div className="keywords-row">
                 <KeyWordsPreview keywords={brick.keywords} />

@@ -76,6 +76,7 @@
     "react-device-detect": "^1.14.0",
     "react-dom": "^16.14.0",
     "react-dropzone": "^10.2.2",
+    "react-dynamic-font": "^2.0.1",
     "react-hyphen": "^1.4.0",
     "react-image-crop": "^8.5.0",
     "react-mathjax": "^1.0.1",
