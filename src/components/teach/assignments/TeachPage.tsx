@@ -493,6 +493,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         <SuccessDialog // reminder sent dialog
           header={`Reminder${remindersData.count > 1 ? 's' : ''} sent!`}
           isOpen={remindersData.isOpen}
+          icon="reminder"
           close={() => this.setState(state => ({ ...state, remindersData: { isOpen: false, count: remindersData.count } }))}
         />
          <CreateClassDialog
