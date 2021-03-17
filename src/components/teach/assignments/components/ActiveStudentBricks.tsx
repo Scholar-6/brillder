@@ -16,7 +16,7 @@ interface ActiveStudentBricksProps {
   subjects: Subject[];
   isArchive: boolean;
   activeStudent: TeachStudent;
-  onRemind?(): void;
+  onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
 
 interface ActiveStudentState {
@@ -118,7 +118,7 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
                     key={i}
                     assignment={a as any}
                     archive={this.loadAssignments.bind(this)}
-                    onRemind={this.props.onRemind}
+                    onRemind={this.props.onRemind?.bind(this)}
                   />
                 </div>
               </Grow>
