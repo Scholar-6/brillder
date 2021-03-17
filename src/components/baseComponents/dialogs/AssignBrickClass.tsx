@@ -39,9 +39,9 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const history = useHistory();
 
   const loadBricks = async () => {
-    let bricks = await getPublishedBricks();
+    const bricks = await getPublishedBricks();
     if (bricks) {
-      setBricks(bricks);
+      setBricks(bricks.filter(b => b.isCore == true));
     }
   }
 
