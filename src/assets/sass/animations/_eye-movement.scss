@@ -1,0 +1,52 @@
+@keyframes eye-movement-desktop {
+  0% {
+    transform: none;
+  }
+  5%,
+  20% {
+    transform: translateX(-0.5vw);
+  }
+  25%,
+  30% {
+    transform: none;
+  }
+  35%,
+  80% {
+    transform: translateX(0.5vw);
+  }
+  85%,
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes blink {
+  90% {
+    transform: none;
+    animation-timing-function: ease-in;
+  }
+  93% {
+    transform: translateY(15px) scaleY(0);
+  }
+  100% {
+    animation-timing-function: ease-out;
+  }
+}
+
+@keyframes eye-movement-mobile {
+  0% {
+    transform: translateX(-2px);
+  }
+
+  50% {
+    transform: translateX(-2px);
+  }
+
+  70% {
+    transform: translateX(2px);
+  }
+
+  100% {
+    transform: translateX(2px);
+  }
+}
