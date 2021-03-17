@@ -37,7 +37,7 @@ import { BrickFieldNames } from "components/build/proposal/model";
 import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
 import { getAssignQueryString, getPlayPath } from "./service";
 import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";
-import map from "components/map";
+import map, { playIntro } from "components/map";
 import userActions from 'redux/actions/user';
 import { User } from "model/user";
 import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
@@ -225,6 +225,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setSidebar(true);
   }
 
+  const moveToIntro = () => {
+    props.history.push(playIntro(brick.id));
+  }
+
   const moveToReview = () => {
     if (props.user) {
       saveBrickAttempt(brickAttempt);
@@ -331,7 +335,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={props.history}
             brick={brick}
-            moveNext={moveToLive}
+            moveNext={moveToIntro}
           />
           {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
         </Route>
