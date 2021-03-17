@@ -865,6 +865,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       user={this.props.user}
       history={this.props.history} location={this.props.location}
       filterByOneSubject={this.filterByOneSubject.bind(this)}
+      setViewAll={() => this.setState({isViewAll: true})}
       checkSubjectsWithBricks={() => this.checkSubjectsWithBricks(this.state.subjects)}
     />
   }
