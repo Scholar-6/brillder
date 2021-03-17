@@ -35,21 +35,30 @@ span.bold {
 }
 
 .assign-dialog-new {
-  .glasses {
-    cursor: pointer;
-    display: inline;
-    margin: 0 0.3vw;
-    width: 4vw !important;
-    color: var(--theme-orange);
-    svg {
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
-
   .text-with-glasses {
     display: flex;
     align-items: center;
     justify-content: center;
+    .glasses {
+      .eye-glass-icon {
+        .eye-glass-frame {
+          svg {
+            width: 100%;
+          }
+        }
+        .glass-eyes-left,
+        .glass-eyes-right {
+          animation: none;
+          transform: scale(0.23);
+          top: -2.1vw;
+        }
+        .glass-eyes-left {
+          left: -1.61vw !important;
+        }
+        .glass-eyes-right {
+          right: -1.5vw !important;
+        }
+      }
+    }
   }
 }
