@@ -258,13 +258,11 @@
       }
     }
 
-    &.completed {
-      .archive-button-container {
-        cursor: pointer;
-        background: var(--theme-green);
-        .svg {
-          color: var(--white) !important;
-        }
+    &.completed .archive-button-container {
+      cursor: pointer;
+      background: var(--theme-green);
+      .svg {
+        color: var(--white) !important;
       }
     }
     &.completed {
@@ -281,6 +279,12 @@
           background: var(--theme-yellow-alpha3);
         }
       }
+    }
+    &.deadline .reminder-icon {
+      background: var(--theme-orange);
+    }
+    &.deadline .green-hover > div {
+      background: var(--theme-orange-alpha3);
     }
     &.completed:hover {
       .green-hover {
