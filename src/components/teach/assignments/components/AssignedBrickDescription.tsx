@@ -209,6 +209,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   }
 
   render() {
+    const {classroom} = this.props as any;
     let subjectId = this.props.assignment.brick.subjectId;
     let color = getSubjectColor(this.props.subjects, subjectId);
 
@@ -244,6 +245,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
             <div className="users-complete-count">
               <span>{this.getCompleteStudents()}/{getTotalStudentsCount(this.props.classroom)}</span>
               <SpriteIcon name="users" className="text-theme-dark-blue" />
+              {classroom && classroom.studentsInvitations && <span style={{marginLeft: '1vw'}}>{classroom.studentsInvitations.length} Invited</span>}
             </div>}
           <div className="average">
             {this.getAverageScore()}
