@@ -1640,3 +1640,109 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     opacity: 1;
   }
 }
+// categorize hover
+.play-preview-pages .sort-category-list-container {
+  .sortable-item:hover {
+    background: rgba(130, 192, 237, 0.5) !important;
+  }
+}
+// horizontal shuffle hover
+.play-preview-pages .horizontal-shuffle-answer:hover {
+  background: rgba(130, 192, 237, 0.5) !important;
+}
+
+// missing choice dropdown font
+.missing-choice {
+  padding: 0.25vw 1vw;
+  font-size: $base-font-size;
+}
+
+// cover page styles
+.play-preview-pages .sorted-row .brick-row-container.cover-page .brick-container {
+  color: var(--theme-dark-blue);
+
+  .introduction-page {
+    padding-top: 3.5vh;
+    padding-left: 3.5vh;
+
+    .first-row {
+      display: flex;
+      align-items: center;
+      font-family: $font-family-black;
+      font-size: 1.1vw;
+
+      .brick-id-container {
+        border-radius: 0.7vw;
+        padding: 1vh 0.8vw;
+        color: var(--white);
+        background: var(--theme-orange);
+      }
+      .question {
+        color: var(--theme-dark-blue);
+        margin-left: 2vw;
+      }
+      svg {
+        width: 2vw;
+        height: 2vw;
+        margin-left: 0.7vw;
+      }
+    }
+    .brick-title {
+      padding-left: 0.5vw;
+      padding-right: 0.5vw;
+      margin-top: 3.6vh;
+      font-size: 2.6vw;
+      @extend %ellipsis;
+      text-transform: uppercase;
+      font-family: $font-family-black;
+    }
+    .author-row {
+      padding-left: 0.5vw;
+      padding-right: 0.5vw;
+      font-size: 1.5vw;
+      @extend %ellipsis;
+      text-transform: capitalize;
+    }
+    .keywords-row {
+      padding-left: 0.5vw;
+      padding-right: 0.5vw;
+      font-size: 1.1vw;
+      @extend %ellipsis;
+    }
+    .image-drag-n-drop {
+      padding-left: 0.5vw;
+      padding-right: 0.5vw;
+      margin-top: 1vh;
+      width: 100%;
+      .dropzone {
+        border-radius: 0.5vw;
+        border: none !important;
+        min-height: 47vh;
+
+        svg {
+          width: 35vh;
+          height: 35vh;
+          stroke-width: 0.7 !important;
+          color: var(--theme-dark-blue);
+        }
+      }
+    }
+  }
+  .introduction-info {
+    font-size: 1.6vw;
+    .c-next-btn-container {
+      margin-top: 4vh;
+      display: flex;
+      justify-content: center;
+      button {
+        border: none;
+        outline: none;
+        font-size: 1.7vw;
+        border-radius: 0.7vw;
+        padding: 1.4vh 1.9vw;
+        color: var(--white);
+        background: var(--theme-orange);
+      }
+    }
+  }
+}
