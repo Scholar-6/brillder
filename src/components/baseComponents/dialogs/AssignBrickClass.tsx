@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -17,6 +16,7 @@ import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
 import { getPublishedBricks } from 'services/axios/brick';
 import map from 'components/map';
 import { useHistory } from 'react-router';
+import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
 
 interface AssignPersonOrClassProps {
   classroomId: number;
@@ -51,16 +51,18 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
     if (!brick || !brick.id) {
       return;
     }
-    return await axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/brick/assignClasses/${brick.id}`,
-      { classesIds },
-      { withCredentials: true }
-    ).then(res => {
-      return res.data as any[];
-    }).catch(() => {
+
+    const data = { classesIds, deadline: null } as AssignClassData;
+
+    if (haveDeadline && deadlineDate) {
+      data.deadline = deadlineDate;
+    }
+
+    const res = await assignClasses(brick.id, data);
+    if (res === false) {
       props.requestFailed('Can`t assign class to brick');
-      return false;
-    });
+    }
+    return res;
   }
 
   const assign = async () => {

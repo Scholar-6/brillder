@@ -16,12 +16,12 @@ interface AssignedDescriptionProps {
   isExpanded?: boolean;
   isStudent?: boolean;
   isStudentAssignment?: boolean;
-  isArchive?:boolean;
+  isArchive?: boolean;
   move?(): void;
   expand?(classroomId: number, assignmentId: number): void;
   minimize?(): void;
   archive(): void;
-  onRemind?(count: number): void;
+  onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
 
 interface State {
@@ -40,7 +40,8 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   sendNotifications() {
     sendAssignmentReminder(this.props.assignment.id);
     const count = getTotalStudentsCount(this.props.classroom);
-    this.props.onRemind?.(count);
+    const passed = this.isDeadlinePassed(this.props.assignment);
+    this.props.onRemind?.(count, passed);
   }
 
   renderVertical(assignmentId: number, color: string) {
@@ -77,6 +78,16 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     );
   }
 
+  isDeadlinePassed(assignment: Assignment) {
+    if (!assignment.deadline) { return false; }
+    const endTime = new Date(assignment.deadline).getTime();
+    const nowTime = new Date().getTime();
+    if (endTime < nowTime) {
+      return true;
+    }
+    return false;
+  }
+
   renderStatus(assignment: Assignment) {
     const { studentStatus } = assignment;
     let everyoneFinished = true;
@@ -96,25 +107,23 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
       return <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2 finished" />;
     } else {
       if (assignment.deadline) {
-        let endTime = new Date(assignment.deadline).getTime();
-        let nowTime = new Date().getTime();
-        if (endTime < nowTime) {
-          return <SpriteIcon name="reminder" className="active reminder-icon bg-theme-orange" onClick={this.sendNotifications.bind(this)} />;
+        if (this.isDeadlinePassed(assignment)) {
+          return <SpriteIcon name="reminder" className="active reminder-icon bg-theme-orange reminder-icon2" onClick={this.sendNotifications.bind(this)} />;
         }
       } else {
         const isPlural = getTotalStudentsCount(this.props.classroom) > 1 ? true : false;
         return (
           <div className="reminder-brick-actions-container completed">
-          <div className="reminder-button-container" onClick={this.archiveAssignment.bind(this)}>
-            <div className="green-hover">
-              <div />
+            <div className="reminder-button-container" onClick={this.archiveAssignment.bind(this)}>
+              <div className="green-hover">
+                <div />
+              </div>
+              <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2" onClick={this.sendNotifications.bind(this)} />
             </div>
-            <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2" onClick={this.sendNotifications.bind(this)} />
+            <div className="css-custom-tooltip">
+              Send Reminder{isPlural ? 's' : ''}
+            </div>
           </div>
-          <div className="css-custom-tooltip">
-            Send Reminder{isPlural ? 's' : ''}
-          </div>
-        </div>
         );
       }
     }
@@ -237,17 +246,17 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           {this.renderStudentStatus()}
         </div>
         {!this.props.isArchive &&
-        <div className={`teach-brick-actions-container ${this.isCompleted() ? 'completed' : ''}`}>
-          <div className="archive-button-container" onClick={this.archiveAssignment.bind(this)}>
-            <div className="green-hover">
-              <div />
+          <div className={`teach-brick-actions-container ${this.isCompleted() ? 'completed' : ''}`}>
+            <div className="archive-button-container" onClick={this.archiveAssignment.bind(this)}>
+              <div className="green-hover">
+                <div />
+              </div>
+              <SpriteIcon name="archive" className="text-gray" />
             </div>
-            <SpriteIcon name="archive" className="text-gray" />
+            <div className="css-custom-tooltip">
+              Archive brick
           </div>
-          <div className="css-custom-tooltip">
-            Archive brick
-          </div>
-        </div>}
+          </div>}
       </div>
     );
   }

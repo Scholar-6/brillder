@@ -16,7 +16,7 @@ interface ActiveStudentBricksProps {
   subjects: Subject[];
   isArchive: boolean;
   activeStudent: TeachStudent;
-  onRemind?(count: number): void;
+  onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
 
 interface ActiveStudentState {

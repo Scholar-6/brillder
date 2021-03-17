@@ -29,10 +29,15 @@ import { getSubjects } from "services/axios/subject";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
-import SuccessDialog from "components/baseComponents/dialogs/SuccessDialog";
+import ReminderSuccessDialog from "components/baseComponents/dialogs/ReminderSuccessDialog";
 import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog";
-import { getTotalStudentsCount } from "./service/service";
 
+
+interface RemindersData {
+  isOpen: boolean;
+  count: number;
+  isDeadlinePassed: boolean;
+}
 
 interface TeachProps {
   history: any;
@@ -60,7 +65,7 @@ interface TeachState {
   subjects: Subject[];
   isSearching: boolean;
   isLoaded: boolean;
-  remindersData: any;
+  remindersData: RemindersData;
   createClassOpen: boolean;
 
   filters: TeachFilters;
@@ -97,7 +102,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       remindersData: {
         isOpen: false,
-        count: 0
+        count: 0,
+        isDeadlinePassed: false
       },
       createClassOpen: false,
 
@@ -390,8 +396,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
     );
   }
 
-  setReminderNotification(count: number) {
-    this.setState(state => ({ ...state, remindersData: { isOpen: true, count } }));
+  setReminderNotification(count: number, isDeadlinePassed: boolean) {
+    this.setState(state => ({ ...state, remindersData: { isOpen: true, count, isDeadlinePassed } }));
   }
 
   renderTabContent() {
@@ -490,11 +496,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
             {this.renderTabContent()}
           </Grid>
         </Grid>
-        <SuccessDialog // reminder sent dialog
+        <ReminderSuccessDialog
           header={`Reminder${remindersData.count > 1 ? 's' : ''} sent!`}
           isOpen={remindersData.isOpen}
-          icon="reminder"
-          close={() => this.setState(state => ({ ...state, remindersData: { isOpen: false, count: remindersData.count } }))}
+          isDeadlinePassed={remindersData.isDeadlinePassed}
+          close={() => this.setState(state => ({ ...state, remindersData: { ...remindersData, isOpen: false } }))}
         />
          <CreateClassDialog
           isOpen={this.state.createClassOpen}

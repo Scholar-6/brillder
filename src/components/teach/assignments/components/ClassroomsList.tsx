@@ -27,7 +27,7 @@ interface ClassroomListProps {
   activeClassroom: TeachClassroom | null;
   expand(classroomId: number, assignmentId: number): void;
   reloadClasses(): void;
-  onRemind?(count: number): void;
+  onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
 
 class ClassroomList extends Component<ClassroomListProps> {
