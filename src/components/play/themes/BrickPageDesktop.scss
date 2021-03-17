@@ -465,7 +465,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           overflow-y: auto;
           // height: 100%;
           height: calc(100vh - 15.8vh);
-          padding: 4vh 2vw 4vh 7vw;
+          padding: 3vh 2vw 4vh 7vw;
           .title {
             @include desktop {
               font-size: 4vw;
@@ -579,7 +579,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             &.review-content {
               width: calc(100% - 7vw) !important;
               margin: 0 3vw 1vw 4vw;
-              padding-top: 1.5vh;
+              // padding-top: 1.5vh;
             }
           }
 
