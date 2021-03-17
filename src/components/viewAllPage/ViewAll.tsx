@@ -347,11 +347,14 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   filterBySubject(id: number) {
-    toggleSubject(this.state.subjects, id);
-    toggleSubject(this.state.userSubjects, id);
+    const subject = this.state.subjects.find(s => s.id === id);
+    if (!subject) { return; }
+    const checked = subject.checked;
+    this.state.subjects.forEach(s => s.checked = false);
+    
+    subject.checked = !checked;
 
-    let checked = this.state.subjects.find(s => s.checked === true);
-    if (!checked) {
+    if (!subject.checked) {
       this.props.history.push(map.AllSubjects + '?filter=true');
     }
 
