@@ -171,7 +171,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     }
     return (
       <div>
-        <h3>Ready?</h3>
+        <h3 className="ready-text">Ready?</h3>
         <h2>Play Brick</h2>
       </div>
     );
@@ -189,9 +189,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <div className="action-footer">
         <div></div>
         <div className="direction-info">
-          <Hidden only={["xs"]}>
-            {renderDesktopPlayText()}
-          </Hidden>
+          {renderDesktopPlayText()}
         </div>
         <div>
           <button

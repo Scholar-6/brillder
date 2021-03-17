@@ -46,6 +46,7 @@ import ValidationFailedDialog from "components/baseComponents/dialogs/Validation
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
 import { createUserByEmail } from "services/axios/user";
 import { coverRoute } from "./routes";
+import { isPhone } from "services/phone";
 
 
 function shuffle(a: any[]) {
@@ -308,7 +309,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (!props.user) {
       link = map.ViewAllPage;
     }
-    if (!isMobile && sidebarRolledUp) {
+    if (!isPhone() && sidebarRolledUp) {
       return <HomeButton link={link} />;
     }
     if (headerHidden) {
@@ -437,10 +438,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     <React.Suspense fallback={<></>}>
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
       <div className="play-preview-pages">
-        {(isMobile && !(isIPad13 || isTablet))
-          ? <div />
-          : renderHead()
-        }
+        {isPhone() ? <div /> : renderHead()}
         <div className={className}>
           <PlayLeftSidebar
             history={props.history}
