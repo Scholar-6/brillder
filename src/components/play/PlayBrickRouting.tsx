@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import queryString from 'query-string';
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
+import Cover from "./cover/Cover";
 import Introduction from "./introduction/Introduction";
 import Live from "./live/Live";
 import ProvisionalScore from "./provisionalScore/ProvisionalScore";
@@ -324,6 +325,15 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const renderRouter = () => {
     return (
       <Switch>
+        <Route exac path={["/play/brick/:brickId/cover"]}>
+          <Cover
+            location={props.location}
+            history={props.history}
+            brick={brick}
+            moveNext={moveToLive}
+          />
+          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
+        </Route>
         <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
           <Introduction
             location={props.location}
