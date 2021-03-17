@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import queryString from 'query-string';
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
+import Cover from "./cover/Cover";
 import Introduction from "./introduction/Introduction";
 import Live from "./live/Live";
 import ProvisionalScore from "./provisionalScore/ProvisionalScore";
@@ -36,7 +37,7 @@ import { BrickFieldNames } from "components/build/proposal/model";
 import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
 import { getAssignQueryString, getPlayPath } from "./service";
 import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";
-import map from "components/map";
+import map, { playIntro } from "components/map";
 import userActions from 'redux/actions/user';
 import { User } from "model/user";
 import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
@@ -44,6 +45,8 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
 import { createUserByEmail } from "services/axios/user";
+import { coverRoute } from "./routes";
+import { isPhone } from "services/phone";
 
 
 function shuffle(a: any[]) {
@@ -216,11 +219,15 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (values.assignmentId) {
       query.assignmentId = values.assignmentId;
     }
-    if (isMobile) {
+    if (isPhone()) {
       setHeader(true);
     }
     props.history.push(liveLink + "?" + queryString.stringify(query));
     setSidebar(true);
+  }
+
+  const moveToIntro = () => {
+    props.history.push(playIntro(brick.id));
   }
 
   const moveToReview = () => {
@@ -302,7 +309,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (!props.user) {
       link = map.ViewAllPage;
     }
-    if (!isMobile && sidebarRolledUp) {
+    if (!isPhone() && sidebarRolledUp) {
       return <HomeButton link={link} />;
     }
     if (headerHidden) {
@@ -324,6 +331,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const renderRouter = () => {
     return (
       <Switch>
+        <Route exac path={coverRoute}>
+          <Cover
+            user={props.user}
+            location={props.location}
+            history={props.history}
+            brick={brick}
+            moveNext={moveToIntro}
+          />
+          {isPhone() && renderPhoneFooter()}
+        </Route>
         <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
           <Introduction
             location={props.location}
@@ -335,7 +352,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             moveNext={moveToLive}
             onHighlight={onHighlight}
           />
-          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
+          {isPhone() && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/live">
           <Live
@@ -353,7 +370,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               }
             }}
           />
-          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
+          {isPhone() && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/provisionalScore">
           <ProvisionalScore
@@ -363,11 +380,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brick={brick}
             attempts={attempts}
           />
-          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
+          {isPhone() && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/synthesis">
           <Synthesis mode={mode} status={status} brick={brick} moveNext={moveToReview} onHighlight={onHighlight} />
-          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
+          {isPhone() && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/review">
           <Review
@@ -382,7 +399,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             attempts={attempts}
             finishBrick={finishReview}
           />
-          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
+          {isPhone() && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/ending">
           <Ending
@@ -393,7 +410,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brickAttempt={brickAttempt}
             move={finishBrick}
           />
-          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
+          {isPhone() && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/finalStep">
           <FinalStep
@@ -402,7 +419,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history={props.history}
             moveNext={moveToPostPlay}
           />
-          {(isMobile && !(isIPad13 || isTablet)) && renderPhoneFooter()}
+          {isPhone() && renderPhoneFooter()}
         </Route>
         <ValidationFailedDialog
           isOpen={saveFailed}
@@ -422,10 +439,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     <React.Suspense fallback={<></>}>
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
       <div className="play-preview-pages">
-        {(isMobile && !(isIPad13 || isTablet))
-          ? <div />
-          : renderHead()
-        }
+        {isPhone() ? <div /> : renderHead()}
         <div className={className}>
           <PlayLeftSidebar
             history={props.history}

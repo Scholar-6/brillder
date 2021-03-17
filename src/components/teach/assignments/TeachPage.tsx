@@ -31,6 +31,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 import ReminderSuccessDialog from "components/baseComponents/dialogs/ReminderSuccessDialog";
 import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog";
+import { isArchived } from "./service/service";
 
 
 interface RemindersData {
@@ -272,6 +273,66 @@ class TeachPage extends Component<TeachProps, TeachState> {
     return itemsCount;
   }
 
+  getArchiveClassCount(classroom: TeachClassroom) {
+    let count = 0;
+    for (const assignment of classroom.assignments) {
+      const archived = isArchived(assignment);
+      if (archived) {
+        count += 1;
+      }
+    }
+    return count;
+  }
+
+  getArchiveClassesCount() {
+    let count = 0;
+    for (const classroom of this.state.classrooms) {
+      count += this.getArchiveClassCount(classroom);
+    }
+    return count;
+  }
+
+  getArchivedAssigmentsCount() {
+    if (this.state.activeStudent) {
+      return '';
+    }
+    if (this.state.activeClassroom) {
+      return this.getArchiveClassCount(this.state.activeClassroom);
+    } else {
+      return this.getArchiveClassesCount();
+    }
+  }
+
+  getLiveClassCount(classroom: TeachClassroom) {
+    let count = 0;
+    for (const assignment of classroom.assignments) {
+      const archived = isArchived(assignment);
+      if (!archived) {
+        count += 1;
+      }
+    }
+    return count;
+  }
+
+  getLiveClassesCount() {
+    let count = 0;
+    for (const classroom of this.state.classrooms) {
+      count += this.getLiveClassCount(classroom);
+    }
+    return count;
+  }
+
+  getLiveAssignmentsCount() {
+    if (this.state.activeStudent) {
+      return '';
+    }
+    if (this.state.activeClassroom) {
+      return this.getLiveClassCount(this.state.activeClassroom);
+    } else {
+      return this.getLiveClassesCount();
+    }
+  }
+
   renderArchiveButton() {
     const className = this.state.isArchive ? "active" : "";
     return (
@@ -282,7 +343,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           this.setState({ isArchive: true });
         }}
       >
-        ARCHIVE
+        {this.getArchivedAssigmentsCount()} ARCHIVED
       </div>
     );
   }
@@ -297,7 +358,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           this.setState({ isArchive: false })
         }}
       >
-        LIVE BRICKS
+        {this.getLiveAssignmentsCount()} LIVE BRICKS
       </div>
     );
   }
@@ -375,16 +436,18 @@ class TeachPage extends Component<TeachProps, TeachState> {
                   <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                     <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
                   </svg>
-                  <div className="glass-left-inside">
-                    <SpriteIcon name="aperture" className="aperture" />
+                  <div className="glass-left-inside svgOnHover">
+                    {/* <SpriteIcon name="aperture" className="aperture" /> */}
+                    <SpriteIcon name="eye-pupil" className="eye-pupil" />
                   </div>
                 </div>
                 <div className="glass-eyes-right svgOnHover">
                   <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                     <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
                   </svg>
-                  <div className="glass-right-inside">
-                    <SpriteIcon name="aperture" className="aperture" />
+                  <div className="glass-right-inside svgOnHover">
+                    {/* <SpriteIcon name="aperture" className="aperture" /> */}
+                    <SpriteIcon name="eye-pupil" className="eye-pupil" />
                   </div>
                 </div>
               </div>
@@ -502,7 +565,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           isDeadlinePassed={remindersData.isDeadlinePassed}
           close={() => this.setState(state => ({ ...state, remindersData: { ...remindersData, isOpen: false } }))}
         />
-         <CreateClassDialog
+        <CreateClassDialog
           isOpen={this.state.createClassOpen}
           submit={(name, subject) => {
             this.createClass(name, subject);

@@ -40,7 +40,6 @@ export interface IntroductionState {
   isStopped: boolean;
   prepExpanded: boolean;
   briefExpanded: boolean;
-  otherExpanded: boolean;
   duration: any;
 }
 
@@ -59,7 +58,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     prepExpanded: initPrepExpanded,
     isStopped: false,
     briefExpanded: true,
-    otherExpanded: false,
     duration: null,
   } as IntroductionState);
 
@@ -98,7 +96,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           ...state,
           isStopped: true,
           briefExpanded: true,
-          prepExpanded: !state.prepExpanded,
+          prepExpanded: false,
         });
       } else {
         if (!isPrep) {
@@ -109,7 +107,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           ...state,
           isStopped: false,
           briefExpanded: false,
-          prepExpanded: !state.prepExpanded,
+          prepExpanded: true,
         });
       }
       return;
@@ -119,13 +117,15 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       setState({
         ...state,
         isStopped: true,
-        prepExpanded: !state.prepExpanded,
+        briefExpanded: true,
+        prepExpanded: false,
       });
     } else {
       setState({
         ...state,
         isStopped: false,
-        prepExpanded: !state.prepExpanded,
+        briefExpanded: false,
+        prepExpanded: true,
       });
     }
   };
@@ -171,8 +171,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     }
     return (
       <div>
-        <h3>Ready?</h3>
-        <h2>Play Brick</h2>
+        <h3 className="ready-text">Ready?</h3>
+        <h2>{state.prepExpanded ? 'Play Brick' : 'Start Prep'}</h2>
       </div>
     );
   }
@@ -189,9 +189,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <div className="action-footer">
         <div></div>
         <div className="direction-info">
-          <Hidden only={["xs"]}>
-            {renderDesktopPlayText()}
-          </Hidden>
+          {renderDesktopPlayText()}
         </div>
         <div>
           <button
