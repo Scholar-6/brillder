@@ -39,7 +39,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const startBrick = () => {
     props.moveNext();
   };
-  
+
 
   const renderPlayButton = () => {
     if (isPhone()) {
@@ -69,54 +69,38 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   return (
     <div className="brick-row-container cover-page">
       <div className="brick-container">
-        <Hidden only={["xs"]}>
-          <Grid container direction="row">
-            <Grid item sm={8} xs={12}>
-              <div className="introduction-page">
-                {renderFirstRow()}
-                <div className="brick-title">{brick.title}</div>
-                <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
-                <div className="keywords-row">
-                  <KeyWordsPreview keywords={brick.keywords} />
-                </div>
-                <div className="centered">
-                  <Image
-                    locked={false}
-                    index={0}
-                    data={{
-                      value: '',
-                      imageAlign: 1,
-                      imageHeight: 40
-                    }}
-                    validationRequired={false}
-                    save={() => {}}
-                    updateComponent={() => {}}
-                    onFocus={() => {}}
-                  />
-                  {/*removed
-                    ? <SpriteIcon name="image" className="icon-image" />
-                    : <DropImage initFileName={''} locked={false} file={file} setFile={setCroped} />
-                  */}
-                </div>
+        <Grid container direction="row">
+          <Grid item sm={8} xs={12}>
+            <div className="introduction-page">
+              {renderFirstRow()}
+              <div className="brick-title">{brick.title}</div>
+              <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
+              <div className="keywords-row">
+                <KeyWordsPreview keywords={brick.keywords} />
               </div>
-            </Grid>
-            <Grid item sm={4} xs={12}>
-              <div className="introduction-info">
-                {renderPlayButton()}
+              <div className="centered">
+                <Image
+                  locked={false}
+                  index={0}
+                  data={{
+                    value: '',
+                    imageAlign: 1,
+                    imageHeight: 40
+                  }}
+                  validationRequired={false}
+                  save={() => { }}
+                  updateComponent={() => { }}
+                  onFocus={() => { }}
+                />
               </div>
-            </Grid>
+            </div>
           </Grid>
-        </Hidden>
-        <Hidden only={["sm", "md", "lg", "xl"]}>
-          <div className="introduction-page">
-            {renderFirstRow()}
+          <Grid item sm={4} xs={12}>
             <div className="introduction-info">
               {renderPlayButton()}
             </div>
-            <div className="introduction-content">
-            </div>
-          </div>
-        </Hidden>
+          </Grid>
+        </Grid>
       </div>
     </div>
   );

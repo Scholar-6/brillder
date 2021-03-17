@@ -6,6 +6,7 @@ import {fileUrl, uploadFile} from 'components/services/uploadFile';
 import ImageDialog from 'components/build/buildQuestions/components/Image/ImageDialog';
 import { ImageAlign, ImageComponentData } from 'components/build/buildQuestions/components/Image/model';
 import ImageCloseDialog from 'components/build/buildQuestions/components/Image//ImageCloseDialog';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface ImageProps {
   locked: boolean;
@@ -99,9 +100,8 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
                 justify="center"
                 alignContent="center"
                 direction="row"
-                style={{height: '10vh'}}
               >
-                Click to Select Image (jpg, png or gif)
+                <SpriteIcon name="image" />
               </Grid>
         }
       </div>

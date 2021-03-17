@@ -1440,3 +1440,97 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     font-size: 4.5vw;
   }
 }
+
+
+// cover page styles
+.play-preview-pages .sorted-row .brick-row-container.cover-page .brick-container {
+  color: var(--theme-dark-blue);
+
+  .introduction-page {
+    padding-top: 4vw;
+    padding-left: 4vw;
+    padding-right: 4vw;
+  
+    .first-row {
+      display: flex;
+      align-items: center;
+      font-family: $font-family-black;
+      font-size: 5.5vw;
+  
+      .brick-id-container {
+        border-radius: 3vw;
+        padding: 1.3vh 4vw;
+        color: var(--white);
+        background: var(--theme-orange);
+      }
+      .question {
+        color: var(--theme-dark-blue);
+        margin-left: 8vw;
+      }
+      svg {
+        width: 10vw;
+        height: 10vw;
+        margin-left: 3vw;
+      }
+    }
+    .brick-title {
+      padding-left: 2vw;
+      padding-right: 2vw;
+      margin-top: 3vh;
+      font-size: 7vw;
+      @extend %ellipsis;
+      text-transform: uppercase;
+      font-family: $font-family-black;
+    }
+    .author-row {
+      padding-left: 2vw;
+      padding-right: 2vw;
+      font-size: 6vw;
+      @extend %ellipsis;
+      text-transform: capitalize;
+    }
+    .keywords-row {
+      padding-left: 2vw;
+      padding-right: 2vw;
+      margin-top: 2vh;
+      font-size: 5vw;
+      @extend %ellipsis;
+    }
+    .image-drag-n-drop {
+      padding-left: 2vw;
+      padding-right: 2vw;
+      margin-top: 1vh;
+      width: 100%;
+      .dropzone {
+        border-radius: 3.5vw;
+        border: none !important;
+        min-height: 70.4vw;
+
+        svg {
+          width: 45vw;
+          height: 45vw;
+          color: var(--theme-dark-blue);
+        }
+      }
+    }
+  }
+  .introduction-info {
+    margin-top: 6vh;
+    text-align: center;
+    font-size: 8.5vw;
+    .c-next-btn-container {
+      margin-top: 3vh;
+      display: flex;
+      justify-content: center;
+      button {
+        border: none;
+        outline: none;
+        font-size: 6.5vw;
+        border-radius: 3vw;
+        padding: 1.1vh 7vw;
+        color: var(--white);
+        background: var(--theme-orange);
+      }
+    }
+  }
+}
