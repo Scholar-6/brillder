@@ -20,6 +20,7 @@ interface NameAndSubjectFormProps {
   onInvited?(): void;
   onAssigned?(): void;
   moveToAssignemts?(): void;
+  inviteHidden?: boolean;
   isArchive?: boolean;  // for assignments
   isStudents?: boolean; // for manage classes page
 }
@@ -147,12 +148,13 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           <div className="css-custom-tooltip">Edit Class Name or Subject</div>
         </span>
         <div className="classroom-btns-container">
+          {!props.inviteHidden &&
           <div className="assign-button-container">
             <div className="btn icon-button" onClick={() => setInvite(true)}>
               <SpriteIcon name="user-plus" />
               <div className="css-custom-tooltip">Add New Student</div>
             </div>
-          </div>
+          </div>}
           <div className="assign-button-container">
             <div className="btn" onClick={() => {
               togglePopup(true);
