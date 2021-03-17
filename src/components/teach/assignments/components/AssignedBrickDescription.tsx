@@ -7,6 +7,7 @@ import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { archiveAssignment, sendAssignmentReminder } from "services/axios/brick";
+import { getTotalStudentsCount } from "../service/service";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
@@ -20,7 +21,7 @@ interface AssignedDescriptionProps {
   expand?(classroomId: number, assignmentId: number): void;
   minimize?(): void;
   archive(): void;
-  onRemind?(): void;
+  onRemind?(count: number): void;
 }
 
 interface State {
@@ -38,7 +39,8 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
   sendNotifications() {
     sendAssignmentReminder(this.props.assignment.id);
-    this.props.onRemind?.();
+    const count = getTotalStudentsCount(this.props.classroom);
+    this.props.onRemind?.(count);
   }
 
   renderVertical(assignmentId: number, color: string) {
@@ -100,6 +102,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           return <SpriteIcon name="reminder" className="active reminder-icon bg-theme-orange" onClick={this.sendNotifications.bind(this)} />;
         }
       } else {
+        const isPlural = getTotalStudentsCount(this.props.classroom) > 1 ? true : false;
         return (
           <div className="reminder-brick-actions-container completed">
           <div className="reminder-button-container" onClick={this.archiveAssignment.bind(this)}>
@@ -109,21 +112,12 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
             <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2" onClick={this.sendNotifications.bind(this)} />
           </div>
           <div className="css-custom-tooltip">
-            Archive brick
+            Send Reminder{isPlural ? 's' : ''}
           </div>
         </div>
         );
       }
     }
-  }
-
-  getTotalStudentsCount() {
-    const { classroom } = this.props;
-    let studentsCount = 0;
-    if (classroom) {
-      studentsCount = classroom.students.length;
-    }
-    return studentsCount;
   }
 
   isCompleted() {
@@ -234,7 +228,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         <div className="assignment-second-part">
           {!this.props.isStudentAssignment &&
             <div className="users-complete-count">
-              <span>{this.getCompleteStudents()}/{this.getTotalStudentsCount()}</span>
+              <span>{this.getCompleteStudents()}/{getTotalStudentsCount(this.props.classroom)}</span>
               <SpriteIcon name="users" className="text-theme-dark-blue" />
             </div>}
           <div className="average">

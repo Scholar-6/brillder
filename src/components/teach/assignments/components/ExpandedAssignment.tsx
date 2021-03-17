@@ -34,7 +34,7 @@ interface AssignmentBrickProps {
   assignment: Assignment;
   history: any;
   minimize(): void;
-  onRemind?(): void;
+  onRemind?(count: number): void;
 }
 
 class ExpandedAssignment extends Component<
