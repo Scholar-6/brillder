@@ -319,6 +319,10 @@
   @include appearance(none);
 }
 
+%removeAnimation {
+  animation: none !important;
+}
+
 %p0 {
   padding: 0px;
 }
