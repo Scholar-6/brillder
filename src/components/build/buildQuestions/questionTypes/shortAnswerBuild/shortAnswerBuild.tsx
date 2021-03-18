@@ -8,10 +8,12 @@ import { UniqueComponentProps } from "../types";
 import AddAnswerButton from "components/build/baseComponents/addAnswerButton/AddAnswerButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import { HintStatus } from "model/question";
 
 
 export interface ShortAnswerBuildProps extends UniqueComponentProps {
   data: Y.Map<any>;
+  hint: Y.Map<any>;
 }
 
 export const getDefaultShortAnswerAnswer = (ymap: Y.Map<any>) => {
@@ -47,7 +49,14 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
 
   const removeFromList = (index: number) => {
     if (locked) return;
-    list.delete(index, 1);
+    if(list.length > 2) {
+      list.delete(index, 1);
+    } else if(list.length === 2) {
+      list.delete(index, 1);
+      if(props.hint.get("status") === HintStatus.Each) {
+        props.hint.set("status", HintStatus.All);
+      }
+    }
   };
 
   const renderDeleteButton = (index: number) => {

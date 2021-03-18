@@ -87,6 +87,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
             locked={locked}
             editOnly={editOnly}
             data={component}
+            hint={hint}
             validationRequired={validationRequired}
             openSameAnswerDialog={props.openSameAnswerDialog}
           />
