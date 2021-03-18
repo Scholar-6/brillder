@@ -1,0 +1,35 @@
+#launcher {
+  left: 0 !important;
+  width: 5.7vw !important;
+  *width: 5.7vw !important;
+  height: 2.4vw !important;
+  *height: 2.4vw !important;
+  margin: 0.6vw !important;
+  *margin: 0.6vw !important;
+}
+
+#launcher body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#launcher body .wrapper-AtBcr {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 0 !important;
+}
+
+.zEWidget-launcher {
+  background-color: var(--theme-orange) !important;
+  left: 5% !important;
+  bottom: -1vh !important;
+  width: 17vw !important;
+  opacity: 0 !important;
+}
