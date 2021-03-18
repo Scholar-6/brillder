@@ -111,7 +111,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   handleKey(e: any) {
     if (e.target.tagName === "INPUT") { return; }
     if (e.target.tagName === "TEXTAREA") { return; }
-    if (e.target.classList.contains("ck-content")) { return; }
+    if (e.target.classList.contains("ql-editor")) { return; }
 
     if (this.state.bookHovered) {
       if (rightKeyPressed(e)) {

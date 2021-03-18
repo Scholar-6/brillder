@@ -24,6 +24,7 @@ export class CustomImageBlot extends ImageBlot {
 
         const containerNode = document.createElement("div");
         containerNode.className = "image-play-container";
+        containerNode.contentEditable = "false";
 
         const imageNode = document.createElement("img");
         imageNode.className = "image-play";
