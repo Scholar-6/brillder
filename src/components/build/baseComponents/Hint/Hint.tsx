@@ -61,8 +61,9 @@ const HintComponent: React.FC<HintProps> = ({
             sharedData={props.hint.get("value")}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'insertTable', 'uploadImageCustom'
+              'latex', 'insertTable', 'image'
             ]}
+            imageDialog={true}
             showToolbar={false}
             validate={validationRequired}
           />
@@ -90,9 +91,10 @@ const HintComponent: React.FC<HintProps> = ({
             sharedData={props.hint.get("list").get(i)}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'imageUploadCustom'
+              'latex', 'image'
             ]}
             showToolbar={false}
+            imageDialog={true}
             validate={validationRequired}
           />
         </div>
