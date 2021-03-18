@@ -188,6 +188,8 @@
       border: 0.13vw solid var(--tab-gray);
       background-color: var(--white);
       border-radius: 0.6vw;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
     .parent-left-sidebar {

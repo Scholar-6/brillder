@@ -7,8 +7,7 @@
   max-height: 100%;
   display: flex;
   flex-direction: column;
-  // overflow-x: hidden;
-  overflow-y: auto;
+  overflow: visible;
   .ck.ck-dropdown.ck-color-ui-dropdown {
     padding: 0 !important;
     margin: 0 !important;
