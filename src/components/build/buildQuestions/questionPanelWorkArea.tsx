@@ -77,7 +77,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
 
   let showHelpArrow = false;
   if (index === 0 && props.isAuthor) {
-    showHelpArrow = getNonEmptyComponent((question.get("components") as Y.Array<any>).toJSON());
+    showHelpArrow = !getNonEmptyComponent((question.get("components") as Y.Array<any>).toJSON());
   }
 
   //#region Scroll

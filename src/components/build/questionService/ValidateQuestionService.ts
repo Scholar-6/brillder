@@ -14,7 +14,8 @@ export function getNonEmptyComponent(components: any[]) {
       c.type === QuestionComponentTypeEnum.Text ||
       c.type === QuestionComponentTypeEnum.Image ||
       c.type === QuestionComponentTypeEnum.Quote ||
-      c.type === QuestionComponentTypeEnum.Sound
+      c.type === QuestionComponentTypeEnum.Sound ||
+      c.type === QuestionComponentTypeEnum.Graph
     );
 }
 
