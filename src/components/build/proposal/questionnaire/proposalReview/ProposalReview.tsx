@@ -275,6 +275,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           showToolbar={true}
           allowMediaEmbed={true}
           allowLinks={true}
+          imageDialog={true}
           toolbar={[
             'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
           ]}

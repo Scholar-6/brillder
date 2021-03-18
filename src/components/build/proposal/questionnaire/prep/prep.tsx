@@ -82,6 +82,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, ...props }) => {
             showToolbar={true}
             allowMediaEmbed={true}
             allowLinks={true}
+            imageDialog={true}
             toolbar={[
               'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
             ]}

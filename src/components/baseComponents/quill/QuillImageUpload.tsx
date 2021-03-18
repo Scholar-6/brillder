@@ -15,12 +15,12 @@ export class CustomImageBlot extends ImageBlot {
         const node: Element = super.create();
 
         node.className = node.className + " image-play-container2" + ((value.imageAlign === ImageAlign.center) ? " center" : "");
-        node.setAttribute('data-url', value.url);
+        node.setAttribute('data-value', value.url);
         node.setAttribute('data-source', value.imageSource);
         node.setAttribute('data-caption', value.imageCaption);
         node.setAttribute('data-align', value.imageAlign);
         node.setAttribute('data-height', value.imageHeight);
-        node.setAttribute('data-permission', value.imagePermission);
+        node.setAttribute('data-permission', value.imagePermision);
 
         const containerNode = document.createElement("div");
         containerNode.className = "image-play-container";
@@ -28,12 +28,13 @@ export class CustomImageBlot extends ImageBlot {
         const imageNode = document.createElement("img");
         imageNode.className = "image-play";
         imageNode.setAttribute('style', `height: ${value.imageHeight}vh`);
-        imageNode.setAttribute('src', value.url);
+        imageNode.setAttribute('src', `${process.env.REACT_APP_BACKEND_HOST}/files/${value.url}`);
         containerNode.appendChild(imageNode);
 
         const captionNode = document.createElement("figcaption");
         captionNode.className = "image-caption";
         captionNode.textContent = value.imageCaption;
+        captionNode.contentEditable = "false";
         containerNode.appendChild(captionNode);
 
         node.appendChild(containerNode);
@@ -44,21 +45,25 @@ export class CustomImageBlot extends ImageBlot {
     static value(node: any) {
         var blot = {} as any;
         
-        blot.url = node.getAttribute('data-url');
+        blot.url = node.getAttribute('data-value');
         blot.imageSource = node.getAttribute('data-source');
         blot.imageCaption = node.getAttribute('data-caption');
-        blot.imageAlign = node.getAttribute('data-align');
+        blot.imageAlign = parseInt(node.getAttribute('data-align'), 10);
         blot.imageHeight = node.getAttribute('data-height');
-        blot.imagePermission = node.getAttribute('data-permission');
+        blot.imagePermision = node.getAttribute('data-permission');
 
         return blot;
+    }
+
+    update(mutations: MutationRecord[], context: {[key: string]: any}) {
+        console.log("mutated", mutations);
     }
 }
 Quill.register(CustomImageBlot);
 
 export default class ImageUpload {
     quill: Quill;
-    openDialog: (file: File) => void;
+    openDialog: (file?: File, data?: any) => void;
 
     constructor(quill: Quill, options: any) {
         this.quill = quill;
@@ -67,6 +72,23 @@ export default class ImageUpload {
         if(toolbar) {
             toolbar.addHandler("image", this.uploadHandler.bind(this, toolbar.container));
         }
+
+        quill.on("selection-change", (range, oldRange) => {
+            if(!range) return;
+            const [leaf] = quill.getLeaf(range.index);
+            if(leaf instanceof CustomImageBlot) {
+                leaf.domNode.ondblclick = () => {
+                    const data = CustomImageBlot.value(leaf.domNode);
+                    this.existingImageSelected({ ...data, value: data.url });
+                }
+            }
+
+            if(!oldRange) return;
+            const [oldLeaf, oldOffset] = quill.getLeaf(oldRange.index);
+            if(oldLeaf instanceof CustomImageBlot) {
+                leaf.domNode.onclick = null;
+            }
+        })
     }
 
     uploadHandler(toolbarNode: any) {
@@ -93,6 +115,10 @@ export default class ImageUpload {
         }
     }
 
+    existingImageSelected(data: any) {
+        this.openDialog(undefined, data);
+    }
+
     async uploadImages(file: File, source: string, caption: string, align: ImageAlign, height: number) {
         const length = this.quill.getLength();
         const range = this.quill.getSelection(true);
@@ -103,16 +129,35 @@ export default class ImageUpload {
             .retain(range.index)
             .delete(range.length)
             .insert({ customImage: {
-                url: fileUrl(fileName),
+                url: fileName,
                 imageSource: source,
                 imageCaption: caption,
                 imageAlign: align,
                 imageHeight: height,
-                imagePermission: true,
+                imagePermision: true,
             } });
 
         this.quill.updateContents(update as unknown as DeltaStatic, "user");
         this.quill.setSelection(length + 1, 0, "silent");
+    }
+
+    async updateImage(data: any) {
+        const range = this.quill.getSelection(true);
+        const [leaf] = this.quill.getLeaf(range.index);
+        if(leaf instanceof CustomImageBlot) {
+            const leafData = CustomImageBlot.value(leaf.domNode);
+            const newData = {
+                url: data.value ?? leafData.url,
+                imageSource: data.source ?? leafData.imageSource,
+                imageCaption: data.caption ?? leafData.imageCaption,
+                imageAlign: data.align ?? leafData.imageAlign,
+                imageHeight: data.height ?? leafData.imageHeight,
+                imagePermision: data.permission ?? leafData.imagePermision,
+            };
+            console.log(newData);
+            const newLeaf = leaf.replaceWith("customImage", newData);
+            console.log(newLeaf);
+        }
     }
 
     // uploadImages(this: {quill: Quill}, range: any, files: File[]) {

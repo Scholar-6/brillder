@@ -61,11 +61,17 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     const [data, setData] = React.useState(props.data);
     const [quill, setQuill] = React.useState<Quill | null>(null);
 
+    const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
     const [imageDialogFile, setImageDialogFile] = React.useState<File>();
+    const [imageDialogData, setImageDialogData] = React.useState<any>(null);
     const [imageModule, setImageModule] = React.useState<ImageUpload>();
     React.useEffect(() => {
         if(imageModule) {
-            imageModule.openDialog = (file: File) => setImageDialogFile(file);
+            imageModule.openDialog = (file?: File, data?: any) => {
+                setImageDialogFile(file);
+                setImageDialogData(data);
+                setImageDialogOpen(true);
+            }
         }
     }, [imageModule])
 
@@ -78,7 +84,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         } : false,
         autolink: props.allowLinks,
         mediaembed: props.allowMediaEmbed,
-        imageupload: true,
+        imageupload: props.imageDialog,
         cursors: true,
     }
     
@@ -157,19 +163,28 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 modules={modules}
                 ref={ref}
             />
-            <ImageDialog
-                initData={{} as any}
-                initFile={imageDialogFile ?? null}
-                open={Boolean(imageDialogFile)}
-                upload={(...args) => {
-                    if(imageModule) {
-                        imageModule.uploadImages.bind(imageModule)(...args);
-                    }
-                    setImageDialogFile(undefined);
-                }}
-                updateData={console.log}
-                setDialog={open => setImageDialogFile(undefined)}
-            />
+            {props.imageDialog &&
+                <ImageDialog
+                    initData={imageDialogData ?? {}}
+                    initFile={imageDialogFile ?? null}
+                    open={imageDialogOpen}
+                    upload={(...args) => {
+                        if(imageModule) {
+                            imageModule.uploadImages.bind(imageModule)(...args);
+                        }
+                        setImageDialogOpen(false);
+                        setImageDialogFile(undefined);
+                    }}
+                    updateData={(source, caption, align, height) => {
+                        if(imageModule) {
+                            imageModule.updateImage.bind(imageModule)({source, caption, align, height});
+                        }
+                        setImageDialogOpen(false);
+                        setImageDialogFile(undefined);
+                    }}
+                    setDialog={open => setImageDialogOpen(false)}
+                />
+            }
         </div>
     );
 });

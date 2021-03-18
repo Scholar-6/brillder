@@ -124,6 +124,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 disabled={this.props.locked}
                 sharedData={this.props.synthesis}
                 showToolbar={true}
+                imageDialog={true}
                 toolbar={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
                   'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
