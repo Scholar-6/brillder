@@ -40,7 +40,7 @@ interface QuillEditorProps {
     onBlur?(): void;
 }
 
-const QuillEditor: React.FC<QuillEditorProps> = (props) => {
+const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, forwardRef) => {
     const [currentQuillId, setCurrentQuillId] = React.useContext(QuillEditorContext);
 
     const callOnChange = React.useCallback(
@@ -126,6 +126,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         <div
             className={`quill-document-editor${valid ? "" : " content-invalid"} quill-id-${uniqueId} ${props.className ?? ""}`}
             data-toolbar={props.toolbar}
+            ref={forwardRef}
         >
             {(props.showToolbar ?? false) &&
                 // <div className={`ql-toolbar quill-${uniqueId}`}>
@@ -171,6 +172,6 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
             />
         </div>
     );
-}
+});
 
 export default QuillEditor;

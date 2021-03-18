@@ -1,8 +1,10 @@
 import React from 'react';
 import Y from "yjs";
+import { Quill } from "react-quill";
 
 import './Text.scss'
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import ReturnToAuthorDialog from 'components/build/baseComponents/dialogs/ReturnToEditorDialog';
 
 
 export interface TextComponentProps {
@@ -16,6 +18,18 @@ export interface TextComponentProps {
 const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, data, ...props}) => {
   const [refreshTimeout, setRefreshTimeout] = React.useState(-1);
   const [questionId, setQuestionId] = React.useState(props.questionId);
+
+  const quillContainer = React.createRef<HTMLDivElement>();
+
+  const focus = React.useRef(() => {
+    const quillElement = quillContainer.current?.getElementsByClassName("ql-container")[0];
+    if(!quillElement) return;
+    const quill = Quill.find(quillElement) as Quill;
+
+    quill.focus();
+  });
+
+  focus.current?.();
 
   // refresh wiris component after question changed
   if (questionId !== props.questionId) {
@@ -32,6 +46,7 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
   return (
     <div className="question-build-text-editor first">
       <QuillEditor
+        ref={quillContainer}
         disabled={locked}
         sharedData={data.get("value")}
         validate={props.validationRequired}
