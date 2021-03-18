@@ -7,13 +7,13 @@ export function showSameAnswerPopup(i: number, list: any, openSameAnswerDialog: 
   for (let [index, item] of list.entries()) {
     if (index !== i && item.value) {
       let text = stripHtml(item.value)
-      if (answerText === text) {
+      if (answerText.trim().length > 0 && answerText === text) {
         openSameAnswerDialog();
       }
     }
     if (index !== i && item.option) {
       let text = stripHtml(item.option);
-      if(optionText === text) {
+      if(optionText.trim().length > 0 && optionText === text) {
         openSameAnswerDialog();
       }
     }
