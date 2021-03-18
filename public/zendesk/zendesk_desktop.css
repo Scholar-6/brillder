@@ -1,20 +1,10 @@
-#launcher {
-  left: 0 !important;
-  width: 5.7vw !important;
-  *width: 5.7vw !important;
-  height: 2.4vw !important;
-  *height: 2.4vw !important;
-  margin: 0.6vw !important;
-  *margin: 0.6vw !important;
-}
-
-#launcher body {
+body {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#launcher body .wrapper-AtBcr {
+body .wrapper-AtBcr {
   position: absolute !important;
   left: 50% !important;
   top: 50% !important;
