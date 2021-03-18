@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .choose-one-live,
 .choose-several-live {
@@ -15,6 +15,7 @@
       padding-right: 2vw;
       padding-top: 0.8vh;
       padding-bottom: 0.8vh;
+      flex-direction: column;
       > img {
         width: auto !important;
         max-width: 100%;

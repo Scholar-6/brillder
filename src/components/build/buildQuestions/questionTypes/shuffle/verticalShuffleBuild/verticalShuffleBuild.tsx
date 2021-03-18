@@ -14,7 +14,7 @@ import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
 
 export const getDefaultVerticalShuffleAnswer = (ymap: Y.Map<any>) => {
-  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), id: generateId() }));
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), valueFile: "", imageSource: "", imageCaption: "", id: generateId() }));
 
   const list = new Y.Array();
   list.push([newAnswer(), newAnswer(), newAnswer()]);
@@ -25,7 +25,7 @@ export const getDefaultVerticalShuffleAnswer = (ymap: Y.Map<any>) => {
 const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   locked, editOnly, data, validationRequired, openSameAnswerDialog
 }) => {
-  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), id: generateId() }));
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), valueFile: "", imageSource: "", imageCaption: "", id: generateId() }));
 
   let list = data.get("list") as Y.Array<any>;
 
@@ -48,10 +48,12 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
 
   const renderAnswer = (answer: any, i: number) => {
     console.log(answer);
-    const setImage = (fileName: string) => {
+    const setImage = (fileName: string, source: string, caption: string) => {
       if (locked) { return; }
       answer.set("value", "");
       answer.set("valueFile", fileName);
+      answer.set("imageSource", source);
+      answer.set("imageCaption", caption);
       answer.set("answerType", QuestionValueType.Image);
     }
 

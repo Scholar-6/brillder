@@ -18,7 +18,7 @@ export interface ChooseOneBuildProps extends UniqueComponentProps {
 }
 
 export const getDefaultChooseOneAnswer = (ymap: Y.Map<any>) => {
-  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), checked: false, valueFile: "", id: generateId() }));
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), checked: false, valueFile: "", imageSource: "", imageCaption: "", id: generateId() }));
 
   const list = new Y.Array();
   list.push([newAnswer(), newAnswer(), newAnswer()]);
@@ -30,7 +30,7 @@ export const getDefaultChooseOneAnswer = (ymap: Y.Map<any>) => {
 const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   locked, editOnly, data, validationRequired, openSameAnswerDialog
 }) => {
-  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), checked: false, valueFile: "", id: generateId() }));
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), checked: false, valueFile: "", imageSource: "", imageCaption: "", id: generateId() }));
 
   let list = data.get("list") as Y.Array<any>;
 

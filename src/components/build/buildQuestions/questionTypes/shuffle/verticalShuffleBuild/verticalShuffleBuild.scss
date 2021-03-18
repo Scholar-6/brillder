@@ -14,4 +14,9 @@
       }
     }
   }
+  .question-image-drop .dropzone > img {
+    height: 8vh;
+    width: auto !important;
+    overflow: hidden;
+  }
 }

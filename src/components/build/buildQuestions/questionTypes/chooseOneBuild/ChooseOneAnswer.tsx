@@ -31,11 +31,13 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
 }) => {
   const [clearOpen, setClear] = React.useState(false);
 
-  const setImage = (fileName: string) => {
+  const setImage = (fileName: string, source: string, caption: string) => {
     if (locked) { return; }
     answer.set("value", "");
     answer.set("soundFile", "");
     answer.set("valueFile", fileName);
+    answer.set("imageSource", source);
+    answer.set("imageCaption", caption);
     answer.set("answerType", QuestionValueType.Image);
   }
 
@@ -52,7 +54,10 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     if (locked) { return; }
     answer.set("value", new Y.Text());
     answer.set("valueFile", "");
+    answer.set("imageSource", "");
+    answer.set("imageCaption", "");
     answer.set("soundFile", "");
+    answer.set("soundCaption", "");
     answer.set("answerType", QuestionValueType.String);
     onBlur();
   }

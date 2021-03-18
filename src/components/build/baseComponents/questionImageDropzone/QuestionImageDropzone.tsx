@@ -19,7 +19,7 @@ export interface AnswerProps {
   locked: boolean;
   type: QuestionValueType;
   fileName: string;
-  update(fileName: string): void;
+  update(fileName: string, source: string, caption: string, permision: boolean): void;
 }
 
 const QuestionImageDropzone: React.FC<AnswerProps> = ({
@@ -42,10 +42,7 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
 
   const updateAnswer = (fileName: string, source: string, caption: string, permision: boolean) => {
     if (locked) { return; }
-    answer.imageSource = source;
-    answer.imageCaption = caption;
-    answer.imagePermision = permision;
-    update(fileName);
+    update(fileName, source, caption, permision);
     setOpen(false);
   }
 
