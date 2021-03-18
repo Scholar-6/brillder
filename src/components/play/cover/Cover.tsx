@@ -68,7 +68,10 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     );
   };
 
-  const isPublisher = checkPublisher(props.user, brick);
+  const isPublisher = false;
+  if (props.user) {
+    checkPublisher(props.user, brick);
+  }
 
   return (
     <div className="brick-row-container cover-page">

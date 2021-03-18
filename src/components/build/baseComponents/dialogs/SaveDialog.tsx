@@ -14,7 +14,7 @@ const SaveDialog: React.FC<SkipTutorialDialogProps> = ({
   return (
     <BaseDialogWrapper open={open} close={close} submit={save}>
       <div className="dialog-header">
-        <div>Save and Exit?</div>
+        <div>Save?</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button" onClick={save}>
