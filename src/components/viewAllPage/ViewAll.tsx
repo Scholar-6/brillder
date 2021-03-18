@@ -185,7 +185,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   addWheelListener() {
-    const { current } = this.state.bricksRef;
+    const {current} = this.state.bricksRef;
     if (current) {
       current.addEventListener('wheel', this.state.onBricksWheel, false);
     }
@@ -198,7 +198,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.state.handleKey, false);
-    const { current } = this.state.bricksRef;
+    const {current} = this.state.bricksRef;
     if (current) {
       current.removeEventListener('wheel', this.state.onBricksWheel, false);
     }
@@ -347,23 +347,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   filterBySubject(id: number) {
-    const subject = this.state.subjects.find(s => s.id === id);
-    if (!subject) { return; }
-    const checked = subject.checked;
+    toggleSubject(this.state.subjects, id);
+    toggleSubject(this.state.userSubjects, id);
 
-    let checkedCont = 0;
-    this.state.subjects.forEach(s => {
-      if (s.checked) { checkedCont += 1; }
-      s.checked = false
-    });
-
-    if (checkedCont > 1) {
-      subject.checked = true;
-    } else {
-      subject.checked = !checked;
-    }
-
-    if (!subject.checked) {
+    let checked = this.state.subjects.find(s => s.checked === true);
+    if (!checked) {
       this.props.history.push(map.AllSubjects + '?filter=true');
     }
 
@@ -515,7 +503,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     let bricks: Brick[] | null = [];
     const { pathname } = this.props.location;
     if (pathname.slice(pathname.length - 13, pathname.length) === '/all-subjects') {
-      this.setState({ isSearching: true })
+      this.setState({isSearching: true})
       this.props.history.push(map.ViewAllPage + '?searchString=' + searchString);
     }
     if (this.props.user) {
@@ -681,7 +669,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             if (s.id === subjectId) {
               clearProposal();
               await this.props.forgetBrick();
-              this.props.history.push(map.ProposalSubjectLink + '?selectedSubject=' + subjectId);
+              this.props.history.push(map.ProposalSubjectLink  + '?selectedSubject=' + subjectId);
             } else {
               this.setState({ noSubjectOpen: true, activeSubject: filterSubjects[0] });
             }
@@ -877,7 +865,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       user={this.props.user}
       history={this.props.history} location={this.props.location}
       filterByOneSubject={this.filterByOneSubject.bind(this)}
-      setViewAll={() => this.setState({ isViewAll: true })}
+      setViewAll={() => this.setState({isViewAll: true})}
       checkSubjectsWithBricks={() => this.checkSubjectsWithBricks(this.state.subjects)}
     />
   }
