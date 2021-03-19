@@ -1709,21 +1709,52 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       font-size: 1.1vw;
       @extend %ellipsis;
     }
-    .image-drag-n-drop {
-      padding-left: 0.5vw;
-      padding-right: 0.5vw;
-      margin-top: 1vh;
-      width: 100%;
-      .dropzone {
-        border-radius: 0.5vw;
-        border: none !important;
-        min-height: 47vh;
+    .image-container {
+      position: relative;
+      .image-drag-n-drop {
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+        margin-top: 1vh;
+        width: 100%;
+        .dropzone {
+          border-radius: 0.5vw;
+          border: none !important;
+          min-height: 47vh;
+  
+          svg {
+            width: 35vh;
+            height: 35vh;
+            stroke-width: 0.7 !important;
+            color: var(--theme-dark-blue);
+          }
+        }
+      }
+      .cover-info-row {
+        position: absolute;
+        $shift: 0.6vw;
+        top: calc(1vh + #{$shift});
+        left: calc(0.5vw + #{$shift});
+        display: flex;
+        font-size: 2vw;
+        font-family: $font-family-black;
+        line-height: 1;
 
-        svg {
-          width: 35vh;
-          height: 35vh;
-          stroke-width: 0.7 !important;
-          color: var(--theme-dark-blue);
+        $circle-size: 2vw;
+
+        .round-button-container {
+          display: flex;
+          align-items: center;
+          margin-right: 0.6vw;
+          .round-button {
+            width: $circle-size;
+            height: $circle-size;
+            border-radius:  50%;
+          }
+        }
+        .svg {
+          margin-left: 0.5vw;
+          width: $circle-size;
+          height: $circle-size;
         }
       }
     }
