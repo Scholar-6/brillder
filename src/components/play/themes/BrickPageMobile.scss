@@ -1693,3 +1693,18 @@ $play-footer-height: 75px;
     }
   }
 }
+
+
+// pair match image fix
+
+.pair-match-play {
+  .pair-match-play-option .option-container img {
+    width: auto !important;
+    max-height: 15vh !important;
+  }
+
+  .answers-list .pair-match-play-choice .MuiListItem-root img {
+    width: auto !important;
+    max-height: 15vh !important;
+  }
+}
