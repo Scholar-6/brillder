@@ -221,6 +221,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
+        <SpriteIcon name="" />
       </div>
     );
   }
