@@ -149,8 +149,10 @@ svg#image {
       border: none !important;
       background-color: var(--solitude-light) !important;
       padding: 1vw;
-      p {
+      p,
+      li {
         text-align: left;
+        padding-left: 0;
       }
     }
   }
