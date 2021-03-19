@@ -33,6 +33,7 @@ import BlocksIcon from "./components/BlocksIcon";
 import { isPhone } from "services/phone";
 import ReportsAlertDialog from "components/baseComponents/dialogs/ReportsAlertDialog";
 import LottieControl from "components/baseComponents/lottie/Lottie";
+import LottieHoverControl from 'components/baseComponents/lottie/LottieHover';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -350,7 +351,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     return (
       <Grid container direction="row" className="mainPage">
         <LottieControl animationData={"first"} className="fisrt-1-animtion" />
-        <LottieControl animationData={"second"} className="fisrt-1-animtion" />
+        <LottieHoverControl animationData={"second"} className="fisrt-1-animtion"  />
         <div className="welcome-col">
           <WelcomeComponent
             user={this.props.user}
