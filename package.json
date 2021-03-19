@@ -79,6 +79,7 @@
     "react-dynamic-font": "^2.0.1",
     "react-hyphen": "^1.4.0",
     "react-image-crop": "^8.5.0",
+    "react-lottie": "^1.2.3",
     "react-mathjax": "^1.0.1",
     "react-mathjax-preview": "^1.2.4",
     "react-mathjax-ts": "^0.1.2",
