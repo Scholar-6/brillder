@@ -12,17 +12,20 @@ const getWidgetIframe = () => document.getElementById("webWidget") as any;
 const attachStyleCss = (iframe: any, path: string) => {
   try {
     const cssLink = document.createElement("link");
-    cssLink.href = path; 
+    cssLink.href = path;
     cssLink.rel = "stylesheet";
     cssLink.type = "text/css";
     const innnerDoc = iframe.contentDocument || iframe.contentWindow;
     innnerDoc.head.appendChild(cssLink);
   } catch (e) {
-    console.log('can`t attach zendesk styles' , e);
+    console.log('can`t attach zendesk styles', e);
   }
 }
 
 const initZendeskStyling = (iframe: any) => {
+  // if (!isPhone() || !isTablet || !isIPad13) {
+  //   attachStyleCss(iframe, '/zendesk/zendesk_desktop.css');
+  // }
   if (isPhone()) {
     attachStyleCss(iframe, '/zendesk/zendesk_mobile.css');
   }
