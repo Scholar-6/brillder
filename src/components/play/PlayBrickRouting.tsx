@@ -45,8 +45,9 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
 import { createUserByEmail } from "services/axios/user";
-import { coverRoute } from "./routes";
+import routes from "./routes";
 import { isPhone } from "services/phone";
+import AfterCover from "./alterCover/AfterCover";
 
 
 function shuffle(a: any[]) {
@@ -331,7 +332,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const renderRouter = () => {
     return (
       <Switch>
-        <Route exac path={coverRoute}>
+        <Route exac path={routes.coverRoute}>
           <Cover
             user={props.user}
             location={props.location}
@@ -339,6 +340,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brick={brick}
             moveNext={moveToIntro}
           />
+          {isPhone() && renderPhoneFooter()}
+        </Route>
+        <Route exact path={routes.afterCoverRoute}>
+          <AfterCover brick={brick} moveNext={() => {}} />
           {isPhone() && renderPhoneFooter()}
         </Route>
         <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>

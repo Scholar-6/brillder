@@ -1,5 +1,4 @@
 @import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mobile-variables';
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
@@ -12,6 +11,8 @@
 }
 
 $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
+$height: 20vw;
+$play-footer-height: 75px;
 
 .play-preview-pages {
   // only ending page scroll fix
@@ -251,7 +252,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
       height: $back-to-work-height-mobile-view;
       transition: 700ms width;
       .brick-container {
-        height: calc(100% - #{$play-footer-height}) !important;
+        height: calc(100% - 91px) !important;
         // overflow-y: auto;
         .MuiGrid-container {
           display: flex;
@@ -1308,7 +1309,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   // play phone footer
   .phone-play-footer {
     z-index: 19999;
-    $height: 20vw;
     position: absolute;
     bottom: 0;
     background: var(--tab-gray);
@@ -1317,6 +1317,7 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     > div {
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       position: absolute;
       bottom: 0;
       height: 20vw;
@@ -1600,7 +1601,6 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
   }
 }
 
-
 // cover page styles
 .play-preview-pages .sorted-row .brick-row-container.cover-page .brick-container {
   color: var(--theme-dark-blue);
@@ -1609,13 +1609,13 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
     padding-top: 4vw;
     padding-left: 4vw;
     padding-right: 4vw;
-  
+
     .first-row {
       display: flex;
       align-items: center;
       font-family: $font-family-black;
       font-size: 5.5vw;
-  
+
       .brick-id-container {
         border-radius: 3vw;
         padding: 1.3vh 4vw;
@@ -1691,5 +1691,20 @@ $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
         background: var(--theme-orange);
       }
     }
+  }
+}
+
+
+// pair match image fix
+
+.pair-match-play {
+  .pair-match-play-option .option-container img {
+    width: auto !important;
+    max-height: 15vh !important;
+  }
+
+  .answers-list .pair-match-play-choice .MuiListItem-root img {
+    width: auto !important;
+    max-height: 15vh !important;
   }
 }

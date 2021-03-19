@@ -221,6 +221,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
+        <SpriteIcon name="" />
       </div>
     );
   }
@@ -243,44 +244,42 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
   }
 
   return <div className="phone-play-footer">
-    <div>
-      {(isFinalStep()) ? renderFinalStep() : renderEveryOtherStep()}
-      <Menu
-        className="phone-down-play-menu menu-dropdown"
-        keepMounted
-        open={menuOpen}
-        onClose={() => setMenu(false)}
-      >
+    {(isFinalStep()) ? renderFinalStep() : renderEveryOtherStep()}
+    <Menu
+      className="phone-down-play-menu menu-dropdown"
+      keepMounted
+      open={menuOpen}
+      onClose={() => setMenu(false)}
+    >
+      <MenuItem onClick={() => {
+        setShare(true);
+        setMenu(false);
+      }}>
+        Share Brick <SpriteIcon name="feather-share" />
+      </MenuItem>
+      {canSee &&
         <MenuItem onClick={() => {
-          setShare(true);
+          setAssign(true);
           setMenu(false);
         }}>
-          Share Brick <SpriteIcon name="feather-share" />
-        </MenuItem>
-        {canSee &&
-          <MenuItem onClick={() => {
-            setAssign(true);
-            setMenu(false);
-          }}>
-            Assign Brick <SpriteIcon name="file-plus" />
-          </MenuItem>}
-        {canStopTrack &&
-          <MenuItem onClick={() => {
-            deleteAllCookies();
-            setMenu(false);
-            setCookiePopup(true);
-            setCookieReOpen(true);
-          }}>
-            Stop Tracking <SpriteIcon name="feather-x-octagon" />
-          </MenuItem>}
-      </Menu>
-      {renderPopups()}
-      <CookiePolicyDialog isOpen={cookieOpen} isReOpened={cookieReOpen} close={() => {
-        acceptCookies();
-        setCookiePopup(false);
-      }} />
-      <ExitPlayDialog isOpen={exitPlay} history={history} subjectId={brick.subject?.id || brick.subjectId} close={() => setExit(false)} />
-    </div>
+          Assign Brick <SpriteIcon name="file-plus" />
+        </MenuItem>}
+      {canStopTrack &&
+        <MenuItem onClick={() => {
+          deleteAllCookies();
+          setMenu(false);
+          setCookiePopup(true);
+          setCookieReOpen(true);
+        }}>
+          Stop Tracking <SpriteIcon name="feather-x-octagon" />
+        </MenuItem>}
+    </Menu>
+    {renderPopups()}
+    <CookiePolicyDialog isOpen={cookieOpen} isReOpened={cookieReOpen} close={() => {
+      acceptCookies();
+      setCookiePopup(false);
+    }} />
+    <ExitPlayDialog isOpen={exitPlay} history={history} subjectId={brick.subject?.id || brick.subjectId} close={() => setExit(false)} />
   </div>;
 }
 

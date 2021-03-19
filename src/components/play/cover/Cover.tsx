@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 
 import DynamicFont from 'react-dynamic-font';
 
-import { Brick } from "model/brick";
+import { AcademicLevelLabels, Brick } from "model/brick";
 
 import Image from "./Image";
 import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
@@ -73,6 +73,14 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     checkPublisher(props.user, brick);
   }
 
+  const renderBrickCircle = () => {
+    return (
+      <div className="round-button-container">
+        <div className="round-button" style={{ background: `${brick.subject?.color || '#B0B0AD'}` }} />
+      </div>
+    );
+  }
+
   return (
     <div className="brick-row-container cover-page">
       <div className="brick-container">
@@ -85,7 +93,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <div className="keywords-row">
                 <KeyWordsPreview keywords={brick.keywords} />
               </div>
-              <div className="centered">
+              <div className="image-container centered">
                 <Image
                   locked={!isPublisher}
                   index={0}
@@ -99,6 +107,12 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   updateComponent={() => { }}
                   onFocus={() => { }}
                 />
+                <div className="cover-info-row">
+                  {renderBrickCircle()}
+                  Religion & Philosophy,
+                  Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
+                  <SpriteIcon name="help-circle-custom" />
+                </div>
               </div>
             </div>
           </Grid>

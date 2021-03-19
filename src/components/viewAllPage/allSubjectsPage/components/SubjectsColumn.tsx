@@ -40,7 +40,7 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
     let row = [];
 
     for (let subject of subjects) {
-      if (subject.name === GENERAL_SUBJECT || subject.name === CURRENT_AFFAIRS_SUBJECT) {
+      if (subject.name === GENERAL_SUBJECT) {
         continue;
       }
       row.push(subject);
@@ -64,7 +64,6 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
         {list.map((row, i) =>
           <div key={i} className="subject-row">
             {row.map((s, j) => renderSubject(s, j))}
-            {i === list.length - 1 && renderViewAllButton()}
           </div>
         )}
       </div>

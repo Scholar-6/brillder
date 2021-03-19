@@ -831,6 +831,13 @@
     }
   }
 
+  // fix for keywords
+  .book-main-container.closed {
+    .key-words-play {
+      display: none;
+    }
+  }
+
   //#endregion
   .arrow-description {
     z-index: 1;
