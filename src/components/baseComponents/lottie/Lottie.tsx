@@ -2,9 +2,9 @@ import React from 'react'
 import Lottie from 'react-lottie';
 import * as animationData from 'assets/lottiefiles/first.json';
 
-
 interface Props {
-
+  animationData: string;
+  className: string;
 }
 
 interface State {
@@ -24,13 +24,13 @@ export default class LottieControl extends React.Component<Props, State> {
     const defaultOptions = {
       loop: true,
       autoplay: true,
-      animationData: dd.default,
+      animationData: dd.default[this.props.animationData],
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
       }
     };
 
-    return <div>
+    return <div className={this.props.className}>
       <Lottie options={defaultOptions}
         height={400}
         width={400}

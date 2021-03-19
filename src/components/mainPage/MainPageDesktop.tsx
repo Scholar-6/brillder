@@ -349,7 +349,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   render() {
     return (
       <Grid container direction="row" className="mainPage">
-        <LottieControl />
+        <LottieControl animationData={"first"} className="fisrt-1-animtion" />
+        <LottieControl animationData={"second"} className="fisrt-1-animtion" />
         <div className="welcome-col">
           <WelcomeComponent
             user={this.props.user}
