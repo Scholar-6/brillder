@@ -1781,3 +1781,75 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
   }
 }
+
+
+// after cover page
+.after-cover-page {
+  .after-cover-main-content {
+    .title {
+      margin-top: 6vh;
+      margin-bottom: 10vh;
+      text-align: center;
+      font-size: 3vw !important;
+      font-family: $font-family-bold;
+    }
+    .like-buttons-container {
+      margin-bottom: 10vh;
+      .x-center {
+        @extend %flexToXCenter;
+    
+        .like-button {
+          font-family: $font-family-bold;
+          width: 15vw;
+          text-align: center;
+          border-radius: 0.7vw;
+          padding: 1.5vh 0;
+          font-size: 2vw;
+          background: var(--tab-gray);
+          margin: 1vh;
+    
+          &.orange {
+            color: var(--white);
+            background: var(--theme-orange);
+          }
+        }
+      }
+    }
+    .footer {
+      text-align: center;
+      font-size: 1.5vw;
+      .underline {
+        text-decoration: underline;
+        text-decoration-color: var(--theme-orange);
+      }
+    }
+  }
+  .new-layout-footer .title-column {
+    width: 55vw !important;
+    .round-button-container {
+      margin-left: 1vw;
+      display: flex;
+      align-items: center;
+      margin-right: 0.6vw;
+      .round-button {
+        $circle-size: 2.7vw;
+        width: $circle-size;
+        height: $circle-size;
+        border-radius:  50%;
+        color: var(--white);
+        font-size: 2vw;
+        @extend %flexCenter;
+      }
+    }
+    .brick-title {
+      font-family: $font-family-black;
+      text-transform: uppercase;
+      font-size: 2vw;
+      max-width: 40vw;
+      @extend %ellipsis;
+    }
+    .new-navigation-buttons {
+      
+    }
+  }
+}
