@@ -21,7 +21,7 @@ import {
   getFirstInvalidQuestion,
   getUniqueComponent,
 } from "./questionService/QuestionService";
-import { convertToQuestionType } from "./questionService/ConvertService";
+import { convertToQuestionType, stripHtml } from "./questionService/ConvertService";
 import { User } from "model/user";
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
@@ -556,7 +556,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     history.push(`/build/brick/${brickId}/investigation/question-component/${questions.get(questions.length - 1).get("id")}`);
   }
 
-  if (!synthesis || synthesis.toString().trim() === "") {
+  if (!synthesis || stripHtml(toRenderJSON(synthesis)).trim() === "") {
     isValid = false;
   }
 

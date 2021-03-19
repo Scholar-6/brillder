@@ -16,6 +16,12 @@ import { HighlightMode } from "../buildQuestions/questionTypes/highlighting/mode
 export function stripHtml(html: string) {
   const div = document.createElement("div");
   div.innerHTML = html;
+
+  div.querySelectorAll("img").forEach((img) => {
+    img.replaceWith(img.getAttribute("alt") ?? "image");
+  });
+
+  console.log(div.textContent);
   return div.textContent || div.innerText || "";
 }
 
