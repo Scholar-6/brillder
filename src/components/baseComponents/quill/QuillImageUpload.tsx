@@ -29,7 +29,7 @@ export class CustomImageBlot extends ImageBlot {
         const imageNode = document.createElement("img");
         imageNode.className = "image-play";
         imageNode.setAttribute('style', `height: ${value.imageHeight}vh`);
-        imageNode.setAttribute('src', `${process.env.REACT_APP_BACKEND_HOST}/files/${value.url}`);
+        imageNode.setAttribute('src', value.url);
         containerNode.appendChild(imageNode);
 
         const captionNode = document.createElement("figcaption");
@@ -55,12 +55,10 @@ export class CustomImageBlot extends ImageBlot {
 
         return blot;
     }
-
-    update(mutations: MutationRecord[], context: {[key: string]: any}) {
-        console.log("mutated", mutations);
-    }
 }
 Quill.register(CustomImageBlot);
+
+const imageUrlRegex = new RegExp(`${process.env.REACT_APP_BACKEND_HOST}/files/(.*)`);
 
 export default class ImageUpload {
     quill: Quill;
@@ -80,7 +78,7 @@ export default class ImageUpload {
             if(leaf instanceof CustomImageBlot) {
                 leaf.domNode.ondblclick = () => {
                     const data = CustomImageBlot.value(leaf.domNode);
-                    this.existingImageSelected({ ...data, value: data.url });
+                    this.existingImageSelected({ ...data, value: (data.url as string).match(imageUrlRegex)?.[1] });
                 }
             }
 
@@ -130,7 +128,7 @@ export default class ImageUpload {
             .retain(range.index)
             .delete(range.length)
             .insert({ customImage: {
-                url: fileName,
+                url: fileUrl(fileName),
                 imageSource: source,
                 imageCaption: caption,
                 imageAlign: align,
@@ -148,7 +146,7 @@ export default class ImageUpload {
         if(leaf instanceof CustomImageBlot) {
             const leafData = CustomImageBlot.value(leaf.domNode);
             const newData = {
-                url: data.value ?? leafData.url,
+                url: data.value ? fileUrl(data.value) : leafData.url,
                 imageSource: data.source ?? leafData.imageSource,
                 imageCaption: data.caption ?? leafData.imageCaption,
                 imageAlign: data.align ?? leafData.imageAlign,

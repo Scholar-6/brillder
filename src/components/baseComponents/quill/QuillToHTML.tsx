@@ -27,7 +27,7 @@ const quillToHTML = (data: Op[]) => {
                     data-permission="${value.imagePermission}"
                 >
                     <div class="image-play-container">
-                        <img class="image-play" style="height: ${value.imageHeight}vh" src="${value.url}" />
+                        <img class="image-play" style="height: ${value.imageHeight}vh" src="${process.env.REACT_APP_BACKEND_HOST}/files/${value.url}" />
                         <figcaption class="image-caption">${value.imageCaption}</figcaption>
                     </div>
                 </div>`
