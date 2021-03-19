@@ -23,14 +23,12 @@ const attachStyleCss = (iframe: any, path: string) => {
 }
 
 const initZendeskStyling = (iframe: any) => {
-  // if (!isPhone() || !isTablet || !isIPad13) {
-  //   attachStyleCss(iframe, '/zendesk/zendesk_desktop.css');
-  // }
   if (isPhone()) {
     attachStyleCss(iframe, '/zendesk/zendesk_mobile.css');
-  }
-  if (isTablet || isIPad13) {
+  } else if (isTablet || isIPad13) {
     attachStyleCss(iframe, '/zendesk/zendesk_tablet.css');
+  } else {
+    attachStyleCss(iframe, '/zendesk/zendesk_desktop.css');
   }
   if (isMobile) { return; }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
