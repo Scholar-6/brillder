@@ -311,6 +311,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       }
     }
 
+    if (!this.state.bookHovered || this.state.animationRunning) {
+      bookClass += ' closed';
+    }
+
     let questions: Question[] = [];
     for (let question of brick.questions) {
       parseQuestion(question as ApiQuestion, questions);
