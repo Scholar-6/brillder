@@ -9,6 +9,7 @@
   padding: 1vh 0.5vw !important;
   &.ql-global-toolbar {
     position: fixed;
+    z-index: 1000;
     transform: translateX(0);
     height: 4vh;
     top: 0.2vw;
