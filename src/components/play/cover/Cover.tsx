@@ -73,10 +73,10 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     checkPublisher(props.user, brick);
   }
 
-  const renderBrickCircle = (color: string) => {
+  const renderBrickCircle = () => {
     return (
       <div className="round-button-container">
-        <div className="round-button" style={{ background: `${color}` }} />
+        <div className="round-button" style={{ background: `${brick.subject?.color || '#B0B0AD'}` }} />
       </div>
     );
   }
@@ -108,7 +108,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   onFocus={() => { }}
                 />
                 <div className="cover-info-row">
-                  {renderBrickCircle(brick.subject?.color || '#B0B0AD')}
+                  {renderBrickCircle()}
                   Religion & Philosophy,
                   Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
                   <SpriteIcon name="help-circle-custom" />
