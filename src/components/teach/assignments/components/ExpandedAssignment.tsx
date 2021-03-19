@@ -132,7 +132,7 @@ class ExpandedAssignment extends Component<
 
   renderBookIcon(studentId: number) {
     const { history, assignment } = this.props;
-    const moveToPostPlay = () => history.push(map.postPlay(assignment.brick.id, studentId));
+    const moveToPostPlay = () => history.push(map.postPlay(assignment.brick.id, studentId) + '?fromTeach=true');
     return (
       <div className="round b-green centered">
         <SpriteIcon name="book-open" className="active book-open-icon" onClick={moveToPostPlay} />
