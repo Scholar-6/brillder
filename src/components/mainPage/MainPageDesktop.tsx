@@ -32,6 +32,7 @@ import LibraryButton from "./components/LibraryButton";
 import BlocksIcon from "./components/BlocksIcon";
 import { isPhone } from "services/phone";
 import ReportsAlertDialog from "components/baseComponents/dialogs/ReportsAlertDialog";
+import LottieControl from "components/baseComponents/lottie/Lottie";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -348,6 +349,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   render() {
     return (
       <Grid container direction="row" className="mainPage">
+        <LottieControl />
         <div className="welcome-col">
           <WelcomeComponent
             user={this.props.user}
