@@ -1,19 +1,48 @@
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+* {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-body .wrapper-AtBcr {
+div {
+  float: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+  width:100% !important;
+  height:100% !important;
   position: absolute !important;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
+  left: 0 !important;
+  top: 0 !important;
+  right: unset !important;
+}
+
+#Embed style {
+  display: none !important
+}
+
+#Embed > div {
+}
+
+#Embed > div > div > .wrapper-AtBcr {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   text-align: center !important;
   padding: 0 !important;
+}
+
+#Embed > div > div > .wrapper-AtBcr > span:last-child {
+  font-size: 15vw !important;
+  line-height: 20vw !important;
+  vertical-align: top !important;
+}
+
+#Embed > div > div > .wrapper-AtBcr > .Icon {
+  margin: 0 10vw 0 0 !important;
+  width: 20vw !important;
+  height: 20vw !important;
 }
 
 .zEWidget-launcher {
