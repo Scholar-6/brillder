@@ -59,6 +59,7 @@ import { setupMatomo } from 'services/matomo';
 import { ReduxCombinedState } from 'redux/reducers';
 import { User } from 'model/user';
 import { getTerms } from 'services/axios/terms';
+import IPadWarning from 'components/baseComponents/rotateInstruction/IPadWarning';
 
 interface AppProps {
   user: User;
@@ -68,6 +69,7 @@ interface AppProps {
 const App: React.FC<AppProps> = props => {
   setBrillderTitle();
   const location = useLocation();
+  const [showWarning, setWarning] = React.useState(isTablet ? true: false)
   const [termsData, setTermsData] = React.useState({
     isLoading: false,
     termsVersion: ''
@@ -159,8 +161,12 @@ const App: React.FC<AppProps> = props => {
   if ( isTablet && !horizontal) {
     return <RotateIPadInstruction />;
   }
+
+  if (isTablet && showWarning) {
+    return <IPadWarning hideWarning={() => setWarning(false)} />
+  }
   
-  // // If is mobile and landscape tell them to go to portrait
+  // If is mobile and landscape tell them to go to portrait
   else if (isMobileOnly && horizontal) {
     return <RotateInstruction />;
   }
