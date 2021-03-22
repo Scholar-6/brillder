@@ -1856,8 +1856,18 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 
-// brief page
+// brief and new-prep pages
 .play-preview-pages .sorted-row .brick-row-container .brick-container.play-brief-page {
+  .introduction-page {
+    padding-top: 0 !important;
+  }
+  .scrollable {
+    padding-top: 2vh !important;
+    padding-bottom: 4.5vw;
+    height: calc(100vh - 4vw - 2vh) !important;
+    overflow-y: scroll;
+  }
+
   .introduction-page {
     padding-top: 2vh;
     padding-right: 6vw;
@@ -1915,6 +1925,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       border-bottom: 0.4vh solid var(--theme-orange);
     }
   }
+  .introduction-content {
+    overflow-y: auto;
+  }
   .title-column {
     margin-right: 28vw;
     padding-left: 3vw;
@@ -1922,5 +1935,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     .timer-progressbar {
       margin-right: 1.5vw;
     }
+  }
+}
+
+// only new prep page
+.new-prep-page {
+  .footer-space {
+    width: 36vw;
   }
 }
