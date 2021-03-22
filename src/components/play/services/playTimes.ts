@@ -1,5 +1,15 @@
 import { BrickLengthEnum } from "model/brick";
 
+export const getPrepareTime = (brickLength: BrickLengthEnum) => {
+  let timeMinutes = 5;
+  if (brickLength === BrickLengthEnum.S40min) {
+    timeMinutes = 10;
+  } else if (brickLength === BrickLengthEnum.S60min) {
+    timeMinutes = 15;
+  }
+  return timeMinutes;
+}
+
 export const getReviewTime = (brickLength: BrickLengthEnum) => {
   let timeMinutes = 3;
   if (brickLength === BrickLengthEnum.S40min) {
