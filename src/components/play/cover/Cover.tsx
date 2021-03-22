@@ -118,7 +118,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 />
                 <div className="cover-info-row">
                   {renderBrickCircle()}
-                  {brick.subject?.name}
+                  {brick.subject?.name},
                   Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
                   <SpriteIcon name="help-circle-custom" />
                 </div>

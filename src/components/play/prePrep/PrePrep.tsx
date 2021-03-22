@@ -46,7 +46,7 @@ const PrePrepPage: React.FC<Props> = ({ brick, ...props }) => {
     <div className="brick-row-container live-container">
       <div className="brick-container play-preview-panel live-page play-pre-prep-page">
         <div className="introduction-page">
-          <div className="icon-container">й
+          <div className="icon-container">
             <SpriteIcon name="file-text" />
           </div>
           <div className="image-title">
