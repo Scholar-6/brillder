@@ -1,5 +1,4 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
 
 import { AcademicLevelLabels, Brick } from "model/brick";
 
@@ -13,7 +12,7 @@ interface Props {
   moveNext(): void;
 }
 
-const IntroductionPage: React.FC<Props> = ({ brick, ...props }) => {
+const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
@@ -71,7 +70,7 @@ const IntroductionPage: React.FC<Props> = ({ brick, ...props }) => {
               <div className="brick-title">{brick.title}</div>
             </div>
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={() => { }}>
+              <div className="n-btn next" onClick={props.moveNext}>
                 Next
                 <SpriteIcon name="arrow-right" />
               </div>
@@ -83,4 +82,4 @@ const IntroductionPage: React.FC<Props> = ({ brick, ...props }) => {
   );
 };
 
-export default IntroductionPage;
+export default SectionsPage;

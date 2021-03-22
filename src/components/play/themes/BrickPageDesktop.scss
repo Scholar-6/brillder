@@ -1788,7 +1788,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 
-
 // after cover page
 .after-cover-page {
   .after-cover-main-content {
@@ -1854,8 +1853,74 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       max-width: 40vw;
       @extend %ellipsis;
     }
+  }
+}
+
+// brief page
+.play-preview-pages .sorted-row .brick-row-container .brick-container.play-brief-page {
+  .introduction-page {
+    padding-top: 2vh;
+    padding-right: 6vw;
+  }
+  .open-question {
+    padding-left: 6vw !important;
+  }
+  .introduction-content {
+    padding-left: 6vw !important;
+  }
+  .open-question > div {
+    $font-size: 2vw;
+    font-size: $font-size !important;
+    p {
+      font-size: $font-size !important;
+    }
+  }
+  .new-layout-footer {
+    .title-column {
+      width: 65vw;
+      justify-content: flex-end;
+      font-size: 1.8vw;
+      font-family: $font-family-bold;
+    }
     .new-navigation-buttons {
-      
+      width: 15vw;
+    }
+  }
+}
+
+// prep-prep page
+.play-preview-pages .sorted-row .brick-row-container .brick-container.play-pre-prep-page {
+  .icon-container {
+    margin-top: 12.5vh;
+    display: flex;
+    justify-content: center;
+    svg {
+      color: var(--theme-orange);
+      width: 27.5vh;
+      height: 27.5vh;
+    }
+  }
+  .image-title {
+    font-family: $font-family-bold;
+    font-size: 3.9vh;
+    margin-top: 6vh;
+    text-align: center;
+  }
+  .help-text {
+    margin-top: 7.7vh;
+    font-size: 2.8vh;
+    text-align: center;
+
+    .underline {
+      border-bottom: 0.4vh solid var(--theme-orange);
+    }
+  }
+  .title-column {
+    margin-right: 28vw;
+    padding-left: 3vw;
+
+    .timer-progressbar {
+      margin-right: 1.5vw;
     }
   }
 }

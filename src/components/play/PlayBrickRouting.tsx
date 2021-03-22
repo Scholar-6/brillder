@@ -7,6 +7,7 @@ import queryString from 'query-string';
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
 import Cover from "./cover/Cover";
+import Sections from "./sections/Sections";
 import Introduction from "./introduction/Introduction";
 import Live from "./live/Live";
 import ProvisionalScore from "./provisionalScore/ProvisionalScore";
@@ -45,9 +46,10 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
 import { createUserByEmail } from "services/axios/user";
-import routes from "./routes";
+import routes, { playBrief, playPrePrep, playSections } from "./routes";
 import { isPhone } from "services/phone";
-import AfterCover from "./alterCover/AfterCover";
+import Brief from "./brief/Brief";
+import PrePrep from "./prePrep/PrePrep";
 
 
 function shuffle(a: any[]) {
@@ -227,9 +229,17 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setSidebar(true);
   }
 
-  const moveToIntro = () => {
-    props.history.push(playIntro(brick.id));
+  const coverMoveNext = () => {
+    if (isPhone()) {
+      moveToIntro();
+    } else {
+      props.history.push(playSections(brick.id));
+    }
   }
+
+  const moveToBrief = () => props.history.push(playBrief(brick.id));
+  const moveToPrePrep = () => props.history.push(playPrePrep(brick.id));
+  const moveToIntro = () => props.history.push(playIntro(brick.id));
 
   const moveToReview = () => {
     if (props.user) {
@@ -338,14 +348,25 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={props.history}
             brick={brick}
-            moveNext={moveToIntro}
+            moveNext={coverMoveNext}
           />
           {isPhone() && renderPhoneFooter()}
         </Route>
-        <Route exact path={routes.afterCoverRoute}>
-          <AfterCover brick={brick} moveNext={() => {}} />
-          {isPhone() && renderPhoneFooter()}
+
+        {/* only desktop routes */}
+        <Route exact path={routes.sectionsRoute}>
+          <Sections brick={brick} moveNext={moveToBrief} />
         </Route>
+        <Route exact path={routes.briefRoute}>
+          <Brief brick={brick} mode={mode} moveNext={moveToPrePrep} onHighlight={onHighlight} />
+        </Route>
+        <Route exact path={routes.briefRoute}>
+          <Brief brick={brick} mode={mode} moveNext={moveToIntro} onHighlight={onHighlight} />
+        </Route>
+        <Route exact path={routes.prePrepRoute}>
+          <PrePrep brick={brick} mode={mode} moveNext={moveToIntro} onHighlight={onHighlight} />
+        </Route>
+
         <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
           <Introduction
             location={props.location}
