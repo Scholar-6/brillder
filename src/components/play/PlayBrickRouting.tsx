@@ -166,7 +166,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const saveBrickAttempt = async (brickAttempt: BrickAttempt) => {
-    console.log(brick);
     if(!attemptId) {
       return createBrickAttempt(brickAttempt);
     }
@@ -234,6 +233,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       moveToIntro();
     } else {
       props.history.push(playSections(brick.id));
+      setSidebar(true);
     }
   }
 
