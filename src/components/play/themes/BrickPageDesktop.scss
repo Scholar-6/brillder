@@ -1950,6 +1950,17 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 
+// seconds count down
+.play-preview-pages .sorted-row .brick-row-container .brick-container .seconds-countdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 30vh;
+  font-family: $font-family-bold;
+}
+
+
 .underline-border {
   border-bottom: 0.4vh solid var(--theme-orange);
 }
