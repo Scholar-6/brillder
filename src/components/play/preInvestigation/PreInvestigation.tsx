@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AcademicLevelLabels, Brick } from "model/brick";
+import { Brick } from "model/brick";
 
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
@@ -8,6 +8,7 @@ import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import { getSynthesisTime } from "../services/playTimes";
+import SecondsCountDown from "../baseComponents/SecondsCountDown";
 
 interface Props {
   brick: Brick;
@@ -15,10 +16,12 @@ interface Props {
 }
 
 const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
+  const [isMoving, setMoving] = React.useState(false);
+
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
-        props.moveNext();
+        setMoving(true);
       }
     }
 
@@ -31,6 +34,18 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
 
   if (isPhone()) {
     return <div />;
+  }
+
+  if (isMoving) {
+    return (
+      <div className="brick-row-container live-container">
+        <div className="brick-container play-preview-panel live-page after-cover-page">
+          <div className="introduction-page">
+            <SecondsCountDown onEnd={props.moveNext} />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const minutes = getSynthesisTime(brick.brickLength);
@@ -63,9 +78,9 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
               <DummyProgressbarCountdown value={100} deadline={true} />
             </div>
             <div className="minutes">{minutes}:00</div>
-            <div className="footer-space"/>
+            <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={props.moveNext}>
+              <div className="n-btn next" onClick={() => setMoving(true)}>
                 Play Brick
                 <SpriteIcon name="arrow-right" />
               </div>
