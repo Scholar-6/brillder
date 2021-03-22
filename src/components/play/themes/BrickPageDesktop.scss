@@ -1938,9 +1938,18 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 
-// only new prep page
-.new-prep-page {
+// basic footer with timer style
+.play-preview-pages .sorted-row .brick-row-container .brick-container .new-layout-footer {
+  .minutes {
+    display: flex;
+    align-items: center;
+    font-size: 1vw;
+  }
   .footer-space {
     width: 36vw;
   }
+}
+
+.underline-border {
+  border-bottom: 0.4vh solid var(--theme-orange);
 }

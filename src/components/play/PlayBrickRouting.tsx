@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -46,11 +46,12 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
 import { createUserByEmail } from "services/axios/user";
-import routes, { playBrief, playNewPrep, playPrePrep, playSections } from "./routes";
+import routes, { playBrief, PlayCoverLastPrefix, playNewPrep, playPreInvesigation, playPrePrep, playSections } from "./routes";
 import { isPhone } from "services/phone";
 import Brief from "./brief/Brief";
 import PrePrep from "./prePrep/PrePrep";
 import NewPrep from "./newPrep/NewPrep";
+import PreInvestigationPage from "./preInvestigation/PreInvestigation";
 
 
 function shuffle(a: any[]) {
@@ -103,6 +104,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
   setBrillderTitle(brick.title);
+
+  // only cover page should have big sidebar
+  useEffect(() => {
+    if (!isPhone()) {
+      let {pathname} = props.history.location;
+      if (pathname.search(PlayCoverLastPrefix) === -1) {
+        setSidebar(true);
+      }
+    }
+  }, [])
 
   // by default move to intro
   let splited = location.pathname.split('/');
@@ -242,6 +253,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const moveToPrePrep = () => props.history.push(playPrePrep(brick.id));
   const moveToNewPrep = () => props.history.push(playNewPrep(brick.id));
   const moveToIntro = () => props.history.push(playIntro(brick.id));
+  const moveToPreInvestigation = () => props.history.push(playPreInvesigation(brick.id));
 
   const moveToReview = () => {
     if (props.user) {
@@ -369,7 +381,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <PrePrep brick={brick} mode={mode} moveNext={moveToNewPrep} onHighlight={onHighlight} />
         </Route>
         <Route exact path={routes.newPrepRoute}>
-          <NewPrep brick={brick} mode={mode} moveNext={moveToLive} onHighlight={onHighlight} />
+          <NewPrep brick={brick} mode={mode} moveNext={moveToPreInvestigation} onHighlight={onHighlight} />
+        </Route>
+        <Route exact path={routes.preInvestigationRoute}>
+          <PreInvestigationPage brick={brick} moveNext={moveToLive} />
         </Route>
 
         <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
