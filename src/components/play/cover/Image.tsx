@@ -3,18 +3,16 @@ import { Grid } from '@material-ui/core';
 
 import 'components/build/buildQuestions/components/Image/Image.scss';
 import {fileUrl, uploadFile} from 'components/services/uploadFile';
-import ImageDialog from 'components/build/buildQuestions/components/Image/ImageDialog';
-import { ImageAlign, ImageComponentData } from 'components/build/buildQuestions/components/Image/model';
 import ImageCloseDialog from 'components/build/buildQuestions/components/Image//ImageCloseDialog';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import ImageCoverDialog from './ImageCoverDialog';
+import { ImageCoverData } from './model';
 
 interface ImageProps {
   locked: boolean;
   index: number;
-  data: ImageComponentData;
-  validationRequired: boolean;
-  save(): void;
-  updateComponent(component:any, index:number): void;
+  data: ImageCoverData;
+  save(comp: ImageCoverData): void;
 
   // phone preview
   onFocus(): void;
@@ -25,42 +23,34 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.data.value);
   const [isCloseOpen, setCloseDialog] = React.useState(false);
-  const [invalid, setInvalid] = React.useState(props.validationRequired && !props.data.value);
+  const [invalid, setInvalid] = React.useState(false);
 
   useEffect(() => {
     setFileName(props.data.value);
     if (props.data.value) {
       setInvalid(false);
-    } else if (props.validationRequired) {
-      setInvalid(true);
     }
   }, [props]);
 
-  const upload = (file: File, source: string, caption: string, align: ImageAlign, height: number) => {
+  const upload = (file: File, source: string, caption: string) => {
     uploadFile(file, (res: any) => {
       let comp = Object.assign({}, props.data);
       comp.value = res.data.fileName;
       comp.imageSource = source;
       comp.imageCaption = caption;
-      comp.imageAlign= align;
-      comp.imageHeight = height;
       comp.imagePermision = true;
-      props.updateComponent(comp, props.index);
       setFileName(comp.value);
-      props.save();
+      props.save(comp);
       setOpen(false);
     }, () => { });
   }
 
-  const updateData = (source: string, caption: string, align: ImageAlign, height: number) => {
+  const updateData = (source: string, caption: string) => {
     let comp = Object.assign({}, props.data);
     comp.imageSource = source;
     comp.imageCaption = caption;
-    comp.imageAlign= align;
-    comp.imageHeight = height;
     comp.imagePermision = true;
-    props.updateComponent(comp, props.index);
-    props.save();
+    props.save(comp);
     setOpen(false);
   }
 
@@ -106,7 +96,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
               </Grid>
         }
       </div>
-      <ImageDialog
+      <ImageCoverDialog
         initData={props.data}
         open={isOpen}
         setDialog={() => setCloseDialog(true)}

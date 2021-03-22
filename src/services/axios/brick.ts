@@ -194,6 +194,21 @@ export const archiveAssignment = async (assignmentId: number) => {
   }
 }
 
+export interface CoverImageData {
+  brickId: number;
+  coverImage: string;
+  coverImageSource: string;
+  coverImageCaption: string;
+}
+
+export const setBrickCover = async (data: CoverImageData) => {
+  try {
+    return await post<any>(`/brick/cover`, data);
+  } catch {
+    return false;
+  }
+}
+
 export default {
   sendToPublisher
 }

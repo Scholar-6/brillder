@@ -1727,6 +1727,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             stroke-width: 0.7 !important;
             color: var(--theme-dark-blue);
           }
+
+          img {
+            margin-top: calc(2vw + 1vh + 0.6vw);
+            width: auto !important;
+            max-height: calc(35vh - 2vw + 1vh + 0.6vw);
+          }
         }
       }
       .cover-info-row {
