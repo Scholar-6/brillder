@@ -263,6 +263,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     const bricks = await getPublishedBricks();
     if (bricks) {
+      
       let bs = sortAllBricks(bricks);
       let finalBricks = this.filter(bs, this.state.isAllSubjects, this.state.isCore);
       let { subjects } = this.state;
