@@ -46,10 +46,11 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
 import { createUserByEmail } from "services/axios/user";
-import routes, { playBrief, playPrePrep, playSections } from "./routes";
+import routes, { playBrief, playNewPrep, playPrePrep, playSections } from "./routes";
 import { isPhone } from "services/phone";
 import Brief from "./brief/Brief";
 import PrePrep from "./prePrep/PrePrep";
+import NewPrep from "./newPrep/NewPrep";
 
 
 function shuffle(a: any[]) {
@@ -239,6 +240,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const moveToBrief = () => props.history.push(playBrief(brick.id));
   const moveToPrePrep = () => props.history.push(playPrePrep(brick.id));
+  const moveToNewPrep = () => props.history.push(playNewPrep(brick.id));
   const moveToIntro = () => props.history.push(playIntro(brick.id));
 
   const moveToReview = () => {
@@ -364,7 +366,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Brief brick={brick} mode={mode} moveNext={moveToIntro} onHighlight={onHighlight} />
         </Route>
         <Route exact path={routes.prePrepRoute}>
-          <PrePrep brick={brick} mode={mode} moveNext={moveToIntro} onHighlight={onHighlight} />
+          <PrePrep brick={brick} mode={mode} moveNext={moveToNewPrep} onHighlight={onHighlight} />
+        </Route>
+        <Route exact path={routes.newPrepRoute}>
+          <NewPrep brick={brick} mode={mode} moveNext={moveToLive} onHighlight={onHighlight} />
         </Route>
 
         <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
