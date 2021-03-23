@@ -1924,6 +1924,25 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     font-size: 1.25vw;
     top: calc(2vw + 5.834vw + 1.5vw);
     text-align: center;
+    .circles {
+      position: absolute;
+      left: -4.8vw;
+      .dashed-circle {
+        border-radius: 50%;
+        border: 0.2vw dashed var(--white);
+        width: 3.5vw;
+        height: 3.5vw;
+      }
+      .share-circle {
+        margin-top: 0.7vw;
+      }
+      .assign-circle {
+        margin-top: 1.5vw;
+      }
+      .adapt-circle {
+        margin-top: 1.5vw;
+      }
+    }
     .highlight {
       padding: 0 1vw;
       width: 8vw;
