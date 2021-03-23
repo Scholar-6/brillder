@@ -142,10 +142,9 @@ class ExpandedAssignment extends Component<
 
   renderQuestionAttemptIcon(
     studentResult: AssignmentStudent | undefined,
-    studentStatus: StudentStatus | undefined,
     questionNumber: number
   ) {
-    if (studentResult && studentStatus) {
+    if (studentResult) {
       try {
         const attempt = studentResult.attempts[0].answers[questionNumber];
         const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
@@ -193,7 +192,7 @@ class ExpandedAssignment extends Component<
             (a, i) =>
               <td key={i} className="icon-container">
                 <div className="centered">
-                  {this.renderQuestionAttemptIcon(studentResult, studentStatus, i)}
+                  {this.renderQuestionAttemptIcon(studentResult, i)}
                 </div>
               </td>
           )}
