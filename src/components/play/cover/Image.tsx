@@ -92,7 +92,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
                 alignContent="center"
                 direction="row"
               >
-                <SpriteIcon name="image" />
+                <img alt="" src="/images/cover-book.png" />
               </Grid>
         }
       </div>
