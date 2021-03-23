@@ -23,13 +23,15 @@ const mapState = (state: ReduxCombinedState) => ({
 const mapDispatch = (dispatch: any) => ({
   getNotifications: () => dispatch(notificationActions.getNotifications())
 });
-
+ 
 const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
 
 
-interface UsersListProps {
+interface Props {
   searchPlaceholder: string;
   link?: string;
+  
+  history: any;
   search(): void;
   searching(value: string): void;
   showDropdown(): void;
@@ -40,7 +42,8 @@ interface UsersListProps {
   isAuthenticated: isAuthenticated;
   getNotifications(): void
 }
-interface MyState {
+
+interface State {
   searchVisible: boolean;
   searchAnimation: string;
   // mobile
@@ -48,7 +51,7 @@ interface MyState {
 }
 
 
-class PageHeader extends Component<UsersListProps, MyState> {
+class PageHeader extends Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -164,6 +167,11 @@ class PageHeader extends Component<UsersListProps, MyState> {
                     onClick={evt => this.props.showNotifications(evt)}
                   />
                   <MoreButton onClick={() => this.props.showDropdown()} />
+                </Grid>
+              }
+              {this.props.isAuthenticated === isAuthenticated.False &&
+                <Grid container direction="row" className="action-container">
+                  <div className="login-button" onClick={() => this.props.history.push(map.Login)}>Login | Register</div>
                 </Grid>
               }
             </div >
