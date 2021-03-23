@@ -83,6 +83,7 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
             <div className="title-column">
               Now you’re ready for preparatory tasks
             </div>
+            <img alt="" className="footer-arrow" src="/images/play-arrows/BriefArrow.svg" />
             <div className="new-navigation-buttons">
               <div className="n-btn next" onClick={props.moveNext}>
                 Next
