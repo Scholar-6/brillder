@@ -13,8 +13,6 @@ interface UnauthorizedProps {
 const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
   const [email, setEmail] = React.useState("");
 
-  console.log(props.emailInvalid);
-
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue set-user-email-dialog">
       <div className="dialog-header">

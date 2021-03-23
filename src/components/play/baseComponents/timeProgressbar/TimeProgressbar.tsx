@@ -67,8 +67,6 @@ const TimeProgressbar: React.FC<CounterProps> = (props) => {
 
   const duration = getDuration().asMilliseconds();
 
-  console.log('wefwef')
-
   if (!props.endTime) {
     endTime = getEndTime();
   }
