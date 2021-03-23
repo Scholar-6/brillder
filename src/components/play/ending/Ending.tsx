@@ -172,6 +172,9 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
             </div>
           </Grid>
         </Grid>
+        <div className="p-help-text">
+          This is an average
+        </div>
       </div>
     );
   }
@@ -231,6 +234,17 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                   <h1 className="title">Final Score</h1>
                   {this.renderProgressBars()}
                 </div>
+                <div className="new-layout-footer" style={{ display: 'none' }}>
+                  <div className="time-container" />
+                  <div className="minutes-footer" />
+                  <div className="footer-space" />
+                  <div className="new-navigation-buttons">
+                    <div className="n-btn next" onClick={this.props.move}>
+                      Next
+                      <SpriteIcon name="arrow-right" />
+                    </div>
+                  </div>
+                </div>
               </Grid>
               <Grid item xs={4}>
                 <div className="introduction-info">
@@ -243,7 +257,6 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                   <div className="intro-text-row f-align-self-start m-t-5">
                     {this.renderStepper()}
                   </div>
-                  {this.renderFooter()}
                 </div>
               </Grid>
             </Grid>

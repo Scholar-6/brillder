@@ -1384,8 +1384,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           }
         }
       }
-      // only provisional score
-      .provisional-container {
+      // only provisional score and final score
+      .provisional-container, .ending-container {
         .circle-progress-container {
           $height: calc(50vh);
           height: $height !important;
@@ -2073,8 +2073,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   @extend %ellipsis;
 }
 
-// provisional score
-.play-preview-pages .sorted-row.sorted-row-expanded .provisional-container {
+// provisional score and final score
+.play-preview-pages .sorted-row.sorted-row-expanded .provisional-container,
+.play-preview-pages .sorted-row.sorted-row-expanded .ending-container {
   .introduction-page .question-live-play {
     margin-top: calc(5vw + 8vh) !important;
     .p-help-text {
