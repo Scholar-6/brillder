@@ -1185,7 +1185,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               align-items: center;
               font-size: 1.8vw;
               font-family: $font-family-bold;
-              margin-left: 3vw;
+              margin-left: 1vw;
               margin-right: 3vw;
 
               svg {
@@ -2079,4 +2079,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   .new-layout-footer {
     z-index: 100;
   }
+}
+
+.pre-synthesis .new-layout-footer .title-column {
+  display: flex;
+  justify-content: center;
+  width: 26.5vw !important;
 }
