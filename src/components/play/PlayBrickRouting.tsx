@@ -259,7 +259,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const moveToReview = () => {
     if (!isPhone()) {
-      props.history.push(routes.playPreReview(brick.id));
+      return props.history.push(routes.playPreReview(brick.id));
     }
     if (props.user) {
       saveBrickAttempt(brickAttempt);
@@ -437,7 +437,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <PreSynthesis brick={brick} history={props.history} />
         </Route>
 
-        <Route exac path="/play/brick/:brickId/synthesis">
+        <Route exac path={routes.synthesisRoute}>
           <Synthesis mode={mode} status={status} brick={brick} moveNext={moveToReview} onHighlight={onHighlight} />
           {isPhone() && renderPhoneFooter()}
         </Route>
@@ -446,7 +446,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <PreReview brick={brick} history={props.history} />
         </Route>
 
-        <Route exac path="/play/brick/:brickId/review">
+        <Route exac path={routes.reviewRoute}>
           <Review
             mode={mode}
             status={status}

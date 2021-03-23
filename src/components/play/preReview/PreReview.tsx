@@ -7,8 +7,9 @@ import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
-import { getReviewTime, getSynthesisTime } from "../services/playTimes";
+import { getReviewTime } from "../services/playTimes";
 import routes from "../routes";
+import SecondsCountDown from "../baseComponents/SecondsCountDown";
 
 interface Props {
   brick: Brick;
@@ -16,12 +17,14 @@ interface Props {
 }
 
 const PreReview: React.FC<Props> = ({ brick, ...props }) => {
-  const moveNext = () => props.history.push(routes.playSynthesis(brick.id));
+  const [isMoving, setMoving] = React.useState(false);
+  
+  const moveNext = () => props.history.push(routes.playReview(brick.id));
 
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
-        moveNext();
+        setMoving(true);
       }
     }
 
@@ -34,6 +37,21 @@ const PreReview: React.FC<Props> = ({ brick, ...props }) => {
 
   if (isPhone()) {
     return <div />;
+  }
+
+  if (isMoving) {
+    return (
+      <div className="brick-row-container live-container">
+        <div className="fixed-upper-b-title">
+          {brick.title}
+        </div>
+        <div className="brick-container play-preview-panel live-page after-cover-page">
+          <div className="introduction-page">
+            <SecondsCountDown onEnd={moveNext} />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const minutes = getReviewTime(brick.brickLength);
@@ -58,19 +76,19 @@ const PreReview: React.FC<Props> = ({ brick, ...props }) => {
               </div>
             </div>
             <div className="footer">
-              You ha<span className="underline-border">ve 3 minutes</span> to review your answers. Once time is up, you will get a final score.
+              You ha<span className="underline-border">ve {minutes} minutes</span> to review your answers. Once time is up, you will get a final score.
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
             <div className="title-column">
-              <DummyProgressbarCountdown value={23} />
+              <DummyProgressbarCountdown value={100} deadline={true} />
             </div>
             <div className="minutes-footer">
               {minutes}:00
               </div>
             <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={moveNext}>
+              <div className="n-btn next" onClick={() => setMoving(true)}>
                 Start Review
                 <SpriteIcon name="arrow-right" />
               </div>

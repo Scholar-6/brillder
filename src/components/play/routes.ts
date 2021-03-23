@@ -6,11 +6,12 @@ export const PlayCoverLastPrefix = '/cover';
 export const PlaySectionsLastPrefix = '/sections';
 export const PlayBriefLastPrefix = '/brief';
 export const PlayPrePrepLastPrefix = '/pre-prep';
-export const PlayNewPrepLastPrefix = '/prep';
+export const PlayNewPrepLastPrefix = '/new-prep';
 export const PlayPreInvestigationLastPrefix = '/pre-investigation';
 export const PlayPreSynthesisLastPrefix = '/pre-synthesis';
 export const PlaySynthesisLastPrefix = '/synthesis';
 export const PlayPreReviewLastPrefix = '/pre-review';
+export const PlayReviewLastPrefix = '/review';
 
 export const coverRoute = basePlayRoute + PlayCoverLastPrefix;
 export const sectionsRoute = basePlayRoute + PlaySectionsLastPrefix;
@@ -21,6 +22,7 @@ export const preInvestigationRoute = basePlayRoute + PlayPreInvestigationLastPre
 export const preSynthesisRoute = basePlayRoute + PlayPreSynthesisLastPrefix;
 export const synthesisRoute = basePlayRoute + PlaySynthesisLastPrefix;
 export const preReviewRoute = basePlayRoute + PlayPreReviewLastPrefix;
+export const reviewRoute = basePlayRoute + PlayReviewLastPrefix;
 
 export const playCover = (brickId: number) => realPlay(brickId) + PlayCoverLastPrefix;
 export const playSections = (brickId: number) => realPlay(brickId) + PlaySectionsLastPrefix;
@@ -31,6 +33,7 @@ export const playPreInvesigation = (brickId: number) => realPlay(brickId) + Play
 export const playPreSynthesis = (brickId: number) => realPlay(brickId) + PlayPreSynthesisLastPrefix;
 export const playSynthesis = (brickId: number) => realPlay(brickId) + PlaySynthesisLastPrefix;
 export const playPreReview = (brickId: number) => realPlay(brickId) + PlayPreReviewLastPrefix;
+export const playReview = (brickId: number) => realPlay(brickId) + PlayReviewLastPrefix;
 
 export default {
   PlayCoverLastPrefix,
@@ -42,6 +45,7 @@ export default {
   PlayPreSynthesisLastPrefix,
   PlaySynthesisLastPrefix,
   PlayPreReviewLastPrefix,
+  PlayReviewLastPrefix,
 
   coverRoute,
   sectionsRoute,
@@ -52,6 +56,7 @@ export default {
   preSynthesisRoute,
   synthesisRoute,
   preReviewRoute,
+  reviewRoute,
 
   playCover,
   playSections,
@@ -61,5 +66,6 @@ export default {
   playPreInvesigation,
   playPreSynthesis,
   playSynthesis,
-  playPreReview
+  playPreReview,
+  playReview
 }
