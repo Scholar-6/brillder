@@ -53,6 +53,7 @@ import PrePrep from "./prePrep/PrePrep";
 import NewPrep from "./newPrep/NewPrep";
 import PreInvestigationPage from "./preInvestigation/PreInvestigation";
 import PreSynthesis from "./preSynthesis/PreSynthesis";
+import PreReview from "./preReview/PreReview";
 
 
 function shuffle(a: any[]) {
@@ -257,6 +258,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const moveToPreInvestigation = () => props.history.push(playPreInvesigation(brick.id));
 
   const moveToReview = () => {
+    if (!isPhone()) {
+      props.history.push(routes.playPreReview(brick.id));
+    }
     if (props.user) {
       saveBrickAttempt(brickAttempt);
       const playPath = getPlayPath(false, brick.id);
@@ -437,6 +441,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Synthesis mode={mode} status={status} brick={brick} moveNext={moveToReview} onHighlight={onHighlight} />
           {isPhone() && renderPhoneFooter()}
         </Route>
+        
+        <Route exact path={routes.preReviewRoute}>
+          <PreReview brick={brick} history={props.history} />
+        </Route>
+
         <Route exac path="/play/brick/:brickId/review">
           <Review
             mode={mode}
