@@ -1,3 +1,5 @@
+import { setAssignmentId } from "localStorage/playAssignmentId";
+
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
 export const Build = '/build';
@@ -101,7 +103,8 @@ export const postPlay = (brickId: number, userId: number) => {
 }
 
 export const playAssignment = (brickId: number, assignmentId: number) => {
-  return `/play/brick/${brickId}/intro?assignmentId=${assignmentId}`
+  setAssignmentId(assignmentId);
+  return `/play/brick/${brickId}/intro`;
 }
 
 export default {

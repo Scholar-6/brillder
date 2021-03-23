@@ -95,7 +95,9 @@ export function minimizeZendeskButton(iframe?: any) {
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
 
   let div = innerDoc.querySelectorAll('#Embed')[0]
-  div.classList.add("minimized");
+  if (div) {
+    div.classList.add("minimized");
+  }
   // div.style.marginLeft = '13%';
   // div.style.width = '47.18%';
   // div.style.height = '100%';

@@ -245,6 +245,10 @@
     width: 86%;
     font-family: $font-family-regular;
     font-size: 1.9vw;
+
+    .text {
+      font-size: 1.5vw;
+    }
   }
   // #2776 zoom brick on hover
   .brick-container {

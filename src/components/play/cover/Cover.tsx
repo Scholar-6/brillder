@@ -12,6 +12,8 @@ import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import { User } from "model/user";
 import { checkPublisher } from "components/services/brickService";
+import { setBrickCover } from "services/axios/brick";
+import { ImageCoverData } from "./model";
 
 interface IntroductionProps {
   user: User;
@@ -44,6 +46,19 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     props.moveNext();
   };
 
+  const updateCover = async (coverData: ImageCoverData) => {
+    const res = await setBrickCover({
+      brickId: brick.id,
+      coverImage: coverData.value,
+      coverImageSource: coverData.imageSource,
+      coverImageCaption: coverData.imageCaption
+    });
+    if (res) {
+      // success
+    } else {
+      // fail
+    }
+  }
 
   const renderPlayButton = () => {
     return (
@@ -68,9 +83,9 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     );
   };
 
-  const isPublisher = false;
+  let isPublisher = false;
   if (props.user) {
-    checkPublisher(props.user, brick);
+    isPublisher = checkPublisher(props.user, brick);
   }
 
   const renderBrickCircle = () => {
@@ -97,19 +112,13 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 <Image
                   locked={!isPublisher}
                   index={0}
-                  data={{
-                    value: '',
-                    imageAlign: 1,
-                    imageHeight: 40
-                  }}
-                  validationRequired={false}
-                  save={() => { }}
-                  updateComponent={() => { }}
+                  data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
+                  save={updateCover}
                   onFocus={() => { }}
                 />
                 <div className="cover-info-row">
                   {renderBrickCircle()}
-                  Religion & Philosophy,
+                  {brick.subject?.name},
                   Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
                   <SpriteIcon name="help-circle-custom" />
                 </div>
