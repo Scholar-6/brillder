@@ -10,6 +10,7 @@ export const PlayNewPrepLastPrefix = '/prep';
 export const PlayPreInvestigationLastPrefix = '/pre-investigation';
 export const PlayPreSynthesisLastPrefix = '/pre-synthesis';
 export const PlaySynthesisLastPrefix = '/synthesis';
+export const PlayPreReviewLastPrefix = '/pre-review';
 
 export const coverRoute = basePlayRoute + PlayCoverLastPrefix;
 export const sectionsRoute = basePlayRoute + PlaySectionsLastPrefix;
@@ -19,6 +20,7 @@ export const newPrepRoute = basePlayRoute + PlayNewPrepLastPrefix;
 export const preInvestigationRoute = basePlayRoute + PlayPreInvestigationLastPrefix;
 export const preSynthesisRoute = basePlayRoute + PlayPreSynthesisLastPrefix;
 export const synthesisRoute = basePlayRoute + PlaySynthesisLastPrefix;
+export const preReviewRoute = basePlayRoute + PlayPreReviewLastPrefix;
 
 export const playCover = (brickId: number) => realPlay(brickId) + PlayCoverLastPrefix;
 export const playSections = (brickId: number) => realPlay(brickId) + PlaySectionsLastPrefix;
@@ -28,6 +30,7 @@ export const playNewPrep = (brickId: number) => realPlay(brickId) + PlayNewPrepL
 export const playPreInvesigation = (brickId: number) => realPlay(brickId) + PlayPreInvestigationLastPrefix;
 export const playPreSynthesis = (brickId: number) => realPlay(brickId) + PlayPreSynthesisLastPrefix;
 export const playSynthesis = (brickId: number) => realPlay(brickId) + PlaySynthesisLastPrefix;
+export const playPreReview = (brickId: number) => realPlay(brickId) + PlayPreReviewLastPrefix;
 
 export default {
   PlayCoverLastPrefix,
@@ -38,6 +41,7 @@ export default {
   PlayPreInvestigationLastPrefix,
   PlayPreSynthesisLastPrefix,
   PlaySynthesisLastPrefix,
+  PlayPreReviewLastPrefix,
 
   coverRoute,
   sectionsRoute,
@@ -47,6 +51,7 @@ export default {
   preInvestigationRoute,
   preSynthesisRoute,
   synthesisRoute,
+  preReviewRoute,
 
   playCover,
   playSections,
@@ -55,5 +60,6 @@ export default {
   playNewPrep,
   playPreInvesigation,
   playPreSynthesis,
-  playSynthesis
+  playSynthesis,
+  playPreReview
 }
