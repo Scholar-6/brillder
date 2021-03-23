@@ -2060,7 +2060,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 // brick title
-.brick-row-container.live-container .fixed-upper-b-title {
+.play-preview-pages .brick-row-container .fixed-upper-b-title {
   position: fixed;
   top: 0.3vw;
   left: 14.2vw;

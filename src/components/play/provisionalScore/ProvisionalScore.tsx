@@ -174,6 +174,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
       <div className="brick-row-container provisional-container">
         <Hidden only={['xs']}>
           <div className="brick-container play-preview-panel provisional-score-page">
+            <div className="fixed-upper-b-title">{brick.title}</div>
             <Grid container direction="row">
               <Grid item xs={8}>
                 <div className="introduction-page">

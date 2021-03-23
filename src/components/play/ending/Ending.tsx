@@ -228,6 +228,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       <div className="brick-row-container ending-container">
         <Hidden only={["xs"]}>
           <div className="brick-container play-preview-panel ending-page">
+            <div className="fixed-upper-b-title">{this.props.brick.title}</div>
             <Grid container direction="row">
               <Grid item xs={8}>
                 <div className="introduction-page">
@@ -252,7 +253,6 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     <div>
                       Range: {this.state.minPScore}%-{this.state.maxPScore}%
                     </div>
-                    <Clock brickLength={this.props.brick.brickLength} />
                   </div>
                   <div className="intro-text-row f-align-self-start m-t-5">
                     {this.renderStepper()}
