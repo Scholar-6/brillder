@@ -8,14 +8,6 @@ export const getPlayPath = (isPreview: boolean | undefined, brickId: number) => 
   return `${mainPath}/brick/${brickId}`;
 }
 
-export const getAssignQueryString = (location: any) => {
-  const values = queryString.parse(location.search);
-  if (values.assignmentId) {
-    return '?assignmentId=' + values.assignmentId;
-  }
-  return '';
-}
-
 export const scrollToStep = (step: number) => {
   try {
     document.getElementsByClassName("step")[step].scrollIntoView();
@@ -24,5 +16,4 @@ export const scrollToStep = (step: number) => {
 
 export default {
   getPlayPath,
-  getAssignQueryString,
 }

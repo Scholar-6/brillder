@@ -84,7 +84,7 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
             {renderBriefExpandText()}
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
-            <div className="title-column">
+            <div className="title-column" style={{marginLeft: '33vw'}}>
               Now you’re ready for preparatory tasks
             </div>
             <img alt="" className="footer-arrow" src="/images/play-arrows/BriefArrow.svg" />

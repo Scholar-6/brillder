@@ -8,7 +8,7 @@ import { PlayStatus } from "../model";
 import { BrickAttempt } from "../model";
 import EndingStepper from "./EndingStepper";
 import Clock from "../baseComponents/Clock";
-import { getPlayPath, getAssignQueryString } from "../service";
+import { getPlayPath } from "../service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isPhone } from "services/phone";
 
@@ -218,9 +218,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     const playPath = getPlayPath(false, this.props.brick.id);
 
     if (this.props.status === PlayStatus.Live) {
-      this.props.history.push(
-        `${playPath}/intro${getAssignQueryString(this.props.location)}`
-      );
+      this.props.history.push(`${playPath}/intro`);
     }
 
     return (

@@ -6,10 +6,9 @@ import 'react-circular-progressbar/dist/styles.css';
 import './ProvisionalScore.scss';
 import { Brick } from 'model/brick';
 import { PlayStatus } from '../model';
-import { getPlayPath, getAssignQueryString } from '../service';
+import { getPlayPath } from '../service';
 
 import ReviewStepper from '../review/ReviewStepper';
-import Clock from '../baseComponents/Clock';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { rightKeyPressed } from 'components/services/key';
 import { isPhone } from 'services/phone';
@@ -112,15 +111,20 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
 
   moveToIntro() {
     let link = getPlayPath(this.props.isPlayPreview, this.props.brick.id);
-    this.props.history.push(`${link}/intro${getAssignQueryString(this.props.location)}`);
+    this.props.history.push(`${link}/intro`);
   }
 
   moveToSynthesis() {
     if (isPhone()) {
       let link = getPlayPath(this.props.isPlayPreview, this.props.brick.id);
-      this.props.history.push(`${link}/synthesis${getAssignQueryString(this.props.location)}`);
+      this.props.history.push(`${link}/synthesis`);
     } else {
-      this.props.history.push(routes.playPreSynthesis(this.props.brick.id) + getAssignQueryString(this.props.location));
+      if (this.props.isPlayPreview) {
+        let link = getPlayPath(this.props.isPlayPreview, this.props.brick.id);
+        this.props.history.push(`${link}/synthesis`);
+      } else {
+        this.props.history.push(routes.playPreSynthesis(this.props.brick.id));
+      }
     }
   }
 
