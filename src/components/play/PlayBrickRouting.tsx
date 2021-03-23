@@ -451,11 +451,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Review
             mode={mode}
             status={status}
-            questions={brick.questions}
-            brickId={brick.id}
+            history={props.history}
             startTime={startTime}
             brick={brick}
-            brickLength={brick.brickLength}
             updateAttempts={updateReviewAttempts}
             attempts={attempts}
             finishBrick={finishReview}

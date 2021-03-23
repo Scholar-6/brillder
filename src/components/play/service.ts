@@ -1,5 +1,3 @@
-import queryString from 'query-string';
-
 export const getPlayPath = (isPreview: boolean | undefined, brickId: number) => {
   let mainPath = '/play'
   if (isPreview) {
