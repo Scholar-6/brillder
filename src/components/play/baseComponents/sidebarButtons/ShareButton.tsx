@@ -3,6 +3,7 @@ import React from 'react';
 
 interface ButtonProps {
   sidebarRolledUp: boolean;
+  showBorder: boolean;
   share(): void;
 }
 
@@ -25,10 +26,16 @@ const ShareButton: React.FC<ButtonProps> = (props) => {
     );
   }
 
+  let className= 'assign-class-button share-button svgOnHover';
+
+  if (props.showBorder) {
+    className += ' button-border';
+  }
+
   return (
     <button
       onClick={props.share}
-      className="assign-class-button share-button svgOnHover"
+      className={className}
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
     >
       <SpriteIcon name="feather-share" className="active" />

@@ -13,7 +13,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
 import { Brick } from "model/brick";
 import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
-import map from "components/map";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
 import axios from "axios";
 import ShareDialog from "./finalStep/dialogs/ShareDialog";
@@ -26,7 +25,7 @@ import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
-import { playNewPrep } from "./routes";
+import { PlayBriefLastPrefix, playNewPrep } from "./routes";
 
 
 interface SidebarProps {
@@ -114,12 +113,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       if (this.isLive() || this.isProvisional() || this.isSynthesis() || this.isEnding()) {
         return <div />
       }
-      /*
-      return (
-        <div className="minimize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
-          <SpriteIcon name="maximize" className="active" />
-        </div>
-      );*/
       return "";
     }
     return (
@@ -239,22 +232,31 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         return <div></div>;
       }
     }
+
+    let showBorder = false;
+    if (this.props.history.location.pathname.search(PlayBriefLastPrefix) >= 0) {
+      showBorder = true;
+    }
+
     return (
       <div className="sidebar-button">
         <HighlightTextButton
           mode={this.props.mode}
+          showBorder={showBorder}
           sidebarRolledUp={this.props.sidebarRolledUp}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />
         {this.renderPrepButton()}
-        <ShareButton sidebarRolledUp={this.props.sidebarRolledUp} share={this.share.bind(this)} />
+        <ShareButton sidebarRolledUp={this.props.sidebarRolledUp} showBorder={showBorder} share={this.share.bind(this)} />
         <AssignButton
           sidebarRolledUp={this.props.sidebarRolledUp}
           user={this.props.user}
+          showBorder={showBorder}
           openAssignDialog={this.openAssignDialog.bind(this)}
         />
         <AdaptButton
           user={this.props.user}
+          showBorder={showBorder}
           sidebarRolledUp={this.props.sidebarRolledUp}
           onClick={this.onAdaptDialog.bind(this)}
         />
