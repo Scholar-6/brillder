@@ -11,6 +11,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "../baseComponents/MathInHtml";
 import HighlightHtml from "../baseComponents/HighlightHtml";
 import { PlayMode } from "../model";
+import FixedHelpers from "./FixedHelpers";
 
 interface Props {
   brick: Brick;
@@ -92,20 +93,7 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
           </div>
         </div>
-        <div className="fixed-helpers-container">
-          <div className="highlight">
-            Highlight Text
-          </div>
-          <div className="share">
-            Share Brick
-          </div>
-          <div className="assign">
-            Assign Brick
-          </div>
-          <div className="adapt">
-            Adapt Brick
-          </div>
-        </div>
+        <FixedHelpers />
       </div>
     </div>
   );

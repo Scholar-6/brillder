@@ -6,7 +6,6 @@ import { PlayMode } from '../../model';
 interface ButtonProps {
   mode: PlayMode | undefined;
   sidebarRolledUp: boolean;
-  showBorder: boolean;
   setHighlightMode(): void;
 }
 
@@ -17,10 +16,6 @@ const HighlightTextButton: React.FC<ButtonProps> = (props) => {
   const { mode } = props;
   if (mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) {
     className += " active";
-  }
-
-  if (props.showBorder) {
-    className += ' button-border';
   }
 
   const renderHightlightText = () => {

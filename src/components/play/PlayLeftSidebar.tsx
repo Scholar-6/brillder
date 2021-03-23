@@ -242,21 +242,18 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       <div className="sidebar-button">
         <HighlightTextButton
           mode={this.props.mode}
-          showBorder={showBorder}
           sidebarRolledUp={this.props.sidebarRolledUp}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />
         {this.renderPrepButton()}
-        <ShareButton sidebarRolledUp={this.props.sidebarRolledUp} showBorder={showBorder} share={this.share.bind(this)} />
+        <ShareButton sidebarRolledUp={this.props.sidebarRolledUp} share={this.share.bind(this)} />
         <AssignButton
           sidebarRolledUp={this.props.sidebarRolledUp}
           user={this.props.user}
-          showBorder={showBorder}
           openAssignDialog={this.openAssignDialog.bind(this)}
         />
         <AdaptButton
           user={this.props.user}
-          showBorder={showBorder}
           sidebarRolledUp={this.props.sidebarRolledUp}
           onClick={this.onAdaptDialog.bind(this)}
         />

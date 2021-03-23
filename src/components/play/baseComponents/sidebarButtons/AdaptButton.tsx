@@ -6,7 +6,6 @@ import React from 'react';
 interface ButtonProps {
   user: User;
   sidebarRolledUp: boolean;
-  showBorder: boolean;
   onClick(): void;
 }
 
@@ -33,16 +32,10 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
     );
   }
 
-  let className = 'assign-class-button adapt-small svgOnHover blue'
-
-  if (props.showBorder) {
-    className += ' button-border';
-  }
-
   return (
     <button
       onClick={props.onClick}
-      className={className}
+      className="assign-class-button adapt-small svgOnHover blue"
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
     >
       <SpriteIcon name="copy" className="active" />
