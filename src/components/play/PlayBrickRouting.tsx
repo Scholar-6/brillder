@@ -259,10 +259,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const moveToPreInvestigation = () => props.history.push(playPreInvesigation(brick.id));
 
   const moveToReview = () => {
-    if (!isPhone()) {
-      return props.history.push(routes.playPreReview(brick.id));
-    }
     if (props.user) {
+      if (!isPhone()) {
+        return props.history.push(routes.playPreReview(brick.id));
+      }
       saveBrickAttempt(brickAttempt);
       const playPath = getPlayPath(false, brick.id);
       props.history.push(`${playPath}/review`);

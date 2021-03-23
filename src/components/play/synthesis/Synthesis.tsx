@@ -146,6 +146,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     <div className="brick-row-container synthesis-container">
       {isPhone() ? renderMobile() :
         <div className="brick-container play-preview-panel synthesis-page">
+          <div className="fixed-upper-b-title">{brick.title}</div>
           <div className="header">
             Synthesis
           </div>
