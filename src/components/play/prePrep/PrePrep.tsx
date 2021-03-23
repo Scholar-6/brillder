@@ -44,6 +44,9 @@ const PrePrepPage: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="brick-row-container live-container">
+      <div className="fixed-upper-b-title">
+        {brick.title}
+      </div>
       <div className="brick-container play-preview-panel live-page play-pre-prep-page">
         <div className="introduction-page">
           <div className="icon-container">
@@ -57,8 +60,12 @@ const PrePrepPage: React.FC<Props> = ({ brick, ...props }) => {
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
             <div className="title-column">
-              <DummyProgressbarCountdown value={23} /> {minutes}:00
+              <DummyProgressbarCountdown value={23} />
             </div>
+            <div className="minutes-footer">
+              {minutes}:00
+            </div>
+            <div className="footer-space" />
             <div className="new-navigation-buttons">
               <div className="n-btn next" onClick={props.moveNext}>
                 Start Prep

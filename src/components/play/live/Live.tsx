@@ -29,6 +29,7 @@ import MobilePrevButton from "./components/MobilePrevButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
+import { getLiveTime } from "../services/playTimes";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -321,8 +322,13 @@ const LivePage: React.FC<LivePageProps> = ({
     );
   }
 
+  const minutes = getLiveTime(brick.brickLength);
+
   return (
     <div className="brick-row-container live-container">
+      <div className="fixed-upper-b-title">
+        {brick.title}
+      </div>
       <div className="brick-container play-preview-panel live-page">
         <div className="introduction-page">
           <Hidden only={["xs"]}>
@@ -347,12 +353,10 @@ const LivePage: React.FC<LivePageProps> = ({
                       setEndTime={props.setEndTime}
                     />
                   </div>
-                  <div className="title-column">
-                    <div>
-                      <div className="subject">{brick.subject?.name}</div>
-                      <div>{brick.title}</div>
-                    </div>
+                  <div className="minutes-footer">
+                    {minutes}:00
                   </div>
+                  <div className="footer-space" />
                   <div className="new-navigation-buttons">
                     <div className="n-btn back" onClick={prev}>
                       <SpriteIcon name="arrow-left" />

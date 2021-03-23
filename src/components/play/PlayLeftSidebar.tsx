@@ -25,7 +25,7 @@ import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
-import { PlayBriefLastPrefix, playNewPrep } from "./routes";
+import { PlayBriefLastPrefix, playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
 
 
 interface SidebarProps {
@@ -173,6 +173,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return this.props.history.location.pathname.slice(-5) === '/live';
   }
 
+  isPreInvesigation() {
+    return this.props.history.location.pathname.search(PlayPreInvestigationLastPrefix);
+  }
+
   isProvisional() {
     return this.props.history.location.pathname.slice(-17) === '/provisionalScore';
   }
@@ -186,7 +190,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   renderPrepButton() {
-    const isLive = this.isLive();
+    const isLive = this.isLive() || this.isPreInvesigation();
     if (isLive && this.props.sidebarRolledUp) {
       return (
         <div>

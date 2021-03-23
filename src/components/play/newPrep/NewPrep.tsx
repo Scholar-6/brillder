@@ -14,6 +14,7 @@ import { PlayMode } from "../model";
 import moment from "moment";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
+import { getPrepareTime } from "../services/playTimes";
 
 
 export interface IntroductionState {
@@ -25,7 +26,7 @@ export interface IntroductionState {
 
 interface Props {
   brick: Brick;
-  
+
   moveNext(): void;
   mode?: PlayMode;
   onHighlight?(name: BrickFieldNames, value: string): void;
@@ -146,8 +147,13 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
     return "";
   };
 
+  const minutes = getPrepareTime(brick.brickLength);
+
   return (
     <div className="brick-row-container live-container">
+      <div className="fixed-upper-b-title">
+        {brick.title}
+      </div>
       <div className="brick-container play-preview-panel live-page play-brief-page new-prep-page">
         <div className="introduction-page">
           <div className="scrollable">
@@ -163,9 +169,12 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
             <div className="time-container">
-              <TimeProgressbarV2 isSynthesis={true} startTime={startTime} onEnd={() => {}} brickLength={brick.brickLength} />
+              <TimeProgressbarV2 isSynthesis={true} startTime={startTime} onEnd={() => { }} brickLength={brick.brickLength} />
             </div>
-            <div className="footer-space"/>
+            <div className="minutes-footer">
+              {minutes}:00
+            </div>
+            <div className="footer-space" />
             <div className="new-navigation-buttons">
               <div className="n-btn next" onClick={props.moveNext}>
                 Investigation

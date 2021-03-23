@@ -102,6 +102,9 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
             </Grid>
           </div>
         </Grid>
+        <div className="p-help-text">
+          Learn more about this topic by reading an<span className="underline-border"> academic summary </span>by the author.
+        </div>
       </div>
     );
   }
@@ -168,12 +171,20 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
                   <h1 className="title">Provisional Score</h1>
                   {this.renderProgressBar()}
                 </div>
+                <div className="new-layout-footer" style={{ display: 'none' }}>
+                  <div className="time-container" />
+                  <div className="minutes-footer" />
+                  <div className="footer-space" />
+                  <div className="new-navigation-buttons">
+                    <div className="n-btn next" onClick={this.moveToSynthesis.bind(this)}>
+                      Next
+                      <SpriteIcon name="arrow-right" />
+                    </div>
+                  </div>
+                </div>
               </Grid>
               <Grid item xs={4}>
                 <div className="introduction-info">
-                  <div className="intro-header">
-                    <Clock brickLength={brick.brickLength} />
-                  </div>
                   <div className="intro-text-row f-align-self-start m-t-5">
                     <ReviewStepper
                       questions={brick.questions}
@@ -181,7 +192,6 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
                       handleStep={() => { }}
                     />
                   </div>
-                  {this.renderFooter()}
                 </div>
               </Grid>
             </Grid>
@@ -198,7 +208,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
               </div>
               <div className="introduction-content">
                 {this.renderProgressBar()}
-                {isPhone() ? this.renderPhoneButton() : this.renderFooter()}
+                {isPhone() && this.renderPhoneButton()}
               </div>
             </div>
           </div>
