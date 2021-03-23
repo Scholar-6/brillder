@@ -1792,10 +1792,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .after-cover-page {
   .after-cover-main-content {
     .title {
-      margin-top: 6vh;
+      margin-top: 7.5vh;
       margin-bottom: 10vh;
       text-align: center;
-      font-size: 3vw !important;
+      font-size: 6vh !important;
       font-family: $font-family-bold;
     }
     .like-buttons-container {
@@ -1809,7 +1809,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           text-align: center;
           border-radius: 0.7vw;
           padding: 1.5vh 0;
-          font-size: 2vw;
+          font-size: 3.5vh;
           background: var(--tab-gray);
           margin: 1vh;
     
@@ -1822,7 +1822,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
     .footer {
       text-align: center;
-      font-size: 1.5vw;
+      font-size: 3vh;
       .underline {
         text-decoration: underline;
         text-decoration-color: var(--theme-orange);
@@ -1892,8 +1892,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       font-size: 1.8vw;
       font-family: $font-family-bold;
     }
+    .footer-arrow {
+      margin-left: 0.5vw;
+      width: 5vw;
+    }
     .new-navigation-buttons {
-      width: 15vw;
+      width: 9vw;
     }
   }
 }
