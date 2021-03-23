@@ -53,19 +53,36 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         .adapt-small {
           overflow: visible !important;
           position: relative;
+          &.button-border {
+            padding: 0 !important;
+            svg {
+              padding: 0.3vw;
+              border-radius: 50%;
+              border: 0.2vw dashed var(--white);
+            }
+          }
           .custom-tooltip {
             z-index: 100;
-            bottom: -3vw;
+            margin-left: 1vw;
+            bottom: -1.5vw;
+            width: 6vw;
           }
         }
         .highlight-button {
+          &.button-border svg {
+            padding: 0.3vw;
+            border-radius: 50%;
+            border: 0.2vw dashed var(--white);
+          }
           position: relative;
           span {
             transition: all 300ms ease-out !important;
           }
           .custom-tooltip {
             z-index: 100;
-            bottom: -3vw;
+            margin-left: -1.2vw;
+            bottom: -1vw !important;
+            width: 6vw;
           }
           &.active {
             span,
@@ -1809,7 +1826,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           text-align: center;
           border-radius: 0.7vw;
           padding: 1.5vh 0;
-          font-size: 3.5vh;
+          font-size: 4.5vh;
           background: var(--tab-gray);
           margin: 1vh;
     
@@ -1898,6 +1915,27 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
     .new-navigation-buttons {
       width: 9vw;
+    }
+  }
+  .fixed-helpers-container {
+    position: fixed;
+    left: 6vw;
+    color: var(--white);
+    font-size: 1.25vw;
+    top: calc(2vw + 5.834vw + 1.5vw);
+    text-align: center;
+    .highlight {
+      padding: 0 1vw;
+      width: 8vw;
+    }
+    .share {
+      margin-top: 1.5vw;
+    }
+    .assign {
+      margin-top: 3.2vw;
+    }
+    .adapt {
+      margin-top: 3.1vw;
     }
   }
 }

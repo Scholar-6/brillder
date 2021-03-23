@@ -5,6 +5,7 @@ import React from 'react';
 
 interface ButtonProps {
   user: User;
+  showBorder: boolean;
   sidebarRolledUp: boolean;
   openAssignDialog(): void;
 }
@@ -32,14 +33,22 @@ const AssignButton: React.FC<ButtonProps> = (props) => {
     );
   }
 
+  let className = 'assign-class-button assign-small svgOnHover';
+
+  if (props.showBorder) {
+    className += ' button-border';
+  }
+
   return (
     <button
       onClick={props.openAssignDialog}
-      className="assign-class-button assign-small svgOnHover"
+      className={className}
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
     >
-      <SpriteIcon name="file-plus" className="active" />
-      {hovered && renderTooltip()}
+      <div>
+        <SpriteIcon name="file-plus" className="active" />
+        {hovered && renderTooltip()}
+      </div>
     </button>
   );
 }

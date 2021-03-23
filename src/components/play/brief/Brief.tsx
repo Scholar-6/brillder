@@ -92,6 +92,20 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
           </div>
         </div>
+        <div className="fixed-helpers-container">
+          <div className="highlight">
+            Highlight Text
+          </div>
+          <div className="share">
+            Share Brick
+          </div>
+          <div className="assign">
+            Assign Brick
+          </div>
+          <div className="adapt">
+            Adapt Brick
+          </div>
+        </div>
       </div>
     </div>
   );
