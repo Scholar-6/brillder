@@ -3,14 +3,13 @@ import { Grid, Hidden } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
 import update from "immutability-helper";
-import { useHistory, useLocation } from "react-router-dom";
 import { Moment } from "moment";
 
 import "./ReviewPage.scss";
 import { Question } from "model/question";
 import { PlayStatus } from "../model";
 import { PlayMode } from "../model";
-import { Brick, BrickLengthEnum } from "model/brick";
+import { Brick } from "model/brick";
 import { getPlayPath, scrollToStep } from "../service";
 
 import ReviewStepper from "./ReviewStepper";
@@ -25,13 +24,12 @@ import MobilePrevButton from "../live/components/MobilePrevButton";
 import MobileNextButton from "../live/components/MobileNextButton";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
+import { getReviewTime } from "../services/playTimes";
 
 interface ReviewPageProps {
   status: PlayStatus;
-  brickId: number;
   brick: Brick;
-  questions: Question[];
-  brickLength: BrickLengthEnum;
+  history: any;
   startTime?: Moment;
   attempts: any[];
   isPlayPreview?: boolean;
@@ -44,15 +42,14 @@ interface ReviewPageProps {
 
 const ReviewPage: React.FC<ReviewPageProps> = ({
   status,
-  questions,
   updateAttempts,
   attempts,
+  history,
+  brick,
   finishBrick,
-  brickId,
   ...props
 }) => {
-  const history = useHistory();
-  const location = useLocation();
+  const {questions} = brick;
   const [activeStep, setActiveStep] = React.useState(0);
   let initAnswers: any[] = [];
   const [answers, setAnswers] = React.useState(initAnswers);
@@ -60,7 +57,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const [questionScrollRef] = React.useState(React.createRef<HTMLDivElement>());
 
   const theme = useTheme();
-  let playPath = getPlayPath(props.isPlayPreview, brickId);
+  let playPath = getPlayPath(props.isPlayPreview, brick.id);
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -285,6 +282,8 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     );
   }
 
+  const minutes = getReviewTime(brick.brickLength);
+
   return (
     <div className="brick-row-container review-container">
       <div className="brick-container play-preview-panel review-page">
@@ -306,16 +305,14 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                       isLive={true}
                       onEnd={onEnd}
                       endTime={null}
-                      brickLength={props.brickLength}
+                      brickLength={brick.brickLength}
                       setEndTime={() => { }}
                     />
                   </div>
-                  <div className="title-column">
-                    <div>
-                      <div className="subject">{props.brick.subject?.name}</div>
-                      <div>{props.brick.title}</div>
-                    </div>
+                  <div className="minutes-footer">
+                    {minutes}:00
                   </div>
+                  <div className="footer-space"/>
                   <div className="new-navigation-buttons">
                     <div className="n-btn back" onClick={prev}>
                       <SpriteIcon name="arrow-left" />
@@ -336,7 +333,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
               </Grid>
               <Grid item sm={4} xs={12}>
                 <div className="introduction-info">
-                  <CountDown brickLength={props.brickLength} endTime={null} setEndTime={() => { }} onEnd={onEnd} />
+                  <CountDown brickLength={brick.brickLength} endTime={null} setEndTime={() => { }} onEnd={onEnd} />
                   <div className="intro-text-row f-align-self-start m-t-5">
                     <ReviewStepper
                       questions={questions}
@@ -357,7 +354,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
           <Hidden only={["sm", "md", "lg", "xl"]}>
             <div className="intro-header">
               <div className="intro-text-row">
-                <span className="phone-stepper-head"><span className="bold">{props.brick.subject?.name}</span> {props.brick.title}</span>
+                <span className="phone-stepper-head"><span className="bold">{brick.subject?.name}</span> {brick.title}</span>
                 <ReviewStepper
                   questions={questions}
                   attempts={attempts}
@@ -386,7 +383,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                   isLive={true}
                   onEnd={onEnd}
                   endTime={null}
-                  brickLength={props.brickLength}
+                  brickLength={brick.brickLength}
                   setEndTime={() => { }}
                 />
               </div>

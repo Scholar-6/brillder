@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { Grid } from '@material-ui/core';
 import moment from 'moment';
 
 import './Synthesis.scss';
 import { AcademicLevelLabels, Brick } from 'model/brick';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { PlayStatus } from '../model';
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
@@ -29,7 +28,6 @@ interface SynthesisProps {
 
 const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }) => {
   const history = useHistory();
-  const location = useLocation();
   const [startTime] = React.useState(moment());
   const playPath = getPlayPath(props.isPlayPreview, brick.id);
 

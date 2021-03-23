@@ -301,13 +301,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             </Route>
             <Route exac path="/play-preview/brick/:brickId/review">
               <Review
+                history={history}
                 isPlayPreview={true}
                 status={status}
-                questions={brick.questions}
                 brick={brick}
-                brickId={brick.id}
                 startTime={startTime}
-                brickLength={brick.brickLength}
                 updateAttempts={updateReviewAttempts}
                 attempts={attempts}
                 finishBrick={finishReview}
