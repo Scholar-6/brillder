@@ -98,6 +98,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
         <PageHeader ref={this.pageHeader}
           searchPlaceholder={placeholder}
           link={this.props.link}
+          history={this.props.history}
           search={() => this.props.search()}
           searching={(v: string) => this.props.searching(v)}
           showDropdown={() => this.showDropdown()}
