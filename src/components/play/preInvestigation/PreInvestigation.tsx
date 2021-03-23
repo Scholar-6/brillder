@@ -39,6 +39,9 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
   if (isMoving) {
     return (
       <div className="brick-row-container live-container">
+        <div className="fixed-upper-b-title">
+          {brick.title}
+        </div>
         <div className="brick-container play-preview-panel live-page after-cover-page">
           <div className="introduction-page">
             <SecondsCountDown onEnd={props.moveNext} />
@@ -52,7 +55,10 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="brick-row-container live-container">
-      <div className="brick-container play-preview-panel live-page after-cover-page">
+      <div className="fixed-upper-b-title">
+        {brick.title}
+      </div>
+      <div className="brick-container play-preview-panel live-page after-cover-page pre-investigation">
         <div className="introduction-page">
           <div className="after-cover-main-content">
             <div className="title">
@@ -85,6 +91,14 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
                 <SpriteIcon name="arrow-right" />
               </div>
             </div>
+          </div>
+        </div>
+        <div className="fixed-helpers-container">
+          <div className="circles">
+            <div className="prep-circle dashed-circle" />
+          </div>
+          <div className="prep">
+            Click here to go back to Prep tasks
           </div>
         </div>
       </div>
