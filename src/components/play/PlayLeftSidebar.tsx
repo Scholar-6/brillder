@@ -174,7 +174,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   isPreInvesigation() {
-    return this.props.history.location.pathname.search(PlayPreInvestigationLastPrefix);
+    return this.props.history.location.pathname.search(PlayPreInvestigationLastPrefix) >= 0;
   }
 
   isProvisional() {
