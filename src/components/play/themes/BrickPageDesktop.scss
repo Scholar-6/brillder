@@ -955,11 +955,17 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           }
         }
         &.synthesis-page {
+          .header {
+            height: 4vw;
+            font-size: 2.5vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: $font-family-bold;
+            background: var(--tab-gray);
+          }
           .introduction-page {
-            h1 {
-              text-transform: capitalize;
-              margin: 0.4vw 0 0 0;
-            }
+            height: calc(100vh - 4vw - 4vw) !important;
           }
           .question-live-play {
             height: calc(100vh - 27.6vh);
@@ -1397,8 +1403,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       // only synthesis score
       .synthesis-container {
         .synthesis-content {
-          height: calc(100vh - 4vw - 12vh) !important;
-          width: 44.5vw !important;
+          height: calc(100vh - 4vw - 4vw) !important;
+          padding: 8vh 5vw 6vw 5vw;
+          width: 100%;
         }
       }
     }

@@ -52,9 +52,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     history.push(`${playPath}/intro${getAssignQueryString(location)}`);
   }
 
-  const reviewBrick = () => {
-    props.moveNext();
-  }
+  const reviewBrick = () => props.moveNext();
 
   const renderSynthesisContent = () => {
     return (
@@ -138,38 +136,40 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
             {isPhone() ? renderPhoneButton() : renderFooter()}
           </div>
           <div className="time-container">
-            <TimeProgressbarV2 isSynthesis={true} startTime={startTime} onEnd={() => {}} brickLength={brick.brickLength} />
+            <TimeProgressbarV2 isSynthesis={true} startTime={startTime} onEnd={() => { }} brickLength={brick.brickLength} />
           </div>
         </div>
       </div>
     );
   }
 
+  const minutes = getSynthesisTime(brick.brickLength);
+
   return (
     <div className="brick-row-container synthesis-container">
       {isPhone() ? renderMobile() :
         <div className="brick-container play-preview-panel synthesis-page">
-          <Grid container direction="row">
-            <Grid item xs={8}>
-              <div className="introduction-page">
-                <h1 className="title">Synthesis</h1>
-                <hr className="cuting-line"></hr>
-                {renderSynthesisContent()}
+          <div className="header">
+            Synthesis
+          </div>
+          <div className="introduction-page">
+            {renderSynthesisContent()}
+            <div className="new-layout-footer" style={{ display: 'none' }}>
+              <div className="time-container">
+                <TimeProgressbarV2 isSynthesis={true} startTime={startTime} onEnd={() => { }} brickLength={brick.brickLength} />
               </div>
-            </Grid>
-            <Grid item xs={4}>
-              <div className="introduction-info">
-                <TimerWithClock isArrowUp={true} startTime={startTime} brickLength={brick.brickLength} />
-                <div className="intro-text-row">
-                  {renderSpendTime()}
-                  <br />
-                  <p>When you’re ready to move on, you will have</p>
-                  <p>{getReviewTime(brick.brickLength)} minutes to try to improve your score.</p>
+              <div className="minutes-footer">
+                {minutes}:00
+              </div>
+              <div className="footer-space" />
+              <div className="new-navigation-buttons">
+                <div className="n-btn next" onClick={props.moveNext}>
+                  Review
+                  <SpriteIcon name="arrow-right" />
                 </div>
-                {renderFooter()}
               </div>
-            </Grid>
-          </Grid>
+            </div>
+          </div>
         </div>
       }
     </div>

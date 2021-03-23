@@ -70,8 +70,6 @@
 
 .sorted-row {
   .synthesis-content {
-    padding-top: 2vh;
-    padding-bottom: 4vh;
     overflow-y: auto;
     width: 48vw;
     height: calc(100vh - 12vh - 2vw - #{$page-head-height});
@@ -80,9 +78,6 @@
       font-size: 1.25vw;
     }
 
-    @include tabletP {
-      margin: 12vh 3vw 1vw 4vw;
-    }
     blockquote {
       border-left: 0.3vw solid var(--tab-gray);
       padding-left: 1.8vw;
@@ -96,13 +91,6 @@
       @include tabletP {
         font-size: 1.05vw;
       }
-    }
-  }
-
-  // synthesis content height for expanded desktop panel
-  &.sorted-row-expanded .synthesis-content {
-    @include desktop {
-      height: calc(100vh - 12vh - 2vw) !important;
     }
   }
 }

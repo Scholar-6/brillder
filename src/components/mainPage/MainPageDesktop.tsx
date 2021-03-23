@@ -406,7 +406,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         <ReportsAlertDialog
           isOpen={this.state.isReportLocked}
           close={() => this.setState({ isReportLocked: false })} />
-        />
         <DesktopVersionDialogV2
           isOpen={this.state.isDesktopOpen} secondaryLabel={this.state.secondaryLabel}
           onClick={() => this.setState({ isDesktopOpen: false })}
