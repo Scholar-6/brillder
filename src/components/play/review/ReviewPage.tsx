@@ -11,7 +11,7 @@ import { Question } from "model/question";
 import { PlayStatus } from "../model";
 import { PlayMode } from "../model";
 import { Brick, BrickLengthEnum } from "model/brick";
-import { getPlayPath, getAssignQueryString, scrollToStep } from "../service";
+import { getPlayPath, scrollToStep } from "../service";
 
 import ReviewStepper from "./ReviewStepper";
 import QuestionLive from "../questionPlay/QuestionPlay";
@@ -83,11 +83,11 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   });
 
   const moveToEnding = () => {
-    history.push(`${playPath}/ending${getAssignQueryString(location)}`)
+    history.push(`${playPath}/ending`)
   }
 
   if (status === PlayStatus.Live) {
-    history.push(`${playPath}/intro${getAssignQueryString(location)}`)
+    history.push(`${playPath}/intro`);
     return <PageLoader content="...Loading..." />;
   } else if (status === PlayStatus.Ending) {
     moveToEnding();

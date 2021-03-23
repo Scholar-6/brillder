@@ -6,14 +6,13 @@ import './Synthesis.scss';
 import { AcademicLevelLabels, Brick } from 'model/brick';
 import { useHistory, useLocation } from 'react-router-dom';
 import { PlayStatus } from '../model';
-import TimerWithClock from "../baseComponents/TimerWithClock";
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/build/proposal/model';
-import { getPlayPath, getAssignQueryString } from '../service';
+import { getPlayPath } from '../service';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { rightKeyPressed } from 'components/services/key';
-import { getReviewTime, getSynthesisTime } from '../services/playTimes';
+import { getSynthesisTime } from '../services/playTimes';
 import { isPhone } from 'services/phone';
 import TimeProgressbarV2 from '../baseComponents/timeProgressbar/TimeProgressbarV2';
 
@@ -49,7 +48,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   });
 
   if (status === PlayStatus.Live) {
-    history.push(`${playPath}/intro${getAssignQueryString(location)}`);
+    history.push(`${playPath}/intro`);
   }
 
   const reviewBrick = () => props.moveNext();

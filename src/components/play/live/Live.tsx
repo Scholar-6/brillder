@@ -14,7 +14,7 @@ import { PlayStatus, ComponentAttempt } from "../model";
 import { CashQuestionFromPlay } from "localStorage/buildLocalStorage";
 import { Brick } from "model/brick";
 import { PlayMode } from "../model";
-import { getPlayPath, getAssignQueryString, scrollToStep } from "../service";
+import { getPlayPath, scrollToStep } from "../service";
 
 import CountDown from "../baseComponents/CountDown";
 import LiveStepper from "./components/LiveStepper";
@@ -105,7 +105,7 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const moveToProvisional = () => {
     let playPath = getPlayPath(props.isPlayPreview, brick.id);
-    history.push(`${playPath}/provisionalScore${getAssignQueryString(location)}`);
+    history.push(`${playPath}/provisionalScore`);
   }
 
   if (status > PlayStatus.Live) {
@@ -275,11 +275,7 @@ const LivePage: React.FC<LivePageProps> = ({
     let attempt = questionRefs[activeStep].current?.getRewritedAttempt(false);
     props.updateAttempts(attempt, activeStep);
     let playPath = getPlayPath(props.isPlayPreview, brick.id);
-    const values = queryString.parse(location.search);
     let link = `${playPath}/intro?prepExtanded=true&resume=true&activeStep=${activeStep}`;
-    if (values.assignmentId) {
-      link += '&assignmentId=' + values.assignmentId;
-    }
     history.push(link);
   }
 

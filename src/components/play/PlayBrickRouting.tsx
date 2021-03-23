@@ -36,7 +36,7 @@ import { PlayMode } from './model';
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames } from "components/build/proposal/model";
 import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
-import { getAssignQueryString, getPlayPath } from "./service";
+import { getPlayPath } from "./service";
 import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";
 import map, { playIntro } from "components/map";
 import userActions from 'redux/actions/user';
@@ -54,6 +54,7 @@ import NewPrep from "./newPrep/NewPrep";
 import PreInvestigationPage from "./preInvestigation/PreInvestigation";
 import PreSynthesis from "./preSynthesis/PreSynthesis";
 import PreReview from "./preReview/PreReview";
+import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
 
 
 function shuffle(a: any[]) {
@@ -161,15 +162,17 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
-    let values = queryString.parse(location.search);
-    if (values.assignmentId) {
-      brickAttempt.assignmentId = parseInt(values.assignmentId as string);
+
+    const assignmentId = getAssignmentId();
+    if (assignmentId) {
+      brickAttempt.assignmentId = assignmentId;
     }
     return axios.post(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
       { brickAttempt, userId: props.user.id },
       { withCredentials: true }
     ).then(async (response) => {
+      clearAssignmentId();
       if (!props.user.hasPlayedBrick && props.isAuthenticated === isAuthenticated.True) {
         await props.getUser();
       }
@@ -187,15 +190,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
-    let values = queryString.parse(location.search);
-    if (values.assignmentId) {
-      brickAttempt.assignmentId = parseInt(values.assignmentId as string);
+    const assignmentId = getAssignmentId();
+    if (assignmentId) {
+      brickAttempt.assignmentId = assignmentId;
     }
     return axios.put(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
       { id: attemptId, userId: props.user.id, body: brickAttempt },
       { withCredentials: true }
     ).then(async (response) => {
+      clearAssignmentId();
       if (!props.user.hasPlayedBrick && props.isAuthenticated === isAuthenticated.True) {
         await props.getUser();
       }
@@ -232,13 +236,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         query.activeStep = values.activeStep;
       }
     }
-    if (values.assignmentId) {
-      query.assignmentId = values.assignmentId;
-    }
     if (isPhone()) {
       setHeader(true);
     }
-    props.history.push(liveLink + "?" + queryString.stringify(query));
+    props.history.push(liveLink);
     setSidebar(true);
   }
 
@@ -264,7 +265,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (props.user) {
       saveBrickAttempt(brickAttempt);
       const playPath = getPlayPath(false, brick.id);
-      props.history.push(`${playPath}/review${getAssignQueryString(location)}`);
+      props.history.push(`${playPath}/review`);
     } else {
       // unauthorized users finish it here. show popup
       setUnauthorized(true);
