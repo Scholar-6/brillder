@@ -52,6 +52,7 @@ import Brief from "./brief/Brief";
 import PrePrep from "./prePrep/PrePrep";
 import NewPrep from "./newPrep/NewPrep";
 import PreInvestigationPage from "./preInvestigation/PreInvestigation";
+import PreSynthesis from "./preSynthesis/PreSynthesis";
 
 
 function shuffle(a: any[]) {
@@ -367,7 +368,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {isPhone() && renderPhoneFooter()}
         </Route>
 
-        {/* only desktop routes */}
         <Route exact path={routes.sectionsRoute}>
           <Sections brick={brick} moveNext={moveToBrief} />
         </Route>
@@ -428,6 +428,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
           {isPhone() && renderPhoneFooter()}
         </Route>
+
+        <Route exact path={routes.preSynthesisRoute}>
+          <PreSynthesis brick={brick} history={props.history} />
+        </Route>
+
         <Route exac path="/play/brick/:brickId/synthesis">
           <Synthesis mode={mode} status={status} brick={brick} moveNext={moveToReview} onHighlight={onHighlight} />
           {isPhone() && renderPhoneFooter()}

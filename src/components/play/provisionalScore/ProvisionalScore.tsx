@@ -13,6 +13,7 @@ import Clock from '../baseComponents/Clock';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { rightKeyPressed } from 'components/services/key';
 import { isPhone } from 'services/phone';
+import routes from '../routes';
 
 interface ProvisionalScoreState {
   value: number;
@@ -115,8 +116,12 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
   }
 
   moveToSynthesis() {
-    let link = getPlayPath(this.props.isPlayPreview, this.props.brick.id);
-    this.props.history.push(`${link}/synthesis${getAssignQueryString(this.props.location)}`);
+    if (isPhone()) {
+      let link = getPlayPath(this.props.isPlayPreview, this.props.brick.id);
+      this.props.history.push(`${link}/synthesis${getAssignQueryString(this.props.location)}`);
+    } else {
+      this.props.history.push(routes.playPreSynthesis(this.props.brick.id) + getAssignQueryString(this.props.location));
+    }
   }
 
   renderFooter() {
