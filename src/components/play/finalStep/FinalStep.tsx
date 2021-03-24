@@ -118,7 +118,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
           <div>
             <ShareColumn onClick={() => setShare(true)} />
             {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
-            {canSee && <AdaptBrickColumn onClick={() => setIsAdaptBrickOpen(true)} />}
           </div>
         </Grid>
       );
