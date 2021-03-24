@@ -531,140 +531,133 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         brick={props.reduxBrick}
         exitAndSave={exitAndSave}
       />
-      <Hidden only={['xs', 'sm']}>
-        <TutorialLabels isTutorialPassed={isTutorialPassed()} />
-        <YourProposalLink
-          brickId={brickId}
-          tutorialStep={step}
-          invalid={validationRequired && !proposalResult.isValid}
-          isTutorialPassed={isTutorialPassed}
-        />
+      <TutorialLabels isTutorialPassed={isTutorialPassed()} />
+      <YourProposalLink
+        brickId={brickId}
+        tutorialStep={step}
+        invalid={validationRequired && !proposalResult.isValid}
+        isTutorialPassed={isTutorialPassed}
+      />
+      <Grid
+        container direction="row"
+        className="investigation-build-background"
+        alignItems="center"
+      >
         <Grid
-          container direction="row"
-          className="investigation-build-background"
+          container
+          item xs={12} sm={12} md={9}
           alignItems="center"
+          style={{ height: "100%" }}
+          className="question-container"
         >
           <Grid
-            container
-            item xs={12} sm={12} md={9}
-            alignItems="center"
+            container direction="row"
+            justify="center" alignItems="center"
             style={{ height: "100%" }}
-            className="question-container"
           >
+            <div className="build-brick-title">
+              <div>{ybrick.get("title")}</div>
+            </div>
             <Grid
-              container direction="row"
-              justify="center" alignItems="center"
-              style={{ height: "100%" }}
+              container
+              item xs={12} sm={12} md={9}
+              style={{ height: "90%", width: "75vw", minWidth: 'none' }}
             >
-              <div className="build-brick-title">
-                <div>{ybrick.get("title")}</div>
-              </div>
-              <Grid
-                container
-                item xs={12} sm={12} md={9}
-                style={{ height: "90%", width: "75vw", minWidth: 'none' }}
-              >
-                <DragableTabs
-                  history={history}
-                  yquestions={questions}
-                  currentQuestionIndex={currentQuestionIndex}
-                  synthesis={synthesis.toString()}
-                  validationRequired={validationRequired}
-                  tutorialSkipped={isTutorialPassed()}
-                  openSkipTutorial={openSkipTutorial}
-                  tutorialStep={isTutorialPassed() ? TutorialStep.None : step}
-                  isSynthesisPage={isSynthesisPage}
-                  moveToSynthesis={moveToSynthesis}
-                  createNewQuestion={createNewQuestion}
-                  selectQuestion={selectQuestion}
-                  removeQuestion={removeQuestion}
-                />
-                {renderPanel()}
-              </Grid>
+              <DragableTabs
+                history={history}
+                yquestions={questions}
+                currentQuestionIndex={currentQuestionIndex}
+                synthesis={synthesis.toString()}
+                validationRequired={validationRequired}
+                tutorialSkipped={isTutorialPassed()}
+                openSkipTutorial={openSkipTutorial}
+                tutorialStep={isTutorialPassed() ? TutorialStep.None : step}
+                isSynthesisPage={isSynthesisPage}
+                moveToSynthesis={moveToSynthesis}
+                createNewQuestion={createNewQuestion}
+                selectQuestion={selectQuestion}
+                removeQuestion={removeQuestion}
+              />
+              {renderPanel()}
             </Grid>
           </Grid>
-          <LastSave updated={new Date(ybrick.get("updated")).toString()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} saveError={false} />
-          <Route path="/build/brick/:brickId/investigation/" exact>
-            <Redirect to={`/build/brick/${ybrick.get("id")}/investigation/question`} />
-          </Route>
-          <Route path="/build/brick/:brickId/investigation/question-component">
-            {activeQuestion &&
-              <PhoneQuestionPreview
-                question={toRenderJSON(activeQuestion.getMap())}
-                focusIndex={focusIndex}
-                getQuestionIndex={getJSONQuestionIndex}
-                nextQuestion={setNextQuestion}
-                prevQuestion={setPrevFromPhone}
-              />
-            }
-          </Route>
-          <Route path="/build/brick/:brickId/investigation/question">
-            {renderQuestionTypePreview()}
-          </Route>
-          <Route path="/build/brick/:brickId/synthesis">
-            <PhonePreview
-              Component={SynthesisPreviewComponent}
-              prev={() => selectQuestion(questions.length - 1)}
-              next={() => { }}
-              nextDisabled={true}
-              data={{ synthesis: toRenderJSON(ybrick).synthesis, brickLength: ybrick.get("brickLength") }}
-            />
-          </Route>
         </Grid>
-        <HighlightInvalidDialog
-          isOpen={highlightInvalid.isOpen}
-          isLines={highlightInvalid.isLine}
-          close={() => {
-            setValidation(true);
-            setInvalidHighlight({ isOpen: false, isLine: false })
-          }}
-        />
-        <HintInvalidDialog
-          isOpen={invalidHint.isOpen}
-          invalidQuestionNumber={invalidHint.questionNumber}
-          close={() => {
-            setValidation(true);
-            setInvalidHint({ isOpen: false, questionNumber: -1 })
-          }}
-        />
-        <QuestionInvalidDialog
-          isOpen={submitDialogOpen}
-          close={() => setSubmitDialog(false)}
-          submit={() => submitInvalidBrick()}
-          hide={() => hideInvalidBrick()}
-        />
-        <ProposalInvalidDialog
-          isOpen={!proposalResult.isValid && proposalInvalidOpen}
-          close={() => setProposalInvalidOpen(false)}
-          submit={() => submitInvalidBrick()}
-          hide={() => moveToInvalidProposal()}
-        />
-        <DeleteDialog
-          isOpen={deleteDialogOpen}
-          index={deleteQuestionIndex}
-          title="Permanently delete<br />this question?"
-          close={setDeleteDialog}
-          submit={deleteQuestionByIndex}
-        />
-        <ValidationFailedDialog
-          isOpen={lastQuestionDialog}
-          header="You can`t delete last question"
-          close={() => setLastQuestionDialog(false)}
-        />
-        <SkipTutorialDialog
-          open={skipTutorialOpen}
-          close={() => setSkipDialog(false)}
-          skip={() => {
-            skipTutorial(true);
-            setSkipDialog(false);
-          }}
-        />
-      </Hidden>
-      <Hidden only={['md', 'lg', 'xl']}>
-        <div className="blue-page">
-          <DesktopVersionDialog history={history} />
-        </div>
-      </Hidden>
+        <LastSave updated={new Date(ybrick.get("updated")).toString()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} saveError={false} />
+        <Route path="/build/brick/:brickId/investigation/" exact>
+          <Redirect to={`/build/brick/${ybrick.get("id")}/investigation/question`} />
+        </Route>
+        <Route path="/build/brick/:brickId/investigation/question-component">
+          {activeQuestion &&
+            <PhoneQuestionPreview
+              question={toRenderJSON(activeQuestion.getMap())}
+              focusIndex={focusIndex}
+              getQuestionIndex={getJSONQuestionIndex}
+              nextQuestion={setNextQuestion}
+              prevQuestion={setPrevFromPhone}
+            />
+          }
+        </Route>
+        <Route path="/build/brick/:brickId/investigation/question">
+          {renderQuestionTypePreview()}
+        </Route>
+        <Route path="/build/brick/:brickId/synthesis">
+          <PhonePreview
+            Component={SynthesisPreviewComponent}
+            prev={() => selectQuestion(questions.length - 1)}
+            next={() => { }}
+            nextDisabled={true}
+            data={{ synthesis: toRenderJSON(ybrick).synthesis, brickLength: ybrick.get("brickLength") }}
+          />
+        </Route>
+      </Grid>
+      <HighlightInvalidDialog
+        isOpen={highlightInvalid.isOpen}
+        isLines={highlightInvalid.isLine}
+        close={() => {
+          setValidation(true);
+          setInvalidHighlight({ isOpen: false, isLine: false })
+        }}
+      />
+      <HintInvalidDialog
+        isOpen={invalidHint.isOpen}
+        invalidQuestionNumber={invalidHint.questionNumber}
+        close={() => {
+          setValidation(true);
+          setInvalidHint({ isOpen: false, questionNumber: -1 })
+        }}
+      />
+      <QuestionInvalidDialog
+        isOpen={submitDialogOpen}
+        close={() => setSubmitDialog(false)}
+        submit={() => submitInvalidBrick()}
+        hide={() => hideInvalidBrick()}
+      />
+      <ProposalInvalidDialog
+        isOpen={!proposalResult.isValid && proposalInvalidOpen}
+        close={() => setProposalInvalidOpen(false)}
+        submit={() => submitInvalidBrick()}
+        hide={() => moveToInvalidProposal()}
+      />
+      <DeleteDialog
+        isOpen={deleteDialogOpen}
+        index={deleteQuestionIndex}
+        title="Permanently delete<br />this question?"
+        close={setDeleteDialog}
+        submit={deleteQuestionByIndex}
+      />
+      <ValidationFailedDialog
+        isOpen={lastQuestionDialog}
+        header="You can`t delete last question"
+        close={() => setLastQuestionDialog(false)}
+      />
+      <SkipTutorialDialog
+        open={skipTutorialOpen}
+        close={() => setSkipDialog(false)}
+        skip={() => {
+          skipTutorial(true);
+          setSkipDialog(false);
+        }}
+      />
     </div>
   );
 };

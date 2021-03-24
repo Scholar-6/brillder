@@ -1,6 +1,8 @@
 import React from "react";
 import { Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
+import { isPhone } from "services/phone";
+import DesktopVersionDialog from "./baseComponents/dialogs/DesktopVersionDialog";
 
 import InvestigationBuildPage, { InvestigationBuildProps } from "./investigationBuildPage";
 import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./proposal/model";
@@ -13,6 +15,14 @@ const BuildRouter: React.FC<InvestigationBuildProps> = (props) => {
   const brickId = parseInt(params.brickId);
 
   const proposalBaseUrl = '/build/brick/' + brickId;
+
+  if (isPhone()) {
+    return (
+      <div className="blue-page">
+        <DesktopVersionDialog history={props.history} />
+      </div>
+    );
+  }
 
   return (
     <Switch>
