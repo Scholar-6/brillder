@@ -148,7 +148,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     if (this.state.isAdapting) {
       return;
     }
-    this.setState({isAdapting: true});
+    this.setState({ isAdapting: true });
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/adapt/${this.props.brick.id}`,
       {},
@@ -162,7 +162,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     } else {
       console.log('can`t copy');
     }
-    this.setState({isAdapting: false})
+    this.setState({ isAdapting: false })
   }
 
   onAdaptDialog() {
