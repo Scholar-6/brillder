@@ -8,14 +8,6 @@ interface Props {
 }
 
 const RotateIPadInstruction: React.FC<Props> = (props) => {
-  const rotateScreen = () => {
-    if (document.body.requestFullscreen) {
-      document.body.requestFullscreen().then(() => {
-        window.screen.orientation.lock('portrait-primary');
-      });
-    }
-  }
-
   return (
     <div className="rotate-instruction-page">
       <div>

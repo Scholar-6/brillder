@@ -4,7 +4,6 @@ import { Grid } from '@material-ui/core';
 import 'components/build/buildQuestions/components/Image/Image.scss';
 import {fileUrl, uploadFile} from 'components/services/uploadFile';
 import ImageCloseDialog from 'components/build/buildQuestions/components/Image//ImageCloseDialog';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import ImageCoverDialog from './ImageCoverDialog';
 import { ImageCoverData } from './model';
 

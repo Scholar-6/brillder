@@ -24,7 +24,6 @@ import InvitationSuccessDialog from '../finalStep/dialogs/InvitationSuccessDialo
 import { ReduxCombinedState } from 'redux/reducers';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
-import { ProposalStep } from 'components/build/proposal/model';
 
 interface InviteResult {
   isOpen: boolean;

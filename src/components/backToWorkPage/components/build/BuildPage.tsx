@@ -8,7 +8,7 @@ import actions from 'redux/actions/requestFailed';
 
 import './BuildPage.scss';
 import { Brick, BrickStatus } from "model/brick";
-import { RolePreference, User } from "model/user";
+import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ThreeColumns, Filters, SortBy } from '../../model';
 import { getBricks, searchBricks, getCurrentUserBricks } from "services/axios/brick";

@@ -19,8 +19,6 @@ import EmailRegisterDesktopPage from "./EmailRegisterDesktopPage";
 import Delayed from "components/services/Delayed";
 import { FirstPage, EmailSignPage, JoinPage, RegisterPage } from "./routes";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
-import LoginWheelComponent from "./LoginWheel";
-import LoginWheel from "./LoginWheel";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
