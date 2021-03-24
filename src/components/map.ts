@@ -19,11 +19,6 @@ export const SelectSubjectPage = Onboarding + '/select-subjects';
 export const UserPreference = Onboarding + '/user-preference';
 export const UserProfile = Onboarding + '/profile-page';
 
-
-export const BackToWorkTeachTab = BackToWorkPage + '/teach';
-export const BackToWorkBuildTab = BackToWorkPage + '/build';
-export const BackToWorkLearnTab = BackToWorkPage + '/learn';
-
 export const TeachAssignedTab = '/teach/assigned';
 export const TeachAssignedArchiveTab = TeachAssignedTab + '/archive';
 export const ManageClassroomsTab = '/teach/manage-classrooms';
@@ -138,9 +133,6 @@ export default {
 
   BackToWorkPage,
   AssignmentsPage,
-  BackToWorkTeachTab,
-  BackToWorkBuildTab,
-  BackToWorkLearnTab,
 
   TeachAssignedTab,
   TeachAssignedArchiveTab,

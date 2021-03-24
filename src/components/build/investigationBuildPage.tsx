@@ -13,7 +13,7 @@ import {
 } from "model/question";
 import actions from "redux/actions/brickActions";
 import { socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
-import { isHighlightInvalid, validateHint, validateQuestion } from "./questionService/ValidateQuestionService";
+import { isHighlightInvalid, validateHint, validateQuestion, validateQuestions } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
   removeQuestionByIndex,
@@ -59,6 +59,7 @@ import * as Y from "yjs";
 import { convertQuestion, toRenderJSON } from "services/SharedTypeService";
 import _ from "lodash";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
+import { getPreviewLink, getQuestionType } from "./services/buildService";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -308,13 +309,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const moveToReview = () => {
-    let invalidQuestion: Y.Doc | undefined;
-    questions.forEach(question => {
-      const jsonQuestion = toRenderJSON(question.getMap());
-      if (!validateQuestion(jsonQuestion)) {
-        invalidQuestion = question;
-      }
-    });
+    const invalidQuestion = validateQuestions(questions);
 
     // synthesis invalid
     if ((!synthesis || synthesis.toString().trim()) === "" && !invalidQuestion) {
@@ -348,20 +343,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       }
     } else {
       if (proposalResult.isValid) {
-        let buildQuestion = GetCashedBuildQuestion();
+        const link = getPreviewLink(brickId, isSynthesisPage);
         props.forgetBrick();
-
-        if (isSynthesisPage) {
-          history.push(`/play-preview/brick/${brickId}/intro`);
-        } else if (
-          buildQuestion && buildQuestion.questionNumber &&
-          buildQuestion.brickId === brickId &&
-          buildQuestion.isTwoOrMoreRedirect
-        ) {
-          history.push(`/play-preview/brick/${brickId}/live`);
-        } else {
-          history.push(`/play-preview/brick/${brickId}/intro`);
-        }
+        history.push(link);
       } else {
         setProposalInvalidOpen(true);
       }
@@ -427,10 +411,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         />
       );
     }
-    let type = QuestionTypeEnum.None;
-    if (activeQuestion && activeQuestion.getMap().get("type")) {
-      type = activeQuestion.getMap().get("type");
-    }
+    const type = getQuestionType(activeQuestion);
     return (
       <QuestionTypePage
         history={history}
@@ -445,16 +426,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const isTutorialPassed = () => {
     const isCurrentEditor = (props.reduxBrick.editors?.findIndex((e: any) => e.id === props.user.id) ?? -1) >= 0;
-    if (isCurrentEditor) {
-      return true;
-    }
-    if (props.user.tutorialPassed) {
-      return true;
-    }
-    if (tutorialSkipped) {
-      return true;
-    }
-    if (questions.length > 1) {
+
+    if (isCurrentEditor ||props.user.tutorialPassed || tutorialSkipped || questions.length > 1) {
       return true;
     }
     if (questions.get(0)?.getMap() && questions.get(0)?.getMap().get("type") !== QuestionTypeEnum.None) {

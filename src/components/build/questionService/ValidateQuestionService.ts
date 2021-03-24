@@ -1,3 +1,6 @@
+import * as Y from "yjs";
+import { toRenderJSON } from "services/SharedTypeService";
+
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, Hint, HintStatus
 } from 'model/question';
@@ -120,4 +123,15 @@ export function isHighlightInvalid(question: Question) {
     return uniqueValidator.validateLineHighlighting(comp);
   }
   return null;
+}
+
+export function validateQuestions(questions: Y.Array<Y.Doc>) {
+  let invalidQuestion: Y.Doc | undefined;
+  questions.forEach(question => {
+    const jsonQuestion = toRenderJSON(question.getMap());
+    if (!validateQuestion(jsonQuestion)) {
+      invalidQuestion = question;
+    }
+  });
+  return invalidQuestion;
 }

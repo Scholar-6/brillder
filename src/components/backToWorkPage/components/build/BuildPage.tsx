@@ -562,9 +562,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const {history} = this.props;
     if (isMobile) {
       if (isTeacherPreference(this.props.user)) {
-        history.push(map.BackToWorkTeachTab);
+        history.push(map.BackToWorkPage);
       } else {
-        history.push(map.BackToWorkLearnTab);
+        history.push(map.BackToWorkPage);
       }
       return <PageLoader content="" />;
     }
