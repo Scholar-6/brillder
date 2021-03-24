@@ -92,7 +92,11 @@
           cursor: pointer;
           width: 1.7vw;
           height: 1.7vw;
-          color: var(--theme-orange);
+          color: var(--theme-dark-blue);
+
+          &:hover {
+            color: var(--theme-orange);
+          }
 
           &.disabled {
             color: var(--tab-gray);
@@ -109,6 +113,19 @@
           }
           .MuiFormControlLabel-label {
             font-size: 1.2vw;
+          }
+        }
+        .arrow-cancel {
+          position: absolute;
+          right: 1.5vw;
+          &::after, &::before {
+            background: var(--theme-dark-blue);
+          }
+          
+          &:hover {
+            &::after, &::before {
+              background: var(--theme-orange);
+            }
           }
         }
       }
