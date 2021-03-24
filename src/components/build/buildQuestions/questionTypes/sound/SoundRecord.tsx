@@ -5,9 +5,9 @@ import { QuestionValueType } from "../types";
 
 import SoundRecordDialog from "./SoundRecordDialog";
 import RemoveButton from "../components/RemoveButton";
-import DeleteDialog from "components/baseComponents/deleteBrickDialog/DeleteDialog";
 import Audio from './Audio';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import YesNoDialog from "components/build/baseComponents/dialogs/YesNoDialog";
 
 interface SoundProps {
   locked: boolean;
@@ -97,9 +97,9 @@ class SoundRecord extends React.Component<SoundProps, SoundState> {
             close={() => this.setOpen(false)}
           />
         )}
-        <DeleteDialog
+        <YesNoDialog
           isOpen={this.state.isClearOpen}
-          label="Delete sound?"
+          title="Delete sound?"
           submit={() => {
             this.props.clear();
             this.setClear(false);
