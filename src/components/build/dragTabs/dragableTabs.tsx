@@ -38,9 +38,7 @@ interface DragTabsProps {
   openSkipTutorial(): void;
   createNewQuestion(): void;
   moveToSynthesis(): void;
-  setQuestions(questions: any): void;
   selectQuestion(e: any): void;
-  moveToLastQuestion(): void;
   removeQuestion(e: any): void;
 }
 

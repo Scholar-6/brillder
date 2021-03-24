@@ -45,7 +45,6 @@ import TutorialPhonePreview from "./tutorial/TutorialPreview";
 import YourProposalLink from './baseComponents/YourProposalLink';
 import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-import Proposal from "./proposal/Proposal";
 
 import DesktopVersionDialog from 'components/build/baseComponents/dialogs/DesktopVersionDialog';
 import QuestionInvalidDialog from './baseComponents/dialogs/QuestionInvalidDialog';
@@ -63,7 +62,7 @@ import _ from "lodash";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 
 
-interface InvestigationBuildProps extends RouteComponentProps<any> {
+export interface InvestigationBuildProps extends RouteComponentProps<any> {
   user: User;
   reduxBrick: Brick;
   startEditing(brickId: number): void;
@@ -81,7 +80,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     initSuggestionExpanded = true;
   }
 
-  const isCurrentEditor = (props.reduxBrick.editors?.findIndex((e:any) => e.id === props.user.id) ?? -1) >= 0;
+  const isCurrentEditor = (props.reduxBrick.editors?.findIndex((e: any) => e.id === props.user.id) ?? -1) >= 0;
   if (isCurrentEditor) {
     initSuggestionExpanded = true;
   }
@@ -132,7 +131,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const ybrick = ydoc!.getMap("brick")!;
   props.startEditing(ybrick.get("id"));
 
-  if(!ybrick) {
+  if (!ybrick) {
     return <PageLoader content="Getting brick..." />
   }
 
@@ -149,7 +148,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const openSkipTutorial = () => {
     setSkipDialog(true);
   }
-   
+
   const undo = () => {
     // TODO: implement undo
   }
@@ -166,7 +165,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const getQuestionIndex = (question: Y.Doc) => {
     let qIndex = -1;
     questions.forEach((q, index) => {
-      if(q === question) {
+      if (q === question) {
         qIndex = index;
       }
     });
@@ -176,7 +175,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const getJSONQuestionIndex = (question: Question) => {
     let qIndex = -1;
     questions.forEach((q, index) => {
-      if(q.getMap().toJSON() === question) {
+      if (q.getMap().toJSON() === question) {
         qIndex = index;
       }
     });
@@ -184,9 +183,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   let activeQuestion: Y.Doc = undefined as any;
-  if(currentQuestionIndex !== -1) {
+  if (currentQuestionIndex !== -1) {
     activeQuestion = questions.get(currentQuestionIndex);
-    if(activeQuestion) {
+    if (activeQuestion) {
       questions.map((q: Y.Doc) => q.load());
     }
   }
@@ -198,7 +197,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       return <PageLoader content="...Loading..." />;
     }
   } else if (_.isEmpty(activeQuestion?.toJSON()) || _.isEmpty(activeQuestion?.getMap()?.toJSON())) {
-    if(questions.length <= 0) {
+    if (questions.length <= 0) {
       if (!canEdit || locked) { return <PageLoader content="...Loading..." />; }
       const newQuestion = convertQuestion(getNewQuestion(QuestionTypeEnum.None, false))
       questions.push([newQuestion]);
@@ -215,14 +214,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   /* Changing question number by tabs in build */
-  const setPreviousQuestion = () => {
-    if (currentQuestionIndex >= 1) {
-      setCurrentQuestionIndex(index => index - 1);
-    } else {
-      history.push(map.ProposalReview);
-    }
-  };
-
   const setPrevFromPhone = () => {
     if (currentQuestionIndex >= 1) {
       setCurrentQuestionIndex(index => index - 1);
@@ -324,7 +315,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     let invalidQuestion: Y.Doc | undefined;
     questions.forEach(question => {
       const jsonQuestion = toRenderJSON(question.getMap());
-      if(!validateQuestion(jsonQuestion)){
+      if (!validateQuestion(jsonQuestion)) {
         invalidQuestion = question;
       }
     });
@@ -354,7 +345,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         let isHintInvalid = validateHint(invalidQuestionJson.hint, answersCount);
         if (isHintInvalid) {
           let index = getQuestionIndex(invalidQuestion);
-          setInvalidHint({ isOpen: true, questionNumber: index + 1});
+          setInvalidHint({ isOpen: true, questionNumber: index + 1 });
         } else {
           setSubmitDialog(true);
         }
@@ -427,8 +418,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         getQuestionIndex={getQuestionIndex}
         toggleLock={toggleLock}
         setQuestionType={convertQuestionTypes}
-        setPreviousQuestion={setPreviousQuestion}
-        nextOrNewQuestion={setNextQuestion}
         undo={undo}
         redo={redo}
         undoRedoService={undoRedoService}
@@ -465,7 +454,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const isTutorialPassed = () => {
-    const isCurrentEditor = (props.reduxBrick.editors?.findIndex((e:any) => e.id === props.user.id) ?? -1) >= 0;
+    const isCurrentEditor = (props.reduxBrick.editors?.findIndex((e: any) => e.id === props.user.id) ?? -1) >= 0;
     if (isCurrentEditor) {
       return true;
     }
@@ -502,7 +491,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             undoRedoService={undoRedoService}
             undo={undo}
             redo={redo}
-           />
+          />
         </Route>
       </Switch>
     );
@@ -563,9 +552,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const isPublisher = checkPublisher(props.user, props.reduxBrick);
   const isAdmin = checkAdmin(props.user.roles);
 
-  const renderBuildPage = () => {
-    return (
-      <div className="investigation-build-page">
+  return (
+    <div className="investigation-build-page">
       <BuildNavigation
         tutorialStep={step}
         user={props.user}
@@ -615,7 +603,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               >
                 <DragableTabs
                   history={history}
-                  setQuestions={switchQuestions}
                   yquestions={questions}
                   currentQuestionIndex={currentQuestionIndex}
                   synthesis={synthesis.toString()}
@@ -628,7 +615,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   createNewQuestion={createNewQuestion}
                   selectQuestion={selectQuestion}
                   removeQuestion={removeQuestion}
-                  moveToLastQuestion={moveToLastQuestion}
                 />
                 {renderPanel()}
               </Grid>
@@ -656,9 +642,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <PhonePreview
               Component={SynthesisPreviewComponent}
               prev={() => selectQuestion(questions.length - 1)}
-              next={()=>{}}
+              next={() => { }}
               nextDisabled={true}
-              data={{synthesis: toRenderJSON(ybrick).synthesis, brickLength: ybrick.get("brickLength")}}
+              data={{ synthesis: toRenderJSON(ybrick).synthesis, brickLength: ybrick.get("brickLength") }}
             />
           </Route>
         </Grid>
@@ -667,7 +653,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           isLines={highlightInvalid.isLine}
           close={() => {
             setValidation(true);
-            setInvalidHighlight({ isOpen: false, isLine: false})
+            setInvalidHighlight({ isOpen: false, isLine: false })
           }}
         />
         <HintInvalidDialog
@@ -675,7 +661,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           invalidQuestionNumber={invalidHint.questionNumber}
           close={() => {
             setValidation(true);
-            setInvalidHint({isOpen: false, questionNumber: -1})
+            setInvalidHint({ isOpen: false, questionNumber: -1 })
           }}
         />
         <QuestionInvalidDialog
@@ -717,30 +703,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         </div>
       </Hidden>
     </div>
-  );
-  }
-
-  const proposalBaseUrl = '/build/brick/' + brickId;
-
-  return (
-    <Switch>
-      <Route
-        path={[
-          proposalBaseUrl + "/subject",
-          proposalBaseUrl + TitleRoutePart,
-          proposalBaseUrl + OpenQuestionRoutePart,
-          proposalBaseUrl + BrickLengthRoutePart,
-          proposalBaseUrl + BriefRoutePart,
-          proposalBaseUrl + PrepRoutePart,
-          proposalBaseUrl + ProposalReviewPart
-        ]}
-      >
-        <Proposal history={history} location={props.location} match={props.match} />
-      </Route>
-      <Route path="/build/brick/:brickId">
-        {renderBuildPage()}
-      </Route>
-    </Switch>
   );
 };
 

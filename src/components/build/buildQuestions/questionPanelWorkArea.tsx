@@ -38,14 +38,11 @@ export interface QuestionProps {
   synthesis: Y.Text;
   validationRequired: boolean;
   comments: Comment[] | null;
-  currentUser: User;
   isAuthor: boolean;
   initSuggestionExpanded: boolean;
   undoRedoService: UndoRedoService;
   setQuestionType(type: QuestionTypeEnum): void;
-  nextOrNewQuestion(): void;
   getQuestionIndex(question: Y.Doc): number;
-  setPreviousQuestion(): void;
   toggleLock(): void;
   undo(): void;
   redo(): void;
@@ -258,7 +255,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
 }
 
 const mapState = (state: ReduxCombinedState) => ({
-  currentUser: state.user.user,
   currentBrick: state.brick.brick,
   comments: state.comments.comments
 });
