@@ -37,13 +37,6 @@ const ShareDialog: React.FC<ShareProps> = props => {
           <SpriteHoverIcon name="user-plus" onClick={props.invite} onBlur={() => setInviteHover(false)} onHover={() => setInviteHover(true)} />
           {inviteHovered && <div className="custom-tooltip invite-tooltip">Invite an existing user</div>}
         </div>
-        {/*
-        <SpriteIcon name="email-feather" className="active" />
-        <SpriteIcon name="whatsapp" className="active" />
-        <SpriteIcon name="facebook" className="active" />
-        <SpriteIcon name="instagram" className="active" />
-        <SpriteIcon name="twitter" className="active" />
-        */}
       </div>
     </Dialog>
   );
