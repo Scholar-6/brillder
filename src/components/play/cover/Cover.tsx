@@ -24,10 +24,6 @@ interface IntroductionProps {
 }
 
 const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
-  const [removed, setRemoved] = React.useState(true as boolean | null);
-  const [file, setFile] = React.useState(null as File | null);
-  const [cropedFile, setCroped] = React.useState(file as File | null);
-
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {

@@ -11,6 +11,7 @@ interface PublishedSubjectsProps {
   filterHeight: string;
   subjects: Subject[];
   isPublic: boolean;
+  isSelected: boolean;
   isAll: boolean;
   toggleAll(): void;
   filterBySubject(id: number): void;
@@ -21,7 +22,7 @@ interface ListState {
   scrollArea: React.RefObject<any>;
 }
 
-class SubjectsListV2 extends Component<PublishedSubjectsProps, ListState> {
+class SubjectsListV3 extends Component<PublishedSubjectsProps, ListState> {
   constructor(props: PublishedSubjectsProps) {
     super(props);
     
@@ -117,6 +118,11 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps, ListState> {
             label="All" />
           <SpriteIcon name="arrow-up" className={`${!this.state.canScroll ? 'disabled' : ''}`} onClick={this.scrollUp.bind(this)} />
           <SpriteIcon name="arrow-down" className={`${!this.state.canScroll ? 'disabled' : ''}`} onClick={this.scrollDown.bind(this)} />
+          {this.props.isSelected &&
+            <button
+              className="btn-transparent filter-icon arrow-cancel"
+              onClick={this.props.toggleAll}
+          ></button>}
         </div>
         <Grid container direction="row" className="filter-container subjects-filter subjects-filter-v2 subjects-filter-v3" ref={this.state.scrollArea}>
           <AnimateHeight
@@ -133,4 +139,4 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps, ListState> {
   }
 }
 
-export default SubjectsListV2;
+export default SubjectsListV3;
