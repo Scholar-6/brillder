@@ -1,20 +1,26 @@
 import webdriver, { By, Capabilities, until, WebDriver, WebElement } from "selenium-webdriver";
 import firefox from "selenium-webdriver/firefox";
 
-const options = new firefox.Options()
-    // .headless();
-
 describe('main e2e test', () => {
     let driver: WebDriver;
 
     beforeEach(() => {
         jest.setTimeout(30000);
-        driver = new webdriver.Builder()
-            // .usingServer("http://localhost:4444/wd/hub")
-            // .withCapabilities(Capabilities.firefox())
-            .forBrowser("firefox")
-            .setFirefoxOptions(options)
-            .build();
+        if(process.env.USE_LOCAL === "true") {
+            let options = new firefox.Options()
+            if(process.env.DISABLE_HEADLESS !== "true") {
+                options.headless();
+            }
+            driver = new webdriver.Builder()
+                .forBrowser("firefox")
+                .setFirefoxOptions(options)
+                .build();
+        } else {
+            driver = new webdriver.Builder()
+                .usingServer("http://localhost:4444/wd/hub")
+                .withCapabilities(Capabilities.firefox())
+                .build();
+        }
     })
 
     it("should run properly", async () => {
@@ -76,9 +82,14 @@ describe('main e2e test', () => {
 
         const confirmButton = await driver.wait(until.elementLocated(By.className("yes-button")), 2000);
         await confirmButton.click();
+
+        // check that class has disappeared from sidebar.
+        expect(driver.wait(until.elementLocated(By.xpath(`//div[contains(concat(' ', @class, ' '), 'student-drop-item') and label/span/text()='${classNameString}']`)), 5000)).rejects.toThrow();
     });
 
     afterEach(async () => {
-        // await driver.quit();
+        if(process.env.KEEP_OPEN !== "true") {
+            await driver.quit();
+        }
     })
 });
