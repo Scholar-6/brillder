@@ -112,9 +112,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
   const [focusIndex, setFocusIndex] = React.useState(-1);
-  // time of last autosave
-  let [lastAutoSave, setLastAutoSave] = React.useState(Date.now());
-
   const [undoRedoService] = React.useState(UndoRedoService.instance);
 
   /* Synthesis */
@@ -389,12 +386,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setValidation(true);
     setSubmitDialog(false);
     moveToRedTab();
-  }
-
-  const setAutoSaveTime = () => {
-    let time = Date.now();
-    lastAutoSave = time;
-    setLastAutoSave(time);
   }
 
   const exitAndSave = () => {
