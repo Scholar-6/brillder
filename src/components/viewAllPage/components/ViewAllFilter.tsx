@@ -24,6 +24,9 @@ interface FilterProps {
   isAllSubjects: boolean;
   setAllSubjects(value: boolean): void;
 
+  isViewAll: boolean;
+  selectAllSubjects(isViewAll: boolean): void;
+
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   clearSubjects(): void;
   filterBySubject(id: number): void;
@@ -165,6 +168,8 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
           <SubjectsListV3
             isPublic={this.props.isCore}
             subjects={subjects}
+            isAll={this.props.isViewAll}
+            toggleAll={() => this.props.selectAllSubjects(!this.props.isViewAll)}
             filterHeight={this.state.filterHeight}
             filterBySubject={this.props.filterBySubject}
           />

@@ -84,6 +84,7 @@
         }
       }
       .scroll-buttons {
+        position: relative;
         @extend %flexCenter;
         background: var(--white);
         height: 2vw;
@@ -95,6 +96,19 @@
 
           &.disabled {
             color: var(--tab-gray);
+          }
+        }
+        .radio-container {
+          position: absolute;
+          left: 1.27vw;
+          color: var(--theme-dark-blue);
+          svg {
+            width: 1.4vw;
+            height: 1.4vw;
+            color: var(--theme-dark-blue);
+          }
+          .MuiFormControlLabel-label {
+            font-size: 1.2vw;
           }
         }
       }

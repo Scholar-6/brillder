@@ -98,6 +98,8 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               isAllSubjects={this.state.isAllSubjects}
               setAllSubjects={isAllSubjects => this.setState({ isAllSubjects })}
               handleSortChange={() => { }}
+              isViewAll={false}
+              selectAllSubjects={() => {}}
               clearSubjects={() => { }}
               filterBySubject={id => this.onSubjectSelected(id)}
             />

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, FormControlLabel } from "@material-ui/core";
+import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
 import "./SubjectsList.scss";
@@ -11,6 +11,8 @@ interface PublishedSubjectsProps {
   filterHeight: string;
   subjects: Subject[];
   isPublic: boolean;
+  isAll: boolean;
+  toggleAll(): void;
   filterBySubject(id: number): void;
 }
 
@@ -108,6 +110,11 @@ class SubjectsListV2 extends Component<PublishedSubjectsProps, ListState> {
     return (
       <div>
         <div className="scroll-buttons">
+          <FormControlLabel
+            className="radio-container"
+            checked={this.props.isAll}
+            control={<Radio onClick={this.props.toggleAll} />}
+            label="All" />
           <SpriteIcon name="arrow-up" className={`${!this.state.canScroll ? 'disabled' : ''}`} onClick={this.scrollUp.bind(this)} />
           <SpriteIcon name="arrow-down" className={`${!this.state.canScroll ? 'disabled' : ''}`} onClick={this.scrollDown.bind(this)} />
         </div>
