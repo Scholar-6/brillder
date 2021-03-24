@@ -212,7 +212,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     }
     
     const onUpdateQuestions = (evt: Sortable.SortableEvent) => {
-      if((evt.oldIndex ?? -1 >= 0) && (evt.newIndex ?? -1 >= 0)) {
+      if(((evt.oldIndex ?? -1) >= 0)  && ((evt.newIndex ?? -1) >= 0)) {
         console.log(evt);
         yquestions.doc?.transact(() => {
           const question = yquestions.get(evt.oldIndex!);

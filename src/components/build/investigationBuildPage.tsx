@@ -517,34 +517,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   });
 
-  const switchQuestions = (newQuestions: { id: string }[]) => {
-    if (canEdit === true) {
-      // create a new doc and sync it with this one.
-      const newDoc = new Y.Doc();
-      const oldUpdate = Y.encodeStateAsUpdate(ydoc);
-      Y.applyUpdate(newDoc, oldUpdate);
-
-      const newQuestionsArray = new Y.Array();
-      newQuestions.map(question =>
-        questions
-          .map((q: Y.Doc) => ({ guid: q.guid, doc: Y.Doc }))
-          .find(q => q.guid === question.id)?.doc
-      );
-      newDoc.getMap().set("questions", newQuestionsArray);
-
-      const newState = Y.encodeStateVector(newDoc);
-      const newUpdate = Y.encodeStateAsUpdate(ydoc, newState);
-      Y.applyUpdate(ydoc, newUpdate);
-
-      setAutoSaveTime();
-      setSavingStatus(true);
-    }
-  }
-
-  const moveToLastQuestion = () => {
-    history.push(`/build/brick/${brickId}/investigation/question-component/${questions.get(questions.length - 1).get("id")}`);
-  }
-
   if (!synthesis || stripHtml(toRenderJSON(synthesis)).trim() === "") {
     isValid = false;
   }
