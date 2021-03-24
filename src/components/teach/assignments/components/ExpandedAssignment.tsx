@@ -34,6 +34,7 @@ interface AssignmentBrickProps {
   assignment: Assignment;
   history: any;
   minimize(): void;
+  onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
 
 class ExpandedAssignment extends Component<
@@ -131,7 +132,7 @@ class ExpandedAssignment extends Component<
 
   renderBookIcon(studentId: number) {
     const { history, assignment } = this.props;
-    const moveToPostPlay = () => history.push(map.postPlay(assignment.brick.id, studentId));
+    const moveToPostPlay = () => history.push(map.postPlay(assignment.brick.id, studentId) + '?fromTeach=true');
     return (
       <div className="round b-green centered">
         <SpriteIcon name="book-open" className="active book-open-icon" onClick={moveToPostPlay} />
@@ -141,10 +142,9 @@ class ExpandedAssignment extends Component<
 
   renderQuestionAttemptIcon(
     studentResult: AssignmentStudent | undefined,
-    studentStatus: StudentStatus | undefined,
     questionNumber: number
   ) {
-    if (studentResult && studentStatus) {
+    if (studentResult) {
       try {
         const attempt = studentResult.attempts[0].answers[questionNumber];
         const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
@@ -192,7 +192,7 @@ class ExpandedAssignment extends Component<
             (a, i) =>
               <td key={i} className="icon-container">
                 <div className="centered">
-                  {this.renderQuestionAttemptIcon(studentResult, studentStatus, i)}
+                  {this.renderQuestionAttemptIcon(studentResult, i)}
                 </div>
               </td>
           )}
@@ -256,6 +256,8 @@ class ExpandedAssignment extends Component<
             minimize={this.props.minimize}
             classroom={classroom}
             assignment={assignment}
+            archive={() => {}}
+            onRemind={this.props.onRemind}
           />
         </div>
         <div className="assignments-table">

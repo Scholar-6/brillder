@@ -5,8 +5,9 @@
 .main-listing,
 .play-preview-pages {
   background: var(--theme-dark-blue);
-  height: 100%;
+  height: 100vh;
   width: 100%;
+  overflow: hidden;
   @include phone_and_tabletP {
     background-color: var(--solitude-light);
   }
@@ -219,15 +220,6 @@
       top: 2vh;
     }
   }
-  .zEWidget-launcher {
-    @include phone_and_tabletP {
-      background-color: red !important;
-      left: 5% !important;
-      bottom: -1vh !important;
-      width: 17vw !important;
-      opacity: 0 !important;
-    }
-  }
   .users-pagination,
   .bricks-pagination {
     height: $pagination-size;
@@ -408,4 +400,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.login-button {
+  cursor: pointer;
+  margin-right: 7vw;
+  color: var(--white);
+  font-size: 1.8vw;
+  transition: all 300ms ease-out;
+  font-family: $font-family-bold;
+  &:hover {
+    color: var(--theme-orange); 
+  }
 }

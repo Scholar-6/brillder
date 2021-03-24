@@ -1,8 +1,6 @@
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import React from 'react';
 
-import './ShareButton.scss';
-
 interface ButtonProps {
   sidebarRolledUp: boolean;
   share(): void;

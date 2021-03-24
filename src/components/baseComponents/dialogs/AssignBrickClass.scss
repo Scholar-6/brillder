@@ -2,30 +2,12 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-@keyframes eye-movement-2 {
-  0% {
-    transform: translateX(-2px);
-  }
-
-  50% {
-    transform: translateX(-2px);
-  }
-
-  70% {
-    transform: translateX(2px);
-  }
-
-  100% {
-    transform: translateX(2px);
-  }
-}
-
 .MuiAutocomplete-listbox {
   height: 30vh !important;
 }
 
 .assign-dialog {
-  .dialog-header>div {
+  .dialog-header > div {
     width: 50vw !important;
 
     .MuiInputBase-input.MuiInput-input {
@@ -53,126 +35,28 @@ span.bold {
 }
 
 .assign-dialog-new {
-  input::placeholder {
-    color: #000 !important;
-  }
-
-  .glasses svg {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
   .text-with-glasses {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .glasses {
-    cursor: pointer;
-    display: inline;
-    margin: 0 0.3vw;
-    width: 4vw !important;
-    color: var(--theme-orange);
-  }
-
-  .eye-glass-icon {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    @extend %textCenter;
-    flex-direction: column;
-
-    svg {
-      width: 4vw;
-      height: 3vw;
-    }
-
-    .eye-glass-frame {
-      svg {
-        @extend %removePosition;
-      }
-    }
-
-    $eye-size: 1.7vw;
-    $pupil-size: 0.45vw;
-
-    .glass-eyes-left,
-    .glass-eyes-right {
-      width: $eye-size;
-      height: $eye-size;
-      transition-delay: 200ms;
-      @extend %transitionAll300;
-      @extend %floatToYCenter;
-      @extend %flexCenter;
-      opacity: 0;
-
-      >svg {
-        width: 60%;
-        height: 60%;
-      }
-
-      .glass-left-inside,
-      .glass-right-inside {
-        width: $pupil-size;
-        height: $pupil-size;
-        @extend %flexCenter;
-        @extend %transitionAll300;
-        transform: translate(0);
-        opacity: 0;
-
-        svg {
-          width: 100%;
-          height: 100%;
-          background-color: var(--white);
-          border-radius: 50%;
-          opacity: 0;
-
-          &.eye-pupil {
-            animation-name: eye-movement-2;
-            animation-duration: 4s;
-            animation-delay: 4s;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-          }
-
-          &.aperture {
-            animation: rotating 2s linear infinite;
-          }
-        }
-      }
-    }
-
-    .glass-eyes-left {
-      left: 0.15vw;
-    }
-
-    .glass-eyes-right {
-      right: 0.17vw;
-    }
-
-    // hover
-    &:hover {
-
-      .glass-eyes-left,
-      .glass-eyes-right {
-        opacity: 1;
-
-        >svg {
-          opacity: 1;
-          visibility: visible;
-        }
-
-        .glass-right-inside,
-        .glass-left-inside {
-          opacity: 1;
-
+    .glasses {
+      .eye-glass-icon {
+        .eye-glass-frame {
           svg {
-            &.eye-pupil {
-              opacity: 1;
-            }
+            width: 100%;
           }
+        }
+        .glass-eyes-left,
+        .glass-eyes-right {
+          animation: none;
+          transform: scale(0.23);
+          top: -2.1vw;
+        }
+        .glass-eyes-left {
+          left: -1.61vw !important;
+        }
+        .glass-eyes-right {
+          right: -1.5vw !important;
         }
       }
     }

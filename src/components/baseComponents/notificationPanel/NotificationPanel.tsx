@@ -96,6 +96,8 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
           this.props.forgetBrick();
           await this.props.fetchBrick(notification.brick.id);
           history.push(map.ProposalReview);
+        } else if (notification.type === NotificationType.RemindedToPlayBrick) {
+          history.push(map.playIntro(notification.brick.id));
         }
       }
     }
@@ -229,6 +231,9 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
                     }
                     {notification.type === NotificationType.StudentAssignedBrick &&
                       <SpriteIcon name="file-plus" className="w60 h60 active text-theme-dark-blue" />
+                    }
+                    {notification.type === NotificationType.RemindedToPlayBrick &&
+                      <SpriteIcon name="reminder" className="w60 h60 active text-theme-dark-blue stroke-2" />
                     }
                   </div>
                   <div className="content-box">

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -17,6 +16,7 @@ import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
 import { getPublishedBricks } from 'services/axios/brick';
 import map from 'components/map';
 import { useHistory } from 'react-router';
+import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
 
 interface AssignPersonOrClassProps {
   classroomId: number;
@@ -39,9 +39,9 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const history = useHistory();
 
   const loadBricks = async () => {
-    let bricks = await getPublishedBricks();
+    const bricks = await getPublishedBricks();
     if (bricks) {
-      setBricks(bricks);
+      setBricks(bricks.filter(b => b.isCore == true));
     }
   }
 
@@ -51,21 +51,23 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
     if (!brick || !brick.id) {
       return;
     }
-    return await axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/brick/assignClasses/${brick.id}`,
-      { classesIds },
-      { withCredentials: true }
-    ).then(res => {
-      return res.data as any[];
-    }).catch(() => {
+
+    const data = { classesIds, deadline: null } as AssignClassData;
+
+    if (haveDeadline && deadlineDate) {
+      data.deadline = deadlineDate;
+    }
+
+    const res = await assignClasses(brick.id, data);
+    if (res === false) {
       props.requestFailed('Can`t assign class to brick');
-      return false;
-    });
+    }
+    return res;
   }
 
   const assign = async () => {
-    let res = await assignToClasses([props.classroomId]);
-    if (res) {
+    const res = await assignToClasses([props.classroomId]); // empty array if succss
+    if (res === false) {
       props.failed(brick);
     } else {
       props.success(brick);
@@ -84,7 +86,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
           onChange={(e: any, v: any) => setBrick(v)}
           noOptionsText="Sorry, try typing something else"
           className="subject-autocomplete"
-          getOptionLabel={(option:any) => option.title}
+          getOptionLabel={(option: any) => option.title}
           renderOption={(brick: Brick) => (
             <React.Fragment>
               <MenuItem>
@@ -105,7 +107,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
             <TextField
               {...params}
               variant="standard"
-              label="Bricks: "
+              label=""
               placeholder="Search for a brick you know, or try your luck!"
             />
           )}
@@ -138,14 +140,16 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
                   </div>
                   <div className="glass-eyes-left svgOnHover">
                     <SpriteIcon name="eye-ball" className="active eye-ball text-white" />
-                    <div className="glass-left-inside">
-                      <SpriteIcon name="eye-pupil" className="active eye-pupil text-theme-dark-blue" />
+                    <div className="glass-right-inside svgOnHover">
+                      {/* <SpriteIcon name="aperture" className="aperture" /> */}
+                      <SpriteIcon name="eye-pupil" className="eye-pupil" />
                     </div>
                   </div>
                   <div className="glass-eyes-right svgOnHover">
                     <SpriteIcon name="eye-ball" className="active eye-ball text-white" />
-                    <div className="glass-right-inside">
-                      <SpriteIcon name="eye-pupil" className="active eye-pupil text-theme-dark-blue" />
+                    <div className="glass-right-inside svgOnHover">
+                      {/* <SpriteIcon name="aperture" className="aperture" /> */}
+                      <SpriteIcon name="eye-pupil" className="eye-pupil" />
                     </div>
                   </div>
                 </div>

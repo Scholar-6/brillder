@@ -14,10 +14,15 @@ import InviteStudentEmailDialog from '../manageClassrooms/components/InviteStude
 import "./NameAndSubjectForm.scss";
 
 interface NameAndSubjectFormProps {
-  buttonsInvisible?: boolean;
   classroom: any;
   onChange(name: string, subject: Subject): void;
   user: User;
+  onInvited?(): void;
+  onAssigned?(): void;
+  moveToAssignemts?(): void;
+  inviteHidden?: boolean;
+  isArchive?: boolean;  // for assignments
+  isStudents?: boolean; // for manage classes page
 }
 
 const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
@@ -46,6 +51,25 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
       setEdit(false);
     }
   }, [name, subjectIndex, props]);
+
+  if (props.isArchive) {
+    return (
+      <div className="name-subject-display">
+        <div className="subject-icon">
+          <SpriteIcon
+            name={(props.classroom.subject?.color ?? "#FFFFFF") === "#FFFFFF" ? "circle-empty" : "circle-filled"}
+            className="w100 h100 active"
+            style={{
+              color: (props.classroom.subject?.color ?? "#FFFFFF") === "#FFFFFF" ?
+                "var(--theme-dark-blue)" :
+                props.classroom.subject.color
+            }}
+          />
+        </div>
+        <h1 className="name-display">{props.classroom!.name}</h1>
+      </div>
+    );
+  }
 
   return edit ?
     (
@@ -124,25 +148,35 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           <div className="css-custom-tooltip">Edit Class Name or Subject</div>
         </span>
         <div className="classroom-btns-container">
+          {!props.inviteHidden &&
           <div className="assign-button-container">
             <div className="btn icon-button" onClick={() => setInvite(true)}>
               <SpriteIcon name="user-plus" />
               <div className="css-custom-tooltip">Add New Student</div>
             </div>
+          </div>}
+          <div className="assign-button-container">
+            <div className="btn" onClick={() => {
+              togglePopup(true);
+            }}>
+              Assign a new brick
+            <SpriteIcon name="file-plus" />
+            </div>
           </div>
-          {!props.buttonsInvisible &&
-            <div className="assign-button-container">
-              <div className="btn" onClick={() => togglePopup(true)}>
-                Assign a new brick
-              <SpriteIcon name="file-plus" />
-              </div>
-            </div>}
         </div>
         <AssignBrickClass
           isOpen={isOpen}
           classroomId={props.classroom.id}
           subjectId={props.classroom.subjectId || props.classroom.subject.id}
-          success={brick => setSuccess({ isOpen: true, brick })}
+          success={brick => {
+            setSuccess({ isOpen: true, brick })
+            if (props.onAssigned) {
+              props.onAssigned();
+            }
+            if (props.isStudents) {
+              props.moveToAssignemts && props.moveToAssignemts();
+            }
+          }}
           failed={brick => setFailed({ isOpen: true, brick })}
           close={() => togglePopup(false)}
         />
@@ -164,6 +198,9 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           close={(numInvited: number) => {
             setInvite(false);
             setInvitedCount(numInvited);
+            if (props && props.onInvited) {
+              props.onInvited();
+            }
           }}
         />
         <StudentInviteSuccessDialog

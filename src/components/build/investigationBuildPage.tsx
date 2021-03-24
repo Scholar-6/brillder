@@ -47,7 +47,6 @@ import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import Proposal from "./proposal/Proposal";
 
-import DeleteQuestionDialog from "./baseComponents/dialogs/DeleteQuestionDialog";
 import DesktopVersionDialog from 'components/build/baseComponents/dialogs/DesktopVersionDialog';
 import QuestionInvalidDialog from './baseComponents/dialogs/QuestionInvalidDialog';
 import HighlightInvalidDialog from './baseComponents/dialogs/HighlightInvalidDialog';
@@ -61,6 +60,7 @@ import { YJSContext } from "./baseComponents/YJSProvider";
 import * as Y from "yjs";
 import { convertQuestion, toRenderJSON } from "services/SharedTypeService";
 import _ from "lodash";
+import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -690,11 +690,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           submit={() => submitInvalidBrick()}
           hide={() => moveToInvalidProposal()}
         />
-        <DeleteQuestionDialog
-          open={deleteDialogOpen}
+        <DeleteDialog
+          isOpen={deleteDialogOpen}
           index={deleteQuestionIndex}
-          setDialog={setDeleteDialog}
-          deleteQuestion={deleteQuestionByIndex}
+          title="Permanently delete<br />this question?"
+          close={setDeleteDialog}
+          submit={deleteQuestionByIndex}
         />
         <ValidationFailedDialog
           isOpen={lastQuestionDialog}

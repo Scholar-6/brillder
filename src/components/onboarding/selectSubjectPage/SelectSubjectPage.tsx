@@ -8,13 +8,14 @@ import "swiper/swiper.scss";
 import { ReduxCombinedState } from "redux/reducers";
 import userActions from 'redux/actions/user';
 import { updateUser } from "services/axios/user";
-import { RolePreference, User, UserType } from "model/user";
+import { User } from "model/user";
 import { SubjectItem } from "model/brick";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
 import { GENERAL_SUBJECT } from "components/services/subject";
 
 import SubjectsColumnV2 from "./SubjectsColumnV2";
+import { isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 
 
 interface AllSubjectsProps {
@@ -60,15 +61,18 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
   async submit() {
     const { user } = this.props;
 
-    let subjects = [];
-    let general = this.state.subjects.find(s => s.name === GENERAL_SUBJECT);
-    if (general) {
-      subjects.push(general.id);
-    }
+    const subjects = [];
 
-    for (let subject of this.state.subjects) {
+    for (const subject of this.state.subjects) {
       if (subject.checked) {
         subjects.push(subject.id);
+      }
+    }
+
+    if (subjects.length === 0) {
+      const general = this.state.subjects.find(s => s.name === GENERAL_SUBJECT);
+      if (general) {
+        subjects.push(general.id);
       }
     }
 
@@ -78,7 +82,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
-      subjects: subjects
+      subjects
     } as any;
 
 
@@ -86,8 +90,10 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
 
     if (saved) {
       await this.props.getUser();
-      if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
-      this.props.history.push('/home');
+      if (isStudentPreference(user)) {
+        this.props.history.push(map.MainPage);
+      } else if (isTeacherPreference(user)) {
+        this.props.history.push(map.MainPage + '?new=true');
       } else {
         this.props.history.push(map.UserProfile + '?onboardingUser=true');
       }
@@ -107,9 +113,9 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
 
   render() {
     let titleVerb = 'build';
-    if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === RolePreference.Teacher) {
+    if (isTeacherPreference(this.props.user)) {
       titleVerb = 'teach';
-    } else if(this.props.user.rolePreference && this.props.user.rolePreference.roleId === RolePreference.Student) {
+    } else if(isStudentPreference(this.props.user)) {
       titleVerb = 'play';
     }
     return (

@@ -18,6 +18,7 @@ interface AllSubjectsProps {
   user: User;
   history: any;
   location: any;
+  setViewAll(): void;
   filterByOneSubject(subjectId: number): void;
   checkSubjectsWithBricks(): void;
 }
@@ -81,6 +82,10 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
     }
   }
 
+  isFilterClear() {
+    return this.state.subjects.some(r => r.checked);
+  }
+
   render() {
     return (
       <React.Suspense fallback={<></>}>
@@ -93,10 +98,12 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               subjects={this.state.subjects}
               userSubjects={this.props.user ? this.props.user.subjects : []}
               isCore={true}
-              isClearFilter={() => { }}
+              isClearFilter={this.isFilterClear()}
               isAllSubjects={this.state.isAllSubjects}
               setAllSubjects={isAllSubjects => this.setState({ isAllSubjects })}
               handleSortChange={() => { }}
+              isViewAll={false}
+              selectAllSubjects={() => {}}
               clearSubjects={() => { }}
               filterBySubject={id => this.onSubjectSelected(id)}
             />
@@ -107,6 +114,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               subjects={this.state.totalSubjects}
               viewAll={() => {
                 this.props.checkSubjectsWithBricks();
+                this.props.setViewAll();
                 this.props.history.push(map.ViewAllPage + `?isViewAll=${true}`);
               }}
               onClick={this.onSubjectSelected.bind(this)}

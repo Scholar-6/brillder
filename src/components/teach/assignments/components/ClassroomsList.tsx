@@ -9,6 +9,7 @@ import { TeachClassroom, Assignment } from "model/classroom";
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import NameAndSubjectForm from "components/teach/components/NameAndSubjectForm";
 import { updateClassroom } from "services/axios/classroom";
+import { convertClassAssignments } from "../service/service";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -22,9 +23,11 @@ interface ClassroomListProps {
   classrooms: TeachClassroom[];
   startIndex: number;
   pageSize: number;
+  isArchive: boolean;
   activeClassroom: TeachClassroom | null;
   expand(classroomId: number, assignmentId: number): void;
   reloadClasses(): void;
+  onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
 
 class ClassroomList extends Component<ClassroomListProps> {
@@ -60,6 +63,8 @@ class ClassroomList extends Component<ClassroomListProps> {
           <div>
           <NameAndSubjectForm
             classroom={classroom}
+            isArchive={this.props.isArchive}
+            onAssigned={() => this.props.reloadClasses()}
             onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
           />
           </div>
@@ -81,8 +86,11 @@ class ClassroomList extends Component<ClassroomListProps> {
             <div>
               <AssignedBrickDescription
                 subjects={this.props.subjects}
+                isArchive={this.props.isArchive}
                 expand={this.props.expand.bind(this)}
                 key={i} classroom={c.classroom} assignment={c.assignment}
+                archive={() => this.props.reloadClasses()}
+                onRemind={this.props.onRemind}
               />
             </div>
           </Grow>
@@ -100,13 +108,7 @@ class ClassroomList extends Component<ClassroomListProps> {
       assignment: null
     };
     items.push(item);
-    for (let assignment of classroom.assignments) {
-      let item: TeachListItem = {
-        classroom,
-        assignment
-      };
-      items.push(item);
-    }
+    convertClassAssignments(items, classroom, this.props.isArchive);
   }
 
   renderContent() {

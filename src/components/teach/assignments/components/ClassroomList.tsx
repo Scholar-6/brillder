@@ -10,6 +10,7 @@ import { TeachClassroom, Assignment } from "model/classroom";
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import NameAndSubjectForm from "components/teach/components/NameAndSubjectForm";
 import { updateClassroom } from "services/axios/classroom";
+import { convertClassAssignments } from "../service/service";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -22,8 +23,10 @@ interface ClassroomListProps {
   startIndex: number;
   pageSize: number;
   activeClassroom: TeachClassroom;
+  isArchive: boolean;
   expand(classroomId: number, assignmentId: number): void;
   reloadClass(id: number): void;
+  onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
 
 interface ListState {
@@ -76,7 +79,9 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       <div className={className}>
         <NameAndSubjectForm
           classroom={classroom}
+          isArchive={this.props.isArchive}
           onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
+          onAssigned={() => this.props.reloadClass(classroom.id)}
         />
       </div>
     );
@@ -95,8 +100,11 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
             <div>
               <AssignedBrickDescription
                 subjects={this.props.subjects}
+                isArchive={this.props.isArchive}
                 expand={this.props.expand.bind(this)}
                 key={i} classroom={c.classroom} assignment={c.assignment}
+                archive={() => {}}
+                onRemind={this.props.onRemind}
               />
             </div>
           </Grow>
@@ -106,35 +114,21 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     return "";
   }
 
-  prepareClassItems(items: TeachListItem[], classroom: TeachClassroom) {
-    for (let assignment of classroom.assignments) {
-      let item: TeachListItem = {
-        classroom,
-        assignment
-      };
-      items.push(item);
-    }
+  isArchived(assignment: Assignment) {
+    return assignment.studentStatus && assignment.studentStatus.length > 0 && assignment.studentStatus[0].status == 3;
   }
 
   renderContent() {
     const { classroom } = this.state;
     let items = [] as TeachListItem[];
-    this.prepareClassItems(items, classroom);
-    let k = 0;
-    return items.map(item => {
-      if (item.classroom && item.assignment === null) {
-        k += 0.5;
-      } else {
-        k += 1;
-      }
-      return this.renderTeachListItem(item, k);
-    });
+    convertClassAssignments(items, classroom, this.props.isArchive);
+    return items.map((item, i) => this.renderTeachListItem(item, i));
   }
 
   render() {
     return (
       <div className="classroom-list one-classroom-assignments">
-        <div className="fixed-classname">
+        <div className="classroom-title one-of-many first">
           {this.renderClassname()}
         </div>
         {this.renderContent()}

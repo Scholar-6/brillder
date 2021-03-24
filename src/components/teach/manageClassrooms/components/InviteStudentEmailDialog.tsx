@@ -9,7 +9,7 @@ import AutocompleteUsernameButEmail from 'components/play/baseComponents/Autocom
 import { User } from 'model/user';
 
 interface InviteStudentEmailProps {
-  classroom: ClassroomApi | undefined;
+  classroom: ClassroomApi;
   isOpen: boolean;
   close(numInvited: number): void;
 }
@@ -22,18 +22,23 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
   const [users, setUsers] = React.useState<User[]>([]);
   const [emailInvalid, setEmailInvalid] = React.useState<boolean>(false);
 
+  const addUser = (email: string) => {
+    if (!emailRegex.test(email)) {
+      setEmailInvalid(true);
+      return;
+    }
+    setCurrentEmail('');
+    setUsers(users => [ ...users, { email } as User]);
+  }
+
   const onAddUser = React.useCallback(() => {
     if (!emailRegex.test(currentEmail)) {
       setEmailInvalid(true);
       return;
     }
-    setUsers(users => [...users, { email: currentEmail } as User]);
-    setCurrentEmail("");
+    setCurrentEmail('');
+    setUsers(users => [ ...users, { email: currentEmail} as User]);
   }, [currentEmail]);
-
-  const onDeleteUser = (user: User) => {
-    setUsers(users => users.filter(u => u.id !== user.id));
-  }
 
   const onSubmit = React.useCallback(async () => {
     const currentUsers = users;
@@ -43,19 +48,28 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
         return;
       }
     } else {
-      setUsers(users => [...users, { email: currentEmail } as User]);
-      currentUsers.push({ email: currentEmail } as User);
+      setUsers(users => [ ...users, { email: currentEmail } as User ]);
+      currentUsers.push({ email: currentEmail} as User);
       setCurrentEmail("");
     }
-    if (props.classroom) {
-      await axios.post(
-        `${process.env.REACT_APP_BACKEND_HOST}/classrooms/students/${props.classroom.id}/new`,
-        { emails: currentUsers.map(u => u.email) },
-        { withCredentials: true }
-      );
-      props.close(currentUsers.length);
-    }
+    await axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/classrooms/students/${props.classroom.id}/new`,
+      { emails: currentUsers.map(u => u.email) },
+      { withCredentials: true }
+    );
+    props.close(currentUsers.length);
   }, [users, currentEmail])
+
+  const checkSpaces = (email: string) => {
+    const emails = email.split(' ');
+    if (emails.length >= 2) {
+      for (let email of emails) {
+        addUser(email);
+      }
+    } else {
+      setCurrentEmail(email.trim());
+    }
+  }
 
   return (
     <Dialog open={props.isOpen} onClose={() => props.close(0)} className="dialog-box light-blue invite-email-dialog">
@@ -68,44 +82,18 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
         <AutocompleteUsernameButEmail
           editorError=""
           placeholder="hello"
-          onBlur={() => { }}
+          currentEmail={currentEmail}
+          onBlur={() => {}}
           users={users}
           onAddEmail={onAddUser}
-          onChange={email => setCurrentEmail(email)}
-          setUsers={users => setUsers(users as User[])}
+          onChange={email => checkSpaces(email.trim())}
+          setUsers={users => {
+            setCurrentEmail('');
+            setUsers(users as User[]);
+          }}
         />
-        {/*
-        <Autocomplete
-          multiple
-          options={[] as string[]}
-          value={emails}
-          renderInput={(params) => <TextField
-            {...params}
-            onChange={e => setCurrentEmail(e.target.value)}
-            onKeyPress={e => {
-              if(e.key === "Enter" || e.key === ' ') {
-                onAddEmail();
-              }
-            }}
-            className="input"
-            value={currentEmail}
-            variant="standard"
-            placeholder="Enter emails here..."
-            error={emailInvalid}
-            helperText={emailInvalid ? "Email is not valid." : ""}
-          />}
-          renderTags={(value: string[], getTagProps) => <>
-            {value.map((email, idx) => (
-              <Chip
-                label={email}
-                {...getTagProps({ index: idx })}
-                onDelete={() => onDeleteEmail(email)}
-              />
-            ))}
-          </>}
-        />*/}
-        <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
-          <button className="btn btn-md bg-theme-orange yes-button icon-button" style={{ width: 'auto' }} onClick={onSubmit}>
+        <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
+          <button className="btn btn-md bg-theme-orange yes-button icon-button" style={{width: 'auto'}} onClick={onSubmit}>
             <div className="centered">
               <span className="label">Send Invites</span>
               <SpriteIcon name="send" />

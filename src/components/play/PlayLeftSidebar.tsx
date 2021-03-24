@@ -13,7 +13,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
 import { Brick } from "model/brick";
 import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
-import map from "components/map";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
 import axios from "axios";
 import ShareDialog from "./finalStep/dialogs/ShareDialog";
@@ -26,6 +25,7 @@ import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
+import { playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
 
 
 interface SidebarProps {
@@ -113,11 +113,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       if (this.isLive() || this.isProvisional() || this.isSynthesis() || this.isEnding()) {
         return <div />
       }
-      return (
-        <div className="minimize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
-          <SpriteIcon name="maximize" className="active" />
-        </div>
-      );
+      return "";
     }
     return (
       <div className="maximize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
@@ -177,6 +173,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return this.props.history.location.pathname.slice(-5) === '/live';
   }
 
+  isPreInvesigation() {
+    return this.props.history.location.pathname.search(PlayPreInvestigationLastPrefix) >= 0;
+  }
+
   isProvisional() {
     return this.props.history.location.pathname.slice(-17) === '/provisionalScore';
   }
@@ -190,11 +190,11 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   renderPrepButton() {
-    const isLive = this.isLive();
+    const isLive = this.isLive() || this.isPreInvesigation();
     if (isLive && this.props.sidebarRolledUp) {
       return (
         <div>
-          <div className="prep-button" onClick={() => this.props.history.push(map.playIntro(this.props.brick.id))}>
+          <div className="prep-button" onClick={() => this.props.history.push(playNewPrep(this.props.brick.id))}>
             <SpriteIcon name="file-text" />
             <div>Prep</div>
           </div>
@@ -236,6 +236,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         return <div></div>;
       }
     }
+
     return (
       <div className="sidebar-button">
         <HighlightTextButton

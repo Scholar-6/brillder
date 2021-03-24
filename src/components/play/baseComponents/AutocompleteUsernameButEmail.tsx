@@ -11,6 +11,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 interface AutocompleteProps {
   editorError: string;
   placeholder: string;
+  currentEmail: string;
   onBlur(): void;
 
   users: UserBase[];
@@ -29,54 +30,65 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
     <Autocomplete
       multiple
       value={users}
-      options={suggestions}
+      options={[] as UserBase[]}
+      open={false}
       style={{ background: "inherit" }}
       onChange={(e: any, value: UserBase[]) => {
         if (value) {
           setUsers(value);
         }
       }}
-      noOptionsText="User not found. Try to type the name of person"
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          error={props.editorError !== ""}
-          helperText={props.editorError}
-          fullWidth
-          onBlur={() => props.onBlur()}
-          onKeyPress={e => {
-            if(e.key === "Enter" || e.key === ' ') {
-              props.onAddEmail();
-            }
-          }}
-          onChange={(evt) => {
-            const { value } = evt.target;
-            if (value.length >= 3) {
-              suggestUsername(value).then((res) => {
-                if (res && res.length > 0) {
-                  setSuggestions(res);
+      // noOptionsText="User not found. Try to type the name of person"
+      renderInput={(params) => {
+        const inputProps = params.inputProps as any;
+        inputProps.value = props.currentEmail;
+        return (
+          <TextField
+            {...params}
+            error={props.editorError !== ""}
+            helperText={props.editorError}
+            value={props.currentEmail}
+            fullWidth
+            onBlur={() => props.onBlur()}
+            onKeyPress={e => {
+              if (e.key === "Enter" || e.key === ' ') {
+                const user = users.find(u => u.email.toLocaleLowerCase() === props.currentEmail.toLocaleLowerCase());
+                if (user) {
+                  return;
                 } else {
-                  setSuggestions([]);
+                  props.onAddEmail();
                 }
-              });
-            } else {
-              setSuggestions([]);
-            }
-            props.onChange(value);
-          }}
-          placeholder="Enter emails here"
-          variant="outlined"
-        />
-      )}
+              }
+            }}
+            onChange={(evt) => {
+              const { value } = evt.target;
+              if (value.length >= 2) {
+                suggestUsername(value).then((res) => {
+                  if (res && res.length > 0) {
+                    setSuggestions(res);
+                  } else {
+                    setSuggestions([]);
+                  }
+                });
+              } else {
+                setSuggestions([]);
+              }
+              props.onChange(value);
+            }}
+            placeholder="Enter emails here"
+            variant="outlined"
+          />
+        );
+      }}
       renderTags={(value: UserBase[], getTagProps) => {
         return <>
-        {value.map((user, idx) => (
-          <Chip
-            label={`${user.username || user.email}`}
-            avatar={<Avatar src={fileUrl(user.profileImage)} />}
-            {...getTagProps({ index: idx })}
-          />
-        ))}
+          {value.map((user, idx) => (
+            <Chip
+              label={`${user.username || user.email}`}
+              avatar={<Avatar src={fileUrl(user.profileImage)} />}
+              {...getTagProps({ index: idx })}
+            />
+          ))}
         </>;
       }}
       filterOptions={(options) => options}
@@ -84,7 +96,7 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
       renderOption={option => (
         <React.Fragment>
           {option.profileImage ? <img alt="" className="autocomplete-profile-image" src={fileUrl(option.profileImage)} /> : <SpriteIcon className="autocomplete-profile-icon" name="user" />}
-          {option.firstName} {option.lastName} ({option.username})
+          {option.username}
         </React.Fragment>
       )}
     />

@@ -39,8 +39,6 @@
         display: flex;
         margin: 0;
         width: 100%;
-        box-sizing: border-box;
-
         .custom-color svg {
           color: var(--color);
         }
@@ -361,7 +359,6 @@
     flex-basis: inherit;
     max-width: inherit;
     width: 100%;
-
     @include phone_and_tabletP {
       height: $height-mobile-view;
       margin: 0;
@@ -369,7 +366,7 @@
     }
 
     @include tabletP {
-      background: var(--solitude-light);
+      background-color: var(--solitude-light);
       width: calc(100vw - #{$filter-sidebar-size} - #{$filter-sidebar-margin * 2});
       height: $height-desktop-view;
       overflow: hidden;

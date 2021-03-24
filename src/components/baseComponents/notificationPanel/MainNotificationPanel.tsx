@@ -90,9 +90,15 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
         } else if (notification.type === NotificationType.ReturnedToEditor) {
           history.push(map.InvestigationBuild(brick.id));
         } else if (notification.type === NotificationType.AssignedToEdit) {
-          history.push(map.InvestigationBuild(brick.id));
+          this.props.forgetBrick();
+          await this.props.fetchBrick(notification.brick.id);
+          history.push(map.ProposalReview);
         } else if (notification.type === NotificationType.ReturnedToAuthor) {
-          history.push(map.InvestigationBuild(brick.id));
+          this.props.forgetBrick();
+          await this.props.fetchBrick(notification.brick.id);
+          history.push(map.ProposalReview);
+        } else if (notification.type === NotificationType.RemindedToPlayBrick) {
+          history.push(map.playIntro(notification.brick.id));
         }
       }
     }
@@ -228,6 +234,9 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
                     }
                     {notification.type === NotificationType.StudentAssignedBrick &&
                       <SpriteIcon name="file-plus" className="w60 h60 active text-theme-dark-blue" />
+                    }
+                    {notification.type === NotificationType.RemindedToPlayBrick &&
+                      <SpriteIcon name="reminder" className="w60 h60 active text-theme-dark-blue stroke-2" />
                     }
                   </div>
                   <div className="content-box">

@@ -1,11 +1,9 @@
 #launcher {
-  position: fixed;
-  margin-left: 1vw !important;
-  margin-bottom: 0px !important;
-  left: 0;
-  margin: 1vw;
-  width: 52px;
-  height: 50px;
+  left: 0 !important;
+  margin: 7px !important;
+  width: 60px !important;
+  height: 60px !important;
+  padding: 4px !important;
 }
 
 // #2870 unauthorized dashbaord scrolling fix
@@ -102,13 +100,15 @@
   margin-right: 2vw !important;
 }
 .time-container {
-  $height: 3vw;
-  $width: 94vw;
-  z-index: 20000;
-  left: 3vw;
+  $height: 10px;
+  $width: 100%;
+  left: 0;
   position: fixed;
-  bottom: 19vw;
+  bottom: 75px;
   width: $width !important;
+  padding: 8px;
+  background-color: var(--tab-gray);
+  z-index: 20000;
   .timer-progressbar {
     width: $width !important;
     border-radius: 1.5vw !important;

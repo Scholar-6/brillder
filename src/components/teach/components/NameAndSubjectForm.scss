@@ -89,6 +89,7 @@
   }
 
   .edit-icon {
+    transition: all 300ms ease-out;
     position: relative;
     cursor: pointer;
     display: flex;
@@ -110,12 +111,13 @@
       bottom: -2vw;
       left: -4vw;
       color: var(--tab-gray);
-      background: var(--theme-dark-blue);
+      background: var(--theme-light-blue);
       width: 12.5vw !important;
     }
 
     &:hover {
-      color: var(--theme-orange) !important;
+      background: var(--theme-orange) !important;
+      color: var(--white) !important;
       .css-custom-tooltip {
         opacity: 1;
       }
@@ -139,6 +141,7 @@
       color: var(--theme-dark-blue);
       letter-spacing: 0;
       position: relative;
+      font-size: 1.5vw;
 
       .svg {
         fill: var(--off-white);
@@ -152,7 +155,7 @@
         bottom: -2vw;
         left: -2.1vw;
         color: var(--tab-gray);
-        background: var(--theme-dark-blue);
+        background: var(--theme-light-blue);
         width: 8.4vw !important;
       }
 

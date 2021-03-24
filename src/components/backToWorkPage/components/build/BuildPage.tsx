@@ -8,7 +8,7 @@ import actions from 'redux/actions/requestFailed';
 
 import './BuildPage.scss';
 import { Brick, BrickStatus } from "model/brick";
-import { RolePreference, User } from "model/user";
+import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ThreeColumns, Filters, SortBy } from '../../model';
 import { getBricks, searchBricks, getCurrentUserBricks } from "services/axios/brick";
@@ -34,6 +34,7 @@ import { isMobile } from "react-device-detect";
 import map from "components/map";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { SubjectItem } from "../personalBuild/model";
+import { isTeacherPreference } from "components/services/preferenceService";
 
 interface BuildProps {
   searchString: string;
@@ -205,21 +206,29 @@ class BuildPage extends Component<BuildProps, BuildState> {
     return filters.build && filters.review && filters.draft;
   }
 
+  moveBack() {
+    if (this.isThreeColumns()) {
+      this.moveThreeColumnsBack();
+    } else {
+      this.moveAllBack();
+    }
+  }
+
+  moveNext() {
+    if (this.isThreeColumns()) {
+      this.moveThreeColumnsNext();
+    } else {
+      this.moveAllNext();
+    }
+  }
+
   handleKey(e: any) {
     // only public page
     if (this.state.filters.isCore) {
       if (upKeyPressed(e)) {
-        if (this.isThreeColumns()) {
-          this.moveThreeColumnsBack();
-        } else {
-          this.moveAllBack();
-        }
+        this.moveBack();
       } else if (downKeyPressed(e)) {
-        if (this.isThreeColumns()) {
-          this.moveThreeColumnsNext();
-        } else {
-          this.moveAllNext();
-        }
+        this.moveNext();
       }
     }
   }
@@ -552,8 +561,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   render() {
     const {history} = this.props;
     if (isMobile) {
-      const {rolePreference} = this.props.user;
-      if (rolePreference?.roleId === RolePreference.Teacher) {
+      if (isTeacherPreference(this.props.user)) {
         history.push(map.BackToWorkTeachTab);
       } else {
         history.push(map.BackToWorkLearnTab);
@@ -672,6 +680,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 searchString={searchString}
                 published={published}
                 isCorePage={false}
+                moveNext={this.moveNext.bind(this)}
+                moveBack={this.moveBack.bind(this)}
                 switchPublish={this.switchPublish.bind(this)}
                 handleDeleteOpen={this.handleDeleteOpen.bind(this)}
                 handleMouseHover={this.handleMouseHover.bind(this)}

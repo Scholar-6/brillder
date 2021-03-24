@@ -84,6 +84,7 @@
         }
       }
       .scroll-buttons {
+        position: relative;
         @extend %flexCenter;
         background: var(--white);
         height: 2vw;
@@ -91,16 +92,45 @@
           cursor: pointer;
           width: 1.7vw;
           height: 1.7vw;
-          color: var(--theme-orange);
+          color: var(--theme-dark-blue);
+
+          &:hover {
+            color: var(--theme-orange);
+          }
 
           &.disabled {
             color: var(--tab-gray);
           }
         }
+        .radio-container {
+          position: absolute;
+          left: 1.27vw;
+          color: var(--theme-dark-blue);
+          svg {
+            width: 1.4vw;
+            height: 1.4vw;
+            color: var(--theme-dark-blue);
+          }
+          .MuiFormControlLabel-label {
+            font-size: 1.2vw;
+          }
+        }
+        .arrow-cancel {
+          position: absolute;
+          right: 1.5vw;
+          &::after, &::before {
+            background: var(--theme-dark-blue);
+          }
+          
+          &:hover {
+            &::after, &::before {
+              background: var(--theme-orange);
+            }
+          }
+        }
       }
     }
     .brick-row-container {
-      background: var(--off-white) !important;
       .subjects-column {
         display: flex;
         align-items: center;
@@ -164,6 +194,9 @@
               .subject-name {
                 color: var(--white);
               }
+              .round-circle-container.icon .svg {
+                color: var(--white);
+              }
               .icon {
                 color: var(--theme-dark-blue);
               }
@@ -179,6 +212,10 @@
         font-family: $font-family-regular-italic;
         margin-left: 1.7vw;
         margin-bottom: 1.9vh;
+      }
+      .subjects-column {
+        justify-content: flex-start;
+        align-items: flex-start !important;
       }
     }
   }
@@ -243,6 +280,10 @@
     width: 86%;
     font-family: $font-family-regular;
     font-size: 1.9vw;
+
+    .text {
+      font-size: 1.5vw;
+    }
   }
   // #2776 zoom brick on hover
   .brick-container {

@@ -19,8 +19,6 @@ import EmailRegisterDesktopPage from "./EmailRegisterDesktopPage";
 import Delayed from "components/services/Delayed";
 import { FirstPage, EmailSignPage, JoinPage, RegisterPage } from "./routes";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
-import LoginWheelComponent from "./LoginWheel";
-import LoginWheel from "./LoginWheel";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -68,7 +66,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
             <TypingLabel className="" onEnd={() => { }} label="Join the revolution" />
           </h1>
           <div className="image-container spinning">
-            <LoginWheel />
+            <img alt="" src="/images/login/PhoneWheellogin.svg" />
           </div>
         </div>}
       <Switch>

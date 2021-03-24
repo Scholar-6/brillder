@@ -101,6 +101,11 @@ export interface Brick {
   hasNotifications?: boolean;
   academicLevel: AcademicLevel;
 
+  // cover page
+  coverImage: string;
+  coverImageCaption: string;
+  coverImageSource: string;
+
   assignments?: Assignment[];
 
   // for back to work page

@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { History } from "history";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 
 import "./PostPlay.scss";
 import { ReduxCombinedState } from "redux/reducers";
@@ -70,12 +71,20 @@ interface ProposalState {
   attempt: PlayAttempt | null;
   mode?: boolean; // live - false, review - true, undefined - default
   playHovered: boolean;
+  showLibraryButton: boolean;
   handleKey(e: any): void;
 }
 
 class PostPlay extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
+
+    let showLibraryButton = true;
+    const values = queryString.parse(props.history.location.search);
+    if(values.fromTeach) {
+      showLibraryButton = false;
+    }
+
     this.state = {
       bookState: BookState.Titles,
       questionIndex: 0,
@@ -90,6 +99,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       subjects: [],
       firstHoverTimeout: -1,
       playHovered: false,
+      showLibraryButton,
       handleKey: this.handleKey.bind(this)
     };
     this.loadData();
@@ -301,6 +311,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       }
     }
 
+    if (!this.state.bookHovered || this.state.animationRunning) {
+      bookClass += ' closed';
+    }
+
     let questions: Question[] = [];
     for (let question of brick.questions) {
       parseQuestion(question as ApiQuestion, questions);
@@ -347,9 +361,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             <h1>This book is yours.</h1>
             <h2>Hover your mouse over the cover to</h2>
             <h2>see a summary of your results.</h2>
-            <button onClick={() => this.props.history.push(map.MyLibrary + '?subjectId=' + brick.subjectId)}>
-              View it in my library
-            </button>
+            {this.state.showLibraryButton &&
+              <button onClick={() => this.props.history.push(map.MyLibrary + '?subjectId=' + brick.subjectId)}>
+                View it in my library
+              </button>}
           </Grid>
           <div className={bookClass}>
             <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>

@@ -1,9 +1,8 @@
 #launcher {
-  position: fixed;
-  width: 5.5vw !important;
-  margin-left: 0.9vw !important;
-  margin-bottom: 14px !important;
-  left: 0;
+  left: 0 !important;
+  width: 5.7vw !important;
+  height: 2.5vw !important;
+  margin: 1.7vw !important;
 }
 
 .short-description {
@@ -77,8 +76,8 @@
 .stop-cookie-tracking {
   cursor: pointer;
   position: fixed;
-  bottom: 14px;
-  left: calc(5.5vw + 0.6vw + 20px + 0.5vw);
+  bottom: 1.8vw;
+  left: calc(5.5vw + 0.6vw + 20px + 0.5vw + 0.5vw);
   border: none;
   height: 2.3vw;
   display: flex;

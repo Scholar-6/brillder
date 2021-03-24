@@ -16,6 +16,7 @@ import { Brick } from 'model/brick';
 import { getClassrooms, getStudents } from 'services/axios/classroom';
 import SpriteIcon from '../SpriteIcon';
 import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
+import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
@@ -87,20 +88,15 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }
 
   const assignToClasses = async (classesIds: Number[]) => {
-    let data = { classesIds } as any;
-    if (haveDeadline) {
+    let data = { classesIds, deadline: null } as AssignClassData;
+    if (haveDeadline && deadlineDate) {
       data.deadline = deadlineDate;
     }
-    return await axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/brick/assignClasses/${props.brick.id}`,
-      data,
-      { withCredentials: true }
-    ).then(res => {
-      return res.data as any[];
-    }).catch(() => {
+    const res = await assignClasses(props.brick.id, data);
+    if (res === false) {
       props.requestFailed('Can`t assign class to brick');
-      return false;
-    });
+    }
+    return res;
   }
 
   const hide = () => setAutoCompleteDropdown(false);
@@ -233,11 +229,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             control={<Radio onClick={() => toggleDeadline(true)} />}
             label="Set date"
           />
-        </div>
-        <div className={haveDeadline ? 'r-day-date-row' : 'r-day-date-row r-hidden'}>
-          <div>
-            <TimeDropdowns onChange={setDeadline} />
-          </div>
+          {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
         </div>
         <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
           <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{ width: 'auto' }}>

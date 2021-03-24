@@ -1,3 +1,5 @@
+import { setAssignmentId } from "localStorage/playAssignmentId";
+
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
 export const Build = '/build';
@@ -23,6 +25,7 @@ export const BackToWorkBuildTab = BackToWorkPage + '/build';
 export const BackToWorkLearnTab = BackToWorkPage + '/learn';
 
 export const TeachAssignedTab = '/teach/assigned';
+export const TeachAssignedArchiveTab = TeachAssignedTab + '/archive';
 export const ManageClassroomsTab = '/teach/manage-classrooms';
 
 
@@ -102,7 +105,8 @@ export const postPlay = (brickId: number, userId: number) => {
 }
 
 export const playAssignment = (brickId: number, assignmentId: number) => {
-  return `/play/brick/${brickId}/intro?assignmentId=${assignmentId}`
+  setAssignmentId(assignmentId);
+  return `/play/brick/${brickId}/intro`;
 }
 
 export default {
@@ -139,6 +143,7 @@ export default {
   BackToWorkLearnTab,
 
   TeachAssignedTab,
+  TeachAssignedArchiveTab,
   ManageClassroomsTab,
 
   ViewAllPage,

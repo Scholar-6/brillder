@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Profiler, useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
@@ -59,6 +59,7 @@ import { setupMatomo } from 'services/matomo';
 import { ReduxCombinedState } from 'redux/reducers';
 import { User } from 'model/user';
 import { getTerms } from 'services/axios/terms';
+import IPadWarning from 'components/baseComponents/rotateInstruction/IPadWarning';
 
 interface AppProps {
   user: User;
@@ -68,6 +69,7 @@ interface AppProps {
 const App: React.FC<AppProps> = props => {
   setBrillderTitle();
   const location = useLocation();
+  const [showWarning, setWarning] = React.useState(isTablet ? true: false)
   const [termsData, setTermsData] = React.useState({
     isLoading: false,
     termsVersion: ''
@@ -159,8 +161,12 @@ const App: React.FC<AppProps> = props => {
   if ( isTablet && !horizontal) {
     return <RotateIPadInstruction />;
   }
+
+  if (isTablet && showWarning) {
+    return <IPadWarning hideWarning={() => setWarning(false)} />
+  }
   
-  // // If is mobile and landscape tell them to go to portrait
+  // If is mobile and landscape tell them to go to portrait
   else if (isMobileOnly && horizontal) {
     return <RotateInstruction />;
   }
@@ -185,8 +191,26 @@ const App: React.FC<AppProps> = props => {
     }
   }
 
+  const onRenderCallback = (
+    id: any, // the "id" prop of the Profiler tree that has just committed
+    phase: any, // either "mount" (if the tree just mounted) or "update" (if it re-rendered)
+    actualDuration: any, // time spent rendering the committed update
+    baseDuration: any, // estimated time to render the entire subtree without memoization
+    startTime: any, // when React began rendering this update
+    commitTime: any, // when React committed this update
+    interactions: any // the Set of interactions belonging to this update
+  ) => {
+    // if more then 100ms log it.
+    if (baseDuration > 100) {
+      console.log('heavy: ', id, phase, baseDuration, startTime, actualDuration, commitTime);
+    } else if (baseDuration > 75) {
+      console.log('medium:', id, phase, baseDuration, startTime, actualDuration, commitTime);
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
+      <Profiler id="app-tsx" onRender={onRenderCallback} >
       {/* all page routes are here order of routes is important */}
       <Switch>
         <UnauthorizedRoute path={map.AllSubjects} component={ViewAll} />
@@ -240,6 +264,7 @@ const App: React.FC<AppProps> = props => {
       </Switch>
       <VersionLabel />
       <GlobalFailedRequestDialog />
+      </Profiler>
     </ThemeProvider>
   );
 }

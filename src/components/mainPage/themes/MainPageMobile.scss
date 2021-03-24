@@ -76,6 +76,10 @@
         @extend %removePosition;
         width: 150px;
         height: 120px;
+        @include phone_and_tabletP {
+          width: 150px;
+          height: 120px;
+        }
       }
     }
 
@@ -161,6 +165,18 @@
     }
   }
 
+  .glasses {
+    cursor: pointer;
+    display: inline;
+    margin: 0 0.3vw;
+    width: 4vw !important;
+    color: var(--theme-orange);
+    svg {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
   .dialog-box {
     .MuiDialog-container {
       padding: 0 !important;
@@ -216,6 +232,7 @@
         .view-item-container {
           .svg {
             width: 230px;
+            height: 80px;
           }
         }
 

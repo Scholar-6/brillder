@@ -153,22 +153,33 @@
       @extend %textCenter;
       flex-direction: column;
       .svg {
+        @extend %transitionAll300;
         @extend %removePosition;
-        @include phone_and_tabletP {
-          width: 150px;
-          height: 120px;
+        width: 13vw;
+        height: 6vw;
+      }
+    }
+    &.disabled {
+      div {
+        cursor: initial !important;
+      }
+      svg {
+        cursor: initial !important;
+        color: var(--theme-dark-blue) !important;
+      }
+      &:hover {
+        .btn svg {
+          transform: rotate(0) !important;
         }
-        @include tabletP {
-          width: 13vw;
-          height: 6vw;
-        }
+      }
+      .item-description {
+        font-family: $font-family-light !important;
       }
     }
     &.student-back-work {
-      .btn .svg {
-        @include laptop {
-          width: 13vw;
-          height: 6vw;
+      &.disabled {
+        .blocks-icon .bl {
+          background: var(--theme-light-blue) !important;
         }
       }
     }
@@ -196,126 +207,19 @@
       }
     }
   }
-
   .view-item-container {
-    .eye-glass-icon {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      @extend %textCenter;
-      flex-direction: column;
-      svg {
-        width: 13vw;
-        height: 6vw;
-      }
-      .eye-glass-frame {
-        svg {
-          @extend %removePosition;
-        }
-      }
-      $eye-size: 5.5vw;
-      $pupil-size: 1.5vw;
-      .glass-eyes-left,
-      .glass-eyes-right {
-        width: $eye-size;
-        height: $eye-size;
-        transition-delay: 200ms;
-        @extend %transitionAll300;
-        @extend %floatToYCenter;
-        @extend %flexCenter;
-        opacity: 0;
-        > svg {
-          width: 60%;
-          height: 60%;
-        }
-        .glass-left-inside,
-        .glass-right-inside {
-          width: $pupil-size;
-          height: $pupil-size;
-          @extend %flexCenter;
-          @extend %transitionAll300;
-          transform: translate(0);
-          opacity: 0;
-          svg {
-            width: 100%;
-            height: 100%;
-            background-color: var(--white);
-            border-radius: 50%;
-            // @extend %removePosition;
-            opacity: 0;
-            &.eye-pupil {
-              animation-name: eye-movement;
-              animation-duration: 4s;
-              animation-delay: 4s;
-              animation-timing-function: linear;
-              animation-iteration-count: infinite;
-            }
-            &.aperture {
-              animation: rotating 2s linear infinite;
-            }
-          }
-        }
-      }
-      .glass-eyes-left {
-        left: 0.6vw;
-      }
-      .glass-eyes-right {
-        right: 0.6vw;
-      }
-    }
-    &:hover {
+    &.disabled {
       .eye-glass-icon {
         .glass-eyes-left,
         .glass-eyes-right {
-          opacity: 1;
-          > svg {
-            opacity: 1;
-            visibility: visible;
-          }
-          .glass-right-inside,
-          .glass-left-inside {
-            opacity: 1;
-            svg {
-              &.eye-pupil {
-                opacity: 1;
-              }
-            }
-          }
-        }
-      }
-    }
-    &:active {
-      .eye-glass-icon {
-        .glass-eyes-left,
-        .glass-eyes-right {
-          opacity: 1;
-          > .svg {
-            opacity: 1;
-            visibility: visible;
-          }
-          .glass-left-inside,
-          .glass-right-inside {
-            opacity: 1;
-            svg {
-              &.aperture {
-                opacity: 1;
-              }
-            }
-          }
+          display: none;
         }
       }
     }
   }
-
   .create-item-container {
     .btn .svg {
-      @extend %transitionAll300;
-    }
-    @include tabletP {
-      .btn .svg {
-        height: 7.5vw;
-      }
+      height: 7.5vw;
       &:hover {
         .btn svg {
           transform: rotate(10deg) !important;
@@ -331,12 +235,24 @@
       }
     }
   }
-  @extend %policy-text;
+
   .policy-text {
     position: fixed;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: right;
+    padding-right: 2.5vw;
+    color: var(--tab-gray);
+    font-family: $font-family-regular;
     bottom: 2.4vh;
+    line-height: 2vw;
     right: 10vw;
+    font-size: 1.6vw;
+    span:hover {
+      color: var(--theme-orange) !important;
+    }
   }
+
   .dialog-box {
     .MuiDialog-container {
       padding: 0 !important;
@@ -344,6 +260,7 @@
   }
 }
 
+// mobile
 .mainPage {
   .mobile-main-page {
     width: 100%;
@@ -406,23 +323,5 @@
         }
       }
     }
-  }
-}
-
-@keyframes eye-movement {
-  0% {
-    transform: translateX(0.4vw);
-  }
-  15% {
-    transform: translateX(-0.4vw);
-  }
-  25% {
-    transform: translateX(-0.4vw);
-  }
-  50% {
-    transform: translateX(0.4vw);
-  }
-  100% {
-    transform: translateX(0.4vw);
   }
 }

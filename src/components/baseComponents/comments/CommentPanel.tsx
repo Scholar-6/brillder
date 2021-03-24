@@ -13,9 +13,9 @@ import { deleteComment } from 'services/axios/brick';
 import CommentItem from './CommentItem';
 import CommentChild from './CommentChild';
 import NewCommentPanel from './NewCommentPanel';
-import CommentDeleteDialog from './CommentDeleteDialog';
 import SpriteIcon from '../SpriteIcon';
 import CommentIndicator from 'components/build/baseComponents/CommentIndicator';
+import DeleteDialog from 'components/build/baseComponents/dialogs/DeleteDialog';
 
 
 interface CommentPanelProps {
@@ -217,8 +217,9 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
         <SpriteIcon name="arrow-down" className={className} onClick={scrollDown} />
       </div>
       {renderComments()}
-      <CommentDeleteDialog
+      <DeleteDialog
         isOpen={deleteData.isOpen}
+        title="Are you sure you want to delete this comment?"
         submit={() => {
           deleteComment(deleteData.brickId, deleteData.commentId);
           setDeleteData(initDeleteData)

@@ -3,8 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from "react-redux";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
-import './PreviewBrickRouting.scss';
-
 import actions from 'redux/actions/brickActions';
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { Brick } from 'model/brick';
@@ -303,13 +301,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             </Route>
             <Route exac path="/play-preview/brick/:brickId/review">
               <Review
+                history={history}
                 isPlayPreview={true}
                 status={status}
-                questions={brick.questions}
                 brick={brick}
-                brickId={brick.id}
                 startTime={startTime}
-                brickLength={brick.brickLength}
                 updateAttempts={updateReviewAttempts}
                 attempts={attempts}
                 finishBrick={finishReview}
