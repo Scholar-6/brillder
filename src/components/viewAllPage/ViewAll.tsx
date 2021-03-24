@@ -680,7 +680,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       const subject = this.state.subjects.find(s => s.id === subjectId);
       return subject?.name;
     } else if (this.state.isViewAll) {
-      return "View All";
+      return "All bricks";
     } else if (filterSubjects.length > 1) {
       return "Filtered";
     } else if (this.state.isSearching) {
