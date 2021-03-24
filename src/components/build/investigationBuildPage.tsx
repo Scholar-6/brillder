@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Redirect, RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import queryString from 'query-string';
 
@@ -46,7 +46,6 @@ import YourProposalLink from './baseComponents/YourProposalLink';
 import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
-import DesktopVersionDialog from 'components/build/baseComponents/dialogs/DesktopVersionDialog';
 import QuestionInvalidDialog from './baseComponents/dialogs/QuestionInvalidDialog';
 import HighlightInvalidDialog from './baseComponents/dialogs/HighlightInvalidDialog';
 import HintInvalidDialog from './baseComponents/dialogs/HintInvalidDialog';
