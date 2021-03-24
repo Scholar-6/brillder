@@ -322,9 +322,9 @@ const LivePage: React.FC<LivePageProps> = ({
 
   return (
     <div className="brick-row-container live-container">
-      <div className="fixed-upper-b-title">
+      {!isPhone() && <div className="fixed-upper-b-title">
         {brick.title}
-      </div>
+      </div>}
       <div className="brick-container play-preview-panel live-page">
         <div className="introduction-page">
           <Hidden only={["xs"]}>
