@@ -25,7 +25,7 @@ import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
-import { PlayBriefLastPrefix, playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
+import { playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
 
 
 interface SidebarProps {
@@ -235,11 +235,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       } else {
         return <div></div>;
       }
-    }
-
-    let showBorder = false;
-    if (this.props.history.location.pathname.search(PlayBriefLastPrefix) >= 0) {
-      showBorder = true;
     }
 
     return (

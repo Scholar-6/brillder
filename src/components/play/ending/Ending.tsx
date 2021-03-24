@@ -7,7 +7,6 @@ import { Brick } from "model/brick";
 import { PlayStatus } from "../model";
 import { BrickAttempt } from "../model";
 import EndingStepper from "./EndingStepper";
-import Clock from "../baseComponents/Clock";
 import { getPlayPath } from "../service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isPhone } from "services/phone";
