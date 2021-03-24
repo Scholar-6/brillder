@@ -1,6 +1,5 @@
 import types from '../types';
 import { isAuthenticated } from 'model/brick';
-import { UserLoginType } from 'model/auth';
 import { UserType } from 'model/user';
 
 

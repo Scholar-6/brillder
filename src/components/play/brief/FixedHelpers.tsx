@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 
 class FixedHelpers extends Component<any> {
-  constructor(props: any) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="fixed-helpers-container">

@@ -1,18 +1,19 @@
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
+import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 
 
 interface DialogProps {
   isOpen: boolean;
+  title: string;
   close(): void;
   submit(): void;
 }
 
-const SendToPublisherDialog: React.FC<DialogProps> = (props) => {
+const YesNoDialog: React.FC<DialogProps> = (props) => {
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
+    <BaseDialogWrapper open={props.isOpen} close={props.close} submit={props.submit}>
       <div className="dialog-header">
-        <div>Are you convinced this brick meets our publication standards?</div>
+        <div>{props.title}</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button" onClick={props.submit}>
@@ -22,8 +23,8 @@ const SendToPublisherDialog: React.FC<DialogProps> = (props) => {
           <span>No</span>
         </button>
       </div>
-    </Dialog>
+    </BaseDialogWrapper>
   );
 }
 
-export default SendToPublisherDialog;
+export default YesNoDialog;
