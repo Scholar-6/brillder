@@ -1385,7 +1385,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         }
       }
       // only provisional score and final score
-      .provisional-container, .ending-container {
+      .provisional-container,
+      .ending-container {
         .circle-progress-container {
           $height: calc(50vh);
           height: $height !important;
@@ -1744,7 +1745,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           border-radius: 0.5vw;
           border: none !important;
           min-height: 47vh;
-  
+
           svg {
             width: 35vh;
             height: 35vh;
@@ -1778,7 +1779,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           .round-button {
             width: $circle-size;
             height: $circle-size;
-            border-radius:  50%;
+            border-radius: 50%;
           }
         }
         .svg {
@@ -1826,17 +1827,17 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       margin-bottom: 10vh;
       .x-center {
         @extend %flexToXCenter;
-    
+
         .like-button {
           font-family: $font-family-bold;
-          width: 15vw;
+          min-width: 17vw;
           text-align: center;
           border-radius: 0.7vw;
-          padding: 1.5vh 0;
+          padding: 1.5vh 1.5vw;
           font-size: 4.5vh;
           background: var(--tab-gray);
           margin: 1vh;
-    
+
           &.orange {
             color: var(--white);
             background: var(--theme-orange);
@@ -1864,7 +1865,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         $circle-size: 2.7vw;
         width: $circle-size;
         height: $circle-size;
-        border-radius:  50%;
+        border-radius: 50%;
         color: var(--white);
         font-size: 2vw;
         @extend %flexCenter;
@@ -1914,6 +1915,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       width: 65vw;
       justify-content: flex-end;
       font-size: 1.8vw;
+      margin-left: 33vw;
       font-family: $font-family-bold;
     }
     .footer-arrow {
@@ -2021,7 +2023,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   font-size: 30vh;
   font-family: $font-family-bold;
 }
-
 
 .underline-border {
   border-bottom: 0.4vh solid var(--theme-orange);
