@@ -1708,3 +1708,8 @@ $play-footer-height: 75px;
     max-height: 15vh !important;
   }
 }
+
+// intro height fix
+.play-preview-pages .sorted-row .brick-row-container.real-introduction-page .brick-container {
+  height: 100% !important;
+}

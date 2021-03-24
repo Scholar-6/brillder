@@ -20,8 +20,8 @@ import { getNonEmptyComponent } from "../../questionService/ValidateQuestionServ
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import FixedTextComponent from "../components/Text/FixedText";
 import { TextComponentObj } from "../components/Text/interface";
-import DeleteComponentDialog from "./deleteComponentDialog";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
+import DeleteDialog from "components/build/baseComponents/dialogs/DeleteDialog";
 
 
 type QuestionComponentsProps = {
@@ -207,7 +207,13 @@ const QuestionComponents = ({
           ))
         }
       </ReactSortable>
-      <DeleteComponentDialog isOpen={dialogOpen} removeIndex={removeIndex} submit={removeInnerComponent} close={hideDialog} />
+      <DeleteDialog
+        isOpen={dialogOpen}
+        title="Permanently delete<br />this component?"
+        index={removeIndex}
+        submit={removeInnerComponent}
+        close={hideDialog}
+      />
       <ValidationFailedDialog
         isOpen={sameAnswerDialogOpen}
         header="Looks like some answers are the same."

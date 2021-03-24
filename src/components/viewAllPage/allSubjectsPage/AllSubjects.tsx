@@ -82,6 +82,10 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
     }
   }
 
+  isFilterClear() {
+    return this.state.subjects.some(r => r.checked);
+  }
+
   render() {
     return (
       <React.Suspense fallback={<></>}>
@@ -94,10 +98,12 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               subjects={this.state.subjects}
               userSubjects={this.props.user ? this.props.user.subjects : []}
               isCore={true}
-              isClearFilter={() => { }}
+              isClearFilter={this.isFilterClear()}
               isAllSubjects={this.state.isAllSubjects}
               setAllSubjects={isAllSubjects => this.setState({ isAllSubjects })}
               handleSortChange={() => { }}
+              isViewAll={false}
+              selectAllSubjects={() => {}}
               clearSubjects={() => { }}
               filterBySubject={id => this.onSubjectSelected(id)}
             />
