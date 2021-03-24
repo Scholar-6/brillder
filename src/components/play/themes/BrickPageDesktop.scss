@@ -594,9 +594,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               }
             }
             &.review-content {
-              width: calc(100% - 7vw) !important;
-              margin: 0 3vw 1vw 4vw;
-              // padding-top: 1.5vh;
+              padding: 0 4vw;
             }
           }
 
@@ -1590,7 +1588,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
   }
   .open-question {
-    margin-top: 3vh;
     font-family: $font-family-regular-italic;
   }
 }
@@ -1885,31 +1882,26 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .play-preview-pages .sorted-row .brick-row-container .brick-container.play-brief-page {
   .introduction-page {
     padding-top: 0 !important;
+    .open-question {
+      padding: 0 4vw !important;
+      > div {
+        $font-size: 2vw;
+        font-size: $font-size !important;
+        p {
+          font-size: $font-size !important;
+        }
+      }
+    }
+    .introduction-content {
+      padding: 0 4vw !important;
+    }
   }
   .scrollable {
-    padding-top: 2vh !important;
-    padding-bottom: 4.5vw;
-    height: calc(100vh - 4vw - 2vh) !important;
+    padding: 4vh 0 !important;
+    height: calc(100vh - 15vh) !important;
     overflow-y: scroll;
   }
 
-  .introduction-page {
-    padding-top: 2vh;
-    padding-right: 6vw;
-  }
-  .open-question {
-    padding-left: 6vw !important;
-  }
-  .introduction-content {
-    padding-left: 6vw !important;
-  }
-  .open-question > div {
-    $font-size: 2vw;
-    font-size: $font-size !important;
-    p {
-      font-size: $font-size !important;
-    }
-  }
   .new-layout-footer {
     .title-column {
       width: 65vw;

@@ -799,9 +799,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
           }
           .question-live-play {
-            @include tabletP {
-              overflow: hidden;
-            }
+            overflow: hidden;
           }
         }
         &.final-step-page {
@@ -1146,7 +1144,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           padding-left: 0 !important;
           .question-live-play {
             margin-top: $header-height !important;
-            height: calc(100vh - 4vw - #{$header-height} - #{$foter-height}) !important;
+            height: calc(100vh - 5vw - #{$header-height} - #{$foter-height}) !important;
             .question-title {
               display: none;
             }
@@ -1882,26 +1880,25 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 // brief and new-prep pages
-.play-preview-pages .sorted-row .brick-row-container .brick-container.play-brief-page {
+.play-preview-pages .sorted-row .brick-row-container .brick-containerz.play-brief-page {
   .introduction-page {
     padding-top: 0 !important;
   }
   .scrollable {
-    padding-top: 2vh !important;
-    padding-bottom: 4.5vw;
-    height: calc(100vh - 4vw - 2vh) !important;
+    padding: 4vh 0 !important;
+    height: calc(100vh - 15vh) !important;
     overflow-y: scroll;
   }
 
   .introduction-page {
     padding-top: 2vh;
-    padding-right: 6vw;
+    padding-right: 4vw;
   }
   .open-question {
-    padding-left: 6vw !important;
+    padding-left: 4vw !important;
   }
   .introduction-content {
-    padding-left: 6vw !important;
+    padding-left: 4vw !important;
   }
   .open-question > div {
     $font-size: 2vw;
