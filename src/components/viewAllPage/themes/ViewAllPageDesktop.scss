@@ -182,6 +182,10 @@
         margin-left: 1.7vw;
         margin-bottom: 1.9vh;
       }
+      .subjects-column {
+        justify-content: flex-start;
+        align-items: flex-start !important;
+      }
     }
   }
   .view-all-toggle {
