@@ -74,9 +74,10 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
     return (
         <div className={`ql-custom-toolbar${props.quillId ? ` quill-${props.quillId}` : ""} ${props.className}`}>
             <div className="formats" ref={toolbarNode}>
-                {props.toolbar.map(option => {
+                {props.toolbar.map((option, i) => {
                     const Item = toolbarItems[option]
                     return <Item
+                        key={i}
                         handler={quillHandler}
                         format={format}
                         enabled={props.enabled.includes(option)}
