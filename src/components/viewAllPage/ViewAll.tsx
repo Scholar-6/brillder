@@ -220,7 +220,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     } else if (this.props.user) {
       this.loadBricks(values);
     } else {
-      this.loadUnauthorizedBricks(values);
+      this.loadUnauthorizedBricks();
     }
   }
 
@@ -239,7 +239,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return subjects;
   }
 
-  async loadUnauthorizedBricks(values?: queryString.ParsedQuery<string>) {
+  async loadUnauthorizedBricks() {
     const bricks = await getPublicBricks();
     if (bricks) {
       let finalBricks = this.filter(bricks, this.state.isAllSubjects, true);
@@ -363,6 +363,40 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
       } catch { }
     }, 1400);
+  }
+
+  /**
+   * Check all subjects based on isCore.
+   */
+  checkAllSubjects() {
+    let {subjects} = this.state;
+    if (this.state.isCore) {
+      subjects.forEach(s => {
+        if (s.publicCount > 0) {
+          s.checked = true;
+        } else {
+          s.checked = false;
+        }
+      });
+    } else {
+      subjects.forEach(s => {
+        if (s.personalCount && s.personalCount > 0) {
+          s.checked = true;
+        } else {
+          s.checked = false;
+        }
+      });
+    }
+  }
+
+  selectAllSubjects(isViewAll: boolean) {
+    if (isViewAll === false) {
+      this.props.history.push(map.AllSubjects);
+    } else {
+      this.checkAllSubjects();
+      const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, isViewAll);
+      this.setState({ isViewAll, finalBricks, isClearFilter: this.isFilterClear() });
+    }
   }
 
   filterByOneSubject(id: number) {
@@ -848,6 +882,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           isCore={this.state.isCore}
           isClearFilter={this.state.isClearFilter}
           isAllSubjects={this.state.isAllSubjects}
+          isViewAll={this.state.isViewAll}
+          selectAllSubjects={this.selectAllSubjects.bind(this)}
           setAllSubjects={isAllSubjects => {
             const finalBricks = this.filter(this.state.bricks, isAllSubjects, this.state.isCore);
             this.setState({ isAllSubjects, finalBricks, sortedIndex: 0 });
