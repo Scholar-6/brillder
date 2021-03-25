@@ -1,6 +1,9 @@
 import webdriver, { By, Capabilities, until, WebDriver, WebElement } from "selenium-webdriver";
 import firefox from "selenium-webdriver/firefox";
 
+import dotenv from 'dotenv';
+dotenv.config({ path: "test/e2e/.env" });
+
 describe('main e2e test', () => {
     let driver: WebDriver;
     const waitClick = (element: WebElement) => async () => {
@@ -25,7 +28,7 @@ describe('main e2e test', () => {
                 .build();
         } else {
             driver = new webdriver.Builder()
-                .usingServer("http://localhost:4444/wd/hub")
+                .usingServer(process.env.SELENIUM_HOST)
                 .withCapabilities(Capabilities.firefox())
                 .build();
         }
@@ -33,7 +36,7 @@ describe('main e2e test', () => {
 
     it("should run properly", async () => {
         // get the main web page
-        await driver.get('https://dev-app.brillder.com');
+        await driver.get(process.env.SELENIUM_TEST_URL);
 
         const title = await driver.getTitle();
         expect(title).toBeTruthy();
@@ -93,7 +96,7 @@ describe('main e2e test', () => {
             const brickBlock = await driver.wait(until.elementLocated(By.css(".main-brick-container .absolute-container")), 10000);
             await driver.wait(waitClick(brickBlock), 2000);
 
-            const brickTitle = await driver.wait(until.elementLocated(By.className("intro-desktop-title")), 10000);
+            const brickTitle = await driver.wait(until.elementLocated(By.className("brick-title")), 10000);
             brickTitleString = await brickTitle.getText();
             console.log("Assigning Brick: ", brickTitleString);
 
@@ -125,10 +128,10 @@ describe('main e2e test', () => {
             await driver.wait(waitClick(manageClassesButton), 2000);
 
             // Need to wait for the classes to show before clicking 'Assignments' tab.
-            await driver.wait(until.elementLocated(By.xpath(`//div[contains(concat(' ', @class, ' '), ' student-drop-item ') and label/span/text()='${classNameString}']`)), 5000);
+            // await driver.wait(until.elementLocated(By.xpath(`//div[contains(concat(' ', @class, ' '), ' student-drop-item ') and label/span/text()='${classNameString}']`)), 5000);
 
-            const assignmentsTab = await driver.wait(until.elementLocated(By.xpath(`//div[contains(@class, "tab-container")]/div[contains(., "Assignments")]`)), 2000)
-            await driver.wait(waitClick(assignmentsTab), 2000);
+            // const assignmentsTab = await driver.wait(until.elementLocated(By.xpath(`//div[contains(@class, "tab-container")]/div[contains(., "Assignments")]`)), 2000)
+            // await driver.wait(waitClick(assignmentsTab), 2000);
 
             const sidebarClass = await driver.wait(until.elementLocated(By.css(`.index-box[title="${classNameString}"]`)), 5000);
             await driver.wait(waitClick(sidebarClass), 2000);
