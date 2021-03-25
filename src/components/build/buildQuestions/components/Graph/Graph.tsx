@@ -169,4 +169,4 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
     )
 }
 
-export default GraphComponent;
+export default React.memo(GraphComponent);

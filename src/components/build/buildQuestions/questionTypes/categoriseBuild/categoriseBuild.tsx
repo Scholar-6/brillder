@@ -237,4 +237,4 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   )
 }
 
-export default CategoriseBuildComponent
+export default React.memo(CategoriseBuildComponent);

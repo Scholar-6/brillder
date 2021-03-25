@@ -35,4 +35,4 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, ...
   );
 }
 
-export default QuoteComponent
+export default React.memo(QuoteComponent);

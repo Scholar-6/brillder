@@ -94,4 +94,4 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   )
 }
 
-export default ChooseOneBuildComponent
+export default React.memo(ChooseOneBuildComponent);

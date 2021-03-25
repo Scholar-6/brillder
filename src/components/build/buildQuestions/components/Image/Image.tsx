@@ -119,5 +119,4 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   );
 }
 
-
-export default ImageComponent
+export default React.memo(ImageComponent);

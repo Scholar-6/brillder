@@ -118,4 +118,4 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
   )
 }
 
-export default HorizontalShuffleBuildComponent
+export default React.memo(HorizontalShuffleBuildComponent);

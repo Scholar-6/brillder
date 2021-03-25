@@ -117,4 +117,4 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   )
 }
 
-export default VerticalShuffleBuildComponent
+export default React.memo(VerticalShuffleBuildComponent);

@@ -117,4 +117,4 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
   )
 }
 
-export default LineHighlightingComponent
+export default React.memo(LineHighlightingComponent);

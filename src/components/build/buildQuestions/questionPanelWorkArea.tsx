@@ -260,4 +260,4 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const connector = connect(mapState);
 
-export default connector(QuestionPanelWorkArea);
+export default connector(React.memo(QuestionPanelWorkArea));

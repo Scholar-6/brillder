@@ -201,4 +201,4 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
   )
 }
 
-export default MissingWordComponent
+export default React.memo(MissingWordComponent);

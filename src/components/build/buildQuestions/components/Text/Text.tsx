@@ -33,4 +33,4 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, d
   );
 }
 
-export default TextComponent
+export default React.memo(TextComponent);

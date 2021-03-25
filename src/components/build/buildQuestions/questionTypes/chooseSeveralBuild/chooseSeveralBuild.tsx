@@ -91,4 +91,4 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   )
 }
 
-export default ChooseSeveralBuildComponent
+export default React.memo(ChooseSeveralBuildComponent);

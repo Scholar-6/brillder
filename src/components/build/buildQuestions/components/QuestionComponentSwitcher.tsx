@@ -142,4 +142,4 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   }
 }
 
-export default SwitchQuestionComponent
+export default React.memo(SwitchQuestionComponent);

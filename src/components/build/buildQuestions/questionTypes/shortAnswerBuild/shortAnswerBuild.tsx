@@ -124,4 +124,4 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
   );
 };
 
-export default ShortAnswerBuildComponent;
+export default React.memo(ShortAnswerBuildComponent);

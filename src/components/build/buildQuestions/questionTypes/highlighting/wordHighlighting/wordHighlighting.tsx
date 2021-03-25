@@ -252,4 +252,4 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   )
 }
 
-export default WordHighlightingComponent
+export default React.memo(WordHighlightingComponent);
