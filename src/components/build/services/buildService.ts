@@ -1,7 +1,7 @@
 import * as Y from "yjs";
 
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
-import { QuestionTypeEnum } from "model/question";
+import { Question, QuestionTypeEnum } from "model/question";
 
 export const getPreviewLink = (brickId: number, isSynthesisPage: boolean) => {
   let buildQuestion = GetCashedBuildQuestion();
@@ -24,4 +24,29 @@ export const getQuestionType = (question: Y.Doc) => {
     type = question.getMap().get("type");
   }
   return type;
+}
+
+export const getJSONQuestionIndex = (question: Question, questions: Y.Array<Y.Doc>) => {
+  let qIndex = -1;
+  questions.forEach((q, index) => {
+    if (q.getMap().toJSON() === question) {
+      qIndex = index;
+    }
+  });
+  return qIndex;
+}
+
+export const getQuestionIndex = (question: Y.Doc, questions: Y.Array<Y.Doc>) => {
+  let qIndex = -1;
+  questions.forEach((q, index) => {
+    if (q === question) {
+      qIndex = index;
+    }
+  });
+  return qIndex;
+}
+
+export default {
+  getQuestionIndex,
+  getJSONQuestionIndex
 }

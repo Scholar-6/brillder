@@ -23,7 +23,6 @@ import {
 } from "./questionService/QuestionService";
 import { convertToQuestionType, stripHtml } from "./questionService/ConvertService";
 import { User } from "model/user";
-import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick, checkAdmin, checkPublisher } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
@@ -59,7 +58,7 @@ import * as Y from "yjs";
 import { convertQuestion, toRenderJSON } from "services/SharedTypeService";
 import _ from "lodash";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
-import { getPreviewLink, getQuestionType } from "./services/buildService";
+import service, { getPreviewLink, getQuestionType } from "./services/buildService";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -159,24 +158,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   setBrillderTitle(ybrick.get("title"));
 
-  const getQuestionIndex = (question: Y.Doc) => {
-    let qIndex = -1;
-    questions.forEach((q, index) => {
-      if (q === question) {
-        qIndex = index;
-      }
-    });
-    return qIndex;
-  };
+  const getQuestionIndex     = (question: Y.Doc) =>    service.getQuestionIndex(question, questions);
+  const getJSONQuestionIndex = (question: Question) => service.getJSONQuestionIndex(question, questions);
 
-  const getJSONQuestionIndex = (question: Question) => {
-    let qIndex = -1;
-    questions.forEach((q, index) => {
-      if (q.getMap().toJSON() === question) {
-        qIndex = index;
-      }
-    });
-    return qIndex;
+  const createQuestion = () => {
+    const newQuestion = convertQuestion(getNewQuestion(QuestionTypeEnum.None, false))
+    questions.push([newQuestion]);
+    setCurrentQuestionIndex(questions.length - 1);
   }
 
   let activeQuestion: Y.Doc = undefined as any;
@@ -196,10 +184,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   } else if (_.isEmpty(activeQuestion?.toJSON()) || _.isEmpty(activeQuestion?.getMap()?.toJSON())) {
     if (questions.length <= 0) {
       if (!canEdit || locked) { return <PageLoader content="...Loading..." />; }
-      const newQuestion = convertQuestion(getNewQuestion(QuestionTypeEnum.None, false))
-      questions.push([newQuestion]);
-      console.log(newQuestion);
-      setCurrentQuestionIndex(questions.length - 1);
+      createQuestion();
     }
     return <PageLoader content="...Loading..." />;
   }
@@ -234,10 +219,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
     if (!canEdit) { return; }
     if (locked) { return; }
-    const newQuestion = convertQuestion(getNewQuestion(QuestionTypeEnum.None, false))
-    questions.push([newQuestion]);
-    console.log(newQuestion);
-    setCurrentQuestionIndex(questions.length - 1);
+
+    createQuestion();
 
     if (history.location.pathname.slice(-10) === '/synthesis') {
       history.push(`/build/brick/${brickId}/investigation/question`);
@@ -246,12 +229,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const moveToSynthesis = () => {
     history.push(map.InvestigationSynthesis(brickId));
-  }
+  };
 
   const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
     if (locked) { return; }
     setQuestionType(type);
-    history.push(`/build/brick/${brickId}/investigation/question-component`);
+    history.push(map.InvestigationBuild(brickId));
   };
 
   const componentFocus = (index: number) => {
@@ -273,7 +256,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     removeQuestionByIndex(questions, index);
     setDeleteDialog(false);
     setCurrentQuestionIndex(deleteQuestionIndex <= 0 ? 0 : deleteQuestionIndex - 1);
-  }
+  };
 
   const removeQuestion = (index: number) => {
     if (locked) { return; }
@@ -302,11 +285,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const toggleLock = () => {
     setLock(!locked);
     ybrick.set("locked", !locked);
-  }
+  };
 
   if (ybrick.get("id") !== brickId) {
     return <PageLoader content="...Loading..." />;
-  }
+  };
 
   const moveToReview = () => {
     const invalidQuestion = validateQuestions(questions);
@@ -375,30 +358,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     history.push('/home');
   }
 
-  const renderBuildQuestion = () => {
-    return (
-      <QuestionPanelWorkArea
-        brickId={brickId}
-        history={history}
-        synthesis={ybrick.get("synthesis")}
-        questionsCount={questions ? questions.length : 0}
-        yquestion={activeQuestion}
-        canEdit={canEdit}
-        locked={locked}
-        isAuthor={isAuthor}
-        validationRequired={validationRequired}
-        initSuggestionExpanded={initSuggestionExpanded}
-        componentFocus={componentFocus}
-        getQuestionIndex={getQuestionIndex}
-        toggleLock={toggleLock}
-        setQuestionType={convertQuestionTypes}
-        undo={undo}
-        redo={redo}
-        undoRedoService={undoRedoService}
-      />
-    );
-  };
-
   const renderQuestionComponent = () => {
     if (!isTutorialPassed()) {
       return (
@@ -427,7 +386,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const isTutorialPassed = () => {
     const isCurrentEditor = (props.reduxBrick.editors?.findIndex((e: any) => e.id === props.user.id) ?? -1) >= 0;
 
-    if (isCurrentEditor ||props.user.tutorialPassed || tutorialSkipped || questions.length > 1) {
+    if (isCurrentEditor || props.user.tutorialPassed || tutorialSkipped || questions.length > 1) {
       return true;
     }
     if (questions.get(0)?.getMap() && questions.get(0)?.getMap().get("type") !== QuestionTypeEnum.None) {
@@ -440,7 +399,25 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return (
       <Switch>
         <Route path="/build/brick/:brickId/investigation/question-component">
-          {renderBuildQuestion}
+          <QuestionPanelWorkArea
+            brickId={brickId}
+            history={history}
+            synthesis={ybrick.get("synthesis")}
+            questionsCount={questions ? questions.length : 0}
+            yquestion={activeQuestion}
+            canEdit={canEdit}
+            locked={locked}
+            isAuthor={isAuthor}
+            validationRequired={validationRequired}
+            initSuggestionExpanded={initSuggestionExpanded}
+            componentFocus={componentFocus}
+            getQuestionIndex={getQuestionIndex}
+            toggleLock={toggleLock}
+            setQuestionType={convertQuestionTypes}
+            undo={undo}
+            redo={redo}
+            undoRedoService={undoRedoService}
+          />
         </Route>
         <Route path="/build/brick/:brickId/investigation/question">
           {renderQuestionComponent}
