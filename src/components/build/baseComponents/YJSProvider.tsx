@@ -27,10 +27,12 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
     const [, forceUpdate] = React.useReducer(x => x + 1, 0);
 
     const handleQuestionChange = React.useCallback((evt: Y.YEvent[], transaction: Y.Transaction) => {
-        let res = toRenderJSON(evt);
-        if (res[0].childListChanged) {
-            return;
-        }
+        try {
+          let res = toRenderJSON(evt);
+          if (res[0].childListChanged) {
+              return;
+          }
+        } catch {}
         forceUpdate();
     }, [ydoc]);
 
