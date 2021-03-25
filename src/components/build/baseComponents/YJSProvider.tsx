@@ -6,6 +6,7 @@ import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { toRenderJSON } from "services/SharedTypeService";
 
 interface YJSProviderProps extends React.PropsWithChildren<any> {
     brickId: number;
@@ -24,8 +25,12 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
     const [awareness, setAwareness] = React.useState<Awareness>();
     const history = useHistory();
     const [, forceUpdate] = React.useReducer(x => x + 1, 0);
-    
+
     const handleQuestionChange = React.useCallback((evt: Y.YEvent[], transaction: Y.Transaction) => {
+        let res = toRenderJSON(evt);
+        if (res[0].childListChanged) {
+            return;
+        }
         forceUpdate();
     }, [ydoc]);
 
@@ -35,7 +40,7 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
             forceUpdate();
         });
 
-        newYDoc.on("subdocs", ({added, removed, loaded}: {
+        newYDoc.on("subdocs", ({ added, removed, loaded }: {
             added: Set<Y.Doc>,
             removed: Set<Y.Doc>,
             loaded: Set<Y.Doc>
