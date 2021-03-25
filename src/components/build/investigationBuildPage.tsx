@@ -13,7 +13,7 @@ import {
 } from "model/question";
 import actions from "redux/actions/brickActions";
 import { socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
-import { isHighlightInvalid, validateHint, validateQuestions } from "./questionService/ValidateQuestionService";
+import { isHighlightInvalid, validateBrick, validateHint, validateQuestions } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
   removeQuestionByIndex,
@@ -21,7 +21,7 @@ import {
   getFirstInvalidQuestion,
   getUniqueComponent,
 } from "./questionService/QuestionService";
-import { convertToQuestionType, stripHtml } from "./questionService/ConvertService";
+import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick, checkAdmin, checkPublisher } from "components/services/brickService";
@@ -301,8 +301,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
 
     if (invalidQuestion) {
-      let invalidQuestionJson = invalidQuestion.getMap().toJSON();
-      let invalid = isHighlightInvalid(invalidQuestionJson);
+      const invalidQuestionJson = invalidQuestion.getMap().toJSON() as Question;
+      const invalid = isHighlightInvalid(invalidQuestionJson);
       if (invalid === false) {
         let isLine = false;
         if (invalidQuestionJson.type === QuestionTypeEnum.LineHighlighting) {
@@ -449,11 +449,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return <TutorialPhonePreview step={step} />;
   }
 
-  let isValid = !validateQuestions(questions);
-
-  if (!synthesis || stripHtml(toRenderJSON(synthesis)).trim() === "") {
-    isValid = false;
-  }
+  const isValid = validateBrick(questions, synthesis);
 
   const isPublisher = checkPublisher(props.user, props.reduxBrick);
   const isAdmin = checkAdmin(props.user.roles);

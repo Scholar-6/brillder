@@ -6,6 +6,7 @@ import {
 } from 'model/question';
 import { stripHtml } from './ConvertService';
 import uniqueValidator from './UniqueValidator';
+import { invalid } from "moment";
 
 const getUniqueComponent = (components: any[]) => {
   return components && components.find(c => c.type === QuestionComponentTypeEnum.Component);
@@ -137,4 +138,15 @@ export function validateQuestions(questions: Y.Array<Y.Doc>) {
     }
   });
   return invalidQuestion;
+}
+
+export function validateBrick(questions: Y.Array<Y.Doc>, synthesis: Y.Text) {
+  const invalidQuesiton = validateQuestions(questions);
+  if (invalidQuesiton) {
+    return false;
+  }
+  if (!synthesis || stripHtml(toRenderJSON(synthesis)).trim() === "") {
+    return false;
+  }
+  return true;
 }
