@@ -1,6 +1,9 @@
 import webdriver, { By, Capabilities, until, WebDriver, WebElement } from "selenium-webdriver";
 import firefox from "selenium-webdriver/firefox";
 
+import dotenv from 'dotenv';
+dotenv.config({ path: "test/e2e/.env" });
+
 describe('main e2e test', () => {
     let driver: WebDriver;
     const waitClick = (element: WebElement) => async () => {
@@ -14,7 +17,7 @@ describe('main e2e test', () => {
 
     beforeEach(() => {
         jest.setTimeout(30000);
-        if(process.env.USE_LOCAL === "true") {
+        if(!process.env.SELENIUM_HOST) {
             let options = new firefox.Options()
             if(process.env.DISABLE_HEADLESS !== "true") {
                 options.headless();
@@ -25,7 +28,7 @@ describe('main e2e test', () => {
                 .build();
         } else {
             driver = new webdriver.Builder()
-                .usingServer("http://localhost:4444/wd/hub")
+                .usingServer(process.env.SELENIUM_HOST)
                 .withCapabilities(Capabilities.firefox())
                 .build();
         }
@@ -33,7 +36,8 @@ describe('main e2e test', () => {
 
     it("should run properly", async () => {
         // get the main web page
-        await driver.get('https://dev-app.brillder.com');
+        console.log("Navigating to:", process.env.SELENIUM_TEST_URL);
+        await driver.get(process.env.SELENIUM_TEST_URL);
 
         const title = await driver.getTitle();
         expect(title).toBeTruthy();
@@ -45,13 +49,14 @@ describe('main e2e test', () => {
         const emailField = await driver.findElement(By.css("input[type=email].login-field"))
         const passwordField = await driver.findElement(By.css("input[type=password].login-field.password"))
 
-        await emailField.sendKeys("admin@test.com");
-        await passwordField.sendKeys("password");
+        console.log("Logging in as:", process.env.TEST_EMAIL);
+        await emailField.sendKeys(process.env.TEST_EMAIL);
+        await passwordField.sendKeys(process.env.TEST_PASSWORD);
 
         const signInButton = await driver.findElement(By.className("sign-in-button"));
         await driver.wait(waitClick(signInButton), 2000);
 
-        const welcomeBox = await driver.wait(until.elementLocated(By.className("welcome-box")), 5000);
+        const welcomeBox = await driver.wait(until.elementLocated(By.className("welcome-box")), 7000);
         expect(welcomeBox).toBeTruthy();
 
         // MANAGE CLASSES
@@ -65,6 +70,7 @@ describe('main e2e test', () => {
         await createClassButton.click();
 
         const classNameString = `Test Class (${new Date().toUTCString()})`;
+        console.log("Creating class:", classNameString);
         const classNameField = await driver.wait(until.elementLocated(By.css("input[placeholder=\"Class Name\"")), 2000);
         await classNameField.sendKeys(classNameString);
 
@@ -93,9 +99,9 @@ describe('main e2e test', () => {
             const brickBlock = await driver.wait(until.elementLocated(By.css(".main-brick-container .absolute-container")), 10000);
             await driver.wait(waitClick(brickBlock), 2000);
 
-            const brickTitle = await driver.wait(until.elementLocated(By.className("intro-desktop-title")), 10000);
+            const brickTitle = await driver.wait(until.elementLocated(By.className("brick-title")), 10000);
             brickTitleString = await brickTitle.getText();
-            console.log("Assigning Brick: ", brickTitleString);
+            console.log("Assigning Brick:", brickTitleString);
 
             const assignClassButton = await driver.wait(until.elementLocated(By.xpath(`//button[contains(.,"Assign Brick")]`)), 5000);
             await driver.wait(waitClick(assignClassButton), 2000);
@@ -125,10 +131,10 @@ describe('main e2e test', () => {
             await driver.wait(waitClick(manageClassesButton), 2000);
 
             // Need to wait for the classes to show before clicking 'Assignments' tab.
-            await driver.wait(until.elementLocated(By.xpath(`//div[contains(concat(' ', @class, ' '), ' student-drop-item ') and label/span/text()='${classNameString}']`)), 5000);
+            // await driver.wait(until.elementLocated(By.xpath(`//div[contains(concat(' ', @class, ' '), ' student-drop-item ') and label/span/text()='${classNameString}']`)), 5000);
 
-            const assignmentsTab = await driver.wait(until.elementLocated(By.xpath(`//div[contains(@class, "tab-container")]/div[contains(., "Assignments")]`)), 2000)
-            await driver.wait(waitClick(assignmentsTab), 2000);
+            // const assignmentsTab = await driver.wait(until.elementLocated(By.xpath(`//div[contains(@class, "tab-container")]/div[contains(., "Assignments")]`)), 2000)
+            // await driver.wait(waitClick(assignmentsTab), 2000);
 
             const sidebarClass = await driver.wait(until.elementLocated(By.css(`.index-box[title="${classNameString}"]`)), 5000);
             await driver.wait(waitClick(sidebarClass), 2000);
@@ -145,7 +151,8 @@ describe('main e2e test', () => {
             const sidebarClass = await driver.wait(until.elementLocated(By.xpath(`//div[contains(concat(' ', @class, ' '), ' student-drop-item ') and label/span/text()='${classNameString}']`)), 5000);
             const removeClassButton = await sidebarClass.findElement(By.className("remove-class"));
             await removeClassButton.click();
-
+            
+            console.log("Deleting class:", classNameString);
             const confirmButton = await driver.wait(until.elementLocated(By.className("yes-button")), 2000);
             await confirmButton.click();
         }
@@ -155,7 +162,9 @@ describe('main e2e test', () => {
     });
 
     afterEach(async () => {
-        if(process.env.KEEP_OPEN !== "true") {
+        if(process.env.KEEP_OPEN !== "true"
+        && !process.env.SELENIUM_HOST) { // only keep the browser open locally - possible DoS if we leave it open remotely.
+            console.log("Exiting browser.");
             await driver.quit();
         }
     })
