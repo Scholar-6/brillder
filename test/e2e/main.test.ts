@@ -162,7 +162,8 @@ describe('main e2e test', () => {
     });
 
     afterEach(async () => {
-        if(process.env.KEEP_OPEN !== "true") {
+        if(process.env.KEEP_OPEN !== "true"
+        && !process.env.SELENIUM_HOST) { // only keep the browser open locally - possible DoS if we leave it open remotely.
             console.log("Exiting browser.");
             await driver.quit();
         }
