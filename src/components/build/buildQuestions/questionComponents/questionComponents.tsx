@@ -76,10 +76,13 @@ const QuestionComponents = ({
   const removeInnerComponent = (componentIndex: number) => {
     if (locked) { return; }
     const comps = Object.assign([], components) as any[];
-    comps.splice(componentIndex, 1);
-    setComponents(comps);
-    updateComponents(comps);
-    saveBrick();
+    if(components[componentIndex].type !== QuestionComponentTypeEnum.Component) {
+      comps.splice(componentIndex, 1);
+      setComponents(comps);
+      updateComponents(comps);
+      saveBrick();
+    }
+    setDialog(false);
   }
 
   let canRemove = (components.length > 3) ? true : false;
