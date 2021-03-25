@@ -1,9 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Redirect, RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import queryString from 'query-string';
+import { getYDoc } from "socket/yjs";
+import { Awareness } from "y-protocols/awareness";
 
 import "./investigationBuildPage.scss";
 import map from 'components/map';
@@ -53,13 +55,11 @@ import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./proposal/model";
-import { YJSContext } from "./baseComponents/YJSProvider";
 import * as Y from "yjs";
 import { convertQuestion, toRenderJSON } from "services/SharedTypeService";
 import _ from "lodash";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import service, { getPreviewLink, getQuestionType } from "./services/buildService";
-
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
   user: User;
@@ -113,6 +113,36 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [focusIndex, setFocusIndex] = React.useState(-1);
   const [undoRedoService] = React.useState(UndoRedoService.instance);
 
+  // data from YJS context
+  const [ydoc, setYdoc] = React.useState<Y.Doc>();
+  const [awareness, setAwareness] = React.useState<Awareness>();
+  const [, forceUpdate] = React.useReducer(x => x + 1, 0);
+
+  const handleQuestionChange = React.useCallback((evt: Y.YEvent[], transaction: Y.Transaction) => {
+    forceUpdate();
+  }, [ydoc]);
+
+  React.useEffect(() => {
+    const { ydoc: newYDoc, awareness: newAwareness } = getYDoc(history, props.reduxBrick.id, props.user.firstName, props.user.lastName);
+    newYDoc.getMap("brick").observeDeep((evt, transaction) => {
+      forceUpdate();
+    });
+
+    newYDoc.on("subdocs", ({ added, removed, loaded }: {
+      added: Set<Y.Doc>,
+      removed: Set<Y.Doc>,
+      loaded: Set<Y.Doc>
+    }) => {
+      added.forEach((q) => {
+        q.getMap().observeDeep(handleQuestionChange);
+      });
+    });
+
+    setYdoc(newYDoc);
+    setAwareness(newAwareness);
+  }, [props.reduxBrick.id]);
+  // 
+
   /* Synthesis */
   let isSynthesisPage = false;
   if (history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
@@ -123,11 +153,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const validRoutes = ["/investigation", "/synthesis", "/subject", TitleRoutePart, OpenQuestionRoutePart, BrickLengthRoutePart, BriefRoutePart, PrepRoutePart, ProposalReviewPart];
   const isProposalPage = validRoutes.includes(props.location.pathname.split("/")[4]);
 
-  const { ydoc, json: yjson } = useContext(YJSContext)!;
+  if (!ydoc) {
+    return <PageLoader content="Getting brick..." />
+  }
+
   const ybrick = ydoc!.getMap("brick")!;
   props.startEditing(ybrick.get("id"));
 
-  if (!ybrick) {
+  if (!ybrick || !toRenderJSON(ybrick).id) {
     return <PageLoader content="Getting brick..." />
   }
 
@@ -158,7 +191,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   setBrillderTitle(ybrick.get("title"));
 
-  const getQuestionIndex     = (question: Y.Doc) =>    service.getQuestionIndex(question, questions);
+  const getQuestionIndex = (question: Y.Doc) => service.getQuestionIndex(question, questions);
   const getJSONQuestionIndex = (question: Question) => service.getJSONQuestionIndex(question, questions);
 
   const createQuestion = () => {
