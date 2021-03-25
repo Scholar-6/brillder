@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Brick, BrickLengthEnum } from "model/brick";
+import { Brick } from "model/brick";
 
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
@@ -9,7 +9,6 @@ import { BrickFieldNames } from 'components/build/proposal/model';
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { PlayMode } from "../model";
-import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 import { getPrepareTime } from "../services/playTimes";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 

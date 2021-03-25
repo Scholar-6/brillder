@@ -5,9 +5,9 @@ import brickActions from 'redux/actions/brickActions';
 import { ReduxCombinedState } from "redux/reducers";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import SendToPublisherDialog from "./dialogs/SendToPublisherDialog";
 import SendPublisherSuccessDialog from "components/playPreview/finalStep/SendPublisherSuccess";
 import { Brick, BrickStatus } from "model/brick";
+import YesNoDialog from "./dialogs/YesNoDialog";
 
 export interface ButtonProps {
   disabled: boolean;
@@ -49,14 +49,19 @@ const SendToPublisherButton: React.FC<ButtonProps> = props => {
         <SpriteIcon name="send" />
         {hovered && <div className="custom-tooltip">Send to Publisher</div>}
       </div>
-      <SendToPublisherDialog isOpen={isOpen} close={() => setState(false)} submit={async () => {
-        let res = await props.sendToPublisher(props.brick.id);
-        if (res === true) {
-          // change brick status
-          props.brick.status = BrickStatus.Review;
-          setState(false);
-        }
-      }} />
+      <YesNoDialog
+        isOpen={isOpen}
+        title="Are you convinced this brick meets our publication standards?"
+        close={() => setState(false)}
+        submit={async () => {
+          let res = await props.sendToPublisher(props.brick.id);
+          if (res === true) {
+            // change brick status
+            props.brick.status = BrickStatus.Review;
+            setState(false);
+          }
+        }}
+      />
       <SendPublisherSuccessDialog
         isOpen={props.sendedToPublisher && props.publisherConfirmed === false}
         close={() => {

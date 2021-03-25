@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Subject } from "model/brick";
-import { GENERAL_SUBJECT, CURRENT_AFFAIRS_SUBJECT } from "components/services/subject";
+import { GENERAL_SUBJECT } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
 
