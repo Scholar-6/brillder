@@ -28,11 +28,14 @@ export const getQuestionType = (question: Y.Doc) => {
 
 export const getJSONQuestionIndex = (question: Question, questions: Y.Array<Y.Doc>) => {
   let qIndex = -1;
-  questions.forEach((q, index) => {
-    if (q.getMap().toJSON() === question) {
-      qIndex = index;
-    }
-  });
+  try {
+    questions.forEach((q, index) => {
+      let qJson = q.getMap().toJSON();
+      if (qJson === question || qJson.id === question.id) {
+        qIndex = index;
+      }
+    });
+  } catch {}
   return qIndex;
 }
 
