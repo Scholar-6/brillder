@@ -119,6 +119,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [, forceUpdate] = React.useReducer(x => x + 1, 0);
 
   const handleQuestionChange = React.useCallback((evt: Y.YEvent[], transaction: Y.Transaction) => {
+    let res = toRenderJSON(evt);
+    if (res[0].childListChanged) {
+      return;
+    }
     forceUpdate();
   }, [ydoc]);
 
