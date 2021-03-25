@@ -76,6 +76,9 @@ export function validateQuestion(question: Question) {
   }
 
   const comp = getUniqueComponent(components);
+  if(!comp) {
+    return false;
+  }
 
   let answersCount = 1;
   if (comp.list) {
