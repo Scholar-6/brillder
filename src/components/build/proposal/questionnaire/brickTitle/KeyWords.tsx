@@ -36,7 +36,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
   checkIfPresent() {
     const {keyWord} = this.state;
     for (let keyword of this.state.keyWords) {
-      if (keyword.name.trim() == keyWord.trim()) {
+      if (keyword.name.trim() === keyWord.trim()) {
         return true;
       }
     }

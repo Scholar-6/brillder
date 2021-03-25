@@ -107,7 +107,7 @@ class BuildBricks extends Component<BuildBricksProps, State> {
       }
 
       if (brick.isCreateLink) {
-        return <CreateBrickBlock history={this.props.history} isCore={this.props.isCorePage} />;
+        return <CreateBrickBlock key={-10} history={this.props.history} isCore={this.props.isCorePage} />;
       }
 
       // render first row as description

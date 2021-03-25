@@ -340,7 +340,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   }
 
   onIntroChanged(e: any) {
-    if (e != 0) {
+    if (e !== 0) {
       this.setState({stepsEnabled: false});
     }
   }
