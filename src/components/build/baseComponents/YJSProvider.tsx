@@ -28,17 +28,23 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
 
     const handleQuestionChange = React.useCallback((evt: Y.YEvent[], transaction: Y.Transaction) => {
         try {
-          let res = toRenderJSON(evt);
-          if (res[0].childListChanged) {
-              return;
-          }
-        } catch {}
+            let res = toRenderJSON(evt);
+            if (res[0].childListChanged) {
+                return;
+            }
+        } catch { }
         forceUpdate();
     }, [ydoc]);
 
     React.useEffect(() => {
         const { ydoc: newYDoc, awareness: newAwareness } = getYDoc(history, props.brickId, props.user.firstName, props.user.lastName);
         newYDoc.getMap("brick").observeDeep((evt, transaction) => {
+            let res = toRenderJSON(evt);
+            try {
+                if (res[0].childListChanged) {
+                    return;
+                }
+            } catch { }
             forceUpdate();
         });
 

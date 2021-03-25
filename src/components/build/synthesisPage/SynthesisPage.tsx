@@ -20,9 +20,9 @@ import { QuillEditorContext } from 'components/baseComponents/quill/QuillEditorC
 
 export interface SynthesisProps {
   currentBrick: Brick;
+  ybrick: Y.Map<any>;
   locked: boolean;
   editOnly: boolean;
-  synthesis: Y.Text;
   undoRedoService: UndoRedoService;
   initSuggestionExpanded: boolean;
   undo(): void;
@@ -99,6 +99,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
 
   render() {
     const {canScroll} = this.state;
+    const synthesis = this.props.ybrick.get("synthesis") as Y.Text;
 
     return (
     <QuillEditorContext.Provider value={[this.state.currentEditorId, (editorId: string) => this.setState(state => ({ ...state, currentEditorId: editorId }))]}>
@@ -121,7 +122,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
               /> */}
               <QuillEditor
                 disabled={this.props.locked}
-                sharedData={this.props.synthesis}
+                sharedData={synthesis}
                 showToolbar={true}
                 imageDialog={true}
                 toolbar={[
@@ -150,7 +151,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                     />
                   </div>
                   <div style={{width: "100%"}}>
-                    <CountSynthesis value={this.props.synthesis.toJSON()} />
+                    <CountSynthesis value={synthesis.toJSON()} />
                   </div>
                 </div>
               </Grid>
@@ -184,4 +185,4 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const connector = connect(mapState);
 
-export default connector(SynthesisPage);
+export default connector(React.memo(SynthesisPage));

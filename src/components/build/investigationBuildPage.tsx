@@ -4,6 +4,8 @@ import { Route } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import queryString from 'query-string';
+import * as Y from "yjs";
+import _ from "lodash";
 
 import "./investigationBuildPage.scss";
 import map from 'components/map';
@@ -54,9 +56,7 @@ import BuildNavigation from "./baseComponents/BuildNavigation";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./proposal/model";
 import { YJSContext } from "./baseComponents/YJSProvider";
-import * as Y from "yjs";
 import { convertQuestion, toRenderJSON } from "services/SharedTypeService";
-import _ from "lodash";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import service, { getPreviewLink, getQuestionType } from "./services/buildService";
 
@@ -426,7 +426,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <SynthesisPage
             locked={locked}
             editOnly={!canEdit}
-            synthesis={synthesis}
+            ybrick={ybrick}
             initSuggestionExpanded={initSuggestionExpanded}
             undoRedoService={undoRedoService}
             undo={undo}
