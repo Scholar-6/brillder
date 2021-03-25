@@ -13,7 +13,6 @@ import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 import { Comment, CommentLocation } from 'model/comments';
 import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
-import { User } from 'model/user';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Brick } from 'model/brick';
 import UndoRedoService from 'components/services/UndoRedoService';

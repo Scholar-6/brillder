@@ -15,7 +15,6 @@ import RedoButton from '../baseComponents/redoButton';
 import UndoButton from '../baseComponents/UndoButton';
 import CountSynthesis from './WordsCount';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
-import QuillGlobalToolbar from 'components/baseComponents/quill/QuillGlobalToolbar';
 import { QuillEditorContext } from 'components/baseComponents/quill/QuillEditorContext';
 
 

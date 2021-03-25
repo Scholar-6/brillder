@@ -1,6 +1,5 @@
-import React from "react";
 import { fileUrl, uploadFile } from "components/services/uploadFile";
-import { DeltaStatic, RangeStatic } from "quill";
+import { DeltaStatic } from "quill";
 import Delta from "quill-delta";
 import { Quill } from "react-quill";
 import { ImageAlign } from "components/build/buildQuestions/components/Image/model";

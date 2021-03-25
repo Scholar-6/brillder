@@ -80,9 +80,7 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
 
     const setGraphSetting = (evt: React.MouseEvent<HTMLElement>, newSettings: string[]) => {
         value.doc!.transact(() => {
-            settingNames.map(name => {
-                value.get("graphSettings").set(name, newSettings.findIndex(s => s === name) !== -1);
-            });
+            settingNames.map(name => value.get("graphSettings").set(name, newSettings.findIndex(s => s === name) !== -1));
         });
     }
 

@@ -5,7 +5,7 @@ import { Grid, Input, Hidden } from "@material-ui/core";
 import './brickTitle.scss';
 import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "../../model";
 import { AcademicLevel, Brick, Subject } from "model/brick";
-import { canEdit, getDate, getMonth, getYear } from 'components/services/brickService';
+import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
 import { enterPressed } from "components/services/key";
 

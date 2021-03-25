@@ -301,7 +301,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const { user } = this.props;
 
     let playStatus = PlayButtonStatus.Hidden;
-    const { brick } = this.props;
     const ybrick = this.context?.ydoc.getMap("brick");
     if (ybrick && ybrick.get("questions") && ybrick.get("questions").length > 0) {
       playStatus = PlayButtonStatus.Valid;

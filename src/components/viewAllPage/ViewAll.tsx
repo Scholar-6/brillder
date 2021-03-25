@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Grid, Hidden } from "@material-ui/core";
 import { connect } from "react-redux";
-import { Swiper, SwiperSlide } from "swiper/react";
 import queryString from 'query-string';
 import { Route, Switch } from 'react-router-dom';
 import "swiper/swiper.scss";
@@ -13,14 +12,12 @@ import { Notification } from 'model/notifications';
 import { Brick, Subject, SubjectItem } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin, getAssignmentIcon } from "components/services/brickService";
-import { getCurrentUserBricks, getPublicBricks, getPublishedBricks, searchBricks, searchPublicBricks } from "services/axios/brick";
+import { getPublicBricks, getPublishedBricks, searchBricks, searchPublicBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
-import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
-import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import ViewAllFilter, { SortBy } from "./components/ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
@@ -28,15 +25,13 @@ import BrickBlock from "components/baseComponents/BrickBlock";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
-import { getBrickColor } from "services/brick";
 import map from "components/map";
 import NoSubjectDialog from "components/baseComponents/dialogs/NoSubjectDialog";
 import { clearProposal } from "localStorage/proposal";
-import ViewAllMobile from "./ViewAllMobile";
 import CreateOneButton from "components/viewAllPage/components/CreateOneButton";
 import RecommendButton from "components/viewAllPage/components/RecommendBuilderButton";
 
-import { removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject, getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks, expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks, sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds } from './service/viewAll';
+import { removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject, getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks, expandBrick, sortAllBricks, countSubjectBricks, sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds } from './service/viewAll';
 import { filterByCurretUser } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 import AllSubjects from "./allSubjectsPage/AllSubjects";
@@ -589,47 +584,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     });
   };
 
-  // 2020-03-04 no longer used
-  //region Mobile
-  // renderMobileExpandedBrick(brick: Brick) {
-  //   let color = getBrickColor(brick);
-
-  //   return (
-  //     <ExpandedMobileBrick
-  //       brick={brick}
-  //       color={color}
-  //       move={(brickId) => this.move(brickId)}
-  //     />
-  //   );
-  // }
-
-  // renderMobileUpperBricks(expandedBrick: Brick | undefined) {
-  //   if (expandedBrick) {
-  //     return this.renderMobileExpandedBrick(expandedBrick);
-  //   }
-
-  //   let bricksList = [];
-  //   for (const brick of this.state.yourBricks) {
-  //     bricksList.push(
-  //       <ShortBrickDescription
-  //         brick={brick}
-  //         searchString=""
-  //         onClick={() => this.handleYourMobileClick(brick)}
-  //       />
-  //     );
-  //   }
-  //   return (
-  //     <Swiper slidesPerView={2}>
-  //       {bricksList.map((b, i) => (
-  //         <SwiperSlide key={i} style={{ width: "50vw" }}>
-  //           {b}
-  //         </SwiperSlide>
-  //       ))}
-  //     </Swiper>
-  //   );
-  // }
-  //region Mobile
-
   renderEmptyCategory(name: string) {
     return (
       <div className="brick-row-title">
@@ -820,35 +774,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       </Grid>
     );
   }
-
-  // 2020-03-04 no longer used
-  // renderMobilePage(expandedBrick: Brick | undefined) {
-  //   return (
-  //     <div>
-  //       <PageHeadWithMenu
-  //         page={PageEnum.ViewAll}
-  //         user={this.props.user}
-  //         placeholder={"Search Subjects, Topics, Titles & more"}
-  //         history={this.props.history}
-  //         search={() => this.search()}
-  //         searching={(v) => this.searching(v)}
-  //       />
-  //       <div className="mobile-scroll-bricks">
-  //         {this.renderMobileUpperBricks(expandedBrick)}
-  //       </div>
-  //       <Grid container direction="row" className="sorted-row">
-  //         <ViewAllMobile
-  //           sortedIndex={this.state.sortedIndex}
-  //           pageSize={this.state.pageSize}
-  //           finalBricks={this.state.finalBricks}
-  //           history={this.props.history}
-  //           handleMobileClick={this.handleMobileClick.bind(this)}
-  //           move={this.move.bind(this)}
-  //         />
-  //       </Grid>
-  //     </div>
-  //   );
-  // }
 
   renderDesktopViewAllPage(bricks: Brick[]) {
     return (

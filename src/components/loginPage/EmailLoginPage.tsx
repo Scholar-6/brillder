@@ -28,10 +28,6 @@ interface LoginProps {
   match: any;
 }
 
-const MobileTheme = React.lazy(() => import('./themes/LoginPageMobileTheme'));
-const TabletTheme = React.lazy(() => import('./themes/LoginPageTabletTheme'));
-const DesktopTheme = React.lazy(() => import('./themes/LoginPageDesktopTheme'));
-
 const EmailLoginPage: React.FC<LoginProps> = (props) => {
   let initPolicyOpen = false;
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {

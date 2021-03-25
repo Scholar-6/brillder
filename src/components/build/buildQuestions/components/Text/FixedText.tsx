@@ -4,7 +4,6 @@ import { Quill } from "react-quill";
 
 import './Text.scss'
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
-import ReturnToAuthorDialog from 'components/build/baseComponents/dialogs/ReturnToEditorDialog';
 
 
 export interface TextComponentProps {
