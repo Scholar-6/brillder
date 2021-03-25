@@ -545,7 +545,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             prev={() => selectQuestion(questions.length - 1)}
             next={() => { }}
             nextDisabled={true}
-            data={{ synthesis: toRenderJSON(ybrick).synthesis, brickLength: ybrick.get("brickLength") }}
+            data={{ synthesis, brickLength: ybrick.get("brickLength") }}
           />
         </Route>
       </Grid>
