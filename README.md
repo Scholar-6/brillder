@@ -1,34 +1,34 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Development Version
+
 All changes to development branch are automatically deployed to http://dev-brillder.scholar6.org
 
-
-## Run Project  
+## Run Project
 
 Run the project locally (Windows and Linux) and connect to the dev-api:
 
-* Requires Git and NPM  
-* `git clone git@github.com:Scholar-6/brillder`  
-* `cd brillder`  
-* add an entry to the hosts file   
-** linux /etc/hosts  
-** windows C:\Windows\System32\Drivers\etc\hosts  
-`127.0.0.1 local-brillder.scholar6.org` 
-* create .env file with the following values  
-        REACT_APP_BACKEND_HOST=https://dev-api.brillder.com  
-        REACT_APP_ZENDESK_ID=33210b3d-b3d5-43ba-9b07-70acce8c10b6  
-        REACT_APP_VERSION=$npm_package_version  
-        # $npm_package_version points to the package.json 
-        REACT_APP_BUILD_AUTO_SAVE_DELAY=500  
-        REACT_APP_DESMOS_API_KEY=dcb31709b452b1cf9dc26972add0fda6  
-        HOST=local-brillder.brillder.com  
-        PORT=3000
-        PUBLIC_URL=/play/dashboard/all-subjects  
-* `npm install`  
-* `npm start`  
-* Go to http://local-brillder.scholar6.org:3000  
-* If you do not have an account registered on https://dev-brillder.scholar6.org then click signup option  
+- Requires Git and NPM
+- `git clone git@github.com:Scholar-6/brillder`
+- `cd brillder`
+- add an entry to the hosts file  
+  ** linux /etc/hosts  
+  ** windows C:\Windows\System32\Drivers\etc\hosts  
+  `127.0.0.1 local-brillder.scholar6.org`
+- create .env file with the following values  
+   REACT_APP_BACKEND_HOST=https://dev-api.brillder.com  
+   REACT_APP_ZENDESK_ID=33210b3d-b3d5-43ba-9b07-70acce8c10b6  
+   REACT_APP_VERSION=$npm_package_version
+  # $npm_package_version points to the package.json
+  REACT_APP_BUILD_AUTO_SAVE_DELAY=500  
+   REACT_APP_DESMOS_API_KEY=dcb31709b452b1cf9dc26972add0fda6  
+   HOST=local-brillder.brillder.com  
+   PORT=3000
+  PUBLIC_URL=/play/dashboard/all-subjects
+- `npm install`
+- `npm start`
+- Go to http://local-brillder.scholar6.org:3000
+- If you do not have an account registered on https://dev-brillder.scholar6.org then click signup option
 
 ## Available Scripts
 
@@ -60,19 +60,33 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### `npm run e2e`
+
+Runs the end to end test using Selenium.
+There should be a .env file in test/e2e that provides the following config variables.
+
+```
+SELENIUM_HOST: Path to the Selenium server (blank for local WebDriver).
+SELENIUM_TEST_URL: URL to test using the e2e test suite.
+TEST_EMAIL: Email for the test user to log in with.
+TEST_PASSWORD: Password for the test user to log in with.
+DISABLE_HEADLESS: If true, run the tests in a graphical browser (only if USE_LOCAL is true).
+KEEP_OPEN: If true, keep the browser open after a test is finished.
+```
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-
 ## MAP
-/back-to-work       - auto redirect to build learn or teach tab based on user roles
+
+/back-to-work - auto redirect to build learn or teach tab based on user roles
 /back-to-work/learn - learn tab
 /back-to-work/build - build tab
 /back-to-work/teach - teach tab
 
-/play/dashboard        - view all page
+/play/dashboard - view all page
 /build/new-brick - create new brick page
 /build/brick/{brickId}/investigation/question - investigation build page

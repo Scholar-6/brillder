@@ -17,7 +17,7 @@ describe('main e2e test', () => {
 
     beforeEach(() => {
         jest.setTimeout(30000);
-        if(process.env.USE_LOCAL === "true") {
+        if(!process.env.SELENIUM_HOST) {
             let options = new firefox.Options()
             if(process.env.DISABLE_HEADLESS !== "true") {
                 options.headless();
@@ -36,6 +36,7 @@ describe('main e2e test', () => {
 
     it("should run properly", async () => {
         // get the main web page
+        console.log("Navigating to:", process.env.SELENIUM_TEST_URL);
         await driver.get(process.env.SELENIUM_TEST_URL);
 
         const title = await driver.getTitle();
@@ -48,13 +49,14 @@ describe('main e2e test', () => {
         const emailField = await driver.findElement(By.css("input[type=email].login-field"))
         const passwordField = await driver.findElement(By.css("input[type=password].login-field.password"))
 
-        await emailField.sendKeys("admin@test.com");
-        await passwordField.sendKeys("password");
+        console.log("Logging in as:", process.env.TEST_EMAIL);
+        await emailField.sendKeys(process.env.TEST_EMAIL);
+        await passwordField.sendKeys(process.env.TEST_PASSWORD);
 
         const signInButton = await driver.findElement(By.className("sign-in-button"));
         await driver.wait(waitClick(signInButton), 2000);
 
-        const welcomeBox = await driver.wait(until.elementLocated(By.className("welcome-box")), 5000);
+        const welcomeBox = await driver.wait(until.elementLocated(By.className("welcome-box")), 7000);
         expect(welcomeBox).toBeTruthy();
 
         // MANAGE CLASSES
@@ -68,6 +70,7 @@ describe('main e2e test', () => {
         await createClassButton.click();
 
         const classNameString = `Test Class (${new Date().toUTCString()})`;
+        console.log("Creating class:", classNameString);
         const classNameField = await driver.wait(until.elementLocated(By.css("input[placeholder=\"Class Name\"")), 2000);
         await classNameField.sendKeys(classNameString);
 
@@ -98,7 +101,7 @@ describe('main e2e test', () => {
 
             const brickTitle = await driver.wait(until.elementLocated(By.className("brick-title")), 10000);
             brickTitleString = await brickTitle.getText();
-            console.log("Assigning Brick: ", brickTitleString);
+            console.log("Assigning Brick:", brickTitleString);
 
             const assignClassButton = await driver.wait(until.elementLocated(By.xpath(`//button[contains(.,"Assign Brick")]`)), 5000);
             await driver.wait(waitClick(assignClassButton), 2000);
@@ -148,7 +151,8 @@ describe('main e2e test', () => {
             const sidebarClass = await driver.wait(until.elementLocated(By.xpath(`//div[contains(concat(' ', @class, ' '), ' student-drop-item ') and label/span/text()='${classNameString}']`)), 5000);
             const removeClassButton = await sidebarClass.findElement(By.className("remove-class"));
             await removeClassButton.click();
-
+            
+            console.log("Deleting class:", classNameString);
             const confirmButton = await driver.wait(until.elementLocated(By.className("yes-button")), 2000);
             await confirmButton.click();
         }
@@ -159,6 +163,7 @@ describe('main e2e test', () => {
 
     afterEach(async () => {
         if(process.env.KEEP_OPEN !== "true") {
+            console.log("Exiting browser.");
             await driver.quit();
         }
     })
