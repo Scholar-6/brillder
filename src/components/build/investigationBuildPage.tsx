@@ -13,7 +13,7 @@ import {
 } from "model/question";
 import actions from "redux/actions/brickActions";
 import { socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
-import { isHighlightInvalid, validateHint, validateQuestion, validateQuestions } from "./questionService/ValidateQuestionService";
+import { isHighlightInvalid, validateHint, validateQuestions } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
   removeQuestionByIndex,
@@ -449,13 +449,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return <TutorialPhonePreview step={step} />;
   }
 
-  let isValid = true;
-  questions.forEach(q => {
-    let isQuestionValid = validateQuestion(toRenderJSON(q.getMap()));
-    if (!isQuestionValid) {
-      isValid = false;
-    }
-  });
+  let isValid = !validateQuestions(questions);
 
   if (!synthesis || stripHtml(toRenderJSON(synthesis)).trim() === "") {
     isValid = false;
