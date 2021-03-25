@@ -115,7 +115,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   }
 
   isArchived(assignment: Assignment) {
-    return assignment.studentStatus && assignment.studentStatus.length > 0 && assignment.studentStatus[0].status == 3;
+    return assignment.studentStatus && assignment.studentStatus.length > 0 && assignment.studentStatus[0].status === 3;
   }
 
   renderContent() {

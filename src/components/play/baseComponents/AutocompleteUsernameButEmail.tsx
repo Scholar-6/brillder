@@ -3,7 +3,6 @@ import { Avatar, Chip, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import './AutocompleteUsername.scss';
-import { suggestUsername } from "services/axios/user";
 import { UserBase } from "model/user";
 import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -24,8 +23,6 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
   users, setUsers,
   ...props
 }) => {
-  const [suggestions, setSuggestions] = React.useState([] as UserBase[]);
-
   return (
     <Autocomplete
       multiple
@@ -62,17 +59,6 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
             }}
             onChange={(evt) => {
               const { value } = evt.target;
-              if (value.length >= 2) {
-                suggestUsername(value).then((res) => {
-                  if (res && res.length > 0) {
-                    setSuggestions(res);
-                  } else {
-                    setSuggestions([]);
-                  }
-                });
-              } else {
-                setSuggestions([]);
-              }
               props.onChange(value);
             }}
             placeholder="Enter emails here"

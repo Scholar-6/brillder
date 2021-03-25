@@ -22,7 +22,7 @@ const connector = connect(null, mapDispatch);
 interface LoginProps {
   history: History;
   token: string;
-  email?: string;
+  email: string;
   loginSuccess(): void;
 }
 
@@ -30,10 +30,11 @@ const EmailActivateDesktopPage: React.FC<LoginProps> = (props) => {
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
-  const [email, setEmail] = useState(props.email || "");
   const [password, setPassword] = useState("");
   const [isLoginWrong, setLoginWrong] = React.useState(false);
   const [isSubmiting, setSubmiting] = React.useState(false);
+
+  const {email} = props;
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {

@@ -35,7 +35,7 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
         // get image by url
       }
     }
-  }, [initFile, initData.value]);
+  }, [initFile, file, initData.value]);
 
   let canUpload = false;
   if (permision && source && !removed) {

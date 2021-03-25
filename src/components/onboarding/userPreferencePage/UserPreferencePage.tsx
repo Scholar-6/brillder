@@ -23,11 +23,6 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
   const isAdmin = checkAdmin(props.user.roles);
   const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId ?? props.defaultPreference);
 
-  React.useEffect(() => {
-      if(preference) {
-          handleChange(preference, false);
-      }
-  }, [props.defaultPreference]);
   const handleChange = async (roleId: RolePreference, disabled: boolean) => {
     if (disabled || !roleId) {
       return;
@@ -40,6 +35,13 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
       console.log(e);
     }
   }
+
+  React.useEffect(() => {
+    if (preference) {
+      handleChange(preference, false);
+    }
+  /* eslint-disable-next-line */
+}, [props.defaultPreference]);
 
   const renderRadioButton = (roleId: RolePreference) => {
     return <Radio checked={preference === roleId} value={roleId} />;

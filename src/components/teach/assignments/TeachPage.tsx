@@ -146,7 +146,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       let { activeClassroom } = this.state;
 
       if (activeClassId) {
-        const classroom = classrooms.find(c => c.id == activeClassId);
+        const classroom = classrooms.find(c => c.id === activeClassId);
         if (classroom) {
           activeClassroom = classroom;
           activeClassroom.active = true;

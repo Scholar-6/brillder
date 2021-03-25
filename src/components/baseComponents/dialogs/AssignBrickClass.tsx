@@ -41,7 +41,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const loadBricks = async () => {
     const bricks = await getPublishedBricks();
     if (bricks) {
-      setBricks(bricks.filter(b => b.isCore == true));
+      setBricks(bricks.filter(b => b.isCore === true));
     }
   }
 

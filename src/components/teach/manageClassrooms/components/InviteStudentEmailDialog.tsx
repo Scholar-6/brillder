@@ -20,11 +20,9 @@ const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
   const [currentEmail, setCurrentEmail] = React.useState("");
   const [users, setUsers] = React.useState<User[]>([]);
-  const [emailInvalid, setEmailInvalid] = React.useState<boolean>(false);
 
   const addUser = (email: string) => {
     if (!emailRegex.test(email)) {
-      setEmailInvalid(true);
       return;
     }
     setCurrentEmail('');
@@ -33,7 +31,6 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
 
   const onAddUser = React.useCallback(() => {
     if (!emailRegex.test(currentEmail)) {
-      setEmailInvalid(true);
       return;
     }
     setCurrentEmail('');
@@ -44,7 +41,6 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
     const currentUsers = users;
     if (!emailRegex.test(currentEmail)) {
       if (users.length <= 0) {
-        setEmailInvalid(true);
         return;
       }
     } else {
@@ -58,7 +54,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
       { withCredentials: true }
     );
     props.close(currentUsers.length);
-  }, [users, currentEmail])
+  }, [users, props, currentEmail])
 
   const checkSpaces = (email: string) => {
     const emails = email.split(' ');

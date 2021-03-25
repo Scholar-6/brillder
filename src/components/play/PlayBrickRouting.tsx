@@ -116,6 +116,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         setSidebar(true);
       }
     }
+  /*eslint-disable-next-line*/
   }, [])
 
   // by default move to intro

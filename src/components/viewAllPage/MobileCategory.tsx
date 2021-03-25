@@ -138,7 +138,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   handleClick(id: number) {
     const { finalBricks } = this.state;
-    const brick = finalBricks.find(b => b.id == id);
+    const brick = finalBricks.find(b => b.id === id);
     if (brick) {
       const isExpanded = brick.expanded;
       finalBricks.forEach(brick => brick.expanded = false);
