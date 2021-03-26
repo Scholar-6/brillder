@@ -2018,7 +2018,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   justify-content: center;
   align-items: center;
   height: 100%;
-  font-size: 30vh;
+  font-size: 36vh;
   font-family: $font-family-bold;
 }
 
@@ -2093,4 +2093,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   display: flex;
   justify-content: center;
   width: 26.5vw !important;
+}
+
+// margin in sides in play
+.play-preview-pages .question-live-play {
+  margin-left: 7vw !important;
+  margin-right: 7vw !important;
 }
