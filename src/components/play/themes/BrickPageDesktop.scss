@@ -1912,6 +1912,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
     .introduction-content {
       padding: 0 4vw !important;
+      .brief-title {
+        .italic {
+          color: var(--theme-dark-blue);
+          font-size: 1.8vw;
+        }        
+      }
     }
   }
   .scrollable {
