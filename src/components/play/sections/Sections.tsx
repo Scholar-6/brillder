@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AcademicLevelLabels, Brick } from "model/brick";
+import { Brick } from "model/brick";
 
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
@@ -29,16 +29,6 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
 
   if (isPhone()) {
     return <div />;
-  }
-
-  const renderBrickCircle = () => {
-    return (
-      <div className="round-button-container">
-        <div className="round-button" style={{ background: `${brick.subject?.color || '#B0B0AD'}` }}>
-          {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
-        </div>
-      </div>
-    );
   }
 
   return (
