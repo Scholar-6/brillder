@@ -21,8 +21,7 @@ class SecondsCountDown extends React.Component<Props, State> {
 
   componentDidMount() {
     const interval = setInterval(() => {
-      console.log(55 , this.state.seconds);
-      if (this.state.seconds === 1) {
+      if (this.state.seconds === 0) {
         this.props.onEnd();
         clearInterval(this.state.interval);
         this.setState({seconds: -1});
@@ -40,7 +39,7 @@ class SecondsCountDown extends React.Component<Props, State> {
   render() {
     return (
       <div className="seconds-countdown-container">
-        {this.state.seconds}
+        {this.state.seconds === 0 ? 'GO!' : this.state.seconds}
       </div>
     );
   }
