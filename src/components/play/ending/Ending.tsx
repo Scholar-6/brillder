@@ -100,12 +100,12 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     }, 100);
     this.setState({ interval });
 
-    document.addEventListener("keydown", this.state.handleMove, false);
+    //document.addEventListener("keydown", this.state.handleMove, false);
   }
 
   componentWillUnmount() {
     clearInterval(this.state.interval);
-    document.removeEventListener("keydown", this.state.handleMove, false);
+    //document.removeEventListener("keydown", this.state.handleMove, false);
   }
 
   handleMove() {
@@ -172,7 +172,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
           </Grid>
         </Grid>
         <div className="p-help-text">
-          This is an average
+          This is an average of your provisional score and your review score
         </div>
       </div>
     );
