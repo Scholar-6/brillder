@@ -1321,7 +1321,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               transition: all 300ms ease-out;
               display: flex;
               align-items: center;
-              font-size: 1.8vw;
+              font-size: 2.5vw;
               font-family: $font-family-bold;
               margin-left: 1vw;
               margin-right: 3vw;
@@ -1329,8 +1329,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               svg {
                 transition: all 300ms ease-out;
                 stroke-width: 3;
-                width: 2.1vw;
-                height: 2.1vw;
+                width: 3vw;
+                height: 3vw;
               }
               &.next {
                 &:hover {
@@ -1817,6 +1817,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   font-size: $base-font-size;
 }
 
+@keyframes greyToOrange {
+  from { background: var(--tab-gray); }
+  to { background: var(--theme-orange); }
+}
+
 // after cover page
 .after-cover-page {
   .after-cover-main-content {
@@ -1843,8 +1848,13 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           margin: 1vh;
 
           &.orange {
+            cursor: pointer;
             color: var(--white);
             background: var(--theme-orange);
+            animation-duration: 1s;
+            animation-delay: 0s;
+            animation-timing-function: ease;
+            animation-name: greyToOrange;
           }
         }
       }
@@ -1911,10 +1921,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
   .new-layout-footer {
     .title-column {
-      width: 65vw;
+      width: 70vw;
       justify-content: flex-end;
-      font-size: 1.8vw;
-      margin-left: 33vw;
+      font-size: 2vw;
+      margin-left: 27vw;
+      margin-right: 0.5vw;
       font-family: $font-family-bold;
     }
     .footer-arrow {

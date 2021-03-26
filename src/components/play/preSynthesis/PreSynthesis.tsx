@@ -54,7 +54,7 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="like-button">Preparation</div>
               </div>
               <div className="x-center">
-                <div className="like-button">Investigation</div><div className="like-button orange">Synthesis</div>
+                <div className="like-button">Investigation</div><div className="like-button orange" onClick={moveNext}>Synthesis</div>
               </div>
               <div className="x-center">
                 <div className="like-button">Review</div>
