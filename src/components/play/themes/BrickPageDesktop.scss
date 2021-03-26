@@ -1169,6 +1169,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 width: 100%;
                 .dropzone {
                   border-radius: 0.5vw;
+                  padding: 0 !important;
                   border: none !important;
                   min-height: 47vh;
 
@@ -1181,8 +1182,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
                   img {
                     margin-top: calc(2vw + 1vh + 0.6vw);
-                    width: auto !important;
-                    max-height: calc(35vh - 2vw + 1vh + 0.6vw);
+                    border-bottom-left-radius: 0.5vw;
+                    border-bottom-right-radius: 0.5vw;
                   }
                 }
               }
