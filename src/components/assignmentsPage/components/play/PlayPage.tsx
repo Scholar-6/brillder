@@ -19,10 +19,12 @@ import BackPagePagination from "../BackPagePagination";
 import BackPagePaginationV2 from "../BackPagePaginationV2";
 import { isMobile } from "react-device-detect";
 import MobileLearn from "./MobileLearn";
+import map from "components/map";
 
 
 interface PlayProps {
   history: any;
+  match: any;
 
   // redux
   user: User;
@@ -67,13 +69,19 @@ class PlayPage extends Component<PlayProps, PlayState> {
         finalAssignments: []
       }
     } as ThreeAssignmentColumns;
+
+    let activeClassroomId = -1;
+    const {classId} = props.match.params;
+    if (classId && classId > 0) {
+      activeClassroomId = parseInt(classId as string);
+    }
     
     this.state = {
       finalAssignments: [],
       rawAssignments: [],
       threeColumns,
       classrooms: [],
-      activeClassroomId: -1,
+      activeClassroomId,
 
       filterExpanded: true,
       isClearFilter: false,
@@ -289,11 +297,13 @@ class PlayPage extends Component<PlayProps, PlayState> {
       filters.submitted = false;
       filters.completed = false;
       filters.checked = false;
+      this.props.history.push(map.AssignmentsPage + '/' + classroomId);
     } else {
       filters.viewAll = true;
+      this.props.history.push(map.AssignmentsPage);
     }
     const threeColumns = service.prepareThreeAssignmentRows(assignments);
-
+    
     this.setState({activeClassroomId: classroomId, finalAssignments: assignments, threeColumns, filters, sortedIndex: 0});
   }
 
