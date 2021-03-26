@@ -4,18 +4,10 @@
 
 .dialog-box {
   z-index: 999999 !important;
-
-  .MuiDialog-paperScrollPaper {
-    @extend %m0;
-
-    @include phone_and_tabletP {
-      padding: 2.5vw;
-      border-radius: 2vw;
-      width: 90%;
-    }
-
-    @include tabletP {
-      width: max-content;
+  .MuiDialog-container {
+    padding: 0 !important;
+    .MuiDialog-paperScrollPaper {
+      @extend %m0;
       padding: 1.5vw;
       border-radius: 0.8vw;
     }
@@ -49,14 +41,8 @@
     letter-spacing: 0;
     color: var(--theme-dark-blue);
     font-family: $font-family-regular !important;
-    @include phone_and_tabletL {
-      margin-bottom: 2vw;
-      font-size: 6vw;
-    }
-    @include tabletL {
-      margin-bottom: 1vw;
-      font-size: 1.5vw;
-    }
+    margin-bottom: 1vw;
+    font-size: 2vw;
     svg {
       margin-left: 0.3vw;
       margin-right: 0.3vw;
@@ -67,9 +53,6 @@
       font-family: $font-family-regular;
       font-size: 2vw;
       margin-right: 1vw;
-      @include phone_and_tabletP {
-        font-size: 7.8vw;
-      }
     }
     .link {
       font-family: $font-family-bold;
@@ -109,19 +92,10 @@
       width: $circle-size;
       background: var(--theme-green);
 
-      @include phone_and_tabletP {
-        height: 15vw;
-        width: 15vw;
-      }
       svg {
         $icon-size: 2.3vw;
         height: $icon-size;
         width: $icon-size;
-
-        @include phone_and_tabletP {
-          height: 5vw;
-          width: 5vw;
-        }
       }
     }
 
@@ -197,9 +171,6 @@
       color: transparent !important;
       font-size: 1.4vw;
       margin-bottom: 1vh;
-      @include phone_and_tabletL {
-        font-size: 4vw;
-      }
       &::after {
         position: absolute;
         top: 0;
@@ -210,28 +181,15 @@
         display: block;
         content: 'Drag Image Here | Click to Select Image';
         font-family: $font-family-regular;
-        @include phone_and_tabletL {
-          font-size: 4vw;
-        }
       }
     }
     .dropzone-instructions--sub {
-      @include phone_and_tabletL {
-        font-size: 4vw;
-      }
     }
   }
   .dialog-footer {
     display: flex;
     justify-content: space-between;
-
     margin-bottom: 0 !important;
-    @include phone_and_tabletL {
-      gap: 3vw;
-    }
-    @include tabletL {
-      gap: 1vw;
-    }
     button,
     .btn {
       width: 100%;
@@ -240,11 +198,11 @@
       white-space: nowrap;
       padding-top: 1.5vh;
       padding-bottom: 1.5vh;
-      @include phone_and_tabletL {
-        font-size: 5vw;
-      }
-      @include tabletL {
-        font-size: 1.2vw;
+      font-size: 2vw;
+      margin-left: 3vw;
+      &:first-child,
+      &:only-child {
+        margin-left: 0;
       }
       &.bold {
         font-family: $font-family-bold !important;
@@ -275,14 +233,8 @@
       stroke-width: 3;
       color: var(--white);
       @extend %transitionAll300;
-      @include phone_and_tabletP {
-        height: 8vw !important;
-        width: 8vw !important;
-      }
-      @include tabletP {
-        height: 1.5vw !important;
-        width: 1.5vw !important;
-      }
+      height: 1.5vw !important;
+      width: 1.5vw !important;
     }
     &:hover {
       .svg {
@@ -319,14 +271,8 @@
 
         > div {
           @extend %textCenter;
-          @include phone_and_tabletL {
-            width: 100%;
-            margin-bottom: 1.5vh;
-          }
-          @include tabletL {
-            margin-bottom: 4.5vh;
-            width: 30vw;
-          }
+          margin: 0 auto 4.5vh auto;
+          width: 30vw;
         }
 
         input {

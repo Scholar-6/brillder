@@ -9,6 +9,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import { getSynthesisTime } from "../services/playTimes";
 import routes from "../routes";
+import TypingLabel from "components/baseComponents/TypingLabel";
 
 interface Props {
   brick: Brick;
@@ -47,14 +48,14 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
         <div className="introduction-page">
           <div className="after-cover-main-content">
             <div className="title">
-              Deepen your understanding.
+              <TypingLabel label="Deepen your understanding." onEnd={() => {}} />
             </div>
             <div className="like-buttons-container">
               <div className="x-center">
                 <div className="like-button">Preparation</div>
               </div>
               <div className="x-center">
-                <div className="like-button">Investigation</div><div className="like-button orange">Synthesis</div>
+                <div className="like-button">Investigation</div><div className="like-button orange" onClick={moveNext}>Synthesis</div>
               </div>
               <div className="x-center">
                 <div className="like-button">Review</div>

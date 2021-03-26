@@ -40,7 +40,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
         // get image by url
       }
     }
-  }, [initFile, initData.value]);
+  }, [initFile, file, initData.value]);
 
   useEffect(() => {
     setHeight(initData.imageHeight);

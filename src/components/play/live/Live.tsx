@@ -276,6 +276,9 @@ const LivePage: React.FC<LivePageProps> = ({
     props.updateAttempts(attempt, activeStep);
     let playPath = getPlayPath(props.isPlayPreview, brick.id);
     let link = `${playPath}/intro?prepExtanded=true&resume=true&activeStep=${activeStep}`;
+    //if (!isPhone() && !props.isPlayPreview) {
+    //  link = routes.playNewPrep(brick.id) + '?prepExtanded=true&resume=true&activeStep=${activeStep}';
+    // }
     history.push(link);
   }
 

@@ -59,8 +59,9 @@
         }
 
         .MuiFormControlLabel-label {
-          font: 1.05vw $font-family-light !important;
+          font-size: 1.05vw !important;
           letter-spacing: 0.06vw;
+          font-family: $font-family-light !important;
         }
       }
 
@@ -256,23 +257,13 @@
         margin: 0 $sidebar-gutter;
         padding: 2vh 0 6vh 0;
         width: calc(100% - #{$sidebar-gutter * 2});
-
-        @include phone_and_tabletP {
-          height: calc(100vh - 55vw);
-        }
-
-        @include tabletP {
-          height: calc(100vh - 34vh);
-        }
-
+        height: calc(100vh - 34vh);
         overflow-y: auto;
-
         .published-count {
           font-size: 1.05vw;
           @extend %textCenter;
           font-family: $font-family-light;
         }
-
         .MuiGrid-container {
           margin-bottom: 1vh;
         }

@@ -1,9 +1,26 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+@import './utils/desktop/global-desktop';
+@import './utils/desktop/sidebar-desktop';
+@import './utils/desktop/dialog-desktop';
+@import './utils/desktop/tooltips-desktop';
+@import './utils/desktop/buttons-desktop';
+@import './utils/desktop/form-elements-desktop';
+@import './utils/desktop/dropdowns-desktop';
+
 #launcher {
   left: 0 !important;
   width: 5.7vw !important;
   height: 2.5vw !important;
-  margin: 1.7vw !important;
+  margin: 1vw 0 1vw 1.5vw !important;
 }
+
+.beta-text {
+  color: var(--theme-light-blue);
+}
+
 
 .short-description {
   cursor: pointer;
@@ -86,10 +103,7 @@
   font-size: 1.4vw;
   border-radius: 0.5vw;
   padding: 0;
-  border: none;
-  outline: none;
   background: inherit;
-
   svg {
     width: 2vw;
     height: 2vw;

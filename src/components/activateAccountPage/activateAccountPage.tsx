@@ -42,20 +42,21 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
   const params = new URLSearchParams(search);
   const token = params.get("token");
 
-  const verifyToken = async () => {
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
-      setValid(true);
-      setEmail(response.data.email);
-    } catch(e) {
-      setValid(false);
-      props.history.push(map.Login);
-    }
-  }
 
   React.useEffect(() => {
+    const verifyToken = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
+        setValid(true);
+        setEmail(response.data.email);
+      } catch(e) {
+        setValid(false);
+        props.history.push(map.Login);
+      }
+    }
+
     verifyToken();
-  }, [token, setValid]);
+  }, [token, props.history, setValid]);
 
   const moveToEmailPage = () => {
     props.history.push(map.ActivateAccount + '/email?token=' + token);

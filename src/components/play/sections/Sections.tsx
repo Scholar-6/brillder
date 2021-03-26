@@ -1,11 +1,12 @@
 import React from "react";
 
-import { AcademicLevelLabels, Brick } from "model/brick";
+import { Brick } from "model/brick";
 
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import TypingLabel from "components/baseComponents/TypingLabel";
 
 interface Props {
   brick: Brick;
@@ -31,27 +32,20 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
     return <div />;
   }
 
-  const renderBrickCircle = () => {
-    return (
-      <div className="round-button-container">
-        <div className="round-button" style={{ background: `${brick.subject?.color || '#B0B0AD'}` }}>
-          {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="brick-row-container live-container">
+      <div className="fixed-upper-b-title text-white">
+        {brick.title}
+      </div>
       <div className="brick-container play-preview-panel live-page after-cover-page">
         <div className="introduction-page">
           <div className="after-cover-main-content">
             <div className="title">
-              A brick has four sections.
+              <TypingLabel label="A brick has four sections." onEnd={() => {}} />
             </div>
             <div className="like-buttons-container">
               <div className="x-center">
-                <div className="like-button orange">Preparation</div>
+                <div className="like-button orange" onClick={props.moveNext}>Preparation</div>
               </div>
               <div className="x-center">
                 <div className="like-button">Investigation</div><div className="like-button">Synthesis</div>
@@ -66,8 +60,6 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
             <div className="title-column">
-              {renderBrickCircle()}
-              <div className="brick-title">{brick.title}</div>
             </div>
             <div className="new-navigation-buttons">
               <div className="n-btn next" onClick={props.moveNext}>

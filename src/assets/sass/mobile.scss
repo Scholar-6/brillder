@@ -1,3 +1,15 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+@import './utils/mobile/global-mobile';
+@import './utils/mobile/sidebar-mobile';
+@import './utils/mobile/dialog-mobile';
+@import './utils/mobile/tooltips-mobile';
+@import './utils/mobile/buttons-mobile';
+@import './utils/mobile/form-elements-mobile';
+@import './utils/mobile/dropdowns-mobile';
+
 #launcher {
   left: 0 !important;
   margin: 7px !important;
@@ -132,11 +144,6 @@
       font-size: 6vw !important;
     }
   }
-}
-
-// main page adjustments for biger menu
-.mainPageMobile .main-page-menu.menu-expanded {
-  width: 58vw !important;
 }
 
 .svg {

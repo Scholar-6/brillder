@@ -148,7 +148,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     if (this.state.isAdapting) {
       return;
     }
-    this.setState({isAdapting: true});
+    this.setState({ isAdapting: true });
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/adapt/${this.props.brick.id}`,
       {},
@@ -162,7 +162,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     } else {
       console.log('can`t copy');
     }
-    this.setState({isAdapting: false})
+    this.setState({ isAdapting: false })
   }
 
   onAdaptDialog() {
@@ -171,6 +171,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   isLive() {
     return this.props.history.location.pathname.slice(-5) === '/live';
+  }
+
+  isCover() {
+    return this.props.history.location.pathname.slice(-6) === '/cover';
   }
 
   isPreInvesigation() {
@@ -239,11 +243,11 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     return (
       <div className="sidebar-button">
-        <HighlightTextButton
+        {!this.isCover() && <HighlightTextButton
           mode={this.props.mode}
           sidebarRolledUp={this.props.sidebarRolledUp}
           setHighlightMode={this.setHighlightMode.bind(this)}
-        />
+        />}
         {this.renderPrepButton()}
         <ShareButton sidebarRolledUp={this.props.sidebarRolledUp} share={this.share.bind(this)} />
         <AssignButton

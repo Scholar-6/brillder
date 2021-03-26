@@ -6,7 +6,6 @@ import "./FinalStep.scss";
 import { Brick } from "model/brick";
 import actions from "redux/actions/brickActions";
 
-import Clock from "../baseComponents/Clock";
 import ShareDialog from './dialogs/ShareDialog';
 import LinkDialog from './dialogs/LinkDialog';
 import LinkCopiedDialog from './dialogs/LinkCopiedDialog';
@@ -42,9 +41,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
   history,
   moveNext,
   fetchBrick
-}) => 
-{
-  const [shareOpen, setShare] = React.useState(false);  
+}) => {
+  const [shareOpen, setShare] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
@@ -89,7 +87,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     canSee = checkTeacherOrAdmin(user);
   } catch { }
 
-  let createBrickCopy = async function() {
+  let createBrickCopy = async function () {
     // prevent multiple clicking
     if (isAdapting) {
       return;
@@ -152,12 +150,23 @@ const FinalStep: React.FC<FinalStepProps> = ({
             </Grid>
             <Grid item xs={4}>
               <div className="introduction-info">
-                <div className="intro-header">
-                  <Clock brickLength={brick.brickLength} />
-                </div>
                 <div className="intro-text-row">
                 </div>
-                <ExitButton onClick={moveNext} />
+                <div className="action-footer">
+                  <div></div>
+                  <div className="direction-info text-center">
+                    <h2>Results</h2>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      className="play-preview svgOnHover roller-red"
+                      onClick={moveNext}
+                    >
+                      <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
+                    </button>
+                  </div>
+                </div>
               </div>
             </Grid>
           </Grid>
@@ -207,7 +216,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
           close={() => setIsAdaptBrickOpen(false)}
           submit={() => createBrickCopy()}
         /> </div>}
-       {canSee && <div>
+      {canSee && <div>
         <AssignPersonOrClassDialog
           isOpen={assign}
           success={(items: any[], failedItems: any[]) => {

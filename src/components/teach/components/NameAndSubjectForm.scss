@@ -2,17 +2,14 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
-.name-subject-form,
-.name-subject-display {
-  display: inline-flex;
-  flex-flow: row nowrap;
+.name-subject-form, .name-subject-display {
+  display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
 
   height: 100%;
   padding-left: 0.7vw;
 }
- 
 
 .name-subject-form {
   .MuiOutlinedInput-input {

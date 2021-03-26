@@ -31,25 +31,6 @@ const initZendeskStyling = (iframe: any) => {
     attachStyleCss(iframe, '/zendesk/zendesk_desktop.css');
   }
   if (isMobile) { return; }
-  var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-  // iframe.style.height = '2.3vw';
-  let div = innerDoc.querySelectorAll('#Embed')[0]
-  // div.classList.add("minimized");
-  // div.style.position = "absolute";
-  // div.style.width = '100%';
-  // div.style.height = '100%';
-  // let button = innerDoc.getElementsByTagName("button")[0];
-
-
-  // let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
-  // btnContent.style.paddingRight = "0";
-
-  // let svg = innerDoc.getElementsByTagName("svg")[0];
-  // let svgSize = '48vh';
-  // svg.style.minWidth = svgSize;
-  // svg.style.minHeight = svgSize;
-  // svg.style.width = svgSize;
-  // svg.style.height = svgSize;
 
   // hide custom fields
   let widgetIframe = getWidgetIframe();
@@ -91,26 +72,12 @@ export function minimizeZendeskButton(iframe?: any) {
     iframe = getZendeskIframe();
     if (!iframe) { return; }
   }
-  // iframe.style.height = '2.6vw';
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
 
   let div = innerDoc.querySelectorAll('#Embed')[0]
   if (div) {
     div.classList.add("minimized");
   }
-  // div.style.marginLeft = '13%';
-  // div.style.width = '47.18%';
-  // div.style.height = '100%';
-
-  // var button = innerDoc.getElementsByTagName("button")[0];
-  // button.style.paddingLeft = "12.26vw";
-
-  // let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
-  // btnContent.style.padding = 0;
-
-  // removes help text
-  // let helpText = innerDoc.getElementsByClassName("label-3kk12");
-  // helpText[0].classList.add("minimized");
 }
 
 export function maximizeZendeskButton(iframe?: any) {
@@ -120,16 +87,8 @@ export function maximizeZendeskButton(iframe?: any) {
     if (!iframe) { return; }
   }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-  // iframe.style.height = '2.3vw';
   let div = innerDoc.querySelectorAll('#Embed')[0]
   div.classList.remove("minimized");
-  // div.style.marginLeft = '0';
-  // div.style.width = '100%';
-  // div.style.height = '100%';
-  // let button = innerDoc.getElementsByTagName("button")[0];
-  // button.style.paddingLeft = '19.5vw';
-  // let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
-  // btnContent.style.paddingRight = "7vw";
 }
 
 function addZendesk() {
@@ -260,7 +219,6 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
 /**
  * Task #2782. For play on phone zendesk button should be smaller and fixed in footer.
  * Button size and position are from .\src\components\play\themes\BrickPageMobile.scss
- */
 const setMobilePlayButton = (iframe: any, pathname: string) => {
   if (!isMobile && (isTablet || isIPad13)) {
     return;
@@ -324,3 +282,4 @@ const setMobilePlayButtonStyle = (iframe: any) => {
     whiteCircle.style.fillOpacity = '0';
   } catch { }
 }
+ */

@@ -20,7 +20,13 @@
     overflow: auto !important;
   }
 
-  ol {
+  li {
+    p {
+      display: inline;
+    }
+  }
+
+  ol ol {
     margin-left: 1vw;
     overflow-x: hidden;
   }
@@ -50,8 +56,8 @@
   h2,
   h3 {
     letter-spacing: 0;
+    text-align:left;
     font-family: $font-family-bold;
-    color: var(--theme-orange);
   }
 }
 
@@ -63,7 +69,8 @@
   .bottom-button {
     cursor: pointer;
     transition: all 300ms ease-out;
-    background: var(--tab-gray);
+    color: var(--white);
+    background: var(--theme-orange);
     height: calc(10vh);
     display: flex;
     justify-content: center;
@@ -71,7 +78,7 @@
     font-size: 1.3vw;
 
     .MuiIconButton-colorSecondary {
-      color: #001c58 !important;
+      color: var(--white) !important;
     }
 
     .MuiButtonBase-root {
@@ -91,7 +98,11 @@
     }
 
     &:hover {
+      color: var(--theme-dark-blue);
       background: var(--theme-green);
+      .MuiIconButton-colorSecondary {
+        color: #001c58 !important;
+      }
     }
   }
 }

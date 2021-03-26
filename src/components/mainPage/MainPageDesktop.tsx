@@ -7,7 +7,6 @@ import 'intro.js/introjs.css';
 import { Steps } from 'intro.js-react';
 
 
-import './themes/MainPageDesktop.scss';
 import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
 import { RolePreference, User } from "model/user";
@@ -32,6 +31,7 @@ import LibraryButton from "./components/LibraryButton";
 import BlocksIcon from "./components/BlocksIcon";
 import { isPhone } from "services/phone";
 import ReportsAlertDialog from "components/baseComponents/dialogs/ReportsAlertDialog";
+import { isTablet } from "react-device-detect";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -43,6 +43,9 @@ const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
   logout: () => dispatch(actions.logout()),
 });
+
+const TabletTheme = React.lazy(() => import('./themes/MainPageTablet'));
+const DesktopTheme = React.lazy(() => import('./themes/MainPageDesktop'));
 
 const connector = connect(mapState, mapDispatch);
 
@@ -340,7 +343,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   }
 
   onIntroChanged(e: any) {
-    if (e != 0) {
+    if (e !== 0) {
       this.setState({stepsEnabled: false});
     }
   }
@@ -348,6 +351,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   render() {
     return (
       <Grid container direction="row" className="mainPage">
+        <React.Suspense fallback={<></>}>
+          {isTablet ? <TabletTheme/> : <DesktopTheme /> }
+        </React.Suspense>
         <div className="welcome-col">
           <WelcomeComponent
             user={this.props.user}
