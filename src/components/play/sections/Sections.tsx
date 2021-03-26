@@ -69,8 +69,6 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
             <div className="title-column">
-              {renderBrickCircle()}
-              <div className="brick-title">{brick.title}</div>
             </div>
             <div className="new-navigation-buttons">
               <div className="n-btn next" onClick={props.moveNext}>

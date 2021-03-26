@@ -78,7 +78,7 @@
     font-size: 1.3vw;
 
     .MuiIconButton-colorSecondary {
-      color: #001c58 !important;
+      color: var(--white) !important;
     }
 
     .MuiButtonBase-root {
@@ -100,6 +100,9 @@
     &:hover {
       color: var(--theme-dark-blue);
       background: var(--theme-green);
+      .MuiIconButton-colorSecondary {
+        color: #001c58 !important;
+      }
     }
   }
 }
