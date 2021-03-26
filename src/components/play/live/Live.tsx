@@ -30,7 +30,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
 import { getLiveTime } from "../services/playTimes";
-import routes from "../routes";
 
 interface LivePageProps {
   status: PlayStatus;
