@@ -31,6 +31,8 @@ const initZendeskStyling = (iframe: any) => {
     attachStyleCss(iframe, '/zendesk/zendesk_desktop.css');
   }
   if (isMobile) { return; }
+  var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+  let div = innerDoc.querySelectorAll('#Embed')[0]
 
   // hide custom fields
   let widgetIframe = getWidgetIframe();
