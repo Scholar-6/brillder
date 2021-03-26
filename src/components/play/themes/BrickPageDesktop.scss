@@ -1818,8 +1818,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 @keyframes greyToOrange {
-  from { background: var(--tab-gray); }
-  to { background: var(--theme-orange); }
+  from {
+  }
+  to {
+    color: var(--white);
+    background: var(--theme-orange);
+  }
 }
 
 // after cover page
@@ -1849,12 +1853,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
           &.orange {
             cursor: pointer;
-            color: var(--white);
-            background: var(--theme-orange);
-            animation-duration: 1s;
-            animation-delay: 0s;
-            animation-timing-function: ease;
-            animation-name: greyToOrange;
+            color: var(--theme-dark-blue);
+            background: var(--tab-gray);
+            animation: greyToOrange 0.5s linear 0.5s 1 normal forwards;
           }
         }
       }
