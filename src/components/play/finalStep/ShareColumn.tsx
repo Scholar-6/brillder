@@ -15,7 +15,7 @@ const ShareColumn: React.FC<ShareProps> = props => {
         <div className="button-container">
           <SpriteIcon name="feather-share" className="active" />
         </div>
-        <div className="link-text" >Share with a friend or colleague</div>
+        <div className="link-text" >Share</div>
       </div>
     </Grid>
   );
