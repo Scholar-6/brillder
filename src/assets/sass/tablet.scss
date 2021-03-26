@@ -1,8 +1,23 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+@import './utils/tablet/global-tablet';
+@import './utils/tablet/sidebar-tablet';
+@import './utils/tablet/dialog-tablet';
+@import './utils/tablet/tooltips-tablet';
+@import './utils/tablet/buttons-tablet';
+@import './utils/tablet/form-elements-tablet';
+@import './utils/tablet/dropdowns-tablet';
+
 #launcher {
   left: 0 !important;
   width: 5.7vw !important;
+  *width: 5.7vw !important;
   height: 2.5vw !important;
+  *height: 2.5vw !important;
   margin: 1.7vw !important;
+  *margin: 1.7vw !important;
 }
 
 .short-description {
@@ -76,8 +91,8 @@
 .stop-cookie-tracking {
   cursor: pointer;
   position: fixed;
-  bottom: 14px;
-  left: calc(5.5vw + 0.6vw + 20px + 0.5vw);
+  bottom: 5vw;
+  left: 2vw;
   border: none;
   height: 2.3vw;
   display: flex;
@@ -87,7 +102,6 @@
   border-radius: 0.5vw;
   padding: 0;
   background: inherit;
-
   svg {
     width: 2vw;
     height: 2vw;

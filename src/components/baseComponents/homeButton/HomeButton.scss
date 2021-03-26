@@ -9,7 +9,7 @@
     display: flex;
   }
   @include tabletP {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
     border-bottom-right-radius: 2vw;
