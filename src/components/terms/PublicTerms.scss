@@ -36,6 +36,11 @@
     color: var(--theme-dark-blue);
     height: calc(100vh - 5.834vw - 2vw) !important;
 
+    em {
+      display: block;
+      margin-bottom: 3vh;
+    }
+
     li {
       p {
         display: inline;
