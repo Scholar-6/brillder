@@ -1,6 +1,5 @@
 _Last Updated: 24th March 2021_
 
-
 # USER AGREEMENT
 
 Incorporating Acceptable Use Policy (Appendix A) and Privacy Policy (Appendix B)
