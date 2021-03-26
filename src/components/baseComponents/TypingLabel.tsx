@@ -5,7 +5,7 @@ interface LabelState {
 }
 
 interface LabelProps {
-  className: string;
+  className?: string;
   label: string;
   onEnd(): void;
 }
@@ -42,7 +42,7 @@ class TypingLabel extends Component<LabelProps, LabelState> {
 
   render() {
     const {props} = this;
-    return (<span className={props.className}>{this.state.label}</span>);
+    return (<span className={props.className ? props.className : ""}>{this.state.label}</span>);
   }
 };
 

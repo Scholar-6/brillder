@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import TypingLabel from "components/baseComponents/TypingLabel";
 
 interface Props {
   brick: Brick;
@@ -40,7 +41,7 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
         <div className="introduction-page">
           <div className="after-cover-main-content">
             <div className="title">
-              A brick has four sections.
+              <TypingLabel label="A brick has four sections." onEnd={() => {}} />
             </div>
             <div className="like-buttons-container">
               <div className="x-center">

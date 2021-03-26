@@ -9,6 +9,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import { getSynthesisTime } from "../services/playTimes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
+import TypingLabel from "components/baseComponents/TypingLabel";
 
 interface Props {
   brick: Brick;
@@ -62,7 +63,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
         <div className="introduction-page">
           <div className="after-cover-main-content">
             <div className="title">
-              Time for some questions.
+              <TypingLabel label="Time for some questions." onEnd={() => {}} />
             </div>
             <div className="like-buttons-container">
               <div className="x-center">

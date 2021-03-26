@@ -63,7 +63,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
       {(page === LoginPage.Join || page === LoginPage.Register) &&
         <div className="left-part-join">
           <h1>
-            <TypingLabel className="" onEnd={() => { }} label="Join the revolution" />
+            <TypingLabel onEnd={() => { }} label="Join the revolution" />
           </h1>
           <div className="image-container spinning">
             <img alt="" src="/images/login/PhoneWheellogin.svg" />

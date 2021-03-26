@@ -10,6 +10,7 @@ import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTi
 import { getReviewTime } from "../services/playTimes";
 import routes from "../routes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
+import TypingLabel from "components/baseComponents/TypingLabel";
 
 interface Props {
   brick: Brick;
@@ -64,7 +65,7 @@ const PreReview: React.FC<Props> = ({ brick, ...props }) => {
         <div className="introduction-page">
           <div className="after-cover-main-content">
             <div className="title">
-              Improve your score.
+              <TypingLabel label="Improve your score." onEnd={() => {}} />
             </div>
             <div className="like-buttons-container">
               <div className="x-center">
