@@ -6,7 +6,6 @@ import "./FinalStep.scss";
 import { Brick } from "model/brick";
 import actions from "redux/actions/brickActions";
 
-import Clock from "../baseComponents/Clock";
 import ShareDialog from './dialogs/ShareDialog';
 import LinkDialog from './dialogs/LinkDialog';
 import LinkCopiedDialog from './dialogs/LinkCopiedDialog';
