@@ -1403,8 +1403,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       // only synthesis score
       .synthesis-container {
         .synthesis-content {
-          height: calc(100vh - 4vw - 4vw) !important;
-          padding: 8vh 5vw 6vw 5vw;
+          height: calc(100vh - 7vw - 7vw) !important;
+          padding: 8vh 7vw 6vw 7vw;
           width: 100%;
         }
       }
@@ -2093,10 +2093,4 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   display: flex;
   justify-content: center;
   width: 26.5vw !important;
-}
-
-// margin in sides in play
-.play-preview-pages .question-live-play {
-  margin-left: 7vw !important;
-  margin-right: 7vw !important;
 }
