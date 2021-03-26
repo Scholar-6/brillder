@@ -112,7 +112,9 @@
             color: var(--theme-dark-blue);
           }
           .MuiFormControlLabel-label {
-            font-size: 1.2vw;
+            font-size: 1.05vw;
+            letter-spacing: 0.06vw;
+            font-family: $font-family-light !important;
           }
         }
         .arrow-cancel {
