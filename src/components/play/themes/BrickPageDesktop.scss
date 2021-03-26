@@ -1945,8 +1945,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       position: absolute;
       left: -4.8vw;
       .dashed-circle {
-        border-radius: 50%;
-        border: 0.2vw dashed var(--white);
+        display: block;
         width: 3.5vw;
         height: 3.5vw;
       }
@@ -2057,8 +2056,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       position: absolute;
       left: -5.6vw;
       .dashed-circle {
-        border-radius: 50%;
-        border: 0.2vw dashed var(--white);
         width: 5vw;
         height: 5vw;
       }

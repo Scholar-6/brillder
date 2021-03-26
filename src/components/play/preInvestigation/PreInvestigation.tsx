@@ -96,7 +96,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
         </div>
         <div className="fixed-helpers-container">
           <div className="circles">
-            <div className="prep-circle dashed-circle" />
+            <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg"  />
           </div>
           <div className="prep">
             Click here to go back to Prep tasks
