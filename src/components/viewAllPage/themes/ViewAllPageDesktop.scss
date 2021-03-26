@@ -131,12 +131,15 @@
         }
       }
       .sidebar-footer {
+        position: absolute;
+        bottom: 0;
+        right: 0;
         height: 10vh;
         width: 100%;
-        background: red;
+        background: var(--light-blue-alpha5);
       }
       .subjects-filter-v3 {
-        height: calc(100vh - 5.834vw - 2vw - 2.4vw - 6.5vw - 2vw - 1.8vw) !important;
+        height: calc(100vh - 0.5vh - 5.834vw - 2vw - 2.4vw - 6.5vw - 2vw - 1.8vw - 4.5vw) !important;
         padding-bottom: 6vh !important;
       }
     }

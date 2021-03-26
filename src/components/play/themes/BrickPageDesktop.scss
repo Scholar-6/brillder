@@ -183,7 +183,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             background: var(--theme-orange);
             outline: none;
             border: none;
-            margin-top: 3vh;
             padding: 1.3vh 0.5vw;
             border-radius: $editor-radius;
             width: 80%;
@@ -443,6 +442,13 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           .minimize-icon,
           .highlight-button,
           .annotate-button {
+            justify-content: center;
+          }
+          .highlight-button {
+            height: 3vw;
+            width: 3.5vw;
+            display: flex;
+            align-items: center;
             justify-content: center;
           }
           .assign-class-button {
@@ -1955,8 +1961,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         width: 3.5vw;
         height: 3.5vw;
       }
+      .highlight-circle {
+        margin-top: 0.3vw;
+      }
       .share-circle {
-        margin-top: 0.7vw;
+        margin-top: 1.15vw;
       }
       .assign-circle {
         margin-top: 1.5vw;
