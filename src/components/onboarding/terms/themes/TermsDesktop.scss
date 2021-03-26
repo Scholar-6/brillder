@@ -20,7 +20,13 @@
     overflow: auto !important;
   }
 
-  ol {
+  li {
+    p {
+      display: inline;
+    }
+  }
+
+  ol ol {
     margin-left: 1vw;
     overflow-x: hidden;
   }
