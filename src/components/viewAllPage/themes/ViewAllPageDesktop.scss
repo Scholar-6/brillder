@@ -113,7 +113,6 @@
           }
           .MuiFormControlLabel-label {
             font-size: 1.05vw;
-            letter-spacing: 0.06vw;
             font-family: $font-family-light !important;
           }
         }
@@ -130,6 +129,15 @@
             }
           }
         }
+      }
+      .sidebar-footer {
+        height: 10vh;
+        width: 100%;
+        background: red;
+      }
+      .subjects-filter-v3 {
+        height: calc(100vh - 5.834vw - 2vw - 2.4vw - 6.5vw - 2vw - 1.8vw) !important;
+        padding-bottom: 6vh !important;
       }
     }
     .brick-row-container {

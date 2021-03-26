@@ -74,7 +74,7 @@ const PreReview: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="like-button">Investigation</div><div className="like-button">Synthesis</div>
               </div>
               <div className="x-center">
-                <div className="like-button orange">Review</div>
+                <div className="like-button orange" onClick={() => setMoving(true)}>Review</div>
               </div>
             </div>
             <div className="footer">
