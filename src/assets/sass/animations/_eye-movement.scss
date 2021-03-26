@@ -2,7 +2,7 @@
   cursor: pointer;
   display: inline;
   margin: 0 0.3vw;
-  width: 4vw !important;
+  width: 4vw;
   color: var(--theme-orange);
   svg {
     margin-left: 0;
@@ -31,7 +31,11 @@
     }
   }
   .eye-glass-frame {
+    width: 13vw;
+    height: 6vw;
     svg {
+      width: 100%;
+      height: auto;
       @extend %removePosition;
     }
   }
@@ -85,7 +89,7 @@
     left: 0.6vw;
   }
   .glass-eyes-right {
-    right: 0.5vw;
+    right: 0.6vw;
   }
   // hover
   &:hover {

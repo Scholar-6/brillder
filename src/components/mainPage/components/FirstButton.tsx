@@ -41,6 +41,9 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
       }}
     >
       <div className="eye-glass-icon">
+        {/* <div className="svgOnHover">
+          <SpriteIcon name="glasses-home" className="active text-theme-orange" />
+        </div> */}
         <div className="eye-glass-frame svgOnHover">
           <SpriteIcon name="glasses-home" className="active text-theme-orange" />
         </div>

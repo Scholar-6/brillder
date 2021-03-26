@@ -22,17 +22,16 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
   const params = new URLSearchParams(search);
   const token = params.get("token");
 
-  const verifyToken = async () => {
-    try {
-      await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
-      setValid(true);
-    } catch(e) {
-      console.log(e.response.statusCode);
-      setValid(false);
-    }
-  }
-
   useEffect(() => {
+    const verifyToken = async () => {
+      try {
+        await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
+        setValid(true);
+      } catch(e) {
+        setValid(false);
+      }
+    }
+
     verifyToken();
   }, [token, setValid]);
 

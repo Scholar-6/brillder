@@ -12,10 +12,12 @@ import MathInHtml from "../baseComponents/MathInHtml";
 import HighlightHtml from "../baseComponents/HighlightHtml";
 import { PlayMode } from "../model";
 import FixedHelpers from "./FixedHelpers";
+import { User } from "model/user";
 
 interface Props {
   brick: Brick;
-  
+  user: User;
+
   moveNext(): void;
   mode?: PlayMode;
   onHighlight?(name: BrickFieldNames, value: string): void;
@@ -84,7 +86,7 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
             {renderBriefExpandText()}
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
-            <div className="title-column" style={{marginLeft: '33vw'}}>
+            <div className="title-column">
               Now you’re ready for preparatory tasks
             </div>
             <img alt="" className="footer-arrow" src="/images/play-arrows/BriefArrow.svg" />
@@ -96,7 +98,7 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
           </div>
         </div>
-        <FixedHelpers />
+        <FixedHelpers user={props.user} />
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ export const ProposalBase = `${Build}/new-brick`;
 export const ProposalBase2 = `${Build}/brick/:brickId`;
 export const BackToWorkPage = '/back-to-work';
 export const AssignmentsPage = '/assignments';
+export const AssignmentsClassPage = AssignmentsPage + '/:classId';
 export const MyLibrary = '/my-library';
 export const Onboarding = '/onboarding';
 export const TermsPage = '/terms';
@@ -133,6 +134,7 @@ export default {
 
   BackToWorkPage,
   AssignmentsPage,
+  AssignmentsClassPage,
 
   TeachAssignedTab,
   TeachAssignedArchiveTab,

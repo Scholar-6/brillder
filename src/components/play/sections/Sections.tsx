@@ -43,6 +43,9 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="brick-row-container live-container">
+      <div className="fixed-upper-b-title text-white">
+        {brick.title}
+      </div>
       <div className="brick-container play-preview-panel live-page after-cover-page">
         <div className="introduction-page">
           <div className="after-cover-main-content">
@@ -66,8 +69,6 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
             <div className="title-column">
-              {renderBrickCircle()}
-              <div className="brick-title">{brick.title}</div>
             </div>
             <div className="new-navigation-buttons">
               <div className="n-btn next" onClick={props.moveNext}>
