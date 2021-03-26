@@ -594,8 +594,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               }
             }
             &.review-content {
-              width: calc(100% - 7vw) !important;
-              margin: 0 3vw 1vw 4vw;
+              width: calc(100% - 14vw) !important;
+              margin: 0 7vw 1vw 7vw;
               // padding-top: 1.5vh;
             }
           }
