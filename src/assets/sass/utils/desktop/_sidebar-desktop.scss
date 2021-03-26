@@ -59,8 +59,9 @@
         }
 
         .MuiFormControlLabel-label {
-          font: 1.05vw $font-family-light !important;
+          font-size: 1.05vw !important;
           letter-spacing: 0.06vw;
+          font-family: $font-family-light !important;
         }
       }
 
@@ -289,9 +290,9 @@
           }
         }
 
-        .MuiTypography-root {
-          color: var(--white) !important;
-        }
+        // .MuiTypography-root {
+        //   color: var(--white) !important;
+        // }
       }
     }
 
