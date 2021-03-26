@@ -378,10 +378,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Sections brick={brick} moveNext={moveToBrief} />
         </Route>
         <Route exact path={routes.briefRoute}>
-          <Brief brick={brick} mode={mode} moveNext={moveToPrePrep} onHighlight={onHighlight} />
-        </Route>
-        <Route exact path={routes.briefRoute}>
-          <Brief brick={brick} mode={mode} moveNext={moveToIntro} onHighlight={onHighlight} />
+          <Brief brick={brick} mode={mode} user={props.user} moveNext={moveToPrePrep} onHighlight={onHighlight} />
         </Route>
         <Route exact path={routes.prePrepRoute}>
           <PrePrep brick={brick} mode={mode} moveNext={moveToNewPrep} onHighlight={onHighlight} />
