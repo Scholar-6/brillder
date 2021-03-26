@@ -12,9 +12,11 @@ import MathInHtml from "../baseComponents/MathInHtml";
 import HighlightHtml from "../baseComponents/HighlightHtml";
 import { PlayMode } from "../model";
 import FixedHelpers from "./FixedHelpers";
+import { User } from "model/user";
 
 interface Props {
   brick: Brick;
+  user: User;
   
   moveNext(): void;
   mode?: PlayMode;
@@ -96,7 +98,7 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
           </div>
         </div>
-        <FixedHelpers />
+        <FixedHelpers user={props.user} />
       </div>
     </div>
   );
