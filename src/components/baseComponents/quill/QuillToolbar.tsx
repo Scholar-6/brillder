@@ -27,6 +27,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         }
         props.quill?.on("selection-change", onSelectChange);
         return () => { props.quill?.off("selection-change", onSelectChange); }
+    /*eslint-disable-next-line*/
     }, [props.quill]);
 
 
@@ -46,6 +47,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         }
     }, [props.quill, toolbarNode]);
 
+    /*eslint-disable-next-line*/
     const format = React.useMemo(() => props.quill?.getFormat(), [props.quill, id]);
 
     const toolbarItems: { [key: string]: any } = React.useMemo(() => ({

@@ -82,7 +82,7 @@ export default class ImageUpload {
             }
 
             if(!oldRange) return;
-            const [oldLeaf, oldOffset] = quill.getLeaf(oldRange.index);
+            const [oldLeaf] = quill.getLeaf(oldRange.index);
             if(oldLeaf instanceof CustomImageBlot) {
                 leaf.domNode.onclick = null;
             }

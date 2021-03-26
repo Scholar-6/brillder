@@ -6,7 +6,6 @@ import {
 } from 'model/question';
 import { stripHtml } from './ConvertService';
 import uniqueValidator from './UniqueValidator';
-import { invalid } from "moment";
 
 const getUniqueComponent = (components: any[]) => {
   return components && components.find(c => c.type === QuestionComponentTypeEnum.Component);

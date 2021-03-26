@@ -5,7 +5,7 @@ import { QuillBinding } from "y-quill";
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
 import _ from "lodash";
-import { ReactComponent as LatexIcon } from "assets/img/latex.svg";
+//import { ReactComponent as LatexIcon } from "assets/img/latex.svg";
 import * as Y from "yjs";
 
 import "./QuillLatex";
@@ -41,6 +41,7 @@ interface QuillEditorProps {
 }
 
 const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, forwardRef) => {
+    /*eslint-disable-next-line*/
     const [currentQuillId, setCurrentQuillId] = React.useContext(QuillEditorContext);
 
     const callOnChange = React.useCallback(
@@ -88,6 +89,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         cursors: true,
     }
     
+    /*
     const toolbarItems: { [key: string]: any } = {
         bold: <button className="ql-bold" />,
         italic: <button className="ql-italic" />,
@@ -112,6 +114,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         </button>),
         image: <button className="ql-image" />,
     };
+    */
 
     const ref = React.useCallback((node: ReactQuill) => {
         if(node && props.sharedData) {
@@ -122,6 +125,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 setQuill(editor);
             }
         }
+    /*eslint-disable-next-line*/
     }, []);
 
     const valid = (!props.validate || (

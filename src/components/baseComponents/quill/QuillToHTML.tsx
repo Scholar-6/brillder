@@ -1,9 +1,10 @@
-import { ImageAlign } from "components/build/buildQuestions/components/Image/model";
+//import { ImageAlign } from "components/build/buildQuestions/components/Image/model";
 import { DeltaStatic } from "quill";
-import { DeltaInsertOp, QuillDeltaToHtmlConverter } from "quill-delta-to-html";
-import Op from "quill-delta/dist/Op";
+//import { DeltaInsertOp, QuillDeltaToHtmlConverter } from "quill-delta-to-html";
+//import Op from "quill-delta/dist/Op";
 import { Quill } from "react-quill";
 
+/*
 const quillToHTML = (data: Op[]) => {
     const converter = new QuillDeltaToHtmlConverter(data, {
         customTag: (format: string, op: DeltaInsertOp) => {
@@ -42,6 +43,7 @@ const quillToHTML = (data: Op[]) => {
     const html = converter.convert();
     return html;
 }
+*/
 
 const quillToHTMLVirtual = (delta: DeltaStatic) => {
     const tempQuill = new Quill(document.createElement("div"));

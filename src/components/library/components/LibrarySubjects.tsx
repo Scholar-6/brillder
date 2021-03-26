@@ -4,7 +4,6 @@ import { Subject } from "model/brick";
 
 import { SubjectAssignments } from "../service/model";
 import LibrarySubject from "./LibrarySubject";
-import { getSubjectWidth } from "../service/css";
 
 interface LibrarySubjectsProps {
   userId: number;

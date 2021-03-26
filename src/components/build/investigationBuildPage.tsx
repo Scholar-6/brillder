@@ -106,7 +106,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
   const [activeQuestionType] = React.useState(QuestionTypeEnum.None);
   const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
-  const [isSaving, setSavingStatus] = React.useState(false);
   const [skipTutorialOpen, setSkipDialog] = React.useState(false);
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
@@ -521,7 +520,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             </Grid>
           </Grid>
         </Grid>
-        <LastSave updated={new Date(ybrick.get("updated")).toString()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} saveError={false} />
+        <LastSave updated={new Date(ybrick.get("updated")).toString()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={false} saveError={false} />
         <Route path="/build/brick/:brickId/investigation/" exact>
           <Redirect to={`/build/brick/${ybrick.get("id")}/investigation/question`} />
         </Route>

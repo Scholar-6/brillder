@@ -58,6 +58,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
       setAlign(initData.imageAlign ? initData.imageAlign : ImageAlign.left);
       setHeight(initData.imageHeight ? initData.imageHeight : 30);
     }
+  /*eslint-disable-next-line*/
   }, [open])
 
   let canUpload = false;

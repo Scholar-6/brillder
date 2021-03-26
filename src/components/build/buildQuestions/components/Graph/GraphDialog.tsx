@@ -26,6 +26,7 @@ const GraphContainer: React.FC<GraphContainerProps> = props => {
         props.setGraphState(calculator.getState());
       });
     }
+  /*eslint-disable-next-line*/
   }, []);
 
   return <div className="graph-dialog-desmos" ref={graphCallback} />
