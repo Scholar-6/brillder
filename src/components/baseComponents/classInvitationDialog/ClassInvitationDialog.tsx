@@ -33,12 +33,14 @@ const ClassInvitationDialog: React.FC = props => {
 
   const handleAccept = async () => {
     if(invitations && invitations[activeStep]) {
-      await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].classroom.id}/accept`, {}, { withCredentials: true });
-      setActiveStep(activeStep => activeStep + 1);
-      if(activeStep + 1 >= invitations.length) {
-        const newInvitations = await getInvitations();
-        if(newInvitations && newInvitations.length <= 0) {
-          history.push(map.AssignmentsPage);
+      const res = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].classroom.id}/accept`, {}, { withCredentials: true });
+      if (res.data && res.data === 'OK') {
+        setActiveStep(activeStep => activeStep + 1);
+        if(activeStep + 1 >= invitations.length) {
+          const newInvitations = await getInvitations();
+          if(newInvitations && newInvitations.length <= 0) {
+            history.push(map.AssignmentsPage);
+          }
         }
       }
     }

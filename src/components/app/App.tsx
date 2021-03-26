@@ -241,6 +241,7 @@ const App: React.FC<AppProps> = props => {
         <BuildRoute path="/build/brick/:brickId" component={Proposal} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
+        <BuildRoute path={map.AssignmentsClassPage} component={AssignmentsPage} location={location} />
         <BuildRoute path={map.AssignmentsPage} component={AssignmentsPage} location={location} />
         <BuildRoute path="/users" component={UsersListPage} location={location} />
         <BuildRoute path={map.UserProfile + '/:userId'} component={UserProfilePage} location={location} />
