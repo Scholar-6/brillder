@@ -387,7 +387,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <NewPrep brick={brick} mode={mode} moveNext={moveToPreInvestigation} onHighlight={onHighlight} />
         </Route>
         <Route exact path={routes.preInvestigationRoute}>
-          <PreInvestigationPage brick={brick} moveNext={moveToLive} />
+          <PreInvestigationPage user={props.user} brick={brick} moveNext={moveToLive} />
         </Route>
 
         <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
