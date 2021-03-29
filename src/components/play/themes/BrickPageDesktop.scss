@@ -2119,10 +2119,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   display: flex;
   justify-content: center;
   width: 26.5vw !important;
-
-.complete-container .introduction-info {
-  padding-right: 10vw !important;
-  .action-footer {
-    right: unset !important;
+  
+  .complete-container .introduction-info {
+    padding-right: 10vw !important;
+    .action-footer {
+      right: unset !important;
+    }
   }
 }
