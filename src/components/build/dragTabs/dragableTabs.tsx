@@ -193,8 +193,6 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
         isValid = validateQuestion(question as any);
       }
 
-      console.log(props.currentQuestionIndex === index && !isPlanPage);
-
       return (
         <GridListTile
           className={titleClassNames}
@@ -215,7 +213,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       );
     };
 
-    let columns = props.yquestions.length * 2 + 3;
+    let columns = props.yquestions.length * 2 + 4;
 
     if (isSynthesisPage) {
       columns = props.yquestions.length * 2 + 2;
@@ -223,7 +221,6 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     
     const onUpdateQuestions = (evt: Sortable.SortableEvent) => {
       if(((evt.oldIndex ?? -1) >= 0)  && ((evt.newIndex ?? -1) >= 0)) {
-        console.log(evt);
         yquestions.doc?.transact(() => {
           const question = yquestions.get(evt.oldIndex!);
           yquestions.delete(evt.oldIndex!);
@@ -305,7 +302,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           </ReactSortable>
           <GridListTile
             onClick={props.createNewQuestion}
-            className={"drag-tile-container"}
+            className="drag-tile-container"
             cols={isSynthesisPresent || isSynthesisPage ? 1.5555 : 2}
           >
             <PlusTab tutorialStep={props.tutorialStep} />
