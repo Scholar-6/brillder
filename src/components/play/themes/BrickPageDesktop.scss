@@ -183,7 +183,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             background: var(--theme-orange);
             outline: none;
             border: none;
-            margin-top: 3vh;
             padding: 1.3vh 0.5vw;
             border-radius: $editor-radius;
             width: 80%;
@@ -445,6 +444,13 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           .annotate-button {
             justify-content: center;
           }
+          .highlight-button {
+            height: 3vw;
+            width: 3.5vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
           .assign-class-button {
             width: 3.5vw;
           }
@@ -624,7 +630,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             color: var(--theme-dark-blue);
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: center;
+            width: calc(100% - 4vw) !important;
             position: absolute;
             right: 2.2vw;
             top: 2.2vw;
@@ -864,6 +871,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               @extend %flexToXCenter;
 
               svg {
+                color: var(--theme-orange) !important;
                 cursor: pointer;
                 $icon-size: 6vw;
                 height: $icon-size;
@@ -1169,6 +1177,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 width: 100%;
                 .dropzone {
                   border-radius: 0.5vw;
+                  padding: 0 !important;
                   border: none !important;
                   min-height: 47vh;
 
@@ -1181,8 +1190,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
                   img {
                     margin-top: calc(2vw + 1vh + 0.6vw);
-                    width: auto !important;
-                    max-height: calc(35vh - 2vw + 1vh + 0.6vw);
+                    border-bottom-left-radius: 0.5vw;
+                    border-bottom-right-radius: 0.5vw;
                   }
                 }
               }
@@ -1320,7 +1329,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               transition: all 300ms ease-out;
               display: flex;
               align-items: center;
-              font-size: 1.8vw;
+              font-size: 2.5vw;
               font-family: $font-family-bold;
               margin-left: 1vw;
               margin-right: 3vw;
@@ -1328,8 +1337,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               svg {
                 transition: all 300ms ease-out;
                 stroke-width: 3;
-                width: 2.1vw;
-                height: 2.1vw;
+                width: 3vw;
+                height: 3vw;
               }
               &.next {
                 &:hover {
@@ -1711,7 +1720,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 .play-preview-pages ~ .beta-text {
-  color: var(--white-dark-blue) !important;
+  color: var(--theme-light-blue) !important;
 }
 
 // only stepper in play
@@ -1816,6 +1825,15 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   font-size: $base-font-size;
 }
 
+@keyframes greyToOrange {
+  from {
+  }
+  to {
+    color: var(--white);
+    background: var(--theme-orange);
+  }
+}
+
 // after cover page
 .after-cover-page {
   .after-cover-main-content {
@@ -1842,8 +1860,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           margin: 1vh;
 
           &.orange {
-            color: var(--white);
-            background: var(--theme-orange);
+            cursor: pointer;
+            color: var(--theme-dark-blue);
+            background: var(--tab-gray);
+            animation: greyToOrange 0.5s linear 0.5s 1 normal forwards;
           }
         }
       }
@@ -1900,6 +1920,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
     .introduction-content {
       padding: 0 4vw !important;
+      .brief-title {
+        .italic {
+          color: var(--theme-dark-blue);
+          font-size: 1.8vw;
+        }        
+      }
     }
   }
   .scrollable {
@@ -1910,10 +1936,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
   .new-layout-footer {
     .title-column {
-      width: 65vw;
+      width: 70vw;
       justify-content: flex-end;
-      font-size: 1.8vw;
-      margin-left: 33vw;
+      font-size: 2vw;
+      margin-left: 27vw;
+      margin-right: 0.5vw;
       font-family: $font-family-bold;
     }
     .footer-arrow {
@@ -1932,13 +1959,15 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       position: absolute;
       left: -4.8vw;
       .dashed-circle {
-        border-radius: 50%;
-        border: 0.2vw dashed var(--white);
+        display: block;
         width: 3.5vw;
         height: 3.5vw;
       }
+      .highlight-circle {
+        margin-top: 0.3vw;
+      }
       .share-circle {
-        margin-top: 0.7vw;
+        margin-top: 1.15vw;
       }
       .assign-circle {
         margin-top: 1.5vw;
@@ -2044,8 +2073,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       position: absolute;
       left: -5.6vw;
       .dashed-circle {
-        border-radius: 50%;
-        border: 0.2vw dashed var(--white);
         width: 5vw;
         height: 5vw;
       }
@@ -2092,4 +2119,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   display: flex;
   justify-content: center;
   width: 26.5vw !important;
+
+.complete-container .introduction-info {
+  padding-right: 10vw !important;
+  .action-footer {
+    right: unset !important;
+  }
 }

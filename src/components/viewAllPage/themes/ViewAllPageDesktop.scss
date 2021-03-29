@@ -112,7 +112,8 @@
             color: var(--theme-dark-blue);
           }
           .MuiFormControlLabel-label {
-            font-size: 1.2vw;
+            font-size: 1.05vw;
+            font-family: $font-family-light !important;
           }
         }
         .arrow-cancel {
@@ -128,6 +129,19 @@
             }
           }
         }
+      }
+      .sidebar-footer {
+        border-top: 0.3vw solid var(--white);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 5vw;
+        width: 100%;
+        background: var(--theme-light-blue);
+      }
+      .subjects-filter-v3 {
+        height: calc(100vh - 0.5vh - 5.834vw - 2vw - 2.4vw - 6.5vw - 2vw - 1.8vw - 4.5vw) !important;
+        padding-bottom: 6vh !important;
       }
     }
     .brick-row-container {

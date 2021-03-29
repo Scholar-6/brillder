@@ -172,7 +172,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
           </Grid>
         </Grid>
         <div className="p-help-text">
-          This is an average of your provisional score and your review score
+          This is an average of your provisional score and your review score.
         </div>
       </div>
     );

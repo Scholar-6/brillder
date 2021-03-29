@@ -9,6 +9,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import { getSynthesisTime } from "../services/playTimes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
+import TypingLabel from "components/baseComponents/TypingLabel";
 
 interface Props {
   brick: Brick;
@@ -62,14 +63,14 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
         <div className="introduction-page">
           <div className="after-cover-main-content">
             <div className="title">
-              Time for some questions.
+              <TypingLabel label="Time for some questions." onEnd={() => {}} />
             </div>
             <div className="like-buttons-container">
               <div className="x-center">
                 <div className="like-button">Preparation</div>
               </div>
               <div className="x-center">
-                <div className="like-button orange">Investigation</div><div className="like-button">Synthesis</div>
+                <div className="like-button orange" onClick={() => setMoving(true)}>Investigation</div><div className="like-button">Synthesis</div>
               </div>
               <div className="x-center">
                 <div className="like-button">Review</div>
@@ -95,7 +96,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
         </div>
         <div className="fixed-helpers-container">
           <div className="circles">
-            <div className="prep-circle dashed-circle" />
+            <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg"  />
           </div>
           <div className="prep">
             Click here to go back to Prep tasks

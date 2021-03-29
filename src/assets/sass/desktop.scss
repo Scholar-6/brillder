@@ -14,8 +14,13 @@
   left: 0 !important;
   width: 5.7vw !important;
   height: 2.5vw !important;
-  margin: 1.7vw !important;
+  margin: 1vw 0 1vw 1.5vw !important;
 }
+
+.beta-text {
+  color: var(--theme-light-blue);
+}
+
 
 .short-description {
   cursor: pointer;

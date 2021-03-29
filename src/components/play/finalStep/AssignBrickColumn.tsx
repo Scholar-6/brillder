@@ -15,7 +15,7 @@ const AssignBrickColumn: React.FC<ShareProps> = props => {
         <div className="button-container">
           <SpriteIcon name="feather-file-plus" className="active" />
         </div>
-        <div className="link-text">Assign brick</div>
+        <div className="link-text">Assign</div>
       </div>
     </Grid>
   );
