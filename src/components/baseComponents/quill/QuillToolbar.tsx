@@ -39,10 +39,10 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
             return true;
         }
         if(props.quill.getFormat()[format] === (value ?? true)) {
-            props.quill.format(format, false);
+            props.quill.format(format, false, "user");
             return false;
         } else {
-            props.quill.format(format, value ?? true);
+            props.quill.format(format, value ?? true, "user");
             return true;
         }
     }, [props.quill, toolbarNode]);

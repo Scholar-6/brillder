@@ -15,6 +15,7 @@ import QuillToolbar from './QuillToolbar';
 
 interface QuillGlobalToolbarProps {
     availableOptions: string[];
+    disabled?: boolean;
 }
 
 const QuillGlobalToolbar: React.FC<QuillGlobalToolbarProps> = props => {
@@ -40,7 +41,7 @@ const QuillGlobalToolbar: React.FC<QuillGlobalToolbarProps> = props => {
             className="ql-global-toolbar"
             quill={quill}
             toolbar={props.availableOptions}
-            enabled={enabled}
+            enabled={props.disabled ? [] : enabled}
         />
     );
 };

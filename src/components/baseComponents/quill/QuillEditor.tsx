@@ -20,7 +20,7 @@ import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
 
 function randomEditorId() {
-     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
+    return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
 }
 
 interface QuillEditorProps {
@@ -153,7 +153,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                     quill={quill}
                     quillId={uniqueId}
                     toolbar={props.toolbar}
-                    enabled={props.toolbar}
+                    enabled={props.disabled ? [] : props.toolbar}
                 />
             }
             <ReactQuill

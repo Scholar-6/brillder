@@ -180,6 +180,7 @@ const QuestionComponents = ({
   }
 
   const onAddComponent = (evt: Sortable.SortableEvent) => {
+    if(locked) return;
     if(evt.item.dataset.value && (evt.newIndex !== undefined)) {
       const newComponent = createNewComponent(parseInt(evt.item.dataset.value))
       if(newComponent) {
@@ -189,6 +190,7 @@ const QuestionComponents = ({
   }
 
   const onUpdateComponent = (evt: Sortable.SortableEvent) => {
+    if(locked) return;
     if(((evt.oldIndex ?? -1) >= 0) && ((evt.newIndex ?? -1) >= 0)) {
       console.log(evt);
       components.doc?.transact(() => {
@@ -223,6 +225,7 @@ const QuestionComponents = ({
   <QuillEditorContext.Provider value={editorIdState}>
     <div className="questions">
       <QuillGlobalToolbar
+        disabled={locked}
         availableOptions={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
           'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
