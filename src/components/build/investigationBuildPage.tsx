@@ -8,7 +8,9 @@ import * as Y from "yjs";
 import _ from "lodash";
 
 import "./investigationBuildPage.scss";
+import routes from './routes';
 import map from 'components/map';
+import PlanPage from './plan/Plan';
 import {
   Question,
   QuestionTypeEnum,
@@ -221,7 +223,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
     createQuestion();
 
-    if (history.location.pathname.slice(-10) === '/synthesis') {
+    const {pathname} = history.location;
+
+    if (
+      pathname.slice(-10) === routes.BuildSynthesisLastPrefix ||
+      pathname.slice(-5) === routes.BuildPlanLastPrefix
+    ) {
       history.push(`/build/brick/${brickId}/investigation/question`);
     }
   };
@@ -272,11 +279,18 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const selectQuestion = (index: number) => {
-    if (history.location.pathname.slice(-10) === '/synthesis') {
+    const {pathname} = history.location;
+    if (
+      pathname.slice(-10) === routes.BuildSynthesisLastPrefix ||
+      pathname.slice(-5) === routes.BuildPlanLastPrefix
+    ) {
       setMovingFromSynthesis(true);
     }
     setCurrentQuestionIndex(index);
-    if (history.location.pathname.slice(-10) === '/synthesis') {
+    if (
+      pathname.slice(-10) === routes.BuildSynthesisLastPrefix ||
+      pathname.slice(-5) === routes.BuildPlanLastPrefix
+    ) {
       history.push(`/build/brick/${brickId}/investigation/question`);
     }
   };
@@ -383,6 +397,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const isTutorialPassed = () => {
+    return true;
+    /*
     const isCurrentEditor = (props.reduxBrick.editors?.findIndex((e: any) => e.id === props.user.id) ?? -1) >= 0;
 
     if (isCurrentEditor || props.user.tutorialPassed || tutorialSkipped || questions.length > 1) {
@@ -391,12 +407,24 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (questions.get(0)?.getMap() && questions.get(0)?.getMap().get("type") !== QuestionTypeEnum.None) {
       return true;
     }
-    return false;
+    return false;*/
   }
 
   const renderPanel = () => {
     return (
       <Switch>
+        <Route path={routes.planRoute}>
+          <PlanPage
+            locked={locked}
+            editOnly={!canEdit}
+            user={props.user}
+            ybrick={ybrick}
+            initSuggestionExpanded={initSuggestionExpanded}
+            undoRedoService={undoRedoService}
+            undo={undo}
+            redo={redo}
+          />
+        </Route>
         <Route path="/build/brick/:brickId/investigation/question-component">
           <QuestionPanelWorkArea
             brickId={brickId}
@@ -470,12 +498,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         exitAndSave={exitAndSave}
       />
       <TutorialLabels isTutorialPassed={isTutorialPassed()} />
-      <YourProposalLink
-        brickId={brickId}
-        tutorialStep={step}
-        invalid={validationRequired && !proposalResult.isValid}
-        isTutorialPassed={isTutorialPassed}
-      />
       <Grid
         container direction="row"
         className="investigation-build-background"
@@ -503,6 +525,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             >
               <DragableTabs
                 history={history}
+                brickId={brickId}
                 yquestions={questions}
                 currentQuestionIndex={currentQuestionIndex}
                 synthesis={synthesis.toString()}

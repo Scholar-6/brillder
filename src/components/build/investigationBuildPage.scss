@@ -421,3 +421,135 @@ $space-between-boxes: 0.1vw;
     border-radius: 0.3vw;
   }
 }
+
+// plan page styles.
+.plan-page {
+  .top-scroll-area,
+  .bottom-scroll-area {
+    display: flex;
+    width: 100%;
+    height: 5vh;
+    justify-content: flex-start;
+    .bottom-button-container,
+    .top-button-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 2vw;
+      min-width: calc(72.5% - 2vw);
+      max-width: calc(72.5% - 2vw);
+
+      svg {
+        width: 2vw;
+        height: 2vw;
+      }
+    }
+  }
+
+  .inner-question-type {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 2vw;
+    height: calc(100% - 10vh);
+
+    .plan-quill-container {
+      background: var(--tab-gray);
+      border-radius: 0.6vw;
+    }
+
+    .p-edit-container {
+      position: relative;
+      height: calc(100%);
+    }
+
+    $toolbar-height: 45px;
+
+    .ql-global-toolbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: $toolbar-height;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .inner-quills {
+      display: block;
+      $border: 0.2vw;
+      background: var(--white);
+      overflow-y: scroll;
+      position: absolute;
+      top: $toolbar-height;
+      left: $border;
+      width: calc(100% - #{$border * 2});
+      height: calc(100% - #{$toolbar-height} - #{$border});
+      border-bottom-left-radius: 0.4vw;
+      border-bottom-right-radius: 0.4vw;
+      padding-left: 0.5vw;
+      padding-right: 0.5vw;
+
+      .quill-document-editor {
+        width: 100%;
+        height: auto !important;
+      }
+      .ql-editor {
+        border-radius: 0.5vw;
+      }
+      .title-quill-container {
+        width: 100%;
+        margin-top: 0.5vw;
+        input {
+          color: var(--theme-dark-blue);
+          background: var(--off-white);
+          width: calc(100% - 1vw);
+          font-size: 1.2vw;
+          padding: 0.3vw 0.5vw;
+          border-radius: 0.5vw;
+        }
+      }
+      .key-words {
+        margin-top: 0.5vw;
+        background: var(--off-white);
+        border-radius: 0.5vw;
+        .key-word {
+          border-radius: 1vw;
+          background: #E4E8EE;
+          margin-top: 0.3vw;
+          margin-bottom: 0.3vw;
+          margin-right: 0.2vw;
+          margin-left: 0.2vw;
+          padding-left: 0.3vw;
+          padding-right: 0.2vw;
+          padding-top: 0.2vw;
+          padding-bottom: 0.2vw;
+        }
+        .MuiAutocomplete-root {
+          margin-bottom: 0 !important;
+          input {
+            padding: 0;
+          }
+        }
+      }
+      .subject-select-container {
+        margin-top: 0.5vw;
+        width: 100%;
+        .MuiInputBase-root {
+          width: 100%;
+          .MuiSelect-root {
+            border-radius: 0.5vw;
+            background: var(--off-white);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--theme-dark-blue);
+            .MuiListItemIcon-root:first-child {
+              display: center;
+              justify-content: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}

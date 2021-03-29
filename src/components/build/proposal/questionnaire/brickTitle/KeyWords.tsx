@@ -90,6 +90,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
           onKeyDown={this.checkKeyword.bind(this)}
           renderInput={(params: any) => {
             params.inputProps.value = this.state.keyWord;
+            console.log(params.inputProps.value);
             return <TextField
               {...params}
               disabled={this.props.disabled}

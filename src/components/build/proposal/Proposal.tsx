@@ -15,7 +15,6 @@ import BrickLength from "./questionnaire/brickLength/brickLength";
 import Brief from "./questionnaire/brief/brief";
 import Prep from "./questionnaire/prep/prep";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
-import ProposalReview from "./questionnaire/proposalReview/ProposalReview";
 import { Brick, Author } from "model/brick";
 import { User } from "model/user";
 import CloseProposalDialog from "components/build/baseComponents/dialogs/CloseProposalDialog";
@@ -383,22 +382,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 brickLength={this.context?.ydoc.getMap("brick").get("brickLength")}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
-            </Route>
-            
-            <Route path={[map.ProposalReview, map.ProposalBase + '/plan']}>
-              <ProposalReview
-                playStatus={playStatus}
-                brick={this.context!.ydoc.getMap("brick")}
-                baseUrl={baseUrl}
-                history={history}
-                canEdit={canEdit}
-                user={user}
-                setBrickField={this.setBrickField}
-                setAcademicLevel={this.setAcademicLevel}
-                saveBrick={this.saveAndMove}
-                saveAndPreview={() => this.saveAndPreview(playStatus)}
-              />
-            </Route>
+            </Route>            
             <VersionLabel />
           </div>
           <CloseProposalDialog

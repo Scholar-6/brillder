@@ -60,6 +60,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
 
     const [uniqueId] = React.useState(randomEditorId());
     const [data, setData] = React.useState(props.data);
+    console.log(data);
     const [quill, setQuill] = React.useState<Quill | null>(null);
 
     const [imageDialogOpen, setImageDialogOpen] = React.useState(false);

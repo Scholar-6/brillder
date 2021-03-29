@@ -4,18 +4,14 @@ import { Route } from "react-router-dom";
 import { isPhone } from "services/phone";
 import DesktopVersionDialog from "./baseComponents/dialogs/DesktopVersionDialog";
 
-import InvestigationBuildPage, { InvestigationBuildProps } from "./investigationBuildPage";
-import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./proposal/model";
+import routes from "./routes";
+import InvestigationBuildPage, {
+  InvestigationBuildProps,
+} from "./investigationBuildPage";
 
 import Proposal from "./proposal/Proposal";
 
-
 const BuildRouter: React.FC<InvestigationBuildProps> = (props) => {
-  const { params } = props.match;
-  const brickId = parseInt(params.brickId);
-
-  const proposalBaseUrl = '/build/brick/' + brickId;
-
   if (isPhone()) {
     return (
       <div className="blue-page">
@@ -28,22 +24,25 @@ const BuildRouter: React.FC<InvestigationBuildProps> = (props) => {
     <Switch>
       <Route
         path={[
-          proposalBaseUrl + "/subject",
-          proposalBaseUrl + TitleRoutePart,
-          proposalBaseUrl + OpenQuestionRoutePart,
-          proposalBaseUrl + BrickLengthRoutePart,
-          proposalBaseUrl + BriefRoutePart,
-          proposalBaseUrl + PrepRoutePart,
-          proposalBaseUrl + ProposalReviewPart
+          routes.subjectRoute,
+          routes.titleRoute,
+          routes.openQuestionRoute,
+          routes.lengthRoute,
+          routes.briefRoute,
+          routes.prepRoute,
         ]}
       >
-        <Proposal history={props.history} location={props.location} match={props.match} />
+        <Proposal
+          history={props.history}
+          location={props.location}
+          match={props.match}
+        />
       </Route>
-      <Route path="/build/brick/:brickId">
+      <Route path={routes.baseBuildRoute}>
         <InvestigationBuildPage {...props} />
       </Route>
     </Switch>
   );
-}
+};
 
 export default BuildRouter;

@@ -17,6 +17,8 @@ import { User } from "model/user";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { generateId } from "../buildQuestions/questionTypes/service/questionBuild";
 import { toRenderJSON } from "services/SharedTypeService";
+import PlanTab from "./PlanTab";
+import routes from "../routes";
 
 interface Question {
   id: number;
@@ -26,6 +28,7 @@ interface Question {
 
 interface DragTabsProps {
   history: any;
+  brickId: number;
   yquestions: Y.Array<Y.Doc>;
   currentQuestionIndex: number;
   user: User;
@@ -107,6 +110,11 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     const { props } = this;
     const { isSynthesisPage, synthesis, yquestions } = props;
 
+    let isPlanPage = false;
+    if (this.props.history.location.pathname.slice(-5) === routes.BuildPlanLastPrefix) {
+      isPlanPage = true;
+    }
+
     const getHasSynthesisReplied = () => {
       const replies = props.comments
         ?.filter((comment) => comment.location === CommentLocation.Synthesis)
@@ -161,7 +169,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       const question = toRenderJSON(yquestion.getMap());
       let titleClassNames = "drag-tile-container";
       let cols = 2;
-      if (index === props.currentQuestionIndex) {
+      if (index === props.currentQuestionIndex && !isPlanPage) {
         titleClassNames += " active";
         cols = 3;
       }
@@ -185,6 +193,8 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
         isValid = validateQuestion(question as any);
       }
 
+      console.log(props.currentQuestionIndex === index && !isPlanPage);
+
       return (
         <GridListTile
           className={titleClassNames}
@@ -195,7 +205,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           <DragTab
             index={index}
             questionId={question.id}
-            active={props.currentQuestionIndex === index}
+            active={props.currentQuestionIndex === index && !isPlanPage}
             isValid={isValid}
             getHasReplied={getHasReplied}
             selectQuestion={props.selectQuestion}
@@ -275,6 +285,12 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             transform: "translateZ(0)",
           }}
         >
+          <GridListTile
+            className={`drag-tile-container plan-tab ${isPlanPage ? 'active' : ''}`}
+            cols={isPlanPage ? 1.5555 : 2}
+          >
+            <PlanTab brickId={this.props.brickId} history={this.props.history} />
+          </GridListTile>
           <ReactSortable
             key={this.state.sortableId}
             list={props.yquestions.map((q: Y.Doc) => ({ id: q.guid }))}
