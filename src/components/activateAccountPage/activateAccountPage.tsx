@@ -3,7 +3,7 @@ import { Grid, Hidden } from "@material-ui/core";
 import { History } from "history";
 import axios from 'axios';
 
-import "./activateAccountPage.scss";
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import LoginLogo from 'components/loginPage/components/LoginLogo';
 import GoogleButton from "components/loginPage/components/GoogleButton";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
@@ -27,6 +27,10 @@ interface ActivateAccountProps {
   match: any;
 }
 
+const MobileTheme = React.lazy(() => import('../loginPage/themes/LoginPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('../loginPage/themes/LoginPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('../loginPage/themes/LoginPageDesktopTheme'));
+
 const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
   let initPolicyOpen = false;
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
@@ -49,7 +53,7 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
         setValid(true);
         setEmail(response.data.email);
-      } catch(e) {
+      } catch (e) {
         setValid(false);
         props.history.push(map.Login);
       }
@@ -69,7 +73,7 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
     }, 450);
   }
 
-  if(!valid && valid !== false) {
+  if (!valid && valid !== false) {
     return <PageLoader content="Checking token..." />
   }
 
@@ -95,42 +99,45 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
   }
 
   return (
-    <Grid
-      className="auth-page login-page"
-      container
-      item
-      justify="center"
-      alignItems="center"
-    >
-      {valid ? <>
-        <Hidden only={["xs"]}>
-          <div className="choose-login-desktop">
-            <Grid container direction="row" className="first-row">
-              <div className="first-col"></div>
-              <div className="second-col"></div>
-              <div className="third-col"></div>
-            </Grid>
-            <Grid container direction="row" className="second-row">
-              <div className="first-col">
-                <LoginLogo />
-              </div>
-              <div className="second-col">
-                {renderButtons()}
-              </div>
-            </Grid>
-            <Grid container direction="row" className="third-row">
-              <div className="first-col"></div>
-              <div className="second-col">
-                <TermsLink history={props.history}/>
-              </div>
-              <div className="third-col"></div>
-            </Grid>
-          </div>
-        </Hidden>
-        <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
-      </>
-      : <Redirect to={map.Login} />}
-    </Grid>
+    <React.Suspense fallback={<></>}>
+      {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+      <Grid
+        className="auth-page login-page"
+        container
+        item
+        justify="center"
+        alignItems="center"
+      >
+        {valid ? <>
+          <Hidden only={["xs"]}>
+            <div className="choose-login-desktop">
+              <Grid container direction="row" className="first-row">
+                <div className="first-col"></div>
+                <div className="second-col"></div>
+                <div className="third-col"></div>
+              </Grid>
+              <Grid container direction="row" className="second-row">
+                <div className="first-col">
+                  <LoginLogo />
+                </div>
+                <div className="second-col">
+                  {renderButtons()}
+                </div>
+              </Grid>
+              <Grid container direction="row" className="third-row">
+                <div className="first-col"></div>
+                <div className="second-col">
+                  <TermsLink history={props.history} />
+                </div>
+                <div className="third-col"></div>
+              </Grid>
+            </div>
+          </Hidden>
+          <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
+        </>
+          : <Redirect to={map.Login} />}
+      </Grid>
+    </React.Suspense>
   );
 };
 

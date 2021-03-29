@@ -152,7 +152,20 @@
     }
   }
   .main-page-menu {
+    position: absolute;
+    width: 42vw;
+    height: 60px;
+    bottom: 0;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 6vw;
+    z-index: 1;
     padding-top: 1.1vw;
+    .more-button {
+      margin-right: 4vw;
+    }
+    .bell-button {
+      margin-right: 7.2vw;
+    }
     .menu-buttons {
       padding-bottom: 1.05vw;
       display: flex;
@@ -169,28 +182,21 @@
         margin: auto;
       }
     }
-    &.notification-expanded {
-      height: auto;
-    }
   }
-  .main-page-menu {
-    position: absolute;
-    width: 42vw;
-    height: 60px;
-    bottom: 0;
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 6vw;
-    z-index: 1;
-
-    .more-button {
-      margin-right: 4vw;
-    }
-    .bell-button {
-      margin-right: 7.2vw;
-    }
-    &.menu-expanded {
-      border-top-left-radius: 0;
-      width: 58vw !important;
+  .menu-expanded {
+    border-top-left-radius: 0;
+    width: 45vw !important;
+  }
+  .notification-expanded {
+    border-top-left-radius: 0;
+    width: 100vw !important;
+    height: auto;
+  }
+  .manage-classes {
+    font-size: 25px;
+    .svg {
+      width: 200px;
+      height: 120px;
     }
   }
   .notification-expanded {

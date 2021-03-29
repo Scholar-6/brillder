@@ -13,7 +13,7 @@ input {
     @include placeholder {
       color: var(--theme-dark-blue);
     }
-    &[type="password"] {
+    &[type='password'] {
       @include placeholder {
         > div {
           font-size: 4vw;
@@ -67,8 +67,8 @@ input {
       font-size: 1.5vw;
     }
   }
-  input[type="email"]::placeholder,
-  input[type="password"]::placeholder {
+  input[type='email']::placeholder,
+  input[type='password']::placeholder {
     color: rgb(141, 154, 180);
   }
   .hide-password-icon-container {
@@ -76,7 +76,7 @@ input {
     position: absolute;
     right: 1.3vw;
     top: 0;
-    padding: 0.5vw 1vw;
+    padding: 0 1vw;
     height: 100%;
     .hide-password-icon {
       height: 37%;
