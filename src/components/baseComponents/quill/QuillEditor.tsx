@@ -87,7 +87,9 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         autolink: props.allowLinks,
         mediaembed: props.allowMediaEmbed,
         imageupload: props.imageDialog,
-        cursors: true,
+        cursors: {
+            hideDelayMs: 500,
+        },
     }
     
     /*
