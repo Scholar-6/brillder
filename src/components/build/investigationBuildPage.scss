@@ -139,7 +139,7 @@ $space-between-boxes: 0.1vw;
     vertical-align: bottom;
     height: 5%;
     left: 33vw;
-    font-size: 1.3vw;
+    font-size: 1.05vw;
     font-family: $font-family-regular;
     color: white;
   }
@@ -424,6 +424,7 @@ $space-between-boxes: 0.1vw;
 
 // plan page styles.
 .plan-page {
+  $baseFontSize: 1.05vw;
   .top-scroll-area,
   .bottom-scroll-area {
     display: flex;
@@ -495,6 +496,7 @@ $space-between-boxes: 0.1vw;
       }
       .ql-editor {
         border-radius: 0.5vw;
+        height: auto !important;
       }
       .title-quill-container {
         width: 100%;
@@ -503,7 +505,7 @@ $space-between-boxes: 0.1vw;
           color: var(--theme-dark-blue);
           background: var(--off-white);
           width: calc(100% - 1vw);
-          font-size: 1.2vw;
+          font-size: $baseFontSize;
           padding: 0.3vw 0.5vw;
           border-radius: 0.5vw;
         }
@@ -519,14 +521,16 @@ $space-between-boxes: 0.1vw;
           margin-bottom: 0.3vw;
           margin-right: 0.2vw;
           margin-left: 0.2vw;
-          padding-left: 0.3vw;
+          padding-left: 0.5vw;
           padding-right: 0.2vw;
           padding-top: 0.2vw;
+          font-size: $baseFontSize;
           padding-bottom: 0.2vw;
         }
         .MuiAutocomplete-root {
           margin-bottom: 0 !important;
           input {
+            font-size: $baseFontSize;
             padding: 0;
           }
         }
@@ -547,7 +551,66 @@ $space-between-boxes: 0.1vw;
               display: center;
               justify-content: center;
             }
+            .MuiTypography-root {
+              font-size: $baseFontSize;
+            }
           }
+        }
+      }
+      .level-and-length-container {
+        display: inline-flex;
+        margin-top: 0.5vw;
+        width: 100%;
+        .difficulty-select {
+          padding-right: 0.5vw;
+          width: 100%;
+          .MuiInputBase-root {
+            width: 100%;
+            &::before, &::after {
+              content: none !important;
+            }
+
+            .MuiSelect-root {
+              font-size: $baseFontSize;
+              background: var(--off-white);
+              padding-left: 0.4vw;
+              border-radius: 0.5vw;
+            }
+          }
+        }
+        .brick-length {
+          width: 30%;
+          &::before, &::after {
+            content: none !important;
+          }
+          .MuiSelect-root {
+            padding-left: 0.4vw;
+            color: var(--theme-dark-blue);
+            font-size: $baseFontSize;
+            font-family: $font-family-regular;
+            background: var(--off-white);
+            border-radius: 0.5vw;
+          }
+        }
+      }
+      .open-question-container {
+        margin-top: 0.5vw;
+      }
+      .brief-container, .prep-container {
+        margin-top: 0.5vw;
+        .header {
+          width: 100%;
+          background: var(--tab-gray);
+          border-top-left-radius: 0.5vw;
+          border-top-right-radius: 0.5vw;
+          color: var(--theme-dark-blue);
+          font-size: 1.3vw;
+          text-align: center;
+          font-family: $font-family-bold;
+        }
+        .ql-editor {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
         }
       }
     }
