@@ -60,7 +60,7 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
               </div>
             </div>
             <div className="footer">
-              Spend about<span className="underline-border"> 4 minutes </span>on this stage before reviewing your answers to improve your score.
+              Spend about<span className="underline-border"> {minutes} minutes </span>on this stage before reviewing your answers to improve your score.
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
