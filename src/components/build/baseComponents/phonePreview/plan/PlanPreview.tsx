@@ -5,18 +5,26 @@ import "./PlanPreview.scss";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import KeyWordsPlay from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
 import ObservableText from "./ObservableText";
+import { User } from "model/user";
+import BrickCircle from "components/baseComponents/BrickCircle";
+import { AcademicLevelLabels } from "model/brick";
 
 interface PlanPreviewProps {
   data: {
     ybrick: Y.Map<any>;
+    user: User;
   }
 }
 
 const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
-  const { ybrick } = data;
+  const { ybrick, user } = data;
+
+  const subjectId = ybrick.get("subjectId") as number;
+  const subject = user.subjects.find(s => s.id === subjectId);
 
   return (
     <div className="phone-preview-component plan-preview">
+      <BrickCircle color={subject ? subject.color : ''} label={AcademicLevelLabels[ybrick.get("academicLevel")]} onClick={() => {}} />
       <div className="title" style={{ textAlign: "center" }}>
         {ybrick.get("title").toString()}
       </div>

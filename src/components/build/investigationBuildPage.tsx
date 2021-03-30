@@ -575,7 +575,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             prev={() => { }}
             next={() => selectQuestion(0)}
             prevDisabled={true}
-            data={{ ybrick }}
+            data={{ ybrick, user: props.user }}
           />
         </Route>
       </Grid>

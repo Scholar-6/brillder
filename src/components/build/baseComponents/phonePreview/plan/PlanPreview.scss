@@ -7,6 +7,20 @@
   margin-right: 1.5vh;
   color: var(--theme-dark-blue);
 
+  .brick-status-circle {
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+    .round-button {
+      border-radius: 50%;
+      width: 7vh;
+      height: 7vh;
+      .label-circle-text {
+        font-size: 5vh;
+      }
+    }
+  }
+
   .title {
     margin-top: 3vh;
     font-size: 1.3vw;

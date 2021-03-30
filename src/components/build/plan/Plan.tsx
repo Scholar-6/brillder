@@ -55,6 +55,8 @@ const PlanPage: React.FC<PlanProps> = (props) => {
     }
   }, [subjects]);
 
+  console.log(subjectIndex);
+
   return (
     <div className="question-type plan-page">
       <div className="top-scroll-area">
@@ -107,11 +109,12 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     keyWords={ybrick.get("keywords")}
                   />
                   <div className="subject-select-container">
-                    {ybrick.get("subjectId") !== undefined && (
+                    {subjectIndex !== undefined && (
                       <Select
-                        value={ybrick.get("subjectId")}
+                        value={subjectIndex}
                         onChange={(evt) => {
-                          ybrick.set("subjectId", evt.target.value as number);
+                          ybrick.set("subjectId", subjects[evt.target.value as number].id as number);
+                          setSubjectIndex(evt.target.value as number);
                         }}
                         input={<InputBase />}
                       >
