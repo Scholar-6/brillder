@@ -444,6 +444,10 @@ $space-between-boxes: 0.1vw;
         width: 2vw;
         height: 2vw;
       }
+
+      .disabled {
+        color: var(--theme-dark-blue) !important;
+      }
     }
   }
 
@@ -600,6 +604,7 @@ $space-between-boxes: 0.1vw;
       }
       .brief-container, .prep-container {
         margin-top: 0.5vw;
+        margin-bottom: 0.5vw;
         .header {
           width: 100%;
           background: var(--tab-gray);
