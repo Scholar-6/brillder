@@ -72,7 +72,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, acti
         <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
           { props.prev &&
             <div className="centered pointer">
-              <SpriteIcon name="arrow-left" className="scroll-arrow" onClick={props.prev} />
+              <SpriteIcon name="arrow-left" className={`scroll-arrow ${props.prevDisabled && 'disabled'}`} onClick={props.prev} />
             </div>
           }
           <div className="phone-question-preview">
@@ -98,7 +98,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, acti
           </div>
           { props.next &&
             <div className="centered pointer">
-              <SpriteIcon name="arrow-right" className={`scroll-arrow ${props.nextDisabled && 'disabled'}`} onClick={props.next} />
+              <SpriteIcon name="arrow-right" className={`scroll-arrow ${props.nextDisabled && 'disabled'}`} onClick={() => props.next?.()} />
             </div>
           }
         </Grid>

@@ -27,7 +27,7 @@ import QuillGlobalToolbar from "components/baseComponents/quill/QuillGlobalToolb
 import KeyWordsComponent from "../proposal/questionnaire/brickTitle/KeyWords";
 import { User } from "model/user";
 import DifficultySelect from "../proposal/questionnaire/brickTitle/DifficultySelect";
-import BrickLength from "../proposal/questionnaire/brickLength/brickLength";
+import { toRenderJSON } from "services/SharedTypeService";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -44,6 +44,7 @@ export interface PlanProps {
 const PlanPage: React.FC<PlanProps> = (props) => {
   const { subjects } = props.user;
   const { ybrick, locked } = props;
+  const [commentsShown, setCommentsShown] = React.useState(false);
   const editorIdState = React.useState("");
   const [subjectIndex, setSubjectIndex] = React.useState<number>();
 
@@ -54,13 +55,11 @@ const PlanPage: React.FC<PlanProps> = (props) => {
     }
   }, [subjects]);
 
-  console.log(subjectIndex);
-
   return (
     <div className="question-type plan-page">
       <div className="top-scroll-area">
         <div className="top-button-container">
-          <button className="btn btn-transparent svgOnHover" onClick={() => {}}>
+          <button className="btn btn-transparent svgOnHover" onClick={() => { }}>
             <SpriteIcon
               name="arrow-up"
               className={`active text-theme-orange`}
@@ -159,7 +158,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                   <div className="open-question-container">
                     <QuillEditor
                       disabled={locked}
-                      data={ybrick.get("openQuestion")}
+                      sharedData={ybrick.get("openQuestion")}
                       toolbar={["bold", "italic", "latex"]}
                       imageDialog={true}
                     />
@@ -168,7 +167,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <div className="header">Brief</div>
                     <QuillEditor
                       disabled={locked}
-                      data={ybrick.get("brief")}
+                      sharedData={ybrick.get("brief")}
                       toolbar={[
                         "bold",
                         "italic",
@@ -184,7 +183,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <div className="header">Prep</div>
                     <QuillEditor
                       disabled={locked}
-                      data={ybrick.get("prep")}
+                      sharedData={ybrick.get("prep")}
                       toolbar={[
                         "bold",
                         "italic",
@@ -202,67 +201,51 @@ const PlanPage: React.FC<PlanProps> = (props) => {
               </div>
             </QuillEditorContext.Provider>
           </Grid>
-          <Grid
-            container
-            item
-            xs={3}
-            sm={3}
-            md={3}
-            direction="column"
-            className="right-sidebar"
-            alignItems="flex-end"
-          ></Grid>
-          {/*
-            {!this.state.commentsShown && (
-              <Grid
-                container
-                item
-                xs={3}
-                sm={3}
-                md={3}
-                direction="column"
-                className="right-sidebar"
-                alignItems="flex-end"
-              >
-                <div className="comments-sidebar-default">
-                  <div className="reundo-button-container">
-                    <UndoButton
-                      undo={this.props.undo}
-                      canUndo={() => this.props.undoRedoService.canUndo()}
-                    />
-                    <RedoButton
-                      redo={this.props.redo}
-                      canRedo={() => this.props.undoRedoService.canRedo()}
-                    />
-                  </div>
-                  <div className="comment-button-container">
-                    <CommentButton
-                      location={CommentLocation.Synthesis}
-                      setCommentsShown={this.setCommentsShown.bind(this)}
-                    />
-                  </div>
-                  <div style={{ width: "100%" }}></div>
-                </div>
-              </Grid>
-            )}
+          {!commentsShown && (
             <Grid
-              className={`synthesis-comments-panel ${
-                !this.state.commentsShown && "hidden"
-              }`}
+              container
               item
+              xs={3}
+              sm={3}
+              md={3}
+              direction="column"
+              className="right-sidebar"
+              alignItems="flex-end"
             >
-              <CommentPanel
-                currentLocation={CommentLocation.Synthesis}
-                currentBrick={this.props.currentBrick}
-                setCommentsShown={this.setCommentsShown.bind(this)}
-                haveBackButton={true}
-              />
-            </Grid>*/}
+              <div className="comments-sidebar-default">
+                <div className="reundo-button-container">
+                  <UndoButton
+                    undo={props.undo}
+                    canUndo={() => false}
+                  />
+                  <RedoButton
+                    redo={props.redo}
+                    canRedo={() => false}
+                  />
+                </div>
+                <div className="comment-button-container">
+                  <CommentButton
+                    location={CommentLocation.Synthesis}
+                    setCommentsShown={setCommentsShown}
+                  />
+                </div>
+                <div style={{ width: "100%" }}></div>
+              </div>
+            </Grid>
+          )}
+          <Grid className={`plan-comments-panel ${!commentsShown && "hidden"}`} item>
+            <CommentPanel
+              currentLocation={CommentLocation.Synthesis}
+              currentBrick={toRenderJSON(ybrick) as Brick}
+              setCommentsShown={setCommentsShown}
+              haveBackButton={true}
+            />
+          </Grid>
         </Grid>
       </div>
       <div className="bottom-scroll-area">
         <div className="bottom-button-container">
-          <button className="btn btn-transparent svgOnHover" onClick={() => {}}>
+          <button className="btn btn-transparent svgOnHover" onClick={() => { }}>
             <SpriteIcon
               name="arrow-down"
               className={`active text-theme-orange`}

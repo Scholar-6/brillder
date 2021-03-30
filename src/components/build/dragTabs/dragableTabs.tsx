@@ -213,11 +213,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       );
     };
 
-    let columns = props.yquestions.length * 2 + 4;
-
-    if (isSynthesisPage) {
-      columns = props.yquestions.length * 2 + 2;
-    }
+    const columns = props.yquestions.length * 2 + 4;
     
     const onUpdateQuestions = (evt: Sortable.SortableEvent) => {
       if(((evt.oldIndex ?? -1) >= 0)  && ((evt.newIndex ?? -1) >= 0)) {

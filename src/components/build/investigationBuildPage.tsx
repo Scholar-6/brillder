@@ -61,6 +61,7 @@ import { YJSContext } from "./baseComponents/YJSProvider";
 import { convertQuestion, toRenderJSON } from "services/SharedTypeService";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import service, { getPreviewLink, getQuestionType } from "./services/buildService";
+import PlanPreviewComponent from "./baseComponents/phonePreview/plan/PlanPreview";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -158,7 +159,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   setBrillderTitle(ybrick.get("title"));
 
-  const getQuestionIndex     = (question: Y.Doc) =>    service.getQuestionIndex(question, questions);
+  const getQuestionIndex = (question: Y.Doc) => service.getQuestionIndex(question, questions);
   const getJSONQuestionIndex = (question: Question) => service.getJSONQuestionIndex(question, questions);
 
   const createQuestion = () => {
@@ -207,7 +208,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (currentQuestionIndex < lastIndex) {
       setCurrentQuestionIndex(index => index + 1);
     } else {
-      history.push(map.InvestigationSynthesis(brickId));
+      history.push(routes.buildSynthesis(brickId));
     }
   };
   /* Changing question in build */
@@ -222,24 +223,24 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
     createQuestion();
 
-    const {pathname} = history.location;
+    const { pathname } = history.location;
 
     if (
       pathname.slice(-10) === routes.BuildSynthesisLastPrefix ||
       pathname.slice(-5) === routes.BuildPlanLastPrefix
     ) {
-      history.push(`/build/brick/${brickId}/investigation/question`);
+      history.push(routes.buildQuesitonType(brickId));
     }
   };
 
   const moveToSynthesis = () => {
-    history.push(map.InvestigationSynthesis(brickId));
+    history.push(routes.buildSynthesis(brickId));
   };
 
   const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
     if (locked) { return; }
     setQuestionType(type);
-    history.push(map.InvestigationBuild(brickId));
+    history.push(routes.buildQuesiton(brickId));
   };
 
   const componentFocus = (index: number) => {
@@ -278,7 +279,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const selectQuestion = (index: number) => {
-    const {pathname} = history.location;
+    const { pathname } = history.location;
     if (
       pathname.slice(-10) === routes.BuildSynthesisLastPrefix ||
       pathname.slice(-5) === routes.BuildPlanLastPrefix
@@ -290,7 +291,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       pathname.slice(-10) === routes.BuildSynthesisLastPrefix ||
       pathname.slice(-5) === routes.BuildPlanLastPrefix
     ) {
-      history.push(`/build/brick/${brickId}/investigation/question`);
+      history.push(routes.buildQuesitonType(brickId));
     }
   };
 
@@ -480,6 +481,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const isPublisher = checkPublisher(props.user, props.reduxBrick);
   const isAdmin = checkAdmin(props.user.roles);
 
+
   return (
     <div className="investigation-build-page">
       <BuildNavigation
@@ -515,7 +517,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             style={{ height: "100%" }}
           >
             <div className="build-brick-title">
-              <div>{ybrick.get("title")}</div>
+              <div dangerouslySetInnerHTML={{ __html: toRenderJSON(ybrick.get("title")) }} />
             </div>
             <Grid
               container
@@ -546,7 +548,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <Route path="/build/brick/:brickId/investigation/" exact>
           <Redirect to={`/build/brick/${ybrick.get("id")}/investigation/question`} />
         </Route>
-        <Route path="/build/brick/:brickId/investigation/question-component">
+        <Route path={routes.questionRoute}>
           {activeQuestion &&
             <PhoneQuestionPreview
               question={toRenderJSON(activeQuestion.getMap())}
@@ -557,10 +559,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             />
           }
         </Route>
-        <Route path="/build/brick/:brickId/investigation/question">
+        <Route path={routes.questionTypeRoute}>
           {renderQuestionTypePreview()}
         </Route>
-        <Route path="/build/brick/:brickId/synthesis">
+        <Route path={routes.synthesisRoute}>
           <PhonePreview
             Component={SynthesisPreviewComponent}
             prev={() => selectQuestion(questions.length - 1)}
@@ -568,6 +570,16 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             nextDisabled={true}
             data={{ synthesis, brickLength: ybrick.get("brickLength") }}
           />
+        </Route>
+        <Route path={routes.planRoute}>
+          {/*
+          <PhonePreview
+            Component={PlanPreviewComponent}
+            prev={() => { }}
+            next={() => selectQuestion(0)}
+            prevDisabled={true}
+            data={{ ybrick }}
+          />*/}
         </Route>
       </Grid>
       <HighlightInvalidDialog

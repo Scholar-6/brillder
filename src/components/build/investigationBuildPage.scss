@@ -450,10 +450,12 @@ $space-between-boxes: 0.1vw;
   .inner-question-type {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
+    padding-right: 0 !important;
     padding-left: 2vw;
     height: calc(100% - 10vh);
 
     .plan-quill-container {
+      max-width: 72.5%;
       background: var(--tab-gray);
       border-radius: 0.6vw;
     }
@@ -612,6 +614,20 @@ $space-between-boxes: 0.1vw;
           border-top-left-radius: 0;
           border-top-right-radius: 0;
         }
+      }
+    }
+    .right-sidebar {
+      width: 27.5%;
+    }
+    .plan-comments-panel {
+      transition: all 1s ease-out;
+      display: flex;
+      justify-content: flex-end;
+      width: 27.5%;
+      height: calc(100% - 10vh);
+      &.hidden {
+        width: 0;
+        overflow: hidden;
       }
     }
   }
