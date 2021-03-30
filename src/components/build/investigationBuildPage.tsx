@@ -549,7 +549,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <Route path="/build/brick/:brickId/investigation/question-component">
           {activeQuestion &&
             <PhoneQuestionPreview
-              question={toRenderJSON(activeQuestion.getMap())}
+              yquestion={activeQuestion.getMap()}
               focusIndex={focusIndex}
               getQuestionIndex={getJSONQuestionIndex}
               nextQuestion={setNextQuestion}
