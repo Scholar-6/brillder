@@ -1,18 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as Y from "yjs";
 
-// @ts-ignore
-import MathJax from "react-mathjax-preview";
-import {
-  isMathJax, parseSynthesisDataToArray, isLatex
-} from "components/services/mathJaxService";
 import "./PlanPreview.scss";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { Radio } from "@material-ui/core";
-import { BrickLengthEnum } from "model/brick";
-import Katex from "components/baseComponents/katex/Katex";
-import { toRenderJSON } from "services/SharedTypeService";
 import KeyWordsPlay from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
+import ObservableText from "./ObservableText";
 
 interface PlanPreviewProps {
   data: {
@@ -30,7 +22,7 @@ const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
       </div>
       <KeyWordsPlay keywords={ybrick.get("keywords").toJSON()} />
       <div>
-        {ybrick.get("openQuestion").toString()}
+      <ObservableText text={ybrick.get("openQuestion")} math={true} />
       </div>
       <div className="expand-title brief-title" style={{ marginTop: '4vh' }}>
         <span>Brief</span>
@@ -41,7 +33,7 @@ const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
         </div>
       </div>
       <div>
-        {ybrick.get("brief").toString()}
+        <ObservableText text={ybrick.get("brief")} math={true} />
       </div>
       <div className="expand-title prep-title" style={{ marginTop: '4vh' }}>
         <span>Prep</span>
@@ -52,7 +44,7 @@ const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
         </div>
       </div>
       <div>
-        {ybrick.get("brief").toString()}
+        <ObservableText text={ybrick.get("prep")} math={true} />
       </div>
     </div>
   );

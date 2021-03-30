@@ -1,5 +1,6 @@
 import React from "react";
 import * as Y from "yjs";
+import _ from "lodash";
 
 // @ts-ignore
 import MathJax from "react-mathjax-preview";
@@ -12,7 +13,6 @@ import { Radio } from "@material-ui/core";
 import { BrickLengthEnum } from "model/brick";
 import Katex from "components/baseComponents/katex/Katex";
 import { toRenderJSON } from "services/SharedTypeService";
-import _ from "lodash";
 
 interface SynthesisPreviewData {
   synthesis: Y.Text;
