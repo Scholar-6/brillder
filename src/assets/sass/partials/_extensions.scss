@@ -780,20 +780,3 @@
     bottom: 0;
   }
 }
-
-%policy-text {
-  cursor: pointer;
-  vertical-align: middle;
-  text-align: right;
-  padding-right: 2.5vw;
-  line-height: 2vw;
-  font-size: 1.6vw;
-  z-index: 2000;
-  a {
-    font-family: $font-family-regular;
-    color: var(--white);
-    &:hover {
-      color: var(--theme-orange);
-    }
-  }
-}
