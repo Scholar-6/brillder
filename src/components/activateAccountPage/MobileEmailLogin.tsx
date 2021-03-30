@@ -89,7 +89,7 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
               </Button>
           </div>
           <div className="mobile-policy-text">
-            <TermsLink history={this.props.history}/>
+            <TermsLink history={this.props.history} />
           </div>
         </form>
       </div>
