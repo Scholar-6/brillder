@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import './ProgressbarCountdown.scss';
-let moment = require('moment');
 
 
 interface CounterProps {

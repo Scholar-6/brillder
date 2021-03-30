@@ -10,28 +10,18 @@ import NavigationButtons from '../../components/navigationButtons/NavigationButt
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { getReviewTime } from "components/play/services/playTimes";
+import { getLiveTime, getPrepareTime, getReviewTime, getSynthesisTime } from "components/play/services/playTimes";
 
 interface Props {
   data: BrickLengthEnum;
 }
 
 const BrickLengthPreviewComponent: React.FC<Props> = ({ data }) => {
-  let prepare = 5;
-  let investigation = 8;
-  let synthesis = 4;
-
+  const prepare = getPrepareTime(data);
+  const investigation = getLiveTime(data);
+  const synthesis = getSynthesisTime(data);
   const review = getReviewTime(data);
 
-  if (data === 40) {
-    prepare = 10;
-    investigation = 16;
-    synthesis = 8;
-  } else if (data === 60) {
-    prepare = 15;
-    investigation = 24;
-    synthesis= 12;
-  }
 
   return (
     <Grid container justify="center" className="phone-preview-component">
