@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 
-import "./loginPage.scss";
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import actions from "redux/actions/auth";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import MobileLoginPage from "./MobileLogin";
@@ -30,6 +30,10 @@ interface LoginProps {
   match: any;
 }
 
+const MobileTheme = React.lazy(() => import('./themes/LoginPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/LoginPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/LoginPageDesktopTheme'));
+
 const LoginPage: React.FC<LoginProps> = (props) => {
   let initPolicyOpen = false;
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
@@ -47,23 +51,26 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   }
 
   return (
-    <Grid
-      className="auth-page login-page"
-      container
-      item
-      justify="center"
-      alignItems="center"
-    >
-      <MobileLoginPage
-        loginState={loginState}
-        history={props.history}
-        match={props.match}
-        moveToLogin={moveToLogin}
-        setPolicyDialog={setPolicyDialog}
-        setLoginState={setLoginState}
-      />
-      <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
-    </Grid>
+    <React.Suspense fallback={<></>}>
+      {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+      <Grid
+        className="auth-page login-page"
+        container
+        item
+        justify="center"
+        alignItems="center"
+      >
+        <MobileLoginPage
+          loginState={loginState}
+          history={props.history}
+          match={props.match}
+          moveToLogin={moveToLogin}
+          setPolicyDialog={setPolicyDialog}
+          setLoginState={setLoginState}
+        />
+        <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
+      </Grid>
+    </React.Suspense>
   );
 };
 

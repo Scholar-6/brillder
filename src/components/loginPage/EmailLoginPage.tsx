@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
 
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
 import LoginLogo from './components/LoginLogo';
@@ -27,6 +28,10 @@ interface LoginProps {
   history: History;
   match: any;
 }
+
+const MobileTheme = React.lazy(() => import('../loginPage/themes/LoginPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('../loginPage/themes/LoginPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('../loginPage/themes/LoginPageDesktopTheme'));
 
 const EmailLoginPage: React.FC<LoginProps> = (props) => {
   let initPolicyOpen = false;
@@ -128,68 +133,71 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
   }
 
   return (
-    <Grid
-      className="auth-page login-page"
-      container
-      item
-      justify="center"
-      alignItems="center"
-    >
-      <Hidden only={["xs"]}>
-        <div className="choose-login-desktop">
-          <Grid container direction="row" className="first-row">
-            <div className="first-col"></div>
-            <div className="second-col"></div>
-            <div className="third-col"></div>
-          </Grid>
-          <Grid container direction="row" className="second-row">
-            <div className="first-col">
-              <LoginLogo />
-            </div>
-            <div className="second-col">
-              <DesktopLoginForm
-                email={email}
-                setEmail={setEmail}
-                password={password}
-                setPassword={setPassword}
-                passwordHidden={passwordHidden}
-                setHidden={setHidden}
-                handleSubmit={handleLoginSubmit}
-                register={() => register(email, password)}
-              />
-            </div>
-          </Grid>
-          <Grid container direction="row" className="third-row">
-            <div className="first-col"></div>
-            <TermsLink history={props.history}/>
-            <div className="third-col"></div>
-          </Grid>
-        </div>
-      </Hidden>
-      <MobileEmailLogin
-        history={props.history}
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        passwordHidden={passwordHidden}
-        setHidden={setHidden}
-        register={register}
-        login={login}
-        handleLoginSubmit={handleLoginSubmit}
-        setPolicyDialog={setPolicyDialog}
-      />
-      <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
-      <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        open={alertShown}
-        autoHideDuration={1500}
-        onClose={() => toggleAlertMessage(false)}
-        message={alertMessage}
-        action={<React.Fragment></React.Fragment>}
-      />
-      <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
-    </Grid>
+    <React.Suspense fallback={<></>}>
+      {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+      <Grid
+        className="auth-page login-page"
+        container
+        item
+        justify="center"
+        alignItems="center"
+      >
+        <Hidden only={["xs"]}>
+          <div className="choose-login-desktop">
+            <Grid container direction="row" className="first-row">
+              <div className="first-col"></div>
+              <div className="second-col"></div>
+              <div className="third-col"></div>
+            </Grid>
+            <Grid container direction="row" className="second-row">
+              <div className="first-col">
+                <LoginLogo />
+              </div>
+              <div className="second-col">
+                <DesktopLoginForm
+                  email={email}
+                  setEmail={setEmail}
+                  password={password}
+                  setPassword={setPassword}
+                  passwordHidden={passwordHidden}
+                  setHidden={setHidden}
+                  handleSubmit={handleLoginSubmit}
+                  register={() => register(email, password)}
+                />
+              </div>
+            </Grid>
+            <Grid container direction="row" className="third-row">
+              <div className="first-col"></div>
+              <TermsLink history={props.history} />
+              <div className="third-col"></div>
+            </Grid>
+          </div>
+        </Hidden>
+        <MobileEmailLogin
+          history={props.history}
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          passwordHidden={passwordHidden}
+          setHidden={setHidden}
+          register={register}
+          login={login}
+          handleLoginSubmit={handleLoginSubmit}
+          setPolicyDialog={setPolicyDialog}
+        />
+        <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={alertShown}
+          autoHideDuration={1500}
+          onClose={() => toggleAlertMessage(false)}
+          message={alertMessage}
+          action={<React.Fragment></React.Fragment>}
+        />
+        <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
+      </Grid>
+    </React.Suspense>
   );
 };
 

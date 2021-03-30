@@ -71,6 +71,8 @@ interface SynthesisState {
 }
 
 class RenderSynthesisContent extends React.Component<SynthesisProps, SynthesisState> {
+  interval: number;
+
   constructor(props: any) {
     super(props);
 
@@ -78,13 +80,21 @@ class RenderSynthesisContent extends React.Component<SynthesisProps, SynthesisSt
       synthesis: toRenderJSON(this.props.synthesis)
     }
 
-    setInterval(() => {
+    this.interval = -1;
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => {
       let newSynthesis = toRenderJSON(this.props.synthesis);
       console.log(newSynthesis);
       if (newSynthesis.length !== this.state.synthesis.length) {
         this.setState({synthesis: newSynthesis});
       }
     }, 200);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   renderMath(data: string, i: number) {

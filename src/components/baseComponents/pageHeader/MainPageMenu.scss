@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .main-page-menu {
   display: block;
@@ -14,7 +14,8 @@
   background: var(--theme-light-blue);
   @extend %transitionAll300;
   border-bottom-left-radius: 2vw;
-
+  z-index: 9999;
+  padding-top: 1.1vw;
   &.menu-expanded {
     width: 16vw;
     border-bottom-left-radius: 0;
@@ -24,10 +25,6 @@
     width: $notification-width;
     transition: all 300ms ease-in;
   }
-}
-
-.main-page-menu {
-  padding-top: 1.1vw;
   .menu-buttons {
     padding-bottom: 1.05vw;
     margin: auto;
@@ -51,39 +48,5 @@
   }
   &.notification-expanded {
     height: auto;
-  }
-}
-
-@include phone_and_tabletP {
-  .main-page-menu {
-    position: absolute;
-    width: 42vw;
-    height: 60px;
-    bottom: 0;
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 6vw;
-    z-index: 1;
-
-    .more-button {
-      margin-right: 4vw;
-    }
-    .bell-button {
-      margin-right: 7.2vw;
-    }
-  }
-  .menu-expanded {
-    border-top-left-radius: 0;
-    width: 45vw !important;
-  }
-  .notification-expanded {
-    border-top-left-radius: 0;
-    width: 100vw !important;
-  }
-  .manage-classes {
-    font-size: 25px;
-    .svg {
-      width: 200px;
-      height: 120px;
-    }
   }
 }
