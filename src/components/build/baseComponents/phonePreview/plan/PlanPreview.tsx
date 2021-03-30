@@ -26,7 +26,7 @@ const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
     <div className="phone-preview-component plan-preview">
       <BrickCircle color={subject ? subject.color : ''} label={AcademicLevelLabels[ybrick.get("academicLevel")]} onClick={() => {}} />
       <div className="title" style={{ textAlign: "center" }}>
-        {ybrick.get("title").toString()}
+        <ObservableText text={ybrick.get("title")} />
       </div>
       <KeyWordsPlay keywords={ybrick.get("keywords").toJSON()} />
       <div>

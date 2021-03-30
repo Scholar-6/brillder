@@ -12,7 +12,11 @@ class FixedHelpers extends Component<Props> {
   }
 
   render() {
-    const canSee = checkTeacher(this.props.user) || checkAdmin(this.props.user.roles);
+    const { user } = this.props;
+    if (!user) { return <div /> }
+
+    const canSee = checkTeacher(user) || checkAdmin(user.roles);
+
     return (
       <div className="fixed-helpers-container">
         <div className="circles">
