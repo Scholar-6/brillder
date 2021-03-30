@@ -3,10 +3,6 @@
 @import 'src/assets/sass/partials/extensions';
 @import 'src/assets/sass/component/authpages';
 
-.login-desktop-page ~ .beta-text {
-  z-index: 13;
-}
-
 .login-desktop-page {
   display: flex;
   flex-direction: row;
@@ -38,21 +34,12 @@
         height: 55vh;
       }
     }
-
-    @keyframes spinning {
-      0% {
-        transform: rotateZ(0deg);
-      }
-      100% {
-        transform: rotateZ(360deg);
-      }
-    }
-
     .spinning {
       animation: spinning 9s infinite linear;
     }
   }
 
+  // left part
   .left-part {
     position: absolute;
     top: 0;
@@ -201,179 +188,190 @@
       }
     }
   }
+  // right part
+  .right-part {
+    height: 100%;
+    position: absolute;
+    left: 45vw;
+    display: relative;
+    .container {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 55vw;
+      .loginPhone {
+        z-index: 10;
+      }
+      svg {
+        margin-bottom: 2vh;
+        transform: perspective(70vw) rotateY(-25deg);
+        height: 72vh;
+        font-family: $font-family-black;
+      }
+      #phone-image {
+        animation: phone-animate 2s;
+      }
+    }
+    $top: 24.5%;
+    .bricks-container {
+      position: absolute;
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      top: $top;
+      width: 55vw;
+      height: calc(100% - #{$top});
+      .inner {
+        width: 70%;
+        animation: appear 1400ms ease-in-out;
+      }
+      .row {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .block {
+        display: inline-block;
+        width: 20%;
+        height: 7.3vh;
+        margin: 0.7%;
+        border-radius: 0.6vw;
+        background: #12326a;
+      }
+    }
+    .icons-container {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 55vw;
+      .glasses {
+        position: absolute;
+        top: 12vh;
+        left: 9.2vw;
+        width: 17vh;
+        .blue {
+          fill: red !important;
+          stroke: red !important;
+        }
+      }
+      .teach-icon {
+        position: absolute;
+        top: 8.5vh;
+        right: 9.5vw;
+        width: 19vh;
+        transform: rotateZ(13deg);
+      }
+      .trowel-login {
+        position: absolute;
+        right: 11vw;
+        width: 19vh;
+        bottom: 22vh;
+        transform: rotateZ(-1deg);
+      }
+      .floating1 {
+        animation: floating1 3s ease-in-out infinite;
+      }
+      .floating2 {
+        animation: floating2 3s ease-in-out infinite;
+      }
+      .floating3 {
+        animation: floating3 3s ease-in-out infinite;
+      }
+    }
+  }
+  // email input form
+  .button-box {
+    form {
+      input {
+        color: var(--white);
+        text-align: center;
+        width: 20vw !important;
+        padding: 2.3vh 1vw !important;
+        background: var(--theme-dark-blue);
+        margin-bottom: 1vh;
+      }
+      button {
+        border: none;
+        outline: none;
+        background: var(--theme-orange);
+        width: 100% !important;
+        font-family: $font-family-bold;
+        color: var(--white);
+        font-size: 1.7vw;
+        line-height: 1.3;
+        padding: 2.3vh 1vw !important;
+        border-radius: 1.7vh;
+        transition: all 300ms ease-out;
+
+        &:hover {
+          color: var(--theme-orange);
+          background: var(--white);
+        }
+      }
+    }
+  }
 }
 
+.login-desktop-page ~ .beta-text {
+  z-index: 13;
+  color: var(--theme-orange) !important;
+}
+
+@keyframes spinning {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+@keyframes appear {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 70%;
+  }
+}
+@keyframes floating1 {
+  0% {
+    transform: translate(0, 0px);
+  }
+  50% {
+    transform: translate(0, 15px);
+  }
+  100% {
+    transform: translate(0, 0px);
+  }
+}
+@keyframes floating2 {
+  0% {
+    transform: translate(0, -15px);
+  }
+  50% {
+    transform: translate(0, 0px);
+  }
+  100% {
+    transform: translate(0, -15px);
+  }
+}
+@keyframes floating3 {
+  0% {
+    transform: translate(0, 7px);
+  }
+  50% {
+    transform: translate(0, -7px);
+  }
+  100% {
+    transform: translate(0, 7px);
+  }
+}
 @keyframes phone-animate {
   0% {
     opacity: 0;
   }
   100% {
     opacity: 1;
-  }
-}
-
-// right part
-.login-desktop-page .right-part {
-  height: 100%;
-  position: absolute;
-  left: 45vw;
-  display: relative;
-  .container {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 55vw;
-    .loginPhone {
-      z-index: 10;
-    }
-    svg {
-      margin-bottom: 2vh;
-      transform: perspective(70vw) rotateY(-25deg);
-      height: 72vh;
-      font-family: $font-family-black;
-    }
-    #phone-image {
-      animation: phone-animate 2s;
-    }
-  }
-  $top: 24.5%;
-
-  @keyframes appear {
-    0% {
-      width: 0;
-    }
-    100% {
-      width: 70%;
-    }
-  }
-
-  .bricks-container {
-    position: absolute;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    top: $top;
-    width: 55vw;
-    height: calc(100% - #{$top});
-    .inner {
-      width: 70%;
-      animation: appear 1400ms ease-in-out;
-    }
-    .row {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-    .block {
-      display: inline-block;
-      width: 20%;
-      height: 7.3vh;
-      margin: 0.7%;
-      border-radius: 0.6vw;
-      background: #12326a;
-    }
-  }
-  .icons-container {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 55vw;
-    .glasses {
-      position: absolute;
-      top: 12vh;
-      left: 9.2vw;
-      width: 17vh;
-      .blue {
-        fill: red !important;
-        stroke: red !important;
-      }
-    }
-    .teach-icon {
-      position: absolute;
-      top: 8.5vh;
-      right: 9.5vw;
-      width: 19vh;
-      transform: rotateZ(13deg);
-    }
-    .trowel-login {
-      position: absolute;
-      right: 11vw;
-      width: 19vh;
-      bottom: 22vh;
-      transform: rotateZ(-1deg);
-    }
-    @keyframes floating1 {
-      0% {
-        transform: translate(0, 0px);
-      }
-      50% {
-        transform: translate(0, 15px);
-      }
-      100% {
-        transform: translate(0, 0px);
-      }
-    }
-    @keyframes floating2 {
-      0% {
-        transform: translate(0, -15px);
-      }
-      50% {
-        transform: translate(0, 0px);
-      }
-      100% {
-        transform: translate(0, -15px);
-      }
-    }
-    @keyframes floating3 {
-      0% {
-        transform: translate(0, 7px);
-      }
-      50% {
-        transform: translate(0, -7px);
-      }
-      100% {
-        transform: translate(0, 7px);
-      }
-    }
-    .floating1 {
-      animation: floating1 3s ease-in-out infinite;
-    }
-    .floating2 {
-      animation: floating2 3s ease-in-out infinite;
-    }
-    .floating3 {
-      animation: floating3 3s ease-in-out infinite;
-    }
-  }
-}
-
-// email input form
-.login-desktop-page .button-box form {
-  input {
-    color: var(--white);
-    text-align: center;
-    width: 20vw !important;
-    padding: 2.3vh 1vw !important;
-    background: var(--theme-dark-blue);
-    margin-bottom: 1vh;
-  }
-  button {
-    border: none;
-    outline: none;
-    background: var(--theme-orange);
-    width: 100% !important;
-    font-family: $font-family-bold;
-    color: var(--white);
-    font-size: 1.7vw;
-    line-height: 1.3;
-    padding: 2.3vh 1vw !important;
-    border-radius: 1.7vh;
-    transition: all 300ms ease-out;
-
-    &:hover {
-      color: var(--theme-orange);
-      background: var(--white);
-    }
   }
 }
