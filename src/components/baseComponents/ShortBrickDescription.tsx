@@ -71,7 +71,8 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     return (
       <div className="short-brick-info">
         <div className="link-description">
-          <SearchText searchString={searchString} text={brick.title} />
+          <div className="q-brick-title" dangerouslySetInnerHTML={{__html: brick.title}} />
+          {/*<SearchText searchString={searchString} text={brick.title} />*/}
         </div>
         <div className="link-info">
           <KeyWordsPreview keywords={brick.keywords} />

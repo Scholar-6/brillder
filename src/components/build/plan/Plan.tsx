@@ -106,6 +106,12 @@ const PlanPage: React.FC<PlanProps> = (props) => {
     }
   }
 
+  const title = ybrick.get("title");
+  if (typeof title === "string") {
+    ybrick.set("title", new Y.Text(title));
+    return <div />;
+  }
+
   return (
     <div className="question-type plan-page">
       <div className="top-scroll-area">
@@ -147,7 +153,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                 <Grid container direction="row" className="inner-quills" ref={scrollArea}>
                   <div className="title-quill-container">
                     <QuillEditor
-                      sharedData={ybrick.get("title")}
+                      sharedData={title}
                       placeholder="Title"
                       disabled={locked}
                       toolbar={[]}

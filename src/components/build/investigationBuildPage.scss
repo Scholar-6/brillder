@@ -515,6 +515,15 @@ $space-between-boxes: 0.1vw;
           padding: 0.3vw 0.5vw;
           border-radius: 0.5vw;
         }
+        .ql-editor {
+          text-align: left;
+          p {
+            display: inline;
+          }
+          br {
+            display: none;
+          }
+        }
       }
       .key-words {
         margin-top: 0.5vw;
