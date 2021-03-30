@@ -571,14 +571,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           />
         </Route>
         <Route path={routes.planRoute}>
-          {/*
           <PhonePreview
             Component={PlanPreviewComponent}
             prev={() => { }}
             next={() => selectQuestion(0)}
             prevDisabled={true}
             data={{ ybrick }}
-          />*/}
+          />
         </Route>
       </Grid>
       <HighlightInvalidDialog
