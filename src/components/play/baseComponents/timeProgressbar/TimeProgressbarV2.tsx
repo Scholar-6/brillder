@@ -25,7 +25,7 @@ const TimeProgressbar: React.FC<CounterProps> = (props) => {
     return moment.duration(timeMinutes, "minutes");
   }
 
-  const getDuration = () => {
+  const getDuration = (): any => {
     if (props.isIntro) {
       return getIntroDuration();
     }

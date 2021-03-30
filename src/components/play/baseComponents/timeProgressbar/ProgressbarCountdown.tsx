@@ -41,7 +41,7 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
   setTimer() {
     return setInterval(() => {
       let now = moment();
-      let dif = moment.duration(this.props.endTime.diff(now));
+      let dif = moment.duration(this.props.endTime.diff(now)) as any;
       this.setValue(dif._milliseconds);
       if (dif._milliseconds < 1000) {
         this.props.onEnd();
