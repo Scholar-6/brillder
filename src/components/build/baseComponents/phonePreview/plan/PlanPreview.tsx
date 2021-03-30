@@ -22,7 +22,7 @@ const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
       </div>
       <KeyWordsPlay keywords={ybrick.get("keywords").toJSON()} />
       <div>
-      <ObservableText text={ybrick.get("openQuestion")} math={true} />
+        <ObservableText text={ybrick.get("openQuestion")} math={true} />
       </div>
       <div className="expand-title brief-title" style={{ marginTop: '4vh' }}>
         <span>Brief</span>

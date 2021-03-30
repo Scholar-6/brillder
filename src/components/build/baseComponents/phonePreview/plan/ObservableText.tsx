@@ -14,20 +14,21 @@ const ObservableText: React.FC<Props> = ({ text, math }) => {
 
   // when mounted observe if text changed and set new text
   useEffect(() => {
-    text.observe(_.throttle((evt: Y.YTextEvent) => {
+    const observer = _.throttle((evt: Y.YTextEvent) => {
       const newText = toRenderJSON(text);
       if (newText.length !== value.length) {
         setValue(newText)
       }
-    }, 200)
-    );
+    }, 200);
+    text.observe(observer);
+    return () => { text.unobserve(observer) }
   }, []);
 
   if (math) {
-    return <YoutubeAndMathQuote value={value}/>;
+    return <YoutubeAndMathQuote value={value} />;
   }
 
-  return <div dangerouslySetInnerHTML={{__html: value}} />;
+  return <div dangerouslySetInnerHTML={{ __html: value }} />;
 }
 
 export default ObservableText;
