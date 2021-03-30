@@ -45,16 +45,6 @@ const PlanPage: React.FC<PlanProps> = (props) => {
   const { subjects } = props.user;
   const { ybrick, locked } = props;
   const editorIdState = React.useState("");
-  const [subjectIndex, setSubjectIndex] = React.useState<number>();
-
-  React.useEffect(() => {
-    const subjectId = ybrick.get("subjectId");
-    if (subjects) {
-      setSubjectIndex(subjects.findIndex((s) => s.id === subjectId) ?? 0);
-    }
-  }, [subjects]);
-
-  console.log(subjectIndex);
 
   return (
     <div className="question-type plan-page">
@@ -96,11 +86,11 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                 />
                 <Grid container direction="row" className="inner-quills">
                   <div className="title-quill-container">
-                    <input
-                      value={ybrick.get("title")}
+                    <QuillEditor
+                      sharedData={ybrick.get("title")}
                       placeholder="Title"
                       disabled={locked}
-                      onChange={(e) => ybrick.set("title", e.target.value)}
+                      toolbar={[]}
                     />
                   </div>
                   <KeyWordsComponent
@@ -108,12 +98,12 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     keyWords={ybrick.get("keywords")}
                   />
                   <div className="subject-select-container">
-                    {subjectIndex !== undefined && (
+                    {ybrick.get("subjectId") !== undefined && (
                       <Select
-                        value={subjectIndex}
-                        onChange={(evt) =>
-                          setSubjectIndex(evt.target.value as number)
-                        }
+                        value={ybrick.get("subjectId")}
+                        onChange={(evt) => {
+                          ybrick.set("subjectId", evt.target.value as number);
+                        }}
                         input={<InputBase />}
                       >
                         {subjects?.map((s, i) => (
@@ -144,6 +134,9 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <Select
                       className="brick-length"
                       value={ybrick.get("brickLength")}
+                      onChange={(evt) =>
+                        ybrick.set("brickLength", evt.target.value)
+                      }
                     >
                       <MenuItem value={BrickLengthEnum.S20min}>
                         20 mins
@@ -159,7 +152,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                   <div className="open-question-container">
                     <QuillEditor
                       disabled={locked}
-                      data={ybrick.get("openQuestion")}
+                      sharedData={ybrick.get("openQuestion")}
                       toolbar={["bold", "italic", "latex"]}
                       imageDialog={true}
                     />
@@ -168,7 +161,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <div className="header">Brief</div>
                     <QuillEditor
                       disabled={locked}
-                      data={ybrick.get("brief")}
+                      sharedData={ybrick.get("brief")}
                       toolbar={[
                         "bold",
                         "italic",
@@ -184,7 +177,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <div className="header">Prep</div>
                     <QuillEditor
                       disabled={locked}
-                      data={ybrick.get("prep")}
+                      sharedData={ybrick.get("prep")}
                       toolbar={[
                         "bold",
                         "italic",

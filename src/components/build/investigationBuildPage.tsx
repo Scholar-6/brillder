@@ -515,7 +515,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             style={{ height: "100%" }}
           >
             <div className="build-brick-title">
-              <div>{ybrick.get("title")}</div>
+              <div>{ybrick.get("title").toString()}</div>
             </div>
             <Grid
               container
