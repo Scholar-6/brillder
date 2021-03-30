@@ -15,10 +15,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 
-.sorted-row.sorted-row-expanded {
-  height: 100% !important;
-}
-
 .play-preview-pages {
   background: var(--theme-dark-blue);
   min-height: 100%;
@@ -1251,10 +1247,24 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
     &.sorted-row-expanded {
       padding-top: $expanded-intro-padding;
+      height: 100% !important;
       margin-top: 0;
       .brick-row-container {
         width: calc(98vw - #{$home-button-size}) !important;
         height: $introduction-expanded-height !important;
+      }
+      .introduction-page {
+        height: $introduction-expanded-height !important;
+        .question-live-play {
+          height: $introduction-expanded-height !important;
+        }
+      }
+      .introduction-info {
+        height: $introduction-expanded-height !important;
+      }
+      .intro-desktop-title {
+        font-size: 2vw !important;
+        max-width: 54.2vw;
       }
       // #2781 new play live and review theme
       .live-container,
@@ -1549,6 +1559,18 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           width: 100%;
         }
       }
+      .circle-progress-container {
+        margin-top: 0 !important;
+        height: $introduction-expanded-height !important;
+
+        .score-data {
+          height: $introduction-expanded-height !important;
+
+          > div {
+            height: $introduction-expanded-height !important;
+          }
+        }
+      }
     }
     // categorize
     .sort-category-list-container {
@@ -1689,34 +1711,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       font-size: 1.15vw;
     }
   }
-
-  // class for desktop only
-  .sorted-row-expanded {
-    .introduction-page {
-      height: $introduction-expanded-height !important;
-
-      .question-live-play {
-        height: $introduction-expanded-height !important;
-      }
-    }
-
-    .introduction-info {
-      height: $introduction-expanded-height !important;
-    }
-
-    .circle-progress-container {
-      margin-top: 0 !important;
-      height: $introduction-expanded-height !important;
-
-      .score-data {
-        height: $introduction-expanded-height !important;
-
-        > div {
-          height: $introduction-expanded-height !important;
-        }
-      }
-    }
-  }
 }
 
 .play-preview-pages ~ .beta-text {
@@ -1768,12 +1762,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   height: 5vw;
   margin-bottom: 0;
   text-align: left;
-}
-.sorted-row-expanded {
-  .intro-desktop-title {
-    font-size: 2vw !important;
-    max-width: 54.2vw;
-  }
 }
 .open-question {
   font-size: $base-font-size;
@@ -1851,7 +1839,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
         .like-button {
           font-family: $font-family-bold;
-          min-width: 17vw;
+          min-width: 20vw;
           text-align: center;
           border-radius: 0.7vw;
           padding: 1.5vh 1.5vw;
