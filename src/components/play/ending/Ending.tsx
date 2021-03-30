@@ -227,7 +227,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       <div className="brick-row-container ending-container">
         <Hidden only={["xs"]}>
           <div className="brick-container play-preview-panel ending-page">
-            <div className="fixed-upper-b-title">{this.props.brick.title}</div>
+            <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: this.props.brick.title }} />
             <Grid container direction="row">
               <Grid item xs={8}>
                 <div className="introduction-page">

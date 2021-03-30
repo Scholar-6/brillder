@@ -49,7 +49,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   finishBrick,
   ...props
 }) => {
-  const {questions} = brick;
+  const { questions } = brick;
   const [activeStep, setActiveStep] = React.useState(0);
   let initAnswers: any[] = [];
   const [answers, setAnswers] = React.useState(initAnswers);
@@ -121,9 +121,9 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
 
     // phone scroll to top
     if (isPhone()) {
-      const {current} = questionScrollRef;
+      const { current } = questionScrollRef;
       if (current) {
-        current.scrollTo({top: 0});
+        current.scrollTo({ top: 0 });
       }
     }
 
@@ -141,9 +141,9 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
 
     // phone scroll to top
     if (isPhone()) {
-      const {current} = questionScrollRef;
+      const { current } = questionScrollRef;
       if (current) {
-        current.scrollTo({top: 0});
+        current.scrollTo({ top: 0 });
       }
     }
 
@@ -286,7 +286,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
 
   return (
     <div className="brick-row-container review-container">
-      {!isPhone() && <div className="fixed-upper-b-title">{brick.title}</div>}
+      {!isPhone() && <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />}
       <div className="brick-container play-preview-panel review-page">
         <div className="introduction-page">
           <Hidden only={['xs']}>
@@ -313,7 +313,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                   <div className="minutes-footer">
                     {minutes}:00
                   </div>
-                  <div className="footer-space"/>
+                  <div className="footer-space" />
                   <div className="new-navigation-buttons">
                     <div className="n-btn back" onClick={prev}>
                       <SpriteIcon name="arrow-left" />

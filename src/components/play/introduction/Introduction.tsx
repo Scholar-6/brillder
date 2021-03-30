@@ -311,7 +311,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <Hidden only={["sm", "md", "lg", "xl"]}>
           {renderBrickCircle(color)}
         </Hidden>
-        <div className="intro-desktop-title">{brick.title}</div>
+        <div className="intro-desktop-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       </div>
     );
   };
@@ -371,21 +371,21 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   <IntroductionDetails brickLength={brick.brickLength} />
                 </div>
                 : <div className="time-container">
-              <TimeProgressbarV2
-                isIntro={true}
-                onEnd={() => { }}
-                startTime={props.startTime}
-                brickLength={brick.brickLength}
-              />
-            </div>}
-            {renderPlayButton()}
-          </div>
-          <div className="introduction-content">
-            {renderMobileBriefTitle()}
-            {renderBriefExpandText()}
-            {state.prepExpanded && renderPrepTitle()}
-            {state.prepExpanded && renderPrepExpandText()}
-          </div>
+                  <TimeProgressbarV2
+                    isIntro={true}
+                    onEnd={() => { }}
+                    startTime={props.startTime}
+                    brickLength={brick.brickLength}
+                  />
+                </div>}
+              {renderPlayButton()}
+            </div>
+            <div className="introduction-content">
+              {renderMobileBriefTitle()}
+              {renderBriefExpandText()}
+              {state.prepExpanded && renderPrepTitle()}
+              {state.prepExpanded && renderPrepExpandText()}
+            </div>
           </div>
         </Hidden>
       </div>

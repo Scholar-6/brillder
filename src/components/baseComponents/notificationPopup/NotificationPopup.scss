@@ -328,3 +328,12 @@
     animation: notification-hide-small 0.3s linear;
   }
 }
+
+.notif-desc {
+  p {
+    display: inline;
+  }
+  br {
+    display: none;
+  }
+}
