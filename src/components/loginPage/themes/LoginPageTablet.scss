@@ -81,7 +81,7 @@
     .email-button,
     .google-button-desktop {
       position: relative;
-      font-size: 1.4vw;
+      font-size: 2vw;
       font-family: $font-family-regular;
       border-radius: 0.5vw;
       transition: all 450ms ease-out;
@@ -97,7 +97,9 @@
         transition: all 0.2s ease-in-out;
         margin-right: 1vw;
       }
-
+      span {
+        margin: 0 !important;
+      }
       .MuiButton-label {
         justify-content: flex-start;
       }
