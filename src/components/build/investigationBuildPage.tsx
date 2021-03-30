@@ -481,7 +481,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const isPublisher = checkPublisher(props.user, props.reduxBrick);
   const isAdmin = checkAdmin(props.user.roles);
 
-
   return (
     <div className="investigation-build-page">
       <BuildNavigation
@@ -517,7 +516,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             style={{ height: "100%" }}
           >
             <div className="build-brick-title">
-              <div dangerouslySetInnerHTML={{ __html: toRenderJSON(ybrick.get("title")) }} />
+              <div>{ybrick.get("title").toString()}</div>
             </div>
             <Grid
               container
@@ -551,7 +550,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <Route path={routes.questionRoute}>
           {activeQuestion &&
             <PhoneQuestionPreview
-              question={toRenderJSON(activeQuestion.getMap())}
+              yquestion={activeQuestion.getMap()}
               focusIndex={focusIndex}
               getQuestionIndex={getJSONQuestionIndex}
               nextQuestion={setNextQuestion}

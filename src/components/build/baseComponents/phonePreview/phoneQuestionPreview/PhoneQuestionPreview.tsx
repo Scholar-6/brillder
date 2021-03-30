@@ -1,5 +1,6 @@
 
 import React from 'react';
+import * as Y from "yjs";
 import {  Hidden, Grid } from '@material-ui/core';
 
 import './PhoneQuestionPreview.scss';
@@ -9,10 +10,12 @@ import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from 'model/que
 import { SortCategory } from 'components/interfaces/sort';
 import EmptyQP1 from './EmptyQP1';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { toRenderJSON } from 'services/SharedTypeService';
+import _ from 'lodash';
 
 
 export interface PhonePreviewProps {
-  question: Question;
+  yquestion: Y.Map<any>;
   focusIndex: number;
   getQuestionIndex(question: Question): number;
 
@@ -21,11 +24,25 @@ export interface PhonePreviewProps {
   prevQuestion(): void;
 }
 
-const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex, ...props }) => {
-  const questionIndex = getQuestionIndex(question);
+const PhonePreview: React.FC<PhonePreviewProps> = ({ yquestion, getQuestionIndex, ...props }) => {
+  const questionIndex = getQuestionIndex(yquestion.toJSON());
   const canGoBack = questionIndex > 0 ? true : false;
 
   const [questionPreview] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+  const [question, setQuestion] = React.useState<Question>(toRenderJSON(yquestion));
+
+  const observer = React.useCallback(_.throttle(() => {
+    let newQuestion = toRenderJSON(yquestion);
+    setQuestion(newQuestion);
+  }, 500), []);
+
+  React.useEffect(() => {
+    yquestion.observeDeep(observer);
+
+    return () => {
+      yquestion.unobserveDeep(observer);
+    }
+  }, [yquestion])
 
   //#region Scroll
   const [canScroll, setScroll] = React.useState(false);

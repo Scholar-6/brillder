@@ -12,6 +12,7 @@ import { Radio } from "@material-ui/core";
 import { BrickLengthEnum } from "model/brick";
 import Katex from "components/baseComponents/katex/Katex";
 import { toRenderJSON } from "services/SharedTypeService";
+import _ from "lodash";
 
 interface SynthesisPreviewData {
   synthesis: Y.Text;
@@ -71,30 +72,28 @@ interface SynthesisState {
 }
 
 class RenderSynthesisContent extends React.Component<SynthesisProps, SynthesisState> {
-  interval: number;
-
   constructor(props: any) {
     super(props);
 
     this.state = {
       synthesis: toRenderJSON(this.props.synthesis)
     }
-
-    this.interval = -1;
   }
 
+  observer = _.throttle((evt: Y.YTextEvent) => {
+    let newSynthesis = toRenderJSON(this.props.synthesis);
+    console.log(newSynthesis);
+    if (newSynthesis.length !== this.state.synthesis.length) {
+      this.setState({synthesis: newSynthesis});
+    }
+  }, 200)
+
   componentDidMount() {
-    this.interval = setInterval(() => {
-      let newSynthesis = toRenderJSON(this.props.synthesis);
-      console.log(newSynthesis);
-      if (newSynthesis.length !== this.state.synthesis.length) {
-        this.setState({synthesis: newSynthesis});
-      }
-    }, 200);
+    this.props.synthesis.observe(this.observer);
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    this.props.synthesis.unobserve(this.observer);
   }
 
   renderMath(data: string, i: number) {

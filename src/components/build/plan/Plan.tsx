@@ -95,11 +95,11 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                 />
                 <Grid container direction="row" className="inner-quills">
                   <div className="title-quill-container">
-                    <input
-                      value={ybrick.get("title")}
+                    <QuillEditor
+                      sharedData={ybrick.get("title")}
                       placeholder="Title"
                       disabled={locked}
-                      onChange={(e) => ybrick.set("title", e.target.value)}
+                      toolbar={[]}
                     />
                   </div>
                   <KeyWordsComponent
@@ -107,12 +107,12 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     keyWords={ybrick.get("keywords")}
                   />
                   <div className="subject-select-container">
-                    {subjectIndex !== undefined && (
+                    {ybrick.get("subjectId") !== undefined && (
                       <Select
-                        value={subjectIndex}
-                        onChange={(evt) =>
-                          setSubjectIndex(evt.target.value as number)
-                        }
+                        value={ybrick.get("subjectId")}
+                        onChange={(evt) => {
+                          ybrick.set("subjectId", evt.target.value as number);
+                        }}
                         input={<InputBase />}
                       >
                         {subjects?.map((s, i) => (
@@ -143,6 +143,9 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <Select
                       className="brick-length"
                       value={ybrick.get("brickLength")}
+                      onChange={(evt) =>
+                        ybrick.set("brickLength", evt.target.value)
+                      }
                     >
                       <MenuItem value={BrickLengthEnum.S20min}>
                         20 mins
