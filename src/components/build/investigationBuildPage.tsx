@@ -180,14 +180,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       if (movingFromSynthesis === false) {
         setCurrentQuestionIndex(-1);
       }
-      return <PageLoader content="...Loading..." />;
+      return <PageLoader content="...Loading 1..." />;
     }
   } else if (_.isEmpty(activeQuestion?.toJSON()) || _.isEmpty(activeQuestion?.getMap()?.toJSON())) {
     if (questions.length <= 0) {
-      if (!canEdit || locked) { return <PageLoader content="...Loading..." />; }
+      if (!canEdit || locked) { return <PageLoader content="...Loading 2..." />; }
       createQuestion();
     }
-    return <PageLoader content="...Loading..." />;
   }
 
   if (activeQuestion) {
