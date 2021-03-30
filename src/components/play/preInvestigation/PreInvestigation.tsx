@@ -7,7 +7,7 @@ import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
-import { getSynthesisTime } from "../services/playTimes";
+import { getLiveTime } from "../services/playTimes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
 import TypingLabel from "components/baseComponents/TypingLabel";
 
@@ -50,7 +50,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
     );
   }
 
-  const minutes = getSynthesisTime(brick.brickLength);
+  const minutes = getLiveTime(brick.brickLength);
 
   return (
     <div className="brick-row-container live-container">
