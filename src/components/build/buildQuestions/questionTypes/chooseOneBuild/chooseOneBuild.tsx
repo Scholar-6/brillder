@@ -54,6 +54,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   React.useEffect(() => {
     awareness?.on("update", observer);
     return () => awareness?.off("update", observer);
+  /*eslint-disable-next-line*/
   }, [awareness]);
   //#endregion
 

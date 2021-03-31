@@ -1,6 +1,5 @@
 import React from "react";
 import * as Y from "yjs";
-import _ from "lodash";
 
 import "./SynthesisPreview.scss";
 import SpriteIcon from "components/baseComponents/SpriteIcon";

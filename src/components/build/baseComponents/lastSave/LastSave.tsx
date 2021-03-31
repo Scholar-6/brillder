@@ -29,6 +29,7 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
   useEffect(() => {
     props.ybrick.observeDeep(observer);
     return () => props.ybrick.unobserveDeep(observer);
+  // eslint-disable-next-line
   }, [observer]);
 
   useEffect(() => {

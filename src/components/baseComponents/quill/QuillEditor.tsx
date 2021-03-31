@@ -85,6 +85,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         if(!state) return;
         state.hover = null;
         awareness?.setLocalState(state);
+    /*eslint-disable-next-line*/
     }, [setCurrentQuillId, uniqueId])
 
     const modules = {

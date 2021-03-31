@@ -15,7 +15,7 @@ import CommentPanel from "components/baseComponents/comments/CommentPanel";
 import { CommentLocation } from "model/comments";
 import { ReduxCombinedState } from "redux/reducers";
 
-import { AcademicLevel, Brick, BrickLengthEnum } from "model/brick";
+import { Brick, BrickLengthEnum } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import CommentButton from "../baseComponents/commentButton/CommentButton";
 import UndoRedoService from "components/services/UndoRedoService";
@@ -72,6 +72,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
         }
       }
     }, 100);
+  /*eslint-disable-next-line*/
   }, [subjects]);
 
   React.useEffect(() => {

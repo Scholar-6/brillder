@@ -9,7 +9,6 @@ import _ from "lodash";
 
 import "./investigationBuildPage.scss";
 import routes from './routes';
-import map from 'components/map';
 import PlanPage from './plan/Plan';
 import {
   Question,
@@ -45,7 +44,6 @@ import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/p
 import SynthesisPreviewComponent from "./baseComponents/phonePreview/synthesis/SynthesisPreview";
 import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
 import TutorialPhonePreview from "./tutorial/TutorialPreview";
-import YourProposalLink from './baseComponents/YourProposalLink';
 import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
@@ -110,6 +108,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [activeQuestionType] = React.useState(QuestionTypeEnum.None);
   const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
   const [skipTutorialOpen, setSkipDialog] = React.useState(false);
+  // eslint-disable-next-line
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
   const [focusIndex, setFocusIndex] = React.useState(-1);

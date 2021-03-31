@@ -30,7 +30,6 @@ import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/Delet
 import BackPagePagination from '../BackPagePagination';
 import BackPagePaginationV2 from '../BackPagePaginationV2';
 import PersonalBuild from "../personalBuild/PersonalBuild";
-import { isMobile } from "react-device-detect";
 import map from "components/map";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { SubjectItem } from "../personalBuild/model";

@@ -1,8 +1,6 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
-import DynamicFont from 'react-dynamic-font';
-
 import { AcademicLevelLabels, Brick } from "model/brick";
 
 import Image from "./Image";

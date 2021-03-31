@@ -22,6 +22,7 @@ const ObservableText: React.FC<Props> = ({ text, math }) => {
     }, 200);
     text.observe(observer);
     return () => { text.unobserve(observer) }
+  // eslint-disable-next-line
   }, []);
 
   if (math) {
