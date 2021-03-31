@@ -227,7 +227,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                       </Select>
                     </FormControl>
                   </Grid>
-                </Grid>/*}
+                </Grid>*/}
                 <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
               </div>
             }
