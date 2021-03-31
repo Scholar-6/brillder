@@ -1,20 +1,27 @@
 import React from "react";
 
-import './Warning.scss';
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import SpriteIcon from "../SpriteIcon";
 
-interface Props {}
+interface Props { }
+
+const MobileTheme = React.lazy(() => import('./themes/RotateInstructionsMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/RotateInstructionsTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/RotateInstructionsDesktopTheme'));
 
 const Warning: React.FC<Props> = (props) => {
   return (
-    <div className="rotate-instruction-page ipad-warning">
-      <div>
-        <div className="rotate-button-container">
-          <SpriteIcon name="alert-triangle" />
+    <React.Suspense fallback={<></>}>
+      {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+      <div className="rotate-instruction-page ipad-warning">
+        <div>
+          <div className="rotate-button-container">
+            <SpriteIcon name="alert-triangle" />
+          </div>
+          <div className="rotate-text">Hold tight, Brillder is coming soon on iPad.</div>
         </div>
-        <div className="rotate-text">Hold tight, Brillder is coming soon on iPad.</div>
       </div>
-    </div>
+    </React.Suspense>
   );
 }
 

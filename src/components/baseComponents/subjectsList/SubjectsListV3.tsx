@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
-import "./SubjectsList.scss";
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import { Subject } from "model/brick";
 import SpriteIcon from "../SpriteIcon";
 import RadioButton from "../buttons/RadioButton";
@@ -21,6 +21,10 @@ interface ListState {
   canScroll: boolean;
   scrollArea: React.RefObject<any>;
 }
+
+const MobileTheme = React.lazy(() => import('./themes/SubjectFilterMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/SubjectFilterTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/SubjectFilterDesktopTheme'));
 
 class SubjectsListV3 extends Component<PublishedSubjectsProps, ListState> {
   constructor(props: PublishedSubjectsProps) {
@@ -109,7 +113,8 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps, ListState> {
     let otherSubjects = subjects.filter(s => !s.checked);
 
     return (
-      <div>
+      <React.Suspense fallback={<></>}>
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
         <div className="scroll-buttons">
           <FormControlLabel
             className="radio-container"
@@ -134,7 +139,7 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps, ListState> {
             {otherSubjects.map(this.renderSubjectItem.bind(this))}
           </AnimateHeight>
         </Grid>
-      </div>
+      </React.Suspense>
     );
   }
 }
