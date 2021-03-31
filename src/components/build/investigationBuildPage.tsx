@@ -187,6 +187,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       if (!canEdit || locked) { return <PageLoader content="...Loading 2..." />; }
       createQuestion();
     }
+    return <PageLoader content="...Loading 3..." />;
   }
 
   if (activeQuestion) {
