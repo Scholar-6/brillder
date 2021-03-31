@@ -35,6 +35,7 @@ import map from "components/map";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { SubjectItem } from "../personalBuild/model";
 import { isTeacherPreference } from "components/services/preferenceService";
+import { isPhone } from "services/phone";
 
 interface BuildProps {
   searchString: string;
@@ -560,7 +561,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
   render() {
     const {history} = this.props;
-    if (isMobile) {
+    if (isPhone()) {
       if (isTeacherPreference(this.props.user)) {
         history.push(map.BackToWorkPage);
       } else {
