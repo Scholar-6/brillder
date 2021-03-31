@@ -139,7 +139,7 @@ $space-between-boxes: 0.1vw;
     vertical-align: bottom;
     height: 5%;
     left: 33vw;
-    font-size: 1.05vw;
+    font-size: $base-build-font-size;
     font-family: $font-family-regular;
     color: white;
   }
@@ -276,7 +276,7 @@ $space-between-boxes: 0.1vw;
     width: 17vw;
 
     .text-container {
-      font-size: 1.05vw;
+      font-size: $base-build-font-size;
       margin-left: 0.4vw;
     }
   }
@@ -424,7 +424,7 @@ $space-between-boxes: 0.1vw;
 
 // plan page styles.
 .plan-page {
-  $baseFontSize: 1.05vw;
+  $baseFontSize: $base-build-font-size;
   .top-scroll-area,
   .bottom-scroll-area {
     display: flex;
@@ -516,10 +516,8 @@ $space-between-boxes: 0.1vw;
           border-radius: 0.5vw;
         }
         .ql-editor {
+          min-height: 3.5vw;
           text-align: left;
-          p {
-            display: inline;
-          }
           br {
             display: none;
           }

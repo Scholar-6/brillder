@@ -146,7 +146,7 @@ svg#image {
       border: 0 !important;
       color: var(--theme-dark-blue);
       background: var(--solitude-light) !important;
-      font-size: 1.05vw;
+      font-size: $base-build-font-size;
       border: none !important;
       background-color: var(--solitude-light) !important;
       padding: 1vw;

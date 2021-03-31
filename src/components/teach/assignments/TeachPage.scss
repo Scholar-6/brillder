@@ -21,7 +21,7 @@
   .index-box {
     @extend %flexToYCenter;
     height: 4.7vh !important;
-    font-size: 1.05vw !important;
+    font-size: $base-build-font-size !important;
     font-family: $font-family-regular;
   }
   .white-box {
@@ -81,7 +81,7 @@
       }
 
       .MuiFormControlLabel-label {
-        font: 1.05vw $font-family-light !important;
+        font: $base-build-font-size $font-family-light !important;
         letter-spacing: 0.06vw;
       }
     }
@@ -391,7 +391,7 @@
       overflow-y: auto;
 
       .published-count {
-        font-size: 1.05vw;
+        font-size: $base-build-font-size;
         @extend %textCenter;
         font-family: $font-family-light;
       }

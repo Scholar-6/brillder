@@ -112,7 +112,7 @@
             color: var(--theme-dark-blue);
           }
           .MuiFormControlLabel-label {
-            font-size: 1.05vw;
+            font-size: $base-build-font-size;
             font-family: $font-family-light !important;
           }
         }

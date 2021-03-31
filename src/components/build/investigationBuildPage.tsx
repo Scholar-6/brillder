@@ -38,9 +38,6 @@ import QuestionTypePage from "./questionType/questionType";
 import SynthesisPage from "./synthesisPage/SynthesisPage";
 import LastSave from "components/build/baseComponents/lastSave/LastSave";
 import DragableTabs from "./dragTabs/dragableTabs";
-import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
-import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
-import SynthesisPreviewComponent from "./baseComponents/phonePreview/synthesis/SynthesisPreview";
 import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
@@ -56,7 +53,6 @@ import { YJSContext } from "./baseComponents/YJSProvider";
 import { convertQuestion, toRenderJSON } from "services/SharedTypeService";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import service, { getPreviewLink, getQuestionType } from "./services/buildService";
-import PlanPreviewComponent from "./baseComponents/phonePreview/plan/PlanPreview";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -97,7 +93,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   // eslint-disable-next-line
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
-  const [focusIndex, setFocusIndex] = React.useState(-1);
   const [undoRedoService] = React.useState(UndoRedoService.instance);
 
   /* Synthesis */
@@ -145,7 +140,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   setBrillderTitle(ybrick.get("title"));
 
   const getQuestionIndex = (question: Y.Doc) => service.getQuestionIndex(question, questions);
-  const getJSONQuestionIndex = (question: Question) => service.getJSONQuestionIndex(question, questions);
 
   const createQuestion = () => {
     const newQuestion = convertQuestion(getNewQuestion(QuestionTypeEnum.None, false))
@@ -185,6 +179,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setPrevFromPhone = () => {
     if (currentQuestionIndex >= 1) {
       setCurrentQuestionIndex(index => index - 1);
+    } else {
+      history.push(routes.buildPlan(brickId));
     }
   }
 
@@ -226,10 +222,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (locked) { return; }
     setQuestionType(type);
     history.push(routes.buildQuesiton(brickId));
-  };
-
-  const componentFocus = (index: number) => {
-    setFocusIndex(index);
   };
 
   const setQuestionType = (type: QuestionTypeEnum) => {
@@ -409,26 +401,26 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             ybrick={ybrick}
             initSuggestionExpanded={props.initSuggestionExpanded}
             undoRedoService={undoRedoService}
+            selectFirstQuestion={() => selectQuestion(0)}
             undo={undo}
             redo={redo}
           />
         </Route>
-        <Route path="/build/brick/:brickId/investigation/question-component">
+        <Route path={routes.questionRoute}>
           <QuestionPanelWorkArea
             brickId={brickId}
             history={history}
-            synthesis={ybrick.get("synthesis")}
-            questionsCount={questions ? questions.length : 0}
             yquestion={activeQuestion}
             canEdit={canEdit}
             locked={locked}
             isAuthor={isAuthor}
             validationRequired={validationRequired}
             initSuggestionExpanded={props.initSuggestionExpanded}
-            componentFocus={componentFocus}
             getQuestionIndex={getQuestionIndex}
             toggleLock={toggleLock}
             setQuestionType={convertQuestionTypes}
+            setNextQuestion={setNextQuestion}
+            setPrevFromPhone={setPrevFromPhone}
             undo={undo}
             redo={redo}
             undoRedoService={undoRedoService}
@@ -437,11 +429,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <Route path="/build/brick/:brickId/investigation/question">
           {renderQuestionComponent}
         </Route>
-        <Route path="/build/brick/:brickId/synthesis">
+        <Route path={routes.synthesisRoute}>
           <SynthesisPage
             locked={locked}
             editOnly={!canEdit}
             ybrick={ybrick}
+            moveToLastQuestion={() => selectQuestion(questions.length - 1)}
             initSuggestionExpanded={props.initSuggestionExpanded}
             undoRedoService={undoRedoService}
             undo={undo}
@@ -522,35 +515,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <LastSave ybrick={ybrick} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={false} saveError={false} />
         <Route path="/build/brick/:brickId/investigation/" exact>
           <Redirect to={`/build/brick/${ybrick.get("id")}/investigation/question`} />
-        </Route>
-        <Route path={routes.questionRoute}>
-          {activeQuestion &&
-            <PhoneQuestionPreview
-              yquestion={activeQuestion.getMap()}
-              focusIndex={focusIndex}
-              getQuestionIndex={getJSONQuestionIndex}
-              nextQuestion={setNextQuestion}
-              prevQuestion={setPrevFromPhone}
-            />
-          }
-        </Route>
-        <Route path={routes.synthesisRoute}>
-          <PhonePreview
-            Component={SynthesisPreviewComponent}
-            prev={() => selectQuestion(questions.length - 1)}
-            next={() => { }}
-            nextDisabled={true}
-            data={{ synthesis, brickLength: ybrick.get("brickLength") }}
-          />
-        </Route>
-        <Route path={routes.planRoute}>
-          <PhonePreview
-            Component={PlanPreviewComponent}
-            prev={() => { }}
-            next={() => selectQuestion(0)}
-            prevDisabled={true}
-            data={{ ybrick, user: props.user }}
-          />
         </Route>
       </Grid>
       <HighlightInvalidDialog

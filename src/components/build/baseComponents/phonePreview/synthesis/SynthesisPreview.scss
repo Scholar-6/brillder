@@ -11,7 +11,7 @@
 
   &.phone-preview-component {
     p {
-      font-size: 1.05vw;
+      font-size: $base-build-font-size;
     }
   }
 
@@ -62,7 +62,7 @@
     margin-right: 0.6vw;
     letter-spacing: 0.014vw;
     line-height: 1.5;
-    font-size: 1.05vw;
+    font-size: $base-build-font-size;
     font-family: $font-family-regular;
 
     blockquote {

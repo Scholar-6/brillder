@@ -59,7 +59,7 @@
         }
 
         .MuiFormControlLabel-label {
-          font-size: 1.05vw !important;
+          font-size: $base-build-font-size !important;
           font-family: $font-family-light !important;
         }
       }
@@ -268,7 +268,7 @@
         overflow-y: auto;
 
         .published-count {
-          font-size: 1.05vw;
+          font-size: $base-build-font-size;
           @extend %textCenter;
           font-family: $font-family-light;
         }

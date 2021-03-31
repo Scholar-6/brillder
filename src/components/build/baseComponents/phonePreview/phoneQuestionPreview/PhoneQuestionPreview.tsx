@@ -17,33 +17,31 @@ import _ from 'lodash';
 export interface PhonePreviewProps {
   yquestion: Y.Map<any>;
   focusIndex: number;
-  getQuestionIndex(question: Question): number;
 
   // navigation
   nextQuestion(): void;
   prevQuestion(): void;
 }
 
-const PhonePreview: React.FC<PhonePreviewProps> = ({ yquestion, getQuestionIndex, ...props }) => {
-  const questionIndex = getQuestionIndex(yquestion.toJSON());
-  const canGoBack = questionIndex > 0 ? true : false;
-
+const PhonePreview: React.FC<PhonePreviewProps> = ({ yquestion, ...props }) => {
   const [questionPreview] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const [question, setQuestion] = React.useState<Question>(toRenderJSON(yquestion));
 
-  const observer = React.useCallback(_.throttle(() => {
-    let newQuestion = toRenderJSON(yquestion);
-    setQuestion(newQuestion);
-  }, 500), []);
-
   React.useEffect(() => {
+    setQuestion(toRenderJSON(yquestion));
+
+    const observer = _.throttle(() => {
+      const newQuestion = toRenderJSON(yquestion);
+      setQuestion(newQuestion);
+    }, 500);
+  
     yquestion.observeDeep(observer);
 
     return () => {
       yquestion.unobserveDeep(observer);
     }
   /*eslint-disable-next-line*/
-  }, [yquestion])
+  }, [yquestion]);
 
   //#region Scroll
   const [canScroll, setScroll] = React.useState(false);
@@ -150,7 +148,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ yquestion, getQuestionIndex
       <div className="phone-question-preview-box">
         <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
           <div className="centered pointer">
-            <SpriteIcon name="arrow-left" className={`scroll-arrow ${!canGoBack && 'disabled'}`} onClick={props.prevQuestion} />
+            <SpriteIcon name="arrow-left" className="scroll-arrow" onClick={props.prevQuestion} />
           </div>
           <div className="phone-question-preview">
             <div className="centered">

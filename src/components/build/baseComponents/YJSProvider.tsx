@@ -29,10 +29,8 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
     const handleQuestionChange = React.useCallback((evt: Y.YEvent[]) => {
         try {
             const res = toRenderJSON(evt);
-            if (res[0].childListChanged) {
-                return;
-            }
-            if (!res[0].keysChanged.has("created")) {
+            //!! this check if very important and delicate could couse to infinity loading of build page !!
+            if ((res[0].keysChanged.has("created") || res[0].keysChanged.has("id")) === false) {
                 return;
             }
         } catch { }
@@ -44,12 +42,10 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
     React.useEffect(() => {
         const { ydoc: newYDoc, awareness: newAwareness } = getYDoc(history, props.brickId, props.user.firstName, props.user.lastName);
         newYDoc.getMap("brick").observeDeep((evt) => {
-            const res = toRenderJSON(evt);
             try {
-                if (res[0].childListChanged) {
-                    return;
-                }
-                if (!res[0].keysChanged.has("created")) {
+                const res = toRenderJSON(evt);
+                //!! this check if very important and delicate could couse to infinity loading of build page !!
+                if ((res[0].keysChanged.has("created") || res[0].keysChanged.has("id")) === false) {
                     return;
                 }
             } catch { }
@@ -70,7 +66,7 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
         setYdoc(newYDoc);
         setAwareness(newAwareness);
 
-        newAwareness.on("update", () => console.log(newAwareness.getStates()));
+        //newAwareness.on("update", () => console.log(newAwareness.getStates()));
     /*eslint-disable-next-line*/
     }, [props.brickId]);
 

@@ -5,7 +5,7 @@ import { ReactSortable } from "react-sortablejs";
 import QuestionComponents from './questionComponents/questionComponents';
 import { getNonEmptyComponent } from '../questionService/ValidateQuestionService';
 import './questionPanelWorkArea.scss';
-import { QuestionTypeEnum, QuestionComponentTypeEnum, QuestionTypeObj } from 'model/question';
+import { QuestionTypeEnum, QuestionComponentTypeEnum, QuestionTypeObj, Question } from 'model/question';
 import DragBox from './drag/dragBox';
 import LockComponent from './lock/Lock';
 import CommentPanel from 'components/baseComponents/comments/CommentPanel';
@@ -19,8 +19,10 @@ import UndoRedoService from 'components/services/UndoRedoService';
 import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoButton from '../baseComponents/UndoButton';
 import RedoButton from '../baseComponents/redoButton';
+import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
 
 import * as Y from "yjs";
+import { toRenderJSON } from 'services/SharedTypeService';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -33,8 +35,6 @@ export interface QuestionProps {
   canEdit: boolean;
   yquestion: Y.Doc;
   history: any;
-  questionsCount: number;
-  synthesis: Y.Text;
   validationRequired: boolean;
   comments: Comment[] | null;
   isAuthor: boolean;
@@ -42,18 +42,19 @@ export interface QuestionProps {
   undoRedoService: UndoRedoService;
   setQuestionType(type: QuestionTypeEnum): void;
   getQuestionIndex(question: Y.Doc): number;
+  setNextQuestion(): void;
+  setPrevFromPhone(): void;
   toggleLock(): void;
   undo(): void;
   redo(): void;
   locked: boolean;
-  
-  // phone preview
-  componentFocus(index: number): void;
 }
 
 const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   brickId, yquestion, history, validationRequired, locked, getQuestionIndex, ...props
 }) => {
+  const [focusIndex, setFocusIndex] = React.useState(-1);
+
   const [componentTypes, setComponentType] = React.useState([
     { id: 1, type: QuestionComponentTypeEnum.Text },
     { id: 2, type: QuestionComponentTypeEnum.Quote },
@@ -66,10 +67,12 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
 
   const question = yquestion.getMap();
-  const type = question.get("type");
 
-  let typeArray: string[] = Object.keys(QuestionTypeObj);
-  let index = getQuestionIndex(yquestion);
+  // 3/31/2021 hidden not working with all quesiton types
+  //const type = question.get("type");
+  //const typeArray: string[] = Object.keys(QuestionTypeObj);
+
+  const index = getQuestionIndex(yquestion);
 
   let showHelpArrow = false;
   if (index === 0 && props.isAuthor) {
@@ -107,6 +110,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     }
   }
   //#endregion
+
 
   return (
       <div className={showHelpArrow ? "build-question-page unselectable" : "build-question-page unselectable active"} style={{ width: '100%', height: '94%' }}>
@@ -174,7 +178,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               history={history}
               question={yquestion}
               validationRequired={validationRequired}
-              componentFocus={props.componentFocus}
+              componentFocus={setFocusIndex}
             />
           </Grid>
           <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
@@ -197,6 +201,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     setCommentsShown={() => setCommentsShown(true)}
                   />
                 </div>
+                {/* 3/31/2021 hidden not working with all quesiton types
                 <Grid container direction="row" alignItems="center">
                   <Grid container justify="center" item sm={12} className="select-type-container">
                     <FormControl variant="outlined">
@@ -226,7 +231,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                       </Select>
                     </FormControl>
                   </Grid>
-                </Grid>
+                </Grid>*/}
                 <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
               </div>
             }
@@ -249,6 +254,17 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
           </div>
         </div>
         <CommingSoonDialog isOpen={isCommingSoonOpen} close={() => setCommingSoon(false)} />
+        <div className="fixed-build-phone">
+          {
+          yquestion &&
+            <PhoneQuestionPreview
+              yquestion={question}
+              focusIndex={focusIndex}
+              nextQuestion={props.setNextQuestion}
+              prevQuestion={props.setPrevFromPhone}
+            />
+          }
+        </div>
       </div>
   );
 }

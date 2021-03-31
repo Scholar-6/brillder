@@ -28,6 +28,8 @@ import KeyWordsComponent from "../proposal/questionnaire/brickTitle/KeyWords";
 import { User } from "model/user";
 import DifficultySelect from "../proposal/questionnaire/brickTitle/DifficultySelect";
 import { toRenderJSON } from "services/SharedTypeService";
+import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
+import PlanPreviewComponent from "../baseComponents/phonePreview/plan/PlanPreview";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -37,6 +39,7 @@ export interface PlanProps {
   editOnly: boolean;
   undoRedoService: UndoRedoService;
   initSuggestionExpanded?: boolean;
+  selectFirstQuestion(): void;
   undo(): void;
   redo(): void;
 }
@@ -58,7 +61,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
       setSubjectIndex(subjects.findIndex((s) => s.id === subjectId) ?? 0);
     }
     setTimeout(() => {
-      let {current} = scrollArea;
+      let { current } = scrollArea;
       if (current) {
         console.log(current.scrollHeight, current.clientHeight);
         if (current.scrollHeight > current.clientHeight) {
@@ -72,12 +75,12 @@ const PlanPage: React.FC<PlanProps> = (props) => {
         }
       }
     }, 100);
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [subjects]);
 
   React.useEffect(() => {
     setTimeout(() => {
-      let {current} = scrollArea;
+      let { current } = scrollArea;
       if (current) {
         console.log(current.scrollHeight, current.clientHeight);
         if (current.scrollHeight > current.clientHeight) {
@@ -94,14 +97,14 @@ const PlanPage: React.FC<PlanProps> = (props) => {
   }, [canScroll, scrollArea, props, setScroll]);
 
   const scrollUp = () => {
-    const {current} = scrollArea;
+    const { current } = scrollArea;
     if (current) {
       current.scrollBy(0, -window.screen.height / 30);
     }
   }
 
   const scrollDown = () => {
-    const {current} = scrollArea;
+    const { current } = scrollArea;
     if (current) {
       current.scrollBy(0, window.screen.height / 30);
     }
@@ -314,6 +317,15 @@ const PlanPage: React.FC<PlanProps> = (props) => {
             />
           </button>
         </div>
+      </div>
+      <div className="fixed-build-phone">
+        <PhonePreview
+          Component={PlanPreviewComponent}
+          prev={() => { }}
+          next={props.selectFirstQuestion}
+          prevDisabled={true}
+          data={{ ybrick, user: props.user }}
+        />
       </div>
     </div>
   );
