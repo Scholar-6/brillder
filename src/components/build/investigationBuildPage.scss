@@ -516,10 +516,8 @@ $space-between-boxes: 0.1vw;
           border-radius: 0.5vw;
         }
         .ql-editor {
+          min-height: 3.5vw;
           text-align: left;
-          p {
-            display: inline;
-          }
           br {
             display: none;
           }
