@@ -349,20 +349,11 @@
     margin-left: $filter-sidebar-margin;
     flex-basis: inherit;
     max-width: inherit;
-    width: 100%;
-    @include phone_and_tabletP {
-      height: $height-mobile-view;
-      margin: 0;
-      border-top-left-radius: 10vw;
-    }
-
-    @include tabletP {
-      background-color: var(--solitude-light);
-      width: calc(100vw - #{$filter-sidebar-size} - #{$filter-sidebar-margin * 2});
-      height: $height-desktop-view;
-      overflow: hidden;
-    }
-
+    // width: 100%;
+    background-color: var(--solitude-light);
+    width: calc(100vw - #{$filter-sidebar-size} - #{$filter-sidebar-margin * 2});
+    height: $height-desktop-view;
+    overflow: hidden;
     .brick-row-title {
       color: var(--theme-dark-blue);
       line-height: 1;
@@ -413,10 +404,8 @@
         overflow: auto;
       }
       .subjects-column {
-        @include tabletP {
-          height: inherit;
-          display: block;
-        }
+        // height: inherit;
+        display: block;
       }
       &.bricks-container-mobile {
         overflow: hidden;
@@ -451,21 +440,13 @@
       .main-brick-container {
         display: flex;
         position: relative;
-
-        @include phone_and_tabletP {
-        }
-
+        padding: 0.8vw 0 0 0.8vw;
+        // height: calc(#{$bricks-height / 6.35});
         .title {
           margin-bottom: 3vh;
           font-size: 1.5vw;
           font-family: $font-family-bold;
         }
-
-        @include tabletP {
-          padding: 0.8vw 0 0 0.8vw;
-          height: calc(#{$bricks-height / 6.35});
-        }
-
         .brick-container {
           width: 100%;
           position: relative;
