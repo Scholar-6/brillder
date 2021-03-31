@@ -437,11 +437,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <Route path="/build/brick/:brickId/investigation/question">
           {renderQuestionComponent}
         </Route>
-        <Route path="/build/brick/:brickId/synthesis">
+        <Route path={routes.synthesisRoute}>
           <SynthesisPage
             locked={locked}
             editOnly={!canEdit}
             ybrick={ybrick}
+            moveToLastQuestion={() => selectQuestion(questions.length - 1)}
             initSuggestionExpanded={props.initSuggestionExpanded}
             undoRedoService={undoRedoService}
             undo={undo}
@@ -533,15 +534,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               prevQuestion={setPrevFromPhone}
             />
           }
-        </Route>
-        <Route path={routes.synthesisRoute}>
-          <PhonePreview
-            Component={SynthesisPreviewComponent}
-            prev={() => selectQuestion(questions.length - 1)}
-            next={() => { }}
-            nextDisabled={true}
-            data={{ synthesis, brickLength: ybrick.get("brickLength") }}
-          />
         </Route>
         <Route path={routes.planRoute}>
           <PhonePreview
