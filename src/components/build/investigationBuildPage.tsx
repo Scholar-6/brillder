@@ -42,8 +42,6 @@ import DragableTabs from "./dragTabs/dragableTabs";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
 import SynthesisPreviewComponent from "./baseComponents/phonePreview/synthesis/SynthesisPreview";
-import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
-import TutorialPhonePreview from "./tutorial/TutorialPreview";
 import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
@@ -105,8 +103,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [proposalInvalidOpen, setProposalInvalidOpen] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
-  const [activeQuestionType] = React.useState(QuestionTypeEnum.None);
-  const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
   const [skipTutorialOpen, setSkipDialog] = React.useState(false);
   // eslint-disable-next-line
   const [tutorialSkipped, skipTutorial] = React.useState(false);
@@ -387,7 +383,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       <QuestionTypePage
         history={history}
         brickId={brickId}
-        setHoverQuestion={setHoverQuestion}
+        setNextQuestion={setNextQuestion}
+        setPrevFromPhone={setPrevFromPhone}
         questionId={activeQuestion.getMap().get("id")}
         setQuestionType={setQuestionTypeAndMove}
         questionType={type}
@@ -463,18 +460,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         </Route>
       </Switch>
     );
-  }
-
-  const renderQuestionTypePreview = () => {
-    if (isTutorialPassed()) {
-      return <QuestionTypePreview
-        hoverQuestion={hoverQuestion}
-        activeQuestionType={activeQuestionType}
-        nextQuestion={setNextQuestion}
-        prevQuestion={setPrevFromPhone}
-      />;
-    }
-    return <TutorialPhonePreview step={step} />;
   }
 
   const isValid = validateBrick(questions, synthesis);
@@ -558,9 +543,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               prevQuestion={setPrevFromPhone}
             />
           }
-        </Route>
-        <Route path={routes.questionTypeRoute}>
-          {renderQuestionTypePreview()}
         </Route>
         <Route path={routes.synthesisRoute}>
           <PhonePreview
