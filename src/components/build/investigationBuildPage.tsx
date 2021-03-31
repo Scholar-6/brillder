@@ -38,8 +38,6 @@ import QuestionTypePage from "./questionType/questionType";
 import SynthesisPage from "./synthesisPage/SynthesisPage";
 import LastSave from "components/build/baseComponents/lastSave/LastSave";
 import DragableTabs from "./dragTabs/dragableTabs";
-import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
-import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
 import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
@@ -55,7 +53,6 @@ import { YJSContext } from "./baseComponents/YJSProvider";
 import { convertQuestion, toRenderJSON } from "services/SharedTypeService";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import service, { getPreviewLink, getQuestionType } from "./services/buildService";
-import PlanPreviewComponent from "./baseComponents/phonePreview/plan/PlanPreview";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -96,7 +93,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   // eslint-disable-next-line
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
-  const [focusIndex, setFocusIndex] = React.useState(-1);
   const [undoRedoService] = React.useState(UndoRedoService.instance);
 
   /* Synthesis */
@@ -144,7 +140,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   setBrillderTitle(ybrick.get("title"));
 
   const getQuestionIndex = (question: Y.Doc) => service.getQuestionIndex(question, questions);
-  const getJSONQuestionIndex = (question: Question) => service.getJSONQuestionIndex(question, questions);
 
   const createQuestion = () => {
     const newQuestion = convertQuestion(getNewQuestion(QuestionTypeEnum.None, false))
@@ -225,10 +220,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (locked) { return; }
     setQuestionType(type);
     history.push(routes.buildQuesiton(brickId));
-  };
-
-  const componentFocus = (index: number) => {
-    setFocusIndex(index);
   };
 
   const setQuestionType = (type: QuestionTypeEnum) => {
@@ -413,7 +404,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             redo={redo}
           />
         </Route>
-        <Route path="/build/brick/:brickId/investigation/question-component">
+        <Route path={routes.questionRoute}>
           <QuestionPanelWorkArea
             brickId={brickId}
             history={history}
@@ -425,10 +416,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             isAuthor={isAuthor}
             validationRequired={validationRequired}
             initSuggestionExpanded={props.initSuggestionExpanded}
-            componentFocus={componentFocus}
+            questions={questions}
             getQuestionIndex={getQuestionIndex}
             toggleLock={toggleLock}
             setQuestionType={convertQuestionTypes}
+            setNextQuestion={setNextQuestion}
+            setPrevFromPhone={setPrevFromPhone}
             undo={undo}
             redo={redo}
             undoRedoService={undoRedoService}
@@ -523,17 +516,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <LastSave ybrick={ybrick} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={false} saveError={false} />
         <Route path="/build/brick/:brickId/investigation/" exact>
           <Redirect to={`/build/brick/${ybrick.get("id")}/investigation/question`} />
-        </Route>
-        <Route path={routes.questionRoute}>
-          {activeQuestion &&
-            <PhoneQuestionPreview
-              yquestion={activeQuestion.getMap()}
-              focusIndex={focusIndex}
-              getQuestionIndex={getJSONQuestionIndex}
-              nextQuestion={setNextQuestion}
-              prevQuestion={setPrevFromPhone}
-            />
-          }
         </Route>
       </Grid>
       <HighlightInvalidDialog

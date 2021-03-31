@@ -5,7 +5,7 @@ import { ReactSortable } from "react-sortablejs";
 import QuestionComponents from './questionComponents/questionComponents';
 import { getNonEmptyComponent } from '../questionService/ValidateQuestionService';
 import './questionPanelWorkArea.scss';
-import { QuestionTypeEnum, QuestionComponentTypeEnum, QuestionTypeObj } from 'model/question';
+import { QuestionTypeEnum, QuestionComponentTypeEnum, QuestionTypeObj, Question } from 'model/question';
 import DragBox from './drag/dragBox';
 import LockComponent from './lock/Lock';
 import CommentPanel from 'components/baseComponents/comments/CommentPanel';
@@ -19,6 +19,8 @@ import UndoRedoService from 'components/services/UndoRedoService';
 import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoButton from '../baseComponents/UndoButton';
 import RedoButton from '../baseComponents/redoButton';
+import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
+import service from "../services/buildService";
 
 import * as Y from "yjs";
 
@@ -40,20 +42,22 @@ export interface QuestionProps {
   isAuthor: boolean;
   initSuggestionExpanded: boolean;
   undoRedoService: UndoRedoService;
+  questions: Y.Array<Y.Doc>;
   setQuestionType(type: QuestionTypeEnum): void;
   getQuestionIndex(question: Y.Doc): number;
+  setNextQuestion(): void;
+  setPrevFromPhone(): void;
   toggleLock(): void;
   undo(): void;
   redo(): void;
   locked: boolean;
-  
-  // phone preview
-  componentFocus(index: number): void;
 }
 
 const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   brickId, yquestion, history, validationRequired, locked, getQuestionIndex, ...props
 }) => {
+  const [focusIndex, setFocusIndex] = React.useState(-1);
+
   const [componentTypes, setComponentType] = React.useState([
     { id: 1, type: QuestionComponentTypeEnum.Text },
     { id: 2, type: QuestionComponentTypeEnum.Quote },
@@ -64,6 +68,8 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   const [isCommingSoonOpen, setCommingSoon] = React.useState(false);
   const [commentsShown, setCommentsShown] = React.useState(props.initSuggestionExpanded);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+
+  const getJSONQuestionIndex = (question: Question) => service.getJSONQuestionIndex(question, props.questions);
 
   const question = yquestion.getMap();
   const type = question.get("type");
@@ -174,7 +180,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               history={history}
               question={yquestion}
               validationRequired={validationRequired}
-              componentFocus={props.componentFocus}
+              componentFocus={setFocusIndex}
             />
           </Grid>
           <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
@@ -249,6 +255,18 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
           </div>
         </div>
         <CommingSoonDialog isOpen={isCommingSoonOpen} close={() => setCommingSoon(false)} />
+        <div className="fixed-build-phone">
+          {
+          yquestion &&
+            <PhoneQuestionPreview
+              yquestion={question}
+              focusIndex={focusIndex}
+              getQuestionIndex={getJSONQuestionIndex}
+              nextQuestion={props.setNextQuestion}
+              prevQuestion={props.setPrevFromPhone}
+            />
+          }
+        </div>
       </div>
   );
 }
