@@ -10,6 +10,7 @@
 @import './utils/desktop/form-elements-desktop';
 @import './utils/desktop/dropdowns-desktop';
 
+
 #launcher {
   left: 0 !important;
   width: 5.7vw !important;
@@ -160,7 +161,7 @@
 .css-custom-tooltip {
   position: absolute;
   opacity: 0;
-  font-size: 1.05vw;
+  font-size: $base-build-font-size;
   transition: all 300ms ease-out;
   border-radius: 0.5vw;
   color: var(--theme-dark-blue);

@@ -259,7 +259,7 @@
   .student-row {
     .student-name {
       max-width: 100%;
-      font-size: 1.05vw;
+      font-size: $base-build-font-size;
       white-space: nowrap;
       overflow-x: hidden;
       text-overflow: ellipsis;

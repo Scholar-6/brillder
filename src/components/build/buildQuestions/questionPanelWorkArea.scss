@@ -311,12 +311,12 @@
 
       .lines-input,
       .words-input {
-        font-size: 1.05vw;
+        font-size: $base-build-font-size;
       }
 
       .hightlight-area {
         line-height: 1.45;
-        font-size: 1.05vw;
+        font-size: $base-build-font-size;
 
         .line {
           cursor: pointer;
