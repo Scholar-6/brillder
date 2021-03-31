@@ -28,11 +28,15 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
 
     const handleQuestionChange = React.useCallback((evt: Y.YEvent[]) => {
         try {
-            let res = toRenderJSON(evt);
+            const res = toRenderJSON(evt);
             if (res[0].childListChanged) {
                 return;
             }
+            if (!res[0].keysChanged.has("created")) {
+                return;
+            }
         } catch { }
+        console.log('force update 1')
         forceUpdate();
     /*eslint-disable-next-line*/
     }, [ydoc]);
@@ -40,12 +44,16 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
     React.useEffect(() => {
         const { ydoc: newYDoc, awareness: newAwareness } = getYDoc(history, props.brickId, props.user.firstName, props.user.lastName);
         newYDoc.getMap("brick").observeDeep((evt) => {
-            let res = toRenderJSON(evt);
+            const res = toRenderJSON(evt);
             try {
                 if (res[0].childListChanged) {
                     return;
                 }
+                if (!res[0].keysChanged.has("created")) {
+                    return;
+                }
             } catch { }
+            console.log('force update 2')
             forceUpdate();
         });
 
@@ -61,6 +69,8 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
 
         setYdoc(newYDoc);
         setAwareness(newAwareness);
+
+        newAwareness.on("update", () => console.log(newAwareness.getStates()));
     /*eslint-disable-next-line*/
     }, [props.brickId]);
 

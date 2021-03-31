@@ -15,7 +15,7 @@ import CommentPanel from "components/baseComponents/comments/CommentPanel";
 import { CommentLocation } from "model/comments";
 import { ReduxCombinedState } from "redux/reducers";
 
-import { AcademicLevel, Brick, BrickLengthEnum } from "model/brick";
+import { Brick, BrickLengthEnum } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import CommentButton from "../baseComponents/commentButton/CommentButton";
 import UndoRedoService from "components/services/UndoRedoService";
@@ -36,7 +36,7 @@ export interface PlanProps {
   locked: boolean;
   editOnly: boolean;
   undoRedoService: UndoRedoService;
-  initSuggestionExpanded: boolean;
+  initSuggestionExpanded?: boolean;
   undo(): void;
   redo(): void;
 }
@@ -44,6 +44,10 @@ export interface PlanProps {
 const PlanPage: React.FC<PlanProps> = (props) => {
   const { subjects } = props.user;
   const { ybrick, locked } = props;
+
+  const [scrollArea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+  const [canScroll, setScroll] = React.useState(false);
+
   const [commentsShown, setCommentsShown] = React.useState(false);
   const editorIdState = React.useState("");
   const [subjectIndex, setSubjectIndex] = React.useState<number>();
@@ -53,18 +57,70 @@ const PlanPage: React.FC<PlanProps> = (props) => {
     if (subjects) {
       setSubjectIndex(subjects.findIndex((s) => s.id === subjectId) ?? 0);
     }
+    setTimeout(() => {
+      let {current} = scrollArea;
+      if (current) {
+        console.log(current.scrollHeight, current.clientHeight);
+        if (current.scrollHeight > current.clientHeight) {
+          if (!canScroll) {
+            setScroll(true);
+          }
+        } else {
+          if (canScroll) {
+            setScroll(false);
+          }
+        }
+      }
+    }, 100);
+  /*eslint-disable-next-line*/
   }, [subjects]);
 
-  console.log(subjectIndex);
+  React.useEffect(() => {
+    setTimeout(() => {
+      let {current} = scrollArea;
+      if (current) {
+        console.log(current.scrollHeight, current.clientHeight);
+        if (current.scrollHeight > current.clientHeight) {
+          if (!canScroll) {
+            setScroll(true);
+          }
+        } else {
+          if (canScroll) {
+            setScroll(false);
+          }
+        }
+      }
+    }, 100);
+  }, [canScroll, scrollArea, props, setScroll]);
+
+  const scrollUp = () => {
+    const {current} = scrollArea;
+    if (current) {
+      current.scrollBy(0, -window.screen.height / 30);
+    }
+  }
+
+  const scrollDown = () => {
+    const {current} = scrollArea;
+    if (current) {
+      current.scrollBy(0, window.screen.height / 30);
+    }
+  }
+
+  const title = ybrick.get("title");
+  if (typeof title === "string") {
+    ybrick.set("title", new Y.Text(title));
+    return <div />;
+  }
 
   return (
     <div className="question-type plan-page">
       <div className="top-scroll-area">
         <div className="top-button-container">
-          <button className="btn btn-transparent svgOnHover" onClick={() => { }}>
+          <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
             <SpriteIcon
               name="arrow-up"
-              className={`active text-theme-orange`}
+              className={`active text-theme-orange ${!canScroll && 'disabled'}`}
             />
           </button>
         </div>
@@ -95,10 +151,10 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     "image",
                   ]}
                 />
-                <Grid container direction="row" className="inner-quills">
+                <Grid container direction="row" className="inner-quills" ref={scrollArea}>
                   <div className="title-quill-container">
                     <QuillEditor
-                      sharedData={ybrick.get("title")}
+                      sharedData={title}
                       placeholder="Title"
                       disabled={locked}
                       toolbar={[]}
@@ -231,7 +287,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                 </div>
                 <div className="comment-button-container">
                   <CommentButton
-                    location={CommentLocation.Synthesis}
+                    location={CommentLocation.Prep}
                     setCommentsShown={setCommentsShown}
                   />
                 </div>
@@ -241,7 +297,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
           )}
           <Grid className={`plan-comments-panel ${!commentsShown && "hidden"}`} item>
             <CommentPanel
-              currentLocation={CommentLocation.Synthesis}
+              currentLocation={CommentLocation.Prep}
               currentBrick={toRenderJSON(ybrick) as Brick}
               setCommentsShown={setCommentsShown}
               haveBackButton={true}
@@ -251,10 +307,10 @@ const PlanPage: React.FC<PlanProps> = (props) => {
       </div>
       <div className="bottom-scroll-area">
         <div className="bottom-button-container">
-          <button className="btn btn-transparent svgOnHover" onClick={() => { }}>
+          <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
             <SpriteIcon
               name="arrow-down"
-              className={`active text-theme-orange`}
+              className={`active text-theme-orange ${!canScroll && 'disabled'}`}
             />
           </button>
         </div>

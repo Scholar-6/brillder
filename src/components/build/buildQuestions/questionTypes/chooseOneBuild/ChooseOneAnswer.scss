@@ -27,6 +27,13 @@
       $checkbox-size: 1.25vw;
       height: $checkbox-size;
       width: $checkbox-size;
+      border: 0.2rem solid transparent;
+    }
+    .hovered {
+      .MuiSvgIcon-root {
+        border: 0.2rem solid var(--theme-orange);
+        border-radius: 0.5rem;
+      }
     }
   }
 

@@ -23,6 +23,7 @@ import AddSubjectDialog from "./AddSubjectDialog";
 import KeyWordsComponent from "./KeyWords";
 import DifficultySelect from "./DifficultySelect";
 import KeyWordsPlay from "./KeywordsPlay";
+import routes from "components/build/routes";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
@@ -201,7 +202,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                 ?
                 <div className="centered">
                   <PrevButton
-                    to={map.ProposalSubject}
+                    to={routes.buildSubject(parentState.toJSON().id)}
                     isActive={true}
                     onHover={() => { }}
                     onOut={() => { }}

@@ -62,6 +62,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
           <option value="#6A2E15">Brown</option>
           <option value="#4523FF">Purple</option>
           <option value="#FC7502">Orange</option>
+          <option value="#001C58">DarkBlue</option>
         </QuillGlobalToolbarSelect>,
         subscript: (props: any) => <QuillGlobalToolbarButton name="script" value="sub" {...props} />,
         superscript: (props: any) => <QuillGlobalToolbarButton name="script" value="super" {...props} />,

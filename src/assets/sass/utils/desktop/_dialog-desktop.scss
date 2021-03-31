@@ -39,7 +39,6 @@
   .dialog-header {
     letter-spacing: 0;
     color: var(--theme-dark-blue);
-    font-family: $font-family-bold !important;
     margin-bottom: 1vw;
     font-size: 1.5vw;
     svg {
@@ -190,7 +189,6 @@
     .btn {
       width: 100%;
       // margin: 0 0.5vw;
-      font-family: $font-family-bold !important;
       white-space: nowrap;
       padding-top: 1.5vh;
       letter-spacing: 0 !important;

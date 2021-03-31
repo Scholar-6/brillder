@@ -444,6 +444,10 @@ $space-between-boxes: 0.1vw;
         width: 2vw;
         height: 2vw;
       }
+
+      .disabled {
+        color: var(--theme-dark-blue) !important;
+      }
     }
   }
 
@@ -510,6 +514,15 @@ $space-between-boxes: 0.1vw;
           font-size: $baseFontSize;
           padding: 0.3vw 0.5vw;
           border-radius: 0.5vw;
+        }
+        .ql-editor {
+          text-align: left;
+          p {
+            display: inline;
+          }
+          br {
+            display: none;
+          }
         }
       }
       .key-words {
@@ -600,6 +613,7 @@ $space-between-boxes: 0.1vw;
       }
       .brief-container, .prep-container {
         margin-top: 0.5vw;
+        margin-bottom: 0.5vw;
         .header {
           width: 100%;
           background: var(--tab-gray);
@@ -631,4 +645,12 @@ $space-between-boxes: 0.1vw;
       }
     }
   }
+}
+
+.fixed-build-phone {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 33.8vw;
 }

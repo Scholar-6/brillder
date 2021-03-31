@@ -115,14 +115,11 @@
   margin-bottom: 1vw !important;
   padding-bottom: 15vw;
   font-size: 1.25vw !important;
-  .document-editor {
-    .ck-editor {
-      .ck-editor__main {
-        .ck-content {
-          min-height: auto;
-        }
-      }
-    }
+}
+
+.phone-question-preview {
+  .question-unique-play {
+    padding-bottom: 1vh;
   }
 }
 

@@ -12,13 +12,6 @@
     /* Edge */
     color: #aaa;
   }
-  .ck-editor {
-    .ck-content {
-      p {
-        font-size: 1.35vw !important;
-      }
-    }
-  }
   .tutorial-pagination {
     display: flex;
     align-items: center;
@@ -104,14 +97,6 @@
   }
 }
 
-.media {
-  &.ck-placeholder {
-    &:before {
-      content: none !important;
-    }
-  }
-}
-
 .brief-page,
 .open-question-page,
 .prep-page-questionary {
@@ -163,49 +148,10 @@
             margin-left: 0vw;
           }
         }
-        .ck-color-table__remove-color {
-          color: var(--theme-dark-blue);
-          padding: 0.5vh 0.7vw;
-          width: 12vw;
-          font-size: 1.1vw;
-        }
-        .ck-color-grid__tile {
-          min-width: 2vw;
-          min-height: 2vw;
-          border-radius: 0.2vw;
-        }
         .ql-formats {
           background: var(--tab-gray) !important;
           @include phone_and_tabletL {
             padding: 1vh 2vw;
-          }
-          .ck-color-ui-dropdown {
-            margin-right: 0;
-            @extend %m0;
-            width: 3.8vw;
-            .ck-button {
-              padding: 0 !important;
-            }
-          }
-          > .ck-button:nth-child(1) {
-            border-top-left-radius: 1.5vw;
-            margin-top: 0.5vw;
-            margin-bottom: 0.5vw;
-            margin-left: 0.5vw;
-          }
-          > .ck:nth-child(4) {
-            @include phone_and_tabletL {
-              margin-left: 59vw;
-            }
-            @include phone_and_tabletP {
-              margin-left: 35vw;
-            }
-            @include tabletL {
-              margin-left: 16vw;
-            }
-          }
-          > .ck:nth-child(7) {
-            border-top-right-radius: 1.5vw;
           }
         }
       }
@@ -241,6 +187,23 @@
               margin: 0;
             }
           }
+        }
+      }
+      .picker-options {
+        padding: 0 !important;
+        width: 8vw;
+        display: none;
+        border: 1px solid transparent;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 2px 8px;
+        position: absolute;
+        background-color: #fff;
+        .ql-picker-item {
+          margin: 0.21vw;
+          padding: 0;
+          border-radius: 0.2vw;
+          min-width: 2.2vw;
+          min-height: 2.2vw;
+          display: inline-block;
         }
       }
     }

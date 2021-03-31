@@ -1,5 +1,4 @@
 import React from 'react'
-import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import Grid from '@material-ui/core/Grid';
 import routes from 'components/build/routes';

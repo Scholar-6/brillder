@@ -3,13 +3,11 @@ import { Redirect, RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
-import queryString from 'query-string';
 import * as Y from "yjs";
 import _ from "lodash";
 
 import "./investigationBuildPage.scss";
 import routes from './routes';
-import map from 'components/map';
 import PlanPage from './plan/Plan';
 import {
   Question,
@@ -43,9 +41,6 @@ import DragableTabs from "./dragTabs/dragableTabs";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
 import SynthesisPreviewComponent from "./baseComponents/phonePreview/synthesis/SynthesisPreview";
-import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
-import TutorialPhonePreview from "./tutorial/TutorialPreview";
-import YourProposalLink from './baseComponents/YourProposalLink';
 import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
@@ -67,6 +62,8 @@ import PlanPreviewComponent from "./baseComponents/phonePreview/plan/PlanPreview
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
   user: User;
   reduxBrick: Brick;
+  initSuggestionExpanded: boolean;
+  isCurrentEditor: boolean;
   startEditing(brickId: number): void;
   changeQuestion(questionId?: number): void;
   forgetBrick(): void;
@@ -75,17 +72,6 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const { params } = props.match;
   const brickId = parseInt(params.brickId);
-
-  const values = queryString.parse(props.location.search);
-  let initSuggestionExpanded = false;
-  if (values.suggestionsExpanded) {
-    initSuggestionExpanded = true;
-  }
-
-  const isCurrentEditor = (props.reduxBrick.editors?.findIndex((e: any) => e.id === props.user.id) ?? -1) >= 0;
-  if (isCurrentEditor) {
-    initSuggestionExpanded = true;
-  }
 
   const { history } = props;
 
@@ -107,9 +93,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [proposalInvalidOpen, setProposalInvalidOpen] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
-  const [activeQuestionType] = React.useState(QuestionTypeEnum.None);
-  const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
   const [skipTutorialOpen, setSkipDialog] = React.useState(false);
+  // eslint-disable-next-line
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
   const [focusIndex, setFocusIndex] = React.useState(-1);
@@ -187,6 +172,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       if (!canEdit || locked) { return <PageLoader content="...Loading 2..." />; }
       createQuestion();
     }
+    return <PageLoader content="...Loading 3..." />;
   }
 
   if (activeQuestion) {
@@ -387,7 +373,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       <QuestionTypePage
         history={history}
         brickId={brickId}
-        setHoverQuestion={setHoverQuestion}
+        setNextQuestion={setNextQuestion}
+        setPrevFromPhone={setPrevFromPhone}
         questionId={activeQuestion.getMap().get("id")}
         setQuestionType={setQuestionTypeAndMove}
         questionType={type}
@@ -409,6 +396,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return false;*/
   }
 
+  console.log('rerender');
+
   const renderPanel = () => {
     return (
       <Switch>
@@ -418,7 +407,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             editOnly={!canEdit}
             user={props.user}
             ybrick={ybrick}
-            initSuggestionExpanded={initSuggestionExpanded}
+            initSuggestionExpanded={props.initSuggestionExpanded}
             undoRedoService={undoRedoService}
             undo={undo}
             redo={redo}
@@ -435,7 +424,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             locked={locked}
             isAuthor={isAuthor}
             validationRequired={validationRequired}
-            initSuggestionExpanded={initSuggestionExpanded}
+            initSuggestionExpanded={props.initSuggestionExpanded}
             componentFocus={componentFocus}
             getQuestionIndex={getQuestionIndex}
             toggleLock={toggleLock}
@@ -453,7 +442,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             locked={locked}
             editOnly={!canEdit}
             ybrick={ybrick}
-            initSuggestionExpanded={initSuggestionExpanded}
+            initSuggestionExpanded={props.initSuggestionExpanded}
             undoRedoService={undoRedoService}
             undo={undo}
             redo={redo}
@@ -461,18 +450,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         </Route>
       </Switch>
     );
-  }
-
-  const renderQuestionTypePreview = () => {
-    if (isTutorialPassed()) {
-      return <QuestionTypePreview
-        hoverQuestion={hoverQuestion}
-        activeQuestionType={activeQuestionType}
-        nextQuestion={setNextQuestion}
-        prevQuestion={setPrevFromPhone}
-      />;
-    }
-    return <TutorialPhonePreview step={step} />;
   }
 
   const isValid = validateBrick(questions, synthesis);
@@ -488,7 +465,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         isTutorialSkipped={isTutorialPassed()}
         isValid={isValid}
         moveToReview={moveToReview}
-        isEditor={isCurrentEditor}
+        isEditor={props.isCurrentEditor}
         isPublisher={isPublisher}
         isAdmin={isAdmin}
         isAuthor={isAuthor}
@@ -542,7 +519,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             </Grid>
           </Grid>
         </Grid>
-        <LastSave updated={new Date(ybrick.get("updated")).toString()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={false} saveError={false} />
+        <LastSave ybrick={ybrick} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={false} saveError={false} />
         <Route path="/build/brick/:brickId/investigation/" exact>
           <Redirect to={`/build/brick/${ybrick.get("id")}/investigation/question`} />
         </Route>
@@ -556,9 +533,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               prevQuestion={setPrevFromPhone}
             />
           }
-        </Route>
-        <Route path={routes.questionTypeRoute}>
-          {renderQuestionTypePreview()}
         </Route>
         <Route path={routes.synthesisRoute}>
           <PhonePreview

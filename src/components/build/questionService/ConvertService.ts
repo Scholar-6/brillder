@@ -21,7 +21,6 @@ export function stripHtml(html: string) {
     img.replaceWith(img.getAttribute("alt") ?? "image");
   });
 
-  console.log(div.textContent);
   return div.textContent || div.innerText || "";
 }
 

@@ -12,14 +12,13 @@ import LogoPage from "components/logoPage/logoPage";
 
 
 interface QuestionTypePreviewProps {
-  activeQuestionType: QuestionTypeEnum;
   hoverQuestion: QuestionTypeEnum;
   nextQuestion(): void;
   prevQuestion(): void;
 }
 
 const QuestionTypePreview:React.FC<QuestionTypePreviewProps> = ({
-  hoverQuestion, activeQuestionType, ...props
+  hoverQuestion, ...props
 }) => {
   const getPreviewElement = (type: QuestionTypeEnum) => {
     if (type === QuestionTypeEnum.ShortAnswer) {
@@ -37,10 +36,6 @@ const QuestionTypePreview:React.FC<QuestionTypePreviewProps> = ({
   }
     
   let preview = getPreviewElement(hoverQuestion);
-  if (preview) {
-    return preview;
-  }
-  preview = getPreviewElement(activeQuestionType);
   if (preview) {
     return preview;
   }

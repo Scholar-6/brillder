@@ -1,22 +1,36 @@
 import React, { useEffect } from "react";
+import * as Y from "yjs";
 import './LastSave.scss'
 import { Grid } from "@material-ui/core";
 import { TutorialStep } from "components/build/tutorial/TutorialPanelWorkArea";
 import { getTime, getFormattedDate } from "components/services/brickService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import _ from "lodash";
 
 
 interface LastSaveProps {
   tutorialStep: TutorialStep;
   isSaving: boolean;
   saveError: boolean;
-  updated: string;
+  // updated: string;
+  ybrick: Y.Map<any>;
 }
 
 const LastSave: React.FC<LastSaveProps> = (props) => {
   const [isSaving, setSaving] = React.useState(props.isSaving);
   // eslint-disable-next-line
   const [saveTimeout, setSaveTimeout] = React.useState(null as any);
+  const [updated, setUpdated] = React.useState<Date>(new Date(props.ybrick.get("updated")));
+
+  const observer = React.useCallback(_.throttle(() => {
+    setUpdated(new Date(props.ybrick.get("updated")));
+  }, 200), [props.ybrick])
+
+  useEffect(() => {
+    props.ybrick.observeDeep(observer);
+    return () => props.ybrick.unobserveDeep(observer);
+  // eslint-disable-next-line
+  }, [observer]);
 
   useEffect(() => {
     if (props.isSaving) {
@@ -40,7 +54,7 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
         return "Saving...";
       }
     } else {
-      return `Last Saved at ${getTime(props.updated)} on ${getFormattedDate(props.updated)}`;
+      return `Last Saved at ${updated ? getTime(updated.toString()) : ""} on ${updated ? getFormattedDate(updated.toString()) : ""}`;
     }
   }
 

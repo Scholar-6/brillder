@@ -227,9 +227,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           {this.renderVertical(assignment.id, color)}
         </div>
         <div className="short-brick-info long">
-          <div className="link-description">
-            <span>{brick.title}</span>
-          </div>
+          <div className="link-description q-brick-title" dangerouslySetInnerHTML={{__html: brick.title}} />
           <div className="link-info">
             {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)}
           </div>

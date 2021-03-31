@@ -42,6 +42,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ yquestion, getQuestionIndex
     return () => {
       yquestion.unobserveDeep(observer);
     }
+  /*eslint-disable-next-line*/
   }, [yquestion])
 
   //#region Scroll
