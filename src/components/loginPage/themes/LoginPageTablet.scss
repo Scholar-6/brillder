@@ -77,26 +77,40 @@
       width: 100%;
       transition: width ease-in-out 300ms;
     }
-
+    $button-width: 30vw;
     .email-button,
     .google-button-desktop {
+      position: relative;
+      font-size: 2vw;
+      font-family: $font-family-regular;
+      border-radius: 0.5vw;
+      transition: all 450ms ease-out;
+      width: $button-width;
       border: none;
       @extend %flexCenter;
       padding: 2.2vh;
-
-      .svg {
+      svg {
+        position: absolute !important;
+        left: 2vw;
+        width: 2vw;
+        height: 2vw;
         transition: all 0.2s ease-in-out;
         margin-right: 1vw;
       }
-
+      span {
+        margin: 0 !important;
+      }
       .MuiButton-label {
         justify-content: flex-start;
       }
     }
-
+    .google-button-desktop {
+      background: var(--white);
+      color: var(--theme-dark-blue);
+    }
     .email-button {
+      margin-top: 3vh;
       background: var(--theme-orange);
-
       .svg,
       span {
         color: var(--white);
@@ -105,33 +119,6 @@
       &:hover {
         background: var(--theme-dark-blue);
       }
-    }
-    $button-width: 20vw;
-
-    .google-button-desktop,
-    .email-button {
-      position: relative;
-      font-size: 1.4vw;
-      font-family: $font-family-regular;
-      border-radius: 0.5vw;
-      transition: all 450ms ease-out;
-      width: $button-width;
-
-      svg {
-        position: absolute !important;
-        height: 100%;
-        left: 2vw;
-        width: 2vw;
-        height: 2vw;
-      }
-    }
-
-    .google-button-desktop {
-      background: var(--white);
-      color: var(--theme-dark-blue);
-    }
-    .email-button {
-      margin-top: 3vh;
     }
     .text-box {
       padding-left: 1.4vw;
