@@ -410,7 +410,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <QuestionPanelWorkArea
             brickId={brickId}
             history={history}
-            synthesis={ybrick.get("synthesis")}
             yquestion={activeQuestion}
             canEdit={canEdit}
             locked={locked}

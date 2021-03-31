@@ -20,7 +20,6 @@ import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoButton from '../baseComponents/UndoButton';
 import RedoButton from '../baseComponents/redoButton';
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
-import service from "../services/buildService";
 
 import * as Y from "yjs";
 
@@ -35,7 +34,6 @@ export interface QuestionProps {
   canEdit: boolean;
   yquestion: Y.Doc;
   history: any;
-  synthesis: Y.Text;
   validationRequired: boolean;
   comments: Comment[] | null;
   isAuthor: boolean;
@@ -70,8 +68,8 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   const question = yquestion.getMap();
   const type = question.get("type");
 
-  let typeArray: string[] = Object.keys(QuestionTypeObj);
-  let index = getQuestionIndex(yquestion);
+  const typeArray: string[] = Object.keys(QuestionTypeObj);
+  const index = getQuestionIndex(yquestion);
 
   let showHelpArrow = false;
   if (index === 0 && props.isAuthor) {
@@ -199,6 +197,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     setCommentsShown={() => setCommentsShown(true)}
                   />
                 </div>
+                {/* 3/31/2021 hidden not working with all quesiton types
                 <Grid container direction="row" alignItems="center">
                   <Grid container justify="center" item sm={12} className="select-type-container">
                     <FormControl variant="outlined">
@@ -228,7 +227,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                       </Select>
                     </FormControl>
                   </Grid>
-                </Grid>
+                </Grid>/*}
                 <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
               </div>
             }
