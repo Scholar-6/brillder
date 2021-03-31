@@ -80,6 +80,14 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     const context = React.useContext(YJSContext);
     const awareness = context?.awareness;
 
+    const onFocus = React.useCallback(() => {
+        setCurrentQuillId(uniqueId);
+        const state = awareness?.getLocalState();
+        if(!state) return;
+        state.hover = null;
+        awareness?.setLocalState(state);
+    }, [setCurrentQuillId, uniqueId])
+
     const modules = {
         toolbar: (props.showToolbar ?? false) ? {
             container: `.quill-${uniqueId}`,
@@ -164,7 +172,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 // value={props.sharedData ? undefined : (data || "")}
                 onChange={onChange}
                 onBlur={props.onBlur}
-                onFocus={() => setCurrentQuillId(uniqueId)}
+                onFocus={onFocus}
                 readOnly={props.disabled}
                 placeholder={props.placeholder}
                 modules={modules}
