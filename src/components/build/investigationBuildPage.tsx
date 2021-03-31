@@ -408,6 +408,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             ybrick={ybrick}
             initSuggestionExpanded={props.initSuggestionExpanded}
             undoRedoService={undoRedoService}
+            selectFirstQuestion={() => selectQuestion(0)}
             undo={undo}
             redo={redo}
           />
@@ -533,15 +534,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               prevQuestion={setPrevFromPhone}
             />
           }
-        </Route>
-        <Route path={routes.planRoute}>
-          <PhonePreview
-            Component={PlanPreviewComponent}
-            prev={() => { }}
-            next={() => selectQuestion(0)}
-            prevDisabled={true}
-            data={{ ybrick, user: props.user }}
-          />
         </Route>
       </Grid>
       <HighlightInvalidDialog
