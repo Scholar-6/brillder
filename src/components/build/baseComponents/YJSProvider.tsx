@@ -29,10 +29,7 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
     const handleQuestionChange = React.useCallback((evt: Y.YEvent[]) => {
         try {
             const res = toRenderJSON(evt);
-            if (res[0].childListChanged) {
-                return;
-            }
-            if (!res[0].keysChanged.has("created")) {
+            if ((res[0].keysChanged.has("created") || res[0].keysChanged.has("id")) === false) {
                 return;
             }
         } catch { }
@@ -44,12 +41,9 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
     React.useEffect(() => {
         const { ydoc: newYDoc, awareness: newAwareness } = getYDoc(history, props.brickId, props.user.firstName, props.user.lastName);
         newYDoc.getMap("brick").observeDeep((evt) => {
-            const res = toRenderJSON(evt);
             try {
-                if (res[0].childListChanged) {
-                    return;
-                }
-                if (!res[0].keysChanged.has("created")) {
+                const res = toRenderJSON(evt);
+                if ((res[0].keysChanged.has("created") || res[0].keysChanged.has("id")) === false) {
                     return;
                 }
             } catch { }
