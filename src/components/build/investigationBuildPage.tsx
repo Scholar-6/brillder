@@ -410,6 +410,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return false;*/
   }
 
+  console.log('rerender');
+
   const renderPanel = () => {
     return (
       <Switch>
