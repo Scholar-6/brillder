@@ -41,6 +41,8 @@ div {
   line-height: 20vw !important;
   vertical-align: top !important;
   width: auto !important;
+  display: block !important;
+  visibility: visible !important;
 }
 
 #Embed>div>div>.wrapper-AtBcr>.Icon {

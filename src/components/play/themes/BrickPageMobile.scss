@@ -1439,39 +1439,6 @@ $play-footer-height: 75px;
   }
 }
 
-// assign brick to class or student dialog styles
-.MuiDialog-root.dialog-box.light-blue.assign-dialog {
-  .dialog-header {
-    > div {
-      width: 100% !important;
-    }
-    input {
-      font-size: 7vw !important;
-    }
-    .MuiAutocomplete-root .MuiChip-label {
-      font-size: 6vw !important;
-    }
-    .MuiSvgIcon-root.MuiChip-deleteIcon {
-      width: 7vw !important;
-      height: 7vw !important;
-      margin-right: 1vw;
-    }
-  }
-  .dialog-footer {
-    .btn {
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
-    }
-    .label {
-      font-size: 7vw !important;
-    }
-    .svg {
-      width: 7vw;
-      height: 7vw;
-    }
-  }
-}
-
 // finalStep page
 .brick-row-container.complete-container {
   .introduction-page {
@@ -1672,7 +1639,6 @@ $play-footer-height: 75px;
     }
   }
 }
-
 
 // pair match image fix
 

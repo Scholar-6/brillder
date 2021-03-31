@@ -25,7 +25,7 @@ interface ListState {
 class SubjectsListV3 extends Component<PublishedSubjectsProps, ListState> {
   constructor(props: PublishedSubjectsProps) {
     super(props);
-    
+
     this.state = {
       canScroll: false,
       scrollArea: React.createRef()
@@ -41,30 +41,30 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps, ListState> {
   }
 
   checkScroll() {
-    const {canScroll} = this.state;
-    const {current} = this.state.scrollArea;
+    const { canScroll } = this.state;
+    const { current } = this.state.scrollArea;
     if (current) {
       if (current.scrollHeight > current.clientHeight) {
         if (!canScroll) {
-          this.setState({canScroll: true});
+          this.setState({ canScroll: true });
         }
       } else {
         if (canScroll) {
-          this.setState({canScroll: false});
+          this.setState({ canScroll: false });
         }
       }
     }
   }
 
   scrollUp() {
-    const {current} = this.state.scrollArea;
+    const { current } = this.state.scrollArea;
     if (current) {
       current.scrollBy(0, -window.screen.height / 30);
     }
   }
 
   scrollDown() {
-    const {current} = this.state.scrollArea;
+    const { current } = this.state.scrollArea;
     if (current) {
       current.scrollBy(0, window.screen.height / 30);
     }
@@ -122,7 +122,7 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps, ListState> {
             <button
               className="btn-transparent filter-icon arrow-cancel"
               onClick={this.props.toggleAll}
-          ></button>}
+            ></button>}
         </div>
         <Grid container direction="row" className="filter-container subjects-filter subjects-filter-v2 subjects-filter-v3" ref={this.state.scrollArea}>
           <AnimateHeight

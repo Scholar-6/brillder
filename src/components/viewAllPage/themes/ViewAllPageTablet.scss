@@ -83,6 +83,7 @@
         }
       }
       .scroll-buttons {
+        position: relative;
         @extend %flexCenter;
         background: var(--white);
         height: 2vw;
@@ -90,22 +91,63 @@
           cursor: pointer;
           width: 1.7vw;
           height: 1.7vw;
-          color: var(--theme-orange);
+          color: var(--theme-dark-blue);
+
+          &:hover {
+            color: var(--theme-orange);
+          }
 
           &.disabled {
             color: var(--tab-gray);
           }
         }
+        .radio-container {
+          position: absolute;
+          left: 1.27vw;
+          color: var(--theme-dark-blue);
+          svg {
+            width: 1.4vw;
+            height: 1.4vw;
+            color: var(--theme-dark-blue);
+          }
+          .MuiFormControlLabel-label {
+            font-size: 1.05vw;
+            font-family: $font-family-light !important;
+          }
+        }
+        .arrow-cancel {
+          position: absolute;
+          right: 1.5vw;
+          &::after,
+          &::before {
+            background: var(--theme-dark-blue);
+          }
+
+          &:hover {
+            &::after,
+            &::before {
+              background: var(--theme-orange);
+            }
+          }
+        }
+      }
+      .sidebar-footer {
+        border-top: 0.3vw solid var(--white);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 5vw;
+        width: 100%;
+        background: var(--theme-light-blue);
       }
     }
     .brick-row-container {
+      @extend %flexCenter;
       .subjects-column {
-        display: flex;
-        align-items: center;
+        @extend %flexCenter;
         margin-left: 2vw;
         margin-right: 2vw;
         flex-direction: column;
-        justify-content: center;
         // height: 100%;
         .subject-row {
           width: 100%;
@@ -142,7 +184,7 @@
               margin: 0.8vh 0.5%;
               border-radius: 0.8vw;
             }
-            &:hover {
+            &:focus {
               background: var(--theme-dark-blue) !important;
               color: var(--white) !important;
               .icon {
