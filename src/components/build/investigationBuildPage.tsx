@@ -179,6 +179,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setPrevFromPhone = () => {
     if (currentQuestionIndex >= 1) {
       setCurrentQuestionIndex(index => index - 1);
+    } else {
+      history.push(routes.buildPlan(brickId));
     }
   }
 

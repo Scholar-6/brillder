@@ -26,7 +26,6 @@ export interface PhonePreviewProps {
 
 const PhonePreview: React.FC<PhonePreviewProps> = ({ yquestion, getQuestionIndex, ...props }) => {
   const questionIndex = getQuestionIndex(yquestion.toJSON());
-  const canGoBack = questionIndex > 0 ? true : false;
 
   const [questionPreview] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const [question, setQuestion] = React.useState<Question>(toRenderJSON(yquestion));
@@ -150,7 +149,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ yquestion, getQuestionIndex
       <div className="phone-question-preview-box">
         <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
           <div className="centered pointer">
-            <SpriteIcon name="arrow-left" className={`scroll-arrow ${!canGoBack && 'disabled'}`} onClick={props.prevQuestion} />
+            <SpriteIcon name="arrow-left" className="scroll-arrow" onClick={props.prevQuestion} />
           </div>
           <div className="phone-question-preview">
             <div className="centered">
