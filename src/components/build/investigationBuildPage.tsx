@@ -411,14 +411,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             brickId={brickId}
             history={history}
             synthesis={ybrick.get("synthesis")}
-            questionsCount={questions ? questions.length : 0}
             yquestion={activeQuestion}
             canEdit={canEdit}
             locked={locked}
             isAuthor={isAuthor}
             validationRequired={validationRequired}
             initSuggestionExpanded={props.initSuggestionExpanded}
-            questions={questions}
             getQuestionIndex={getQuestionIndex}
             toggleLock={toggleLock}
             setQuestionType={convertQuestionTypes}

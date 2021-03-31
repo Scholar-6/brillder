@@ -35,14 +35,12 @@ export interface QuestionProps {
   canEdit: boolean;
   yquestion: Y.Doc;
   history: any;
-  questionsCount: number;
   synthesis: Y.Text;
   validationRequired: boolean;
   comments: Comment[] | null;
   isAuthor: boolean;
   initSuggestionExpanded: boolean;
   undoRedoService: UndoRedoService;
-  questions: Y.Array<Y.Doc>;
   setQuestionType(type: QuestionTypeEnum): void;
   getQuestionIndex(question: Y.Doc): number;
   setNextQuestion(): void;
@@ -68,8 +66,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   const [isCommingSoonOpen, setCommingSoon] = React.useState(false);
   const [commentsShown, setCommentsShown] = React.useState(props.initSuggestionExpanded);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
-
-  const getJSONQuestionIndex = (question: Question) => service.getJSONQuestionIndex(question, props.questions);
 
   const question = yquestion.getMap();
   const type = question.get("type");
@@ -261,7 +257,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             <PhoneQuestionPreview
               yquestion={question}
               focusIndex={focusIndex}
-              getQuestionIndex={getJSONQuestionIndex}
               nextQuestion={props.setNextQuestion}
               prevQuestion={props.setPrevFromPhone}
             />

@@ -17,16 +17,13 @@ import _ from 'lodash';
 export interface PhonePreviewProps {
   yquestion: Y.Map<any>;
   focusIndex: number;
-  getQuestionIndex(question: Question): number;
 
   // navigation
   nextQuestion(): void;
   prevQuestion(): void;
 }
 
-const PhonePreview: React.FC<PhonePreviewProps> = ({ yquestion, getQuestionIndex, ...props }) => {
-  const questionIndex = getQuestionIndex(yquestion.toJSON());
-
+const PhonePreview: React.FC<PhonePreviewProps> = ({ yquestion, ...props }) => {
   const [questionPreview] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const [question, setQuestion] = React.useState<Question>(toRenderJSON(yquestion));
 
