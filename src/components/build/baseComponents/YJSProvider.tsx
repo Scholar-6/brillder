@@ -61,6 +61,8 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
 
         setYdoc(newYDoc);
         setAwareness(newAwareness);
+
+        newAwareness.on("update", () => console.log(newAwareness.getStates()));
     /*eslint-disable-next-line*/
     }, [props.brickId]);
 

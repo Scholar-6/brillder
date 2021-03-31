@@ -20,13 +20,14 @@ export interface ChooseOneAnswerProps {
   answer: Y.Map<any>;
   validationRequired: boolean;
   checkBoxValid: boolean;
+  hovered?: boolean;
   removeFromList(index: number): void;
   onChecked(event: any, checked: boolean): void;
   onBlur(): void;
 }
 
 const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
-  locked, editOnly, index, length, answer, validationRequired, checkBoxValid,
+  locked, editOnly, index, length, answer, validationRequired, checkBoxValid, hovered,
   removeFromList, onChecked, onBlur
 }) => {
   const [clearOpen, setClear] = React.useState(false);
@@ -80,6 +81,10 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     if (!checkBoxValid) {
       checkboxClass += " checkbox-invalid";
     }
+  }
+
+  if(hovered) {
+    checkboxClass += " hovered";
   }
 
   if (validationRequired) {

@@ -28,6 +28,12 @@
       height: $checkbox-size;
       width: $checkbox-size;
     }
+    .hovered {
+      .MuiSvgIcon-root {
+        border: 0.2rem solid var(--theme-orange);
+        border-radius: 0.5rem;
+      }
+    }
   }
 
   .checkbox-container ~ .question-image-drop {

@@ -8,6 +8,7 @@ import { ChooseOneAnswer } from './types';
 import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
 import { generateId, showSameAnswerPopup } from '../service/questionBuild';
+import { YJSContext } from 'components/build/baseComponents/YJSProvider';
 
 export interface ChooseOneData {
   list: ChooseOneAnswer[];
@@ -34,6 +35,28 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
 
   let list = data.get("list") as Y.Array<any>;
 
+  //#region Awareness
+  const { awareness } = React.useContext(YJSContext)!;
+
+  const [hovered, setHovered] = React.useState<any[]>([]);
+
+  const observer = React.useCallback(() => {
+    const hovers: any[] = [];
+    Array.from(awareness!.getStates().entries()).forEach(([key, value]) => {
+      if(key === awareness!.clientID) return;
+      if(value.hover && value.hover.type === "unique-component") {
+        hovers.push({ user: value.user, index: value.hover.index });
+      }
+    });
+    setHovered(hovers);
+  }, [awareness]);
+
+  React.useEffect(() => {
+    awareness?.on("update", observer);
+    return () => awareness?.off("update", observer);
+  }, [awareness]);
+  //#endregion
+
   const addAnswer = () => {
     if (locked) { return; }
     list.push([newAnswer()]);
@@ -55,6 +78,10 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
       });
       list.get(index).set("checked", true);
     });
+    const state = awareness?.getLocalState();
+    if(!state) return;
+    state.hover = { index, type: "unique-component" };
+    awareness?.setLocalState(state);
   }
 
   const removeFromList = (index: number) => {
@@ -69,6 +96,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
       <div className="component-title">Tick Correct Answer</div>
       {
         list.map((answer: Y.Map<any>, i: number) => {
+          console.log(hovered);
           return <ChooseOneAnswerComponent
             key={answer.get("id")}
             locked={locked}
@@ -77,6 +105,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
             length={list.length}
             answer={answer}
             checkBoxValid={checkBoxValid}
+            hovered={hovered.findIndex(item => item.index === i.toString()) >= 0}
             validationRequired={validationRequired}
             removeFromList={removeFromList}
             onChecked={onChecked}
