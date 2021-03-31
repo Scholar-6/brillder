@@ -126,6 +126,12 @@
   }
 }
 
+.phone-question-preview {
+  .question-unique-play {
+    padding-bottom: 1vh;
+  }
+}
+
 @include phone_and_tabletP {
   .question-unique-play {
     font-size: 4.5vw !important;
