@@ -36,7 +36,7 @@ export interface PlanProps {
   locked: boolean;
   editOnly: boolean;
   undoRedoService: UndoRedoService;
-  initSuggestionExpanded: boolean;
+  initSuggestionExpanded?: boolean;
   undo(): void;
   redo(): void;
 }

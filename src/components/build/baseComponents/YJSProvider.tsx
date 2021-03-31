@@ -32,6 +32,9 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
             if (res[0].childListChanged) {
                 return;
             }
+            if (!res[0].keysChanged.has("created")) {
+                return;
+            }
         } catch { }
         console.log('force update 1')
         forceUpdate();
@@ -46,7 +49,7 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
                 if (res[0].childListChanged) {
                     return;
                 }
-                if (!res[0].keysChanged.has("created") && res[0].keysChanged.has("updated")) {
+                if (!res[0].keysChanged.has("created")) {
                     return;
                 }
             } catch { }

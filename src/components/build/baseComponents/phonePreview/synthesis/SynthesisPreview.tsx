@@ -69,7 +69,7 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
         Synthesis
       </div>
       <div className="synthesis-text">
-        <ObservableText text={data.synthesis} />
+        <ObservableText text={data.synthesis} math={true} />
       </div>
     </div>
   );

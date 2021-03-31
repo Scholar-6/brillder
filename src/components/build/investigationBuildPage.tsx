@@ -3,7 +3,6 @@ import { Redirect, RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
-import queryString from 'query-string';
 import * as Y from "yjs";
 import _ from "lodash";
 
@@ -63,6 +62,8 @@ import PlanPreviewComponent from "./baseComponents/phonePreview/plan/PlanPreview
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
   user: User;
   reduxBrick: Brick;
+  initSuggestionExpanded: boolean;
+  isCurrentEditor: boolean;
   startEditing(brickId: number): void;
   changeQuestion(questionId?: number): void;
   forgetBrick(): void;
@@ -71,17 +72,6 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const { params } = props.match;
   const brickId = parseInt(params.brickId);
-
-  const values = queryString.parse(props.location.search);
-  let initSuggestionExpanded = false;
-  if (values.suggestionsExpanded) {
-    initSuggestionExpanded = true;
-  }
-
-  const isCurrentEditor = (props.reduxBrick.editors?.findIndex((e: any) => e.id === props.user.id) ?? -1) >= 0;
-  if (isCurrentEditor) {
-    initSuggestionExpanded = true;
-  }
 
   const { history } = props;
 
@@ -417,7 +407,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             editOnly={!canEdit}
             user={props.user}
             ybrick={ybrick}
-            initSuggestionExpanded={initSuggestionExpanded}
+            initSuggestionExpanded={props.initSuggestionExpanded}
             undoRedoService={undoRedoService}
             undo={undo}
             redo={redo}
@@ -434,7 +424,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             locked={locked}
             isAuthor={isAuthor}
             validationRequired={validationRequired}
-            initSuggestionExpanded={initSuggestionExpanded}
+            initSuggestionExpanded={props.initSuggestionExpanded}
             componentFocus={componentFocus}
             getQuestionIndex={getQuestionIndex}
             toggleLock={toggleLock}
@@ -452,7 +442,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             locked={locked}
             editOnly={!canEdit}
             ybrick={ybrick}
-            initSuggestionExpanded={initSuggestionExpanded}
+            initSuggestionExpanded={props.initSuggestionExpanded}
             undoRedoService={undoRedoService}
             undo={undo}
             redo={redo}
@@ -475,7 +465,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         isTutorialSkipped={isTutorialPassed()}
         isValid={isValid}
         moveToReview={moveToReview}
-        isEditor={isCurrentEditor}
+        isEditor={props.isCurrentEditor}
         isPublisher={isPublisher}
         isAdmin={isAdmin}
         isAuthor={isAuthor}

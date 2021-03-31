@@ -199,13 +199,12 @@ const App: React.FC<AppProps> = props => {
     baseDuration: any, // estimated time to render the entire subtree without memoization
     startTime: any, // when React began rendering this update
     commitTime: any, // when React committed this update
-    interactions: any // the Set of interactions belonging to this update
   ) => {
     // if more then 100ms log it.
     if (baseDuration > 100) {
-      console.log('heavy: ', id, phase, baseDuration, startTime, actualDuration, commitTime);
+      //console.log('heavy: ', id, phase, baseDuration, startTime, actualDuration, commitTime);
     } else if (baseDuration > 75) {
-      console.log('medium:', id, phase, baseDuration, startTime, actualDuration, commitTime);
+      //console.log('medium:', id, phase, baseDuration, startTime, actualDuration, commitTime);
     }
   }
 
