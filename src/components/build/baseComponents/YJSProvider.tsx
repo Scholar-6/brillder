@@ -29,6 +29,7 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
     const handleQuestionChange = React.useCallback((evt: Y.YEvent[]) => {
         try {
             const res = toRenderJSON(evt);
+            //!! this check if very important and delicate could couse to infinity loading of build page !!
             if ((res[0].keysChanged.has("created") || res[0].keysChanged.has("id")) === false) {
                 return;
             }
@@ -43,6 +44,7 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
         newYDoc.getMap("brick").observeDeep((evt) => {
             try {
                 const res = toRenderJSON(evt);
+                //!! this check if very important and delicate could couse to infinity loading of build page !!
                 if ((res[0].keysChanged.has("created") || res[0].keysChanged.has("id")) === false) {
                     return;
                 }
