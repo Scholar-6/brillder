@@ -9,9 +9,6 @@
   }
   .pair-match-option,
   .pair-match-answer {
-    .ck-content {
-      padding-left: 1vw !important;
-    }
     .quill-document-editor {
       .quill {
         height: 100%;
@@ -23,11 +20,6 @@
           }
         }
       }
-    }
-  }
-  .pair-image {
-    .ck-content {
-      padding-top: 9.5vh !important;
     }
   }
 }

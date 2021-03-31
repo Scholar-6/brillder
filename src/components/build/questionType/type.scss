@@ -12,13 +12,6 @@
 
   .inner-question-type {
     padding: 0.7vh 4vh 2vh 4vh;
-    .document-editor {
-      .ck-editor {
-        .ck-content {
-          padding: 1vw;
-        }
-      }
-    }
     .label-question-type {
       margin-left: 0.6vw;
       font-size: 1.4vw;
@@ -29,68 +22,6 @@
     }
   }
 
-  .document-editor {
-    .ck-toolbar {
-      .ck-toolbar__items {
-        height: 5vh;
-        background-color: var(--tab-gray) !important;
-        padding: 1vh 0.5vw;
-        .ck-icon {
-          font-size: 1.5vh;
-        }
-        .ck-button {
-          padding: 0;
-          margin: 0;
-          margin-left: 0.1vw;
-          margin-right: 0.1vw;
-          .ck-button__icon,
-          .ck-button__label {
-            color: var(--theme-dark-blue) !important;
-          }
-        }
-      }
-    }
-    .ck-toolbar_vertical {
-      border-radius: 0 !important;
-      .ck-toolbar__items {
-        height: auto;
-        width: 20vh;
-        flex-flow: row wrap;
-        .ck-button {
-          width: 5vh;
-          border-radius: 0;
-        }
-      }
-    }
-    .ck-dropdown__panel.ck-dropdown__panel_se.ck-dropdown__panel-visible {
-      height: auto;
-      width: auto;
-      background: var(--tab-gray);
-    }
-    .ck-dropdown.ck-toolbar-dropdown.ck-alignment-dropdown {
-      .ck-dropdown__panel.ck-dropdown__panel_se.ck-dropdown__panel-visible {
-        height: auto;
-        width: 100%;
-        .ck.ck-button {
-          margin-top: 0.3vw !important;
-        }
-      }
-    }
-
-    .ck-editor {
-      width: 100%;
-      .ck-content {
-        height: 70vh;
-        border-top: none !important;
-        border: 1px solid var(--ck-color-toolbar-border);
-        background-color: var(--solitude-light) !important;
-        padding: 0 0.5vw;
-        p {
-          text-align: left;
-        }
-      }
-    }
-  }
   .quill-document-editor {
     .ql-container {
       .ql-editor {
@@ -204,12 +135,5 @@
     .set-type-icon {
       font-size: 5vhx;
     }
-  }
-}
-
-.question-build-text-editor {
-  .ck.ck-button,
-  a.ck.ck-button {
-    padding: 0 !important;
   }
 }

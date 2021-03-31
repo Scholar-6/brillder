@@ -590,13 +590,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               .document-editor {
                 border-radius: 0 !important;
                 background: transparent !important;
-                .ck-editor {
-                  .ck-content {
-                    background: transparent !important;
-                    border-radius: 0 !important;
-                    padding: 0.5vw 0 !important;
-                  }
-                }
               }
             }
             &.review-content {
