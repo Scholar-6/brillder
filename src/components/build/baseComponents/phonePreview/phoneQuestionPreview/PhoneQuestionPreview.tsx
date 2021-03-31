@@ -27,19 +27,21 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ yquestion, ...props }) => {
   const [questionPreview] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const [question, setQuestion] = React.useState<Question>(toRenderJSON(yquestion));
 
-  const observer = React.useCallback(_.throttle(() => {
-    let newQuestion = toRenderJSON(yquestion);
-    setQuestion(newQuestion);
-  }, 500), []);
-
   React.useEffect(() => {
+    setQuestion(toRenderJSON(yquestion));
+
+    const observer = _.throttle(() => {
+      const newQuestion = toRenderJSON(yquestion);
+      setQuestion(newQuestion);
+    }, 500);
+  
     yquestion.observeDeep(observer);
 
     return () => {
       yquestion.unobserveDeep(observer);
     }
   /*eslint-disable-next-line*/
-  }, [yquestion])
+  }, [yquestion]);
 
   //#region Scroll
   const [canScroll, setScroll] = React.useState(false);

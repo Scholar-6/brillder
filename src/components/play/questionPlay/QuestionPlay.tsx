@@ -100,7 +100,6 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
     return true;
   }
 
-
   render() {
     const { question } = this.props;
     const renderUniqueComponent = (component: any, index: number) => {

@@ -22,6 +22,7 @@ import RedoButton from '../baseComponents/redoButton';
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
 
 import * as Y from "yjs";
+import { toRenderJSON } from 'services/SharedTypeService';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -66,9 +67,11 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
 
   const question = yquestion.getMap();
-  const type = question.get("type");
 
-  const typeArray: string[] = Object.keys(QuestionTypeObj);
+  // 3/31/2021 hidden not working with all quesiton types
+  //const type = question.get("type");
+  //const typeArray: string[] = Object.keys(QuestionTypeObj);
+
   const index = getQuestionIndex(yquestion);
 
   let showHelpArrow = false;
@@ -107,6 +110,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     }
   }
   //#endregion
+
 
   return (
       <div className={showHelpArrow ? "build-question-page unselectable" : "build-question-page unselectable active"} style={{ width: '100%', height: '94%' }}>
