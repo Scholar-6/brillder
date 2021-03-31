@@ -19,9 +19,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   background: var(--theme-dark-blue);
   min-height: 100%;
   .sorted-row {
-    .brick-row-container {
-      background-color: var(--white);
-    }
     .play-sidebar {
       text-align: right;
       $resize-icon-size: 2.7vw;
@@ -454,10 +451,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       }
     }
     .brick-row-container {
-      @include tabletP {
-        width: calc(82.85vw - 1vw);
-        transition: 700ms width;
-      }
+      background-color: var(--white);
+      width: calc(82.85vw - 1vw);
+      transition: 700ms width;
       .brick-container {
         .left-brick-circle {
           position: absolute;
@@ -486,9 +482,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           height: calc(100vh - 15.8vh);
           padding: 3vh 2vw 4vh 7vw;
           .title {
-            @include desktop {
-              font-size: 4vw;
-            }
+            font-size: 4vw;
           }
           p {
             font-size: $base-font-size !important;

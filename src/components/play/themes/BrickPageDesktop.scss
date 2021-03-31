@@ -23,9 +23,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   background: var(--theme-dark-blue);
   min-height: 100%;
   .sorted-row {
-    .brick-row-container {
-      background-color: var(--white);
-    }
     .play-sidebar {
       text-align: right;
       $resize-icon-size: 2.7vw;
@@ -458,10 +455,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       }
     }
     .brick-row-container {
-      @include tabletP {
-        width: calc(82.85vw - 1vw);
-        transition: 700ms width;
-      }
+      background-color: var(--white);
+      width: calc(82.85vw - 1vw);
+      transition: 700ms width;
       .brick-container {
         .left-brick-circle {
           position: absolute;
@@ -1249,6 +1245,19 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         width: calc(98vw - #{$home-button-size}) !important;
         height: $introduction-expanded-height !important;
       }
+      .introduction-page {
+        height: $introduction-expanded-height !important;
+        .question-live-play {
+          height: $introduction-expanded-height !important;
+        }
+      }
+      .introduction-info {
+        height: $introduction-expanded-height !important;
+      }
+      .intro-desktop-title {
+        font-size: 2vw !important;
+        max-width: 54.2vw;
+      }
       // #2781 new play live and review theme
       .live-container,
       .provisional-container,
@@ -1917,7 +1926,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         .italic {
           color: var(--theme-dark-blue);
           font-size: 1.8vw;
-        }        
+        }
       }
     }
   }
@@ -2112,7 +2121,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   display: flex;
   justify-content: center;
   width: 26.5vw !important;
-  
+
   .complete-container .introduction-info {
     padding-right: 10vw !important;
     .action-footer {
