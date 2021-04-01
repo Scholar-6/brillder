@@ -50,7 +50,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       isValid = true;
     }
     return (
-      <button className={`btn btn-md yes-button ${isValid ? 'bg-theme-orange' : 'b-dark-blue'}`}
+      <button className={`btn btn-md yes-button ${isValid ? 'bg-theme-orange' : 'b-dark-blue text-theme-light-blue'}`}
         onClick={() => {
           if (isValid && subjectIndex && subjects) {
             props.submit(value, subjects[subjectIndex]);
