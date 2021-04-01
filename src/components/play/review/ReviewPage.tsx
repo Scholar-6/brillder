@@ -355,7 +355,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
           <Hidden only={["sm", "md", "lg", "xl"]}>
             <div className="intro-header">
               <div className="intro-text-row">
-                <span className="phone-stepper-head"><span className="bold">{brick.subject?.name}</span> {brick.title}</span>
+                <span className="phone-stepper-head"><span className="bold">{brick.subject?.name}</span> <span className="q-brick-title" dangerouslySetInnerHTML={{__html: brick.title}}/></span>
                 <ReviewStepper
                   questions={questions}
                   attempts={attempts}
