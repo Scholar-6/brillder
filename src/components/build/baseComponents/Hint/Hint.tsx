@@ -43,9 +43,12 @@ export interface HintProps {
 const HintComponent: React.FC<HintProps> = ({
   index, locked, editOnly, validationRequired, ...props
 }) => {
+  const [, forceUpdate] = React.useReducer(x => x + 1, 0);
+
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
     if (locked) { return; }
     props.hint.set("status", status);
+    forceUpdate();
   };
 
   const renderHintInputs = () => {
