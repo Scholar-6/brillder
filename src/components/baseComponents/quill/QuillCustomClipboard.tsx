@@ -17,7 +17,6 @@ class QuillCustomClipboard extends Clipboard {
             this.onPasteImage?.(node, delta);
             return new Delta();
         });
-        console.log(this.matchers);
     }
 
     constructor(quill: Quill, options: any) {
