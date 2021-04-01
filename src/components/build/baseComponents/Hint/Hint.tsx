@@ -43,9 +43,12 @@ export interface HintProps {
 const HintComponent: React.FC<HintProps> = ({
   index, locked, editOnly, validationRequired, ...props
 }) => {
+  const [, forceUpdate] = React.useReducer(x => x + 1, 0);
+
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
     if (locked) { return; }
     props.hint.set("status", status);
+    forceUpdate();
   };
 
   const renderHintInputs = () => {
@@ -85,7 +88,7 @@ const HintComponent: React.FC<HintProps> = ({
     for (let i = 0; i < props.count; i++) {
       answerHints.push(
         <div className="hint-container" key={i}>
-          <div className="hint-container-label">Answer {i}</div>
+          <div className="hint-container-label">Answer {i+1}</div>
           <QuillEditor
             disabled={locked}
             sharedData={props.hint.get("list").get(i)}

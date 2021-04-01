@@ -144,7 +144,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
             setImageModule(editor.getModule("imageupload") as ImageUpload);
             setClipboardModule(editor.getModule("clipboard") as QuillCustomClipboard);
             editor.on("editor-change", () => {
-                const clipboard = editor.getModule("clipboard")
+                const clipboard = editor.getModule("clipboard");
                 if (clipboardModule !== clipboard) {
                     setClipboardModule(clipboard);
                 }
