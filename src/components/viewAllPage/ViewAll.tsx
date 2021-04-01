@@ -769,7 +769,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           <CreateOneButton onClick={this.moveToCreateOne.bind(this)} />
           <RecommendButton />
         </div>
-        <div className="no-found-help-text">Try one of the following:</div>
+        <div className="no-found-help-text">Try three of the following:</div>
         <SubjectsColumn
           subjects={subjects}
           viewAll={this.viewAll.bind(this)}
