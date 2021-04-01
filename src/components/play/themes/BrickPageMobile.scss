@@ -95,7 +95,7 @@ $play-footer-height: 75px;
         .sidebar-button {
           font-family: $font-family-bold !important;
           width: 100%;
-          font-size: 1.6vw;
+          font-size: $base-popup-font-size;
           @extend %flexCenter;
           flex-direction: column;
           span,
@@ -149,7 +149,7 @@ $play-footer-height: 75px;
             border-radius: $editor-radius;
             width: 80%;
             height: 3.5vw;
-            font-size: 1.6vw;
+            font-size: $base-popup-font-size;
             font-family: $font-family-bold;
             @extend %flexCenter;
             @extend %transitionAll300;

@@ -247,7 +247,7 @@
     bottom: 2.4vh;
     line-height: 2vw;
     right: 10vw;
-    font-size: 1.6vw;
+    font-size: $base-popup-font-size;
     span:hover {
       color: var(--theme-orange) !important;
     }
