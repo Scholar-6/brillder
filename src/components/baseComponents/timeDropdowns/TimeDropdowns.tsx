@@ -13,6 +13,7 @@ interface State {
   years: number[];
 
   startDate: Date;
+  startMonth: number;
 
   year: number;
   month: number;
@@ -23,13 +24,12 @@ class TimeDropdowns extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
 
-    const startDate = new Date(2021, 3, 8);
+    const startDate = new Date();
+    const startMonth = startDate.getMonth();
+    const startDay = startDate.getDate();
 
     const start = startDate.getFullYear();
     const end = start + 4; 
-
-    const startMonth = startDate.getMonth();
-    const startDay = startDate.getDate();
 
     const years = [];
     for (let i = start; i <= end; i++) {
@@ -44,6 +44,7 @@ class TimeDropdowns extends React.Component<Props, State> {
       days,
       months,
       years,
+      startMonth,
       startDate,
       year: start,
       month: months[0],
@@ -83,26 +84,29 @@ class TimeDropdowns extends React.Component<Props, State> {
     this.onChange(this.state.year, this.state.month, newDay);
   }
 
-  setMonth(newMonth: number) {
+  getStartDay(year: number, month: number) {
     let startDay = 0;
-    if (this.state.year === this.state.years[0]) {
+    if (year === this.state.years[0] && month === this.state.startMonth + 1) {
       startDay = this.state.startDate.getDate();
     }
+    return startDay;
+  }
+
+  setMonth(newMonth: number) {
+    const startDay = this.getStartDay(this.state.year, newMonth);
     const days = this.getDays(newMonth, this.state.year, startDay);
     this.setState({days, month: newMonth});
     this.onChange(this.state.year, newMonth, this.state.day);
   }
 
   setYear(newYear: number) {
-    let startDay = 0;
-    if (newYear === this.state.years[0]) {
-      startDay = this.state.startDate.getDate();
-    }
+    const startDay = this.getStartDay(newYear, this.state.month);
     const days = this.getDays(this.state.month, newYear, startDay);
-    let months = this.getMonths(0);
+    let startMonth = 0;
     if (newYear === this.state.years[0]) {
-      months = this.getMonths(this.state.startDate.getMonth());
+      startMonth = this.state.startMonth;
     }
+    const months = this.getMonths(startMonth);
     this.setState({days, year: newYear, months});
     this.onChange(newYear, this.state.month, this.state.day);
   }
