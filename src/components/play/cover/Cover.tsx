@@ -12,6 +12,7 @@ import { User } from "model/user";
 import { checkPublisher } from "components/services/brickService";
 import { setBrickCover } from "services/axios/brick";
 import { ImageCoverData } from "./model";
+import { isPhone } from "services/phone";
 
 interface IntroductionProps {
   user: User;
@@ -94,6 +95,36 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     );
   }
 
+  if (isPhone()) {
+    return (
+      <div className="cover-page">
+        {renderFirstRow()}
+        <div className="brick-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
+        <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
+        <div className="keywords-row">
+          <KeyWordsPreview keywords={brick.keywords} />
+        </div>
+        <div className="image-container centered">
+          <Image
+            locked={!isPublisher}
+            index={0}
+            data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
+            save={updateCover}
+            onFocus={() => { }}
+          />
+          <div className="cover-info-row">
+            {renderBrickCircle()}
+            {brick.subject?.name}, Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
+            <SpriteIcon name="help-circle-custom" />
+          </div>
+        </div>
+        <div className="introduction-info">
+          {renderPlayButton()}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="brick-row-container cover-page">
       <div className="brick-container">
@@ -101,7 +132,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <Grid item sm={8} xs={12}>
             <div className="introduction-page">
               {renderFirstRow()}
-              <div className="brick-title q-brick-title" dangerouslySetInnerHTML={{__html: brick.title}} />
+              <div className="brick-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
               <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
               <div className="keywords-row">
                 <KeyWordsPreview keywords={brick.keywords} />
