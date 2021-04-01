@@ -195,7 +195,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="" />
         <button
           type="button"
-          className="play-preview svgOnHover roller-red m-b-10"
+          className="play-preview svgOnHover roller-red m-b-02"
           onClick={() => {
             history.push(map.ViewAllPage)
             return props.moveToPostPlay;

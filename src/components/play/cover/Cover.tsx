@@ -72,7 +72,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <div className="first-row">
         <div className="brick-id-container">Brick #{brick.id}</div>
         <div className="question">What is a brick?</div>
-        <SpriteIcon name="help-circle-custom" />
+        <div className="hover-area">
+          <SpriteIcon name="help-circle-custom" />
+          {/*<div className="hover-content">
+          </div>*/}
+        </div>
       </div>
     );
   };

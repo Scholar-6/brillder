@@ -324,7 +324,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             {renderBrickCircle(color)}
           </div>
           <div className="r-title-container">
-            <h1>{brick.title}</h1>
+            <h1 className="q-brick-title" dangerouslySetInnerHTML={{__html: brick.title}} />
             <p><PrepareText brickLength={brick.brickLength} /></p>
           </div>
         </div>
