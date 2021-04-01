@@ -198,7 +198,7 @@
       }
     }
     .r-radio-buttons {
-      margin-top: 1vw;
+      margin-top: 0;
       .MuiTypography-root {
         font-size: 1.3vw;
       }
@@ -306,7 +306,7 @@
 
         > div {
           @extend %textCenter;
-          margin-bottom: 4.5vh;
+          margin-bottom: 1vh;
           width: 30vw;
         }
 
