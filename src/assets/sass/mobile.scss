@@ -162,3 +162,17 @@
     padding: 2vw;
   }
 }
+
+// brick title
+.q-brick-title {
+  @extend %ellipsis;
+  div {
+    display: inline;
+  }
+  p {
+    display: inline;
+  }
+  br {
+    display: none;
+  }
+}
