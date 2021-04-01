@@ -3,6 +3,8 @@ import { DeltaStatic } from "quill";
 import Delta from "quill-delta";
 import { Quill } from "react-quill";
 import { ImageAlign } from "components/build/buildQuestions/components/Image/model";
+import axios from "axios";
+import React from "react";
 
 const ImageBlot = Quill.import('formats/image');
 export class CustomImageBlot extends ImageBlot {
@@ -86,7 +88,18 @@ export default class ImageUpload {
             if(oldLeaf instanceof CustomImageBlot) {
                 leaf.domNode.onclick = null;
             }
-        })
+        });
+    }
+
+    onImagePaste(node: any, delta: Delta) {
+        console.log("h");
+        console.log(node);
+        if(!node.src) return;
+        axios.get(node.src, { responseType: "blob" }).then((response) => {
+            const file = new File([response.data as Blob], "imageFile");
+            this.imageSelected([file]);
+        });
+        return new Delta();
     }
 
     uploadHandler(toolbarNode: any) {
@@ -109,6 +122,7 @@ export default class ImageUpload {
 
     imageSelected(files: File[]) {
         if(files.length >= 1) {
+            console.log(this.openDialog);
             this.openDialog(files[0]);
         }
     }

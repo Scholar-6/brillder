@@ -97,7 +97,6 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
       <div className="component-title">Tick Correct Answer</div>
       {
         list.map((answer: Y.Map<any>, i: number) => {
-          console.log(hovered);
           return <ChooseOneAnswerComponent
             key={answer.get("id")}
             locked={locked}

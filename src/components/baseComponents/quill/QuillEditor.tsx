@@ -1,4 +1,4 @@
-import { Delta, Sources } from "quill";
+import { Sources, Delta } from "quill";
 import React from "react";
 import ReactQuill, { Quill } from "react-quill"; 
 import { QuillBinding } from "y-quill";
@@ -11,6 +11,7 @@ import * as Y from "yjs";
 import "./QuillLatex";
 import "./QuillAutoLink";
 import "./QuillMediaEmbed";
+import "./QuillCustomClipboard";
 import "./QuillImageUpload";
 import "./QuillCursors";
 import { YJSContext } from "components/build/baseComponents/YJSProvider";
@@ -18,6 +19,7 @@ import ImageDialog from "components/build/buildQuestions/components/Image/ImageD
 import ImageUpload from "./QuillImageUpload";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
+import QuillCustomClipboard from "./QuillCustomClipboard";
 
 function randomEditorId() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -53,7 +55,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         []
     );
 
-    const onChange = (content: string, delta: Delta, source: Sources) => {
+    const onChange = (content: string, delta: any, source: Sources) => {
         if(!props.sharedData) setData(content);
         callOnChange(content, delta, source);
     }
@@ -74,7 +76,14 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 setImageDialogOpen(true);
             }
         }
-    }, [imageModule])
+    }, [imageModule]);
+
+    const [clipboardModule, setClipboardModule] = React.useState<QuillCustomClipboard>();
+    React.useEffect(() => {
+        if(imageModule && clipboardModule) {
+            clipboardModule.onPasteImage = imageModule.onImagePaste.bind(imageModule);
+        }
+    }, [imageModule, clipboardModule]);
 
     const context = React.useContext(YJSContext);
     const awareness = context?.awareness;
@@ -95,6 +104,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         autolink: props.allowLinks,
         mediaembed: props.allowMediaEmbed,
         imageupload: props.imageDialog,
+        clipboard: true,
         cursors: {
             hideDelayMs: 500,
         },
@@ -132,6 +142,13 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
             const editor = node.getEditor();
             new QuillBinding(props.sharedData, editor, awareness);
             setImageModule(editor.getModule("imageupload") as ImageUpload);
+            setClipboardModule(editor.getModule("clipboard") as QuillCustomClipboard);
+            editor.on("editor-change", () => {
+                const clipboard = editor.getModule("clipboard")
+                if (clipboardModule !== clipboard) {
+                    setClipboardModule(clipboard);
+                }
+            });
             if(quill !== editor) {
                 setQuill(editor);
             }
