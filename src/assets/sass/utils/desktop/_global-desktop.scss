@@ -367,7 +367,13 @@ h3 {
       }
     }
   }
-  .MuiTypography-body1 {
+  .MuiButtonBase-root {
+    svg {
+      width: 1.4vw;
+      height: 1.4vw;
+    }
+  }
+  .MuiTypography-root {
     font-size: 1.2vw;
   }
 }
