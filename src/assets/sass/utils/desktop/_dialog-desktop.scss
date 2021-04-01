@@ -318,7 +318,7 @@
         input {
           padding: 1.5vh 1.8vw;
           text-transform: capitalize;
-          font-size: 1.6vw;
+          font-size: $base-popup-font-size;
           width: calc(100% - 1.8vw - 1.8vw);
           color: var(--theme-dark-blue);
         }
@@ -331,7 +331,7 @@
           width: 100% !important;
         }
         input {
-          font-size: 7vw !important;
+          font-size: $base-popup-font-size !important;
         }
         .MuiAutocomplete-root .MuiChip-label {
           font-size: 6vw !important;
@@ -348,11 +348,11 @@
           padding-bottom: 0 !important;
         }
         .label {
-          font-size: 7vw !important;
+          font-size: $base-popup-font-size !important;
         }
         .svg {
-          width: 7vw;
-          height: 7vw;
+          width: 2vw;
+          height: 2vw;
         }
       }
     }

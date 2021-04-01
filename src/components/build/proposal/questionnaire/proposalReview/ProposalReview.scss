@@ -132,7 +132,7 @@
         width: 6.8vw;
         margin-left: 6vw;
         margin-right: 3vw;
-        font-size: 1.6vw;
+        font-size: $base-popup-font-size;
         @extend %transitionAll150;
         svg {
           @extend %transitionAll150;

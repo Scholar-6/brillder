@@ -5,7 +5,7 @@
 .link-copied-dialog {
   .italic .MuiTypography-root {
     font-family: $font-family-regular-italic !important;
-    font-size: 1.6vw !important;
+    font-size: $base-popup-font-size !important;
   }
   .bold .MuiTypography-root {
     font-family: $font-family-bold !important;

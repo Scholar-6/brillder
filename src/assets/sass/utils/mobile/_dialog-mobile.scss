@@ -277,7 +277,7 @@
         input {
           padding: 1.5vh 1.8vw;
           text-transform: capitalize;
-          font-size: 1.6vw;
+          font-size: $base-popup-font-size;
           width: calc(100% - 1.8vw - 1.8vw);
           color: var(--theme-dark-blue);
         }
