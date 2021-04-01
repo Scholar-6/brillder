@@ -20,7 +20,7 @@ interface AssignClassProps {
 
 const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   const [value, setValue] = React.useState("");
-  const [subjectIndex, setSubjectIndex] = React.useState<number>();
+  const [subjectIndex, setSubjectIndex] = React.useState<number>(0);
 
   const [subjects, setSubjects] = React.useState<Subject[]>();
   React.useEffect(() => {
