@@ -10,5 +10,9 @@ export function setBrillderTitle(brickTitle?: string) {
       title = "dev-" + title;
     }
   }
-  document.title = title;
+
+  // title is html string. this is to get text from html
+  let element = document.createElement("div");
+  element.innerHTML = title;
+  document.title = element.innerText;
 }
