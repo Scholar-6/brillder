@@ -4,7 +4,7 @@ import { Subject } from 'model/brick';
 import { InputBase, ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
 import { connect } from 'react-redux';
 
-import './CreateClassDialog.scss';
+// import './CreateClassDialog.scss';
 import { loadSubjects } from 'components/services/subject';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { User, UserType } from 'model/user';

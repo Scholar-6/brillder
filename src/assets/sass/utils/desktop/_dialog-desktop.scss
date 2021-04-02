@@ -12,6 +12,7 @@
       border-radius: 0.8vw;
     }
   }
+
   .MuiInputBase-root {
     background: white !important;
     box-shadow: none !important;
@@ -39,8 +40,9 @@
   .dialog-header {
     letter-spacing: 0;
     color: var(--theme-dark-blue);
+    font-family: $font-family-regular !important;
     margin-bottom: 1vw;
-    font-size: 1.5vw;
+    font-size: 2vw;
     svg {
       margin-left: 0.3vw;
       margin-right: 0.3vw;
@@ -49,7 +51,7 @@
     }
     .MuiListItemText-primary {
       font-family: $font-family-regular;
-      font-size: 1.8vw;
+      font-size: 2vw;
       margin-right: 1vw;
     }
     .link {
@@ -60,7 +62,6 @@
     }
     .title {
       font-family: $font-family-bold;
-      width: auto !important;
       margin-bottom: 3vh !important;
       &.smaller {
         margin-bottom: 1.5vh !important;
@@ -89,6 +90,7 @@
       height: $circle-size;
       width: $circle-size;
       background: var(--theme-green);
+
       svg {
         $icon-size: 2.3vw;
         height: $icon-size;
@@ -179,6 +181,8 @@
         font-family: $font-family-regular;
       }
     }
+    .dropzone-instructions--sub {
+    }
     .r-popup-title {
       font-size: 2vw;
     }
@@ -198,7 +202,7 @@
       }
     }
     .r-radio-buttons {
-      margin-top: 0;
+      margin-top: 1vw;
       .MuiTypography-root {
         font-size: 1.3vw;
       }
@@ -224,12 +228,12 @@
     .btn {
       width: 100%;
       // margin: 0 0.5vw;
+      font-family: $font-family-regular !important;
       white-space: nowrap;
       padding-top: 1.5vh;
-      letter-spacing: 0 !important;
       padding-bottom: 1.5vh;
-      font-size: 1.5vw;
-      margin-left: 1.5vw;
+      font-size: 2vw;
+      margin-left: 3vw;
       &:first-child,
       &:only-child {
         margin-left: 0;
@@ -263,14 +267,8 @@
       stroke-width: 3;
       color: var(--white);
       @extend %transitionAll300;
-      @include phone_and_tabletP {
-        height: 8vw !important;
-        width: 8vw !important;
-      }
-      @include tabletP {
-        height: 1.5vw !important;
-        width: 1.5vw !important;
-      }
+      height: 1.5vw !important;
+      width: 1.5vw !important;
     }
     &:hover {
       .svg {
@@ -300,41 +298,37 @@
     .MuiDialog-paper {
       background: var(--theme-light-blue);
       color: white;
-      .dialog-header {
-        margin-bottom: 0;
-        color: inherit;
-
-        > div {
-          @extend %textCenter;
-          margin-bottom: 1vh;
-          width: 30vw;
-        }
-
-        input {
-          background: white;
-          border-radius: 0.5vw;
-        }
-
-        input {
-          padding: 1.5vh 1.8vw;
-          text-transform: capitalize;
-          font-size: $base-popup-font-size;
-          width: calc(100% - 1.8vw - 1.8vw);
-          color: var(--theme-dark-blue);
-        }
+    }
+    .dialog-header {
+      margin-bottom: 0;
+      color: inherit;
+      > div {
+        width: 100% !important;
+        @extend %textCenter;
+        margin: 0 auto 4.5vh auto !important;
+      }
+      input {
+        background: white;
+        border-radius: 0.5vw;
+      }
+      input {
+        padding: 1.5vh 1.8vw;
+        text-transform: capitalize;
+        font-size: $base-popup-font-size;
+        width: calc(100% - 1.8vw - 1.8vw);
+        color: var(--theme-dark-blue);
       }
     }
     // assign brick to class or student dialog styles
     &.assign-dialog {
       .dialog-header {
-        > div {
-          width: 100% !important;
-        }
         input {
-          font-size: $base-popup-font-size !important;
+          font-size: 2vw !important;
         }
-        .MuiAutocomplete-root .MuiChip-label {
-          font-size: 1.6vw !important;
+        .MuiAutocomplete-root {
+          .MuiChip-label {
+            font-size: 2vw !important;
+          }
         }
         .MuiSvgIcon-root.MuiChip-deleteIcon {
           width: 2vw !important;
@@ -348,7 +342,7 @@
           padding-bottom: 0 !important;
         }
         .label {
-          font-size: $base-popup-font-size !important;
+          font-size: 2vw !important;
         }
         .svg {
           width: 2vw;
@@ -356,13 +350,43 @@
         }
       }
     }
+    &.unlimited {
+      .close-button {
+        svg {
+          color: var(--theme-orange);
+        }
+      }
+      .title {
+        font-size: 2vw;
+      }
+      .social-share-row {
+        svg {
+          height: 3.4vw;
+          margin-left: 2vw;
+          margin-right: 2vw;
+          width: 3.4vw;
+        }
+        .custom-tooltip {
+          display: none;
+        }
+      }
+      .link {
+        margin-left: 0;
+        margin-right: 0;
+        font-size: 3.8vw;
+      }
+      .dialog-footer {
+        .btn {
+          padding-left: 9vw;
+          padding-right: 9vw;
+          background: var(--theme-orange) !important;
+        }
+      }
+    }
   }
   &.unlimited {
     .MuiDialog-paperWidthSm {
       max-width: none !important;
-      .dialog-header > div {
-        width: auto;
-      }
     }
     .title {
       color: var(--tab-gray);
@@ -425,8 +449,89 @@
       }
     }
   }
-}
+  &.link-copied-dialog {
+    .MuiListItem-root.MuiListItem-gutters {
+      padding-top: 0 !important;
+    }
+    .MuiListItem-root.MuiListItem-gutters:first-child {
+      $top: 24vw;
+      margin-top: $top;
+      padding-bottom: 0 !important;
+      position: relative;
+      .MuiListItemAvatar-root {
+        position: absolute;
+        top: -21vw;
+        left: calc(50% - 10vw);
+        .MuiAvatar-root {
+          width: 18vw;
+          height: 18vw;
+          svg {
+            width: 10vw;
+            height: 10vw;
+          }
+        }
+      }
+    }
+    .MuiTypography-root.MuiListItemText-primary {
+      font-size: 6vw !important;
+    }
+  }
+  &.create-classroom-dialog {
+    .dialog-select-container {
+      margin-bottom: 2vh !important;
 
-.MuiDialog-paperWidthSm {
-  max-width: none !important;
+      .MuiSelect-select {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      svg {
+        width: 1.8vw !important;
+        height: 1.8vw !important;
+      }
+
+      .MuiInputBase-root {
+        margin-bottom: 0 !important;
+      }
+
+      .MuiListItemText-root {
+        display: inline-flex;
+        margin: 0 !important;
+        flex: none !important;
+      }
+    }
+    .dialog-select-container {
+      .MuiInputBase-root {
+        border-radius: 0.5vw;
+        margin-bottom: 0 !important;
+
+        .MuiSelect-root {
+          padding: 1.5vh 0 !important;
+          min-height: calc(2.97vw) !important;
+        }
+
+        .MuiListItemText-root {
+          display: inline-flex;
+          margin: 0 !important;
+          color: var(--theme-dark-blue);
+        }
+      }
+    }
+    input {
+      line-height: 1.87 !important;
+      font-size: 1.8vw !important;
+    }
+    .MuiSelect-root.MuiSelect-select {
+      width: 100% !important;
+      padding-left: 0 !important;
+      padding-right: 2vw !important;
+    }
+    .title {
+      font-size: 2vw;
+    }
+    .dialog-footer .btn {
+      font-size: $base-popup-font-size;
+    }
+  }
 }
