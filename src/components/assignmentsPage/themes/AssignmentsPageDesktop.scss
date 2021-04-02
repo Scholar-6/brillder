@@ -1,6 +1,15 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.student-assignments-page {
+  .index-box:hover {
+    background: var(--light-blue-alpha3) !important;
+  }
+  .index-box.active:hover {
+    background: var(--theme-orange) !important;
+  }
+}
 
 .student-assignments-page {
   .left-brick-circle.brick-status-circle.skip-top-right-border {

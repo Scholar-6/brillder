@@ -330,14 +330,16 @@
           width: 100% !important;
         }
         input {
-          font-size: 7vw !important;
+          font-size: 2vw !important;
         }
-        .MuiAutocomplete-root .MuiChip-label {
-          font-size: 6vw !important;
+        .MuiAutocomplete-root {
+          .MuiChip-label {
+            font-size: 2vw !important;
+          }
         }
         .MuiSvgIcon-root.MuiChip-deleteIcon {
-          width: 7vw !important;
-          height: 7vw !important;
+          width: 2vw !important;
+          height: 2vw !important;
           margin-right: 1vw;
         }
       }
@@ -347,11 +349,47 @@
           padding-bottom: 0 !important;
         }
         .label {
-          font-size: 7vw !important;
+          font-size: 2vw !important;
         }
         .svg {
-          width: 7vw;
-          height: 7vw;
+          width: 2vw;
+          height: 2vw;
+        }
+      }
+    }
+    &.unlimited {
+      .close-button {
+        top: 4vw;
+        right: 4vw;
+        svg {
+          color: var(--theme-orange);
+        }
+      }
+      .title {
+        margin-top: 5vw;
+        font-size: 7vw;
+      }
+      .social-share-row {
+        svg {
+          height: 10vw;
+          margin-left: 5vw;
+          margin-right: 5vw;
+          width: 10vw;
+        }
+        .custom-tooltip {
+          display: none;
+        }
+      }
+      .link {
+        margin-left: 0;
+        margin-right: 0;
+        font-size: 3.8vw;
+      }
+      .dialog-footer {
+        .btn {
+          padding-left: 9vw;
+          padding-right: 9vw;
+          background: var(--theme-orange) !important;
         }
       }
     }
@@ -422,6 +460,33 @@
           padding: 1vw;
         }
       }
+    }
+  }
+  &.link-copied-dialog {
+    .MuiListItem-root.MuiListItem-gutters {
+      padding-top: 0 !important;
+    }
+    .MuiListItem-root.MuiListItem-gutters:first-child {
+      $top: 24vw;
+      margin-top: $top;
+      padding-bottom: 0 !important;
+      position: relative;
+      .MuiListItemAvatar-root {
+        position: absolute;
+        top: -21vw;
+        left: calc(50% - 10vw);
+        .MuiAvatar-root {
+          width: 18vw;
+          height: 18vw;
+          svg {
+            width: 10vw;
+            height: 10vw;
+          }
+        }
+      }
+    }
+    .MuiTypography-root.MuiListItemText-primary {
+      font-size: 6vw !important;
     }
   }
 }

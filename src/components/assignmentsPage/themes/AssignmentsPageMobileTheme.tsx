@@ -1,5 +1,5 @@
 import React from 'react';
-import './AssignmentsMobilePage.scss';
+import './AssignmentsPageMobile.scss';
 
 const Theme = () => (<React.Fragment></React.Fragment>);
 

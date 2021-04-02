@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { ReduxCombinedState } from "redux/reducers";
 
-import './AssignmentsPage.scss';
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import PlayPage from './components/play/PlayPage';
-import { isMobile } from "react-device-detect";
 
 interface AssignmentState {
   searchString: string;
@@ -23,9 +22,9 @@ export interface AssignmentProps {
   forgetBrick(): void;
 }
 
-const MobileTheme = React.lazy(() => import('./themes/AssignmentsMobilePage'));
-const DesktopTheme = React.lazy(() => import('./themes/AssignmentsDesktopPage'));
-
+const MobileTheme = React.lazy(() => import('./themes/AssignmentsPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/AssignmentsPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/AssignmentsPageDesktopTheme'));
 
 class BackToWorkPage extends Component<AssignmentProps, AssignmentState> {
   constructor(props: AssignmentProps) {
@@ -59,7 +58,7 @@ class BackToWorkPage extends Component<AssignmentProps, AssignmentState> {
   render() {
     return (
       <React.Suspense fallback={<></>}>
-        {isMobile ? <MobileTheme /> : <DesktopTheme />}
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
         <div className="main-listing student-assignments-page">
           <PageHeadWithMenu
             page={PageEnum.BackToWork}
