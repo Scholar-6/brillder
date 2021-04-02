@@ -203,7 +203,7 @@ h3 {
   @extend %textCenter;
   text-transform: none !important;
   width: 100%;
-  border-radius: 0.6vw !important;
+  border-radius: $editor-radius !important;
   background-color: var(--tab-gray) !important;
   opacity: 1;
   @include phone_and_tabletP {
@@ -367,6 +367,15 @@ h3 {
       }
     }
   }
+  .MuiButtonBase-root {
+    svg {
+      width: 1.4vw;
+      height: 1.4vw;
+    }
+  }
+  .MuiTypography-root {
+    font-size: 1.2vw;
+  }
 }
 
 .blue-page {
@@ -401,9 +410,56 @@ h3 {
   text-transform: unset !important;
 }
 
-.MuiInputBase-input::placeholder {
-}
 
 .inline {
   display: inline;
+}
+
+.short-answer-input {
+  .quill-document-editor {
+    min-height: 5vw;
+    border-bottom-right-radius: 0;
+  }
+  .ql-custom-toolbar {
+    display: flex;
+    align-items: center;
+    height: 100% !important;
+    position: absolute !important;
+    width: 10%;
+    left: 90%;
+    z-index: 10001;
+  }
+  .quill {
+    width: 90%;
+    height: 100%;
+    .ql-editor {
+      border-top-left-radius: $editor-radius;
+      min-height: 5vw;
+    }
+  }
+}
+
+.phone-question-preview {
+  .short-answer-input {
+    .quill-document-editor {
+      min-height: 5vw;
+      border-bottom-right-radius: 0;
+    }
+    .ql-custom-toolbar {
+      display: flex;
+      align-items: center;
+      height: 100% !important;
+      width: 20%;
+      left: 80%;
+      z-index: 10001;
+    }
+    .quill {
+      width: 80%;
+      height: 100%;
+      .ql-editor {
+        border-top-left-radius: $editor-radius;
+        min-height: 5vw;
+      }
+    }
+  }
 }

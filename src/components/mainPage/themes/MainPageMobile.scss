@@ -160,6 +160,11 @@
     border-top-left-radius: 6vw;
     z-index: 1;
     padding-top: 1.1vw;
+
+    &.menu-expanded {
+      border-top-left-radius: 0;
+      width: 58vw !important;
+    }
     .more-button {
       margin-right: 4vw;
     }
@@ -182,10 +187,6 @@
         margin: auto;
       }
     }
-  }
-  .menu-expanded {
-    border-top-left-radius: 0;
-    width: 45vw !important;
   }
   .notification-expanded {
     border-top-left-radius: 0;
@@ -255,6 +256,7 @@
         }
 
         .view-item-container {
+          margin-top: 90px;
           .svg {
             width: 230px;
             height: 100px;

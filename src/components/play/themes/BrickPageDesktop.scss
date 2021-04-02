@@ -131,7 +131,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         .sidebar-button {
           font-family: $font-family-bold !important;
           width: 100%;
-          font-size: 1.6vw;
+          font-size: $base-popup-font-size;
           @extend %flexCenter;
           flex-direction: column;
           span,
@@ -184,7 +184,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             border-radius: $editor-radius;
             width: 80%;
             height: 3.5vw;
-            font-size: 1.6vw;
+            font-size: $base-popup-font-size;
             font-family: $font-family-bold;
             @extend %flexCenter;
             @extend %transitionAll300;
@@ -299,7 +299,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         .sidebar-button {
           font-family: $font-family-bold !important;
           width: 100%;
-          font-size: 1.6vw;
+          font-size: $base-popup-font-size;
           @extend %flexCenter;
           flex-direction: column;
           span,
@@ -353,7 +353,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             border-radius: $editor-radius;
             width: 80%;
             height: 3.5vw;
-            font-size: 1.6vw;
+            font-size: $base-popup-font-size;
             font-family: $font-family-bold;
             @extend %flexCenter;
             @extend %transitionAll300;
@@ -1215,7 +1215,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
           }
           .introduction-info {
-            font-size: 1.6vw;
+            font-size: $base-popup-font-size;
             .c-next-btn-container {
               margin-top: 4vh;
               display: flex;
@@ -1235,6 +1235,24 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               }
             }
           }
+        }
+        .hover-area {
+          position: relative;
+          .hover-content {
+            display: none;
+          }
+        }
+        .hover-area:hover .hover-content {
+          width: 30vw;
+          z-index: 100000;
+          display: block;
+          position: absolute;
+          top: 3vw;
+          left: 0;
+          color: var(--white);
+          border-radius: 0.2vw;
+          padding: 0.2vw 0.5vw;
+          background: var(--theme-light-blue);
         }
       }
     }

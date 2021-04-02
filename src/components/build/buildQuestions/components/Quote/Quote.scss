@@ -8,7 +8,8 @@
     .ql-container {
       width: 100% !important;
       .ql-editor {
-        margin-top: 3vh;
+        border-bottom-left-radius: $editor-radius;
+        border-bottom-right-radius: $editor-radius;
         padding: 1vw;
         text-align: left;
         background-color: var(--tab-gray);
@@ -25,16 +26,14 @@
   }
 
   .text-label-container {
-    margin: 0 30%;
+    width: 100%;
+    text-align: center;
+    border-top-left-radius: $editor-radius;
+    border-top-right-radius: $editor-radius;
+    background: var(--tab-gray);
 
-    .text-label {
-      color: var(--theme-dark-blue);
-      width: 40%;
-      position: absolute;
-      top: 0;
-      z-index: 1;
-      height: 3vh;
-      font-size: 1.1vw;
-    }
+    color: var(--theme-dark-blue);
+    font-size: 1.3vw;
+    font-family: $font-family-bold;
   }
 }

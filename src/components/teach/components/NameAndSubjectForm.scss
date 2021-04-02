@@ -97,7 +97,7 @@
     background: var(--off-white);
     color: var(--theme-dark-blue) !important;
     margin-left: 1vw;
-    border-radius: 0.6vw;
+    border-radius: $editor-radius;
 
     .svg {
       width: 1.8vw !important;

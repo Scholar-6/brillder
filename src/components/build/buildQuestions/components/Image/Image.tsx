@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Y from "yjs";
 import { Grid } from '@material-ui/core';
+import _ from "lodash";
 
 import './Image.scss'
 import {fileUrl, uploadFile} from 'components/services/uploadFile';
@@ -35,18 +36,17 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
     }
   }, [props]);
 
-  const upload = (file: File, source: string, caption: string, align: ImageAlign, height: number) => {
-    uploadFile(file, (res: any) => {
-      props.data.set("value", res.data.fileName);
-      props.data.set("imageSource", source);
-      props.data.set("imageCaption", caption);
-      props.data.set("imageAlign", align);
-      props.data.set("imageHeight", height);
-      props.data.set("imagePermision", true);
-      setFileName(props.data.get("value"));
-      setOpen(false);
-    }, () => { });
-  }
+  // observe for incoming changes
+  useEffect(() => {
+    const observer = _.throttle((evt: any) => {
+      const newValue = props.data.get("value");
+      setFileName(newValue);
+    }, 200);
+
+    props.data.observe(observer);
+    return () => { props.data.unobserve(observer) }
+  // eslint-disable-next-line
+  }, []);
 
   const updateData = (source: string, caption: string, align: ImageAlign, height: number) => {
     props.data.set("imageSource", source);
@@ -55,6 +55,15 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
     props.data.set("imageHeight", height);
     props.data.set("imagePermision", true);
     setOpen(false);
+  }
+
+  const upload = (file: File, source: string, caption: string, align: ImageAlign, height: number) => {
+    uploadFile(file, (res: any) => {
+      updateData(source, caption, align, height);
+      props.data.set("value", res.data.fileName);
+      setFileName(props.data.get("value"));
+      setOpen(false);
+    }, () => { });
   }
 
   let className = 'dropzone';

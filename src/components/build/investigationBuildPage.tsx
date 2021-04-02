@@ -151,7 +151,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   if (currentQuestionIndex !== -1) {
     activeQuestion = questions.get(currentQuestionIndex);
     if (activeQuestion) {
-      questions.map((q: Y.Doc) => q.load());
+      questions.forEach((q: Y.Doc) => {
+        q.clientID = ydoc.clientID;
+        q.load();
+      });
     }
   }
   if (isSynthesisPage || isProposalPage) {

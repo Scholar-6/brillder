@@ -563,7 +563,7 @@
       font-size: 3.3vw;
     }
     @include tabletL {
-      font-size: 1.6vw;
+      font-size: $base-popup-font-size;
     }
   }
 }

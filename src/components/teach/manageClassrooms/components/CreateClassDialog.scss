@@ -7,6 +7,17 @@
   .dialog-select-container {
     margin-bottom: 2vh !important;
 
+    .MuiSelect-select {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    svg {
+      width: 1.8vw !important;
+      height: 1.8vw !important;
+    }
+
     .MuiInputBase-root {
       margin-bottom: 0 !important;
     }
@@ -14,6 +25,7 @@
     .MuiListItemText-root {
       display: inline-flex;
       margin: 0 !important;
+      flex: none !important;
     }
   }
 
@@ -34,6 +46,9 @@
 
 // only create class popup
 .create-classroom-dialog {
+  input {
+    font-size: 1.8vw !important;
+  }
   .dialog-select-container {
     .MuiInputBase-root {
       border-radius: 0.5vw;
@@ -53,6 +68,6 @@
   }
 
   .dialog-footer .btn {
-    font-size: 1.6vw;
+    font-size: $base-popup-font-size;
   }
 }

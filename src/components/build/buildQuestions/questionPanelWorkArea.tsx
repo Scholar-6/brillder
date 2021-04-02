@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { Grid, Select, FormControl, MenuItem } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { ReactSortable } from "react-sortablejs";
 
 import QuestionComponents from './questionComponents/questionComponents';
 import { getNonEmptyComponent } from '../questionService/ValidateQuestionService';
 import './questionPanelWorkArea.scss';
-import { QuestionTypeEnum, QuestionComponentTypeEnum, QuestionTypeObj, Question } from 'model/question';
+import { QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/question';
 import DragBox from './drag/dragBox';
 import LockComponent from './lock/Lock';
 import CommentPanel from 'components/baseComponents/comments/CommentPanel';
@@ -22,12 +22,7 @@ import RedoButton from '../baseComponents/redoButton';
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
 
 import * as Y from "yjs";
-import { toRenderJSON } from 'services/SharedTypeService';
 
-
-function SplitByCapitalLetters(element: string): string {
-  return element.split(/(?=[A-Z])/).join(" ");
-}
 
 export interface QuestionProps {
   brickId: number;

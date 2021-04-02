@@ -31,7 +31,9 @@
       .ql-container {
         width: 100% !important;
         .ql-editor {
-          font-size: 1.35vw !important;
+          border-bottom-left-radius: 0.6vw;
+          border-bottom-right-radius: 0.6vw;
+            font-size: 1.35vw !important;
           p {
             font-size: 1.35vw;
           }

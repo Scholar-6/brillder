@@ -1,6 +1,5 @@
 import React from 'react';
 import Y from "yjs";
-import { Grid } from '@material-ui/core';
 
 import './Quote.scss'
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
@@ -20,9 +19,7 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, ...
   return (
     <div className="question-build-quote-editor" onFocus={props.onFocus}>
       <div className="text-label-container">
-        <Grid className="text-label" container justify="center" alignContent="center">
-          Quote
-        </Grid>
+        Poem Quote
       </div>
       <QuillEditor
         disabled={locked}

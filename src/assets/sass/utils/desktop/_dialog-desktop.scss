@@ -49,7 +49,7 @@
     }
     .MuiListItemText-primary {
       font-family: $font-family-regular;
-      font-size: 2vw;
+      font-size: 1.8vw;
       margin-right: 1vw;
     }
     .link {
@@ -198,7 +198,7 @@
       }
     }
     .r-radio-buttons {
-      margin-top: 1vw;
+      margin-top: 0;
       .MuiTypography-root {
         font-size: 1.3vw;
       }
@@ -306,7 +306,7 @@
 
         > div {
           @extend %textCenter;
-          margin-bottom: 4.5vh;
+          margin-bottom: 1vh;
           width: 30vw;
         }
 
@@ -318,7 +318,7 @@
         input {
           padding: 1.5vh 1.8vw;
           text-transform: capitalize;
-          font-size: 1.6vw;
+          font-size: $base-popup-font-size;
           width: calc(100% - 1.8vw - 1.8vw);
           color: var(--theme-dark-blue);
         }
@@ -331,14 +331,14 @@
           width: 100% !important;
         }
         input {
-          font-size: 7vw !important;
+          font-size: $base-popup-font-size !important;
         }
         .MuiAutocomplete-root .MuiChip-label {
-          font-size: 6vw !important;
+          font-size: 1.6vw !important;
         }
         .MuiSvgIcon-root.MuiChip-deleteIcon {
-          width: 7vw !important;
-          height: 7vw !important;
+          width: 2vw !important;
+          height: 2vw !important;
           margin-right: 1vw;
         }
       }
@@ -348,11 +348,11 @@
           padding-bottom: 0 !important;
         }
         .label {
-          font-size: 7vw !important;
+          font-size: $base-popup-font-size !important;
         }
         .svg {
-          width: 7vw;
-          height: 7vw;
+          width: 2vw;
+          height: 2vw;
         }
       }
     }

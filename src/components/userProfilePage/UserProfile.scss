@@ -237,7 +237,7 @@
             display: flex;
             align-items: center;
             button {
-              border-radius: 0.6vw;
+              border-radius: $editor-radius;
               height: 1.7vw;
               font-size: 1.1vw;
               font-family: $font-family-regular;

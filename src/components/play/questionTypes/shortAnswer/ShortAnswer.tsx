@@ -10,9 +10,9 @@ import {
   ShortAnswerItem,
 } from "components/build/buildQuestions/questionTypes/shortAnswerBuild/interface";
 import { stripHtml } from "components/build/questionService/ConvertService";
-import DocumentWirisEditorComponent from "components/baseComponents/ckeditor/DocumentWirisEditor";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
 import { getValidationClassName } from "../service";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 export type ShortAnswerAnswer = string[];
 
@@ -96,13 +96,14 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
       return <MathInHtml value={value} />;
     }
     return (
-      <DocumentWirisEditorComponent
-        data={value}
+      <QuillEditor
         disabled={false}
-        onChange={v => this.setUserAnswer(v, index)}
-        toolbar={["superscript", "subscript"]}
-        onBlur={() => { }}
+        data={value}
+        showToolbar={true}
+        toolbar={['superscript', 'subscript']}
         placeholder={`Answer ${index + 1}`}
+        onChange={v => this.setUserAnswer(v, index)}
+        onBlur={() => {}}
       />
     );
   }

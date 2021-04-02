@@ -93,7 +93,7 @@ input {
   z-index: 999999 !important;
   .MuiAutocomplete-option {
     color: var(--theme-dark-blue);
-    font-size: 1.6vw;
+    font-size: $base-popup-font-size;
   }
   * {
     font-family: $font-family-regular !important;

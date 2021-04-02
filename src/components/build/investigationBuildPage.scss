@@ -451,6 +451,13 @@ $space-between-boxes: 0.1vw;
     }
   }
 
+  .key-words {
+    .MuiOutlinedInput-notchedOutline {
+      border: none !important;
+    }
+  }
+
+
   .inner-question-type {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -461,7 +468,7 @@ $space-between-boxes: 0.1vw;
     .plan-quill-container {
       max-width: 72.5%;
       background: var(--tab-gray);
-      border-radius: 0.6vw;
+      border-radius: $editor-radius;
     }
 
     .p-edit-container {
@@ -469,17 +476,7 @@ $space-between-boxes: 0.1vw;
       height: calc(100%);
     }
 
-    $toolbar-height: 45px;
-
-    .ql-global-toolbar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: $toolbar-height;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
+    $toolbar-height: calc(2vh + 1.9vw);
 
     .inner-quills {
       display: block;
@@ -606,10 +603,7 @@ $space-between-boxes: 0.1vw;
           }
         }
       }
-      .open-question-container {
-        margin-top: 0.5vw;
-      }
-      .brief-container, .prep-container {
+      .brief-container, .prep-container, .open-question-container {
         margin-top: 0.5vw;
         margin-bottom: 0.5vw;
         .header {
@@ -625,6 +619,11 @@ $space-between-boxes: 0.1vw;
         .ql-editor {
           border-top-left-radius: 0;
           border-top-right-radius: 0;
+
+          .ql-video {
+            width: 100%;
+            height: 14vw;
+          }
         }
       }
     }
@@ -651,4 +650,45 @@ $space-between-boxes: 0.1vw;
   top: 0;
   height: 100%;
   width: 33.8vw;
+}
+
+
+// quill top toolbar
+.investigation-build-page {
+  .ql-global-toolbar, .ql-custom-toolbar {
+    position: relative !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: unset !important;
+
+    button, .picker.q-color {
+      width: 1.9vw !important;
+      height: 1.9vw !important;
+
+      svg {
+        height: 100% !important;
+        width: 100% !important;
+        &:hover {
+          color: rgba(0,28,88, 0.5) !important;
+        }
+      }
+
+    }
+
+    button:disabled {
+      svg {
+        &:hover {
+          color: var(--dark-gray) !important;
+        }
+      }
+    }
+  }
+  // more space between buttons in bigger editors
+  .synthesis-page, .plan-page {
+    .ql-custom-toolbar .formats > button {
+      margin-left: 0.8vw;
+      margin-right: 0.8vw;
+    }
+  }
 }

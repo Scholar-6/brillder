@@ -31,7 +31,7 @@ const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
         </div>
       </div>
       <KeyWordsPlay keywords={ybrick.get("keywords").toJSON()} />
-      <div>
+      <div className="pl-open-question">
         <ObservableText text={ybrick.get("openQuestion")} math={true} />
       </div>
       <div className="expand-title brief-title" style={{ marginTop: '4vh' }}>
@@ -42,7 +42,7 @@ const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="base-font">
         <ObservableText text={ybrick.get("brief")} math={true} />
       </div>
       <div className="expand-title prep-title" style={{ marginTop: '4vh' }}>
@@ -53,7 +53,7 @@ const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="base-font">
         <ObservableText text={ybrick.get("prep")} math={true} />
       </div>
     </div>

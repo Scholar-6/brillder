@@ -12,8 +12,6 @@
     background-color: var(--tab-gray);
     @extend %themeRadius;
   }
-  $toolbar-width: 5vw;
-  $border-radius: 0.6vw;
 
   .document-editor {
     width: 100%;

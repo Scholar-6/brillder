@@ -1,21 +1,13 @@
 import React from "react";
 import * as Y from "yjs";
 import { connect } from "react-redux";
-import {
-  Grid,
-  InputBase,
-  ListItemIcon,
-  ListItemText,
-  MenuItem,
-  Select,
-  SvgIcon,
-} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 import CommentPanel from "components/baseComponents/comments/CommentPanel";
 import { CommentLocation } from "model/comments";
 import { ReduxCombinedState } from "redux/reducers";
 
-import { Brick, BrickLengthEnum } from "model/brick";
+import { Brick } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import CommentButton from "../baseComponents/commentButton/CommentButton";
 import UndoRedoService from "components/services/UndoRedoService";
@@ -26,10 +18,12 @@ import { QuillEditorContext } from "components/baseComponents/quill/QuillEditorC
 import QuillGlobalToolbar from "components/baseComponents/quill/QuillGlobalToolbar";
 import KeyWordsComponent from "../proposal/questionnaire/brickTitle/KeyWords";
 import { User } from "model/user";
-import DifficultySelect from "../proposal/questionnaire/brickTitle/DifficultySelect";
+import DifficultySelectObservable from "./DifficultySelectObservable";
 import { toRenderJSON } from "services/SharedTypeService";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import PlanPreviewComponent from "../baseComponents/phonePreview/plan/PlanPreview";
+import BrickLengthObservable from "./BrickLengthObservable";
+import SubjectsObservable from "./SubjectsObservable";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -53,36 +47,11 @@ const PlanPage: React.FC<PlanProps> = (props) => {
 
   const [commentsShown, setCommentsShown] = React.useState(false);
   const editorIdState = React.useState("");
-  const [subjectIndex, setSubjectIndex] = React.useState<number>();
-
-  React.useEffect(() => {
-    const subjectId = ybrick.get("subjectId");
-    if (subjects) {
-      setSubjectIndex(subjects.findIndex((s) => s.id === subjectId) ?? 0);
-    }
-    setTimeout(() => {
-      let { current } = scrollArea;
-      if (current) {
-        console.log(current.scrollHeight, current.clientHeight);
-        if (current.scrollHeight > current.clientHeight) {
-          if (!canScroll) {
-            setScroll(true);
-          }
-        } else {
-          if (canScroll) {
-            setScroll(false);
-          }
-        }
-      }
-    }, 100);
-    /*eslint-disable-next-line*/
-  }, [subjects]);
 
   React.useEffect(() => {
     setTimeout(() => {
       let { current } = scrollArea;
       if (current) {
-        console.log(current.scrollHeight, current.clientHeight);
         if (current.scrollHeight > current.clientHeight) {
           if (!canScroll) {
             setScroll(true);
@@ -160,7 +129,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       sharedData={title}
                       placeholder="Title"
                       disabled={locked}
-                      toolbar={[]}
+                      toolbar={['italic']}
                     />
                   </div>
                   <KeyWordsComponent
@@ -168,59 +137,17 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     keyWords={ybrick.get("keywords")}
                   />
                   <div className="subject-select-container">
-                    {subjectIndex !== undefined && (
-                      <Select
-                        value={subjectIndex}
-                        onChange={(evt) => {
-                          ybrick.set("subjectId", subjects[evt.target.value as number].id as number);
-                          setSubjectIndex(evt.target.value as number);
-                        }}
-                        input={<InputBase />}
-                      >
-                        {subjects?.map((s, i) => (
-                          <MenuItem value={i} key={i}>
-                            <ListItemIcon>
-                              <SvgIcon>
-                                <SpriteIcon
-                                  name="circle-filled"
-                                  className="w100 h100 active"
-                                  style={{ color: s.color }}
-                                />
-                              </SvgIcon>
-                            </ListItemIcon>
-                            <ListItemText>{s.name}</ListItemText>
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
+                    <SubjectsObservable disabled={locked} subjects={subjects} ybrick={ybrick} />
                   </div>
                   <div className="level-and-length-container">
-                    <DifficultySelect
+                    <DifficultySelectObservable
                       disabled={locked}
-                      level={ybrick.get("academicLevel")}
-                      onChange={(academicLevel) =>
-                        ybrick.set("academicLevel", academicLevel)
-                      }
+                      ybrick={ybrick}
                     />
-                    <Select
-                      className="brick-length"
-                      value={ybrick.get("brickLength")}
-                      onChange={(evt) =>
-                        ybrick.set("brickLength", evt.target.value)
-                      }
-                    >
-                      <MenuItem value={BrickLengthEnum.S20min}>
-                        20 mins
-                      </MenuItem>
-                      <MenuItem value={BrickLengthEnum.S40min}>
-                        40 mins
-                      </MenuItem>
-                      <MenuItem value={BrickLengthEnum.S60min}>
-                        60 mins
-                      </MenuItem>
-                    </Select>
+                    <BrickLengthObservable disabled={locked} ybrick={ybrick} />
                   </div>
                   <div className="open-question-container">
+                    <div className="header">Open Question</div>
                     <QuillEditor
                       disabled={locked}
                       sharedData={ybrick.get("openQuestion")}

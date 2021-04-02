@@ -20,18 +20,18 @@ interface AssignClassProps {
 
 const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   const [value, setValue] = React.useState("");
-  const [subjectIndex, setSubjectIndex] = React.useState<number>();
+  const [subjectIndex, setSubjectIndex] = React.useState<number>(0);
 
   const [subjects, setSubjects] = React.useState<Subject[]>();
   React.useEffect(() => {
     const initAllSubjects = async () => {
       const subs = await loadSubjects();
-      if(subs) {
+      if (subs) {
         setSubjects(subs);
       }
     }
 
-    if(props.user.roles.some(role => role.roleId === UserType.Admin)) {
+    if (props.user.roles.some(role => role.roleId === UserType.Admin)) {
       initAllSubjects();
     } else {
       setSubjects(props.user.subjects);
@@ -39,10 +39,27 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   }, [props.user.roles, props.user.subjects]);
 
   React.useEffect(() => {
-    if(subjects && subjects.length === 1) {
+    if (subjects && subjects.length === 1) {
       setSubjectIndex(subjects.findIndex(s => s.name === "General") ?? 0);
     }
   }, [subjects])
+
+  const renderButton = () => {
+    let isValid = false;
+    if (value && subjects && subjectIndex !== undefined && subjects[subjectIndex]) {
+      isValid = true;
+    }
+    return (
+      <button className={`btn btn-md yes-button ${isValid ? 'bg-theme-orange' : 'b-dark-blue text-theme-light-blue'}`}
+        onClick={() => {
+          if (isValid && subjectIndex && subjects) {
+            props.submit(value, subjects[subjectIndex]);
+          }
+        }}>
+        <span className="bold">Create</span>
+      </button>
+    );
+  }
 
   return (
     <Dialog
@@ -53,7 +70,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       <div className="close-button svgOnHover" onClick={props.close}>
         <SpriteIcon name="cancel" className="w100 h100 active" />
       </div>
-      <div className="dialog-header" style={{marginBottom: '2vh'}}>
+      <div className="dialog-header" style={{ marginBottom: '2vh' }}>
         <div className="title">Name Your Class</div>
         <input placeholder="Class Name" value={value} onChange={e => setValue(e.target.value)} />
       </div>
@@ -81,14 +98,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         </Select>
       </div>
       <div className="dialog-footer">
-        <button className="btn btn-md bg-theme-orange yes-button"
-          onClick={() => {
-            if(value && subjects && subjectIndex !== undefined && subjects[subjectIndex]) {
-              props.submit(value, subjects[subjectIndex]);
-            }
-          }}>
-          <span className="bold">Create</span>
-        </button>
+        {renderButton()}
       </div>
     </Dialog>
   );
