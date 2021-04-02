@@ -451,6 +451,13 @@ $space-between-boxes: 0.1vw;
     }
   }
 
+  .key-words {
+    .MuiOutlinedInput-notchedOutline {
+      border: none !important;
+    }
+  }
+
+
   .inner-question-type {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
