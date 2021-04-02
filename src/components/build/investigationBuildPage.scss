@@ -471,28 +471,6 @@ $space-between-boxes: 0.1vw;
 
     $toolbar-height: calc(2vh + 1.9vw);
 
-    .ql-global-toolbar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      align-items: center;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-      height: unset;
-
-      button, .picker.q-color {
-        width: 1.9vw;
-        height: 1.9vw;
-
-        svg {
-          height: 100%;
-          width: 100%;
-        }
-      }
-    }
-
     .inner-quills {
       display: block;
       $border: 0.2vw;
@@ -663,4 +641,26 @@ $space-between-boxes: 0.1vw;
   top: 0;
   height: 100%;
   width: 33.8vw;
+}
+
+
+// quill top toolbar
+.investigation-build-page {
+  .ql-global-toolbar, .ql-custom-toolbar {
+    position: relative !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: unset !important;
+
+    button, .picker.q-color {
+      width: 1.9vw !important;
+      height: 1.9vw !important;
+
+      svg {
+        height: 100% !important;
+        width: 100% !important;
+      }
+    }
+  }
 }
