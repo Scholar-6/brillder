@@ -31,6 +31,7 @@ import { toRenderJSON } from "services/SharedTypeService";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import PlanPreviewComponent from "../baseComponents/phonePreview/plan/PlanPreview";
 import BrickLengthObservable from "./BrickLengthObservable";
+import SubjectsObservable from "./SubjectsObservable";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -64,7 +65,6 @@ const PlanPage: React.FC<PlanProps> = (props) => {
     setTimeout(() => {
       let { current } = scrollArea;
       if (current) {
-        console.log(current.scrollHeight, current.clientHeight);
         if (current.scrollHeight > current.clientHeight) {
           if (!canScroll) {
             setScroll(true);
@@ -83,7 +83,6 @@ const PlanPage: React.FC<PlanProps> = (props) => {
     setTimeout(() => {
       let { current } = scrollArea;
       if (current) {
-        console.log(current.scrollHeight, current.clientHeight);
         if (current.scrollHeight > current.clientHeight) {
           if (!canScroll) {
             setScroll(true);
@@ -169,31 +168,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     keyWords={ybrick.get("keywords")}
                   />
                   <div className="subject-select-container">
-                    {subjectIndex !== undefined && (
-                      <Select
-                        value={subjectIndex}
-                        onChange={(evt) => {
-                          ybrick.set("subjectId", subjects[evt.target.value as number].id as number);
-                          setSubjectIndex(evt.target.value as number);
-                        }}
-                        input={<InputBase />}
-                      >
-                        {subjects?.map((s, i) => (
-                          <MenuItem value={i} key={i}>
-                            <ListItemIcon>
-                              <SvgIcon>
-                                <SpriteIcon
-                                  name="circle-filled"
-                                  className="w100 h100 active"
-                                  style={{ color: s.color }}
-                                />
-                              </SvgIcon>
-                            </ListItemIcon>
-                            <ListItemText>{s.name}</ListItemText>
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
+                    <SubjectsObservable disabled={locked} subjects={subjects} ybrick={ybrick} />
                   </div>
                   <div className="level-and-length-container">
                     <DifficultySelectObservable

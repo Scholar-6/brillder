@@ -31,6 +31,7 @@ const BrickLengthObservable: React.FC<Props> = (props) => {
     <Select
       className="brick-length"
       value={brickLength}
+      disabled={props.disabled}
       onChange={(evt) => ybrick.set("brickLength", evt.target.value)}
     >
       <MenuItem value={BrickLengthEnum.S20min}>
