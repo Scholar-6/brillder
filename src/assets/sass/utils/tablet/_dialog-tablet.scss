@@ -352,8 +352,6 @@
     }
     &.unlimited {
       .close-button {
-        top: 4vw;
-        right: 4vw;
         svg {
           color: var(--theme-orange);
         }
@@ -536,8 +534,4 @@
       font-size: $base-popup-font-size;
     }
   }
-}
-
-.MuiDialog-paperWidthSm {
-  max-width: none !important;
 }
