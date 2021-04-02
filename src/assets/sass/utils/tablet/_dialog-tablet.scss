@@ -62,7 +62,6 @@
     }
     .title {
       font-family: $font-family-bold;
-      width: auto !important;
       margin-bottom: 3vh !important;
       &.smaller {
         margin-bottom: 1.5vh !important;
@@ -299,36 +298,30 @@
     .MuiDialog-paper {
       background: var(--theme-light-blue);
       color: white;
-      .dialog-header {
-        margin-bottom: 0;
-        color: inherit;
-
-        > div {
-          @extend %textCenter;
-          margin: 0 auto 4.5vh auto;
-          width: 30vw;
-        }
-
-        input {
-          background: white;
-          border-radius: 0.5vw;
-        }
-
-        input {
-          padding: 1.5vh 1.8vw;
-          text-transform: capitalize;
-          font-size: $base-popup-font-size;
-          width: calc(100% - 1.8vw - 1.8vw);
-          color: var(--theme-dark-blue);
-        }
+    }
+    .dialog-header {
+      margin-bottom: 0;
+      color: inherit;
+      > div {
+        width: 100% !important;
+        @extend %textCenter;
+        margin: 0 auto 4.5vh auto !important;
+      }
+      input {
+        background: white;
+        border-radius: 0.5vw;
+      }
+      input {
+        padding: 1.5vh 1.8vw;
+        text-transform: capitalize;
+        font-size: $base-popup-font-size;
+        width: calc(100% - 1.8vw - 1.8vw);
+        color: var(--theme-dark-blue);
       }
     }
     // assign brick to class or student dialog styles
     &.assign-dialog {
       .dialog-header {
-        > div {
-          width: 100% !important;
-        }
         input {
           font-size: 2vw !important;
         }
@@ -366,15 +359,14 @@
         }
       }
       .title {
-        margin-top: 5vw;
-        font-size: 7vw;
+        font-size: 2vw;
       }
       .social-share-row {
         svg {
-          height: 10vw;
-          margin-left: 5vw;
-          margin-right: 5vw;
-          width: 10vw;
+          height: 3.4vw;
+          margin-left: 2vw;
+          margin-right: 2vw;
+          width: 3.4vw;
         }
         .custom-tooltip {
           display: none;
@@ -397,9 +389,6 @@
   &.unlimited {
     .MuiDialog-paperWidthSm {
       max-width: none !important;
-      .dialog-header > div {
-        width: auto;
-      }
     }
     .title {
       color: var(--tab-gray);
@@ -487,6 +476,64 @@
     }
     .MuiTypography-root.MuiListItemText-primary {
       font-size: 6vw !important;
+    }
+  }
+  &.create-classroom-dialog {
+    .dialog-select-container {
+      margin-bottom: 2vh !important;
+
+      .MuiSelect-select {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      svg {
+        width: 1.8vw !important;
+        height: 1.8vw !important;
+      }
+
+      .MuiInputBase-root {
+        margin-bottom: 0 !important;
+      }
+
+      .MuiListItemText-root {
+        display: inline-flex;
+        margin: 0 !important;
+        flex: none !important;
+      }
+    }
+    .dialog-select-container {
+      .MuiInputBase-root {
+        border-radius: 0.5vw;
+        margin-bottom: 0 !important;
+
+        .MuiSelect-root {
+          padding: 1.5vh 0 !important;
+          min-height: calc(2.97vw) !important;
+        }
+
+        .MuiListItemText-root {
+          display: inline-flex;
+          margin: 0 !important;
+          color: var(--theme-dark-blue);
+        }
+      }
+    }
+    input {
+      line-height: 1.87 !important;
+      font-size: 1.8vw !important;
+    }
+    .MuiSelect-root.MuiSelect-select {
+      width: 100% !important;
+      padding-left: 0 !important;
+      padding-right: 2vw !important;
+    }
+    .title {
+      font-size: 2vw;
+    }
+    .dialog-footer .btn {
+      font-size: $base-popup-font-size;
     }
   }
 }

@@ -365,6 +365,7 @@
         }
       }
       .title {
+        width: 30vw !important;
         margin-top: 5vw;
         font-size: 7vw;
       }
@@ -486,6 +487,64 @@
     }
     .MuiTypography-root.MuiListItemText-primary {
       font-size: 6vw !important;
+    }
+  }
+  &.create-classroom-dialog {
+    .dialog-select-container {
+      margin-bottom: 2vh !important;
+
+      .MuiSelect-select {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      svg {
+        width: 1.8vw !important;
+        height: 1.8vw !important;
+      }
+
+      .MuiInputBase-root {
+        margin-bottom: 0 !important;
+      }
+
+      .MuiListItemText-root {
+        display: inline-flex;
+        margin: 0 !important;
+        flex: none !important;
+      }
+    }
+    .dialog-select-container {
+      .MuiInputBase-root {
+        border-radius: 0.5vw;
+        margin-bottom: 0 !important;
+
+        .MuiSelect-root {
+          padding: 1.5vh 0 !important;
+          min-height: calc(2.97vw) !important;
+        }
+
+        .MuiListItemText-root {
+          display: inline-flex;
+          margin: 0 !important;
+          color: var(--theme-dark-blue);
+        }
+      }
+    }
+    input {
+      line-height: 1.87 !important;
+      font-size: 1.8vw !important;
+    }
+    .MuiSelect-root.MuiSelect-select {
+      width: 100% !important;
+      padding-left: 0 !important;
+      padding-right: 2vw !important;
+    }
+    .title {
+      font-size: 2vw;
+    }
+    .dialog-footer .btn {
+      font-size: $base-popup-font-size;
     }
   }
 }
