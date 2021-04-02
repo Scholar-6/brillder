@@ -24,6 +24,7 @@ import QuillGlobalToolbar from "components/baseComponents/quill/QuillGlobalToolb
 import { QuillEditorContext } from "components/baseComponents/quill/QuillEditorContext";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import DeleteDialog from "components/build/baseComponents/dialogs/DeleteDialog";
+import { toRenderJSON } from "services/SharedTypeService";
 
 
 type QuestionComponentsProps = {
@@ -71,7 +72,18 @@ const QuestionComponents = ({
 
   const removeInnerComponent = (componentIndex: number) => {
     if (locked) { return; }
-    components.delete(componentIndex);
+    try {
+      // !! this is very critical part. could lead to deleting unique components.
+      const component = toRenderJSON(components.get(componentIndex));
+      if (component.type === QuestionComponentTypeEnum.Component) {
+        console.log('you tried to review unique component. forbidden');
+      } else {
+        components.delete(componentIndex);
+      }
+      setDialog(false);
+    } catch {
+      console.log('can`t delete component by index ' + componentIndex);
+    }
   }
 
   let canRemove = (components.length > 3) ? true : false;
