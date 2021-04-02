@@ -1,5 +1,7 @@
 import React from "react";
 import Y from "yjs";
+import _ from "lodash";
+
 import "./Sound.scss";
 import Dropzone from "./Dropzone";
 import PauseButton from "./components/buttons/PauseButton";
@@ -24,6 +26,7 @@ interface SoundState {
   blobUrl: string;
   audio: HTMLAudioElement;
   cantSave: boolean;
+  observer: any;
 }
 
 export enum AudioStatus {
@@ -50,8 +53,28 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
       status: initStatus,
       blobUrl: "",
       audio: initAudio,
-      cantSave: false
+      cantSave: false,
+      observer: null
     };
+  }
+
+  componentDidMount() {
+    const observer = _.throttle((evt: any) => {
+      const newValue = this.props.data.get("value");
+      console.log(newValue);
+      if (newValue) {
+        const updatedAudio = new Audio(fileUrl(newValue));
+        this.setState({ audio: updatedAudio, status: AudioStatus.Recorded });
+      }
+    }, 200);
+    this.props.data.observe(observer);
+    this.setState({observer});
+  }
+
+  componentWillUnmount() {
+    if (this.state.observer) {
+      this.props.data.unobserve(this.state.observer);
+    }
   }
 
   onSave(blob: any) {
