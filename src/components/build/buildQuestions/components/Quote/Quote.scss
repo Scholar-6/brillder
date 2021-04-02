@@ -4,6 +4,7 @@
 
 .question-build-quote-editor {
   width: 100%;
+  border-radius: $editor-radius;
   .quill-document-editor {
     .ql-container {
       width: 100% !important;
@@ -25,15 +26,14 @@
   }
 
   .text-label-container {
-    margin: 0 30%;
+    width: 100%;
+    text-align: center;
+    background: var(--tab-gray);
 
     .text-label {
       color: var(--theme-dark-blue);
-      width: 40%;
-      position: absolute;
       top: 0;
       z-index: 1;
-      height: 3vh;
       font-size: 1.1vw;
     }
   }

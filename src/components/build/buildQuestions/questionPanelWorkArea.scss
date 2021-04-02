@@ -184,7 +184,7 @@
       position: relative;
       transform: translateZ(0);
       background: var(--tab-gray);
-      border-radius: 0.6vw;
+      border-radius: $editor-radius;
 
       .questions {
         z-index: 1001;

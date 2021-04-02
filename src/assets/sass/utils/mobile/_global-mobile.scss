@@ -203,7 +203,7 @@ h3 {
   @extend %textCenter;
   text-transform: none !important;
   width: 100%;
-  border-radius: 0.6vw !important;
+  border-radius: $editor-radius !important;
   background-color: var(--tab-gray) !important;
   opacity: 1;
   @include phone_and_tabletP {

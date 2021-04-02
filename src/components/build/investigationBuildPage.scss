@@ -461,7 +461,7 @@ $space-between-boxes: 0.1vw;
     .plan-quill-container {
       max-width: 72.5%;
       background: var(--tab-gray);
-      border-radius: 0.6vw;
+      border-radius: $editor-radius;
     }
 
     .p-edit-container {
