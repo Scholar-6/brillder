@@ -7,7 +7,6 @@ interface Props { }
 
 const MobileTheme = React.lazy(() => import('./themes/RotateInstructionsMobileTheme'));
 const TabletTheme = React.lazy(() => import('./themes/RotateInstructionsTabletTheme'));
-const DesktopTheme = React.lazy(() => import('./themes/RotateInstructionsDesktopTheme'));
 
 const RotateInstruction: React.FC<Props> = (props) => {
   const rotateScreen = () => {
@@ -20,7 +19,7 @@ const RotateInstruction: React.FC<Props> = (props) => {
 
   return (
     <React.Suspense fallback={<></>}>
-      {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+      {isIPad13 || isTablet ? <TabletTheme /> : isMobile && <MobileTheme />}
       <div className="rotate-instruction-page">
         <div>
           <div className="rotate-button-container">
