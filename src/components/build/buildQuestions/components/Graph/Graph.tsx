@@ -35,11 +35,14 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
     const graphRef = React.useRef<HTMLDivElement>(null);
     const [calculator, setCalculator] = React.useState<any>(null);
     const value = props.data.get("value") as Y.Map<any>;
-    const [graphState, setStoredGraphState] = React.useState<any>(value.get("graphState")?.toJSON() ?? null);
+    const [storedValue, setStoredValue] = React.useState<any>(value.toJSON() ?? null);
+
+    const graphState = storedValue.graphState;
+    const graphSettings = storedValue.graphSettings;
     console.log(graphState);
 
     const observer = React.useCallback(() => {
-        setStoredGraphState(value.get("graphState")?.toJSON() ?? null);
+        setStoredValue(value.toJSON() ?? null);
     }, [value]);
 
     useEffect(() => {
@@ -94,7 +97,7 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
     }
 
     const getGraphSettings = () => {
-        const settings = settingNames.filter(name => value.get("graphSettings").toJSON()[name] === true);
+        const settings = settingNames.filter(name => graphSettings[name] === true);
         return settings;
     }
 
@@ -105,7 +108,7 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
         
         <GraphDialog
             graphState={graphState}
-            graphSettings={value.get("graphSettings").toJSON()}
+            graphSettings={graphSettings}
             isOpen={dialogOpen}
             close={() => setDialogOpen(false)}
             setGraphState={setGraphState}
@@ -152,7 +155,7 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
                         </SvgIcon>
                     </Tooltip>
                 </ToggleButton>
-                <ToggleButton value="pointsOfInterest" disabled={!value.get("graphSettings").toJSON().trace}>
+                <ToggleButton value="pointsOfInterest" disabled={!graphSettings.trace}>
                     <Tooltip title="Show Points of Interest">
                         <SvgIcon fontSize="large">
                             <svg className="svg active" viewBox="0 0 24 24">
