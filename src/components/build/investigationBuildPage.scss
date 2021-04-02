@@ -469,16 +469,28 @@ $space-between-boxes: 0.1vw;
       height: calc(100%);
     }
 
-    $toolbar-height: 45px;
+    $toolbar-height: calc(2vh + 1.9vw);
 
     .ql-global-toolbar {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: $toolbar-height;
+      display: flex;
+      align-items: center;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
+      height: unset;
+
+      button, .picker.q-color {
+        width: 1.9vw;
+        height: 1.9vw;
+
+        svg {
+          height: 100%;
+          width: 100%;
+        }
+      }
     }
 
     .inner-quills {

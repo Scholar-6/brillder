@@ -1243,6 +1243,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           }
         }
         .hover-area:hover .hover-content {
+          width: 30vw;
+          z-index: 100000;
           display: block;
           position: absolute;
           top: 3vw;

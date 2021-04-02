@@ -75,8 +75,16 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <div className="question">What is a brick?</div>
         <div className="hover-area">
           <SpriteIcon name="help-circle-custom" />
-          {/*<div className="hover-content">
-          </div>*/}
+          <div className="hover-content">
+            <div>A brick is a learning unit that should take either 20, 40, or 60 minutes to complete.</div>
+            <div>Bricks follow a cognitively optimised sequence:</div>
+            <div>1. Preparation: stimulus content gets you in the zone.</div>
+            <div>2. Investigation: challenging interactive questions make you think.</div>
+            <div>3. A preliminary score</div>
+            <div>4. Synthesis: explanation.</div>
+            <div>5. Review: hints help you correct your answers.</div>
+            <div>6. A final score</div>
+          </div>
         </div>
       </div>
     );

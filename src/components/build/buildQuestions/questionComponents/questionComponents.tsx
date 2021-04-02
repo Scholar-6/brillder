@@ -57,7 +57,7 @@ const QuestionComponents = ({
   // My solution is to generate a unique ID for the sortable everytime two components are swapped.
   // This forces a re-render of that component so that it retains the correct ordering, rather than swapping them back.
   const [sortableId, setSortableId] = React.useState(generateId());
-  
+
   let firstComponent = questionData.get("firstComponent") as Y.Map<any>;
   if (!firstComponent.get("type") || firstComponent.get("type") !== QuestionComponentTypeEnum.Text) {
     firstComponent.set("type", QuestionComponentTypeEnum.Text);
@@ -77,7 +77,7 @@ const QuestionComponents = ({
   let canRemove = (components.length > 3) ? true : false;
 
   const renderDropBox = (component: Y.Map<any>, index: number) => {
-    if(!component) return;
+    if (!component) return;
 
     const setEmptyType = () => {
       if (component.get("value")) {
@@ -156,7 +156,7 @@ const QuestionComponents = ({
   // }
 
   const createNewComponent = (type: QuestionComponentTypeEnum) => {
-    switch(type) {
+    switch (type) {
       case QuestionComponentTypeEnum.Text:
         return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Text, value: new Y.Text(), id: generateId() }));
       case QuestionComponentTypeEnum.Quote:
@@ -166,32 +166,34 @@ const QuestionComponents = ({
       case QuestionComponentTypeEnum.Sound:
         return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Sound, value: '', id: generateId() }));
       case QuestionComponentTypeEnum.Graph:
-       return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Graph, value: new Y.Map(Object.entries({
-          graphSettings: new Y.Map(Object.entries({
-            showSidebar: false,
-            showSettings: false,
-            allowPanning: false,
-            trace: false,
-            pointsOfInterest: false,
-          })),
-          graphState: undefined,
-       })), id: generateId() }));
+        return new Y.Map(Object.entries({
+          chosen: false, selected: false, type: QuestionComponentTypeEnum.Graph, value: new Y.Map(Object.entries({
+            graphSettings: new Y.Map(Object.entries({
+              showSidebar: false,
+              showSettings: false,
+              allowPanning: false,
+              trace: false,
+              pointsOfInterest: false,
+            })),
+            graphState: undefined,
+          })), id: generateId()
+        }));
     }
   }
 
   const onAddComponent = (evt: Sortable.SortableEvent) => {
-    if(locked) return;
-    if(evt.item.dataset.value && (evt.newIndex !== undefined)) {
+    if (locked) return;
+    if (evt.item.dataset.value && (evt.newIndex !== undefined)) {
       const newComponent = createNewComponent(parseInt(evt.item.dataset.value))
-      if(newComponent) {
+      if (newComponent) {
         components.insert(evt.newIndex, [newComponent]);
       }
     }
   }
 
   const onUpdateComponent = (evt: Sortable.SortableEvent) => {
-    if(locked) return;
-    if(((evt.oldIndex ?? -1) >= 0) && ((evt.newIndex ?? -1) >= 0)) {
+    if (locked) return;
+    if (((evt.oldIndex ?? -1) >= 0) && ((evt.newIndex ?? -1) >= 0)) {
       console.log(evt);
       components.doc?.transact(() => {
         const component = components.get(evt.oldIndex!).clone() as Y.Map<any>;
@@ -208,7 +210,7 @@ const QuestionComponents = ({
   }
 
   let allDropBoxesEmpty = false;
-  let noComponent = getNonEmptyComponent(components.toJSON());
+  const noComponent = getNonEmptyComponent(components.toJSON());
   if (noComponent) {
     allDropBoxesEmpty = true;
   }
@@ -222,8 +224,7 @@ const QuestionComponents = ({
   }
 
   return (
-  <QuillEditorContext.Provider value={editorIdState}>
-    <div className="questions">
+    <QuillEditorContext.Provider value={editorIdState}>
       <QuillGlobalToolbar
         disabled={locked}
         availableOptions={[
@@ -231,47 +232,48 @@ const QuestionComponents = ({
           'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
         ]}
       />
-      <Grid container direction="row" className={validateDropBox(firstComponent)}>
-        <FixedTextComponent
-          locked={locked}
-          editOnly={editOnly}
-          questionId={questionId}
-          data={firstComponent}
-          validationRequired={validationRequired}
+      <div className="questions">
+        <Grid container direction="row" className={validateDropBox(firstComponent)}>
+          <FixedTextComponent
+            locked={locked}
+            editOnly={editOnly}
+            questionId={questionId}
+            data={firstComponent}
+            validationRequired={validationRequired}
+          />
+        </Grid>
+        <ReactSortable
+          key={sortableId}
+          list={components.toJSON()}
+          animation={150}
+          group={{ name: "cloning-group-name", pull: "clone" }}
+          onAdd={onAddComponent}
+          onUpdate={onUpdateComponent}
+          setList={() => { }}
+        >
+          {
+            components.toJSON().map((comp: any, i: number) => (
+              <Grid key={i} container direction="row" className={validateDropBox(comp)}>
+                {renderDropBox(components.get(i), i)}
+              </Grid>
+            ))
+          }
+        </ReactSortable>
+        <DeleteDialog
+          isOpen={dialogOpen}
+          title="Permanently delete<br />this component?"
+          index={removeIndex}
+          submit={removeInnerComponent}
+          close={hideDialog}
         />
-      </Grid>
-      <ReactSortable
-        key={sortableId}
-        list={components.toJSON()}
-        animation={150}
-        group={{ name: "cloning-group-name", pull: "clone" }}
-        onAdd={onAddComponent}
-        onUpdate={onUpdateComponent}
-        setList={() => {}}
-      >
-        {
-          components.toJSON().map((comp: any, i: number) => (
-            <Grid key={i} container direction="row" className={validateDropBox(comp)}>
-              {renderDropBox(components.get(i), i)}
-            </Grid>
-          ))
-        }
-      </ReactSortable>
-      <DeleteDialog
-        isOpen={dialogOpen}
-        title="Permanently delete<br />this component?"
-        index={removeIndex}
-        submit={removeInnerComponent}
-        close={hideDialog}
-      />
-      <ValidationFailedDialog
-        isOpen={sameAnswerDialogOpen}
-        header="Looks like some answers are the same."
-        label="Correct answers could be marked wrong. Please make sure all answers are different."
-        close={hideSameAnswerDialog}
-      />
-    </div>
-  </QuillEditorContext.Provider>
+        <ValidationFailedDialog
+          isOpen={sameAnswerDialogOpen}
+          header="Looks like some answers are the same."
+          label="Correct answers could be marked wrong. Please make sure all answers are different."
+          close={hideSameAnswerDialog}
+        />
+      </div>
+    </QuillEditorContext.Provider>
   );
 }
 
