@@ -144,6 +144,9 @@
     }
     .brick-row-container {
       @extend %flexCenter;
+      > div {
+        width: 100%;
+      }
       .subjects-column {
         @extend %flexCenter;
         margin-left: 2vw;
