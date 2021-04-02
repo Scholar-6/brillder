@@ -15,7 +15,7 @@ import CommentPanel from "components/baseComponents/comments/CommentPanel";
 import { CommentLocation } from "model/comments";
 import { ReduxCombinedState } from "redux/reducers";
 
-import { Brick, BrickLengthEnum } from "model/brick";
+import { Brick } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import CommentButton from "../baseComponents/commentButton/CommentButton";
 import UndoRedoService from "components/services/UndoRedoService";
@@ -30,6 +30,7 @@ import DifficultySelectObservable from "./DifficultySelectObservable";
 import { toRenderJSON } from "services/SharedTypeService";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import PlanPreviewComponent from "../baseComponents/phonePreview/plan/PlanPreview";
+import BrickLengthObservable from "./BrickLengthObservable";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -199,23 +200,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       disabled={locked}
                       ybrick={ybrick}
                     />
-                    <Select
-                      className="brick-length"
-                      value={ybrick.get("brickLength")}
-                      onChange={(evt) =>
-                        ybrick.set("brickLength", evt.target.value)
-                      }
-                    >
-                      <MenuItem value={BrickLengthEnum.S20min}>
-                        20 mins
-                      </MenuItem>
-                      <MenuItem value={BrickLengthEnum.S40min}>
-                        40 mins
-                      </MenuItem>
-                      <MenuItem value={BrickLengthEnum.S60min}>
-                        60 mins
-                      </MenuItem>
-                    </Select>
+                    <BrickLengthObservable disabled={locked} ybrick={ybrick} />
                   </div>
                   <div className="open-question-container">
                     <QuillEditor
