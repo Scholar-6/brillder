@@ -129,7 +129,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       sharedData={title}
                       placeholder="Title"
                       disabled={locked}
-                      toolbar={[]}
+                      toolbar={['italic']}
                     />
                   </div>
                   <KeyWordsComponent
@@ -147,6 +147,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <BrickLengthObservable disabled={locked} ybrick={ybrick} />
                   </div>
                   <div className="open-question-container">
+                    <div className="header">Open Question</div>
                     <QuillEditor
                       disabled={locked}
                       sharedData={ybrick.get("openQuestion")}

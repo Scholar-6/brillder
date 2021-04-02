@@ -603,10 +603,7 @@ $space-between-boxes: 0.1vw;
           }
         }
       }
-      .open-question-container {
-        margin-top: 0.5vw;
-      }
-      .brief-container, .prep-container {
+      .brief-container, .prep-container, .open-question-container {
         margin-top: 0.5vw;
         margin-bottom: 0.5vw;
         .header {
@@ -622,6 +619,11 @@ $space-between-boxes: 0.1vw;
         .ql-editor {
           border-top-left-radius: 0;
           border-top-right-radius: 0;
+
+          .ql-video {
+            width: 100%;
+            height: 14vw;
+          }
         }
       }
     }
