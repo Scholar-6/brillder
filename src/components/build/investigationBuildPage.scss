@@ -669,7 +669,26 @@ $space-between-boxes: 0.1vw;
       svg {
         height: 100% !important;
         width: 100% !important;
+        &:hover {
+          color: rgba(0,28,88, 0.5) !important;
+        }
       }
+
+    }
+
+    button:disabled {
+      svg {
+        &:hover {
+          color: var(--dark-gray) !important;
+        }
+      }
+    }
+  }
+  // more space between buttons in bigger editors
+  .synthesis-page, .plan-page {
+    .ql-custom-toolbar .formats > button {
+      margin-left: 0.8vw;
+      margin-right: 0.8vw;
     }
   }
 }
