@@ -91,6 +91,9 @@
   .short-answer-input {
     width: 100% !important;
     margin-bottom: 1.5vh;
+    .ql-editor {
+      font-size: 4.5vw;
+    }
   }
   .question-hint-global {
     border-radius: $border-radius;
@@ -114,7 +117,7 @@
 
 .short-answer-input {
   .quill-document-editor {
-    min-height: 5vw;
+    min-height: 15vw;
     border-bottom-right-radius: 0;
   }
   .ql-custom-toolbar {
@@ -122,16 +125,21 @@
     align-items: center;
     position: absolute !important;
     height: 100% !important;
-    width: 20%;
-    left: 80%;
+    width: 12%;
+    left: 88%;
     z-index: 10001;
+
+    button {
+      width: 7vw !important;
+      height: 7vw !important;
+    }
   }
   .quill {
-    width: 80%;
+    width: 85%;
     height: 100%;
     .ql-editor {
       border-top-left-radius: $editor-radius;
-      min-height: 5vw;
+      min-height: 15vw;
     }
   }
 }
