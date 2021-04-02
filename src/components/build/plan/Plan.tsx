@@ -26,7 +26,7 @@ import { QuillEditorContext } from "components/baseComponents/quill/QuillEditorC
 import QuillGlobalToolbar from "components/baseComponents/quill/QuillGlobalToolbar";
 import KeyWordsComponent from "../proposal/questionnaire/brickTitle/KeyWords";
 import { User } from "model/user";
-import DifficultySelect from "../proposal/questionnaire/brickTitle/DifficultySelect";
+import DifficultySelectObservable from "./DifficultySelectObservable";
 import { toRenderJSON } from "services/SharedTypeService";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import PlanPreviewComponent from "../baseComponents/phonePreview/plan/PlanPreview";
@@ -195,12 +195,9 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     )}
                   </div>
                   <div className="level-and-length-container">
-                    <DifficultySelect
+                    <DifficultySelectObservable
                       disabled={locked}
-                      level={ybrick.get("academicLevel")}
-                      onChange={(academicLevel) =>
-                        ybrick.set("academicLevel", academicLevel)
-                      }
+                      ybrick={ybrick}
                     />
                     <Select
                       className="brick-length"
