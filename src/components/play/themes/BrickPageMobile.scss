@@ -1605,6 +1605,24 @@ $play-footer-height: 75px;
     font-size: 5vw;
     @extend %ellipsis;
   }
+  .hover-area {
+    position: relative;
+    .hover-content {
+      display: none;
+    }
+    &:hover .hover-content {
+      width: 30vw;
+      z-index: 100000;
+      display: block;
+      position: absolute;
+      top: 3vw;
+      left: 0;
+      color: var(--white);
+      border-radius: 0.2vw;
+      padding: 0.2vw 0.5vw;
+      background: var(--theme-light-blue);
+    }
+  }
   .image-container {
     margin-left: 2vw;
     margin-right: 2vw;
