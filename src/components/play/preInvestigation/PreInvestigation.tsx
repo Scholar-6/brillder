@@ -59,7 +59,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
         <div className="introduction-page">
           <div className="after-cover-main-content">
             <div className="title">
-              <TypingLabel label="Time for some questions." onEnd={() => {}} />
+              <TypingLabel label="Time for some questions." onEnd={() => { }} />
             </div>
             <div className="like-buttons-container">
               <div className="x-center">
@@ -92,10 +92,10 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
         </div>
         <div className="fixed-helpers-container">
           <div className="circles">
-            <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg"  />
-          </div>
-          <div className="prep">
-            Click here to go back to Prep tasks
+            <div className="prep">
+              <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg" />
+              <span>Click here to go back to Prep tasks</span>
+            </div>
           </div>
         </div>
       </div>
