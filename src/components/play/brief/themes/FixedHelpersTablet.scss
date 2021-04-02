@@ -17,8 +17,10 @@
       align-items: center;
       margin-top: 2vw;
       span {
-        margin-left: 2vw;
-        white-space: nowrap;
+        margin-left: 1.5vw;
+        text-align: left;
+        // white-space: nowrap;
+        width: 7vw;
       }
       &:first-child {
         margin-top: 0.5vw;
@@ -27,11 +29,9 @@
         width: 3.5vw;
         height: 3.5vw;
       }
+      &.prep {
+        margin-top: 3vw;
+      }
     }
-  }
-  .prep {
-    width: 8vw;
-    padding: 0 0.5vw;
-    margin-top: 0vw;
   }
 }
