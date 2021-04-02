@@ -1,10 +1,14 @@
 import { checkAdmin, checkTeacher } from 'components/services/brickService';
 import { User } from 'model/user';
 import React, { Component } from 'react';
-
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 interface Props {
   user: User;
 }
+
+const MobileTheme = React.lazy(() => import('./themes/FixedHelpersMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/FixedHelpersTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/FixedHelpersDesktopTheme'));
 
 class FixedHelpers extends Component<Props> {
   renderBorder(className: string) {
@@ -18,30 +22,29 @@ class FixedHelpers extends Component<Props> {
     const canSee = checkTeacher(user) || checkAdmin(user.roles);
 
     return (
-      <div className="fixed-helpers-container">
-        <div className="circles">
-          {this.renderBorder('highlight-circle')}
-          {this.renderBorder('share-circle')}
-          {canSee && this.renderBorder('assign-circle')}
-          {canSee && this.renderBorder('adapt-circle')}
-        </div>
-        <div className="highlight">
-          Highlight Text
-        </div>
-        <div className="share">
-          Share Brick
-        </div>
-        {canSee &&
-          <div className="assign">
-            Assign Brick
+      <React.Suspense fallback={<></>}>
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+        <div className="fixed-helpers-container">
+          <div className="circles">
+            <div className="highlight">
+              {this.renderBorder('highlight-circle')}
+              <span>Highlight Text</span>
+            </div>
+            <div className="share">
+              {this.renderBorder('share-circle')}
+              <span>Share Brick</span>
+            </div>
+            <div className="assign">
+              {this.renderBorder('assign-circle')}
+              {canSee && this.renderBorder('assign-circle') && <span>Assign Brick</span>}
+            </div>
+            <div className="adapt">
+              {this.renderBorder('adapt-circle')}
+              {canSee && this.renderBorder('adapt-circle') && <span >Adapt Brick</span>}
+            </div>
           </div>
-        }
-        {canSee &&
-          <div className="adapt">
-            Adapt Brick
-          </div>
-        }
-      </div>
+        </div>
+      </React.Suspense>
     );
   }
 }

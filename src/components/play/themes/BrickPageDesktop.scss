@@ -1968,48 +1968,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       width: 5vw;
     }
   }
-  .fixed-helpers-container {
-    position: fixed;
-    left: 6vw;
-    color: var(--white);
-    font-size: 1.25vw;
-    top: calc(2vw + 5.834vw + 1.5vw);
-    text-align: center;
-    .circles {
-      position: absolute;
-      left: -4.8vw;
-      .dashed-circle {
-        display: block;
-        width: 3.5vw;
-        height: 3.5vw;
-      }
-      .highlight-circle {
-        margin-top: 0.3vw;
-      }
-      .share-circle {
-        margin-top: 1.15vw;
-      }
-      .assign-circle {
-        margin-top: 1.5vw;
-      }
-      .adapt-circle {
-        margin-top: 1.5vw;
-      }
-    }
-    .highlight {
-      padding: 0 1vw;
-      width: 8vw;
-    }
-    .share {
-      margin-top: 1.5vw;
-    }
-    .assign {
-      margin-top: 3.2vw;
-    }
-    .adapt {
-      margin-top: 3.1vw;
-    }
-  }
 }
 
 // pre-prep page
@@ -2079,30 +2037,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   display: flex;
   align-items: center;
   font-size: 1vw;
-}
-
-.pre-investigation {
-  .fixed-helpers-container {
-    position: fixed;
-    left: 6vw;
-    color: var(--white);
-    font-size: 1.25vw;
-    top: calc(2vw + 5.834vw + 4.3vw);
-    text-align: center;
-    .circles {
-      position: absolute;
-      left: -5.6vw;
-      .dashed-circle {
-        width: 5vw;
-        height: 5vw;
-      }
-    }
-    .prep {
-      width: 8vw;
-      padding: 0 0.5vw;
-      margin-top: 0vw;
-    }
-  }
 }
 
 // brick title

@@ -1,0 +1,37 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.fixed-helpers-container {
+  position: fixed;
+  left: 6vw;
+  color: var(--white);
+  font-size: 1.25vw;
+  top: calc(2vw + 5.834vw + 1.5vw);
+  text-align: center;
+  .circles {
+    position: absolute;
+    left: -4.8vw;
+    > div {
+      display: flex;
+      align-items: center;
+      margin-top: 2vw;
+      span {
+        margin-left: 2vw;
+        white-space: nowrap;
+      }
+      &:first-child {
+        margin-top: 0.5vw;
+      }
+      .dashed-circle {
+        width: 3.5vw;
+        height: 3.5vw;
+      }
+    }
+  }
+  .prep {
+    width: 8vw;
+    padding: 0 0.5vw;
+    margin-top: 0vw;
+  }
+}
