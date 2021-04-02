@@ -4,6 +4,7 @@ import _ from "lodash";
 
 import { Select, MenuItem } from "@material-ui/core";
 import { BrickLengthEnum } from 'model/brick';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface Props {
   disabled: boolean;
@@ -28,22 +29,25 @@ const BrickLengthObservable: React.FC<Props> = (props) => {
   }, []);
 
   return (
-    <Select
-      className="brick-length"
-      value={brickLength}
-      disabled={props.disabled}
-      onChange={(evt) => ybrick.set("brickLength", evt.target.value)}
-    >
-      <MenuItem value={BrickLengthEnum.S20min}>
-        20 mins
+    <div className="brick-length">
+      <div className="fixed-select-clock"><SpriteIcon name="clock" /></div>
+      <Select
+        value={brickLength}
+        disabled={props.disabled}
+        className="select"
+        onChange={(evt) => ybrick.set("brickLength", evt.target.value)}
+      >
+        <MenuItem value={BrickLengthEnum.S20min}>
+          20 mins
       </MenuItem>
-      <MenuItem value={BrickLengthEnum.S40min}>
-        40 mins
+        <MenuItem value={BrickLengthEnum.S40min}>
+          40 mins
       </MenuItem>
-      <MenuItem value={BrickLengthEnum.S60min}>
-        60 mins
+        <MenuItem value={BrickLengthEnum.S60min}>
+          60 mins
       </MenuItem>
-    </Select>
+      </Select>
+    </div>
   );
 }
 

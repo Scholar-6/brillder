@@ -457,7 +457,6 @@ $space-between-boxes: 0.1vw;
     }
   }
 
-
   .inner-question-type {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -590,11 +589,38 @@ $space-between-boxes: 0.1vw;
         }
         .brick-length {
           width: 30%;
-          &::before, &::after {
-            content: none !important;
+          position: relative;
+          color: var(--theme-dark-blue);
+          
+          .fixed-select-clock {
+            cursor: pointer;
+            z-index: 100;
+            height: 100%;
+            position: absolute;
+            width: 27%;
+            border-top-left-radius: 0.5vw;
+            border-bottom-left-radius: 0.5vw;
+            pointer-events: none;
+            background: #E4E8EE;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            svg {
+              stroke-width: 2;
+              width: 1.5vw;
+              height: 1.5vw;
+            }
           }
+
+          .select {
+            width: 100%;
+            &::before, &::after {
+              content: none !important;
+            }
+          }
+
           .MuiSelect-root {
-            padding-left: 0.4vw;
+            padding-left: 3.2vw;
             color: var(--theme-dark-blue);
             font-size: $baseFontSize;
             font-family: $font-family-regular;
