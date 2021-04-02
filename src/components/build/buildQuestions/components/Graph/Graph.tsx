@@ -35,8 +35,17 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
     const graphRef = React.useRef<HTMLDivElement>(null);
     const [calculator, setCalculator] = React.useState<any>(null);
     const value = props.data.get("value") as Y.Map<any>;
-    const graphState = value.get("graphState")?.toJSON() ?? null;
+    const [graphState, setStoredGraphState] = React.useState<any>(value.get("graphState")?.toJSON() ?? null);
     console.log(graphState);
+
+    const observer = React.useCallback(() => {
+        setStoredGraphState(value.get("graphState")?.toJSON() ?? null);
+    }, [value]);
+
+    useEffect(() => {
+        value.observeDeep(observer);
+        return () => value.unobserveDeep(observer);
+    }, [observer, value]);
 
     const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
 
