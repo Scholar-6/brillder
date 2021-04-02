@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import * as Y from "yjs";
 import _ from "lodash";
 import {
-  InputBase,
   ListItemIcon,
   ListItemText,
   MenuItem,

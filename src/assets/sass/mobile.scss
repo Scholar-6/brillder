@@ -176,3 +176,27 @@
     display: none;
   }
 }
+
+.short-answer-input {
+  .quill-document-editor {
+    min-height: 5vw;
+    border-bottom-right-radius: 0;
+  }
+  .ql-custom-toolbar {
+    display: flex;
+    align-items: center;
+  position: absolute !important;
+    height: 100% !important;
+    width: 20%;
+    left: 80%;
+    z-index: 10001;
+  }
+  .quill {
+    width: 80%;
+    height: 100%;
+    .ql-editor {
+      border-top-left-radius: $editor-radius;
+      min-height: 5vw;
+    }
+  }
+}

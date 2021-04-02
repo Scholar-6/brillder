@@ -40,13 +40,12 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   useEffect(() => {
     const observer = _.throttle((evt: any) => {
       const newValue = props.data.get("value");
-      //console.log('incoming value ' + newValue);
-      //setLevel(newLevel);
       setFileName(newValue);
     }, 200);
 
     props.data.observe(observer);
     return () => { props.data.unobserve(observer) }
+  // eslint-disable-next-line
   }, []);
 
   const updateData = (source: string, caption: string, align: ImageAlign, height: number) => {

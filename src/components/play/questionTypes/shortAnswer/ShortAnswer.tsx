@@ -10,7 +10,6 @@ import {
   ShortAnswerItem,
 } from "components/build/buildQuestions/questionTypes/shortAnswerBuild/interface";
 import { stripHtml } from "components/build/questionService/ConvertService";
-import DocumentWirisEditorComponent from "components/baseComponents/ckeditor/DocumentWirisEditor";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
 import { getValidationClassName } from "../service";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";

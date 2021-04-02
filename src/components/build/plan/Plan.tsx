@@ -1,15 +1,7 @@
 import React from "react";
 import * as Y from "yjs";
 import { connect } from "react-redux";
-import {
-  Grid,
-  InputBase,
-  ListItemIcon,
-  ListItemText,
-  MenuItem,
-  Select,
-  SvgIcon,
-} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 import CommentPanel from "components/baseComponents/comments/CommentPanel";
 import { CommentLocation } from "model/comments";
@@ -55,29 +47,6 @@ const PlanPage: React.FC<PlanProps> = (props) => {
 
   const [commentsShown, setCommentsShown] = React.useState(false);
   const editorIdState = React.useState("");
-  const [subjectIndex, setSubjectIndex] = React.useState<number>();
-
-  React.useEffect(() => {
-    const subjectId = ybrick.get("subjectId");
-    if (subjects) {
-      setSubjectIndex(subjects.findIndex((s) => s.id === subjectId) ?? 0);
-    }
-    setTimeout(() => {
-      let { current } = scrollArea;
-      if (current) {
-        if (current.scrollHeight > current.clientHeight) {
-          if (!canScroll) {
-            setScroll(true);
-          }
-        } else {
-          if (canScroll) {
-            setScroll(false);
-          }
-        }
-      }
-    }, 100);
-    /*eslint-disable-next-line*/
-  }, [subjects]);
 
   React.useEffect(() => {
     setTimeout(() => {

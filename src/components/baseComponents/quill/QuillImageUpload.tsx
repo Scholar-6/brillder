@@ -4,7 +4,6 @@ import Delta from "quill-delta";
 import { Quill } from "react-quill";
 import { ImageAlign } from "components/build/buildQuestions/components/Image/model";
 import axios from "axios";
-import React from "react";
 
 const ImageBlot = Quill.import('formats/image');
 export class CustomImageBlot extends ImageBlot {
