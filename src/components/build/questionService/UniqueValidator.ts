@@ -23,9 +23,9 @@ const validateImageSoundAndText = (a: any) => {
   return !a.value;
 }
 
-const validateShortAnswer = (comp: any) => {
+const validateShortAnswerOrShuffle = (comp: any) => {
   if (comp.list && comp.list.length >= 1) {
-    let invalid = comp.list.find((a:any) => !a.value);
+    let invalid = comp.list.find((a:any) => !(a.value || a.valueFile || a.soundFile));
     if (invalid) {
       return false;
     }
@@ -176,7 +176,7 @@ const validateMissingWord = (comp: any) => {
 
 
 export default {
-  validateShortAnswer,
+  validateShortAnswerOrShuffle,
   getChecked,
   validateChooseOne,
   validateChooseSeveralChecked,

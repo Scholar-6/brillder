@@ -92,7 +92,7 @@ export function validateQuestion(question: Question) {
   if (type === QuestionTypeEnum.ShortAnswer || type === QuestionTypeEnum.VerticalShuffle
     || type === QuestionTypeEnum.HorizontalShuffle)
   {
-    return uniqueValidator.validateShortAnswer(comp);
+    return uniqueValidator.validateShortAnswerOrShuffle(comp);
   } else if (type === QuestionTypeEnum.ChooseOne) {
     return uniqueValidator.validateChooseOne(comp);
   } else if (type === QuestionTypeEnum.ChooseSeveral) {
