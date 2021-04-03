@@ -35,35 +35,6 @@
     .sort-box {
       width: 100%;
 
-      .filter-container {
-        display: flex;
-        margin: 0;
-        width: 100%;
-        .custom-color svg {
-          color: var(--color);
-        }
-
-        .filter-radio,
-        .MuiFormControlLabel-root,
-        .sortBy {
-          padding: 0 !important;
-          margin: 0 !important;
-          margin-right: 0.5vw !important;
-
-          svg {
-            width: 1.25vw;
-            height: 1.25vw;
-            color: var(--theme-orange);
-            padding: 0 !important;
-          }
-        }
-
-        .MuiFormControlLabel-label {
-          font-size: 1.05vw !important;
-          font-family: $font-family-light !important;
-        }
-      }
-
       .sort-by-box {
         padding: $sidebar-gutter;
         flex-direction: column;
@@ -195,7 +166,6 @@
           }
         }
       }
-
       .subject-indexes-box {
         width: 100%;
 
@@ -251,48 +221,6 @@
           }
         }
       }
-
-      .subjects-filter {
-        margin: 0 $sidebar-gutter;
-        padding: 2vh 0 6vh 0;
-        width: calc(100% - #{$sidebar-gutter * 2});
-
-        @include phone_and_tabletP {
-          height: calc(100vh - 55vw);
-        }
-
-        @include tabletP {
-          height: calc(100vh - 34vh);
-        }
-
-        overflow-y: auto;
-
-        .published-count {
-          font-size: 1.05vw;
-          @extend %textCenter;
-          font-family: $font-family-light;
-        }
-
-        .MuiGrid-container {
-          margin-bottom: 1vh;
-        }
-
-        .MuiRadio-root {
-          color: inherit !important;
-
-          .MuiIconButton-label {
-            color: inherit !important;
-
-            .MuiSvgIcon-root {
-              color: inherit !important;
-            }
-          }
-        }
-
-        // .MuiTypography-root {
-        //   color: var(--white) !important;
-        // }
-      }
     }
 
     .back-hover-area {
@@ -343,7 +271,7 @@
       }
 
       h3 {
-        font-size: 1.6vw;
+        font-size: $base-popup-font-size;
         font-family: $font-family-black;
         color: var(--white);
         letter-spacing: 0.3vw;
@@ -358,45 +286,18 @@
     margin-left: $filter-sidebar-margin;
     flex-basis: inherit;
     max-width: inherit;
-    width: 100%;
-    @include phone_and_tabletP {
-      height: $height-mobile-view;
-      margin: 0;
-      border-top-left-radius: 10vw;
-    }
-
-    @include tabletP {
-      background-color: var(--solitude-light);
-      width: calc(100vw - #{$filter-sidebar-size} - #{$filter-sidebar-margin * 2});
-      height: $height-desktop-view;
-      overflow: hidden;
-    }
-
+    background-color: var(--solitude-light);
+    width: calc(100vw - #{$filter-sidebar-size} - #{$filter-sidebar-margin * 2});
+    height: $height-desktop-view;
+    overflow: hidden;
     .brick-row-title {
       color: var(--theme-dark-blue);
       line-height: 1;
-      letter-spacing: 0.9vw;
-
-      @include phone_and_tabletP {
-        font-size: 5vw;
-        font-family: $font-family-bold;
-        padding: 3vw 3vw 3vw 6vw;
-        margin-bottom: 0.5vh;
-        border-bottom: 0.2vh solid var(--solitude-light);
-        z-index: 10;
-        display: flex;
-        align-items: center;
-      }
-
-      @include tabletP {
-        font-family: $font-family-black;
-        padding-bottom: 0;
-        font-size: $bricks-title-font-size;
-        line-height: 1;
-        letter-spacing: 1.2vw;
-        padding: $bricks-title-padding-top 0vw $bricks-title-padding-bottom 2.4vw;
-      }
-
+      font-family: $font-family-black;
+      padding-bottom: 0;
+      font-size: $bricks-title-font-size;
+      letter-spacing: 1.2vw;
+      padding: $bricks-title-padding-top 0vw $bricks-title-padding-bottom 2.4vw;
       .btn {
         @extend %flexCenter;
 
@@ -460,37 +361,19 @@
       .main-brick-container {
         display: flex;
         position: relative;
-
-        @include phone_and_tabletP {
-        }
-
+        padding: 0.4vw 0 0 0.4vw;
+        // height: calc(#{$bricks-height / 6.35});
         .title {
           margin-bottom: 3vh;
           font-size: 1.5vw;
           font-family: $font-family-bold;
         }
-
-        @include tabletP {
-          padding: 0.8vw 0 0 0.8vw;
-          height: calc(#{$bricks-height / 6.35});
-        }
-
         .brick-container {
           width: 100%;
           position: relative;
           font-family: $font-family-regular;
           text-align: left;
-
-          @include phone_and_tabletP {
-            text-align: center;
-            margin-bottom: 2vw;
-            padding: 0 4vw;
-          }
-
-          @include tabletP {
-            height: $min-brick-height;
-          }
-
+          // height: $min-brick-height;
           .short-brick-info {
             @extend %ellipsis;
             margin-left: 3vw;
@@ -531,11 +414,9 @@
               }
             }
           }
-
           &:hover {
             color: var(--white);
           }
-
           h1 {
             color: var(--theme-dark-blue);
             padding: 5px;
@@ -543,27 +424,22 @@
             text-transform: capitalize;
             font-size: 32px;
           }
-
           h2 {
             font-size: 24px;
           }
-
           h3 {
             color: var(--theme-dark-blue);
             padding: 5px;
             font-size: 16px;
             line-height: 28px;
           }
-
           .absolute-container {
             border-radius: $brick-radius;
             color: var(--theme-dark-blue);
             text-align: left;
-            @include tabletP {
-              height: $min-brick-height;
-              position: absolute;
-              width: 95%;
-            }
+            // height: $min-brick-height;
+            // position: absolute;
+            width: 95%;
             .short-description,
             .expanded-brick-info {
               display: flex;

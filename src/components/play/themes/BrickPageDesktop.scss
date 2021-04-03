@@ -23,9 +23,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   background: var(--theme-dark-blue);
   min-height: 100%;
   .sorted-row {
-    .brick-row-container {
-      background-color: var(--white);
-    }
     .play-sidebar {
       text-align: right;
       $resize-icon-size: 2.7vw;
@@ -134,7 +131,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         .sidebar-button {
           font-family: $font-family-bold !important;
           width: 100%;
-          font-size: 1.6vw;
+          font-size: $base-popup-font-size;
           @extend %flexCenter;
           flex-direction: column;
           span,
@@ -187,7 +184,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             border-radius: $editor-radius;
             width: 80%;
             height: 3.5vw;
-            font-size: 1.6vw;
+            font-size: $base-popup-font-size;
             font-family: $font-family-bold;
             @extend %flexCenter;
             @extend %transitionAll300;
@@ -302,7 +299,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         .sidebar-button {
           font-family: $font-family-bold !important;
           width: 100%;
-          font-size: 1.6vw;
+          font-size: $base-popup-font-size;
           @extend %flexCenter;
           flex-direction: column;
           span,
@@ -356,7 +353,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             border-radius: $editor-radius;
             width: 80%;
             height: 3.5vw;
-            font-size: 1.6vw;
+            font-size: $base-popup-font-size;
             font-family: $font-family-bold;
             @extend %flexCenter;
             @extend %transitionAll300;
@@ -458,10 +455,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       }
     }
     .brick-row-container {
-      @include tabletP {
-        width: calc(82.85vw - 1vw);
-        transition: 700ms width;
-      }
+      background-color: var(--white);
+      width: calc(82.85vw - 1vw);
+      transition: 700ms width;
       .brick-container {
         .left-brick-circle {
           position: absolute;
@@ -590,13 +586,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               .document-editor {
                 border-radius: 0 !important;
                 background: transparent !important;
-                .ck-editor {
-                  .ck-content {
-                    background: transparent !important;
-                    border-radius: 0 !important;
-                    padding: 0.5vw 0 !important;
-                  }
-                }
               }
             }
             &.review-content {
@@ -1226,7 +1215,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
           }
           .introduction-info {
-            font-size: 1.6vw;
+            font-size: $base-popup-font-size;
             .c-next-btn-container {
               margin-top: 4vh;
               display: flex;
@@ -1247,6 +1236,24 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
           }
         }
+        .hover-area {
+          position: relative;
+          .hover-content {
+            display: none;
+          }
+          &:hover .hover-content {
+            width: 30vw;
+            z-index: 100000;
+            display: block;
+            position: absolute;
+            top: 3vw;
+            left: 0;
+            color: var(--white);
+            border-radius: 0.2vw;
+            padding: 0.2vw 0.5vw;
+            background: var(--theme-light-blue);
+          }
+        }
       }
     }
     &.sorted-row-expanded {
@@ -1255,6 +1262,19 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       .brick-row-container {
         width: calc(98vw - #{$home-button-size}) !important;
         height: $introduction-expanded-height !important;
+      }
+      .introduction-page {
+        height: $introduction-expanded-height !important;
+        .question-live-play {
+          height: $introduction-expanded-height !important;
+        }
+      }
+      .introduction-info {
+        height: $introduction-expanded-height !important;
+      }
+      .intro-desktop-title {
+        font-size: 2vw !important;
+        max-width: 54.2vw;
       }
       // #2781 new play live and review theme
       .live-container,
@@ -1924,7 +1944,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         .italic {
           color: var(--theme-dark-blue);
           font-size: 1.8vw;
-        }        
+        }
       }
     }
   }
@@ -1946,48 +1966,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     .footer-arrow {
       margin-left: 0.5vw;
       width: 5vw;
-    }
-  }
-  .fixed-helpers-container {
-    position: fixed;
-    left: 6vw;
-    color: var(--white);
-    font-size: 1.25vw;
-    top: calc(2vw + 5.834vw + 1.5vw);
-    text-align: center;
-    .circles {
-      position: absolute;
-      left: -4.8vw;
-      .dashed-circle {
-        display: block;
-        width: 3.5vw;
-        height: 3.5vw;
-      }
-      .highlight-circle {
-        margin-top: 0.3vw;
-      }
-      .share-circle {
-        margin-top: 1.15vw;
-      }
-      .assign-circle {
-        margin-top: 1.5vw;
-      }
-      .adapt-circle {
-        margin-top: 1.5vw;
-      }
-    }
-    .highlight {
-      padding: 0 1vw;
-      width: 8vw;
-    }
-    .share {
-      margin-top: 1.5vw;
-    }
-    .assign {
-      margin-top: 3.2vw;
-    }
-    .adapt {
-      margin-top: 3.1vw;
     }
   }
 }
@@ -2061,30 +2039,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   font-size: 1vw;
 }
 
-.pre-investigation {
-  .fixed-helpers-container {
-    position: fixed;
-    left: 6vw;
-    color: var(--white);
-    font-size: 1.25vw;
-    top: calc(2vw + 5.834vw + 4.3vw);
-    text-align: center;
-    .circles {
-      position: absolute;
-      left: -5.6vw;
-      .dashed-circle {
-        width: 5vw;
-        height: 5vw;
-      }
-    }
-    .prep {
-      width: 8vw;
-      padding: 0 0.5vw;
-      margin-top: 0vw;
-    }
-  }
-}
-
 // brick title
 .play-preview-pages .brick-row-container .fixed-upper-b-title {
   position: fixed;
@@ -2119,12 +2073,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   display: flex;
   justify-content: center;
   width: 26.5vw !important;
-}
 
-
-.complete-container .introduction-info {
-  padding-right: 10vw !important;
-  .action-footer {
-    right: unset !important;
+  .complete-container .introduction-info {
+    padding-right: 10vw !important;
+    .action-footer {
+      right: unset !important;
+    }
   }
 }

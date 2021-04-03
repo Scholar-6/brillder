@@ -6,7 +6,7 @@ class PageLoader extends Component<pageLoaderProps> {
     //let { content } = this.props
     return (
       <div className="page-loader">
-        <img src={LoaderLogo} alt="Loader logo" />
+        <img src={LoaderLogo} alt={this.props.content} />
         {/* <span>{content}</span> */}
       </div>
     );

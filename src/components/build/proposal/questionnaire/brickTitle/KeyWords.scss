@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .key-words {
-  font-size: 1.6vw;
+  font-size: $base-popup-font-size;
   color: var(--theme-dark-blue);
   display: inline-flex;
   width: 100%;
@@ -29,7 +29,7 @@
   input {
     color: var(--theme-dark-blue);
     width: auto !important;
-    font-size: 1.6vw;
+    font-size: $base-popup-font-size;
     min-width: 4vw;
     &::placeholder {
       color: var(--theme-dark-blue);
@@ -45,7 +45,7 @@
     .key-word {
       padding-left: 0.6vw;
       height: 2.5vw;
-      font-size: 1.6vw;
+      font-size: $base-popup-font-size;
       line-height: 1;
       margin-right: 0.5vw;
       margin-bottom: 0.5vw;

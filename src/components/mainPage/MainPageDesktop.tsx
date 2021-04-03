@@ -125,7 +125,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       steps: [{
         element: '.manage-classes',
         intro: `<p>Click on the Manage Classes icon to begin</p>`,
-      },{
+      }, {
         element: '.manage-classes',
         intro: `<p>Click on the Manage Classes icon to begin</p>`,
       }]
@@ -339,12 +339,12 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   }
 
   onIntroExit() {
-    this.setState({stepsEnabled: false});
+    this.setState({ stepsEnabled: false });
   }
 
   onIntroChanged(e: any) {
     if (e !== 0) {
-      this.setState({stepsEnabled: false});
+      this.setState({ stepsEnabled: false });
     }
   }
 
@@ -352,71 +352,71 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     return (
       <Grid container direction="row" className="mainPage">
         <React.Suspense fallback={<></>}>
-          {isTablet ? <TabletTheme/> : <DesktopTheme /> }
-        </React.Suspense>
-        <div className="welcome-col">
-          <WelcomeComponent
+          {isTablet ? <TabletTheme /> : <DesktopTheme />}
+          <div className="welcome-col">
+            <WelcomeComponent
+              user={this.props.user}
+              history={this.props.history}
+              notifications={this.props.notifications}
+              notificationClicked={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
+            />
+          </div>
+          <div className="first-col">
+            <div className="first-item">
+              <FirstButton history={this.props.history} disabled={this.state.isBoarding} user={this.props.user} />
+              {this.renderSecondButton()}
+              {this.renderThirdButton()}
+            </div>
+            <div className="second-item"></div>
+          </div>
+          {(this.state.isTeacher || this.state.isAdmin) ?
+            <div className="second-col">
+              <div>
+                {this.renderRightButton()}
+                {this.renderRightBottomButton()}
+              </div>
+            </div>
+            : <div className="second-col">
+              {this.renderRightButton()}
+            </div>
+          }
+          <MainPageMenu
             user={this.props.user}
             history={this.props.history}
-            notifications={this.props.notifications}
-            notificationClicked={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
+            notificationExpanded={this.state.notificationExpanded}
+            toggleNotification={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
           />
-        </div>
-        <div className="first-col">
-          <div className="first-item">
-            <FirstButton history={this.props.history} disabled={this.state.isBoarding} user={this.props.user} />
-            {this.renderSecondButton()}
-            {this.renderThirdButton()}
-          </div>
-          <div className="second-item"></div>
-        </div>
-        {(this.state.isTeacher || this.state.isAdmin) ?
-          <div className="second-col">
-            <div>
-              {this.renderRightButton()}
-              {this.renderRightBottomButton()}
-            </div>
-          </div>
-          : <div className="second-col">
-            {this.renderRightButton()}
-          </div>
-        }
-        <MainPageMenu
-          user={this.props.user}
-          history={this.props.history}
-          notificationExpanded={this.state.notificationExpanded}
-          toggleNotification={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
-        />
-        <TermsLink history={this.props.history}/>
-        <Steps
-          enabled={this.state.stepsEnabled}
-          steps={this.state.steps}
-          initialStep={0}
-          onChange={this.onIntroChanged.bind(this)}
-          onExit={this.onIntroExit.bind(this)}
-          onComplete={() => {}}
-        />
-        <PolicyDialog isOpen={this.state.isPolicyOpen} close={() => this.setPolicyDialog(false)} />
-        <LockedDialog
-          label="Play a brick to unlock this feature"
-          isOpen={this.state.isMyLibraryOpen}
-          close={() => this.setState({ isMyLibraryOpen: false })} />
-        <LockedDialog
-          label="To unlock this, a brick needs to have been assigned to you"
-          isOpen={this.state.isBackToWorkOpen}
-          close={() => this.setState({ isBackToWorkOpen: false })} />
-        <LockedDialog
-          label="Play a brick to unlock this feature"
-          isOpen={this.state.isTryBuildOpen}
-          close={() => this.setState({ isTryBuildOpen: false })} />
-        <ReportsAlertDialog
-          isOpen={this.state.isReportLocked}
-          close={() => this.setState({ isReportLocked: false })} />
-        <DesktopVersionDialogV2
-          isOpen={this.state.isDesktopOpen} secondaryLabel={this.state.secondaryLabel}
-          onClick={() => this.setState({ isDesktopOpen: false })}
-        />
-        <ClassInvitationDialog />
+          <TermsLink history={this.props.history} />
+          <Steps
+            enabled={this.state.stepsEnabled}
+            steps={this.state.steps}
+            initialStep={0}
+            onChange={this.onIntroChanged.bind(this)}
+            onExit={this.onIntroExit.bind(this)}
+            onComplete={() => { }}
+          />
+          <PolicyDialog isOpen={this.state.isPolicyOpen} close={() => this.setPolicyDialog(false)} />
+          <LockedDialog
+            label="Play a brick to unlock this feature"
+            isOpen={this.state.isMyLibraryOpen}
+            close={() => this.setState({ isMyLibraryOpen: false })} />
+          <LockedDialog
+            label="To unlock this, a brick needs to have been assigned to you"
+            isOpen={this.state.isBackToWorkOpen}
+            close={() => this.setState({ isBackToWorkOpen: false })} />
+          <LockedDialog
+            label="Play a brick to unlock this feature"
+            isOpen={this.state.isTryBuildOpen}
+            close={() => this.setState({ isTryBuildOpen: false })} />
+          <ReportsAlertDialog
+            isOpen={this.state.isReportLocked}
+            close={() => this.setState({ isReportLocked: false })} />
+          <DesktopVersionDialogV2
+            isOpen={this.state.isDesktopOpen} secondaryLabel={this.state.secondaryLabel}
+            onClick={() => this.setState({ isDesktopOpen: false })}
+          />
+          <ClassInvitationDialog />
+        </React.Suspense>
       </Grid>
     );
   }

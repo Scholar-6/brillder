@@ -20,6 +20,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
 import { getPublicBricks, searchPublicBricks } from "services/axios/brick";
 import BrickCircle from "components/baseComponents/BrickCircle";
+import routes from "components/play/routes";
 
 
 const MobileTheme = React.lazy(() => import('./themes/ViewAllPageMobileTheme'));
@@ -118,7 +119,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   moveToPlay(brickId: number) {
-    this.props.history.push(`/play/brick/${brickId}/intro`);
+    this.props.history.push(routes.playCover(brickId));
   }
 
   move(brickId: number) {

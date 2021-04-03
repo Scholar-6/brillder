@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
 
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
 import LoginLogo from '../components/LoginLogo';
@@ -27,6 +28,10 @@ interface LoginProps {
   match: any;
   loginSuccess(): void;
 }
+
+const MobileTheme = React.lazy(() => import('../themes/LoginPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('../themes/LoginPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('../themes/LoginPageDesktopTheme'));
 
 const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
   let initPolicyOpen = false;
@@ -126,81 +131,84 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
 
   const renderPrivacyPolicy = () => {
     return (
-      <TermsLink history={props.history}/>
+      <TermsLink history={props.history} />
     );
   }
 
   return (
-    <div className="login-desktop-page email-desktop-page">
-      <div className="left-part">
-        <div className="logo">
-          <LoginLogo />
-        </div>
-        <div className="button-box">
-          <DesktopLoginForm
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            passwordHidden={passwordHidden}
-            setHidden={setHidden}
-            handleSubmit={handleLoginSubmit}
-            register={() => register(email, password)}
-          />
-        </div>
-      </div>
-      <div className="right-part">
-        <div className="container">
-          <PhoneIcon />
-        </div>
-        <div className="bricks-container">
-          <div className="inner">
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-            </div>
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-            </div>
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-            </div>
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-            </div>
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-            </div>
+    <React.Suspense fallback={<></>}>
+      {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+      <div className="login-desktop-page">
+        <div className="left-part">
+          <div className="logo">
+            <LoginLogo />
+          </div>
+          <div className="button-box">
+            <DesktopLoginForm
+              email={email}
+              setEmail={setEmail}
+              password={password}
+              setPassword={setPassword}
+              passwordHidden={passwordHidden}
+              setHidden={setHidden}
+              handleSubmit={handleLoginSubmit}
+              register={() => register(email, password)}
+            />
           </div>
         </div>
-        <div className="icons-container">
-          <img alt="" className="glasses floating1" src="/images/login/rotatedGlasses.svg" />
-          <TeachIcon className="floating3" />
-          <SpriteIcon name="trowel-home" className="trowel-login text-theme-orange floating2" />
+        <div className="right-part">
+          <div className="container">
+            <PhoneIcon />
+          </div>
+          <div className="bricks-container">
+            <div className="inner">
+              <div className="row">
+                <div className="block" />
+                <div className="block" />
+                <div className="block" />
+                <div className="block" />
+              </div>
+              <div className="row">
+                <div className="block" />
+                <div className="block" />
+                <div className="block" />
+              </div>
+              <div className="row">
+                <div className="block" />
+                <div className="block" />
+                <div className="block" />
+                <div className="block" />
+              </div>
+              <div className="row">
+                <div className="block" />
+                <div className="block" />
+                <div className="block" />
+              </div>
+              <div className="row">
+                <div className="block" />
+                <div className="block" />
+              </div>
+            </div>
+          </div>
+          <div className="icons-container">
+            <img alt="" className="glasses floating1" src="/images/login/rotatedGlasses.svg" />
+            <TeachIcon className="floating3" />
+            <SpriteIcon name="trowel-home" className="trowel-login text-theme-orange floating2" />
+          </div>
         </div>
+        {renderPrivacyPolicy()}
+        <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={alertShown}
+          autoHideDuration={1500}
+          onClose={() => toggleAlertMessage(false)}
+          message={alertMessage}
+          action={<React.Fragment></React.Fragment>}
+        />
+        <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
       </div>
-      {renderPrivacyPolicy()}
-      <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
-      <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        open={alertShown}
-        autoHideDuration={1500}
-        onClose={() => toggleAlertMessage(false)}
-        message={alertMessage}
-        action={<React.Fragment></React.Fragment>}
-      />
-      <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
-    </div>
+    </React.Suspense>
   );
 };
 

@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import './type.scss';
 import { QuestionTypeEnum } from 'model/question';
 import TypeButton from './TypeButton'
+import QuestionTypePreview from '../baseComponents/QuestionTypePreview';
 
 
 export interface QuestionTypeProps {
@@ -11,13 +12,16 @@ export interface QuestionTypeProps {
   history: any,
   brickId: number,
   questionId: number,
+  setNextQuestion(): void;
+  setPrevFromPhone(): void;
   setQuestionType(type: QuestionTypeEnum): void
-  setHoverQuestion(type: QuestionTypeEnum): void
 }
 
 const QuestionTypePage: React.FC<QuestionTypeProps> = ({
-  questionType, history, brickId, questionId, setQuestionType, setHoverQuestion
+  questionType, history, brickId, questionId, setQuestionType, ...props
 }: QuestionTypeProps) => {
+  const [hoveredType, setHoveredType] = React.useState(QuestionTypeEnum.None);
+
   if (questionType !== QuestionTypeEnum.None) {
     history.push(`/build/brick/${brickId}/investigation/question-component/${questionId}`);
   }
@@ -29,11 +33,11 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
   }
 
   const onHover = (type: QuestionTypeEnum) => {
-    setHoverQuestion(type);
+    setHoveredType(type);
   }
 
   const removeHover = () => {
-    setHoverQuestion(QuestionTypeEnum.None);
+    setHoveredType(QuestionTypeEnum.None);
   }
 
   return (
@@ -158,6 +162,13 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
             />
           </Grid>
         </Grid>
+      </div>
+      <div className="fixed-build-phone">
+        <QuestionTypePreview
+          hoverQuestion={hoveredType}
+          nextQuestion={props.setNextQuestion}
+          prevQuestion={props.setPrevFromPhone}
+        />
       </div>
     </div>
   );

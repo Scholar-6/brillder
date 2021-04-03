@@ -1,13 +1,14 @@
-
 import React from 'react';
+import Y from "yjs";
+import * as Yjs from "yjs";
 import { withStyles } from '@material-ui/core/styles';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import Tooltip from '@material-ui/core/Tooltip';
 import sprite from "assets/img/icons-sprite.svg";
 import './Hint.scss';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import { QuestionTypeEnum } from 'model/question';
 
 
@@ -28,103 +29,46 @@ export enum HintStatus {
   Each
 }
 
-export interface HintState {
-  index: number,
-  status: HintStatus
-  value: string
-  list: string[]
-}
-
 export interface HintProps {
   index: number;
   locked: boolean;
   editOnly: boolean;
-  list: string[];
-  status?: HintStatus;
-  value?: string;
+  hint: Y.Map<any>;
   count?: number;
   component: any;
   questionType: QuestionTypeEnum;
   validationRequired?: boolean;
-  save(): void;
-  onChange(state: HintState): void;
 }
 
 const HintComponent: React.FC<HintProps> = ({
-  index, locked, editOnly, validationRequired, onChange, save, ...props
+  index, locked, editOnly, validationRequired, ...props
 }) => {
-  let initState = {
-    status: HintStatus.All,
-    value: '',
-    index,
-    list: []
-  } as HintState;
-
-  if (props.value) {
-    initState.value = props.value;
-  }
-
-  if (props.list) {
-    initState.list = props.list;
-  }
-
-  if (props.status) {
-    initState.status = props.status;
-  }
-
-  const [state, setState] = React.useState(initState);
-
-  React.useEffect(() => {
-    if(props.value) {
-      setState({ ...state, value: props.value });
-    }
-  /*eslint-disable-next-line*/
-  }, [props.value])
-
-  if (state.index !== index) {
-    setState(initState);
-  }
-
-  if (state.status !== initState.status) {
-    setState(initState);
-  }
-
-  const onHintChanged = (value: string) => {
-    if (locked) { return; }
-    setState({ ...state, value });
-    onChange({ ...state, value });
-  }
-
-  const onHintListChanged = (value: string, index: number) => {
-    if (locked) { return; }
-    let { list } = state;
-    list[index] = value;
-    onChange({ ...state, list });
-  }
+  const [, forceUpdate] = React.useReducer(x => x + 1, 0);
 
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
     if (locked) { return; }
-    setState({ ...state, status });
-    onChange({ ...state, status });
-    save();
+    props.hint.set("status", status);
+    forceUpdate();
   };
 
   const renderHintInputs = () => {
-    if (state.status === HintStatus.All) {
+    if (!props.hint) {
+      return <PageLoader content="...Preparing hints..." />;
+    }
+
+    if (props.hint.get("status") === HintStatus.All) {
       return (
         <div className="hint-container">
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={locked}
-            editOnly={editOnly}
-            data={state.value}
+            sharedData={props.hint.get("value")}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'insertTable', 'uploadImageCustom'
+              'latex', 'insertTable', 'image'
             ]}
-            placeholder="Enter Hint..."
-            validationRequired={validationRequired}
-            onBlur={() => save()}
-            onChange={onHintChanged}
+            imageDialog={true}
+            showToolbar={false}
+            validate={validationRequired}
           />
         </div>
       );
@@ -135,33 +79,26 @@ const HintComponent: React.FC<HintProps> = ({
       return <PageLoader content="...Preparing hints..." />;
     }
 
-    if (state.list.length < props.count) {
-      let list = state.list;
-      for (let i = 0; i < props.count; i++) {
-        if (state.list.length < props.count) {
-          list.push('');
-        } else {
-          setState({ ...state, list });
-          return <PageLoader content="...Preparing hints..." />;
-        }
-      }
+    if (props.hint.toJSON().list.length < props.count) {
+      let list = props.hint.get("list") as Y.Array<any>;
+      const newItems = Array.from({ length: props.count - list.length }).map(() => new Yjs.Text());
+      list.push(newItems);
     }
 
     for (let i = 0; i < props.count; i++) {
       answerHints.push(
         <div className="hint-container" key={i}>
-          <DocumentWirisCKEditor
+          <div className="hint-container-label">Answer {i+1}</div>
+          <QuillEditor
             disabled={locked}
-            editOnly={editOnly}
-            data={state.list[i]}
+            sharedData={props.hint.get("list").get(i)}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'imageUploadCustom'
+              'latex', 'image'
             ]}
-            placeholder="Enter Hint"
-            validationRequired={validationRequired}
-            onBlur={() => save()}
-            onChange={(v: any) => { onHintListChanged(v, i) }}
+            showToolbar={false}
+            imageDialog={true}
+            validate={validationRequired}
           />
         </div>
       );
@@ -170,7 +107,7 @@ const HintComponent: React.FC<HintProps> = ({
   }
 
   const renderToggleButton = () => {
-    const {list} = props.component;
+    let list = props.component.get("list") as Y.Array<any>;
     if (
       !list || list.length <= 1 ||
       props.questionType === QuestionTypeEnum.WordHighlighting ||
@@ -185,7 +122,7 @@ const HintComponent: React.FC<HintProps> = ({
       );
     }
     return (
-      <ToggleButtonGroup className="hint-toggle-group" value={state.status} exclusive onChange={handleStatusChange}>
+      <ToggleButtonGroup className="hint-toggle-group" value={props.hint.get("status")} exclusive onChange={handleStatusChange}>
         <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.Each}>
           Each Answer
         </ToggleButton>

@@ -112,26 +112,28 @@
             color: var(--theme-dark-blue);
           }
           .MuiFormControlLabel-label {
-            font-size: 1.05vw;
+            font-size: $base-build-font-size;
             font-family: $font-family-light !important;
           }
         }
         .arrow-cancel {
           position: absolute;
           right: 1.5vw;
-          &::after, &::before {
+          &::after,
+          &::before {
             background: var(--theme-dark-blue);
           }
-          
+
           &:hover {
-            &::after, &::before {
+            &::after,
+            &::before {
               background: var(--theme-orange);
             }
           }
         }
       }
       .sidebar-footer {
-        border-top: 0.3vw solid var(--white);
+        border-top: 0.1vw solid var(--white);
         position: absolute;
         bottom: 0;
         right: 0;
@@ -139,19 +141,18 @@
         width: 100%;
         background: var(--theme-light-blue);
       }
-      .subjects-filter-v3 {
-        height: calc(100vh - 0.5vh - 5.834vw - 2vw - 2.4vw - 6.5vw - 2vw - 1.8vw - 4.5vw) !important;
-        padding-bottom: 6vh !important;
-      }
     }
     .brick-row-container {
+      display: flex;
+      flex-direction: column;
+      > div {
+        width: 100%;
+      }
       .subjects-column {
-        display: flex;
-        align-items: center;
+        @extend %flexCenter;
         margin-left: 2vw;
         margin-right: 2vw;
         flex-direction: column;
-        justify-content: center;
         height: 100%;
         .subject-row {
           width: 100%;
@@ -228,7 +229,7 @@
         margin-bottom: 1.9vh;
       }
       .subjects-column {
-        justify-content: flex-start;
+        justify-content: flex-start !important;
         align-items: flex-start !important;
       }
     }

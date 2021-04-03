@@ -21,7 +21,7 @@
   .index-box {
     @extend %flexToYCenter;
     height: 4.7vh !important;
-    font-size: 1.05vw !important;
+    font-size: $base-build-font-size !important;
     font-family: $font-family-regular;
   }
   .white-box {
@@ -56,36 +56,6 @@
   }
   .sort-box {
     width: 100%;
-
-    .filter-container {
-      display: flex;
-      margin: 0;
-      width: 100%;
-      .custom-color svg {
-        color: var(--color);
-      }
-
-      .filter-radio,
-      .MuiFormControlLabel-root,
-      .sortBy {
-        padding: 0 !important;
-        margin: 0 !important;
-        margin-right: 0.5vw !important;
-
-        svg {
-          width: 1.25vw;
-          height: 1.25vw;
-          color: var(--theme-orange);
-          padding: 0 !important;
-        }
-      }
-
-      .MuiFormControlLabel-label {
-        font: 1.05vw $font-family-light !important;
-        letter-spacing: 0.06vw;
-      }
-    }
-
     .sort-by-box {
       padding: $sidebar-gutter;
       flex-direction: column;
@@ -374,48 +344,6 @@
         }
       }
     }
-
-    .subjects-filter {
-      margin: 0 $sidebar-gutter;
-      padding: 2vh 0 6vh 0;
-      width: calc(100% - #{$sidebar-gutter * 2});
-
-      @include phone_and_tabletP {
-        height: calc(100vh - 55vw);
-      }
-
-      @include tabletP {
-        height: calc(100vh - 34vh);
-      }
-
-      overflow-y: auto;
-
-      .published-count {
-        font-size: 1.05vw;
-        @extend %textCenter;
-        font-family: $font-family-light;
-      }
-
-      .MuiGrid-container {
-        margin-bottom: 1vh;
-      }
-
-      .MuiRadio-root {
-        color: inherit !important;
-
-        .MuiIconButton-label {
-          color: inherit !important;
-
-          .MuiSvgIcon-root {
-            color: inherit !important;
-          }
-        }
-      }
-
-      .MuiTypography-root {
-        color: var(--white) !important;
-      }
-    }
   }
 
   .empty-filter-content {
@@ -476,7 +404,7 @@
         .glass-eyes-inside {
           opacity: 1;
           .aperture {
-            @include animation(rotating 2s linear infinite)
+            @include animation(rotating 2s linear infinite);
           }
         }
       }

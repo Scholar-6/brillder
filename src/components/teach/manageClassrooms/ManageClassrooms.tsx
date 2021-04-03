@@ -61,6 +61,7 @@ interface UsersListState {
 
   isAdmin: boolean;
   classrooms: ClassroomApi[];
+  individualClassroom: ClassroomApi | undefined;
 
   sortBy: UserSortBy;
   isAscending: boolean;
@@ -75,6 +76,7 @@ interface UsersListState {
   unassignStudent: MUser | null;
   unassignOpen: boolean;
 
+  inviteIdividualOpen: boolean;
   inviteOpen: boolean;
   numStudentsInvited: number;
 
@@ -91,6 +93,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       isLoaded: false,
       users: [],
       classrooms: [],
+      individualClassroom: undefined,
       page: 0,
       pageSize,
       classPageSize: 12,
@@ -117,6 +120,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       unassignOpen: false,
 
       inviteOpen: false,
+      inviteIdividualOpen: false,
       numStudentsInvited: 0,
 
       pageStudentsSelected: false
@@ -156,9 +160,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     let classrooms = await getAllClassrooms();
     if (classrooms) {
       this.prepareClassrooms(classrooms);
+      const individualClassroom = classrooms.find(c => c.subjectId === null && c.name === 'individuals');
       classrooms = classrooms.filter(c => c.subjectId);
       this.setState({
         classrooms,
+        individualClassroom,
         activeClassroom: this.state.activeClassroom ? classrooms.find(c => c.id === this.state.activeClassroom!.id) ?? null : null
       });
     } else {

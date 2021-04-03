@@ -1,6 +1,5 @@
 import React from "react";
 
-import './FirstButton.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { User } from "model/user";
 import map from "components/map";

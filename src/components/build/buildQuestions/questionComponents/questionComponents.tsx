@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { ReactSortable } from "react-sortablejs";
+import React, { useState } from "react";
+import { ReactSortable, Sortable } from "react-sortablejs";
 import { Grid } from '@material-ui/core';
 
 import './questionComponents.scss';
@@ -14,14 +14,17 @@ import MissingWordComponent from '../questionTypes/missingWordBuild/MissingWordB
 import PairMatchComponent from '../questionTypes/pairMatchBuild/pairMatchBuild';
 import VerticalShuffleComponent from '../questionTypes/shuffle/verticalShuffleBuild/verticalShuffleBuild';
 import WordHighlightingComponent from '../questionTypes/highlighting/wordHighlighting/wordHighlighting';
-import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/question';
-import { HintState } from 'components/build/baseComponents/Hint/Hint';
+import { QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/question';
 import { getNonEmptyComponent } from "../../questionService/ValidateQuestionService";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import FixedTextComponent from "../components/Text/FixedText";
-import { TextComponentObj } from "../components/Text/interface";
+import * as Y from "yjs";
+import { generateId } from "../questionTypes/service/questionBuild";
+import QuillGlobalToolbar from "components/baseComponents/quill/QuillGlobalToolbar";
+import { QuillEditorContext } from "components/baseComponents/quill/QuillEditorContext";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import DeleteDialog from "components/build/baseComponents/dialogs/DeleteDialog";
+import { toRenderJSON } from "services/SharedTypeService";
 
 
 type QuestionComponentsProps = {
@@ -30,12 +33,8 @@ type QuestionComponentsProps = {
   editOnly: boolean;
   history: any;
   brickId: number;
-  question: Question;
+  question: Y.Doc;
   validationRequired: boolean;
-  saveBrick(): void;
-  updateFirstComponent(component: TextComponentObj): void;
-  updateComponents(components: any[]): void;
-  setQuestionHint(hintState: HintState): void;
 
   // phone preview
   componentFocus(index: number): void;
@@ -43,69 +42,65 @@ type QuestionComponentsProps = {
 
 const QuestionComponents = ({
   questionIndex, locked, editOnly, history, brickId, question, validationRequired,
-  componentFocus, updateComponents, setQuestionHint, saveBrick, updateFirstComponent
+  componentFocus
 }: QuestionComponentsProps) => {
-  
-  let firstComponent = Object.assign({}, question.firstComponent) as any;
-  if (!firstComponent.type || firstComponent.type !== QuestionComponentTypeEnum.Text) {
-    firstComponent = {
-      type: QuestionComponentTypeEnum.Text,
-      value: ''
-    };
-  }
 
-  const componentsCopy = Object.assign([], question.components) as any[]
-  const [components, setComponents] = useState(componentsCopy);
-  const [questionId, setQuestionId] = useState(question.id);
   const [removeIndex, setRemovedIndex] = useState(-1);
   const [dialogOpen, setDialog] = useState(false);
   const [sameAnswerDialogOpen, setSameAnswerDialog] = useState(false);
+  const editorIdState = useState("");
 
-  useEffect(() => {
-    setComponents(Object.assign([], question.components) as any[]);
-  }, [question]);
+  const questionData = question.getMap();
+  const questionId = questionData.get("id");
 
-  if (questionId !== question.id) {
-    setQuestionId(question.id);
-    setComponents(Object.assign([], question.components));
+  // WARNING: very hacky solution!
+  // Unfortunately react-sortablejs has some weird behaviour when interacting with YJS.
+  // My solution is to generate a unique ID for the sortable everytime two components are swapped.
+  // This forces a re-render of that component so that it retains the correct ordering, rather than swapping them back.
+  const [sortableId, setSortableId] = React.useState(generateId());
+
+  let firstComponent = questionData.get("firstComponent") as Y.Map<any>;
+  if (!firstComponent.get("type") || firstComponent.get("type") !== QuestionComponentTypeEnum.Text) {
+    firstComponent.set("type", QuestionComponentTypeEnum.Text);
+    firstComponent.set("value", '');
   }
 
   const hideSameAnswerDialog = () => setSameAnswerDialog(false);
   const openSameAnswerDialog = () => setSameAnswerDialog(true);
 
+  const components = questionData.get("components") as Y.Array<Y.Map<any>>;
+
   const removeInnerComponent = (componentIndex: number) => {
     if (locked) { return; }
-    const comps = Object.assign([], components) as any[];
-    if(components[componentIndex].type !== QuestionComponentTypeEnum.Component) {
-      comps.splice(componentIndex, 1);
-      setComponents(comps);
-      updateComponents(comps);
-      saveBrick();
+    try {
+      // !! this is very critical part. could lead to deleting unique components.
+      const component = toRenderJSON(components.get(componentIndex));
+      if (component.type === QuestionComponentTypeEnum.Component) {
+        console.log('you tried to review unique component. forbidden');
+      } else {
+        components.delete(componentIndex);
+      }
+      setDialog(false);
+    } catch {
+      console.log('can`t delete component by index ' + componentIndex);
     }
-    setDialog(false);
   }
 
   let canRemove = (components.length > 3) ? true : false;
 
-  const renderDropBox = (component: any, index: number) => {
-    const updatingComponent = (compData: any) => {
-      let copyComponents = Object.assign([], components) as any[];
-      copyComponents[index] = compData;
-      setComponents(copyComponents);
-      updateComponents(copyComponents);
-    }
+  const renderDropBox = (component: Y.Map<any>, index: number) => {
+    if (!component) return;
 
     const setEmptyType = () => {
-      if (component.value) {
+      if (component.get("value")) {
         setDialog(true);
         setRemovedIndex(index);
       } else {
         removeInnerComponent(index);
       }
-      saveBrick();
     }
 
-    const { type } = question;
+    const type = questionData.get("type");
     let uniqueComponent: any;
     if (type === QuestionTypeEnum.ShortAnswer) {
       uniqueComponent = ShortAnswerComponent;
@@ -134,14 +129,14 @@ const QuestionComponents = ({
 
     return (
       <SwitchQuestionComponent
-        questionType={question.type}
-        type={component.type}
+        questionType={type}
+        type={component.get("type")}
         questionIndex={questionIndex}
         index={index}
         locked={locked}
         editOnly={editOnly}
         component={component}
-        hint={question.hint}
+        hint={questionData.get("hint")}
         canRemove={canRemove}
         uniqueComponent={uniqueComponent}
         allDropBoxesEmpty={allDropBoxesEmpty}
@@ -149,19 +144,76 @@ const QuestionComponents = ({
         componentFocus={() => componentFocus(index)}
         setEmptyType={setEmptyType}
         removeComponent={removeInnerComponent}
-        setQuestionHint={setQuestionHint}
-        updateComponent={updatingComponent}
-        saveBrick={saveBrick}
         openSameAnswerDialog={openSameAnswerDialog}
       />
     );
   }
 
-  const setList = (components: any) => {
-    if (locked) { return; }
-    setComponents(components);
-    updateComponents(components);
-    saveBrick();
+  // Use more atomic method (02/02/2021)
+  // const setList = (newComponents: any) => {
+  //   if (locked) { return; }
+  //   // create a new doc and sync it with this one.
+  //   const newDoc = new Y.Doc();
+  //   const oldUpdate = Y.encodeStateAsUpdate(question);
+  //   Y.applyUpdate(newDoc, oldUpdate);
+
+  //   const newComponentsArray = new Y.Array();
+  //   newComponentsArray.push(newComponents.map(convertObject));
+  //   newDoc.getMap().set("questions", newComponentsArray);
+  //   console.log(newDoc.toJSON());
+
+  //   const newState = Y.encodeStateVector(newDoc);
+  //   const newUpdate = Y.encodeStateAsUpdate(question, newState);
+  //   Y.applyUpdate(question, newUpdate);
+  // }
+
+  const createNewComponent = (type: QuestionComponentTypeEnum) => {
+    switch (type) {
+      case QuestionComponentTypeEnum.Text:
+        return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Text, value: new Y.Text(), id: generateId() }));
+      case QuestionComponentTypeEnum.Quote:
+        return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Quote, value: new Y.Text(), id: generateId() }));
+      case QuestionComponentTypeEnum.Image:
+        return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Image, value: '', id: generateId() }));
+      case QuestionComponentTypeEnum.Sound:
+        return new Y.Map(Object.entries({ chosen: false, selected: false, type: QuestionComponentTypeEnum.Sound, value: '', id: generateId() }));
+      case QuestionComponentTypeEnum.Graph:
+        return new Y.Map(Object.entries({
+          chosen: false, selected: false, type: QuestionComponentTypeEnum.Graph, value: new Y.Map(Object.entries({
+            graphSettings: new Y.Map(Object.entries({
+              showSidebar: false,
+              showSettings: false,
+              allowPanning: false,
+              trace: false,
+              pointsOfInterest: false,
+            })),
+            graphState: undefined,
+          })), id: generateId()
+        }));
+    }
+  }
+
+  const onAddComponent = (evt: Sortable.SortableEvent) => {
+    if (locked) return;
+    if (evt.item.dataset.value && (evt.newIndex !== undefined)) {
+      const newComponent = createNewComponent(parseInt(evt.item.dataset.value))
+      if (newComponent) {
+        components.insert(evt.newIndex, [newComponent]);
+      }
+    }
+  }
+
+  const onUpdateComponent = (evt: Sortable.SortableEvent) => {
+    if (locked) return;
+    if (((evt.oldIndex ?? -1) >= 0) && ((evt.newIndex ?? -1) >= 0)) {
+      console.log(evt);
+      components.doc?.transact(() => {
+        const component = components.get(evt.oldIndex!).clone() as Y.Map<any>;
+        components.delete(evt.oldIndex!);
+        components.insert(evt.newIndex!, [component]);
+      });
+      setSortableId(generateId());
+    }
   }
 
   const hideDialog = () => {
@@ -170,7 +222,7 @@ const QuestionComponents = ({
   }
 
   let allDropBoxesEmpty = false;
-  let noComponent = getNonEmptyComponent(components);
+  const noComponent = getNonEmptyComponent(components.toJSON());
   if (noComponent) {
     allDropBoxesEmpty = true;
   }
@@ -184,46 +236,56 @@ const QuestionComponents = ({
   }
 
   return (
-    <div className="questions">
-      <Grid container direction="row" className={validateDropBox(firstComponent)}>
-        <FixedTextComponent
-          locked={locked}
-          editOnly={editOnly}
-          questionId={question.id}
-          data={firstComponent}
-          save={saveBrick}
-          validationRequired={validationRequired}
-          updateComponent={updateFirstComponent}
+    <QuillEditorContext.Provider value={editorIdState}>
+      <QuillGlobalToolbar
+        disabled={locked}
+        availableOptions={[
+          'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
+          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
+        ]}
+      />
+      <div className="questions">
+        <Grid container direction="row" className={validateDropBox(firstComponent)}>
+          <FixedTextComponent
+            locked={locked}
+            editOnly={editOnly}
+            questionId={questionId}
+            data={firstComponent}
+            validationRequired={validationRequired}
+          />
+        </Grid>
+        <ReactSortable
+          key={sortableId}
+          list={components.toJSON()}
+          animation={150}
+          group={{ name: "cloning-group-name", pull: "clone" }}
+          onAdd={onAddComponent}
+          onUpdate={onUpdateComponent}
+          setList={() => { }}
+        >
+          {
+            components.toJSON().map((comp: any, i: number) => (
+              <Grid key={i} container direction="row" className={validateDropBox(comp)}>
+                {renderDropBox(components.get(i), i)}
+              </Grid>
+            ))
+          }
+        </ReactSortable>
+        <DeleteDialog
+          isOpen={dialogOpen}
+          title="Permanently delete<br />this component?"
+          index={removeIndex}
+          submit={removeInnerComponent}
+          close={hideDialog}
         />
-      </Grid>
-      <ReactSortable
-        list={components}
-        animation={150}
-        group={{ name: "cloning-group-name", pull: "clone" }}
-        setList={setList}
-      >
-        {
-          components.map((comp, i) => (
-            <Grid key={`${questionId}-${i}`} container direction="row" className={validateDropBox(comp)}>
-              {renderDropBox(comp, i)}
-            </Grid>
-          ))
-        }
-      </ReactSortable>
-      <DeleteDialog
-        isOpen={dialogOpen}
-        title="Permanently delete<br />this component?"
-        index={removeIndex}
-        submit={removeInnerComponent}
-        close={hideDialog}
-      />
-      <ValidationFailedDialog
-        isOpen={sameAnswerDialogOpen}
-        header="Looks like some answers are the same."
-        label="Correct answers could be marked wrong. Please make sure all answers are different."
-        close={hideSameAnswerDialog}
-      />
-    </div>
+        <ValidationFailedDialog
+          isOpen={sameAnswerDialogOpen}
+          header="Looks like some answers are the same."
+          label="Correct answers could be marked wrong. Please make sure all answers are different."
+          close={hideSameAnswerDialog}
+        />
+      </div>
+    </QuillEditorContext.Provider>
   );
 }
 

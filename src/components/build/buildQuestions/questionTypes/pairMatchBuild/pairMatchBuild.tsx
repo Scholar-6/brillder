@@ -1,71 +1,64 @@
-import React, {useEffect} from 'react'
+import React from 'react';
+import * as Y from "yjs";
 import { Grid } from '@material-ui/core';
 
 import './pairMatchBuild.scss'
-import {Answer} from './types';
 import { UniqueComponentProps } from '../types';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import PairAnswerComponent from './answer/pairAnswer';
 import PairOptionComponent from './option/pairOption';
-import { showSameAnswerPopup } from '../service/questionBuild';
+import { generateId, showSameAnswerPopup } from '../service/questionBuild';
 
 
 export interface PairMatchBuildProps extends UniqueComponentProps { }
 
-export const getDefaultPairMatchAnswer = () => {
-  const newAnswer = () => ({ option: "", value: "" });
+export const getDefaultPairMatchAnswer = (ymap: Y.Map<any>) => {
+  const newAnswer = () => new Y.Map(Object.entries({ option: new Y.Text(), value: new Y.Text(), id: generateId() }));
 
-  return { list: [newAnswer(), newAnswer(), newAnswer()] };
+  const list = new Y.Array();
+  list.push([newAnswer(), newAnswer(), newAnswer()]);
+
+  ymap.set("list", list);
 }
 
 const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, openSameAnswerDialog
 }) => {
-  const newAnswer = () => ({ option: "", value: "" });
+  const newAnswer = () => new Y.Map(Object.entries({ option: new Y.Text(), value: new Y.Text(), id: generateId() }));
 
-  if (!data.list) {
-    data.list = getDefaultPairMatchAnswer().list;
-  } else if (data.list.length < 3) {
-    data.list.push(newAnswer());
-    updateComponent(data);
-  }
-
-  const [state, setState] = React.useState(data);
-  useEffect(() => { setState(data) }, [data]);
-
-  const update = () => {
-    setState(Object.assign({}, state));
-    updateComponent(state);
-  }
+  let list = data.get("list") as Y.Array<any>;
 
   const addAnswer = () => {
     if (locked) { return; }
-    state.list.push(newAnswer());
-    update();
-    save();
+    list.push([newAnswer()]);
+  }
+
+  if (!list) {
+    getDefaultPairMatchAnswer(data);
+    list = data.get("list");
+  } else if (list.length < 3) {
+    addAnswer();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
-    state.list.splice(index, 1);
-    update();
-    save();
+    list.delete(index);
   }
 
-  const renderAnswer = (answer: Answer, i: number) => {
+  const renderAnswer = (answer: Y.Map<any>, i: number) => {
     return (
-      <Grid key={i} container direction="row" className="answers-container">
+      <Grid key={answer.get("id")} container direction="row" className="answers-container">
         <PairOptionComponent
           index={i} locked={locked} editOnly={editOnly} answer={answer}
           validationRequired={validationRequired}
-          update={update} save={save}
+          onBlur={() => showSameAnswerPopup(i, list.toJSON(), openSameAnswerDialog)}
         />
         <PairAnswerComponent
-          index={i} length={data.list.length} locked={locked} editOnly={editOnly} answer={answer}
+          index={i} length={list.length} locked={locked} editOnly={editOnly} answer={answer}
           validationRequired={validationRequired}
-          removeFromList={removeFromList} update={update} save={save}
-          onBlur={() => showSameAnswerPopup(i, state.list, openSameAnswerDialog)}
+          removeFromList={removeFromList}
+          onBlur={() => showSameAnswerPopup(i, list.toJSON(), openSameAnswerDialog)}
         />
       </Grid>
     );
@@ -78,7 +71,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
         These will be randomised in the play interface.
       </div>
       {
-        state.list.map((answer: Answer, i: number) => renderAnswer(answer, i))
+        list.map((answer: Y.Map<any>, i: number) => renderAnswer(answer, i))
       }
       <AddAnswerButton
         locked={locked}

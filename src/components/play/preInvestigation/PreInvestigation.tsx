@@ -7,7 +7,7 @@ import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
-import { getSynthesisTime } from "../services/playTimes";
+import { getLiveTime } from "../services/playTimes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
 import TypingLabel from "components/baseComponents/TypingLabel";
 import { User } from "model/user";
@@ -42,9 +42,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
   if (isMoving) {
     return (
       <div className="brick-row-container live-container">
-        <div className="fixed-upper-b-title">
-          {brick.title}
-        </div>
+        <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
         <div className="brick-container play-preview-panel live-page after-cover-page">
           <div className="introduction-page">
             <SecondsCountDown onEnd={props.moveNext} />
@@ -54,18 +52,16 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
     );
   }
 
-  const minutes = getSynthesisTime(brick.brickLength);
+  const minutes = getLiveTime(brick.brickLength);
 
   return (
     <div className="brick-row-container live-container">
-      <div className="fixed-upper-b-title">
-        {brick.title}
-      </div>
+      <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       <div className="brick-container play-preview-panel live-page after-cover-page pre-investigation">
         <div className="introduction-page">
           <div className="after-cover-main-content">
             <div className="title">
-              <TypingLabel label="Time for some questions." onEnd={() => {}} />
+              <TypingLabel label="Time for some questions." onEnd={() => { }} />
             </div>
             <div className="like-buttons-container">
               <div className="x-center">
@@ -99,10 +95,10 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
         {props.user &&
         <div className="fixed-helpers-container">
           <div className="circles">
-            <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg"  />
-          </div>
-          <div className="prep">
-            Click here to go back to Prep tasks
+            <div className="prep">
+              <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg" />
+              <span>Click here to go back to Prep tasks</span>
+            </div>
           </div>
         </div>}
       </div>

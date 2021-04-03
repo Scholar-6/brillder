@@ -1,15 +1,15 @@
 import React from "react";
+import * as Y from "yjs";
 import Grid from "@material-ui/core/Grid";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import queryString from 'query-string';
 import { History } from 'history';
 
 import './ProposalReview.scss';
-import { AcademicLevel, Brick, BrickStatus, KeyWord } from "model/brick";
+import { AcademicLevel, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import YoutubeAndMathInHtml from "components/play/baseComponents/YoutubeAndMath";
 import { BrickFieldNames, PlayButtonStatus, PrepRoutePart } from '../../model';
@@ -20,6 +20,8 @@ import { Transition } from "react-transition-group";
 import NextButton from "./NextButton";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import CopiedDialog from "./CopiedDialog";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import { toRenderJSON } from "services/SharedTypeService";
 import DifficultySelect from "../brickTitle/DifficultySelect";
 import KeyWordsComponent from "../brickTitle/KeyWords";
 
@@ -29,7 +31,7 @@ export enum BookState {
 }
 
 interface ProposalProps {
-  brick: Brick;
+  brick: Y.Map<any>;
   user: User;
   canEdit: boolean;
   history: History;
@@ -37,7 +39,6 @@ interface ProposalProps {
   baseUrl: string;
   saveBrick(): void;
   setBrickField(name: BrickFieldNames, value: string): void;
-  setKeywords(keywords: KeyWord[]): void;
   setAcademicLevel(a: AcademicLevel): void;
   saveAndPreview(): void;
 }
@@ -64,11 +65,11 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     }
 
     let briefCommentExpanded = false;
-    const {brick} = props;
+    const brick = props.brick.toJSON();
     
     let isAuthor = false;
     try {
-      isAuthor = props.brick.author.id === props.user.id;
+      isAuthor = props.brick.get("authorId") === props.user.id;
     } catch { }
 
     // expend suggestions for returned author
@@ -110,7 +111,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   handleKey(e: any) {
     if (e.target.tagName === "INPUT") { return; }
     if (e.target.tagName === "TEXTAREA") { return; }
-    if (e.target.classList.contains("ck-content")) { return; }
+    if (e.target.classList.contains("ql-editor")) { return; }
 
     if (this.state.bookHovered) {
       if (rightKeyPressed(e)) {
@@ -169,7 +170,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   }
 
   renderEditableTextarea(name: BrickFieldNames, placeholder: string = "Please fill in..", color?: string) {
-    const { brick } = this.props;
+    const brick = this.props.brick.toJSON();
     if (this.state.mode) {
       return (
         <textarea
@@ -177,7 +178,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           onChange={e => {
             e.stopPropagation();
             const title = e.target.value.substr(0, 49);
-            this.props.setBrickField(name, title);
+            this.props.brick.set(name, title);
           }}
           placeholder={placeholder}
           value={brick[name]}
@@ -195,14 +196,14 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   }
 
   renderEditableField(name: BrickFieldNames, placeholder: string = "Please fill in..", color?: string) {
-    const { brick } = this.props;
+    const brick = this.props.brick.toJSON();
     if (this.state.mode) {
       return (
         <input
           disabled={!this.props.canEdit}
           onChange={e => {
             e.stopPropagation();
-            this.props.setBrickField(name, e.target.value)
+            this.props.brick.set(name, e.target.value);
           }}
           placeholder={placeholder}
           value={brick[name]}
@@ -225,21 +226,17 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     const { brick } = this.props;
     if (this.state.mode) {
       return (
-        <DocumentWirisCKEditor
+        <QuillEditor
           disabled={!this.props.canEdit}
-          placeholder={placeholder}
-          data={brick[name]}
+          sharedData={brick.get(name)}
+          showToolbar={true}
           toolbar={[
-            'bold', 'italic', 'latex', 'mathType'
+            'bold', 'italic', 'latex'
           ]}
-          onBlur={() => { }}
-          onChange={v => {
-            this.props.setBrickField(name, v);
-          }}
         />
       );
     }
-    const value = brick[name];
+    const value = toRenderJSON(brick.get(name));
     if (value) {
       return  <MathInHtml value={value} />;
     }
@@ -250,21 +247,20 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     const { brick } = this.props;
     if (this.state.mode) {
       return (
-        <DocumentWirisCKEditor
+        <QuillEditor
           disabled={!this.props.canEdit}
-          data={brick[name]}
-          placeholder="Enter Brief Here..."
+          sharedData={brick.get(name)}
+          showToolbar={true}
+          allowLinks={true}
           toolbar={[
-            'bold', 'italic', 'fontColor', 'latex', 'mathType', 'bulletedList', 'numberedList'
+            'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList'
           ]}
-          onBlur={() => { }}
-          onChange={v => this.props.setBrickField(name, v)}
         />
       );
     }
-    const value = brick[name];
+    const value = toRenderJSON(brick.get(name));
     if (value) {
-      return <MathInHtml value={brick[name]} />;
+      return <MathInHtml value={value} />;
     }
     return <span style={{ color: "#757575" }}>Please fill in..</span>;
   }
@@ -273,26 +269,22 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     const { brick } = this.props;
     if (this.state.mode) {
       return (
-        <DocumentWirisCKEditor
+        <QuillEditor
           disabled={!this.props.canEdit}
-          data={brick.prep}
-          placeholder="Enter Instructions, Links to Videos and Webpages Here…"
-          mediaEmbed={true}
-          link={true}
+          sharedData={brick.get("prep")}
+          showToolbar={true}
+          allowMediaEmbed={true}
+          allowLinks={true}
+          imageDialog={true}
           toolbar={[
-            'bold', 'italic', 'fontColor', 'latex', 'mathType', 'bulletedList', 'numberedList', 'uploadImageCustom'
+            'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
           ]}
-          blockQuote={true}
-          uploadStarted={() => this.setState({uploading: true})}
-          uploadFinished={() => this.setState({uploading: false})}
-          onBlur={() => { }}
-          onChange={v => this.props.setBrickField(BrickFieldNames.prep, v)}
         />
       );
     }
-    const value = brick.prep;
+    const value = toRenderJSON(brick.get("prep"));
     if (value) {
-      return <YoutubeAndMathInHtml value={brick.prep} />;
+      return <YoutubeAndMathInHtml value={value} />;
     }
     return <span style={{ color: "#757575" }}>Please fill in..</span>;
   }
@@ -300,15 +292,16 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   render() {
     const { brick } = this.props;
 
-    if (brick.title) {
-      setBrillderTitle(brick.title);
+    if (brick.get("title")) {
+      setBrillderTitle(brick.get("title"));
     }
 
     const renderAuthorRow = () => {
-      const { author } = brick;
+      const author = brick.get("author");
       if (!author) { return ''; }
 
-      const { firstName, lastName } = author;
+      const firstName = author.get("firstName").toString();
+      const lastName = author.get("lastName").toString();
 
       return (
         <div className="names-row">
@@ -345,14 +338,15 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             <div className="proposal-titles">
               <div className="title">
                 {this.renderEditableTextarea(BrickFieldNames.title)}
-                {brick.adaptedFrom && '(ADAPTED)'}
+                {/* TODO: Add adaptedFrom field */}
+                {brick.get("adaptedFrom") && '(ADAPTED)'}
               </div>
-              <div><KeyWordsComponent isHashtags={true} disabled={!this.props.canEdit} keyWords={this.props.brick.keywords} onChange={this.props.setKeywords} /></div>
-              <div><DifficultySelect disabled={!this.props.canEdit} level={this.props.brick.academicLevel} onChange={this.props.setAcademicLevel} /></div>
+              <div><KeyWordsComponent isHashtags={true} disabled={!this.props.canEdit} keyWords={this.props.brick.get("keywords")} /></div>
+              <div><DifficultySelect disabled={!this.props.canEdit} level={this.props.brick.get("academicLevel")} onChange={this.props.setAcademicLevel} /></div>
               <p className="text-title m-t-3 bold">Open Question:</p>
               {this.renderOpenQuestionField()}
               <p className="text-title brick-length m-t-3">
-                <span className="bold">Brick Length:</span> <span className="brickLength">{brick.brickLength} mins.</span>
+                <span className="bold">Brick Length:</span> <span className="brickLength">{brick.get("brickLength")} mins.</span>
               </p>
             </div>
           </div>
@@ -391,7 +385,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                       isPlanBrief={true}
                       mode={!this.state.briefCommentPanelExpanded}
                       currentLocation={CommentLocation.Brief}
-                      currentBrick={this.props.brick}
+                      currentBrick={this.props.brick.toJSON()}
                       onHeaderClick={() => this.setState({ briefCommentPanelExpanded: !this.state.briefCommentPanelExpanded })}
                     />
                   </div>
@@ -412,7 +406,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
               <div className="proposal-comments-panel prep" onClick={e => e.stopPropagation()}>
                 <CommentPanel
                   currentLocation={CommentLocation.Prep}
-                  currentBrick={this.props.brick}
+                  currentBrick={this.props.brick.toJSON()}
                 />
               </div>
             </div>
@@ -497,7 +491,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         </Grid>
         <CopiedDialog
           isOpen={this.state.isCopyOpen}
-          title={this.props.brick.title}
+          title={this.props.brick.get("title")}
           close={() => this.setState({isCopyOpen: false})}
         />
       </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { getLiveTime, getPrepareTime, getReviewTime, getSynthesisTime } from "../services/playTimes";
 
 
 interface IntroductionProps {
@@ -6,22 +7,10 @@ interface IntroductionProps {
 }
 
 const IntroductionDetails: React.FC<IntroductionProps> = ({ brickLength }) => {
-  let prepare = 5;
-  let investigation = 8;
-  let synthesis = 4;
-  let review = 3;
-
-  if (brickLength === 40) {
-    prepare = 10;
-    investigation = 16;
-    synthesis = 8;
-    review = 6;
-  } else if (brickLength === 60) {
-    prepare = 15;
-    investigation = 24;
-    synthesis = 12;
-    review = 9;
-  }
+  const prepare = getPrepareTime(brickLength);
+  const investigation = getLiveTime(brickLength);
+  const synthesis = getSynthesisTime(brickLength);
+  const review = getReviewTime(brickLength);
 
   return (
     <div className="intro-text-row">

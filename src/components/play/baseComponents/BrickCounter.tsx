@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
 import './BrickCounter.scss';
-import {Moment} from 'moment';
-let moment = require('moment');
+import moment, {Moment} from 'moment';
 
 interface CounterProps {
   isArrowUp?: boolean;

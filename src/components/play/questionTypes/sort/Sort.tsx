@@ -46,6 +46,7 @@ interface SortState {
 class Sort extends CompComponent<SortProps, SortState> {
   constructor(props: SortProps) {
     super(props);
+    console.log(props.component);
 
     let userCats:UserCategory[] = [];
     let choices:SortAnswer[] = [];

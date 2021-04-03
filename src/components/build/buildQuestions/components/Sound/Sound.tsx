@@ -1,4 +1,7 @@
 import React from "react";
+import Y from "yjs";
+import _ from "lodash";
+
 import "./Sound.scss";
 import Dropzone from "./Dropzone";
 import PauseButton from "./components/buttons/PauseButton";
@@ -12,9 +15,8 @@ import ValidationFailedDialog from "components/baseComponents/dialogs/Validation
 interface SoundProps {
   locked: boolean;
   index: number;
-  data: any;
-  save(): void;
-  updateComponent(component: any, index: number): void;
+  data: Y.Map<any>;
+
   //phone preview
   onFocus(): void;
 }
@@ -24,6 +26,7 @@ interface SoundState {
   blobUrl: string;
   audio: HTMLAudioElement;
   cantSave: boolean;
+  observer: any;
 }
 
 export enum AudioStatus {
@@ -41,8 +44,8 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
 
     let initAudio = new Audio();
     let initStatus = AudioStatus.Start;
-    if (props.data && props.data.value) {
-      initAudio = new Audio(fileUrl(props.data.value));
+    if (props.data && props.data.get("value")) {
+      initAudio = new Audio(fileUrl(props.data.get("value")));
       initStatus = AudioStatus.Recorded;
     }
 
@@ -50,8 +53,28 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
       status: initStatus,
       blobUrl: "",
       audio: initAudio,
-      cantSave: false
+      cantSave: false,
+      observer: null
     };
+  }
+
+  componentDidMount() {
+    const observer = _.throttle((evt: any) => {
+      const newValue = this.props.data.get("value");
+      console.log(newValue);
+      if (newValue) {
+        const updatedAudio = new Audio(fileUrl(newValue));
+        this.setState({ audio: updatedAudio, status: AudioStatus.Recorded });
+      }
+    }, 200);
+    this.props.data.observe(observer);
+    this.setState({observer});
+  }
+
+  componentWillUnmount() {
+    if (this.state.observer) {
+      this.props.data.unobserve(this.state.observer);
+    }
   }
 
   onSave(blob: any) {
@@ -114,11 +137,8 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
       uploadFile(
         file,
         (res: any) => {
-          let comp = Object.assign({}, this.props.data);
-          comp.value = res.data.fileName;
+          this.props.data.set("value", res.data.fileName);
           this.setRecorded();
-          this.props.updateComponent(comp, this.props.index);
-          this.props.save();
         },
         () => {
           this.setState({cantSave: true});
@@ -130,8 +150,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
   render() {
     const { locked } = this.props;
     const { status } = this.state;
-    let canDelete =
-      status === AudioStatus.Start || status === AudioStatus.Recording;
+    let canDelete = status === AudioStatus.Start || status === AudioStatus.Recording;
     
     return (
       <div className="react-recording" onClick={this.props.onFocus}>
@@ -176,4 +195,4 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
   }
 }
 
-export default SoundComponent;
+export default React.memo(SoundComponent);

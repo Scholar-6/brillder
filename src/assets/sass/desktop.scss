@@ -10,6 +10,7 @@
 @import './utils/desktop/form-elements-desktop';
 @import './utils/desktop/dropdowns-desktop';
 
+
 #launcher {
   left: 0 !important;
   width: 5.7vw !important;
@@ -20,7 +21,6 @@
 .beta-text {
   color: var(--theme-light-blue);
 }
-
 
 .short-description {
   cursor: pointer;
@@ -117,59 +117,33 @@
   }
 }
 
-.dialog-header {
-  .r-popup-title {
-    font-size: 2vw;
-  }
-  .r-radio-row {
-    .MuiTypography-root {
-      font-size: 1.4vw;
-    }
-    .MuiSvgIcon-root {
-      color: var(--white) !important;
-    }
-  }
-  .r-day-date-row {
-    transition: all 300ms ease-out;
-    overflow: hidden;
-    &.r-hidden {
-      height: 0;
-    }
-  }
-  .r-radio-buttons {
-    margin-top: 1vw;
-    .MuiTypography-root {
-      font-size: 1.3vw;
-    }
-    .MuiSvgIcon-root {
-      color: var(--white);
-    }
-    .MuiSelect-root {
-      font-size: 1.2vw;
-    }
-    .MuiInputBase-input {
-      padding: 0.2vw;
-    }
-    .MuiInputBase-root {
-      background: var(--theme-dark-blue) !important;
-    }
-  }
-}
-
 // tooltip
 .css-custom-tooltip {
   position: absolute;
   opacity: 0;
-  font-size: 1.05vw;
+  font-size: $base-build-font-size;
   transition: all 300ms ease-out;
   border-radius: 0.5vw;
   color: var(--theme-dark-blue);
   background: var(--tab-gray);
   padding-left: 0.5vw;
   display: block;
-  position: absolute;
 }
 
 .short-brick-info {
   width: calc(100% - 4.4vw);
+}
+
+// brick title
+.q-brick-title {
+  @extend %ellipsis;
+  div {
+    display: inline;
+  }
+  p {
+    display: inline;
+  }
+  br {
+    display: none;
+  }
 }

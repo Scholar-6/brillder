@@ -1,15 +1,15 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .categorise-build {
   @extend %textCenter;
   > div {
     margin-bottom: 0.4vh;
   }
-  > .document-editor {
-    .ck-editor {
-      .ck-content {
+  > .quill-document-editor {
+    .ql-container {
+      .ql-editor {
         padding: 1vw;
         text-align: center !important;
         overflow: hidden;
@@ -26,10 +26,10 @@
     > div {
       margin-bottom: 0.2vw;
     }
-    > .document-editor {
+    > .quill-document-editor {
       position: relative;
-      .ck-editor {
-        .ck-content {
+      .ql-container {
+        .ql-editor {
           padding: 1vw !important;
         }
       }
@@ -40,9 +40,9 @@
     input {
       padding-top: 9.5vh;
     }
-    .document-editor {
-      .ck-editor {
-        .ck-content {
+    .quill-document-editor {
+      .ql-container {
+        .ql-editor {
           padding: 9vh 1vw 1vw 1vw;
         }
       }
@@ -50,10 +50,15 @@
   }
   .categorise-answer {
     position: relative;
+    .quill-document-editor {
+      .ql-editor {
+        padding-top: 5vh;
+      }
+    }
     &:first-child {
-      .document-editor {
-        .ck-editor {
-          .ck-content {
+      .quill-document-editor {
+        .ql-container {
+          .ql-editor {
             border-bottom-left-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
           }
@@ -61,18 +66,18 @@
       }
     }
     &:not(:first-child):not(:last-child) {
-      .document-editor {
-        .ck-editor {
-          .ck-content {
+      .quill-document-editor {
+        .ql-container {
+          .ql-editor {
             border-radius: 0 !important;
           }
         }
       }
     }
     &:last-child {
-      .document-editor {
-        .ck-editor {
-          .ck-content {
+      .quill-document-editor {
+        .ql-container {
+          .ql-editor {
             border-top-left-radius: 0 !important;
             border-top-right-radius: 0 !important;
           }

@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import Y from "yjs";
 import { Grid } from '@material-ui/core';
+import _ from "lodash";
 
 import './Image.scss'
 import {fileUrl, uploadFile} from 'components/services/uploadFile';
 import ImageDialog from './ImageDialog';
-import { ImageAlign, ImageComponentData } from './model';
+import { ImageAlign } from './model';
 import ImageCloseDialog from './ImageCloseDialog';
 
 
 interface ImageProps {
   locked: boolean;
   index: number;
-  data: ImageComponentData;
+  data: Y.Map<any>;
   validationRequired: boolean;
-  save(): void;
-  updateComponent(component:any, index:number): void;
 
   // phone preview
   onFocus(): void;
@@ -23,45 +23,47 @@ interface ImageProps {
 const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   const [isOpen, setOpen] = React.useState(false);
   const [file, setFile] = React.useState(null as File | null);
-  const [fileName, setFileName] = React.useState(props.data.value);
+  const [fileName, setFileName] = React.useState(props.data.get("value").toString());
   const [isCloseOpen, setCloseDialog] = React.useState(false);
-  const [invalid, setInvalid] = React.useState(props.validationRequired && !props.data.value);
+  const [invalid, setInvalid] = React.useState(props.validationRequired && !props.data.get("value"));
 
   useEffect(() => {
-    setFileName(props.data.value);
-    if (props.data.value) {
+    setFileName(props.data.get("value"));
+    if (props.data.get("value")) {
       setInvalid(false);
     } else if (props.validationRequired) {
       setInvalid(true);
     }
   }, [props]);
 
-  const upload = (file: File, source: string, caption: string, align: ImageAlign, height: number) => {
-    uploadFile(file, (res: any) => {
-      let comp = Object.assign({}, props.data);
-      comp.value = res.data.fileName;
-      comp.imageSource = source;
-      comp.imageCaption = caption;
-      comp.imageAlign= align;
-      comp.imageHeight = height;
-      comp.imagePermision = true;
-      props.updateComponent(comp, props.index);
-      setFileName(comp.value);
-      props.save();
-      setOpen(false);
-    }, () => { });
-  }
+  // observe for incoming changes
+  useEffect(() => {
+    const observer = _.throttle((evt: any) => {
+      const newValue = props.data.get("value");
+      setFileName(newValue);
+    }, 200);
+
+    props.data.observe(observer);
+    return () => { props.data.unobserve(observer) }
+  // eslint-disable-next-line
+  }, []);
 
   const updateData = (source: string, caption: string, align: ImageAlign, height: number) => {
-    let comp = Object.assign({}, props.data);
-    comp.imageSource = source;
-    comp.imageCaption = caption;
-    comp.imageAlign= align;
-    comp.imageHeight = height;
-    comp.imagePermision = true;
-    props.updateComponent(comp, props.index);
-    props.save();
+    props.data.set("imageSource", source);
+    props.data.set("imageCaption", caption);
+    props.data.set("imageAlign", align);
+    props.data.set("imageHeight", height);
+    props.data.set("imagePermision", true);
     setOpen(false);
+  }
+
+  const upload = (file: File, source: string, caption: string, align: ImageAlign, height: number) => {
+    uploadFile(file, (res: any) => {
+      updateData(source, caption, align, height);
+      props.data.set("value", res.data.fileName);
+      setFileName(props.data.get("value"));
+      setOpen(false);
+    }, () => { });
   }
 
   let className = 'dropzone';
@@ -76,7 +78,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   return (
     <div className="image-drag-n-drop" onClick={props.onFocus}>
       <div className={className} onClick={() => {
-        if (props.data.value) {
+        if (props.data.get("value")) {
           setOpen(true);
         } else {
           let el = document.createElement("input");
@@ -107,7 +109,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
         }
       </div>
       <ImageDialog
-        initData={props.data}
+        initData={props.data.toJSON()}
         open={isOpen}
         setDialog={() => setCloseDialog(true)}
         initFile={file}
@@ -126,5 +128,4 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   );
 }
 
-
-export default ImageComponent
+export default React.memo(ImageComponent);

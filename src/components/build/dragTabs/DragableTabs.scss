@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 $distance: 2px;
 $tile-height: 100%;
@@ -151,7 +151,7 @@ $tile-height: 100%;
     border-radius: 50%;
     @extend %flexCenter;
     &:before {
-      content: ' ';
+      content: " ";
       position: absolute;
       left: 0;
       right: 0;
@@ -307,7 +307,6 @@ $tile-height: 100%;
   .drag-tile-container.active {
     .drag-tile {
       background: white !important;
-      
       .tab-number {
         font-family: $font-family-bold !important;
       }
@@ -318,7 +317,7 @@ $tile-height: 100%;
       }
       &.invalid {
         .tab-number {
-         color: var(--white) !important;
+          color: var(--white) !important;
         }
         .svg {
           color: var(--white) !important;
@@ -332,4 +331,9 @@ $tile-height: 100%;
       }
     }
   }
+}
+
+// plan tab
+.drag-tabs .drag-tile-container.plan-tab {
+  margin-right: 2px;
 }

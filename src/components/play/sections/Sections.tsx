@@ -34,9 +34,7 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="brick-row-container live-container">
-      <div className="fixed-upper-b-title text-white">
-        {brick.title}
-      </div>
+      <div className="fixed-upper-b-title text-white q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       <div className="brick-container play-preview-panel live-page after-cover-page">
         <div className="introduction-page">
           <div className="after-cover-main-content">

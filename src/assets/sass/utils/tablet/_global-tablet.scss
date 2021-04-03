@@ -7,10 +7,10 @@ body,
   font-family: $font-family-regular;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#root {
+  overflow: hidden;
+  width: 100%;
   height: 100vh;
+  position: fixed;
 }
 
 h1,
@@ -203,7 +203,7 @@ h3 {
   @extend %textCenter;
   text-transform: none !important;
   width: 100%;
-  border-radius: 0.6vw !important;
+  border-radius: $editor-radius !important;
   background-color: var(--tab-gray) !important;
   opacity: 1;
   @include phone_and_tabletP {
@@ -259,12 +259,6 @@ h3 {
 }
 .short-answer-input.correct {
   $border-radius: 1vw;
-  .ck-editor {
-    border-top-left-radius: $border-radius;
-    border-top-right-radius: $border-radius;
-    padding-left: $border-radius;
-    background: var(--theme-green) !important;
-  }
 
   .question-hint {
     padding-left: 1vw;
@@ -273,11 +267,6 @@ h3 {
   }
   @include phone_and_tabletP {
     $border-radius: 2vw;
-    .ck-editor {
-      border-top-left-radius: $border-radius;
-      border-top-right-radius: $border-radius;
-      padding-left: $border-radius;
-    }
 
     .question-hint {
       border-bottom-left-radius: $border-radius;

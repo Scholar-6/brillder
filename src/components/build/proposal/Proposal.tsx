@@ -1,6 +1,6 @@
 import React from "react";
+import * as Y from "yjs";
 import { Route } from "react-router-dom";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { connect } from "react-redux";
 import { History } from "history";
 
@@ -15,7 +15,6 @@ import BrickLength from "./questionnaire/brickLength/brickLength";
 import Brief from "./questionnaire/brief/brief";
 import Prep from "./questionnaire/prep/prep";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
-import ProposalReview from "./questionnaire/proposalReview/ProposalReview";
 import { Brick, Author } from "model/brick";
 import { User } from "model/user";
 import CloseProposalDialog from "components/build/baseComponents/dialogs/CloseProposalDialog";
@@ -25,16 +24,13 @@ import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames, BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PlayButtonStatus, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./model";
 import { validateQuestion } from "components/build/questionService/ValidateQuestionService";
-import {
-  parseQuestion,
-  ApiQuestion,
-} from "components/build/questionService/QuestionService";
 import map from "components/map";
 
 import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
-import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
+import { YJSContext } from "../baseComponents/YJSProvider";
+import { toRenderJSON } from "services/SharedTypeService";
 
 interface ProposalProps {
   history: History;
@@ -45,6 +41,7 @@ interface ProposalProps {
   brick: Brick;
   user: User;
   saveBrick(brick: Brick): Promise<Brick | null>;
+  fetchBrick(brickId: number): Promise<Brick | null>;
   createBrick(brick: Brick): Promise<Brick | null>;
   socketStartEditing(brickId: number): void;
 }
@@ -60,6 +57,9 @@ interface ProposalState {
 }
 
 class Proposal extends React.Component<ProposalProps, ProposalState> {
+  static contextType = YJSContext;
+  context!: React.ContextType<typeof YJSContext>;
+
   constructor(props: ProposalProps) {
     super(props);
     let subjectId = 0;
@@ -97,10 +97,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       setLocalBrick(brick);
     }
 
-    if (initBrick.id) {
-      this.props.socketStartEditing(initBrick.id); // start editing in socket as well.
-    }
-
     this.state = {
       brick: initBrick,
       saved: false,
@@ -124,7 +120,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
 
   async handleKey(e: any) {
     if (e.target.tagName === "INPUT") { return; }
-    if (e.target.classList.contains("ck-content")) { return; }
+    if (e.target.classList.contains("ql-editor")) { return; }
 
     const {history} = this.props;
     const {pathname} = this.props.location;
@@ -198,18 +194,23 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     setLocalBrick(brick);
   }
 
-  setCore = (isCore: boolean) =>
+  setCore = (isCore: boolean) => {
     this.saveLocalBrick({ ...this.state.brick, isCore });
-  setSubject = (subjectId: number) =>
-    this.saveLocalBrick({ ...this.state.brick, subject: undefined, subjectId });
-  setCoreAndSubject = (subjectId: number, isCore: boolean) => 
+    this.context?.ydoc.getMap("brick").set("isCore", isCore);
+  }
+  setSubject = (subjectId: number) => {
+    this.saveLocalBrick({ ...this.state.brick, subjectId });
+    this.context?.ydoc.getMap("brick").set("subjectId", subjectId);
+  }
+  setCoreAndSubject = (subjectId: number, isCore: boolean) => {
     this.saveLocalBrick({ ...this.state.brick, subjectId, isCore });
+    this.context?.ydoc.getMap("brick").set("isCore", isCore);
+    this.context?.ydoc.getMap("brick").set("subjectId", subjectId);
+  }
   setTitles = (titles: any) =>
     this.saveLocalBrick({ ...this.state.brick, ...titles });
   setKeywords = (keywords: KeyWord[]) =>
     this.saveLocalBrick({ ...this.state.brick, keywords});
-  setAcademicLevel = (academicLevel: AcademicLevel) =>
-    this.saveLocalBrick({ ...this.state.brick, academicLevel});
   setOpenQuestion = (openQuestion: string) =>
     this.saveLocalBrick({ ...this.state.brick, openQuestion } as Brick);
   setBrief = (brief: string) =>
@@ -227,8 +228,14 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   setLength = (brickLength: BrickLengthEnum) => {
     let brick = { ...this.state.brick, brickLength } as Brick;
     this.saveLocalBrick(brick);
+    this.context?.ydoc.getMap("brick").set("brickLength", brickLength);
     return brick;
   };
+
+  setAcademicLevel = (academicLevel: AcademicLevel) => {
+    this.saveLocalBrick({ ...this.state.brick, academicLevel});
+    this.context?.ydoc.getMap("brick").set("academicLevel", academicLevel);
+  }
 
   setLengthAndSave = (brickLength: BrickLengthEnum) => {
     const canEdit = canEditBrick(this.state.brick, this.props.user);
@@ -253,9 +260,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   };
 
   async saveAndPreview(playStatus: PlayButtonStatus) {
-    if (this.state.brick.id && playStatus === PlayButtonStatus.Valid) {
-      await this.props.saveBrick(this.state.brick);
-      this.props.history.push(map.playPreviewIntro(this.state.brick.id));
+    if (this.context && playStatus === PlayButtonStatus.Valid) {
+      await this.props.fetchBrick(this.context.json.brick.id);
+      this.props.history.push(map.playPreviewIntro(this.context.json.brick.id));
     }
   }
 
@@ -290,21 +297,14 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       }
     }
 
-    const localBrick = this.state.brick;
     const { user } = this.props;
 
     let playStatus = PlayButtonStatus.Hidden;
-    const { brick } = this.props;
-    if (brick && brick.questions && brick.questions.length > 0) {
+    const ybrick = this.context?.ydoc.getMap("brick");
+    if (ybrick && ybrick.get("questions") && ybrick.get("questions").length > 0) {
       playStatus = PlayButtonStatus.Valid;
-      const parsedQuestions: Question[] = [];
-      for (const question of brick.questions) {
-        try {
-          parseQuestion(question as ApiQuestion, parsedQuestions);
-        } catch (e) { }
-      }
-      parsedQuestions.forEach((q) => {
-        let isQuestionValid = validateQuestion(q as any);
+      ybrick.get("questions").forEach((q: Y.Doc) => {
+        let isQuestionValid = validateQuestion(toRenderJSON(q.getMap()) as any);
         if (!isQuestionValid) {
           playStatus = PlayButtonStatus.Invalid;
         }
@@ -312,7 +312,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     }
 
     return (
-      <MuiThemeProvider>
         <div>
           <HomeButton onClick={() => this.openDialog()} />
           <div
@@ -324,7 +323,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 location={history.location}
                 baseUrl={baseUrl}
                 subjects={user.subjects}
-                subjectId={this.state.brick.subjectId ? this.state.brick.subjectId : ""}
+                subjectId={this.context?.ydoc.getMap("brick").get("subjectId")}
                 history={history}
                 saveCore={this.setCore}
                 saveSubject={this.setSubject}
@@ -337,11 +336,10 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 history={history}
                 baseUrl={baseUrl}
                 playStatus={playStatus}
-                parentState={localBrick}
+                parentState={this.context!.ydoc.getMap("brick")}
                 canEdit={canEdit}
                 subjects={this.state.subjects}
                 saveTitles={this.setTitles}
-                setKeywords={this.setKeywords}
                 setAcademicLevel={this.setAcademicLevel}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
@@ -350,10 +348,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               <BrickLength
                 baseUrl={baseUrl}
                 playStatus={playStatus}
-                length={localBrick.brickLength}
+                length={this.context?.ydoc.getMap("brick").get("brickLength")}
                 canEdit={canEdit}
                 saveLength={this.setLength}
-                saveBrick={this.setLength}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
@@ -362,9 +359,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 baseUrl={baseUrl}
                 playStatus={playStatus}
                 history={history}
-                selectedQuestion={localBrick.openQuestion}
+                selectedQuestion={this.context?.ydoc.getMap("brick").get("openQuestion")}
                 canEdit={canEdit}
-                saveOpenQuestion={this.setOpenQuestion}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
@@ -372,40 +368,21 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               <Brief
                 baseUrl={baseUrl}
                 playStatus={playStatus}
-                parentBrief={localBrick.brief}
+                parentBrief={this.context?.ydoc.getMap("brick").get("brief")}
                 canEdit={canEdit}
-                saveBrief={this.setBrief}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
             <Route path={[map.ProposalPrep, map.ProposalBase + '/prep']}>
               <Prep
                 playStatus={playStatus}
-                parentPrep={localBrick.prep}
+                parentPrep={this.context?.ydoc.getMap("brick").get("prep")}
                 canEdit={canEdit}
                 baseUrl={baseUrl}
-                savePrep={this.setPrep}
-                brickLength={localBrick.brickLength}
-                saveBrick={this.setPrepAndSave}
+                brickLength={this.context?.ydoc.getMap("brick").get("brickLength")}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
-            </Route>
-            
-            <Route path={[map.ProposalReview, map.ProposalBase + '/plan']}>
-              <ProposalReview
-                playStatus={playStatus}
-                brick={localBrick}
-                baseUrl={baseUrl}
-                history={history}
-                canEdit={canEdit}
-                user={user}
-                setBrickField={this.setBrickField}
-                setKeywords={this.setKeywords}
-                setAcademicLevel={this.setAcademicLevel}
-                saveBrick={this.saveAndMove}
-                saveAndPreview={() => this.saveAndPreview(playStatus)}
-              />
-            </Route>
+            </Route>            
             <VersionLabel />
           </div>
           <CloseProposalDialog
@@ -414,7 +391,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             move={() => this.goHome()}
           />
         </div>
-      </MuiThemeProvider>
     );
   }
 }
@@ -426,6 +402,7 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
+  fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
   createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
   socketStartEditing: (brickId: number) => dispatch(socketActions.socketStartEditing(brickId)),
 });

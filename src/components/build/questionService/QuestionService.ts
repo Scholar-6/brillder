@@ -1,4 +1,4 @@
-import update from "immutability-helper";
+import * as Y from "yjs";
 
 import { validateQuestion } from "./ValidateQuestionService";
 import { CasheBuildQuestion, BuildPlayRedirect } from 'localStorage/buildLocalStorage';
@@ -12,7 +12,6 @@ import { Brick } from "model/brick";
 import { getDefaultChooseOneAnswer } from "../buildQuestions/questionTypes/chooseOneBuild/chooseOneBuild";
 import { getDefaultChooseSeveralAnswer } from "../buildQuestions/questionTypes/chooseSeveralBuild/chooseSeveralBuild";
 import { getDefaultHorizontalShuffleAnswer } from "../buildQuestions/questionTypes/shuffle/horizontalShuffleBuild/horizontalShuffleBuild";
-import { getDefaultShortAnswerAnswer } from "../buildQuestions/questionTypes/shortAnswerBuild/shortAnswerBuild";
 import { getDefaultVerticalShuffleAnswer } from "../buildQuestions/questionTypes/shuffle/verticalShuffleBuild/verticalShuffleBuild";
 import { getDefaultPairMatchAnswer } from "../buildQuestions/questionTypes/pairMatchBuild/pairMatchBuild";
 import { getDefaultCategoriseAnswer } from "../buildQuestions/questionTypes/categoriseBuild/categoriseBuild";
@@ -35,9 +34,10 @@ export function getNewFirstQuestion(type: number, active: boolean) {
     hint: {
       value: "",
       list: [] as string[],
-      status: HintStatus.None
+      status: HintStatus.All
     },
-    components: [{ type: QuestionComponentTypeEnum.Component }]
+    components: [{ type: QuestionComponentTypeEnum.Component }],
+    firstComponent: { type: QuestionComponentTypeEnum.Text, value: "" }
   } as Question;
 };
 
@@ -48,38 +48,27 @@ export function getNewQuestion(type: number, active: boolean) {
     hint: {
       value: "",
       list: [] as string[],
-      status: HintStatus.None
+      status: HintStatus.All
     },
     components: [{
       type: QuestionComponentTypeEnum.Component
-    }]
+    }],
+    firstComponent: { type: QuestionComponentTypeEnum.Text, value: "" }
   } as Question;
 };
-
-export function deactiveQuestions(questions: Question[]) {
-  const updatedQuestions = questions.slice();
-  updatedQuestions.forEach(q => q.active = false);
-  return updatedQuestions;
-}
 
 export function cashBuildQuestion(brickId: number, questionNumber: number) {
   CasheBuildQuestion({ brickId, questionNumber } as BuildPlayRedirect);
 }
 
-export function activeQuestionByIndex(brickId: number, questions: Question[], questionNumber: number) {
-  let updatedQuestions = questions;
-  if (updatedQuestions[questionNumber]) {
-    updatedQuestions = deactiveQuestions(questions)
-    updatedQuestions[questionNumber].active = true;
-    cashBuildQuestion(brickId, questionNumber);
-  }
-  return updatedQuestions;
+export function getUniqueComponent(question: Y.Doc) {
+  const components = question.getMap().get("components");
+  const uniqueComponentIndex = components.toJSON().findIndex((c: any) => c.type === QuestionComponentTypeEnum.Component);
+  return components.get(uniqueComponentIndex) as Y.Map<any>;
 }
 
-export function getUniqueComponent(question: Question) {
-  return question.components.find(
-    c => c.type === QuestionComponentTypeEnum.Component
-  );
+export function getJSONUniqueComponent(question: Question) {
+  return question.components.find(c => c.type === QuestionComponentTypeEnum.Component);
 }
 
 export function getActiveQuestion(questions: Question[]) {
@@ -105,37 +94,15 @@ export function getApiQuestion(question: Question) {
   return apiQuestion;
 }
 
-export function prepareBrickToSave(brick: Brick, questions: Question[], synthesis: string) {
-  brick.questions = [];
-  brick.synthesis = synthesis;
-  for (let question of questions) {
-    if(question) {
-      const apiQuestion = getApiQuestion(question) as Question;
-      brick.questions.push(apiQuestion);
-    }
-  }
+export function removeQuestionByIndex(questions: Y.Array<Y.Doc>, index: number) {
+  questions.get(index).destroy();
+  questions.delete(index);
 }
 
-export function removeQuestionByIndex(questions: Question[], index: number) {
-  let updatedQuestions = [];
-  if (index !== 0) {
-    updatedQuestions = update(questions, {
-      $splice: [[index, 1]],
-      0: { active: { $set: true } }
-    });
-  } else {
-    updatedQuestions = update(questions, {
-      $splice: [[index, 1]],
-      [questions.length - 1]: { active: { $set: true } }
-    });
-  }
-  return updatedQuestions;
-}
-
-const defaultFunctions: { [key in QuestionTypeEnum]?: () => any } = {
+const defaultFunctions: { [key in QuestionTypeEnum]?: (ymap: Y.Map<any>) => void } = {
   [QuestionTypeEnum.ChooseOne]: getDefaultChooseOneAnswer,
   [QuestionTypeEnum.ChooseSeveral]: getDefaultChooseSeveralAnswer,
-  [QuestionTypeEnum.ShortAnswer]: getDefaultShortAnswerAnswer,
+  // [QuestionTypeEnum.ShortAnswer]: getDefaultShortAnswerAnswer,
   [QuestionTypeEnum.HorizontalShuffle]: getDefaultHorizontalShuffleAnswer,
   [QuestionTypeEnum.VerticalShuffle]: getDefaultVerticalShuffleAnswer,
   [QuestionTypeEnum.PairMatch]: getDefaultPairMatchAnswer,
@@ -145,20 +112,17 @@ const defaultFunctions: { [key in QuestionTypeEnum]?: () => any } = {
   [QuestionTypeEnum.WordHighlighting]: getDefaultWordHighlightingAnswer,
 }
 
-export function setQuestionTypeByIndex(questions: Question[], index: number, type: QuestionTypeEnum) {
-  const uniqueComponentIndex = questions[index].components.findIndex(c => c.type === QuestionComponentTypeEnum.Component);
-  return update(questions, {
-    [index]: {
-      type: { $set: type },
-      components: {
-        [uniqueComponentIndex]: {
-          $merge: {
-            ...defaultFunctions[type]?.()
-          }
-        }
-      },
-    }
-  });
+export function setQuestionTypeByIndex(questions: Y.Array<Y.Doc>, index: number, type: QuestionTypeEnum) {
+  const question = questions.get(index).getMap();
+  const components = question.get("components");
+  const uniqueComponentIndex = components.toJSON().findIndex((c: any) => c.type === QuestionComponentTypeEnum.Component);
+  console.log(uniqueComponentIndex);
+
+  const uniqueComponent = components.get(uniqueComponentIndex) as Y.Map<any>;
+  defaultFunctions[type]?.(uniqueComponent);
+  question.set("type", type);
+
+  return questions;
 }
 
 export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]) {
@@ -183,20 +147,11 @@ export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]
 }
 
 export function setLastQuestionId(brick: Brick, questions: Question[]) {
-  const savedQuestions = brick.questions;
-  const updatedQuestions = deactiveQuestions(questions);
-  const lastIndex = updatedQuestions.length - 1;
-  updatedQuestions[lastIndex].active = true;
-  updatedQuestions[lastIndex].id = savedQuestions[lastIndex].id;
-  return updatedQuestions;
+  const lastIndex = questions.length - 1;
+  questions[lastIndex].id = brick.questions[lastIndex].id;
+  return questions;
 }
 
-export function activateFirstInvalidQuestion(qs: Question[]) {
-  for (const q of qs) {
-    let isQuestionValid = validateQuestion(q as any);
-    if (!isQuestionValid) {
-      q.active = true;
-      return;
-    }
-  }
+export function getFirstInvalidQuestion(qs: Question[]) {
+  return qs.findIndex((q, index) => !validateQuestion(q as any));
 }

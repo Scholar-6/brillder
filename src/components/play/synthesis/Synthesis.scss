@@ -89,7 +89,7 @@
         font-size: 3.5vw;
       }
       @include tabletP {
-        font-size: 1.05vw;
+        font-size: $base-build-font-size;
       }
     }
   }

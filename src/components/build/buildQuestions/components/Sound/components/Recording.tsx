@@ -14,9 +14,8 @@ interface SoundProps {
 // only one record component can be present in page
 const Recording: React.FC<SoundProps> = (props) => {
   const {status} = props;
-  const record = document.getElementById("audio-record");
 
-  if (!record && (status === AudioStatus.Recording || status === AudioStatus.BeforeRecorded)) {
+  if (status === AudioStatus.Recording || status === AudioStatus.BeforeRecorded) {
     return (
       <div id="audio-record">
         <ReactRecord

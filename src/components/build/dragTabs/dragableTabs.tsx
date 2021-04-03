@@ -1,7 +1,8 @@
 import React from "react";
+import * as Y from "yjs";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridList from "@material-ui/core/GridList";
-import { ReactSortable } from "react-sortablejs";
+import { ReactSortable, Sortable } from "react-sortablejs";
 
 import "./DragableTabs.scss";
 import { validateQuestion } from "../questionService/ValidateQuestionService";
@@ -14,6 +15,10 @@ import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
 import { User } from "model/user";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
+import { generateId } from "../buildQuestions/questionTypes/service/questionBuild";
+import { toRenderJSON } from "services/SharedTypeService";
+import PlanTab from "./PlanTab";
+import routes from "../routes";
 
 interface Question {
   id: number;
@@ -23,7 +28,9 @@ interface Question {
 
 interface DragTabsProps {
   history: any;
-  questions: Question[];
+  brickId: number;
+  yquestions: Y.Array<Y.Doc>;
+  currentQuestionIndex: number;
   user: User;
   comments: Comment[] | null;
   synthesis: string;
@@ -34,14 +41,13 @@ interface DragTabsProps {
   openSkipTutorial(): void;
   createNewQuestion(): void;
   moveToSynthesis(): void;
-  setQuestions(questions: any): void;
   selectQuestion(e: any): void;
-  moveToLastQuestion(): void;
   removeQuestion(e: any): void;
 }
 
 interface TabsState {
   handleKey(e: any): void;
+  sortableId: number;
 }
 
 class DragableTabs extends React.Component<DragTabsProps, TabsState> {
@@ -49,7 +55,8 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     super(props);
 
     this.state = {
-      handleKey: this.handleKey.bind(this)
+      handleKey: this.handleKey.bind(this),
+      sortableId: generateId(),
     }
   }
 
@@ -65,13 +72,16 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     if (e.target.tagName === "INPUT") { return; }
     if (e.target.tagName === "TEXTAREA") { return; }
     if (e.target.classList.contains("ck-content")) { return; }
+    if (e.target.classList.contains("ql-editor")) { return; }
+
+    const jsonQuestions = this.props.yquestions.toJSON() as Question[];
 
     if (leftKeyPressed(e)) {
       if (this.props.history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
-        let keyIndex = this.props.questions.length;
+        let keyIndex = jsonQuestions.length;
         this.props.selectQuestion(keyIndex - 1)
       } else {
-        let keyIndex = this.props.questions.findIndex(q => q.active === true);
+        let keyIndex = jsonQuestions.findIndex(q => q.active === true);
 
         if (keyIndex > 0) {
           this.props.selectQuestion(keyIndex - 1)
@@ -84,9 +94,9 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       }
       
       if (!isSynthesisPage) {
-        let keyIndex = this.props.questions.findIndex(q => q.active === true);
+        let keyIndex = jsonQuestions.findIndex(q => q.active === true);
   
-        if (keyIndex < this.props.questions.length - 1) { 
+        if (keyIndex < jsonQuestions.length - 1) { 
           this.props.selectQuestion(keyIndex + 1);
         } else {
           this.props.moveToSynthesis();
@@ -96,10 +106,14 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
   }
 
   render() {
-    let isInit = true;
     let isSynthesisPresent = true;
     const { props } = this;
-    const { questions, isSynthesisPage, synthesis } = props;
+    const { isSynthesisPage, synthesis, yquestions } = props;
+
+    let isPlanPage = false;
+    if (this.props.history.location.pathname.slice(-5) === routes.BuildPlanLastPrefix) {
+      isPlanPage = true;
+    }
 
     const getHasSynthesisReplied = () => {
       const replies = props.comments
@@ -147,20 +161,21 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     };
 
     const renderQuestionTab = (
-      questions: Question[],
-      question: Question,
+      yquestions: Y.Array<Y.Doc>,
+      yquestion: Y.Doc,
       index: number,
       comlumns: number
     ) => {
+      const question = toRenderJSON(yquestion.getMap());
       let titleClassNames = "drag-tile-container";
       let cols = 2;
-      if (question.active) {
+      if (index === props.currentQuestionIndex && !isPlanPage) {
         titleClassNames += " active";
         cols = 3;
       }
 
-      let nextQuestion = questions[index + 1];
-      if (nextQuestion && nextQuestion.active) {
+      let nextQuestion = yquestions.get(index + 1)?.getMap();
+      if (nextQuestion && nextQuestion.get("active")) {
         titleClassNames += " pre-active";
       }
 
@@ -181,14 +196,14 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       return (
         <GridListTile
           className={titleClassNames}
-          key={index}
+          key={yquestion.guid}
           cols={cols}
           style={{ display: "inline-block", width: `${width}%` }}
         >
           <DragTab
             index={index}
             questionId={question.id}
-            active={question.active}
+            active={props.currentQuestionIndex === index && !isPlanPage}
             isValid={isValid}
             getHasReplied={getHasReplied}
             selectQuestion={props.selectQuestion}
@@ -198,22 +213,19 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       );
     };
 
-    let columns = questions.length * 2 + 3;
-
-    if (isSynthesisPage) {
-      columns = questions.length * 2 + 2;
-    }
-
-    const setQuestions = (newQuestions: Question[], d: any) => {
-      if (isInit === false) {
-        let switched = newQuestions.find((q, i) => questions[i].id !== q.id);
-        if (switched) {
-          props.setQuestions(newQuestions);
-        }
-      } else {
-        isInit = false;
+    const columns = props.yquestions.length * 2 + 4;
+    
+    const onUpdateQuestions = (evt: Sortable.SortableEvent) => {
+      if(((evt.oldIndex ?? -1) >= 0)  && ((evt.newIndex ?? -1) >= 0)) {
+        yquestions.doc?.transact(() => {
+          const question = yquestions.get(evt.oldIndex!);
+          yquestions.delete(evt.oldIndex!);
+          yquestions.insert(evt.newIndex!, [question]);
+        });
+        // WARNING: using same hacky solution as questionComponents.tsx
+        this.setState({ ...this.state, sortableId: generateId() });
       }
-    };
+    }
 
     const renderSynthesisTab = () => {
       let className = 'drag-tile-container';
@@ -266,19 +278,27 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             transform: "translateZ(0)",
           }}
         >
+          <GridListTile
+            className={`drag-tile-container plan-tab ${isPlanPage ? 'active' : ''}`}
+            cols={isPlanPage ? 1.5555 : 2}
+          >
+            <PlanTab brickId={this.props.brickId} history={this.props.history} />
+          </GridListTile>
           <ReactSortable
-            list={questions}
+            key={this.state.sortableId}
+            list={props.yquestions.map((q: Y.Doc) => ({ id: q.guid }))}
             className="drag-container"
             group="tabs-group"
-            setList={setQuestions}
+            onUpdate={onUpdateQuestions}
+            setList={() => {}}
           >
-            {questions.map((question, i) =>
-              renderQuestionTab(questions, question, i, columns)
+            {props.yquestions.map((question: Y.Doc, i) =>
+              renderQuestionTab(props.yquestions, question, i, columns)
             )}
           </ReactSortable>
           <GridListTile
             onClick={props.createNewQuestion}
-            className={"drag-tile-container"}
+            className="drag-tile-container"
             cols={isSynthesisPresent || isSynthesisPage ? 1.5555 : 2}
           >
             <PlusTab tutorialStep={props.tutorialStep} />

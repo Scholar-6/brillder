@@ -1,43 +1,17 @@
-.text-white {
-  color: var(--white) !important;
-}
-.text-theme-green {
-  color: var(--theme-green) !important;
-}
-.text-orange {
-  color: var(--theme-orange);
-}
-.text-white-gray {
-  color: var(--white-gray);
-}
-.text-theme-orange {
-  color: var(--theme-orange) !important;
-}
-.text-tab-gray {
-  color: var(--tab-gray) !important;
-}
-.text-white-blue {
-  color: var(--white-blue) !important;
-}
-.text-blue {
-  color: var(--text-blue) !important;
-}
-.text-theme-light-blue {
-  color: var(--theme-light-blue) !important;
-}
-.text-theme-dark-blue {
-  color: var(--theme-dark-blue) !important;
-}
-.text-gray {
-  color: var(--gray) !important;
-}
-.text-dark-gray {
-  color: var(--dark-gray) !important;
+@each $color, $value in $colors {
+  @for $i from 1 through 10 {
+    @if $i == 10 {
+      .text-#{$color} {
+        color: #{$value} !important;
+      }
+    } @else {
+      .text-#{$color}-alpha#{$i} {
+        color: rgba($value, $i/10) !important;
+      }
+    }
+  }
 }
 
-.text-yellow {
-  color: var(--theme-yellow) !important;
-}
 .b-red {
   background: var(--theme-orange) !important;
 }

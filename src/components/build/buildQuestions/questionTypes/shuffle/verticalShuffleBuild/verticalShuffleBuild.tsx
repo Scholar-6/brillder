@@ -1,85 +1,71 @@
-import React, { useEffect } from 'react'
+import React from 'react';
+import * as Y from "yjs";
 
 import './verticalShuffleBuild.scss'
 import { QuestionValueType, UniqueComponentProps } from '../../types';
-import { showSameAnswerPopup } from '../../service/questionBuild';
+import { generateId, showSameAnswerPopup } from '../../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import RemoveItemButton from '../../components/RemoveItemButton';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
 
-export const getDefaultVerticalShuffleAnswer = () => {
-  const newAnswer = () => ({ value: "" });
+export const getDefaultVerticalShuffleAnswer = (ymap: Y.Map<any>) => {
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), valueFile: "", imageSource: "", imageCaption: "", id: generateId() }));
 
-  return { list: [newAnswer(), newAnswer(), newAnswer()] };
+  const list = new Y.Array();
+  list.push([newAnswer(), newAnswer(), newAnswer()]);
+
+  ymap.set("list", list);
 }
 
 const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, openSameAnswerDialog
 }) => {
-  const newAnswer = () => ({ value: "" });
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), valueFile: "", imageSource: "", imageCaption: "", id: generateId() }));
 
-  if (!data.list) {
-    data.list = getDefaultVerticalShuffleAnswer().list;
-  } else if (data.list.length < 3) {
-    data.list.push(newAnswer());
-    updateComponent(data);
-  }
-
-  const [state, setState] = React.useState(data);
-
-  useEffect(() => { setState(data) }, [data]);
-
-  const update = () => {
-    setState(Object.assign({}, state));
-    updateComponent(state);
-  }
-
-  const changed = (answer: any, value: string) => {
-    if (locked) { return; }
-    answer.value = value;
-    answer.valueFile = "";
-    answer.answerType = QuestionValueType.String;
-    update();
-  }
+  let list = data.get("list") as Y.Array<any>;
 
   const addAnswer = () => {
     if (locked) { return; }
-    state.list.push({ value: "" });
-    update();
-    save();
+    list.push([newAnswer()]);
+  }
+
+  if (!list) {
+    getDefaultVerticalShuffleAnswer(data);
+    list = data.get("list");
+  } else if (list.length < 3) {
+    addAnswer();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
-    state.list.splice(index, 1);
-    update();
-    save();
+    list.delete(index);
   }
 
   const renderAnswer = (answer: any, i: number) => {
-    const setImage = (fileName: string) => {
+    console.log(answer);
+    const setImage = (fileName: string, source: string, caption: string) => {
       if (locked) { return; }
-      answer.value = "";
-      answer.valueFile = fileName;
-      answer.answerType = QuestionValueType.Image;
-      update();
-      save();
+      answer.set("value", "");
+      answer.set("valueFile", fileName);
+      answer.set("imageSource", source);
+      answer.set("imageCaption", caption);
+      answer.set("answerType", QuestionValueType.Image);
     }
 
     let className = 'vertical-answer-box unique-component';
-    if (answer.answerType === QuestionValueType.Image) {
+    if (answer.get("answerType") === QuestionValueType.Image) {
       className += ' big-answer';
     }
 
     let isValid = null;
     if (validationRequired) {
       isValid = true;
-      if ((answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None) && !answer.value) {
+      if ((answer.get("answerType") === QuestionValueType.String || answer.get("answerType") === QuestionValueType.None) && !answer.get("value")) {
         isValid = false;
       }
     }
@@ -89,27 +75,25 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     }
 
     return (
-      <div className={className} key={i}>
-        <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
+      <div className={className} key={answer.get("id")}>
+        <RemoveItemButton index={i} length={list.length} onClick={removeFromList} />
         <QuestionImageDropzone
           answer={answer as any}
-          type={answer.answerType || QuestionValueType.None}
+          type={answer.get("answerType") || QuestionValueType.None}
           locked={locked}
-          fileName={answer.valueFile}
+          fileName={answer.get("valueFile")}
           update={setImage}
         />
-        <DocumentWirisCKEditor
+        <QuillEditor
           disabled={locked}
-          editOnly={editOnly}
-          data={answer.value}
-          isValid={isValid}
+          sharedData={answer.get("value")}
+          validate={validationRequired}
           toolbar={['latex']}
+          isValid={isValid}
           placeholder={"Enter Answer " + (i + 1) + "..."}
           onBlur={() => {
-            showSameAnswerPopup(i, state.list, openSameAnswerDialog);
-            save();
+            showSameAnswerPopup(i, list.toJSON(), openSameAnswerDialog);
           }}
-          onChange={value => changed(answer, value)}
         />
       </div>
     );
@@ -122,7 +106,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
         These will be randomised in the Play Interface.
       </div>
       {
-        state.list.map((answer: any, i: number) => renderAnswer(answer, i))
+        list.map((answer: any, i: number) => renderAnswer(answer, i))
       }
       <AddAnswerButton
         locked={locked}
@@ -133,4 +117,4 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   )
 }
 
-export default VerticalShuffleBuildComponent
+export default React.memo(VerticalShuffleBuildComponent);

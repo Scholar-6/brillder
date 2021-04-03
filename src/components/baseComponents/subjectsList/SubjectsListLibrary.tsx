@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
-import "./SubjectsList.scss";
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import { SubjectAItem } from "model/brick";
 import RadioButton from "../buttons/RadioButton";
 
@@ -12,6 +12,10 @@ interface PublishedSubjectsProps {
   ref?: React.RefObject<any>;
   filterBySubject(id: number): void;
 }
+
+const MobileTheme = React.lazy(() => import('./themes/SubjectFilterMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/SubjectFilterTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/SubjectFilterDesktopTheme'));
 
 class SubjectsListLibrary extends Component<PublishedSubjectsProps> {
   renderSubjectItem(subject: SubjectAItem, i: number) {
@@ -47,15 +51,18 @@ class SubjectsListLibrary extends Component<PublishedSubjectsProps> {
 
   render() {
     return (
-      <Grid container direction="row" className="filter-container subjects-filter subjects-filter-v2" ref={this.props.ref}>
-        <AnimateHeight
-          duration={500}
-          height={this.props.filterHeight}
-          style={{ width: "100%" }}
-        >
-          {this.props.subjects.map(this.renderSubjectItem.bind(this))}
-        </AnimateHeight>
-      </Grid>
+      <React.Suspense fallback={<></>}>
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+        <Grid container direction="row" className="filter-container subjects-filter subjects-filter-v2" ref={this.props.ref}>
+          <AnimateHeight
+            duration={500}
+            height={this.props.filterHeight}
+            style={{ width: "100%" }}
+          >
+            {this.props.subjects.map(this.renderSubjectItem.bind(this))}
+          </AnimateHeight>
+        </Grid>
+      </React.Suspense>
     );
   }
 }

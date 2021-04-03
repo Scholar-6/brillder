@@ -123,7 +123,6 @@ const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
 });
 
-
 const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
 });

@@ -151,9 +151,9 @@ const LivePage: React.FC<LivePageProps> = ({
 
     // phone scroll to top
     if (isPhone()) {
-      const {current} = questionScrollRef;
+      const { current } = questionScrollRef;
       if (current) {
-        current.scrollTo({top: 0});
+        current.scrollTo({ top: 0 });
       }
     }
   }
@@ -197,9 +197,9 @@ const LivePage: React.FC<LivePageProps> = ({
 
     // phone scroll to top
     if (isPhone()) {
-      const {current} = questionScrollRef;
+      const { current } = questionScrollRef;
       if (current) {
-        current.scrollTo({top: 0});
+        current.scrollTo({ top: 0 });
       }
     }
 
@@ -325,9 +325,7 @@ const LivePage: React.FC<LivePageProps> = ({
 
   return (
     <div className="brick-row-container live-container">
-      {!isPhone() && <div className="fixed-upper-b-title">
-        {brick.title}
-      </div>}
+      {!isPhone() && <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />}
       <div className="brick-container play-preview-panel live-page">
         <div className="introduction-page">
           <Hidden only={["xs"]}>
@@ -395,7 +393,7 @@ const LivePage: React.FC<LivePageProps> = ({
             <div className="introduction-info">
               {renderCountDown()}
               <div className="intro-text-row">
-                <span className="phone-stepper-head"><span className="bold">{brick.subject?.name}</span> {brick.title}</span>
+                <span className="phone-stepper-head"><span className="bold">{brick.subject?.name}</span> <span className="q-brick-title" dangerouslySetInnerHTML={{__html: brick.title}}/></span>
                 {renderStepper()}
               </div>
             </div>
