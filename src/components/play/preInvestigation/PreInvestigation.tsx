@@ -10,8 +10,10 @@ import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTi
 import { getLiveTime } from "../services/playTimes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
 import TypingLabel from "components/baseComponents/TypingLabel";
+import { User } from "model/user";
 
 interface Props {
+  user: User;
   brick: Brick;
   moveNext(): void;
 }
@@ -90,6 +92,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
           </div>
         </div>
+        {props.user &&
         <div className="fixed-helpers-container">
           <div className="circles">
             <div className="prep">
@@ -97,7 +100,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
               <span>Click here to go back to Prep tasks</span>
             </div>
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );
