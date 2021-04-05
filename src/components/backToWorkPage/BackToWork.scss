@@ -126,7 +126,9 @@
         padding-left: $padding;
         padding-right: $padding;
         font-size: 1.02vw;
-
+        > div {
+          position: absolute;
+        }
         .empty-title {
           margin-top: 5vh;
           margin-bottom: 3vh;
