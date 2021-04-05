@@ -5,7 +5,6 @@
 @import './utils/tablet/global-tablet';
 @import './utils/tablet/sidebar-tablet';
 @import './utils/tablet/dialog-tablet';
-@import './utils/tablet/tooltips-tablet';
 @import './utils/tablet/buttons-tablet';
 @import './utils/tablet/form-elements-tablet';
 @import './utils/tablet/dropdowns-tablet';
@@ -145,8 +144,6 @@
     display: none;
   }
 }
-
-
 
 .short-answer-input {
   .quill-document-editor {

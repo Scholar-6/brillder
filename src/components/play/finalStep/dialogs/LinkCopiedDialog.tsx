@@ -5,8 +5,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import './LinkCopiedDialog.scss';
-
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ProfileSavedProps {
@@ -23,17 +21,15 @@ const LinkCopiedDialog: React.FC<ProfileSavedProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <ListItem>
-          <ListItemText primary="Link copied!" className="bold" style={{ minWidth: '30vw' }} />
-          <ListItemAvatar>
-            <Avatar className="circle-check">
-              <SpriteIcon name="link" className="active text-white" />
-            </Avatar>
-          </ListItemAvatar>
-        </ListItem>
-        <ListItem>
-          <ListItemText primary="Paste it anywhere you like" className="italic" style={{ minWidth: '30vw' }} />
-        </ListItem>
+        <div>
+          <Avatar className="circle-check">
+            <SpriteIcon name="link" className="active text-white" />
+          </Avatar>
+        </div>
+        <div>
+          <span className="bold">Link copied!</span>
+          <span className="italic">Paste it anywhere you like</span>
+        </div>
       </div>
     </Dialog>
   );

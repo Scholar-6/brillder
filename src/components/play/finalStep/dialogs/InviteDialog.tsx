@@ -31,12 +31,12 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [editorError, setEditorError] = React.useState("");
 
   React.useEffect(() => {
-    if(accessGranted) {
+    if (accessGranted) {
       setEditors(brick.editors ?? []);
     } else {
       setEditors([]);
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [accessGranted])
 
   const saveEditor = (editorIds: number[]) => {
@@ -86,7 +86,7 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
     return editors.reduce((prev, current, idx, array) => {
       if (idx === 0) {
         return `${prev}${current.username}`;
-      } else if(idx === array.length - 1) {
+      } else if (idx === array.length - 1) {
         return `${prev}, ${current.username}`;
       } else {
         return `${prev}, and ${current.username}`;
@@ -96,7 +96,7 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
 
   const renderCustomText = () => {
     let name = getNameText();
-    if(!name) {
+    if (!name) {
       name = 'Name';
     }
     return `Allow ${name} to comment on the build panels of your brick`;
@@ -106,7 +106,6 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
     return (
       <button
         className="btn bold btn-md bg-theme-orange yes-button"
-        style={{ width: 'auto', paddingLeft: '4vw' }}
         onClick={onNext}
       >
         Send Invite

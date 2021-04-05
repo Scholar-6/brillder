@@ -1,0 +1,33 @@
+.regular,
+.regular .MuiTypography-root {
+  font-family: $font-family-regular !important;
+}
+
+.italic,
+.italic .MuiTypography-root {
+  font-family: $font-family-regular-italic !important;
+}
+
+.bold,
+.bold .MuiTypography-root {
+  font-family: $font-family-bold !important;
+}
+
+.bolder,
+.bolder .MuiTypography-root {
+  font-family: $font-family-black !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.uppercase {
+  text-transform: uppercase !important;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
