@@ -301,36 +301,6 @@ h3 {
   }
 }
 
-.regular {
-  font-family: $font-family-regular;
-}
-
-.bold {
-  font-family: $font-family-bold;
-}
-
-.bolder {
-  font-weight: 600 !important;
-}
-
-.font-black {
-  font-family: $font-family-black;
-}
-
-.text-left {
-  text-align: left;
-}
-
-.uppercase {
-  text-transform: uppercase !important;
-}
-
-.ellipsis {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .dropzone {
   margin: 0;
   border: 2px dashed var(--gray-alpha5) !important;

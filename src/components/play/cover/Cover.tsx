@@ -58,9 +58,9 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderPlayButton = () => {
     return (
       <div>
-        <div className="font-black">Are you ready to learn?</div>
+        <div className="bolder">Are you ready to learn?</div>
         <div className="c-next-btn-container">
-          <button type="button" className="font-black" onClick={startBrick}>
+          <button type="button" className="bolder" onClick={startBrick}>
             Play Now
           </button>
         </div>
