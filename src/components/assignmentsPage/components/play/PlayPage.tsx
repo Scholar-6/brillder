@@ -10,16 +10,15 @@ import { getAssignedBricks } from "services/axios/brick";
 import service, { getLongestColumn, hideAssignments } from './service';
 import { checkAdmin, checkTeacher } from "components/services/brickService";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
-
 import { User } from "model/user";
+import map from "components/map";
+import { isPhone } from "services/phone";
 
 import AssignedBricks from "./AssignedBricks";
 import PlayFilterSidebar from "./PlayFilterSidebar";
 import BackPagePagination from "../BackPagePagination";
 import BackPagePaginationV2 from "../BackPagePaginationV2";
-import { isMobile } from "react-device-detect";
 import MobileLearn from "./MobileLearn";
-import map from "components/map";
 
 
 interface PlayProps {
@@ -321,7 +320,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
   }
 
   render() {
-    if (isMobile) {
+    if (isPhone()) {
       return (
         <MobileLearn
           shown={true}

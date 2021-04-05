@@ -78,12 +78,42 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <div className="hover-content">
             <div>A brick is a learning unit that should take either 20, 40, or 60 minutes to complete.</div>
             <div>Bricks follow a cognitively optimised sequence:</div>
-            <div>1. Preparation: stimulus content gets you in the zone.</div>
-            <div>2. Investigation: challenging interactive questions make you think.</div>
-            <div>3. A preliminary score</div>
-            <div>4. Synthesis: explanation.</div>
-            <div>5. Review: hints help you correct your answers.</div>
-            <div>6. A final score</div>
+            <div className="container">
+              <div className="white-circle">1</div>
+              <div className="l-text">
+                Preparation: stimulus content gets you in the zone.
+              </div>
+            </div>
+            <div className="container">
+              <div className="white-circle">2</div>
+              <div className="l-text">
+                Investigation: challenging interactive questions make you think.
+              </div>
+            </div>
+            <div className="container">
+              <div className="white-circle">3</div>
+              <div className="l-text">
+                A preliminary score
+              </div>
+            </div>
+            <div className="container">
+              <div className="white-circle">4</div>
+              <div className="l-text">
+                Synthesis: explanation.
+              </div>
+            </div>
+            <div className="container">
+              <div className="white-circle">5</div>
+              <div className="l-text">
+                Review: hints help you correct your answers.
+              </div>
+            </div>
+            <div className="container">
+              <div className="white-circle">6</div>
+              <div className="l-text">
+                A final score
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -157,7 +187,37 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   {renderBrickCircle()}
                   {brick.subject?.name},
                   Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
-                  <SpriteIcon name="help-circle-custom" />
+                  <div className="hover-area">
+                    <SpriteIcon name="help-circle-custom" />
+                    <div className="hover-content">
+                      <div>Brillder focusses on universal concepts and topics, not specific exam courses.</div>
+                      <br/>
+                      <div>LEVELS:</div>
+                      <div className="container">
+                        <div className="white-circle">1</div>
+                        <div className="l-text">
+                          <div>I Foundation</div>
+                          <div>For 15-16 yr-olds, equivalent to GCSE / IB Middle Years / High School Diploma</div>
+                        </div>
+                      </div>
+                      <br/>
+                      <div className="container">
+                        <div className="white-circle">2</div>
+                        <div className="l-text">
+                          <div>II & III Core</div>
+                          <div>For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
+                        </div>
+                      </div>
+                      <br/>
+                      <div className="container">
+                        <div className="white-circle">3</div>
+                        <div className="l-text">
+                          <div>IV Extension</div>
+                          <div>College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
