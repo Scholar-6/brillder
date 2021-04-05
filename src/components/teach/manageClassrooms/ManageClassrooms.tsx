@@ -406,6 +406,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             />
           )}
         </div>
+        <div className="sidebar-footer">
+        </div>
       </div>
     );
   };

@@ -84,11 +84,11 @@
   .create-class-button {
     cursor: pointer;
     padding-left: $base-filter-padding-left !important;
-    padding-bottom: 1vh !important;
-    margin-bottom: 1vh;
+    padding-bottom: 2vh !important;
     letter-spacing: 0.02vw;
     font-size: 1.1vw;
     font-family: $font-family-bold;
+    border-bottom: 0.2vw solid var(--light-blue-alpha5);
   }
 
   .filter-header2 {

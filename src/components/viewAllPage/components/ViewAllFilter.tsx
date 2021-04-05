@@ -158,7 +158,6 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
             filterBySubject={this.props.filterBySubject}
           />
           <div className="sidebar-footer">
-            
           </div>
         </div>
       </Grid>
