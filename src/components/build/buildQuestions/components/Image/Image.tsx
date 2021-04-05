@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 import _ from "lodash";
 
 import './Image.scss'
-import {fileUrl, uploadFile} from 'components/services/uploadFile';
+import { fileUrl, uploadFile } from 'components/services/uploadFile';
 import ImageDialog from './ImageDialog';
 import { ImageAlign } from './model';
 import ImageCloseDialog from './ImageCloseDialog';
@@ -20,7 +20,7 @@ interface ImageProps {
   onFocus(): void;
 }
 
-const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
+const ImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
   const [isOpen, setOpen] = React.useState(false);
   const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.data.get("value").toString());
@@ -45,7 +45,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
 
     props.data.observe(observer);
     return () => { props.data.unobserve(observer) }
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   const updateData = (source: string, caption: string, align: ImageAlign, height: number) => {
@@ -85,7 +85,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
           el.setAttribute("type", "file");
           el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
           el.click();
-  
+
           el.onchange = () => {
             if (el.files && el.files.length >= 0) {
               setFile(el.files[0]);
@@ -96,15 +96,15 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
       }}>
         {
           fileName
-            ? <img alt="" style={{width: '100%'}} src={fileUrl(fileName)} />
+            ? <img alt="" style={{ width: '100%' }} src={fileUrl(fileName)} />
             : <Grid
-                container
-                justify="center"
-                alignContent="center"
-                direction="row"
-                style={{height: '10vh'}}
-              >
-                Click to Select Image (jpg, png or gif)
+              container
+              justify="center"
+              alignContent="center"
+              direction="row"
+              style={{ height: '10vh' }}
+            >
+              Click to Select Image (jpg, png or gif)
               </Grid>
         }
       </div>
