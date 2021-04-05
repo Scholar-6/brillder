@@ -25,7 +25,7 @@ import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
-import { playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
+import { playNewPrep, playNewPrepResume, PlayPreInvestigationLastPrefix } from "./routes";
 
 
 interface SidebarProps {
@@ -198,7 +198,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     if (isLive && this.props.sidebarRolledUp) {
       return (
         <div>
-          <div className="prep-button" onClick={() => this.props.history.push(playNewPrep(this.props.brick.id))}>
+          <div className="prep-button" onClick={() => this.props.history.push(playNewPrepResume(this.props.brick.id))}>
             <SpriteIcon name="file-text" />
             <div>Prep</div>
           </div>
