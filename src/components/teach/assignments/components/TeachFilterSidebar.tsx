@@ -186,6 +186,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             </div>
           </div>
           {this.props.classrooms.map(this.renderClassroom.bind(this))}
+          <div className="sidebar-footer" />
         </div>
       </div>
     );
