@@ -30,6 +30,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
 import { getLiveTime } from "../services/playTimes";
+import routes from "../routes";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -274,12 +275,15 @@ const LivePage: React.FC<LivePageProps> = ({
   const moveToPrep = () => {
     let attempt = questionRefs[activeStep].current?.getRewritedAttempt(false);
     props.updateAttempts(attempt, activeStep);
-    let playPath = getPlayPath(props.isPlayPreview, brick.id);
-    let link = `${playPath}/intro?prepExtanded=true&resume=true&activeStep=${activeStep}`;
-    //if (!isPhone() && !props.isPlayPreview) {
-    //  link = routes.playNewPrep(brick.id) + '?prepExtanded=true&resume=true&activeStep=${activeStep}';
-    // }
-    history.push(link);
+    
+    // phone or build play preview
+    if (isPhone() || props.isPlayPreview) {
+      let playPath = getPlayPath(props.isPlayPreview, brick.id);
+      let link = `${playPath}/intro?prepExtanded=true&resume=true&activeStep=${activeStep}`;
+      history.push(link);
+    }
+    // play desktop or tablet
+    history.push(routes.playNewPrep(brick.id));
   }
 
   const renderStepper = () => {
