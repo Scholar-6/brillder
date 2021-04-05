@@ -376,20 +376,26 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     this.getUsers(page - 1, this.state.sortBy, filterSubjects);
   }
 
+  renderPreferenceType(user: User) {
+    console.log(user);
+    if (user.rolePreference?.roleId === RolePreference.Builder) {
+      return "B";
+    } else if (user.rolePreference?.roleId === RolePreference.Student) {
+      return "S";
+    } else if (user.rolePreference?.roleId === RolePreference.Teacher) {
+      return "T";
+    }
+    return "";
+  }
+
   renderUserType(user: User) {
     let type = "";
 
     for (let role of user.roles) {
       if (role.roleId === UserType.Admin) {
         type += "A";
-      } else if (user.rolePreference?.roleId === RolePreference.Builder) {
-        type += "B";
       } else if (role.roleId === UserType.Publisher) {
         type += "P";
-      } else if (user.rolePreference?.roleId === RolePreference.Student) {
-        type += "S";
-      } else if (user.rolePreference?.roleId === RolePreference.Teacher) {
-        type += "T";
       }
     }
     return type;
@@ -438,6 +444,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           <Grid container>NAME {this.renderSortArrow(UserSortBy.Name)}</Grid>
         </th>
         <th className="email-column">EMAIL</th>
+        <th>
+          <Grid container>USER PREFERENCE</Grid>
+        </th>
         <th>
           <Grid container>ROLE</Grid>
         </th>
@@ -490,6 +499,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                     <span className="user-last-name">{user.lastName}</span>
                   </td>
                   <td>{user.email}</td>
+                  <td>{this.renderPreferenceType(user)}</td>
                   <td>{this.renderUserType(user)}</td>
                   <td className="activate-button-container">
                     <CustomToggle checked={user.status === UserStatus.Active} onClick={() => this.toggleUser(user)} />
