@@ -5,9 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import './LinkCopiedDialog.scss';
-
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface InvitationProps {
   isOpen: boolean;
@@ -35,20 +33,15 @@ const InvitationSuccessDialog: React.FC<InvitationProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <ListItem>
-          <ListItemText primary="Invitation Sent!" className="bold" style={{ minWidth: '30vw' }} />
-          <ListItemAvatar>
-            <Avatar className="circle-check">
-              <svg className="svg active" style={{marginLeft: 0, marginTop: '0.3vw', marginRight: '0.3vw'}}>
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#send"} className="text-white" />
-              </svg>
-            </Avatar>
-          </ListItemAvatar>
-        </ListItem>
-        <ListItem>
-          <ListItemText primary={getCustomText()} className="italic" style={{ minWidth: '30vw' }} />
-        </ListItem>
+        <div>
+          <Avatar className="circle-check">
+            <SpriteIcon name="send" className="active text-white" />
+          </Avatar>
+        </div>
+        <div>
+          <span className="bold">Invitation Sent!</span>
+          <span className="italic">{getCustomText()}</span>
+        </div>
       </div>
     </Dialog>
   );

@@ -29,13 +29,13 @@ const ShareDialog: React.FC<ShareProps> = props => {
         <div className="title smaller">How would you like to share this brick?</div>
       </div>
       <div className="social-share-row">
-        <div>
-          <SpriteHoverIcon name="link" onClick={props.link} onHover={() => setLinkHover(true)} onBlur={() => setLinkHover(false)} />
-          {linkHovered && <div className="custom-tooltip copy-tooltip">Copy Link</div>}
+        <div className="svgOnHover tooltip top" onClick={props.link}>
+          <SpriteIcon name="link" className="active text-white" />
+          <span className="tooltip-inner">Copy Link</span>
         </div>
-        <div >
-          <SpriteHoverIcon name="user-plus" onClick={props.invite} onBlur={() => setInviteHover(false)} onHover={() => setInviteHover(true)} />
-          {inviteHovered && <div className="custom-tooltip invite-tooltip">Invite an existing user</div>}
+        <div className="svgOnHover tooltip top" onClick={props.invite}>
+          <SpriteIcon name="user-plus" className="active text-white" />
+          <span className="tooltip-inner">Invite an existing user</span>
         </div>
       </div>
     </Dialog>

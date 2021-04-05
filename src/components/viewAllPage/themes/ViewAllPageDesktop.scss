@@ -156,9 +156,7 @@
         height: 100%;
         .subject-row {
           width: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          @extend %flexCenter;
           &:nth-child(even) {
             width: calc(100% - 8vw);
             margin: 0 4vw;
