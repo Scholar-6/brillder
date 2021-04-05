@@ -88,7 +88,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     if(isPhone() || props.isPlayPreview) {
       history.push(`${playPath}/intro`);
     } else {
-      history.push(routes.playNewPrep(brick.id));
+      history.push(routes.playNewPrepResume(brick.id));
     }
     return <PageLoader content="...Loading..." />;
   } else if (status === PlayStatus.Ending) {

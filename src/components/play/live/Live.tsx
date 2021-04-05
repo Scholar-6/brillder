@@ -275,7 +275,7 @@ const LivePage: React.FC<LivePageProps> = ({
   const moveToPrep = () => {
     let attempt = questionRefs[activeStep].current?.getRewritedAttempt(false);
     props.updateAttempts(attempt, activeStep);
-    
+
     // phone or build play preview
     if (isPhone() || props.isPlayPreview) {
       let playPath = getPlayPath(props.isPlayPreview, brick.id);
@@ -283,7 +283,7 @@ const LivePage: React.FC<LivePageProps> = ({
       history.push(link);
     }
     // play desktop or tablet
-    history.push(routes.playNewPrep(brick.id));
+    history.push(routes.playNewPrepResume(brick.id));
   }
 
   const renderStepper = () => {
