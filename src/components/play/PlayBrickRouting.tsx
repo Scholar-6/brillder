@@ -46,7 +46,7 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
 import { createUserByEmail } from "services/axios/user";
-import routes, { playBrief, PlayCoverLastPrefix, playNewPrep, playPreInvesigation, playPrePrep, playSections } from "./routes";
+import routes, { playBrief, PlayCoverLastPrefix, playNewPrep, playPrePrep, playSections } from "./routes";
 import { isPhone } from "services/phone";
 import Brief from "./brief/Brief";
 import PrePrep from "./prePrep/PrePrep";
@@ -111,12 +111,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   // only cover page should have big sidebar
   useEffect(() => {
     if (!isPhone()) {
-      let {pathname} = props.history.location;
+      let { pathname } = props.history.location;
       if (pathname.search(PlayCoverLastPrefix) === -1) {
         setSidebar(true);
       }
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [])
 
   // by default move to intro
@@ -184,7 +184,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const saveBrickAttempt = async (brickAttempt: BrickAttempt) => {
-    if(!attemptId) {
+    if (!attemptId) {
       return createBrickAttempt(brickAttempt);
     }
 
@@ -229,7 +229,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const moveToLive = () => {
-    let liveLink = `/play/brick/${brick.id}/live`;
+    let liveLink = routes.playLive(brick.id);
     const values = queryString.parse(props.location.search);
     const query = {} as any;
     if (values.resume === 'true') {
@@ -257,7 +257,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const moveToPrePrep = () => props.history.push(playPrePrep(brick.id));
   const moveToNewPrep = () => props.history.push(playNewPrep(brick.id));
   const moveToIntro = () => props.history.push(playIntro(brick.id));
-  const moveToPreInvestigation = () => props.history.push(playPreInvesigation(brick.id));
 
   const moveToReview = () => {
     if (props.user) {
@@ -265,8 +264,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         return props.history.push(routes.playPreReview(brick.id));
       }
       saveBrickAttempt(brickAttempt);
-      const playPath = getPlayPath(false, brick.id);
-      props.history.push(`${playPath}/review`);
+      props.history.push(routes.playReview(brick.id));
     } else {
       // unauthorized users finish it here. show popup
       setUnauthorized(true);
@@ -274,7 +272,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const moveToPostPlay = () => {
-    if(props.isAuthenticated === isAuthenticated.True) {
+    if (props.isAuthenticated === isAuthenticated.True) {
       props.history.push(map.postPlay(brick.id, props.user.id));
     } else if (userToken) {
       props.history.push(map.ActivateAccount + "?token=" + userToken);
@@ -296,9 +294,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
-  const again = () => {
-    props.history.push(`/play/dashboard`);
-  }
+  const again = () => props.history.push(map.ViewAllPage);
 
   const onHighlight = (name: BrickFieldNames, value: string) => {
     brick[name] = value;
@@ -315,7 +311,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const renderPhoneFooter = () => {
     let isIntro = props.history.location.pathname.slice(-6) === '/intro';
-  
+
     return <PhonePlayFooter
       brick={brick}
       user={props.user}
@@ -329,10 +325,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const renderHead = () => {
     let isMobileHidden = false;
-    const live = location.pathname.search("/live");
+    const live = location.pathname.search(routes.PlayLiveLastPrefix);
     const score = location.pathname.search("/provisionalScore");
-    const synthesis = location.pathname.search("/synthesis");
-    const review = location.pathname.search("/review");
+    const synthesis = location.pathname.search(routes.PlaySynthesisLastPrefix);
+    const review = location.pathname.search(routes.PlayReviewLastPrefix);
     const ending = location.pathname.search("/ending");
     if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0) {
       isMobileHidden = true;
@@ -384,10 +380,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <PrePrep brick={brick} mode={mode} moveNext={moveToNewPrep} onHighlight={onHighlight} />
         </Route>
         <Route exact path={routes.newPrepRoute}>
-          <NewPrep brick={brick} mode={mode} moveNext={moveToPreInvestigation} onHighlight={onHighlight} />
+          <NewPrep brick={brick} mode={mode} history={props.history} onHighlight={onHighlight} />
         </Route>
         <Route exact path={routes.preInvestigationRoute}>
-          <PreInvestigationPage brick={brick} moveNext={moveToLive} />
+          <PreInvestigationPage user={props.user} brick={brick} moveNext={moveToLive} />
         </Route>
 
         <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
@@ -403,7 +399,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
           {isPhone() && renderPhoneFooter()}
         </Route>
-        <Route exac path="/play/brick/:brickId/live">
+        <Route exac path={routes.liveRoute}>
           <Live
             mode={mode}
             status={status}
@@ -440,7 +436,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Synthesis mode={mode} status={status} brick={brick} moveNext={moveToReview} onHighlight={onHighlight} />
           {isPhone() && renderPhoneFooter()}
         </Route>
-        
+
         <Route exact path={routes.preReviewRoute}>
           <PreReview brick={brick} history={props.history} />
         </Route>

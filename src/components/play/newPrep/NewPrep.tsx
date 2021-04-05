@@ -1,51 +1,61 @@
-import React from "react";
+import React, { useEffect } from "react";
+import queryString from 'query-string';
+import moment from "moment";
 
 import { Brick } from "model/brick";
-
-import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
 import { BrickFieldNames } from 'components/build/proposal/model';
+import { PlayMode } from "../model";
+import { getPrepareTime } from "../services/playTimes";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "../baseComponents/MathInHtml";
 import HighlightHtml from "../baseComponents/HighlightHtml";
-import { PlayMode } from "../model";
-import moment from "moment";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
-import { getPrepareTime } from "../services/playTimes";
+import routes from "../routes";
 
 
 export interface IntroductionState {
   isStopped: boolean;
   prepExpanded: boolean;
   briefExpanded: boolean;
+  resume: boolean;
   duration: any;
 }
 
 interface Props {
   brick: Brick;
+  history: any;
 
-  moveNext(): void;
   mode?: PlayMode;
   onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
-const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
+const NewPrepPage: React.FC<Props> = ({ brick, history, ...props }) => {
   const [startTime] = React.useState(moment());
 
   const [state, setState] = React.useState({
     prepExpanded: true,
     isStopped: false,
     briefExpanded: false,
+    resume: false,
     duration: null,
   } as IntroductionState);
+
+  const moveNext = () => {
+    if (state.resume) {
+      history.push(routes.playLive(brick.id));
+    } else {
+      history.push(routes.playPreInvesigation(brick.id));
+    }
+  }
 
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
-        props.moveNext();
+        moveNext();
       }
     }
 
@@ -55,6 +65,14 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
       document.removeEventListener("keydown", handleMove, false);
     };
   });
+
+  useEffect(() => {
+    const values = queryString.parse(history.location.search);
+    console.log(values);
+    if (values.resume) {
+      setState({...state, resume: true});
+    }
+  }, []);
 
   if (isPhone()) {
     return <div />;
@@ -174,8 +192,8 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
             <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={props.moveNext}>
-                Investigation
+              <div className="n-btn next" onClick={moveNext}>
+                {state.resume ? 'Resume' : 'Investigation'}
                 <SpriteIcon name="arrow-right" />
               </div>
             </div>

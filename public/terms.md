@@ -52,22 +52,20 @@ In this contract:
     4. Any key information we give you by law forms part of this contract (as is set out in full here).
     5. We reserve the right to modify, terminate or otherwise amend this agreement at any time.
 2. All Users (including anonymous users)
-
-1. If you access any Digital Content on the Site (regardless of whether you register an account), you enter a contract and agree to be legally bound by all and any part of this agreement.
-2. The Site can be accessed anonymously but we record some information about your visit as outlined in our Privacy Policy. Whilst we may not be able to immediately determine your identity we do track certain information which can be used to:
-
-- block your access to the Site; or
-- identify you in a court proceeding.
-
-1. If we have to change any key information relevant to anonymous users we will update our terms at [https://brillder.com/terms](https://brillder.com/terms).
-
-1. You agree that you are solely responsible for all costs and expenses you may incur in relation to your use of the Site.
+    1. If you access any Digital Content on the Site (regardless of whether you register an account), you enter a contract and agree to be legally bound by all and any part of this agreement.
+    2. The Site can be accessed anonymously but we record some information about your visit as outlined in our Privacy Policy. Whilst we may not be able to immediately determine your identity we do track certain information which can be used to:
+      <ol>
+        <li>block your access to the Site; or</li>
+        <li>identify you in a court proceeding.</li>
+      </ol>
+    3. If we have to change any key information relevant to anonymous users we will update our terms at [https://brillder.com/terms](https://brillder.com/terms).
+    4. You agree that you are solely responsible for all costs and expenses you may incur in relation to your use of the Site.
 
 **Permission to use the Digital Content (the License)**
 
-1. When you access our Digital Content, you will not own it. Instead we give you permission to use it (also known as a &#39;licence&#39;) according to this contract.
+3. When you access our Digital Content, you will not own it. Instead we give you permission to use it (also known as a &#39;licence&#39;) according to this contract.
 
-1. The Digital Content:
+4. The Digital Content:
 
 - is personal to you - you can use it wherever you want in the world but only if you comply with local laws;
 - is non-exclusive to you - without a separate or further agreement, we supply the same Digital Content to other users;
@@ -291,7 +289,7 @@ Your privacy is important to us.  In addition to this Privacy Policy we subscrib
 Scholar 6 Limited, a company registered in England and Wales under company number: 12023679.  Our registered office is at: c/o Jamieson Alexander Legal 222 Temple Chambers, 3-7 Temple Avenue, London, Ec4Y 0DB.  Scholar 6 Ltd is the sole information controller for all information collected in relation to the Brillder Platform/Site.
 
 3 **What information does Scholar 6 Ltd collect?**
-
+<div class="indent1">
 3.1 All Users
 
 For all people who access the Site with or without an authenticated user session, we may collect any of the following information from your session that could be used to indirectly identify a natural person (see **&#39;How does Scholar 6 Ltd. process and use your information?&#39;** ):
@@ -329,11 +327,10 @@ We may collect all of the following personally identifiable information for all 
 - The score each time a user answers questions in the Digital Content
 
 3.3 **Content Creators**
-
 We do not collect any additional private information from users who create Digital Content on our site. Please DO NOT upload sensitive or private information when creating &#39;Digital Content&#39; as all Digital Content is intended to be shared with other users of the Site.
-
-4 **How does Scholar 6 Ltd collect your information?**
-
+<div>
+4 <strong>How does Scholar 6 Ltd collect your information?</strong>
+<div class="indent1">
 We collect information in several ways.
 
 - We use HTTPS protocol for all communication between your device and servers to protect your information in transit between your device and our servers;
@@ -341,50 +338,51 @@ We collect information in several ways.
 - When you enter information into the site;
 - When you (or your browser) makes requests to our servers (using an application programming interface) we log the content of the request and our response;
 - When you (or your browser) makes authenticated requests to our servers we also store the information.
-
-5 **What is the Legal basis for Scholar 6 collecting your information?**
-
+</div>
+5 <strong>What is the Legal basis for Scholar 6 collecting your information?</strong>
+<div class="indent1">
 By accessing the Site signing up to Brillder, agreeing to this policy and using the service, you are providing informed consent.  It is also in the legitimate business interest of Scholar 6 Limited to provide a better service to our users.  Both of these reasons form the legal basis for storing and using your information.
-
-6 **How does Scholar 6 Ltd. store your information?**
+</div>
+6 <strong>How does Scholar 6 Ltd. store your information?</strong>
+<div class="indent1">
  Information is stored on commercial servers which are accessible only to our developers.
-
-7 **How does Scholar 6 Ltd. process and use your information?**
-
+</div>
+7 <strong>How does Scholar 6 Ltd. process and use your information?</strong>
+<div class="indent1">
 7.1 All Users
 
 We use the analytics data from our anonymous users to improve our business and marketing strategy i.e. targeting specific geographic locations or subject areas.
 
 7.2 Your IP address could be used to identify you. We use your IP address to infer your approximate location in the world.  We may also block specific IP addresses for bad behaviour. We do not process the analytics data of our anonymous users to try and infer the identity of natural persons however in the case of a legal proceeding or data breach this analytics data could be used to determine your identity (e.g. comparing our analytics data with your internet service provider&#39;s records).
-
-8 **Learning Records**
-
+</div>
+8 <strong>Learning Records</strong>
+<div class="indent1">
 8.1 Teachers, tutors and school administrators who have permissions to set bricks to their students also have the capability to analyse results and data arising from brick assignments which they have set. (They do not have access to other brick assignments which a learner may have undertaken.)
 
 8.2 Students have access to their own individual data sets within the context of the personalised library which they create as they play and collect bricks.
-
-**9 Content Creators**
-
+</div>
+9 <strong>Content Creators</strong>
+<div class="indent1">
 When you create and share a brick you make the following personal information public:
 
 - First Name
 - Last Name
 - Bio (A short autobiographical description written by the user)
-
-10 **Email addresses and marketing**
-
+</div>
+10 <strong>Email addresses and marketing</strong>
+<div class="indent1">
 We use the email addresses of our users to communicate specific notifications or broadcast messages. These can include notifications that a user has been assigned a brick  You can opt out of these emails by replying to the email directly or sending an email to [support@scholar6.org](mailto:support@scholar6.org).
-
-11 **Machine learning and inference**
-
+</div>
+11 <strong>Machine learning and inference</strong>
+<div class="indent1">
 We may use aggregate data from many different people with a machine learning algorithm to learn patterns of behaviour which can help us improve your experience of the system
-
-12 **Does Scholar 6 Ltd. share your information?**
-
+</div>
+12 <strong>Does Scholar 6 Ltd. share your information?</strong>
+<div class="indent1">
 Your details will only be shared with other Brillder users on an individual and consensual basis. A student must first accept a teacher&#39;s invitation for the teacher to see their play attempts and learning records for the subject(s) they teach. As above, we do not share lists of user details with any third parties (such as selling your email as part of a list to another company).
-
-13 **What are your rights?**
-
+</div>
+13 <strong>What are your rights?</strong>
+<div class="indent1">
 You have the following rights:
 
 1. The right to be informed;
@@ -395,21 +393,22 @@ You have the following rights:
 6. The right to data portability;
 7. The right to object;
 8. Rights in relation to automated decision making and profiling.
-
-14 **How do you contact Scholar 6 Ltd. if you have a problem?**
-
+</div>
+14 <strong>How do you contact Scholar 6 Ltd. if you have a problem?</strong>
+<div class="indent1">
 To revoke your consent for us to use your personal information at any time please email [support@scholar6.org](mailto:support@scholar6.org).  We can delete your account and all private data, however details such as your name which you have elected to publish publicly on your bricks are no longer private and may stay associated with the bricks you created.
-
-15 **Cookie Policy**
-
+</div>
+15 <strong>Cookie Policy</strong>
+<div class="indent1">
 When accessing BrillderTM without logging in, there is a Zendesk widget (for reporting issues or sending us a message) that uses a cookie called \_\_zlcmid, this can track your machine ID to any other website that uses Zendesk for up to 1 year. Please read the Zendesk documentation on their separate website for more information:
 
 [https://support.zendesk.com/hc/en-us/articles/360022367393-Zendesk-in-product-cookie-policy](https://support.zendesk.com/hc/en-us/articles/360022367393-Zendesk-in-product-cookie-policy)
 
 By signing up with a user account and accepting the terms of use, you are agreeing to the use of various cookies that are associated with your user profile and personal details when logged in to BrillderTM. You can reject these cookies being used to track you at any time by signing out of your account in the top right corner.
-
-16 **Supervisory Authorities**
-
+</div>
+16 <strong>Supervisory Authorities</strong>
+<div class="indent1">
 If you find our conduct or response unsatisfactory in relation to an inquiry or complaint, you may  submit a formal complaint to the ICO (the Information Commissioner&#39;s Office), which is
 
 responsible for General Data Protection Regulation in the UK. It can be found here: [https://ico.org.uk/](https://ico.org.uk/)
+</div>

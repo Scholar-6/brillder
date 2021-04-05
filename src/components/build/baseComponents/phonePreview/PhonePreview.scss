@@ -229,6 +229,9 @@
       &.mobile-question-component {
         div {
           > .text-play {
+            div, p, strong, span {
+              background: inherit !important;
+            }
             &:first-child {
               p {
                 @extend %fw-6;

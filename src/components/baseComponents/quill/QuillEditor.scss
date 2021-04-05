@@ -93,39 +93,6 @@ svg#image {
   overflow: visible;
 
   .ql-toolbar {
-    // border: none !important;
-    // padding: 1vh 0.5vw;
-    // .ql-formats {
-    //   background-color: var(--tab-gray) !important;
-    //   font-size: initial;
-    //   button,
-    //   .ql-picker {
-    //     padding: 0;
-    //     margin: 0;
-    //     margin-left: 0.1vw;
-    //     margin-right: 0.1vw;
-    //     line-height: 1;
-    //     svg {
-    //       color: var(--theme-dark-blue) !important;
-    //       width: var(--ck-icon-size);
-    //       height: var(--ck-icon-size);
-    //       * {
-    //         stroke: currentColor;
-    //       }
-    //     }
-    //   }
-    //   .ql-picker-options {
-    //     padding: 0 !important;
-    //     width: 6.5vw;
-    //     .ql-picker-item {
-    //       margin: 0.2vw;
-    //       padding: 0;
-    //       border-radius: 0.2vw;
-    //       width: 1.2vw;
-    //       height: 1.2vw;
-    //     }
-    //   }
-    // }
     @extend .ql-custom-toolbar;
   }
 
@@ -154,6 +121,9 @@ svg#image {
       li {
         text-align: left;
         padding-left: 0;
+      }
+      div, p, strong, span {
+        background: inherit !important;
       }
     }
   }
