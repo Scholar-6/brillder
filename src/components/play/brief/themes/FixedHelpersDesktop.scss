@@ -30,8 +30,34 @@
         height: 3.5vw;
       }
       &.prep {
-        margin-top: 3vw;
+        position: absolute;
+        left: -0.8vw;
+        margin-top: 3.4vw;
+        .prep-circle {
+          width: 5vw !important;
+          height: 5vw !important;
+        }
       }
+    }
+    .highlight {
+      margin-top: 0.5vh !important;
+      opacity: 0;
+      animation: fadein 230ms 100ms forwards;
+    }
+    .share {
+      margin-top: 2.5vh !important;
+      opacity: 0;
+      animation: fadein 180ms 400ms forwards;
+    }
+    .assign {
+      margin-top: 3vh !important;
+      opacity: 0;
+      animation: fadein 150ms 650ms forwards;
+    }
+    .adapt {
+      margin-top: 3vh !important;
+      opacity: 0;
+      animation: fadein 100ms 900ms forwards;
     }
   }
 }

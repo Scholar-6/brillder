@@ -19,3 +19,13 @@
   -o-animation: $animation1, $animation2;
   animation: $animation1, $animation2;
 }
+
+@keyframes fadein {
+  0% { opacity: 0; }
+  100% { opacity: 100%; }
+}
+
+@keyframes fadeout {
+  0% { opacity: 100%; }
+  100% { opacity: 0; }
+}

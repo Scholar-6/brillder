@@ -2020,16 +2020,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 // seconds count down
-@keyframes fadein {
-  0% { opacity: 0; }
-  100% { opacity: 100%; }
-}
-
-@keyframes fadeout {
-  0% { opacity: 100%; }
-  100% { opacity: 0; }
-}
-
 .play-preview-pages .sorted-row .brick-row-container .brick-container .seconds-countdown-container {
   display: flex;
   justify-content: center;
