@@ -125,9 +125,10 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                 />
                 <Grid container direction="row" className="inner-quills" ref={scrollArea}>
                   <div className="title-quill-container">
+                    <div className="header">Title</div>
                     <QuillEditor
                       sharedData={title}
-                      placeholder="Title"
+                      placeholder="What is it about?"
                       disabled={locked}
                       toolbar={['italic']}
                     />
@@ -150,6 +151,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <div className="header">Open Question</div>
                     <QuillEditor
                       disabled={locked}
+                      placeholder="Ideally, every brick should point to a bigger question."
                       sharedData={ybrick.get("openQuestion")}
                       toolbar={["bold", "italic", "latex"]}
                       imageDialog={true}
@@ -160,6 +162,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <QuillEditor
                       disabled={locked}
                       sharedData={ybrick.get("brief")}
+                      placeholder="Outline the purpose of this brick."
                       toolbar={[
                         "bold",
                         "italic",
@@ -174,6 +177,8 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                   <div className="prep-container">
                     <div className="header">Prep</div>
                     <QuillEditor
+                      placeholder="Add engaging and relevant
+                      preparatory material."
                       disabled={locked}
                       sharedData={ybrick.get("prep")}
                       toolbar={[

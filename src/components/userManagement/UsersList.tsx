@@ -377,7 +377,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   renderPreferenceType(user: User) {
-    console.log(user);
     if (user.rolePreference?.roleId === RolePreference.Builder) {
       return "B";
     } else if (user.rolePreference?.roleId === RolePreference.Student) {

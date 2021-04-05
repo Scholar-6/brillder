@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { Grid } from '@material-ui/core';
+import { FormControl, Grid, Select, MenuItem } from '@material-ui/core';
 import { ReactSortable } from "react-sortablejs";
 
 import QuestionComponents from './questionComponents/questionComponents';
 import { getNonEmptyComponent } from '../questionService/ValidateQuestionService';
 import './questionPanelWorkArea.scss';
-import { QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/question';
+import { QuestionTypeEnum, QuestionComponentTypeEnum, QuestionTypeObj } from 'model/question';
 import DragBox from './drag/dragBox';
 import LockComponent from './lock/Lock';
 import CommentPanel from 'components/baseComponents/comments/CommentPanel';
@@ -63,9 +63,8 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
 
   const question = yquestion.getMap();
 
-  // 3/31/2021 hidden not working with all quesiton types
-  //const type = question.get("type");
-  //const typeArray: string[] = Object.keys(QuestionTypeObj);
+  const type = question.get("type");
+  const typeArray: string[] = Object.keys(QuestionTypeObj);
 
   const index = getQuestionIndex(yquestion);
 
@@ -196,14 +195,13 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     setCommentsShown={() => setCommentsShown(true)}
                   />
                 </div>
-                {/* 3/31/2021 hidden not working with all quesiton types
                 <Grid container direction="row" alignItems="center">
                   <Grid container justify="center" item sm={12} className="select-type-container">
                     <FormControl variant="outlined">
                       Change Answer type here:
                       <Select
                         className="select-question-type"
-                        disabled={locked}
+                        disabled={true}
                         value={type}
                         inputProps={{
                           name: 'age',
@@ -214,19 +212,12 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                         }}
                       >
                         {
-                          typeArray.map((typeName, i) => {
-                            const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
-                            return (
-                              <MenuItem key={i} value={type}>
-                                {SplitByCapitalLetters(typeName)}
-                              </MenuItem>
-                            )
-                          })
+                        
                         }
                       </Select>
                     </FormControl>
                   </Grid>
-                </Grid>*/}
+                </Grid>
                 <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
               </div>
             }
@@ -272,3 +263,7 @@ const mapState = (state: ReduxCombinedState) => ({
 const connector = connect(mapState);
 
 export default connector(React.memo(QuestionPanelWorkArea));
+function SplitByCapitalLetters(typeName: string): React.ReactNode {
+  throw new Error('Function not implemented.');
+}
+

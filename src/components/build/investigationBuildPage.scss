@@ -549,6 +549,9 @@ $space-between-boxes: 0.1vw;
         width: 100%;
         .MuiInputBase-root {
           width: 100%;
+          &::before, &::after {
+            content: none !important;
+          }
           .MuiSelect-root {
             border-radius: 0.5vw;
             background: var(--off-white);
@@ -629,7 +632,7 @@ $space-between-boxes: 0.1vw;
           }
         }
       }
-      .brief-container, .prep-container, .open-question-container {
+      .brief-container, .prep-container, .open-question-container, .title-quill-container {
         margin-top: 0.5vw;
         margin-bottom: 0.5vw;
         .header {

@@ -56,6 +56,7 @@
       display: none;
     }
     .picker-options {
+      z-index: 200;
       padding: 0 !important;
       width: 5vw;
       display: none;
@@ -117,6 +118,10 @@ svg#image {
       border: none !important;
       background-color: var(--solitude-light) !important;
       padding: 1vw;
+      ::before {
+        font-style: normal !important;
+      }
+      text-align: left;
       p,
       li {
         text-align: left;
