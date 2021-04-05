@@ -2020,6 +2020,16 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 // seconds count down
+@keyframes fadein {
+  0% { opacity: 0; }
+  100% { opacity: 100%; }
+}
+
+@keyframes fadeout {
+  0% { opacity: 100%; }
+  100% { opacity: 0; }
+}
+
 .play-preview-pages .sorted-row .brick-row-container .brick-container .seconds-countdown-container {
   display: flex;
   justify-content: center;
@@ -2027,6 +2037,15 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   height: 100%;
   font-size: 36vh;
   font-family: $font-family-bold;
+  opacity: 0;
+  &.fadein {
+    opacity: 0;
+    animation: fadein 500ms linear 0s forwards;
+  }
+  &.fadeout {
+    opacity: 1;
+    animation: fadeout 150ms linear 0s forwards;
+  }
 }
 
 .underline-border {
