@@ -187,10 +187,8 @@
       border-radius: $editor-radius;
 
       .questions {
-        z-index: 1001;
-        position: absolute;
         top: calc(1.9vw + 2vh);
-        left: 0.2vw;
+        margin-left: 0.2vw;
         display: block;
         width: calc(100% - 0.4vw);
         padding-left: 0.2vw;
