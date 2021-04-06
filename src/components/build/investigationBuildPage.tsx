@@ -48,7 +48,6 @@ import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialo
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
-import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./proposal/model";
 import { YJSContext } from "./baseComponents/YJSProvider";
 import { convertQuestion, toRenderJSON } from "services/SharedTypeService";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
@@ -95,15 +94,18 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [step, setStep] = React.useState(TutorialStep.Proposal);
   const [undoRedoService] = React.useState(UndoRedoService.instance);
 
-  /* Synthesis */
+  const {pathname} = history.location;
+  const {BuildSynthesisLastPrefix, BuildPlanLastPrefix} = routes;
   let isSynthesisPage = false;
-  if (history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
+
+  if (pathname.slice(-BuildSynthesisLastPrefix.length).toLowerCase() === BuildSynthesisLastPrefix) {
     isSynthesisPage = true;
   }
 
-  /* Proposal */
-  const validRoutes = ["/investigation", "/synthesis", "/subject", TitleRoutePart, OpenQuestionRoutePart, BrickLengthRoutePart, BriefRoutePart, PrepRoutePart, ProposalReviewPart];
-  const isProposalPage = validRoutes.includes(props.location.pathname.split("/")[4]);
+  let isProposalPage = false;
+  if (pathname.slice(-BuildPlanLastPrefix.length).toLocaleLowerCase() === BuildPlanLastPrefix) {
+    isProposalPage = true;
+  }
 
   const { ydoc } = useContext(YJSContext)!;
   const ybrick = ydoc!.getMap("brick")!;
@@ -390,8 +392,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
     return false;*/
   }
-
-  console.log('rerender');
 
   const renderPanel = () => {
     return (

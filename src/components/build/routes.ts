@@ -43,6 +43,7 @@ export const buildQuesitonType = (brickId: number) => investigationBuild(brickId
 export const buildQuesiton = (brickId: number) => investigationBuild(brickId) + BuildQuestionLastPrefix;
 
 export default {
+  InvestigationPrefix,
   BuildSubjectLastPrefix,
   BuildTitleLastPrefix,
   BuildOpenQuestionLastPrefix,
