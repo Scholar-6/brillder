@@ -61,10 +61,12 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
   componentDidMount() {
     const observer = _.throttle((evt: any) => {
       const newValue = this.props.data.get("value");
-      console.log(newValue);
       if (newValue) {
         const updatedAudio = new Audio(fileUrl(newValue));
         this.setState({ audio: updatedAudio, status: AudioStatus.Recorded });
+      } else {
+        const updatedAudio = new Audio(fileUrl(newValue));
+        this.setState({ audio: updatedAudio, status: AudioStatus.Start });
       }
     }, 200);
     this.props.data.observe(observer);
@@ -130,6 +132,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
       return;
     }
     this.setState({ blobUrl: "", status: AudioStatus.Start });
+    this.props.data.set("value", "");
   }
 
   saveAudio(file: any) {
