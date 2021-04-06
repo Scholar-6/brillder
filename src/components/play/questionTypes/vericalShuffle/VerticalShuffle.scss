@@ -21,6 +21,10 @@
     .image-container {
       margin: 5px;
       width: 100%;
+      img {
+        width: auto;
+        max-height: 10vh;
+      }
     }
   }
 }
