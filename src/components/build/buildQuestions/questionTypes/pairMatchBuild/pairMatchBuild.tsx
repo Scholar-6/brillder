@@ -1,14 +1,12 @@
 import React from 'react';
 import * as Y from "yjs";
-import { Grid } from '@material-ui/core';
 
 import './pairMatchBuild.scss'
 import { UniqueComponentProps } from '../types';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
-import PairAnswerComponent from './answer/pairAnswer';
-import PairOptionComponent from './option/pairOption';
 import { generateId, showSameAnswerPopup } from '../service/questionBuild';
+import ObservablePairAnswer from './ObservablePairAnswer';
 
 
 export interface PairMatchBuildProps extends UniqueComponentProps { }
@@ -23,7 +21,7 @@ export const getDefaultPairMatchAnswer = (ymap: Y.Map<any>) => {
 }
 
 const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
-  locked, editOnly, data, validationRequired, openSameAnswerDialog
+  locked, data, validationRequired, openSameAnswerDialog
 }) => {
   const newAnswer = () => new Y.Map(Object.entries({ option: new Y.Text(), value: new Y.Text(), id: generateId() }));
 
@@ -46,24 +44,6 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
     list.delete(index);
   }
 
-  const renderAnswer = (answer: Y.Map<any>, i: number) => {
-    return (
-      <Grid key={answer.get("id")} container direction="row" className="answers-container">
-        <PairOptionComponent
-          index={i} locked={locked} editOnly={editOnly} answer={answer}
-          validationRequired={validationRequired}
-          onBlur={() => showSameAnswerPopup(i, list.toJSON(), openSameAnswerDialog)}
-        />
-        <PairAnswerComponent
-          index={i} length={list.length} locked={locked} editOnly={editOnly} answer={answer}
-          validationRequired={validationRequired}
-          removeFromList={removeFromList}
-          onBlur={() => showSameAnswerPopup(i, list.toJSON(), openSameAnswerDialog)}
-        />
-      </Grid>
-    );
-  }
-
   return (
     <div className="pair-match-build">
       <div className="component-title">
@@ -71,7 +51,15 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
         These will be randomised in the play interface.
       </div>
       {
-        list.map((answer: Y.Map<any>, i: number) => renderAnswer(answer, i))
+        list.map((answer: Y.Map<any>, i: number) => <ObservablePairAnswer
+          answer={answer}
+          index={i}
+          locked={locked}
+          validationRequired={validationRequired}
+          list={list}
+          removeFromList={removeFromList}
+          checkSameAnswer={() => showSameAnswerPopup(i, list.toJSON(), openSameAnswerDialog)}
+        />)
       }
       <AddAnswerButton
         locked={locked}

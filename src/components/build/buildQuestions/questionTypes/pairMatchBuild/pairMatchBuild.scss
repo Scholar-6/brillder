@@ -7,6 +7,10 @@
   .pair-match-answer {
     margin-left: 0.4vw;
   }
+  .pair-image {
+    background: var(--solitude-light);
+    min-height: calc(10vh + 2vw);
+  }
   .pair-match-option,
   .pair-match-answer {
     .quill-document-editor {
