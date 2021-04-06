@@ -2,15 +2,15 @@ import React from "react";
 import * as Y from "yjs";
 import _ from "lodash";
 
-import "./verticalShuffleBuild.scss";
-import { QuestionValueType } from "../../types";
+import { QuestionValueType } from "../types";
 
 import QuestionImageDropzone from "components/build/baseComponents/questionImageDropzone/QuestionImageDropzone";
-import RemoveItemButton from "../../components/RemoveItemButton";
+import RemoveItemButton from "./RemoveItemButton";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
-import RemoveImageButton from "../../components/RemoveImageButton";
+import RemoveImageButton from "./RemoveImageButton";
 
 interface ObservableAnswerProps {
+  isHorizontal?: boolean;
   index: number;
   list: Y.Array<any>;
   locked: boolean;
@@ -65,7 +65,7 @@ const ObservableAnswer: React.FC<ObservableAnswerProps> = ({
     answer.set("answerType", QuestionValueType.String);
   }
 
-  let className = "vertical-answer-box unique-component";
+  let className = "answer-box unique-component";
   if (answer.get("answerType") === QuestionValueType.Image) {
     className += " big-answer";
   }

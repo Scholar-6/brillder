@@ -6,7 +6,7 @@ import { UniqueComponentProps } from '../../types';
 import { generateId, showSameAnswerPopup } from '../../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
-import ObservableAnswer from './ObservableAnswer';
+import ObservableAnswer from '../../components/ObservableAnswer';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }

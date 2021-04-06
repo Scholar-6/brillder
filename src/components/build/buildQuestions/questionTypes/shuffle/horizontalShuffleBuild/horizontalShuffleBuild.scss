@@ -4,10 +4,14 @@
 
 .horizontal-shuffle-build {
   @extend %textCenter;
-  .horizontal-shuffle-box {
+  .answer-box {
     position: relative;
-    width: 100%;
-    margin: 0;
+    background: var(--solitude-light);
+    width: 32%;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    margin-top: 0.2vh;
+    margin-bottom:0.2vh;
     .quill-document-editor {
       .quill {
         height: 100%;
