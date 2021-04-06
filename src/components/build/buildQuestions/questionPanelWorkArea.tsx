@@ -212,7 +212,14 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                         }}
                       >
                         {
-                        
+                          typeArray.map((typeName, i) => {
+                            const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
+                            return (
+                              <MenuItem key={i} value={type}>
+                                {SplitByCapitalLetters(typeName)}
+                              </MenuItem>
+                            )
+                          })
                         }
                       </Select>
                     </FormControl>
@@ -264,6 +271,6 @@ const connector = connect(mapState);
 
 export default connector(React.memo(QuestionPanelWorkArea));
 function SplitByCapitalLetters(typeName: string): React.ReactNode {
-  throw new Error('Function not implemented.');
+  return typeName.split(/(?=[A-Z])/).join(" ");
 }
 
