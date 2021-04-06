@@ -2,13 +2,11 @@ import React from 'react';
 import * as Y from "yjs";
 
 import './verticalShuffleBuild.scss'
-import { QuestionValueType, UniqueComponentProps } from '../../types';
+import { UniqueComponentProps } from '../../types';
 import { generateId, showSameAnswerPopup } from '../../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
-import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
-import RemoveItemButton from '../../components/RemoveItemButton';
-import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import ObservableAnswer from './ObservableAnswer';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
@@ -46,59 +44,6 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     list.delete(index);
   }
 
-  const renderAnswer = (answer: any, i: number) => {
-    console.log(answer);
-    const setImage = (fileName: string, source: string, caption: string) => {
-      if (locked) { return; }
-      answer.set("value", "");
-      answer.set("valueFile", fileName);
-      answer.set("imageSource", source);
-      answer.set("imageCaption", caption);
-      answer.set("answerType", QuestionValueType.Image);
-    }
-
-    let className = 'vertical-answer-box unique-component';
-    if (answer.get("answerType") === QuestionValueType.Image) {
-      className += ' big-answer';
-    }
-
-    let isValid = null;
-    if (validationRequired) {
-      isValid = true;
-      if ((answer.get("answerType") === QuestionValueType.String || answer.get("answerType") === QuestionValueType.None) && !answer.get("value")) {
-        isValid = false;
-      }
-    }
-
-    if (isValid === false) {
-      className += ' invalid-answer';
-    }
-
-    return (
-      <div className={className} key={answer.get("id")}>
-        <RemoveItemButton index={i} length={list.length} onClick={removeFromList} />
-        <QuestionImageDropzone
-          answer={answer as any}
-          type={answer.get("answerType") || QuestionValueType.None}
-          locked={locked}
-          fileName={answer.get("valueFile")}
-          update={setImage}
-        />
-        <QuillEditor
-          disabled={locked}
-          sharedData={answer.get("value")}
-          validate={validationRequired}
-          toolbar={['latex']}
-          isValid={isValid}
-          placeholder={"Enter Answer " + (i + 1) + "..."}
-          onBlur={() => {
-            showSameAnswerPopup(i, list.toJSON(), openSameAnswerDialog);
-          }}
-        />
-      </div>
-    );
-  }
-
   return (
     <div className="vertical-shuffle-build unique-component">
       <div className="component-title">
@@ -106,7 +51,16 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
         These will be randomised in the Play Interface.
       </div>
       {
-        list.map((answer: any, i: number) => renderAnswer(answer, i))
+        list.map((answer: any, i: number) => {
+          return <ObservableAnswer
+            locked={locked}
+            answer={answer}
+            validationRequired={validationRequired}
+            index={i} list={list}
+            removeFromList={removeFromList}
+            checkSameAnswer={() => showSameAnswerPopup(i, list.toJSON(), openSameAnswerDialog)}
+          />
+        })
       }
       <AddAnswerButton
         locked={locked}
