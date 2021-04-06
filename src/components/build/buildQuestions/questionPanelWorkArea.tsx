@@ -198,7 +198,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 <Grid container direction="row" alignItems="center">
                   <Grid container justify="center" item sm={12} className="select-type-container">
                     <FormControl variant="outlined">
-                      Change Answer type here:
+                      {/*Change Answer type here:*/}
                       <Select
                         className="select-question-type"
                         disabled={true}
