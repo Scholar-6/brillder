@@ -24,6 +24,7 @@ import KeyWordsComponent from "./KeyWords";
 import DifficultySelect from "./DifficultySelect";
 import KeyWordsPlay from "./KeywordsPlay";
 import routes from "components/build/routes";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
@@ -181,11 +182,17 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <form>
               <Grid item className="input-container">
                 <div className="audience-inputs">
-                  <Input
+                  {/* <Input
                     disabled={!canEdit}
                     value={parentState.get("title")}
                     onKeyUp={e => this.moveToRef(e, RefName.subTitleRef)}
                     onChange={e => this.onChange(e, "title")}
+                    placeholder="Enter Proposed Title Here..."
+                  /> */}
+                  <QuillEditor
+                    toolbar={[]}
+                    disabled={!canEdit}
+                    sharedData={parentState.get("title")}
                     placeholder="Enter Proposed Title Here..."
                   />
                 </div>

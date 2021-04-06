@@ -44,28 +44,28 @@
 }
 
 %fontFamilyLight {
-  font-family: 'Brandon Grotesque Light';
+  font-family: "Brandon Grotesque Light";
 }
 %fontFamilyLightItalic {
-  font-family: 'Brandon Grotesque Light Italic';
+  font-family: "Brandon Grotesque Light Italic";
 }
 %fontFamilyRegular {
-  font-family: 'Brandon Grotesque Regular';
+  font-family: "Brandon Grotesque Regular";
 }
 %fontFamilyRegularItalic {
-  font-family: 'Brandon Grotesque Regular Italic';
+  font-family: "Brandon Grotesque Regular Italic";
 }
 %fontFamilyBold {
-  font-family: 'Brandon Grotesque Bold';
+  font-family: "Brandon Grotesque Bold";
 }
 %fontFamilyBoldItalic {
-  font-family: 'Brandon Grotesque Bold Italic';
+  font-family: "Brandon Grotesque Bold Italic";
 }
 %fontFamilyBlack {
-  font-family: 'Brandon Grotesque Black';
+  font-family: "Brandon Grotesque Black";
 }
 %fontFamilyBlackItalic {
-  font-family: 'Brandon Grotesque Black Italic';
+  font-family: "Brandon Grotesque Black Italic";
 }
 
 %fs9 {
@@ -527,7 +527,7 @@
   }
   &:after,
   &:before {
-    content: '';
+    content: "";
     @extend %floatToXCenter;
     bottom: 0;
     pointer-events: none;
@@ -551,9 +551,14 @@
       width: 100%;
     }
   }
+  .quill-document-editor {
+    background-color: transparent;
+  }
   input,
-  textarea {
+  textarea,
+  .ql-editor {
     width: 100%;
+    background-color: transparent !important;
     padding: 0 0 0.8vw 0;
     border: 0;
     @include phone {
@@ -564,6 +569,11 @@
     }
     @include tabletL {
       font-size: $base-popup-font-size;
+    }
+    &.ql-blank {
+      &:before {
+        font-style: normal;
+      }
     }
   }
 }
@@ -595,7 +605,7 @@
         border-radius: 50%;
         @extend %flexCenter;
         &:before {
-          content: ' ';
+          content: " ";
           position: absolute;
           left: 0;
           right: 0;
