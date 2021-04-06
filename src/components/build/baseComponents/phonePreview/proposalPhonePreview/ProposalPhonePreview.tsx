@@ -2,6 +2,9 @@ import React from 'react';
 import { Hidden } from '@material-ui/core';
 
 import './ProposalPhonePreview.scss';
+import LastSave from '../../lastSave/LastSave';
+import { YJSContext } from '../../YJSProvider';
+import { TutorialStep } from 'components/build/tutorial/TutorialPanelWorkArea';
 
 
 export interface ProposalPhonePreviewProps {
@@ -11,6 +14,8 @@ export interface ProposalPhonePreviewProps {
 }
 
 const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Component, data }) => {
+  const { ydoc } = React.useContext(YJSContext)!;
+
   const renderInner = () => {
     if (link) {
       return (
@@ -32,6 +37,12 @@ const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Compo
   return (
     <Hidden only={['xs', 'sm']}>
       <div className="proposal-phone-preview">
+        <LastSave
+          isSaving={false}
+          saveError={false}
+          tutorialStep={TutorialStep.None}
+          ybrick={ydoc.getMap("brick")}
+        />
         <div className="phone">
           <div className="phone-border">
             <div className="volume volume1"></div>

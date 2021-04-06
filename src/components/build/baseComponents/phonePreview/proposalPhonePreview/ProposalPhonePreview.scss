@@ -1,0 +1,12 @@
+.proposal-phone-preview {
+  .saved-info {
+    position: absolute;
+    top: -7%;
+    right: 10%;
+    width: 100%;
+    white-space: nowrap;
+    * {
+      color: var(--theme-dark-blue);
+    }
+  }
+}

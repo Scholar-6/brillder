@@ -256,31 +256,6 @@ $space-between-boxes: 0.1vw;
     border: none;
   }
 
-  .saved-info {
-    position: fixed;
-    font-family: $font-family-regular;
-    top: 6%;
-    right: 0;
-    width: 34.3vw;
-    color: white;
-    @extend %textCenter;
-
-    svg {
-      margin-top: 0.3vw;
-      height: 1.52vw;
-      width: 1.52vw;
-    }
-  }
-
-  .saved-info-row {
-    width: 17vw;
-
-    .text-container {
-      font-size: $base-build-font-size;
-      margin-left: 0.4vw;
-    }
-  }
-
   .saved-info .editor-border {
     border-radius: $editor-radius;
     padding: 0.1vh 0;
@@ -525,7 +500,7 @@ $space-between-boxes: 0.1vw;
         border-radius: 0.5vw;
         .key-word {
           border-radius: 1vw;
-          background: #E4E8EE;
+          background: #e4e8ee;
           margin-top: 0.3vw;
           margin-bottom: 0.3vw;
           margin-right: 0.2vw;
@@ -549,7 +524,8 @@ $space-between-boxes: 0.1vw;
         width: 100%;
         .MuiInputBase-root {
           width: 100%;
-          &::before, &::after {
+          &::before,
+          &::after {
             content: none !important;
           }
           .MuiSelect-root {
@@ -578,7 +554,8 @@ $space-between-boxes: 0.1vw;
           width: 100%;
           .MuiInputBase-root {
             width: 100%;
-            &::before, &::after {
+            &::before,
+            &::after {
               content: none !important;
             }
 
@@ -594,7 +571,7 @@ $space-between-boxes: 0.1vw;
           width: 30%;
           position: relative;
           color: var(--theme-dark-blue);
-          
+
           .fixed-select-clock {
             cursor: pointer;
             z-index: 100;
@@ -604,7 +581,7 @@ $space-between-boxes: 0.1vw;
             border-top-left-radius: 0.5vw;
             border-bottom-left-radius: 0.5vw;
             pointer-events: none;
-            background: #E4E8EE;
+            background: #e4e8ee;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -617,7 +594,8 @@ $space-between-boxes: 0.1vw;
 
           .select {
             width: 100%;
-            &::before, &::after {
+            &::before,
+            &::after {
               content: none !important;
             }
           }
@@ -632,7 +610,10 @@ $space-between-boxes: 0.1vw;
           }
         }
       }
-      .brief-container, .prep-container, .open-question-container, .title-quill-container {
+      .brief-container,
+      .prep-container,
+      .open-question-container,
+      .title-quill-container {
         margin-top: 0.5vw;
         margin-bottom: 0.5vw;
         .header {
@@ -681,17 +662,18 @@ $space-between-boxes: 0.1vw;
   width: 33.8vw;
 }
 
-
 // quill top toolbar
 .investigation-build-page {
-  .ql-global-toolbar, .ql-custom-toolbar {
+  .ql-global-toolbar,
+  .ql-custom-toolbar {
     position: relative !important;
     top: 0;
     left: 0;
     width: 100%;
     height: unset !important;
 
-    button, .picker.q-color {
+    button,
+    .picker.q-color {
       width: 1.9vw !important;
       height: 1.9vw !important;
 
@@ -699,10 +681,9 @@ $space-between-boxes: 0.1vw;
         height: 100% !important;
         width: 100% !important;
         &:hover {
-          color: rgba(0,28,88, 0.5) !important;
+          color: rgba(0, 28, 88, 0.5) !important;
         }
       }
-
     }
 
     button:disabled {
@@ -714,7 +695,8 @@ $space-between-boxes: 0.1vw;
     }
   }
   // more space between buttons in bigger editors
-  .synthesis-page, .plan-page {
+  .synthesis-page,
+  .plan-page {
     .ql-custom-toolbar .formats > button {
       margin-left: 0.8vw;
       margin-right: 0.8vw;

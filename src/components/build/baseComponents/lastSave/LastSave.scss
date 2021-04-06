@@ -3,23 +3,48 @@
 @import "src/assets/sass/partials/extensions";
 
 @keyframes error-blink {
-    0% {
-        color: var(--white);
-    }
-    49% {
-        color: var(--white);
-    }
-    50% {
-        color: red;
-    }
-    99% {
-        color: red;
-    }
+  0% {
+    color: var(--white);
+  }
+  49% {
+    color: var(--white);
+  }
+  50% {
+    color: red;
+  }
+  99% {
+    color: red;
+  }
+}
+
+.saved-info {
+  position: fixed;
+  font-family: $font-family-regular;
+  top: 6%;
+  right: 0;
+  width: 34.3vw;
+  color: white;
+  @extend %textCenter;
+
+  svg {
+    margin-top: 0.3vw;
+    height: 1.52vw;
+    width: 1.52vw;
+  }
 }
 
 .saved-info-row {
-    &.save-error {
-        animation: error-blink 0.5s infinite;
-    }
-    color: var(--white);
+  width: 17vw;
+
+  .text-container {
+    font-size: $base-build-font-size;
+    margin-left: 0.4vw;
+  }
+}
+
+.saved-info-row {
+  &.save-error {
+    animation: error-blink 0.5s infinite;
+  }
+  color: var(--white);
 }
