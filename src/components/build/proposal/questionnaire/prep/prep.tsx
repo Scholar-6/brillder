@@ -13,6 +13,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import { toRenderJSON } from "services/SharedTypeService";
 import { BrickLengthEnum } from "model/brick";
+import _ from "lodash";
 
 
 interface PrepProps {
@@ -36,6 +37,16 @@ const PrepPreviewComponent: React.FC<any> = ({ data }) => {
 }
 
 const PrepComponent: React.FC<PrepProps> = ({ parentPrep, ...props }) => {
+  const [, forceUpdate] = React.useReducer(x => x + 1, 0);
+  
+  const observer = React.useCallback(_.throttle(() => {
+    forceUpdate();
+  }, 500), []);
+  React.useEffect(() => {
+    parentPrep.observeDeep(observer);
+    return () => parentPrep.unobserveDeep(observer);
+  }, [parentPrep]);
+
   const isVisible = () => {
     if (props.brickLength) {
       if (props.brickLength === BrickLengthEnum.S20min) {
