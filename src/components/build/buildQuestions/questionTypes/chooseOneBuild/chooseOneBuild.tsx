@@ -100,7 +100,6 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
           return <ChooseOneAnswerComponent
             key={answer.get("id")}
             locked={locked}
-            editOnly={editOnly}
             index={i}
             length={list.length}
             answer={answer}

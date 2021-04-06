@@ -63,7 +63,7 @@
   .choose-image {
     border-radius: 0.8vw;
     background: var(--solitude-light);
-    height: 10vh;
+    height: calc(10vh + 1.7vw);
     .right-top-icon {
       height: calc(100% - 1vh);
       right: 1vw !important;

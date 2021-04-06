@@ -1,5 +1,6 @@
 import React from "react";
 import * as Y from "yjs";
+import _ from "lodash";
 import Checkbox from "@material-ui/core/Checkbox";
 
 import './ChooseOneAnswer.scss';
@@ -14,7 +15,6 @@ import YesNoDialog from "components/build/baseComponents/dialogs/YesNoDialog";
 
 export interface ChooseOneAnswerProps {
   locked: boolean;
-  editOnly: boolean;
   index: number;
   length: number;
   answer: Y.Map<any>;
@@ -27,10 +27,28 @@ export interface ChooseOneAnswerProps {
 }
 
 const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
-  locked, editOnly, index, length, answer, validationRequired, checkBoxValid, hovered,
+  locked, index, length, answer, validationRequired, checkBoxValid, hovered,
   removeFromList, onChecked, onBlur
 }) => {
+  const getAnswerType = () =>
+    (answer.get("answerType") as QuestionValueType) || QuestionValueType.None;
+  const getFileName = () => answer.get("valueFile") as string;
+
   const [clearOpen, setClear] = React.useState(false);
+  const [type, setType] = React.useState(getAnswerType());
+  const [fileName, setFileName] = React.useState(getFileName());
+
+  React.useEffect(() => {
+    const observer = _.throttle((evt: any) => {
+      setType(getAnswerType());
+      setFileName(getFileName());
+    }, 200);
+    answer.observe(observer);
+    return () => {
+      answer.unobserve(observer);
+    };
+    // eslint-disable-next-line
+  }, []);
 
   const setImage = (fileName: string, source: string, caption: string) => {
     if (locked) { return; }
@@ -63,15 +81,9 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     onBlur();
   }
 
-  React.useEffect(() => {
-    if(answer.get("answerType") === QuestionValueType.String && !answer.get("value")) {
-      answer.set("value", new Y.Text());
-    } 
-  }, [answer]);
-
   let containerClass = "";
   let className = 'choose-one-box unique-component';
-  if (answer.get("answerType") === QuestionValueType.Image) {
+  if (type === QuestionValueType.Image) {
     className += ' big-answer';
     containerClass = 'big-box';
   }
@@ -88,13 +100,13 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   }
 
   if (validationRequired) {
-    if (!answer.get("value") && (answer.get("answerType") === QuestionValueType.String || answer.get("answerType") === QuestionValueType.None)) {
+    if (!answer.get("value") && (type === QuestionValueType.String || type === QuestionValueType.None)) {
       className += ' invalid-answer';
     }
   }
 
   const renderAnswerType = () => {
-    if (answer.get("answerType") === QuestionValueType.Sound) {
+    if (type === QuestionValueType.Sound) {
       return (
         <div className="choose-sound">
           <SoundRecord
@@ -105,15 +117,15 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           />
         </div>
       );
-    } else if (answer.get("answerType") === QuestionValueType.Image) {
+    } else if (type === QuestionValueType.Image) {
       return (
         <div className="choose-image">
           <RemoveButton onClick={() => setClear(true)} />
           <QuestionImageDropzone
             answer={answer as any}
-            type={answer.get("answerType") || QuestionValueType.None}
+            type={type}
             locked={locked}
-            fileName={answer.get("valueFile")}
+            fileName={fileName}
             update={setImage}
           />
           <YesNoDialog
@@ -129,9 +141,9 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
       <div className="choose-empty">
         <QuestionImageDropzone
           answer={answer as any}
-          type={answer.get("answerType") || QuestionValueType.None}
+          type={type}
           locked={locked}
-          fileName={answer.get("valueFile")}
+          fileName={fileName}
           update={setImage}
         />
         <QuillEditor
@@ -154,7 +166,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
 
   return (
     <div className={className}>
-      {answer.get("answerType") !== QuestionValueType.Sound && answer.get("answerType") !== QuestionValueType.Image &&
+      {type !== QuestionValueType.Sound && type !== QuestionValueType.Image &&
         <RemoveItemButton index={index} length={length} onClick={removeFromList} />
       }
       <div className={"checkbox-container " + containerClass}>

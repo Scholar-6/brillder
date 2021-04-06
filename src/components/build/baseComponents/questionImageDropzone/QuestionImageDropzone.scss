@@ -4,7 +4,7 @@
 
 .question-image-drop {
   position: absolute;
-  width: calc(100% - 2vw);
+  width: calc(100%);
   top: 1vh;
   left: 0;
   z-index: 200;
@@ -21,9 +21,12 @@
       height: 1.4vw;
       width: 1.4vw;
     }
-    > img {
-      max-height: 8vh;
-      width: auto;
+    > div {
+      color: var(--theme-dark-blue);
+      > img {
+        max-height: 8vh;
+        width: auto;
+      }
     }
   }
 }

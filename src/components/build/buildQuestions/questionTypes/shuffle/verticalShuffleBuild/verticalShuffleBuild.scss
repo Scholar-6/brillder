@@ -9,7 +9,7 @@
     background: var(--solitude-light);
     width: 100%;
     margin-bottom: 0.4vh;
-    min-height: 10vh;
+    min-height: calc(10vh + 2vw);
     .quill-document-editor {
       .ql-editor {
         padding-top: 5vh;
