@@ -11,4 +11,12 @@
     max-width: 100%;
     overflow: scroll;
   }
+  .choose-choice.image-choice {
+    .image-container {
+      img {
+        max-height: 20vh;
+      }
+      display: block;
+    }
+  }
 }
