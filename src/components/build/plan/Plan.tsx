@@ -128,7 +128,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <div className="header">Title</div>
                     <QuillEditor
                       sharedData={title}
-                      placeholder="What is it about?"
+                      placeholder="What is your brick about?"
                       disabled={locked}
                       toolbar={['italic']}
                     />
@@ -177,8 +177,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                   <div className="prep-container">
                     <div className="header">Prep</div>
                     <QuillEditor
-                      placeholder="Add engaging and relevant
-                      preparatory material."
+                      placeholder="Add engaging and relevant preparatory material."
                       disabled={locked}
                       sharedData={ybrick.get("prep")}
                       toolbar={[

@@ -432,6 +432,11 @@ $space-between-boxes: 0.1vw;
     }
   }
 
+  .fixed-build-phone .phone-question-preview-box .phone-question-preview .phone .phone-border .screen .custom-component .phone-preview-component .key-words-play {
+    white-space: normal;
+    overflow: auto;
+  }
+
   .inner-question-type {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
