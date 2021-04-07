@@ -80,7 +80,6 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
     if(!answer.get("id")) {
       answer.set("id", generateId());
     }
-    console.log(answer.get("id"));
     return (
       <div className={className} key={answer.get("id")}>
         {renderDeleteButton(index)}

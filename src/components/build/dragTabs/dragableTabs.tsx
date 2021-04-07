@@ -256,7 +256,6 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       );
     }
 
-    console.log(columns);
     if (props.yquestions.length === 0) {
       columns = 2 + 1.582 + 1.5555;
       if (isPlanPage) {
