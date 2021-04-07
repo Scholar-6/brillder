@@ -114,7 +114,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             <RadioButton checked={c.active} color={c.subject.color} name={c.subject.name} />
             <span className="filter-class-name">{c.name}</span>
             {
-              c.active &&
+              c.active && c.students.length > 0 &&
               <div className="classroom-icon svgOnHover">
                 <SpriteIcon name="arrow-right" className="active" />
               </div>
@@ -171,20 +171,20 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
           + Create Class
         </div>
-        <div className="filter-container indexes-box classrooms-filter">
-          <div
-            className={"index-box " + (!this.props.activeClassroom ? "active" : "")}
-            onClick={this.removeClassrooms.bind(this)}
-          >
-            View All Classes
+        <div
+          className={"index-box m-view-all " + (!this.props.activeClassroom ? "active" : "")}
+          onClick={this.removeClassrooms.bind(this)}
+        >
+          View All Classes
             <div className="right-index">
-              {totalCount}
-              <SpriteIcon name="users" className="active" />
-              <div className="classrooms-box">
-                {totalBricks}
-              </div>
+            {totalCount}
+            <SpriteIcon name="users" className="active" />
+            <div className="classrooms-box">
+              {totalBricks}
             </div>
           </div>
+        </div>
+        <div className="filter-container indexes-box classrooms-filter">
           {this.props.classrooms.map(this.renderClassroom.bind(this))}
           <div className="sidebar-footer" />
         </div>

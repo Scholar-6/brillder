@@ -3,4 +3,45 @@
     cursor: pointer;
     background: var(--light-blue-alpha3);
   }
+  .filter-container.classrooms-filter {
+    height: calc(100vh - 1.1vh - 2vh - 4vh - 5.95vw - 2vw - 5.2vw - 5.834vw) !important;
+    padding-bottom: 0;
+  }
+  .subject-no-border {
+    margin: 0.25vw;
+    margin-right: 0.65vw;
+    .filter-circle {
+      margin-right: 0 !important;
+      width: 0.85vw;
+      height: 0.85vw;
+      border-radius: 50%;
+    }
+  }
+  .subject-border {
+    display: flex;
+    align-items: center;
+    margin-right: 0.65vw;
+  }
+  .m-view-all {
+    display: flex;
+    font-size: 1.1vw;
+    padding-left: 1.4vw;
+    padding-top: 0.5vh;
+    padding-bottom: 0.6vh;
+    border-bottom: 0.2vw solid var(--light-blue-alpha5);
+    color: var(--white);
+    .right-index {
+      background: inherit !important;
+      display: flex;
+      align-items: center;
+      color: var(--white) !important;
+    }
+    svg {
+      width: 1.3vw;
+      height: 1.3vw;
+    }
+    &.active {
+      background: var(--theme-orange);
+    }
+  }
 }
