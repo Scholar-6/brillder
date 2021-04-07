@@ -5,7 +5,7 @@
 .manage-classrooms-page {
   $base-filter-padding-left: 2vw;
   .manage-classrooms-filter {
-    height: calc(94vh - #{$page-head-height} - 5.9vh - 6.5vw) !important;
+    height: calc(100vh - 1.1vh - 2vh - 4vh - 5.95vw - 2vw - 5.2vw - 5.834vw) !important;
     overflow: auto;
     .index-box {
       padding-left: $base-filter-padding-left !important;
@@ -88,7 +88,6 @@
     letter-spacing: 0.02vw;
     font-size: 1.1vw;
     font-family: $font-family-bold;
-    border-bottom: 0.2vw solid var(--light-blue-alpha5);
   }
 
   .filter-header2 {
@@ -298,6 +297,17 @@
 
     .bold {
       margin-bottom: 4vh;
+    }
+  }
+  .m-view-all {
+    display: flex;
+    font-size: 1.1vw;
+    padding-left: 1.4vw;
+    padding-top: 0.5vh;
+    padding-bottom: 0.6vh;
+    border-bottom: 0.2vw solid var(--light-blue-alpha5);
+    &.active {
+      background: var(--theme-orange);
     }
   }
 }

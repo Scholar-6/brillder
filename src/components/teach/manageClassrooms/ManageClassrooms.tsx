@@ -353,7 +353,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderViewAllFilter() {
-    let className = "index-box hover-light item-box2";
+    let className = "m-view-all index-box hover-light item-box2";
     if (!this.state.activeClassroom) {
       className += " active";
     }
@@ -393,8 +393,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
           + Create Class
         </div>
+        {this.renderViewAllFilter()}
         <div className="subject-indexes-box filter-container manage-classrooms-filter">
-          {this.renderViewAllFilter()}
           {this.state.classrooms.map((c, i) =>
             <ClassroomFilterItem
               classroom={c}
