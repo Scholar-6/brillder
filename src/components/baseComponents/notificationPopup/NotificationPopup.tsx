@@ -153,7 +153,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           </div>
           <div className="content-box" onClick={() => move(notification)}>
             <div className="notification-detail">
-              <p className="notif-title">{notification.title}</p>
+              <p className="notif-title" dangerouslySetInnerHTML={{__html: notification.title}} />
               <p className="notif-desc" dangerouslySetInnerHTML={{__html: notification.text}} />
             </div>
             <div className="actions">
