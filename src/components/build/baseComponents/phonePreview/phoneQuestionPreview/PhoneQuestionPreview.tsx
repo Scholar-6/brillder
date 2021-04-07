@@ -10,8 +10,8 @@ import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from 'model/que
 import { SortCategory } from 'components/interfaces/sort';
 import EmptyQP1 from './EmptyQP1';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { toRenderJSON } from 'services/SharedTypeService';
 import _ from 'lodash';
+import { useObserver } from '../../hooks/useObserver';
 
 
 export interface PhonePreviewProps {
@@ -25,23 +25,7 @@ export interface PhonePreviewProps {
 
 const PhonePreview: React.FC<PhonePreviewProps> = ({ yquestion, ...props }) => {
   const [questionPreview] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
-  const [question, setQuestion] = React.useState<Question>(toRenderJSON(yquestion));
-
-  React.useEffect(() => {
-    setQuestion(toRenderJSON(yquestion));
-
-    const observer = _.throttle(() => {
-      const newQuestion = toRenderJSON(yquestion);
-      setQuestion(newQuestion);
-    }, 500);
-  
-    yquestion.observeDeep(observer);
-
-    return () => {
-      yquestion.unobserveDeep(observer);
-    }
-  /*eslint-disable-next-line*/
-  }, [yquestion]);
+  const question = useObserver(yquestion) as Question;
 
   //#region Scroll
   const [canScroll, setScroll] = React.useState(false);

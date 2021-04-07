@@ -6,6 +6,7 @@ import { TutorialStep } from "components/build/tutorial/TutorialPanelWorkArea";
 import { getTime, getFormattedDate } from "components/services/brickService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import _ from "lodash";
+import { useObserver } from "../hooks/useObserver";
 
 
 interface LastSaveProps {
@@ -20,17 +21,7 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
   const [isSaving, setSaving] = React.useState(props.isSaving);
   // eslint-disable-next-line
   const [saveTimeout, setSaveTimeout] = React.useState(null as any);
-  const [updated, setUpdated] = React.useState<Date>(new Date(props.ybrick.get("updated")));
-
-  const observer = React.useCallback(_.throttle(() => {
-    setUpdated(new Date(props.ybrick.get("updated")));
-  }, 200), [props.ybrick])
-
-  useEffect(() => {
-    props.ybrick.observeDeep(observer);
-    return () => props.ybrick.unobserveDeep(observer);
-  // eslint-disable-next-line
-  }, [observer]);
+  const updated = new Date(useObserver(props.ybrick, "updated", 1000));
 
   useEffect(() => {
     if (props.isSaving) {

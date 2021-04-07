@@ -5,7 +5,7 @@ import { Grid } from "@material-ui/core";
 
 import PairOptionComponent from "./option/pairOption";
 import PairAnswerComponent from "./answer/pairAnswer";
-import { toRenderJSON } from "services/SharedTypeService";
+import { useObserver } from "components/build/baseComponents/hooks/useObserver";
 
 interface ObservablePairAnswerProps {
   index: number;
@@ -25,18 +25,7 @@ const ObservablePairAnswer: React.FC<ObservablePairAnswerProps> = ({
   list,
   ...props
 }) => {
-  const [jsonAnswer, setAnswer] = React.useState(toRenderJSON(answer));
-
-  React.useEffect(() => {
-    const observer = _.throttle((evt: any) => {
-      setAnswer(toRenderJSON(answer))
-    }, 200);
-    answer.observe(observer);
-    return () => {
-      answer.unobserve(observer);
-    };
-    // eslint-disable-next-line
-  }, []);
+  const jsonAnswer = useObserver(answer);
 
   return (
     <Grid key={answer.get("id")} container direction="row" className="answers-container">
