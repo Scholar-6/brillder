@@ -10,6 +10,7 @@ import NextButton from '../../components/nextButton'
 import { Redirect } from "react-router-dom";
 import map from 'components/map';
 import { useObserver } from "components/build/baseComponents/hooks/useObserver";
+import routes from "components/build/routes";
 
 
 interface SubjectProps {
@@ -251,12 +252,15 @@ const SubjectPage: React.FC<SubjectProps> = ({
     setCoreStatus(true);
   }
 
+  const setSubjectId = (newSubjectId: number) => {
+    ybrick.set("subjectId", newSubjectId);
+  }
+
   if (subjects.length === 1) {
     let subjectId = subjects[0].id;
-    ybrick.set("subjectId", subjectId);
+    setSubjectId(subjectId);
     if (values.isCore) {
       ybrick.set("isCore", getCore(values));
-    } else {
     }
     return <Redirect to={map.ProposalTitle.replace(":brickId", ybrick.get("id"))} />
   }
@@ -270,6 +274,12 @@ const SubjectPage: React.FC<SubjectProps> = ({
         return <Redirect to={map.ProposalTitle.replace(":brickId", ybrick.get("id"))} />
       }
     } catch { }
+  } else {
+    // select first one if empty
+    const subjectId = ybrick.get("subjectId");
+    if (!subjectId) {
+      setSubjectId(subjects[0].id);
+    }
   }
 
   const getInnerComponent = () => {
@@ -308,8 +318,6 @@ const SubjectPage: React.FC<SubjectProps> = ({
     }
   }
 
-  let innerComponent = getInnerComponent();
-
   return (
     <div className="tutorial-page subject-page">
       <Grid container direction="row" style={{ height: '100%' }}>
@@ -342,8 +350,11 @@ const SubjectPage: React.FC<SubjectProps> = ({
         </Grid>
         {subject &&
           <Grid className='tutorial-pagination'>
-            <div className="centered text-theme-dark-blue bold" style={{ fontSize: '2vw', marginRight: '2vw' }}
-              onClick={() => { saveSubject(subject); history.push(map.ProposalTitleLink) }}>
+            <div className="centered next-text text-theme-dark-blue bold"
+              onClick={() => {
+                saveSubject(subject);
+                history.push(routes.buildTitle(ybrick.get("id")));
+              }}>
               Next
             </div>
             <NextButton
@@ -357,7 +368,7 @@ const SubjectPage: React.FC<SubjectProps> = ({
             <div>{subjectName}</div>
           </div>
         </Hidden>
-        <ProposalPhonePreview Component={innerComponent} />
+        <ProposalPhonePreview Component={getInnerComponent()} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>
