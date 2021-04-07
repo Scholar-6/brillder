@@ -14,7 +14,7 @@
     left: 0;
     z-index: 0;
     height: 100%;
-    width: 55vw;
+    width: 50%;
     overflow: hidden;
     h1 {
       text-align: center;
@@ -28,7 +28,6 @@
     .image-container {
       display: flex;
       justify-content: center;
-
       img {
         height: 55vh;
       }
@@ -48,16 +47,13 @@
     display: flex;
     flex-direction: column;
     background: #12326a;
-    width: 45vw;
+    width: 50%;
     height: 100%;
     padding-top: 12.4vh;
     transition: all 500ms ease-out;
-
     &.right {
-      position: absolute;
-      left: 55vw;
+      left: 50%;
     }
-
     .logo {
       $logo-width: 11.3vw;
       margin-bottom: 5.6vh;
@@ -177,16 +173,17 @@
   }
   // right part
   .right-part {
+    width: 50%;
+    left: 50%;
     height: 100%;
     position: absolute;
-    left: 45vw;
     display: relative;
     .container {
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 55vw;
+      width: 100%;
       .loginPhone {
         z-index: 10;
       }
@@ -203,10 +200,9 @@
     $top: 24.5%;
     .bricks-container {
       @extend %flexCenter;
-      @extend %floatToCenter;
-      // position: absolute;
-      // top: $top;
-      width: 55vw;
+      @extend %floatToYCenter;
+      right: 0;
+      width: 100%;
       height: calc(100% - #{$top});
       .inner {
         width: 100%;
@@ -230,28 +226,28 @@
       position: absolute;
       top: 0;
       height: 100%;
-      width: 55vw;
+      width: 100%;
       .glasses {
-        width: 17vh;
+        width: 15vh;
         position: absolute;
         top: 12vh;
-        left: 3.2vw;
+        left: 1vw;
         .blue {
           fill: var(--theme-orange) !important;
           stroke: var(--theme-orange) !important;
         }
       }
       .teach-icon {
-        width: 19vh;
+        width: 15vh;
         position: absolute;
         top: 8.5vh;
-        right: 3.5vw;
+        right: 2vw;
         transform: rotateZ(13deg);
       }
       .trowel-login {
-        width: 19vh;
+        width: 15vh;
         position: absolute;
-        right: 5vw;
+        right: 2vw;
         bottom: 22vh;
         transform: rotateZ(-1deg);
       }
