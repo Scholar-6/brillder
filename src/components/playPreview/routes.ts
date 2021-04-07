@@ -18,7 +18,7 @@ export const previewCover = (brickId: number) => preview(brickId) + routes.PlayC
 export const previewSections = (brickId: number) => preview(brickId) + routes.PlaySectionsLastPrefix;
 export const previewBrief = (brickId: number) => preview(brickId) + routes.PlayBriefLastPrefix;
 export const previewNewPrep = (brickId: number) => preview(brickId) + routes.PlayNewPrepLastPrefix;
-export const previewNewPrepResume = (brickId: number) => preview(brickId) + "?resume=true";
+export const previewNewPrepResume = (brickId: number) => preview(brickId) + routes.PlayNewPrepLastPrefix + "?resume=true";
 export const previewLive = (brickId: number) => preview(brickId) + routes.PlayLiveLastPrefix;
 export const previewSynthesis = (brickId: number) => preview(brickId) + routes.PlaySynthesisLastPrefix;
 export const previewReview = (brickId: number) => preview(brickId) + routes.PlayReviewLastPrefix;
