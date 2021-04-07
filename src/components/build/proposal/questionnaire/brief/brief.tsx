@@ -11,7 +11,6 @@ import { ProposalStep, PlayButtonStatus, BrickLengthRoutePart } from "../../mode
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
-import { toRenderJSON } from "services/SharedTypeService";
 import { useObserver } from "components/build/baseComponents/hooks/useObserver";
 
 
