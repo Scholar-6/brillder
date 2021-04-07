@@ -7,13 +7,14 @@
     background: var(--theme-orange);
   }
   .MuiPaper-root.MuiDialog-paper {
-    height: 70vh;
     padding-bottom: 7.4vw;
     overflow-y: hidden;
     min-width: 34vw;
     .dialog-header.image-dialog {
+      overflow: scroll;
       position: relative;
       overflow-y: auto;
+      padding-bottom: calc(4vw + 1.5vw);
     }
     .upload-button {
       position: absolute;
