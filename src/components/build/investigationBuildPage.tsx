@@ -109,6 +109,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const { ydoc } = useContext(YJSContext)!;
   const ybrick = ydoc!.getMap("brick")!;
+  props.startEditing(brickId);
 
   if (!ybrick) {
     return <PageLoader content="Getting brick..." />
