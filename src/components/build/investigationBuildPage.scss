@@ -697,9 +697,11 @@ $space-between-boxes: 0.1vw;
   // more space between buttons in bigger editors
   .synthesis-page,
   .plan-page {
-    .ql-custom-toolbar .formats > button {
-      margin-left: 0.8vw;
-      margin-right: 0.8vw;
+    .ql-custom-toolbar .formats {
+      > button, > span.picker.q-color {
+        margin-left: 0.3vw;
+        margin-right: 0.3vw;
+      }
     }
   }
 }
