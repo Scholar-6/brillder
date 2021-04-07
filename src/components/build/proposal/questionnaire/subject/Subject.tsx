@@ -1,4 +1,5 @@
 import React from "react";
+import * as Y from "yjs";
 import { Grid, RadioGroup, FormControlLabel, Radio, Hidden } from "@material-ui/core";
 import queryString from 'query-string';
 
@@ -8,14 +9,15 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import NextButton from '../../components/nextButton'
 import { Redirect } from "react-router-dom";
 import map from 'components/map';
+import { useObserver } from "components/build/baseComponents/hooks/useObserver";
 
 
 interface SubjectProps {
   history: any;
   baseUrl: string;
   location: any;
-  subjectId: any;
   subjects: any[];
+  ybrick: Y.Map<any>;
   saveCore(isCore: boolean): void;
   saveSubject(subjectId: number): void;
   saveData(subjectId: number, isCore: boolean): void;
@@ -210,9 +212,9 @@ const DefaultComponent: React.FC = () => {
 }
 
 const SubjectPage: React.FC<SubjectProps> = ({
-  history, subjectId, subjects, baseUrl, location, saveData, saveCore, saveSubject
+  ybrick, history, subjects, baseUrl, location, saveSubject
 }) => {
-  const getSubjectName = (subjectId: number) => {
+  const getSubjectName = React.useCallback((subjectId: number) => {
     if (subjectId) {
       const subject = subjects.find(s => s.id === subjectId);
       if (subject) {
@@ -220,20 +222,16 @@ const SubjectPage: React.FC<SubjectProps> = ({
       }
     }
     return "";
-  }
+  }, [subjects]);
 
-  let initSubjectName = getSubjectName(subjectId);
+  const subject = useObserver(ybrick, "subjectId");
+  const subjectName = React.useMemo(() => getSubjectName(subject), [subject, getSubjectName]);
 
-  const [subject, setSubject] = React.useState(subjectId);
-  const [subjectName, setSubjectName] = React.useState(initSubjectName);
   const [isCoreSet, setCoreStatus] = React.useState(false);
 
   const onSubjectChange = (event: any) => {
     const subjectId = parseInt(event.target.value) as number;
-    setSubject(subjectId);
-    const currentName = getSubjectName(subjectId);
-    setSubjectName(currentName);
-    saveSubject(subjectId);
+    ybrick.set("subjectId", subjectId);
   };
 
   const values = queryString.parse(location.search);
@@ -249,18 +247,18 @@ const SubjectPage: React.FC<SubjectProps> = ({
 
   if (!isCoreSet && values.isCore) {
     let isCore = getCore(values);
-    saveCore(isCore);
+    ybrick.set("isCore", isCore);
     setCoreStatus(true);
   }
 
   if (subjects.length === 1) {
     let subjectId = subjects[0].id;
+    ybrick.set("subjectId", subjectId);
     if (values.isCore) {
-      saveData(subjectId, getCore(values));
+      ybrick.set("isCore", getCore(values));
     } else {
-      saveSubject(subjectId);
     }
-    return <Redirect to={map.ProposalTitleLink} />
+    return <Redirect to={map.ProposalTitle.replace(":brickId", ybrick.get("id"))} />
   }
 
   if (values.selectedSubject) {
@@ -268,8 +266,8 @@ const SubjectPage: React.FC<SubjectProps> = ({
       let subjectId = parseInt(values.selectedSubject as string);
       let res = subjects.find(s => s.id === subjectId);
       if (res) {
-        saveSubject(res.id);
-        return <Redirect to={map.ProposalTitleLink} />
+        ybrick.set("subjectId", res.id);
+        return <Redirect to={map.ProposalTitle.replace(":brickId", ybrick.get("id"))} />
       }
     } catch { }
   }
