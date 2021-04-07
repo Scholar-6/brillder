@@ -620,7 +620,6 @@ $space-between-boxes: 0.1vw;
       .open-question-container,
       .title-quill-container {
         margin-top: 0.5vw;
-        margin-bottom: 0.5vw;
         .header {
           width: 100%;
           background: var(--tab-gray);
@@ -640,6 +639,9 @@ $space-between-boxes: 0.1vw;
             height: 14vw;
           }
         }
+      }
+      .prep-container {
+        margin-bottom: 0.5vw;
       }
     }
     .right-sidebar {
