@@ -8,6 +8,15 @@
   }
   .create-class-button { 
     padding-left: 1.15vw !important;
+    width: 14vw;
+    svg {
+      transition: all 300ms ease-out;
+    }
+    &:hover {
+      svg {
+        color: var(--theme-orange);
+      }
+    }
   }
   .filter-container.classrooms-filter {
     height: calc(100vh - 1.1vh - 2vh - 4vh - 5.95vw - 2vw - 5.2vw - 5.834vw) !important;
