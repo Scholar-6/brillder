@@ -83,11 +83,18 @@
 
   .create-class-button {
     cursor: pointer;
+    display: flex;
+    align-items:center;
     padding-left: $base-filter-padding-left !important;
     padding-bottom: 2vh !important;
     letter-spacing: 0.02vw;
-    font-size: 1.1vw;
-    font-family: $font-family-bold;
+    font-size: 1.4vw;
+    font-family: $font-family-regular;
+    svg {
+      height: 2vw;
+      width: 2vw;
+      margin-right: 0.4vw;
+    }
   }
 
   .filter-header2 {

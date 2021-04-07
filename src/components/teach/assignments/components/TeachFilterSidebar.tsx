@@ -10,6 +10,7 @@ import RadioButton from "components/baseComponents/buttons/RadioButton";
 import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
 import { Subject } from "model/brick";
 import { isArchived } from "../service/service";
+import ClassroomsList from "./ClassroomsList";
 
 enum TeachFilterFields {
   Assigned = 'assigned',
@@ -29,9 +30,8 @@ interface FilterSidebarProps {
 }
 
 interface FilterSidebarState {
-  filterExpanded: boolean;
   filters: TeachFilters;
-  isClearFilter: boolean;
+  ascending: boolean;
   createClassOpen: boolean;
 }
 
@@ -39,8 +39,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
   constructor(props: FilterSidebarProps) {
     super(props);
     this.state = {
-      filterExpanded: true,
-      isClearFilter: false,
+      ascending: false,
       filters: {
         assigned: false,
         completed: false
@@ -49,29 +48,16 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     };
   }
 
-  hideFilter() { this.setState({ filterExpanded: false }) }
-  expandFilter() { this.setState({ filterExpanded: true }) }
-
   clearStatus() {
     const { filters } = this.state;
     filters.assigned = false;
     filters.completed = false;
-    this.filterClear(filters);
     this.props.filterChanged(filters);
-  }
-
-  filterClear(filters: TeachFilters) {
-    if (filters.assigned || filters.completed) {
-      this.setState({ isClearFilter: true, filters });
-    } else {
-      this.setState({ isClearFilter: false, filters });
-    }
   }
 
   toggleFilter(filter: TeachFilterFields) {
     const { filters } = this.state;
     filters[filter] = !filters[filter];
-    this.filterClear(filters);
     this.props.filterChanged(filters);
   }
 
@@ -125,6 +111,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             <SpriteIcon name="users" className="active" />
             <div className="classrooms-box">
               {this.getClassAssignedCount(c)}
+              <div />
             </div>
           </div>
         </div>
@@ -133,7 +120,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     );
   }
 
-  getClassAssignedCount(classroom: TeachClassroom) {
+  getClassAssignedCount(classroom: any) {
     let classBricks = 0;
     for (const assignment of classroom.assignments) {
       const archived = isArchived(assignment);
@@ -151,6 +138,17 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
   }
 
   renderClassesBox() {
+    let finalClasses = [];
+    for (const cls of this.props.classrooms) {
+      let finalClass = Object.assign({}, cls) as any;
+      finalClass.assigned = this.getClassAssignedCount(finalClass);
+      finalClasses.push(finalClass);
+    }
+    if (this.state.ascending) {
+      finalClasses = finalClasses.sort((a, b) => a.assigned - b.assigned);
+    } else {
+      finalClasses = finalClasses.sort((a, b) => b.assigned - a.assigned);
+    }
     let totalBricks = 0;
     let totalCount = 0;
     for (let classroom of this.props.classrooms) {
@@ -158,34 +156,41 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
       totalBricks += this.getClassAssignedCount(classroom);
     }
     let className = "sort-box teach-sort-box";
-    if (!this.state.filterExpanded) {
-      className += " sort-box-expanded";
-    }
     return (
       <div className={className}>
         <div className="filter-container sort-by-box">
           <div style={{ display: 'flex' }}>
-            <div className="class-header" style={{ width: '50%' }}>CLASSES</div>
+            {finalClasses.length > 1
+              ? <div className="class-header" style={{ width: '50%' }}>{finalClasses.length} CLASSES</div>
+              : <div className="class-header" style={{ width: '50%' }}>{finalClasses.length} CLASS</div>
+            }
           </div>
         </div>
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
-          + Create Class
+          <SpriteIcon name="plus-circle" /> Create Class
         </div>
         <div
           className={"index-box m-view-all " + (!this.props.activeClassroom ? "active" : "")}
           onClick={this.removeClassrooms.bind(this)}
         >
           View All Classes
-            <div className="right-index">
+          <div className="right-index">
             {totalCount}
             <SpriteIcon name="users" className="active" />
             <div className="classrooms-box">
               {totalBricks}
+              <div />
             </div>
+          </div>
+          <div className="m-absolute-sort">
+            <SpriteIcon
+              name={this.state.ascending ? "hero-sort-ascending" : "hero-sort-descending"}
+              onClick={() => this.setState({ascending: !this.state.ascending})}
+            />
           </div>
         </div>
         <div className="filter-container indexes-box classrooms-filter">
-          {this.props.classrooms.map(this.renderClassroom.bind(this))}
+          {finalClasses.map(this.renderClassroom.bind(this))}
           <div className="sidebar-footer" />
         </div>
       </div>
