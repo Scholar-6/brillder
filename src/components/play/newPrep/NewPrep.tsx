@@ -39,10 +39,15 @@ interface Props {
 const NewPrepPage: React.FC<Props> = ({ brick, history, ...props }) => {
   const [startTime] = React.useState(moment());
 
+  let briefExpanded = false;
+  if (props.isPreview) {
+    briefExpanded = true;
+  }
+
   const [state, setState] = React.useState({
     prepExpanded: true,
     isStopped: false,
-    briefExpanded: false,
+    briefExpanded,
     resume: false,
     duration: null,
   } as IntroductionState);
