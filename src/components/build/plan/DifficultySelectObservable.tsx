@@ -3,6 +3,7 @@ import * as Y from "yjs";
 import _ from "lodash";
 
 import DifficultySelect from "../proposal/questionnaire/brickTitle/DifficultySelect";
+import { useObserver } from '../baseComponents/hooks/useObserver';
 
 interface Props {
   disabled: boolean;
@@ -11,20 +12,7 @@ interface Props {
 
 const DifficultySelectObservable: React.FC<Props> = (props) => {
   const {ybrick} = props;
-
-  const [level, setLevel] = React.useState(ybrick.get("academicLevel"));
-
-  // when mounted observe if level changed and set new text
-  useEffect(() => {
-    const observer = _.throttle((evt: any) => {
-      const newLevel = ybrick.get("academicLevel");
-      setLevel(newLevel);
-    }, 200);
-
-    ybrick.observe(observer);
-    return () => { ybrick.unobserve(observer) }
-  // eslint-disable-next-line
-  }, []);
+  const level = useObserver(ybrick, "academicLevel");
 
   return <DifficultySelect
     disabled={props.disabled}

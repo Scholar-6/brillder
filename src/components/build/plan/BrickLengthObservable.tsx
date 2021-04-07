@@ -5,6 +5,7 @@ import _ from "lodash";
 import { Select, MenuItem } from "@material-ui/core";
 import { BrickLengthEnum } from 'model/brick';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { useObserver } from '../baseComponents/hooks/useObserver';
 
 interface Props {
   disabled: boolean;
@@ -13,20 +14,7 @@ interface Props {
 
 const BrickLengthObservable: React.FC<Props> = (props) => {
   const { ybrick } = props;
-
-  const [brickLength, setLength] = React.useState(ybrick.get("brickLength"));
-
-  // when mounted observe if level changed and set new text
-  useEffect(() => {
-    const observer = _.throttle(() => {
-      const newLength = ybrick.get("brickLength");
-      setLength(newLength);
-    }, 200);
-
-    ybrick.observe(observer);
-    return () => { ybrick.unobserve(observer) }
-    // eslint-disable-next-line
-  }, []);
+  const brickLength = useObserver(ybrick, "brickLength");
 
   return (
     <div className="brick-length">

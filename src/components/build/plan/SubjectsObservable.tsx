@@ -11,6 +11,7 @@ import {
 import { Subject } from 'model/brick';
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { useObserver } from '../baseComponents/hooks/useObserver';
 
 interface Props {
   disabled: boolean;
@@ -20,22 +21,9 @@ interface Props {
 
 const SubjectsObservable: React.FC<Props> = (props) => {
   const { ybrick, subjects } = props;
-  const initSubjectId = ybrick.get("subjectId");
-  const initSubjectIndex = subjects.findIndex((s) => s.id === initSubjectId);
-  const [subjectIndex, setSubjectIndex] = React.useState<number>(initSubjectIndex);
 
-  // when mounted observe if level changed and set new text
-  useEffect(() => {
-    const observer = _.throttle((evt: any) => {
-      const newSubjectId = ybrick.get("subjectId");
-      const newSubjectIndex = subjects.findIndex((s) => s.id === newSubjectId);
-      setSubjectIndex(newSubjectIndex);
-    }, 200);
-
-    ybrick.observe(observer);
-    return () => { ybrick.unobserve(observer) }
-    // eslint-disable-next-line
-  }, []);
+  const subjectId = useObserver(ybrick, "subjectId");
+  const subjectIndex = React.useMemo(() => subjects.findIndex(s => s.id === subjectId), [subjects, subjectId]);
 
   return (
     <Select

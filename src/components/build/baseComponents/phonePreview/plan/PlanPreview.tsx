@@ -8,6 +8,7 @@ import ObservableText from "./ObservableText";
 import { User } from "model/user";
 import BrickCircle from "components/baseComponents/BrickCircle";
 import { AcademicLevelLabels } from "model/brick";
+import { useObserver } from "../../hooks/useObserver";
 
 interface PlanPreviewProps {
   data: {
@@ -19,12 +20,14 @@ interface PlanPreviewProps {
 const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
   const { ybrick, user } = data;
 
-  const subjectId = ybrick.get("subjectId") as number;
+  const subjectId = useObserver(ybrick, "subjectId");
   const subject = user.subjects.find(s => s.id === subjectId);
+
+  const academicLevel = useObserver(ybrick, "academicLevel");
 
   return (
     <div className="phone-preview-component plan-preview">
-      <BrickCircle color={subject ? subject.color : ''} label={AcademicLevelLabels[ybrick.get("academicLevel")]} onClick={() => {}} />
+      <BrickCircle color={subject ? subject.color : ''} label={AcademicLevelLabels[academicLevel]} onClick={() => {}} />
       <div className="title" style={{ textAlign: "center" }}>
         <div className='q-brick-title'>
           <ObservableText text={ybrick.get("title")} />
