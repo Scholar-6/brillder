@@ -171,6 +171,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (questions.length <= 0) {
       if (!canEdit || locked) { return <PageLoader content="...Loading 2..." />; }
       createQuestion();
+    } else if (currentQuestionIndex >= questions.length) {
+      setCurrentQuestionIndex(questions.length - 1);
     }
     return <PageLoader content="...Loading 3..." />;
   }
