@@ -9,6 +9,7 @@ import { HighlightMode } from '../model';
 import HighlightButton from '../components/HighlightButton';
 import LineStyleDialog from './LineStyleDialog';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import { useObserver } from 'components/build/baseComponents/hooks/useObserver';
 
 export interface WordHighlightingData {
   text: string;
@@ -32,6 +33,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   locked, data, validationRequired
 }) => {
   const [isOpen, setDialog] = React.useState(false);
+  const jsonData = useObserver(data); // purely used for rendering on change
 
   useEffect(() => {
     if (!data.get("text")) { data.set("text", new Y.Text()); }

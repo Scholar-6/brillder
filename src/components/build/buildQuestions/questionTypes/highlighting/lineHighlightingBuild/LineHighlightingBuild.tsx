@@ -9,6 +9,7 @@ import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import { HighlightMode } from '../model';
 import HighlightButton from '../components/HighlightButton';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import { useObserver } from 'components/build/baseComponents/hooks/useObserver';
 
 
 export interface Line {
@@ -34,6 +35,7 @@ export const getDefaultLineHighlightingAnswer = (ymap: Y.Map<any>) => {
 const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
   locked, data, validationRequired
 }) => {
+  const jsonData = useObserver(data); // purely used for rendering on change
   useEffect(() => {
     if (!data.get("text")) { data.set("text", new Y.Text()); }
     if (!data.get("lines")) { data.set("lines", new Y.Array()); }
