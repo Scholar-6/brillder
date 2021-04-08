@@ -23,13 +23,11 @@ import SynthesisPreviewComponent from "../baseComponents/phonePreview/synthesis/
 export interface SynthesisProps {
   currentBrick: Brick;
   ybrick: Y.Map<any>;
+  undoManager?: Y.UndoManager;
   locked: boolean;
   editOnly: boolean;
-  undoRedoService: UndoRedoService;
   initSuggestionExpanded: boolean;
   moveToLastQuestion(): void;
-  undo(): void;
-  redo(): void;
 }
 
 interface SynthesisState {
@@ -132,14 +130,8 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
                   <div className="comments-sidebar-default">
                     <div className="reundo-button-container">
-                      <UndoButton
-                        undo={this.props.undo}
-                        canUndo={() => this.props.undoRedoService.canUndo()}
-                      />
-                      <RedoButton
-                        redo={this.props.redo}
-                        canRedo={() => this.props.undoRedoService.canRedo()}
-                      />
+                      <UndoButton undoManager={this.props.undoManager} />
+                      <RedoButton undoManager={this.props.undoManager} />
                     </div>
                     <div className="comment-button-container">
                       <CommentButton

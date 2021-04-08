@@ -29,13 +29,11 @@ export interface PlanProps {
   currentBrick: Brick;
   user: User;
   ybrick: Y.Map<any>;
+  undoManager?: Y.UndoManager;
   locked: boolean;
   editOnly: boolean;
-  undoRedoService: UndoRedoService;
   initSuggestionExpanded?: boolean;
   selectFirstQuestion(): void;
-  undo(): void;
-  redo(): void;
 }
 
 const PlanPage: React.FC<PlanProps> = (props) => {
@@ -210,14 +208,8 @@ const PlanPage: React.FC<PlanProps> = (props) => {
             >
               <div className="comments-sidebar-default">
                 <div className="reundo-button-container">
-                  <UndoButton
-                    undo={props.undo}
-                    canUndo={() => false}
-                  />
-                  <RedoButton
-                    redo={props.redo}
-                    canRedo={() => false}
-                  />
+                  <UndoButton undoManager={props.undoManager} />
+                  <RedoButton undoManager={props.undoManager} />
                 </div>
                 <div className="comment-button-container">
                   <CommentButton

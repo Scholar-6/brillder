@@ -34,13 +34,14 @@ export interface QuestionProps {
   comments: Comment[] | null;
   isAuthor: boolean;
   initSuggestionExpanded: boolean;
-  undoRedoService: UndoRedoService;
   setQuestionType(type: QuestionTypeEnum): void;
   getQuestionIndex(question: Y.Doc): number;
   setNextQuestion(): void;
   setPrevFromPhone(): void;
   toggleLock(): void;
+  canUndo: boolean;
   undo(): void;
+  canRedo: boolean;
   redo(): void;
   locked: boolean;
 }
@@ -179,14 +180,8 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             {!commentsShown &&
               <div className="comments-sidebar-default">
                 <div className="reundo-button-container">
-                  <UndoButton
-                    undo={props.undo}
-                    canUndo={() => props.undoRedoService.canUndo()}
-                  />
-                  <RedoButton
-                    redo={props.redo}
-                    canRedo={() => props.undoRedoService.canRedo()}
-                  />
+                  <UndoButton undoManager={yquestion.meta.undoManager} />
+                  <RedoButton undoManager={yquestion.meta.undoManager} />
                 </div>
                 <div className="comment-button-container">
                   <CommentButton
