@@ -257,6 +257,10 @@ h3 {
     background: var(--theme-orange);
   }
 }
+.horizontal-shuffle-answer .image-container img {
+  padding-top: 1vh;
+  max-height: 20vh;
+}
 .short-answer-input.correct {
   $border-radius: 1vw;
 
