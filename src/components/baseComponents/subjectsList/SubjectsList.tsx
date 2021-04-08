@@ -32,9 +32,8 @@ class SubjectsList extends Component<PublishedSubjectsProps, any> {
                 <Grid item xs={11} className="filter-container subjects-indexes-box">
                   <FormControlLabel
                     className="index-box custom-color"
-                    style={{ ["color" as any]: subject.color }}
                     checked={subject.checked}
-                    control={<Radio onClick={() => this.props.filterBySubject(i)} className={"filter-radio"} />}
+                    control={<Radio style={{ ["color" as any]: subject.color }} onClick={() => this.props.filterBySubject(i)} className={"filter-radio"} />}
                     label={subject.name}
                   />
                 </Grid>
