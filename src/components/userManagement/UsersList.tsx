@@ -358,6 +358,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           filterBySubject={this.filterBySubject}
           showUserCount={true}
         />
+        <div className="sidebar-footer" />
       </div>
     );
   };
