@@ -162,6 +162,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       this.prepareClassrooms(classrooms);
       const individualClassroom = classrooms.find(c => c.subjectId === null && c.name === 'individuals');
       classrooms = classrooms.filter(c => c.subjectId);
+      classrooms = classrooms.sort((a: any, b: any) => b.students.length - a.students.length);
+      console.log(classrooms);
       this.setState({
         classrooms,
         individualClassroom,
@@ -381,17 +383,20 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       return <EmptyFilter />;
     }
 
+    const {classrooms} = this.state;
+
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box">
           <div style={{ display: 'flex' }}>
-            <div className="class-header" style={{ width: '50%' }}>
-              CLASSES
-            </div>
+            {classrooms.length > 1
+              ? <div className="class-header" style={{ width: '50%' }}>{classrooms.length} CLASSES</div>
+              : <div className="class-header" style={{ width: '50%' }}>{classrooms.length} CLASS</div>
+            }
           </div>
         </div>
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
-          + Create Class
+          <SpriteIcon name="plus-circle" /> Create Class
         </div>
         {this.renderViewAllFilter()}
         <div className="subject-indexes-box filter-container manage-classrooms-filter">

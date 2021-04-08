@@ -1,3 +1,7 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
 .teach-assigned {
   .student-row:hover, .index-box:hover {
     cursor: pointer;
@@ -16,6 +20,11 @@
       svg {
         color: var(--theme-orange);
       }
+    }
+  }
+  .index-box {
+    .filter-class-name {
+      font-family: $font-family-light !important;
     }
   }
   .filter-container.classrooms-filter {
@@ -51,6 +60,9 @@
       display: flex;
       align-items: center;
       color: var(--white) !important;
+      svg {
+        margin-left: 0.2vw;
+      }
     }
     svg {
       width: 1.3vw;
@@ -72,12 +84,13 @@
       display: flex;
       align-items: center;
       border: none !important;
+      margin-left: 0.6vw;
   
       div {
         margin-left: 0.3vw;
         width: 1.4vw;
         height: 0.85vw;
-        border: 0.15vw solid var(--white);
+        border: 0.12vw solid var(--white);
         border-radius: 0.25vw;
       }
     }
