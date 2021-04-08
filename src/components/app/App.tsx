@@ -1,5 +1,5 @@
 import React, { Profiler, useEffect } from 'react';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -60,6 +60,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { User } from 'model/user';
 import { getTerms } from 'services/axios/terms';
 import IPadWarning from 'components/baseComponents/rotateInstruction/IPadWarning';
+import BuildRouter from 'components/build/BuildRouter';
 
 interface AppProps {
   user: User;
@@ -69,6 +70,11 @@ interface AppProps {
 const App: React.FC<AppProps> = props => {
   setBrillderTitle();
   const location = useLocation();
+  const history = useHistory();
+  React.useEffect(() => {
+    history.listen(evt => console.log(evt.pathname));
+  }, []);
+
   const [showWarning, setWarning] = React.useState(isTablet ? true: false)
   const [termsData, setTermsData] = React.useState({
     isLoading: false,
@@ -198,13 +204,12 @@ const App: React.FC<AppProps> = props => {
     baseDuration: any, // estimated time to render the entire subtree without memoization
     startTime: any, // when React began rendering this update
     commitTime: any, // when React committed this update
-    interactions: any // the Set of interactions belonging to this update
   ) => {
     // if more then 100ms log it.
     if (baseDuration > 100) {
-      console.log('heavy: ', id, phase, baseDuration, startTime, actualDuration, commitTime);
+      //console.log('heavy: ', id, phase, baseDuration, startTime, actualDuration, commitTime);
     } else if (baseDuration > 75) {
-      console.log('medium:', id, phase, baseDuration, startTime, actualDuration, commitTime);
+      //console.log('medium:', id, phase, baseDuration, startTime, actualDuration, commitTime);
     }
   }
 
@@ -234,10 +239,10 @@ const App: React.FC<AppProps> = props => {
             "/build/brick/:brickId/investigation/question",
             "/build/brick/:brickId"
           ]}
-          component={InvestigationBuildPage}
+          component={BuildRouter}
           location={location}
         />
-        <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
+        <BuildBrickRoute path={map.ProposalBase} component={Proposal} location={location} />
         <BuildRoute path="/build/brick/:brickId" component={Proposal} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />

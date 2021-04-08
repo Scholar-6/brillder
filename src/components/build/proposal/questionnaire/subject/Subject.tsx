@@ -1,4 +1,5 @@
 import React from "react";
+import * as Y from "yjs";
 import { Grid, RadioGroup, FormControlLabel, Radio, Hidden } from "@material-ui/core";
 import queryString from 'query-string';
 
@@ -8,14 +9,16 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import NextButton from '../../components/nextButton'
 import { Redirect } from "react-router-dom";
 import map from 'components/map';
+import { useObserver } from "components/build/baseComponents/hooks/useObserver";
+import routes from "components/build/routes";
 
 
 interface SubjectProps {
   history: any;
   baseUrl: string;
   location: any;
-  subjectId: any;
   subjects: any[];
+  ybrick: Y.Map<any>;
   saveCore(isCore: boolean): void;
   saveSubject(subjectId: number): void;
   saveData(subjectId: number, isCore: boolean): void;
@@ -210,9 +213,9 @@ const DefaultComponent: React.FC = () => {
 }
 
 const SubjectPage: React.FC<SubjectProps> = ({
-  history, subjectId, subjects, baseUrl, location, saveData, saveCore, saveSubject
+  ybrick, history, subjects, baseUrl, location, saveSubject
 }) => {
-  const getSubjectName = (subjectId: number) => {
+  const getSubjectName = React.useCallback((subjectId: number) => {
     if (subjectId) {
       const subject = subjects.find(s => s.id === subjectId);
       if (subject) {
@@ -220,20 +223,16 @@ const SubjectPage: React.FC<SubjectProps> = ({
       }
     }
     return "";
-  }
+  }, [subjects]);
 
-  let initSubjectName = getSubjectName(subjectId);
+  const subject = useObserver(ybrick, "subjectId");
+  const subjectName = React.useMemo(() => getSubjectName(subject), [subject, getSubjectName]);
 
-  const [subject, setSubject] = React.useState(subjectId);
-  const [subjectName, setSubjectName] = React.useState(initSubjectName);
   const [isCoreSet, setCoreStatus] = React.useState(false);
 
   const onSubjectChange = (event: any) => {
     const subjectId = parseInt(event.target.value) as number;
-    setSubject(subjectId);
-    const currentName = getSubjectName(subjectId);
-    setSubjectName(currentName);
-    saveSubject(subjectId);
+    ybrick.set("subjectId", subjectId);
   };
 
   const values = queryString.parse(location.search);
@@ -249,18 +248,21 @@ const SubjectPage: React.FC<SubjectProps> = ({
 
   if (!isCoreSet && values.isCore) {
     let isCore = getCore(values);
-    saveCore(isCore);
+    ybrick.set("isCore", isCore);
     setCoreStatus(true);
+  }
+
+  const setSubjectId = (newSubjectId: number) => {
+    ybrick.set("subjectId", newSubjectId);
   }
 
   if (subjects.length === 1) {
     let subjectId = subjects[0].id;
+    setSubjectId(subjectId);
     if (values.isCore) {
-      saveData(subjectId, getCore(values));
-    } else {
-      saveSubject(subjectId);
+      ybrick.set("isCore", getCore(values));
     }
-    return <Redirect to={map.ProposalTitleLink} />
+    return <Redirect to={map.ProposalTitle.replace(":brickId", ybrick.get("id"))} />
   }
 
   if (values.selectedSubject) {
@@ -268,10 +270,16 @@ const SubjectPage: React.FC<SubjectProps> = ({
       let subjectId = parseInt(values.selectedSubject as string);
       let res = subjects.find(s => s.id === subjectId);
       if (res) {
-        saveSubject(res.id);
-        return <Redirect to={map.ProposalTitleLink} />
+        ybrick.set("subjectId", res.id);
+        return <Redirect to={map.ProposalTitle.replace(":brickId", ybrick.get("id"))} />
       }
     } catch { }
+  } else {
+    // select first one if empty
+    const subjectId = ybrick.get("subjectId");
+    if (!subjectId) {
+      setSubjectId(subjects[0].id);
+    }
   }
 
   const getInnerComponent = () => {
@@ -310,8 +318,6 @@ const SubjectPage: React.FC<SubjectProps> = ({
     }
   }
 
-  let innerComponent = getInnerComponent();
-
   return (
     <div className="tutorial-page subject-page">
       <Grid container direction="row" style={{ height: '100%' }}>
@@ -344,8 +350,11 @@ const SubjectPage: React.FC<SubjectProps> = ({
         </Grid>
         {subject &&
           <Grid className='tutorial-pagination'>
-            <div className="centered text-theme-dark-blue bold" style={{ fontSize: '2vw', marginRight: '2vw' }}
-              onClick={() => { saveSubject(subject); history.push(map.ProposalTitleLink) }}>
+            <div className="centered next-text text-theme-dark-blue bold"
+              onClick={() => {
+                saveSubject(subject);
+                history.push(routes.buildTitle(ybrick.get("id")));
+              }}>
               Next
             </div>
             <NextButton
@@ -359,7 +368,7 @@ const SubjectPage: React.FC<SubjectProps> = ({
             <div>{subjectName}</div>
           </div>
         </Hidden>
-        <ProposalPhonePreview Component={innerComponent} />
+        <ProposalPhonePreview Component={getInnerComponent()} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

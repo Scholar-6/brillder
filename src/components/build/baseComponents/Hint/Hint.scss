@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .hint-component {
   width: 100%;
@@ -78,12 +78,17 @@
       &:last-child {
         margin-bottom: 0;
       }
-      .document-editor {
+      .hint-container-label {
+        background-color: var(--tab-gray);
+        padding: 0.35vw;
+        font-weight: bolder;
+      }
+      .quill-document-editor {
         border-radius: 0 !important;
         width: 100%;
-        .ck-editor {
+        .ql-container {
           width: 100% !important;
-          .ck-content {
+          .ql-editor {
             padding: 0.5vw !important;
             border-radius: 0 !important;
             p {

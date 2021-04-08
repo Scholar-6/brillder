@@ -1,19 +1,17 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .back-to-work-page {
   .brick-row-container {
     overflow: hidden;
     background: inherit !important;
     $tabs-margin-between: 0.2vw;
-    $width: calc(
-      100.2vw - #{$filter-sidebar-size} - (#{$filter-sidebar-margin * 2}) - #{$tabs-margin-between}
-    );
+    $width: calc(100.2vw - #{$filter-sidebar-size} - (#{$filter-sidebar-margin * 2}) - #{$tabs-margin-between});
 
     .tab-container {
       display: flex;
-      flex-wrap: nowrap;  
+      flex-wrap: nowrap;
 
       .long {
         width: 25vw;
@@ -40,7 +38,8 @@
         border-top-right-radius: 0.5vw;
         margin-right: $tabs-margin-between;
         > div {
-          span, .no-active {
+          span,
+          .no-active {
             @extend %transitionAll300;
             opacity: 0.2;
           }
@@ -90,10 +89,11 @@
       > div.no-active:hover {
         background: var(--off-white) !important;
 
-        span, .no-active {
+        span,
+        .no-active {
           opacity: 0.5;
         }
-        
+
         .round-button {
           opacity: 1;
         }
@@ -126,7 +126,9 @@
         padding-left: $padding;
         padding-right: $padding;
         font-size: 1.02vw;
-
+        > div {
+          position: absolute;
+        }
         .empty-title {
           margin-top: 5vh;
           margin-bottom: 3vh;
@@ -138,12 +140,10 @@
       &.empty-description:first {
         padding-left: $padding2;
       }
-
       &.empty-description.third {
         padding-left: 1.2vw;
         padding-right: 2vw;
       }
-
       &.description {
         .round-button {
           @extend %flexCenter;
@@ -158,11 +158,9 @@
           font-family: $font-family-bold;
         }
       }
-
       .last-text {
         margin-top: 3vh;
       }
-
       .circle {
         height: 5.2vw;
         width: 5.2vw;
@@ -189,7 +187,6 @@
       .red {
         background: var(--theme-orange);
       }
-
       &.create-link {
         cursor: pointer;
         color: var(--theme-dark-blue);
@@ -311,10 +308,10 @@
           }
         }
         tr {
-          height: calc((100vh - 5.834vw - 2vw - 5.2vw - 15vh)/13) !important;
+          height: calc((100vh - 5.834vw - 2vw - 5.2vw - 15vh) / 13) !important;
           overflow-y: auto;
           &.user-row {
-            height: calc((100vh - 5.834vw - 2vw - 5.2vw - 15vh)/13) !important;
+            height: calc((100vh - 5.834vw - 2vw - 5.2vw - 15vh) / 13) !important;
             font-family: $font-family-regular;
             &:nth-child(even) {
               background: var(--tab-gray);
@@ -522,7 +519,7 @@
     .brick-row-title {
       padding-right: 0 !important;
       .private-core-toggle {
-        float:right;
+        float: right;
         margin-left: auto;
         font-size: 5vw !important;
 
@@ -682,9 +679,6 @@
     }
   }
 }
-
-
-
 
 // page scroliing
 .back-to-work-page {

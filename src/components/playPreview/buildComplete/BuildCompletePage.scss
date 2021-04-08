@@ -98,6 +98,10 @@
     padding-left: 0;
     font-size: 2.1vw;
     margin-top: 7vh;
+
+    > div {
+      display: inline;
+    }
   }
   .inner-radio-text {
     font-size: 1.1vw;

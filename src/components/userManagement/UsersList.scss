@@ -6,7 +6,8 @@
   .sorted-row {
     .sort-box {
       .subjects-filter {
-        height: calc(100vh - 38vh);
+        height: calc(100vh - 8.2vh - 19.834vw);
+        padding-bottom: 0.2vw !important;
       }
     }
     .brick-row-container {
@@ -74,10 +75,10 @@
                 }
               }
               .user-full-name {
-                width: 30%;
+                width: 21%;
               }
               .email-column {
-                width: 31.3%;
+                width: 20%;
               }
               .edit-button-column {
                 width: 2.5vw;

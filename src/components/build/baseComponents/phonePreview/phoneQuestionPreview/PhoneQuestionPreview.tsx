@@ -1,5 +1,6 @@
 
 import React from 'react';
+import * as Y from "yjs";
 import {  Hidden, Grid } from '@material-ui/core';
 
 import './PhoneQuestionPreview.scss';
@@ -9,23 +10,22 @@ import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from 'model/que
 import { SortCategory } from 'components/interfaces/sort';
 import EmptyQP1 from './EmptyQP1';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import _ from 'lodash';
+import { usePhoneObserver } from '../../hooks/usePhoneObserver';
 
 
 export interface PhonePreviewProps {
-  question: Question;
+  yquestion: Y.Map<any>;
   focusIndex: number;
-  getQuestionIndex(question: Question): number;
 
   // navigation
   nextQuestion(): void;
   prevQuestion(): void;
 }
 
-const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex, ...props }) => {
-  const questionIndex = getQuestionIndex(question);
-  const canGoBack = questionIndex > 0 ? true : false;
-
+const PhonePreview: React.FC<PhonePreviewProps> = ({ yquestion, ...props }) => {
   const [questionPreview] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+  const question = usePhoneObserver(yquestion) as Question;
 
   //#region Scroll
   const [canScroll, setScroll] = React.useState(false);
@@ -132,7 +132,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
       <div className="phone-question-preview-box">
         <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
           <div className="centered pointer">
-            <SpriteIcon name="arrow-left" className={`scroll-arrow ${!canGoBack && 'disabled'}`} onClick={props.prevQuestion} />
+            <SpriteIcon name="arrow-left" className="scroll-arrow" onClick={props.prevQuestion} />
           </div>
           <div className="phone-question-preview">
             <div className="centered">

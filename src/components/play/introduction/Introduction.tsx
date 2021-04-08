@@ -1,10 +1,10 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
-import { Moment } from "moment";
+import moment, { Moment } from "moment";
 import queryString from 'query-string';
 import { isMobile } from 'react-device-detect';
 
-import { AcademicLevelLabels, Brick, BrickLengthEnum } from "model/brick";
+import { AcademicLevelLabels, Brick } from "model/brick";
 import { PlayMode } from "../model";
 import { BrickFieldNames } from 'components/build/proposal/model';
 
@@ -19,8 +19,8 @@ import { rightKeyPressed } from "components/services/key";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 import { isPhone } from "services/phone";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
+import { getPrepareTime } from "../services/playTimes";
 
-const moment = require("moment");
 interface IntroductionProps {
   isPlayPreview?: boolean;
   startTime?: Moment;
@@ -150,12 +150,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     color = brick.subject.color;
   }
 
-  let timeToSpend = 5;
-  if (brick.brickLength === BrickLengthEnum.S40min) {
-    timeToSpend = 10;
-  } else if (brick.brickLength === BrickLengthEnum.S60min) {
-    timeToSpend = 15;
-  }
+  const timeToSpend = getPrepareTime(brick.brickLength);
 
   const setDuration = (duration: any) => {
     setState({ ...state, duration });
@@ -316,7 +311,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <Hidden only={["sm", "md", "lg", "xl"]}>
           {renderBrickCircle(color)}
         </Hidden>
-        <div className="intro-desktop-title">{brick.title}</div>
+        <div className="intro-desktop-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       </div>
     );
   };
@@ -329,7 +324,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             {renderBrickCircle(color)}
           </div>
           <div className="r-title-container">
-            <h1>{brick.title}</h1>
+            <h1 className="q-brick-title" dangerouslySetInnerHTML={{__html: brick.title}} />
             <p><PrepareText brickLength={brick.brickLength} /></p>
           </div>
         </div>
@@ -376,21 +371,21 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   <IntroductionDetails brickLength={brick.brickLength} />
                 </div>
                 : <div className="time-container">
-              <TimeProgressbarV2
-                isIntro={true}
-                onEnd={() => { }}
-                startTime={props.startTime}
-                brickLength={brick.brickLength}
-              />
-            </div>}
-            {renderPlayButton()}
-          </div>
-          <div className="introduction-content">
-            {renderMobileBriefTitle()}
-            {renderBriefExpandText()}
-            {state.prepExpanded && renderPrepTitle()}
-            {state.prepExpanded && renderPrepExpandText()}
-          </div>
+                  <TimeProgressbarV2
+                    isIntro={true}
+                    onEnd={() => { }}
+                    startTime={props.startTime}
+                    brickLength={brick.brickLength}
+                  />
+                </div>}
+              {renderPlayButton()}
+            </div>
+            <div className="introduction-content">
+              {renderMobileBriefTitle()}
+              {renderBriefExpandText()}
+              {state.prepExpanded && renderPrepTitle()}
+              {state.prepExpanded && renderPrepExpandText()}
+            </div>
           </div>
         </Hidden>
       </div>

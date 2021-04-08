@@ -1,21 +1,29 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .pair-match-build {
   @extend %textCenter;
   .pair-match-answer {
     margin-left: 0.4vw;
   }
+  .pair-image {
+    background: var(--solitude-light);
+    min-height: calc(10vh + 2vw);
+  }
   .pair-match-option,
   .pair-match-answer {
-    .ck-content {
-      padding-left: 1vw !important;
-    }
-  }
-  .pair-image {
-    .ck-content {
-      padding-top: 9.5vh !important;
+    .quill-document-editor {
+      .quill {
+        height: 100%;
+        .ql-container {
+          .ql-editor {
+            padding-top: 5vh;
+            padding-left: 0.5vw;
+            padding-right: 3vw;
+          }
+        }
+      }
     }
   }
 }

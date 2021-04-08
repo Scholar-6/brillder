@@ -29,6 +29,9 @@
         }
       }
     }
+    .ql-editor {
+      height: 26vh !important;
+    }
   }
 
   .sub-header {
@@ -68,12 +71,5 @@
 
   .document-editor {
     height: auto;
-    .ck-content {
-      height: 26vh !important;
-      text-align: left !important;
-      p {
-        text-align: left !important;
-      }
-    }
   }
 }

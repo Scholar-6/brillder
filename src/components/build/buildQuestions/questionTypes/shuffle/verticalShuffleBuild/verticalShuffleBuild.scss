@@ -1,12 +1,24 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .vertical-shuffle-build {
   @extend %textCenter;
-  .vertical-answer-box {
+  .answer-box {
     position: relative;
+    background: var(--solitude-light);
     width: 100%;
     margin-bottom: 0.4vh;
+    min-height: calc(10vh + 2vw);
+    .quill-document-editor {
+      .ql-editor {
+        padding-top: 5vh;
+      }
+    }
+  }
+  .question-image-drop .dropzone > img {
+    height: 8vh;
+    width: auto !important;
+    overflow: hidden;
   }
 }

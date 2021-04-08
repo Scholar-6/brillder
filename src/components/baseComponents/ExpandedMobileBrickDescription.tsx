@@ -42,7 +42,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
         <div className="brick-description">
           <div>
           <div className="link-description">
-            <span>{brick.title}</span>
+            <div className="q-brick-title" dangerouslySetInnerHTML={{__html: brick.title}} />
           </div>
           <div className="link-info">
             <KeyWordsPreview keywords={brick.keywords} />

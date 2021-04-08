@@ -6,7 +6,7 @@
   .horizontal-shuffle-answer {
     display: inline-block;
     margin: 2px;
-    border-radius: 0.6vw;
+    border-radius: $editor-radius;
     background: var(--tab-gray);
     box-shadow: none !important;
     .answer {

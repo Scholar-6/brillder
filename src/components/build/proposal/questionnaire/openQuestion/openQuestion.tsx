@@ -1,4 +1,5 @@
 import React from "react";
+import * as Y from "yjs";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './openQuestion.scss';
@@ -8,32 +9,33 @@ import NavigationButtons from '../../components/navigationButtons/NavigationButt
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from "components/play/baseComponents/MathInHtml";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import { useObserver } from "components/build/baseComponents/hooks/useObserver";
 
 interface OpenQuestionProps {
   baseUrl: string;
-  selectedQuestion: any;
+  selectedQuestion: Y.Text;
   canEdit: boolean;
   playStatus: PlayButtonStatus;
   history: any;
-  saveOpenQuestion(v: string): void;
   saveAndPreview(): void;
 }
 
 const HeadComponent: React.FC<any> = ({ data }) => {
+  const text = useObserver(data);
   return (
     <Grid container justify="center" className="phone-preview-component">
-      <SpriteIcon name="help-circle" className={data ? "" : "big"} />
+      <SpriteIcon name="help-circle" className={text ? "" : "big"} />
       <div className="typing-text">
-        <MathInHtml value={data} />
+        <MathInHtml value={text} />
       </div>
     </Grid>
   );
 }
 
 const OpenQuestion: React.FC<OpenQuestionProps> = ({
-  selectedQuestion, saveOpenQuestion, ...props
+  selectedQuestion, ...props
 }) => {
   return (
     <div className="tutorial-page open-question-page">
@@ -42,9 +44,9 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
         step={ProposalStep.OpenQuestion}
         playStatus={props.playStatus}
         saveAndPreview={props.saveAndPreview}
-        onMove={() => saveOpenQuestion(selectedQuestion)}
+        onMove={() => {}}
       />
-      <Grid container direction="row">
+      <Grid container direction="row" alignItems="flex-start">
         <Grid item className="left-block">
           <div className="mobile-view-image">
             <img alt="titles" className="size2" src="/images/new-brick/head.png" />
@@ -53,21 +55,19 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           <p className="sub-header">
             Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.
           </p>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!props.canEdit}
-            data={selectedQuestion}
-            placeholder="Enter Open Question(s)..."
+            sharedData={selectedQuestion}
+            showToolbar={true}
             toolbar={[
               'bold', 'italic', 'latex'
             ]}
-            onBlur={() => { }}
-            onChange={saveOpenQuestion}
           />
           <NavigationButtons
             baseUrl={props.baseUrl}
             step={ProposalStep.OpenQuestion}
             canSubmit={true}
-            onSubmit={saveOpenQuestion}
+            onSubmit={() => {}}
             data={selectedQuestion}
             backLink={props.baseUrl + TitleRoutePart}
           />

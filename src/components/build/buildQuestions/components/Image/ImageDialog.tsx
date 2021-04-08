@@ -28,7 +28,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
   const [align, setAlign] = React.useState(initData.imageAlign ? initData.imageAlign : ImageAlign.left);
-  const [height, setHeight] = React.useState(initData.imageHeight ? initData.imageAlign : 30);
+  const [height, setHeight] = React.useState(initData.imageHeight ? initData.imageHeight : 30);
   const [removed, setRemoved] = React.useState(null as boolean | null);
 
   useEffect(() => {
@@ -45,6 +45,21 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
   useEffect(() => {
     setHeight(initData.imageHeight);
   }, [initData.imageHeight]);
+
+
+  // Reset to initial data when dialog opens.
+  useEffect(() => {
+    if(open) {
+      setFile(initFile);
+      setCroped(initFile);
+      setSource(initData.imageSource ?? '');
+      setCaption(initData.imageCaption ?? '');
+      setPermision(initData.imagePermision ? true : false);
+      setAlign(initData.imageAlign ? initData.imageAlign : ImageAlign.left);
+      setHeight(initData.imageHeight ? initData.imageHeight : 30);
+    }
+  /*eslint-disable-next-line*/
+  }, [open])
 
   let canUpload = false;
   if (permision && source && !removed) {

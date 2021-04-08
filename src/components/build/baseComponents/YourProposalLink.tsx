@@ -12,7 +12,7 @@ export interface YourProposalButtonProps {
   brickId: number;
   invalid: boolean;
   tutorialStep: TutorialStep;
-  saveBrick(): void;
+  saveBrick?(): void;
   isTutorialPassed(): boolean;
 }
 
@@ -23,7 +23,7 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
 
   const editProposal = () => {
     clearProposal();
-    saveBrick();
+    saveBrick?.();
     history.push(`/build/brick/${brickId}/plan`);
   }
 

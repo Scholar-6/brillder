@@ -1,9 +1,9 @@
 import React from "react";
+import moment from 'moment';
 
 import ProgressbarCountdown from "./ProgressbarCountdown";
 import { BrickLengthEnum } from "model/brick";
-import { getSynthesisTime } from 'components/play/services/playTimes';
-const moment = require("moment");
+import { getPrepareTime, getSynthesisTime } from 'components/play/services/playTimes';
 // TODO: try combining this into import { Moment }, * as moment from 'moment';
 
 interface CounterProps {
@@ -16,12 +16,7 @@ interface CounterProps {
 
 const TimeProgressbar: React.FC<CounterProps> = (props) => {
   const getIntroDuration = () => {
-    let durationMins = 5;
-    if (props.brickLength === BrickLengthEnum.S40min) {
-      durationMins = 10;
-    } else if (props.brickLength === BrickLengthEnum.S60min) {
-      durationMins = 15;
-    }
+    const durationMins = getPrepareTime(props.brickLength);
     return moment.duration(durationMins, "minutes");
   }
 
@@ -30,7 +25,7 @@ const TimeProgressbar: React.FC<CounterProps> = (props) => {
     return moment.duration(timeMinutes, "minutes");
   }
 
-  const getDuration = () => {
+  const getDuration = (): any => {
     if (props.isIntro) {
       return getIntroDuration();
     }

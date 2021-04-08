@@ -13,6 +13,10 @@
   background: var(--white);
   font-size: 1.1vw;
 
+  .indent1 {
+    margin-left: 1.2vw;
+  }
+
   >div {
     padding-top: 5vh;
     padding-bottom: 4vh;
@@ -58,6 +62,42 @@
     letter-spacing: 0;
     text-align:left;
     font-family: $font-family-bold;
+  }
+
+  ul {
+    padding-left: 3vw;
+    li {
+      padding-left: 0.3vw;
+      list-style-position: outside;
+    }
+  }
+
+  ol {
+    list-style: none;
+    counter-reset: roman;
+    margin: 0 !important;
+    > li {
+      position: relative;
+      padding-left: 2.4vw;
+    }
+    > li:before{
+      position: absolute;
+      left: 0;
+      counter-increment: roman;
+      content: counter(roman)".";
+      padding-right:5px;
+    }
+    li ol {
+      counter-reset: inner;
+    }
+    ol li:before{
+      counter-increment: inner;
+      content: counter(roman)"."counters(inner,'.');
+      padding-right:5px;
+    }
+    ol ol li:before{
+      content: '\25CF';
+    }
   }
 }
 

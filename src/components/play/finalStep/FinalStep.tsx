@@ -10,7 +10,6 @@ import ShareDialog from './dialogs/ShareDialog';
 import LinkDialog from './dialogs/LinkDialog';
 import LinkCopiedDialog from './dialogs/LinkCopiedDialog';
 import ShareColumn from "./ShareColumn";
-import ExitButton from "./ExitButton";
 import InviteDialog from "./dialogs/InviteDialog";
 import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
@@ -143,7 +142,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                     </div>
                   </div>
                   <h2>All done!</h2>
-                  <p>Well done for completing “{brick.title}”!</p>
+                  <p>Well done for completing “<span className="q-brick-title" dangerouslySetInnerHTML={{__html: brick.title}}/>”!</p>
                   {renderActionColumns()}
                 </div>
               </div>
@@ -181,7 +180,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
               </div>
             </div>
             <p>Well done for completing</p>
-            <p>“{brick.title}”!</p>
+            <p>“<span className="q-brick-title" dangerouslySetInnerHTML={{__html: brick.title}}/>”!</p>
             {renderActionColumns()}
             <div className="introduction-info">
               <div className="intro-text-row"></div>

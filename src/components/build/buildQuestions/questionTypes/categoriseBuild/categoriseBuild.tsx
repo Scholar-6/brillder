@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import * as Y from "yjs";
 
 import './categoriseBuild.scss'
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import { UniqueComponentProps } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
-import { SortCategory, QuestionValueType, SortAnswer } from 'components/interfaces/sort';
-import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/DocumentWirisEditor';
-import { showSameAnswerPopup } from '../service/questionBuild';
+import { SortCategory, QuestionValueType } from 'components/interfaces/sort';
+import { generateId, showSameAnswerPopup } from '../service/questionBuild';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import ValidationFailedDialog from 'components/baseComponents/dialogs/ValidationFailedDialog';
 
 export interface CategoriseData {
@@ -15,115 +16,99 @@ export interface CategoriseData {
 }
 
 export interface CategoriseBuildProps extends UniqueComponentProps {
-  data: CategoriseData;
+  data: Y.Map<any>;
 }
 
-export const getDefaultCategoriseAnswer = () => {
-  const newAnswer = () => ({ value: "", text: "", valueFile: "", answerType: QuestionValueType.String });
-  const newCategory = () => ({ name: "", answers: [newAnswer()], height: '0%' })
+export const getDefaultCategoriseAnswer = (ymap: Y.Map<any>) => {
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), text: "", valueFile: "", answerType: QuestionValueType.String, id: generateId() }));
+  const newCategory = () => {
+    const answers = new Y.Array();
+    answers.push([newAnswer()]);
+    return new Y.Map(Object.entries({ name: new Y.Text(), answers, height: '0%', id: generateId() }));
+  }
 
-  return { categories: [newCategory(), newCategory()] };
+  const categories = new Y.Array();
+  categories.push([newCategory(), newCategory()]);
+  ymap.set("categories", categories);
 }
 
 const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, openSameAnswerDialog
 }) => {
   const [categoryHeight, setCategoryHeight] = React.useState('0%');
   const [sameCategoryOpen, setSameCategory] = React.useState(false);
 
-  const newAnswer = () => ({ value: "", text: "", valueFile: "", answerType: QuestionValueType.String });
-  const newCategory = () => ({ name: "", answers: [newAnswer()], height: '0%' })
-
-  if (!data.categories) {
-    data.categories = getDefaultCategoriseAnswer().categories;
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), text: "", valueFile: "", answerType: QuestionValueType.String, id: generateId() }));
+  const newCategory = () => {
+    const answers = new Y.Array();
+    answers.push([newAnswer()]);
+    return new Y.Map(Object.entries({ name: new Y.Text(), answers, height: '0%', id: generateId() }));
   }
 
-  const [state, setState] = React.useState(data);
+  let categories = data.get("categories") as Y.Array<any>;
+
+  if (!categories) {
+    getDefaultCategoriseAnswer(data);
+    categories = data.get("categories");
+  }
 
   useEffect(() => calculateCategoryHeight());
-  useEffect(() => setState(data), [data]);
-
   const calculateCategoryHeight = () => {
     let showButton = true;
-    let categories = [];
-    for (let category of state.categories) {
-      if (category.name === "") {
+    categories.forEach((category: Y.Map<any>) => {
+      if (category.get("name").toString() === "") {
         showButton = false;
       }
-      category.height = 'auto';
-      for (let answer of category.answers) {
-        if (answer.answerType !== QuestionValueType.Image) {
-          if (!answer.value) {
-            category.height = "0%";
+      let autoHeight = true;
+      category.get("answers").forEach((answer: Y.Map<any>) => {
+        if (answer.get("answerType") !== QuestionValueType.Image) {
+          if (!answer.get("value").toString()) {
+            autoHeight = false;
           }
         }
+      });
+      if(autoHeight && category.get("height") !== "auto") {
+        category.set("height", "auto");
+      } else if (!autoHeight && category.get("height") !== "0%") {
+        category.set("height", "0%");
       }
-      categories.push(category);
-    }
+    })
     showButton === true ? setCategoryHeight('auto') : setCategoryHeight('0%');
-    setState(state);
   }
 
-  const update = () => {
-    setState(Object.assign({}, state));
-    updateComponent(state);
+  const addAnswer = (category: Y.Map<any>) => {
+    category.get("answers").push([newAnswer()]);
   }
 
-  const answerChanged = (answer: SortAnswer, value: string) => {
-    answer.value = value;
-    answer.valueFile = '';
-    answer.answerType = QuestionValueType.String;
-    update();
-  }
-
-  const addAnswer = (category: SortCategory) => {
-    category.answers.push(newAnswer());
-    update();
-    save();
-  }
-
-  const removeAnswer = (category: SortCategory, index: number) => {
-    category.answers.splice(index, 1);
-    update();
-    save();
-  }
-
-  const categoryChanged = (category: any, value: string) => {
-    category.name = value;
-    update();
+  const removeAnswer = (category: Y.Map<any>, index: number) => {
+    category.get("answers").delete(index);
   }
 
   const addCategory = () => {
-    state.categories.push(newCategory());
-    update();
-    save();
+    categories.push([newCategory()]);
   }
 
   const removeCategory = (index: number) => {
-    state.categories.splice(index, 1);
-    update();
-    save();
+    categories.delete(index);
   }
 
-  const renderAnswer = (category: SortCategory, answer: SortAnswer, i: number, catIndex: number) => {
+  const renderAnswer = (category: Y.Map<any>, answer: Y.Map<any>, i: number, catIndex: number) => {
     let customClass = 'categorise-answer unique-component';
-    if (answer.answerType === QuestionValueType.Image) {
+    if (answer.get("answerType") === QuestionValueType.Image) {
       customClass = 'sort-image';
     }
 
     const setImage = (fileName: string) => {
       if (locked) { return; }
-      answer.value = "";
-      answer.valueFile = fileName;
-      answer.answerType = QuestionValueType.Image;
-      update();
-      save();
+      answer.set("value", "");
+      answer.set("valueFile", fileName);
+      answer.set("answerType", QuestionValueType.Image);
     }
 
     let isValid = null;
     if (validationRequired) {
       isValid = true;
-      if ((answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None || !answer.answerType) && !answer.value) {
+      if ((answer.get("answerType") === QuestionValueType.String || answer.get("answerType") === QuestionValueType.None || !answer.get("answerType")) && !answer.get("value")) {
         isValid = false;
       }
     }
@@ -133,45 +118,43 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     }
 
     const checkCategoriesAnswers = () => {
-      if (answer.value) {
-        for (let cat of state.categories) {
+      if (answer.get("value")) {
+        categories.forEach((cat: Y.Map<any>) => {
           if (cat !== category) {
-            cat.answers.forEach(a => {
-              if (a.value === answer.value) {
+            cat.get("answers").forEach((a: Y.Map<any>) => {
+              if (a.get("value").toString() === answer.get("value").toString()) {
                 openSameAnswerDialog();
               }
             });
           }
-        }
+        });
       }
     }
 
     return (
-      <div key={i} className={customClass}>
+      <div key={answer.get("id")} className={customClass}>
         {
-          (category.answers.length > 1)
+          (category.get("answers").length > 1)
           && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeAnswer(category, i)}>
             <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
           </button>
         }
-        <DocumentWirisEditorComponent
+        <QuillEditor
           disabled={locked}
-          editOnly={editOnly}
-          data={answer.value}
+          sharedData={answer.get("value")}
           placeholder="Enter Answer..."
           toolbar={['latex']}
+          validate={validationRequired}
           isValid={isValid}
           onBlur={() => {
-            showSameAnswerPopup(i, category.answers, openSameAnswerDialog);
+            showSameAnswerPopup(i, category.get("answers").toJSON(), openSameAnswerDialog);
             checkCategoriesAnswers();
-            save();
           }}
-          onChange={value => { answerChanged(answer, value) }}
         />
         <QuestionImageDropZone
           answer={answer as any}
-          type={answer.answerType || QuestionValueType.None}
-          fileName={answer.valueFile}
+          type={answer.get("answerType") || QuestionValueType.None}
+          fileName={answer.get("valueFile")}
           locked={locked}
           update={setImage}
         />
@@ -179,57 +162,54 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     );
   }
 
-  const renderCategory = (category: SortCategory, key: number) => {
+  const renderCategory = (category: Y.Map<any>, key: number) => {
     let className = 'categorise-box';
     if (validationRequired) {
-      if (!category.name) {
+      if (!category.get("name")) {
         className += ' invalid-category';
       }
     }
 
     const checkCategoriesNames = () => {
-      if (category.name) {
-        for (let cat of state.categories) {
+      if (category.get("name")) {
+        categories.forEach((cat: Y.Map<any>) => {
           if (cat !== category) {
-            if (cat.name === category.name) {
+            if (cat.get("name").toString() === category.get("name").toString()) {
               setSameCategory(true);
               return;
             }
           }
-        }
+        });
       }
     }
 
     return (
-      <div key={key}>
+      <div key={category.get("id")}>
         <div className={className}>
           {
-            (state.categories.length > 2)
+            (categories.length > 2)
             && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeCategory(key)}>
               <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
             </button>
           }
-          <DocumentWirisEditorComponent
+          <QuillEditor
             disabled={locked}
-            editOnly={editOnly}
-            data={category.name}
+            sharedData={category.get("name")}
             placeholder="Enter Category Heading..."
             toolbar={['latex']}
-            validationRequired={validationRequired}
+            validate={validationRequired}
             onBlur={() => {
               checkCategoriesNames();
-              save()
             }}
-            onChange={value => categoryChanged(category, value)}
           />
           {
-            category.answers.map((answer, answerKey) => renderAnswer(category, answer, answerKey, key))
+            category.get("answers").map((answer: Y.Map<any>, answerKey: number) => renderAnswer(category, answer, answerKey, key))
           }
         </div>
         <AddAnswerButton
           locked={locked}
           addAnswer={() => addAnswer(category)}
-          height={category.height}
+          height={category.get("height")}
           label="+ ANSWER"
         />
       </div>
@@ -239,7 +219,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   return (
     <div className="categorise-build unique-component">
       {
-        state.categories.map((category, i) => renderCategory(category, i))
+        categories.map((category: Y.Map<any>, i) => renderCategory(category, i))
       }
       <AddAnswerButton
         locked={locked}
@@ -257,4 +237,4 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   )
 }
 
-export default CategoriseBuildComponent
+export default React.memo(CategoriseBuildComponent);

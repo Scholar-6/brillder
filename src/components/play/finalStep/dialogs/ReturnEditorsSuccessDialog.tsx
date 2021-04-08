@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Editor } from "model/brick";
 
 interface InvitationProps {
@@ -17,7 +17,7 @@ interface InvitationProps {
 const ReturnEditorsSuccessDialog: React.FC<InvitationProps> = props => {
   let getEditors2 = () => {
     let text = '';
-    const {editors} = props;
+    const { editors } = props;
     if (editors) {
       editors.forEach((e, i) => {
         if (i > 0 && editors.length - 1 === i) {
@@ -34,7 +34,7 @@ const ReturnEditorsSuccessDialog: React.FC<InvitationProps> = props => {
 
   let getEditors = () => {
     let text = '';
-    const {editors} = props;
+    const { editors } = props;
     if (editors) {
       editors.forEach((e, i) => {
         if (i > 0 && editors.length - 1 === i) {
@@ -53,20 +53,15 @@ const ReturnEditorsSuccessDialog: React.FC<InvitationProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <ListItem>
-          <ListItemText primary={`Over to you${getEditors()}`} className="bold" style={{ minWidth: '30vw' }} />
-          <ListItemAvatar>
-            <Avatar className="circle-check">
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#repeat"} className="text-white stroke-2" />
-              </svg>
-            </Avatar>
-          </ListItemAvatar>
-        </ListItem>
-        <ListItem>
-          <ListItemText primary={`${getEditors2()} will be able to review your changes`} className="italic" style={{ minWidth: '30vw' }} />
-        </ListItem>
+        <div>
+          <Avatar className="circle-check">
+            <SpriteIcon name="repeat" className="active text-white stroke-2" />
+          </Avatar>
+        </div>
+        <div>
+          <span className="bold">{`Over to you${getEditors()}`}</span>
+          <span className="italic">{`${getEditors2()} will be able to review your changes`}</span>
+        </div>
       </div>
     </Dialog>
   );

@@ -11,8 +11,10 @@
     overflow-y: hidden;
     min-width: 34vw;
     .dialog-header.image-dialog {
+      overflow: scroll;
       position: relative;
       overflow-y: auto;
+      padding-bottom: calc(4vw + 1.5vw);
     }
     .upload-button {
       position: absolute;
@@ -97,7 +99,7 @@
     margin-top: 2vh;
     color: var(--theme-dark-blue);
     background: var(--tab-gray);
-    border-radius: 0.6vw;
+    border-radius: $editor-radius;
     padding: 0.2vh 1vw;
     width: calc(100% - 2vw);
     &::placeholder {

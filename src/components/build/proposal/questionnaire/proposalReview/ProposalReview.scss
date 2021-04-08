@@ -30,23 +30,7 @@
     z-index: -1;
   }
 
-  .ck-editor {
-    .ck-content {
-      text-align: left !important;
-    }
-  }
-
-  .beta-text {
-    color: var(--theme-dark-blue);
-  }
-
   $book-height: 60vh;
-
-  .prep-page {
-    .ck-editor {
-      height: 57vh !important;
-    }
-  }
 
   .main-text-container {
     position: fixed;
@@ -148,7 +132,7 @@
         width: 6.8vw;
         margin-left: 6vw;
         margin-right: 3vw;
-        font-size: 1.6vw;
+        font-size: $base-popup-font-size;
         @extend %transitionAll150;
         svg {
           @extend %transitionAll150;
@@ -407,18 +391,6 @@
 
         .document-editor {
           width: 100%;
-          // .ck-toolbar {
-          //   .ck-toolbar__items {
-          //     background-color: var(--solitude-light) !important;
-          //   }
-          // }
-          .ck-editor {
-            width: 100% !important;
-            .ck-content {
-              background-color: var(--tab-gray);
-              padding: 1vw;
-            }
-          }
         }
       }
     }
@@ -527,19 +499,6 @@
         margin-bottom: 1vh;
         .document-editor {
           width: 100%;
-          // .ck-toolbar {
-          //   .ck-toolbar__items {
-          //     background-color: var(--solitude-light) !important;
-          //   }
-          // }
-          .ck-editor {
-            width: 100% !important;
-            .ck-content {
-              background-color: var(--tab-gray);
-              padding: 1vw;
-            }
-            height: 50vh !important;
-          }
         }
         input {
           width: calc(100% - 2vw);
@@ -759,4 +718,8 @@
       margin: 25%;
     }
   }
+}
+
+.proposal-page ~ .beta-text {
+  color: var(--theme-dark-blue);
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
+import * as Y from "yjs";
 
 import './QuestionImageDropzone.scss';
 import {fileUrl, uploadFile} from 'components/services/uploadFile';
@@ -15,11 +16,11 @@ export interface ImageAnswerData extends MainImageProps {
 }
 
 export interface AnswerProps {
-  answer: ImageAnswerData;
+  answer: Y.Map<ImageAnswerData>;
   locked: boolean;
   type: QuestionValueType;
   fileName: string;
-  update(fileName: string): void;
+  update(fileName: string, source: string, caption: string, permision: boolean): void;
 }
 
 const QuestionImageDropzone: React.FC<AnswerProps> = ({
@@ -42,10 +43,7 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
 
   const updateAnswer = (fileName: string, source: string, caption: string, permision: boolean) => {
     if (locked) { return; }
-    answer.imageSource = source;
-    answer.imageCaption = caption;
-    answer.imagePermision = permision;
-    update(fileName);
+    update(fileName, source, caption, permision);
     setOpen(false);
   }
 
@@ -57,12 +55,16 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
   }
 
   const updateData = (source: string, caption: string, permision: boolean) => {
-    updateAnswer(answer.valueFile, source, caption, permision);
+    // this need to be fixed
+    //updateAnswer(answer.valueFile, source, caption, permision);
   }
  
   const renderImagePreview = () => {
     return (
-      <img src={fileUrl(fileName)} alt="" width="100%" height="auto"/>
+      <div>
+        <img src={fileUrl(fileName)} alt="" width="100%" height="auto"/>
+        <div>{answer.get("imageCaption")?.toString()}</div>
+      </div>
     );
   }
 

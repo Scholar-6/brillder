@@ -9,7 +9,8 @@ const expandedColors = [
   { color: '#FF9D00', label: 'Yellow' },
   { color: '#6A2E15', label: 'Brown' },
   { color: '#4523FF', label: 'Purple' },
-  { color: '#FC7502', label: 'Orange' }
+  { color: '#FC7502', label: 'Orange' },
+  { color: '#001C58', label: 'DarkBlue' }
 ]
 
 export default {

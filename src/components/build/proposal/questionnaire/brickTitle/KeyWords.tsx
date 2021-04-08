@@ -1,61 +1,53 @@
 import React, { Component } from "react";
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
+import * as Y from "yjs";
 
 import './KeyWords.scss';
 import { enterPressed, spaceKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyWord } from "model/brick";
 import KeyWordsPlay from "./KeywordsPlay";
+import { suggestKeyword } from "services/axios/keywords";
 
 interface KeyWordsProps {
   disabled: boolean;
+  keyWords: Y.Array<any>;
   isHashtags?: boolean;
-  keyWords: KeyWord[];
-  onChange(keyWords: KeyWord[]): void;
 }
 
 interface KeyWordsState {
-  keyWords: KeyWord[];
   keyWord: string;
+  optionKeyWord: any;
+  options: any[];
 }
 
 class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
   constructor(props: any) {
     super(props);
 
-    let keyWords = [];
-    if (props.keyWords) {
-      keyWords = props.keyWords;
-    }
-
     this.state = {
-      keyWords,
-      keyWord: ''
+      keyWord: '',
+      optionKeyWord: null,
+      options: []
     }
   }
 
-  checkIfPresent() {
-    const {keyWord} = this.state;
-    for (let keyword of this.state.keyWords) {
-      if (keyword.name.trim() === keyWord.trim()) {
-        return true;
-      }
-    }
-    return false;
+  pushKeyword(keyword: any) {
+    this.props.keyWords.push([new Y.Map(Object.entries(keyword))]);
+    this.setState({ keyWord: '', optionKeyWord: null });
   }
 
   addKeyWord() {
-    if (this.props.disabled) { return; }
-
-    const present = this.checkIfPresent();
-    if (present) {
-      this.setState({ keyWord: '' });
-      return;
+    if (!this.props.disabled) {
+      this.pushKeyword({ name: this.state.keyWord });
     }
+  }
 
-    const {keyWords} = this.state;
-    keyWords.push({ name: this.state.keyWord });
-    this.setState({ keyWord: '', keyWords });
-    this.props.onChange(keyWords);
+  addSuggestedKeyword(keyword: any) {
+    if (!this.props.disabled) {
+      this.pushKeyword(keyword);
+    }
   }
 
   checkKeyword(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -67,10 +59,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
 
   removeKeyWord(i: number) {
     if (i > -1 && !this.props.disabled) {
-      const { keyWords } = this.state;
-      keyWords.splice(i, 1);
-      this.setState({ keyWords });
-      this.props.onChange(keyWords);
+      this.props.keyWords.delete(i, 1);
     }
   }
 
@@ -87,10 +76,46 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
     return (
       <div className="key-words">
         {this.props.isHashtags
-          ? <KeyWordsPlay keywords={this.state.keyWords} />
-          : this.state.keyWords.map(this.renderKeyWord.bind(this))
+          ? <KeyWordsPlay keywords={this.props.keyWords.toJSON()} />
+          : this.props.keyWords.toJSON().map(this.renderKeyWord.bind(this))
         }
-        <input disabled={this.props.disabled} value={this.state.keyWord} placeholder="Keyword(s)" onKeyDown={this.checkKeyword.bind(this)} onChange={e => this.setState({ keyWord: e.target.value })} />
+        <Autocomplete
+          options={this.state.options}
+          disabled={this.props.disabled}
+          value={this.state.optionKeyWord}
+          getOptionLabel={(option:any) => option.name}
+          onChange={(event: any, value: any) => {
+            this.addSuggestedKeyword(value);
+          }}
+          onKeyDown={this.checkKeyword.bind(this)}
+          renderInput={(params: any) => {
+            params.inputProps.value = this.state.keyWord;
+            console.log(params.inputProps.value);
+            return <TextField
+              {...params}
+              disabled={this.props.disabled}
+              placeholder="Keyword(s)"
+              variant="outlined"
+              onChange={(evt) => {
+                const { value } = evt.target;
+                const tempState = { keyWord: value } as KeyWordsState;
+                if (value.length >= 3) {
+                  suggestKeyword(value).then((res) => {
+                    if (res && res.length > 0) {
+                      tempState.options = res;
+                    } else {
+                      tempState.options = [];
+                    }
+                    this.setState(tempState);
+                  });
+                } else {
+                  tempState.options = [];
+                  this.setState(tempState);
+                }
+              }}
+            />
+          }}
+        />
       </div>
     );
   }

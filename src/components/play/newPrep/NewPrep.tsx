@@ -1,51 +1,71 @@
-import React from "react";
+import React, { useEffect } from "react";
+import queryString from 'query-string';
+import moment from "moment";
 
 import { Brick } from "model/brick";
-
-import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
 import { BrickFieldNames } from 'components/build/proposal/model';
+import { PlayMode } from "../model";
+import { getPrepareTime } from "../services/playTimes";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "../baseComponents/MathInHtml";
 import HighlightHtml from "../baseComponents/HighlightHtml";
-import { PlayMode } from "../model";
-import moment from "moment";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
-import { getPrepareTime } from "../services/playTimes";
+import routes from "../routes";
+import {previewLive} from 'components/playPreview/routes';
 
 
 export interface IntroductionState {
   isStopped: boolean;
   prepExpanded: boolean;
   briefExpanded: boolean;
+  resume: boolean;
   duration: any;
 }
 
 interface Props {
   brick: Brick;
+  history: any;
 
-  moveNext(): void;
+  isPreview?: boolean;
+
   mode?: PlayMode;
   onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
-const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
+const NewPrepPage: React.FC<Props> = ({ brick, history, ...props }) => {
   const [startTime] = React.useState(moment());
+
+  let briefExpanded = false;
+  if (props.isPreview) {
+    briefExpanded = true;
+  }
 
   const [state, setState] = React.useState({
     prepExpanded: true,
     isStopped: false,
-    briefExpanded: false,
+    briefExpanded,
+    resume: false,
     duration: null,
   } as IntroductionState);
+
+  const moveNext = () => {
+    let link = routes.playPreInvesigation(brick.id);
+    if (props.isPreview) {
+      link = previewLive(brick.id);
+    } else if (state.resume) {
+      link = routes.playLive(brick.id);
+    }
+    history.push(link);
+  }
 
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
-        props.moveNext();
+        moveNext();
       }
     }
 
@@ -55,6 +75,13 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
       document.removeEventListener("keydown", handleMove, false);
     };
   });
+
+  useEffect(() => {
+    const values = queryString.parse(history.location.search);
+    if (values.resume) {
+      setState({...state, resume: true});
+    }
+  }, []);
 
   if (isPhone()) {
     return <div />;
@@ -151,9 +178,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="brick-row-container live-container">
-      <div className="fixed-upper-b-title">
-        {brick.title}
-      </div>
+      <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       <div className="brick-container play-preview-panel live-page play-brief-page new-prep-page">
         <div className="introduction-page">
           <div className="scrollable">
@@ -176,8 +201,8 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
             <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={props.moveNext}>
-                Investigation
+              <div className="n-btn next" onClick={moveNext}>
+                {state.resume ? 'Resume' : 'Investigation'}
                 <SpriteIcon name="arrow-right" />
               </div>
             </div>

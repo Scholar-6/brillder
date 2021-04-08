@@ -1,22 +1,14 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .questions {
   width: 100%;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
-  .ck.ck-dropdown.ck-color-ui-dropdown {
-    padding: 0 !important;
-    margin: 0 !important;
-    .ck-dropdown__button {
-      max-width: none !important;
-    }
-    .ck.ck-icon.ck-button__icon {
-      width: 1.25vw;
-      height: 1.25vw;
-    }
-  }
+  overflow: visible;
+  overflow-y: auto;
   .dropzone {
     border: 0 !important;
   }
@@ -42,17 +34,6 @@
   .add-dropbox {
     margin-bottom: 0.2vw;
   }
-  .question-build-text-editor {
-    &.first {
-      .ck-editor {
-        .ck-content {
-          p {
-            @extend %fw-6;
-          }
-        }
-      }
-    }
-  }
 }
 
 .component-title {
@@ -64,24 +45,24 @@
   }
 }
 
-
 .unique-component {
   margin: 0.5vh 0;
   margin-top: 0;
   position: relative;
   width: 100%;
   .right-top-icon {
-    right: 2.2vw !important;
+    top: 0 !important;
+    right: 0vw !important;
   }
-  .ck-editor {
-    .ck-content {
+  .ql-container {
+    .ql-editor {
       background: var(--tab-gray) !important;
       p {
         text-align: center !important;
       }
     }
   }
-  .ck-toolbar {
+  .ql-toolbar {
     width: 2vw;
     height: 100%;
     position: absolute;
@@ -90,49 +71,27 @@
     top: 0;
     z-index: 1;
     padding: 0;
-    .ck-toolbar__items {
+    .ql-formats {
       background: inherit !important;
-      .ck-button {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      margin: 0;
+      align-items: center;
+      justify-content: center;
+      button,
+      select {
         min-width: inherit !important;
         min-height: inherit !important;
-        width: 100%;
         height: 1.5vw;
         border: 0;
         margin: 0 !important;
         padding: 0;
         color: var(--theme-dark-blue);
-        .ck-button__label {
-          font-family: $font-family-regular;
-        }
-        .ck-icon {
-          font-size: 0.5vw;
-        }
-      }
-    }
-    .ck-dropdown {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 0.2vw;
-      .ck-dropdown__panel {
-        top: 0 !important;
-        height: 100% !important;
-        box-shadow: none !important;
-        border: 0 !important;
       }
     }
   }
   &.big-answer {
-    .document-editor {
-      .ck-content {
-        padding-top: 9vh;
-        padding-bottom: 0;
-        p {
-          margin: 2vh 0 !important;
-        }
-      }
-    }
     .left-ckeckbox {
       z-index: 1;
       padding: 0.45vw;
@@ -144,7 +103,7 @@
         }
       }
     }
-    input:not([type='checkbox']) {
+    input:not([type="checkbox"]) {
       width: 84%;
       @extend %textCenter;
       border: none;
@@ -157,7 +116,7 @@
       font-family: $font-family-regular;
       height: $answer-height !important;
     }
-    input[type='checkbox'] {
+    input[type="checkbox"] {
       height: 100% !important;
     }
   }
@@ -169,46 +128,56 @@
 .missing-word-build .invalid-answer,
 .unique-component.invalid-answer {
   .answer-image-drop-button:hover {
-      span {
-        color: var(--white) !important;
-      }
-      .plus-image {
-        color: var(--white) !important;
-      }
+    span {
+      color: var(--white) !important;
     }
-    .sound-record-button:hover {
-      svg {
-        color: var(--white) !important;
-      }
+    .plus-image {
+      color: var(--white) !important;
     }
-    .right-top-icon {
-      opacity: 1;
+  }
+  .sound-record-button:hover {
+    svg {
+      color: var(--white) !important;
+    }
+  }
+  .right-top-icon {
+    opacity: 1;
+    color: var(--dark-gray) !important;
+
+    .back-button {
       color: var(--dark-gray) !important;
+    }
 
+    &:hover {
+      opacity: 1 !important;
+      color: var(--white) !important;
       .back-button {
-        color: var(--dark-gray) !important;
-      }
-   
-      &:hover {
-        opacity: 1 !important;
         color: var(--white) !important;
-        .back-button {
-          color: var(--white) !important;
-        }
       }
     }
+  }
 }
-
 
 .unique-component-wrapper {
   margin: #{$editor-spacing} 0;
   padding: $editor-radius;
-  padding-top: 0.3vw;
+  padding-top: 0;
   width: 100%;
   background: var(--tab-gray);
   @extend %themeRadius;
+  .red-build-title {
+    background: var(--theme-orange);
+    color: var(--white);
+    font-size: 1.3vw;
+    font-family: $font-family-bold;
+    margin-left: -0.6vw;
+    border-top-left-radius: 0.6vw;
+    border-top-right-radius: 0.6vw;
+    width: calc(100% + 1.2vw);
+    text-align: center;
+  }
   .unique-component {
-    .ck-content {
+    .ql-editor {
       background: var(--solitude-light) !important;
     }
   }

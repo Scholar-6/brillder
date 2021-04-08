@@ -7,7 +7,7 @@
   width: 100%;
   margin-top: 0.17vw;
   margin-bottom: 0.17vw;
-  .document-editor {
+  .quill-document-editor {
     height: calc(100% - 0.4vh);
   }
 
@@ -27,6 +27,13 @@
       $checkbox-size: 1.25vw;
       height: $checkbox-size;
       width: $checkbox-size;
+      border: 0.2rem solid transparent;
+    }
+    .hovered {
+      .MuiSvgIcon-root {
+        border: 0.2rem solid var(--theme-orange);
+        border-radius: 0.5rem;
+      }
     }
   }
 
@@ -56,7 +63,7 @@
   .choose-image {
     border-radius: 0.8vw;
     background: var(--solitude-light);
-    height: 10vh;
+    height: calc(10vh + 1.7vw);
     .right-top-icon {
       height: calc(100% - 1vh);
       right: 1vw !important;
@@ -70,10 +77,16 @@
   }
 
   .choose-empty {
-    .ck-content {
+    .ql-editor {
       padding-top: 2vh !important;
-      padding-right: 9vw !important;
+      padding-right: 10.5vw !important;
+      padding-left: 2vw !important;
       min-height: 7vh !important;
+      &.ql-blank:before {
+        padding-right: 10.5vw !important;
+        padding-left: 2vw !important;
+        min-height: 7vh !important;
+      }
     }
     .question-image-drop {
       height: 100%;

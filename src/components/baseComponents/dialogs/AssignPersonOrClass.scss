@@ -20,7 +20,7 @@
       width: $size;
     }
     .label {
-      font-size: 1.6vw;
+      font-size: $base-popup-font-size;
       padding: 0.5vh;
       font-family: $font-family-bold;
     }

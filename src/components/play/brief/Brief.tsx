@@ -73,9 +73,7 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="brick-row-container live-container">
-      <div className="fixed-upper-b-title">
-        {brick.title}
-      </div>
+      <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       <div className="brick-container play-preview-panel live-page play-brief-page">
         <div className="introduction-page">
           <div className="scrollable">

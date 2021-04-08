@@ -60,9 +60,15 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
     const { history } = this.props;
     if (history) {
       if (notification.type === NotificationType.BrickPublished) {
-        history.push(map.ViewAllPage);
+        if(notification.brick) {
+          history.push(map.SubjectBricksPage(notification.brick.subjectId));
+        } else {
+          history.push(map.AllSubjects);
+        }
       } else if (notification.type === NotificationType.BrickSubmittedForReview) {
         history.push(map.BackToWorkPage);
+      } else if (notification.type === NotificationType.StudentAssignedBrick) {
+        history.push(map.AssignmentsPage);
       }
 
       if (notification.brick && notification.brick.id) {
@@ -235,8 +241,8 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
                   </div>
                   <div className="content-box">
                     <div className="notification-detail">
-                      <p className="notif-title">{notification.title}</p>
-                      <p className="notif-desc">{notification.text}</p>
+                      <p className="notif-title" dangerouslySetInnerHTML={{__html: notification.title}} />
+                      <p className="notif-desc" dangerouslySetInnerHTML={{__html: notification.text}} />
                     </div>
                     <div className="actions">
                       <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>

@@ -111,8 +111,8 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     if (answer.answerType === QuestionValueType.Image) {
       return (
         <div className="image-container">
-          <img alt="" src={fileUrl(answer.valueFile)} width="100%" />
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
+          <img alt="" src={fileUrl(answer.valueFile)} />
+          {answer.imageCaption && <div dangerouslySetInnerHTML={{__html: answer.imageCaption}} />}
         </div>
       );
     } else {

@@ -30,6 +30,8 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
 import { getLiveTime } from "../services/playTimes";
+import routes from "../routes";
+import { previewNewPrepResume } from "components/playPreview/routes";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -151,9 +153,9 @@ const LivePage: React.FC<LivePageProps> = ({
 
     // phone scroll to top
     if (isPhone()) {
-      const {current} = questionScrollRef;
+      const { current } = questionScrollRef;
       if (current) {
-        current.scrollTo({top: 0});
+        current.scrollTo({ top: 0 });
       }
     }
   }
@@ -197,9 +199,9 @@ const LivePage: React.FC<LivePageProps> = ({
 
     // phone scroll to top
     if (isPhone()) {
-      const {current} = questionScrollRef;
+      const { current } = questionScrollRef;
       if (current) {
-        current.scrollTo({top: 0});
+        current.scrollTo({ top: 0 });
       }
     }
 
@@ -272,13 +274,17 @@ const LivePage: React.FC<LivePageProps> = ({
   };
 
   const moveToPrep = () => {
+    let link = routes.playNewPrepResume(brick.id);
     let attempt = questionRefs[activeStep].current?.getRewritedAttempt(false);
     props.updateAttempts(attempt, activeStep);
-    let playPath = getPlayPath(props.isPlayPreview, brick.id);
-    let link = `${playPath}/intro?prepExtanded=true&resume=true&activeStep=${activeStep}`;
-    //if (!isPhone() && !props.isPlayPreview) {
-    //  link = routes.playNewPrep(brick.id) + '?prepExtanded=true&resume=true&activeStep=${activeStep}';
-    // }
+
+    if (isPhone()) {
+      let playPath = getPlayPath(props.isPlayPreview, brick.id);
+      link = `${playPath}/intro?prepExtanded=true&resume=true&activeStep=${activeStep}`;
+    }
+    if (props.isPlayPreview) {
+      link = previewNewPrepResume(brick.id);
+    }
     history.push(link);
   }
 
@@ -325,9 +331,7 @@ const LivePage: React.FC<LivePageProps> = ({
 
   return (
     <div className="brick-row-container live-container">
-      {!isPhone() && <div className="fixed-upper-b-title">
-        {brick.title}
-      </div>}
+      {!isPhone() && <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />}
       <div className="brick-container play-preview-panel live-page">
         <div className="introduction-page">
           <Hidden only={["xs"]}>
@@ -395,7 +399,7 @@ const LivePage: React.FC<LivePageProps> = ({
             <div className="introduction-info">
               {renderCountDown()}
               <div className="intro-text-row">
-                <span className="phone-stepper-head"><span className="bold">{brick.subject?.name}</span> {brick.title}</span>
+                <span className="phone-stepper-head"><span className="bold">{brick.subject?.name}</span> <span className="q-brick-title" dangerouslySetInnerHTML={{__html: brick.title}}/></span>
                 {renderStepper()}
               </div>
             </div>

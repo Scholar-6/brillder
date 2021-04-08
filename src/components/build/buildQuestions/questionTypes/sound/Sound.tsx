@@ -172,4 +172,4 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
   }
 }
 
-export default SoundComponent;
+export default React.memo(SoundComponent);

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
-import "./SubjectsList.scss";
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import { Subject } from "model/brick";
 import SpriteIcon from "../SpriteIcon";
 import RadioButton from "../buttons/RadioButton";
@@ -22,10 +22,14 @@ interface ListState {
   scrollArea: React.RefObject<any>;
 }
 
+const MobileTheme = React.lazy(() => import('./themes/SubjectFilterMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/SubjectFilterTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/SubjectFilterDesktopTheme'));
+
 class SubjectsListV3 extends Component<PublishedSubjectsProps, ListState> {
   constructor(props: PublishedSubjectsProps) {
     super(props);
-    
+
     this.state = {
       canScroll: false,
       scrollArea: React.createRef()
@@ -41,30 +45,30 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps, ListState> {
   }
 
   checkScroll() {
-    const {canScroll} = this.state;
-    const {current} = this.state.scrollArea;
+    const { canScroll } = this.state;
+    const { current } = this.state.scrollArea;
     if (current) {
       if (current.scrollHeight > current.clientHeight) {
         if (!canScroll) {
-          this.setState({canScroll: true});
+          this.setState({ canScroll: true });
         }
       } else {
         if (canScroll) {
-          this.setState({canScroll: false});
+          this.setState({ canScroll: false });
         }
       }
     }
   }
 
   scrollUp() {
-    const {current} = this.state.scrollArea;
+    const { current } = this.state.scrollArea;
     if (current) {
       current.scrollBy(0, -window.screen.height / 30);
     }
   }
 
   scrollDown() {
-    const {current} = this.state.scrollArea;
+    const { current } = this.state.scrollArea;
     if (current) {
       current.scrollBy(0, window.screen.height / 30);
     }
@@ -109,7 +113,8 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps, ListState> {
     let otherSubjects = subjects.filter(s => !s.checked);
 
     return (
-      <div>
+      <React.Suspense fallback={<></>}>
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
         <div className="scroll-buttons">
           <FormControlLabel
             className="radio-container"
@@ -122,7 +127,7 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps, ListState> {
             <button
               className="btn-transparent filter-icon arrow-cancel"
               onClick={this.props.toggleAll}
-          ></button>}
+            ></button>}
         </div>
         <Grid container direction="row" className="filter-container subjects-filter subjects-filter-v2 subjects-filter-v3" ref={this.state.scrollArea}>
           <AnimateHeight
@@ -134,7 +139,7 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps, ListState> {
             {otherSubjects.map(this.renderSubjectItem.bind(this))}
           </AnimateHeight>
         </Grid>
-      </div>
+      </React.Suspense>
     );
   }
 }

@@ -1,0 +1,63 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.fixed-helpers-container {
+  position: fixed;
+  left: 6vw;
+  color: var(--white);
+  font-size: 1.25vw;
+  top: calc(2vw + 5.834vw + 1.5vw);
+  text-align: center;
+  .circles {
+    position: absolute;
+    left: -4.8vw;
+    > div {
+      display: flex;
+      align-items: center;
+      margin-top: 1.2vw;
+      span {
+        margin-left: 1.5vw;
+        text-align: left;
+        // white-space: nowrap;
+        width: 7vw;
+      }
+      &:first-child {
+        margin-top: 0.5vw;
+      }
+      .dashed-circle {
+        width: 3.5vw;
+        height: 3.5vw;
+      }
+      &.prep {
+        position: absolute;
+        left: -0.8vw;
+        margin-top: 3.4vw;
+        .prep-circle {
+          width: 5vw !important;
+          height: 5vw !important;
+        }
+      }
+    }
+    .highlight {
+      margin-top: 0.5vh !important;
+      opacity: 0;
+      animation: fadein 230ms 100ms forwards;
+    }
+    .share {
+      margin-top: 2.5vh !important;
+      opacity: 0;
+      animation: fadein 180ms 400ms forwards;
+    }
+    .assign {
+      margin-top: 3vh !important;
+      opacity: 0;
+      animation: fadein 150ms 650ms forwards;
+    }
+    .adapt {
+      margin-top: 3vh !important;
+      opacity: 0;
+      animation: fadein 100ms 900ms forwards;
+    }
+  }
+}

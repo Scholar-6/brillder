@@ -474,8 +474,8 @@ class Library extends Component<BricksListProps, BricksListState> {
                   onClick={() => history.push(`/play/dashboard/${Category.New}`)}
                 >
                   <button className="btn btn-transparent svgOnHover">
-                    <span>New</span>
-                    <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" />
+                    <span>My Library</span>
+                    {/* <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" /> */}
                   </button>
                 </div>
               </Hidden>

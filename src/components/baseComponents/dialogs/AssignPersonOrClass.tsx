@@ -34,7 +34,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const [students, setStudents] = React.useState<UserBase[]>([]);
   const [classes, setClasses] = React.useState<Classroom[]>([]);
   const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
-  const [haveDeadline, toggleDeadline] = React.useState(null as boolean | null);
+  const [haveDeadline, toggleDeadline] = React.useState(false);
 
   const getAllStudents = React.useCallback(async () => {
     let students = await getStudents();
@@ -187,6 +187,21 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     }
   }
 
+  const renderButton = () => {
+    let isValid = false;
+    if (selectedObjs.length > 0) {
+      isValid = true;
+    }
+    return (
+      <button className={`btn btn-md yes-button icon-button ${isValid ? 'bg-theme-orange' : 'b-dark-blue text-theme-light-blue'}`} onClick={assign} style={{ width: 'auto' }}>
+        <div className="centered">
+          <span className="label">Assign Brick</span>
+          <SpriteIcon name="file-plus" />
+        </div>
+      </button>
+    );
+  }
+
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
       <div className="dialog-header">
@@ -217,8 +232,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             </React.Fragment>
           )}
         />
-        <div className="r-popup-title bold">When is it due?</div>
-        <div className="r-radio-buttons">
+        <div className="r-popup-title bold m-b-02">When is it due?</div>
+        <div className="r-radio-buttons m-b-1">
           <FormControlLabel
             checked={haveDeadline === false}
             control={<Radio onClick={() => toggleDeadline(false)} />}
@@ -232,12 +247,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
         </div>
         <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
-          <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{ width: 'auto' }}>
-            <div className="centered">
-              <span className="label">Assign Brick</span>
-              <SpriteIcon name="file-plus" />
-            </div>
-          </button>
+          {renderButton()}
         </div>
       </div>
     </Dialog>

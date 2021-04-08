@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
 import './BrickCounter.scss';
-import { Moment } from 'moment';
-let moment = require('moment');
+import moment, { Moment } from 'moment';
 
 
 interface CounterProps {
@@ -40,7 +39,7 @@ class CounterDown extends Component<CounterProps, CounterState> {
   setTimer() {
     return setInterval(() => {
       let now = moment();
-      let dif = moment.duration(this.props.endTime.diff(now));
+      let dif = moment.duration(this.props.endTime.diff(now)) as any;
       let minutes = this.formatTwoLastDigits(dif.hours() * 60 + dif.minutes());
       let seconds = this.formatTwoLastDigits(dif.seconds());
       let milliseconds = this.formatTwoLastDigits(Math.round(dif.milliseconds() / 10));

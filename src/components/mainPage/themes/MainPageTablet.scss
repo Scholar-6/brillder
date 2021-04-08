@@ -247,75 +247,9 @@
     bottom: 2.4vh;
     line-height: 2vw;
     right: 10vw;
-    font-size: 1.6vw;
+    font-size: $base-popup-font-size;
     span:hover {
       color: var(--theme-orange) !important;
-    }
-  }
-}
-
-// mobile
-.mainPage {
-  .mobile-main-page {
-    width: 100%;
-    height: 100%;
-    @extend %flexCenter;
-    flex-direction: column;
-    .prev-image,
-    .next-image {
-      width: 20%;
-      height: 5%;
-      margin: 0;
-      opacity: 0.5;
-    }
-    .prev-image {
-      margin-top: 10px;
-    }
-    .next-image {
-      margin-bottom: 10px;
-    }
-    .swiper-container {
-      width: 100%;
-      height: calc(80%) !important;
-      padding: 1vh 0;
-      .swiper-slide {
-        width: 100%;
-        @extend %flexCenter;
-        height: calc(26%);
-        opacity: 0.65;
-        &.swiper-slide-next {
-          transform: scale(1);
-          @extend %transitionAll300;
-          opacity: 1;
-        }
-        &:not(.swiper-slide-next) {
-          transform: scale(0.85);
-          pointer-events: none;
-        }
-        .view-item-container {
-          @include phone_and_tabletP {
-            .svg {
-              width: 230px;
-            }
-          }
-        }
-        .back-item-container {
-          .svg {
-            padding-top: 5px;
-            width: 230px;
-          }
-        }
-        .manage-classes {
-          .svg {
-            width: 150px;
-            height: 120px;
-          }
-
-          span {
-            font-size: 25px !important;
-          }
-        }
-      }
     }
   }
 }

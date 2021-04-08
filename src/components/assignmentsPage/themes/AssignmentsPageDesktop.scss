@@ -1,0 +1,76 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.student-assignments-page {
+  .index-box:hover {
+    background: var(--light-blue-alpha3) !important;
+  }
+  .index-box.active:hover {
+    background: var(--theme-orange) !important;
+  }
+}
+
+.student-assignments-page {
+  .left-brick-circle.brick-status-circle.skip-top-right-border {
+    border-radius: 50%;
+  }
+
+  .color1 .round-button {
+    border-radius: 50%;
+    background: var(--theme-orange) !important;
+  }
+
+  .swiper-slide {
+    .label-circle-text {
+      font-size: 10vw !important;
+    }
+
+    .short-description {
+      background: inherit !important;
+    }
+  }
+
+  .brick-row-title {
+    margin-bottom: 0 !important;
+  }
+
+  .brick-row-container {
+    height: auto !important;
+    overflow: hidden;
+  }
+
+  .bricks-list-container {
+    height: calc(100vh - 39.5vh - 6vw - 5vw - 60px) !important;
+    padding-top: 0 !important;
+    .main-brick-container .brick-container {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-bottom: 0 !important;
+      .short-description {
+        padding-left: 4vw;
+        padding-right: 4vw;
+        padding-bottom: 1.5vw;
+        padding-top: 1.5vw;
+        min-height: calc(7vh + 3vw) !important;
+      }
+      .short-description.mobile-expanded {
+        background: var(--tab-gray);
+        .label-circle-text {
+          font-size: 5.5vw !important;
+        }
+      }
+    }
+  }
+}
+
+.student-mobile-assignments-page {
+  .MuiGrid-root.sorted-row.MuiGrid-container {
+    height: auto !important;
+  }
+  .bricks-list-container {
+    .short-brick-info {
+      width: 80vw !important;
+    }
+  }
+}

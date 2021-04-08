@@ -98,7 +98,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                   </div>
                   <h2>You’ve just built a brick!</h2>
                   <p className="complete-brick-name">
-                    What would you like to do with <span className="bold uppercase">‘{brick.title}’</span>?
+                    <span>What would you like to do with ‘</span><span className="bold uppercase q-brick-title" dangerouslySetInnerHTML={{__html: brick.title}}/>’?
                 </p>
                   <div className="radio-container" onClick={() => this.setState({ isCore: false })}>
                     <Radio checked={this.state.isCore === false} />

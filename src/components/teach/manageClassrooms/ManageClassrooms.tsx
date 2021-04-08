@@ -61,6 +61,7 @@ interface UsersListState {
 
   isAdmin: boolean;
   classrooms: ClassroomApi[];
+  individualClassroom: ClassroomApi | undefined;
 
   sortBy: UserSortBy;
   isAscending: boolean;
@@ -75,6 +76,7 @@ interface UsersListState {
   unassignStudent: MUser | null;
   unassignOpen: boolean;
 
+  inviteIdividualOpen: boolean;
   inviteOpen: boolean;
   numStudentsInvited: number;
 
@@ -91,6 +93,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       isLoaded: false,
       users: [],
       classrooms: [],
+      individualClassroom: undefined,
       page: 0,
       pageSize,
       classPageSize: 12,
@@ -117,6 +120,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       unassignOpen: false,
 
       inviteOpen: false,
+      inviteIdividualOpen: false,
       numStudentsInvited: 0,
 
       pageStudentsSelected: false
@@ -156,9 +160,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     let classrooms = await getAllClassrooms();
     if (classrooms) {
       this.prepareClassrooms(classrooms);
+      const individualClassroom = classrooms.find(c => c.subjectId === null && c.name === 'individuals');
       classrooms = classrooms.filter(c => c.subjectId);
+      classrooms = classrooms.sort((a: any, b: any) => b.students.length - a.students.length);
+      console.log(classrooms);
       this.setState({
         classrooms,
+        individualClassroom,
         activeClassroom: this.state.activeClassroom ? classrooms.find(c => c.id === this.state.activeClassroom!.id) ?? null : null
       });
     } else {
@@ -347,7 +355,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderViewAllFilter() {
-    let className = "index-box hover-light item-box2";
+    let className = "m-view-all index-box hover-light item-box2";
     if (!this.state.activeClassroom) {
       className += " active";
     }
@@ -375,20 +383,23 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       return <EmptyFilter />;
     }
 
+    const {classrooms} = this.state;
+
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box">
           <div style={{ display: 'flex' }}>
-            <div className="class-header" style={{ width: '50%' }}>
-              CLASSES
-            </div>
+            {classrooms.length > 1
+              ? <div className="class-header" style={{ width: '50%' }}>{classrooms.length} CLASSES</div>
+              : <div className="class-header" style={{ width: '50%' }}>{classrooms.length} CLASS</div>
+            }
           </div>
         </div>
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
-          + Create Class
+          <SpriteIcon name="plus-circle" /> Create Class
         </div>
+        {this.renderViewAllFilter()}
         <div className="subject-indexes-box filter-container manage-classrooms-filter">
-          {this.renderViewAllFilter()}
           {this.state.classrooms.map((c, i) =>
             <ClassroomFilterItem
               classroom={c}
@@ -400,6 +411,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             />
           )}
         </div>
+        <div className="sidebar-footer" />
       </div>
     );
   };
