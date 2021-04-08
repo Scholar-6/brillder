@@ -63,7 +63,7 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
     return (
       <div>
         <img src={fileUrl(fileName)} alt="" width="100%" height="auto"/>
-        <div>{answer.get("imageCaption")}</div>
+        <div>{answer.get("imageCaption")?.toString()}</div>
       </div>
     );
   }
