@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { FormControl, Grid, Select, MenuItem } from '@material-ui/core';
 import { ReactSortable } from "react-sortablejs";
+import * as Y from "yjs";
+import { connect } from 'react-redux';
 
 import QuestionComponents from './questionComponents/questionComponents';
 import { getNonEmptyComponent } from '../questionService/ValidateQuestionService';
@@ -12,7 +14,6 @@ import CommentPanel from 'components/baseComponents/comments/CommentPanel';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 import { Comment, CommentLocation } from 'model/comments';
 import { ReduxCombinedState } from 'redux/reducers';
-import { connect } from 'react-redux';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Brick } from 'model/brick';
 import UndoRedoService from 'components/services/UndoRedoService';
@@ -20,8 +21,6 @@ import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoButton from '../baseComponents/UndoButton';
 import RedoButton from '../baseComponents/redoButton';
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
-
-import * as Y from "yjs";
 
 
 export interface QuestionProps {
@@ -244,7 +243,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
         <CommingSoonDialog isOpen={isCommingSoonOpen} close={() => setCommingSoon(false)} />
         <div className="fixed-build-phone">
           {
-          yquestion &&
+            yquestion &&
             <PhoneQuestionPreview
               yquestion={question}
               focusIndex={focusIndex}

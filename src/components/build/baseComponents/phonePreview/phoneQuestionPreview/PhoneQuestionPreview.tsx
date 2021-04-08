@@ -11,7 +11,7 @@ import { SortCategory } from 'components/interfaces/sort';
 import EmptyQP1 from './EmptyQP1';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import _ from 'lodash';
-import { useObserver } from '../../hooks/useObserver';
+import { usePhoneObserver } from '../../hooks/usePhoneObserver';
 
 
 export interface PhonePreviewProps {
@@ -25,7 +25,7 @@ export interface PhonePreviewProps {
 
 const PhonePreview: React.FC<PhonePreviewProps> = ({ yquestion, ...props }) => {
   const [questionPreview] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
-  const question = useObserver(yquestion) as Question;
+  const question = usePhoneObserver(yquestion) as Question;
 
   //#region Scroll
   const [canScroll, setScroll] = React.useState(false);
