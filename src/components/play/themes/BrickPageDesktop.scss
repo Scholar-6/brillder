@@ -1895,24 +1895,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       margin-bottom: 10vh;
       .x-center {
         @extend %flexToXCenter;
-
-        .like-button {
-          font-family: $font-family-bold;
-          min-width: 17vw;
-          text-align: center;
-          border-radius: 0.7vw;
-          padding: 1.5vh 1.5vw;
-          font-size: 4.5vh;
-          background: var(--tab-gray);
-          margin: 1vh;
-
-          &.orange {
-            cursor: pointer;
-            color: var(--theme-dark-blue);
-            background: var(--tab-gray);
-            animation: greyToOrange 0.5s linear 0.5s 1 normal forwards;
-          }
-        }
       }
     }
     .footer {
@@ -2114,6 +2096,38 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     padding-right: 10vw !important;
     .action-footer {
       right: unset !important;
+    }
+  }
+}
+
+.play-preview-panel.animate-fade {
+  .s-fade1, .s-fade2, .s-fade3 {
+    opacity: 0;
+  }
+  .s-fade1 {
+    animation: fadein 1s forwards;
+  }
+  .s-fade2 {
+    animation: fadein 1s 1s forwards;
+  }
+  .s-fade3 {
+    animation: fadein 1s 2s forwards;
+  }
+  .like-button {
+    font-family: $font-family-bold;
+    min-width: 17vw;
+    text-align: center;
+    border-radius: 0.7vw;
+    padding: 1.5vh 1.5vw;
+    font-size: 4.5vh;
+    background: var(--tab-gray);
+    margin: 1vh;
+
+    &.orange {
+      cursor: pointer;
+      color: var(--theme-dark-blue);
+      background: var(--tab-gray);
+      animation: greyToOrange 0.5s linear 2s 1 normal forwards;
     }
   }
 }
