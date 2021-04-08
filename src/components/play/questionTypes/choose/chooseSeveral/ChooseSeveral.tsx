@@ -104,7 +104,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     if (answer.answerType === QuestionValueType.Image) {
       return (
         <div className="image-container">
-          <img alt="" src={fileUrl(answer.valueFile)} width="100%" />
+          <img alt="" src={fileUrl(answer.valueFile)} />
           {answer.imageCaption && <div dangerouslySetInnerHTML={{__html: answer.imageCaption}} />}
         </div>
       );
