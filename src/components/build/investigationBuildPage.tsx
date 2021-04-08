@@ -129,7 +129,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const questions = ybrick.get("questions") as Y.Array<Y.Doc>;
   let synthesis = ybrick.get("synthesis") as Y.Text;
 
-  const proposalResult = validateProposal(toRenderJSON(ybrick));
+  const proposalResult = validateProposal(toRenderJSON(ybrick, ["questions"]));
 
   let isAuthor = false;
   try {

@@ -4,21 +4,23 @@ import { Brick } from "model/brick";
 import { Question } from "model/question";
 import quillToHTML from "components/baseComponents/quill/QuillToHTML";
 
-export const toRenderJSON = (type: Y.AbstractType<any> | any): any => {
+export const toRenderJSON = (type: Y.AbstractType<any> | any, exclude: string[] = []): any => {
     if(type instanceof Y.Doc) {
         const jsonDoc: any = {};
         type.share.forEach((value, key) => {
-            jsonDoc[key] = toRenderJSON(value);
+            if(!exclude.includes(key)) {
+                jsonDoc[key] = toRenderJSON(value, exclude);
+            }
         });
         return jsonDoc;
     } else if (type instanceof Y.Array) {
-        return type.map(c => toRenderJSON(c));
+        return type.map(c => toRenderJSON(c, exclude));
     } else if (type instanceof Y.Map) {
         const jsonMap: any = {};
         type._map.forEach((item, key) => {
-            if(!item.deleted) {
+            if(!item.deleted && !exclude.includes(key)) {
                 const v = item.content.getContent()[item.length-1];
-                jsonMap[key] = toRenderJSON(v);
+                jsonMap[key] = toRenderJSON(v, exclude);
             }
         });
         return jsonMap;
