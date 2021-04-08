@@ -60,7 +60,7 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
           setCookieReOpen(true);
         }} />
         {/* for phones button and popup is in menus */}
-        {!isPhone() &&
+        {
         <CookiePolicyDialog isOpen={cookieOpen} isReOpened={cookieReOpen} close={() => {
           acceptCookies();
           setCookiePopup(false);
