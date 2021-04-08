@@ -229,6 +229,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
       <Grid container item xs={3} className="sort-and-filter-container build-filter">
         {!this.props.filters.publish && this.renderInbox(draft, build, publication)}
         {this.renderSubjectsBox(viewAll)}
+        <div className="sidebar-footer" />
       </Grid>
     );
   }

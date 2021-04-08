@@ -2,10 +2,16 @@
   .subjects {
     height: auto;
   }
+  .sort-and-filter-container {
+    height: 100%;
+    .sort-box {
+      height: 100%;
+    }
+  }
   .subjects-list {
     overflow-y: scroll;
-    height: calc(90vh - 15vw) !important;
-    padding-bottom: calc(2.3vw + 30px) !important;
+    max-height: calc(100% - 14.5vh - 5.1vw - 5.3vw - 1.2vw);
+    padding-bottom: 0.2vw;
   }
 
   .index-box.hover-light:hover {
