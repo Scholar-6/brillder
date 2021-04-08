@@ -323,7 +323,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 location={history.location}
                 baseUrl={baseUrl}
                 subjects={user.subjects}
-                subjectId={this.context?.ydoc.getMap("brick").get("subjectId")}
+                ybrick={this.context!.ydoc.getMap("brick")}
                 history={history}
                 saveCore={this.setCore}
                 saveSubject={this.setSubject}

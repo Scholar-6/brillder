@@ -1,7 +1,6 @@
 import { stripHtml } from "components/build/questionService/ConvertService";
 
 export function showSameAnswerPopup(i: number, list: any, openSameAnswerDialog: Function) {
-  console.log(list);
   let answerText = stripHtml(list[i].value);
   let optionText = stripHtml(list[i].option);
   for (let [index, item] of list.entries()) {

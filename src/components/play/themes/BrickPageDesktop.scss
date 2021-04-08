@@ -77,7 +77,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           }
           .custom-tooltip {
             z-index: 100;
-            margin-left: -1.2vw;
+            margin-left: 1vw;
             bottom: -1vw !important;
             width: 6vw;
           }

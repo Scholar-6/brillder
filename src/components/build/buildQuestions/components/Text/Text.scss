@@ -17,4 +17,21 @@
       font-size: 1.1vw;
     }
   }
+  .quill-document-editor .ql-container .ql-editor {
+    border-bottom-left-radius: $editor-radius;
+    border-bottom-right-radius: $editor-radius;
+  }
+  
+  .text-label-container {
+    margin-left: 0 !important;
+    width: 100%;
+    text-align: center;
+    border-top-left-radius: $editor-radius;
+    border-top-right-radius: $editor-radius;
+    background: var(--tab-gray);
+
+    color: var(--theme-dark-blue);
+    font-size: 1.3vw;
+    font-family: $font-family-bold;
+  }
 }

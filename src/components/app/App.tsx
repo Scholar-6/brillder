@@ -1,5 +1,5 @@
 import React, { Profiler, useEffect } from 'react';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -70,6 +70,11 @@ interface AppProps {
 const App: React.FC<AppProps> = props => {
   setBrillderTitle();
   const location = useLocation();
+  const history = useHistory();
+  React.useEffect(() => {
+    history.listen(evt => console.log(evt.pathname));
+  }, []);
+
   const [showWarning, setWarning] = React.useState(isTablet ? true: false)
   const [termsData, setTermsData] = React.useState({
     isLoading: false,

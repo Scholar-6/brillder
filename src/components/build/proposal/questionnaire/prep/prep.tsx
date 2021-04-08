@@ -11,7 +11,6 @@ import Navigation from 'components/build/proposal/components/navigation/Navigati
 import YoutubeAndMathQuote from 'components/play/baseComponents/YoutubeAndMathQuote';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
-import { toRenderJSON } from "services/SharedTypeService";
 import { BrickLengthEnum } from "model/brick";
 import _ from "lodash";
 import { useObserver } from "components/build/baseComponents/hooks/useObserver";
@@ -27,19 +26,19 @@ interface PrepProps {
 }
 
 const PrepPreviewComponent: React.FC<any> = ({ data }) => {
+  const prepHtml = useObserver(data);
+
   return (
     <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
       <SpriteIcon name="file-text" className={data ? "" : "big"} />
       <div className="typing-text">
-        <YoutubeAndMathQuote value={data} isSynthesisParser={true} />
+        <YoutubeAndMathQuote value={prepHtml} isSynthesisParser={true} />
       </div>
     </Grid>
   );
 }
 
 const PrepComponent: React.FC<PrepProps> = ({ parentPrep, ...props }) => {
-  const prepHtml = useObserver(parentPrep);
-
   const isVisible = () => {
     if (props.brickLength) {
       if (props.brickLength === BrickLengthEnum.S20min) {
@@ -106,7 +105,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, ...props }) => {
           />
           <h2 className="pagination-text">4 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={PrepPreviewComponent} data={prepHtml} />
+        <ProposalPhonePreview Component={PrepPreviewComponent} data={parentPrep} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

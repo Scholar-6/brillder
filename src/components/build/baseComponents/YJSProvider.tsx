@@ -17,12 +17,14 @@ interface YJSContext {
     ydoc: Y.Doc;
     awareness?: Awareness;
     json: any;
+    undoManager?: Y.UndoManager;
 }
 export const YJSContext = React.createContext<YJSContext | null>(null);
 
 const YJSProvider: React.FC<YJSProviderProps> = props => {
     const [ydoc, setYdoc] = React.useState<Y.Doc>();
     const [awareness, setAwareness] = React.useState<Awareness>();
+    const [undoManager, setUndoManager] = React.useState<Y.UndoManager>();
     const history = useHistory();
     const [, forceUpdate] = React.useReducer(x => x + 1, 0);
 
@@ -60,11 +62,16 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
         }) => {
             added.forEach((q) => {
                 q.getMap().observeDeep(handleQuestionChange);
+                if(!q.meta) q.meta = {};
+                q.meta.undoManager = new Y.UndoManager(q.getMap(), { captureTimeout: 200 });
             })
         });
 
+        const newUndoManager = new Y.UndoManager(newYDoc.getMap("brick"), { captureTimeout: 200 });
+
         setYdoc(newYDoc);
         setAwareness(newAwareness);
+        setUndoManager(newUndoManager);
 
         // newAwareness.on("update", () => console.log(newAwareness.getStates()));
     /*eslint-disable-next-line*/
@@ -75,6 +82,7 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
             ydoc,
             json: ydoc.toJSON(),
             awareness,
+            undoManager,
         } : null}>
             {props.children}
         </YJSContext.Provider>

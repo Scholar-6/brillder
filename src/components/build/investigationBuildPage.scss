@@ -432,6 +432,11 @@ $space-between-boxes: 0.1vw;
     }
   }
 
+  .fixed-build-phone .phone-question-preview-box .phone-question-preview .phone .phone-border .screen .custom-component .phone-preview-component .key-words-play {
+    white-space: normal;
+    overflow: auto;
+  }
+
   .inner-question-type {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -615,7 +620,6 @@ $space-between-boxes: 0.1vw;
       .open-question-container,
       .title-quill-container {
         margin-top: 0.5vw;
-        margin-bottom: 0.5vw;
         .header {
           width: 100%;
           background: var(--tab-gray);
@@ -635,6 +639,9 @@ $space-between-boxes: 0.1vw;
             height: 14vw;
           }
         }
+      }
+      .prep-container {
+        margin-bottom: 0.5vw;
       }
     }
     .right-sidebar {
@@ -697,9 +704,11 @@ $space-between-boxes: 0.1vw;
   // more space between buttons in bigger editors
   .synthesis-page,
   .plan-page {
-    .ql-custom-toolbar .formats > button {
-      margin-left: 0.8vw;
-      margin-right: 0.8vw;
+    .ql-custom-toolbar .formats {
+      > button, > span.picker.q-color {
+        margin-left: 0.3vw;
+        margin-right: 0.3vw;
+      }
     }
   }
 }

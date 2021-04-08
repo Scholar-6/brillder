@@ -100,7 +100,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       return (
         <div className="image-container">
           <img alt="" src={fileUrl(answer.optionFile)} width="100%" />
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
+          {answer.imageCaption && <div dangerouslySetInnerHTML={{__html: answer.imageCaption}} />}
         </div>
       );
     }
@@ -112,7 +112,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       return (
         <div className="image-container">
           <img alt="" src={fileUrl(answer.valueFile)} width="100%"/>
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
+          {answer.imageCaption && <div dangerouslySetInnerHTML={{__html: answer.imageCaption}} />}
         </div>
       );
     } else {

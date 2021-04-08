@@ -29,6 +29,8 @@ import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
 import BuildCompletePage from './buildComplete/BuildCompletePage';
 import FinalStep from './finalStep/FinalStep';
 import { calcBrickLiveAttempt, calcBrickReviewAttempt } from 'components/play/services/scoring';
+import routes from './routes';
+import NewPrep from 'components/play/newPrep/NewPrep';
 
 
 export interface BrickAttempt {
@@ -242,6 +244,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     className += " sorted-row-expanded";
   }
 
+  console.log('play preview render', routes.newPrepRoute)
+
   return (
     <React.Suspense fallback={<></>}>
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
@@ -257,6 +261,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             moveToBuild={moveToBuild}
           />
           <Switch>
+            <Route exact path={routes.newPrepRoute}>
+              <NewPrep brick={brick} history={props.history} isPreview={true} />
+            </Route>
             <Route exac path="/play-preview/brick/:brickId/intro">
               <Introduction
                 location={location}

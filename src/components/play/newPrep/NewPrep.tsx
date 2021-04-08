@@ -15,6 +15,7 @@ import HighlightHtml from "../baseComponents/HighlightHtml";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 import routes from "../routes";
+import {previewLive} from 'components/playPreview/routes';
 
 
 export interface IntroductionState {
@@ -29,6 +30,8 @@ interface Props {
   brick: Brick;
   history: any;
 
+  isPreview?: boolean;
+
   mode?: PlayMode;
   onHighlight?(name: BrickFieldNames, value: string): void;
 }
@@ -36,20 +39,27 @@ interface Props {
 const NewPrepPage: React.FC<Props> = ({ brick, history, ...props }) => {
   const [startTime] = React.useState(moment());
 
+  let briefExpanded = false;
+  if (props.isPreview) {
+    briefExpanded = true;
+  }
+
   const [state, setState] = React.useState({
     prepExpanded: true,
     isStopped: false,
-    briefExpanded: false,
+    briefExpanded,
     resume: false,
     duration: null,
   } as IntroductionState);
 
   const moveNext = () => {
-    if (state.resume) {
-      history.push(routes.playLive(brick.id));
-    } else {
-      history.push(routes.playPreInvesigation(brick.id));
+    let link = routes.playPreInvesigation(brick.id);
+    if (props.isPreview) {
+      link = previewLive(brick.id);
+    } else if (state.resume) {
+      link = routes.playLive(brick.id);
     }
+    history.push(link);
   }
 
   useEffect(() => {
@@ -68,7 +78,6 @@ const NewPrepPage: React.FC<Props> = ({ brick, history, ...props }) => {
 
   useEffect(() => {
     const values = queryString.parse(history.location.search);
-    console.log(values);
     if (values.resume) {
       setState({...state, resume: true});
     }

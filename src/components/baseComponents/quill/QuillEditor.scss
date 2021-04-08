@@ -145,3 +145,10 @@ svg#image {
     }
   }
 }
+
+// #3101 make image icon thicker everywhere
+.ql-custom-toolbar, .ql-global-toolbar {
+  .formats .q-image svg {
+    stroke-width: 1.5 !important;
+  }
+}

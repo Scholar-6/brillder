@@ -11,7 +11,7 @@ import Navigation from 'components/build/proposal/components/navigation/Navigati
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
-import { toRenderJSON } from "services/SharedTypeService";
+import { useObserver } from "components/build/baseComponents/hooks/useObserver";
 
 interface OpenQuestionProps {
   baseUrl: string;
@@ -23,11 +23,12 @@ interface OpenQuestionProps {
 }
 
 const HeadComponent: React.FC<any> = ({ data }) => {
+  const text = useObserver(data);
   return (
     <Grid container justify="center" className="phone-preview-component">
-      <SpriteIcon name="help-circle" className={data ? "" : "big"} />
+      <SpriteIcon name="help-circle" className={text ? "" : "big"} />
       <div className="typing-text">
-        <MathInHtml value={data} />
+        <MathInHtml value={text} />
       </div>
     </Grid>
   );
@@ -72,7 +73,7 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           />
           <h2 className="pagination-text">2 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={HeadComponent} data={toRenderJSON(selectedQuestion)} link="" />
+        <ProposalPhonePreview Component={HeadComponent} data={selectedQuestion} link="" />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

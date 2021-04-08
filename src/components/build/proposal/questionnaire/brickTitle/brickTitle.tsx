@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import * as Y from "yjs";
-import { Grid, Input, Hidden } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "../../model";
-import { AcademicLevel, Brick, Subject } from "model/brick";
+import { AcademicLevel, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
 import { enterPressed } from "components/services/key";
@@ -25,6 +25,7 @@ import DifficultySelect from "./DifficultySelect";
 import KeyWordsPlay from "./KeywordsPlay";
 import routes from "components/build/routes";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import { useObserver } from "components/build/baseComponents/hooks/useObserver";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
@@ -51,11 +52,12 @@ interface BrickTitleState {
 }
 
 interface PreviewProps {
-  data: Brick;
+  data: Y.Map<any>;
 }
 
 const BrickTitlePreviewComponent: React.FC<PreviewProps> = (props) => {
-  let { keywords, title, author } = props.data;
+  const value = useObserver(props.data);
+  const {keywords, title, author} = value;
 
   const date = new Date();
   const dateString = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
@@ -84,9 +86,7 @@ const BrickTitlePreviewComponent: React.FC<PreviewProps> = (props) => {
         <SpriteIcon name="search-flip" className="active titles-image" />
       </Grid>
       <div className="brick-preview-container">
-        <div className={"brick-title uppercase " + (title ? 'topic-filled' : '')}>
-          {title ? title : 'BRICK TITLE'}
-        </div>
+        <div className={"brick-title uppercase " + (title ? 'topic-filled' : '')} dangerouslySetInnerHTML={{__html: title ? title : 'BRICK TITLE'}} />
         <div className="brick-topics">
           {keywords && 
             <span className={keywords.length > 0 ? 'topic-filled' : ''}>
@@ -116,7 +116,6 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
     event.stopPropagation();
     const title = event.target.value.substr(0, 49);
     this.props.parentState.set(value, title);
-    // this.props.saveTitles({ ...this.props.parentState, [value]: title });
   };
 
   moveToRef(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, refName: RefName) {
@@ -182,13 +181,6 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <form>
               <Grid item className="input-container">
                 <div className="audience-inputs">
-                  {/* <Input
-                    disabled={!canEdit}
-                    value={parentState.get("title")}
-                    onKeyUp={e => this.moveToRef(e, RefName.subTitleRef)}
-                    onChange={e => this.onChange(e, "title")}
-                    placeholder="Enter Proposed Title Here..."
-                  /> */}
                   <QuillEditor
                     toolbar={[]}
                     disabled={!canEdit}
@@ -235,7 +227,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
               </div>
             </div>
           </Grid>
-          <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState.toJSON()} />
+          <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
           <Hidden only={['xs', 'sm']}>
             <div className="red-right-block"></div>
           </Hidden>

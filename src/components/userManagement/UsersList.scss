@@ -6,7 +6,8 @@
   .sorted-row {
     .sort-box {
       .subjects-filter {
-        height: calc(100vh - 38vh);
+        height: calc(100vh - 8.2vh - 19.834vw);
+        padding-bottom: 0.2vw !important;
       }
     }
     .brick-row-container {

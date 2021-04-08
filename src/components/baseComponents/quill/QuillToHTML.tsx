@@ -45,10 +45,27 @@ const quillToHTML = (data: Op[]) => {
 }
 */
 
+let vQuill: Quill;
+const getQuill = () => {
+    if(!vQuill) {
+        vQuill = new Quill(document.createElement("div"));
+    }
+    return vQuill;
+}
+
+const deltaCache = new Map();
+
 const quillToHTMLVirtual = (delta: DeltaStatic) => {
-    const tempQuill = new Quill(document.createElement("div"));
-    tempQuill.setContents(delta);
-    return tempQuill.root.innerHTML;
+    const deltaString = JSON.stringify(delta);
+    if(deltaCache.has(deltaString)) {
+        return deltaCache.get(deltaString);
+    } else {
+        const tempQuill = getQuill();
+        tempQuill.setContents(delta);
+        const html = tempQuill.root.innerHTML;
+        deltaCache.set(deltaString, html);
+        return html;
+    }
 }
 
 export default quillToHTMLVirtual;

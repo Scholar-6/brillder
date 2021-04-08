@@ -11,9 +11,10 @@ export interface ProposalPhonePreviewProps {
   link?: string
   Component?: any
   data?: any
+  savedHidden?: boolean;
 }
 
-const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Component, data }) => {
+const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Component, savedHidden, data }) => {
   const { ydoc } = React.useContext(YJSContext)!;
 
   const renderInner = () => {
@@ -37,12 +38,13 @@ const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Compo
   return (
     <Hidden only={['xs', 'sm']}>
       <div className="proposal-phone-preview">
+        {!savedHidden &&
         <LastSave
           isSaving={false}
           saveError={false}
           tutorialStep={TutorialStep.None}
           ybrick={ydoc.getMap("brick")}
-        />
+        />}
         <div className="phone">
           <div className="phone-border">
             <div className="volume volume1"></div>

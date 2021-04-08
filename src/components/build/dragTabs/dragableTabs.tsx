@@ -213,7 +213,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       );
     };
 
-    const columns = props.yquestions.length * 2 + 4;
+    let columns = props.yquestions.length * 2 + 4;
     
     const onUpdateQuestions = (evt: Sortable.SortableEvent) => {
       if(((evt.oldIndex ?? -1) >= 0)  && ((evt.newIndex ?? -1) >= 0)) {
@@ -256,6 +256,13 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       );
     }
 
+    if (props.yquestions.length === 0) {
+      columns = 2 + 1.582 + 1.5555;
+      if (isPlanPage) {
+        columns = 1.58 + 1.5555 + 1.5555;
+      }
+    }
+
     return (
       <div
         className="drag-tabs"
@@ -284,6 +291,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           >
             <PlanTab brickId={this.props.brickId} history={this.props.history} />
           </GridListTile>
+          {props.yquestions.length > 0 &&
           <ReactSortable
             key={this.state.sortableId}
             list={props.yquestions.map((q: Y.Doc) => ({ id: q.guid }))}
@@ -295,7 +303,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             {props.yquestions.map((question: Y.Doc, i) =>
               renderQuestionTab(props.yquestions, question, i, columns)
             )}
-          </ReactSortable>
+          </ReactSortable>}
           <GridListTile
             onClick={props.createNewQuestion}
             className="drag-tile-container"

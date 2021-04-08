@@ -11,7 +11,7 @@ import { ProposalStep, PlayButtonStatus, BrickLengthRoutePart } from "../../mode
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
-import { toRenderJSON } from "services/SharedTypeService";
+import { useObserver } from "components/build/baseComponents/hooks/useObserver";
 
 
 interface BriefProps {
@@ -23,11 +23,12 @@ interface BriefProps {
 }
 
 const BriefPreviewComponent: React.FC<any> = ({ data }) => {
+  const text = useObserver(data);
   return (
     <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
-      <SpriteIcon name="crosshair" className={data ? "" : "big"} />
+      <SpriteIcon name="crosshair" className={text ? "" : "big"} />
       <div className="typing-text">
-        <MathInHtml value={data} />
+        <MathInHtml value={text} />
       </div>
     </Grid>
   );
@@ -68,7 +69,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, ...props }
           />
           <h2 className="pagination-text m-0">3 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={BriefPreviewComponent} data={toRenderJSON(parentBrief)} />
+        <ProposalPhonePreview Component={BriefPreviewComponent} data={parentBrief} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

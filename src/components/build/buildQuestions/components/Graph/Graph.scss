@@ -13,13 +13,16 @@
     .question-component-graph-header {
         @extend %textCenter;
         color: #aaa;
+        font-size: 1.3vw;
+        color: var(--theme-dark-blue);
         font-family: "Brandon Grotesque Bold";
-        font-size: 1vw;
-        padding: 0.5vw;
     }
 
     .question-component-graph {
         flex-grow: 1;
+        .dcg-wrapper {
+            width: 99.6% !important;
+        }
     }
 
     .question-component-graph-settings {

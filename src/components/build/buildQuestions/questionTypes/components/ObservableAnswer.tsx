@@ -58,7 +58,7 @@ const ObservableAnswer: React.FC<ObservableAnswerProps> = ({
 
   const removeImage = () => {
     if (locked) { return; }
-    answer.set("value", "");
+    answer.set("value", new Y.Text());
     answer.set("valueFile", "");
     answer.set("imageSource", "");
     answer.set("imageCaption", "");

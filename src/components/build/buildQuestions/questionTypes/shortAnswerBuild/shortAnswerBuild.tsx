@@ -9,6 +9,7 @@ import AddAnswerButton from "components/build/baseComponents/addAnswerButton/Add
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import { HintStatus } from "model/question";
+import { generateId } from "../service/questionBuild";
 
 
 export interface ShortAnswerBuildProps extends UniqueComponentProps {
@@ -17,7 +18,7 @@ export interface ShortAnswerBuildProps extends UniqueComponentProps {
 }
 
 export const getDefaultShortAnswerAnswer = (ymap: Y.Map<any>) => {
-  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text() }));
+  const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), id: generateId() }));
 
   const list = new Y.Array();
   list.push([newAnswer()]);
@@ -76,8 +77,11 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
         className += ' invalid-answer';
       }
     }
+    if(!answer.get("id")) {
+      answer.set("id", generateId());
+    }
     return (
-      <div className={className} key={index}>
+      <div className={className} key={answer.get("id")}>
         {renderDeleteButton(index)}
         <QuillEditor
           disabled={locked}

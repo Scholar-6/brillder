@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { toRenderJSON } from 'services/SharedTypeService';
+import React from 'react';
 import * as Y from "yjs";
 import _ from "lodash";
 import YoutubeAndMathQuote from 'components/play/baseComponents/YoutubeAndMathQuote';

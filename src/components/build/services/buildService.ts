@@ -2,11 +2,12 @@ import * as Y from "yjs";
 
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { Question, QuestionTypeEnum } from "model/question";
+import routes from "components/playPreview/routes";
 
 export const getPreviewLink = (brickId: number, isSynthesisPage: boolean) => {
-  let buildQuestion = GetCashedBuildQuestion();
+  const buildQuestion = GetCashedBuildQuestion();
   if (isSynthesisPage) {
-    return `/play-preview/brick/${brickId}/intro`;
+    return routes.previewNewPrep(brickId);
   } else if (
     buildQuestion && buildQuestion.questionNumber &&
     buildQuestion.brickId === brickId &&
@@ -14,7 +15,7 @@ export const getPreviewLink = (brickId: number, isSynthesisPage: boolean) => {
   ) {
     return `/play-preview/brick/${brickId}/live`;
   } else {
-    return `/play-preview/brick/${brickId}/intro`;
+    return routes.previewNewPrep(brickId);
   }
 }
 

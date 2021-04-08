@@ -9,6 +9,7 @@ import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
 import { generateId, showSameAnswerPopup } from '../service/questionBuild';
 import { YJSContext } from 'components/build/baseComponents/YJSProvider';
+import { useObserver } from 'components/build/baseComponents/hooks/useObserver';
 
 export interface ChooseOneData {
   list: ChooseOneAnswer[];
@@ -34,6 +35,8 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   const newAnswer = () => new Y.Map(Object.entries({ value: new Y.Text(), checked: false, valueFile: "", imageSource: "", imageCaption: "", id: generateId() }));
 
   let list = data.get("list") as Y.Array<any>;
+
+  const jsonData = useObserver(data);
 
   //#region Awareness
   const { awareness } = React.useContext(YJSContext)!;

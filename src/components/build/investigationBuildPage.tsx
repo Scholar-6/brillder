@@ -92,7 +92,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   // eslint-disable-next-line
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
-  const [undoRedoService] = React.useState(UndoRedoService.instance);
 
   const {pathname} = history.location;
   const {BuildSynthesisLastPrefix, BuildPlanLastPrefix} = routes;
@@ -107,9 +106,21 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     isProposalPage = true;
   }
 
-  const { ydoc } = useContext(YJSContext)!;
+  const { ydoc, undoManager } = useContext(YJSContext)!;
   const ybrick = ydoc!.getMap("brick")!;
   props.startEditing(brickId);
+
+  const canUndo = React.useMemo(() => (undoManager?.undoStack.length ?? 0) > 0, [undoManager]);
+  const undo = () => {
+    // TODO: implement undo
+    undoManager?.undo();
+  }
+
+  const canRedo = React.useMemo(() => (undoManager?.redoStack.length ?? 0) > 0, [undoManager]);
+  const redo = () => {
+    // TODO: implement redo
+    undoManager?.redo();
+  }
 
   if (!ybrick) {
     return <PageLoader content="Getting brick..." />
@@ -118,7 +129,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const questions = ybrick.get("questions") as Y.Array<Y.Doc>;
   let synthesis = ybrick.get("synthesis") as Y.Text;
 
-  const proposalResult = validateProposal(toRenderJSON(ybrick));
+  const proposalResult = validateProposal(toRenderJSON(ybrick, ["questions"]));
 
   let isAuthor = false;
   try {
@@ -127,14 +138,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const openSkipTutorial = () => {
     setSkipDialog(true);
-  }
-
-  const undo = () => {
-    // TODO: implement undo
-  }
-
-  const redo = () => {
-    // TODO: implement redo
   }
 
   let canEdit = canEditBrick(props.reduxBrick, props.user);
@@ -171,6 +174,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (questions.length <= 0) {
       if (!canEdit || locked) { return <PageLoader content="...Loading 2..." />; }
       createQuestion();
+    } else if (currentQuestionIndex >= questions.length) {
+      setCurrentQuestionIndex(questions.length - 1);
     }
     return <PageLoader content="...Loading 3..." />;
   }
@@ -403,11 +408,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             editOnly={!canEdit}
             user={props.user}
             ybrick={ybrick}
+            undoManager={undoManager}
             initSuggestionExpanded={props.initSuggestionExpanded}
-            undoRedoService={undoRedoService}
             selectFirstQuestion={() => selectQuestion(0)}
-            undo={undo}
-            redo={redo}
           />
         </Route>
         <Route path={routes.questionRoute}>
@@ -425,9 +428,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             setQuestionType={convertQuestionTypes}
             setNextQuestion={setNextQuestion}
             setPrevFromPhone={setPrevFromPhone}
+            canUndo={canUndo}
             undo={undo}
+            canRedo={canRedo}
             redo={redo}
-            undoRedoService={undoRedoService}
           />
         </Route>
         <Route path="/build/brick/:brickId/investigation/question">
@@ -438,11 +442,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             locked={locked}
             editOnly={!canEdit}
             ybrick={ybrick}
+            undoManager={undoManager}
             moveToLastQuestion={() => selectQuestion(questions.length - 1)}
             initSuggestionExpanded={props.initSuggestionExpanded}
-            undoRedoService={undoRedoService}
-            undo={undo}
-            redo={redo}
           />
         </Route>
       </Switch>
