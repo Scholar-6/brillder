@@ -112,7 +112,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
       return (
         <div className="image-container">
           <img alt="" src={fileUrl(answer.valueFile)} width="100%" />
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
+          {answer.imageCaption && <div dangerouslySetInnerHTML={{__html: answer.imageCaption}} />}
         </div>
       );
     } else {

@@ -85,7 +85,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       return (
         <div className="image-container">
           <img alt="" src={fileUrl(answer.valueFile)} />
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
+          {answer.imageCaption && <div dangerouslySetInnerHTML={{__html: answer.imageCaption}} />}
         </div>
       );
     } else if (answer.answerType === QuestionValueType.Sound) {
