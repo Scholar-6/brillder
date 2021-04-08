@@ -77,6 +77,9 @@ const ImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
 
   return (
     <div className="image-drag-n-drop" onClick={props.onFocus}>
+      <div className="text-label-container">
+        Image
+      </div>
       <div className={className} onClick={() => {
         if (props.data.get("value")) {
           setOpen(true);
