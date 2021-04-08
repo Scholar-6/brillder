@@ -44,6 +44,9 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
 
   return (
     <div className="question-build-text-editor first">
+      <div className="text-label-container">
+        Question Text
+      </div>
       <QuillEditor
         ref={quillContainer}
         disabled={locked}

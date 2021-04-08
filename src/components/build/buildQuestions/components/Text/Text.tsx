@@ -19,6 +19,9 @@ export interface TextComponentProps {
 const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, data, ...props}) => {
   return (
     <div className="question-build-text-editor" onFocus={props.onFocus}>
+      <div className="text-label-container">
+        Text
+      </div>
       <QuillEditor
         disabled={locked}
         sharedData={data.get("value")}
