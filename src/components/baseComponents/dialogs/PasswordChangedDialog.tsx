@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import SpriteIcon from "../SpriteIcon";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface DialogProps {
   isOpen: boolean;
@@ -19,17 +19,15 @@ const PasswordChangedDialog: React.FC<DialogProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <ListItem>
-          <ListItemText
-            primary="Password changed"
-            className="bold" style={{ minWidth: '30vw' }}
-          />
-          <ListItemAvatar>
-            <Avatar className="circle-check b-green">
-              <SpriteIcon name="alert-triangle" />
-            </Avatar>
-          </ListItemAvatar>
-        </ListItem>
+        <div>
+          <Avatar className="circle-check bg-green">
+            <SpriteIcon name="alert-triangle" className="active text-white stroke-2" />
+          </Avatar>
+        </div>
+        <div>
+          <span className="bold">Password changed</span>
+          {/* <span className="italic">{`${getEditors2()} will be able to review your changes`}</span> */}
+        </div>
       </div>
     </Dialog>
   );

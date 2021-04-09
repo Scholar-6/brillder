@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import SpriteIcon from "../SpriteIcon";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface DialogProps {
   isOpen: boolean;
@@ -29,10 +29,10 @@ const AssignFailedDialog: React.FC<DialogProps> = props => {
     if (item.classroom) {
       itemsText += capitalize(item.classroom.name);
     } else {
-      const {student} = item;
+      const { student } = item;
       itemsText += capitalize(student.firstName) + ' ' + capitalize(student.lastName);
     }
-    index+= 1;
+    index += 1;
     if (index === props.selectedItems.length - 1) {
       itemsText += ' and ';
     } else if (index < props.selectedItems.length - 1) {
@@ -46,17 +46,15 @@ const AssignFailedDialog: React.FC<DialogProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <ListItem>
-          <ListItemText
-            primary={ `You have already assigned ${props.brickTitle} to ${itemsText}.`}
-            className="bold" style={{ minWidth: '30vw' }}
-          />
-          <ListItemAvatar>
-            <Avatar className="circle-check bg-theme-orange">
-              <SpriteIcon name="alert-triangle" />
-            </Avatar>
-          </ListItemAvatar>
-        </ListItem>
+        <div>
+          <Avatar className="circle-check bg-theme-orange">
+            <SpriteIcon name="alert-triangle" className="active text-white stroke-2" />
+          </Avatar>
+        </div>
+        <div>
+          <span className="bold">{`You have already assigned ${props.brickTitle} to ${itemsText}.`}</span>
+          {/* <span className="italic">{`${getEditors2()} will be able to review your changes`}</span> */}
+        </div>
       </div>
     </Dialog>
   );

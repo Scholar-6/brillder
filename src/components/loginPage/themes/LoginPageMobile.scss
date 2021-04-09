@@ -343,13 +343,6 @@
     background: var(--theme-light-blue);
     transition: width ease-in-out 300ms;
     width: 100%;
-    &.expanding {
-      .google-button,
-      .email-button {
-        transition: all 450ms ease-out;
-        width: 100%;
-      }
-    }
     &.expanded {
       .button-box {
         margin-top: 0px;
@@ -494,15 +487,12 @@
       text-transform: uppercase;
       letter-spacing: 0.2vw;
       padding: 0.7vw;
-      @include phone_and_tabletP {
-        color: var(--black-blue);
-        border-radius: 2.4vw !important;
-      }
+      color: var(--black-blue);
+      border-radius: 2.4vw !important;
+      margin-top: 3vh;
       .MuiButton-label {
-        @include phone_and_tabletP {
-          font-family: $font-family-black;
-          letter-spacing: 1vw;
-        }
+        font-family: $font-family-black;
+        letter-spacing: 1vw;
       }
     }
     .sign-up-button {
@@ -557,62 +547,22 @@
     .google-button {
       @extend %flexCenter;
       padding: 2.5vh;
-      @include phone_and_tabletP {
-        width: 100%;
-        min-height: 6.663vh;
-      }
-      @include tabletP {
-        min-height: 9.663vh;
-        width: 30vw;
-      }
-      @include desktop {
-        width: 22vw;
-      }
+      width: 100%;
+      min-height: 6.663vh;
+      letter-spacing: inherit;
       .svg {
         transition: all 0.2s ease-in-out;
         margin-right: 1vw;
+        width: 9.5vw;
+        height: 9.5vw;
         @extend %removePosition;
-        @include phone {
-          width: 9.5vw;
-          height: 9.5vw;
-        }
-        @include tabletP {
-          width: 2.5vw;
-          height: 2.5vw;
-        }
-        @include desktop {
-          width: 2.3vw;
-          height: 2.3vw;
-        }
       }
       .MuiButton-label {
         justify-content: flex-start;
       }
     }
     .email-button {
-      background: var(--theme-orange);
-      @include phone_and_tabletP {
-        order: 2;
-      }
-      .svg,
-      span {
-        color: var(--white);
-      }
-      &:hover {
-        background: var(--theme-dark-blue);
-      }
-    }
-    .google-button {
-      background: var(--white);
-      span {
-        color: var(--theme-dark-blue);
-      }
-      &:hover {
-        background: var(--white);
-        .svg {
-          transform: scale(1.4);
-        }
-      }
+      order: 2;
     }
   }
 }

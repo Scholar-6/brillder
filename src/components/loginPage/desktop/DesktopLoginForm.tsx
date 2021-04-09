@@ -45,7 +45,7 @@ class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
       this.props.handleSubmit(e);
     }
   }
-  
+
   render() {
     let className = 'content-box expanded';
     return (
@@ -78,7 +78,9 @@ class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
         </div>
         <div className="input-block">
           <div className="button-box">
-            <button type="submit" className="sign-in-button">{this.props.buttonLabel ? this.props.buttonLabel : 'Sign in'}</button>
+            <button type="submit" className="btn btn-xl btn-block bg-theme-orange sign-in-button">
+              <span>{this.props.buttonLabel ? this.props.buttonLabel : 'Sign in'}</span>
+            </button>
           </div>
         </div>
       </form>

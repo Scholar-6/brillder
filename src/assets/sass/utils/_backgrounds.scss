@@ -1,5 +1,20 @@
 .bg-white {
   background-color: var(--white) !important;
+  &.btn {
+    transition: all 300ms ease-out;
+    svg,
+    span {
+      color: var(--theme-dark-blue) !important;
+      transition: all 300ms ease-out;
+    }
+    &:hover {
+      background: var(--theme-dark-blue) !important;
+      svg,
+      span {
+        color: var(--white) !important;
+      }
+    }
+  }
 }
 
 .bg-tab-gray {
@@ -28,11 +43,16 @@
   }
 }
 .bg-theme-orange {
+  transition: all 300ms ease-out;
   background-color: var(--theme-orange) !important;
   &.btn {
-    color: var(--white);
+    svg,
+    span {
+      color: var(--white) !important;
+      transition: all 300ms ease-out;
+    }
     &:hover {
-      background: var(--theme-light-blue) !important;
+      background: var(--theme-dark-blue) !important;
     }
   }
 }

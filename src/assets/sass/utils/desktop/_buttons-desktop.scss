@@ -14,29 +14,14 @@
     }
   }
   &.btn-md {
-    @include phone_and_tabletP {
-      padding: 1vw 2vw;
-      font-size: 4.35vw;
-      border-radius: 1.8vw;
-    }
-    @include tabletP {
-      padding: 0.5vw 1vw;
-      font-size: 1.5vw;
-      border-radius: $editor-radius;
-    }
+    padding: 0.5vw 1vw;
+    font-size: 1.5vw;
+    border-radius: $editor-radius;
   }
   &.btn-xl {
     padding: 2.5vh 0;
     font-size: 1.2vw;
-    @include phone_and_tabletL {
-      font-size: $base-popup-font-size;
-    }
-    @include phone_and_tabletP {
-      font-size: 1.2vw;
-    }
-    @include tabletL {
-      font-size: 1vw;
-    }
+    font-size: 1vw;
   }
 }
 
