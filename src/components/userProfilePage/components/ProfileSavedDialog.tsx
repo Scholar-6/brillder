@@ -46,15 +46,14 @@ const ProfileSavedDialog: React.FC<ProfileSavedProps> = props => {
       className="dialog-box profile-saved-dialog"
     >
       <div className="dialog-header">
-        <div>
-          <Avatar className="circle-check">
-            <SpriteIcon name="check-icon" className="active text-white stroke-2" />
-          </Avatar>
-        </div>
-        <div>
-          <span className="bold">Profile saved</span>
-          {/* <span className="italic">Publisher will be able to publish this brick</span> */}
-        </div>
+        <ListItem>
+          <ListItemText primary="Profile saved" />
+          <ListItemAvatar>
+            <Avatar className="circle-check">
+              <SpriteIcon name="check-icon" className="active text-white" />
+            </Avatar>
+          </ListItemAvatar>
+        </ListItem>
       </div>
       <div className="dialog-footer">
         {renderLinkButton()}

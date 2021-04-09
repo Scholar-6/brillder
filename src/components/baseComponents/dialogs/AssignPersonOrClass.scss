@@ -10,7 +10,7 @@
     width: 50vw !important;
 
     .MuiInputBase-input.MuiInput-input {
-      min-width: 4vw;
+      width: 14vw;
     }
   }
   .icon-button {
@@ -25,4 +25,8 @@
       font-family: $font-family-bold;
     }
   }
+}
+
+span.bold {
+  font-family: $font-family-bold !important;
 }

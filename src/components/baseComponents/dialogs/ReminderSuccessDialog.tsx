@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import SpriteIcon from "components/baseComponents/SpriteIcon";
+import SpriteIcon from "../SpriteIcon";
 
 interface SuccessDialogProps {
   isOpen: boolean;
@@ -23,15 +23,14 @@ const ReminderSuccessDialog: React.FC<SuccessDialogProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <div>
-          <Avatar className={`circle-check ${props.isDeadlinePassed ? "bg-theme-orange" : "b-yellow"}`}>
-            <SpriteIcon name="reminder" className="active text-white stroke-2" />
-          </Avatar>
-        </div>
-        <div>
-          <span className="bold">{props.header}</span>
-          {/* <span className="italic">Thank you for adding to our library</span> */}
-        </div>
+        <ListItem>
+          <ListItemText primary={props.header} className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemAvatar>
+            <Avatar className={`circle-check ${props.isDeadlinePassed ? "bg-theme-orange" : "b-yellow"}`}>
+              <SpriteIcon name="reminder" className="active stroke-2" />
+            </Avatar>
+          </ListItemAvatar>
+        </ListItem>
       </div>
     </Dialog>
   );

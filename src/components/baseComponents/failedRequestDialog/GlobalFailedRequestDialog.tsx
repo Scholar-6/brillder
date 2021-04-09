@@ -6,8 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import SpriteIcon from "components/baseComponents/SpriteIcon";
-
+import sprite from "assets/img/icons-sprite.svg";
 import "./FailedRequestDialog.scss";
 import { ReduxCombinedState } from 'redux/reducers';
 import actions from 'redux/actions/requestFailed';
@@ -27,15 +26,20 @@ const FailedRequestDialog: React.FC<FailedRequestProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <div>
-          <Avatar className="circle-check bg-theme-orange">
-            <SpriteIcon name="alert-triangle" className="active text-white stroke-2" />
-          </Avatar>
-        </div>
-        <div>
-          <span className="bold">Sorry, we've run into a brick wall</span>
-          <span className="italic">Click refresh and see if we can get over it</span>
-        </div>
+        <ListItem>
+          <ListItemText primary="Sorry, we've run into a brick wall" className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemAvatar>
+            <Avatar className="circle-check alert-icon">
+              <svg className="svg active stroke-2" style={{marginBottom: '0.3vw'}}>
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#alert-triangle"} />
+              </svg>
+            </Avatar>
+          </ListItemAvatar>
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Click refresh and see if we can get over it" className="italic" style={{ minWidth: '30vw' }} />
+        </ListItem>
       </div>
     </Dialog>
   );

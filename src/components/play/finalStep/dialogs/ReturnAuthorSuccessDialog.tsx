@@ -5,8 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import SpriteIcon from "components/baseComponents/SpriteIcon";
-
+import sprite from "assets/img/icons-sprite.svg";
 import { Author } from "model/brick";
 
 interface InvitationProps {
@@ -16,7 +15,7 @@ interface InvitationProps {
 }
 
 const ReturnAuthorSuccessDialog: React.FC<InvitationProps> = props => {
-  const { firstName, lastName } = props.author;
+  const {firstName, lastName} = props.author;
 
   const capitalize = (n: string) => {
     if (n && n.length > 1) {
@@ -35,15 +34,20 @@ const ReturnAuthorSuccessDialog: React.FC<InvitationProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <div>
-          <Avatar className="circle-check">
-            <SpriteIcon name="repeat" className="active text-white stroke-2" />
-          </Avatar>
-        </div>
-        <div>
-          <span className="bold">{`Over to you ${first} ${last}`}</span>
-          <span className="italic">{`${first} ${last} will be able to review your suggestions`}</span>
-        </div>
+        <ListItem>
+          <ListItemText primary={`Over to you ${first} ${last}`} className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemAvatar>
+            <Avatar className="circle-check">
+              <svg className="svg active">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#repeat"} className="text-white stroke-2" />
+              </svg>
+            </Avatar>
+          </ListItemAvatar>
+        </ListItem>
+        <ListItem>
+          <ListItemText primary={`${first} ${last} will be able to review your suggestions`} className="italic" style={{ minWidth: '30vw' }} />
+        </ListItem>
       </div>
     </Dialog>
   );

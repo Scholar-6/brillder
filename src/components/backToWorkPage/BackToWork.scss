@@ -133,6 +133,9 @@
           margin-top: 5vh;
           margin-bottom: 3vh;
         }
+        .italic {
+          font-family: $font-family-regular-italic;
+        }
       }
       &.empty-description:first {
         padding-left: $padding2;

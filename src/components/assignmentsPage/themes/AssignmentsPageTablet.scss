@@ -29,13 +29,10 @@
   .brick-row-container {
     height: auto !important;
     overflow: hidden;
-    .tab-content-centered {
-      height: 100% !important;
-    }
   }
 
   .bricks-list-container {
-    // height: calc(100vh - 39.5vh - 6vw - 5vw - 60px) !important;
+    height: calc(100vh - 39.5vh - 6vw - 5vw - 60px) !important;
     padding-top: 0 !important;
     .main-brick-container .brick-container {
       padding-left: 0 !important;

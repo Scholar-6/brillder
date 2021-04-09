@@ -95,8 +95,8 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
                   <div className="text-box">
                     <div className="signin-button" onClick={moveToFirstPage}>
                       <SpriteIcon name="arrow-left" />
-                      <span>Sign In</span>
-                    </div>
+                    Sign In
+                  </div>
                     <span>Already a member?</span>
                   </div>
                 </div>
@@ -118,7 +118,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
                 <div className="text-box">
                   <span>New to Brillder?</span>
                   <div className="join-button" onClick={moveToJoin}>
-                    <span>Join Now</span>
+                    Join Now
                     <SpriteIcon name="arrow-right" />
                   </div>
                 </div>

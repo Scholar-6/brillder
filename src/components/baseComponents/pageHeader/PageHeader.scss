@@ -63,7 +63,7 @@
         position: relative;
         align-items: center;
         justify-content: center;
-        height: $mobile-menu-height;
+        height: 60px;
         &.active {
           z-index: 999999;
         }
