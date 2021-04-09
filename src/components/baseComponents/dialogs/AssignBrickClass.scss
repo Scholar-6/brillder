@@ -11,7 +11,7 @@
     width: 50vw !important;
 
     .MuiInputBase-input.MuiInput-input {
-      width: 14vw;
+      min-width: 4vw;
     }
   }
 
@@ -28,10 +28,6 @@
       font-family: $font-family-bold;
     }
   }
-}
-
-span.bold {
-  font-family: $font-family-bold !important;
 }
 
 .assign-dialog-new {
