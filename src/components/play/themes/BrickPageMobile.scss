@@ -252,7 +252,7 @@ $play-footer-height: 75px;
       height: $back-to-work-height-mobile-view;
       transition: 700ms width;
       .brick-container {
-        height: calc(100% - 91px) !important;
+        height: calc(100% - #{$mobile-menu-height}) !important;
         // overflow-y: auto;
         .MuiGrid-container {
           display: flex;
@@ -1741,4 +1741,9 @@ $play-footer-height: 75px;
 // intro height fix
 .play-preview-pages .sorted-row .brick-row-container.real-introduction-page .brick-container {
   height: 100% !important;
+}
+
+// youtube video styles
+.play-preview-pages .youtube-video-session .ql-video {
+  width: 100%;
 }
