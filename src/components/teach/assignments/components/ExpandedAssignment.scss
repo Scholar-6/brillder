@@ -18,6 +18,8 @@
     }
 
     thead tr {
+      color: var(--theme-dark-blue);
+      font-size: 1.2vw;
       height: calc(#{$table-height / 15}) !important;
     }
 
