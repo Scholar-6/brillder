@@ -69,7 +69,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
     return editors.reduce((prev, current, idx, array) => {
       if (idx === 0) {
         return `${prev}${current.username}`;
-      } else if(idx === array.length - 1) {
+      } else if (idx === array.length - 1) {
         return `${prev} and ${current.username}`;
       } else {
         return `${prev}, ${current.username}`;
@@ -81,10 +81,10 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
     return (
       <button
         disabled={false}
-        className={`btn bold btn-md yes-button bg-theme-orange`}
+        className="btn bold btn-md bg-theme-orange yes-button"
         onClick={onNext}
       >
-        Send Invite
+        <span>Send Invite</span>
         <SpriteIcon name="send" className="active send-icon" onClick={props.close} />
       </button>
     );

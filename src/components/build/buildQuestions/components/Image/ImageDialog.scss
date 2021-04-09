@@ -164,17 +164,45 @@
     }
   }
   .cropping.empty {
-    @extend %flexCenter;
+    .icon-image {
+      height: 20vh !important;
+      width: 20vh !important;
+    }
   }
-  .icon-image {
-    height: 13vh !important;
-    width: 13vh !important;
-  }
-  .MuiSlider-markLabel {
-    font-size: 1.5vw !important;
-    line-height: 1;
-    font-family: $font-family-regular !important;
-    color: var(--theme-dark-blue) !important;
+  .i-s-slider {
+    margin-top: 0.3vw !important;
+    margin-left: 3vw;
+    width: 19vw;
+    height: 0.3vw;
+    .MuiSlider-track, .MuiSlider-rail {
+      height: inherit !important;
+      border-bottom-left-radius: 0.5vw;
+      border-top-left-radius: 0.5vw;
+    }
+    .MuiSlider-rail {
+      border-radius: 0.5vw;
+    }
+    .MuiSlider-thumb {
+      width: 1vw !important;
+      height: 1vw !important;
+      margin-top: -0.3vw !important;
+      margin-bottom: 0 !important;
+    }
+    .MuiSlider-markLabel {
+      position: absolute !important;
+      font-size: 3vw !important;
+      color: var(--theme-orange) !important;
+      line-height: 1;
+      font-family: $font-family-regular !important;
+      &[data-index="0"] {
+        top: -1vw !important;
+        margin-left: -1.2vw;
+      }
+      &[data-index="1"] {
+        top: -0.7vw !important;
+        margin-left: 1.4vw;
+      }
+    }
   }
   .absolute {
     padding-top: 0;
@@ -186,6 +214,22 @@
   .last-button {
     margin-top: 40vh;
     margin-bottom: 1.5vw;
+  }
+  .i-image-footer {
+    background: var(--tab-gray);
+    width: 100%;
+    border-bottom-left-radius: 0.5vw;
+    border-bottom-right-radius: 0.5vw;
+    height: 2.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    .add-image-button {
+      position: relative !important;
+      margin-top: 0.8vw;
+      width: 2vw;
+      height: 2vw;
+    }
   }
 }
 

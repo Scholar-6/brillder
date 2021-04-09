@@ -70,11 +70,6 @@ interface AppProps {
 const App: React.FC<AppProps> = props => {
   setBrillderTitle();
   const location = useLocation();
-  const history = useHistory();
-  React.useEffect(() => {
-    history.listen(evt => console.log(evt.pathname));
-  }, []);
-
   const [showWarning, setWarning] = React.useState(isTablet ? true: false)
   const [termsData, setTermsData] = React.useState({
     isLoading: false,
