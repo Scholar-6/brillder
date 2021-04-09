@@ -160,7 +160,7 @@ class ExpandedAssignment extends Component<
           return <SpriteIcon name="check-icon" className="text-theme-green" />;
         }
 
-        return <SpriteIcon name="cancel" className="text-theme-orange smaller stroke-2" />;
+        return <SpriteIcon name="cancel-custom" className="text-theme-orange smaller stroke-2" />;
       } catch {
         console.log('can`t parse attempt');
       }
