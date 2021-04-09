@@ -4,12 +4,12 @@
 
 .cropping {
   border-radius: 0.5vw;
-  padding: 0.4vw !important;
+  padding-top: 0 !important;
   position: relative;
   background: var(--tab-gray);
   min-height: 20vh;
   max-height: 30vh;
-  width: 34vw;
+  width: 100%;
   div {
     padding-top: 0 !important;
 
