@@ -1644,6 +1644,21 @@ $play-footer-height: 75px;
         display: block;
       }
     }
+    &.smaller {
+      display: flex;
+      align-items: center;
+      .hover-content {
+        overflow: scroll;
+        top: 8vw;
+        left: -60vw;
+        width: 88vw;
+        position: absolute;
+        font-size: 5vw !important;
+        br {
+          display: none;
+        }
+      }
+    }
   }
   .image-container {
     margin-left: 2vw;
