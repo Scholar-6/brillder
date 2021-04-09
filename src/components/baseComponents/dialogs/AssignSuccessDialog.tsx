@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import SpriteIcon from "components/baseComponents/SpriteIcon";
+import SpriteIcon from "../SpriteIcon";
 
 interface DialogProps {
   isOpen: boolean;
@@ -31,7 +31,7 @@ const AssignSuccessDialog: React.FC<DialogProps> = props => {
     } else {
       itemsText += capitalize(item.name);
     }
-    index += 1;
+    index+= 1;
     if (index === props.selectedItems.length - 1) {
       itemsText += ' and ';
     } else if (index < props.selectedItems.length - 1) {
@@ -45,15 +45,17 @@ const AssignSuccessDialog: React.FC<DialogProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <div>
-          <Avatar className="circle-check">
-            <SpriteIcon name="file-plus" className="active text-white stroke-2" />
-          </Avatar>
-        </div>
-        <div>
-          <span className="bold">{`${props.brickTitle} has been assigned to ${itemsText}.`}</span>
-          {/* <span className="italic">{`${getEditors2()} will be able to review your changes`}</span> */}
-        </div>
+        <ListItem>
+          <ListItemText
+            primary={ `${props.brickTitle} has been assigned to ${itemsText}.`}
+            className="bold" style={{ minWidth: '30vw' }}
+          />
+          <ListItemAvatar>
+            <Avatar className="circle-check">
+              <SpriteIcon name="file-plus" />
+            </Avatar>
+          </ListItemAvatar>
+        </ListItem>
       </div>
     </Dialog>
   );

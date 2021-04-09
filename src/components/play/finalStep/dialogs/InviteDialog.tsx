@@ -108,7 +108,7 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
         className="btn bold btn-md bg-theme-orange yes-button"
         onClick={onNext}
       >
-        <span>Send Invite</span>
+        Send Invite
         <SpriteIcon name="send" className="active send-icon" onClick={props.close} />
       </button>
     );

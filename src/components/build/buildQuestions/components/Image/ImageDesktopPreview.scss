@@ -3,43 +3,78 @@
 @import 'src/assets/sass/partials/extensions';
 
 .image-desktop-preview {
-  $width: 100%;
-  $height: 30vh;
-  width: 100%;
-  height: 30vh;
-  border-top-left-radius: 0.5vw;
-  border-top-right-radius: 0.5vw;
-  background: var(--theme-dark-blue);
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-
+  $width: 34vw;
+  $height: 40vh;
+  position: relative;
+  width: $width;
+  height: $height;
   .image-desktop-preview-container {
-    width: 60%;
-    height: 88%;
+    position: absolute;
     top: 0;
     left: 0;
-    border-radius: 0.5vw;
-    background: var(--tab-gray);
-    display: flex !important;
-    align-items: center !important;
-  
-    .preview-image-container {
-      margin-top: 0 !important;
-      height: 80%;
-      background: var(--white);
-      width: 100%;
-      display: flex !important;
-      align-items: center;
-      &.image-center {
-        justify-content: center;
-      }
-      > div {
-        height: auto;
-        width: auto;
-        max-width: 100%;
-        max-height: 100%;
+    width: calc(#{$width} * 2);
+    height: 80vh;
+  }
+  .play-preview-pages {
+    position: absolute;
+    top: -25%;
+    left: -25%;
+    height: 100%;
+    transform: scale(0.5);
+    .sort-and-filter-container {
+      width: $home-button-size;
+    }
+    .upper-part {
+      .page-header {
+        .logout-container {
+          width: 85% !important;
+          .action-container {
+            width: 40%;
+          }
+        }
       }
     }
+  }
+  .sorted-row {
+    height: calc(100% - 2vw);
+    .sort-and-filter-container {
+      margin-top: $home-button-size;
+      height: calc(100% - #{$home-button-size});
+    }
+  }
+  .brick-row-container {
+    width: calc(#{$width} * 2 - #{$home-button-size} - #{$sidebar-gutter} - #{$sidebar-gutter}) !important;
+    height: 100%;
+  }
+  .introduction-info {
+    background: var(--solitude-light);
+  }
+  .preview-image-container {
+    margin-top: 8vh;
+    padding-left: 4vw;
+    padding-right: 4vw;
+
+    > div {
+      width: 100%;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
+    &.image-center {
+      @extend %flexToXCenter;
+    }
+  }
+  .main-listing .upper-part .page-header .logout-container {
+    width: 85% !important;
+
+    .action-container {
+      width: 40%;
+    }
+  }
+  .back-hover-area-filter {
+    display: none !important;
+  }
+  img {
+    max-width: 100%;
   }
 }

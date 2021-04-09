@@ -44,7 +44,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
 
   const openAnotherUploadDialog = () => {
     props.deleteImage();
-    setState({ ...state, src: null, result: null });
+    setState({ ...state, src: null, result: null});
     openUploadDialog();
   }
 
@@ -75,7 +75,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
 
   const uploadCropedFile = () => {
     let file = dataURLtoFile(state.result as any, state.filename as any);
-    if (!file) { return; }
+    if (!file) { return; } 
     uploadFile(
       file as File,
       (res: any) => {
@@ -129,7 +129,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
           <DropNCrop onChange={(value: any) => setState(value)} value={state} />
         </div>
         <div className="dialog-footer">
-          <button className="btn btn-md btn-block bg-theme-orange yes-button" onClick={uploadCropedFile}>
+          <button className="btn btn-md bg-theme-orange yes-button" onClick={uploadCropedFile}>
             <span>Upload</span>
           </button>
         </div>
