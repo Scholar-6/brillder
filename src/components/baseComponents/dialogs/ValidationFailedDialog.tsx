@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ValidationFailedProps {
   isOpen: boolean;
@@ -23,21 +23,16 @@ const ValidationFailedDialog: React.FC<ValidationFailedProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <ListItem>
-          <ListItemText primary={props.header} className="bold" style={{ minWidth: '30vw' }} />
-          <ListItemAvatar>
-            <Avatar className="circle-check alert-icon">
-              <svg className="svg active stroke-2" style={{marginBottom: '0.3vw'}}>
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#alert-triangle"} />
-              </svg>
-            </Avatar>
-          </ListItemAvatar>
-        </ListItem>
-        {props.label &&
-        <ListItem>
-          <ListItemText primary={props.label} className="italic" style={{ minWidth: '30vw' }} />
-        </ListItem>}
+        <div>
+          <Avatar className="circle-check bg-theme-orange">
+            <SpriteIcon name="alert-triangle" className="active text-white stroke-2" />
+          </Avatar>
+        </div>
+        <div>
+          <span className="bold">{props.header}</span>
+          {props.label &&
+            <span className="italic">{props.label}</span>}
+        </div>
       </div>
     </Dialog>
   );

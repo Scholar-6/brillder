@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface DialogProps {
   isOpen: boolean;
@@ -20,17 +20,15 @@ const CopiedDialog: React.FC<DialogProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <ListItem>
-          <ListItemText primary={`A copy of ${props.title} is ready for you to adapt!`} className="bold" style={{ minWidth: '30vw' }} />
-          <ListItemAvatar>
-            <Avatar className="circle-check">
-              <svg className="svg active" style={{marginLeft: 0, marginTop: '0.3vw', marginRight: '0.3vw'}}>
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#copy"} className="text-white" />
-              </svg>
-            </Avatar>
-          </ListItemAvatar>
-        </ListItem>
+        <div>
+          <Avatar className="circle-check">
+            <SpriteIcon name="copy" className="active text-white stroke-2" />
+          </Avatar>
+        </div>
+        <div>
+          <span className="bold">{`A copy of ${props.title} is ready for you to adapt!`}</span>
+          {/* <span className="italic">Click refresh and see if we can get over it</span> */}
+        </div>
       </div>
     </Dialog>
   );
