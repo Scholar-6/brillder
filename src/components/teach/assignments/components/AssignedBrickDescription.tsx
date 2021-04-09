@@ -203,7 +203,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
     return (
       <div className="status-text-centered">
-        Completed
+        Completed <span className="bold">Final Score: X</span>
       </div>
     );
   }
@@ -241,9 +241,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         <div className="assignment-second-part">
           {!this.props.isStudentAssignment &&
             <div className="users-complete-count">
-              <span>{this.getCompleteStudents()}/{getTotalStudentsCount(this.props.classroom)}</span>
+              <span>{this.getCompleteStudents()}/{getTotalStudentsCount(classroom)}</span>
               <SpriteIcon name="users" className="text-theme-dark-blue" />
-              {classroom && classroom.studentsInvitations && <span style={{marginLeft: '1vw'}}>{classroom.studentsInvitations.length} Invited</span>}
+              {classroom && classroom.studentsInvitations && <span style={{marginLeft: '1vw'}}>{classroom.students.length + classroom.studentsInvitations.length} Invited</span>}
             </div>}
           <div className="average">
             {this.getAverageScore()}

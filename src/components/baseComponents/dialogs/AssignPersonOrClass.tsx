@@ -233,7 +233,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           )}
         />
         <div className="r-popup-title bold m-b-02">When is it due?</div>
-        <div className="r-radio-buttons m-b-10w">
+        <div className="r-radio-buttons m-b-1">
           <FormControlLabel
             checked={haveDeadline === false}
             control={<Radio onClick={() => toggleDeadline(false)} />}

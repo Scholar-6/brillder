@@ -157,10 +157,10 @@ class ExpandedAssignment extends Component<
         }
 
         if (attempt.correct === true && liveAttempt.correct === true) {
-          return <SpriteIcon name="check-icon" className="text-theme-green" />;
+          return <SpriteIcon name="check-icon-custom" className="text-theme-green check-icon" />;
         }
 
-        return <SpriteIcon name="cancel" className="text-theme-orange smaller stroke-2" />;
+        return <SpriteIcon name="cancel-custom" className="text-theme-orange smaller stroke-2" />;
       } catch {
         console.log('can`t parse attempt');
       }

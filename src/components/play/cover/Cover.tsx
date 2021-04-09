@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid } from "@material-ui/core";
 
 import { AcademicLevelLabels, Brick } from "model/brick";
@@ -23,6 +23,10 @@ interface IntroductionProps {
 }
 
 const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
+  // for mobile
+  const [showFirst, setShowFirst] = useState(false);
+  const [showSecond, setShowSecond] = useState(false);
+
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
@@ -46,14 +50,14 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       brickId: brick.id,
       coverImage: coverData.value,
       coverImageSource: coverData.imageSource,
-      coverImageCaption: coverData.imageCaption
+      coverImageCaption: coverData.imageCaption,
     });
     if (res) {
       // success
     } else {
       // fail
     }
-  }
+  };
 
   const renderPlayButton = () => {
     return (
@@ -73,10 +77,16 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <div className="first-row">
         <div className="brick-id-container">Brick #{brick.id}</div>
         <div className="question">What is a brick?</div>
-        <div className="hover-area">
-          <SpriteIcon name="help-circle-custom" />
+        <div className={`hover-area ${showFirst && "visible"}`}>
+          <SpriteIcon
+            name="help-circle-custom"
+            onClick={() => isPhone() && setShowFirst(!showFirst)}
+          />
           <div className="hover-content">
-            <div>A brick is a learning unit that should take either 20, 40, or 60 minutes to complete.</div>
+            <div>
+              A brick is a learning unit that should take either 20, 40, or 60
+              minutes to complete.
+            </div>
             <div>Bricks follow a cognitively optimised sequence:</div>
             <div className="container">
               <div className="white-circle">1</div>
@@ -92,15 +102,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </div>
             <div className="container">
               <div className="white-circle">3</div>
-              <div className="l-text">
-                A preliminary score
-              </div>
+              <div className="l-text">A preliminary score</div>
             </div>
             <div className="container">
               <div className="white-circle">4</div>
-              <div className="l-text">
-                Synthesis: explanation.
-              </div>
+              <div className="l-text">Synthesis: explanation.</div>
             </div>
             <div className="container">
               <div className="white-circle">5</div>
@@ -110,9 +116,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </div>
             <div className="container">
               <div className="white-circle">6</div>
-              <div className="l-text">
-                A final score
-              </div>
+              <div className="l-text">A final score</div>
             </div>
           </div>
         </div>
@@ -128,17 +132,25 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderBrickCircle = () => {
     return (
       <div className="round-button-container">
-        <div className="round-button" style={{ background: `${brick.subject?.color || '#B0B0AD'}` }} />
+        <div
+          className="round-button"
+          style={{ background: `${brick.subject?.color || "#B0B0AD"}` }}
+        />
       </div>
     );
-  }
+  };
 
   if (isPhone()) {
     return (
       <div className="cover-page">
         {renderFirstRow()}
-        <div className="brick-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
-        <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
+        <div
+          className="brick-title q-brick-title"
+          dangerouslySetInnerHTML={{ __html: brick.title }}
+        />
+        <div className="author-row">
+          {brick.author.firstName} {brick.author.lastName}
+        </div>
         <div className="keywords-row">
           <KeyWordsPreview keywords={brick.keywords} />
         </div>
@@ -146,19 +158,68 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <Image
             locked={!isPublisher}
             index={0}
-            data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
+            data={{
+              value: brick.coverImage,
+              imageSource: brick.coverImageSource,
+              imageCaption: brick.coverImageCaption,
+              imagePermision: false,
+            }}
             save={updateCover}
-            onFocus={() => { }}
+            onFocus={() => {}}
           />
           <div className="cover-info-row">
             {renderBrickCircle()}
-            {brick.subject?.name}, Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
-            <SpriteIcon name="help-circle-custom" />
+            {brick.subject?.name}, Level{" "}
+            {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
+            <div className={`hover-area smaller ${showSecond && "visible"}`}>
+              <SpriteIcon
+                name="help-circle-custom"
+                onClick={() => isPhone() && setShowSecond(!showSecond)}
+              />
+              <div className="hover-content">
+                <div>
+                  Brillder focusses on universal concepts and topics, not
+                  specific exam courses.
+                </div>
+                <br />
+                <div>LEVELS:</div>
+                <div className="container">
+                  <div className="white-circle">1</div>
+                  <div className="l-text">
+                    <div>I Foundation</div>
+                    <div>
+                      For 15-16 yr-olds, equivalent to GCSE / IB Middle Years /
+                      High School Diploma
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div className="container">
+                  <div className="white-circle">2</div>
+                  <div className="l-text">
+                    <div>II & III Core</div>
+                    <div>
+                      For 17-18 yr-olds, equivalent to A-level / IB / High
+                      School Honors
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div className="container">
+                  <div className="white-circle">3</div>
+                  <div className="l-text">
+                    <div>IV Extension</div>
+                    <div>
+                      College / Undergraduate level, to challenge Oxbridge (UK)
+                      or Advanced Placement (US) students
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="introduction-info">
-          {renderPlayButton()}
-        </div>
+        <div className="introduction-info">{renderPlayButton()}</div>
       </div>
     );
   }
@@ -170,8 +231,13 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <Grid item sm={8} xs={12}>
             <div className="introduction-page">
               {renderFirstRow()}
-              <div className="brick-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
-              <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
+              <div
+                className="brick-title q-brick-title"
+                dangerouslySetInnerHTML={{ __html: brick.title }}
+              />
+              <div className="author-row">
+                {brick.author.firstName} {brick.author.lastName}
+              </div>
               <div className="keywords-row">
                 <KeyWordsPreview keywords={brick.keywords} />
               </div>
@@ -179,41 +245,62 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 <Image
                   locked={!isPublisher}
                   index={0}
-                  data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
+                  data={{
+                    value: brick.coverImage,
+                    imageSource: brick.coverImageSource,
+                    imageCaption: brick.coverImageCaption,
+                    imagePermision: false,
+                  }}
                   save={updateCover}
-                  onFocus={() => { }}
+                  onFocus={() => {}}
                 />
                 <div className="cover-info-row">
                   {renderBrickCircle()}
-                  {brick.subject?.name},
-                  Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
-                  <div className="hover-area">
-                    <SpriteIcon name="help-circle-custom" />
+                  {brick.subject?.name}, Level{" "}
+                  {brick.academicLevel &&
+                    AcademicLevelLabels[brick.academicLevel]}
+                  <div className={`hover-area ${showSecond && "visible"}`}>
+                    <SpriteIcon
+                      name="help-circle-custom"
+                      onClick={() => isPhone() && setShowSecond(!showSecond)}
+                    />
                     <div className="hover-content">
-                      <div>Brillder focusses on universal concepts and topics, not specific exam courses.</div>
-                      <br/>
+                      <div>
+                        Brillder focusses on universal concepts and topics, not
+                        specific exam courses.
+                      </div>
+                      <br />
                       <div>LEVELS:</div>
                       <div className="container">
                         <div className="white-circle">1</div>
                         <div className="l-text">
                           <div>I Foundation</div>
-                          <div>For 15-16 yr-olds, equivalent to GCSE / IB Middle Years / High School Diploma</div>
+                          <div>
+                            For 15-16 yr-olds, equivalent to GCSE / IB Middle
+                            Years / High School Diploma
+                          </div>
                         </div>
                       </div>
-                      <br/>
+                      <br />
                       <div className="container">
                         <div className="white-circle">2</div>
                         <div className="l-text">
                           <div>II & III Core</div>
-                          <div>For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
+                          <div>
+                            For 17-18 yr-olds, equivalent to A-level / IB / High
+                            School Honors
+                          </div>
                         </div>
                       </div>
-                      <br/>
+                      <br />
                       <div className="container">
                         <div className="white-circle">3</div>
                         <div className="l-text">
                           <div>IV Extension</div>
-                          <div>College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>
+                          <div>
+                            College / Undergraduate level, to challenge Oxbridge
+                            (UK) or Advanced Placement (US) students
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -223,9 +310,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </div>
           </Grid>
           <Grid item sm={4} xs={12}>
-            <div className="introduction-info">
-              {renderPlayButton()}
-            </div>
+            <div className="introduction-info">{renderPlayButton()}</div>
           </Grid>
         </Grid>
       </div>

@@ -1112,6 +1112,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           .introduction-page {
             padding-top: 3.5vh;
             padding-left: 3.5vh;
+            padding-right: 3.5vh !important;
 
             .first-row {
               display: flex;
@@ -1897,24 +1898,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       margin-bottom: 10vh;
       .x-center {
         @extend %flexToXCenter;
-
-        .like-button {
-          font-family: $font-family-bold;
-          min-width: 17vw;
-          text-align: center;
-          border-radius: 0.7vw;
-          padding: 1.5vh 1.5vw;
-          font-size: 4.5vh;
-          background: var(--tab-gray);
-          margin: 1vh;
-
-          &.orange {
-            cursor: pointer;
-            color: var(--theme-dark-blue);
-            background: var(--tab-gray);
-            animation: greyToOrange 0.5s linear 0.5s 1 normal forwards;
-          }
-        }
       }
     }
     .footer {
@@ -2116,6 +2099,60 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     padding-right: 10vw !important;
     .action-footer {
       right: unset !important;
+    }
+  }
+}
+
+.play-preview-panel.animate-fade {
+  .s-fade1, .s-fade2, .s-fade3 {
+    opacity: 0;
+    
+  }
+  .s-fade1 {
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-name: fadein;
+  }
+  .s-fade2 {
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 1s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-name: fadein;
+  }
+  .s-fade3 {
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 2s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-name: fadein;
+  }
+  .like-button {
+    font-family: $font-family-bold;
+    min-width: 17vw;
+    text-align: center;
+    border-radius: 0.7vw;
+    padding: 1.5vh 1.5vw;
+    font-size: 4.5vh;
+    background: var(--tab-gray);
+    margin: 1vh;
+
+    &.orange {
+      cursor: pointer;
+      color: var(--theme-dark-blue);
+      background: var(--tab-gray);
+      animation: greyToOrange 0.5s linear 2s 1 normal forwards;
     }
   }
 }

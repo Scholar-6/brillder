@@ -57,13 +57,13 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
   return (
     <div className="brick-row-container live-container">
       <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
-      <div className="brick-container play-preview-panel live-page after-cover-page pre-investigation">
+      <div className="brick-container play-preview-panel live-page after-cover-page pre-investigation animate-fade">
         <div className="introduction-page">
           <div className="after-cover-main-content">
-            <div className="title">
-              <TypingLabel label="Time for some questions." onEnd={() => { }} />
+            <div className="title s-fade1">
+              Time for some questions.
             </div>
-            <div className="like-buttons-container">
+            <div className="like-buttons-container s-fade2">
               <div className="x-center">
                 <div className="like-button">Preparation</div>
               </div>
@@ -74,7 +74,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="like-button">Review</div>
               </div>
             </div>
-            <div className="footer">
+            <div className="footer s-fade3">
               You have<span className="underline-border"> {minutes} minutes </span>to complete the investigation. Once time is up, you will get a provisional score.
             </div>
           </div>

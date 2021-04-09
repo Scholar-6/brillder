@@ -151,6 +151,9 @@
       margin-left: 0.6vw;
       @extend %flexCenter;
       font-size: 1.5vw;
+      .bold {
+        margin-left: 0.4vw;
+      }
     }
   }
   .reminder-container {

@@ -9,6 +9,7 @@
   padding-right: 0.5vw;
   color: var(--white) !important;
   max-height: 10vw;
+  width: 3.6vw !important;
 
   optgroup {
     overflow: scroll;
@@ -21,10 +22,12 @@
   &.first {
     border-top-left-radius: $radius;
     border-bottom-left-radius: $radius;
+    width: 3.6vw !important;
   }
   &.last {
     border-top-right-radius: $radius;
     border-bottom-right-radius: $radius;
+    width: 5vw !important;
   }
   &:before {
     display: none !important;

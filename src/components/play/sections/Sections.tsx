@@ -1,12 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Brick } from "model/brick";
-
-import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import TypingLabel from "components/baseComponents/TypingLabel";
 
 interface Props {
   brick: Brick;
@@ -35,13 +32,13 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
   return (
     <div className="brick-row-container live-container">
       <div className="fixed-upper-b-title text-white q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
-      <div className="brick-container play-preview-panel live-page after-cover-page">
+      <div className="brick-container play-preview-panel live-page after-cover-page animate-fade">
         <div className="introduction-page">
           <div className="after-cover-main-content">
-            <div className="title">
-              <TypingLabel label="A brick has four sections." onEnd={() => {}} />
+            <div className="title s-fade1">
+              A brick has four sections.
             </div>
-            <div className="like-buttons-container">
+            <div className="like-buttons-container s-fade2">
               <div className="x-center">
                 <div className="like-button orange" onClick={props.moveNext}>Preparation</div>
               </div>
@@ -52,7 +49,7 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="like-button">Review</div>
               </div>
             </div>
-            <div className="footer">
+            <div className="footer s-fade3">
               The Preparation phase <span className="underline-border">briefs</span> you, and presents some <span className="underline-border">tasks to get you thinking.</span>
             </div>
           </div>
