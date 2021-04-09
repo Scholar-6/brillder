@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import SpriteIcon from "../SpriteIcon";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface SuccessDialogProps {
   isOpen: boolean;
@@ -24,18 +24,16 @@ const SuccessDialog: React.FC<SuccessDialogProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <ListItem>
-          <ListItemText primary={props.header} className="bold" style={{ minWidth: '30vw' }} />
-          <ListItemAvatar>
-            <Avatar className="circle-check">
-              <SpriteIcon name={props.icon ? props.icon : "ok"} className="active stroke-2" />
-            </Avatar>
-          </ListItemAvatar>
-        </ListItem>
-        {props.label &&
-        <ListItem>
-          <ListItemText primary={props.label} className="italic" style={{ minWidth: '30vw' }} />
-        </ListItem>}
+        <div>
+          <Avatar className="circle-check">
+            <SpriteIcon name={props.icon ? props.icon : "ok"} className="active text-white stroke-2" />
+          </Avatar>
+        </div>
+        <div>
+          <span className="bold">{props.header}</span>
+          {props.label &&
+            <span className="italic">{props.label}</span>}
+        </div>
       </div>
     </Dialog>
   );
