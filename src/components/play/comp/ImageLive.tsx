@@ -28,7 +28,7 @@ const ImageLive: React.FC<ImageProps> = ({ component, refs }) => {
             src={fileUrl(component.value)}
             style={{height}}
           />
-          {component.imageCaption && <figcaption className="image-caption">{component.imageCaption}</figcaption>}
+          {component.imageCaption && <figcaption className="image-caption" dangerouslySetInnerHTML={{__html: component.imageCaption}} />}
         </div>
       </div>
     );
