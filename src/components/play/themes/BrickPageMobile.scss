@@ -843,7 +843,7 @@ $play-footer-height: 20vw;
               .introduction-content {
                 .question-live-play {
                   overflow: hidden;
-                  height: calc(100vh - 17vh - #{$play-mobile-height});
+                  height: calc(100vh - 17vh - 100vh - 60px - 87px - 20vw);
                 }
               }
             }
