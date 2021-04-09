@@ -9,7 +9,7 @@
   height: 100%;
 
   .left-part-join {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 0;
@@ -40,10 +40,9 @@
 
   // left part
   .left-part {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    z-index: 20;
     display: flex;
     flex-direction: column;
     background: #12326a;
@@ -51,8 +50,8 @@
     height: 100%;
     padding-top: 12.4vh;
     transition: all 500ms ease-out;
+    z-index: 20;
     &.right {
-      position: absolute;
       left: 55vw;
     }
     .logo {
@@ -178,9 +177,10 @@
   // right part
   .right-part {
     height: 100%;
-    position: absolute;
+    position: fixed;
     left: 45vw;
     display: relative;
+    z-index: 10;
     .container {
       height: 100%;
       display: flex;
