@@ -157,7 +157,7 @@ class ExpandedAssignment extends Component<
         }
 
         if (attempt.correct === true && liveAttempt.correct === true) {
-          return <SpriteIcon name="check-icon" className="text-theme-green" />;
+          return <SpriteIcon name="check-icon-custom" className="text-theme-green check-icon" />;
         }
 
         return <SpriteIcon name="cancel-custom" className="text-theme-orange smaller stroke-2" />;
