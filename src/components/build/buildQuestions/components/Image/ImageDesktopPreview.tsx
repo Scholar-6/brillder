@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react'
-import { Grid } from '@material-ui/core';
 
 import './ImageDesktopPreview.scss'
 import { ImageAlign } from './model';
-
 
 interface Props {
   src: any;
@@ -29,7 +27,7 @@ const ImageDesktopPreview: React.FC<Props> = props => {
   }, [props.file]);
 
   if (!props.src && !value) {
-    return <div></div>;
+    return <div />;
   }
 
   let finalSrc = value ? value : props.src;

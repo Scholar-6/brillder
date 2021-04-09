@@ -162,11 +162,10 @@
     }
   }
   .cropping.empty {
-    @extend %flexCenter;
   }
   .icon-image {
-    height: 13vh !important;
-    width: 13vh !important;
+    height: 20vh !important;
+    width: 20vh !important;
   }
   .MuiSlider-markLabel {
     font-size: 1.5vw !important;

@@ -164,11 +164,10 @@
     }
   }
   .cropping.empty {
-    @extend %flexCenter;
-  }
-  .icon-image {
-    height: 13vh !important;
-    width: 13vh !important;
+    .icon-image {
+      height: 20vh !important;
+      width: 20vh !important;
+    }
   }
   .i-s-slider {
     margin-top: 0.3vw !important;
@@ -215,6 +214,22 @@
   .last-button {
     margin-top: 40vh;
     margin-bottom: 1.5vw;
+  }
+  .i-image-footer {
+    background: var(--tab-gray);
+    width: 100%;
+    border-bottom-left-radius: 0.5vw;
+    border-bottom-right-radius: 0.5vw;
+    height: 2.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    .add-image-button {
+      position: relative !important;
+      margin-top: 0.8vw;
+      width: 2vw;
+      height: 2vw;
+    }
   }
 }
 
