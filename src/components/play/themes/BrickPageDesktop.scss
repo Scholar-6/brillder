@@ -1112,6 +1112,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           .introduction-page {
             padding-top: 3.5vh;
             padding-left: 3.5vh;
+            padding-right: 3.5vh !important;
 
             .first-row {
               display: flex;
@@ -2105,15 +2106,43 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .play-preview-panel.animate-fade {
   .s-fade1, .s-fade2, .s-fade3 {
     opacity: 0;
+    
   }
   .s-fade1 {
     animation: fadein 1s forwards;
+    animation: fadein 1s forwards;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-name: fadein;
   }
   .s-fade2 {
     animation: fadein 1s 1s forwards;
+    animation: fadein 1s forwards;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-name: fadein;
   }
   .s-fade3 {
     animation: fadein 1s 2s forwards;
+    animation: fadein 1s forwards;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-name: fadein;
   }
   .like-button {
     font-family: $font-family-bold;

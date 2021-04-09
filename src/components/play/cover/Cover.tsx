@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid } from "@material-ui/core";
 
 import { AcademicLevelLabels, Brick } from "model/brick";
@@ -23,6 +23,10 @@ interface IntroductionProps {
 }
 
 const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
+  // for mobile
+  const [showFirst, setShowFirst] = useState(false);
+  const [showSecond, setShowSecond] = useState(false);
+  
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
@@ -73,8 +77,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <div className="first-row">
         <div className="brick-id-container">Brick #{brick.id}</div>
         <div className="question">What is a brick?</div>
-        <div className="hover-area">
-          <SpriteIcon name="help-circle-custom" />
+        <div className={`hover-area ${showFirst && 'visible'}`}>
+          <SpriteIcon name="help-circle-custom" onClick={() => isPhone() && setShowFirst(!showFirst)} />
           <div className="hover-content">
             <div>A brick is a learning unit that should take either 20, 40, or 60 minutes to complete.</div>
             <div>Bricks follow a cognitively optimised sequence:</div>
@@ -187,8 +191,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   {renderBrickCircle()}
                   {brick.subject?.name},
                   Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
-                  <div className="hover-area">
-                    <SpriteIcon name="help-circle-custom" />
+                  <div className={`hover-area ${showSecond && 'visible'}`}>
                     <div className="hover-content">
                       <div>Brillder focusses on universal concepts and topics, not specific exam courses.</div>
                       <br/>
