@@ -203,7 +203,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
     return (
       <div className="status-text-centered">
-        Completed <span className="bold">Final Score: X</span>
+        Completed {/*<span className="bold">Final Score: X</span>*/}
       </div>
     );
   }
