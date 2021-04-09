@@ -40,7 +40,7 @@
 
   // left part
   .left-part {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 20;
@@ -175,12 +175,15 @@
       }
     }
   }
+  .left-part.right ~ .right-part {
+    display: none !important;
+  }
   // right part
   .right-part {
     width: 50%;
     left: 50%;
     height: 100%;
-    position: absolute;
+    position: fixed;
     display: relative;
     .container {
       height: 100%;
