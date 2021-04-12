@@ -254,7 +254,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const newClassroom = await createClass(name, subject);
     if (newClassroom) {
       await this.loadClasses(newClassroom.id);
-      this.props.history.push(map.ManageClassroomsTab);
     } else {
       // creation failed
     }

@@ -194,7 +194,8 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   isStudentCompleted(studentStatus: StudentStatus[]) {
     return !(!studentStatus || studentStatus.length !== 1 || studentStatus[0].status <= 0)
   }
-
+  
+  // TODO: fix this span
   renderStudentStatus() {
     if (!this.props.isStudent) { return <div /> }
     const { studentStatus } = this.props.assignment;
@@ -241,9 +242,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         <div className="assignment-second-part">
           {!this.props.isStudentAssignment &&
             <div className="users-complete-count">
-              <span>{this.getCompleteStudents()}/{getTotalStudentsCount(classroom)}</span>
+              <span>{this.getCompleteStudents()}/{getTotalStudentsCount(this.props.classroom)}</span>
               <SpriteIcon name="users" className="text-theme-dark-blue" />
-              {classroom && classroom.studentsInvitations && <span style={{marginLeft: '1vw'}}>{classroom.students.length + classroom.studentsInvitations.length} Invited</span>}
+              {classroom && classroom.studentsInvitations && <span style={{marginLeft: '1vw'}}>{classroom.studentsInvitations.length} Invited</span>}
             </div>}
           <div className="average">
             {this.getAverageScore()}

@@ -10,6 +10,7 @@ import RadioButton from "components/baseComponents/buttons/RadioButton";
 import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
 import { Subject } from "model/brick";
 import { isArchived } from "../service/service";
+import ClassroomsList from "./ClassroomsList";
 
 enum TeachFilterFields {
   Assigned = "assigned",
@@ -78,14 +79,6 @@ class TeachFilterSidebar extends Component<
     }
   }
 
-  renderStudentInvitation(s: any, key: number) {
-    return (
-      <div className="student-row yellow" key={key}>
-        <span className="student-name">{s.email}</span>
-      </div>
-    );
-  }
-
   renderStudent(s: TeachStudent, key: number) {
     let className = "student-row";
 
@@ -122,7 +115,6 @@ class TeachFilterSidebar extends Component<
   }
 
   renderClassroom(c: TeachClassroom, i: number) {
-    console.log(c.studentsInvitations);
     return (
       <div key={i} className="classes-box">
         <div
@@ -152,8 +144,6 @@ class TeachFilterSidebar extends Component<
           </div>
         </div>
         {c.active && c.students.map(this.renderStudent.bind(this))}
-        {c.active &&
-          c.studentsInvitations.map(this.renderStudentInvitation.bind(this))}
       </div>
     );
   }

@@ -256,7 +256,6 @@ $play-footer-height: 20vw;
         &.mobile-provisional-score {
           height: calc(100% - #{$mobile-menu-height}) !important;
         }
-
         // overflow-y: auto;
         .MuiGrid-container {
           display: flex;
@@ -1566,7 +1565,6 @@ $play-footer-height: 20vw;
   color: var(--theme-dark-blue);
   overflow-y: auto;
   height: calc(100% - #{$mobile-menu-height} - #{$progress-bar-height}) !important;
-  
   padding-top: 4vw;
   padding-left: 4vw;
   padding-right: 4vw;
@@ -1618,62 +1616,23 @@ $play-footer-height: 20vw;
     position: relative;
     .hover-content {
       display: none;
-      width: calc(100% - 60px);
-      position: fixed;
-      top: 70px;
-      left: 30px;
-      color: var(--white);
-      border-radius: 10px;
-      padding: 15px;
-      font-family: $font-family-regular;
-      background: var(--theme-light-blue);
+    }
+    &:hover .hover-content {
+      width: 30vw;
       z-index: 100000;
-      .container {
-        margin: 10px 0;
-        display: flex;
-        .white-circle {
-          background: var(--white);
-          width: 20px;
-          height: 20px;
-          margin: 5px 5px 0 0;
-          border-radius: 50%;
-          color: var(--theme-dark-blue);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .l-text {
-          margin-left: 0.3vw;
-          width: calc(100% - 2vw);
-        }
-      }
-    }
-    &.visible {
-      .hover-content {
-        display: block;
-      }
-    }
-    &.smaller {
-      display: flex;
-      align-items: center;
-      .hover-content {
-        overflow: scroll;
-        top: 8vw;
-        left: -60vw;
-        width: 88vw;
-        position: absolute;
-        font-size: 5vw !important;
-        br {
-          display: none;
-        }
-      }
+      display: block;
+      position: absolute;
+      top: 3vw;
+      left: 0;
+      color: var(--white);
+      border-radius: 0.2vw;
+      padding: 0.2vw 0.5vw;
+      background: var(--theme-light-blue);
     }
   }
   .image-container {
     margin-left: 2vw;
     margin-right: 2vw;
-    width: calc(100% - 4vw);
-    
     position: relative;
     .cover-info-row {
       position: absolute;
@@ -1751,7 +1710,6 @@ $play-footer-height: 20vw;
 .play-preview-pages .sorted-row .brick-row-container.real-introduction-page .brick-container {
   height: 100% !important;
 }
-
 // youtube video styles
 .play-preview-pages .ql-video {
   width: 100%;

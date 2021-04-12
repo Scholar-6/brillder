@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import SpriteIcon from "components/baseComponents/SpriteIcon";
+import SpriteIcon from "../SpriteIcon";
 
 interface ProfileSavedProps {
   isOpen: boolean;
@@ -21,15 +21,17 @@ const PublishSuccessDialog: React.FC<ProfileSavedProps> = props => {
       className="dialog-box link-copied-dialog"
     >
       <div className="dialog-header">
-        <div>
-          <Avatar className="circle-check">
-            <SpriteIcon name="award" className="active text-white stroke-2" />
-          </Avatar>
-        </div>
-        <div>
-          <span className="bold">Successfully Published!</span>
-          <span className="italic">Thank you for adding to our library</span>
-        </div>
+        <ListItem>
+          <ListItemText primary="Successfully Published!" className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemAvatar>
+            <Avatar className="circle-check">
+              <SpriteIcon name="award" className="active stroke-2 text-white" />
+            </Avatar>
+          </ListItemAvatar>
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Thank you for adding to our library" className="italic" style={{ minWidth: '30vw' }} />
+        </ListItem>
       </div>
     </Dialog>
   );
