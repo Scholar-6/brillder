@@ -243,11 +243,12 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     return (
       <div className="sidebar-button">
-        {!this.isCover() && <HighlightTextButton
+        {/* TODO: this highlight button was causing weird effects so removing and putting as task on backlog 12/04/21 */}
+        {/* {!this.isCover() && <HighlightTextButton
           mode={this.props.mode}
           sidebarRolledUp={this.props.sidebarRolledUp}
           setHighlightMode={this.setHighlightMode.bind(this)}
-        />}
+        />} */}
         {this.renderPrepButton()}
         <ShareButton sidebarRolledUp={this.props.sidebarRolledUp} share={this.share.bind(this)} />
         <AssignButton

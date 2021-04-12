@@ -26,22 +26,26 @@ class FixedHelpers extends Component<Props> {
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
         <div className="fixed-helpers-container">
           <div className="circles">
-            <div className="highlight">
+            {/* <div className="highlight">
               {this.renderBorder('highlight-circle')}
               <span>Highlight Text</span>
-            </div>
+            </div> */}
             <div className="share">
               {this.renderBorder('share-circle')}
               <span>Share Brick</span>
             </div>
-            <div className="assign">
-              {this.renderBorder('assign-circle')}
-              {canSee && this.renderBorder('assign-circle') && <span>Assign Brick</span>}
-            </div>
-            <div className="adapt">
-              {this.renderBorder('adapt-circle')}
-              {canSee && this.renderBorder('adapt-circle') && <span >Adapt Brick</span>}
-            </div>
+            {canSee && 
+              <>
+              <div className="assign">
+                {this.renderBorder('assign-circle')}
+                <span>Assign Brick</span>
+              </div>
+              <div className="adapt">
+                {this.renderBorder('adapt-circle')}
+                <span>Adapt Brick</span>
+              </div>
+              </>
+            }
           </div>
         </div>
       </React.Suspense>
