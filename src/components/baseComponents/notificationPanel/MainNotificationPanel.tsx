@@ -14,6 +14,7 @@ import { checkTeacherEditorOrAdmin } from 'components/services/brickService';
 import { User } from 'model/user';
 import SpriteIcon from '../SpriteIcon';
 import DesktopVersionDialogV2 from 'components/build/baseComponents/dialogs/DesktopVersionDialogV2';
+import routes from 'components/build/routes';
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -92,11 +93,11 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
         } else if (notification.type === NotificationType.AssignedToEdit) {
           this.props.forgetBrick();
           await this.props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
+          history.push(routes.buildPlan(notification.brick.id));
         } else if (notification.type === NotificationType.ReturnedToAuthor) {
           this.props.forgetBrick();
           await this.props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
+          history.push(routes.buildPlan(notification.brick.id));
         } else if (notification.type === NotificationType.RemindedToPlayBrick) {
           history.push(map.playIntro(notification.brick.id));
         }
