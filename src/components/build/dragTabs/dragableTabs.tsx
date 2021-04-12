@@ -248,6 +248,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           <SynthesisTab
             columns={columns}
             tutorialStep={props.tutorialStep}
+            isActive={isSynthesisPage}
             validationRequired={props.validationRequired}
             synthesis={synthesis}
             getHasReplied={getHasSynthesisReplied}
@@ -289,7 +290,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             className={`drag-tile-container plan-tab ${isPlanPage ? 'active' : ''}`}
             cols={isPlanPage ? 1.5555 : 2}
           >
-            <PlanTab brickId={this.props.brickId} history={this.props.history} />
+            <PlanTab brickId={this.props.brickId} isActive={isPlanPage} history={this.props.history} />
           </GridListTile>
           {props.yquestions.length > 0 &&
           <ReactSortable
