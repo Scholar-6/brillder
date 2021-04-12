@@ -2107,13 +2107,34 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     opacity: 0;
   }
   .s-fade1 {
-    animation: fadein 1s forwards;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-name: fadein;
   }
   .s-fade2 {
-    animation: fadein 1s 1s forwards;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 1s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-name: fadein;
   }
   .s-fade3 {
-    animation: fadein 1s 2s forwards;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 2s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-name: fadein;
   }
   .like-button {
     font-family: $font-family-bold;
