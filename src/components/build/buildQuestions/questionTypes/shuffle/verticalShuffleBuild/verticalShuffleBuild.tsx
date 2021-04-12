@@ -55,6 +55,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           return <ObservableAnswer
             locked={locked}
             answer={answer}
+            key={i}
             validationRequired={validationRequired}
             index={i} list={list}
             removeFromList={removeFromList}
