@@ -14,7 +14,7 @@ import {
   QuestionTypeEnum,
 } from "model/question";
 import actions from "redux/actions/brickActions";
-import { socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
+import { socketStartEditing } from "redux/actions/socket";
 import { isHighlightInvalid, validateBrick, validateHint, validateQuestions } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
@@ -60,7 +60,6 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
   initSuggestionExpanded: boolean;
   isCurrentEditor: boolean;
   startEditing(brickId: number): void;
-  changeQuestion(questionId?: number): void;
   forgetBrick(): void;
 }
 
@@ -70,7 +69,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const { history } = props;
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
+  const [currentQuestionIndex, setQuestionIndex] = React.useState(0);
+
+  const setCurrentQuestionIndex = (index: number) => {
+    setQuestionIndex(-2);
+    setTimeout(() => {
+      setQuestionIndex(index)
+    }, 200);
+  }
 
   const [lastQuestionDialog, setLastQuestionDialog] = React.useState(false);
   let [locked, setLock] = React.useState(false);
@@ -191,7 +197,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   /* Changing question number by tabs in build */
   const setPrevFromPhone = () => {
     if (currentQuestionIndex >= 1) {
-      setCurrentQuestionIndex(index => index - 1);
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
     } else {
       history.push(routes.buildPlan(brickId));
     }
@@ -200,7 +206,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setNextQuestion = () => {
     let lastIndex = questions.length - 1;
     if (currentQuestionIndex < lastIndex) {
-      setCurrentQuestionIndex(index => index + 1);
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       history.push(routes.buildSynthesis(brickId));
     }
@@ -586,7 +592,6 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   startEditing: (brickId: number) => dispatch(socketStartEditing(brickId)),
-  changeQuestion: (questionId?: number) => dispatch(socketNavigateToQuestion(questionId)),
   forgetBrick: () => dispatch(actions.forgetBrick()),
 });
 
