@@ -61,9 +61,6 @@ export const ProposalOpenQuestion = `${ProposalBase2}/open-question`;
 export const ProposalBrief = `${ProposalBase2}/brief`;
 export const ProposalPrep = `${ProposalBase2}/prep`;
 export const ProposalLength = `${ProposalBase2}/length`;
-export const ProposalReview = `${ProposalBase2}/plan`;
-
-export const ProposalReview2 = `${ProposalBase2}/plan`;
 
 // new brick link
 export const ProposalSubjectLink = `${ProposalBase}/subject`;
@@ -127,8 +124,6 @@ export default {
   ProposalBrief,
   ProposalPrep,
   ProposalLength,
-  ProposalReview,
-  ProposalReview2,
   ProposalSubjectLink,
   ProposalTitleLink,
 

@@ -14,6 +14,7 @@ import { User } from 'model/user';
 import { isMobile } from 'react-device-detect';
 import SpriteIcon from '../SpriteIcon';
 import DesktopVersionDialogV2 from 'components/build/baseComponents/dialogs/DesktopVersionDialogV2';
+import routes from 'components/build/routes';
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -82,11 +83,11 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
         } else if (notification.type === NotificationType.AssignedToEdit) {
           props.forgetBrick();
           await props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
+          history.push(routes.buildPlan(notification.brick.id));
         } else if (notification.type === NotificationType.ReturnedToAuthor) {
           props.forgetBrick();
           await props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
+          history.push(routes.buildPlan(notification.brick.id));
         } else if (notification.type === NotificationType.RemindedToPlayBrick) {
           history.push(map.playIntro(notification.brick.id));
         }
