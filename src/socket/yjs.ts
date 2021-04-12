@@ -58,8 +58,7 @@ export const getYDoc = (history: History, brickId: number, firstName: string, la
                 } catch (e) {
                     console.log("couldn't access ws", e);
                 }
-            }, 1000);
-            // TODO: figure out why this needs to be so long on production??
+            }, 100);
         }
     });
     
