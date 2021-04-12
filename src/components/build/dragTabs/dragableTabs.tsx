@@ -34,6 +34,7 @@ interface DragTabsProps {
   user: User;
   comments: Comment[] | null;
   synthesis: string;
+  locked: boolean;
   isSynthesisPage: boolean;
   validationRequired: boolean;
   tutorialStep: TutorialStep;
@@ -295,7 +296,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           {props.yquestions.length > 0 &&
           <ReactSortable
             key={this.state.sortableId}
-            disabled={true}
+            disabled={this.props.locked}
             list={props.yquestions.map((q: Y.Doc) => ({ id: q.guid }))}
             className="drag-container"
             group="tabs-group"
