@@ -368,7 +368,7 @@ const SubjectPage: React.FC<SubjectProps> = ({
             <div>{subjectName}</div>
           </div>
         </Hidden>
-        <ProposalPhonePreview Component={getInnerComponent()} />
+        <ProposalPhonePreview Component={getInnerComponent()} savedHidden={true} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>
