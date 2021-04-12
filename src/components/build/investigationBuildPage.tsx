@@ -505,7 +505,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                 history={history}
                 brickId={brickId}
                 yquestions={questions}
-                locked={canEdit || locked}
+                locked={!canEdit || locked}
                 currentQuestionIndex={currentQuestionIndex}
                 synthesis={synthesis.toString()}
                 validationRequired={validationRequired}
