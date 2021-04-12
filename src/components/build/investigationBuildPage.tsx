@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Redirect, RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid } from "@material-ui/core";
@@ -22,6 +22,7 @@ import {
   setQuestionTypeByIndex,
   getFirstInvalidQuestion,
   getUniqueComponent,
+  cashBuildQuestion,
 } from "./questionService/QuestionService";
 import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
@@ -54,6 +55,7 @@ import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import service, { getPreviewLink, getQuestionType } from "./services/buildService";
 import QuestionTypePreview from "./baseComponents/QuestionTypePreview";
 import EmptyWorkArea from "./buildQuestions/EmptyWorkArea";
+import { GetCashedBuildQuestion } from "localStorage/buildLocalStorage";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -72,6 +74,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const { history } = props;
 
   const [currentQuestionIndex, setQuestionIndex] = React.useState(0);
+
+  // when user go back from play set cashed question
+  useEffect(() => {
+    const cashedData = GetCashedBuildQuestion();
+    if (cashedData && cashedData.questionNumber >= 0) {
+      setQuestionIndex(cashedData.questionNumber);
+    }
+  }, []);
 
   const setCurrentQuestionIndex = (index: number) => {
     setQuestionIndex(-2);
@@ -352,6 +362,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       if (proposalResult.isValid) {
         const link = getPreviewLink(brickId, isSynthesisPage);
         props.forgetBrick();
+        cashBuildQuestion(brickId, currentQuestionIndex);
         history.push(link);
       } else {
         setProposalInvalidOpen(true);
