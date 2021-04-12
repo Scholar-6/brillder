@@ -53,6 +53,7 @@ import { convertQuestion, toRenderJSON } from "services/SharedTypeService";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import service, { getPreviewLink, getQuestionType } from "./services/buildService";
 import QuestionTypePreview from "./baseComponents/QuestionTypePreview";
+import EmptyWorkArea from "./buildQuestions/EmptyWorkArea";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -431,11 +432,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           />
         </Route>
         <Route path={routes.questionRoute}>
-          {!isQuestionLoading() &&
+          {!isQuestionLoading() ?
           <QuestionPanelWorkArea
             brickId={brickId}
             history={history}
-            isQuestionLoading={isQuestionLoading}
             yquestion={activeQuestion}
             canEdit={canEdit}
             locked={locked}
@@ -451,6 +451,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             undo={undo}
             canRedo={canRedo}
             redo={redo}
+          /> : <EmptyWorkArea
+            setNextQuestion={setNextQuestion}
+            setPrevFromPhone={setPrevFromPhone}
           />}
         </Route>
         <Route path="/build/brick/:brickId/investigation/question">

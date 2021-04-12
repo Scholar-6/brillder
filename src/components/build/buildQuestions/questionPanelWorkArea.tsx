@@ -42,7 +42,6 @@ export interface QuestionProps {
   undo(): void;
   canRedo: boolean;
   redo(): void;
-  isQuestionLoading(): boolean;
   locked: boolean;
 }
 
@@ -64,6 +63,8 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
 
   const question = yquestion.getMap();
 
+  const type = question.get("type");
+  const typeArray: string[] = Object.keys(QuestionTypeObj);
 
   const index = getQuestionIndex(yquestion);
 
@@ -104,40 +105,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   }
   //#endregion
 
-  const isQuestionLoading = props.isQuestionLoading();
-
-  const renderTypeSelect = () => {
-    if (isQuestionLoading) { return ""; }
-
-    const type = question.get("type");
-    const typeArray: string[] = Object.keys(QuestionTypeObj);
-
-    return (
-      <Select
-        className="select-question-type"
-        disabled={true}
-        value={type}
-        inputProps={{
-          name: 'age',
-          id: 'age-native-simple',
-        }}
-        onChange={(e) => {
-          props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
-        }}
-      >
-        {
-          typeArray.map((typeName, i) => {
-            const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
-            return (
-              <MenuItem key={i} value={type}>
-                {SplitByCapitalLetters(typeName)}
-              </MenuItem>
-            )
-          })
-        }
-      </Select>
-    );
-  }
 
   return (
       <div className={showHelpArrow ? "build-question-page unselectable" : "build-question-page unselectable active"} style={{ width: '100%', height: '94%' }}>
@@ -197,7 +164,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             </div>
           </Grid>
           <Grid container item xs={5} sm={6} md={6} className="question-components-list" ref={workarea}>
-            {!isQuestionLoading && <QuestionComponents
+            <QuestionComponents
               questionIndex={index}
               locked={locked}
               editOnly={!props.canEdit}
@@ -206,7 +173,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               question={yquestion}
               validationRequired={validationRequired}
               componentFocus={setFocusIndex}
-            />}
+            />
           </Grid>
           <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
             {!commentsShown &&
@@ -226,24 +193,43 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   <Grid container justify="center" item sm={12} className="select-type-container">
                     <FormControl variant="outlined">
                       {/*Change Answer type here:*/}
-                      {!isQuestionLoading && renderTypeSelect()}
+                      <Select
+                        className="select-question-type"
+                        disabled={true}
+                        value={type}
+                        inputProps={{
+                          name: 'age',
+                          id: 'age-native-simple',
+                        }}
+                        onChange={(e) => {
+                          props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
+                        }}
+                      >
+                        {
+                          typeArray.map((typeName, i) => {
+                            const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
+                            return (
+                              <MenuItem key={i} value={type}>
+                                {SplitByCapitalLetters(typeName)}
+                              </MenuItem>
+                            )
+                          })
+                        }
+                      </Select>
                     </FormControl>
                   </Grid>
                 </Grid>
-                {!isQuestionLoading &&
-                  <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
-                }
+                <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
               </div>
             }
             <Grid className={`question-comments-panel ${!commentsShown && 'hidden'}`} item container direction="row" justify="flex-start" xs>
-              {!isQuestionLoading &&
               <CommentPanel
                 currentLocation={CommentLocation.Question}
                 currentBrick={props.currentBrick}
                 setCommentsShown={setCommentsShown}
                 haveBackButton={true}
                 currentQuestionId={question.get("id")}
-              />}
+              />
             </Grid>
           </Grid>
         </Grid>
@@ -257,7 +243,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
         <CommingSoonDialog isOpen={isCommingSoonOpen} close={() => setCommingSoon(false)} />
         <div className="fixed-build-phone">
           {
-            yquestion && !isQuestionLoading &&
+            yquestion &&
             <PhoneQuestionPreview
               yquestion={question}
               focusIndex={focusIndex}
