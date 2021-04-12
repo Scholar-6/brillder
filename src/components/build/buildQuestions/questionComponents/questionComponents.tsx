@@ -265,7 +265,7 @@ const QuestionComponents = ({
         >
           {
             components.toJSON().map((comp: any, i: number) => (
-              <Grid key={comp.id} container direction="row" className={validateDropBox(comp)}>
+              <Grid key={i} container direction="row" className={validateDropBox(comp)}>
                 {renderDropBox(components.get(i), i)}
               </Grid>
             ))
