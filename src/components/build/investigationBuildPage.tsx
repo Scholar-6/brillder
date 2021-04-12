@@ -185,7 +185,20 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } else if (currentQuestionIndex >= questions.length) {
       setCurrentQuestionIndex(questions.length - 1);
     }
-    return <PageLoader content="...Loading 3..." />;
+    //return <PageLoader content="...Loading 3..." />;
+  }
+
+  const isQuestionLoading = () => {
+    if (_.isEmpty(activeQuestion?.toJSON()) || _.isEmpty(activeQuestion?.getMap()?.toJSON())) {
+      if (questions.length <= 0) {
+        if (!canEdit || locked) { return true; }
+        createQuestion();
+      } else if (currentQuestionIndex >= questions.length) {
+        setCurrentQuestionIndex(questions.length - 1);
+      }
+      return true;
+    }
+    return false;
   }
 
   if (activeQuestion) {
@@ -423,9 +436,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           />
         </Route>
         <Route path={routes.questionRoute}>
+          {!isQuestionLoading() &&
           <QuestionPanelWorkArea
             brickId={brickId}
             history={history}
+            isQuestionLoading={isQuestionLoading}
             yquestion={activeQuestion}
             canEdit={canEdit}
             locked={locked}
@@ -441,10 +456,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             undo={undo}
             canRedo={canRedo}
             redo={redo}
-          />
+          />}
         </Route>
         <Route path="/build/brick/:brickId/investigation/question">
-          {renderQuestionComponent}
+          {!isQuestionLoading() && renderQuestionComponent()}
         </Route>
         <Route path={routes.synthesisRoute}>
           <SynthesisPage
