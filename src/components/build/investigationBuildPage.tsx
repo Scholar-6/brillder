@@ -52,6 +52,7 @@ import { YJSContext } from "./baseComponents/YJSProvider";
 import { convertQuestion, toRenderJSON } from "services/SharedTypeService";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import service, { getPreviewLink, getQuestionType } from "./services/buildService";
+import QuestionTypePreview from "./baseComponents/QuestionTypePreview";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -382,15 +383,19 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const renderQuestionComponent = () => {
-    if (!isTutorialPassed()) {
+    if (!activeQuestion) {
       return (
-        <TutorialWorkArea
-          brickId={brickId}
-          step={step}
-          setStep={setStep}
-          user={props.user}
-          skipTutorial={() => skipTutorial(true)}
-        />
+        <div className="question-type">
+          <div className="inner-question-type">
+          </div>
+          <div className="fixed-build-phone">
+          <QuestionTypePreview
+            hoverQuestion={QuestionTypeEnum.None}
+            nextQuestion={setNextQuestion}
+            prevQuestion={setPrevFromPhone}
+          />
+          </div>
+        </div>
       );
     }
     const type = getQuestionType(activeQuestion);
@@ -409,16 +414,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const isTutorialPassed = () => {
     return true;
-    /*
-    const isCurrentEditor = (props.reduxBrick.editors?.findIndex((e: any) => e.id === props.user.id) ?? -1) >= 0;
-
-    if (isCurrentEditor || props.user.tutorialPassed || tutorialSkipped || questions.length > 1) {
-      return true;
-    }
-    if (questions.get(0)?.getMap() && questions.get(0)?.getMap().get("type") !== QuestionTypeEnum.None) {
-      return true;
-    }
-    return false;*/
   }
 
   const renderPanel = () => {
@@ -459,7 +454,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           />}
         </Route>
         <Route path="/build/brick/:brickId/investigation/question">
-          {!isQuestionLoading() && renderQuestionComponent()}
+          {renderQuestionComponent()}
         </Route>
         <Route path={routes.synthesisRoute}>
           <SynthesisPage
