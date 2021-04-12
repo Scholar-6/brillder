@@ -67,7 +67,7 @@ const YJSProvider: React.FC<YJSProviderProps> = props => {
             })
         });
 
-        const newUndoManager = new Y.UndoManager(newYDoc.getMap("brick"), { captureTimeout: 200 });
+        const newUndoManager = new Y.UndoManager(newYDoc.getMap("brick"), { captureTimeout: 200, trackedOrigins: new Set([null]) });
 
         setYdoc(newYDoc);
         setAwareness(newAwareness);
