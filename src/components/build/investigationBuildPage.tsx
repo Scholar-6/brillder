@@ -340,6 +340,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const moveToInvalidProposal = () => {
     history.push(routes.buildPlan(brickId));
+    setProposalInvalidOpen(false);
   }
 
   const submitInvalidBrick = () => {
