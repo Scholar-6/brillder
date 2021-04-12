@@ -339,7 +339,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const moveToInvalidProposal = () => {
-    history.push(proposalResult.url);
+    history.push(routes.buildPlan(brickId));
   }
 
   const submitInvalidBrick = () => {
@@ -504,7 +504,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                 history={history}
                 brickId={brickId}
                 yquestions={questions}
-                locked={locked}
+                locked={canEdit || locked}
                 currentQuestionIndex={currentQuestionIndex}
                 synthesis={synthesis.toString()}
                 validationRequired={validationRequired}
