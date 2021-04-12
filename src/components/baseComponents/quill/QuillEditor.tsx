@@ -154,7 +154,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
             }
         }
     /*eslint-disable-next-line*/
-    }, [props.sharedData]);
+    }, []);
 
     const valid = (!props.validate || (
         ((data?.trim().length || props.sharedData?.toString().trim().length) ?? "") > 0 && (props.isValid !== false)
