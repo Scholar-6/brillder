@@ -125,7 +125,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     }
 
     return (
-      <div key={index} className={className} style={{ width: `${width}%` }}>
+      <div key={index} className={className}>
         {this.renderCkeditor(index)}
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}

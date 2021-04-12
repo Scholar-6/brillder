@@ -571,6 +571,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             position: absolute;
             top: 0;
             width: 100%;
+            padding-left: 8vw !important;
+            padding-right: 8vw !important;
             height: calc(100vh - #{$home-button-size} - #{$sorted-row-margin-top});
             // overflow: hidden;
             .question-title {

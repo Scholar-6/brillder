@@ -149,7 +149,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const createQuestion = () => {
     const newQuestion = convertQuestion(getNewQuestion(QuestionTypeEnum.None, false))
-    questions.push([newQuestion]);
+    questions.doc!.transact(() => {
+      questions.push([newQuestion]);
+    }, "no-undo");
     setCurrentQuestionIndex(questions.length - 1);
   }
 

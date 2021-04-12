@@ -96,7 +96,9 @@ export function getApiQuestion(question: Question) {
 
 export function removeQuestionByIndex(questions: Y.Array<Y.Doc>, index: number) {
   questions.get(index).destroy();
-  questions.delete(index);
+  questions.doc!.transact(() => {
+    questions.delete(index);
+  }, "no-undo");
 }
 
 const defaultFunctions: { [key in QuestionTypeEnum]?: (ymap: Y.Map<any>) => void } = {

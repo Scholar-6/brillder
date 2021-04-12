@@ -12,7 +12,7 @@
 
 $play-mobile-height: calc(100vh - 60px - 87px - 20vw) !important;
 $height: 20vw;
-$play-footer-height: 75px;
+$play-footer-height: 20vw;
 
 .play-preview-pages {
   // only ending page scroll fix
@@ -252,7 +252,11 @@ $play-footer-height: 75px;
       height: $back-to-work-height-mobile-view;
       transition: 700ms width;
       .brick-container {
-        height: calc(100% - #{$mobile-menu-height}) !important;
+        height: calc(100% - #{$mobile-menu-height} - #{$progress-bar-height}) !important;
+        &.mobile-provisional-score {
+          height: calc(100% - #{$mobile-menu-height}) !important;
+        }
+
         // overflow-y: auto;
         .MuiGrid-container {
           display: flex;
@@ -839,7 +843,7 @@ $play-footer-height: 75px;
               .introduction-content {
                 .question-live-play {
                   overflow: hidden;
-                  height: calc(100vh - 17vh - #{$play-footer-height});
+                  height: calc(100vh - 17vh - 100vh - 60px - 87px - 20vw);
                 }
               }
             }
@@ -1305,7 +1309,7 @@ $play-footer-height: 75px;
     position: absolute;
     bottom: 0;
     background: var(--tab-gray);
-    height: $play-footer-height;
+    height: $mobile-menu-height;
     width: 100%;
     > div {
       display: flex;
@@ -1474,7 +1478,12 @@ $play-footer-height: 75px;
 }
 // introduction flex box
 .real-introduction-page {
-  height: calc(100vh - #{$play-footer-height}) !important;
+  // have progress bar
+  height: calc(100vh - #{$play-footer-height} - #{$progress-bar-height}) !important;
+  &.brief-only {
+    // this one have don`t have progress bar
+    height: calc(100vh - #{$play-footer-height}) !important;
+  }
   .brick-container {
     height: 100% !important;
   }
@@ -1556,7 +1565,7 @@ $play-footer-height: 75px;
 .play-preview-pages .sorted-row .cover-page {
   color: var(--theme-dark-blue);
   overflow-y: auto;
-  height: calc(100% - 20vw) !important;
+  height: calc(100% - #{$mobile-menu-height} - #{$progress-bar-height}) !important;
   
   padding-top: 4vw;
   padding-left: 4vw;
@@ -1747,3 +1756,4 @@ $play-footer-height: 75px;
 .play-preview-pages .ql-video {
   width: 100%;
 }
+
