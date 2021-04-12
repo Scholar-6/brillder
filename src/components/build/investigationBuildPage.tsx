@@ -78,10 +78,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   // when user go back from play set cashed question
   useEffect(() => {
     const cashedData = GetCashedBuildQuestion();
-    if (cashedData && cashedData.questionNumber >= 0) {
+    // check if brick is the same
+    if (cashedData && cashedData.brickId === brickId && cashedData.questionNumber >= 0) {
       setQuestionIndex(cashedData.questionNumber);
     }
-  }, []);
+  }, [brickId]);
 
   const setCurrentQuestionIndex = (index: number) => {
     setQuestionIndex(-2);

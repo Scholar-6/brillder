@@ -31,6 +31,7 @@ import FinalStep from './finalStep/FinalStep';
 import { calcBrickLiveAttempt, calcBrickReviewAttempt } from 'components/play/services/scoring';
 import routes from './routes';
 import NewPrep from 'components/play/newPrep/NewPrep';
+import { cashBuildQuestion } from 'components/build/questionService/QuestionService';
 
 
 export interface BrickAttempt {
