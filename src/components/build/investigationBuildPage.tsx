@@ -149,7 +149,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const createQuestion = () => {
     const newQuestion = convertQuestion(getNewQuestion(QuestionTypeEnum.None, false))
-    questions.push([newQuestion]);
+    questions.doc!.transact(() => {
+      questions.push([newQuestion]);
+    }, "no-undo");
     setCurrentQuestionIndex(questions.length - 1);
   }
 
@@ -337,7 +339,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const moveToInvalidProposal = () => {
-    history.push(proposalResult.url);
+    history.push(routes.buildPlan(brickId));
+    setProposalInvalidOpen(false);
   }
 
   const submitInvalidBrick = () => {
@@ -502,6 +505,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                 history={history}
                 brickId={brickId}
                 yquestions={questions}
+                locked={!canEdit || locked}
                 currentQuestionIndex={currentQuestionIndex}
                 synthesis={synthesis.toString()}
                 validationRequired={validationRequired}

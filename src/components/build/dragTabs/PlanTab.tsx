@@ -5,6 +5,7 @@ import routes from 'components/build/routes';
 
 export interface PlanTabProps {
   brickId: number;
+  isActive: boolean;
   history: any;
 }
 
@@ -14,7 +15,7 @@ const PlanTab: React.FC<PlanTabProps> = (props) => {
       props.history.push(routes.buildPlan(props.brickId))
     }}>
       <div className="svgOnHover add-tab last-tab">
-        <SpriteIcon name="feather-map" className="w100 h100 active text-theme-dark-blue"/>
+        <SpriteIcon name="feather-map" className={`w100 h100 active ${props.isActive ? 'text-theme-dark-blue' : 'text-dark-gray'}`}/>
       </div>
     </Grid>
   );

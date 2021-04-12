@@ -1,7 +1,15 @@
 import axios from 'axios';
 
+function extractContent(s: string) {
+  var span = document.createElement('span');
+  span.innerHTML = s;
+  return span.textContent || span.innerText;
+};
 
 export function fileUrl(fileName: string) {
+  if (fileName && typeof fileName === "string" && fileName.slice(0, 3) === '<p>') {
+    fileName = extractContent(fileName);
+  }
   return `${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`;
 }
 

@@ -73,34 +73,11 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, baseUrl, 
     );
   }
 
-  const renderButtonsContainer = () => {
-    if (playStatus !== PlayButtonStatus.Hidden) {
-      return (
-        <div className="navigation-container">
-          <div className="play-preview-button-container">
-            <PlayButton
-              isValid={playStatus === PlayButtonStatus.Valid}
-              tutorialStep={-1}
-              isTutorialSkipped={true}
-              onClick={props.saveAndPreview}
-            />
-          </div>
-          <div className="navigation-left">
-            {renderButtons()}
-          </div>
-        </div>
-      );
-    }
-    return (
+  return (
+    <Hidden only={['xs', 'sm']}>
       <div className="navigation-container">
         {renderButtons()}
       </div>
-    );
-  }
-
-  return (
-    <Hidden only={['xs', 'sm']}>
-      {renderButtonsContainer()}
     </Hidden>
   );
 }

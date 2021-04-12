@@ -194,7 +194,8 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   isStudentCompleted(studentStatus: StudentStatus[]) {
     return !(!studentStatus || studentStatus.length !== 1 || studentStatus[0].status <= 0)
   }
-
+  
+  // TODO: fix this span
   renderStudentStatus() {
     if (!this.props.isStudent) { return <div /> }
     const { studentStatus } = this.props.assignment;
@@ -203,7 +204,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
     return (
       <div className="status-text-centered">
-        Completed
+        Completed {/*<span className="bold">Final Score: X</span>*/}
       </div>
     );
   }

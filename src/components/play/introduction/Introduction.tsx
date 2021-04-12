@@ -334,7 +334,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   };
 
   return (
-    <div className="brick-row-container real-introduction-page">
+    <div className={`brick-row-container real-introduction-page ${!state.prepExpanded && 'brief-only'}`}>
       <div className="brick-container">
         <Hidden only={["xs"]}>
           <Grid container direction="row">

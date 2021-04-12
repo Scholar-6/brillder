@@ -571,6 +571,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             position: absolute;
             top: 0;
             width: 100%;
+            padding-left: 8vw !important;
+            padding-right: 8vw !important;
             height: calc(100vh - #{$home-button-size} - #{$sorted-row-margin-top});
             // overflow: hidden;
             .question-title {
@@ -2128,6 +2130,34 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       color: var(--theme-dark-blue);
       background: var(--tab-gray);
       animation: greyToOrange 0.5s linear 2s 1 normal forwards;
+    }
+  }
+}
+
+// synthesis
+.sorted-row {
+  .synthesis-content {
+    overflow-y: auto;
+    width: 48vw;
+    height: calc(100vh - 12vh - 2vw - #{$page-head-height});
+    
+    ul, li, ol {
+      font-size: 1.25vw;
+    }
+
+    blockquote {
+      border-left: 0.3vw solid var(--tab-gray);
+      padding-left: 1.8vw;
+    }
+
+    table {
+      color: var(--theme-dark-blue);
+      @include phone_and_tabletP {
+        font-size: 3.5vw;
+      }
+      @include tabletP {
+        font-size: $base-build-font-size;
+      }
     }
   }
 }

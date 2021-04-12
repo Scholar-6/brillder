@@ -275,6 +275,13 @@ $tile-height: 100%;
       .svg {
         stroke-width: 3;
       }
+      &:hover {
+        .svg {
+          opacity: 0.5;
+          color: var(--theme-dark-blue) !important;
+        }
+      }
+
     }
     .drag-tile.invalid {
       background: #f43c30 !important;
@@ -336,4 +343,18 @@ $tile-height: 100%;
 // plan tab
 .drag-tabs .drag-tile-container.plan-tab {
   margin-right: 2px;
+  .svg {
+    color: var(--dark-gray);
+  }
+  &.active {
+    .svg {
+      color: var(--theme-dark-blue) !important;
+    }
+  }
+  .last-tab:hover {
+    .svg {
+      opacity: 0.5 !important;
+      color: var(--theme-dark-blue) !important;
+    }
+  }
 }

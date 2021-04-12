@@ -6,6 +6,7 @@ import CommentIndicator from "../baseComponents/CommentIndicator";
 
 export interface SynthesisTabProps {
   columns: number;
+  isActive: boolean;
   synthesis: string;
   validationRequired: boolean;
   tutorialStep: TutorialStep;
@@ -35,7 +36,7 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
     >
       <CommentIndicator replyType={replyType} />
       <div className={`last-tab svgOnHover ${className}`}>
-        <SpriteIcon name="list-custom" className="svg w100 h100 active text-theme-dark-blue" />
+        <SpriteIcon name="list-custom" className={`svg w100 h100 active ${props.isActive ? 'text-theme-dark-blue' : 'text-dark-gray'}`} />
       </div>
     </Grid>
   );

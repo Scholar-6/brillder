@@ -1,4 +1,5 @@
 import { ImageAlign, ImageComponentData } from 'components/build/buildQuestions/components/Image/model';
+import { fileUrl } from 'components/services/uploadFile';
 import React from 'react';
 
 import './ImageLive.scss';
@@ -24,10 +25,10 @@ const ImageLive: React.FC<ImageProps> = ({ component, refs }) => {
         <div className="image-play-container">
           <img
             alt="play" className="image-play"
-            src={`${process.env.REACT_APP_BACKEND_HOST}/files/${component.value}`}
+            src={fileUrl(component.value)}
             style={{height}}
           />
-          {component.imageCaption && <figcaption className="image-caption">{component.imageCaption}</figcaption>}
+          {component.imageCaption && <figcaption className="image-caption" dangerouslySetInnerHTML={{__html: component.imageCaption}} />}
         </div>
       </div>
     );
