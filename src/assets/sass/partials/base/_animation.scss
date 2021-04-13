@@ -19,3 +19,8 @@
   -o-animation: $animation1, $animation2;
   animation: $animation1, $animation2;
 }
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
