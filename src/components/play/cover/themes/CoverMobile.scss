@@ -74,6 +74,7 @@
   .image-container {
     margin-left: 2vw;
     margin-right: 2vw;
+    width: calc(100% - 2vw);
     position: relative;
     .cover-info-row {
       position: absolute;
