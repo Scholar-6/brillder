@@ -3,6 +3,7 @@ import React from "react";
 interface State {
   seconds: number;
   interval: number;
+  isApearing: boolean;
 }
 
 interface Props {
@@ -15,7 +16,8 @@ class SecondsCountDown extends React.Component<Props, State> {
 
     this.state = {
       seconds: 3,
-      interval: -1
+      interval: -1,
+      isApearing: true,
     }
   }
 
@@ -26,9 +28,10 @@ class SecondsCountDown extends React.Component<Props, State> {
         clearInterval(this.state.interval);
         this.setState({seconds: -1});
       } else {
-        this.setState({seconds: this.state.seconds - 1})
+        this.setState({isApearing: false});
+        setTimeout(() => this.setState({seconds: this.state.seconds - 1, isApearing: true}), 400);
       }
-    }, 1000);
+    }, 1500);
     this.setState({interval});
   }
 
@@ -38,7 +41,7 @@ class SecondsCountDown extends React.Component<Props, State> {
 
   render() {
     return (
-      <div className="seconds-countdown-container">
+      <div className={`seconds-countdown-container ${this.state.isApearing ? 'fadein' : 'fadeout'}`}>
         {this.state.seconds === 0 ? 'GO!' : this.state.seconds}
       </div>
     );

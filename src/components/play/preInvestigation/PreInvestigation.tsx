@@ -7,9 +7,8 @@ import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
-import { getSynthesisTime } from "../services/playTimes";
+import { getLiveTime } from "../services/playTimes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
-import TypingLabel from "components/baseComponents/TypingLabel";
 import { User } from "model/user";
 
 interface Props {
@@ -42,9 +41,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
   if (isMoving) {
     return (
       <div className="brick-row-container live-container">
-        <div className="fixed-upper-b-title">
-          {brick.title}
-        </div>
+        <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
         <div className="brick-container play-preview-panel live-page after-cover-page">
           <div className="introduction-page">
             <SecondsCountDown onEnd={props.moveNext} />
@@ -54,20 +51,18 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
     );
   }
 
-  const minutes = getSynthesisTime(brick.brickLength);
+  const minutes = getLiveTime(brick.brickLength);
 
   return (
     <div className="brick-row-container live-container">
-      <div className="fixed-upper-b-title">
-        {brick.title}
-      </div>
-      <div className="brick-container play-preview-panel live-page after-cover-page pre-investigation">
+      <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
+      <div className="brick-container play-preview-panel live-page after-cover-page pre-investigation animate-fade">
         <div className="introduction-page">
           <div className="after-cover-main-content">
-            <div className="title">
-              <TypingLabel label="Time for some questions." onEnd={() => {}} />
+            <div className="title s-fade1">
+              Time for some questions.
             </div>
-            <div className="like-buttons-container">
+            <div className="like-buttons-container s-fade2">
               <div className="x-center">
                 <div className="like-button">Preparation</div>
               </div>
@@ -78,7 +73,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="like-button">Review</div>
               </div>
             </div>
-            <div className="footer">
+            <div className="footer s-fade3">
               You have<span className="underline-border"> {minutes} minutes </span>to complete the investigation. Once time is up, you will get a provisional score.
             </div>
           </div>
@@ -99,10 +94,10 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
         {props.user &&
         <div className="fixed-helpers-container">
           <div className="circles">
-            <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg"  />
-          </div>
-          <div className="prep">
-            Click here to go back to Prep tasks
+            <div className="prep">
+              <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg" />
+              <span>Click here to go back to Prep tasks</span>
+            </div>
           </div>
         </div>}
       </div>
