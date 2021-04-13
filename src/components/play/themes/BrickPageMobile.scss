@@ -105,29 +105,6 @@ $new-play-height: calc(100vh - #{$play-footer-height} - #{$progress-bar-height})
           .brick-counter {
             right: 4vw;
           }
-          .play-clock {
-            left: 4vw;
-            margin: 0;
-            .clock-image {
-              width: 5vw;
-              height: 5vw;
-            }
-            .clock {
-              display: flex;
-              align-items: center;
-              min-width: 6vw;
-
-              .clock-image {
-                width: 2vw;
-                height: 2vw;
-              }
-            }
-            .counter {
-              .counter-seconds {
-                font-size: 1vw;
-              }
-            }
-          }
           .phone-stepper-head {
             text-align: left;
             font-size: 6vw;
@@ -633,6 +610,17 @@ $new-play-height: calc(100vh - #{$play-footer-height} - #{$progress-bar-height})
         }
         &.provisional-score-page,
         &.ending-page {
+          .introduction-content {
+            height: 100% !important;
+            .question-live-play {
+              height: 100% !important;
+
+              .p-help-text {
+                position: fixed;
+                bottom: calc(#{$mobile-menu-height} + 3vw);
+              }
+            }
+          }
         }
         &.live-page,
         &.synthesis-page,
