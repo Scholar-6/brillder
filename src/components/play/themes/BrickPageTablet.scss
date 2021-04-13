@@ -1880,14 +1880,24 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 
+
 // seconds count down
 .play-preview-pages .sorted-row .brick-row-container .brick-container .seconds-countdown-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  font-size: 30vh;
+  font-size: 36vh;
   font-family: $font-family-bold;
+  opacity: 0;
+  &.fadein {
+    opacity: 0;
+    animation: fadein 500ms linear 0s forwards;
+  }
+  &.fadeout {
+    opacity: 1;
+    animation: fadeout 150ms linear 0s forwards;
+  }
 }
 
 .underline-border {
