@@ -86,11 +86,11 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
         } else if (notification.type === NotificationType.AssignedToEdit) {
           this.props.forgetBrick();
           await this.props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
+          history.push(map.Proposal(notification.brick.id));
         } else if (notification.type === NotificationType.ReturnedToAuthor) {
           this.props.forgetBrick();
           await this.props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
+          history.push(map.Proposal(notification.brick.id));
         } else if (notification.type === NotificationType.RemindedToPlayBrick) {
           history.push(map.playIntro(notification.brick.id));
         }

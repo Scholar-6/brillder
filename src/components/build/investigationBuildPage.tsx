@@ -314,7 +314,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setQuestions(update(questions, { $set: updatedQuestions }));
     } else {
       saveBrick();
-      history.push(map.ProposalReview);
+      history.push(map.Proposal(brickId));
     }
   };
 

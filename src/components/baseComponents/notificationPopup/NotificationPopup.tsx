@@ -82,11 +82,11 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
         } else if (notification.type === NotificationType.AssignedToEdit) {
           props.forgetBrick();
           await props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
+          history.push(map.Proposal(notification.brick.id));
         } else if (notification.type === NotificationType.ReturnedToAuthor) {
           props.forgetBrick();
           await props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
+          history.push(map.Proposal(notification.brick.id));
         } else if (notification.type === NotificationType.RemindedToPlayBrick) {
           history.push(map.playIntro(notification.brick.id));
         }

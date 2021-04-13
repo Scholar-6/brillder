@@ -303,9 +303,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
             </Grid>
             <Grid item xs={4}>
               <div className="introduction-info">
-                <div className="intro-header">
-                  <Clock brickLength={brick.brickLength} />
-                </div>
                 <div className="intro-text-row">
                 </div>
                 <ExitButton onClick={() =>
