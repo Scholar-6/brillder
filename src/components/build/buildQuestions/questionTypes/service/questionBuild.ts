@@ -11,3 +11,5 @@ export function showSameAnswerPopup(i: number, list: any, openSameAnswerDialog: 
     }
   }
 }
+
+export const generateId = () => Math.floor(Math.random() * 8192);
