@@ -1,7 +1,9 @@
 import { Delta } from "quill";
 import { Quill } from "react-quill";
 
+/*eslint-disable-next-line*/
 const YOUTUBE_REGEXP = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?[\w\?=]*)?/g;
+/*eslint-disable-next-line*/
 const EMBED_REGEXP = /https:\/\/www.youtube.com\/embed\/([\w\-\_]*)/;
 
 const BlockEmbed = Quill.import("blots/block/embed");
@@ -23,18 +25,18 @@ class YoutubeEmbed extends BlockEmbed {
     }
 }
 YoutubeEmbed.blotName = 'youtube';
-YoutubeEmbed.tagName= 'iframe';
+YoutubeEmbed.tagName = 'iframe';
 Quill.register(YoutubeEmbed, true);
 
 export default class MediaEmbed {
     constructor(quill: Quill) {
         quill.clipboard.addMatcher(Node.TEXT_NODE, (node: any, delta: Delta) => {
             const matches: string[] = Array.from(node.data.matchAll(YOUTUBE_REGEXP));
-            if(matches && matches.length > 0) {
+            if (matches && matches.length > 0) {
                 console.log(matches);
                 const ops = [];
                 let str: string = node.data;
-                for(const match of matches) {
+                for (const match of matches) {
                     const split = str.split(match[0]);
                     const beforeLink = split.shift();
                     ops.push({ insert: beforeLink });

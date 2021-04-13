@@ -1,5 +1,4 @@
 import React from 'react'
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
 import './SynthesisPage.scss';
 import { Grid } from '@material-ui/core';
@@ -123,6 +122,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 disabled={this.props.locked}
                 data={this.state.synthesis}
                 onChange={this.onSynthesisChange.bind(this)}
+                showToolbar={true}
                 toolbar={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
                   'latex', 'bulletedList', 'numberedList', 'blockQuote'
