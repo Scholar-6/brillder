@@ -41,16 +41,14 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="brick-row-container live-container">
-      <div className="fixed-upper-b-title">
-        {brick.title}
-      </div>
-      <div className="brick-container play-preview-panel live-page after-cover-page pre-synthesis">
+      <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
+      <div className="brick-container play-preview-panel live-page after-cover-page pre-synthesis animate-fade">
         <div className="introduction-page">
           <div className="after-cover-main-content">
-            <div className="title">
-              <TypingLabel label="Deepen your understanding." onEnd={() => {}} />
+            <div className="title s-fade1">
+              Deepen your understanding.
             </div>
-            <div className="like-buttons-container">
+            <div className="like-buttons-container s-fade2">
               <div className="x-center">
                 <div className="like-button">Preparation</div>
               </div>
@@ -61,8 +59,8 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="like-button">Review</div>
               </div>
             </div>
-            <div className="footer">
-              Spend about<span className="underline-border"> 4 minutes </span>on this stage before reviewing your answers to improve your score.
+            <div className="footer s-fade3">
+              Spend about<span className="underline-border"> {minutes} minutes </span>on this stage before reviewing your answers to improve your score.
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
