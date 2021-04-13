@@ -103,7 +103,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
           </div>
         </Grid>
         <div className="p-help-text">
-          Learn more about this topic by reading an<span className="underline-border"> academic summary </span>by the author.
+          Now read the author's synthesis to deepen your understanding of the topic.
         </div>
       </div>
     );
