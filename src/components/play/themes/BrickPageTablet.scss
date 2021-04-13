@@ -491,14 +491,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             @extend %transitionAll600;
             margin-bottom: 2vh;
           }
-          .start-brick-button {
-            margin-right: 0px;
-            > span {
-              font-family: $font-family-regular;
-              font-size: 25px;
-              margin-right: 10px;
-            }
-          }
           h1,
           p,
           ul,

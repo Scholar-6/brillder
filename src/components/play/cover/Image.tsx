@@ -6,6 +6,7 @@ import { fileUrl, uploadFile } from 'components/services/uploadFile';
 import ImageCloseDialog from 'components/build/buildQuestions/components/Image//ImageCloseDialog';
 import ImageCoverDialog from './ImageCoverDialog';
 import { ImageCoverData } from './model';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface ImageProps {
   locked: boolean;
@@ -85,7 +86,7 @@ const ImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
         {
           fileName
             ? <img alt="" style={{ width: '100%' }} src={fileUrl(fileName)} />
-            : <img alt="" style={{ width: '100%' }} src="/images/cover-book.png" />
+            : <SpriteIcon name="image" />
         }
       </div>
       <ImageCoverDialog

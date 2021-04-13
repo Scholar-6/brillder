@@ -2,17 +2,13 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-$base-font-size: 1.25vw;
+$base-font-size: 1.4vw;
 $expanded-intro-padding: 2vw;
 $introduction-desktop-height: calc(100vh - #{$expanded-intro-padding} - #{$page-head-height});
 $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
 .MuiExpansionPanelDetails-root {
   padding-top: 0 !important;
-
-  .MuiTypography-root {
-    font-size: 0.8vw;
-  }
 }
 
 .sorted-row.sorted-row-expanded {
@@ -486,9 +482,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           height: calc(100vh - 15.8vh);
           padding: 3vh 2vw 4vh 7vw;
           .title {
-            @include desktop {
-              font-size: 4vw;
-            }
+            font-size: 4vw;
           }
           p {
             font-size: $base-font-size !important;
@@ -496,14 +490,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           .intro-header {
             @extend %transitionAll600;
             margin-bottom: 2vh;
-          }
-          .start-brick-button {
-            margin-right: 0px;
-            > span {
-              font-family: $font-family-regular;
-              font-size: 25px;
-              margin-right: 10px;
-            }
           }
           h1,
           p,
@@ -2163,7 +2149,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     height: calc(100vh - 12vh - 2vw - #{$page-head-height});
     
     ul, li, ol {
-      font-size: 1.25vw;
+      font-size: $base-font-size;
     }
 
     blockquote {
@@ -2173,12 +2159,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
     table {
       color: var(--theme-dark-blue);
-      @include phone_and_tabletP {
-        font-size: 3.5vw;
-      }
-      @include tabletP {
-        font-size: $base-build-font-size;
-      }
     }
   }
 }
