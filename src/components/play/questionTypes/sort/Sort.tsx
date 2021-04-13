@@ -13,8 +13,8 @@ import {SortCategory, SortAnswer, QuestionValueType} from 'components/interfaces
 import { DragAndDropStatus } from '../pairMatch/interface';
 
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
-import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { getValidationClassName } from '../service';
+import MathInHtml from 'components/play/baseComponents/MathInHtml';
 
 
 interface UserCategory {
@@ -32,7 +32,7 @@ interface SortProps extends CompQuestionProps {
   question: Question;
   component: SortComponent;
   attempt: ComponentAttempt<any>;
-  answers: number;
+  answers: any;
   isPreview?: boolean;
 }
 
@@ -72,7 +72,19 @@ class Sort extends CompComponent<SortProps, SortState> {
       this.prepareChoices(userCats);
     }
 
+    // this is bad but it fixed issue. input answers should not be array.
+    if (props.answers && props.answers.length !== 0) {
+      this.diselectChoices(userCats);
+      this.prepareChoices(userCats);
+    }
+
     this.state = { status: DragAndDropStatus.None, userCats, choices: this.getChoices() };
+  }
+
+  diselectChoices(userCats: UserCategory[]) {
+    for (let category of userCats) {
+      category.choices = [];
+    }
   }
 
   componentDidUpdate(prevProp: SortProps) {
@@ -118,6 +130,10 @@ class Sort extends CompComponent<SortProps, SortState> {
     }
   }
 
+  /**
+   * When user selected choices in question and go back to this question.
+   * move choices in exact positions user drag them in.
+   */
   prepareChoices(userCats: UserCategory[]) {
     const {answer} = this.props.attempt;
     Object.keys(answer).forEach(value => {
@@ -207,7 +223,7 @@ class Sort extends CompComponent<SortProps, SortState> {
         />
       );
     }
-    return <div dangerouslySetInnerHTML={{ __html: choice.text}} />;
+    return <MathInHtml value={choice.text} />;
   }
 
   renderChoice(choice: SortAnswer, i: number, choiceIndex: number) {
@@ -231,7 +247,7 @@ class Sort extends CompComponent<SortProps, SortState> {
         <ListItem className="sort-choice-custom">
           <ListItemText>
             {this.renderChoiceContent(choice)}
-            {this.props.isReview || this.props.isPreview ?
+            {(this.props.isReview || this.props.isPreview) &&
               <ReviewEachHint
                 isPhonePreview={this.props.isPreview}
                 isReview={this.props.isReview}
@@ -239,7 +255,6 @@ class Sort extends CompComponent<SortProps, SortState> {
                 index={choiceIndex}
                 hint={this.props.question.hint}
               />
-              : ""
             }
           </ListItemText>
         </ListItem>
@@ -257,7 +272,9 @@ class Sort extends CompComponent<SortProps, SortState> {
         {
           this.state.userCats.map((cat, i) => (
             <div key={i}>
-              <div className="sort-category" dangerouslySetInnerHTML={{ __html: cat.name}} />
+              <div className="sort-category">
+                <MathInHtml value={cat.name} />
+              </div>
               <div className="sort-category-list-container">
                 {this.props.isBookPreview ? (
                   <div className="sortable-list">
@@ -284,12 +301,7 @@ class Sort extends CompComponent<SortProps, SortState> {
             </div>
           ))
         }
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }

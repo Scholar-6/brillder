@@ -10,8 +10,12 @@ import { login } from "services/axios/auth";
 import LoginLogo from './components/LoginLogo';
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import WrongLoginDialog from "./components/WrongLoginDialog";
-import DesktopLoginForm from "./components/DesktopLoginForm";
+import DesktopLoginForm from "./desktop/DesktopLoginForm";
 import MobileEmailLogin from './MobileEmailLogin';
+import TermsLink from "components/baseComponents/TermsLink";
+import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
+import { trackSignUp } from "services/matomo";
+import { isPhone } from "services/phone";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -111,6 +115,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       }
 
       if (data === "OK") {
+        trackSignUp();
         sendLogin(email, password);
       }
     }).catch((e) => {
@@ -118,6 +123,10 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       setAlertMessage("Connection problem");
     });
   };
+
+  if (!isPhone()) {
+    return <EmailLoginDesktopPage history={props.history} match={props.match} />
+  }
 
   return (
     <Grid
@@ -153,9 +162,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
           </Grid>
           <Grid container direction="row" className="third-row">
             <div className="first-col"></div>
-            <div className="second-col">
-              <span className="policy-text" onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
-            </div>
+            <TermsLink history={props.history}/>
             <div className="third-col"></div>
           </Grid>
         </div>

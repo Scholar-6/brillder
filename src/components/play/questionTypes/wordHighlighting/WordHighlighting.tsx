@@ -4,7 +4,6 @@ import "./WordHighlighting.scss";
 import CompComponent from "../Comp";
 import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/model";
-import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 import { PlayWord, IPlayWordComponent } from 'components/interfaces/word';
 
 interface WordHighlightingProps extends CompQuestionProps {
@@ -63,6 +62,11 @@ class WordHighlighting extends CompComponent<
   }
 
   renderWordPreview(word: PlayWord, index: number) {
+    // don`t show spaces
+    if (word.notSelectable && !word.isBreakLine) {
+      return <span />;
+    }
+  
     return (
       <span key={index} className={word.checked ? "correct word" : "word"}>
         {word.text}
@@ -74,7 +78,17 @@ class WordHighlighting extends CompComponent<
     if (this.props.isPreview) {
       return this.renderWordPreview(word, index);
     }
+    
     let className = "word";
+
+    if (this.props.isDefaultBook) {
+      return (
+        <span key={index} className={className}>
+          {word.text}
+          {word.isBreakLine ? <br/> : ""}
+        </span>
+      );
+    }
     
     if (word.selected) {
       className += " active";
@@ -97,6 +111,11 @@ class WordHighlighting extends CompComponent<
       } else {
         className += " wrong";
       }
+    }
+
+    // don`t show spaces
+    if (word.notSelectable && !word.isBreakLine) {
+      return <span />;
     }
 
     return (
@@ -137,16 +156,11 @@ class WordHighlighting extends CompComponent<
     return (
       <div className="question-unique-play word-highlighting-play">
         <p><span className="help-text">Click to highlight.</span></p>
-        <div className={`words-container ${this.props.isPreview && 'preview'} ${!component.isPoem && 'break-lines'}`}>
+        <div className={`words-container ${this.props.isPreview && 'preview'} ${!component.isPoem ? 'break-lines' : 'lines-inline'}`}>
           {this.getWords()}
         </div>
         <br/>
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }

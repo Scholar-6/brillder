@@ -147,7 +147,6 @@ const defaultFunctions: { [key in QuestionTypeEnum]?: () => any } = {
 
 export function setQuestionTypeByIndex(questions: Question[], index: number, type: QuestionTypeEnum) {
   const uniqueComponentIndex = questions[index].components.findIndex(c => c.type === QuestionComponentTypeEnum.Component);
-  console.log(uniqueComponentIndex);
   return update(questions, {
     [index]: {
       type: { $set: type },
@@ -184,11 +183,9 @@ export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]
 }
 
 export function setLastQuestionId(brick: Brick, questions: Question[]) {
-  console.log(brick.questions.length)
   const savedQuestions = brick.questions;
   const updatedQuestions = deactiveQuestions(questions);
   const lastIndex = updatedQuestions.length - 1;
-  console.log(lastIndex);
   updatedQuestions[lastIndex].active = true;
   updatedQuestions[lastIndex].id = savedQuestions[lastIndex].id;
   return updatedQuestions;

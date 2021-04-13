@@ -6,6 +6,8 @@ import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
+import { playCover } from "components/play/routes";
+import { setAssignmentId } from "localStorage/playAssignmentId";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -54,9 +56,10 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
 
   const move = () => {
     if (props.isPlay) {
-      props.history.push(`/play/brick/${brick.id}/intro`);
+      props.history.push(playCover(brick.id));
     } else if (props.isAssignment && props.assignmentId) {
-      props.history.push(`/play/brick/${brick.id}/intro?assignmentId=${props.assignmentId}`);
+      setAssignmentId(props.assignmentId);
+      props.history.push(playCover(brick.id));
     } else {
       props.history.push(`/build/brick/${brick.id}/investigation/question`);
     }
@@ -76,13 +79,12 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     >
       <div className="main-brick-container" onMouseLeave={props.handleMouseLeave}>
         <Box className={`brick-container ${color}`}>
-          <div className={`absolute-container brick-row-${row} ${brick.expanded ? "brick-hover" : ""}`}>
+          <div className="absolute-container">
             <ShortBrickDescription
               user={props.user}
               searchString={props.searchString}
               circleIcon={props.circleIcon}
               iconColor={props.iconColor}
-              onMouseEnter={props.handleMouseHover}
               handleDeleteOpen={props.handleDeleteOpen}
               move={move}
               color={color}

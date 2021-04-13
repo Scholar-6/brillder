@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 
 import './ShortBrickDescription.scss';
-import { Brick } from "model/brick";
+import { AcademicLevel, AcademicLevelLabels, Brick } from "model/brick";
 
 import SpriteIcon from "./SpriteIcon";
-import sprite from 'assets/img/icons-sprite.svg';
 import SearchText from "./SearchText";
 import AuthorSearchRow from "./AuthorRow";
 import { User, UserType } from "model/user";
-import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDescription";
 import BrickCircle from "./BrickCircle";
+import { canDelete } from "components/services/brickService";
+import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
 
 interface ShortDescriptionProps {
   brick: Brick;
@@ -17,7 +17,6 @@ interface ShortDescriptionProps {
   circleIcon?: string;
   iconColor?: string;
   user?: User;
-  onMouseEnter?(e: any): void;
   handleDeleteOpen?(id: number): void;
 
   searchString: string;
@@ -38,31 +37,8 @@ interface ShortDescriptionProps {
   move?(): void;
 }
 
-interface State {
-  circleHovered: boolean;
-}
 
-class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
-  constructor(props: ShortDescriptionProps) {
-    super(props);
-    this.state = {
-      circleHovered: false,
-    };
-  }
-
-  renderRoler() {
-    return (
-      <div className="left-brick-roller">
-        <div className="btn btn-transparent roller-button svgOnHover">
-          <svg className="svg w100 h100 active stroke-2">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#award"} className="text-theme-green" />
-          </svg>
-        </div>
-      </div>
-    );
-  }
-
+class ShortBrickDescription extends Component<ShortDescriptionProps> {
   renderIcon() {
     const { circleIcon, iconColor } = this.props;
     let svgClass = 'svg active ';
@@ -81,46 +57,6 @@ class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
     return "";
   }
 
-  circleHover() {
-    if(!this.state.circleHovered) {
-      this.setState({circleHovered: true});
-    }
-  }
-
-  circleHide() {
-    if (this.state.circleHovered) {
-      this.setState({circleHovered: false});
-    }
-  }
-
-  renderCircle(color: string) {
-    let className = "left-brick-circle";
-
-    if (this.props.circleClass) {
-      className += ' ' + this.props.circleClass;
-    }
-
-    if (color === "color3") {
-    } else if (color === "color2") {
-      className += ' skip-top-right-border';
-    }
-    
-    if (this.state.circleHovered) {
-      className += ' circle-hovered';
-    }
-
-    return (
-      <div className={className} onMouseEnter={() => this.circleHover()} onMouseLeave={() => this.circleHide()}>
-        <div className="round-button" style={{ background: `${color}` }}>
-          {this.renderIcon()}
-        </div>
-        <div className="play-button">
-          <SpriteIcon name="play-thick" onClick={() => this.props.move ? this.props.move() : {}} />
-        </div>
-      </div>
-    );
-  }
-
   // mobile only
   renderPlayButton() {
     return (
@@ -133,14 +69,12 @@ class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
 
   renderShortBrickInfo(searchString: string, brick: Brick) {
     return (
-      <div className="short-brick-info" onMouseEnter={this.props.onMouseEnter}>
+      <div className="short-brick-info">
         <div className="link-description">
           <SearchText searchString={searchString} text={brick.title} />
         </div>
         <div className="link-info">
-          <SearchText searchString={searchString} text={brick.subTopic} />
-          |
-          <SearchText searchString={searchString} text={brick.alternativeTopics} />
+          <KeyWordsPreview keywords={brick.keywords} />
         </div>
         <div className="link-info">
           <AuthorSearchRow searchString={searchString} brick={brick} />
@@ -149,26 +83,32 @@ class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
     );
   }
 
-  renderExpanded() {
-    const {user} = this.props;
+  renderDeleteButton(brick: Brick) {
+    const { user } = this.props;
     let isAdmin = false;
     if (user) {
       isAdmin = user.roles.some(role => role.roleId === UserType.Admin);
     }
-
-    return (
-      <ExpandedBrickDecsiption
-        userId={user ? user.id : -1}
-        isAdmin={isAdmin}
-        color={this.props.color ? this.props.color : ''}
-        brick={this.props.brick}
-        searchString={this.props.searchString}
-        circleIcon={this.props.circleIcon}
-        iconColor={this.props.iconColor}
-        move={this.props.move ? this.props.move : () => {}}
-        onDelete={brickId => this.props.handleDeleteOpen ? this.props.handleDeleteOpen(brickId) : {}}
-      />
-    );
+    if (user) {
+      // check if user can delete the brick
+      if (!canDelete(user.id, isAdmin, brick)) { return; }
+      return (
+        <div className="hover-delete-icon">
+          <button
+            className="btn btn-transparent svgOnHover bin-button"
+            onClick={e => {
+              e.stopPropagation();
+              if (this.props.handleDeleteOpen) {
+                this.props.handleDeleteOpen(brick.id);
+              }
+            }}
+          >
+            <SpriteIcon name="trash-outline" className="w100 h100 active" />
+          </button>
+        </div>
+      );
+    }
+    return <div />
   }
 
   render() {
@@ -182,22 +122,27 @@ class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
       className += " mobile-short-" + index;
     }
 
+    let label = '';
+    if (brick.academicLevel >= AcademicLevel.First) {
+      label = AcademicLevelLabels[brick.academicLevel];
+    }
+
     if (isMobile) {
       return (
         <div>
           <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
             {color
-              ? ( 
-                 <BrickCircle
+              && (
+                <BrickCircle
                   color={color}
                   circleIcon={this.props.circleIcon}
                   circleClass={this.props.circleClass}
                   iconColor={this.props.iconColor}
                   canHover={true}
+                  label={label}
                   onClick={() => this.props.move ? this.props.move() : {}}
                 />
               )
-              : this.renderRoler()
             }
             {this.renderShortBrickInfo(searchString, brick)}
             {isExpanded ? this.renderPlayButton() : ""}
@@ -207,29 +152,25 @@ class ShortBrickDescription extends Component<ShortDescriptionProps, State> {
     }
 
     return (
-      <div>
-        {brick.expanded
-          ? this.renderExpanded()
-          : (
-            <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
-              {color
-                ? ( 
-                   <BrickCircle
-                    color={color}
-                    circleIcon={this.props.circleIcon}
-                    circleClass={this.props.circleClass}
-                    iconColor={this.props.iconColor}
-                    canHover={true}
-                    onClick={() => this.props.move ? this.props.move() : {}}
-                  />
-                )
-                : this.renderRoler()
-              }
-              {this.renderShortBrickInfo(searchString, brick)}
-              {isExpanded ? this.renderPlayButton() : ""}
-            </div>
-          )
-        }
+      <div className={className} onClick={() => this.props.move ? this.props.move() : {}}>
+        {this.renderDeleteButton(this.props.brick)}
+        {color && (
+          <div className="brick-circle-container">
+            <BrickCircle
+              color={color}
+              label={label}
+              circleIcon={this.props.circleIcon}
+              circleClass={this.props.circleClass}
+              iconColor={this.props.iconColor}
+              canHover={true}
+              onClick={() => this.props.move ? this.props.move() : {}}
+            />
+          </div>
+        )}
+        <div className="centered-brick-description">
+          {this.renderShortBrickInfo(searchString, brick)}
+        </div>
+        {isExpanded ? this.renderPlayButton() : ""}
       </div>
     );
   }

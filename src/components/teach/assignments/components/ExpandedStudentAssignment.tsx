@@ -171,13 +171,15 @@ class ExpandedStudentAssignment extends Component<
       <div className="expanded-assignment classroom-list">
         <div>
           <AssignedBrickDescription
+            isStudent={true}
             isExpanded={true}
             subjects={this.props.subjects}
             minimize={this.props.minimize}
             assignment={this.props.assignment}
+            archive={() => {}}
           />
         </div>
-        <div className="users-table">
+        <div className="assignments-table">
           <table cellSpacing="0" cellPadding="0">
             {this.renderTableHead()}
             <tbody>{this.renderStudent(this.props.student)}</tbody>

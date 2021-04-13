@@ -30,7 +30,9 @@ interface QuestionProps {
   question: Question;
   answers: any;
   isReview?: boolean;
+  isPreview?: boolean;
   isBookPreview?: boolean;
+  isDefaultBook?: boolean;
   onAttempted?(): void;
 
   // build phone preview
@@ -85,7 +87,6 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
 
   shouldComponentUpdate(nextProps: QuestionProps) {
     if (this.props.isPhonePreview) {
-      console.log(this.props.focusIndex);
       if (this.props.focusIndex !== nextProps.focusIndex) {
         let {focusIndex} = nextProps;
         if (focusIndex !== undefined && focusIndex >= 0) {
@@ -137,7 +138,8 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
           isTimeover={this.props.isTimeover}
           attempt={this.props.attempt}
           answers={this.props.answers}
-          isPreview={this.props.isPhonePreview}
+          isPreview={this.props.isPreview}
+          isDefaultBook={this.props.isDefaultBook}
           isBookPreview={this.props.isBookPreview}
           question={question}
           component={component}

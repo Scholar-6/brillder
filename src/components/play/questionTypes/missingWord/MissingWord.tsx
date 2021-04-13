@@ -1,13 +1,13 @@
 import React from "react";
 import { Grid, Select } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import CompComponent from "../Comp";
 import "./MissingWord.scss";
 import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/model";
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
-import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 
@@ -92,10 +92,11 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       <Select
         className="missing-select"
         value={value}
+        IconComponent={ExpandMoreIcon}
         onChange={e => this.setUserAnswer(e, index)}
       >
         {choice.answers.map((a: any, i: number) => (
-          <MenuItem key={i} value={i}>
+          <MenuItem key={i} className="missing-choice" value={i}>
             {a.value}
           </MenuItem>
         ))}
@@ -154,12 +155,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
             </Grid>
           </div>
         ))}
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }

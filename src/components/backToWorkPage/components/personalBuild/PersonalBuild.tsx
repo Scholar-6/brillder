@@ -56,6 +56,8 @@ interface PersonalState {
   filters: PersonalFilters;
   checkedSubjectId: number;
   handleKey(e: any): void;
+  onBricksWheel(e: any): void;
+  bricksRef: React.RefObject<any>;
 }
 
 class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
@@ -69,16 +71,36 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
         draft: true,
         selfPublish: true
       },
-      handleKey: this.handleKey.bind(this)
+      bricksRef: React.createRef<any>(),
+      handleKey: this.handleKey.bind(this),
+      onBricksWheel: this.onBricksWheel.bind(this)
     };
   }
 
   componentDidMount() {
     document.addEventListener("keydown", this.state.handleKey, false);
+
+    const {current} = this.state.bricksRef;
+    if (current) {
+      current.addEventListener('wheel', this.state.onBricksWheel, false);
+    }
+  }
+
+  onBricksWheel(e: any) {
+    if (e.wheelDeltaY < 0) {
+      this.props.moveAllNext();
+    } else {
+      this.props.moveAllBack();
+    }
   }
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.state.handleKey, false);
+
+    const {current} = this.state.bricksRef;
+    if (current) {
+      current.removeEventListener('wheel', this.state.onBricksWheel, false);
+    }
   }
 
   handleMouseHover(index: number) {
@@ -86,23 +108,16 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
     hideBricks(bricks);
 
     if (bricks[index] && bricks[index].expanded) return;
-    this.setState({ ...this.state });
 
-    setTimeout(() => {
-      expandSearchBrick(bricks, index);
-      this.setState({ ...this.state });
-    }, 400);
+    expandSearchBrick(bricks, index);
+
+    this.setState({ ...this.state });
   }
 
-  handleMouseLeave(key: number) {
-    let bricks = this.getDisplayBricks();
+  handleMouseLeave() {
+    const bricks = this.getDisplayBricks();
     hideBricks(bricks);
-    bricks[key].expandFinished = true;
     this.setState({ ...this.state });
-    setTimeout(() => {
-      bricks[key].expandFinished = false;
-      this.setState({ ...this.state });
-    }, 400);
   }
 
   setFilters(filters: PersonalFilters) {
@@ -163,9 +178,9 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
             circleIcon={circleIcon}
             iconColor=''
             searchString={this.props.searchString}
-            handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
+            handleDeleteOpen={this.props.handleDeleteOpen.bind(this)}
             handleMouseHover={() => this.handleMouseHover(item.key)}
-            handleMouseLeave={() => this.handleMouseLeave(item.key)}
+            handleMouseLeave={this.handleMouseLeave.bind(this)}
           />
         );
       });
@@ -295,7 +310,7 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
               {isEmpty && this.props.loaded
                 ? this.renderEmptyPage()
                 : <div className="bricks-list-container">
-                    <div className="bricks-list">
+                    <div className="bricks-list" ref={this.state.bricksRef}>
                       {this.renderBricks(displayBricks)}
                     </div>
                   </div>}

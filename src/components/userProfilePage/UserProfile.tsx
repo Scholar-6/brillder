@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Radio, FormControlLabel } from "@material-ui/core";
-import Checkbox from "@material-ui/core/Checkbox";
+import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import { ReduxCombinedState } from "redux/reducers";
@@ -8,27 +7,30 @@ import actions from 'redux/actions/requestFailed';
 import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
 import authActions from "redux/actions/auth";
-
+import RolesBox from './RolesBox';
 import "./UserProfile.scss";
 
 import { getGeneralSubject, loadSubjects } from 'components/services/subject';
 import { UpdateUserStatus, UserProfileField, UserRoleItem } from './model';
 import { getUserById, createUser, updateUser, saveProfileImageName } from 'services/axios/user';
-import { isValid, getUserProfile, newStudentProfile } from './service';
-import { User, UserType, UserStatus, UserProfile } from "model/user";
+import { isValid, getUserProfile } from './service';
+import { User, UserType, UserProfile } from "model/user";
 import { Subject } from "model/brick";
-import { checkAdmin, canBuild, canEdit, isInstitution } from "components/services/brickService";
+import { checkAdmin } from "components/services/brickService";
 
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import SubjectDialog from "./components/SubjectDialog";
-import PhonePreview from "../build/baseComponents/phonePreview/PhonePreview";
 import SaveProfileButton from "./components/SaveProfileButton";
 import ProfileSavedDialog from "./components/ProfileSavedDialog";
 import ProfileImage from "./components/ProfileImage";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
-import UserProfilePreview from "./components/UserProfilePreview";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import ProfileInput from "./components/ProfileInput";
+import ProfileIntroJs from "./components/ProfileIntroJs";
+import PasswordChangedDialog from "components/baseComponents/dialogs/PasswordChangedDialog";
+import ProfilePhonePreview from "./components/ProfilePhonePreview";
+import { getExistedUserState, getNewUserState } from "./stateService";
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -43,6 +45,7 @@ const connector = connect(mapState, mapDispatch);
 
 interface UserProfileProps {
   user: User;
+  location: any;
   history: any;
   match: any;
   forgetBrick(): void;
@@ -55,6 +58,8 @@ interface UserProfileState {
   noSubjectDialogOpen: boolean;
   savedDialogOpen: boolean;
   emailInvalidOpen: boolean;
+  passwordChangedDialog: boolean;
+
   previewAnimationFinished: boolean;
 
   user: UserProfile;
@@ -65,6 +70,9 @@ interface UserProfileState {
   roles: UserRoleItem[];
   validationRequired: boolean;
   emailInvalid: boolean;
+  editPassword: boolean;
+
+  introJsSuspended?: boolean;
 }
 
 class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
@@ -77,14 +85,14 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     // check if admin wanna create new user
     if (userId === "new") {
       if (isAdmin) {
-        this.state = this.getNewUserState(isAdmin);
+        this.state = getNewUserState(isAdmin);
       } else {
         props.history.push("/home");
       }
     } else {
       const { user } = props;
 
-      let tempState: UserProfileState = this.getExistedUserState(user, isAdmin);
+      let tempState: UserProfileState = getExistedUserState(user);
       if (userId) {
         this.state = tempState;
         getUserById(userId).then(user => {
@@ -114,86 +122,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.props.requestFailed("Can`t get subjects");
       }
     });
-  }
-
-  getExistedUserState(user: User, isAdmin: boolean) {
-    let isBuilder = canBuild(user);
-    let isEditor = canEdit(user);
-    let isStudent = isBuilder;
-    let isInstitute = isInstitution(user);
-
-    let isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
-    if (this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
-      isBuilder = false;
-      isEditor = false;
-      isStudent = true;
-    }
-
-    if (isAdmin) {
-      isBuilder = true;
-      isEditor = true;
-      isStudent = true;
-      isInstitute = true;
-    }
-
-    return {
-      user: {
-        id: -1,
-        username: "",
-        firstName: "",
-        lastName: "",
-        tutorialPassed: false,
-        email: "",
-        password: "",
-        roles: [],
-        subjects: [],
-        status: UserStatus.Pending,
-        bio: '',
-        profileImage: "",
-      },
-      subjects: [],
-      isNewUser: false,
-      isStudent: isOnlyStudent,
-      isAdmin,
-      roles: [
-        { roleId: UserType.Student, name: "Student", disabled: !isStudent },
-        { roleId: UserType.Teacher, name: "Teacher", disabled: !isAdmin },
-        { roleId: UserType.Builder, name: "Builder", disabled: !isBuilder },
-        { roleId: UserType.Publisher, name: "Publisher", disabled: !isEditor },
-        { roleId: UserType.Institution, name: "Institution", disabled: !isInstitute },
-        { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
-      ],
-      noSubjectDialogOpen: false,
-      savedDialogOpen: false,
-      emailInvalidOpen: false,
-
-      validationRequired: false,
-      emailInvalid: false,
-      previewAnimationFinished: false
-    };
-  }
-
-  getNewUserState(isAdmin: boolean) {
-    return {
-      user: newStudentProfile(),
-      subjects: [],
-      isNewUser: true,
-      isStudent: false,
-      isAdmin,
-      roles: [
-        { roleId: UserType.Student, name: "Student", disabled: false },
-        { roleId: UserType.Teacher, name: "Teacher", disabled: false },
-        { roleId: UserType.Builder, name: "Builder", disabled: false },
-        { roleId: UserType.Publisher, name: "Publisher", disabled: false },
-        { roleId: UserType.Admin, name: "Admin", disabled: false },
-      ],
-      noSubjectDialogOpen: false,
-      savedDialogOpen: false,
-      emailInvalidOpen: false,
-      validationRequired: false,
-      emailInvalid: false,
-      previewAnimationFinished: false
-    };
   }
 
   saveStudentProfile(user: UserProfile) {
@@ -230,6 +158,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   saveUserProfile() {
     const { user } = this.state;
+
+    this.suspendIntroJs();
+
     if (this.state.isStudent) {
       this.saveStudentProfile(user);
       return;
@@ -282,10 +213,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   onSubjectDialogClose() {
     this.setState({ noSubjectDialogOpen: false });
+    this.resumeIntroJs();
   }
 
   onProfileSavedDialogClose() {
     this.setState({ savedDialogOpen: false });
+    this.resumeIntroJs();
   }
 
   onFieldChanged(e: React.ChangeEvent<HTMLInputElement>, name: UserProfileField) {
@@ -320,15 +253,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({ user });
   }
 
-  checkUserRole(roleId: number) {
-    if (!this.state.isAdmin && this.props.user.rolePreference && this.props.user.rolePreference.roleId === UserType.Student) {
-      if (roleId !== UserType.Student) {
-        return false;
-      }
-    }
-    return this.state.user.roles.some((id) => id === roleId);
-  }
-
   toggleRole(roleId: number, disabled: boolean) {
     if (disabled) {
       return;
@@ -349,43 +273,33 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({ ...this.state });
   }
 
-  renderUserRole(role: UserRoleItem) {
-    let checked = this.checkUserRole(role.roleId);
-
-    if (this.state.isStudent) {
-      return (
-        <FormControlLabel
-          className="filter-container disabled"
-          checked={checked}
-          control={<Radio className="filter-radio" />}
-          label={role.name}
-        />
-      );
-    }
-
-    return (
-      <FormControlLabel
-        className={`filter-container ${role.disabled ? "disabled" : ""}`}
-        checked={checked}
-        onClick={() => this.toggleRole(role.roleId, role.disabled)}
-        control={<Radio className="filter-radio" />}
-        label={role.name}
-      />
-    );
-  }
-
-  renderRoles() {
-    return this.state.roles.map((role: any, i: number) => (
-      <Grid item key={i}>
-        {this.renderUserRole(role)}
-      </Grid>
-    ));
-  }
-
   onSubjectChange(newValue: any[]) {
     const { user } = this.state;
     user.subjects = newValue;
     this.setState({ user });
+  }
+
+  async changePassword() {
+    const {user} = this.state;
+    const userToSave = { password: user.password} as any;
+
+    // set current user roles
+    userToSave.roles = this.props.user.roles.map(role => role.roleId);
+    //const saved = await updateUser(userToSave);
+
+    //this.setState({ passwordChangedDialog: true });
+  }
+
+  suspendIntroJs() {
+    if (!this.state.introJsSuspended) {
+      this.setState({introJsSuspended: true});
+    }
+  }
+
+  resumeIntroJs() {
+    if (this.state.introJsSuspended) {
+      this.setState({introJsSuspended: false});
+    }
   }
 
   renderSubjects(user: UserProfile) {
@@ -396,24 +310,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       <SubjectAutocomplete
         selected={user.subjects}
         subjects={this.state.subjects}
+        suspendIntroJs={this.suspendIntroJs.bind(this)}
+        resumeIntroJs={this.resumeIntroJs.bind(this)}
         onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
       />
-    );
-  }
-
-  renderInput(
-    value: string, initClassName: string, placeholder: string,
-    onChange: ((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined,
-    type: string = 'text', shouldBeFilled: boolean = true
-  ) {
-    let className = initClassName + ' style2';
-    if (this.state.validationRequired && !value && shouldBeFilled) {
-      className += ' invalid';
-    }
-    return (
-      <div className="input-block">
-        <input type={type} className={className} value={value} onChange={onChange} placeholder={placeholder} />
-      </div>
     );
   }
 
@@ -449,35 +349,55 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 profileImage={user.profileImage}
                 setImage={(v) => this.onProfileImageChanged(v)}
                 deleteImage={() => this.onProfileImageChanged('')}
+                suspendIntroJs={this.suspendIntroJs.bind(this)}
+                resumeIntroJs={this.resumeIntroJs.bind(this)}
               />
               <div className="profile-inputs-container">
                 <div className="input-group">
-                  {this.renderInput(
-                    user.firstName, 'first-name', 'Name', e => this.onFieldChanged(e, UserProfileField.FirstName)
-                  )}
-                  {this.renderInput(
-                    user.lastName, 'last-name', 'Surname', e => this.onFieldChanged(e, UserProfileField.LastName)
-                  )}
+                  <ProfileInput
+                    value={user.firstName} validationRequired={this.state.validationRequired}
+                    className="first-name"  placeholder="Name"
+                    onChange={e => this.onFieldChanged(e, UserProfileField.FirstName)}
+                  />
+                  <ProfileInput
+                    value={user.lastName} validationRequired={this.state.validationRequired}
+                    className="last-name"  placeholder="Surname"
+                    onChange={e => this.onFieldChanged(e, UserProfileField.LastName)}
+                  />
                 </div>
-                <FormControlLabel
-                  value="start"
-                  className="secret-input"
-                  control={<Checkbox color="primary" />}
-                  label="Keep me secret: I don't want to be searchable"
-                  labelPlacement="end"
+                <ProfileInput
+                  value={user.email} validationRequired={this.state.validationRequired}
+                  className=""  placeholder="Email" type="email"
+                  onChange={e => this.onEmailChanged(e)}
                 />
-                {this.renderInput(
-                  user.email, '', 'Email', e => this.onEmailChanged(e), 'email'
-                )}
-                {this.renderInput(
-                  user.password, '', '●●●●●●●●●●●', e => this.onFieldChanged(e, UserProfileField.Password), 'password', false
-                )}
+                <div className="password-container">
+                  <ProfileInput
+                    value={user.password} validationRequired={this.state.validationRequired}
+                    className=""  placeholder="●●●●●●●●●●●" type="password" shouldBeFilled={false}
+                    onChange={e => this.onFieldChanged(e, UserProfileField.Password)}
+                    /*disabled={!this.state.editPassword}*/
+                  />
+                  {!this.state.editPassword &&
+                    <div className="button-container">
+                      <button onClick={() => this.setState({editPassword: true})}>Edit</button>
+                    </div>}
+                  {this.state.editPassword &&
+                  <div className="confirm-container">
+                    <SpriteIcon name="check-icon" className="start" onClick={this.changePassword.bind(this)} />
+                    <SpriteIcon name="cancel-custom" className="end" onClick={() => {
+                      this.setState({editPassword: false})
+                    }} />
+                  </div>}
+                </div>
               </div>
               <div className="profile-roles-container">
                 <div className="roles-title">ROLES</div>
-                <Grid container className="roles-box">
-                  {this.renderRoles()}
-                </Grid>
+                <RolesBox
+                  roles={this.state.roles}
+                  userRoles={this.state.user.roles}
+                  rolePreference={this.props.user.rolePreference?.roleId}
+                  toggleRole={this.toggleRole.bind(this)}
+                />
               </div>
             </div>
             <div style={{ display: 'flex' }}>
@@ -491,23 +411,18 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             </div>
             <Grid container direction="row" className="big-input-container">
               <textarea
-                className="style2"
+                className="style2 bio-container"
                 value={user.bio}
+                onClick={this.suspendIntroJs.bind(this)}
                 placeholder="Write a short bio here..."
-                onChange={e => this.onFieldChanged(e as any, UserProfileField.Bio)}
+                onChange={e => {
+                  this.onFieldChanged(e as any, UserProfileField.Bio)
+                }}
+                onBlur={this.resumeIntroJs.bind(this)}
               />
             </Grid>
           </div>
-          <div className="profile-phone-preview">
-            <Grid
-              container
-              justify="center"
-              alignContent="center"
-              style={{ height: "100%" }}
-            >
-              <PhonePreview Component={UserProfilePreview} data={{user:this.state.user}} action={this.previewAnimationFinished.bind(this)} />
-            </Grid>
-          </div>
+          <ProfilePhonePreview user={this.state.user} previewAnimationFinished={this.previewAnimationFinished.bind(this)} />
         </Grid>
         <ValidationFailedDialog
           isOpen={this.state.emailInvalidOpen}
@@ -525,6 +440,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           isOpen={this.state.savedDialogOpen}
           close={this.onProfileSavedDialogClose.bind(this)}
         />
+        <PasswordChangedDialog
+          isOpen={this.state.passwordChangedDialog}
+          close={() => this.setState({passwordChangedDialog: false})} />
+        <ProfileIntroJs user={this.props.user} suspended={this.state.introJsSuspended} history={this.props.history} location={this.props.location} />
       </div>
     );
   }

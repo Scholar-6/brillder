@@ -45,15 +45,40 @@ export interface Subject {
   personalCount?: number;
 }
 
+export interface SubjectItem extends Subject {
+  publicCount: number;
+}
+
+export interface SubjectAItem extends Subject {
+  playedCount: number;
+  assignedCount: number;
+}
+
+export interface KeyWord {
+  id?: number;
+  name: string;
+}
+
+export enum AcademicLevel {
+  Default = 0,
+  First = 1,
+  Second,
+  Third,
+  Fourth
+}
+
+export const AcademicLevelLabels = [
+  '', 'I', 'II', 'III', 'IV'
+];
+
 export interface Brick {
   id: number;
   subject?: Subject;
   subjectId: number;
-  topic: string;
   subTopic: string;
+  topic: string,
+  alternativeTopics: string,
   title: string;
-  alternativeTopics: string;
-  alternativeSubject: string;
   created: string;
   updated: string;
   openQuestion: string;
@@ -71,8 +96,15 @@ export interface Brick {
   status: BrickStatus;
   attemptsCount: number;
   locked: boolean;
+  keywords: KeyWord[];
   isCore?: boolean;
   hasNotifications?: boolean;
+  academicLevel: AcademicLevel;
+
+  // cover page
+  coverImage: string;
+  coverImageCaption: string;
+  coverImageSource: string;
 
   assignments?: Assignment[];
 

@@ -1,0 +1,59 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.MuiAutocomplete-listbox {
+  height: 30vh !important;
+}
+
+.assign-dialog {
+  .dialog-header > div {
+    width: 50vw !important;
+
+    .MuiInputBase-input.MuiInput-input {
+      width: 14vw;
+    }
+  }
+
+  .icon-button {
+    .svg {
+      $size: 2.2vw;
+      height: $size;
+      width: $size;
+    }
+
+    .label {
+      font-size: 1.6vw;
+      padding: 0.5vh;
+      font-family: $font-family-bold;
+    }
+  }
+}
+
+span.bold {
+  font-family: $font-family-bold !important;
+}
+
+.assign-dialog-new {
+  .text-with-glasses {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .glasses {
+      .eye-glass-icon {
+        .glass-eyes-left,
+        .glass-eyes-right {
+          animation: none;
+          transform: scale(0.23);
+          top: -2.1vw;
+        }
+        .glass-eyes-left {
+          left: -1.61vw !important;
+        }
+        .glass-eyes-right {
+          right: -1.5vw !important;
+        }
+      }
+    }
+  }
+}

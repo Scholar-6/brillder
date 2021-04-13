@@ -8,9 +8,9 @@ import { QuestionValueType } from "../types";
 import { ChooseOneAnswer } from './types';
 import RemoveItemButton from "../components/RemoveItemButton";
 import SoundRecord from "../sound/SoundRecord";
-import DeleteDialog from "components/baseComponents/deleteBrickDialog/DeleteDialog";
 import RemoveButton from "../components/RemoveButton";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import YesNoDialog from "components/build/baseComponents/dialogs/YesNoDialog";
 
 
 export interface ChooseOneAnswerProps {
@@ -109,9 +109,9 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
             fileName={answer.valueFile}
             update={setImage}
           />
-          <DeleteDialog
+          <YesNoDialog
             isOpen={clearOpen}
-            label="Delete image?"
+            title="Delete image?"
             submit={() => onTextChanged(answer, '')}
             close={() => setClear(false)}
           />

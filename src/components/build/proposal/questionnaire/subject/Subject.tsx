@@ -17,11 +17,11 @@ interface SubjectProps {
   subjectId: any;
   subjects: any[];
   saveCore(isCore: boolean): void;
-  saveSubject(subjectId: number):void;
+  saveSubject(subjectId: number): void;
   saveData(subjectId: number, isCore: boolean): void;
 }
 
-const FrenchComponent:React.FC = () => {
+const FrenchComponent: React.FC = () => {
   return (
     <div className="french-preview">
       <div>
@@ -31,46 +31,46 @@ const FrenchComponent:React.FC = () => {
       </div>
       <div>Anon.</div>
     </div>
-  )
+  );
 }
 
-const ArtComponent:React.FC = () => {
+const ArtComponent: React.FC = () => {
   return (
     <div className="art-preview">
       <div>“A work of art is a confession”</div>
       <div>Albert Camus</div>
     </div>
-  )
+  );
 }
 
-const BiologyComponent:React.FC = () => {
+const BiologyComponent: React.FC = () => {
   return (
     <div className="biology-preview">
       <div>“Life is, after all, not a product of morality.”</div>
       <div>Nietzsche</div>
     </div>
-  )
+  );
 }
 
-const ChineseComponent:React.FC = () => {
+const ChineseComponent: React.FC = () => {
   return (
     <div className="chinese-preview">
       <div>字值千金</div>
       <div>Proverb</div>
     </div>
-  )
+  );
 }
 
-const ClassicsComponent:React.FC = () => {
+const ClassicsComponent: React.FC = () => {
   return (
     <div className="classics-preview">
       <div>“Dis aliter visum”</div>
       <div>Virgil</div>
     </div>
-  )
+  );
 }
 
-const EconomicsComponent:React.FC = () => {
+const EconomicsComponent: React.FC = () => {
   return (
     <div className="economics-preview">
       <div>
@@ -82,26 +82,25 @@ const EconomicsComponent:React.FC = () => {
       </div>
       <div>Pink Floyd</div>
     </div>
-  )
+  );
 }
 
-const EnglishComponent:React.FC = () => {
+const EnglishComponent: React.FC = () => {
   return (
     <div className="english-preview">
       <div>“What’s in a name?”</div>
       <div>Shakespeare</div>
     </div>
-  )
+  );
 }
 
-const DramaComponent:React.FC = () => {
+const DramaComponent: React.FC = () => {
   return (
-    <div className="drama-preview">
-    </div>
-  )
+    <div className="drama-preview" />
+  );
 }
 
-const GeographyComponent:React.FC = () => {
+const GeographyComponent: React.FC = () => {
   return (
     <div className="geography-preview">
       <div>
@@ -114,10 +113,10 @@ const GeographyComponent:React.FC = () => {
       </div>
       <div>David Bowie</div>
     </div>
-  )
+  );
 }
 
-const HistoryComponent:React.FC = () => {
+const HistoryComponent: React.FC = () => {
   return (
     <div className="history-preview">
       <div>
@@ -128,10 +127,10 @@ const HistoryComponent:React.FC = () => {
       </div>
       <div>T. S. Eliot</div>
     </div>
-  )
+  );
 }
 
-const MathsComponent:React.FC = () => {
+const MathsComponent: React.FC = () => {
   return (
     <div className="maths-preview">
       <div>
@@ -142,10 +141,10 @@ const MathsComponent:React.FC = () => {
       </div>
       <div>Pythagoras</div>
     </div>
-  )
+  );
 }
 
-const PhysicsComponent:React.FC = () => {
+const PhysicsComponent: React.FC = () => {
   return (
     <div className="physics-preview">
       <div>
@@ -156,10 +155,10 @@ const PhysicsComponent:React.FC = () => {
       </div>
       <div>Newton</div>
     </div>
-  )
+  );
 }
 
-const PsychologyComponent:React.FC = () => {
+const PsychologyComponent: React.FC = () => {
   return (
     <div className="psychology-preview">
       <div>
@@ -169,10 +168,10 @@ const PsychologyComponent:React.FC = () => {
       </div>
       <div>Carl Jung</div>
     </div>
-  )
+  );
 }
 
-const GermanComponent:React.FC = () => {
+const GermanComponent: React.FC = () => {
   return (
     <div className="german-preview">
       <div>
@@ -182,10 +181,10 @@ const GermanComponent:React.FC = () => {
       </div>
       <div>Goethe</div>
     </div>
-  )
+  );
 }
 
-const TheologyComponent:React.FC = () => {
+const TheologyComponent: React.FC = () => {
   return (
     <div className="philosophy-preview">
       <div>
@@ -197,10 +196,20 @@ const TheologyComponent:React.FC = () => {
       </div>
       <div>Jean-Paul Sartre</div>
     </div>
-  )
+  );
 }
 
-const SubjectPage:React.FC<SubjectProps> = ({
+
+const DefaultComponent: React.FC = () => {
+  return (
+    <div className="logo-page subject-default-preview b-dark-blue">
+      <img src="/images/choose-login/logo.png" className="brick-logo-image" alt="brix-logo" />
+      <img alt="Logo" src="/images/choose-user/brillder-white-text.svg" className="logo-mobile-text-image" />
+    </div>
+  );
+}
+
+const SubjectPage: React.FC<SubjectProps> = ({
   history, subjectId, subjects, baseUrl, location, saveData, saveCore, saveSubject
 }) => {
   const getSubjectName = (subjectId: number) => {
@@ -251,7 +260,7 @@ const SubjectPage:React.FC<SubjectProps> = ({
     } else {
       saveSubject(subjectId);
     }
-    return <Redirect to={map.ProposalTitle} />
+    return <Redirect to={map.ProposalTitleLink} />
   }
 
   if (values.selectedSubject) {
@@ -260,9 +269,9 @@ const SubjectPage:React.FC<SubjectProps> = ({
       let res = subjects.find(s => s.id === subjectId);
       if (res) {
         saveSubject(res.id);
-        return <Redirect to={map.ProposalTitle} />
+        return <Redirect to={map.ProposalTitleLink} />
       }
-    } catch {}
+    } catch { }
   }
 
   const getInnerComponent = () => {
@@ -281,7 +290,7 @@ const SubjectPage:React.FC<SubjectProps> = ({
     } else if (subjectName === 'English Literature') {
       return EnglishComponent;
     } else if (subjectName === 'Drama & Theatre') {
-        return DramaComponent;
+      return DramaComponent;
     } else if (subjectName === 'Geography') {
       return GeographyComponent;
     } else if (subjectName === 'German') {
@@ -296,6 +305,8 @@ const SubjectPage:React.FC<SubjectProps> = ({
       return PsychologyComponent;
     } else if (subjectName === 'Theology & Philosophy') {
       return TheologyComponent;
+    } else {
+      return DefaultComponent;
     }
   }
 
@@ -331,10 +342,10 @@ const SubjectPage:React.FC<SubjectProps> = ({
             </div>
           </Grid>
         </Grid>
-        { subject &&
+        {subject &&
           <Grid className='tutorial-pagination'>
-            <div className="centered text-theme-dark-blue bold" style={{fontSize: '2vw', marginRight: '2vw'}}
-              onClick={() => {saveSubject(subject); history.push(map.ProposalTitle)}}>
+            <div className="centered text-theme-dark-blue bold" style={{ fontSize: '2vw', marginRight: '2vw' }}
+              onClick={() => { saveSubject(subject); history.push(map.ProposalTitleLink) }}>
               Next
             </div>
             <NextButton
@@ -342,15 +353,15 @@ const SubjectPage:React.FC<SubjectProps> = ({
               baseUrl={baseUrl} canSubmit={true} onSubmit={saveSubject} data={subject}
             />
           </Grid>
-         }
+        }
         <Hidden only={['xs', 'sm']}>
-        <div className="subject-name">
-          <div>{subjectName}</div>
-        </div>
+          <div className="subject-name">
+            <div>{subjectName}</div>
+          </div>
         </Hidden>
         <ProposalPhonePreview Component={innerComponent} />
         <Hidden only={['xs', 'sm']}>
-        <div className="red-right-block"></div>
+          <div className="red-right-block"></div>
         </Hidden>
       </Grid>
     </div>

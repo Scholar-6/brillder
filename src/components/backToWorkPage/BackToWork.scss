@@ -351,12 +351,13 @@
   }
 }
 .teach-sort-box {
-  $filter-height: 50vh;
+  $filter-height: calc(100vh - 5.834vw - 2vw - 2.4vw - 3vw);
   $expanded-filter-height: 62vh;
   $classes-label-height: 7.7vh;
   // margin-bottom: 1vh;
   .classrooms-filter {
-    height: $filter-height;
+    padding-bottom: 7vh;
+    height: calc(100% - 2vw - 4vh);
     // height: calc(#{$filter-height} + #{$classes-label-height});
     overflow-y: scroll;
     transition: 500ms all;
@@ -414,6 +415,9 @@
       .student-name {
         text-transform: capitalize;
         font-family: $font-family-light;
+      }
+      &.active {
+        background: var(--theme-orange);
       }
     }
     .right-index {
@@ -498,7 +502,7 @@
   .learn-tab-desktop {
     .bricks-list-container .main-brick-container .brick-container {
       .absolute-container .short-description .left-brick-circle.skip-top-right-border,
-      .expanded-brick-info .hover-icons-row .left-brick-circle.skip-top-right-border {
+      .expanded-brick-info .left-brick-circle.skip-top-right-border {
         background: inherit !important;
         padding: 0 !important;
       }
@@ -657,6 +661,35 @@
     text-align: left;
     > div:first-child {
       font-family: $font-family-bold !important;
+    }
+  }
+}
+
+// №2776 zoom brick on hover
+.back-to-work-page {
+  .brick-container {
+    display: flex;
+    align-items: center;
+    justify-content: center !important;
+    .absolute-container {
+      width: 100%;
+      height: 4.8vw;
+      transition: all 300ms ease-out;
+    }
+    .absolute-container:hover {
+      width: 100% !important;
+      height: 4.8vw !important;
+    }
+  }
+}
+
+
+
+
+// page scroliing
+.back-to-work-page {
+  .bricks-list-container {
+    .bricks-list {
     }
   }
 }

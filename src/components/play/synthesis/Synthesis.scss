@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .synthesis-page {
   h1 {
@@ -70,14 +70,14 @@
 
 .sorted-row {
   .synthesis-content {
-    padding-top: 2vh;
-    padding-bottom: 4vh;
     overflow-y: auto;
     width: 48vw;
-    height: calc(100vh - 12vh - 2vw - #{$page-head-height}) !important;
-    @include tabletP {
-      margin: 12vh 3vw 1vw 4vw;
+    height: calc(100vh - 12vh - 2vw - #{$page-head-height});
+    
+    ul, li, ol {
+      font-size: 1.25vw;
     }
+
     blockquote {
       border-left: 0.3vw solid var(--tab-gray);
       padding-left: 1.8vw;
@@ -91,34 +91,6 @@
       @include tabletP {
         font-size: 1.05vw;
       }
-    }
-  }
-
-  // synthesis content height for expanded desktop panel
-  &.sorted-row-expanded .synthesis-content {
-    @include desktop {
-      height: calc(100vh - 12vh - 2vw) !important;
-    }
-  }
-}
-
-// mobile
-.synthesis-page {
-  @include phone_and_tabletP {
-    .heading {
-      font-size: 6vw;
-      font-family: $font-family-bold;
-      color: var(--theme-dark-blue);
-      margin-left: 1.5vw;
-    }
-    .synthesis-content {
-      padding: 0;
-      width: calc(100vw - 4vw);
-      padding: 2vw;
-      margin: 0;
-      margin-left: 2vw;
-      margin-bottom: 20vh;
-      height: calc(95% - 20vw - 80px) !important;
     }
   }
 }

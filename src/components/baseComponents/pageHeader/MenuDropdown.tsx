@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 
 import actions from "redux/actions/brickActions";
 
-import { User, UserType } from "model/user";
+import { RolePreference, User, UserType } from "model/user";
 import { PageEnum } from "./PageHeadWithMenu";
 import { clearProposal } from 'localStorage/proposal';
 
 
-import map, { ProposalSubject } from "components/map";
+import map, { ProposalSubjectLink } from "components/map";
 import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
 import SpriteIcon from "../SpriteIcon";
 import { Hidden } from "@material-ui/core";
@@ -68,11 +68,11 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const creatingBrick = () => {
     let isPlay = checkPlay();
     if (isPlay) {
-      setPlaySkip({ isOpen: true, link: ProposalSubject, label: 'Start Building' });
+      setPlaySkip({ isOpen: true, link: ProposalSubjectLink, label: 'Start Building' });
     } else {
       clearProposal();
       props.forgetBrick();
-      move(ProposalSubject, '');
+      move(ProposalSubjectLink, '');
     }
   };
 
@@ -126,9 +126,9 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const renderManageClassesItem = () => {
     const {user} = props;
     if (page !== PageEnum.ManageClasses && page !== PageEnum.MainPage && user) {
-      let canSee = checkTeacherOrAdmin(user.roles);
+      let canSee = checkTeacherOrAdmin(user);
       if (!canSee && user.rolePreference) {
-        if (user.rolePreference.roleId === UserType.Teacher) {
+        if (user.rolePreference.roleId === RolePreference.Teacher) {
           canSee = true
         }
       }
@@ -174,7 +174,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const renderProfileItem = () => {
     if (page !== PageEnum.Profile) {
       return (
-        <MenuItem className="view-profile menu-item" onClick={() => move("/user-profile", 'View Profile')}>
+        <MenuItem className="view-profile menu-item" onClick={() => move(map.UserProfile, 'View Profile')}>
           <span className="menu-text">View Profile</span>
           <div className="btn btn-transparent svgOnHover">
             <SpriteIcon name="user" className="active text-white" />
@@ -191,34 +191,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
           <span className="menu-text">My Library</span>
           <div className="btn btn-transparent svgOnHover">
             <SpriteIcon name="book-open" className="active text-white stroke-2" />
-          </div>
-        </MenuItem>
-      );
-    }
-  }
-
-  /*eslint-disable-next-line*/
-  const renderReportsItem = () => {
-    if (page !== PageEnum.MainPage && props.user.rolePreference?.roleId === UserType.Teacher) {
-      return (
-        <MenuItem className="view-profile menu-item disabled" onClick={() => {}}>
-          <span className="menu-text">Reports</span>
-          <div className="btn btn-transparent svgOnHover">
-            <SpriteIcon name="book-open" className="active text-white" />
-          </div>
-        </MenuItem>
-      );
-    }
-  }
-
-  /*eslint-disable-next-line*/
-  const renderLiveAssignmentItem = () => {
-    if (page !== PageEnum.MainPage && props.user.rolePreference?.roleId === UserType.Teacher) {
-      return (
-        <MenuItem className="view-profile menu-item disabled" onClick={() => {}}>
-          <span className="menu-text">Shared with Me</span>
-          <div className="btn btn-transparent svgOnHover">
-            <SpriteIcon name="student-back-to-work" className="active text-white" />
           </div>
         </MenuItem>
       );
@@ -243,10 +215,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         <FullScreenButton />
       </Hidden>
       {renderProfileItem()}
-      {/*
-      {renderReportsItem()}
-      {renderLiveAssignmentItem()}
-      */}
       <MenuItem className="menu-item" onClick={props.onLogout}>
         <span className="menu-text">Logout</span>
         <div className="btn btn-transparent svgOnHover">
@@ -257,7 +225,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         isOpen={playSkip.isOpen}
         label={playSkip.label}
         submit={() => {
-          if (playSkip.link === ProposalSubject) {
+          if (playSkip.link === ProposalSubjectLink) {
             clearProposal();
             props.forgetBrick();
           }

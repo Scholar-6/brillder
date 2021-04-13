@@ -1,0 +1,165 @@
+.glasses {
+  cursor: pointer;
+  display: inline;
+  margin: 0 0.3vw;
+  width: 4vw;
+  color: var(--theme-orange);
+  svg {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.eye-glass-icon {
+  $eye-ball: 5.5vw;
+  $eye-pupil: 1.6vw;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  @extend %textCenter;
+  flex-direction: column;
+  .svg {
+    width: 13vw;
+    height: 6vw;
+  }
+  > .svgOnHover {
+    &:first-child {
+      .svg {
+        @extend %removePosition;
+      }
+    }
+  }
+  .eye-glass-frame {
+    width: 13vw;
+    height: 6vw;
+    svg {
+      width: 100%;
+      height: auto;
+      @extend %removePosition;
+    }
+  }
+  .glass-eyes-left,
+  .glass-eyes-right {
+    width: $eye-ball;
+    height: $eye-ball;
+    position: absolute;
+    top: 0.2vw;
+    @extend %flexCenter;
+    animation: blink 2.4s infinite;
+    opacity: 0;
+    > svg {
+      width: 60%;
+      height: 60%;
+    }
+    .glass-left-inside,
+    .glass-right-inside {
+      position: relative;
+      width: $eye-pupil;
+      height: $eye-pupil;
+      opacity: 0;
+      svg {
+        // @extend %floatToXCenter;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--white);
+        border-radius: 50%;
+        color: var(--theme-dark-blue);
+        &.eye-pupil {
+          animation-name: eye-movement-desktop;
+          animation-duration: 5s;
+          animation-timing-function: ease-out;
+          animation-iteration-count: infinite;
+          animation-delay: 0;
+        }
+        &.aperture {
+          animation-name: rotating;
+          animation-duration: 4s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+          animation-delay: 5s;
+        }
+      }
+    }
+  }
+  .glass-eyes-left {
+    left: 0.6vw;
+  }
+  .glass-eyes-right {
+    right: 0.6vw;
+  }
+  // hover
+  &:hover {
+    .glass-eyes-left,
+    .glass-eyes-right {
+      opacity: 1;
+      svg {
+        opacity: 1;
+        visibility: visible;
+      }
+      .glass-right-inside,
+      .glass-left-inside {
+        opacity: 1;
+        svg {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+@keyframes eye-movement-desktop {
+  0% {
+    transform: none;
+  }
+  5%,
+  20% {
+    transform: translateX(-0.5vw);
+  }
+  25%,
+  30% {
+    transform: none;
+  }
+  35%,
+  80% {
+    transform: translateX(0.5vw);
+  }
+  85%,
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes blink {
+  90% {
+    transform: none;
+    animation-timing-function: ease-in;
+  }
+  93% {
+    transform: translateY(15px) scaleY(0);
+  }
+  100% {
+    animation-timing-function: ease-out;
+  }
+}
+
+@keyframes eye-movement-mobile {
+  0% {
+    transform: translateX(-2px);
+  }
+
+  50% {
+    transform: translateX(-2px);
+  }
+
+  70% {
+    transform: translateX(2px);
+  }
+
+  100% {
+    transform: translateX(2px);
+  }
+}

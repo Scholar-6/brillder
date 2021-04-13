@@ -4,13 +4,13 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { connect } from "react-redux";
 import { History } from "history";
 
+import "./Proposal.scss";
 import actions from "redux/actions/brickActions";
 import * as socketActions from "redux/actions/socket";
-import "./Proposal.scss";
 import SubjectPage from "./questionnaire/subject/Subject";
 import BrickTitle from "./questionnaire/brickTitle/brickTitle";
 import OpenQuestion from "./questionnaire/openQuestion/openQuestion";
-import { BrickLengthEnum, Subject } from "model/brick";
+import { AcademicLevel, BrickLengthEnum, KeyWord, Subject } from "model/brick";
 import BrickLength from "./questionnaire/brickLength/brickLength";
 import Brief from "./questionnaire/brief/brief";
 import Prep from "./questionnaire/prep/prep";
@@ -79,7 +79,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       brief: "",
       prep: "",
       synthesis: "",
-      alternativeSubject: "",
     } as Brick;
 
     if (user) {
@@ -152,8 +151,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
         history.push(baseUrl + ProposalReviewPart);
       }
     } else if (leftKeyPressed(e)) {
-      console.log(pathname, pathname.slice(-BrickLengthRoutePart.length), BrickLengthRoutePart);
-
       if (pathname.slice(-OpenQuestionRoutePart.length) === OpenQuestionRoutePart) {
         history.push(baseUrl + TitleRoutePart)
       } else if (pathname.slice(-BrickLengthRoutePart.length) === BrickLengthRoutePart) {
@@ -197,20 +194,22 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   saveLocalBrick(brick: Brick) {
-    console.log(brick);
     this.setState({ brick });
     setLocalBrick(brick);
-    console.log('saved');
   }
 
   setCore = (isCore: boolean) =>
     this.saveLocalBrick({ ...this.state.brick, isCore });
   setSubject = (subjectId: number) =>
-    this.saveLocalBrick({ ...this.state.brick, subjectId });
+    this.saveLocalBrick({ ...this.state.brick, subject: undefined, subjectId });
   setCoreAndSubject = (subjectId: number, isCore: boolean) => 
     this.saveLocalBrick({ ...this.state.brick, subjectId, isCore });
   setTitles = (titles: any) =>
     this.saveLocalBrick({ ...this.state.brick, ...titles });
+  setKeywords = (keywords: KeyWord[]) =>
+    this.saveLocalBrick({ ...this.state.brick, keywords});
+  setAcademicLevel = (academicLevel: AcademicLevel) =>
+    this.saveLocalBrick({ ...this.state.brick, academicLevel});
   setOpenQuestion = (openQuestion: string) =>
     this.saveLocalBrick({ ...this.state.brick, openQuestion } as Brick);
   setBrief = (brief: string) =>
@@ -320,20 +319,21 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             style={{ width: "100%", height: "100%" }}
             className="proposal-router"
           >
-            <Route path={[map.ProposalSubject, '/build/brick/:brickId/subject']}>
+            <Route path={[map.ProposalSubject, map.ProposalBase + '/subject']}>
               <SubjectPage
                 location={history.location}
                 baseUrl={baseUrl}
                 subjects={user.subjects}
-                subjectId={""}
+                subjectId={this.state.brick.subjectId ? this.state.brick.subjectId : ""}
                 history={history}
                 saveCore={this.setCore}
                 saveSubject={this.setSubject}
                 saveData={this.setCoreAndSubject}
               />
             </Route>
-            <Route path={[map.ProposalTitle, '/build/brick/:brickId/brick-title']}>
+            <Route path={[map.ProposalTitle, map.ProposalBase + '/brick-title']}>
               <BrickTitle
+                user={user}
                 history={history}
                 baseUrl={baseUrl}
                 playStatus={playStatus}
@@ -341,10 +341,12 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 canEdit={canEdit}
                 subjects={this.state.subjects}
                 saveTitles={this.setTitles}
+                setKeywords={this.setKeywords}
+                setAcademicLevel={this.setAcademicLevel}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={[map.ProposalLength, '/build/brick/:brickId/length']}>
+            <Route path={[map.ProposalLength, map.ProposalBase + '/length']}>
               <BrickLength
                 baseUrl={baseUrl}
                 playStatus={playStatus}
@@ -355,7 +357,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={[map.ProposalOpenQuestion, '/build/brick/:brickId/open-question']}>
+            <Route path={[map.ProposalOpenQuestion, map.ProposalBase + '/open-question']}>
               <OpenQuestion
                 baseUrl={baseUrl}
                 playStatus={playStatus}
@@ -366,7 +368,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={[map.ProposalBrief, '/build/brick/:brickId/brief']}>
+            <Route path={[map.ProposalBrief, map.ProposalBase + '/brief']}>
               <Brief
                 baseUrl={baseUrl}
                 playStatus={playStatus}
@@ -376,19 +378,20 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={[map.ProposalPrep, '/build/brick/:brickId/prep']}>
+            <Route path={[map.ProposalPrep, map.ProposalBase + '/prep']}>
               <Prep
                 playStatus={playStatus}
                 parentPrep={localBrick.prep}
                 canEdit={canEdit}
                 baseUrl={baseUrl}
                 savePrep={this.setPrep}
+                brickLength={localBrick.brickLength}
                 saveBrick={this.setPrepAndSave}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
             
-            <Route path={[map.ProposalReview, '/build/brick/:brickId/proposal']}>
+            <Route path={[map.ProposalReview, map.ProposalBase + '/plan']}>
               <ProposalReview
                 playStatus={playStatus}
                 brick={localBrick}
@@ -397,6 +400,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 canEdit={canEdit}
                 user={user}
                 setBrickField={this.setBrickField}
+                setKeywords={this.setKeywords}
+                setAcademicLevel={this.setAcademicLevel}
                 saveBrick={this.saveAndMove}
                 saveAndPreview={() => this.saveAndPreview(playStatus)}
               />

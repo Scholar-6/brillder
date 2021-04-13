@@ -3,16 +3,14 @@ import { Grid, Hidden } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
 import update from "immutability-helper";
-import { useHistory, useLocation } from "react-router-dom";
 import { Moment } from "moment";
 
 import "./ReviewPage.scss";
-import sprite from "assets/img/icons-sprite.svg";
 import { Question } from "model/question";
 import { PlayStatus } from "../model";
 import { PlayMode } from "../model";
-import { BrickLengthEnum } from "model/brick";
-import { getPlayPath, getAssignQueryString, scrollToStep } from "../service";
+import { Brick } from "model/brick";
+import { getPlayPath, scrollToStep } from "../service";
 
 import ReviewStepper from "./ReviewStepper";
 import QuestionLive from "../questionPlay/QuestionPlay";
@@ -24,12 +22,14 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import MobilePrevButton from "../live/components/MobilePrevButton";
 import MobileNextButton from "../live/components/MobileNextButton";
+import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
+import { isPhone } from "services/phone";
+import { getReviewTime } from "../services/playTimes";
 
 interface ReviewPageProps {
   status: PlayStatus;
-  brickId: number;
-  questions: Question[];
-  brickLength: BrickLengthEnum;
+  brick: Brick;
+  history: any;
   startTime?: Moment;
   attempts: any[];
   isPlayPreview?: boolean;
@@ -42,21 +42,22 @@ interface ReviewPageProps {
 
 const ReviewPage: React.FC<ReviewPageProps> = ({
   status,
-  questions,
   updateAttempts,
   attempts,
+  history,
+  brick,
   finishBrick,
-  brickId,
   ...props
 }) => {
-  const history = useHistory();
-  const location = useLocation();
+  const {questions} = brick;
   const [activeStep, setActiveStep] = React.useState(0);
   let initAnswers: any[] = [];
   const [answers, setAnswers] = React.useState(initAnswers);
   const [isSubmitOpen, setSubmitAnswers] = React.useState(false);
+  const [questionScrollRef] = React.useState(React.createRef<HTMLDivElement>());
+
   const theme = useTheme();
-  let playPath = getPlayPath(props.isPlayPreview, brickId);
+  let playPath = getPlayPath(props.isPlayPreview, brick.id);
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -72,18 +73,18 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     }
 
     document.addEventListener("keydown", handleMove, false);
-    
+
     return function cleanup() {
       document.removeEventListener("keydown", handleMove, false);
     };
   });
 
   const moveToEnding = () => {
-    history.push(`${playPath}/ending${getAssignQueryString(location)}`)
+    history.push(`${playPath}/ending`)
   }
 
   if (status === PlayStatus.Live) {
-    history.push(`${playPath}/intro${getAssignQueryString(location)}`)
+    history.push(`${playPath}/intro`);
     return <PageLoader content="...Loading..." />;
   } else if (status === PlayStatus.Ending) {
     moveToEnding();
@@ -117,6 +118,15 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     if (activeStep === 0) {
       return;
     }
+
+    // phone scroll to top
+    if (isPhone()) {
+      const {current} = questionScrollRef;
+      if (current) {
+        current.scrollTo({top: 0});
+      }
+    }
+
     setActiveAnswer();
     questions[activeStep].edited = true;
     setActiveStep(update(activeStep, { $set: activeStep - 1 }));
@@ -129,12 +139,24 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     setActiveStep(update(activeStep, { $set: activeStep + 1 }));
     scrollToStep(activeStep + 2);
 
+    // phone scroll to top
+    if (isPhone()) {
+      const {current} = questionScrollRef;
+      if (current) {
+        current.scrollTo({top: 0});
+      }
+    }
+
     if (activeStep >= questions.length - 1) {
       setSubmitAnswers(true);
     }
   };
 
-  const onEnd = () => moveNext();
+  const onEnd = () => {
+    if (!props.isPlayPreview) {
+      moveNext();
+    }
+  }
 
   const moveNext = () => {
     handleStep(activeStep)();
@@ -186,14 +208,12 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-        <div className="introduction-page">
-          <div className={indexClassName}>
-            <div className="question-index">{index + 1}</div>
-          </div>
-          <div className="question-live-play review-content">
-            <div className="question-title">{renderReviewTitle(attempt)}</div>
-            {renderQuestion(question, index)}
-          </div>
+        <div className={indexClassName}>
+          <div className="question-index">{index + 1}</div>
+        </div>
+        <div className="question-live-play review-content">
+          <div className="question-title">{renderReviewTitle(attempt)}</div>
+          {renderQuestion(question, index)}
         </div>
       </TabPanel>
     );
@@ -205,8 +225,8 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     }
     return (
       <button className="play-preview svgOnHover play-white" onClick={prev}>
-        <SpriteIcon name="arrow-left" className="w80 h80 svg-default m-0 text-gray" />
-        <SpriteIcon name="arrow-left" className="svg w80 h80 colored m-0 text-white" />
+        <SpriteIcon name="arrow-left" className="w80 h80 svg-default m-l-02 text-gray" />
+        <SpriteIcon name="arrow-left" className="svg w80 h80 colored m-l-02 text-white" />
       </button>
     );
   };
@@ -214,8 +234,8 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const renderCenterText = () => {
     if (questions.length - 1 > activeStep) {
       return (
-        <div className="direction-info">
-          <h2 className="text-center">Next</h2>
+        <div className="direction-info text-center">
+          <h2>Next</h2>
           <span>Don’t panic, you can<br />always come back</span>
         </div>
       );
@@ -242,62 +262,141 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         className="play-preview svgOnHover play-green"
         onClick={() => setSubmitAnswers(true)}
       >
-        <svg className="svg w80 h80 active" style={{ margin: 0 }}>
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#check-icon-thin"} />
-        </svg>
+        <SpriteIcon name="check-icon-thin" className="svg w80 h80 active" />
       </button>
     );
   }
 
+  const renderPhoneButtons = () => {
+    return (
+      <div className="action-footer mobile-footer-fixed-buttons">
+        <SpriteIcon name="arrow-left" className="mobile-back-button" onClick={prev} />
+        <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={() => {
+          if (questions.length - 1 > activeStep) {
+            next();
+          } else {
+            setSubmitAnswers(true);
+          }
+        }} />
+      </div>
+    );
+  }
+
+  const minutes = getReviewTime(brick.brickLength);
+
   return (
-    <div className="brick-container play-preview-panel review-page">
-      <Grid container direction="row">
-        <Grid item sm={8} xs={12}>
+    <div className="brick-row-container review-container">
+      {!isPhone() && <div className="fixed-upper-b-title">{brick.title}</div>}
+      <div className="brick-container play-preview-panel review-page">
+        <div className="introduction-page">
           <Hidden only={['xs']}>
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={activeStep}
-              className="swipe-view"
-              onChangeIndex={handleStep}
-            >
-              {questions.map(renderQuestionContainer)}
-            </SwipeableViews>
+            <Grid container direction="row">
+              <Grid item sm={8} xs={12}>
+                <SwipeableViews
+                  axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                  index={activeStep}
+                  className="swipe-view"
+                  onChangeIndex={handleStep}
+                >
+                  {questions.map(renderQuestionContainer)}
+                </SwipeableViews>
+                <div className="new-layout-footer" style={{ display: 'none' }}>
+                  <div className="time-container">
+                    <TimeProgressbar
+                      isLive={true}
+                      onEnd={onEnd}
+                      endTime={null}
+                      brickLength={brick.brickLength}
+                      setEndTime={() => { }}
+                    />
+                  </div>
+                  <div className="minutes-footer">
+                    {minutes}:00
+                  </div>
+                  <div className="footer-space"/>
+                  <div className="new-navigation-buttons">
+                    <div className="n-btn back" onClick={prev}>
+                      <SpriteIcon name="arrow-left" />
+                      Back
+                    </div>
+                    <div className="n-btn next" onClick={() => {
+                      if (questions.length - 1 > activeStep) {
+                        next();
+                      } else {
+                        setSubmitAnswers(true);
+                      }
+                    }}>
+                      Next
+                      <SpriteIcon name="arrow-right" />
+                    </div>
+                  </div>
+                </div>
+              </Grid>
+              <Grid item sm={4} xs={12}>
+                <div className="introduction-info">
+                  <CountDown brickLength={brick.brickLength} endTime={null} setEndTime={() => { }} onEnd={onEnd} />
+                  <div className="intro-text-row f-align-self-start m-t-5">
+                    <ReviewStepper
+                      questions={questions}
+                      attempts={attempts}
+                      activeStep={activeStep}
+                      handleStep={handleStep}
+                    />
+                  </div>
+                  <div className="action-footer">
+                    <div>{renderPrevButton()}</div>
+                    {renderCenterText()}
+                    <div>{renderNextButton()}</div>
+                  </div>
+                </div>
+              </Grid>
+            </Grid>
           </Hidden>
           <Hidden only={["sm", "md", "lg", "xl"]}>
-            {questions.map(renderQuestionContainer)}
-            <MobilePrevButton activeStep={activeStep} onClick={prev} />
-            <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
-          </Hidden>
-        </Grid>
-        <Grid item sm={4} xs={12}>
-          <div className="introduction-info">
-            <CountDown brickLength={props.brickLength} endTime={null} setEndTime={() => { }} onEnd={onEnd} />
-            <div className="intro-text-row f-align-self-start m-t-5">
-              <Hidden only={['sm', 'md', 'lg', 'xl']}>
-                <span className="heading">Review</span>
-              </Hidden>
-              <ReviewStepper
-                questions={questions}
-                attempts={attempts}
-                handleStep={handleStep}
-              />
-            </div>
-            <Hidden only={['xs']}>
-              <div className="action-footer">
-                <div>{renderPrevButton()}</div>
-                {renderCenterText()}
-                <div>{renderNextButton()}</div>
+            <div className="intro-header">
+              <div className="intro-text-row">
+                <span className="phone-stepper-head"><span className="bold">{brick.subject?.name}</span> {brick.title}</span>
+                <ReviewStepper
+                  questions={questions}
+                  attempts={attempts}
+                  activeStep={activeStep}
+                  handleStep={handleStep}
+                />
               </div>
-            </Hidden>
-          </div>
-        </Grid>
-      </Grid>
-      <SubmitAnswersDialog
-        isOpen={isSubmitOpen}
-        submit={submitAndMove}
-        close={() => setSubmitAnswers(false)}
-      />
+            </div>
+            <div className="introduction-info">
+            </div>
+            <div className="introduction-content" ref={questionScrollRef}>
+              {questions.map(renderQuestionContainer)}
+              {isPhone()
+                ? renderPhoneButtons()
+                : <div className="action-footer">
+                  <div>
+                    <MobilePrevButton activeStep={activeStep} onClick={prev} />
+                  </div>
+                  <div className="direction-info text-center"></div>
+                  <div>
+                    <MobileNextButton questions={questions} activeStep={activeStep} onClick={next} setSubmitAnswers={setSubmitAnswers} />
+                  </div>
+                </div>}
+              <div className="time-container">
+                <TimeProgressbar
+                  isLive={true}
+                  onEnd={onEnd}
+                  endTime={null}
+                  brickLength={brick.brickLength}
+                  setEndTime={() => { }}
+                />
+              </div>
+            </div>
+          </Hidden>
+          <SubmitAnswersDialog
+            isOpen={isSubmitOpen}
+            submit={submitAndMove}
+            close={() => setSubmitAnswers(false)}
+          />
+        </div>
+      </div>
     </div>
   );
 };

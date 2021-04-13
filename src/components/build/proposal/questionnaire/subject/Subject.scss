@@ -61,7 +61,7 @@ $box-radius: 0.4vw;
       .MuiFormControlLabel-label {
         color: var(--theme-dark-blue);
         margin-left: 1vw;
-        font-family: $font-family-regular;
+        font-family: $font-family-light;
         @include phone_and_tabletP {
           font-size: 6vw;
         }
@@ -203,6 +203,15 @@ $box-radius: 0.4vw;
       margin-top: 12.8vw;
       font-size: 2vw;
       font-family: $font-family-bold;
+    }
+  }
+
+  .subject-default-preview {
+    .brick-logo-image {
+      width: 60%;
+    }
+    .logo-mobile-text-image {
+      width: 55%;
     }
   }
 

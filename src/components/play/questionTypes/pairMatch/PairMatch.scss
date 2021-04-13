@@ -9,6 +9,10 @@
     flex-direction: row !important;
   }
 
+  .question-hint-global  {
+    margin-top: 5px;
+  }
+
   .pair-match-play-option {
     @extend %textCenter;
     color: var(--theme-dark-blue);
@@ -20,6 +24,7 @@
 
     .option-container {
       width: 100%;
+      overflow: scroll;
 
       p {
         text-align: center !important;
@@ -28,7 +33,7 @@
         @include tabletP {
           width: auto !important;
           max-width: 100%;
-          max-height: 30vh !important;
+          max-height: 15vh !important;
         }
       }
     }
@@ -54,6 +59,7 @@
     flex-wrap: wrap;
     width: 50%;
     .pair-match-play-choice {
+      cursor: pointer;
       .MuiListItem-root {
         padding-top:4px !important;
         padding-bottom:4px !important;
@@ -73,9 +79,13 @@
           @include tabletP {
             width: auto !important;
             max-width: 100%;
-            max-height: 30vh !important;
+            max-height: 15vh !important;
           }
         }
+      }
+      .question-hint {
+        margin-top: 1vh;
+        border-radius: 0.6vw !important;
       }
     }
   }

@@ -5,8 +5,9 @@
 .main-listing,
 .play-preview-pages {
   background: var(--theme-dark-blue);
-  height: 100%;
+  height: 100vh;
   width: 100%;
+  overflow: hidden;
   @include phone_and_tabletP {
     background-color: var(--solitude-light);
   }
@@ -73,6 +74,7 @@
       .logout-container {
         display: flex;
         align-items: center;
+        transition: all 400ms;
         @include phone_and_tabletP {
           margin: 0;
           width: 100% !important;
@@ -85,7 +87,6 @@
           margin-left: 1vw;
           border-bottom-left-radius: 2vw;
           background: var(--theme-light-blue);
-          jusify-content: flex-end;
         }
 
         .search-container {
@@ -210,9 +211,6 @@
     }
     .bigger-hover:hover {
       height: 35.4vh;
-      .hover-icons-row {
-        height: 11.2vh;
-      }
     }
 
     .next-bricks {
@@ -220,15 +218,6 @@
       right: 0;
       color: white;
       top: 2vh;
-    }
-  }
-  .zEWidget-launcher {
-    @include phone_and_tabletP {
-      background-color: red !important;
-      left: 5% !important;
-      bottom: -1vh !important;
-      width: 17vw !important;
-      opacity: 0 !important;
     }
   }
   .users-pagination,
@@ -401,5 +390,26 @@
   @include phone_and_tabletP {
     opacity: 0;
     display: none;
+  }
+}
+
+// tracking button
+.tracking-button {
+  height: 45px;
+  width: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-button {
+  cursor: pointer;
+  margin-right: 7vw;
+  color: var(--white);
+  font-size: 1.8vw;
+  transition: all 300ms ease-out;
+  font-family: $font-family-bold;
+  &:hover {
+    color: var(--theme-orange); 
   }
 }

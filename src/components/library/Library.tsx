@@ -1,32 +1,34 @@
 import React, { Component } from "react";
 import { Grid, Hidden } from "@material-ui/core";
-import { Category } from "../viewAllPage/interface";
+import { Category } from "../viewAllPage/service/interface";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 import "swiper/swiper.scss";
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
-import './Library.scss';
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
-import { Brick, Subject } from "model/brick";
+import { Brick, SubjectAItem } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import { getLibraryBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
-import { SortBy } from "./model";
-import { AssignmentBrick } from "model/assignment";
+import { SortBy, SubjectAssignments } from "./service/model";
+import { LibraryAssignmentBrick } from "model/assignment";
 
-import LibraryFilter from "./LibraryFilter";
-import ViewAllPagination from "../viewAllPage/ViewAllPagination";
+import LibraryFilter from "./components/LibraryFilter";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
-import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-import AssignedBricks from "./AssignedBricks";
 import { getBrickColor } from "services/brick";
 import { getStudentClassrooms } from "services/axios/classroom";
 import { TeachClassroom } from "model/classroom";
+import LibrarySubjects from "./components/LibrarySubjects";
+import LibraryPhoneSubjects from "./components/LibraryPhoneSubjects";
+import SingleSubjectAssignments from "./singleSubject/SingleSubjectAssignments";
+import { isPhone } from "services/phone";
 
 
 interface BricksListProps {
@@ -37,8 +39,9 @@ interface BricksListProps {
 }
 
 interface BricksListState {
-  finalAssignments: AssignmentBrick[];
-  rawAssignments: AssignmentBrick[];
+  finalAssignments: LibraryAssignmentBrick[];
+  rawAssignments: LibraryAssignmentBrick[];
+  subjectAssignments: SubjectAssignments[];
 
   searchString: string;
   isSearching: boolean;
@@ -57,9 +60,13 @@ interface BricksListState {
   failedRequest: boolean;
   pageSize: number;
   isAdmin: boolean;
-  isCore: boolean;
   shown: boolean;
+  subjectChecked: boolean;
 }
+
+const MobileTheme = React.lazy(() => import('./themes/MyLibraryPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/MyLibraryPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/MyLibraryPageDesktopTheme'));
 
 class Library extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
@@ -73,6 +80,7 @@ class Library extends Component<BricksListProps, BricksListState> {
     this.state = {
       finalAssignments: [],
       rawAssignments: [],
+      subjectAssignments: [],
       classrooms: [],
       sortBy: SortBy.Date,
       subjects: [],
@@ -88,8 +96,8 @@ class Library extends Component<BricksListProps, BricksListState> {
       isClassClearFilter: false,
       failedRequest: false,
       isAdmin,
-      isCore: true,
       shown: false,
+      subjectChecked: false,
     };
 
     this.loadData();
@@ -97,7 +105,7 @@ class Library extends Component<BricksListProps, BricksListState> {
 
   // reload subjects and assignments when notification come
   componentDidUpdate(prevProps: BricksListProps) {
-    const {notifications} = this.props;
+    const { notifications } = this.props;
     const oldNotifications = prevProps.notifications;
     if (notifications && oldNotifications) {
       if (notifications.length > oldNotifications.length) {
@@ -107,10 +115,14 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   async loadData() {
-    const subjects = await this.loadSubjects();
+    const subjects = await this.loadSubjects() as SubjectAItem[];
+    subjects.forEach(s => {
+      s.assignedCount = 0;
+      s.playedCount = 0;
+    })
     let classrooms = await getStudentClassrooms();
     if (classrooms) {
-      this.setState({classrooms});
+      this.setState({ classrooms });
     }
     await this.getAssignments(subjects);
   }
@@ -118,7 +130,7 @@ class Library extends Component<BricksListProps, BricksListState> {
   async loadSubjects() {
     const subjects = await getSubjects();
 
-    if(subjects) {
+    if (subjects) {
       subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
       return subjects;
     } else {
@@ -127,39 +139,94 @@ class Library extends Component<BricksListProps, BricksListState> {
     return [];
   }
 
-  countSubjectBricks(subjects: any[], assignments: AssignmentBrick[]) {
-    subjects.forEach((s:any) => {
-      s.publicCount = 0;
-      s.personalCount = 0;
+  countSubjectBricks(subjects: SubjectAItem[], assignments: LibraryAssignmentBrick[]) {
+    subjects.forEach(s => {
+      s.playedCount = 0;
+      s.assignedCount = 0;
     });
     for (let a of assignments) {
       for (let s of subjects) {
         if (s.id === a.brick.subjectId) {
-          if (a.brick.isCore) {
-            s.publicCount += 1;
-          } else {
-            s.personalCount += 1;
+          s.assignedCount += 1;
+          if (a.maxScore) {
+            s.playedCount += 1;
           }
         }
       }
     }
   }
 
-  prepareSubjects(assignments: AssignmentBrick[], subjects: Subject[]) {
+  prepareSubjects(assignments: LibraryAssignmentBrick[], subjects: SubjectAItem[]) {
     subjects = subjects.filter(s => assignments.find(a => a.brick.subjectId === s.id));
 
     this.countSubjectBricks(subjects, assignments);
     return subjects;
   }
 
-  async getAssignments(subjects: Subject[]) {
-    const rawAssignments = await getLibraryBricks();
+  getAssignmentSubjects(assignments: LibraryAssignmentBrick[], subjects: SubjectAItem[]) {
+    let subjectAssignments: SubjectAssignments[] = [];
+    for (let assignment of assignments) {
+      const { subjectId } = assignment.brick;
+      let subjectFound = false;
+      for (let subjectAssignment of subjectAssignments) {
+        if (subjectAssignment.subject.id === subjectId) {
+          subjectFound = true;
+        }
+      }
+      if (!subjectFound) {
+        const subject = subjects.find(s => s.id === subjectId);
+        if (subject) {
+          subjectAssignments.push({
+            subject,
+            assignments: []
+          });
+        } else {
+          // error
+        }
+      }
+    }
+    this.populateAssignments(subjectAssignments, assignments);
+    return subjectAssignments;
+  }
+
+  populateAssignments(subjectAssignments: SubjectAssignments[], assignments: LibraryAssignmentBrick[]) {
+    for (let assignment of assignments) {
+      const subjectAssignment = subjectAssignments.find(s => s.subject.id === assignment.brick.subjectId);
+      subjectAssignment?.assignments.push(assignment);
+    }
+  }
+
+  preselectSubject(subjects: SubjectAItem[]) {
+    const values = queryString.parse(this.props.location.search);
+    if (values.subjectId) {
+      const subject = subjects.find(s => s.id === parseInt(values.subjectId as string));
+      if (subject) {
+        subject.checked = true;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  async getAssignments(subjects: SubjectAItem[]) {
+    let rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>();
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
-      const finalAssignments = this.filter(rawAssignments, subjects, this.state.isCore);
-      this.setState({...this.state, subjects, isLoading: false, rawAssignments, finalAssignments});
+      const finalAssignments = this.filter(rawAssignments, subjects);
+      const subjectAssignments = this.getAssignmentSubjects(finalAssignments, subjects);
+      let preselected = this.preselectSubject(subjects);
+      if (preselected) {
+        this.setState({
+          ...this.state, subjects, subjectAssignments, isLoading: false,
+          rawAssignments, finalAssignments, subjectChecked: true
+        });
+      } else {
+        this.setState({
+          ...this.state, subjects, subjectAssignments, isLoading: false, rawAssignments, finalAssignments
+        });
+      }
     } else {
-      this.setState({failedRequest: true});
+      this.setState({ failedRequest: true });
     }
   }
 
@@ -169,7 +236,7 @@ class Library extends Component<BricksListProps, BricksListState> {
 
   handleSortChange = (e: any) => { };
 
-  getCheckedSubjectIds(subjects: Subject[]) {
+  getCheckedSubjectIds(subjects: SubjectAItem[]) {
     const filterSubjects = [];
     for (let subject of subjects) {
       if (subject.checked) {
@@ -179,16 +246,10 @@ class Library extends Component<BricksListProps, BricksListState> {
     return filterSubjects;
   }
 
-  filter(assignments: AssignmentBrick[], subjects: Subject[], isCore?: boolean) {
-    let filtered: AssignmentBrick[] = [];
+  filter(assignments: LibraryAssignmentBrick[], subjects: SubjectAItem[]) {
+    let filtered: LibraryAssignmentBrick[] = [];
 
     let filterSubjects = this.getCheckedSubjectIds(subjects);
-
-    if (isCore) {
-      assignments = assignments.filter(a => a.brick.isCore === true);
-    } else {
-      assignments = assignments.filter(a => !a.brick.isCore)
-    }
 
     if (filterSubjects.length > 0) {
       for (let assignment of assignments) {
@@ -207,34 +268,33 @@ class Library extends Component<BricksListProps, BricksListState> {
     return this.state.subjects.some(r => r.checked);
   }
 
-  filterBySubject = (i: number) => {
-    const { subjects } = this.state;
-    subjects[i].checked = !subjects[i].checked;
-    const finalAssignments = this.filter(this.state.rawAssignments, subjects, this.state.isCore);
-    this.setState({subjects, isClearFilter: this.isFilterClear(), finalAssignments, shown: true });
-  };
+  filterByClassroom = async (id: number) => { }
 
-  filterByClassroom = async (id: number) => {
-    if (id > 0) {
-      let rawAssignments = await getLibraryBricks(id);
-      if (rawAssignments) {
-        const finalAssignments = this.filter(rawAssignments, this.state.subjects, this.state.isCore);
-        this.setState({...this.state, activeClassroomId: id, rawAssignments, finalAssignments});
-      }
-    } else {
-      let rawAssignments = await getLibraryBricks();
-      if (rawAssignments) {
-        const finalAssignments = this.filter(rawAssignments, this.state.subjects, this.state.isCore);
-        this.setState({...this.state, activeClassroomId: id, rawAssignments, finalAssignments});
-      }
+  filterBySubject(id: number) {
+    let subjectChecked = true;
+    let isChecked = false;
+    const subject = this.state.subjects.find(s => s.id === id);
+    if (subject.checked === true) {
+      isChecked = true;
+      subjectChecked = false;
     }
+
+    for (let subject of this.state.subjects) {
+      subject.checked = false;
+    }
+
+    if (subject && !isChecked) {
+      subject.checked = true;
+    }
+
+    this.setState({ ...this.state, subjectChecked });
   }
 
   clearSubjects = () => {
     const { state } = this;
     const { subjects } = state;
     subjects.forEach((r: any) => (r.checked = false));
-    const finalAssignments = this.filter(this.state.rawAssignments, subjects, this.state.isCore);
+    const finalAssignments = this.filter(this.state.rawAssignments, subjects);
     this.setState({ ...state, finalAssignments, isClearFilter: false });
   };
 
@@ -313,12 +373,6 @@ class Library extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  toggleCore() {
-    const isCore = !this.state.isCore;
-    const finalAssignments = this.filter(this.state.rawAssignments, this.state.subjects, isCore);
-    this.setState({isCore, finalAssignments});
-  }
-
   renderMainTitle(filterSubjects: number[]) {
     if (filterSubjects.length === 1) {
       const subjectId = filterSubjects[0];
@@ -327,7 +381,7 @@ class Library extends Component<BricksListProps, BricksListState> {
     } else if (filterSubjects.length > 1) {
       return "Filtered";
     }
-    const {activeClassroomId} = this.state;
+    const { activeClassroomId } = this.state;
     if (activeClassroomId > 0) {
       const classroom = this.state.classrooms.find(c => c.id === activeClassroomId);
       if (classroom) {
@@ -337,6 +391,39 @@ class Library extends Component<BricksListProps, BricksListState> {
     return "My Library";
   }
 
+  renderContent() {
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          return <SingleSubjectAssignments userId={this.props.user.id} subjectAssignment={subjectAssignment} history={this.props.history} />
+        }
+      }
+    }
+    return (
+      <div className="bricks-list-container bricks-container-mobile all-subject-assignments">
+        {isPhone() ? <LibraryPhoneSubjects
+          userId={this.props.user.id}
+          subjects={this.state.subjects}
+          pageSize={this.state.pageSize}
+          sortedIndex={this.state.sortedIndex}
+          subjectAssignments={this.state.subjectAssignments}
+          history={this.props.history}
+        />
+          :
+          <LibrarySubjects
+            userId={this.props.user.id}
+            subjects={this.state.subjects}
+            pageSize={this.state.pageSize}
+            sortedIndex={this.state.sortedIndex}
+            subjectAssignments={this.state.subjectAssignments}
+            history={this.props.history}
+          />}
+      </div>
+    );
+  }
+
   render() {
     if (this.state.isLoading) {
       return <PageLoader content="...Getting Bricks..." />;
@@ -344,86 +431,63 @@ class Library extends Component<BricksListProps, BricksListState> {
     const filterSubjects = this.getCheckedSubjectIds(this.state.subjects);
     const { history } = this.props;
     return (
-      <div className="main-listing dashboard-page my-library">
-        {this.renderMobileGlassIcon()}
-        <PageHeadWithMenu
-          page={PageEnum.MyLibrary}
-          user={this.props.user}
-          placeholder={"Search Ongoing Projects & Published Bricks…"}
-          history={this.props.history}
-          search={() => this.search()}
-          searching={(v) => this.searching(v)}
-        />
-        <Grid container direction="row" className="sorted-row">
-          <Grid container item xs={3} className="sort-and-filter-container">
-            <LibraryFilter
-              sortBy={this.state.sortBy}
-              isPublic={this.state.isCore}
-              classrooms={this.state.classrooms}
-              subjects={this.state.subjects}
-              assignments={this.state.rawAssignments}
-              isClearFilter={this.state.isClearFilter}
-              isClassClearFilter={this.state.isClassClearFilter}
-              handleSortChange={e => this.handleSortChange(e)}
-              clearSubjects={() => this.clearSubjects()}
-              filterByClassroom={this.filterByClassroom.bind(this)}
-              filterBySubject={index => this.filterBySubject(index)}
-            />
-          </Grid>
-          <Grid item xs={9} className="brick-row-container">
-            <Hidden only={["xs"]}>
-              <div className={
+      <React.Suspense fallback={<></>}>
+        {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+        <div className="main-listing dashboard-page my-library">
+          {this.renderMobileGlassIcon()}
+          <PageHeadWithMenu
+            page={PageEnum.MyLibrary}
+            user={this.props.user}
+            placeholder={"Search Ongoing Projects & Published Bricks…"}
+            history={this.props.history}
+            search={() => this.search()}
+            searching={(v) => this.searching(v)}
+          />
+          <Grid container direction="row" className="sorted-row">
+            <Grid container item xs={3} className="sort-and-filter-container">
+              <LibraryFilter
+                sortBy={this.state.sortBy}
+                subjects={this.state.subjects}
+                assignments={this.state.rawAssignments}
+                isClearFilter={this.state.isClearFilter}
+                isClassClearFilter={this.state.isClassClearFilter}
+                handleSortChange={e => this.handleSortChange(e)}
+                clearSubjects={() => this.clearSubjects()}
+                filterBySubject={this.filterBySubject.bind(this)}
+              />
+            </Grid>
+            <Grid item xs={9} className="brick-row-container">
+              <Hidden only={["xs"]}>
+                <div className={
                   `
                     brick-row-title main-title uppercase
                     ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}
                   `
                 }
-              >
-                {this.renderMainTitle(filterSubjects)}
-              </div>
-              {this.props.user &&
-                <PrivateCoreToggle
-                  isViewAll={true}
-                  isCore={this.state.isCore}
-                  onSwitch={() => this.toggleCore()}
-                />}
-            </Hidden>
-            <Hidden only={["sm", "md", "lg", "xl"]}>
-              <div
-                className="brick-row-title"
-                onClick={() => history.push(`/play/dashboard/${Category.New}`)}
-              >
-                <button className="btn btn-transparent svgOnHover">
-                  <span>New</span>
-                  <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" />
-                </button>
-              </div>
-            </Hidden>
-            <div className="bricks-list-container bricks-container-mobile">
-              <AssignedBricks
-                user={this.props.user}
-                shown={true}
-                subjects={this.state.subjects}
-                pageSize={this.state.pageSize}
-                sortedIndex={this.state.sortedIndex}
-                assignments={this.state.finalAssignments}
-                history={this.props.history}
-              />
-            </div>
-            <ViewAllPagination
-              pageSize={this.state.pageSize}
-              sortedIndex={this.state.sortedIndex}
-              bricksLength={this.state.finalAssignments.length}
-              moveAllNext={() => this.moveAllNext()}
-              moveAllBack={() => this.moveAllBack()}
-            />
+                >
+                  {this.renderMainTitle(filterSubjects)}
+                </div>
+              </Hidden>
+              <Hidden only={["sm", "md", "lg", "xl"]}>
+                <div
+                  className="brick-row-title"
+                  onClick={() => history.push(`/play/dashboard/${Category.New}`)}
+                >
+                  <button className="btn btn-transparent svgOnHover">
+                    <span>New</span>
+                    <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" />
+                  </button>
+                </div>
+              </Hidden>
+              {this.renderContent()}
+            </Grid>
           </Grid>
-        </Grid>
-        <FailedRequestDialog
-          isOpen={this.state.failedRequest}
-          close={() => this.setState({ ...this.state, failedRequest: false })}
-        />
-      </div>
+          <FailedRequestDialog
+            isOpen={this.state.failedRequest}
+            close={() => this.setState({ ...this.state, failedRequest: false })}
+          />
+        </div>
+      </React.Suspense>
     );
   }
 }

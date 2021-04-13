@@ -13,6 +13,7 @@ enum PlayFilterFields {
 
 interface FilterSidebarProps {
   filters: PlayFilters;
+  assignmentsLength: number;
   assignments: AssignmentBrick[];
   classrooms: ClassroomApi[];
   activeClassroomId: number;
@@ -67,9 +68,24 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
     this.props.filterChanged(filters);
   }
 
+  renderClassroomBox = (c: ClassroomApi, i: number) => {
+    const {activeClassroomId} = this.props;
+
+    return (
+      <div className={`index-box ${activeClassroomId === c.id ? 'active' : ''}`} key={i} onClick={() => this.props.setActiveClassroom(c.id)}>
+        {c.name}
+        {c.assignmentsCount &&
+          <div className="right-index">
+            <div className="white-box">{c.assignmentsCount}</div>
+          </div>
+        }
+      </div>
+    )
+  }
+
   renderIndexesBox = () => {
     const {activeClassroomId} = this.props;
-    
+
     return (
       <div className="sort-box teach-sort-box play-index-box">
         <div className="filter-container sort-by-box">
@@ -79,13 +95,10 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
           <div className={`index-box ${activeClassroomId > 0 ? '' : 'active'}`} onClick={() => this.props.setActiveClassroom(-1)}>
             View All
             <div className="right-index">
-              <div className="white-box">{0}</div>
+              <div className="white-box">{this.props.assignmentsLength}</div>
             </div>
           </div>
-          {this.props.classrooms.map((c, i) => 
-            <div className={`index-box ${activeClassroomId === c.id ? 'active' : ''}`} key={i} onClick={() => this.props.setActiveClassroom(c.id)}>
-              {c.name}
-            </div>)}
+          {this.props.classrooms.map((c, i) => this.renderClassroomBox(c, i))}
         </div>
       </div>
     );

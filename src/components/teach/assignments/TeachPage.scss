@@ -11,12 +11,17 @@
     padding-top: calc(3vh + 1.5vw);
   }
 
+  .teach-sort-box {
+    height: 100%;
+    .classrooms-filter {
+      height: calc(100% - 4vh - 1vw - 1.9vw) !important;
+    }
+  }
+
   .index-box {
     @extend %flexToYCenter;
-    // padding-top: 0 !important;
-    // padding-bottom: 0 !important;
     height: 4.7vh !important;
-    font-size: 2vh !important;
+    font-size: 1.05vw !important;
     font-family: $font-family-regular;
   }
   .white-box {
@@ -39,17 +44,14 @@
     text-transform: capitalize;
     > div {
       width: 100%;
-      line-height: 1.8;
-      padding-left: 1.6vw;
-      background: var(--off-white);
+      height: 100%;
+      background: var(--tab-gray);
+      padding-left: 1.55vw;
     }
-    &.first {
-      position: absolute;
-      top: 1.8vh;
-      height: 2vh;
-      > div {
-        background: inherit;
-      }
+    &.one-of-many {
+      margin-top: 1vh;
+      margin-bottom: 1vh;
+      height: calc(calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh) / 6.35 - 2vh);
     }
   }
   .sort-box {
@@ -59,8 +61,6 @@
       display: flex;
       margin: 0;
       width: 100%;
-      box-sizing: border-box;
-
       .custom-color svg {
         color: var(--color);
       }
@@ -219,16 +219,15 @@
     }
 
     .subject-indexes-box {
-      margin: 0 1.2vw !important;
+      margin: 0 !important;
       width: calc(100% - #{$sidebar-gutter * 2});
 
       .index-box {
         margin: 0 0 0.5vw 0;
         height: auto !important;
-        min-height: 3.4vh;
 
         .right-index {
-          right: 0;
+          right: 1vw !important;
         }
       }
     }
@@ -439,6 +438,7 @@
     @extend %flexCenter;
     color: var(--theme-light-blue);
     .glasses-icon-container {
+      margin-top: 5vh;
       @extend %transitionAll300;
       .glass-eyes-inside {
         @extend %transitionAll300;
@@ -475,13 +475,8 @@
         transform: scale(1.2);
         .glass-eyes-inside {
           opacity: 1;
-
           .aperture {
-            -webkit-animation: rotating 2s linear infinite;
-            -moz-animation: rotating 2s linear infinite;
-            -ms-animation: rotating 2s linear infinite;
-            -o-animation: rotating 2s linear infinite;
-            animation: rotating 2s linear infinite;
+            @include animation(rotating 2s linear infinite)
           }
         }
       }
@@ -501,5 +496,8 @@
       text-align: center;
       font-size: 1.5vw;
     }
+  }
+  .empty-tab-content {
+    height: 80%;
   }
 }

@@ -6,7 +6,6 @@ import './VerticalShuffle.scss';
 import {CompQuestionProps} from '../types';
 import CompComponent from '../Comp';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
-import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
@@ -147,7 +146,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 
   renderAnswer(answer:any, i: number) {
-    let isCorrect = this.checkAttemptAnswer(i);
+    const isCorrect = this.checkAttemptAnswer(i);
     let className = "vertical-shuffle-choice";
 
     if (!this.props.isPreview && this.props.attempt && this.props.isReview) {
@@ -160,7 +159,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
       className += getValidationClassName(isCorrect);
     }
 
-    let hasHint = this.props.isReview || this.props.isPreview;
+    const hasHint = this.props.isReview || this.props.isPreview;
     
     return (
       <div key={i} className={className}>
@@ -196,12 +195,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
             {this.renderAnswers()}
           </ReactSortable>
         )}
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }

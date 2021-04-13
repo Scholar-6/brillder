@@ -7,9 +7,9 @@ import { Brick } from "model/brick";
 import { PlayStatus } from "../model";
 import { BrickAttempt } from "../model";
 import EndingStepper from "./EndingStepper";
-import Clock from "../baseComponents/Clock";
-import { getPlayPath, getAssignQueryString } from "../service";
+import { getPlayPath } from "../service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isPhone } from "services/phone";
 
 interface EndingState {
   oldScore: number;
@@ -32,7 +32,7 @@ interface EndingProps {
   history: any;
   location: any;
   brickAttempt: BrickAttempt;
-  saveAttempt(): void;
+  move(): void;
 }
 
 class EndingPage extends React.Component<EndingProps, EndingState> {
@@ -100,16 +100,16 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     }, 100);
     this.setState({ interval });
 
-    document.addEventListener("keydown", this.state.handleMove, false);
+    //document.addEventListener("keydown", this.state.handleMove, false);
   }
 
   componentWillUnmount() {
     clearInterval(this.state.interval);
-    document.removeEventListener("keydown", this.state.handleMove, false);
+    //document.removeEventListener("keydown", this.state.handleMove, false);
   }
 
   handleMove() {
-    this.props.saveAttempt();
+    this.props.move();
   }
 
   renderProgressBars() {
@@ -171,6 +171,9 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
             </div>
           </Grid>
         </Grid>
+        <div className="p-help-text">
+          This is an average of your provisional score and your review score.
+        </div>
       </div>
     );
   }
@@ -186,11 +189,19 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
           <button
             type="button"
             className="play-preview svgOnHover play-green"
-            onClick={this.props.saveAttempt}
+            onClick={this.props.move}
           >
             <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
           </button>
         </div>
+      </div>
+    );
+  }
+
+  renderPhoneButton() {
+    return (
+      <div className="action-footer mobile-footer-fixed-buttons">
+        <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={this.props.move} />
       </div>
     );
   }
@@ -209,20 +220,30 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     const playPath = getPlayPath(false, this.props.brick.id);
 
     if (this.props.status === PlayStatus.Live) {
-      this.props.history.push(
-        `${playPath}/intro${getAssignQueryString(this.props.location)}`
-      );
+      this.props.history.push(`${playPath}/intro`);
     }
 
     return (
-      <div>
+      <div className="brick-row-container ending-container">
         <Hidden only={["xs"]}>
           <div className="brick-container play-preview-panel ending-page">
+            <div className="fixed-upper-b-title">{this.props.brick.title}</div>
             <Grid container direction="row">
               <Grid item xs={8}>
                 <div className="introduction-page">
-                  <h1 className="title">Final Score : Agg.</h1>
+                  <h1 className="title">Final Score</h1>
                   {this.renderProgressBars()}
+                </div>
+                <div className="new-layout-footer" style={{ display: 'none' }}>
+                  <div className="time-container" />
+                  <div className="minutes-footer" />
+                  <div className="footer-space" />
+                  <div className="new-navigation-buttons">
+                    <div className="n-btn next" onClick={this.props.move}>
+                      Next
+                      <SpriteIcon name="arrow-right" />
+                    </div>
+                  </div>
                 </div>
               </Grid>
               <Grid item xs={4}>
@@ -231,12 +252,10 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     <div>
                       Range: {this.state.minPScore}%-{this.state.maxPScore}%
                     </div>
-                    <Clock brickLength={this.props.brick.brickLength} />
                   </div>
                   <div className="intro-text-row f-align-self-start m-t-5">
                     {this.renderStepper()}
                   </div>
-                  {this.renderFooter()}
                 </div>
               </Grid>
             </Grid>
@@ -244,14 +263,16 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
         </Hidden>
         <Hidden only={["sm", "md", "lg", "xl"]}>
           <div className="brick-container play-preview-panel ending-page mobile-ending-page">
-            <div className="introduction-info">
-              <div className="intro-text-row">
-                <span className="heading">Final Score : Agg.</span>
-                {this.renderStepper()}
+            <div className="introduction-page">
+              <div className="introduction-info">
+                <div className="intro-text-row">
+                  <span className="heading text-center">Final Score</span>
+                  {this.renderStepper()}
+                </div>
               </div>
+              {this.renderProgressBars()}
+              {isPhone() ? this.renderPhoneButton() : this.renderFooter()}
             </div>
-            <div className="introduction-page">{this.renderProgressBars()}</div>
-            {this.renderFooter()}
           </div>
         </Hidden>
       </div>

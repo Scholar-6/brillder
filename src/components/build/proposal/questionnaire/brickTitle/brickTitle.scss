@@ -32,11 +32,27 @@
       }
 
       .subject-text {
+        display: flex;
+        flex-direction: row;
         color: var(--theme-orange);
         font-size: 3.6vh;
         text-align: left;
         @include phone_and_tabletL {
           font-size: 3.5vw;
+        }
+        div {
+          display: flex;
+          flex-direction: column;
+        }
+        .icon-container {
+          @extend %flexCenter;
+          cursor: pointer;
+        }
+        svg {
+          margin-left: 0.4vw;
+          stroke-width: 2.7 !important;
+          width: 2vw;
+          height: 2vw;
         }
       }
     }
@@ -49,12 +65,10 @@
     .input-container {
       @extend %flexCenter;
       flex-direction: column;
-      @include tabletL {
-        margin: 3vh 0 8.5vh $margin-desktop-left;
-        width: 43vw;
-        font-size: 1.4vw;
-        border: transparent;
-      }
+      margin: 0 0 8.5vh $margin-desktop-left;
+      width: 43vw;
+      font-size: 1.4vw;
+      border: transparent;
       .audience-inputs {
         @extend %buildInputs;
       }
@@ -88,13 +102,16 @@
         margin-bottom: 0.5vh;
         width: 15.5vw;
         @extend %ellipsis;
-        &.uppercase {
-          text-transform: uppercase;
-        }
       }
       .topic-filled {
         color: var(--white);
+        font-size: 0.8vw;
+      }
+
+      .key-word {
         font-size: 0.65vw;
+        padding-left: 0.2vw;
+        padding-right: 0.2vw;
       }
 
       .brick-topics {
@@ -107,4 +124,11 @@
       }
     }
   }
+  .tutorial-pagination {
+    padding-top: 9.8vh;
+    position: relative !important;
+  }
+}
+.select-profile-subject {
+  width: 100% !important;
 }

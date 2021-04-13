@@ -1,0 +1,242 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.mainPageMobile {
+  $welcome-col-width: 35.2vw;
+  $first-col-width: 29.6vw;
+  background: var(--theme-dark-blue);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  font-family: $font-family-black;
+  .manage-classes {
+    #Path_8,
+    #Ellipse_12,
+    #Ellipse_12-2,
+    #Path_8-4,
+    .right-smile {
+      fill: var(--theme-light-blue) !important;
+    }
+
+    .right-smile {
+      display: none;
+    }
+
+    #Path_8-2,
+    #Path_8-3 {
+      fill: var(--theme-dark-blue) !important;
+    }
+
+    .right-class-icon,
+    .left-class-icon {
+      color: var(--theme-dark-blue) !important;
+    }
+
+    .item-description {
+      padding: 0;
+      @extend %textCenter;
+      margin: 0;
+      padding-top: 130px;
+      font-family: $font-family-light;
+      color: var(--tab-gray);
+      font-size: 25px;
+      letter-spacing: 4px;
+    }
+  }
+  .my-library-button {
+    button {
+      color: var(--theme-light-blue) !important;
+    }
+  }
+  .view-item-container,
+  .create-item-container,
+  .back-item-container {
+    width: auto;
+    @extend %flexCenter;
+    flex-direction: column;
+
+    @include tabletP {
+      padding: 5vh 0;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      @extend %textCenter;
+      flex-direction: column;
+      .svg {
+        @extend %removePosition;
+        width: 150px;
+        height: 120px;
+        @include phone_and_tabletP {
+          width: 150px;
+          height: 120px;
+        }
+      }
+    }
+
+    &.student-back-work {
+      .btn .svg {
+        @include laptop {
+          width: 13vw;
+          height: 6vw;
+        }
+      }
+    }
+
+    .item-description {
+      padding: 0;
+      @extend %textCenter;
+      margin: 0;
+      font-family: $font-family-light;
+      color: var(--tab-gray);
+      font-size: 25px;
+      letter-spacing: 5px;
+    }
+  }
+  .create-item-container {
+    .btn .svg {
+      @extend %transitionAll300;
+    }
+  }
+
+  .create-item-container,
+  .back-item-container {
+  }
+
+  .dialog-box {
+    .MuiDialog-container {
+      padding: 0 !important;
+    }
+  }
+  .main-page-menu {
+    padding-top: 1.1vw;
+    .menu-buttons {
+      padding-bottom: 1.05vw;
+      display: flex;
+      margin-right: 0;
+      width: 42vw;
+      margin-top: 3px;
+      flex-wrap: wrap;
+      .bell-button {
+        width: 56%;
+        margin: auto;
+      }
+      .more-button {
+        width: 40%;
+        margin: auto;
+      }
+    }
+    &.notification-expanded {
+      height: auto;
+    }
+  }
+  .main-page-menu {
+    position: absolute;
+    width: 42vw;
+    height: 60px;
+    bottom: 0;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 6vw;
+    z-index: 1;
+
+    .more-button {
+      margin-right: 4vw;
+    }
+    .bell-button {
+      margin-right: 7.2vw;
+    }
+    &.menu-expanded {
+      border-top-left-radius: 0;
+      width: 58vw !important;
+    }
+  }
+  .notification-expanded {
+    border-top-left-radius: 0;
+    width: 100vw !important;
+  }
+  .manage-classes {
+    font-size: 25px;
+    .svg {
+      width: 200px;
+      height: 120px;
+    }
+  }
+  .mobile-main-page {
+    width: 100%;
+    height: 100%;
+    @extend %flexCenter;
+    flex-direction: column;
+
+    .prev-image,
+    .next-image {
+      width: 20%;
+      height: 5%;
+      margin: 0;
+      opacity: 0.5;
+    }
+
+    .prev-image {
+      margin-top: 10px;
+    }
+
+    .next-image {
+      margin-bottom: 10px;
+    }
+
+    .swiper-container {
+      width: 100%;
+      height: calc(80%) !important;
+      padding: 1vh 0;
+
+      .swiper-slide {
+        width: 100%;
+        @extend %flexCenter;
+        height: calc(26%);
+        opacity: 0.65;
+
+        &.swiper-slide-next {
+          transform: scale(1);
+          @extend %transitionAll300;
+          opacity: 1;
+        }
+
+        &:not(.swiper-slide-next) {
+          transform: scale(0.85);
+          pointer-events: none;
+        }
+
+        .view-item-container {
+          .svg {
+            width: 230px;
+            height: 100px;
+            margin-bottom: 70px;
+          }
+        }
+
+        .back-item-container {
+          .svg {
+            padding-top: 5px;
+            width: 230px;
+          }
+        }
+
+        .manage-classes {
+          .svg {
+            width: 150px;
+            height: 120px;
+          }
+
+          span {
+            font-size: 25px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.mainPageMobile ~ .beta-text {
+  display: none;
+}

@@ -3,7 +3,7 @@
 @import "src/assets/sass/partials/extensions";
 
 .notification-popup {
-  margin: 0.5vw;
+  margin-top: 0.5vw;
   .MuiPopover-paper {
     background-color: var(--theme-light-blue);
     box-shadow: none !important;
@@ -93,6 +93,7 @@
           }
           .notif-desc {
             color: var(--dark-gray);
+            word-break: break-word;
             font-family: $font-family-regular;
           }
         }

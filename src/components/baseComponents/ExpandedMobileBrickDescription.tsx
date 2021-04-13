@@ -5,6 +5,7 @@ import { Brick } from "model/brick";
 import './ExpandedMobileBrickDescription.scss';
 import SpriteIcon from "./SpriteIcon";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
+import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
 
 
 interface ExpandedDescriptionProps {
@@ -29,7 +30,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
       <div className="expanded-mobile-brick-info">
         {this.props.hide &&
           <div className="expand-button" onClick={this.props.hide}>
-            <SpriteIcon name="minimize" />
+            <SpriteIcon name="corner-up-left" />
           </div>
         }
         <div className={"brick-icons " + this.props.circleClass}>
@@ -44,7 +45,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
             <span>{brick.title}</span>
           </div>
           <div className="link-info">
-            <div>{brick.subTopic} | {brick.alternativeTopics}</div>
+            <KeyWordsPreview keywords={brick.keywords} />
             <div>{getAuthorRow(brick)}</div>
             <div className="expand-open-question"><MathInHtml value={brick.openQuestion} /></div>
             <div>{this.getSubjectRow(brick)}</div>

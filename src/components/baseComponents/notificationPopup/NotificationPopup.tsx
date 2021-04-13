@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Popover, Popper } from '@material-ui/core';
+import { Popper } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
 import sprite from "assets/img/icons-sprite.svg";
 import { Notification, notificationTypeColors, NotificationType } from 'model/notifications';
@@ -87,6 +87,8 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           props.forgetBrick();
           await props.fetchBrick(notification.brick.id);
           history.push(map.ProposalReview);
+        } else if (notification.type === NotificationType.RemindedToPlayBrick) {
+          history.push(map.playIntro(notification.brick.id));
         }
       }
     }
@@ -141,6 +143,12 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#repeat"} />
               </svg>
+            }
+            {notification.type === NotificationType.StudentAssignedBrick &&
+              <SpriteIcon name="file-plus" className="w60 h60 active text-theme-dark-blue" />
+            }
+            {notification.type === NotificationType.RemindedToPlayBrick &&
+              <SpriteIcon name="reminder" className="w60 h60 active text-theme-dark-blue stroke-2" />
             }
           </div>
           <div className="content-box" onClick={() => move(notification)}>

@@ -94,48 +94,12 @@
       }
     }
   }
-
-  .direction-info {
-    font-size: 2.7vw;
-    font-family: $font-family-bold;
-    @extend %textCenter;
-  }
-
   .complete-brick-name {
     padding-left: 0;
     font-size: 2.1vw;
     margin-top: 7vh;
   }
-
-  .roller-red {
-    padding: 2.5vw !important;
-    height: 5.2vw;
-    width: 5.2vw;
-
-    &:after {
-      @include phone_and_tabletP {
-        width: calc(100% + 3vw);
-        height: calc(100% + 3vw);
-      }
-      @include tabletP {
-        width: calc(100% + 1.7vw);
-        height: calc(100% + 1.7vw);
-      }
-    }
-
-    background-color: var(--theme-orange);
-    &:after {
-      background-color: var(--theme-orange-alpha5);
-    }
-    .svg {
-      color: var(--white);
-    }
-    &:hover {
-      animation-name: pulse-orange;
-      animation-duration: 1s;
-      animation-delay: 0s;
-      animation-iteration-count: 5;
-      animation-timing-function: ease;
-    }
+  .inner-radio-text {
+    font-size: 1.1vw;
   }
 }

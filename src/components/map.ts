@@ -1,21 +1,37 @@
+import { setAssignmentId } from "localStorage/playAssignmentId";
+
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
 export const Build = '/build';
 export const MainPage = '/home';
-export const UserProfile = '/user-profile';
 export const ProposalBase = `${Build}/new-brick`;
 export const ProposalBase2 = `${Build}/brick/:brickId`;
 export const BackToWorkPage = '/back-to-work';
 export const AssignmentsPage = '/assignments';
+export const AssignmentsClassPage = AssignmentsPage + '/:classId';
+export const MyLibrary = '/my-library';
+export const Onboarding = '/onboarding';
+export const TermsPage = '/terms';
+
+export const TermsSignUp = Onboarding + '/terms';
+export const SetUsername = Onboarding + '/set-username';
+export const MobileUsername = Onboarding + '/mobile-username';
+export const SelectSubjectPage = Onboarding + '/select-subjects';
+export const UserPreference = Onboarding + '/user-preference';
+export const UserProfile = Onboarding + '/profile-page';
+
 
 export const BackToWorkTeachTab = BackToWorkPage + '/teach';
 export const BackToWorkBuildTab = BackToWorkPage + '/build';
 export const BackToWorkLearnTab = BackToWorkPage + '/learn';
 
 export const TeachAssignedTab = '/teach/assigned';
+export const TeachAssignedArchiveTab = TeachAssignedTab + '/archive';
 export const ManageClassroomsTab = '/teach/manage-classrooms';
 
+
 export const ViewAllPage = '/play/dashboard';
+export const AllSubjects = ViewAllPage + '/all-subjects';
 
 const investigation = (brickId: number) => {
   return `/build/brick/${brickId}/investigation`;
@@ -42,16 +58,19 @@ export const investigationSynthesisSuggestions = (brickId: number) => {
 }
 
 // proposal pages
-export const ProposalSubject = `${ProposalBase}/subject`;
-export const ProposalTitle = `${ProposalBase}/brick-title`;
-export const ProposalOpenQuestion = `${ProposalBase}/open-question`;
-export const ProposalBrief = `${ProposalBase}/brief`;
-export const ProposalPrep = `${ProposalBase}/prep`;
-export const ProposalLength = `${ProposalBase}/length`;
-export const ProposalReview = `${ProposalBase}/proposal`;
+export const ProposalSubject = `${ProposalBase2}/subject`;
+export const ProposalTitle = `${ProposalBase2}/brick-title`;
+export const ProposalOpenQuestion = `${ProposalBase2}/open-question`;
+export const ProposalBrief = `${ProposalBase2}/brief`;
+export const ProposalPrep = `${ProposalBase2}/prep`;
+export const ProposalLength = `${ProposalBase2}/length`;
+export const ProposalReview = `${ProposalBase2}/plan`;
 
-export const ProposalReview2 = `${ProposalBase2}/proposal`;
+export const ProposalReview2 = `${ProposalBase2}/plan`;
 
+// new brick link
+export const ProposalSubjectLink = `${ProposalBase}/subject`;
+export const ProposalTitleLink = `${ProposalBase}/brick-title`;
 
 // play preview
 export const PlayPreviewBase = '/play-preview/brick';
@@ -85,7 +104,8 @@ export const postPlay = (brickId: number, userId: number) => {
 }
 
 export const playAssignment = (brickId: number, assignmentId: number) => {
-  return `/play/brick/${brickId}/intro?assignmentId=${assignmentId}`
+  setAssignmentId(assignmentId);
+  return `/play/brick/${brickId}/intro`;
 }
 
 export default {
@@ -94,6 +114,14 @@ export default {
   UserProfile,
   Login,
   MainPage,
+  MyLibrary,
+
+  TermsPage,
+  TermsSignUp,
+  SetUsername,
+  MobileUsername,
+  SelectSubjectPage,
+  UserPreference,
 
   ProposalBase,
   ProposalSubject,
@@ -104,17 +132,23 @@ export default {
   ProposalLength,
   ProposalReview,
   ProposalReview2,
+  ProposalSubjectLink,
+  ProposalTitleLink,
 
   BackToWorkPage,
   AssignmentsPage,
+  AssignmentsClassPage,
   BackToWorkTeachTab,
   BackToWorkBuildTab,
   BackToWorkLearnTab,
 
   TeachAssignedTab,
+  TeachAssignedArchiveTab,
   ManageClassroomsTab,
 
   ViewAllPage,
+  AllSubjects,
+
   postPlay,
   playAssignment,
 

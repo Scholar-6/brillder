@@ -1,5 +1,5 @@
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
-import map, { ProposalSubject } from "components/map";
+import map from "components/map";
 import React from "react";
 
 import { TeachActiveTab } from "./model";
@@ -21,7 +21,7 @@ const TeachTab: React.FC<TabProps> = ({ history, activeTab, assignmentsEnabled }
     } else {
       setErrorOpen(true);
     }
-  }, [assignmentsEnabled]);
+  }, [assignmentsEnabled, history]);
 
   const assignedTab = () => {
     const className = isActive(activeTab, TeachActiveTab.Assignments);

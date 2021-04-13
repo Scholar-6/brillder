@@ -4,7 +4,6 @@ import "./LineHighlighting.scss";
 import CompComponent from "../Comp";
 import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/model";
-import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 
 
 interface LineHighlightingProps extends CompQuestionProps {
@@ -64,9 +63,7 @@ class LineHighlighting extends CompComponent<
   renderLinePreview(line: any, index: number) {
     return (
       <div key={index}>
-        <span
-          className={line.checked ? "correct line" : "line"}
-        >
+        <span className={line.checked ? "correct line" : "line"}>
           {line.text}
         </span>
       </div>
@@ -78,6 +75,15 @@ class LineHighlighting extends CompComponent<
       return this.renderLinePreview(line, index);
     }
     let className = "line";
+    
+    if (this.props.isDefaultBook) {
+      return (
+        <div key={index}>
+          <span className={className}>{line.text}</span>
+        </div>
+      );
+    }
+    
     if (line.selected) {
       className += " active";
     }
@@ -131,12 +137,7 @@ class LineHighlighting extends CompComponent<
           ))}
         </div>
         <br/>
-        <ReviewGlobalHint
-          isReview={this.props.isReview}
-          attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
-          hint={this.props.question.hint}
-        />
+        {this.renderGlobalHint()}
       </div>
     );
   }

@@ -1,0 +1,176 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.name-subject-form, .name-subject-display {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  height: 100%;
+  padding-left: 0.7vw;
+}
+
+.name-subject-form {
+  .MuiOutlinedInput-input {
+    padding-top: 1vh !important;
+    padding-bottom: 1vh !important;
+  }
+  .subject-input {
+    width: 3vw;
+    height: 3vw;
+    margin-right: 1vw;
+
+    .MuiSelect-root {
+      .MuiListItemIcon-root {
+        svg {
+          width: 3vw;
+          height: 3vw;
+        }
+      }
+
+      .MuiListItemText-root {
+        display: none;
+      }
+    }
+
+    .arrow-icon {
+      position: absolute;
+      margin: auto;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      pointer-events: none;
+    }
+  }
+
+  .name-input {
+    font-size: 1.5vw;
+    background: var(--white);
+    color: var(--theme-dark-blue);
+    border-radius: 0.3vw;
+    padding-left: 0.5vw;
+  }
+
+  .submit-icon {
+    cursor: pointer;
+    width: 1.5vw;
+    height: 1.5vw;
+    color: var(--theme-orange);
+    margin-left: 1vw;
+    stroke-width: 2.8;
+
+    &.tick {
+      color: var(--theme-green);
+    }
+  }
+}
+
+.name-subject-display {
+  .subject-icon {
+    width: 3vw;
+    height: 3vw;
+    margin-right: 1vw;
+  }
+
+  .name-display {
+    font-size: 1.5vw;
+    font-family: $font-family-regular;
+    text-transform: capitalize;
+    max-width: 25vw;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--theme-dark-blue);
+  }
+
+  .edit-icon {
+    transition: all 300ms ease-out;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.6vw;
+    height: 2.6vw;
+    background: var(--off-white);
+    color: var(--theme-dark-blue) !important;
+    margin-left: 1vw;
+    border-radius: 0.6vw;
+
+    .svg {
+      width: 1.8vw !important;
+      height: 1.8vw !important;
+    }
+
+    .css-custom-tooltip {
+      bottom: -2vw;
+      left: -4vw;
+      color: var(--tab-gray);
+      background: var(--theme-light-blue);
+      width: 12.5vw !important;
+    }
+
+    &:hover {
+      background: var(--theme-orange) !important;
+      color: var(--white) !important;
+      .css-custom-tooltip {
+        opacity: 1;
+      }
+    }
+  }
+  .classroom-btns-container {
+    display: flex;
+    align-items: center;
+  }
+  .assign-button-container {
+    margin-left: 1vw;
+    .btn {
+      cursor: pointer;
+      font-family: $font-family-regular;
+      display: flex;
+      align-items: center;
+      padding-left: 1vw;
+      padding-right: 1vw;
+      height: 2.6vw;
+      background: var(--off-white);
+      color: var(--theme-dark-blue);
+      letter-spacing: 0;
+      position: relative;
+      font-size: 1.5vw;
+
+      .svg {
+        fill: var(--off-white);
+        margin-left: 0.5vw;
+        color: var(--theme-dark-blue);
+        width: 1.8vw;
+        height: 1.8vw;
+        stroke-width: 2;
+      }
+      .css-custom-tooltip {
+        bottom: -2vw;
+        left: -2.1vw;
+        color: var(--tab-gray);
+        background: var(--theme-light-blue);
+        width: 8.4vw !important;
+      }
+
+      &:hover {
+        color: var(--off-white);
+        background: var(--theme-orange);
+        .svg {
+          color: var(--off-white);
+        }
+        .css-custom-tooltip {
+          opacity: 1;
+        }
+      }
+    }
+    .icon-button {
+      .svg {
+        margin: 0;
+      }
+    }
+  }
+}

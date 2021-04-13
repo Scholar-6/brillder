@@ -7,6 +7,12 @@ export enum UserType {
   Institution,
 }
 
+export enum RolePreference {
+  Student = 1,
+  Teacher,
+  Builder,
+}
+
 export enum UserStatus {
   Pending,
   Active,
@@ -35,6 +41,7 @@ export interface User extends UserBase {
   roles: UserRole[];
   rolePreference?: UserRole;
   hasPlayedBrick: boolean;
+  termsAndConditionsAcceptedVersion: string;
 }
 
 export interface UserProfile extends UserBase {

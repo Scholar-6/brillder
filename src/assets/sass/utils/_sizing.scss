@@ -47,14 +47,26 @@
 .m-l-1 {
   margin-left: 1vw !important;
 }
+.m-l-012 {
+  margin-left: 1.2vw !important;
+}
+.m-t-2vh {
+  margin-top: 2vh !important;
+}
 .m-t-5 {
   margin-top: 5vw !important;
+}
+.f-s-2 {
+  font-size: 1.4vw;
 }
 .m-t-10 {
   margin-top: 10vw !important;
 }
 .m-l-02 {
   margin-left: 0.2vw !important;
+  @include phone_and_tabletP {
+    margin-left: 1vw !important;
+  }
 }
 .m-l-03 {
   margin-left: 0.3vw !important;
@@ -64,6 +76,9 @@
 }
 .m-r-04 {
   margin-right: 0.4vw !important;
+}
+.m-b-10 {
+  margin-bottom: 1vw !important;
 }
 .m-b-05 {
   margin-bottom: 0.5vw !important;

@@ -1,40 +1,59 @@
 import React, { useEffect } from "react";
 import { Grid, Hidden } from "@material-ui/core";
+import { connect } from 'react-redux';
 
 import "./FinalStep.scss";
 import { Brick } from "model/brick";
+import actions from "redux/actions/brickActions";
 
-import Clock from "../baseComponents/Clock";
 import ShareDialog from './dialogs/ShareDialog';
 import LinkDialog from './dialogs/LinkDialog';
 import LinkCopiedDialog from './dialogs/LinkCopiedDialog';
 import ShareColumn from "./ShareColumn";
-import InviteColumn from "./InviteColumn";
 import ExitButton from "./ExitButton";
 import InviteDialog from "./dialogs/InviteDialog";
 import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
+import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
+import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
+import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
+import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
+import axios from "axios";
+
 import { User } from "model/user";
-import { checkAdmin } from "components/services/brickService";
-import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { rightKeyPressed } from "components/services/key";
+import AssignBrickColumn from "./AssignBrickColumn";
+import AdaptBrickColumn from "./AdaptBrickColumn";
+import { checkTeacherOrAdmin } from "components/services/brickService";
+import { isPhone } from "services/phone";
 
 interface FinalStepProps {
   brick: Brick;
-  history: any;
   user: User;
+  history: any;
+  moveNext(): void;
+  fetchBrick(brickId: number): Promise<Brick | null>;
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
   brick,
   user,
   history,
+  moveNext,
+  fetchBrick
 }) => {
   const [shareOpen, setShare] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
 
+  const [assign, setAssign] = React.useState(false);
+  const [assignItems, setAssignItems] = React.useState([] as any[]);
+  const [assignFailedItems, setAssignFailedItems] = React.useState([] as any[]);
+  const [assignSuccess, setAssignSuccess] = React.useState(false);
+  const [assignFailed, setAssignFailed] = React.useState(false);
+  const [isAdaptBrickOpen, setIsAdaptBrickOpen] = React.useState(false);
+  const [isAdapting, setIsAdapting] = React.useState(false);
 
   const [inviteSuccess, setInviteSuccess] = React.useState({
     isOpen: false,
@@ -50,7 +69,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     }
 
     document.addEventListener("keydown", handleMove, false);
-    
+
     return function cleanup() {
       document.removeEventListener("keydown", handleMove, false);
     };
@@ -58,36 +77,60 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
   const link = `/play/brick/${brick.id}/intro`;
 
-  let isAdmin = checkAdmin(user.roles);
-  let isEditor = false;
-  try {
-    isEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
-  } catch {}
-  
   let isAuthor = false;
   try {
     isAuthor = brick.author.id === user.id;
-  } catch {}
+  } catch { }
+
+  let canSee = false;
+  try {
+    canSee = checkTeacherOrAdmin(user);
+  } catch { }
+
+  let createBrickCopy = async function () {
+    // prevent multiple clicking
+    if (isAdapting) {
+      return;
+    }
+    setIsAdapting(true);
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/brick/adapt/${brick.id}`,
+      {},
+      { withCredentials: true }
+    );
+    const copyBrick = response.data as Brick;
+
+    await fetchBrick(copyBrick.id);
+    if (copyBrick) {
+      history.push(`/build/brick/${copyBrick.id}/plan?bookHovered=true&copied=true`);
+    } else {
+      console.log('can`t copy');
+    }
+    setIsAdapting(false)
+  }
 
   const renderActionColumns = () => {
+    if (isPhone()) {
+      return (
+        <Grid className="share-row" container direction="row" justify="center">
+          <div>
+            <ShareColumn onClick={() => setShare(true)} />
+            {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
+          </div>
+        </Grid>
+      );
+    }
     return (
       <Grid className="share-row" container direction="row" justify="center">
         <ShareColumn onClick={() => setShare(true)} />
-        <InviteColumn onClick={()=> setInvite(true)} />
+        {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
+        {canSee && <AdaptBrickColumn onClick={() => setIsAdaptBrickOpen(true)} />}
       </Grid>
     );
   }
 
-  const moveNext = () => {
-    if (isAuthor || isAdmin || isEditor) {
-      history.push(`${map.ViewAllPage}?isCore=${brick.isCore}`);
-    } else {
-      history.push(`${map.ViewAllPage}?isCore=${brick.isCore}`);
-    }
-  }
-
   return (
-    <div>
+    <div className="brick-row-container complete-container">
       <Hidden only={['xs']}>
         <div className="brick-container final-step-page">
           <Grid container direction="row">
@@ -107,12 +150,23 @@ const FinalStep: React.FC<FinalStepProps> = ({
             </Grid>
             <Grid item xs={4}>
               <div className="introduction-info">
-                <div className="intro-header">
-                  <Clock brickLength={brick.brickLength} />
-                </div>
                 <div className="intro-text-row">
                 </div>
-                <ExitButton onClick={moveNext} />
+                <div className="action-footer">
+                  <div></div>
+                  <div className="direction-info text-center">
+                    <h2>Results</h2>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      className="play-preview svgOnHover roller-red"
+                      onClick={moveNext}
+                    >
+                      <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
+                    </button>
+                  </div>
+                </div>
               </div>
             </Grid>
           </Grid>
@@ -120,12 +174,21 @@ const FinalStep: React.FC<FinalStepProps> = ({
       </Hidden>
       <Hidden only={['sm', 'md', 'lg', 'xl']}>
         <div className="brick-container mobile-final-step-page final-step-page">
-          <div className="introduction-info">
-            <div className="intro-text-row"></div>
-          </div>
           <div className="introduction-page">
+            <div className="top-icon-container">
+              <div className="icon-background">
+                <SpriteIcon name="star" />
+              </div>
+            </div>
+            <p>Well done for completing</p>
+            <p>“{brick.title}”!</p>
+            {renderActionColumns()}
+            <div className="introduction-info">
+              <div className="intro-text-row"></div>
+            </div>
+            {/* Moved to play/phoneComponents/PhonePlayFooter.tsx 
+              <ExitButton onClick={() => history.push(map.ViewAllPage)} />  */}
           </div>
-          <ExitButton onClick={() => history.push(map.ViewAllPage)} />
         </div>
       </Hidden>
       <LinkDialog
@@ -140,10 +203,62 @@ const FinalStep: React.FC<FinalStepProps> = ({
         isAuthor={isAuthor}
         isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={inviteSuccess.accessGranted}
         close={() => setInviteSuccess({ isOpen: false, name: '', accessGranted: false })} />
-      <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
-      <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
+      <LinkCopiedDialog isOpen={linkCopiedOpen} close={() => setCopiedLink(false)} />
+      <ShareDialog
+        isOpen={shareOpen}
+        link={() => { setShare(false); setLink(true) }}
+        invite={() => { setShare(false); setInvite(true) }}
+        close={() => setShare(false)}
+      />
+      {canSee && <div>
+        <AdaptBrickDialog
+          isOpen={isAdaptBrickOpen}
+          close={() => setIsAdaptBrickOpen(false)}
+          submit={() => createBrickCopy()}
+        /> </div>}
+      {canSee && <div>
+        <AssignPersonOrClassDialog
+          isOpen={assign}
+          success={(items: any[], failedItems: any[]) => {
+            if (items.length > 0) {
+              setAssign(false);
+              setAssignItems(items);
+              setAssignFailedItems(failedItems);
+              setAssignSuccess(true);
+            } else if (failedItems.length > 0) {
+              setAssignFailedItems(failedItems);
+              setAssignFailed(true);
+            }
+          }}
+          close={() => setAssign(false)}
+        />
+        <AssignSuccessDialog
+          isOpen={assignSuccess}
+          brickTitle={brick.title}
+          selectedItems={assignItems}
+          close={() => {
+            setAssignSuccess(false);
+            if (assignFailedItems.length > 0) {
+              setAssignFailed(true);
+            }
+          }}
+        />
+        <AssignFailedDialog
+          isOpen={assignFailed}
+          brickTitle={brick.title}
+          selectedItems={assignFailedItems}
+          close={() => {
+            setAssignFailedItems([]);
+            setAssignFailed(false);
+          }}
+        />
+      </div>}
     </div>
   );
 };
 
-export default FinalStep;
+const mapDispatch = (dispatch: any) => ({
+  fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
+});
+
+export default connect(null, mapDispatch)(FinalStep);

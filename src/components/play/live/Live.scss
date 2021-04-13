@@ -5,22 +5,8 @@
 .MuiStepConnector-root.MuiStepConnector-horizontal.MuiStepConnector-alternativeLabel {
   opacity: 0;
 }
+
 .live-page {
-  @include phone_and_tabletP {
-    height: calc(100% - 60px) !important;
-    overflow-y: hidden !important;
-  }
-  .introduction-page {
-    @include phone_and_tabletP {
-      height: calc(100vh - 60px - 19vw) !important;
-    }
-    .question-index-container,
-    .question-title {
-      @include phone_and_tabletP {
-        display: none;
-      }
-    }
-  }
   .edited-step-icon {
     color: var(--black-blue);
     border-radius: 100%;
@@ -28,13 +14,16 @@
     padding: 5px;
     border: 2px solid var(--black-blue);
   }
+
   .ck-content {
     @include phone_and_tabletP {
       font-size: 4vw;
     }
   }
 }
-.lines-container, .words-container {
+
+.lines-container,
+.words-container {
   font-size: 1.25vw !important;
   line-height: 1.5 !important;
 
@@ -44,7 +33,8 @@
 }
 
 .post-play-page {
-  .lines-container, .words-container {
+  .lines-container,
+  .words-container {
     font-size: 0.85vw !important;
   }
 }
@@ -55,7 +45,14 @@
 
 .words-container.break-lines {
   line-height: 1.5 !important;
+
   .word {
     display: inline-block !important;
+  }
+}
+
+.words-container.lines-inline {
+  .word {
+    white-space: nowrap;
   }
 }

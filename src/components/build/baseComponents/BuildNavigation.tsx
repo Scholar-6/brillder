@@ -25,6 +25,7 @@ interface NavigationProps {
   isPublisher: boolean;
   isEditor: boolean;
   isAdmin: boolean;
+  isAuthor: boolean;
   history: any;
   user: User;
   brick: Brick;
@@ -56,7 +57,10 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
   renderReturnToEditorButton() {
     const {brick} = this.props;
     const {brickStatus} = this.state;
-    let disabled = brickStatus === BrickStatus.Draft || brickStatus === BrickStatus.Build;
+    let disabled = brickStatus === BrickStatus.Build || brickStatus === BrickStatus.Publish;
+    if (!this.props.isValid) {
+      disabled = true;
+    }
 
     if (this.props.isAdmin) {
       return <ReturnToEditorButton disabled={disabled} brick={brick} history={this.props.history} />;
@@ -64,9 +68,14 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
 
     // publisher
     if (this.props.isPublisher) {
-      if (!disabled && brick.status === BrickStatus.Publish) {
+      if (!disabled && brick.status === BrickStatus.Draft) {
         disabled = true;
       }
+      return <ReturnToEditorButton disabled={disabled} brick={brick} history={this.props.history} />;
+    }
+
+    // author
+    if (this.props.isAuthor && (brick.editors?.length ?? 0) > 0) {
       return <ReturnToEditorButton disabled={disabled} brick={brick} history={this.props.history} />;
     }
 
@@ -147,7 +156,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         />
         <div className="build-navigation-buttons">
           {(this.props.isEditor || this.props.isAdmin) && this.renderReturnToAuthorButton()}
-          {this.props.isPublisher && this.renderReturnToEditorButton()}
+          {(this.props.isPublisher || this.props.isAuthor) && this.renderReturnToEditorButton()}
           {(this.props.isEditor || this.props.isAdmin) && this.renderSendToPublisherButton()}
           {this.props.isPublisher && this.renderPublisherButtons()}
         </div>

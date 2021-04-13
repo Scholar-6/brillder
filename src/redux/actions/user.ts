@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { User } from 'model/user';
 import { Action, Dispatch } from 'redux';
 
 import types from '../types';
@@ -28,10 +29,15 @@ const getUser = () => {
       const {data} = response;
       dispatch(getUserSuccess(data));
       dispatch(socketLogin(data.id));
+      return data;
     }).catch(error => {
       dispatch(getUserFailure(error.message));
     });
   }
 }
 
-export default { getUser }
+const setUser = (user: User) => {
+  return getUserSuccess(user);
+}
+
+export default { getUser, setUser }

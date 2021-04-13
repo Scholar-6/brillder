@@ -40,7 +40,7 @@
       }
       .users-table {
         width: 100%;
-        height: calc(100vh - 7.834vw - 5.2vw - 15vh) !important;
+        height: calc(100vh - 7.834vw - 6.5vh - 6vh) !important;
         overflow-y: auto;
         > table {
           width: 100%;
@@ -67,8 +67,11 @@
               }
 
               .subject-title {
-                padding-left: 1vw;
-                width: 5%;
+                padding-left: 0.8vw;
+                width: 11.5%;
+                .sort-button {
+                  margin-left: 0;
+                }
               }
               .user-full-name {
                 width: 30%;
@@ -130,6 +133,14 @@
         overflow-y: auto;
       }
     }
+  }
+  .users-pagination {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  .joing-date {
+    padding-left: 1.2vw !important;
   }
 }
 

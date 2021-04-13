@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
-import { isMobile } from "react-device-detect";
 import queryString from 'query-string';
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
-import "./brick.scss";
-
+import Cover from "./cover/Cover";
+import Sections from "./sections/Sections";
 import Introduction from "./introduction/Introduction";
 import Live from "./live/Live";
 import ProvisionalScore from "./provisionalScore/ProvisionalScore";
@@ -20,7 +20,7 @@ import PageHeadWithMenu, {
   PageEnum,
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
-import { Brick } from "model/brick";
+import { Brick, isAuthenticated } from "model/brick";
 import { PlayStatus, BrickAttempt } from "./model";
 import {
   Question,
@@ -36,14 +36,25 @@ import { PlayMode } from './model';
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames } from "components/build/proposal/model";
 import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
-import { getAssignQueryString, getPlayPath } from "./service";
+import { getPlayPath } from "./service";
 import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";
-import map from "components/map";
+import map, { playIntro } from "components/map";
 import userActions from 'redux/actions/user';
 import { User } from "model/user";
 import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
+import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
+import { createUserByEmail } from "services/axios/user";
+import routes, { playBrief, PlayCoverLastPrefix, playNewPrep, playPreInvesigation, playPrePrep, playSections } from "./routes";
+import { isPhone } from "services/phone";
+import Brief from "./brief/Brief";
+import PrePrep from "./prePrep/PrePrep";
+import NewPrep from "./newPrep/NewPrep";
+import PreInvestigationPage from "./preInvestigation/PreInvestigation";
+import PreSynthesis from "./preSynthesis/PreSynthesis";
+import PreReview from "./preReview/PreReview";
+import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
 
 
 function shuffle(a: any[]) {
@@ -62,8 +73,14 @@ interface BrickRoutingProps {
   // redux
   brick: Brick;
   user: User;
+  isAuthenticated: isAuthenticated;
   getUser(): Promise<any>;
+  setUser(user: User): void;
 }
+
+const MobileTheme = React.lazy(() => import('./themes/BrickPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/BrickPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/BrickPageDesktopTheme'));
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const parsedBrick = parseAndShuffleQuestions(props.brick);
@@ -83,8 +100,24 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [unauthorizedOpen, setUnauthorized] = React.useState(false);
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [searchString, setSearchString] = React.useState("");
+  const [attemptId, setAttemptId] = React.useState<string>();
+
+  // used for unauthenticated user.
+  const [userToken, setUserToken] = React.useState<string>();
+  const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
   setBrillderTitle(brick.title);
+
+  // only cover page should have big sidebar
+  useEffect(() => {
+    if (!isPhone()) {
+      let {pathname} = props.history.location;
+      if (pathname.search(PlayCoverLastPrefix) === -1) {
+        setSidebar(true);
+      }
+    }
+  /*eslint-disable-next-line*/
+  }, [])
 
   // by default move to intro
   let splited = location.pathname.split('/');
@@ -94,13 +127,17 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const updateAttempts = (attempt: any, index: number) => {
-    attempts[index] = attempt;
-    setAttempts(attempts);
+    if (attempt) {
+      attempts[index] = attempt;
+      setAttempts(attempts);
+    }
   };
 
   const updateReviewAttempts = (attempt: any, index: number) => {
-    reviewAttempts[index] = attempt;
-    setReviewAttempts(reviewAttempts);
+    if (attempt) {
+      reviewAttempts[index] = attempt;
+      setReviewAttempts(reviewAttempts);
+    }
   };
 
   const finishLive = () => {
@@ -115,29 +152,63 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     var ba = calcBrickReviewAttempt(brick, reviewAttempts, brickAttempt);
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
+    saveBrickAttempt(ba);
   };
 
-  const saveBrickAttempt = () => {
+  const finishBrick = () => {
+    props.history.push(`/play/brick/${brick.id}/finalStep`);
+  }
+
+  const createBrickAttempt = async (brickAttempt: BrickAttempt) => {
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
-    let values = queryString.parse(location.search);
-    if (values.assignmentId) {
-      brickAttempt.assignmentId = parseInt(values.assignmentId as string);
+
+    const assignmentId = getAssignmentId();
+    if (assignmentId) {
+      brickAttempt.assignmentId = assignmentId;
     }
     return axios.post(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
-      brickAttempt,
+      { brickAttempt, userId: props.user.id },
       { withCredentials: true }
-    ).then(async () => {
-      if (!props.user.hasPlayedBrick) {
+    ).then(async (response) => {
+      clearAssignmentId();
+      if (!props.user.hasPlayedBrick && props.isAuthenticated === isAuthenticated.True) {
         await props.getUser();
       }
-      props.history.push(`/play/brick/${brick.id}/finalStep`);
+      setAttemptId(response.data);
     }).catch(() => {
       setFailed(true);
     });
   };
+
+  const saveBrickAttempt = async (brickAttempt: BrickAttempt) => {
+    if(!attemptId) {
+      return createBrickAttempt(brickAttempt);
+    }
+
+    brickAttempt.brick = brick;
+    brickAttempt.brickId = brick.id;
+    brickAttempt.studentId = props.user.id;
+    const assignmentId = getAssignmentId();
+    if (assignmentId) {
+      brickAttempt.assignmentId = assignmentId;
+    }
+    return axios.put(
+      process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
+      { id: attemptId, userId: props.user.id, body: brickAttempt },
+      { withCredentials: true }
+    ).then(async (response) => {
+      clearAssignmentId();
+      if (!props.user.hasPlayedBrick && props.isAuthenticated === isAuthenticated.True) {
+        await props.getUser();
+      }
+      setAttemptId(response.data);
+    }).catch(() => {
+      setFailed(true);
+    });
+  }
 
   const setSidebar = (state?: boolean) => {
     if (typeof state === "boolean") {
@@ -166,23 +237,62 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         query.activeStep = values.activeStep;
       }
     }
-    if (values.assignmentId) {
-      query.assignmentId = values.assignmentId;
-    }
-    if (isMobile) {
+    if (isPhone()) {
       setHeader(true);
     }
-    props.history.push(liveLink + "?" + queryString.stringify(query));
+    props.history.push(liveLink);
     setSidebar(true);
   }
 
+  const coverMoveNext = () => {
+    if (isPhone()) {
+      moveToIntro();
+    } else {
+      props.history.push(playSections(brick.id));
+      setSidebar(true);
+    }
+  }
+
+  const moveToBrief = () => props.history.push(playBrief(brick.id));
+  const moveToPrePrep = () => props.history.push(playPrePrep(brick.id));
+  const moveToNewPrep = () => props.history.push(playNewPrep(brick.id));
+  const moveToIntro = () => props.history.push(playIntro(brick.id));
+  const moveToPreInvestigation = () => props.history.push(playPreInvesigation(brick.id));
+
   const moveToReview = () => {
     if (props.user) {
+      if (!isPhone()) {
+        return props.history.push(routes.playPreReview(brick.id));
+      }
+      saveBrickAttempt(brickAttempt);
       const playPath = getPlayPath(false, brick.id);
-      props.history.push(`${playPath}/review${getAssignQueryString(location)}`);
+      props.history.push(`${playPath}/review`);
     } else {
       // unauthorized users finish it here. show popup
       setUnauthorized(true);
+    }
+  }
+
+  const moveToPostPlay = () => {
+    if(props.isAuthenticated === isAuthenticated.True) {
+      props.history.push(map.postPlay(brick.id, props.user.id));
+    } else if (userToken) {
+      props.history.push(map.ActivateAccount + "?token=" + userToken);
+    }
+  }
+
+  const createInactiveAccount = async (email: string) => {
+    if (!props.user) {
+      // create a new account for an unauthorized user.
+      let data = await createUserByEmail(email);
+      if (data) {
+        const { user, token } = data;
+        props.setUser(user);
+        setUnauthorized(false);
+        setUserToken(token);
+      } else {
+        setInvalidEmail(true);
+      }
     }
   }
 
@@ -203,6 +313,20 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setSearchString(v);
   }
 
+  const renderPhoneFooter = () => {
+    let isIntro = props.history.location.pathname.slice(-6) === '/intro';
+  
+    return <PhonePlayFooter
+      brick={brick}
+      user={props.user}
+      history={props.history}
+      menuOpen={isIntro}
+      mode={mode}
+      setMode={setMode}
+      moveToPostPlay={moveToPostPlay}
+    />;
+  }
+
   const renderHead = () => {
     let isMobileHidden = false;
     const live = location.pathname.search("/live");
@@ -217,7 +341,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (!props.user) {
       link = map.ViewAllPage;
     }
-    if (!isMobile && sidebarRolledUp) {
+    if (!isPhone() && sidebarRolledUp) {
       return <HomeButton link={link} />;
     }
     if (headerHidden) {
@@ -235,12 +359,41 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       />
     );
   };
+
   const renderRouter = () => {
     return (
       <Switch>
-        <Route exac path="/play/brick/:brickId/intro">
+        <Route exac path={routes.coverRoute}>
+          <Cover
+            user={props.user}
+            location={props.location}
+            history={props.history}
+            brick={brick}
+            moveNext={coverMoveNext}
+          />
+          {isPhone() && renderPhoneFooter()}
+        </Route>
+
+        <Route exact path={routes.sectionsRoute}>
+          <Sections brick={brick} moveNext={moveToBrief} />
+        </Route>
+        <Route exact path={routes.briefRoute}>
+          <Brief brick={brick} mode={mode} user={props.user} moveNext={moveToPrePrep} onHighlight={onHighlight} />
+        </Route>
+        <Route exact path={routes.prePrepRoute}>
+          <PrePrep brick={brick} mode={mode} moveNext={moveToNewPrep} onHighlight={onHighlight} />
+        </Route>
+        <Route exact path={routes.newPrepRoute}>
+          <NewPrep brick={brick} mode={mode} moveNext={moveToPreInvestigation} onHighlight={onHighlight} />
+        </Route>
+        <Route exact path={routes.preInvestigationRoute}>
+          <PreInvestigationPage user={props.user} brick={brick} moveNext={moveToLive} />
+        </Route>
+
+        <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
           <Introduction
             location={props.location}
+            history={props.history}
             mode={mode}
             brick={brick}
             startTime={startTime}
@@ -248,6 +401,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             moveNext={moveToLive}
             onHighlight={onHighlight}
           />
+          {isPhone() && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/live">
           <Live
@@ -265,6 +419,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               }
             }}
           />
+          {isPhone() && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/provisionalScore">
           <ProvisionalScore
@@ -274,22 +429,34 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brick={brick}
             attempts={attempts}
           />
+          {isPhone() && renderPhoneFooter()}
         </Route>
-        <Route exac path="/play/brick/:brickId/synthesis">
+
+        <Route exact path={routes.preSynthesisRoute}>
+          <PreSynthesis brick={brick} history={props.history} />
+        </Route>
+
+        <Route exac path={routes.synthesisRoute}>
           <Synthesis mode={mode} status={status} brick={brick} moveNext={moveToReview} onHighlight={onHighlight} />
+          {isPhone() && renderPhoneFooter()}
         </Route>
-        <Route exac path="/play/brick/:brickId/review">
+        
+        <Route exact path={routes.preReviewRoute}>
+          <PreReview brick={brick} history={props.history} />
+        </Route>
+
+        <Route exac path={routes.reviewRoute}>
           <Review
             mode={mode}
             status={status}
-            questions={brick.questions}
-            brickId={brick.id}
+            history={props.history}
             startTime={startTime}
-            brickLength={brick.brickLength}
+            brick={brick}
             updateAttempts={updateReviewAttempts}
             attempts={attempts}
             finishBrick={finishReview}
           />
+          {isPhone() && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/ending">
           <Ending
@@ -298,15 +465,18 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brick={brick}
             history={props.history}
             brickAttempt={brickAttempt}
-            saveAttempt={saveBrickAttempt}
+            move={finishBrick}
           />
+          {isPhone() && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/finalStep">
           <FinalStep
             user={props.user}
             brick={brick}
             history={props.history}
+            moveNext={moveToPostPlay}
           />
+          {isPhone() && renderPhoneFooter()}
         </Route>
         <ValidationFailedDialog
           isOpen={saveFailed}
@@ -323,29 +493,31 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   return (
-    <div className="play-preview-pages">
-      {renderHead()}
-      <div className={className}>
-        <PlayLeftSidebar
-          history={props.history}
-          brick={brick}
-          mode={mode}
-          sidebarRolledUp={sidebarRolledUp}
-          empty={finalStep}
-          setMode={setMode}
-          toggleSidebar={setSidebar}
-        />
-        <div className="brick-row-container">
+    <React.Suspense fallback={<></>}>
+      {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+      <div className="play-preview-pages">
+        {isPhone() ? <div /> : renderHead()}
+        <div className={className}>
+          <PlayLeftSidebar
+            history={props.history}
+            brick={brick}
+            mode={mode}
+            sidebarRolledUp={sidebarRolledUp}
+            empty={finalStep}
+            setMode={setMode}
+            toggleSidebar={setSidebar}
+          />
           {renderRouter()}
         </div>
+        <UnauthorizedUserDialog
+          isOpen={unauthorizedOpen}
+          emailInvalid={emailInvalid}
+          login={(email) => createInactiveAccount(email)}
+          again={again}
+          close={() => setUnauthorized(false)}
+        />
       </div>
-      <UnauthorizedUserDialog
-        isOpen={unauthorizedOpen}
-        login={() => props.history.push('/')}
-        again={again}
-        close={() => setUnauthorized(false)}
-      />
-    </div>
+    </React.Suspense>
   );
 };
 
@@ -407,7 +579,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             item.index = index;
             item.hint = question.hint.list[index];
           }
-          c.list.map((c:any, i:number) => c.index = i);
+          c.list.map((c: any, i: number) => c.index = i);
           c.list = shuffle(c.list);
         }
       });
@@ -434,11 +606,13 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-  brick: state.brick.brick
+  brick: state.brick.brick,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
+  setUser: (user: User) => dispatch(userActions.setUser(user)),
 });
 
 const connector = connect(mapState, mapDispatch);

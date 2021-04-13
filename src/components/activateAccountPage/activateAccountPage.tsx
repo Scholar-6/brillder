@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Grid, Hidden } from "@material-ui/core";
-import { connect } from "react-redux";
 import { History } from "history";
 import axios from 'axios';
 
 import "./activateAccountPage.scss";
-import actions from "redux/actions/auth";
 import LoginLogo from 'components/loginPage/components/LoginLogo';
 import GoogleButton from "components/loginPage/components/GoogleButton";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
@@ -13,12 +11,9 @@ import RegisterButton from "components/loginPage/components/RegisterButton";
 import map from "components/map";
 import { Redirect, useLocation } from "react-router-dom";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-
-const mapDispatch = (dispatch: any) => ({
-  loginSuccess: () => dispatch(actions.loginSuccess()),
-});
-
-const connector = connect(null, mapDispatch);
+import TermsLink from "components/baseComponents/TermsLink";
+import { isPhone } from "services/phone";
+import DesktopActivateAccountPage from "./DesktopActivateAccountPage";
 
 export enum LoginState {
   ChooseLoginAnimation,
@@ -37,6 +32,8 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
     initPolicyOpen = true;
   }
+
+  const [email, setEmail] = useState('');
   const [isPolicyOpen, setPolicyDialog] = useState(initPolicyOpen);
   const [loginState, setLoginState] = useState(LoginState.ChooseLoginAnimation);
   const [valid, setValid] = React.useState<boolean>();
@@ -45,19 +42,21 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
   const params = new URLSearchParams(search);
   const token = params.get("token");
 
-  const verifyToken = async () => {
-    try {
-      await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
-      setValid(true);
-    } catch(e) {
-      console.log(e.response.statusCode);
-      setValid(false);
-    }
-  }
 
   React.useEffect(() => {
+    const verifyToken = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
+        setValid(true);
+        setEmail(response.data.email);
+      } catch(e) {
+        setValid(false);
+        props.history.push(map.Login);
+      }
+    }
+
     verifyToken();
-  }, [token, setValid]);
+  }, [token, props.history, setValid]);
 
   const moveToEmailPage = () => {
     props.history.push(map.ActivateAccount + '/email?token=' + token);
@@ -87,6 +86,14 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
     );
   }
 
+  if (!email) {
+    return <div />;
+  }
+
+  if (!isPhone()) {
+    return <DesktopActivateAccountPage history={props.history} token={token} match={props.match} email={email} />;
+  }
+
   return (
     <Grid
       className="auth-page login-page"
@@ -114,7 +121,7 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
             <Grid container direction="row" className="third-row">
               <div className="first-col"></div>
               <div className="second-col">
-                <span className="policy-text" onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
+                <TermsLink history={props.history}/>
               </div>
               <div className="third-col"></div>
             </Grid>
@@ -127,4 +134,4 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
   );
 };
 
-export default connector(ActivateAccountPage);
+export default ActivateAccountPage;

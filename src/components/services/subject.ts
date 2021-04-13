@@ -2,7 +2,8 @@ import axios from "axios";
 
 import { Subject } from "../../model/brick";
 
-const GENERAL_SUBJECT = "General";
+export const GENERAL_SUBJECT = "General";
+export const CURRENT_AFFAIRS_SUBJECT = "Current Affairs";
 
 export interface SubjectsResult {
   data: Subject[];
@@ -26,6 +27,10 @@ export const getGeneralSubject = (subjects: Subject[]) => {
 export const getSubjectColor = (subjects: Subject[], subjectId: number) => {
   for (const s of subjects) {
     if (s.id === subjectId) {
+      if (s.name === GENERAL_SUBJECT) {
+        return '#001c58';
+      }
+    
       return s.color;
     }
   }

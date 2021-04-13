@@ -1,7 +1,7 @@
 import { AssignmentBrick } from 'model/assignment';
 import { Brick, BrickStatus } from 'model/brick';
 
-import {get, put, post, axiosDelete} from './index';
+import { get, put, post, axiosDelete } from './index';
 
 export const getPublicBrickById = async (id: number) => {
   try {
@@ -49,7 +49,7 @@ export const getPublishedBricks = async () => {
  */
 export const getCurrentUserBricks = async () => {
   try {
-    return (await get<Brick[]>("/bricks/currentUser"))?.filter(b => b.status !== BrickStatus.Deleted); 
+    return (await get<Brick[]>("/bricks/currentUser/short"))?.filter(b => b.status !== BrickStatus.Deleted);
   } catch (e) {
     return null;
   }
@@ -57,19 +57,19 @@ export const getCurrentUserBricks = async () => {
 
 export const getAssignedBricks = async () => {
   try {
-    return await get<AssignmentBrick[]>("/bricks/assigned"); 
+    return await get<AssignmentBrick[]>("/bricks/assigned");
   } catch (e) {
     return null;
   }
 }
 
-export const getLibraryBricks = async (classroomId?: number) => {
+export const getLibraryBricks = async <T>(classroomId?: number) => {
   try {
     let obj = {};
     if (classroomId) {
       obj = { classroomId };
     }
-    return await post<any[]>("/play/library", obj); 
+    return await post<T[]>("/play/library", obj);
   } catch (e) {
     return null;
   }
@@ -93,7 +93,7 @@ export const searchBricks = async (searchString: string = '') => {
 
 export const searchPublicBricks = async (searchString: string = '') => {
   try {
-    return await post<Brick[]>("/bricks/search/public", {searchString});
+    return await post<Brick[]>("/bricks/search/public", { searchString });
   } catch {
     return null;
   }
@@ -113,7 +113,7 @@ export const publishBrick = async (brickId: number) => {
 
 export const inviteUser = async (brickId: number, userId: number) => {
   try {
-    await post<Brick>(`/brick/inviteToBrick/${brickId}`, {userIds: [userId]});
+    await post<Brick>(`/brick/inviteToBrick/${brickId}`, { userIds: [userId] });
     return true;
   } catch {
     return false;
@@ -165,6 +165,49 @@ export const returnToEditor = async (brickId: number) => {
   }
 }
 
+/**
+ * return false or null if error. brick if success
+ * @param brickId BrickId to adapt
+ */
+export const adaptBrick = async (brickId: number) => {
+  try {
+    const copyBrick = await post<Brick>(`/brick/adapt/${brickId}`, {});
+    return copyBrick;
+  } catch {
+    return false;
+  }
+}
+
+export const sendAssignmentReminder = async (assignmentId: number) => {
+  try {
+    return await post<any>(`/brick/assignment/${assignmentId}/reminder`, {});
+  } catch {
+    return false;
+  }
+}
+
+export const archiveAssignment = async (assignmentId: number) => {
+  try {
+    return await post<AssignmentBrick>(`/brick/assignment/${assignmentId}/archive`, {});
+  } catch {
+    return false;
+  }
+}
+
+export interface CoverImageData {
+  brickId: number;
+  coverImage: string;
+  coverImageSource: string;
+  coverImageCaption: string;
+}
+
+export const setBrickCover = async (data: CoverImageData) => {
+  try {
+    return await post<any>(`/brick/cover`, data);
+  } catch {
+    return false;
+  }
+}
 
 export default {
   sendToPublisher

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import './PlayPanel.scss';
 import { TutorialStep } from './TutorialPanelWorkArea';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
@@ -62,16 +62,13 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
         </div>
       </div>
       <Grid container direction="row" className="button-row">
-        <Grid container justify="flex-start" item xs={5}>
+        <Grid container justify="flex-start" item xs={6}>
           <div className="left-arrow" onClick={() => props.next(TutorialStep.Synthesis)} />
           <span className="button-label bold">3. The Synthesis</span>
         </Grid>
-        <Grid container justify="center" item xs={2}>
-          <Button onClick={props.skip}>SKIP</Button>
-        </Grid>
-        <Grid container justify="flex-end" item xs={5}>
-          <span className="bold">5. Additional Information</span>
-          <div className="right-arrow" onClick={() => props.next(TutorialStep.Additional)} />
+        <Grid container justify="flex-end" item xs={6}>
+          <span className="button-label bold long">START BUILDING</span>
+          <div className="right-arrow" onClick={() => props.skip()} />
         </Grid>
       </Grid>
     </div>

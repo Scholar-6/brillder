@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { History } from "history";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 
 import "./PostPlay.scss";
 import { ReduxCombinedState } from "redux/reducers";
@@ -70,12 +71,20 @@ interface ProposalState {
   attempt: PlayAttempt | null;
   mode?: boolean; // live - false, review - true, undefined - default
   playHovered: boolean;
+  showLibraryButton: boolean;
   handleKey(e: any): void;
 }
 
 class PostPlay extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
+
+    let showLibraryButton = true;
+    const values = queryString.parse(props.history.location.search);
+    if(values.fromTeach) {
+      showLibraryButton = false;
+    }
+
     this.state = {
       bookState: BookState.Titles,
       questionIndex: 0,
@@ -90,6 +99,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       subjects: [],
       firstHoverTimeout: -1,
       playHovered: false,
+      showLibraryButton,
       handleKey: this.handleKey.bind(this)
     };
     this.loadData();
@@ -193,7 +203,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   onBookClose() {
     const closeTimeout = setTimeout(() => {
-      this.setState({ bookHovered: true });
+      this.setState({ bookHovered: false });
     }, 400);
     this.setState({ closeTimeout });
   }
@@ -244,7 +254,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     const {brick} = this.state.attempt;
     if (this.state.animationRunning) { return; }
     if (this.state.questionIndex < brick.questions.length - 1) {
-      this.setState({ questionIndex: this.state.questionIndex + 1, animationRunning: true });
+      this.setState({ questionIndex: this.state.questionIndex + 1, mode: undefined, animationRunning: true });
       this.animationFlipRelease();
     } else {
       this.moveToSynthesis();
@@ -257,7 +267,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       this.moveToIntroduction();
     }
     if (this.state.questionIndex > 0) {
-      this.setState({ questionIndex: this.state.questionIndex - 1, animationRunning: true });
+      this.setState({ questionIndex: this.state.questionIndex - 1, mode: undefined, animationRunning: true });
       this.animationFlipRelease();
     }
   }
@@ -299,6 +309,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       } else if (bookState === BookState.Synthesis) {
         bookClass += ` expanded synthesis`;
       }
+    }
+
+    if (!this.state.bookHovered || this.state.animationRunning) {
+      bookClass += ' closed';
     }
 
     let questions: Question[] = [];
@@ -347,6 +361,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             <h1>This book is yours.</h1>
             <h2>Hover your mouse over the cover to</h2>
             <h2>see a summary of your results.</h2>
+            {this.state.showLibraryButton &&
+              <button onClick={() => this.props.history.push(map.MyLibrary + '?subjectId=' + brick.subjectId)}>
+                View it in my library
+              </button>}
           </Grid>
           <div className={bookClass}>
             <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>

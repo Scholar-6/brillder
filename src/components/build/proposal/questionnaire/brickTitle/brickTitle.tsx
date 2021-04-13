@@ -3,18 +3,25 @@ import { Grid, Input, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "../../model";
-import { Brick, Subject } from "model/brick";
+import { AcademicLevel, Brick, KeyWord, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
 import { enterPressed } from "components/services/key";
 
 import NextButton from '../../components/nextButton';
+import PrevButton from "../../components/previousButton";
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 import a from 'indefinite';
+import map from "components/map";
+import { User } from "model/user";
+import AddSubjectDialog from "./AddSubjectDialog";
+import KeyWordsComponent from "./KeyWords";
+import DifficultySelect from "./DifficultySelect";
+import KeyWordsPlay from "./KeywordsPlay";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
@@ -22,6 +29,7 @@ enum RefName {
 }
 
 interface BrickTitleProps {
+  user: User;
   history: any;
   baseUrl: string;
   parentState: Brick;
@@ -29,20 +37,35 @@ interface BrickTitleProps {
   playStatus: PlayButtonStatus;
   subjects: Subject[];
   saveTitles(data: any): void;
+  setKeywords(keywords: KeyWord[]): void;
+  setAcademicLevel(level: AcademicLevel): void;
   saveAndPreview(): void;
 }
 
 interface BrickTitleState {
+  subjectSelectOpen: boolean;
   subTitleRef: React.RefObject<HTMLDivElement>;
   altTitleRef: React.RefObject<HTMLDivElement>;
 }
 
-const BrickTitlePreviewComponent: React.FC<any> = (props) => {
-  let { subTopic, alternativeTopics, title, author } = props.data;
+interface PreviewProps {
+  data: Brick;
+}
+
+const BrickTitlePreviewComponent: React.FC<PreviewProps> = (props) => {
+  let { keywords, title, author } = props.data;
 
   const date = new Date();
   const dateString = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
 
+  if (!title && (!keywords || keywords.length < 0)) {
+    return (
+      <Grid container alignContent="flex-start" className="phone-preview-component">
+        <SpriteIcon name="search-flip" className="active titles-image big" />
+      </Grid>
+    );
+  }
+  
   const renderAuthorRow = () => {
     let data = "";
     if (author) {
@@ -51,14 +74,6 @@ const BrickTitlePreviewComponent: React.FC<any> = (props) => {
       data = "Author | " + dateString;
     }
     return data;
-  }
-
-  if (!title && !subTopic && !alternativeTopics) {
-    return (
-      <Grid container alignContent="flex-start" className="phone-preview-component">
-        <SpriteIcon name="search-flip" className="active titles-image big" />
-      </Grid>
-    );
   }
 
   return (
@@ -71,11 +86,10 @@ const BrickTitlePreviewComponent: React.FC<any> = (props) => {
           {title ? title : 'BRICK TITLE'}
         </div>
         <div className="brick-topics">
-          <span className={subTopic ? 'topic-filled' : ''}>
-            {subTopic ? subTopic : 'Topic'}
-          </span> | <span className={alternativeTopics ? 'topic-filled' : ''}>
-            {alternativeTopics ? alternativeTopics : 'Subtopic(s)'}
-          </span>
+          {keywords && 
+            <span className={keywords.length > 0 ? 'topic-filled' : ''}>
+              {keywords.length > 0 ? <KeyWordsPlay keywords={keywords} /> : 'Keyword(s)'}
+            </span>}
         </div>
         <div className="author-row">
           {renderAuthorRow()}
@@ -90,6 +104,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
     super(props);
 
     this.state = {
+      subjectSelectOpen: false,
       subTitleRef: React.createRef<HTMLDivElement>(),
       altTitleRef: React.createRef<HTMLDivElement>(),
     }
@@ -110,6 +125,25 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
     }
   }
 
+  renderSubjectTitle(subjectName: string) {
+    return (
+      <div className="subject-text">
+        <div>
+          This will be {a(subjectName)} brick
+        </div>
+        <div className="icon-container" onClick={() => {
+          if (this.props.user.subjects.length > 1) {
+            this.props.history.push(map.ProposalSubjectLink);
+          } else {
+            this.setState({subjectSelectOpen: true});
+          }
+        }}>
+          <SpriteIcon name="edit-outline-custom" />
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { parentState, canEdit, baseUrl, saveTitles } = this.props;
     if (parentState.title) {
@@ -122,7 +156,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
       if (subject) {
         subjectName = subject.name;
       }
-    } catch {}
+    } catch { }
 
     return (
       <div className="tutorial-page brick-title-page">
@@ -139,7 +173,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
               <img alt="titles" src="/images/new-brick/titles.png" />
             </div>
             <h1>
-             {subjectName && <div className="subject-text">This will be {a(subjectName)} brick</div>}
+              {subjectName && this.renderSubjectTitle(subjectName)}
               What is it about?
             </h1>
             <form>
@@ -154,39 +188,32 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                   />
                 </div>
                 <div className="audience-inputs">
-                  <Input
-                    ref={this.state.subTitleRef}
-                    disabled={!canEdit}
-                    value={parentState.subTopic}
-                    onKeyUp={e => this.moveToRef(e, RefName.altTitleRef)}
-                    onChange={e => this.onChange(e, "subTopic")}
-                    placeholder="Enter Topic..."
-                  />
+                  <KeyWordsComponent disabled={!canEdit} keyWords={parentState.keywords} onChange={this.props.setKeywords.bind(this)} />
                 </div>
                 <div className="audience-inputs">
-                  <Input
-                    ref={this.state.altTitleRef}
-                    disabled={!canEdit}
-                    value={parentState.alternativeTopics}
-                    onKeyUp={e => {
-                      if (enterPressed(e)) {
-                        saveTitles(parentState);
-                        this.props.history.push(baseUrl + OpenQuestionRoutePart);
-                      }
-                    }}
-                    onChange={e => this.onChange(e, "alternativeTopics")}
-                    placeholder="Enter Subtopic(s)..."
-                  />
+                  <DifficultySelect disabled={!canEdit} level={parentState.academicLevel} onChange={this.props.setAcademicLevel.bind(this)} />
                 </div>
               </Grid>
             </form>
             <div className="tutorial-pagination">
-              <div className="centered text-theme-dark-blue bold" style={{fontSize: '2vw', marginRight: '2vw'}} onClick={() => {
-                saveTitles(parentState);
-                this.props.history.push(baseUrl + OpenQuestionRoutePart);
-              }}>
-                Next
-              </div>
+              {this.props.user.subjects.length > 1
+                ?
+                <div className="centered">
+                  <PrevButton
+                    to={map.ProposalSubject}
+                    isActive={true}
+                    onHover={() => { }}
+                    onOut={() => { }}
+                  />
+                </div>
+                :
+                <div className="centered text-theme-dark-blue bold" style={{ fontSize: '2vw', marginRight: '2vw' }} onClick={() => {
+                  saveTitles(parentState);
+                  this.props.history.push(baseUrl + OpenQuestionRoutePart);
+                }}>
+                  Next
+                </div>
+              }
               <div className="centered">
                 <NextButton
                   isActive={true}
@@ -204,6 +231,13 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <div className="red-right-block"></div>
           </Hidden>
         </Grid>
+        {this.props.user.subjects.length <= 1 &&
+          <AddSubjectDialog
+            isOpen={this.state.subjectSelectOpen}
+            user={this.props.user}
+            close={() => this.setState({subjectSelectOpen: false})}
+          />
+        }
       </div>
     );
   }

@@ -1,0 +1,65 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.key-words {
+  font-size: 1.6vw;
+  color: var(--theme-dark-blue);
+  display: inline-flex;
+  width: 100%;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  .key-word {
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    font-size: 1vw;
+    svg {
+      cursor: pointer;
+      margin-left: 0.3vw;
+      margin-right: 0.3vw;
+      width: 1.3vw;
+      height: 1.3vw;
+      border-radius: 50%;
+      stroke-width: 2;
+      background: var(--theme-orange);
+      color: var(--white);
+    }
+  }
+  input {
+    color: var(--theme-dark-blue);
+    width: auto !important;
+    font-size: 1.6vw;
+    min-width: 4vw;
+    &::placeholder {
+      color: var(--theme-dark-blue);
+      opacity: 0.42;
+    }
+  }
+}
+
+.brick-title-page {
+  .key-words {
+    max-height: 5.8vw;
+    overflow: scroll;
+    .key-word {
+      padding-left: 0.6vw;
+      height: 2.5vw;
+      font-size: 1.6vw;
+      line-height: 1;
+      margin-right: 0.5vw;
+      margin-bottom: 0.5vw;
+      background: var(--tab-gray);
+      border-radius: 0.9vw;
+      svg {
+        width: 1.1vw;
+        height: 1.1vw;
+      }
+    }
+    input {
+      height: 2.6vw;
+      line-height: 2;
+      padding-bottom: 0 !important;
+    }
+  }
+}

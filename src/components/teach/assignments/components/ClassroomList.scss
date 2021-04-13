@@ -1,0 +1,19 @@
+.one-classroom-assignments {
+  padding-top: calc(3.2vh + 0.9vw) !important;
+  .fixed-classname {
+    position: absolute;
+    left: 0vw;
+    top: 8vh;
+    z-index: 1;
+    width: 100%;
+    height: calc(calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35 - 2vh);
+
+    .classroom-title {
+      height: 100%;
+    }
+
+    .name-subject-display {
+      padding-left: 2.2vw;
+    }
+  }
+}

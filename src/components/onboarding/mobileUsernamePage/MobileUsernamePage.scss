@@ -1,0 +1,55 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.mobile-username-page {
+  height: 100%;
+  padding-bottom: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  font-size: 7vw;
+  color: var(--theme-dark-blue);
+  .icon-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10%;
+
+    svg {
+      width: 50vw;
+      height: 50vw;
+    }
+  }
+  .username-container {
+    text-align: center;
+    font-size: 8.5vw;
+    .username {
+      font-family: $font-family-bold;
+    }
+
+    .submit-button {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10%;
+      letter-spacing: 0.1vw;
+      font-family: $font-family-bold;
+
+      svg {
+        height: 15vw;
+        width: 15vw;
+        color: var(--theme-orange);
+      }
+    }
+  }
+  .animation-300 {
+    transition: all 300ms ease-out;
+  }
+  .username-fade-text {
+    padding-left: 5vw;
+    padding-right: 5vw;
+    font-size: 7.8vw;
+  }
+}

@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .assigned-brick-description {
   position: relative;
@@ -10,7 +10,7 @@
     height: calc(#{$bricks-height / 6.35});
   }
 
-  padding-top: 1vh;
+  padding-top: 0;
 
   $base: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh);
 
@@ -147,6 +147,11 @@
       @extend %flexCenter;
       font-size: 1.5vw;
     }
+    .status-text-centered {
+      margin-left: 0.6vw;
+      @extend %flexCenter;
+      font-size: 1.5vw;
+    }
   }
   .reminder-container {
     width: 4vw;
@@ -154,16 +159,155 @@
     .reminder-icon {
       color: white;
       border-radius: 50%;
+      cursor: pointer;
       padding: 0.25vw;
       stroke-width: 1.5;
-      width: 2vw;
-      height: 2vw;
       background: var(--theme-yellow);
+
+      &.finished {
+        background: var(--tab-gray);
+        cursor: default;
+      }
+    }
+    .reminder-icon2 {
+      width: 2.1vw;
+      height: 2.1vw;
     }
   }
   .teach-brick-actions-container {
     @extend %flexCenter;
     width: 3vw;
+    position: relative;
+    .archive-button-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3vw;
+      height: 3vw;
+      border-radius: 50%;
+      .svg {
+        position: absolute;
+        top: 0.4vw;
+        left: 0.4vw;
+        width: 2.1vw;
+        height: 2.1vw;
+      }
+    }
+
+    &.completed {
+      .archive-button-container {
+        cursor: pointer;
+        background: var(--theme-green);
+        .svg {
+          color: var(--white) !important;
+        }
+      }
+    }
+    &.completed {
+      .green-hover {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        > div {
+          transition: all 300ms ease-out;
+          width: 3vw;
+          height: 3vw;
+          border-radius: 50%;
+          background: var(--theme-green-alpha3);
+        }
+      }
+    }
+    &.completed:hover {
+      .green-hover {
+        > div {
+          width: 4vw;
+          height: 4vw;
+        }
+      }
+    }
+    // tooltip
+    .css-custom-tooltip {
+      bottom: -1.25vw;
+      left: -1.5vw;
+      width: 6.4vw !important;
+    }
+    &.completed:hover {
+      .css-custom-tooltip {
+        opacity: 1;
+      }
+    }
+  }
+  .reminder-brick-actions-container {
+    @extend %flexCenter;
+    width: 3vw;
+    position: relative;
+    .reminder-button-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3vw;
+      height: 3vw;
+      border-radius: 50%;
+      .svg {
+        position: absolute;
+        width: 2.1vw;
+        height: 2.1vw;
+      }
+    }
+
+    &.completed .archive-button-container {
+      cursor: pointer;
+      background: var(--theme-green);
+      .svg {
+        color: var(--white) !important;
+      }
+    }
+    &.completed {
+      .green-hover {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        > div {
+          transition: all 300ms ease-out;
+          width: 2.1vw;
+          height: 2.1vw;
+          border-radius: 50%;
+          background: var(--theme-yellow-alpha3);
+        }
+      }
+    }
+    &.deadline .reminder-icon {
+      background: var(--theme-orange);
+    }
+    &.deadline .green-hover > div {
+      background: var(--theme-orange-alpha3);
+    }
+    &.completed:hover {
+      .green-hover {
+        > div {
+          width: 3.3vw;
+          height: 3.3vw;
+        }
+      }
+    }
+    // tooltip
+    .css-custom-tooltip {
+      bottom: -1.8vw;
+      left: -2.3vw;
+      padding: 0 !important;
+      text-align: center;
+      width: 7.7vw !important;
+      z-index: 100;
+    }
+    &.completed:hover {
+      .css-custom-tooltip {
+        opacity: 1;
+      }
+    }
   }
 }
 

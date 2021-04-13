@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { Grid } from '@material-ui/core';
-import Dialog from '@material-ui/core/Dialog';
 
 import './questionComponents.scss';
 import ShortAnswerComponent from '../questionTypes/shortAnswerBuild/shortAnswerBuild';
@@ -21,6 +20,8 @@ import { getNonEmptyComponent } from "../../questionService/ValidateQuestionServ
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import FixedTextComponent from "../components/Text/FixedText";
 import { TextComponentObj } from "../components/Text/interface";
+import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
+import DeleteDialog from "components/build/baseComponents/dialogs/DeleteDialog";
 
 
 type QuestionComponentsProps = {
@@ -75,10 +76,13 @@ const QuestionComponents = ({
   const removeInnerComponent = (componentIndex: number) => {
     if (locked) { return; }
     const comps = Object.assign([], components) as any[];
-    comps.splice(componentIndex, 1);
-    setComponents(comps);
-    updateComponents(comps);
-    saveBrick();
+    if(components[componentIndex].type !== QuestionComponentTypeEnum.Component) {
+      comps.splice(componentIndex, 1);
+      setComponents(comps);
+      updateComponents(comps);
+      saveBrick();
+    }
+    setDialog(false);
   }
 
   let canRemove = (components.length > 3) ? true : false;
@@ -206,34 +210,19 @@ const QuestionComponents = ({
           ))
         }
       </ReactSortable>
-      <Dialog open={dialogOpen} onClose={hideDialog} className="dialog-box">
-        <div className="dialog-header">
-          <div>Permanently delete<br />this component?</div>
-        </div>
-        <div className="dialog-footer">
-          <button className="btn btn-md bg-theme-orange yes-button"
-            onClick={() => {
-              removeInnerComponent(removeIndex);
-              hideDialog();
-            }}>
-            <span>Yes, delete</span>
-          </button>
-          <button className="btn btn-md bg-gray no-button"
-            onClick={hideDialog}>
-            <span>No, keep</span>
-          </button>
-        </div>
-      </Dialog>
-      <Dialog open={sameAnswerDialogOpen} className="dialog-box" onClose={hideSameAnswerDialog}>
-        <div className="dialog-header">
-          <div>Looks like these two answers are the same</div>
-        </div>
-        <div className="dialog-footer">
-          <button className="btn btn-md bg-gray yes-button" onClick={hideSameAnswerDialog}>
-            <span>Ok</span>
-          </button>
-        </div>
-      </Dialog>
+      <DeleteDialog
+        isOpen={dialogOpen}
+        title="Permanently delete<br />this component?"
+        index={removeIndex}
+        submit={removeInnerComponent}
+        close={hideDialog}
+      />
+      <ValidationFailedDialog
+        isOpen={sameAnswerDialogOpen}
+        header="Looks like some answers are the same."
+        label="Correct answers could be marked wrong. Please make sure all answers are different."
+        close={hideSameAnswerDialog}
+      />
     </div>
   );
 }

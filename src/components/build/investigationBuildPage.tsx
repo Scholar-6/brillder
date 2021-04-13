@@ -59,7 +59,6 @@ import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import Proposal from "./proposal/Proposal";
 
-import DeleteQuestionDialog from "./baseComponents/dialogs/DeleteQuestionDialog";
 import DesktopVersionDialog from 'components/build/baseComponents/dialogs/DesktopVersionDialog';
 import QuestionInvalidDialog from './baseComponents/dialogs/QuestionInvalidDialog';
 import HighlightInvalidDialog from './baseComponents/dialogs/HighlightInvalidDialog';
@@ -69,6 +68,7 @@ import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./proposal/model";
+import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -87,6 +87,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const values = queryString.parse(props.location.search);
   let initSuggestionExpanded = false;
   if (values.suggestionsExpanded) {
+    initSuggestionExpanded = true;
+  }
+
+  const isCurrentEditor = (props.brick.editors?.findIndex((e:any) => e.id === props.user.id) ?? -1) >= 0;
+  if (isCurrentEditor) {
     initSuggestionExpanded = true;
   }
 
@@ -134,7 +139,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [skipTutorialOpen, setSkipDialog] = React.useState(false);
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
-  const [tooltipsOn, setTooltips] = React.useState(true);
   const [focusIndex, setFocusIndex] = React.useState(-1);
   // time of last autosave
   let [lastAutoSave, setLastAutoSave] = React.useState(Date.now());
@@ -824,7 +828,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     isValid = false;
   }
 
-  const isCurrentEditor = (props.brick.editors?.findIndex((e:any) => e.id === props.user.id) ?? -1) >= 0;
   const isPublisher = checkPublisher(props.user, props.brick);
   const isAdmin = checkAdmin(props.user.roles);
 
@@ -840,20 +843,19 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         isEditor={isCurrentEditor}
         isPublisher={isPublisher}
         isAdmin={isAdmin}
+        isAuthor={isAuthor}
         history={history}
         brick={props.brick}
         exitAndSave={exitAndSave}
       />
       <Hidden only={['xs', 'sm']}>
-        <TutorialLabels isTutorialPassed={isTutorialPassed()} tooltipsOn={tooltipsOn} />
+        <TutorialLabels isTutorialPassed={isTutorialPassed()} />
         <YourProposalLink
           brickId={props.brick.id}
           tutorialStep={step}
-          tooltipsOn={tooltipsOn}
           invalid={validationRequired && !proposalResult.isValid}
           saveBrick={saveBrick}
           isTutorialPassed={isTutorialPassed}
-          setTooltips={setTooltips}
         />
         <Grid
           container direction="row"
@@ -954,11 +956,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           submit={() => submitInvalidBrick()}
           hide={() => moveToInvalidProposal()}
         />
-        <DeleteQuestionDialog
-          open={deleteDialogOpen}
+        <DeleteDialog
+          isOpen={deleteDialogOpen}
           index={deleteQuestionIndex}
-          setDialog={setDeleteDialog}
-          deleteQuestion={deleteQuestionByIndex}
+          title="Permanently delete<br />this question?"
+          close={setDeleteDialog}
+          submit={deleteQuestionByIndex}
         />
         <ValidationFailedDialog
           isOpen={lastQuestionDialog}

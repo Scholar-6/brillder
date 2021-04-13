@@ -5,6 +5,7 @@ import LeonardoSvg from 'assets/img/leonardo.svg';
 import TypingLabel from "components/baseComponents/TypingLabel";
 import { User } from "model/user";
 import { fileUrl } from "components/services/uploadFile";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface PreiewState {
   imageAnimated: boolean;
@@ -51,7 +52,7 @@ class UserProfilePreview extends Component<PreviewProps, PreiewState> {
   render() {
     const { user } = this.props.data;
     let showProfile = false;
-    if (user.profileImage && user.bio) {
+    if (user.bio) {
       showProfile = true;
     }
     return (
@@ -59,7 +60,9 @@ class UserProfilePreview extends Component<PreviewProps, PreiewState> {
         <div ref={this.state.image} className="leonardo-image">
           {
             showProfile
-              ? <img alt="profile-image" className="profile-image" src={fileUrl(user.profileImage)} />
+              ? user.profileImage
+                ? <img alt="profile" className="profile-image" src={fileUrl(user.profileImage)} />
+                : <SpriteIcon name="user" className="profile-image-icon" />
               : <img alt="leonardo" src={LeonardoSvg} />
           }
         </div>

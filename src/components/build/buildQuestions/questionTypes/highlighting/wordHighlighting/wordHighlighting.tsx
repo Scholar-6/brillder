@@ -225,6 +225,21 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     );
   }
 
+  const renderPoemToggle = () => {
+    let className = 'poem-toggle';
+    if (state.isPoem) {
+      className += ' active';
+    }
+    return (
+      <div className={className} onClick={() => {
+        state.isPoem = !state.isPoem;
+        update();
+      }}>
+        br
+      </div>
+    );
+  }
+
   return (
     <div className="word-highlight-build">
       <div className="component-title">
@@ -237,6 +252,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         list={state.words}
         switchMode={switchMode}
       />
+      {renderPoemToggle()}
       <div className="input-container">
         {renderBox()}
       </div>

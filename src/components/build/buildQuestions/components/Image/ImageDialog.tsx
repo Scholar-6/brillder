@@ -40,7 +40,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
         // get image by url
       }
     }
-  }, [initFile, initData.value]);
+  }, [initFile, file, initData.value]);
 
   useEffect(() => {
     setHeight(initData.imageHeight);
@@ -67,7 +67,7 @@ const ImageDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, 
       el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
       el.click();
 
-      el.onchange = (files: any) => {
+      el.onchange = () => {
         if (el.files && el.files.length >= 0) {
           setFile(el.files[0]);
           setCroped(el.files[0]);

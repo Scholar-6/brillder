@@ -1,0 +1,165 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+#student-drag-element {
+  font-family: $font-family-regular;
+  padding: 1vh 1.2vw;
+  border-radius: 0.3vw;
+  font-size: 1.3vw;
+  opacity: 1 !important;
+  color: var(--white);
+  background: var(--theme-dark-blue);
+}
+
+.manage-classrooms-page {
+  $classroom-name-width: 44.6vw;
+  $user-name-width: 15vw;
+  .classes-names {
+    padding-left: 2vw !important;
+    width: $classroom-name-width;
+  }
+  .user-full-name {
+    width: $user-name-width !important;
+  }
+  .user-radio-column {
+    .MuiButtonBase-root.MuiIconButton-root {
+      padding: 0.35vw !important;
+
+      .MuiSvgIcon-root {
+        width: 1.3vw !important;
+        height: 1.3vw !important;
+      }
+    }
+
+    .custom-tooltip {
+      margin-top: 0.1vw;
+      letter-spacing: 0 !important;
+      margin-left: -0.4vw !important;
+      z-index: 1000;
+      background: var(--theme-dark-blue);
+      color: var(--tab-gray);
+    }
+  }
+
+  .users-table {
+    .students-table-head {
+      display: flex;
+      flex-direction: row;
+      font-size: 1.3vw;
+      letter-spacing: .25vw;
+      color: var(--theme-dark-blue);
+      font-family: $font-family-black;
+
+      .sort-button {
+        cursor: pointer;
+        margin-top: .3vh;
+        margin-left: .4vw;
+        height: 1.5vw;
+        width: 1.5vw;
+      }
+
+      >div {
+        display: flex;
+        align-items: center;
+        padding-top: .6vh;
+        padding-bottom: .6vh;
+        text-align: left;
+        padding-left: .5vw;
+      }
+
+      .user-radio-column .custom-tooltip {
+        margin-top: 3.5vw;
+        margin-left: -0.75vw !important;
+      }
+    }
+
+    .user-row {
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      color: var(--theme-dark-blue);
+      font-size: 1vw;
+
+      .MuiIconButton-root:hover {
+        background: rgba(0, 28, 88, 0.2) !important;
+      }
+
+      >div {
+        display: flex;
+        align-items: center;
+      }
+
+      .action-buttons {
+        right: 0;
+      }
+
+      .student-name {
+        width: $user-name-width;
+        padding-left: 0.5vw;
+
+        .user-last-name {
+          font-family: $font-family-bold;
+        }
+      }
+
+      .classroom-names {
+        max-width: none !important;
+        width: $classroom-name-width;
+
+        >div {
+          width: 100%;
+          display: flex;
+          align-items: center;
+        }
+
+        .classroom-name {
+          display: inline-block;
+          flex-direction: column;
+        }
+      }
+
+      &:nth-child(even) {
+        background: var(--tab-gray);
+      }
+
+      &.yellow {
+        background: var(--theme-yellow) !important;
+      }
+
+      &.yellow:nth-child(odd) {
+        background-color: rgba($color: #ff9d00, $alpha: 0.5) !important;
+      }
+
+      &.selected {
+        background: var(--highlight-blue);
+      }
+      &.selected:nth-child(odd) {
+        background: rgba(130, 192, 237, 0.5);
+      }
+
+      position: relative;
+
+      .drag-icon-container {
+        display: none;
+        height: calc(100% - 0.3vw);
+        position: absolute;
+        left: 0;
+
+        .user-drag-icon {
+          width: 1.3vw;
+          height: 1.3vw;
+        }
+      }
+
+      .user-row-hover:hover {
+        background: rgba(0, 28, 88, 0.15);
+
+        .drag-icon-container {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,321 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.mainPage {
+  $welcome-col-width: 35.2vw;
+  $first-col-width: 29.6vw;
+  background: var(--theme-dark-blue);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  font-family: $font-family-black;
+
+  .welcome-col {
+    width: $welcome-col-width;
+    @extend %textCenter;
+    padding-top: 15vh;
+
+    .welcome-box {
+      color: white;
+      letter-spacing: 0.66vw;
+      font-size: 2.58vw;
+      font-family: $font-family-bold;
+      padding-right: 2.9vw;
+
+      .smaller {
+        font-size: 2.4vw;
+      }
+
+      .welcome-name {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5vw;
+        letter-spacing: 0.73vw;
+        margin-top: 3.2vh;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-family: $font-family-light;
+        transition: font-family 0.2s ease;
+        color: var(--theme-orange);
+        .custom-tooltip {
+          margin-left: -1.4vw;
+          letter-spacing: 0.05vw;
+          text-transform: none;
+          margin-top: 4.9vw;
+          font-family: $font-family-regular;
+        }
+
+        .svg,
+        .profile-image-border {
+          height: 3vw;
+          width: 3vw;
+          margin-right: 1vw;
+        }
+        .svg {
+          stroke-width: 1.7;
+        }
+        .profile-image-border {
+          @extend %flexCenter;
+          border: 0.35vw solid var(--theme-orange);
+          border-radius: 50%;
+          img {
+            width: 105%;
+            height: 105%;
+            border-radius: 50%;
+          }
+        }
+        &:hover {
+          font-family: $font-family-regular;
+          .svg {
+            stroke-width: 2.1;
+          }
+        }
+      }
+      .notifications-text {
+        margin-top: 4.3vw; //10vh;
+        letter-spacing: 0.1vw;
+        font-family: $font-family-light;
+        font-size: 1.5vw;
+
+        &.clickable:hover {
+          font-family: $font-family-bold;
+        }
+      }
+
+      .notifications-text-2,
+      .notifications-text-3 {
+        margin-top: 0.6vh;
+        color: var(--tab-gray);
+        font-family: $font-family-light-italic;
+        letter-spacing: 0.05vw;
+        font-size: 1.2vw;
+      }
+
+      b {
+        font-weight: normal !important;
+        font-family: $font-family-bold;
+      }
+    }
+  }
+
+  .first-col {
+    width: $first-col-width;
+    height: 100%;
+
+    .first-item {
+      background: var(--theme-light-blue);
+      height: 89.2vh;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+      @extend %flexCenter;
+      flex-direction: column;
+    }
+    .second-item {
+      position: relative;
+      background: var(--theme-light-blue);
+      margin-top: 4.6vh;
+      height: 6.2vh;
+      @extend %textCenter;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
+  }
+
+  .second-col {
+    color: var(--white);
+    letter-spacing: 0.3vw;
+    font-size: 1.4vw;
+    font-family: $font-family-light;
+    width: calc(100vw - #{$welcome-col-width} - #{$first-col-width});
+    @extend %flexCenter;
+
+    div {
+      cursor: pointer;
+    }
+  }
+
+  .view-item-container,
+  .create-item-container,
+  .back-item-container {
+    width: auto;
+    @extend %flexCenter;
+    flex-direction: column;
+    @include tabletP {
+      padding: 5vh 0;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      @extend %textCenter;
+      flex-direction: column;
+      .svg {
+        @extend %transitionAll300;
+        @extend %removePosition;
+        width: 13vw;
+        height: 6vw;
+      }
+    }
+    &.disabled {
+      div {
+        cursor: initial !important;
+      }
+      svg {
+        cursor: initial !important;
+        color: var(--theme-dark-blue) !important;
+      }
+      &:hover {
+        .btn svg {
+          transform: rotate(0) !important;
+        }
+      }
+      .item-description {
+        font-family: $font-family-light !important;
+      }
+    }
+    &.student-back-work {
+      &.disabled {
+        .blocks-icon .bl {
+          background: var(--theme-light-blue) !important;
+        }
+      }
+    }
+    .item-description {
+      padding: 0;
+      @extend %textCenter;
+      margin: 0;
+      font-family: $font-family-light;
+      color: var(--tab-gray);
+      @include phone_and_tabletP {
+        font-size: 25px;
+        letter-spacing: 5px;
+      }
+      @include tabletP {
+        font-size: 1.2vw;
+        letter-spacing: 0.3vw;
+      }
+    }
+    &:hover {
+      .item-description {
+        font-family: $font-family-bold;
+        &.disabled {
+          font-family: $font-family-light !important;
+        }
+      }
+    }
+  }
+  .view-item-container {
+    &.disabled {
+      .eye-glass-icon {
+        .glass-eyes-left,
+        .glass-eyes-right {
+          display: none;
+        }
+      }
+    }
+  }
+  .create-item-container {
+    .btn .svg {
+      height: 7.5vw;
+      &:hover {
+        .btn svg {
+          transform: rotate(10deg) !important;
+        }
+      }
+    }
+  }
+  .create-item-container,
+  .back-item-container {
+    @include tabletP {
+      .item-description {
+        margin-top: 0.5vw;
+      }
+    }
+  }
+
+  .policy-text {
+    position: fixed;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: right;
+    padding-right: 2.5vw;
+    color: var(--tab-gray);
+    font-family: $font-family-regular;
+    bottom: 2.4vh;
+    line-height: 2vw;
+    right: 10vw;
+    font-size: 1.6vw;
+    span:hover {
+      color: var(--theme-orange) !important;
+    }
+  }
+}
+
+// mobile
+.mainPage {
+  .mobile-main-page {
+    width: 100%;
+    height: 100%;
+    @extend %flexCenter;
+    flex-direction: column;
+    .prev-image,
+    .next-image {
+      width: 20%;
+      height: 5%;
+      margin: 0;
+      opacity: 0.5;
+    }
+    .prev-image {
+      margin-top: 10px;
+    }
+    .next-image {
+      margin-bottom: 10px;
+    }
+    .swiper-container {
+      width: 100%;
+      height: calc(80%) !important;
+      padding: 1vh 0;
+      .swiper-slide {
+        width: 100%;
+        @extend %flexCenter;
+        height: calc(26%);
+        opacity: 0.65;
+        &.swiper-slide-next {
+          transform: scale(1);
+          @extend %transitionAll300;
+          opacity: 1;
+        }
+        &:not(.swiper-slide-next) {
+          transform: scale(0.85);
+          pointer-events: none;
+        }
+        .view-item-container {
+          @include phone_and_tabletP {
+            .svg {
+              width: 230px;
+            }
+          }
+        }
+        .back-item-container {
+          .svg {
+            padding-top: 5px;
+            width: 230px;
+          }
+        }
+        .manage-classes {
+          .svg {
+            width: 150px;
+            height: 120px;
+          }
+
+          span {
+            font-size: 25px !important;
+          }
+        }
+      }
+    }
+  }
+}

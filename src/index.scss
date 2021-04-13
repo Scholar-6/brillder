@@ -1,10 +1,9 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import '/assets/sass/partials/variables';
+@import '/assets/sass/partials/mixins';
+@import '/assets/sass/partials/extensions';
 
-@import 'src/assets/sass/utils/utils';
+@import '/assets/sass/utils/utils';
 
-@import 'src/assets/sass/animations/animations';
+@import '/assets/sass/animations/animations';
 
-@import 'src/assets/sass/plugins/ckeditor';
-@import 'src/assets/sass/plugins/zendesk';
+@import '/assets/sass/plugins/ckeditor';

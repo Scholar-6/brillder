@@ -44,6 +44,9 @@
 .b-yellow {
   background: var(--theme-yellow) !important;
 }
+.b-yellow-50 {
+  background-color: var(--theme-yellow) 50% !important;
+}
 .b-green {
   background: var(--theme-green) !important;
 }
@@ -84,4 +87,13 @@
 .alert-icon {
   color: white;
   background-color: var(--theme-orange) !important;
+}
+
+.blue-disable {
+  color: var(--blue-disable) !important;
+}
+
+.orange-theme-circle {
+  border: 0.2vw solid var(--theme-orange) !important;
+  background: inherit !important;
 }

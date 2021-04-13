@@ -4,6 +4,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import './AssignPersonOrClass.scss';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -13,28 +15,30 @@ import { Classroom } from 'model/classroom';
 import { Brick } from 'model/brick';
 import { getClassrooms, getStudents } from 'services/axios/classroom';
 import SpriteIcon from '../SpriteIcon';
+import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
+import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
   isOpen: boolean;
-  success(items: any): void;
+  success(items: any[], failed: any[]): void;
   close(): void;
   requestFailed(e: string): void;
 }
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [value] = React.useState("");
+  /*eslint-disable-next-line*/
+  const [deadlineDate, setDeadline] = React.useState(null as null | Date);
   const [selectedObjs, setSelected] = React.useState<any[]>([]);
   const [students, setStudents] = React.useState<UserBase[]>([]);
   const [classes, setClasses] = React.useState<Classroom[]>([]);
   const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
-
-  const { requestFailed } = props;
+  const [haveDeadline, toggleDeadline] = React.useState(null as boolean | null);
 
   const getAllStudents = React.useCallback(async () => {
     let students = await getStudents();
     if (!students) {
-      //11/30/2020 #2485  requestFailed('Can`t get students');
       students = [];
     }
 
@@ -42,12 +46,11 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       student.isStudent = true;
     }
     setStudents(students);
-  }, [requestFailed]);
+  }, []);
 
   const getClasses = React.useCallback(async () => {
     let classrooms = await getClassrooms();
     if (!classrooms) {
-      //11/30/2020 #2485 requestFailed('Can`t get classrooms');
       classrooms = [];
     }
 
@@ -60,7 +63,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     }
 
     setClasses(classrooms);
-  }, [requestFailed]);
+  }, []);
 
   useEffect(() => {
     getAllStudents();
@@ -68,30 +71,32 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }, [value, getAllStudents, getClasses]);
 
   const assignToStudents = async (studentsIds: Number[]) => {
+    let data = { studentsIds } as any;
+    if (haveDeadline) {
+      data.deadline = deadlineDate;
+    }
     return await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignStudents/${props.brick.id}`,
-      {studentsIds },
+      data,
       { withCredentials: true }
-    ).then(() => {
-      return true;
-    })
-    .catch(() => {
+    ).then(res => {
+      return res.data as any[];
+    }).catch(() => {
       props.requestFailed('Can`t assign student to brick');
       return false;
     });
   }
 
   const assignToClasses = async (classesIds: Number[]) => {
-    return await axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/brick/assignClasses/${props.brick.id}`,
-      {classesIds},
-      { withCredentials: true }
-    ).then(() => {
-      return true;
-    }).catch(() => {
+    let data = { classesIds, deadline: null } as AssignClassData;
+    if (haveDeadline && deadlineDate) {
+      data.deadline = deadlineDate;
+    }
+    const res = await assignClasses(props.brick.id, data);
+    if (res === false) {
       props.requestFailed('Can`t assign class to brick');
-      return false;
-    });
+    }
+    return res;
   }
 
   const hide = () => setAutoCompleteDropdown(false);
@@ -110,31 +115,73 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     setAutoCompleteDropdown(false);
   }
 
-  const assign = async () => {
-    let classroomIds:Number[] = [];
-    let studentIds:Number[] = [];
+  const getSelectedIds = () => {
+    let res = {
+      classroomIds: [],
+      studentIds: []
+    } as any;
+
     for (let obj of selectedObjs) {
       if (obj.isStudent) {
-        studentIds.push(obj.id);
+        res.studentIds.push(obj.id);
       } else {
-        classroomIds.push(obj.id);
+        res.classroomIds.push(obj.id);
       }
     }
+    return res;
+  }
+
+  const removeFailedObjs = (failedStudents: any[], failedClasses: any[]) => {
+    return selectedObjs.filter(obj => {
+      if (obj.isStudent) {
+        let found = failedStudents.find(c => c.student.id === obj.id);
+        if (found) {
+          return false;
+        }
+      } else {
+        let found = failedClasses.find(c => c.classroom.id === obj.id)
+        if (found) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }
+
+  const assign = async () => {
+    const { studentIds, classroomIds } = getSelectedIds();
+
+    let failedClasses: any[] = [];
+    let failedStudents: any[] = [];
+    let failedItems: any[] = [];
+
     let good = true;
     if (studentIds.length > 0) {
       let res = await assignToStudents(studentIds);
       if (!res) {
         good = false;
       }
+      if (res instanceof Array && res.length > 0) {
+        failedItems = res;
+        failedStudents = res;
+      }
     }
     if (classroomIds.length > 0) {
       let res = await assignToClasses(classroomIds);
-      if (!res) {
+      if (res === false) {
         good = false;
+      }
+      if (res instanceof Array && res.length > 0) {
+        failedClasses = res;
+        failedItems.push(...res);
       }
     }
     if (good) {
-      props.success(selectedObjs);
+      let assignedObjs = Object.assign([], selectedObjs) as any[];
+      if (failedItems.length > 0) {
+        assignedObjs = removeFailedObjs(failedStudents, failedClasses);
+      }
+      props.success(assignedObjs, failedItems);
     } else {
       props.close();
     }
@@ -143,9 +190,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
       <div className="dialog-header">
-        <div className="bold">Who would you like to assign this brick to?</div>
+        <div className="r-popup-title bold">Who would you like to assign this brick to?</div>
         <Autocomplete
           multiple
+          freeSolo
           open={autoCompleteOpen}
           options={[...classes, ...students]}
           onChange={(e: any, c: any) => classroomSelected(c)}
@@ -157,10 +205,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
               onChange={e => onClassroomInput(e)}
               variant="standard"
               label="Students and Classes: "
-              placeholder="Students and Classes"
+              placeholder="Search for students and classes"
             />
           )}
-          renderOption={(option: any, { selected }) => (
+          renderOption={(option: any) => (
             <React.Fragment>
               {option.isStudent
                 ? <span><span className="bold">Student</span> {option.firstName} {option.lastName}</span>
@@ -169,8 +217,22 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             </React.Fragment>
           )}
         />
-        <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
-          <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{width: 'auto'}}>
+        <div className="r-popup-title bold">When is it due?</div>
+        <div className="r-radio-buttons">
+          <FormControlLabel
+            checked={haveDeadline === false}
+            control={<Radio onClick={() => toggleDeadline(false)} />}
+            label="No deadline"
+          />
+          <FormControlLabel
+            checked={haveDeadline === true}
+            control={<Radio onClick={() => toggleDeadline(true)} />}
+            label="Set date"
+          />
+          {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
+        </div>
+        <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
+          <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{ width: 'auto' }}>
             <div className="centered">
               <span className="label">Assign Brick</span>
               <SpriteIcon name="file-plus" />

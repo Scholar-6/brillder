@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Dialog from "@material-ui/core/Dialog";
 
 import actions from 'redux/actions/requestFailed';
-import { User, UserType, UserStatus } from "model/user";
+import { User, UserType, UserStatus, RolePreference } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
@@ -15,12 +15,12 @@ import PageHeadWithMenu, {
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
-import AddUserButton from "./AddUserButton";
-import UserActionsCell from "./UserActionsCell";
+import AddUserButton from "./components/AddUserButton";
+import UserActionsCell from "./components/UserActionsCell";
 import RoleDescription from "components/baseComponents/RoleDescription";
-import CustomToggle from './CustomToggle';
-import CustomFilterBox from "components/library/CustomFilterBox";
-import UsersListPagination from "./Pagination";
+import CustomToggle from './components/CustomToggle';
+import CustomFilterBox from "components/library/components/CustomFilterBox";
+import UsersListPagination from "./components/Pagination";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -39,10 +39,8 @@ interface UsersListProps {
 }
 
 enum UserSortBy {
-  None,
   Name,
-  Role,
-  Status,
+  Joined
 }
 
 interface UsersListState {
@@ -80,9 +78,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       filterExpanded: true,
 
       roles: [
-        { name: "Student", type: UserType.Student, checked: false },
-        { name: "Teacher", type: UserType.Teacher, checked: false },
-        { name: "Builder", type: UserType.Builder, checked: false },
+        { name: "Student", type: RolePreference.Student, checked: false },
+        { name: "Teacher", type: RolePreference.Teacher, checked: false },
+        { name: "Builder", type: RolePreference.Builder, checked: false },
         { name: "Publisher", type: UserType.Publisher, checked: false },
         { name: "Admin", type: UserType.Admin, checked: false },
       ],
@@ -92,7 +90,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       isSearching: false,
       filterHeight: "auto",
 
-      sortBy: UserSortBy.None,
+      sortBy: UserSortBy.Name,
       isAscending: false,
       isAdmin: checkAdmin(props.user.roles),
       isClearFilter: false,
@@ -100,7 +98,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       deleteUserId: -1
     };
 
-    this.getUsers(this.state.page);
+    this.getUsers(this.state.page, this.state.sortBy);
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
       withCredentials: true,
@@ -113,31 +111,21 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   getUsers(
     page: number,
+    sortBy: UserSortBy,
     subjects: number[] = [],
     roleFilters: any = [],
-    sortBy: UserSortBy = UserSortBy.None,
     isAscending: any = null,
     search: string = ""
   ) {
     let searchString = "";
-    let orderBy = null;
+    let orderBy = "user.lastName";
 
-    if (sortBy === UserSortBy.None) {
-      sortBy = this.state.sortBy;
+    if (sortBy === UserSortBy.Joined) {
+      orderBy = "user.created";
     }
 
     if (isAscending === null) {
       isAscending = this.state.isAscending;
-    }
-
-    if (sortBy) {
-      if (sortBy === UserSortBy.Name) {
-        orderBy = "user.lastName";
-      } else if (sortBy === UserSortBy.Status) {
-        orderBy = "user.status";
-      } else if (sortBy === UserSortBy.Role) {
-        orderBy = "user.roles";
-      }
     }
 
     if (search) {
@@ -267,9 +255,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     let filterSubjects = this.getCheckedSubjectIds();
     this.getUsers(
       0,
+      this.state.sortBy,
       filterSubjects,
       [],
-      this.state.sortBy,
       this.state.isAscending,
       searchString
     );
@@ -279,7 +267,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     role.checked = !role.checked;
     let filterSubjects = this.getCheckedSubjectIds();
     let roles = this.getCheckedRoles();
-    this.getUsers(0, filterSubjects, roles);
+    this.getUsers(0, this.state.sortBy, filterSubjects, roles);
     this.setState({...this.state});
   }
 
@@ -306,7 +294,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   filter() {
     let filterSubjects = this.getCheckedSubjectIds();
     let filterRoles = this.getCheckedRoles();
-    this.getUsers(0, filterSubjects, filterRoles);
+    this.getUsers(0, this.state.sortBy, filterSubjects, filterRoles);
   }
 
   //region Hide / Expand / Clear Filter
@@ -378,14 +366,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     const {page} = this.state;
     this.setState({ ...this.state, page: page + 1 });
     let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(page + 1, filterSubjects);
+    this.getUsers(page + 1, this.state.sortBy, filterSubjects);
   }
 
   previousPage() {
     const {page} = this.state;
     this.setState({ ...this.state, page: page - 1 });
     let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(page - 1, filterSubjects);
+    this.getUsers(page - 1, this.state.sortBy, filterSubjects);
   }
 
   renderUserType(user: User) {
@@ -394,13 +382,13 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     for (let role of user.roles) {
       if (role.roleId === UserType.Admin) {
         type += "A";
-      } else if (role.roleId === UserType.Builder) {
+      } else if (user.rolePreference?.roleId === RolePreference.Builder) {
         type += "B";
       } else if (role.roleId === UserType.Publisher) {
         type += "P";
-      } else if (role.roleId === UserType.Student) {
+      } else if (user.rolePreference?.roleId === RolePreference.Student) {
         type += "S";
-      } else if (role.roleId === UserType.Teacher) {
+      } else if (user.rolePreference?.roleId === RolePreference.Teacher) {
         type += "T";
       }
     }
@@ -415,10 +403,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       this.setState({ ...this.state, isAscending });
     } else {
       isAscending = false;
-      this.setState({ ...this.state, isAscending, sortBy });
+      this.setState({ ...this.state, sortBy: sortBy, isAscending });
     }
     let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(this.state.page, filterSubjects, [], sortBy, isAscending);
+    this.getUsers(this.state.page, sortBy, filterSubjects, [], isAscending);
   }
 
   renderSortArrow(currentSortBy: UserSortBy) {
@@ -443,29 +431,43 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   renderUserTableHead() {
     return (
       <tr>
-        <th className="subject-title">SC</th>
+        <th className="subject-title">
+          <Grid container>JOINED {this.renderSortArrow(UserSortBy.Joined)}</Grid>
+        </th>
         <th className="user-full-name">
-          <Grid container>
-            NAME
-            {this.renderSortArrow(UserSortBy.Name)}
-          </Grid>
+          <Grid container>NAME {this.renderSortArrow(UserSortBy.Name)}</Grid>
         </th>
         <th className="email-column">EMAIL</th>
         <th>
-          <Grid container>
-            ROLE
-            {this.renderSortArrow(UserSortBy.Role)}
-          </Grid>
+          <Grid container>ROLE</Grid>
         </th>
         <th>
           <Grid container>
             ACTIVE?
-            {this.renderSortArrow(UserSortBy.Status)}
           </Grid>
         </th>
         <th className="edit-button-column"></th>
       </tr>
     );
+  }
+
+  formatDate(date: string) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+  renderDate(stringDate: string) {
+    if (!stringDate) { return '—'; }
+    return <div>{this.formatDate(stringDate)}</div>;
   }
 
   renderUsers() {
@@ -480,7 +482,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             {this.state.users.map((user: any, i: number) => {
               return (
                 <tr className="user-row" key={i}>
-                  <td></td>
+                  <td className="joing-date">
+                    {this.renderDate(user.created)}
+                  </td>
                   <td>
                     <span className="user-first-name">{user.firstName} </span>
                     <span className="user-last-name">{user.lastName}</span>

@@ -7,4 +7,16 @@
     width: 100%;
     margin: 0;
   }
+  .katex-overflow-scroll {
+    max-width: 100%;
+    overflow: scroll;
+  }
+  .choose-choice.image-choice {
+    .image-container {
+      img {
+        max-height: 20vh;
+      }
+      display: block;
+    }
+  }
 }

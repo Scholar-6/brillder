@@ -1,0 +1,81 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+$level-size: 6vh;
+.single-assignment-progressbar {
+  .rotated-container {
+    position: absolute;
+    bottom: 0;
+    .rotated {
+      transform: rotate(270deg);
+
+      .rotated-text {
+        padding-left: $level-size;
+        padding-right: $level-size;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        width: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh - 8vh - 3vh);
+        p {
+          color: #C8CACC;
+          font-size: 1vw;
+          font-family: $font-family-bold;
+          white-space: nowrap;
+          overflow: hidden; 
+          text-overflow: ellipsis;
+        }
+      }
+    }
+    &.white .rotated .rotated-text p {
+      color: var(--white);
+    }
+
+    &.left-align {
+      .rotated .rotated-text {
+        justify-content: flex-start;
+      }
+    }
+  }
+  .custom-tooltip.subject-tooltip {
+    margin-top: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh - 8vh - 2vh);
+  }
+  .length-40 .custom-tooltip.subject-tooltip {
+    margin-left: 0.5vw;
+  }
+  .length-60 .custom-tooltip.subject-tooltip {
+    margin-left: 2vw;
+  }
+  .teacher-initials {
+    width: 100%;
+    position: absolute;
+    display: flex;
+    left: 0;
+    justify-content: center;
+    bottom: 1vh;
+    z-index: 200;
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8vw;
+      width: 1.3vw;
+      height: 1.3vw;
+      max-width: 3vh;
+      max-height: 3vh;
+      text-align: center;
+      border-radius: 50%;
+      text-transform: uppercase;
+      background: var(--white);
+      color: var(--theme-dark-blue);
+    }
+  }
+}
+
+.progress-value {
+  transition: all 300ms ease-out !important;
+}

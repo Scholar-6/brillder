@@ -38,16 +38,13 @@
         }
         .short-brick-info {
           padding: 0 3vw;
-          .link-info {
-            width: 100%;
-          }
           @extend %linkDescription;
           .link-info {
+            width: 100%;
             color: var(--theme-light-blue);
             line-height: 1.3;
             font-family: $font-family-regular;
             margin-bottom: 0.1vh;
-            width: 100%;
             @extend %ellipsis;
             @include phone_and_tabletP {
               font-size: 3.8vw;
@@ -81,36 +78,3 @@
   border-radius: 0.2vw;
 }
 
-.short-description {
-  .play-button {
-    position: absolute;
-    top: 0;
-    height: 2.1vw;
-    width: 2.1vw;
-    @extend %flexCenter;
-
-    svg {
-      color: var(--white) !important;
-      height: 0;
-      margin-left: 14%;
-      width: 0;
-    }
-  }
-  .circle-hovered {
-    .round-button {
-      .svg {
-        display: none;
-      }
-    }
-    .play-button {
-      .svg {
-        cursor: pointer;
-        color: var(--white) !important;
-        height: 80%;
-        margin-left: 16%;
-        width: 70%;
-        transition: all 0.2s ease-in-out;
-      }
-    }
-  }
-}

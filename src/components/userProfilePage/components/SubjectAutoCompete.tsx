@@ -4,12 +4,16 @@ import TextField from '@material-ui/core/TextField';
 import actions from 'redux/actions/requestFailed';
 import { connect } from 'react-redux';
 
+import './SubjectAutoCompete.scss';
 import { Subject } from 'model/brick';
+import { Popper } from '@material-ui/core';
 
 
 interface SubjectAutoCompleteProps {
   subjects: Subject[];
   selected: Subject[];
+  suspendIntroJs(): void;
+  resumeIntroJs(): void;
   onSubjectChange(subjects: any[]): void;
   requestFailed(e: string): void;
 }
@@ -17,8 +21,11 @@ interface SubjectAutoCompleteProps {
 interface SubjectAutoCompleteState {
   selected: Subject[];
   autoCompleteSubjects: Subject[];
-  autoCompleteOpen: boolean;
 }
+
+const SubjectsPopper = function (props: any) {
+  return <Popper {...props} className="subjects-popper" placement="bottom-start" />;
+};
 
 class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAutoCompleteState> {
   constructor(props: SubjectAutoCompleteProps) {
@@ -30,11 +37,15 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
     }
 
     const autoCompleteSubjects = props.subjects.filter(s => this.checkSubject(s, selectedSubjects))
+    autoCompleteSubjects.sort((a, b) => {
+      if(a.name < b.name) { return -1; }
+      if(a.name > b.name) { return 1; }
+      return 0;
+    });
 
     this.state = {
       selected: selectedSubjects,
       autoCompleteSubjects,
-      autoCompleteOpen: false,
     };
   }
 
@@ -53,35 +64,25 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
     this.props.onSubjectChange(newValue);
   }
 
-  onSubjectInput(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    const {value} = event.target;
-
-    if (value && value.length >= 2) {
-      this.setState({...this.state, autoCompleteOpen: true});
-    } else {
-      this.setState({...this.state, autoCompleteOpen: false});
-    }
-  }
-
-  hide() {
-    this.setState({...this.state, autoCompleteOpen: false});
-  }
-
   render() {
     return (
       <div className="big-input-container">
         <Autocomplete
           multiple
-          open={this.state.autoCompleteOpen}
           value={this.state.selected}
           options={this.state.autoCompleteSubjects}
-          onChange={(e:any, v: any) => this.onSubjectChange(e, v)}
+          onChange={(e:any, v: any) => {
+            this.onSubjectChange(e, v);
+            this.props.resumeIntroJs();
+          }}
           getOptionLabel={(option:any) => option.name}
+          PopperComponent={SubjectsPopper}
+          onOpen={this.props.suspendIntroJs}
+          noOptionsText="Sorry, try typing something else"
+          className="subject-autocomplete"
           renderInput={(params:any) => (
             <TextField
-              onBlur={() => this.hide()}
               {...params}
-              onChange={(e) => this.onSubjectInput(e)}
               variant="standard"
               label="Subjects: "
               placeholder="Subjects"
@@ -95,7 +96,7 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
 
 const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
-})
+});
 
 const connector = connect(null, mapDispatch);
 

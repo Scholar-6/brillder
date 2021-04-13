@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { isMobile } from "react-device-detect";
 import { connect } from "react-redux";
+import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
-import 'components/play/brick.scss';
-import './PreviewBrickRouting.scss';
 import actions from 'redux/actions/brickActions';
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { Brick } from 'model/brick';
@@ -61,12 +59,16 @@ interface BrickRoutingProps {
   fetchBrick(brickId: number): void;
 }
 
+const MobileTheme = React.lazy(() => import('../play/themes/BrickPageMobileTheme'));
+const TabletTheme = React.lazy(() => import('../play/themes/BrickPageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('../play/themes/BrickPageDesktopTheme'));
+
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  const {history, location, match} = props;
+  const { history, location, match } = props;
   const parsedBrick = parseAndShuffleQuestions(props.brick);
 
   let cashedBuildQuestion = GetCashedBuildQuestion();
-  
+
   const [brick] = React.useState(parsedBrick);
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
@@ -144,7 +146,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const saveBrickAttempt = () => {
-    const {user} = props;
+    const { user } = props;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = user.id;
 
@@ -213,6 +215,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0 || publish > 0 || finish > 0) {
       isMobileHidden = true;
     }
+    if (live && !sidebarRolledUp) {
+      toggleSideBar(true);
+    }
 
     if (!isMobile && sidebarRolledUp) {
       return <HomeButton link="/home" />;
@@ -238,22 +243,24 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   return (
-    <div className="play-preview-pages">
-      {renderHead()}
-      <div className={className}>
-        <PlayLeftSidebar
-          history={history}
-          brick={brick}
-          sidebarRolledUp={sidebarRolledUp}
-          toggleSidebar={setSidebar}
-          isPreview={true}
-          moveToBuild={moveToBuild}
-        />
-        <div className="brick-row-container">
+    <React.Suspense fallback={<></>}>
+      {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
+      <div className="play-preview-pages">
+        {renderHead()}
+        <div className={className}>
+          <PlayLeftSidebar
+            history={history}
+            brick={brick}
+            sidebarRolledUp={sidebarRolledUp}
+            toggleSidebar={setSidebar}
+            isPreview={true}
+            moveToBuild={moveToBuild}
+          />
           <Switch>
             <Route exac path="/play-preview/brick/:brickId/intro">
               <Introduction
                 location={location}
+                history={history}
                 brick={brick}
                 isPlayPreview={true}
                 startTime={startTime}
@@ -294,12 +301,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             </Route>
             <Route exac path="/play-preview/brick/:brickId/review">
               <Review
+                history={history}
                 isPlayPreview={true}
                 status={status}
-                questions={brick.questions}
-                brickId={brick.id}
+                brick={brick}
                 startTime={startTime}
-                brickLength={brick.brickLength}
                 updateAttempts={updateReviewAttempts}
                 attempts={attempts}
                 finishBrick={finishReview}
@@ -312,7 +318,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 history={history}
                 brick={brick}
                 brickAttempt={brickAttempt}
-                saveAttempt={saveBrickAttempt}
+                move={saveBrickAttempt}
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/build-complete">
@@ -324,7 +330,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           </Switch>
         </div>
       </div>
-    </div>
+    </React.Suspense>
   );
 }
 
@@ -366,7 +372,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
               item.hint = question.hint.list[index];
             }
           }
-          c.list.map((c:any, i:number) => c.index = i);
+          c.list.map((c: any, i: number) => c.index = i);
           c.list = shuffle(c.list);
         }
       });
@@ -377,7 +383,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             item.index = index;
             item.hint = question.hint.list[index];
           }
-          c.list.map((c:any, i:number) => c.index = i);
+          c.list.map((c: any, i: number) => c.index = i);
           c.list = shuffle(c.list);
         }
       });
