@@ -13,7 +13,7 @@ import { checkPublisher } from "components/services/brickService";
 import { setBrickCover } from "services/axios/brick";
 import { ImageCoverData } from "./model";
 import { isPhone } from "services/phone";
-import { isIPad13, isMobile, isTablet } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
 interface IntroductionProps {
   user: User;
@@ -23,9 +23,9 @@ interface IntroductionProps {
   moveNext(): void;
 }
 
-const MobileTheme = React.lazy(() => import('./themes/MobileTheme'));
-const TabletTheme = React.lazy(() => import('./themes/TabletTheme'));
-const DesktopTheme = React.lazy(() => import('./themes/DesktopTheme'));
+const MobileTheme = React.lazy(() => import('./themes/CoverMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/CoverTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/CoverDesktopTheme'));
 
 const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   useEffect(() => {
