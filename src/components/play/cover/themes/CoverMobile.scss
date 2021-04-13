@@ -5,7 +5,7 @@
 .play-preview-pages .sorted-row .cover-page {
   color: var(--theme-dark-blue);
   overflow-y: auto;
-  height: calc(100% - #{$mobile-menu-height} - #{$progress-bar-height}) !important;
+  height: calc(100% - #{$mobile-menu-height}) !important;
   padding-top: 4vw;
   padding-left: 4vw;
   padding-right: 4vw;
