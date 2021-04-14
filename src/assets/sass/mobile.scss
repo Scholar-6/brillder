@@ -177,3 +177,23 @@
     padding: 2vw;
   }
 }
+
+// page header
+.main-listing,
+.play-preview-pages {
+  .upper-part {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 1;
+  }
+}
+
+// user preference page
+.user-preference-container {
+  height: 70% !important;
+  margin-bottom: 40% !important;
+}
