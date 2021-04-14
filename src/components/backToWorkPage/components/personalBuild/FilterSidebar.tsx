@@ -99,9 +99,9 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     this.props.setFilters(filters);
   }
 
-  renderIndexesBox(subjects: SubjectItem[]) {
+  renderIndexesBox() {
     return (
-      <div className="sort-box">
+      <div>
         <div className="filter-container sort-by-box">
           <div className="sort-header">INBOX</div>
         </div>
@@ -110,18 +110,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
           <div className="filter-header" style={{marginBottom: 0}}>
             SUBJECTS
           </div>
-        </div>
-        <div className="filter-container subjects-list indexes-box">
-          <div className={"index-box hover-light " + (this.state.subjectCheckedId === -1 ? "active" : "")} onClick={() => this.setViewAll()}>
-            View All
-            <div className="right-index">{this.props.bricks.length}</div>
-          </div>
-          {subjects.map((s, i) =>
-            <div className={"index-box hover-light " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
-              {s.name}
-              <div className="right-index">{s.count}</div>
-            </div>
-          )}
         </div>
       </div>
     );
@@ -153,8 +141,27 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     }
 
     return (
-      <Grid container item xs={3} className="sort-and-filter-container">
-        {this.renderIndexesBox(this.state.subjects)}
+      <Grid container item xs={3} className="sort-and-filter-container personal-build-filter">
+        <div className="flex-height-box first-box">
+          <div className="sort-box">
+            {this.renderIndexesBox()}
+          </div>
+          <div className="sort-box subject-scrollable">
+          <div className="filter-container subjects-list indexes-box">
+            <div className={"index-box hover-light " + (this.state.subjectCheckedId === -1 ? "active" : "")} onClick={() => this.setViewAll()}>
+                View All
+                <div className="right-index">{this.props.bricks.length}</div>
+              </div>
+              {this.state.subjects.map((s, i) =>
+                <div className={"index-box hover-light " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
+                  {s.name}
+                  <div className="right-index">{s.count}</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="sidebar-footer" />
       </Grid>
     );
   }

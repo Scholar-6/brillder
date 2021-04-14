@@ -219,21 +219,21 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     return (
       <Grid container item xs={3} className="sort-and-filter-container build-filter">
         <div className="flex-height-box first-box">
-            <div className="sort-box">
-              <div>
-                {!this.props.filters.publish && this.renderInbox(draft, build, publication)}
-                <CustomFilterBox
-                  label="Subjects"
-                  isClearFilter={this.state.isSubjectsClear}
-                  setHeight={subjectsHeight => this.setState({subjectsHeight})}
-                  clear={() => {}}
-                />
-              </div>
-            </div>
-            <div className="sort-box subject-scrollable">
-              {this.renderSubjectsBox(viewAll)}
+          <div className="sort-box">
+            <div>
+              {!this.props.filters.publish && this.renderInbox(draft, build, publication)}
+              <CustomFilterBox
+                label="Subjects"
+                isClearFilter={this.state.isSubjectsClear}
+                setHeight={subjectsHeight => this.setState({subjectsHeight})}
+                clear={() => {}}
+              />
             </div>
           </div>
+          <div className="sort-box subject-scrollable">
+            {this.renderSubjectsBox(viewAll)}
+          </div>
+        </div>
         <div className="sidebar-footer" />
       </Grid>
     );
