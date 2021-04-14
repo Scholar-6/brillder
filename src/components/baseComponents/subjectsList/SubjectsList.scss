@@ -13,7 +13,7 @@
     padding-top: 0.5vh;
     padding-left: 1.2vw;
     padding-right: 1.2vw;
-
+  
     &:hover {
       background: var(--light-blue-alpha3);
     }
@@ -21,10 +21,8 @@
     &.checked {
       background: var(--white);
       color: var(--theme-dark-blue);
-      .MuiFormControlLabel-root {
-        .MuiTypography-root {
-          color: var(--theme-dark-blue) !important;
-        }
+      .MuiFormControlLabel-root .MuiTypography-root {
+        color: var(--theme-dark-blue) !important;
       }
       &:hover {
         opacity: 0.9;
@@ -57,5 +55,11 @@
     width: 0.85vw;
     height: 0.85vw;
     border-radius: 50%;
+  }
+}
+
+.subjects-filter {
+  .MuiFormControlLabel-root .MuiTypography-root {
+    color: var(--white) !important;
   }
 }
