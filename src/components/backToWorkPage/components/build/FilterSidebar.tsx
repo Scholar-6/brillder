@@ -117,7 +117,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
   renderInbox = (draft: number, build: number, review: number) => {
     return (
-      <div className="sort-box">
+        <div>
         <div className="filter-container sort-by-box">
           <div className="sort-header">INBOX</div>
         </div>
@@ -164,17 +164,9 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
   renderSubjectsBox = (viewAll: number) => {
     return (
-      <div className="sort-box">
-        <CustomFilterBox
-          label="Subjects"
-          isClearFilter={this.state.isSubjectsClear}
-          setHeight={subjectsHeight => this.setState({subjectsHeight})}
-          clear={() => {}}
-        />
         <AnimateHeight
           duration={500}
           height={this.state.subjectsHeight}
-          style={{ width: "100%" }}
         >
           <div className="filter-container subjects-list indexes-box">
             {this.renderViewAll(viewAll)}
@@ -189,7 +181,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             )}
           </div>
         </AnimateHeight>
-      </div>
     );
   };
 
@@ -227,8 +218,23 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
     return (
       <Grid container item xs={3} className="sort-and-filter-container build-filter">
-        {!this.props.filters.publish && this.renderInbox(draft, build, publication)}
-        {this.renderSubjectsBox(viewAll)}
+        <div className="flex-height-box first-box">
+            <div className="sort-box">
+              <div>
+                {!this.props.filters.publish && this.renderInbox(draft, build, publication)}
+                <CustomFilterBox
+                  label="Subjects"
+                  isClearFilter={this.state.isSubjectsClear}
+                  setHeight={subjectsHeight => this.setState({subjectsHeight})}
+                  clear={() => {}}
+                />
+              </div>
+            </div>
+            <div className="sort-box subject-scrollable">
+              {this.renderSubjectsBox(viewAll)}
+            </div>
+          </div>
+        <div className="sidebar-footer" />
       </Grid>
     );
   }
