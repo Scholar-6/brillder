@@ -142,7 +142,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
     return (
       <Grid container item xs={3} className="sort-and-filter-container personal-build-filter">
-        <div className="flex-height-box first-box">
+        <div className="flex-height-box">
           <div className="sort-box">
             {this.renderIndexesBox()}
           </div>

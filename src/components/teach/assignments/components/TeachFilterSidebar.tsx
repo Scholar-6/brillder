@@ -183,9 +183,9 @@ class TeachFilterSidebar extends Component<
       totalCount += classroom.students.length;
       totalBricks += this.getClassAssignedCount(classroom);
     }
-    let className = "sort-box teach-sort-box";
     return (
-      <div className={className}>
+      <div className="sort-box teach-sort-box flex-height-box">
+      <div className="sort-box">
         <div className="filter-container sort-by-box">
           <div style={{ display: "flex" }}>
             {finalClasses.length > 1 ? (
@@ -234,10 +234,12 @@ class TeachFilterSidebar extends Component<
             />
           </div>
         </div>
+        </div>
+      <div className="sort-box subject-scrollable">
         <div className="filter-container indexes-box classrooms-filter">
           {finalClasses.map(this.renderClassroom.bind(this))}
-          <div className="sidebar-footer" />
         </div>
+      </div>
       </div>
     );
   }
@@ -261,6 +263,7 @@ class TeachFilterSidebar extends Component<
         className="sort-and-filter-container teach-assigned"
       >
         {this.renderContent()}
+        <div className="sidebar-footer" />
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
           submit={(name, subject) => {
