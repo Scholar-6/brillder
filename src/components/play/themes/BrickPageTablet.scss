@@ -5,8 +5,8 @@
 $play-border-radius: 3vw;
 $base-font-size: 1.25vw;
 $expanded-intro-padding: 2vw;
-$introduction-desktop-height: calc(100vh - #{$expanded-intro-padding} - #{$page-head-height});
-$introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
+$introduction-desktop-height: calc(95vh - #{$expanded-intro-padding} - #{$page-head-height});
+$introduction-expanded-height: calc(95vh - #{$expanded-intro-padding});
 
 .MuiExpansionPanelDetails-root {
   padding-top: 0 !important;
@@ -1019,7 +1019,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       margin-top: 0;
       .brick-row-container {
         width: calc(98vw - #{$home-button-size}) !important;
-        height: $introduction-expanded-height !important;
+        height: calc(95vh - 4vw) !important;
       }
       // #2781 new play live and review theme
       .live-container,
@@ -1033,7 +1033,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         width: $width !important;
         $header-height: 4vw;
         $foter-height: 4vw;
-        height: calc(100vh - #{$header-height}) !important;
+        height: calc(95vh - #{$header-height}) !important;
         margin-right: 8vw;
         margin-left: 7vw;
         border-radius: 2vw !important;
@@ -1047,11 +1047,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         }
 
         .introduction-page {
-          height: calc(100vh - 4vw) !important;
+          height: calc(95vh - 4vw) !important;
           padding-left: 0 !important;
           .question-live-play {
             margin-top: $header-height !important;
-            height: calc(100vh - 5vw - #{$header-height} - #{$foter-height}) !important;
+            height: calc(95vh - 5vw - #{$header-height} - #{$foter-height}) !important;
             .question-title {
               display: none;
             }
@@ -1285,7 +1285,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       // only synthesis score
       .synthesis-container {
         .synthesis-content {
-          height: calc(100vh - 4vw - 4vw) !important;
+          height: calc(95vh - 4vw - 4vw) !important;
           padding: 8vh 5vw 6vw 5vw;
           width: 100%;
         }
@@ -1600,7 +1600,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
   .scrollable {
     padding: 4vh 0 !important;
-    height: calc(100vh - 15vh) !important;
+    height: calc(95vh - 15vh) !important;
     overflow-y: scroll;
   }
 
@@ -1875,4 +1875,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   .introduction-info {
     background: inherit !important;
   }
+}
+
+// sidebar is grey
+.play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-info {
+  background: var(--solitude-light) !important;
 }
