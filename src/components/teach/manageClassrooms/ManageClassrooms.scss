@@ -6,13 +6,6 @@ $base-build-font-size: 1.25vw;
 
 .manage-classrooms-page {
   $base-filter-padding-left: 2vw;
-  .manage-classrooms-filter {
-    height: calc(100vh - 1.1vh - 2vh - 4vh - 5.95vw - 2vw - 5.2vw - 5.834vw) !important;
-    overflow: auto;
-    .index-box {
-      padding-left: $base-filter-padding-left !important;
-    }
-  }
 
   .subject-border {
     display: flex;

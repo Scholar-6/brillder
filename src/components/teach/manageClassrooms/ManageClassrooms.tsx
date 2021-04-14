@@ -157,6 +157,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     if (classrooms) {
       this.prepareClassrooms(classrooms);
       classrooms = classrooms.filter(c => c.subjectId);
+      classrooms = classrooms.sort((a: any, b: any) => b.students.length - a.students.length);
       this.setState({
         classrooms,
         activeClassroom: this.state.activeClassroom ? classrooms.find(c => c.id === this.state.activeClassroom!.id) ?? null : null
@@ -347,7 +348,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderViewAllFilter() {
-    let className = "index-box hover-light item-box2";
+    let className = "m-view-all index-box hover-light item-box2";
     if (!this.state.activeClassroom) {
       className += " active";
     }
@@ -375,31 +376,39 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       return <EmptyFilter />;
     }
 
+    const {classrooms} = this.state;
+
     return (
-      <div className="sort-box">
-        <div className="filter-container sort-by-box">
-          <div style={{ display: 'flex' }}>
-            <div className="class-header" style={{ width: '50%' }}>
-              CLASSES
+      <div className="flex-height-box">
+        <div className="sort-box">
+          <div className="filter-container sort-by-box">
+            <div style={{ display: 'flex' }}>
+              {classrooms.length > 1
+                ? <div className="class-header" style={{ width: '50%' }}>{classrooms.length} CLASSES</div>
+                : <div className="class-header" style={{ width: '50%' }}>{classrooms.length} CLASS</div>
+              }
             </div>
           </div>
-        </div>
-        <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
-          + Create Class
-        </div>
-        <div className="subject-indexes-box filter-container manage-classrooms-filter">
+          <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
+            <SpriteIcon name="plus-circle" /> Create Class
+          </div>
           {this.renderViewAllFilter()}
-          {this.state.classrooms.map((c, i) =>
-            <ClassroomFilterItem
-              classroom={c}
-              key={i}
-              activeClassroom={this.state.activeClassroom}
-              setActiveClassroom={this.setActiveClassroom.bind(this)}
-              onDeleteClass={this.onDeleteClass.bind(this)}
-              onDrop={this.onDrop.bind(this)}
-            />
-          )}
         </div>
+        <div className="sort-box subject-scrollable">
+          <div className="subject-indexes-box filter-container manage-classrooms-filter">
+            {this.state.classrooms.map((c, i) =>
+              <ClassroomFilterItem
+                classroom={c}
+                key={i}
+                activeClassroom={this.state.activeClassroom}
+                setActiveClassroom={this.setActiveClassroom.bind(this)}
+                onDeleteClass={this.onDeleteClass.bind(this)}
+                onDrop={this.onDrop.bind(this)}
+              />
+            )}
+          </div>
+        </div>
+        <div className="sidebar-footer" />
       </div>
     );
   };
@@ -628,7 +637,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           searching={v => this.searching(v)}
         />
         <Grid container direction="row" className="sorted-row">
-          <Grid container item xs={3} className="sort-and-filter-container">
+          <Grid container item xs={3} className="sort-and-filter-container manage-class-filter">
             {this.renderSortAndFilterBox()}
           </Grid>
           <Grid item xs={9} className="brick-row-container">

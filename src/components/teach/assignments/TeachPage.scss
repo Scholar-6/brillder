@@ -13,20 +13,6 @@
 
   .teach-sort-box {
     height: 100%;
-    .m-view-all {
-      padding-left: 1.4vw;
-      .right-index {
-        display: flex;
-        align-items: center;
-        right: 1.2vw !important;
-        color: var(--white) !important;
-        background: inherit !important;
-        .svg {
-          width: 1.3vw;
-          height: 1.3vw;
-        }
-      }
-    }
   }
 
   .index-box {
@@ -510,5 +496,31 @@
   }
   .empty-tab-content {
     height: 80%;
+  }
+}
+
+// view all button
+.manage-classrooms-page {
+  .m-view-all {
+    display: flex;
+    align-items: center;
+    font-size: 1.05vw;
+    font-family: $font-family-regular;
+    padding-left: 1.4vw;
+    height: 4.7vh !important;
+    &.active {
+      background-color: var(--theme-orange);
+    }
+    .right-index {
+      display: flex;
+      align-items: center;
+      right: 1.2vw !important;
+      color: var(--white) !important;
+      background: inherit !important;
+      .svg {
+        width: 1.3vw;
+        height: 1.3vw;
+      }
+    }
   }
 }
