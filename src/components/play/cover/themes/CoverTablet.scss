@@ -4,7 +4,14 @@
 
 .cover-page {
   .brick-container {
+    height: 100%;
     color: var(--theme-dark-blue);
+    > div {
+      height: 100%;
+    }
+    .introduction-info {
+      height: 100% !important;
+    }
     .introduction-page {
       padding-top: 3.5vh;
       padding-left: 3.5vh;
