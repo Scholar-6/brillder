@@ -26,10 +26,11 @@ interface BuildRouteProps {
   fetchBrick(id: number): void;
 }
 
-const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
+const BuildBrickRoute: React.FC<BuildRouteProps> = ({
   component: Component,
   ...rest
 }) => {
+  console.log('proposal')
   setBrillderTitle();
 
   if (rest.isAuthenticated === isAuthenticated.True) {
@@ -58,7 +59,6 @@ const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
           const brickId = parseInt(props.match.params.brickId);
           if (!rest.brick || !rest.brick.author || rest.brick.id !== brickId) {
             rest.fetchBrick(brickId);
-            return <PageLoader content="...Getting Brick..." />;
           }
 
           // move to investigation
@@ -100,4 +100,4 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(mapState, mapDispatch);
 
-export default connector(ProposalBrickRoute);
+export default connector(BuildBrickRoute);
