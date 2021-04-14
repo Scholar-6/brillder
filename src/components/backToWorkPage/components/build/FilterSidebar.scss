@@ -2,6 +2,7 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
+.personal-build-filter,
 .build-filter {
   height: calc(100vh - #{$home-button-size} - 2vw) !important;
 
