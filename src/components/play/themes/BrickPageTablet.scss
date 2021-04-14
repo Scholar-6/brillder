@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 $play-border-radius: 3vw;
-$base-font-size: 1.25vw;
+$base-font-size: 1.4vw;
 $expanded-intro-padding: 2vw;
 $introduction-desktop-height: calc(95vh - #{$expanded-intro-padding} - #{$page-head-height});
 $introduction-expanded-height: calc(95vh - #{$expanded-intro-padding});
@@ -1097,7 +1097,7 @@ $introduction-expanded-height: calc(95vh - #{$expanded-intro-padding});
               transition: all 300ms ease-out;
               display: flex;
               align-items: center;
-              font-size: 1.8vw;
+              font-size: 2.5vw;
               font-family: $font-family-bold;
               margin-left: 1vw;
               margin-right: 3vw;
@@ -1412,6 +1412,10 @@ $introduction-expanded-height: calc(95vh - #{$expanded-intro-padding});
   }
 }
 
+.unauthrozied-container ~ .beta-text {
+  color: var(--theme-dark-blue) !important;
+}
+
 .play-preview-pages ~ .beta-text {
   color: var(--theme-dark-blue) !important;
 }
@@ -1599,8 +1603,8 @@ $introduction-expanded-height: calc(95vh - #{$expanded-intro-padding});
     }
   }
   .scrollable {
-    padding: 4vh 0 !important;
-    height: calc(95vh - 15vh) !important;
+    padding: 4vh 0 4vw 0 !important;
+    height: 100% !important;
     overflow-y: scroll;
   }
 
