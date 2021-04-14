@@ -173,3 +173,13 @@
 .short-brick-info {
   width: calc(100% - 4.4vw);
 }
+
+.sidebar-footer {
+  border-top: 0.3vw solid var(--light-blue-alpha5);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 5vw;
+  width: 100%;
+  background: var(--theme-light-blue);
+}
