@@ -1877,7 +1877,11 @@ $introduction-expanded-height: calc(95vh - #{$expanded-intro-padding});
   }
 }
 
-// sidebar is grey
+// should be grey in prosivional score and some pages
 .play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-info {
   background: var(--solitude-light) !important;
+}
+// should be invisible in stepper which in live and review
+.play-preview-pages .sorted-row .brick-row-container .brick-container.live-page .introduction-info {
+  background: inherit !important;
 }
