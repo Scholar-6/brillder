@@ -6,6 +6,13 @@
   $tabs-margin-between: 0.2vw;
   $width: calc(100.2vw - #{$filter-sidebar-size} - (#{$filter-sidebar-margin * 2}) - #{$tabs-margin-between});
 
+  .sort-and-filter-container {
+    font-family: $font-family-light !important;
+    .index-box {
+      font-family: $font-family-light !important;
+    }
+  }
+
   .tab-container {
     display: flex;
     flex-wrap: nowrap;
