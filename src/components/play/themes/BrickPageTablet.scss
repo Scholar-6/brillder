@@ -870,7 +870,7 @@ $introduction-expanded-height: calc(95vh - #{$expanded-intro-padding});
             background: var(--tab-gray);
           }
           .introduction-page {
-            height: calc(100vh - 4vw - 4vw) !important;
+            height: calc(95vh - 4vw - 4vw) !important;
           }
           .question-live-play {
             height: calc(100vh - 27.6vh);
