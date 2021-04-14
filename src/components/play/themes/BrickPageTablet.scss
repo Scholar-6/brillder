@@ -1413,11 +1413,11 @@ $introduction-expanded-height: calc(95vh - #{$expanded-intro-padding});
 }
 
 .unauthrozied-container ~ .beta-text {
-  color: var(--theme-dark-blue) !important;
+  color: var(--theme-light-blue) !important;
 }
 
 .play-preview-pages ~ .beta-text {
-  color: var(--theme-dark-blue) !important;
+  color: var(--theme-light-blue) !important;
 }
 
 // only stepper in play
