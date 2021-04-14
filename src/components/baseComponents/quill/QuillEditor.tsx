@@ -8,6 +8,7 @@ import _ from "lodash";
 
 import "./QuillLatex";
 import "./QuillAutoLink";
+import "./QuillImageUpload";
 import "./QuillMediaEmbed";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
@@ -42,7 +43,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 props.onChange(content);
             }
         }, 500),
-        []
+        [props.onChange]
     );
 
     const onChange = (content: string, delta: any, source: Sources) => {
