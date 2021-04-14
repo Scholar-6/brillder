@@ -1086,7 +1086,7 @@ $new-play-height: calc(100vh - #{$play-footer-height} - #{$progress-bar-height})
     svg {
       stroke-width: 2;
       color: var(--theme-dark-blue);
-      width: calc(100% / 7);
+      width: calc(100% / 7.4);
       height: $height / 1.6;
     }
 
