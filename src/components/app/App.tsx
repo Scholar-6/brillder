@@ -60,6 +60,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { User } from 'model/user';
 import { getTerms } from 'services/axios/terms';
 import IPadWarning from 'components/baseComponents/rotateInstruction/IPadWarning';
+import BuildRouter from 'components/build/BuildRouter';
 
 interface AppProps {
   user: User;
@@ -234,12 +235,12 @@ const App: React.FC<AppProps> = props => {
             "/build/brick/:brickId/investigation/question",
             "/build/brick/:brickId"
           ]}
-          component={InvestigationBuildPage}
+          component={BuildRouter}
           location={location}
         />
-        <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
+        {/* <BuildBrickRoute path={map.ProposalBase} component={Proposal} location={location} />
         <BuildRoute path="/build/brick/:brickId" component={Proposal} location={location} />
-        <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
+        <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} /> */}
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
         <BuildRoute path={map.AssignmentsClassPage} component={AssignmentsPage} location={location} />
         <BuildRoute path={map.AssignmentsPage} component={AssignmentsPage} location={location} />

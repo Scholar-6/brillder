@@ -139,7 +139,7 @@ $space-between-boxes: 0.1vw;
     vertical-align: bottom;
     height: 5%;
     left: 33vw;
-    font-size: 1.3vw;
+    font-size: 1.05vw;
     font-family: $font-family-regular;
     color: white;
   }
@@ -254,31 +254,6 @@ $space-between-boxes: 0.1vw;
   .white.proposal:focus {
     outline: none;
     border: none;
-  }
-
-  .saved-info {
-    position: fixed;
-    font-family: $font-family-regular;
-    top: 6%;
-    right: 0;
-    width: 34.3vw;
-    color: white;
-    @extend %textCenter;
-
-    svg {
-      margin-top: 0.3vw;
-      height: 1.52vw;
-      width: 1.52vw;
-    }
-  }
-
-  .saved-info-row {
-    width: 17vw;
-
-    .text-container {
-      font-size: 1.05vw;
-      margin-left: 0.4vw;
-    }
   }
 
   .saved-info .editor-border {
@@ -419,5 +394,330 @@ $space-between-boxes: 0.1vw;
     padding-left: 0.2vw;
     padding-right: 0.2vw;
     border-radius: 0.3vw;
+  }
+}
+
+// plan page styles.
+.plan-page {
+  $baseFontSize: 1.05vw;
+  .top-scroll-area,
+  .bottom-scroll-area {
+    display: flex;
+    width: 100%;
+    height: 5vh;
+    justify-content: flex-start;
+    .bottom-button-container,
+    .top-button-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 2vw;
+      min-width: calc(72.5% - 2vw);
+      max-width: calc(72.5% - 2vw);
+
+      svg {
+        width: 2vw;
+        height: 2vw;
+      }
+
+      .disabled {
+        color: var(--theme-dark-blue) !important;
+      }
+    }
+  }
+
+  .key-words {
+    .MuiOutlinedInput-notchedOutline {
+      border: none !important;
+    }
+  }
+
+  .fixed-build-phone
+    .phone-question-preview-box
+    .phone-question-preview
+    .phone
+    .phone-border
+    .screen
+    .custom-component
+    .phone-preview-component
+    .key-words-play {
+    white-space: normal;
+    overflow: auto;
+  }
+
+  .inner-question-type {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-right: 0 !important;
+    padding-left: 2vw;
+    height: calc(100% - 10vh);
+
+    .plan-quill-container {
+      max-width: 72.5%;
+      background: var(--tab-gray);
+      border-radius: $editor-radius;
+    }
+
+    .p-edit-container {
+      position: relative;
+      height: calc(100%);
+    }
+
+    $toolbar-height: calc(2vh + 1.9vw);
+
+    .inner-quills {
+      display: block;
+      $border: 0.2vw;
+      background: var(--white);
+      overflow-y: scroll;
+      position: absolute;
+      top: $toolbar-height;
+      left: $border;
+      width: calc(100% - #{$border * 2});
+      height: calc(100% - #{$toolbar-height} - #{$border});
+      border-bottom-left-radius: 0.4vw;
+      border-bottom-right-radius: 0.4vw;
+      padding-left: 0.5vw;
+      padding-right: 0.5vw;
+
+      .quill-document-editor {
+        width: 100%;
+        height: auto !important;
+      }
+      .ql-editor {
+        border-radius: 0.5vw;
+        height: auto !important;
+      }
+      .title-quill-container {
+        width: 100%;
+        margin-top: 0.5vw;
+        input {
+          color: var(--theme-dark-blue);
+          background: var(--off-white);
+          width: calc(100% - 1vw);
+          font-size: $baseFontSize;
+          padding: 0.3vw 0.5vw;
+          border-radius: 0.5vw;
+        }
+        .ql-editor {
+          min-height: 3.5vw;
+          text-align: left;
+          br {
+            display: none;
+          }
+        }
+      }
+      .key-words {
+        margin-top: 0.5vw;
+        background: var(--off-white);
+        border-radius: 0.5vw;
+        .key-word {
+          border-radius: 1vw;
+          background: #e4e8ee;
+          margin-top: 0.3vw;
+          margin-bottom: 0.3vw;
+          margin-right: 0.2vw;
+          margin-left: 0.2vw;
+          padding-left: 0.5vw;
+          padding-right: 0.2vw;
+          padding-top: 0.2vw;
+          font-size: $baseFontSize;
+          padding-bottom: 0.2vw;
+        }
+        .MuiAutocomplete-root {
+          margin-bottom: 0 !important;
+          input {
+            font-size: $baseFontSize;
+            padding: 0;
+          }
+        }
+      }
+      .subject-select-container {
+        margin-top: 0.5vw;
+        width: 100%;
+        .MuiInputBase-root {
+          width: 100%;
+          &::before,
+          &::after {
+            content: none !important;
+          }
+          .MuiSelect-root {
+            border-radius: 0.5vw;
+            background: var(--off-white);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--theme-dark-blue);
+            .MuiListItemIcon-root:first-child {
+              display: center;
+              justify-content: center;
+            }
+            .MuiTypography-root {
+              font-size: $baseFontSize;
+            }
+          }
+        }
+      }
+      .level-and-length-container {
+        display: inline-flex;
+        margin-top: 0.5vw;
+        width: 100%;
+        .difficulty-select {
+          padding-right: 0.5vw;
+          width: 100%;
+          .MuiInputBase-root {
+            width: 100%;
+            &::before,
+            &::after {
+              content: none !important;
+            }
+
+            .MuiSelect-root {
+              font-size: $baseFontSize;
+              background: var(--off-white);
+              padding-left: 0.4vw;
+              border-radius: 0.5vw;
+            }
+          }
+        }
+        .brick-length {
+          width: 30%;
+          position: relative;
+          color: var(--theme-dark-blue);
+
+          .fixed-select-clock {
+            cursor: pointer;
+            z-index: 100;
+            height: 100%;
+            position: absolute;
+            width: 27%;
+            border-top-left-radius: 0.5vw;
+            border-bottom-left-radius: 0.5vw;
+            pointer-events: none;
+            background: #e4e8ee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            svg {
+              stroke-width: 2;
+              width: 1.5vw;
+              height: 1.5vw;
+            }
+          }
+
+          .select {
+            width: 100%;
+            &::before,
+            &::after {
+              content: none !important;
+            }
+          }
+
+          .MuiSelect-root {
+            padding-left: 3.2vw;
+            color: var(--theme-dark-blue);
+            font-size: $baseFontSize;
+            font-family: $font-family-regular;
+            background: var(--off-white);
+            border-radius: 0.5vw;
+          }
+        }
+      }
+      .brief-container,
+      .prep-container,
+      .open-question-container,
+      .title-quill-container {
+        margin-top: 0.5vw;
+        .header {
+          width: 100%;
+          background: var(--tab-gray);
+          border-top-left-radius: 0.5vw;
+          border-top-right-radius: 0.5vw;
+          color: var(--theme-dark-blue);
+          font-size: 1.3vw;
+          text-align: center;
+          font-family: $font-family-bold;
+        }
+        .ql-editor {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+
+          .ql-video {
+            width: 100%;
+            height: 14vw;
+          }
+        }
+      }
+      .prep-container {
+        margin-bottom: 0.5vw;
+      }
+    }
+    .right-sidebar {
+      width: 27.5%;
+    }
+    .plan-comments-panel {
+      transition: all 1s ease-out;
+      display: flex;
+      justify-content: flex-end;
+      width: 27.5%;
+      height: calc(100% - 10vh);
+      &.hidden {
+        width: 0;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+.fixed-build-phone {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 33.8vw;
+}
+
+// quill top toolbar
+.investigation-build-page {
+  .ql-global-toolbar,
+  .ql-custom-toolbar {
+    position: relative !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: unset !important;
+
+    button,
+    .picker.q-color {
+      width: 1.9vw !important;
+      height: 1.9vw !important;
+
+      svg {
+        height: 100% !important;
+        width: 100% !important;
+        &:hover {
+          color: rgba(0, 28, 88, 0.5) !important;
+        }
+      }
+    }
+
+    button:disabled {
+      svg {
+        &:hover {
+          color: var(--dark-gray) !important;
+        }
+      }
+    }
+  }
+  // more space between buttons in bigger editors
+  .synthesis-page,
+  .plan-page {
+    .ql-custom-toolbar .formats {
+      > button,
+      > span.picker.q-color {
+        margin-left: 0.3vw;
+        margin-right: 0.3vw;
+      }
+    }
   }
 }
