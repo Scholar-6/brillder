@@ -7,7 +7,6 @@ import { Brick, BrickStatus } from "model/brick";
 import { SortBy, Filters, ThreeColumns } from '../../model';
 import { clearStatusFilters } from '../../service';
 import EmptyFilterSidebar from "../EmptyFilter";
-import CustomFilterBox from "components/library/components/CustomFilterBox";
 import { SubjectItem } from "../personalBuild/model";
 
 
@@ -221,13 +220,10 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
         <div className="flex-height-box first-box">
           <div className="sort-box">
             <div>
-              {!this.props.filters.publish && this.renderInbox(draft, build, publication)}
-              <CustomFilterBox
-                label="Subjects"
-                isClearFilter={this.state.isSubjectsClear}
-                setHeight={subjectsHeight => this.setState({subjectsHeight})}
-                clear={() => {}}
-              />
+              {!this.props.filters.publish ? this.renderInbox(draft, build, publication) : <div style={{height: "10vw"}} />}
+              <div className="filter-header">
+                <span>Subjects</span>
+              </div>
             </div>
           </div>
           <div className="sort-box subject-scrollable">

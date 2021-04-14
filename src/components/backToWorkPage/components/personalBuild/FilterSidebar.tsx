@@ -147,10 +147,9 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             {this.renderIndexesBox()}
           </div>
           <div className="sort-box subject-scrollable">
-          <div className="filter-container subjects-list indexes-box">
-            <div className={"index-box hover-light " + (this.state.subjectCheckedId === -1 ? "active" : "")} onClick={() => this.setViewAll()}>
-                View All
-                <div className="right-index">{this.props.bricks.length}</div>
+            <div className="filter-container subjects-list indexes-box">
+              <div className={"index-box hover-light " + (this.state.subjectCheckedId === -1 ? "active" : "")} onClick={() => this.setViewAll()}>
+                View All <div className="right-index">{this.props.bricks.length}</div>
               </div>
               {this.state.subjects.map((s, i) =>
                 <div className={"index-box hover-light " + (s.id === this.state.subjectCheckedId ? "active" : "")} onClick={() => this.filterBySubject(s)} key={i}>
