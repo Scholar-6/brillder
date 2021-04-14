@@ -604,9 +604,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               }
             }
             &.review-content {
-              // width: calc(100% - 14vw) !important;
-              // margin: 0 7vw 1vw 7vw;
-              padding: 0 4vw;
+              padding: 0 7vw;
             }
           }
 
@@ -1416,7 +1414,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       // only synthesis score
       .synthesis-container {
         .synthesis-content {
-          height: calc(100vh - 7vw - 7vw) !important;
+          height: calc(100vh - 8vw - 4vw) !important;
           padding: 8vh 7vw 6vw 7vw;
           width: 100%;
         }
