@@ -1070,7 +1070,7 @@ $new-play-height: calc(100vh - #{$play-footer-height} - #{$progress-bar-height})
   // play phone footer
   .phone-play-footer {
     z-index: 19999;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     background: var(--tab-gray);
     height: $play-footer-height;
