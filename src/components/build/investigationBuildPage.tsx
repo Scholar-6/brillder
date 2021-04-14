@@ -55,7 +55,6 @@ import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/p
 import SynthesisPreviewComponent from "./baseComponents/phonePreview/synthesis/SynthesisPreview";
 import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
 import TutorialPhonePreview from "./tutorial/TutorialPreview";
-import YourProposalLink from './baseComponents/YourProposalLink';
 import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import Proposal from "./proposal/Proposal";
@@ -866,13 +865,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       />
       <Hidden only={['xs', 'sm']}>
         <TutorialLabels isTutorialPassed={isTutorialPassed()} />
-        <YourProposalLink
-          brickId={props.brick.id}
-          tutorialStep={step}
-          invalid={validationRequired && !proposalResult.isValid}
-          saveBrick={saveBrick}
-          isTutorialPassed={isTutorialPassed}
-        />
         <Grid
           container direction="row"
           className="investigation-build-background"
