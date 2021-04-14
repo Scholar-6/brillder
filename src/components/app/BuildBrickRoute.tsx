@@ -26,7 +26,7 @@ interface BuildRouteProps {
   fetchBrick(id: number): void;
 }
 
-const BuildBrickRoute: React.FC<BuildRouteProps> = ({
+const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
   component: Component,
   ...rest
 }) => {
@@ -100,4 +100,4 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(mapState, mapDispatch);
 
-export default connector(BuildBrickRoute);
+export default connector(ProposalBrickRoute);
