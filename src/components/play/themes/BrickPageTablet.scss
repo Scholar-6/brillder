@@ -90,18 +90,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             .svg {
               color: var(--theme-yellow);
             }
-            &:hover {
-              span,
-              .svg {
-                color: var(--white);
-              }
-            }
-          }
-          &:hover {
-            span,
-            .svg {
-              color: var(--theme-yellow);
-            }
           }
         }
         .highlight-button {
@@ -114,18 +102,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             bottom: -3vw;
           }
           &.active {
-            span,
-            .svg {
-              color: var(--theme-yellow);
-            }
-            &:hover {
-              span,
-              .svg {
-                color: var(--white);
-              }
-            }
-          }
-          &:hover {
             span,
             .svg {
               color: var(--theme-yellow);
@@ -203,28 +179,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               @extend %transitionAll300;
             }
 
-            &:hover {
-              background: var(--white);
-              span {
-                color: var(--theme-orange) !important;
-              }
-              svg {
-                color: var(--theme-orange) !important;
-              }
-            }
-
             &.blue {
               background: var(--theme-dark-blue);
               stroke-width: 2;
-              &:hover {
-                background: var(--tab-gray);
-                span {
-                  color: var(--theme-dark-blue) !important;
-                }
-                svg {
-                  color: var(--theme-dark-blue) !important;
-                }
-              }
             }
           }
           .prep-button {
@@ -249,13 +206,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               line-height: 1;
               font-family: $font-family-regular;
             }
-
-            &:hover {
-              color: var(--white);
-              svg {
-                color: var(--white);
-              }
-            }
           }
           .grey-line {
             display: flex;
@@ -277,13 +227,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             svg {
               color: var(--white);
               stroke-width: 2 !important;
-            }
-            &:hover {
-              background: var(--tab-gray);
-              span,
-              svg {
-                color: var(--theme-dark-blue) !important;
-              }
             }
           }
           &.unauthorized {
@@ -372,28 +315,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               @extend %transitionAll300;
             }
 
-            &:hover {
-              background: var(--white);
-              span {
-                color: var(--theme-orange) !important;
-              }
-              svg {
-                color: var(--theme-orange) !important;
-              }
-            }
-
             &.blue {
               background: var(--theme-dark-blue);
               stroke-width: 2;
-              &:hover {
-                background: var(--tab-gray);
-                span {
-                  color: var(--theme-dark-blue) !important;
-                }
-                svg {
-                  color: var(--theme-dark-blue) !important;
-                }
-              }
             }
           }
           .share-button {
@@ -402,13 +326,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             svg {
               color: var(--white);
               stroke-width: 2 !important;
-            }
-            &:hover {
-              background: var(--tab-gray);
-              span,
-              svg {
-                color: var(--theme-dark-blue) !important;
-              }
             }
           }
           &.unauthorized {
@@ -453,10 +370,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       }
     }
     .brick-row-container {
-      @include tabletP {
-        width: calc(82.85vw - 1vw);
-        transition: 700ms width;
-      }
+      width: calc(82.85vw - 1vw);
+      transition: 700ms width;
       .brick-container {
         .left-brick-circle {
           position: absolute;
@@ -675,10 +590,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 font-size: 2vw;
                 font-family: $font-family-black;
                 color: var(--dark-gray);
-                &:hover {
-                  opacity: 0.5;
-                  color: var(--theme-light-blue) !important;
-                }
                 &.current {
                   opacity: 1;
                 }
@@ -886,11 +797,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             cursor: pointer;
             svg {
               stroke-width: 1.5 !important;
-            }
-            &:hover {
-              svg {
-                stroke-width: 1.8 !important;
-              }
             }
           }
         }
@@ -1202,23 +1108,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 width: 2.1vw;
                 height: 2.1vw;
               }
-              &.next {
-                &:hover {
-                  margin-right: 2vw;
-                  svg {
-                    margin-left: 1vw;
-                  }
-                }
-              }
               &.back {
                 color: var(--dark-gray);
-                &:hover {
-                  color: var(--theme-dark-blue);
-                  //margin-right: 2vw;
-                  svg {
-                    margin-right: 1vw;
-                  }
-                }
               }
             }
           }
@@ -1305,26 +1196,17 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 color: var(--white);
                 background: var(--blue);
               }
-              &:hover {
-                opacity: 0.5;
-              }
             }
             &.success {
               span {
                 color: var(--tab-gray);
                 background: var(--theme-green);
               }
-              &:hover {
-                opacity: 0.5;
-              }
             }
             &.failed {
               span {
                 color: var(--tab-gray);
                 background: var(--theme-orange);
-              }
-              &:hover {
-                opacity: 0.5;
               }
             }
             &.current {
@@ -1350,9 +1232,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               }
               &.failed .underline > div {
                 background: var(--theme-orange);
-              }
-              &:hover {
-                opacity: 0.5;
               }
             }
           }
@@ -1420,9 +1299,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         padding-left: 0.2vw;
         padding-right: 0.2vw;
         border-radius: 0.3vw;
-        &:hover {
-          background: rgba(130, 192, 237, 0.5) !important;
-        }
       }
     }
     // lines hover
@@ -1433,23 +1309,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         padding-left: 0.2vw;
         padding-right: 0.2vw;
         border-radius: 0.3vw;
-        &:hover {
-          background: rgba(130, 192, 237, 0.5) !important;
-        }
-      }
-    }
-    // categorize hover
-    .sort-category-list-container {
-      .sortable-item {
-        &:hover {
-          background: rgba(130, 192, 237, 0.5) !important;
-        }
-      }
-    }
-    // horizontal shuffle hover
-    .horizontal-shuffle-answer {
-      &:hover {
-        background: rgba(130, 192, 237, 0.5) !important;
       }
     }
   }
@@ -1474,9 +1333,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     font: 2.4vw $font-family-bold;
     > span {
       &:first-child {
-        @include tabletP {
-          width: 6vw;
-        }
+        width: 6vw;
       }
     }
     .round-icon {
@@ -1497,17 +1354,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         top: 55%;
         left: 50%;
         transform: translate(-50%, -50%);
-      }
-      &:not(.b-green) {
-        &:hover {
-          @include tabletP {
-            animation-duration: 1s;
-            animation-delay: 0s;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease;
-            animation-name: pulse-yellow;
-          }
-        }
       }
     }
 
@@ -1632,20 +1478,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .choose-choice {
   transition: all 300ms ease-out;
 }
-.choose-choice:hover {
-  background: rgba(130, 192, 237, 0.5) !important;
-  &.active {
-    background: var(--highlight-blue) !important;
-  }
-}
 
 // vertical shuffle hover
 .question-unique-play.vertical-shuffle-play {
   .vertical-content {
     transition: all 300ms ease-out;
-  }
-  .vertical-content:hover {
-    background: rgba(130, 192, 237, 0.5) !important;
   }
 }
 
@@ -1659,25 +1496,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   .step {
     color: var(--dark-gray);
   }
-  .step:hover {
-    opacity: 0.5;
-    color: var(--theme-light-blue) !important;
-  }
   .step.current {
     opacity: 1;
   }
 }
-// categorize hover
-.play-preview-pages .sort-category-list-container {
-  .sortable-item:hover {
-    background: rgba(130, 192, 237, 0.5) !important;
-  }
-}
-// horizontal shuffle hover
-.play-preview-pages .horizontal-shuffle-answer:hover {
-  background: rgba(130, 192, 237, 0.5) !important;
-}
-
 // missing choice dropdown font
 .missing-choice {
   padding: 0.25vw 1vw;
