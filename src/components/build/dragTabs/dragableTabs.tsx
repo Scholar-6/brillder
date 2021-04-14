@@ -207,10 +207,13 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       );
     };
 
-    let columns = questions.length * 2 + 3;
+    let columns = questions.length * 2 + 4;
 
-    if (isSynthesisPage) {
-      columns = questions.length * 2 + 2;
+    if (questions.length === 0) {
+      columns = 2 + 1.582 + 1.5555;
+      if (isPlanPage) {
+        columns = 1.58 + 1.5555 + 1.5555;
+      }
     }
 
     const setQuestions = (newQuestions: Question[], d: any) => {
