@@ -15,7 +15,6 @@ interface OpenQuestionProps {
   baseUrl: string;
   selectedQuestion: any;
   canEdit: boolean;
-  playStatus: PlayButtonStatus;
   history: any;
   saveOpenQuestion(v: string): void;
   saveAndPreview(): void;
@@ -40,7 +39,6 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
       <Navigation
         baseUrl={props.baseUrl}
         step={ProposalStep.OpenQuestion}
-        playStatus={props.playStatus}
         saveAndPreview={props.saveAndPreview}
         onMove={() => saveOpenQuestion(selectedQuestion)}
       />

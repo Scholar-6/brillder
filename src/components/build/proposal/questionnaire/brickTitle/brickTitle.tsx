@@ -34,7 +34,6 @@ interface BrickTitleProps {
   baseUrl: string;
   parentState: Brick;
   canEdit: boolean;
-  playStatus: PlayButtonStatus;
   subjects: Subject[];
   saveTitles(data: any): void;
   setKeywords(keywords: KeyWord[]): void;
@@ -163,7 +162,6 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
         <Navigation
           baseUrl={baseUrl}
           step={ProposalStep.BrickTitle}
-          playStatus={this.props.playStatus}
           saveAndPreview={this.props.saveAndPreview}
           onMove={() => saveTitles(parentState)}
         />
