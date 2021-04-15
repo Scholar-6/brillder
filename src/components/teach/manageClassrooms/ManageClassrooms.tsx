@@ -30,6 +30,7 @@ import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/Studen
 import NameAndSubjectForm from "../components/NameAndSubjectForm";
 import { Subject } from "model/brick";
 import ClassroomFilterItem from "./components/ClassroomFilterItem";
+import { socket } from "socket/socket";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -123,6 +124,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     };
 
     this.loadData();
+  }
+
+  componentDidMount() {
+    socket.on("invitation_accepted", () => {
+      this.loadData();
+      console.log("inv update")
+    });
+  }
+
+  componentWillUnmount() {
+    socket.off("invitation_accepted");
   }
 
   async loadData() {
