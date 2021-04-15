@@ -25,6 +25,7 @@ import MobileNextButton from "../live/components/MobileNextButton";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
 import { getReviewTime } from "../services/playTimes";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -286,7 +287,9 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
 
   return (
     <div className="brick-row-container review-container">
-      {!isPhone() && <div className="fixed-upper-b-title">{brick.title}</div>}
+      {!isPhone() && <div className="fixed-upper-b-title">
+        <BrickTitle title={brick.title} />
+      </div>}
       <div className="brick-container play-preview-panel review-page">
         <div className="introduction-page">
           <Hidden only={['xs']}>
@@ -355,7 +358,9 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
           <Hidden only={["sm", "md", "lg", "xl"]}>
             <div className="intro-header">
               <div className="intro-text-row">
-                <span className="phone-stepper-head"><span className="bold">{brick.subject?.name}</span> {brick.title}</span>
+                <span className="phone-stepper-head">
+                  <span className="bold">{brick.subject?.name}</span> <BrickTitle title={brick.title} />
+                </span>
                 <ReviewStepper
                   questions={questions}
                   attempts={attempts}

@@ -13,6 +13,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { rightKeyPressed } from 'components/services/key';
 import { isPhone } from 'services/phone';
 import routes from '../routes';
+import BrickTitle from 'components/baseComponents/BrickTitle';
 
 interface ProvisionalScoreState {
   value: number;
@@ -174,7 +175,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
       <div className="brick-row-container provisional-container">
         <Hidden only={['xs']}>
           <div className="brick-container play-preview-panel provisional-score-page">
-            <div className="fixed-upper-b-title">{brick.title}</div>
+            <div className="fixed-upper-b-title"><BrickTitle title={brick.title} /></div>
             <Grid container direction="row">
               <Grid item xs={8}>
                 <div className="introduction-page">

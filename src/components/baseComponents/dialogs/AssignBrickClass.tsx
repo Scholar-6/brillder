@@ -17,6 +17,7 @@ import { getPublishedBricks } from 'services/axios/brick';
 import map from 'components/map';
 import { useHistory } from 'react-router';
 import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
+import BrickTitle from '../BrickTitle';
 
 interface AssignPersonOrClassProps {
   classroomId: number;
@@ -99,7 +100,9 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
                     />
                   </SvgIcon>
                 </ListItemIcon>
-                <ListItemText>{brick.title}</ListItemText>
+                <ListItemText>
+                  <BrickTitle title={brick.title} />
+                </ListItemText>
               </MenuItem>
             </React.Fragment>
           )}

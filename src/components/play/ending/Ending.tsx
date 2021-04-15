@@ -10,6 +10,7 @@ import EndingStepper from "./EndingStepper";
 import { getPlayPath } from "../service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isPhone } from "services/phone";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface EndingState {
   oldScore: number;
@@ -227,7 +228,9 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       <div className="brick-row-container ending-container">
         <Hidden only={["xs"]}>
           <div className="brick-container play-preview-panel ending-page">
-            <div className="fixed-upper-b-title">{this.props.brick.title}</div>
+            <div className="fixed-upper-b-title">
+              <BrickTitle title={this.props.brick.title} />
+            </div>
             <Grid container direction="row">
               <Grid item xs={8}>
                 <div className="introduction-page">
