@@ -121,6 +121,53 @@
   .r-popup-title {
     font-size: 2vw;
   }
+  .r-class-selection {
+    display: flex;
+    align-items: center;
+    .select-existed-class.MuiInputBase-root {
+      width: 30vw;
+      border-radius: 0;
+      border-top-left-radius: 1vw;
+      border-bottom-left-radius: 1vw;
+      color: var(--theme-dark-blue);
+      text-align:left;
+      font-size: 1.4vw !important;
+      &::before, &::after {
+        content: none !important;
+      }
+      .MuiSelect-root {
+        padding-top: 0.4vw;
+        padding-bottom: 0.4vw;
+        display: flex;
+        align-items: center;
+        .MuiSvgIcon-root {
+          margin-left: 1vw;
+          margin-right: 0.8vw;
+          width: 2.2vw;
+          height: 2.2vw;
+        }
+      }
+    }
+    .brick-level {
+      font-family: $font-family-regular;
+      display: flex;
+      align-items: center;
+      height: 4.185vw;
+      width: 15vw;
+      font-size: 2vw;
+      padding-left: 2vw;
+      border-top-right-radius: 1vw;
+      border-bottom-right-radius: 1vw;
+      margin-left: 0.2vw;
+      background: var(--white);
+      color: var(--theme-dark-blue);
+    }
+  }
+  .r-radio-row {
+    display: flex;
+    justify-content: center;
+    color: var(--white);
+  }
   .r-radio-row {
     .MuiTypography-root {
       font-size: 1.4vw;

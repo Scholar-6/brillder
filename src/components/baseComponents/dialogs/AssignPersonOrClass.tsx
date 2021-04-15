@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
+import { InputBase, ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
@@ -12,7 +13,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import actions from 'redux/actions/requestFailed';
 import { UserBase } from 'model/user';
 import { Classroom } from 'model/classroom';
-import { Brick } from 'model/brick';
+import { AcademicLevelLabels, Brick } from 'model/brick';
 import { getClassrooms, getStudents } from 'services/axios/classroom';
 import SpriteIcon from '../SpriteIcon';
 import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
@@ -29,6 +30,8 @@ interface AssignPersonOrClassProps {
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [value] = React.useState("");
   /*eslint-disable-next-line*/
+  const [existingClass, setExistingClass] = React.useState(null as any);
+  const [isCreating, setCreating] = React.useState(false);
   const [deadlineDate, setDeadline] = React.useState(null as null | Date);
   const [selectedObjs, setSelected] = React.useState<any[]>([]);
   const [students, setStudents] = React.useState<UserBase[]>([]);
@@ -58,10 +61,13 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       classrooms = [];
     }
 
+    classrooms = classrooms.filter(c => c.subjectId > 0);
+
     for (let classroom of classrooms) {
       classroom.isClass = true;
     }
 
+    setExistingClass(classrooms[0]);
     setClasses(classrooms);
   }, []);
 
@@ -187,36 +193,82 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     }
   }
 
+  const renderNew = () => {
+    return (
+      <Autocomplete
+        multiple
+        freeSolo
+        open={autoCompleteOpen}
+        options={[...classes, ...students]}
+        onChange={(e: any, c: any) => classroomSelected(c)}
+        getOptionLabel={(option: any) => option.isStudent ? `Student ${option.firstName} ${option.lastName} (${option.username})` : 'Class ' + option.name}
+        renderInput={(params: any) => (
+          <TextField
+            onBlur={() => hide()}
+            {...params}
+            onChange={e => onClassroomInput(e)}
+            variant="standard"
+            label="Students and Classes: "
+            placeholder="Search for students and classes"
+          />
+        )}
+        renderOption={(option: any) => (
+          <React.Fragment>
+            {option.isStudent
+              ? <span><span className="bold">Student</span> {option.firstName} {option.lastName}</span>
+              : <span><span className="bold">Class</span> {option.name}</span>
+            }
+          </React.Fragment>
+        )}
+      />
+    )
+  }
+
+  const renderExisting = () => {
+    if (classes.length <= 0) { return <div />; }
+    return (
+      <div className="r-class-selection">
+        <Select
+          className="select-existed-class"
+          MenuProps={{ classes: { paper: 'select-classes-list' } }}
+          value={existingClass.id}
+          onChange={e => setExistingClass(classes.find(c => c.id == e.target.value))}
+        >
+          {classes.map((c: any, i) =>
+            <MenuItem value={c.id} key={i}>
+              <ListItemIcon>
+                <SvgIcon>
+                  <SpriteIcon
+                    name="circle-filled"
+                    className="w100 h100 active"
+                    style={{ color: c.subject.color }}
+                  />
+                </SvgIcon>
+              </ListItemIcon>
+              <ListItemText>{c.name}</ListItemText>
+            </MenuItem>
+          )}
+        </Select>
+        <div className="brick-level">Level {AcademicLevelLabels[props.brick.academicLevel]}</div>
+      </div>
+    );
+  }
+
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
       <div className="dialog-header">
         <div className="r-popup-title bold">Who would you like to assign this brick to?</div>
-        <Autocomplete
-          multiple
-          freeSolo
-          open={autoCompleteOpen}
-          options={[...classes, ...students]}
-          onChange={(e: any, c: any) => classroomSelected(c)}
-          getOptionLabel={(option: any) => option.isStudent ? `Student ${option.firstName} ${option.lastName} (${option.username})` : 'Class ' + option.name}
-          renderInput={(params: any) => (
-            <TextField
-              onBlur={() => hide()}
-              {...params}
-              onChange={e => onClassroomInput(e)}
-              variant="standard"
-              label="Students and Classes: "
-              placeholder="Search for students and classes"
-            />
-          )}
-          renderOption={(option: any) => (
-            <React.Fragment>
-              {option.isStudent
-                ? <span><span className="bold">Student</span> {option.firstName} {option.lastName}</span>
-                : <span><span className="bold">Class</span> {option.name}</span>
-              }
-            </React.Fragment>
-          )}
-        />
+        <div className="r-radio-row">
+          <FormControlLabel
+            checked={!isCreating}
+            control={<Radio onClick={() => setCreating(false)} className={"filter-radio custom-color"} />}
+            label="An Existing Class" />
+          <FormControlLabel
+            checked={isCreating}
+            control={<Radio onClick={() => setCreating(true)} className={"filter-radio custom-color"} />}
+            label="Create A New Class" />
+        </div>
+        {isCreating ? renderNew() : renderExisting()}
         <div className="r-popup-title bold">When is it due?</div>
         <div className="r-radio-buttons">
           <FormControlLabel
@@ -234,8 +286,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
           <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{ width: 'auto' }}>
             <div className="centered">
-              <span className="label">Assign Brick</span>
-              <SpriteIcon name="file-plus" />
+              <span className="label">Assign</span>
             </div>
           </button>
         </div>
