@@ -120,6 +120,9 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
   }
   
   const renderInnerComponent = () => {
+    if (!question || !question.type) {
+      return <EmptyQP1 />;
+    }
     if (!question.firstComponent?.value && isHintEmpty(question.hint) && areComponentsEmpty()) {
       return <EmptyQP1 />;
     }
