@@ -544,6 +544,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const moveToInvalidProposal = () => {
     history.push(proposalResult.url);
+    setProposalResult({ ...proposalResult, isOpen: false });
   }
 
   const submitInvalidBrick = () => {
