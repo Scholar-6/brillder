@@ -446,7 +446,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     let index = this.state.sortedIndex;
 
     if (index >= pageSize) {
-      this.setState({ ...this.state, sortedIndex: index - (pageSize - 1) });
+      this.setState({ ...this.state, sortedIndex: index - pageSize});
     }
   }
 
@@ -455,7 +455,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     let index = this.state.sortedIndex;
 
     if (index + pageSize <= this.state.finalBricks.length) {
-      this.setState({ ...this.state, sortedIndex: index + (pageSize - 1) });
+      this.setState({ ...this.state, sortedIndex: index + pageSize });
     }
   }
 
@@ -482,8 +482,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
         pageSize={pageSize - 1}
         isRed={sortedIndex === 0}
         bricksLength={finalBricks.length}
-        moveNext={() => this.moveAllNext()}
-        moveBack={() => this.moveAllBack()}
+        moveNext={() => this.moveAllNext(this.state.pageSize - 1)}
+        moveBack={() => this.moveAllBack(this.state.pageSize - 1)}
       />
     );
   }
