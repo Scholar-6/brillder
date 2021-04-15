@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { Grid } from '@material-ui/core';
 
 import 'components/build/buildQuestions/components/Image/Image.scss';
 import { fileUrl, uploadFile } from 'components/services/uploadFile';

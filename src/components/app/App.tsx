@@ -19,7 +19,6 @@ import MainPage from 'components/mainPage/mainPage';
 import BackToWorkPage from '../backToWorkPage/BackToWork';
 import AssignmentsPage from '../assignmentsPage/AssignmentsPage';
 import UsersListPage from '../userManagement/UsersList';
-import InvestigationBuildPage from 'components/build/investigationBuildPage'
 import LoginPage from '../loginPage/loginPage';
 import ResetPasswordPage from '../resetPasswordPage/ResetPasswordPage';
 import ActivateAccountPage from '../activateAccountPage/activateAccountPage';
@@ -242,9 +241,6 @@ const App: React.FC<AppProps> = props => {
           component={BuildRouter}
           location={location}
         />
-        {/* <BuildBrickRoute path={map.ProposalBase} component={Proposal} location={location} />
-        <BuildRoute path="/build/brick/:brickId" component={Proposal} location={location} />
-        <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} /> */}
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
         <BuildRoute path={map.AssignmentsClassPage} component={AssignmentsPage} location={location} />
         <BuildRoute path={map.AssignmentsPage} component={AssignmentsPage} location={location} />

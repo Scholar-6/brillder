@@ -9,7 +9,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import { getSynthesisTime } from "../services/playTimes";
 import routes from "../routes";
-import TypingLabel from "components/baseComponents/TypingLabel";
 
 interface Props {
   brick: Brick;

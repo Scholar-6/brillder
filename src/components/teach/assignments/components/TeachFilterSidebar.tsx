@@ -10,7 +10,6 @@ import RadioButton from "components/baseComponents/buttons/RadioButton";
 import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
 import { Subject } from "model/brick";
 import { isArchived } from "../service/service";
-import ClassroomsList from "./ClassroomsList";
 
 enum TeachFilterFields {
   Assigned = "assigned",

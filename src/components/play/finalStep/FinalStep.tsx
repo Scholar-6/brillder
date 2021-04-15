@@ -10,7 +10,6 @@ import ShareDialog from './dialogs/ShareDialog';
 import LinkDialog from './dialogs/LinkDialog';
 import LinkCopiedDialog from './dialogs/LinkCopiedDialog';
 import ShareColumn from "./ShareColumn";
-import ExitButton from "./ExitButton";
 import InviteDialog from "./dialogs/InviteDialog";
 import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
@@ -187,8 +186,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
             <div className="introduction-info">
               <div className="intro-text-row"></div>
             </div>
-            {/* Moved to play/phoneComponents/PhonePlayFooter.tsx 
-              <ExitButton onClick={() => history.push(map.ViewAllPage)} />  */}
           </div>
         </div>
       </Hidden>

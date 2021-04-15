@@ -10,7 +10,6 @@ import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTi
 import { getReviewTime } from "../services/playTimes";
 import routes from "../routes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
-import TypingLabel from "components/baseComponents/TypingLabel";
 
 interface Props {
   brick: Brick;

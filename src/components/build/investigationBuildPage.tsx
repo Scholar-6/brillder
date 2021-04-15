@@ -57,7 +57,6 @@ import QuestionTypePreview from "components/build/baseComponents/QuestionTypePre
 import TutorialPhonePreview from "./tutorial/TutorialPreview";
 import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-import Proposal from "./proposal/Proposal";
 
 import DesktopVersionDialog from 'components/build/baseComponents/dialogs/DesktopVersionDialog';
 import QuestionInvalidDialog from './baseComponents/dialogs/QuestionInvalidDialog';
@@ -67,7 +66,6 @@ import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialo
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
-import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./proposal/model";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import routes from "./routes";
 

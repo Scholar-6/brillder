@@ -6,7 +6,7 @@ import './brief.scss';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
-import { ProposalStep, PlayButtonStatus, BrickLengthRoutePart } from "../../model";
+import { ProposalStep, BrickLengthRoutePart } from "../../model";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import SpriteIcon from "components/baseComponents/SpriteIcon";

@@ -23,8 +23,7 @@ import VersionLabel from "components/baseComponents/VersionLabel";
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
-import { BrickFieldNames, BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PlayButtonStatus, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./model";
-import { validateQuestion } from "components/build/questionService/ValidateQuestionService";
+import { BrickFieldNames, BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./model";
 import {
   parseQuestion,
   ApiQuestion,

@@ -5,7 +5,6 @@ import { FormControlLabel, Radio } from "@material-ui/core";
 import "./ImageDialog.scss";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
-import DropImage from "./DropImage";
 import { ImageAlign, ImageComponentData } from "./model";
 import Slider from "@material-ui/core/Slider";
 import ImageDesktopPreview from "./ImageDesktopPreview";
