@@ -19,6 +19,7 @@ import { rightKeyPressed } from "components/services/key";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 import { isPhone } from "services/phone";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 const moment = require("moment");
 interface IntroductionProps {
@@ -316,7 +317,9 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <Hidden only={["sm", "md", "lg", "xl"]}>
           {renderBrickCircle(color)}
         </Hidden>
-        <div className="intro-desktop-title">{brick.title}</div>
+        <div className="intro-desktop-title">
+          <BrickTitle title={brick.title} />
+        </div>
       </div>
     );
   };
@@ -329,7 +332,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             {renderBrickCircle(color)}
           </div>
           <div className="r-title-container">
-            <h1>{brick.title}</h1>
+            <h1><BrickTitle title={brick.title} /></h1>
             <p><PrepareText brickLength={brick.brickLength} /></p>
           </div>
         </div>

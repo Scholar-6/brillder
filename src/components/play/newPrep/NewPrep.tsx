@@ -15,6 +15,7 @@ import moment from "moment";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 import { getPrepareTime } from "../services/playTimes";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 
 export interface IntroductionState {
@@ -152,7 +153,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
   return (
     <div className="brick-row-container live-container">
       <div className="fixed-upper-b-title">
-        {brick.title}
+        <BrickTitle title={brick.title} />
       </div>
       <div className="brick-container play-preview-panel live-page play-brief-page new-prep-page">
         <div className="introduction-page">

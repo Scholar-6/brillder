@@ -183,3 +183,9 @@
   width: 100%;
   background: var(--theme-light-blue);
 }
+
+.brick-inline {
+  p {
+    display: inline;
+  }
+}

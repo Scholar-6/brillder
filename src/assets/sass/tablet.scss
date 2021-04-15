@@ -171,3 +171,9 @@
 .short-brick-info {
   width: calc(100% - 4.4vw);
 }
+
+.brick-inline {
+  p {
+    display: inline;
+  }
+}

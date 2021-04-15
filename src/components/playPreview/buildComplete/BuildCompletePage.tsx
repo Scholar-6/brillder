@@ -14,6 +14,7 @@ import { Redirect } from "react-router-dom";
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { checkAdmin, checkEditor } from "components/services/brickService";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 
 interface BuildCompleteProps {
@@ -98,7 +99,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                   </div>
                   <h2>You’ve just built a brick!</h2>
                   <p className="complete-brick-name">
-                    What would you like to do with <span className="bold uppercase">‘{brick.title}’</span>?
+                    What would you like to do with <span className="bold uppercase">‘<BrickTitle title={brick.title}/>’</span>?
                 </p>
                   <div className="radio-container" onClick={() => this.setState({ isCore: false })}>
                     <Radio checked={this.state.isCore === false} />

@@ -26,6 +26,7 @@ import AssignBrickColumn from "./AssignBrickColumn";
 import AdaptBrickColumn from "./AdaptBrickColumn";
 import { checkTeacherOrAdmin } from "components/services/brickService";
 import { isPhone } from "services/phone";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface FinalStepProps {
   brick: Brick;
@@ -181,7 +182,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
               </div>
             </div>
             <p>Well done for completing</p>
-            <p>“{brick.title}”!</p>
+            “<BrickTitle title={brick.title} />”!
             {renderActionColumns()}
             <div className="introduction-info">
               <div className="intro-text-row"></div>
