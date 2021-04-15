@@ -13,6 +13,7 @@ import HighlightHtml from "../baseComponents/HighlightHtml";
 import { PlayMode } from "../model";
 import FixedHelpers from "./FixedHelpers";
 import { User } from "model/user";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface Props {
   brick: Brick;
@@ -74,7 +75,7 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
   return (
     <div className="brick-row-container live-container">
       <div className="fixed-upper-b-title">
-        {brick.title}
+        <BrickTitle title={brick.title} />
       </div>
       <div className="brick-container play-preview-panel live-page play-brief-page">
         <div className="introduction-page">

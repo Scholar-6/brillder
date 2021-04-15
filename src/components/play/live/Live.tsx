@@ -30,6 +30,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
 import { getLiveTime } from "../services/playTimes";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -326,7 +327,7 @@ const LivePage: React.FC<LivePageProps> = ({
   return (
     <div className="brick-row-container live-container">
       {!isPhone() && <div className="fixed-upper-b-title">
-        {brick.title}
+        <BrickTitle title={brick.title} />
       </div>}
       <div className="brick-container play-preview-panel live-page">
         <div className="introduction-page">
@@ -395,7 +396,9 @@ const LivePage: React.FC<LivePageProps> = ({
             <div className="introduction-info">
               {renderCountDown()}
               <div className="intro-text-row">
-                <span className="phone-stepper-head"><span className="bold">{brick.subject?.name}</span> {brick.title}</span>
+                <span className="phone-stepper-head">
+                  <span className="bold">{brick.subject?.name}</span> <BrickTitle title={brick.title} />
+                </span>
                 {renderStepper()}
               </div>
             </div>

@@ -12,8 +12,7 @@ import { setBrillderTitle } from "components/services/titleService";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import YoutubeAndMathInHtml from "components/play/baseComponents/YoutubeAndMath";
-import { BrickFieldNames, PlayButtonStatus, PrepRoutePart } from '../../model';
-import PlayButton from "components/build/baseComponents/PlayButton";
+import { BrickFieldNames, PrepRoutePart } from '../../model';
 import { CommentLocation } from "model/comments";
 import CommentPanel from "components/baseComponents/comments/CommentPanel";
 import { Transition } from "react-transition-group";
@@ -33,7 +32,6 @@ interface ProposalProps {
   user: User;
   canEdit: boolean;
   history: History;
-  playStatus: PlayButtonStatus;
   baseUrl: string;
   saveBrick(): void;
   setBrickField(name: BrickFieldNames, value: string): void;
@@ -318,23 +316,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       );
     }
 
-    const renderPlayButton = () => {
-      const { playStatus } = this.props;
-      if (playStatus === PlayButtonStatus.Hidden) {
-        return "";
-      }
-      return (
-        <div className="play-preview-button-container">
-          <PlayButton
-            isValid={playStatus === PlayButtonStatus.Valid}
-            tutorialStep={-1}
-            isTutorialSkipped={true}
-            onClick={this.props.saveAndPreview}
-          />
-        </div>
-      );
-    }
-
     const renderFirstPage = () => {
       return (
         <div className="page5">
@@ -462,7 +443,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
     return (
       <div className="proposal-page">
-        {renderPlayButton()}
         <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
           <Grid className="back-button-container" container alignContent="center">
             {this.state.bookHovered && this.state.bookState === BookState.PrepPage

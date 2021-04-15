@@ -82,11 +82,11 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
         } else if (notification.type === NotificationType.AssignedToEdit) {
           props.forgetBrick();
           await props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
+          history.push(map.Proposal(notification.brick.id));
         } else if (notification.type === NotificationType.ReturnedToAuthor) {
           props.forgetBrick();
           await props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
+          history.push(map.Proposal(notification.brick.id));
         } else if (notification.type === NotificationType.RemindedToPlayBrick) {
           history.push(map.playIntro(notification.brick.id));
         }
@@ -153,8 +153,8 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           </div>
           <div className="content-box" onClick={() => move(notification)}>
             <div className="notification-detail">
-              <p className="notif-title">{notification.title}</p>
-              <p className="notif-desc">{notification.text}</p>
+              <p className="notif-title" dangerouslySetInnerHTML={{__html: notification.title}} />
+              <p className="notif-desc" dangerouslySetInnerHTML={{__html: notification.text}} />
             </div>
             <div className="actions">
               <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={(e) => {

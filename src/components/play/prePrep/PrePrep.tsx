@@ -11,6 +11,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { PlayMode } from "../model";
 import { getPrepareTime } from "../services/playTimes";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface Props {
   brick: Brick;
@@ -44,7 +45,7 @@ const PrePrepPage: React.FC<Props> = ({ brick, ...props }) => {
   return (
     <div className="brick-row-container live-container">
       <div className="fixed-upper-b-title">
-        {brick.title}
+        <BrickTitle title={brick.title} />
       </div>
       <div className="brick-container play-preview-panel live-page play-pre-prep-page">
         <div className="introduction-page">

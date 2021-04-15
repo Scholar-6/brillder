@@ -3,7 +3,7 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './brickLength.scss';
-import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "components/build/proposal/model";
+import { ProposalStep, OpenQuestionRoutePart } from "components/build/proposal/model";
 import { BrickLengthEnum } from 'model/brick';
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
@@ -55,7 +55,6 @@ interface BrickLengthProps {
   baseUrl: string;
   length: BrickLengthEnum;
   canEdit: boolean;
-  playStatus: PlayButtonStatus;
   saveLength(value: BrickLengthEnum): any;
   saveBrick(data: any): void;
   saveAndPreview(): void;
@@ -74,7 +73,6 @@ const BrickLength: React.FC<BrickLengthProps> = (
       <Navigation
         baseUrl={props.baseUrl}
         step={ProposalStep.BrickLength}
-        playStatus={props.playStatus}
         saveAndPreview={props.saveAndPreview}
         onMove={() => { }}
       />

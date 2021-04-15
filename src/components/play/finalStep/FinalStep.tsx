@@ -10,7 +10,6 @@ import ShareDialog from './dialogs/ShareDialog';
 import LinkDialog from './dialogs/LinkDialog';
 import LinkCopiedDialog from './dialogs/LinkCopiedDialog';
 import ShareColumn from "./ShareColumn";
-import ExitButton from "./ExitButton";
 import InviteDialog from "./dialogs/InviteDialog";
 import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
@@ -26,6 +25,7 @@ import AssignBrickColumn from "./AssignBrickColumn";
 import AdaptBrickColumn from "./AdaptBrickColumn";
 import { checkTeacherOrAdmin } from "components/services/brickService";
 import { isPhone } from "services/phone";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface FinalStepProps {
   brick: Brick;
@@ -143,7 +143,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                     </div>
                   </div>
                   <h2>All done!</h2>
-                  <p>Well done for completing “{brick.title}”!</p>
+                  <p>Well done for completing “<BrickTitle title={brick.title} />”!</p>
                   {renderActionColumns()}
                 </div>
               </div>
@@ -181,13 +181,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
               </div>
             </div>
             <p>Well done for completing</p>
-            <p>“{brick.title}”!</p>
+            “<BrickTitle title={brick.title} />”!
             {renderActionColumns()}
             <div className="introduction-info">
               <div className="intro-text-row"></div>
             </div>
-            {/* Moved to play/phoneComponents/PhonePlayFooter.tsx 
-              <ExitButton onClick={() => history.push(map.ViewAllPage)} />  */}
           </div>
         </div>
       </Hidden>

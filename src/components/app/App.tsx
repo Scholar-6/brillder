@@ -19,7 +19,6 @@ import MainPage from 'components/mainPage/mainPage';
 import BackToWorkPage from '../backToWorkPage/BackToWork';
 import AssignmentsPage from '../assignmentsPage/AssignmentsPage';
 import UsersListPage from '../userManagement/UsersList';
-import InvestigationBuildPage from 'components/build/investigationBuildPage'
 import LoginPage from '../loginPage/loginPage';
 import ResetPasswordPage from '../resetPasswordPage/ResetPasswordPage';
 import ActivateAccountPage from '../activateAccountPage/activateAccountPage';
@@ -60,6 +59,8 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { User } from 'model/user';
 import { getTerms } from 'services/axios/terms';
 import IPadWarning from 'components/baseComponents/rotateInstruction/IPadWarning';
+import BuildRouter from 'components/build/BuildRouter';
+import ProposalBrickRoute from './ProposalBrickRoute';
 
 interface AppProps {
   user: User;
@@ -226,6 +227,9 @@ const App: React.FC<AppProps> = props => {
         <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
 
         <PlayPreviewRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
+        {/* Creating new bricks */}
+        <ProposalBrickRoute path={map.ProposalBase} component={Proposal} location={location} />
+        {/* Investigation Build */}
         <BuildBrickRoute
           path={[
             "/build/brick/:brickId/investigation/question-component/:questionId",
@@ -234,12 +238,9 @@ const App: React.FC<AppProps> = props => {
             "/build/brick/:brickId/investigation/question",
             "/build/brick/:brickId"
           ]}
-          component={InvestigationBuildPage}
+          component={BuildRouter}
           location={location}
         />
-        <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
-        <BuildRoute path="/build/brick/:brickId" component={Proposal} location={location} />
-        <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
         <BuildRoute path={map.AssignmentsClassPage} component={AssignmentsPage} location={location} />
         <BuildRoute path={map.AssignmentsPage} component={AssignmentsPage} location={location} />

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, Input, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
-import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "../../model";
+import { ProposalStep, OpenQuestionRoutePart } from "../../model";
 import { AcademicLevel, Brick, KeyWord, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
@@ -34,7 +34,6 @@ interface BrickTitleProps {
   baseUrl: string;
   parentState: Brick;
   canEdit: boolean;
-  playStatus: PlayButtonStatus;
   subjects: Subject[];
   saveTitles(data: any): void;
   setKeywords(keywords: KeyWord[]): void;
@@ -163,7 +162,6 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
         <Navigation
           baseUrl={baseUrl}
           step={ProposalStep.BrickTitle}
-          playStatus={this.props.playStatus}
           saveAndPreview={this.props.saveAndPreview}
           onMove={() => saveTitles(parentState)}
         />

@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './openQuestion.scss';
-import { ProposalStep, PlayButtonStatus, TitleRoutePart } from "../../model";
+import { ProposalStep, TitleRoutePart } from "../../model";
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
@@ -15,7 +15,6 @@ interface OpenQuestionProps {
   baseUrl: string;
   selectedQuestion: any;
   canEdit: boolean;
-  playStatus: PlayButtonStatus;
   history: any;
   saveOpenQuestion(v: string): void;
   saveAndPreview(): void;
@@ -40,7 +39,6 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
       <Navigation
         baseUrl={props.baseUrl}
         step={ProposalStep.OpenQuestion}
-        playStatus={props.playStatus}
         saveAndPreview={props.saveAndPreview}
         onMove={() => saveOpenQuestion(selectedQuestion)}
       />

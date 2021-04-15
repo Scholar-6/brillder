@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './prep.scss';
-import { ProposalStep, PlayButtonStatus, BriefRoutePart } from "../../model";
+import { ProposalStep, BriefRoutePart } from "../../model";
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
@@ -18,7 +18,6 @@ interface PrepProps {
   canEdit: boolean;
   baseUrl: string;
   brickLength: BrickLengthEnum;
-  playStatus: PlayButtonStatus;
   savePrep(prep: string): void;
   saveBrick(prep: string): void;
   saveAndPreview(): void;
@@ -66,7 +65,6 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
       <Navigation
         step={ProposalStep.Prep}
         baseUrl={props.baseUrl}
-        playStatus={props.playStatus}
         saveAndPreview={props.saveAndPreview}
         onMove={() => savePrep(parentPrep)}
       />

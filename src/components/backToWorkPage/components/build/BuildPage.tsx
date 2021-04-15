@@ -446,7 +446,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     let index = this.state.sortedIndex;
 
     if (index >= pageSize) {
-      this.setState({ ...this.state, sortedIndex: index - pageSize });
+      this.setState({ ...this.state, sortedIndex: index - pageSize});
     }
   }
 
@@ -479,11 +479,11 @@ class BuildPage extends Component<BuildProps, BuildState> {
     return (
       <BackPagePagination
         sortedIndex={sortedIndex}
-        pageSize={pageSize}
+        pageSize={pageSize - 1}
         isRed={sortedIndex === 0}
         bricksLength={finalBricks.length}
-        moveNext={() => this.moveAllNext()}
-        moveBack={() => this.moveAllBack()}
+        moveNext={() => this.moveAllNext(this.state.pageSize - 1)}
+        moveBack={() => this.moveAllBack(this.state.pageSize - 1)}
       />
     );
   }
@@ -581,7 +581,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
     let rawPersonalBricks = this.state.rawBricks.filter(b => !b.isCore);
     
-    const isEmpty = rawPersonalBricks.length === 0;
+    let isEmpty = rawPersonalBricks.length === 0;
 
     const published = this.countPublished();
 
@@ -643,6 +643,16 @@ class BuildPage extends Component<BuildProps, BuildState> {
         b.author.id === this.props.user.id &&
         (b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review)
       ).length;
+    }
+
+    // publish should have create brick button when empty
+    if (this.state.filters.publish) {
+      isEmpty = finalBricks.length > 0 ? false : true;
+    } else {
+      const coreNoPublishBricks =  this.state.rawBricks
+        .filter(b => b.isCore === true)
+        .filter(b => b.status !== BrickStatus.Publish);
+      isEmpty = coreNoPublishBricks.length > 0 ? false : true;
     }
 
     return (

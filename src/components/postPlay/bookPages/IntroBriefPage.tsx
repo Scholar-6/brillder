@@ -6,6 +6,7 @@ import HighlightHtml from "components/play/baseComponents/HighlightHtml";
 import { PlayMode } from "components/play/model";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
 import './IntroBriefPage.scss';
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface IntroPageProps {
   brick: Brick;
@@ -18,7 +19,7 @@ const IntroPage: React.FC<IntroPageProps> = ({ brick, color, ...props }) => {
     return (
       <div className="intro-header">
         <h1 style={{ justifyContent: 'flex-start', marginTop: '2.4vh', marginBottom: '3vh', textAlign: 'left' }}>
-          {brick.title}
+          <BrickTitle title={brick.title} />
         </h1>
       </div>
     );

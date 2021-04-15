@@ -1,3 +1,4 @@
+import { stripHtml } from "components/build/questionService/ConvertService";
 import { Brick } from "model/brick";
 
 export interface ValidateProposalResult {
@@ -7,26 +8,19 @@ export interface ValidateProposalResult {
 
 export function validateProposal(brick: Brick) {
   let isValid = true;
-  let urlPrefix = `/build/brick/${brick.id}`;
-  let url = urlPrefix + '/plan';
+  const url = `/build/brick/${brick.id}/plan`;
 
   if (!brick.subjectId) {
-    url = urlPrefix + '/subject';
     isValid = false;
-  } else if (!brick.title || brick.academicLevel < 1 || brick.keywords.length === 0) {
-    url = urlPrefix + '/brick-title';
+  } else if (!stripHtml(brick.title) || brick.academicLevel < 1 || brick.keywords.length === 0) {
     isValid = false;
-  } else if (!brick.openQuestion) {
-    url = urlPrefix + '/open-question';
+  } else if (!stripHtml(brick.openQuestion)) {
     isValid = false;
-  } else if (!brick.brief) {
-    url = urlPrefix + '/brief';
+  } else if (!stripHtml(brick.brief)) {
     isValid = false;
-  } else if (!brick.prep) {
-    url = urlPrefix + '/prep';
+  } else if (!stripHtml(brick.prep)) {
     isValid = false;
   } else if (!brick.brickLength) {
-    url = urlPrefix + '/length';
     isValid = false;
   }
   return { isValid, url };

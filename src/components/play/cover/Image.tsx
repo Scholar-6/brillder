@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { Grid } from '@material-ui/core';
 
 import 'components/build/buildQuestions/components/Image/Image.scss';
-import {fileUrl, uploadFile} from 'components/services/uploadFile';
+import { fileUrl, uploadFile } from 'components/services/uploadFile';
 import ImageCloseDialog from 'components/build/buildQuestions/components/Image//ImageCloseDialog';
 import ImageCoverDialog from './ImageCoverDialog';
 import { ImageCoverData } from './model';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface ImageProps {
   locked: boolean;
@@ -17,7 +17,7 @@ interface ImageProps {
   onFocus(): void;
 }
 
-const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
+const ImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
   const [isOpen, setOpen] = React.useState(false);
   const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.data.value);
@@ -73,7 +73,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
           el.setAttribute("type", "file");
           el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
           el.click();
-  
+
           el.onchange = () => {
             if (el.files && el.files.length >= 0) {
               setFile(el.files[0]);
@@ -84,15 +84,8 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
       }}>
         {
           fileName
-            ? <img alt="" style={{width: '100%'}} src={fileUrl(fileName)} />
-            : <Grid
-                container
-                justify="center"
-                alignContent="center"
-                direction="row"
-              >
-                <img alt="" src="/images/cover-book.png" />
-              </Grid>
+            ? <img alt="" style={{ width: '100%' }} src={fileUrl(fileName)} />
+            : <SpriteIcon name="image" />
         }
       </div>
       <ImageCoverDialog

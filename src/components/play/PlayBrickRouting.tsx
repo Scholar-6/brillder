@@ -498,15 +498,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       <div className="play-preview-pages">
         {isPhone() ? <div /> : renderHead()}
         <div className={className}>
-          <PlayLeftSidebar
-            history={props.history}
-            brick={brick}
-            mode={mode}
-            sidebarRolledUp={sidebarRolledUp}
-            empty={finalStep}
-            setMode={setMode}
-            toggleSidebar={setSidebar}
-          />
+          {!isPhone() &&
+            <PlayLeftSidebar
+              history={props.history}
+              brick={brick}
+              mode={mode}
+              sidebarRolledUp={sidebarRolledUp}
+              empty={finalStep}
+              setMode={setMode}
+              toggleSidebar={setSidebar}
+            />}
           {renderRouter()}
         </div>
         <UnauthorizedUserDialog

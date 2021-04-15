@@ -14,6 +14,8 @@ import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
 import { User } from "model/user";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
+import routes from "../routes";
+import PlanTab from "./PlanTab";
 
 interface Question {
   id: number;
@@ -23,6 +25,7 @@ interface Question {
 
 interface DragTabsProps {
   history: any;
+  brickId: number;
   questions: Question[];
   user: User;
   comments: Comment[] | null;
@@ -65,6 +68,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     if (e.target.tagName === "INPUT") { return; }
     if (e.target.tagName === "TEXTAREA") { return; }
     if (e.target.classList.contains("ck-content")) { return; }
+    if (e.target.classList.contains("ql-editor")) { return; }
 
     if (leftKeyPressed(e)) {
       if (this.props.history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
@@ -100,6 +104,11 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     let isSynthesisPresent = true;
     const { props } = this;
     const { questions, isSynthesisPage, synthesis } = props;
+    
+    let isPlanPage = false;
+    if (this.props.history.location.pathname.slice(-5) === routes.BuildPlanLastPrefix) {
+      isPlanPage = true;
+    }
 
     const getHasSynthesisReplied = () => {
       const replies = props.comments
@@ -198,10 +207,13 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       );
     };
 
-    let columns = questions.length * 2 + 3;
+    let columns = questions.length * 2 + 4;
 
-    if (isSynthesisPage) {
-      columns = questions.length * 2 + 2;
+    if (questions.length === 0) {
+      columns = 2 + 1.582 + 1.5555;
+      if (isPlanPage) {
+        columns = 1.58 + 1.5555 + 1.5555;
+      }
     }
 
     const setQuestions = (newQuestions: Question[], d: any) => {
@@ -266,6 +278,12 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             transform: "translateZ(0)",
           }}
         >
+          <GridListTile
+            className={`drag-tile-container plan-tab ${isPlanPage ? 'active' : ''}`}
+            cols={isPlanPage ? 1.5555 : 2}
+          >
+            <PlanTab brickId={this.props.brickId} isActive={isPlanPage} history={this.props.history} />
+          </GridListTile>
           <ReactSortable
             list={questions}
             className="drag-container"

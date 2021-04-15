@@ -12,7 +12,6 @@ import { PlayStatus } from "components/play/model";
 import { checkAdmin, checkPublisher } from "components/services/brickService";
 import { publishBrick, returnToAuthor, returnToEditor } from "services/axios/brick";
 
-import Clock from "components/play/baseComponents/Clock";
 import ShareDialog from 'components/play/finalStep/dialogs/ShareDialog';
 import InviteEditorDialog from './InviteEditorDialog';
 import LinkDialog from 'components/play/finalStep/dialogs/LinkDialog';
@@ -303,9 +302,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
             </Grid>
             <Grid item xs={4}>
               <div className="introduction-info">
-                <div className="intro-header">
-                  <Clock brickLength={brick.brickLength} />
-                </div>
                 <div className="intro-text-row">
                 </div>
                 <ExitButton onClick={() =>

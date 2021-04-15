@@ -2,10 +2,12 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-$base-font-size: 1.25vw;
+$play-base-height: 92vh;
+$play-border-radius: 3vw;
+$base-font-size: 1.4vw;
 $expanded-intro-padding: 2vw;
-$introduction-desktop-height: calc(100vh - #{$expanded-intro-padding} - #{$page-head-height});
-$introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
+$introduction-desktop-height: calc(#{$play-base-height} - #{$expanded-intro-padding} - #{$page-head-height});
+$introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-padding});
 
 .MuiExpansionPanelDetails-root {
   padding-top: 0 !important;
@@ -89,18 +91,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             .svg {
               color: var(--theme-yellow);
             }
-            &:hover {
-              span,
-              .svg {
-                color: var(--white);
-              }
-            }
-          }
-          &:hover {
-            span,
-            .svg {
-              color: var(--theme-yellow);
-            }
           }
         }
         .highlight-button {
@@ -113,18 +103,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             bottom: -3vw;
           }
           &.active {
-            span,
-            .svg {
-              color: var(--theme-yellow);
-            }
-            &:hover {
-              span,
-              .svg {
-                color: var(--white);
-              }
-            }
-          }
-          &:hover {
             span,
             .svg {
               color: var(--theme-yellow);
@@ -202,28 +180,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               @extend %transitionAll300;
             }
 
-            &:hover {
-              background: var(--white);
-              span {
-                color: var(--theme-orange) !important;
-              }
-              svg {
-                color: var(--theme-orange) !important;
-              }
-            }
-
             &.blue {
               background: var(--theme-dark-blue);
               stroke-width: 2;
-              &:hover {
-                background: var(--tab-gray);
-                span {
-                  color: var(--theme-dark-blue) !important;
-                }
-                svg {
-                  color: var(--theme-dark-blue) !important;
-                }
-              }
             }
           }
           .prep-button {
@@ -248,13 +207,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               line-height: 1;
               font-family: $font-family-regular;
             }
-
-            &:hover {
-              color: var(--white);
-              svg {
-                color: var(--white);
-              }
-            }
           }
           .grey-line {
             display: flex;
@@ -276,13 +228,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             svg {
               color: var(--white);
               stroke-width: 2 !important;
-            }
-            &:hover {
-              background: var(--tab-gray);
-              span,
-              svg {
-                color: var(--theme-dark-blue) !important;
-              }
             }
           }
           &.unauthorized {
@@ -371,28 +316,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               @extend %transitionAll300;
             }
 
-            &:hover {
-              background: var(--white);
-              span {
-                color: var(--theme-orange) !important;
-              }
-              svg {
-                color: var(--theme-orange) !important;
-              }
-            }
-
             &.blue {
               background: var(--theme-dark-blue);
               stroke-width: 2;
-              &:hover {
-                background: var(--tab-gray);
-                span {
-                  color: var(--theme-dark-blue) !important;
-                }
-                svg {
-                  color: var(--theme-dark-blue) !important;
-                }
-              }
             }
           }
           .share-button {
@@ -401,13 +327,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             svg {
               color: var(--white);
               stroke-width: 2 !important;
-            }
-            &:hover {
-              background: var(--tab-gray);
-              span,
-              svg {
-                color: var(--theme-dark-blue) !important;
-              }
             }
           }
           &.unauthorized {
@@ -452,10 +371,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       }
     }
     .brick-row-container {
-      @include tabletP {
-        width: calc(82.85vw - 1vw);
-        transition: 700ms width;
-      }
+      width: calc(82.85vw - 1vw);
+      transition: 700ms width;
       .brick-container {
         .left-brick-circle {
           position: absolute;
@@ -674,10 +591,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 font-size: 2vw;
                 font-family: $font-family-black;
                 color: var(--dark-gray);
-                &:hover {
-                  opacity: 0.5;
-                  color: var(--theme-light-blue) !important;
-                }
                 &.current {
                   opacity: 1;
                 }
@@ -886,11 +799,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             svg {
               stroke-width: 1.5 !important;
             }
-            &:hover {
-              svg {
-                stroke-width: 1.8 !important;
-              }
-            }
           }
         }
         &.final-step-page {
@@ -963,7 +871,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             background: var(--tab-gray);
           }
           .introduction-page {
-            height: calc(100vh - 4vw - 4vw) !important;
+            height: calc(#{$play-base-height} - 4vw - 4vw) !important;
           }
           .question-live-play {
             height: calc(100vh - 27.6vh);
@@ -1112,7 +1020,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       margin-top: 0;
       .brick-row-container {
         width: calc(98vw - #{$home-button-size}) !important;
-        height: $introduction-expanded-height !important;
+        height: calc(#{$play-base-height} - 4vw) !important;
       }
       // #2781 new play live and review theme
       .live-container,
@@ -1126,7 +1034,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         width: $width !important;
         $header-height: 4vw;
         $foter-height: 4vw;
-        height: calc(100vh - #{$header-height}) !important;
+        height: calc(#{$play-base-height} - #{$header-height}) !important;
         margin-right: 8vw;
         margin-left: 7vw;
         border-radius: 2vw !important;
@@ -1140,11 +1048,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         }
 
         .introduction-page {
-          height: calc(100vh - 4vw) !important;
+          height: calc(#{$play-base-height} - 4vw) !important;
           padding-left: 0 !important;
           .question-live-play {
             margin-top: $header-height !important;
-            height: calc(100vh - 5vw - #{$header-height} - #{$foter-height}) !important;
+            height: calc(#{$play-base-height} - 5vw - #{$header-height} - #{$foter-height}) !important;
             .question-title {
               display: none;
             }
@@ -1158,6 +1066,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           height: $foter-height;
           width: $width;
           background: var(--tab-gray);
+          border-bottom-left-radius: $play-border-radius !important;
+          border-bottom-right-radius: $play-border-radius !important;
 
           .time-container {
             display: flex;
@@ -1188,7 +1098,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               transition: all 300ms ease-out;
               display: flex;
               align-items: center;
-              font-size: 1.8vw;
+              font-size: 2.5vw;
               font-family: $font-family-bold;
               margin-left: 1vw;
               margin-right: 3vw;
@@ -1199,23 +1109,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 width: 2.1vw;
                 height: 2.1vw;
               }
-              &.next {
-                &:hover {
-                  margin-right: 2vw;
-                  svg {
-                    margin-left: 1vw;
-                  }
-                }
-              }
               &.back {
                 color: var(--dark-gray);
-                &:hover {
-                  color: var(--theme-dark-blue);
-                  //margin-right: 2vw;
-                  svg {
-                    margin-right: 1vw;
-                  }
-                }
               }
             }
           }
@@ -1302,26 +1197,17 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 color: var(--white);
                 background: var(--blue);
               }
-              &:hover {
-                opacity: 0.5;
-              }
             }
             &.success {
               span {
                 color: var(--tab-gray);
                 background: var(--theme-green);
               }
-              &:hover {
-                opacity: 0.5;
-              }
             }
             &.failed {
               span {
                 color: var(--tab-gray);
                 background: var(--theme-orange);
-              }
-              &:hover {
-                opacity: 0.5;
               }
             }
             &.current {
@@ -1347,9 +1233,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               }
               &.failed .underline > div {
                 background: var(--theme-orange);
-              }
-              &:hover {
-                opacity: 0.5;
               }
             }
           }
@@ -1403,7 +1286,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       // only synthesis score
       .synthesis-container {
         .synthesis-content {
-          height: calc(100vh - 4vw - 4vw) !important;
+          height: calc(#{$play-base-height} - 4vw - 4vw) !important;
           padding: 8vh 5vw 6vw 5vw;
           width: 100%;
         }
@@ -1417,9 +1300,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         padding-left: 0.2vw;
         padding-right: 0.2vw;
         border-radius: 0.3vw;
-        &:hover {
-          background: rgba(130, 192, 237, 0.5) !important;
-        }
       }
     }
     // lines hover
@@ -1430,23 +1310,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         padding-left: 0.2vw;
         padding-right: 0.2vw;
         border-radius: 0.3vw;
-        &:hover {
-          background: rgba(130, 192, 237, 0.5) !important;
-        }
-      }
-    }
-    // categorize hover
-    .sort-category-list-container {
-      .sortable-item {
-        &:hover {
-          background: rgba(130, 192, 237, 0.5) !important;
-        }
-      }
-    }
-    // horizontal shuffle hover
-    .horizontal-shuffle-answer {
-      &:hover {
-        background: rgba(130, 192, 237, 0.5) !important;
       }
     }
   }
@@ -1471,9 +1334,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     font: 2.4vw $font-family-bold;
     > span {
       &:first-child {
-        @include tabletP {
-          width: 6vw;
-        }
+        width: 6vw;
       }
     }
     .round-icon {
@@ -1494,17 +1355,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         top: 55%;
         left: 50%;
         transform: translate(-50%, -50%);
-      }
-      &:not(.b-green) {
-        &:hover {
-          @include tabletP {
-            animation-duration: 1s;
-            animation-delay: 0s;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease;
-            animation-name: pulse-yellow;
-          }
-        }
       }
     }
 
@@ -1563,8 +1413,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 
+.unauthrozied-container ~ .beta-text {
+  color: var(--theme-light-blue) !important;
+}
+
 .play-preview-pages ~ .beta-text {
-  color: var(--theme-dark-blue) !important;
+  color: var(--theme-light-blue) !important;
 }
 
 // only stepper in play
@@ -1629,20 +1483,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .choose-choice {
   transition: all 300ms ease-out;
 }
-.choose-choice:hover {
-  background: rgba(130, 192, 237, 0.5) !important;
-  &.active {
-    background: var(--highlight-blue) !important;
-  }
-}
 
 // vertical shuffle hover
 .question-unique-play.vertical-shuffle-play {
   .vertical-content {
     transition: all 300ms ease-out;
-  }
-  .vertical-content:hover {
-    background: rgba(130, 192, 237, 0.5) !important;
   }
 }
 
@@ -1656,160 +1501,14 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   .step {
     color: var(--dark-gray);
   }
-  .step:hover {
-    opacity: 0.5;
-    color: var(--theme-light-blue) !important;
-  }
   .step.current {
     opacity: 1;
   }
 }
-// categorize hover
-.play-preview-pages .sort-category-list-container {
-  .sortable-item:hover {
-    background: rgba(130, 192, 237, 0.5) !important;
-  }
-}
-// horizontal shuffle hover
-.play-preview-pages .horizontal-shuffle-answer:hover {
-  background: rgba(130, 192, 237, 0.5) !important;
-}
-
 // missing choice dropdown font
 .missing-choice {
   padding: 0.25vw 1vw;
   font-size: $base-font-size;
-}
-
-// cover page styles
-.play-preview-pages .sorted-row .brick-row-container.cover-page .brick-container {
-  color: var(--theme-dark-blue);
-
-  .introduction-page {
-    padding-top: 3.5vh;
-    padding-left: 3.5vh;
-
-    .first-row {
-      display: flex;
-      align-items: center;
-      font-family: $font-family-black;
-      font-size: 1.1vw;
-
-      .brick-id-container {
-        border-radius: 0.7vw;
-        padding: 1vh 0.8vw;
-        color: var(--white);
-        background: var(--theme-orange);
-      }
-      .question {
-        color: var(--theme-dark-blue);
-        margin-left: 2vw;
-      }
-      svg {
-        width: 2vw;
-        height: 2vw;
-        margin-left: 0.7vw;
-      }
-    }
-    .brick-title {
-      padding-left: 0.5vw;
-      padding-right: 0.5vw;
-      margin-top: 3.6vh;
-      font-size: 2.6vw;
-      @extend %ellipsis;
-      text-transform: uppercase;
-      font-family: $font-family-black;
-    }
-    .author-row {
-      padding-left: 0.5vw;
-      padding-right: 0.5vw;
-      font-size: 1.5vw;
-      @extend %ellipsis;
-      text-transform: capitalize;
-    }
-    .keywords-row {
-      padding-left: 0.5vw;
-      padding-right: 0.5vw;
-      font-size: 1.1vw;
-      @extend %ellipsis;
-    }
-    .image-container {
-      position: relative;
-      .image-drag-n-drop {
-        padding-left: 0.5vw;
-        padding-right: 0.5vw;
-        margin-top: 1vh;
-        width: 100%;
-        .dropzone {
-          border-radius: 0.5vw;
-          border: none !important;
-          min-height: 47vh;
-
-          svg {
-            width: 35vh;
-            height: 35vh;
-            stroke-width: 0.7 !important;
-            color: var(--theme-dark-blue);
-          }
-
-          img {
-            margin-top: calc(2vw + 1vh + 0.6vw);
-            width: auto !important;
-            max-height: calc(35vh - 2vw + 1vh + 0.6vw);
-          }
-        }
-      }
-      .cover-info-row {
-        position: absolute;
-        $shift: 0.6vw;
-        top: calc(1vh + #{$shift});
-        left: calc(0.5vw + #{$shift});
-        display: flex;
-        font-size: 2vw;
-        font-family: $font-family-black;
-        line-height: 1;
-
-        $circle-size: 2vw;
-
-        .round-button-container {
-          display: flex;
-          align-items: center;
-          margin-right: 0.6vw;
-          .round-button {
-            width: $circle-size;
-            height: $circle-size;
-            border-radius: 50%;
-          }
-        }
-        .svg {
-          margin-left: 0.5vw;
-          width: $circle-size;
-          height: $circle-size;
-        }
-      }
-    }
-  }
-  .introduction-info {
-    font-size: 1.6vw;
-    .c-next-btn-container {
-      margin-top: 4vh;
-      display: flex;
-      justify-content: center;
-      button {
-        transition: all 300ms ease-out;
-        border: none;
-        outline: none;
-        font-size: 1.7vw;
-        border-radius: 0.7vw;
-        padding: 1.4vh 1.9vw;
-        color: var(--white);
-        background: var(--theme-orange);
-        &:hover {
-          background: var(--theme-green);
-        }
-      }
-    }
-  }
 }
 
 // after cover page
@@ -1880,39 +1579,43 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 // brief and new-prep pages
-.play-preview-pages .sorted-row .brick-row-container .brick-containerz.play-brief-page {
+// brief and new-prep pages
+.play-preview-pages .sorted-row .brick-row-container .brick-container.play-brief-page {
   .introduction-page {
     padding-top: 0 !important;
+    .open-question {
+      padding: 0 4vw !important;
+      > div {
+        $font-size: 2vw;
+        font-size: $font-size !important;
+        p {
+          font-size: $font-size !important;
+        }
+      }
+    }
+    .introduction-content {
+      padding: 0 4vw !important;
+      .brief-title {
+        .italic {
+          color: var(--theme-dark-blue);
+          font-size: 1.8vw;
+        }        
+      }
+    }
   }
   .scrollable {
-    padding: 4vh 0 !important;
-    height: calc(100vh - 15vh) !important;
+    padding: 4vh 0 4vw 0 !important;
+    height: 100% !important;
     overflow-y: scroll;
   }
 
-  .introduction-page {
-    padding-top: 2vh;
-    padding-right: 4vw;
-  }
-  .open-question {
-    padding-left: 4vw !important;
-  }
-  .introduction-content {
-    padding-left: 4vw !important;
-  }
-  .open-question > div {
-    $font-size: 2vw;
-    font-size: $font-size !important;
-    p {
-      font-size: $font-size !important;
-    }
-  }
   .new-layout-footer {
     .title-column {
-      width: 65vw;
+      width: 70vw;
       justify-content: flex-end;
-      margin-left: 32vw;
-      font-size: 1.8vw;
+      font-size: 2vw;
+      margin-left: 27vw;
+      margin-right: 0.5vw;
       font-family: $font-family-bold;
     }
     .footer-arrow {
@@ -1931,13 +1634,15 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       position: absolute;
       left: -4.8vw;
       .dashed-circle {
-        border-radius: 50%;
-        border: 0.2vw dashed var(--white);
+        display: block;
         width: 3.5vw;
         height: 3.5vw;
       }
+      .highlight-circle {
+        margin-top: 0.3vw;
+      }
       .share-circle {
-        margin-top: 0.7vw;
+        margin-top: 1.15vw;
       }
       .assign-circle {
         margin-top: 1.5vw;
@@ -2011,14 +1716,24 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 
+
 // seconds count down
 .play-preview-pages .sorted-row .brick-row-container .brick-container .seconds-countdown-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  font-size: 30vh;
+  font-size: 36vh;
   font-family: $font-family-bold;
+  opacity: 0;
+  &.fadein {
+    opacity: 0;
+    animation: fadein 500ms linear 0s forwards;
+  }
+  &.fadeout {
+    opacity: 1;
+    animation: fadeout 150ms linear 0s forwards;
+  }
 }
 
 .underline-border {
@@ -2092,4 +1807,86 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   display: flex;
   justify-content: center;
   width: 26.5vw !important;
+}
+
+
+
+.play-preview-panel.animate-fade {
+  .s-fade1, .s-fade2, .s-fade3 {
+    opacity: 0;
+  }
+  .s-fade1 {
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-name: fadein;
+  }
+  .s-fade2 {
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 1s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-name: fadein;
+  }
+  .s-fade3 {
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 2s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-name: fadein;
+  }
+  .like-button {
+    font-family: $font-family-bold;
+    min-width: 17vw;
+    text-align: center;
+    border-radius: 0.7vw;
+    padding: 1.5vh 1.5vw;
+    font-size: 4.5vh;
+    background: var(--tab-gray);
+    margin: 1vh;
+
+    &.orange {
+      cursor: pointer;
+      color: var(--theme-dark-blue);
+      background: var(--tab-gray);
+      animation: greyToOrange 0.5s linear 2s 1 normal forwards;
+    }
+  }
+}
+
+// play borders
+.intro-text-row {
+  border-top-left-radius: $play-border-radius !important;
+  border-top-right-radius: $play-border-radius !important;
+}
+
+.play-preview-pages .sorted-row.sorted-row-expanded {
+  .brick-row-container {
+    border-radius: $play-border-radius !important;
+    .brick-container {
+      border-radius: $play-border-radius !important;
+    }
+  }
+  .introduction-info {
+    background: inherit !important;
+  }
+}
+
+// should be grey in prosivional score and some pages
+.play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-info {
+  background: var(--solitude-light) !important;
+}
+// should be invisible in stepper which in live and review
+.play-preview-pages .sorted-row .brick-row-container .brick-container.live-page .introduction-info {
+  background: inherit !important;
 }

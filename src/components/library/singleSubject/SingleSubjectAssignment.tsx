@@ -5,6 +5,7 @@ import { LibraryAssignmentBrick } from "model/assignment";
 import map from "components/map";
 import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademyDifficulty } from "../base/AcademyDifficulty";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -73,7 +74,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
       <div className={className}>
         <div className="rotated">
           <div className="rotated-text" style={{ width }}>
-            <p>{brick.title}</p>
+          <BrickTitle title={brick.title} />
           </div>
         </div>
       </div>
@@ -92,7 +93,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
         {renderTeacher(null)}
         {!height && renderRotatedTitle("left-align", 100)}
         {hovered && <div className="custom-tooltip subject-tooltip">
-          <div>{brick.title}</div>
+          <BrickTitle title={brick.title} />
         </div>}
         <div className="progress-value default-value" onMouseEnter={() => setHover(true)}></div>
         <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }}>

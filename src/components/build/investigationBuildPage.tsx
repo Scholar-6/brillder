@@ -30,7 +30,7 @@ import {
   parseQuestion,
   getUniqueComponent,
 } from "./questionService/QuestionService";
-import { convertToQuestionType } from "./questionService/ConvertService";
+import { convertToQuestionType, stripHtml } from "./questionService/ConvertService";
 import { User } from "model/user";
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
@@ -42,6 +42,7 @@ import { useSocket } from "socket/socket";
 import { applyBrickDiff, getBrickDiff } from "components/services/diff";
 import UndoRedoService from "components/services/UndoRedoService";
 import { Brick } from "model/brick";
+import PlanPage from "./plan/Plan";
 
 import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
 import TutorialWorkArea, { TutorialStep } from './tutorial/TutorialPanelWorkArea';
@@ -54,10 +55,8 @@ import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/p
 import SynthesisPreviewComponent from "./baseComponents/phonePreview/synthesis/SynthesisPreview";
 import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
 import TutorialPhonePreview from "./tutorial/TutorialPreview";
-import YourProposalLink from './baseComponents/YourProposalLink';
 import TutorialLabels from './baseComponents/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-import Proposal from "./proposal/Proposal";
 
 import DesktopVersionDialog from 'components/build/baseComponents/dialogs/DesktopVersionDialog';
 import QuestionInvalidDialog from './baseComponents/dialogs/QuestionInvalidDialog';
@@ -67,11 +66,11 @@ import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialo
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
-import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./proposal/model";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
+import routes from "./routes";
 
 
-interface InvestigationBuildProps extends RouteComponentProps<any> {
+export interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
   user: User;
   startEditing(brickId: number): void;
@@ -109,7 +108,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const { history } = props;
 
-  let proposalRes = validateProposal(props.brick);
+  let proposalRes = React.useMemo(() => validateProposal(props.brick), [props.brick]);
 
   const [questions, setQuestions] = React.useState([
     getNewFirstQuestion(QuestionTypeEnum.None, true)
@@ -149,6 +148,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let isSynthesisPage = false;
   if (history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
     isSynthesisPage = true;
+  }
+
+  let isPlanPage = false;
+  if (history.location.pathname.slice(-5).toLowerCase() === '/plan') {
+    isPlanPage = true;
   }
 
   let initSynthesis = props.brick ? props.brick.synthesis as string : "";
@@ -284,7 +288,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   let activeQuestion = getActiveQuestion(questions);
-  if (isSynthesisPage === true) {
+  if (isSynthesisPage === true || isPlanPage === true) {
     if (activeQuestion) {
       if (movingFromSynthesis === false) {
         unselectQuestions();
@@ -314,7 +318,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setQuestions(update(questions, { $set: updatedQuestions }));
     } else {
       saveBrick();
-      history.push(map.ProposalReview);
+      history.push(map.Proposal(brickId));
     }
   };
 
@@ -413,12 +417,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const selectQuestion = (index: number) => {
-    if (history.location.pathname.slice(-10) === '/synthesis') {
+    if (history.location.pathname.slice(-10) === '/synthesis' || history.location.pathname.slice(-5) === "/plan") {
       setMovingFromSynthesis(true);
     }
     const updatedQuestions = activateQuestionByIndex(index);
     setQuestions(update(questions, { $set: updatedQuestions }));
-    if (history.location.pathname.slice(-10) === '/synthesis') {
+    if (history.location.pathname.slice(-10) === '/synthesis' || history.location.pathname.slice(-5) === "/plan") {
       history.push(`/build/brick/${brickId}/investigation/question`);
     }
   };
@@ -538,6 +542,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const moveToInvalidProposal = () => {
     history.push(proposalResult.url);
+    setProposalResult({ ...proposalResult, isOpen: false });
   }
 
   const submitInvalidBrick = () => {
@@ -766,6 +771,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const renderPanel = () => {
     return (
       <Switch>
+        <Route path={routes.planRoute}>
+          <PlanPage
+            locked={locked}
+            editOnly={!canEdit}
+            user={props.user}
+            initSuggestionExpanded={initSuggestionExpanded}
+            selectFirstQuestion={() => selectQuestion(0)}
+          />
+        </Route>
         <Route path="/build/brick/:brickId/investigation/question-component">
           {renderBuildQuestion}
         </Route>
@@ -824,7 +838,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     history.push(`/build/brick/${brickId}/investigation/question-component/${questions[questions.length - 1].id}`);
   }
 
-  if (!synthesis) {
+  if (!stripHtml(synthesis) || !proposalResult.isValid) {
     isValid = false;
   }
 
@@ -850,13 +864,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       />
       <Hidden only={['xs', 'sm']}>
         <TutorialLabels isTutorialPassed={isTutorialPassed()} />
-        <YourProposalLink
-          brickId={props.brick.id}
-          tutorialStep={step}
-          invalid={validationRequired && !proposalResult.isValid}
-          saveBrick={saveBrick}
-          isTutorialPassed={isTutorialPassed}
-        />
         <Grid
           container direction="row"
           className="investigation-build-background"
@@ -875,7 +882,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               style={{ height: "100%" }}
             >
               <div className="build-brick-title">
-                <div>{brick.title}</div>
+                <div dangerouslySetInnerHTML={{ __html: brick.title }}></div>
               </div>
               <Grid
                 container
@@ -886,6 +893,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   history={history}
                   setQuestions={switchQuestions}
                   questions={questions}
+                  brickId={brickId}
                   synthesis={synthesis}
                   validationRequired={validationRequired}
                   tutorialSkipped={isTutorialPassed()}
@@ -986,27 +994,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   );
   }
 
-  const proposalBaseUrl = '/build/brick/' + brickId;
-
-  return (
-    <Switch>
-      <Route
-        path={[
-          proposalBaseUrl + TitleRoutePart,
-          proposalBaseUrl + OpenQuestionRoutePart,
-          proposalBaseUrl + BrickLengthRoutePart,
-          proposalBaseUrl + BriefRoutePart,
-          proposalBaseUrl + PrepRoutePart,
-          proposalBaseUrl + ProposalReviewPart
-        ]}
-      >
-        <Proposal history={history} location={props.location} match={props.match} />
-      </Route>
-      <Route path="/build/brick/:brickId">
-        {renderBuildPage()}
-      </Route>
-    </Switch>
-  );
+  return renderBuildPage();
 };
 
 const mapState = (state: ReduxCombinedState) => ({

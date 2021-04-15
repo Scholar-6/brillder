@@ -10,7 +10,6 @@ import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTi
 import { getReviewTime } from "../services/playTimes";
 import routes from "../routes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
-import TypingLabel from "components/baseComponents/TypingLabel";
 
 interface Props {
   brick: Brick;
@@ -43,10 +42,7 @@ const PreReview: React.FC<Props> = ({ brick, ...props }) => {
   if (isMoving) {
     return (
       <div className="brick-row-container live-container">
-        <div className="fixed-upper-b-title">{brick.title}</div>
-        <div className="fixed-upper-b-title">
-          {brick.title}
-        </div>
+        <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
         <div className="brick-container play-preview-panel live-page after-cover-page">
           <div className="introduction-page">
             <SecondsCountDown onEnd={moveNext} />
@@ -60,14 +56,14 @@ const PreReview: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="brick-row-container live-container">
-      <div className="fixed-upper-b-title">{brick.title}</div>
-      <div className="brick-container play-preview-panel live-page after-cover-page pre-synthesis">
+      <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
+      <div className="brick-container play-preview-panel live-page after-cover-page pre-synthesis animate-fade">
         <div className="introduction-page">
           <div className="after-cover-main-content">
-            <div className="title">
-              <TypingLabel label="Improve your score." onEnd={() => {}} />
+            <div className="title s-fade1">
+              Improve your score.
             </div>
-            <div className="like-buttons-container">
+            <div className="like-buttons-container s-fade2">
               <div className="x-center">
                 <div className="like-button">Preparation</div>
               </div>
@@ -78,7 +74,7 @@ const PreReview: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="like-button orange" onClick={() => setMoving(true)}>Review</div>
               </div>
             </div>
-            <div className="footer">
+            <div className="footer s-fade3">
               You ha<span className="underline-border">ve {minutes} minutes</span> to review your answers. Once time is up, you will get a final score.
             </div>
           </div>
