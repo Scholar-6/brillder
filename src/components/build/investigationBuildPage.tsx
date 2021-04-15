@@ -110,7 +110,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const { history } = props;
 
-  let proposalRes = validateProposal(props.brick);
+  let proposalRes = React.useMemo(() => validateProposal(props.brick), [props.brick]);
 
   const [questions, setQuestions] = React.useState([
     getNewFirstQuestion(QuestionTypeEnum.None, true)
@@ -840,7 +840,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     history.push(`/build/brick/${brickId}/investigation/question-component/${questions[questions.length - 1].id}`);
   }
 
-  if (!synthesis) {
+  if (!stripHtml(synthesis) || !proposalResult.isValid) {
     isValid = false;
   }
 
