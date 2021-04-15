@@ -28,6 +28,7 @@ interface AssignPersonOrClassProps {
 }
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
+  const [isSaving, setSaving] = React.useState(false);
   const [value] = React.useState("");
   /*eslint-disable-next-line*/
   const [existingClass, setExistingClass] = React.useState(null as any);
@@ -154,9 +155,20 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     });
   }
 
-  const assign = async () => {
-    const { studentIds, classroomIds } = getSelectedIds();
+  const assignToExistingBrick = async () => {
+    let data = { classesIds: [existingClass.id], deadline: null } as AssignClassData;
+    if (haveDeadline && deadlineDate) {
+      data.deadline = deadlineDate;
+    }
+    const res = await assignClasses(props.brick.id, data);
+    if (res) {
+      props.success([existingClass], []);
+    }
+  }
 
+  const createClassAndAssign = async () => {
+    const { studentIds, classroomIds } = getSelectedIds();
+  
     let failedClasses: any[] = [];
     let failedStudents: any[] = [];
     let failedItems: any[] = [];
@@ -183,13 +195,25 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       }
     }
     if (good) {
-      let assignedObjs = Object.assign([], selectedObjs) as any[];
-      if (failedItems.length > 0) {
-        assignedObjs = removeFailedObjs(failedStudents, failedClasses);
-      }
-      props.success(assignedObjs, failedItems);
+    let assignedObjs = Object.assign([], selectedObjs) as any[];
+    if (failedItems.length > 0) {
+      assignedObjs = removeFailedObjs(failedStudents, failedClasses);
+    }
+    props.success(assignedObjs, failedItems);
     } else {
-      props.close();
+    props.close();
+    }
+  }
+
+  const assign = async () => {
+    // prevent from double click
+    if (isSaving) { return; }
+    setSaving(true);
+
+    if (isCreating == false) {
+      assignToExistingBrick();
+    } else {
+      createClassAndAssign();
     }
   }
 
