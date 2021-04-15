@@ -3,6 +3,7 @@ import React from "react";
 import { Brick } from "model/brick";
 import { Grid } from "@material-ui/core";
 import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface TitlePageProps {
   brick: Brick;
@@ -17,7 +18,9 @@ const TitlePage: React.FC<TitlePageProps> = ({brick, color}) => {
           <div className="circle-icon" style={{ background: color }} />
         </Grid>
         <div className="proposal-titles">
-          <div className="title">{brick.title}</div>
+          <div className="title">
+            <BrickTitle title={brick.title} />
+          </div>
           <KeyWordsPreview keywords={brick.keywords} />
         </div>
       </div>
