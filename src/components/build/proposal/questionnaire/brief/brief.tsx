@@ -15,7 +15,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 interface BriefProps {
   baseUrl: string;
   parentBrief: string;
-  playStatus: PlayButtonStatus;
   canEdit: boolean;
   saveBrief(brief: string): void;
   saveAndPreview(): void;
@@ -38,7 +37,6 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
       <Navigation
         baseUrl={props.baseUrl}
         step={ProposalStep.Brief}
-        playStatus={props.playStatus}
         saveAndPreview={props.saveAndPreview}
         onMove={() => saveBrief(parentBrief)}
       />
