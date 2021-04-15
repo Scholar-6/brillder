@@ -284,7 +284,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
         </div>
         <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
-          <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{ width: 'auto' }}>
+          <button className="btn btn-md bg-theme-orange yes-button icon-button r-long" onClick={assign} style={{ width: 'auto' }}>
             <div className="centered">
               <span className="label">Assign</span>
             </div>

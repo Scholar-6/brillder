@@ -120,12 +120,14 @@
 .dialog-header {
   .r-popup-title {
     font-size: 2vw;
+    margin-bottom: 1.3vw !important;
   }
   .r-class-selection {
     display: flex;
     align-items: center;
+    margin-bottom: 1.3vw !important;
     .select-existed-class.MuiInputBase-root {
-      width: 30vw;
+      width: 35vw;
       border-radius: 0;
       border-top-left-radius: 1vw;
       border-bottom-left-radius: 1vw;
@@ -181,6 +183,14 @@
     overflow: hidden;
     &.r-hidden {
       height: 0;
+    }
+  }
+  .r-long {
+    padding-top: 0.8vh !important;
+    padding-bottom: 0.8vh !important;
+    min-width: 13vw;
+    .label {
+      font-size: 2vw !important;
     }
   }
   .r-radio-buttons {
