@@ -125,8 +125,9 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 showToolbar={true}
                 toolbar={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-                  'latex', 'bulletedList', 'numberedList', 'blockQuote'
+                  'latex', 'bulletedList', 'numberedList', 'blockQuote', "image"
                 ]}
+                imageDialog={true}
               />
             </Grid>
             { !this.state.commentsShown &&
