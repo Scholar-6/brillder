@@ -18,6 +18,7 @@ import map from 'components/map';
 import { useHistory } from 'react-router';
 import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
 import BrickTitle from '../BrickTitle';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 interface AssignPersonOrClassProps {
   classroomId: number;
@@ -87,7 +88,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
           onChange={(e: any, v: any) => setBrick(v)}
           noOptionsText="Sorry, try typing something else"
           className="subject-autocomplete"
-          getOptionLabel={(option: any) => option.title}
+          getOptionLabel={(option: any) => stripHtml(option.title)}
           renderOption={(brick: Brick) => (
             <React.Fragment>
               <MenuItem>

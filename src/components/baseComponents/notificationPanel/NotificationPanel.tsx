@@ -234,8 +234,8 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
                   </div>
                   <div className="content-box">
                     <div className="notification-detail">
-                      <p className="notif-title">{notification.title}</p>
-                      <p className="notif-desc">{notification.text}</p>
+                      <p className="notif-title" dangerouslySetInnerHTML={{__html: notification.title}} />
+                      <p className="notif-desc" dangerouslySetInnerHTML={{__html: notification.text}} />
                     </div>
                     <div className="actions">
                       <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>

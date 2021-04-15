@@ -278,7 +278,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let canEdit = canEditBrick(props.brick, props.user);
   locked = canEdit ? locked : true;
 
-  setBrillderTitle(stripHtml(props.brick.title));
+  setBrillderTitle(props.brick.title);
 
   const getQuestionIndex = (question: Question) => {
     return questions.indexOf(question);
