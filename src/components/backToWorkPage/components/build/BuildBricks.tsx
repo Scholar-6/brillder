@@ -143,7 +143,8 @@ class BuildBricks extends Component<BuildBricksProps, State> {
   }
 
   renderSortedBricks = () => {
-    const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize, this.props.finalBricks)
+    const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize - 1, this.props.finalBricks)
+    data.unshift({brick: {isCreateLink: true} as Brick});
 
     return data.map(item => {
       const { brick } = item;
@@ -151,6 +152,10 @@ class BuildBricks extends Component<BuildBricksProps, State> {
       let iconColor = '';
       if (brick.editors && brick.editors.findIndex((e: any) => e.id === this.props.user.id) >= 0) {
         circleIcon = "edit-outline";
+      }
+
+      if (brick.isCreateLink) {
+        return <CreateBrickBlock key={-10} history={this.props.history} isCore={this.props.isCorePage} />;
       }
 
       return <BrickBlock
