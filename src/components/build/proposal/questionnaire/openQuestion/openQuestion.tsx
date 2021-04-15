@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './openQuestion.scss';
-import { ProposalStep, PlayButtonStatus, TitleRoutePart } from "../../model";
+import { ProposalStep, TitleRoutePart } from "../../model";
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
