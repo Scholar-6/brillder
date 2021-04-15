@@ -9,7 +9,6 @@ import brickActions from 'redux/actions/brickActions';
 import actions from 'redux/actions/requestFailed';
 import { setCoreLibrary } from 'services/axios/brick';
 
-import Clock from "components/play/baseComponents/Clock";
 import { Redirect } from "react-router-dom";
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";

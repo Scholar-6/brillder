@@ -14,6 +14,7 @@ import { rightKeyPressed } from 'components/services/key';
 import { getSynthesisTime } from '../services/playTimes';
 import { isPhone } from 'services/phone';
 import TimeProgressbarV2 from '../baseComponents/timeProgressbar/TimeProgressbarV2';
+import BrickTitle from 'components/baseComponents/BrickTitle';
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
@@ -146,7 +147,9 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     <div className="brick-row-container synthesis-container">
       {isPhone() ? renderMobile() :
         <div className="brick-container play-preview-panel synthesis-page">
-          <div className="fixed-upper-b-title">{brick.title}</div>
+          <div className="fixed-upper-b-title">
+            <BrickTitle title={brick.title} />
+          </div>
           <div className="header">
             Synthesis
           </div>

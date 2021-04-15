@@ -396,7 +396,9 @@ const LivePage: React.FC<LivePageProps> = ({
             <div className="introduction-info">
               {renderCountDown()}
               <div className="intro-text-row">
-                <span className="phone-stepper-head"><span className="bold">{brick.subject?.name}</span> {brick.title}</span>
+                <span className="phone-stepper-head">
+                  <span className="bold">{brick.subject?.name}</span> <BrickTitle title={brick.title} />
+                </span>
                 {renderStepper()}
               </div>
             </div>

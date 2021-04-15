@@ -144,7 +144,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                     </div>
                   </div>
                   <h2>All done!</h2>
-                  <p>Well done for completing “{brick.title}”!</p>
+                  <p>Well done for completing “<BrickTitle title={brick.title} />”!</p>
                   {renderActionColumns()}
                 </div>
               </div>
