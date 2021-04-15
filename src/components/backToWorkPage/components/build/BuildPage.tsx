@@ -646,7 +646,14 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
 
     // publish should have create brick button when empty
-    isEmpty = finalBricks.length > 0 ? false : true;
+    if (this.state.filters.publish) {
+      isEmpty = finalBricks.length > 0 ? false : true;
+    } else {
+      const coreNoPublishBricks =  this.state.rawBricks
+        .filter(b => b.isCore === true)
+        .filter(b => b.status !== BrickStatus.Publish);
+      isEmpty = coreNoPublishBricks.length > 0 ? false : true;
+    }
 
     return (
       <Grid container direction="row" className="sorted-row build-page-content">
