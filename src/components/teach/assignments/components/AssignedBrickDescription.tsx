@@ -8,6 +8,7 @@ import { getSubjectColor } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { archiveAssignment, sendAssignmentReminder } from "services/axios/brick";
 import { getTotalStudentsCount } from "../service/service";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
@@ -228,7 +229,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         </div>
         <div className="short-brick-info long">
           <div className="link-description">
-            <span>{brick.title}</span>
+            <BrickTitle title={brick.title} />
           </div>
           <div className="link-info">
             {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)}

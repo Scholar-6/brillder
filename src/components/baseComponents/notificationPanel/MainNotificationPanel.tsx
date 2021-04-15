@@ -86,11 +86,11 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
         } else if (notification.type === NotificationType.AssignedToEdit) {
           this.props.forgetBrick();
           await this.props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
+          history.push(map.Proposal(notification.brick.id));
         } else if (notification.type === NotificationType.ReturnedToAuthor) {
           this.props.forgetBrick();
           await this.props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
+          history.push(map.Proposal(notification.brick.id));
         } else if (notification.type === NotificationType.RemindedToPlayBrick) {
           history.push(map.playIntro(notification.brick.id));
         }
@@ -235,8 +235,8 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
                   </div>
                   <div className="content-box">
                     <div className="notification-detail">
-                      <p className="notif-title">{notification.title}</p>
-                      <p className="notif-desc">{notification.text}</p>
+                      <p className="notif-title" dangerouslySetInnerHTML={{__html: notification.title}} />
+                      <p className="notif-desc" dangerouslySetInnerHTML={{__html: notification.text}} />
                     </div>
                     <div className="actions">
                       <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>

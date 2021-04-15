@@ -6,6 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 import SpriteIcon from "../SpriteIcon";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 interface DialogProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ interface DialogProps {
 
 const AssignSuccessDialog: React.FC<DialogProps> = props => {
   let itemsText = '';
+  const title = stripHtml(props.brickTitle);
 
   const capitalize = (n: string) => {
     if (n && n.length > 1) {
@@ -47,7 +49,7 @@ const AssignSuccessDialog: React.FC<DialogProps> = props => {
       <div className="dialog-header">
         <ListItem>
           <ListItemText
-            primary={ `${props.brickTitle} has been assigned to ${itemsText}.`}
+            primary={ `${title} has been assigned to ${itemsText}.`}
             className="bold" style={{ minWidth: '30vw' }}
           />
           <ListItemAvatar>

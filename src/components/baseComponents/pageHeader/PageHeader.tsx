@@ -127,7 +127,7 @@ class PageHeader extends Component<Props, State> {
                     <SpriteIcon name="settings" className="w80 h80 text-theme-orange" />
                   </div>
                 }
-                {!this.props.isAuthenticated &&
+                {(!this.props.isAuthenticated || this.props.isAuthenticated === isAuthenticated.False) &&
                   <UnauthorizedMenu isOpen={this.state.dropdownShown} closeDropdown={this.hideDropdown.bind(this)} />
                 }
               </div>

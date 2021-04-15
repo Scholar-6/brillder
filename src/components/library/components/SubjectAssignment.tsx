@@ -5,6 +5,7 @@ import { LibraryAssignmentBrick } from "model/assignment";
 import map from "components/map";
 import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademyDifficulty } from "../base/AcademyDifficulty";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -57,7 +58,7 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
       }} style={{ background: color }}>
         {hovered && <div className="custom-tooltip subject-tooltip">
           <div className="bold">{subject.name}</div>
-          <div>{brick.title}</div>
+          <div><BrickTitle title={brick.title} /></div>
         </div>}
         <div className="progress-value default-value" onMouseEnter={() => setHover(true)} />
         <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }}>

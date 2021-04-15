@@ -1,9 +1,13 @@
 import { setAssignmentId } from "localStorage/playAssignmentId";
 
+
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
 export const Build = '/build';
 export const MainPage = '/home';
+
+export const buildBase = (brickId: number) => `${Build}/brick/` + brickId;
+
 export const ProposalBase = `${Build}/new-brick`;
 export const ProposalBase2 = `${Build}/brick/:brickId`;
 export const BackToWorkPage = '/back-to-work';
@@ -65,6 +69,11 @@ export const ProposalBrief = `${ProposalBase2}/brief`;
 export const ProposalPrep = `${ProposalBase2}/prep`;
 export const ProposalLength = `${ProposalBase2}/length`;
 export const ProposalReview = `${ProposalBase2}/plan`;
+
+export const Proposal = (brickId: number) => {
+  console.log(`${buildBase(brickId)}/plan`);
+  return `${buildBase(brickId)}/plan`
+};
 
 export const ProposalReview2 = `${ProposalBase2}/plan`;
 
@@ -151,6 +160,7 @@ export default {
 
   postPlay,
   playAssignment,
+  Proposal,
 
   InvestigationBuild,
   InvestigationSynthesis,

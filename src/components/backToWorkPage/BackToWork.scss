@@ -354,12 +354,7 @@
   $filter-height: calc(100vh - 5.834vw - 2vw - 2.4vw - 3vw);
   $expanded-filter-height: 62vh;
   $classes-label-height: 7.7vh;
-  // margin-bottom: 1vh;
   .classrooms-filter {
-    padding-bottom: 7vh;
-    height: calc(100% - 2vw - 4vh);
-    // height: calc(#{$filter-height} + #{$classes-label-height});
-    overflow-y: scroll;
     transition: 500ms all;
     .classes-box {
       .index-box {
@@ -450,7 +445,6 @@
     height: calc(#{$expanded-filter-height} + #{$classes-label-height});
     .classrooms-filter {
       transition: none;
-      height: $expanded-filter-height !important;
     }
   }
 }

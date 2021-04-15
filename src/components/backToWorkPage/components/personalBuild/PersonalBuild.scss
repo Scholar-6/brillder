@@ -1,13 +1,4 @@
 .personal-build {
-  .subjects {
-    height: auto;
-  }
-  .subjects-list {
-    overflow-y: scroll;
-    height: calc(90vh - 15vw) !important;
-    padding-bottom: calc(2.3vw + 30px) !important;
-  }
-
   .index-box.hover-light:hover {
     background: var(--light-blue-alpha3);
   }
