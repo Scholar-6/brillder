@@ -220,7 +220,10 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
         <div className="flex-height-box">
           <div className="sort-box">
             <div>
-              {!this.props.filters.publish ? this.renderInbox(draft, build, publication) : <div style={{height: "10vw"}} />}
+              {!this.props.filters.publish
+                ? this.renderInbox(draft, build, publication)
+                : <div style={{height: "10vw"}} />
+              }
               <div className="filter-header">
                 <span>Subjects</span>
               </div>
