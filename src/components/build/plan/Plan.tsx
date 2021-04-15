@@ -167,7 +167,6 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       data={currentBrick.openQuestion}
                       onChange={data => changeBrick((brick) => ({ ...brick, openQuestion: data }))}
                       toolbar={["bold", "italic", "latex"]}
-                      imageDialog={true}
                     />
                   </div>
                   <div className="brief-container">
@@ -185,7 +184,6 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                         "bulletedList",
                         "numberedList",
                       ]}
-                      imageDialog={true}
                     />
                   </div>
                   <div className="prep-container">

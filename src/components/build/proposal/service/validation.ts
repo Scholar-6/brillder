@@ -1,3 +1,4 @@
+import { stripHtml } from "components/build/questionService/ConvertService";
 import { Brick } from "model/brick";
 
 export interface ValidateProposalResult {
@@ -11,13 +12,13 @@ export function validateProposal(brick: Brick) {
 
   if (!brick.subjectId) {
     isValid = false;
-  } else if (!brick.title || brick.academicLevel < 1 || brick.keywords.length === 0) {
+  } else if (!stripHtml(brick.title) || brick.academicLevel < 1 || brick.keywords.length === 0) {
     isValid = false;
-  } else if (!brick.openQuestion) {
+  } else if (!stripHtml(brick.openQuestion)) {
     isValid = false;
-  } else if (!brick.brief) {
+  } else if (!stripHtml(brick.brief)) {
     isValid = false;
-  } else if (!brick.prep) {
+  } else if (!stripHtml(brick.prep)) {
     isValid = false;
   } else if (!brick.brickLength) {
     isValid = false;
