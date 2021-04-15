@@ -8,10 +8,14 @@ import _ from "lodash";
 
 import "./QuillLatex";
 import "./QuillAutoLink";
-import "./QuillImageUpload";
 import "./QuillMediaEmbed";
+import "./QuillCustomClipboard";
+import "./QuillImageUpload";
+import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
+import ImageUpload from "./QuillImageUpload";
+import QuillCustomClipboard from "./QuillCustomClipboard";
 
 function randomEditorId() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -54,6 +58,27 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     const [uniqueId] = React.useState(randomEditorId());
     const [data, setData] = React.useState(props.data);
     const [quill, setQuill] = React.useState<Quill | null>(null);
+
+    const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
+    const [imageDialogFile, setImageDialogFile] = React.useState<File>();
+    const [imageDialogData, setImageDialogData] = React.useState<any>(null);
+    const [imageModule, setImageModule] = React.useState<ImageUpload>();
+    React.useEffect(() => {
+        if(imageModule) {
+            imageModule.openDialog = (file?: File, data?: any) => {
+                setImageDialogFile(file);
+                setImageDialogData(data);
+                setImageDialogOpen(true);
+            }
+        }
+    }, [imageModule]);
+
+    const [clipboardModule, setClipboardModule] = React.useState<QuillCustomClipboard>();
+    React.useEffect(() => {
+        if(imageModule && clipboardModule) {
+            clipboardModule.onPasteImage = imageModule.onImagePaste.bind(imageModule);
+        }
+    }, [imageModule, clipboardModule]);
 
     const onFocus = React.useCallback(() => {
         setCurrentQuillId(uniqueId);
@@ -99,6 +124,14 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     const ref = React.useCallback((node: ReactQuill) => {
         if(node) {
             const editor = node.getEditor();
+            setImageModule(editor.getModule("imageupload") as ImageUpload);
+            setClipboardModule(editor.getModule("clipboard") as QuillCustomClipboard);
+            editor.on("editor-change", () => {
+                const clipboard = editor.getModule("clipboard");
+                if (clipboardModule !== clipboard) {
+                    setClipboardModule(clipboard);
+                }
+            });
             if(quill !== editor) {
                 setQuill(editor);
             }
@@ -143,6 +176,28 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 modules={modules}
                 ref={ref}
             />
+            {props.imageDialog &&
+                <ImageDialog
+                    initData={imageDialogData ?? {}}
+                    initFile={imageDialogFile ?? null}
+                    open={imageDialogOpen}
+                    upload={(...args) => {
+                        if(imageModule) {
+                            imageModule.uploadImages.bind(imageModule)(...args);
+                        }
+                        setImageDialogOpen(false);
+                        setImageDialogFile(undefined);
+                    }}
+                    updateData={(source, caption, align, height) => {
+                        if(imageModule) {
+                            imageModule.updateImage.bind(imageModule)({source, caption, align, height});
+                        }
+                        setImageDialogOpen(false);
+                        setImageDialogFile(undefined);
+                    }}
+                    setDialog={open => setImageDialogOpen(false)}
+                />
+            }
         </div>
     );
 });
