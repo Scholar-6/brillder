@@ -16,7 +16,7 @@ interface PlanPreviewProps {
 }
 
 const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
-  const { currentBrick, user } = data;
+  const { currentBrick } = data;
 
   return (
     <div className="phone-preview-component plan-preview">

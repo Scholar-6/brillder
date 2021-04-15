@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './prep.scss';
-import { ProposalStep, PlayButtonStatus, BriefRoutePart } from "../../model";
+import { ProposalStep, BriefRoutePart } from "../../model";
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';

@@ -1,12 +1,11 @@
 import React from "react";
 import { useHistory } from 'react-router-dom';
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { connect } from 'react-redux';
 
 import './Navigation.scss';
 import { ReduxCombinedState } from 'redux/reducers';
-import { ProposalStep, PlayButtonStatus, PrepRoutePart, BriefRoutePart, OpenQuestionRoutePart, TitleRoutePart, BrickLengthRoutePart } from "../../model";
-import PlayButton from "components/build/baseComponents/PlayButton";
+import { ProposalStep, PrepRoutePart, BriefRoutePart, OpenQuestionRoutePart, TitleRoutePart, BrickLengthRoutePart } from "../../model";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface NextButtonProps {

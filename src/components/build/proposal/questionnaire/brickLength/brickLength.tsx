@@ -3,7 +3,7 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './brickLength.scss';
-import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "components/build/proposal/model";
+import { ProposalStep, OpenQuestionRoutePart } from "components/build/proposal/model";
 import { BrickLengthEnum } from 'model/brick';
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
