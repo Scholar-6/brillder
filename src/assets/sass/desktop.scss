@@ -122,6 +122,42 @@
     font-size: 2vw;
     margin-bottom: 1.3vw !important;
   }
+  .r-brick-level {
+    font-family: $font-family-regular;
+    display: flex;
+    align-items: center;
+    height: 4.185vw;
+    width: 15vw;
+    font-size: 2vw;
+    padding-left: 2vw;
+    border-top-right-radius: 1vw;
+    border-bottom-right-radius: 1vw;
+    margin-left: 0.2vw;
+    background: var(--white);
+    color: var(--theme-dark-blue);
+  }
+
+  .r-class-inputs {
+    display: flex;
+    margin-bottom: 0.4vw;
+    input {
+      padding-top: 0.4vw !important;
+      padding-bottom: 0.4vw !important;
+      color: var(--white) !important;
+      width: 35vw !important;
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      background: var(--theme-dark-blue) !important;
+    }
+    .r-brick-level {
+      background: var(--theme-dark-blue);
+      color: var(--white);
+    }
+  }
+  .r-regular-center {
+    text-align: center;
+    font-family: $font-family-regular;
+  }
   .r-class-selection {
     display: flex;
     align-items: center;
@@ -149,20 +185,6 @@
           height: 2.2vw;
         }
       }
-    }
-    .brick-level {
-      font-family: $font-family-regular;
-      display: flex;
-      align-items: center;
-      height: 4.185vw;
-      width: 15vw;
-      font-size: 2vw;
-      padding-left: 2vw;
-      border-top-right-radius: 1vw;
-      border-bottom-right-radius: 1vw;
-      margin-left: 0.2vw;
-      background: var(--white);
-      color: var(--theme-dark-blue);
     }
   }
   .r-radio-row {
