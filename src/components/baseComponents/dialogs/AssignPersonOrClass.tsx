@@ -97,6 +97,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     } catch {
       console.log('failed create class and assign students');
     }
+    // clear data
+    setUsers([]);
+    setNewClassName('');
   }
   //#endregion
 
@@ -150,25 +153,25 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
   const renderNew = () => {
     return (
-      <div>
+      <div className="r-new-class">
         <div className="r-class-inputs">
           <input value={newClassName} onChange={e => setNewClassName(e.target.value)} />
           {renderBrickLevel()}
         </div>
         <div className="r-regular-center">Invite between 1 and 50 students to your class</div>
-        <AutocompleteUsernameButEmail
-          editorError=""
-          placeholder="hello"
-          currentEmail={currentEmail}
-          onBlur={() => {}}
-          users={users}
-          onAddEmail={onAddUser}
-          onChange={email => checkSpaces(email.trim())}
-          setUsers={users => {
-            setCurrentEmail('');
-            setUsers(users as User[]);
-          }}
-        />
+        <div className="r-student-emails">
+          <AutocompleteUsernameButEmail
+            placeholder="Type or paste student emails"
+            currentEmail={currentEmail}
+            users={users}
+            onAddEmail={onAddUser}
+            onChange={email => checkSpaces(email.trim())}
+            setUsers={users => {
+              setCurrentEmail('');
+              setUsers(users as User[]);
+            }}
+          />
+        </div>
       </div>
     )
   }

@@ -120,7 +120,7 @@
 .dialog-header {
   .r-popup-title {
     font-size: 2vw;
-    margin-bottom: 1.3vw !important;
+    margin-bottom: 0.3vw !important;
   }
   .r-brick-level {
     font-family: $font-family-regular;
@@ -157,6 +157,39 @@
   .r-regular-center {
     text-align: center;
     font-family: $font-family-regular;
+    margin-top: 0.5vw;
+    margin-bottom: 0.5vw;
+  }
+  .r-new-class {
+    margin-bottom: 1vw !important;
+  }
+  .r-student-emails {
+    .MuiAutocomplete-root {
+      margin-bottom: 0 !important;
+    }
+    .MuiFormControl-root {
+      max-height: 8.3vw !important;
+      overflow-y: auto;
+      margin-bottom: 0 !important;
+      position: inherit !important;
+      .MuiButtonBase-root.MuiIconButton-root.MuiAutocomplete-popupIndicator {
+        display: none !important;
+      }
+    }
+    .MuiInputBase-root {
+      border: none !important;
+      outline: none !important;
+      border-radius: 1vw !important;
+      border:none !important;
+      outline: none !important;
+      background: var(--theme-dark-blue) !important;
+      box-sizing: none !important;
+      color: var(--white) !important;
+      input {
+        color: var(--white) !important;
+        background: var(--theme-dark-blue) !important;
+      }
+    }
   }
   .r-class-selection {
     display: flex;
@@ -191,6 +224,7 @@
     display: flex;
     justify-content: center;
     color: var(--white);
+    margin-bottom: 1vw !important;
   }
   .r-radio-row {
     .MuiTypography-root {
@@ -216,9 +250,15 @@
     }
   }
   .r-radio-buttons {
-    margin-top: 1vw;
+    padding-right: 2vw;
+    margin-top: 0.5vw;
+    margin-bottom: 1.2vw !important;
+    .MuiFormControlLabel-root {
+      margin-left: 2vw;
+      margin-right: 2vw;
+    }
     .MuiTypography-root {
-      font-size: 1.3vw;
+      font-size: 1.6vw;
     }
     .MuiSvgIcon-root {
       color: var(--white);

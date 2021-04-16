@@ -76,10 +76,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
         <div className="bold m-b-10">Invite students by email.</div>
         <div className="text-center f-s-2">You can invite between 1 and 50 students to a class</div>
         <AutocompleteUsernameButEmail
-          editorError=""
-          placeholder="hello"
           currentEmail={currentEmail}
-          onBlur={() => {}}
           users={users}
           onAddEmail={onAddUser}
           onChange={email => checkSpaces(email.trim())}
