@@ -350,10 +350,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   render() {
     return (
-      <Grid container direction="row" className="mainPage">
-        <React.Suspense fallback={<></>}>
-          {isTablet ? <TabletTheme/> : <DesktopTheme /> }
-        </React.Suspense>
+      <React.Suspense fallback={<></>}>
+        {isTablet ? <TabletTheme/> : <DesktopTheme /> }
+        <Grid container direction="row" className="mainPage">
         <div className="welcome-col">
           <WelcomeComponent
             user={this.props.user}
@@ -418,6 +417,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         />
         <ClassInvitationDialog />
       </Grid>
+      </React.Suspense>
     );
   }
 }
