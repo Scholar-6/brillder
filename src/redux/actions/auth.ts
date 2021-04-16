@@ -124,11 +124,11 @@ const redirectedToProfile = () => {
   }
 }
 
-const setDefaultPreference = (defaultPreference: UserType | undefined) => {
+const setDefaultUserProperties = (defaultPreference: UserType | undefined, defaultSubject: number | undefined) => {
   return {
-    type: types.AUTH_DEFAULT_PREFERENCE,
-    defaultPreference
+    type: types.AUTH_DEFAULT_USER_PROPERTIES,
+    defaultPreference, defaultSubject,
   }
 }
 
-export default { login, logout, loginSuccess, setLogoutSuccess, isAuthorized, redirectedToProfile, setDefaultPreference }
+export default { login, logout, loginSuccess, setLogoutSuccess, isAuthorized, redirectedToProfile, setDefaultUserProperties }
