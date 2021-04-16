@@ -16,6 +16,7 @@ import Proposal from "./proposal/Proposal";
 import { ReduxCombinedState } from "redux/reducers";
 import axios from "axios";
 import ReloadDialog from "components/baseComponents/dialogs/ReloadDialog";
+import map from "components/map";
 
 const BuildRouter: React.FC<InvestigationBuildProps> = (props) => {
   const [isReloadOpen, setReload] = React.useState(false);
@@ -37,7 +38,7 @@ const BuildRouter: React.FC<InvestigationBuildProps> = (props) => {
   });
 
   const reload = () => {
-    props.history.go(0)
+    props.history.push(map.Login);
   }
 
   const renderInvestigationPage = () => {
