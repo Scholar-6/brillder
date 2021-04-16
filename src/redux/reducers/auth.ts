@@ -8,6 +8,7 @@ export interface AuthState {
   isActivated: boolean;
   isRedirectedToProfile: boolean;
   defaultPreference?: UserType;
+  defaultSubject?: number;
   error: string;
 }
 
@@ -16,6 +17,7 @@ const AccountInitialState: AuthState = {
   isActivated: false,
   isRedirectedToProfile: false,
   defaultPreference: undefined,
+  defaultSubject: undefined,
   error: ""
 }
 
@@ -23,8 +25,8 @@ export default (state = AccountInitialState, action: any) => {
   switch (action.type) {
     case types.AUTH_PROFILE_REDIRECT:
       return {...state, isRedirectedToProfile: true } as AuthState;
-    case types.AUTH_DEFAULT_PREFERENCE:
-      return {...state, defaultPreference: action.defaultPreference } as AuthState;
+    case types.AUTH_DEFAULT_USER_PROPERTIES:
+      return {...state, defaultPreference: action.defaultPreference, defaultSubject: action.defaultSubject } as AuthState;
     case types.LOGIN_SUCCESS:
       return { ...state, isAuthenticated: isAuthenticated.True } as AuthState;
     case types.LOGIN_FAILURE:
