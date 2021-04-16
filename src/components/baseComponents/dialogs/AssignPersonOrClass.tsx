@@ -86,8 +86,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             setCurrentEmail("");
           }
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
-          console.log(res);
-          props.success([newClassroom], []);
+          if (res && res.length > 0) {
+            await assignToExistingBrick(newClassroom);
+            props.success([newClassroom], []);
+          }
         }
       } else {
         console.log('failed to create class');
@@ -116,15 +118,12 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     getClasses();
   }, [value, getClasses]);
 
-  const assignToExistingBrick = async () => {
-    let data = { classesIds: [existingClass.id], deadline: null } as AssignClassData;
+  const assignToExistingBrick = async (classroom: any) => {
+    let data = { classesIds: [classroom.id], deadline: null } as AssignClassData;
     if (haveDeadline && deadlineDate) {
       data.deadline = deadlineDate;
     }
-    const res = await assignClasses(props.brick.id, data);
-    if (res) {
-      props.success([existingClass], []);
-    }
+    return await assignClasses(props.brick.id, data);
   }
 
   const assign = async () => {
@@ -133,7 +132,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     setSaving(true);
 
     if (isCreating == false) {
-      await assignToExistingBrick();
+      const res = await assignToExistingBrick(existingClass);
+      if (res) {
+        props.success([existingClass], []);
+      }
     } else {
       await createClassAndAssign();
     }
