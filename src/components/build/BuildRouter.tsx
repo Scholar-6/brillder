@@ -14,14 +14,30 @@ import InvestigationBuildPage, {
 
 import Proposal from "./proposal/Proposal";
 import { ReduxCombinedState } from "redux/reducers";
+import axios from "axios";
+import ReloadDialog from "components/baseComponents/dialogs/ReloadDialog";
 
 const BuildRouter: React.FC<InvestigationBuildProps> = (props) => {
+  const [isReloadOpen, setReload] = React.useState(false);
+
   if (isPhone()) {
     return (
       <div className="blue-page">
         <DesktopVersionDialog history={props.history} />
       </div>
     );
+  }
+
+  axios.interceptors.response.use((response) => {
+    return response;
+  }, function (error) {
+    if (error.response.status === 403) {
+      setReload(true);
+    }
+  });
+
+  const reload = () => {
+    props.history.go(0)
   }
 
   const renderInvestigationPage = () => {
@@ -39,6 +55,7 @@ const BuildRouter: React.FC<InvestigationBuildProps> = (props) => {
   }
 
   return (
+    <div>
     <Switch>
       <Route
         path={[
@@ -60,6 +77,8 @@ const BuildRouter: React.FC<InvestigationBuildProps> = (props) => {
         {renderInvestigationPage()}
       </Route>
     </Switch>
+    <ReloadDialog isOpen={isReloadOpen} reload={reload} close={() => setReload(false)} />
+    </div>
   );
 };
 
