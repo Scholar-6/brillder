@@ -141,6 +141,8 @@
     display: flex;
     margin-bottom: 0.4vw;
     input {
+      border-top-left-radius: 1vw !important;
+      border-bottom-left-radius: 1vw !important;
       padding-top: 0.4vw !important;
       padding-bottom: 0.4vw !important;
       color: var(--white) !important;
@@ -148,6 +150,9 @@
       border-top-right-radius: 0 !important;
       border-bottom-right-radius: 0 !important;
       background: var(--theme-dark-blue) !important;
+      &::placeholder {
+        color: #69799d !important;
+      }
     }
     .r-brick-level {
       background: var(--theme-dark-blue);
@@ -159,6 +164,10 @@
     font-family: $font-family-regular;
     margin-top: 0.5vw;
     margin-bottom: 0.5vw;
+  }
+  .r-first-class {
+    font-size: 2.6vw;
+    margin-bottom: 1.2vw !important;
   }
   .r-new-class {
     margin-bottom: 1vw !important;
