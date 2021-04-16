@@ -70,10 +70,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const createClassAndAssign = async () => {
     try {
       const subject = props.brick.subject as Subject;
-      const newClassroom = await createClass(newClassName, subject);
-      if (newClassroom) {
-        await getClasses();
-        if (newClassName) {
+      if (newClassName) {
+        const newClassroom = await createClass(newClassName, subject);
+        if (newClassroom) {
           // assign students to class
           const currentUsers = users;
           if (!emailRegex.test(currentEmail)) {
@@ -87,12 +86,16 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           }
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
           if (res && res.length > 0) {
+            console.log(newClassroom);
             await assignToExistingBrick(newClassroom);
             props.success([newClassroom], []);
           }
+          await getClasses();
+        } else {
+          console.log('failed to create class');
         }
       } else {
-        console.log('failed to create class');
+        console.log('class name is empty');
       }
     } catch {
       console.log('failed create class and assign students');
@@ -112,8 +115,13 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     for (const classroom of classrooms) {
       classroom.isClass = true;
     }
+  
+    if (classrooms.length > 0) {
+      setExistingClass(classrooms[0]);
+    } else {
+      setCreating(true);
+    }
 
-    setExistingClass(classrooms[0]);
     setClasses(classrooms);
   }, []);
 
@@ -155,7 +163,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     return (
       <div className="r-new-class">
         <div className="r-class-inputs">
-          <input value={newClassName} onChange={e => setNewClassName(e.target.value)} />
+          <input value={newClassName} placeholder="Class Name" onChange={e => setNewClassName(e.target.value)} />
           {renderBrickLevel()}
         </div>
         <div className="r-regular-center">Invite between 1 and 50 students to your class</div>
@@ -206,6 +214,51 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     );
   }
 
+  const renderFooter = () => (
+    <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
+      <button
+        className="btn btn-md bg-theme-orange yes-button icon-button r-long"
+        onClick={assign} style={{ width: 'auto' }}
+      >
+        <div className="centered">
+          <span className="label">Assign</span>
+        </div>
+      </button>
+    </div>
+  );
+
+  const renderDeadline = () => (
+    <div>
+      <div className="r-popup-title bold">When is it due?</div>
+      <div className="r-radio-buttons">
+        <FormControlLabel
+          checked={haveDeadline === false}
+          control={<Radio onClick={() => toggleDeadline(false)} />}
+          label="No deadline"
+        />
+        <FormControlLabel
+          checked={haveDeadline === true}
+          control={<Radio onClick={() => toggleDeadline(true)} />}
+          label="Set date"
+        />
+        {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
+      </div>
+    </div>
+  );
+
+  if (classes.length == 0) {
+    return (
+      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
+        <div className="dialog-header">
+          <div className="r-popup-title bold r-first-class">Create Your First Class</div>
+          {renderNew()}
+          {renderDeadline()}
+          {renderFooter()}
+        </div>
+      </Dialog>
+    );
+  }
+
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
       <div className="dialog-header">
@@ -221,27 +274,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             label="Create A New Class" />
         </div>
         {isCreating ? renderNew() : renderExisting()}
-        <div className="r-popup-title bold">When is it due?</div>
-        <div className="r-radio-buttons">
-          <FormControlLabel
-            checked={haveDeadline === false}
-            control={<Radio onClick={() => toggleDeadline(false)} />}
-            label="No deadline"
-          />
-          <FormControlLabel
-            checked={haveDeadline === true}
-            control={<Radio onClick={() => toggleDeadline(true)} />}
-            label="Set date"
-          />
-          {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
-        </div>
-        <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
-          <button className="btn btn-md bg-theme-orange yes-button icon-button r-long" onClick={assign} style={{ width: 'auto' }}>
-            <div className="centered">
-              <span className="label">Assign</span>
-            </div>
-          </button>
-        </div>
+        {renderDeadline()}
+        {renderFooter()}
       </div>
     </Dialog>
   );
