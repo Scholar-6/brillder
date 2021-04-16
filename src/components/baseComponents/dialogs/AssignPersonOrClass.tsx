@@ -18,9 +18,11 @@ import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
 import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
 import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
 import { createClass } from 'components/teach/service';
+import map from 'components/map';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
+  history: any;
   isOpen: boolean;
   success(items: any[], failed: any[]): void;
   close(): void;
@@ -86,7 +88,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           }
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
           if (res && res.length > 0) {
-            console.log(newClassroom);
+            if (classes.length == 0) {
+              props.history.push(map.ManageClassroomsTab);
+            }
             await assignToExistingBrick(newClassroom);
             props.success([newClassroom], []);
           }

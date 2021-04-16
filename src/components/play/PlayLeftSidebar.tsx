@@ -293,6 +293,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {canSee &&
           <AssignPersonOrClassDialog
             isOpen={this.state.isAssigningOpen}
+            history={this.props.history}
             success={(items: any[], failedItems: any[]) => {
               if (items.length > 0) {
                 this.setState({ isAssigningOpen: false, selectedItems: items, failedItems, isAssignedSuccessOpen: true });
