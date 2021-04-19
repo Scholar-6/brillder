@@ -142,9 +142,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
     const values = queryString.parse(this.props.history.location.search);
     if (values.classroomId) {
-      await this.loadClasses(parseInt(values.classroomId as string));
+      const classroomId = parseInt(values.classroomId as string);
+      await this.loadClasses(classroomId);
       if (values.newTeacher) {
+        const activeAssignment = this.state.activeClassroom?.assignments[0] as any;
         this.setState({ isNewTeacher: true });
+        if (activeAssignment) {
+          await this.setActiveAssignment(classroomId, activeAssignment.id);
+        }
       }
     } else {
       this.loadClasses();

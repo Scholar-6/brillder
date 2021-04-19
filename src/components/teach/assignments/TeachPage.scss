@@ -497,6 +497,25 @@
   .empty-tab-content {
     height: 80%;
   }
+
+  .assignment-tab-content-text {
+    padding-top: 0.1vw;
+    padding-bottom: 0.1vw;
+    border-radius: 0.9vw;
+    margin-top: 1vw;
+    margin-left: 6.7vw;
+    margin-right: 6.7vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    background: var(--tab-gray);
+
+    p {
+      font-size: 1.5vw;
+      color: var(--theme-dark-blue);
+      margin-top: 1.5vw;
+      margin-bottom: 1.5vw;
+    }
+  }
 }
 
 // view all button
