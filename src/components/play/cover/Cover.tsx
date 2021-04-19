@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
+import DynamicFont from 'react-dynamic-font';
 
 import { AcademicLevelLabels, Brick } from "model/brick";
 
@@ -14,6 +15,7 @@ import { setBrickCover } from "services/axios/brick";
 import { ImageCoverData } from "./model";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 interface IntroductionProps {
   user: User;
@@ -141,105 +143,107 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   if (isPhone()) {
     return (
       <React.Suspense fallback={<></>}>
-      <MobileTheme />
-      <div className="cover-page">
-        {renderFirstRow()}
-        <div className="brick-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
-        <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
-        <div className="keywords-row">
-          <KeyWordsPreview keywords={brick.keywords} />
-        </div>
-        <div className="image-container centered">
-          <Image
-            locked={!isPublisher}
-            index={0}
-            data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
-            save={updateCover}
-            onFocus={() => { }}
-          />
-          <div className="cover-info-row">
-            {renderBrickCircle()}
-            {brick.subject?.name}, Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
-            <SpriteIcon name="help-circle-custom" />
+        <MobileTheme />
+        <div className="cover-page">
+          {renderFirstRow()}
+          <div className="brick-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
+          <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
+          <div className="keywords-row">
+            <KeyWordsPreview keywords={brick.keywords} />
+          </div>
+          <div className="image-container centered">
+            <Image
+              locked={!isPublisher}
+              index={0}
+              data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
+              save={updateCover}
+              onFocus={() => { }}
+            />
+            <div className="cover-info-row">
+              {renderBrickCircle()}
+              {brick.subject?.name}, Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
+              <SpriteIcon name="help-circle-custom" />
+            </div>
+          </div>
+          <div className="introduction-info">
+            {renderPlayButton()}
           </div>
         </div>
-        <div className="introduction-info">
-          {renderPlayButton()}
-        </div>
-      </div>
       </React.Suspense>
     );
   }
 
   return (
     <React.Suspense fallback={<></>}>
-    {isMobile ? <TabletTheme /> : <DesktopTheme />}
-    <div className="brick-row-container cover-page">
-      <div className="brick-container">
-        <Grid container direction="row">
-          <Grid item sm={8} xs={12}>
-            <div className="introduction-page">
-              {renderFirstRow()}
-              <div className="brick-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
-              <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
-              <div className="keywords-row">
-                <KeyWordsPreview keywords={brick.keywords} />
-              </div>
-              <div className="image-container centered">
-                <Image
-                  locked={!isPublisher}
-                  index={0}
-                  data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
-                  save={updateCover}
-                  onFocus={() => { }}
-                />
-                <div className="cover-info-row">
-                  {renderBrickCircle()}
-                  {brick.subject?.name},
+      {isMobile ? <TabletTheme /> : <DesktopTheme />}
+      <div className="brick-row-container cover-page">
+        <div className="brick-container">
+          <Grid container direction="row">
+            <Grid item sm={8} xs={12}>
+              <div className="introduction-page">
+                {renderFirstRow()}
+                <div className="brick-title q-brick-title">
+                  <DynamicFont content={stripHtml(brick.title)} />
+                </div>
+                <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
+                <div className="image-container centered">
+                  <Image
+                    locked={!isPublisher}
+                    index={0}
+                    data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
+                    save={updateCover}
+                    onFocus={() => { }}
+                  />
+                  <div className="cover-info-row">
+                    {renderBrickCircle()}
+                    {brick.subject?.name},
                   Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
-                  <div className="hover-area">
-                    <SpriteIcon name="help-circle-custom" />
-                    <div className="hover-content">
-                      <div>Brillder focusses on universal concepts and topics, not specific exam courses.</div>
-                      <br/>
-                      <div>LEVELS:</div>
-                      <div className="container">
-                        <div className="white-circle">1</div>
-                        <div className="l-text">
-                          <div>I Foundation</div>
-                          <div>For 15-16 yr-olds, equivalent to GCSE / IB Middle Years / High School Diploma</div>
+                    <div className="hover-area">
+                      <SpriteIcon name="help-circle-custom" />
+                      <div className="hover-content">
+                        <div>Brillder focusses on universal concepts and topics, not specific exam courses.</div>
+                        <br />
+                        <div>LEVELS:</div>
+                        <div className="container">
+                          <div className="white-circle">1</div>
+                          <div className="l-text">
+                            <div>I Foundation</div>
+                            <div>For 15-16 yr-olds, equivalent to GCSE / IB Middle Years / High School Diploma</div>
+                          </div>
                         </div>
-                      </div>
-                      <br/>
-                      <div className="container">
-                        <div className="white-circle">2</div>
-                        <div className="l-text">
-                          <div>II & III Core</div>
-                          <div>For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
+                        <br />
+                        <div className="container">
+                          <div className="white-circle">2</div>
+                          <div className="l-text">
+                            <div>II & III Core</div>
+                            <div>For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
+                          </div>
                         </div>
-                      </div>
-                      <br/>
-                      <div className="container">
-                        <div className="white-circle">3</div>
-                        <div className="l-text">
-                          <div>IV Extension</div>
-                          <div>College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>
+                        <br />
+                        <div className="container">
+                          <div className="white-circle">3</div>
+                          <div className="l-text">
+                            <div>IV Extension</div>
+                            <div>College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <div className="keywords-row">
+                  <KeyWordsPreview keywords={brick.keywords} />
+                </div>
               </div>
-            </div>
+            </Grid>
+            <Grid item sm={4} xs={12}>
+              <div className="introduction-info">
+                {renderPlayButton()}
+              </div>
+            </Grid>
           </Grid>
-          <Grid item sm={4} xs={12}>
-            <div className="introduction-info">
-              {renderPlayButton()}
-            </div>
-          </Grid>
-        </Grid>
+        </div>
       </div>
-    </div>
     </React.Suspense>
   );
 };

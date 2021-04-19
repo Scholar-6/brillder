@@ -48,6 +48,7 @@
         text-transform: capitalize;
       }
       .keywords-row {
+        margin-top: 2vh;
         padding-left: 0.5vw;
         padding-right: 0.5vw;
         font-size: 1.1vw;
@@ -123,6 +124,7 @@
         display: flex;
         justify-content: center;
         button {
+          font-family: $font-family-regular;
           transition: all 300ms ease-out;
           border: none;
           outline: none;
