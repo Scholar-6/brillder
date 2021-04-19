@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -104,7 +103,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
           if (res && res.length > 0) {
             if (classes.length == 0) {
-              props.history.push(map.ManageClassroomsTab + '?classroomId=' + newClassroom.id);
+              props.history.push(map.TeachAssignedTab + '?classroomId=' + newClassroom.id + '&' + map.NewTeachQuery);
             }
             await assignToExistingBrick(newClassroom);
             props.success([newClassroom], []);
