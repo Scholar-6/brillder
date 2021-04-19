@@ -72,13 +72,18 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
     return subjects;
   }
 
-
   onSubjectSelected(subjectId: number) {
     const { subjects } = this.state;
     const subject = subjects.find(s => s.id === subjectId);
     if (subject) {
       this.props.filterByOneSubject(subject.id);
-      this.props.history.push(map.ViewAllPage + `?subjectId=${subject.id}`);
+      let link = map.ViewAllPage + `?subjectId=${subject.id}`;
+
+      const values = queryString.parse(this.props.location.search);
+      if (values.newTeacher) {
+        link += '&' + map.NewTeachQuery;
+      }
+      this.props.history.push(link);
     }
   }
 

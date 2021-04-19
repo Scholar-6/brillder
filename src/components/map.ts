@@ -17,6 +17,7 @@ export const MyLibrary = '/my-library';
 export const Onboarding = '/onboarding';
 export const TermsPage = '/terms';
 
+
 export const TermsSignUp = Onboarding + '/terms';
 export const SetUsername = Onboarding + '/set-username';
 export const MobileUsername = Onboarding + '/mobile-username';
@@ -32,6 +33,10 @@ export const BackToWorkLearnTab = BackToWorkPage + '/learn';
 export const TeachAssignedTab = '/teach/assigned';
 export const TeachAssignedArchiveTab = TeachAssignedTab + '/archive';
 export const ManageClassroomsTab = '/teach/manage-classrooms';
+
+
+// query strings
+export const NewTeachQuery = 'newTeacher=true';
 
 
 export const ViewAllPage = '/play/dashboard';
@@ -154,6 +159,8 @@ export default {
   TeachAssignedTab,
   TeachAssignedArchiveTab,
   ManageClassroomsTab,
+
+  NewTeachQuery,
 
   ViewAllPage,
   AllSubjects,

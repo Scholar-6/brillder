@@ -107,7 +107,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
     if (!values.isViewAll && !values.subjectId && !values.searchString) {
-      this.props.history.push(map.AllSubjects);
+      let link = map.AllSubjects;
+      if (values.newTeacher) {
+        link += '?' + map.NewTeachQuery;
+      }
+      this.props.history.push(link);
     }
 
     let isViewAll = false;
@@ -291,14 +295,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   move(brickId: number) {
-    if (isMobile) {
-      if (document.body.requestFullscreen) {
-        document.body.requestFullscreen().then(() => {
-          this.moveToPlay(brickId);
-        });
-      } else {
+    if (document.body.requestFullscreen) {
+      document.body.requestFullscreen().then(() => {
         this.moveToPlay(brickId);
-      }
+      });
     } else {
       this.moveToPlay(brickId);
     }
