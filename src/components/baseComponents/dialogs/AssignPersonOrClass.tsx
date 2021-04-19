@@ -19,6 +19,7 @@ import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
 import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
 import { createClass } from 'components/teach/service';
 import map from 'components/map';
+import InvalidDialog from 'components/build/baseComponents/dialogs/InvalidDialog';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
@@ -38,6 +39,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const [classes, setClasses] = React.useState<Classroom[]>([]);
   const [haveDeadline, toggleDeadline] = React.useState(false);
   const [newClassName, setNewClassName] = React.useState('');
+
+  // validation
+  const [validationRequired, setValidation] = React.useState(false);
+  const [isInvalidOpen, showInvalid] = React.useState(false);
 
   //#region New Class
   const [currentEmail, setCurrentEmail] = React.useState("");
@@ -63,6 +68,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     }
   }
 
+  const validate = () => {
+    return false;
+  }
+
   const onAddUser = React.useCallback(() => {
     if (!emailRegex.test(currentEmail)) { return; }
     setCurrentEmail('');
@@ -71,6 +80,14 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
   const createClassAndAssign = async () => {
     try {
+      // validation
+      const isValid = validate();
+      if (isValid === false) {
+        setValidation(true);
+        showInvalid(true);
+        return;
+      }
+
       const subject = props.brick.subject as Subject;
       if (newClassName) {
         const newClassroom = await createClass(newClassName, subject);
@@ -167,11 +184,11 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     return (
       <div className="r-new-class">
         <div className="r-class-inputs">
-          <input value={newClassName} placeholder="Class Name" onChange={e => setNewClassName(e.target.value)} />
+          <input value={newClassName} className={(validationRequired && !newClassName) ? 'invalid' : ''} placeholder="Class Name" onChange={e => setNewClassName(e.target.value)} />
           {renderBrickLevel()}
         </div>
         <div className="r-regular-center">Invite between 1 and 50 students to your class</div>
-        <div className="r-student-emails">
+        <div className={`r-student-emails ${(validationRequired && users.length === 0) ? 'invalid' : '' }`}>
           <AutocompleteUsernameButEmail
             placeholder="Type or paste student emails"
             currentEmail={currentEmail}
@@ -184,6 +201,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             }}
           />
         </div>
+        <InvalidDialog isOpen={isInvalidOpen} label="Please fill in the fields in red" close={() => showInvalid(false)} />
       </div>
     )
   }

@@ -343,3 +343,25 @@
 .MuiDialog-paperWidthSm {
   max-width: none !important;
 }
+
+// invalid input style
+.dialog-box .dialog-header input.invalid {
+  background: var(--theme-orange) !important;
+  &::placeholder {
+    color: var(--white) !important;
+  }
+}
+
+// invalid autocomplete style
+.dialog-box .dialog-header .invalid {
+  .MuiInputBase-root {
+    background: var(--theme-orange) !important;
+    input {
+      background: inherit !important;
+      &::placeholder {
+        opacity: 1 !important;
+        color: white !important;
+      }
+    }
+  }
+}
