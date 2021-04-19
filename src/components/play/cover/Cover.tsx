@@ -16,6 +16,7 @@ import { ImageCoverData } from "./model";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import CoverBioDialog from "components/baseComponents/dialogs/CoverBioDialog";
 
 interface IntroductionProps {
   user: User;
@@ -30,6 +31,8 @@ const TabletTheme = React.lazy(() => import('./themes/CoverTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/CoverDesktopTheme'));
 
 const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
+  const [bioOpen, setBio] = React.useState(false);
+
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
@@ -185,7 +188,14 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 <div className="brick-title q-brick-title">
                   <DynamicFont content={stripHtml(brick.title)} />
                 </div>
-                <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
+                <div className="author-row">
+                  <span>{brick.author.firstName} {brick.author.lastName}</span>
+                  <div className="cover-bio" onClick={() => setBio(true)}>see bio</div>
+                </div>
+                <div className="cover-sponsors">
+                  <span className="italic">Sponsored By</span>
+                  <img src="/images/Scholar-6-Logo.svg" />
+                </div>
                 <div className="image-container centered">
                   <Image
                     locked={!isPublisher}
@@ -243,6 +253,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </Grid>
           </Grid>
         </div>
+        <CoverBioDialog isOpen={bioOpen} user={brick.author} close={() => setBio(false)} />
       </div>
     </React.Suspense>
   );

@@ -6,6 +6,7 @@
   .brick-container {
     color: var(--theme-dark-blue);
     .introduction-page {
+      height: calc(100vh - #{$home-button-size} - 2vw) !important;
       padding-top: 3.5vh;
       padding-left: 2vw !important;
 
@@ -41,11 +42,23 @@
         font-family: $font-family-black;
       }
       .author-row {
+        display: flex;
         padding-left: 0.5vw;
         padding-right: 0.5vw;
         font-size: 1.5vw;
         @extend %ellipsis;
         text-transform: capitalize;
+
+        .cover-bio {
+          cursor: pointer;
+          text-transform: none;
+          background: var(--tab-gray);
+          border-radius: 1.4vw;
+          font-size: 1.4vw;
+          margin-left: 0.5vw;
+          padding-left: 1vw;
+          padding-right: 1vw
+        }
       }
       .keywords-row {
         margin-top: 2vh;
@@ -69,7 +82,7 @@
             border-top-left-radius: 0 !important;
             border-top-right-radius: 0 !important;
             border: none !important;
-            height: calc(100vh - 18vh - 18vw);
+            height: calc(100vh - 18vh - 21vw);
             overflow-y: auto;
 
             svg {
@@ -178,5 +191,17 @@
       padding: 0.2vw 0.5vw;
       background: var(--theme-light-blue);
     }
+  }
+}
+
+.cover-page .cover-sponsors {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  img {
+    margin-left: 0.3vw;
+    margin-top: 0.2vw;
+    height: 1.5vw;
   }
 }

@@ -62,7 +62,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
 
   const move = () => {
     // students go to brief
-    if (!props.user || props.user.rolePreference?.roleId === RolePreference.Student) {
+    if (props.user && props.user.rolePreference?.roleId === RolePreference.Student) {
       if (props.isPlay) {
         const values = queryString.parse(props.history.location.search);
         let link = playBrief(brick.id);
