@@ -68,9 +68,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     }
   }
 
-  const validate = () => {
-    return false;
-  }
+  const validate = () => (!newClassName || users.length === 0) ? false : true;
 
   const onAddUser = React.useCallback(() => {
     if (!emailRegex.test(currentEmail)) { return; }
@@ -106,7 +104,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
           if (res && res.length > 0) {
             if (classes.length == 0) {
-              props.history.push(map.ManageClassroomsTab);
+              console.log(res);
+              props.history.push(map.ManageClassroomsTab + '?classroomId=' + res.id);
             }
             await assignToExistingBrick(newClassroom);
             props.success([newClassroom], []);
