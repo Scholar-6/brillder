@@ -15,7 +15,6 @@ import BrickLength from "./questionnaire/brickLength/brickLength";
 import Brief from "./questionnaire/brief/brief";
 import Prep from "./questionnaire/prep/prep";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
-import ProposalReview from "./questionnaire/proposalReview/ProposalReview";
 import { Brick, Author } from "model/brick";
 import { User } from "model/user";
 import CloseProposalDialog from "components/build/baseComponents/dialogs/CloseProposalDialog";
@@ -34,7 +33,7 @@ import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
 import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
-import { buildPlan } from "../routes";
+import { buildQuesitonType } from "../routes";
 
 interface ProposalProps {
   history: History;
@@ -247,7 +246,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const newBrick = await this.saveBrick(brick);
     console.log(newBrick);
     if (newBrick) {
-      this.props.history.push(buildPlan(newBrick.id));
+      this.props.history.push(buildQuesitonType(newBrick.id));
     }
   };
 
