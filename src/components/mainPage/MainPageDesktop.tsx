@@ -347,7 +347,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   onIntroChanged(e: any) {
     if (e !== 0) {
-      this.props.history.push(map.AllSubjects + '?newTeacher=true');
+      this.props.history.push(map.AllSubjects + '?' + map.NewTeachQuery);
       this.setState({stepsEnabled: false});
     }
   }

@@ -1,6 +1,7 @@
 import React from "react";
 import Grow from "@material-ui/core/Grow";
 import { Box } from "@material-ui/core";
+import queryString from 'query-string';
 
 import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
@@ -8,6 +9,7 @@ import { User } from "model/user";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import { playCover } from "components/play/routes";
 import { setAssignmentId } from "localStorage/playAssignmentId";
+import map from "components/map";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -56,7 +58,12 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
 
   const move = () => {
     if (props.isPlay) {
-      props.history.push(playCover(brick.id));
+      const values = queryString.parse(props.history.location.search);
+      let link = playCover(brick.id);
+      if (values.newTeacher) {
+        link += '?' + map.NewTeachQuery;
+      }
+      props.history.push(link);
     } else if (props.isAssignment && props.assignmentId) {
       setAssignmentId(props.assignmentId);
       props.history.push(playCover(brick.id));

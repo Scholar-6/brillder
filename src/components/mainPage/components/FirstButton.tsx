@@ -39,7 +39,7 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
       onClick={() => {
         let link = map.AllSubjects;
         if (props.isNewTeacher) {
-          link += '?newTeacher=true';
+          link += '?' + map.NewTeachQuery;
         }
         props.history.push(link);
       }}

@@ -253,6 +253,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         <AssignButton
           sidebarRolledUp={this.props.sidebarRolledUp}
           user={this.props.user}
+          history={this.props.history}
           openAssignDialog={this.openAssignDialog.bind(this)}
         />
         <AdaptButton
