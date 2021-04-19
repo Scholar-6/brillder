@@ -34,6 +34,7 @@ import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
 import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
+import { buildPlan } from "../routes";
 
 interface ProposalProps {
   history: History;
@@ -171,17 +172,19 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
 
   async saveBrick(tempBrick: Brick) {
     if (this.state.saving === true) { return; }
+    let newBrick = null;
     this.setState({saving: true});
     const { brick } = this.props;
     if (tempBrick.id) {
       await this.props.saveBrick(tempBrick);
     } else if (brick && brick.id) {
       tempBrick.id = brick.id;
-      await this.props.saveBrick(tempBrick);
+      newBrick = await this.props.saveBrick(tempBrick);
     } else {
-      await this.props.createBrick(tempBrick);
+      newBrick = await this.props.createBrick(tempBrick);
     }
     this.setState({saving: false});
+    return newBrick;
   }
 
   openDialog = () => this.setState({ isDialogOpen: true });
@@ -238,10 +241,14 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.saveBrick(brick);
   };
 
-  setPrepAndSave = (prep: string) => {
+  setPrepAndSave = async (prep: string) => {
     const brick = { ...this.state.brick, prep } as Brick;
     this.saveLocalBrick(brick);
-    this.saveBrick(brick);
+    const newBrick = await this.saveBrick(brick);
+    console.log(newBrick);
+    if (newBrick) {
+      this.props.history.push(buildPlan(newBrick.id));
+    }
   };
 
   saveAndMove = async () => {
@@ -250,13 +257,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     await this.saveBrick(this.state.brick);
     this.setState({ saved: true, saving: false });
   };
-
-  async saveAndPreview() {
-    if (this.state.brick.id) {
-      await this.props.saveBrick(this.state.brick);
-      this.props.history.push(map.playPreviewIntro(this.state.brick.id));
-    }
-  }
 
   getBaseUrl() {
     const {brickId} = this.props.match.params;
@@ -333,7 +333,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveTitles={this.setTitles}
                 setKeywords={this.setKeywords}
                 setAcademicLevel={this.setAcademicLevel}
-                saveAndPreview={() => this.saveAndPreview()}
               />
             </Route>
             <Route path={[map.ProposalLength, map.ProposalBase + '/length']}>
@@ -343,7 +342,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 canEdit={canEdit}
                 saveLength={this.setLength}
                 saveBrick={this.setLength}
-                saveAndPreview={() => this.saveAndPreview()}
               />
             </Route>
             <Route path={[map.ProposalOpenQuestion, map.ProposalBase + '/open-question']}>
@@ -353,7 +351,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 selectedQuestion={localBrick.openQuestion}
                 canEdit={canEdit}
                 saveOpenQuestion={this.setOpenQuestion}
-                saveAndPreview={() => this.saveAndPreview()}
               />
             </Route>
             <Route path={[map.ProposalBrief, map.ProposalBase + '/brief']}>
@@ -362,7 +359,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 parentBrief={localBrick.brief}
                 canEdit={canEdit}
                 saveBrief={this.setBrief}
-                saveAndPreview={() => this.saveAndPreview()}
               />
             </Route>
             <Route path={[map.ProposalPrep, map.ProposalBase + '/prep']}>
@@ -373,22 +369,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 savePrep={this.setPrep}
                 brickLength={localBrick.brickLength}
                 saveBrick={this.setPrepAndSave}
-                saveAndPreview={() => this.saveAndPreview()}
-              />
-            </Route>
-            
-            <Route path={[map.ProposalReview, map.ProposalBase + '/plan']}>
-              <ProposalReview
-                brick={localBrick}
-                baseUrl={baseUrl}
-                history={history}
-                canEdit={canEdit}
-                user={user}
-                setBrickField={this.setBrickField}
-                setKeywords={this.setKeywords}
-                setAcademicLevel={this.setAcademicLevel}
-                saveBrick={this.saveAndMove}
-                saveAndPreview={() => this.saveAndPreview()}
               />
             </Route>
             <VersionLabel />
