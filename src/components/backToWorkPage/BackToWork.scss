@@ -414,6 +414,13 @@
       &.active {
         background: var(--theme-orange);
       }
+
+      &.invitation {
+        background: var(--theme-yellow);
+        .student-name {
+          text-transform: none !important;
+        }
+      }
     }
     .right-index {
       right: 0.3vw !important;

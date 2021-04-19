@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
+// @ts-ignore
+import { Steps } from 'intro.js-react';
 
 import "./TeachFilterSidebar.scss";
 import { TeachClassroom, TeachStudent } from "model/classroom";
@@ -18,12 +20,14 @@ enum TeachFilterFields {
 
 interface FilterSidebarProps {
   isLoaded: boolean;
+  isNewTeacher: boolean;
   classrooms: TeachClassroom[];
   activeStudent: TeachStudent | null;
   activeClassroom: TeachClassroom | null;
   setActiveStudent(s: TeachStudent): void;
   setActiveClassroom(id: number | null): void;
   filterChanged(filters: TeachFilters): void;
+  hideIntro(): void;
   createClass(name: string, subject: Subject): void;
   isArchive: boolean;
 }
@@ -100,6 +104,20 @@ class TeachFilterSidebar extends Component<
     );
   }
 
+  renderInvitation(s: any, key: number) {
+    return (
+      <div
+        className="student-row invitation"
+        key={key}
+        onClick={() => this.props.setActiveStudent(s)}
+      >
+        <span className="student-name">
+          {s.email}
+        </span>
+      </div>
+    );
+  }
+
   renderAssignedCount(c: TeachClassroom) {
     const count = this.getClassAssignedCount(c);
     if (count <= 0) {
@@ -143,6 +161,7 @@ class TeachFilterSidebar extends Component<
           </div>
         </div>
         {c.active && c.students.map(this.renderStudent.bind(this))}
+        {c.active && c.studentsInvitations.map(this.renderInvitation.bind(this))}
       </div>
     );
   }
@@ -253,6 +272,16 @@ class TeachFilterSidebar extends Component<
     return this.renderClassesBox();
   }
 
+  onIntroExit() {
+    this.props.hideIntro();
+  }
+
+  onIntroChanged(e: any) {
+    if (e !== 0) {
+      this.props.hideIntro();
+    }
+  }
+
   render() {
     return (
       <Grid
@@ -273,6 +302,21 @@ class TeachFilterSidebar extends Component<
             this.setState({ createClassOpen: false });
           }}
         />
+        {this.props.isNewTeacher &&
+         <Steps
+          enabled={this.props.isNewTeacher}
+          steps={[{
+            element: '.classes-box .index-box',
+            intro: `<p>Invited students will remain amber until they accept to join your class</p>`,
+          },{
+            element: '.classes-box',
+            intro: `<p>Invited students will remain amber until they accept to join your class</p>`,
+          }]}
+          initialStep={0}
+          onChange={this.onIntroChanged.bind(this)}
+          onExit={this.onIntroExit.bind(this)}
+          onComplete={() => {}}
+        />}
       </Grid>
     );
   }

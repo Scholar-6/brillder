@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 
 import './TeachPage.scss';
 import { ReduxCombinedState } from "redux/reducers";
@@ -69,6 +70,8 @@ interface TeachState {
   remindersData: RemindersData;
   createClassOpen: boolean;
 
+  isNewTeacher: boolean;
+
   filters: TeachFilters;
   handleKey(e: any): void;
 }
@@ -100,6 +103,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       assignmentStats: null,
       activeStudent: null,
       isLoaded: false,
+      isNewTeacher: false,
 
       remindersData: {
         isOpen: false,
@@ -119,7 +123,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       handleKey: this.handleKey.bind(this),
     };
 
-    this.loadData();
+    this.loadInitData();
   }
 
   componentDidMount() {
@@ -130,8 +134,25 @@ class TeachPage extends Component<TeachProps, TeachState> {
     document.removeEventListener("keydown", this.state.handleKey, false);
   }
 
+  async loadInitData() {
+    const subjects = await getSubjects();
+    if (subjects) {
+      this.setState({ subjects });
+    }
+
+    const values = queryString.parse(this.props.history.location.search);
+    if (values.classroomId) {
+      await this.loadClasses(parseInt(values.classroomId as string));
+      if (values.newTeacher) {
+        this.setState({ isNewTeacher: true });
+      }
+    } else {
+      this.loadClasses();
+    }
+  }
+
   async loadData() {
-    let subjects = await getSubjects();
+    const subjects = await getSubjects();
     if (subjects) {
       this.setState({ subjects });
     }
@@ -544,10 +565,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <TeachFilterSidebar
+            isNewTeacher={this.state.isNewTeacher}
             classrooms={this.state.classrooms}
             isLoaded={this.state.isLoaded}
             activeStudent={this.state.activeStudent}
             activeClassroom={this.state.activeClassroom}
+            hideIntro={() => this.setState({isNewTeacher: false})}
             isArchive={this.state.isArchive}
             setActiveClassroom={this.setActiveClassroom.bind(this)}
             setActiveStudent={this.setActiveStudent.bind(this)}
