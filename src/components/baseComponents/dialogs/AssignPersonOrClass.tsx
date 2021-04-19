@@ -36,7 +36,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const [isCreating, setCreating] = React.useState(false);
   const [deadlineDate, setDeadline] = React.useState(null as null | Date);
   const [classes, setClasses] = React.useState<Classroom[]>([]);
-  const [haveDeadline, toggleDeadline] = React.useState(null as boolean | null);
+  const [haveDeadline, toggleDeadline] = React.useState(false);
   const [newClassName, setNewClassName] = React.useState('');
 
   //#region New Class
