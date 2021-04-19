@@ -386,15 +386,16 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     for (let role of user.roles) {
       if (role.roleId === UserType.Admin) {
         type += "A";
-      } else if (user.rolePreference?.roleId === RolePreference.Builder) {
-        type += "B";
       } else if (role.roleId === UserType.Publisher) {
         type += "P";
-      } else if (user.rolePreference?.roleId === RolePreference.Student) {
-        type += "S";
-      } else if (user.rolePreference?.roleId === RolePreference.Teacher) {
-        type += "T";
       }
+    }
+    if (user.rolePreference?.roleId === RolePreference.Builder) {
+      type += "B";
+    } else if (user.rolePreference?.roleId === RolePreference.Student) {
+      type += "S";
+    } else if (user.rolePreference?.roleId === RolePreference.Teacher) {
+      type += "T";
     }
     return type;
   }
