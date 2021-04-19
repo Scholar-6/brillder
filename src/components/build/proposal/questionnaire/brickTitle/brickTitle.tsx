@@ -38,7 +38,6 @@ interface BrickTitleProps {
   saveTitles(data: any): void;
   setKeywords(keywords: KeyWord[]): void;
   setAcademicLevel(level: AcademicLevel): void;
-  saveAndPreview(): void;
 }
 
 interface BrickTitleState {
@@ -162,7 +161,6 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
         <Navigation
           baseUrl={baseUrl}
           step={ProposalStep.BrickTitle}
-          saveAndPreview={this.props.saveAndPreview}
           onMove={() => saveTitles(parentState)}
         />
         <Grid container direction="row">

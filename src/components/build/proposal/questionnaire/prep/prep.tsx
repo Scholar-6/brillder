@@ -20,7 +20,6 @@ interface PrepProps {
   brickLength: BrickLengthEnum;
   savePrep(prep: string): void;
   saveBrick(prep: string): void;
-  saveAndPreview(): void;
 }
 
 const PrepPreviewComponent: React.FC<any> = ({ data }) => {
@@ -65,7 +64,6 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
       <Navigation
         step={ProposalStep.Prep}
         baseUrl={props.baseUrl}
-        saveAndPreview={props.saveAndPreview}
         onMove={() => savePrep(parentPrep)}
       />
       <Grid container direction="row" alignItems="flex-start">
