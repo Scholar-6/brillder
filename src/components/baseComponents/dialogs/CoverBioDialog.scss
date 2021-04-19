@@ -1,0 +1,36 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.dialog-box .dialog-header.bio-popup {
+  display: flex;
+  .b-image-container {
+    min-width: 9vw;
+    display: block;
+    .b-image {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0.4vw;
+      svg {
+        height: 3vw;
+        width: 3vw;
+        background: var(--tab-gray);
+        padding: 1vw;
+        border-radius: 50%;
+      }
+      img, svg {
+        height: 5vw;
+        width: 5vw;
+        border-radius: 50%;
+      }
+    }
+    .b-name {
+      text-align: center;
+    }
+  }
+  .b-bio {
+    max-width: 40vw;
+    font-family: $font-family-regular !important;
+    margin-left: 1.5vw;
+  }
+}
