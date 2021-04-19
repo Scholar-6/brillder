@@ -10,6 +10,9 @@ $tile-height: 100%;
   width: 100%;
   background: var(--theme-dark-blue) !important;
   height: 6.2%;
+  > .MuiGridList-root {
+    overflow: inherit !important;
+  }
   .drag-container {
     width: 100% !important;
     margin: 0 !important;
@@ -18,6 +21,9 @@ $tile-height: 100%;
     display: flex;
     .drag-tile-container {
       flex: 1;
+      > .MuiGridListTile-tile {
+        overflow: inherit !important;
+      }
     }
   }
   .drag-tile-container {
@@ -59,6 +65,7 @@ $tile-height: 100%;
     }
   }
   .draggable-tab {
+    position: relative;
     width: 100%;
     height: 100%;
     @extend %textCenter;
@@ -83,24 +90,54 @@ $tile-height: 100%;
       opacity: 1;
     }
     .remove-icon {
+      position: absolute;
       width: 1.2vw;
       height: 1.2vw;
       display: none;
       padding: 0.3vw;
+      color: var(--white) !important;
+
+      .css-custom-tooltip {
+        width: 8vw;
+        height: 0;
+        overflow:hidden;
+        bottom: -2vw;
+      }
+
       &.active {
         display: flex;
         position: absolute;
-        right: 0.3vw;
-        top: 0.3vw;
+        height: 0.7vw;
+        width: 0.7vw;
+        top: -1.4vw !important;
+
+        border-radius: 50%;
+
+        svg {
+          position: absolute;
+          width: 1.9vw !important;
+          height: 1.9vw !important;
+        }
       }
       .svg {
         stroke-width: 2.2;
       }
 
       &:hover {
+        animation-name: pulse-orange;
+        animation-duration: 1s;
+        animation-iteration-count: 20;
+        animation-delay: 0s;
+        animation-timing-function: ease;
+        animation-play-state: running;
+
         .svg {
-          color: var(--theme-orange) !important;
+          color: var(--theme-dark-blue) !important;
           stroke-width: 3;
+        }
+        .css-custom-tooltip {
+          opacity: 1;
+          height: auto;
         }
       }
     }
