@@ -103,7 +103,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
           if (res && res.length > 0) {
             if (classes.length == 0) {
-              props.history.push(map.TeachAssignedTab + '?classroomId=' + newClassroom.id + '&' + map.NewTeachQuery);
+              props.history.push(map.TeachAssignedTab + '?classroomId=' + newClassroom.id + '&' + map.NewTeachQuery + '&' + 'assignmentExpanded=true');
             }
             await assignToExistingBrick(newClassroom);
             props.success([newClassroom], []);
