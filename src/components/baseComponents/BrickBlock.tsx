@@ -4,12 +4,13 @@ import { Box } from "@material-ui/core";
 import queryString from 'query-string';
 
 import { Brick, BrickStatus } from "model/brick";
-import { User } from "model/user";
+import { RolePreference, User } from "model/user";
 
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import { playCover } from "components/play/routes";
 import { setAssignmentId } from "localStorage/playAssignmentId";
 import map from "components/map";
+import { playBrief } from "components/play/routes";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -56,7 +57,30 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     }
   }
 
+  const moveToBuild = () => {
+    props.history.push(`/build/brick/${brick.id}/investigation/question`);
+  }
+
   const move = () => {
+    // students go to brief
+    if (!props.user || props.user.rolePreference?.roleId === RolePreference.Student) {
+      if (props.isPlay) {
+        const values = queryString.parse(props.history.location.search);
+        let link = playBrief(brick.id);
+        if (values.newTeacher) {
+          link += '?' + map.NewTeachQuery;
+        }
+        props.history.push(link);
+      } else if (props.isAssignment && props.assignmentId) {
+        setAssignmentId(props.assignmentId);
+        props.history.push(playBrief(brick.id));
+      } else {
+        moveToBuild();
+      }
+      return;
+    }
+
+    // others go to cover page
     if (props.isPlay) {
       const values = queryString.parse(props.history.location.search);
       let link = playCover(brick.id);
@@ -68,7 +92,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       setAssignmentId(props.assignmentId);
       props.history.push(playCover(brick.id));
     } else {
-      props.history.push(`/build/brick/${brick.id}/investigation/question`);
+      moveToBuild();
     }
   }
 

@@ -248,11 +248,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (isPhone()) {
       moveToIntro();
     } else {
-      props.history.push(playSections(brick.id));
+      moveToBrief();
       setSidebar(true);
     }
   }
-
+      
+  const moveToSections = () => props.history.push(playSections(brick.id));
   const moveToBrief = () => props.history.push(playBrief(brick.id));
   const moveToPrePrep = () => props.history.push(playPrePrep(brick.id));
   const moveToNewPrep = () => props.history.push(playNewPrep(brick.id));
@@ -373,12 +374,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
           {isPhone() && renderPhoneFooter()}
         </Route>
-
-        <Route exact path={routes.sectionsRoute}>
-          <Sections brick={brick} moveNext={moveToBrief} />
-        </Route>
         <Route exact path={routes.briefRoute}>
-          <Brief brick={brick} mode={mode} user={props.user} moveNext={moveToPrePrep} onHighlight={onHighlight} />
+          <Brief brick={brick} mode={mode} user={props.user} moveNext={moveToSections} onHighlight={onHighlight} />
+        </Route>
+        <Route exact path={routes.sectionsRoute}>
+          <Sections brick={brick} moveNext={moveToPrePrep} />
         </Route>
         <Route exact path={routes.prePrepRoute}>
           <PrePrep brick={brick} mode={mode} moveNext={moveToNewPrep} onHighlight={onHighlight} />
