@@ -7,10 +7,9 @@ import { Brick, BrickStatus } from "model/brick";
 import { RolePreference, User } from "model/user";
 
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
-import { playCover } from "components/play/routes";
+import { playCover, playBrief } from "components/play/routes";
 import { setAssignmentId } from "localStorage/playAssignmentId";
 import map from "components/map";
-import { playBrief } from "components/play/routes";
 
 interface BrickBlockProps {
   brick: Brick;
