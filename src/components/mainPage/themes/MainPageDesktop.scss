@@ -291,4 +291,8 @@
       }
     }
   }
+  // disabled third button build
+  .first-col .first-item .create-item-container.disabled button svg {
+    color: var(--theme-dark-blue) !important;
+  }
 }

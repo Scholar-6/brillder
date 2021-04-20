@@ -102,18 +102,6 @@
       }
     }
   }
-  &:hover {
-    &:after {
-      @include opacity(1);
-      visibility: visible;
-      z-index: 990;
-    }
-    .tooltip-inner {
-      @include opacity(1);
-      visibility: visible;
-      z-index: 990;
-    }
-  }
   &.left,
   &.right {
     .tooltip-inner {
@@ -136,14 +124,6 @@
       right: 0;
       border-color: transparent transparent transparent var(--theme-dark-blue);
     }
-    &:hover {
-      .tooltip-inner {
-        right: calc(100% + 10px);
-      }
-      &:after {
-        right: calc(100% - 6px);
-      }
-    }
   }
   &.right {
     .tooltip-inner {
@@ -154,14 +134,6 @@
       right: inherit;
       left: 0;
       border-color: transparent var(--theme-dark-blue) transparent transparent;
-    }
-    &:hover {
-      .tooltip-inner {
-        left: calc(100% + 10px);
-      }
-      &:after {
-        left: calc(100% - 6px);
-      }
     }
   }
   &.top,
@@ -174,14 +146,6 @@
       bottom: 0;
       border-color: var(--theme-dark-blue) transparent transparent transparent;
     }
-    &:hover {
-      .tooltip-inner {
-        bottom: calc(100% + 10px);
-      }
-      &:after {
-        bottom: calc(100% - 6px);
-      }
-    }
   }
   &.bottom,
   &.bottom-left,
@@ -192,14 +156,6 @@
     &:after {
       top: 0;
       border-color: transparent transparent var(--theme-dark-blue) transparent;
-    }
-    &:hover {
-      .tooltip-inner {
-        top: calc(100% + 10px);
-      }
-      &:after {
-        top: calc(100% - 6px);
-      }
     }
   }
   &.top,
