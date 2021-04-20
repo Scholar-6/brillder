@@ -190,7 +190,10 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 </div>
                 <div className="author-row">
                   <span>{brick.author.firstName} {brick.author.lastName}</span>
-                  <div className="cover-bio" onClick={() => setBio(true)}>see bio</div>
+                  <div className="cover-bio" onClick={() => setBio(true)}>
+                    see bio
+                    <div className="cover-bio-background" />
+                  </div>
                 </div>
                 <div className="cover-sponsors">
                   <span className="italic">Sponsored By</span>
