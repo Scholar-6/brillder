@@ -8,7 +8,6 @@ interface SubjectDialogProps {
 }
 
 const ReloadDialog: React.FC<SubjectDialogProps> = (props) => {
-  console.log(45);
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
       <div className="dialog-header">
