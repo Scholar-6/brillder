@@ -8,11 +8,8 @@ import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface AutocompleteProps {
-  editorError: string;
-  placeholder: string;
+  placeholder?: string;
   currentEmail: string;
-  onBlur(): void;
-
   users: UserBase[];
   onChange(email: string): void;
   onAddEmail(): void;
@@ -20,8 +17,7 @@ interface AutocompleteProps {
 }
 
 const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
-  users, setUsers,
-  ...props
+  users, setUsers, ...props
 }) => {
   return (
     <Autocomplete
@@ -42,11 +38,9 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
         return (
           <TextField
             {...params}
-            error={props.editorError !== ""}
-            helperText={props.editorError}
+            helperText={""}
             value={props.currentEmail}
             fullWidth
-            onBlur={() => props.onBlur()}
             onKeyPress={e => {
               if (e.key === "Enter" || e.key === ' ') {
                 const user = users.find(u => u.email.toLocaleLowerCase() === props.currentEmail.toLocaleLowerCase());
@@ -61,7 +55,7 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
               const { value } = evt.target;
               props.onChange(value);
             }}
-            placeholder="Enter emails here"
+            placeholder={props.placeholder ? props.placeholder : "Enter emails here"}
             variant="outlined"
           />
         );

@@ -120,6 +120,120 @@
 .dialog-header {
   .r-popup-title {
     font-size: 2vw;
+    margin-bottom: 0.3vw !important;
+  }
+  .r-brick-level {
+    font-family: $font-family-regular;
+    display: flex;
+    align-items: center;
+    height: 4.185vw;
+    width: 15vw;
+    font-size: 2vw;
+    padding-left: 2vw;
+    border-top-right-radius: 1vw;
+    border-bottom-right-radius: 1vw;
+    margin-left: 0.2vw;
+    background: var(--white);
+    color: var(--theme-dark-blue);
+  }
+
+  .r-class-inputs {
+    display: flex;
+    margin-bottom: 0.4vw;
+    input {
+      border-top-left-radius: 1vw !important;
+      border-bottom-left-radius: 1vw !important;
+      padding-top: 0.4vw !important;
+      padding-bottom: 0.4vw !important;
+      color: var(--white) !important;
+      width: 35vw !important;
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      background: var(--theme-dark-blue) !important;
+      &::placeholder {
+        color: #69799d !important;
+      }
+    }
+    .r-brick-level {
+      background: var(--theme-dark-blue);
+      color: var(--white);
+    }
+  }
+  .r-regular-center {
+    text-align: center;
+    font-family: $font-family-regular;
+    margin-top: 0.5vw;
+    margin-bottom: 0.5vw;
+  }
+  .r-first-class {
+    font-size: 2.6vw;
+    margin-bottom: 1.2vw !important;
+  }
+  .r-new-class {
+    margin-bottom: 1vw !important;
+  }
+  .r-student-emails {
+    .MuiAutocomplete-root {
+      margin-bottom: 0 !important;
+    }
+    .MuiFormControl-root {
+      max-height: 8.3vw !important;
+      overflow-y: auto;
+      margin-bottom: 0 !important;
+      position: inherit !important;
+      .MuiButtonBase-root.MuiIconButton-root.MuiAutocomplete-popupIndicator {
+        display: none !important;
+      }
+    }
+    .MuiInputBase-root {
+      border: none !important;
+      outline: none !important;
+      border-radius: 1vw !important;
+      border:none !important;
+      outline: none !important;
+      background: var(--theme-dark-blue) !important;
+      box-sizing: none !important;
+      color: var(--white) !important;
+      input {
+        color: var(--white) !important;
+        background: var(--theme-dark-blue) !important;
+      }
+    }
+  }
+  .r-class-selection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.3vw !important;
+    .select-existed-class.MuiInputBase-root {
+      width: 35vw;
+      border-radius: 0;
+      border-top-left-radius: 1vw;
+      border-bottom-left-radius: 1vw;
+      color: var(--theme-dark-blue);
+      text-align:left;
+      font-size: 1.4vw !important;
+      &::before, &::after {
+        content: none !important;
+      }
+      .MuiSelect-root {
+        padding-top: 0.4vw;
+        padding-bottom: 0.4vw;
+        display: flex;
+        align-items: center;
+        .MuiSvgIcon-root {
+          margin-left: 1vw;
+          margin-right: 0.8vw;
+          width: 2.2vw;
+          height: 2.2vw;
+        }
+      }
+    }
+  }
+  .r-radio-row {
+    display: flex;
+    justify-content: center;
+    color: var(--white);
+    margin-bottom: 1vw !important;
   }
   .r-radio-row {
     .MuiTypography-root {
@@ -136,10 +250,24 @@
       height: 0;
     }
   }
+  .r-long {
+    padding-top: 0.8vh !important;
+    padding-bottom: 0.8vh !important;
+    min-width: 13vw;
+    .label {
+      font-size: 2vw !important;
+    }
+  }
   .r-radio-buttons {
-    margin-top: 1vw;
+    padding-right: 2vw;
+    margin-top: 0.5vw;
+    margin-bottom: 1.2vw !important;
+    .MuiFormControlLabel-root {
+      margin-left: 2vw;
+      margin-right: 2vw;
+    }
     .MuiTypography-root {
-      font-size: 1.3vw;
+      font-size: 1.6vw;
     }
     .MuiSvgIcon-root {
       color: var(--white);

@@ -111,6 +111,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
       {canSee && <div>
         <AssignPersonOrClassDialog
           isOpen={assign}
+          history={history}
           success={(items: any[], failedItems: any[]) => {
             if (items.length > 0) {
               setAssign(false);

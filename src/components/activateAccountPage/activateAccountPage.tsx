@@ -14,6 +14,9 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import TermsLink from "components/baseComponents/TermsLink";
 import { isPhone } from "services/phone";
 import DesktopActivateAccountPage from "./DesktopActivateAccountPage";
+import { connect } from "react-redux";
+import auth from "redux/actions/auth";
+import { UserType } from "model/user";
 
 export enum LoginState {
   ChooseLoginAnimation,
@@ -25,6 +28,7 @@ export enum LoginState {
 interface ActivateAccountProps {
   history: History;
   match: any;
+  setDefaultUserProperties(defaultPreference?: UserType, defaultSubject?: number): void;
 }
 
 const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
@@ -49,6 +53,7 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
         setValid(true);
         setEmail(response.data.email);
+        props.setDefaultUserProperties(response.data.defaultPreference, response.data.defaultSubject);
       } catch(e) {
         setValid(false);
         props.history.push(map.Login);
@@ -134,4 +139,8 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
   );
 };
 
-export default ActivateAccountPage;
+const mapDispatch = (dispatch: any) => ({
+  setDefaultUserProperties: (defaultPreference?: UserType, defaultSubject?: number) => dispatch(auth.setDefaultUserProperties(defaultPreference, defaultSubject)),
+});
+
+export default connect(() => {}, mapDispatch)(ActivateAccountPage);

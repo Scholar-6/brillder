@@ -31,7 +31,7 @@ import LibraryButton from "./components/LibraryButton";
 import BlocksIcon from "./components/BlocksIcon";
 import { isPhone } from "services/phone";
 import ReportsAlertDialog from "components/baseComponents/dialogs/ReportsAlertDialog";
-import { isTablet } from "react-device-detect";
+import { isIPad13, isTablet } from "react-device-detect";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -67,7 +67,7 @@ interface MainPageState {
   isStudent: boolean;
   isBuilder: boolean;
 
-  isBoarding: boolean;
+  isNewTeacher: boolean;
 
   // for students
   backWorkActive: boolean;
@@ -91,10 +91,10 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     super(props);
 
     // onboarding users logic
-    let isBoarding = false;
+    let isNewTeacher = false;
     const values = queryString.parse(this.props.history.location.search);
-    if (values.new) {
-      isBoarding = true;
+    if (values.newTeacher) {
+      isNewTeacher = true;
     }
 
     const { rolePreference } = props.user;
@@ -111,7 +111,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isBackToWorkOpen: false,
       isTryBuildOpen: false,
       isReportLocked: false,
-      isBoarding,
+      isNewTeacher,
 
       isTeacher: rolePreference?.roleId === RolePreference.Teacher,
       isAdmin: checkAdmin(props.user.roles),
@@ -121,19 +121,22 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isDesktopOpen: false,
       secondaryLabel: '',
       secondPart: ' not yet been optimised for mobile devices.',
-      stepsEnabled: isBoarding,
+      stepsEnabled: false,
       steps: [{
-        element: '.manage-classes',
-        intro: `<p>Click on the Manage Classes icon to begin</p>`,
+        element: '.view-item-container',
+        intro: `<p>Browse the catalogue, and assign your first brick to new class</p>`,
       },{
-        element: '.manage-classes',
-        intro: `<p>Click on the Manage Classes icon to begin</p>`,
+        element: '.view-item-container',
+        intro: `<p>Browse the catalogue, and assign your first brick to new class</p>`,
       }]
     } as any;
 
     if (isStudent) {
       this.preparationForStudent();
     }
+    setTimeout(() => {
+      this.setState({stepsEnabled: isNewTeacher});
+    }, 300);
   }
 
   async preparationForStudent() {
@@ -158,8 +161,11 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     if (disabled) {
       isActive = false;
     }
+    if (isIPad13 || isTablet) {
+      isActive = false;
+    }
     return (
-      <div className="create-item-container" onClick={() => {
+      <div className={`create-item-container ${isActive ? '' : 'disabled'}`} onClick={() => {
         if (disabled) {
           return;
         }
@@ -210,7 +216,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   renderSecondButton() {
     if (this.state.isTeacher || this.state.isAdmin) {
-      return <TeachButton history={this.props.history} />
+      const isIpad = isIPad13 || isTablet;
+      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher || isIpad} />
     } else if (this.state.isStudent) {
       return this.renderStudentWorkButton();
     }
@@ -219,7 +226,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   renderThirdButton() {
     if (this.state.isTeacher) {
-      return this.renderTryBuildButton(true && !this.state.isBoarding);
+      return this.renderTryBuildButton(true && !this.state.isNewTeacher);
     } else if (this.state.isStudent) {
       return this.renderLibraryButton();
     } else if (this.state.isAdmin) {
@@ -317,7 +324,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     }
     let isActive = this.props.user.hasPlayedBrick;
     if (this.state.isTeacher) {
-      return this.renderLiveAssignmentButton(true && !this.state.isBoarding);
+      return this.renderLiveAssignmentButton(true && !this.state.isNewTeacher);
     } else if (this.state.isStudent) {
       return this.renderTryBuildButton(isActive);
     } else if (this.state.isAdmin) {
@@ -344,16 +351,16 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   onIntroChanged(e: any) {
     if (e !== 0) {
+      this.props.history.push(map.AllSubjects + '?' + map.NewTeachQuery);
       this.setState({stepsEnabled: false});
     }
   }
 
   render() {
     return (
-      <Grid container direction="row" className="mainPage">
-        <React.Suspense fallback={<></>}>
-          {isTablet ? <TabletTheme/> : <DesktopTheme /> }
-        </React.Suspense>
+      <React.Suspense fallback={<></>}>
+        {isTablet ? <TabletTheme/> : <DesktopTheme /> }
+        <Grid container direction="row" className="mainPage">
         <div className="welcome-col">
           <WelcomeComponent
             user={this.props.user}
@@ -364,7 +371,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         </div>
         <div className="first-col">
           <div className="first-item">
-            <FirstButton history={this.props.history} disabled={this.state.isBoarding} user={this.props.user} />
+            <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
             {this.renderSecondButton()}
             {this.renderThirdButton()}
           </div>
@@ -418,6 +425,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         />
         <ClassInvitationDialog />
       </Grid>
+      </React.Suspense>
     );
   }
 }

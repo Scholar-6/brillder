@@ -17,7 +17,6 @@ interface BriefProps {
   parentBrief: string;
   canEdit: boolean;
   saveBrief(brief: string): void;
-  saveAndPreview(): void;
 }
 
 const BriefPreviewComponent: React.FC<any> = ({ data }) => {
@@ -37,7 +36,6 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
       <Navigation
         baseUrl={props.baseUrl}
         step={ProposalStep.Brief}
-        saveAndPreview={props.saveAndPreview}
         onMove={() => saveBrief(parentBrief)}
       />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">

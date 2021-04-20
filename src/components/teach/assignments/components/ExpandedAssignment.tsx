@@ -261,10 +261,18 @@ class ExpandedAssignment extends Component<
           />
         </div>
         <div className="assignments-table">
-          <table cellSpacing="0" cellPadding="0">
-            {this.renderTableHead()}
-            <tbody>{students.map(this.renderStudent.bind(this))}</tbody>
-          </table>
+          {students.length > 0 ? (
+            <table cellSpacing="0" cellPadding="0">
+              {this.renderTableHead()}
+              <tbody>{students.map(this.renderStudent.bind(this))}</tbody>
+            </table>
+          ) : (
+            <div className="assignment-tab-content-text">
+              <p>Once students start joining your class, they will be shown here.</p>
+              <p>When they have completed the assignment, you will be able to see how they have done on the brick as a whole and on each individual question.</p>
+              <p>You will also be able to send them reminders to complete the assignment at any time.</p>
+            </div>
+          )}
         </div>
       </div>
     );

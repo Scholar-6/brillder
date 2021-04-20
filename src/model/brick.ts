@@ -25,6 +25,8 @@ export interface Author {
   id: number;
   lastName: string;
   tutorialPassed: boolean;
+  profileImage: string;
+  bio: string;
   type: UserType;
 }
 

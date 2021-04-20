@@ -64,4 +64,5 @@ export interface TeachClassroom extends Classroom {
   subjectId: number;
   subject: Subject;
   isClass?: boolean;
+  studentsInvitations: any[];
 }

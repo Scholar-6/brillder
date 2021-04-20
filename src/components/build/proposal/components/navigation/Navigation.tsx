@@ -13,7 +13,6 @@ interface NextButtonProps {
   brickId?: number;
   baseUrl?: string;
   onMove(): void;
-  saveAndPreview(): void;
 }
 
 const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, baseUrl, ...props }) => {

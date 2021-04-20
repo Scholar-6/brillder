@@ -132,9 +132,6 @@
           padding: 1.4vh 1.9vw;
           color: var(--white);
           background: var(--theme-orange);
-          &:hover {
-            background: var(--theme-green);
-          }
         }
       }
     }
@@ -143,18 +140,6 @@
     position: relative;
     .hover-content {
       display: none;
-    }
-    &:hover .hover-content {
-      width: 30vw;
-      z-index: 100000;
-      display: block;
-      position: absolute;
-      top: 3vw;
-      left: 0;
-      color: var(--white);
-      border-radius: 0.2vw;
-      padding: 0.2vw 0.5vw;
-      background: var(--theme-light-blue);
     }
   }
 }

@@ -9,6 +9,7 @@ import { isStudentPreference, isTeacherPreference } from "components/services/pr
 interface FirstButtonProps {
   user: User;
   history: any;
+  isNewTeacher?: boolean;
   disabled?: boolean;
 }
 
@@ -36,29 +37,26 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
     <div
       className={className}
       onClick={() => {
-        if (!props.disabled) {
-          props.history.push(map.AllSubjects);
+        let link = map.AllSubjects;
+        if (props.isNewTeacher) {
+          link += '?' + map.NewTeachQuery;
         }
+        props.history.push(link);
       }}
     >
       <div className="eye-glass-icon">
-        {/* <div className="svgOnHover">
-          <SpriteIcon name="glasses-home" className="active text-theme-orange" />
-        </div> */}
         <div className="eye-glass-frame svgOnHover">
           <SpriteIcon name="glasses-home" className="active text-theme-orange" />
         </div>
         <div className="glass-eyes-left svgOnHover">
           <SpriteIcon name="eye-ball" className="active eye-ball text-white" />
           <div className="glass-left-inside svgOnHover">
-            {/* <SpriteIcon name="aperture" className="aperture" /> */}
             <SpriteIcon name="eye-pupil" className="eye-pupil" />
           </div>
         </div>
         <div className="glass-eyes-right svgOnHover">
           <SpriteIcon name="eye-ball" className="active eye-ball text-white" />
           <div className="glass-right-inside svgOnHover">
-            {/* <SpriteIcon name="aperture" className="aperture" /> */}
             <SpriteIcon name="eye-pupil" className="eye-pupil" />
           </div>
         </div>
