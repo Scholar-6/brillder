@@ -14,6 +14,7 @@ import { rightKeyPressed } from 'components/services/key';
 import { isPhone } from 'services/phone';
 import routes from '../routes';
 import BrickTitle from 'components/baseComponents/BrickTitle';
+import { User } from 'model/user';
 
 interface ProvisionalScoreState {
   value: number;
@@ -24,6 +25,7 @@ interface ProvisionalScoreState {
 }
 
 interface ProvisionalScoreProps {
+  user?: User;
   history: any;
   location: any;
   isPlayPreview?: boolean;
@@ -116,17 +118,21 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
   }
 
   moveToSynthesis() {
+    let link = '';
     if (isPhone()) {
-      let link = getPlayPath(this.props.isPlayPreview, this.props.brick.id);
-      this.props.history.push(`${link}/synthesis`);
+      link = getPlayPath(this.props.isPlayPreview, this.props.brick.id) + routes.PlaySynthesisLastPrefix;
     } else {
       if (this.props.isPlayPreview) {
-        let link = getPlayPath(this.props.isPlayPreview, this.props.brick.id);
-        this.props.history.push(`${link}/synthesis`);
+        link = getPlayPath(this.props.isPlayPreview, this.props.brick.id) + routes.PlaySynthesisLastPrefix;
       } else {
-        this.props.history.push(routes.playPreSynthesis(this.props.brick.id));
+        if (this.props.user) {
+          link = routes.playSynthesis(this.props.brick.id);
+        } else {
+          link = routes.playPreSynthesis(this.props.brick.id);
+        }
       }
     }
+    this.props.history.push(link);
   }
 
   renderFooter() {

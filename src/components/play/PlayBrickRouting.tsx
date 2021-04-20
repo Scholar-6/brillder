@@ -375,7 +375,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {isPhone() && renderPhoneFooter()}
         </Route>
         <Route exact path={routes.briefRoute}>
-          <Brief brick={brick} mode={mode} user={props.user} moveNext={moveToSections} onHighlight={onHighlight} />
+          <Brief brick={brick} mode={mode} user={props.user} moveNext={() => {
+            if (props.user) {
+              moveToPrePrep();
+            } else {
+              moveToSections();
+            }
+          }} onHighlight={onHighlight} />
         </Route>
         <Route exact path={routes.sectionsRoute}>
           <Sections brick={brick} moveNext={moveToPrePrep} />
@@ -384,7 +390,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <PrePrep brick={brick} mode={mode} moveNext={moveToNewPrep} onHighlight={onHighlight} />
         </Route>
         <Route exact path={routes.newPrepRoute}>
-          <NewPrep brick={brick} mode={mode} moveNext={moveToPreInvestigation} onHighlight={onHighlight} />
+          <NewPrep brick={brick} mode={mode} moveNext={() => {
+            if (props.user) {
+              moveToLive();
+            } else {
+              moveToPreInvestigation();
+            }
+          }} onHighlight={onHighlight} />
         </Route>
         <Route exact path={routes.preInvestigationRoute}>
           <PreInvestigationPage user={props.user} brick={brick} moveNext={moveToLive} />
@@ -423,6 +435,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route exac path="/play/brick/:brickId/provisionalScore">
           <ProvisionalScore
+            user={props.user}
             history={props.history}
             location={location}
             status={status}
