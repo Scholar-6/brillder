@@ -67,22 +67,12 @@
             border-radius: 50%;
           }
         }
-        &:hover {
-          font-family: $font-family-regular;
-          .svg {
-            stroke-width: 2.1;
-          }
-        }
       }
       .notifications-text {
         margin-top: 4.3vw; //10vh;
         letter-spacing: 0.1vw;
         font-family: $font-family-light;
         font-size: 1.5vw;
-
-        &.clickable:hover {
-          font-family: $font-family-bold;
-        }
       }
 
       .notifications-text-2,
@@ -167,11 +157,6 @@
         cursor: initial !important;
         color: var(--theme-dark-blue) !important;
       }
-      &:hover {
-        .btn svg {
-          transform: rotate(0) !important;
-        }
-      }
       .item-description {
         font-family: $font-family-light !important;
       }
@@ -198,14 +183,6 @@
         letter-spacing: 0.3vw;
       }
     }
-    &:hover {
-      .item-description {
-        font-family: $font-family-bold;
-        &.disabled {
-          font-family: $font-family-light !important;
-        }
-      }
-    }
   }
   .view-item-container {
     &.disabled {
@@ -220,11 +197,6 @@
   .create-item-container {
     .btn .svg {
       height: 7.5vw;
-      &:hover {
-        .btn svg {
-          transform: rotate(10deg) !important;
-        }
-      }
     }
   }
   .create-item-container,
@@ -248,74 +220,51 @@
     line-height: 2vw;
     right: 10vw;
     font-size: 1.6vw;
-    span:hover {
-      color: var(--theme-orange) !important;
-    }
   }
-}
-
-// mobile
-.mainPage {
-  .mobile-main-page {
-    width: 100%;
-    height: 100%;
-    @extend %flexCenter;
-    flex-direction: column;
-    .prev-image,
-    .next-image {
-      width: 20%;
-      height: 5%;
-      margin: 0;
-      opacity: 0.5;
+  // disabled
+  .manage-classes.disabled {
+    cursor: inherit !important;
+    #Path_8-4, #Ellipse_12-2, #Path_8, #Ellipse_12 {
+      fill: var(--theme-dark-blue) !important;
     }
-    .prev-image {
-      margin-top: 10px;
+    #Path_8-3, #Path_8-2 {
+      fill: var(--theme-light-blue) !important;
     }
-    .next-image {
-      margin-bottom: 10px;
+    .right-smile path {
+      stroke: var(--theme-light-blue) !important;
     }
-    .swiper-container {
-      width: 100%;
-      height: calc(80%) !important;
-      padding: 1vh 0;
-      .swiper-slide {
-        width: 100%;
-        @extend %flexCenter;
-        height: calc(26%);
-        opacity: 0.65;
-        &.swiper-slide-next {
-          transform: scale(1);
-          @extend %transitionAll300;
-          opacity: 1;
-        }
-        &:not(.swiper-slide-next) {
-          transform: scale(0.85);
-          pointer-events: none;
-        }
-        .view-item-container {
-          @include phone_and_tabletP {
-            .svg {
-              width: 230px;
-            }
-          }
-        }
-        .back-item-container {
-          .svg {
-            padding-top: 5px;
-            width: 230px;
-          }
-        }
-        .manage-classes {
-          .svg {
-            width: 150px;
-            height: 120px;
-          }
-
-          span {
-            font-size: 25px !important;
-          }
-        }
+    .left-class-icon {
+      transform: translateX(0) !important;
+    }
+    .right-class-icon {
+      transform: translateX(0) !important;
+    }
+    $smileY: 53px;
+    .left-smile {
+      transform: none;
+      transform: translate(12px, $smileY) !important;
+    }
+    .right-smile {
+      transform: translate(139px, $smileY) !important;
+    }
+    .item-description {
+      letter-spacing: 0.3vw !important;
+      font-family: $font-family-light !important;
+    }
+    .left-smile, .right-smile {
+      path {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+        animation: dash 2s linear alternate forwards;
       }
     }
+  }
+  // disabled third button build
+  .first-col .first-item .create-item-container.disabled button svg {
+    color: var(--theme-dark-blue) !important;
+  }
+  // disabled button build scond column
+  .second-col .create-item-container.disabled button svg {
+    color: var(--theme-light-blue) !important;
   }
 }

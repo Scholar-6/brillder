@@ -305,13 +305,6 @@
         @extend %transitionAll150;
       }
 
-      &:hover {
-        .create-icon {
-          color: var(--theme-orange);
-          transform: rotate(10deg);
-        }
-      }
-
       .create-icon-small {
         width: 3vw;
         height: 3vw;
@@ -521,10 +514,6 @@
                 }
               }
             }
-          }
-
-          &:hover {
-            color: var(--white);
           }
 
           h1 {
