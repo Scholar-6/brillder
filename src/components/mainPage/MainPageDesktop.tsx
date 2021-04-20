@@ -31,7 +31,7 @@ import LibraryButton from "./components/LibraryButton";
 import BlocksIcon from "./components/BlocksIcon";
 import { isPhone } from "services/phone";
 import ReportsAlertDialog from "components/baseComponents/dialogs/ReportsAlertDialog";
-import { isTablet } from "react-device-detect";
+import { isIPad13, isTablet } from "react-device-detect";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -161,8 +161,11 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     if (disabled) {
       isActive = false;
     }
+    if (isIPad13 || isTablet) {
+      isActive = false;
+    }
     return (
-      <div className="create-item-container" onClick={() => {
+      <div className={`create-item-container ${isActive ? '' : 'disabled'}`} onClick={() => {
         if (disabled) {
           return;
         }
@@ -213,7 +216,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   renderSecondButton() {
     if (this.state.isTeacher || this.state.isAdmin) {
-      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher} />
+      const isIpad = isIPad13 || isTablet;
+      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher || isIpad} />
     } else if (this.state.isStudent) {
       return this.renderStudentWorkButton();
     }

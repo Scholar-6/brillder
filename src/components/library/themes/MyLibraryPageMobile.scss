@@ -62,10 +62,6 @@
 
             .default-value {
               height: 100%;
-              &:hover {
-                opacity: 0.5;
-                background: var(--theme-light-blue) !important;
-              }
             }
 
             &.length-20 {
@@ -110,9 +106,6 @@
   .classroom-filter-custom {
     height: 25vh;
     overflow-y: scroll;
-  }
-  .index-box.hover-light:hover {
-    background: var(--light-blue-alpha3);
   }
   .one-subject {
     padding-top: 3vh;
@@ -190,10 +183,6 @@
 
           .default-value {
             height: 100%;
-            &:hover {
-              opacity: 0.5;
-              background: var(--theme-light-blue) !important;
-            }
           }
 
           &.length-20 {
