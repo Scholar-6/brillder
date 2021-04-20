@@ -40,9 +40,6 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
     let row = [];
 
     for (let subject of subjects) {
-      if (subject.name === GENERAL_SUBJECT) {
-        continue;
-      }
       row.push(subject);
       if (isOdd && row.length >= 3) {
         isOdd = false;

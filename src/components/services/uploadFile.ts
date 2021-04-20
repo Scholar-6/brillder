@@ -2,6 +2,7 @@ import axios from 'axios';
 
 
 export function fileUrl(fileName: string) {
+  if (!fileName) { return '' }
   return `${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`;
 }
 

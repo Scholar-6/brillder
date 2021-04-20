@@ -264,7 +264,6 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "space-around",
-          overflow: "hidden",
         }}
       >
         <GridList
@@ -274,7 +273,6 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             width: "100%",
             flexWrap: "nowrap",
             margin: "0 !important",
-            overflow: "hidden",
             transform: "translateZ(0)",
           }}
         >

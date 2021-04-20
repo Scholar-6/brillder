@@ -17,7 +17,6 @@ interface OpenQuestionProps {
   canEdit: boolean;
   history: any;
   saveOpenQuestion(v: string): void;
-  saveAndPreview(): void;
 }
 
 const HeadComponent: React.FC<any> = ({ data }) => {
@@ -39,7 +38,6 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
       <Navigation
         baseUrl={props.baseUrl}
         step={ProposalStep.OpenQuestion}
-        saveAndPreview={props.saveAndPreview}
         onMove={() => saveOpenQuestion(selectedQuestion)}
       />
       <Grid container direction="row">

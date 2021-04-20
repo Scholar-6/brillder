@@ -33,10 +33,8 @@ const NextButton:React.FC<NextButtonProps> = (
           return history.push(baseUrl + BrickLengthRoutePart);
         case ProposalStep.BrickLength:
           return history.push(baseUrl + BriefRoutePart);
-          case ProposalStep.Brief:
+        case ProposalStep.Brief:
           return history.push(baseUrl + PrepRoutePart);
-        case ProposalStep.Prep:
-          return history.push(baseUrl + ProposalReviewPart);
       }
     }
   }

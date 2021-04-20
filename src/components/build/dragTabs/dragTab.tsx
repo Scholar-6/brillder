@@ -26,10 +26,10 @@ const DragTab: React.FC<DragTabProps> = ({
 
   const renderRemoveIcon = () => {
     if (!active) { return; }
-    let color = 'text-theme-dark-blue'
     return (
       <div className="remove-icon svgOnHover active" onClick={removeTab}>
-        <SpriteIcon name="cancel-custom" className={`w100 h100 active ${color}`} />
+        <SpriteIcon name="circle-remove" className="w100 h100 active" />
+        <div className="css-custom-tooltip">Delete question</div>
       </div>
     );
   }

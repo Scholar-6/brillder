@@ -50,7 +50,7 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
               </div>
             </div>
             <div className="footer s-fade3">
-              The Preparation phase <span className="underline-border">briefs</span> you, and presents some <span className="underline-border">tasks to get you thinking.</span>
+              The Preparation phase presents some <span className="underline-border">tasks to get you thinking.</span>
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>

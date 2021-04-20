@@ -217,6 +217,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       {canSee && <div>
         <AssignPersonOrClassDialog
           isOpen={assign}
+          history={history}
           success={(items: any[], failedItems: any[]) => {
             if (items.length > 0) {
               setAssign(false);

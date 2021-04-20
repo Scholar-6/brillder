@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 
 import './ManageClassrooms.scss';
 import '../style.scss';
@@ -86,7 +87,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   constructor(props: UsersListProps) {
     super(props);
 
-    let pageSize = 14;
+    const pageSize = 14;
 
     this.state = {
       isLoaded: false,
@@ -123,7 +124,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       pageStudentsSelected: false
     };
 
-    this.loadData();
+    this.loadInitData();
   }
 
   componentDidMount() {
@@ -135,6 +136,22 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   componentWillUnmount() {
     socket.off("invitation_accepted");
+  }
+
+  async loadInitData() {
+    let activeClassroom = null;
+    await this.getStudents();
+    const classrooms = await this.getClassrooms();
+    const values = queryString.parse(this.props.history.location.search);
+    if (values.classroomId) {
+      activeClassroom = classrooms.find(c => c.id === parseInt(values.classroomId as string));
+      if (!activeClassroom) {
+        activeClassroom = null;
+      } else {
+        activeClassroom.isActive = true;
+      }
+    }
+    this.setState({ isLoaded: true, activeClassroom });
   }
 
   async loadData() {
@@ -174,8 +191,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         classrooms,
         activeClassroom: this.state.activeClassroom ? classrooms.find(c => c.id === this.state.activeClassroom!.id) ?? null : null
       });
+      return classrooms;
     } else {
       console.log('geting classrooms failed');
+      return [];
     }
   }
 

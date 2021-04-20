@@ -57,7 +57,6 @@ interface BrickLengthProps {
   canEdit: boolean;
   saveLength(value: BrickLengthEnum): any;
   saveBrick(data: any): void;
-  saveAndPreview(): void;
 }
 
 const BrickLength: React.FC<BrickLengthProps> = (
@@ -73,7 +72,6 @@ const BrickLength: React.FC<BrickLengthProps> = (
       <Navigation
         baseUrl={props.baseUrl}
         step={ProposalStep.BrickLength}
-        saveAndPreview={props.saveAndPreview}
         onMove={() => { }}
       />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
