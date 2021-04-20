@@ -44,10 +44,6 @@
             background: var(--white);
           }
 
-          &.not-active:hover {
-            background: var(--off-white) !important;
-          }
-
           &:nth-child(odd) {
             margin-right: 0.4%;
           }
@@ -149,13 +145,6 @@
               margin: 0.8vh 0.5%;
               border-radius: 0.8vw;
             }
-            &:hover {
-              background: var(--theme-dark-blue) !important;
-              color: var(--white) !important;
-              .icon {
-                color: var(--theme-dark-blue) !important;
-              }
-            }
             .round-circle-container {
               left: 0.8vw;
               position: absolute;
@@ -254,12 +243,6 @@
       @extend %transitionAll300;
       margin-top: calc(#{$bricks-height / 90});
       max-height: calc(#{$bricks-height / 12});
-    }
-
-    &:hover {
-      svg {
-        transform: rotate(10deg);
-      }
     }
   }
 

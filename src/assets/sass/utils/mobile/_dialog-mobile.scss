@@ -231,11 +231,6 @@
       height: 8vw !important;
       width: 8vw !important;
     }
-    &:hover {
-      .svg {
-        color: var(--theme-orange);
-      }
-    }
   }
   .social-share-row {
     @extend %flexToXCenter;
@@ -249,10 +244,6 @@
       width: $icon-size;
       stroke-width: 2;
       transition: all 0.2s ease-in-out;
-    }
-
-    svg:hover {
-      color: var(--theme-orange);
     }
   }
   &.light-blue {
