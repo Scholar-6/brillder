@@ -302,11 +302,6 @@ h3 {
   cursor: pointer;
   @extend %textCenter;
   @extend %transitionAll300;
-  &:hover {
-    @include tabletP {
-      transform: scale(1.2);
-    }
-  }
 }
 
 .mobile-hidden {
@@ -363,9 +358,6 @@ h3 {
     border-color: var(--gray) !important;
   }
 }
-.dropzone:hover {
-  border-color: var(--theme-dark-blue) !important;
-}
 
 // material select
 .MuiPaper-root.MuiMenu-paper.MuiPopover-paper {
@@ -376,9 +368,6 @@ h3 {
       font-size: 1.2vw !important;
       line-height: 2.2vw !important;
       color: var(--theme-dark-blue) !important;
-      &:hover {
-        background: var(--tab-gray) !important;
-      }
     }
   }
 }
