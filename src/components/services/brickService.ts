@@ -1,7 +1,7 @@
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType, UserRole, RolePreference } from 'model/user';
 
-function formatTwoLastDigits(twoLastDigits: number) {
+export function formatTwoLastDigits(twoLastDigits: number) {
   var formatedTwoLastDigits = "";
   if (twoLastDigits < 10) {
     formatedTwoLastDigits = "0" + twoLastDigits;
