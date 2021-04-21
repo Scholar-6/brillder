@@ -44,10 +44,9 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
 
   setValue(difference: number) {
     const timeLeft = this.props.duration - difference;
-    const secondsLeft = difference / 1000;
+    const secondsLeft = timeLeft / 1000;
     const minuteSeconds = Math.floor(secondsLeft % 60);
     const minutesLeft = Math.floor(secondsLeft / 60);
-    console.log(minutesLeft, minuteSeconds);
     const value = (timeLeft / this.props.duration) * 100;
     this.setState({ value, minutesDown: minutesLeft, secondsDown: minuteSeconds, isCounting: true });
   }
