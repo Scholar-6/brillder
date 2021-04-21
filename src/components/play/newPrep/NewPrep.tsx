@@ -170,10 +170,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
             <div className="time-container">
-              <TimeProgressbarV2 isSynthesis={true} startTime={startTime} onEnd={() => { }} brickLength={brick.brickLength} />
-            </div>
-            <div className="minutes-footer">
-              {minutes}:00
+              <TimeProgressbarV2 isIntro={true} startTime={startTime} minutes={minutes} onEnd={() => { }} brickLength={brick.brickLength} />
             </div>
             <div className="footer-space" />
             <div className="new-navigation-buttons">

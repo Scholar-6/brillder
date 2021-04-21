@@ -1177,6 +1177,17 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             justify-content: center;
             width: 25.6vw;
             height: $foter-height;
+            .united-timeprogress {
+              position: relative;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 100%;
+              .fixed {
+                position: absolute;
+                right: -3vw;
+              }
+            }
           }
           .title-column {
             width: calc(#{$width} / 3);
@@ -1907,7 +1918,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     font-size: 1vw;
   }
   .footer-space {
-    width: 23.7vw;
+    width: 26vw;
   }
 }
 
