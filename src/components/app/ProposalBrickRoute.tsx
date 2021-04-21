@@ -57,8 +57,10 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
         render={(props) => {
           // fetch brick
           const brickId = parseInt(props.match.params.brickId);
-          if (!rest.brick || !rest.brick.author || rest.brick.id !== brickId) {
-            rest.fetchBrick(brickId);
+          if (brickId) {
+            if (!rest.brick || !rest.brick.author || rest.brick.id !== brickId) {
+              rest.fetchBrick(brickId);
+            }
           }
 
           // move to investigation
