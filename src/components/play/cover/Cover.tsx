@@ -197,7 +197,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 </div>
                 <div className="cover-sponsors">
                   <span className="italic">Sponsored By</span>
-                  <img src="/images/Scholar-6-Logo.svg" />
+                  <img alt="scholar6" src="/images/Scholar-6-Logo.svg" />
                 </div>
                 <div className="image-container centered">
                   <Image

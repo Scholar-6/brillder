@@ -14,7 +14,9 @@ class QuillCustomClipboard extends Clipboard {
 
         this.removeMatcher("img");
         this.addMatcher("img", (node: any, delta: any) => {
-            this.onPasteImage?.(node, delta);
+            if(node.className !== "image-play") {
+                this.onPasteImage?.(node, delta);
+            }
             return new Delta();
         });
     }

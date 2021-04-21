@@ -133,6 +133,12 @@ svg#image {
       span {
         background: inherit !important;
       }
+      blockquote {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 5px;
+        padding-top: 5px;
+      }
     }
   }
   &.content-invalid {

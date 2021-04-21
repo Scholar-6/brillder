@@ -69,6 +69,11 @@
     @include box-shadow(0 0 0 0 transparent);
   }
 }
+@include keyframes(fade-orange) {
+  100% {
+    @include box-shadow(0 0 0 0.7vw rgba(196, 60, 48, 0.5));
+  }
+}
 .pulse-orange {
   animation-name: pulse-orange;
   animation-delay: 0s;
