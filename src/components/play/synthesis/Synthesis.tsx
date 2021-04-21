@@ -157,10 +157,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
             {renderSynthesisContent()}
             <div className="new-layout-footer" style={{ display: 'none' }}>
               <div className="time-container">
-                <TimeProgressbarV2 isSynthesis={true} startTime={startTime} onEnd={() => { }} brickLength={brick.brickLength} />
-              </div>
-              <div className="minutes-footer">
-                {minutes}:00
+                <TimeProgressbarV2 isSynthesis={true} minutes={minutes} startTime={startTime} onEnd={() => { }} brickLength={brick.brickLength} />
               </div>
               <div className="footer-space" />
               <div className="new-navigation-buttons">

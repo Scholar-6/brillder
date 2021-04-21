@@ -18,6 +18,8 @@ interface CounterProps {
 }
 
 const TimeProgressbar: React.FC<CounterProps> = (props) => {
+  let {endTime} = props;
+
   const getLiveDuration = () => {
     const durationMins = getLiveTime(props.brickLength);
     return moment.duration(durationMins, "minutes");
@@ -49,8 +51,6 @@ const TimeProgressbar: React.FC<CounterProps> = (props) => {
     const endTime = moment().add(duration);
     return endTime;
   }
-
-  let {endTime} = props;
 
   const duration = getDuration().asMilliseconds();
 
