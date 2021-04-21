@@ -348,14 +348,13 @@ const LivePage: React.FC<LivePageProps> = ({
                     <TimeProgressbar
                       isLive={true}
                       onEnd={onEnd}
+                      minutes={minutes}
                       endTime={props.endTime}
                       brickLength={brick.brickLength}
                       setEndTime={props.setEndTime}
                     />
                   </div>
-                  <div className="minutes-footer">
-                    {minutes}:00
-                  </div>
+                  <div className="minutes-footer" />
                   <div className="footer-space" />
                   <div className="new-navigation-buttons">
                     <div className="n-btn back" onClick={prev}>
