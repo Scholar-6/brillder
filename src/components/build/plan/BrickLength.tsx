@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import * as Y from "yjs";
-import _ from "lodash";
+import React from 'react';
 
 import { Select, MenuItem } from "@material-ui/core";
 import { BrickLengthEnum } from 'model/brick';
