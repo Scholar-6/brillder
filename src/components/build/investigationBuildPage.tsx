@@ -68,6 +68,7 @@ import BuildNavigation from "./baseComponents/BuildNavigation";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import routes from "./routes";
+import { deleteQuestion } from "services/axios/brick";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -178,23 +179,23 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setSkipDialog(true);
   }
 
-  // update on socket when things change.
-  useEffect(() => {
-    if (props.brick && !locked) {
-      let brick = props.brick;
-      prepareBrickToSave(brick, questions, synthesis);
-    }
-  }, [questions, synthesis, locked, updateBrick, props.brick]);
+  // // update on socket when things change.
+  // useEffect(() => {
+  //   if (props.brick && !locked) {
+  //     let brick = props.brick;
+  //     prepareBrickToSave(brick, questions, synthesis);
+  //   }
+  // }, [questions, synthesis, locked, updateBrick, props.brick]);
 
-  // parse questions on socket update
-  useSocket('brick_update', (diff: any) => {
-    console.log(diff);
-    if (!diff) return;
-    if (currentBrick && locked) {
-      console.log(diff);
-      applyDiff(diff);
-    }
-  })
+  // // parse questions on socket update
+  // useSocket('brick_update', (diff: any) => {
+  //   console.log(diff);
+  //   if (!diff) return;
+  //   if (currentBrick && locked) {
+  //     console.log(diff);
+  //     applyDiff(diff);
+  //   }
+  // })
 
   const applyDiff = (diff: any) => {
     const brick = applyBrickDiff(currentBrick, diff);
@@ -358,7 +359,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const updatedQuestions = questions.slice();
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, false));
     saveBrickQuestions(updatedQuestions, (brick2: any) => {
-      const postUpdatedQuestions = setLastQuestionId(brick, updatedQuestions);
+      const postUpdatedQuestions = setLastQuestionId(brick2, updatedQuestions);
       setQuestions(update(questions, { $set: postUpdatedQuestions }));
       cashBuildQuestion(brickId, postUpdatedQuestions.length - 1);
     });
@@ -395,11 +396,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     convertToQuestionType(questions, activeQuestion, type, setQuestionAndSave);
   };
 
-  const deleteQuestionByIndex = (index: number) => {
+  const deleteQuestionByIndex = async (index: number) => {
+    await deleteQuestion(questions[index].id)
     let updatedQuestions = removeQuestionByIndex(questions, index);
     setQuestions(updatedQuestions);
     setDeleteDialog(false);
-    saveBrickQuestions(updatedQuestions);
+    // saveBrickQuestions(updatedQuestions);
   }
 
   const removeQuestion = (index: number) => {
@@ -568,7 +570,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setLastAutoSave(time);
   }
 
-  const saveBrickQuestions = (updatedQuestions: Question[], callback?: Function) => {
+  const saveBrickQuestions = async (updatedQuestions: Question[], callback?: Function) => {
     if (canEdit === true) {
       setAutoSaveTime();
       setSavingStatus(true);
@@ -582,7 +584,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       pushDiff(diffBrick);
       setCurrentBrick(diffBrick);
       props.saveBrick(brick).then((res: Brick) => {
-        console.log(res.questions.length)
         const time = Date.now();
         console.log(`${new Date(time)} -> ${res.updated}`);
         const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
