@@ -100,8 +100,8 @@ $tile-height: 100%;
       .css-custom-tooltip {
         width: 8vw;
         height: 0;
+        left: 1.5vw;
         overflow:hidden;
-        bottom: -2vw;
       }
 
       &.active {
@@ -124,12 +124,11 @@ $tile-height: 100%;
       }
 
       &:hover {
-        animation-name: pulse-orange;
-        animation-duration: 1s;
-        animation-iteration-count: 20;
+        animation-name: fade-orange;
+        animation-duration: 0.5s;
         animation-delay: 0s;
         animation-timing-function: ease;
-        animation-play-state: running;
+        animation-fill-mode: forwards;
 
         .svg {
           color: var(--theme-dark-blue) !important;
