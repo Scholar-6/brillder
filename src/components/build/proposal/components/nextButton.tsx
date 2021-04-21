@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from 'react-router-dom';
 
 import './nextButton.scss';
-import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, ProposalStep, TitleRoutePart } from "../model";
+import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalStep, TitleRoutePart } from "../model";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface NextButtonProps {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
-import queryString from 'query-string';
+//import queryString from 'query-string';
 import { connect } from "react-redux";
 
 import { isPhone } from "services/phone";
@@ -42,6 +42,7 @@ const BuildRouter: React.FC<InvestigationBuildProps> = (props) => {
   }
 
   const renderInvestigationPage = () => {
+    /*
     const values = queryString.parse(props.location.search);
     let initSuggestionExpanded = false;
     if (values.suggestionsExpanded) {
@@ -51,7 +52,7 @@ const BuildRouter: React.FC<InvestigationBuildProps> = (props) => {
     const isCurrentEditor = (props.brick.editors?.findIndex((e: any) => e.id === props.user.id) ?? -1) >= 0;
     if (isCurrentEditor) {
       initSuggestionExpanded = true;
-    }
+    }*/
     return <InvestigationBuildPage {...props} />;
   }
 

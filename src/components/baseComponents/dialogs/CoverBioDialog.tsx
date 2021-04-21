@@ -17,7 +17,7 @@ const CoverBioDialog: React.FC<SubjectDialogProps> = ({ isOpen, user, close }) =
       <div className="dialog-header bio-popup">
         <div className="b-image-container">
           <div className="b-image">
-          {user.profileImage ? <img src={fileUrl(user.profileImage)} /> : <svg />}
+          {user.profileImage ? <img alt="b-image" src={fileUrl(user.profileImage)} /> : <svg />}
           </div>
           <div className="b-name">
             {user.firstName} {user.lastName}
