@@ -6,7 +6,34 @@ import { ImageAlign } from "components/build/buildQuestions/components/Image/mod
 import axios from "axios";
 
 const ImageBlot = Quill.import('formats/image');
-export class CustomImageBlot extends ImageBlot {
+const Embed = Quill.import('blots/block/embed');
+
+class Devider extends Embed {
+    static create() {
+        let node = super.create();
+        node.textContent = 'Invinsible line (devide images)';
+        return node;
+    }
+}
+Devider.blotName = 'devider';
+Devider.tagName = 'div';
+Devider.className = 'invinsible';
+
+Quill.register(Devider);
+
+class Newline extends Embed {
+    static create(value: string) {
+        let node = super.create(value);
+        return node;
+    }
+}
+Newline.blotName = 'newlinecustom';
+Newline.tagName = 'p';
+Newline.className = 'new-line-custom';
+
+Quill.register(Newline);
+
+export class CustomImageBlot extends Embed {
     static blotName = 'customImage';
     static tagName = 'div';
     static className = 'customImage';
@@ -45,7 +72,7 @@ export class CustomImageBlot extends ImageBlot {
 
     static value(node: any) {
         var blot = {} as any;
-        
+
         blot.url = node.getAttribute('data-value');
         blot.imageSource = node.getAttribute('data-source');
         blot.imageCaption = node.getAttribute('data-caption');
@@ -56,6 +83,7 @@ export class CustomImageBlot extends ImageBlot {
         return blot;
     }
 }
+CustomImageBlot.tagName="div";
 Quill.register(CustomImageBlot);
 
 const imageUrlRegex = new RegExp(`${process.env.REACT_APP_BACKEND_HOST}/files/(.*)`);
@@ -68,23 +96,23 @@ export default class ImageUpload {
         this.quill = quill;
         this.openDialog = options.openDialog;
         const toolbar = quill.getModule("toolbar");
-        if(toolbar) {
+        if (toolbar) {
             toolbar.addHandler("image", this.uploadHandler.bind(this, toolbar.container));
         }
 
         quill.on("selection-change", (range, oldRange) => {
-            if(!range) return;
+            if (!range) return;
             const [leaf] = quill.getLeaf(range.index);
-            if(leaf instanceof CustomImageBlot) {
+            if (leaf instanceof CustomImageBlot) {
                 leaf.domNode.ondblclick = () => {
                     const data = CustomImageBlot.value(leaf.domNode);
                     this.existingImageSelected({ ...data, value: (data.url as string).match(imageUrlRegex)?.[1] });
                 }
             }
 
-            if(!oldRange) return;
+            if (!oldRange) return;
             const [oldLeaf] = quill.getLeaf(oldRange.index);
-            if(oldLeaf instanceof CustomImageBlot) {
+            if (oldLeaf instanceof CustomImageBlot) {
                 leaf.domNode.onclick = null;
             }
         });
@@ -93,7 +121,7 @@ export default class ImageUpload {
     onImagePaste(node: any, delta: Delta) {
         console.log("h");
         console.log(node);
-        if(!node.src) return;
+        if (!node.src) return;
         axios.get(node.src, { responseType: "blob" }).then((response) => {
             const file = new File([response.data as Blob], "imageFile");
             this.imageSelected([file]);
@@ -102,7 +130,7 @@ export default class ImageUpload {
     }
 
     uploadHandler(toolbarNode: any) {
-        if(!toolbarNode) return;
+        if (!toolbarNode) return;
         let fileInput = toolbarNode.querySelector("input.ql-image[type=file]");
         if (fileInput === null) {
             fileInput = document.createElement("input");
@@ -120,7 +148,7 @@ export default class ImageUpload {
     }
 
     imageSelected(files: File[]) {
-        if(files.length >= 1) {
+        if (files.length >= 1) {
             console.log(this.openDialog);
             this.openDialog(files[0]);
         }
@@ -136,26 +164,38 @@ export default class ImageUpload {
         const res = await new Promise<any>((resolve, reject) => uploadFile(file, resolve, reject));
         const fileName = res.data.fileName;
 
+        /*
         const update = new Delta()
             .retain(range.index)
             .delete(range.length)
-            .insert({ customImage: {
-                url: fileUrl(fileName),
-                imageSource: source,
-                imageCaption: caption,
-                imageAlign: align,
-                imageHeight: height,
-                imagePermision: true,
-            } });
+            .insert({
+                customImage: {
+                    url: fileUrl(fileName),
+                    imageSource: source,
+                    imageCaption: caption,
+                    imageAlign: align,
+                    imageHeight: height,
+                    imagePermision: true,
+                }
+            });*/
 
-        this.quill.updateContents(update as unknown as DeltaStatic, "user");
-        this.quill.setSelection(length + 1, 0, "silent");
+        //this.quill.updateContents(update as unknown as DeltaStatic, "user");
+        this.quill.insertEmbed(range.index, 'customImage', {
+            url: fileUrl(fileName),
+            imageSource: source,
+            imageCaption: caption,
+            imageAlign: align,
+            imageHeight: height,
+            imagePermision: true,
+        });
+        this.quill.insertEmbed(range.index + 1, 'devider', '');
+        //this.quill.insertEmbed(range.index + 2, 'newline', '');
     }
 
     async updateImage(data: any) {
         const range = this.quill.getSelection(true);
         const [leaf] = this.quill.getLeaf(range.index);
-        if(leaf instanceof CustomImageBlot) {
+        if (leaf instanceof CustomImageBlot) {
             const leafData = CustomImageBlot.value(leaf.domNode);
             const newData = {
                 url: data.value ? fileUrl(data.value) : leafData.url,
