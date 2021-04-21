@@ -354,7 +354,6 @@ const LivePage: React.FC<LivePageProps> = ({
                       setEndTime={props.setEndTime}
                     />
                   </div>
-                  <div className="minutes-footer" />
                   <div className="footer-space" />
                   <div className="new-navigation-buttons">
                     <div className="n-btn back" onClick={prev}>
