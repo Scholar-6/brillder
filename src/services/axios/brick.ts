@@ -194,6 +194,14 @@ export const archiveAssignment = async (assignmentId: number) => {
   }
 }
 
+export const deleteQuestion = async (questionId: number) => {
+  try {
+    return await axiosDelete(`/question/${questionId}`);
+  } catch {
+    return false;
+  }
+}
+
 export interface CoverImageData {
   brickId: number;
   coverImage: string;
