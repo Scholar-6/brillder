@@ -38,7 +38,6 @@ import { canEditBrick, checkAdmin, checkPublisher } from "components/services/br
 import { ReduxCombinedState } from "redux/reducers";
 import { validateProposal } from 'components/build/proposal/service/validation';
 import { TextComponentObj } from "./buildQuestions/components/Text/interface";
-import { useSocket } from "socket/socket";
 import { applyBrickDiff, getBrickDiff } from "components/services/diff";
 import UndoRedoService from "components/services/UndoRedoService";
 import { Brick } from "model/brick";
