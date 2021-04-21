@@ -124,10 +124,10 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       stepsEnabled: false,
       steps: [{
         element: '.view-item-container',
-        intro: `<p>Browse the catalogue, and assign your first brick to new class</p>`,
+        intro: `<p>Browse the catalogue, and assign your first brick to a new class</p>`,
       },{
         element: '.view-item-container',
-        intro: `<p>Browse the catalogue, and assign your first brick to new class</p>`,
+        intro: `<p>Browse the catalogue, and assign your first brick to a new class</p>`,
       }]
     } as any;
 
