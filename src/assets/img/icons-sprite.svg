@@ -198,6 +198,10 @@
     <path fill="#EB4335" d="M12.204,5.741c1.916,0,3.209,0.827,3.946,1.52l2.879-2.812c-1.769-1.645-4.07-2.653-6.825-2.653
       c-3.99,0-7.438,2.291-9.115,5.624l3.3,2.563C7.215,7.521,9.505,5.741,12.204,5.741" />
   </svg>
+  <svg id="feather-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
   <svg id="list-custom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
     <line x1="8" y1="6" x2="21" y2="6"></line>
     <line x1="8" y1="12" x2="21" y2="12"></line>
@@ -798,5 +802,11 @@
   </svg>
   <svg id="hero-sort-ascending" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path>
+  </svg>
+  <svg id="dashed-circle" viewBox="0 0 72 72" stroke="currentColor">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3" stroke-dasharray="8 8">
+      <circle cx="36" cy="36" r="36" stroke="none"/>
+      <circle cx="36" cy="36" r="34.5" fill="none"/>
+    </g>
   </svg>
 </svg>

@@ -1,7 +1,7 @@
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType, UserRole, RolePreference } from 'model/user';
 
-function formatTwoLastDigits(twoLastDigits: number) {
+export function formatTwoLastDigits(twoLastDigits: number) {
   var formatedTwoLastDigits = "";
   if (twoLastDigits < 10) {
     formatedTwoLastDigits = "0" + twoLastDigits;
@@ -126,8 +126,8 @@ export function canEditBrick(brick: Brick, user: User) {
   switch(brick.status) {
     case BrickStatus.Draft:
       return brick.author?.id === user.id || isAdmin;
-    case BrickStatus.Build:
-      return brick.editors?.findIndex(e => e.id === user.id) !== -1 || isAdmin;
+    //case BrickStatus.Build:
+    //  return brick.editors?.findIndex(e => e.id === user.id) !== -1 || isAdmin;
     case BrickStatus.Review:
       return isPublisher;
     case BrickStatus.Publish:

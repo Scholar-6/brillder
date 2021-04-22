@@ -1,24 +1,3 @@
-// .border-animation {
-//   background-image: linear-gradient(90deg, var(--theme-orange) 50%, transparent 50%),
-//     linear-gradient(90deg, var(--theme-orange) 50%, transparent 50%),
-//     linear-gradient(0deg, var(--theme-orange) 50%, transparent 50%),
-//     linear-gradient(0deg, var(--theme-orange) 50%, transparent 50%);
-//   background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
-//   background-size: 1vw 0.1vw, 1vw 0.1vw, 0.1vw 1vw, 0.1vw 1vw;
-//   background-position: left top, right bottom, left bottom, right top;
-//   animation: border-dance 1s infinite linear;
-//   border-radius: 50%;
-//   overflow: hidden;
-// }
-// @keyframes border-dance {
-//   0% {
-//     background-position: left top, right bottom, left bottom, right top;
-//   }
-//   100% {
-//     background-position: left 1vw top, right 1vw bottom, left bottom 1vw, right top 1vw;
-//   }
-// }
-
 .border-animation {
   &:before {
     animation: border-dance 20s linear infinite;

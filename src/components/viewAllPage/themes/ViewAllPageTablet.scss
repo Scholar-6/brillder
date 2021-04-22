@@ -79,6 +79,7 @@
         }
       }
       .scroll-buttons {
+        position: relative;
         @extend %flexCenter;
         background: var(--white);
         height: 2vw;
@@ -86,10 +87,31 @@
           cursor: pointer;
           width: 1.7vw;
           height: 1.7vw;
-          color: var(--theme-orange);
+          color: var(--theme-dark-blue);
 
           &.disabled {
             color: var(--tab-gray);
+          }
+        }
+        .radio-container {
+          position: absolute;
+          left: 1.27vw;
+          color: var(--theme-dark-blue);
+          svg {
+            width: 1.4vw;
+            height: 1.4vw;
+            color: var(--theme-dark-blue);
+          }
+          .MuiFormControlLabel-label {
+            font-size: 1.05vw;
+            font-family: $font-family-light !important;
+          }
+        }
+        .arrow-cancel {
+          position: absolute;
+          right: 1.5vw;
+          &::after, &::before {
+            background: var(--theme-dark-blue);
           }
         }
       }

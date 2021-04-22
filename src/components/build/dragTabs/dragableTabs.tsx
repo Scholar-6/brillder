@@ -196,6 +196,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
         >
           <DragTab
             index={index}
+            deleteHidden={questions.length === 1}
             questionId={question.id}
             active={question.active}
             isValid={isValid}
@@ -280,7 +281,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             className={`drag-tile-container plan-tab ${isPlanPage ? 'active' : ''}`}
             cols={isPlanPage ? 1.5555 : 2}
           >
-            <PlanTab brickId={this.props.brickId} isActive={isPlanPage} history={this.props.history} />
+            <PlanTab brickId={this.props.brickId} tutorialStep={props.tutorialStep} isActive={isPlanPage} history={this.props.history} />
           </GridListTile>
           <ReactSortable
             list={questions}

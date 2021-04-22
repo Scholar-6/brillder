@@ -1,52 +1,51 @@
-import React from 'react'
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import CommentIndicator from '../baseComponents/CommentIndicator';
+import React from "react";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import CommentIndicator from "../baseComponents/CommentIndicator";
 
 export interface DragTabProps {
-  questionId: any
-  index: number,
-  active: boolean,
+  questionId: any;
+  index: number;
+  deleteHidden?: boolean;
+  active: boolean;
   isValid: boolean;
-  selectQuestion: Function,
-  removeQuestion: Function,
-  getHasReplied(questionId: number): number
+  selectQuestion: Function;
+  removeQuestion: Function;
+  getHasReplied(questionId: number): number;
 }
 
-const DragTab: React.FC<DragTabProps> = ({
-  questionId, index, active, isValid, selectQuestion, removeQuestion, getHasReplied
-}) => {
+const DragTab: React.FC<DragTabProps> = ({ index, ...props }) => {
   const removeTab = (event: React.ChangeEvent<any>) => {
     event.stopPropagation();
-    removeQuestion(index);
-  }
+    props.removeQuestion(index);
+  };
 
   const activateTab = () => {
-    selectQuestion(index);
-  }
+    props.selectQuestion(index);
+  };
 
   const renderRemoveIcon = () => {
-    if (!active) { return; }
+    if (!props.active || props.deleteHidden) {
+      return;
+    }
     return (
       <div className="remove-icon svgOnHover active" onClick={removeTab}>
         <SpriteIcon name="circle-remove" className="w100 h100 active" />
         <div className="css-custom-tooltip">Delete question</div>
       </div>
     );
-  }
+  };
 
-  const replyType = getHasReplied(questionId);
+  const replyType = props.getHasReplied(props.questionId);
 
   return (
-    <div className={isValid ? "drag-tile valid" : "drag-tile invalid"}>
+    <div className={props.isValid ? "drag-tile valid" : "drag-tile invalid"}>
       <div className="draggable-tab" onClick={activateTab}>
-        <div className='tab-number'>
-          {index + 1}
-        </div>
+        <div className="tab-number">{index + 1}</div>
         <CommentIndicator replyType={replyType} />
         {renderRemoveIcon()}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DragTab
+export default DragTab;

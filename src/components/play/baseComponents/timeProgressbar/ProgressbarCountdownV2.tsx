@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { Moment } from 'moment';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import './ProgressbarCountdown.scss';
-import { formatTwoLastDigits } from 'components/services/brickService';
-let moment = require('moment');
+const moment = require('moment');
 
 
 interface CounterProps {
-  minutes?: number;
   duration: number;
   endTime: Moment;
+  minutes?: number;
   onEnd(): void;
 }
 
@@ -18,9 +17,6 @@ interface CounterState {
   isCounting: boolean;
   timerInterval: number;
   isDeadlineSoon: boolean;
-
-  minutesDown: number;
-  secondsDown: number;
 }
 
 class ProgressbarCountdown extends Component<CounterProps, CounterState> {
@@ -31,10 +27,7 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
       value: 0,
       isCounting: false,
       timerInterval: this.setTimer(),
-      isDeadlineSoon: false,
-
-      minutesDown: props.minutes ? props.minutes : 0,
-      secondsDown: 0,
+      isDeadlineSoon: false
     }
   }
 
@@ -43,18 +36,16 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
   }
 
   setValue(difference: number) {
-    const timeLeft = this.props.duration - difference;
-    const secondsLeft = timeLeft / 1000;
-    const minuteSeconds = Math.floor(secondsLeft % 60);
-    const minutesLeft = Math.floor(secondsLeft / 60);
-    const value = (timeLeft / this.props.duration) * 100;
-    this.setState({ value, minutesDown: minutesLeft, secondsDown: minuteSeconds, isCounting: true });
+    let dd = this.props.duration - difference;
+    console.log(dd / 1000 / 60);
+    const value = ((this.props.duration - difference) / this.props.duration) * 100;
+    this.setState({ value, isCounting: true });
   }
 
   setTimer() {
     return setInterval(() => {
-      let now = moment();
-      let dif = moment.duration(this.props.endTime.diff(now));
+      const now = moment();
+      const dif = moment.duration(this.props.endTime.diff(now));
       this.setValue(dif._milliseconds);
       if (dif._milliseconds < 1000) {
         this.props.onEnd();
@@ -71,15 +62,13 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
     if (this.state.isDeadlineSoon) {
       className += ' deadline-soon';
     }
-    if (this.props.minutes) {
-      return (
-        <div className="united-timeprogress">
-          <LinearProgress className={className} variant="determinate" value={this.state.value} />
-          <div className="minutes-footer fixed">{this.state.minutesDown}:{formatTwoLastDigits(this.state.secondsDown)}/{this.props.minutes}:00</div>
-        </div>
-      );
-    }
-    return <LinearProgress className={className} variant="determinate" value={this.state.value} />;
+
+    return (
+      <div className="time-container">
+        <LinearProgress className={className} variant="determinate" value={this.state.value} />
+        {this.props.minutes ? <div>{this.props.minutes}:00/{this.props.minutes}:00</div> : ''}
+      </div>
+    );
   }
 }
 

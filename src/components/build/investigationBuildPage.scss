@@ -122,15 +122,15 @@ $space-between-boxes: 0.1vw;
     z-index: 101;
 
     .tutorial-exit-label {
-      width: 38%;
+      width: 47.5%;
     }
 
     .tutorial-add-label {
-      width: 31%;
+      width: 27%;
     }
 
     .tutorial-synthesis-label {
-      width: 31%;
+      width: 25.5%;
     }
   }
 
@@ -743,6 +743,23 @@ $space-between-boxes: 0.1vw;
         margin-left: 0.3vw;
         margin-right: 0.3vw;
       }
+    }
+  }
+}
+
+
+// tutorial
+.investigation-build-page {
+  .hover-move-left {
+    cursor: pointer;
+    .right-arrow {
+      transition: all 300ms ease-out;
+    }
+  }
+  .hover-move-left:hover {
+    .right-arrow {
+      margin-left: 1vw !important;
+      margin-right: 1vw !important;
     }
   }
 }

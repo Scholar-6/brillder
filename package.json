@@ -1,6 +1,6 @@
 {
   "name": "brillder",
-  "version": "9.4.0",
+  "version": "9.5.0",
   "private": false,
   "dependencies": {
     "@ckeditor/ckeditor5-alignment": "^22.0.0",
@@ -107,6 +107,7 @@
     "start": "react-app-rewired start --scripts-version react-scripts",
     "build": "react-app-rewired build --scripts-version react-scripts",
     "test": "react-app-rewired test --scripts-version react-scripts",
+    "e2e": "react-app-rewired test --scripts-version react-scripts --roots test --testMatch \"<rootDir>/test/**/*.{spec,test}.{js,ts}\" --env node",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -141,6 +142,7 @@
     "enzyme-adapter-react-16": "^1.15.5",
     "react-app-rewired": "^2.1.6",
     "react-test-renderer": "^16.14.0",
-    "redux-mock-store": "^1.5.4"
+    "redux-mock-store": "^1.5.4",
+    "selenium-webdriver": "^4.0.0-beta.3"
   }
 }

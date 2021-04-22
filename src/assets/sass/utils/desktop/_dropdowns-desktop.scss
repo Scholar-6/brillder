@@ -1,5 +1,6 @@
 .menu-dropdown {
   width: 16vw;
+  z-index: 100 !important;
   .MuiPaper-root {
     position: fixed;
     border-radius: 0;
@@ -64,7 +65,7 @@
   }
 }
 
-// mobile 
+// mobile
 .menu-dropdown {
   @include phone_and_tabletP {
     .MuiPaper-root {

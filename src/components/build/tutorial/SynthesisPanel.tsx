@@ -17,7 +17,8 @@ const SynthesisPanel: React.FC<TutorialProps> = (props) => {
       <div className="tutorial-step-1">
         <Grid container justify="center">
           <div className="editor-border svgOnHover border-animation">
-            <SpriteIcon name="list" className="w60 h60 active text-theme-dark-blue" />
+            <SpriteIcon name="dashed-circle" className="circle-border" />
+            <SpriteIcon name="feather-menu" className="w60 h60 active text-theme-dark-blue" />
           </div>
         </Grid>
         <p className="center">
@@ -36,9 +37,13 @@ const SynthesisPanel: React.FC<TutorialProps> = (props) => {
         <Grid container justify="center" item xs={2}>
           <Button onClick={props.skip}>SKIP</Button>
         </Grid>
-        <Grid container justify="flex-end" item xs={5}>
+        <Grid
+          container justify="flex-end" item xs={5}
+          className="hover-move-left"
+          onClick={() => props.next(TutorialStep.Play)}
+        >
           <span className="bold">4. Play Preview and Submission</span>
-          <div className="right-arrow" onClick={() => props.next(TutorialStep.Play)} />
+          <div className="right-arrow" />
         </Grid>
       </Grid>
     </div>
