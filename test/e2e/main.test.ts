@@ -15,10 +15,57 @@ describe('main e2e test', () => {
             return false;
         }
     };
+    const randomId = () => Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
 
     beforeEach(() => {
-        jest.setTimeout(30000);
-        if(!process.env.SELENIUM_HOST) {
+        jest.setTimeout(100000);
+    });
+
+    if(process.env.SELENIUM_HOST) {
+        const dateString = new Date().toUTCString();
+        it.each([
+            {
+                browser: "firefox",
+                browser_version: "latest",
+                os: "Windows",
+                os_version: "10",
+                build: `dev-Brillder Test ${dateString}`,
+                name: "dev-Brillder Firefox Test"
+            },
+            {
+                browser: "chrome",
+                browser_version: "latest",
+                os: "Windows",
+                os_version: "10",
+                build: `dev-Brillder Test ${dateString}`,
+                name: "dev-Brillder Chrome Test"
+            },
+            {
+                browser: "safari",
+                browser_version: "latest",
+                os: "OS X",
+                os_version: "Big Sur",
+                build: `dev-Brillder Test ${dateString}`,
+                name: "dev-Brillder Safari Test"
+            },
+        ])("should run on BrowserStack", async (capabilities) => {
+            try {
+                driver = new webdriver.Builder()
+                    .usingServer(process.env.SELENIUM_HOST)
+                    .withCapabilities({
+                        ...capabilities,
+                        ...capabilities['browser'] && { browserName: capabilities['browser']},
+                    })
+                    .build();
+                await runWithDriver(driver);
+                await driver.executeScript('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed","reason": "Test passed."}}');
+            } catch (e) {
+                await driver.executeScript(`browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "${e.message}"}}`);
+                fail(e);
+            }
+        });
+    } else {
+        it("should run locally", async () => {
             let options = new firefox.Options()
             if(process.env.DISABLE_HEADLESS !== "true") {
                 options.headless();
@@ -27,15 +74,16 @@ describe('main e2e test', () => {
                 .forBrowser("firefox")
                 .setFirefoxOptions(options)
                 .build();
-        } else {
-            driver = new webdriver.Builder()
-                .usingServer(process.env.SELENIUM_HOST)
-                .withCapabilities(Capabilities.firefox())
-                .build();
-        }
-    })
+            await runWithDriver(driver);
+        });
+    }
 
-    it("should run properly", async () => {
+    const runWithDriver = async (driver: WebDriver) => {
+        // Add a random ID to the mailtrap email so multiple tests can be ran in parallel.
+        const mailtrapEmail = process.env.MAILTRAP_EMAIL.replace("@", `+${randomId()}@`);
+        // Class Name should be based on the current date and time.
+        const classNameString = `Test Class (${new Date().toUTCString()})`;
+
         // get the main web page
         console.log("Navigating to:", process.env.SELENIUM_TEST_URL);
         await driver.get(process.env.SELENIUM_TEST_URL);
@@ -69,7 +117,6 @@ describe('main e2e test', () => {
         }
 
         // -- CREATE A CLASS
-        const classNameString = `Test Class (${new Date().toUTCString()})`;
         {   
             const createClassButton = await driver.wait(until.elementLocated(By.className("create-class-button")), 2000);
             await createClassButton.click();
@@ -101,7 +148,7 @@ describe('main e2e test', () => {
             await inviteStudentsButton.click();
 
             const emailField = await driver.wait(until.elementLocated(By.css(".dialog-header .MuiInputBase-input")), 2000);
-            await emailField.sendKeys(process.env.MAILTRAP_EMAIL);
+            await emailField.sendKeys(mailtrapEmail);
             await emailField.sendKeys(Key.ENTER);
 
             const sendButton = await driver.wait(until.elementLocated(By.className("yes-button")), 2000);
@@ -109,15 +156,12 @@ describe('main e2e test', () => {
 
             await driver.wait(until.elementLocated(By.className("dialog-header")), 2000);
             // dismiss popup
-            const element = await driver.findElement(By.css("body"));
-            const { width, height } = await driver.manage().window().getRect();
             await driver.wait(async () => {
                 try {
-                    console.log("clicking");
                     await driver.actions()
-                        .move({ origin: element, x: 100 - (width / 2), y: 100 - (height  / 2) })
-                        .click()
+                        .sendKeys(Key.ESCAPE)
                         .perform();
+                    
                     const moreButton = await driver.findElement(By.className("more-button"));
                     await driver.wait(waitClick(moreButton), 1000);
                     return true;
@@ -138,7 +182,7 @@ describe('main e2e test', () => {
 
         // GET TOKEN FROM MAILTRAP
         {
-            const token = await waitForToken(inviteTime);
+            const token = await waitForToken(mailtrapEmail, inviteTime);
             console.log("Received token:", token);
             await driver.get(token);
         }
@@ -180,6 +224,8 @@ describe('main e2e test', () => {
         {
             const acceptButton = await driver.wait(until.elementLocated(By.css(".btn.btn-md.b-green")), 2000);
             await acceptButton.click();
+
+            const assignmentsText = await driver.wait(until.elementLocated(By.className("brick-row-title")), 2000);
         }
 
         // SIGN OUT
@@ -221,7 +267,7 @@ describe('main e2e test', () => {
 
             const searchField = await driver.wait(until.elementLocated(By.className("search-input")), 2000);
             await driver.wait(waitClick(searchField), 2000);
-            await searchField.sendKeys("e2e\n");
+            await searchField.sendKeys("e2e" + Key.ENTER);
 
             const brickBlock = await driver.wait(until.elementLocated(By.css(".main-brick-container .absolute-container")), 10000);
             await driver.wait(waitClick(brickBlock), 2000);
@@ -282,6 +328,9 @@ describe('main e2e test', () => {
             console.log("Deleting class:", classNameString);
             const confirmButton = await driver.wait(until.elementLocated(By.className("yes-button")), 2000);
             await confirmButton.click();
+
+            // check that class has disappeared from sidebar.
+            expect(driver.wait(until.elementLocated(By.xpath(`//div[contains(concat(' ', @class, ' '), ' student-drop-item ') and label/span/text()='${classNameString}']`)), 5000)).rejects.toThrow();
         }
 
         // -- DELETE TEMPORARY USER
@@ -292,20 +341,21 @@ describe('main e2e test', () => {
             const manageUsersButton = await driver.wait(until.elementLocated(By.xpath(`//span[contains(., "Manage Users")]`)), 2000);
             await driver.wait(waitClick(manageUsersButton), 2000);
 
-            const deleteButton = await driver.wait(until.elementLocated(By.xpath(`//tr[contains(., "${process.env.MAILTRAP_EMAIL}")]//div[contains(@class, 'delete-button')]`)))
-            await driver.wait(waitClick(deleteButton));
+            const searchField = await driver.wait(until.elementLocated(By.className("search-input")), 2000);
+            await driver.wait(waitClick(searchField), 2000);
+            await searchField.sendKeys("mailtrap" + Key.ENTER);
+
+            const deleteButton = await driver.wait(until.elementLocated(By.xpath(`//tr[contains(., "${mailtrapEmail}")]//div[contains(@class, 'delete-button')]`)), 2000);
+            await driver.wait(waitClick(deleteButton), 2000);
 
             const yesButton = await driver.wait(until.elementLocated(By.className("yes-button")), 2000);
             await driver.wait(waitClick(yesButton), 2000);
         }
-
-        // check that class has disappeared from sidebar.
-        expect(driver.wait(until.elementLocated(By.xpath(`//div[contains(concat(' ', @class, ' '), ' student-drop-item ') and label/span/text()='${classNameString}']`)), 5000)).rejects.toThrow();
-    });
+    };
 
     afterEach(async () => {
         if(process.env.KEEP_OPEN !== "true"
-        && !process.env.SELENIUM_HOST) { // only keep the browser open locally - possible DoS if we leave it open remotely.
+        || process.env.SELENIUM_HOST) { // only keep the browser open locally - possible DoS if we leave it open remotely.
             console.log("Exiting browser.");
             await driver.quit();
         }
