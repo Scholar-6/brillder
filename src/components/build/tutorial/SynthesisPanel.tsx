@@ -17,6 +17,7 @@ const SynthesisPanel: React.FC<TutorialProps> = (props) => {
       <div className="tutorial-step-1">
         <Grid container justify="center">
           <div className="editor-border svgOnHover border-animation">
+            <SpriteIcon name="dashed-circle" className="circle-border" />
             <SpriteIcon name="list" className="w60 h60 active text-theme-dark-blue" />
           </div>
         </Grid>

@@ -25,16 +25,15 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
 
   return (
     <Grid
-      className={`drag-tile ${
-        props.validationRequired && !props.synthesis ? "invalid" : ""
-        }`}
+      className={`drag-tile ${props.validationRequired && !props.synthesis ? "invalid" : ""}`}
       container
       alignContent="center"
       justify="center"
     >
       <CommentIndicator replyType={replyType} />
       <div className={`last-tab svgOnHover ${className}`}>
-        <SpriteIcon name="list-custom" className="svg w100 h100 active text-theme-dark-blue" />
+        {props.tutorialStep === TutorialStep.Synthesis && <SpriteIcon name="dashed-circle" className="circle-border" />}
+        <SpriteIcon name="list-custom" className={`svg ${props.tutorialStep === TutorialStep.Synthesis ? "w80 h80" : "w100 h100"} active icon text-theme-dark-blue`} />
       </div>
     </Grid>
   );

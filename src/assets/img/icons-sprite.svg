@@ -799,4 +799,10 @@
   <svg id="hero-sort-ascending" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path>
   </svg>
+  <svg id="dashed-circle" viewBox="0 0 72 72" stroke="currentColor">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3" stroke-dasharray="8 8">
+      <circle cx="36" cy="36" r="36" stroke="none"/>
+      <circle cx="36" cy="36" r="34.5" fill="none"/>
+    </g>
+  </svg>
 </svg>
