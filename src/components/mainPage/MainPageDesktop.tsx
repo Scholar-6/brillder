@@ -163,6 +163,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     }
     if (isIPad13 || isTablet) {
       isActive = false;
+      disabled = true;
     }
     return (
       <div className={`create-item-container ${isActive ? '' : 'disabled'}`} onClick={() => {
@@ -290,12 +291,21 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   }
 
   renderTryBuildButton(isActive: boolean) {
+    let disabled = false;
     let className = "create-item-container";
+    if (isTablet || isIPad13) {
+      isActive = false;
+      disabled = true;
+    }
+
     if (!isActive) {
       className += ' disabled';
     }
     return (
       <div className={className} onClick={() => {
+        if (disabled) {
+          return;
+        }
         if (!isActive) {
           this.setState({ isTryBuildOpen: true });
         } else {

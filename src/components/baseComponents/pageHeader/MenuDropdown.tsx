@@ -15,7 +15,7 @@ import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickServic
 import SpriteIcon from "../SpriteIcon";
 import { Hidden } from "@material-ui/core";
 import FullScreenButton from "./fullScreenButton/FullScreen";
-import { isMobile } from "react-device-detect";
+import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import PlaySkipDialog from "../dialogs/PlaySkipDialog";
 
 const mapDispatch = (dispatch: any) => ({
@@ -110,6 +110,8 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   }
 
   const renderStartBuildItem = () => {
+    if (isIPad13 || isTablet) { return <div/>; }
+
     if (page !== PageEnum.MainPage) {
       if (isStudent) {
         if (hasPlayedBrick) {
@@ -124,6 +126,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   };
 
   const renderManageClassesItem = () => {
+    if (isIPad13 || isTablet) { return <div/>; }
     const {user} = props;
     if (page !== PageEnum.ManageClasses && page !== PageEnum.MainPage && user) {
       let canSee = checkTeacherOrAdmin(user);
@@ -146,6 +149,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   };
 
   const renderBackToWorkItem = () => {
+    if (isIPad13 || isTablet) { return <div/>; }
     if (page !== PageEnum.BackToWork && page !== PageEnum.MainPage) {
       return (
         <MenuItem className="menu-item" onClick={() => move("/back-to-work", 'Back To Work')}>
@@ -159,6 +163,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   };
 
   const renderManageUsersItem = () => {
+    if (isIPad13 || isTablet) { return <div/>; }
     if (props.user && checkAdmin(props.user.roles) && props.page !== PageEnum.ManageUsers) {
       return (
         <MenuItem className="menu-item" onClick={() => move("/users", 'Manage Users')}>
