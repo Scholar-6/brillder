@@ -40,9 +40,13 @@ const InvestigationPanel: React.FC<TutorialProps> = (props) => {
         <Grid container justify="center" item xs={4}>
           <Button onClick={props.skip}>SKIP</Button>
         </Grid>
-        <Grid container justify="flex-end" item xs={4}>
+        <Grid
+          container justify="flex-end" item xs={4}
+          className="hover-move-left"
+          onClick={() => props.next(TutorialStep.Synthesis)}
+        >
           <span className="bold">3. The Synthesis</span>
-          <div className="right-arrow" onClick={() => props.next(TutorialStep.Synthesis)} />
+          <div className="right-arrow" />
         </Grid>
       </Grid>
     </div>

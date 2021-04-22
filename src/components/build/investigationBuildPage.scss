@@ -746,3 +746,20 @@ $space-between-boxes: 0.1vw;
     }
   }
 }
+
+
+// tutorial
+.investigation-build-page {
+  .hover-move-left {
+    cursor: pointer;
+    .right-arrow {
+      transition: all 300ms ease-out;
+    }
+  }
+  .hover-move-left:hover {
+    .right-arrow {
+      margin-left: 1vw !important;
+      margin-right: 1vw !important;
+    }
+  }
+}
