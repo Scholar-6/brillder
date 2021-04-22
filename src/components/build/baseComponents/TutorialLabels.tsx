@@ -1,8 +1,10 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
+import { TutorialStep } from "../tutorial/TutorialPanelWorkArea";
 
 
 interface LabelProps {
+  tutorialStep: TutorialStep;
   isTutorialPassed: boolean;
 }
 
@@ -21,16 +23,18 @@ const TutorialLabels: React.FC<LabelProps> = (props) => {
                   Click the red icon to Exit & Save
                 </Grid>
               </div>
+              {props.tutorialStep != TutorialStep.Proposal &&
               <div className="tutorial-add-label" style={{ height: '100%' }}>
                 <Grid container alignContent="center" justify="center" style={{ height: '100%' }}>
                   Add Question Panel
                 </Grid>
-              </div>
+              </div>}
+              {props.tutorialStep != TutorialStep.Proposal &&
               <div className="tutorial-synthesis-label" style={{ height: '100%' }}>
                 <Grid container alignContent="center" justify="center" style={{ height: '100%' }}>
                   Synthesis
                 </Grid>
-              </div>
+              </div>}
             </Grid>
           </Grid>
         </Grid>

@@ -186,20 +186,11 @@ $tile-height: 100%;
     border: 0;
     border-radius: 50%;
     @extend %flexCenter;
-    &:before {
-      content: " ";
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      border-width: 0.1vw;
-      border-style: dashed;
-      border-color: var(--theme-orange);
-      border-radius: 50%;
-    }
-    .svg {
-      @extend %removePosition;
+    .circle-border {
+      width: 2vw !important;
+      height: 2vw !important;
+      color: var(--theme-orange) !important;
+      position: absolute !important;
     }
   }
 

@@ -38,7 +38,6 @@ import { canEditBrick, checkAdmin, checkPublisher } from "components/services/br
 import { ReduxCombinedState } from "redux/reducers";
 import { validateProposal } from 'components/build/proposal/service/validation';
 import { TextComponentObj } from "./buildQuestions/components/Text/interface";
-import { useSocket } from "socket/socket";
 import { applyBrickDiff, getBrickDiff } from "components/services/diff";
 import UndoRedoService from "components/services/UndoRedoService";
 import { Brick } from "model/brick";
@@ -65,9 +64,9 @@ import HintInvalidDialog from './baseComponents/dialogs/HintInvalidDialog';
 import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialog';
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
-import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import routes from "./routes";
+import { deleteQuestion } from "services/axios/brick";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -114,7 +113,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     getNewFirstQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
 
-  const [lastQuestionDialog, setLastQuestionDialog] = React.useState(false);
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
@@ -178,23 +176,23 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setSkipDialog(true);
   }
 
-  // update on socket when things change.
-  useEffect(() => {
-    if (props.brick && !locked) {
-      let brick = props.brick;
-      prepareBrickToSave(brick, questions, synthesis);
-    }
-  }, [questions, synthesis, locked, updateBrick, props.brick]);
+  // // update on socket when things change.
+  // useEffect(() => {
+  //   if (props.brick && !locked) {
+  //     let brick = props.brick;
+  //     prepareBrickToSave(brick, questions, synthesis);
+  //   }
+  // }, [questions, synthesis, locked, updateBrick, props.brick]);
 
-  // parse questions on socket update
-  useSocket('brick_update', (diff: any) => {
-    console.log(diff);
-    if (!diff) return;
-    if (currentBrick && locked) {
-      console.log(diff);
-      applyDiff(diff);
-    }
-  })
+  // // parse questions on socket update
+  // useSocket('brick_update', (diff: any) => {
+  //   console.log(diff);
+  //   if (!diff) return;
+  //   if (currentBrick && locked) {
+  //     console.log(diff);
+  //     applyDiff(diff);
+  //   }
+  // })
 
   const applyDiff = (diff: any) => {
     const brick = applyBrickDiff(currentBrick, diff);
@@ -358,7 +356,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const updatedQuestions = questions.slice();
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, false));
     saveBrickQuestions(updatedQuestions, (brick2: any) => {
-      const postUpdatedQuestions = setLastQuestionId(brick, updatedQuestions);
+      const postUpdatedQuestions = setLastQuestionId(brick2, updatedQuestions);
       setQuestions(update(questions, { $set: postUpdatedQuestions }));
       cashBuildQuestion(brickId, postUpdatedQuestions.length - 1);
     });
@@ -395,19 +393,16 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     convertToQuestionType(questions, activeQuestion, type, setQuestionAndSave);
   };
 
-  const deleteQuestionByIndex = (index: number) => {
+  const deleteQuestionByIndex = async (index: number) => {
+    await deleteQuestion(questions[index].id)
     let updatedQuestions = removeQuestionByIndex(questions, index);
     setQuestions(updatedQuestions);
     setDeleteDialog(false);
-    saveBrickQuestions(updatedQuestions);
+    // saveBrickQuestions(updatedQuestions);
   }
 
   const removeQuestion = (index: number) => {
     if (locked) { return; }
-    if (questions.length === 1) {
-      setLastQuestionDialog(true);
-      return;
-    }
     if (questions[index].type) {
       setDeleteDialog(true);
       setDeleteIndex(index);
@@ -568,7 +563,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setLastAutoSave(time);
   }
 
-  const saveBrickQuestions = (updatedQuestions: Question[], callback?: Function) => {
+  const saveBrickQuestions = async (updatedQuestions: Question[], callback?: Function) => {
     if (canEdit === true) {
       setAutoSaveTime();
       setSavingStatus(true);
@@ -582,7 +577,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       pushDiff(diffBrick);
       setCurrentBrick(diffBrick);
       props.saveBrick(brick).then((res: Brick) => {
-        console.log(res.questions.length)
         const time = Date.now();
         console.log(`${new Date(time)} -> ${res.updated}`);
         const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
@@ -863,7 +857,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         exitAndSave={exitAndSave}
       />
       <Hidden only={['xs', 'sm']}>
-        <TutorialLabels isTutorialPassed={isTutorialPassed()} />
+        <TutorialLabels isTutorialPassed={isTutorialPassed()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} />
         <Grid
           container direction="row"
           className="investigation-build-background"
@@ -970,11 +964,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           title="Permanently delete<br />this question?"
           close={setDeleteDialog}
           submit={deleteQuestionByIndex}
-        />
-        <ValidationFailedDialog
-          isOpen={lastQuestionDialog}
-          header="You can`t delete last question"
-          close={() => setLastQuestionDialog(false)}
         />
         <SkipTutorialDialog
           open={skipTutorialOpen}

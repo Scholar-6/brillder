@@ -2,11 +2,12 @@ import React from "react";
 
 import ProgressbarCountdown from "./ProgressbarCountdown";
 import { BrickLengthEnum } from "model/brick";
-import { getSynthesisTime } from 'components/play/services/playTimes';
+import { getPrepareTime, getSynthesisTime } from 'components/play/services/playTimes';
 const moment = require("moment");
 // TODO: try combining this into import { Moment }, * as moment from 'moment';
 
 interface CounterProps {
+  minutes?: number;
   isIntro?: boolean;
   isSynthesis?: boolean;
   brickLength: BrickLengthEnum;
@@ -14,14 +15,11 @@ interface CounterProps {
   onEnd(): void;
 }
 
-const TimeProgressbar: React.FC<CounterProps> = (props) => {
+const TimeProgressbarV2: React.FC<CounterProps> = (props) => {
+  const {startTime} = props;
+
   const getIntroDuration = () => {
-    let durationMins = 5;
-    if (props.brickLength === BrickLengthEnum.S40min) {
-      durationMins = 10;
-    } else if (props.brickLength === BrickLengthEnum.S60min) {
-      durationMins = 15;
-    }
+    const durationMins = getPrepareTime(props.brickLength);
     return moment.duration(durationMins, "minutes");
   }
 
@@ -40,21 +38,19 @@ const TimeProgressbar: React.FC<CounterProps> = (props) => {
   }
 
   const getEndTime = () => {
-    let duration = getDuration();
+    const duration = getDuration();
     let endTime = moment().add(duration);
-    if (startTime) {
-      endTime = startTime.add(duration);
-    }
+    //if (startTime) {
+      //endTime = startTime.add(duration);
+    //}
     return endTime;
   }
 
-  let {startTime} = props;
   
   const duration = getDuration().asMilliseconds();
-  let endTime = getEndTime();
+  const endTime = getEndTime();
 
-
-  return <ProgressbarCountdown onEnd={props.onEnd} duration={duration} endTime={endTime} />;
+  return <ProgressbarCountdown onEnd={props.onEnd} minutes={props.minutes} duration={duration} endTime={endTime} />;
 };
 
-export default TimeProgressbar;
+export default TimeProgressbarV2;

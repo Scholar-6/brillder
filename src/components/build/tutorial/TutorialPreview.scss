@@ -20,20 +20,17 @@
     border-radius: 50%;
     @extend %flexCenter;
     margin: 3.5vw 0 0 0;
-    &:before {
-      content: ' ';
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      border-width: 0.3vw;
-      border-style: dashed;
-      border-color: var(--theme-light-blue);
-      border-radius: 50%;
-    }
     .svg {
-      @extend %removePosition;
+      position: unset;
+      top: unset;
+      left: unset;
+      transform: unset;
+    }
+    .circle-border {
+      width: 8vw !important;
+      height: 8vw !important;
+      color: var(--theme-dark-blue) !important;
+      position: absolute !important;
     }
   }
 }

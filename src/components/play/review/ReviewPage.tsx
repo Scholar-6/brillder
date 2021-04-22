@@ -306,15 +306,12 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 <div className="new-layout-footer" style={{ display: 'none' }}>
                   <div className="time-container">
                     <TimeProgressbar
-                      isLive={true}
                       onEnd={onEnd}
+                      minutes={minutes}
                       endTime={null}
                       brickLength={brick.brickLength}
                       setEndTime={() => { }}
                     />
-                  </div>
-                  <div className="minutes-footer">
-                    {minutes}:00
                   </div>
                   <div className="footer-space"/>
                   <div className="new-navigation-buttons">
