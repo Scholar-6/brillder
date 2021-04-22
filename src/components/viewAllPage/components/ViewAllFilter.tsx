@@ -33,6 +33,8 @@ interface FilterProps {
 }
 
 interface FilterState {
+  canScroll: boolean;
+  scrollArea: React.RefObject<any>;
   filterExpanded: boolean;
   filterHeight: any;
 }
@@ -41,13 +43,59 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   constructor(props: FilterProps) {
     super(props);
     this.state = {
+      canScroll: false,
+      scrollArea: React.createRef(),
       filterHeight: "auto",
       filterExpanded: true,
     }
   }
 
+  componentDidUpdate() {
+    this.checkScroll();
+  }
+
+  componentDidMount() {
+    this.checkScroll();
+  }
+
   hideFilter() {
     this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
+  }
+
+  checkScroll() {
+    const { canScroll } = this.state;
+    const { current } = this.state.scrollArea;
+    if (current) {
+      if (current.scrollHeight > current.clientHeight) {
+        if (!canScroll) {
+          this.setState({ canScroll: true });
+        }
+      } else {
+        if (canScroll) {
+          this.setState({ canScroll: false });
+        }
+      }
+    }
+  }
+
+  scrollUp() {
+    console.log('scrool down')
+    try {
+      const { current } = this.state.scrollArea;
+      if (current) {
+        current.scrollBy(0, -window.screen.height / 30);
+      }
+    } catch {}
+  }
+
+  scrollDown() {
+    console.log('scrool down')
+    try {
+      const { current } = this.state.scrollArea;
+      if (current) {
+        current.scrollBy(0, window.screen.height / 30);
+      }
+    } catch {}
   }
 
   expandFilter() {
@@ -116,8 +164,9 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     }
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
-        <div className="sort-box">
-          <div className="filter-container sort-by-box view-all-sort-box" style={{ height: '6.5vw' }}>
+        <div className="flex-height-box">
+          <div className="sort-box">
+            <div className="filter-container sort-by-box view-all-sort-box" style={{ height: '6.5vw' }}>
             <div className="sort-header">Sort By</div>
             <RadioGroup
               className="sort-group"
@@ -146,21 +195,35 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               </Grid>
             </RadioGroup>
           </div>
-          {this.renderSubjectLabelBox()}
-          {this.renderSubjectsToggle()}
-          <SubjectsListV3
-            isPublic={this.props.isCore}
-            subjects={subjects}
-            isAll={this.props.isViewAll}
-            isSelected={this.props.isClearFilter}
-            toggleAll={() => this.props.selectAllSubjects(!this.props.isViewAll)}
-            filterHeight={this.state.filterHeight}
-            filterBySubject={this.props.filterBySubject}
-          />
-          <div className="sidebar-footer">
-            
+            {this.renderSubjectLabelBox()}
+            {this.renderSubjectsToggle()}
+            <div className="scroll-buttons">
+              <FormControlLabel
+                className="radio-container"
+                checked={this.props.isViewAll}
+                control={<Radio onClick={() => this.props.selectAllSubjects(!this.props.isViewAll)} />}
+                label="All" />
+              <SpriteIcon name="arrow-up" className={`${!this.state.canScroll ? 'disabled' : ''}`} onClick={this.scrollUp.bind(this)} />
+              <SpriteIcon name="arrow-down" className={`${!this.state.canScroll ? 'disabled' : ''}`} onClick={this.scrollDown.bind(this)} />
+              {this.props.isClearFilter &&
+                <button
+                  className="btn-transparent filter-icon arrow-cancel"
+                  onClick={() => this.props.selectAllSubjects(!this.props.isViewAll)}
+              ></button>}
+            </div>
+          </div>
+          <div className="sort-box subject-scrollable" ref={this.state.scrollArea}>
+            <SubjectsListV3
+              isPublic={this.props.isCore}
+              subjects={subjects}
+              isAll={this.props.isViewAll}
+              isSelected={this.props.isClearFilter}
+              filterHeight={this.state.filterHeight}
+              filterBySubject={this.props.filterBySubject}
+            />
           </div>
         </div>
+        <div className="sidebar-footer" />
       </Grid>
     );
   }
