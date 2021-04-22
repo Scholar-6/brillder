@@ -2,6 +2,9 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
+@import 'src/assets/sass/component/authpages-tablet';
+@import 'src/assets/sass/animations/animations';
+
 @import './utils/mobile/global-mobile';
 @import './utils/mobile/sidebar-mobile';
 @import './utils/mobile/dialog-mobile';
