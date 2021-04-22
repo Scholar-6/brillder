@@ -67,7 +67,7 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
           <span className="button-label bold">3. The Synthesis</span>
         </Grid>
         <Grid container justify="flex-end" item xs={6}>
-          <span className="button-label bold long">START BUILDING</span>
+          <span className="button-label bold long">BUILD QUESTIONS</span>
           <div className="right-arrow" onClick={() => props.skip()} />
         </Grid>
       </Grid>

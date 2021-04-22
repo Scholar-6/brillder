@@ -857,7 +857,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         exitAndSave={exitAndSave}
       />
       <Hidden only={['xs', 'sm']}>
-        <TutorialLabels isTutorialPassed={isTutorialPassed()} />
+        <TutorialLabels isTutorialPassed={isTutorialPassed()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} />
         <Grid
           container direction="row"
           className="investigation-build-background"
