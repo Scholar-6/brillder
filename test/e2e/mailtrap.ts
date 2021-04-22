@@ -15,11 +15,11 @@ mailtrap.interceptors.request.use(req => {
     return req;
 })
 
-export const waitForEmail = async (since: Date, timeout: number = 10000) => {
+export const waitForEmail = async (to: string, since: Date, timeout: number = 10000) => {
     let received = false;
     const startTime = new Date();
     while (!received) {
-        const response = await mailtrap.get(`/api/v1/inboxes/${process.env.MAILTRAP_INBOX_ID}/messages`);
+        const response = await mailtrap.get(`/api/v1/inboxes/${process.env.MAILTRAP_INBOX_ID}/messages?search=${encodeURIComponent(to)}`);
 
         if(response.data.length > 0) {
             received = since.valueOf() < new Date(response.data[0].sent_at).valueOf();
@@ -34,8 +34,8 @@ export const waitForEmail = async (since: Date, timeout: number = 10000) => {
 }
 
 const tokenRegex = /href="([^">]*(activateAccount)[^">]*)"/;
-export const waitForToken = async (since: Date) => {
-    const email = await waitForEmail(since);
+export const waitForToken = async (to: string, since: Date) => {
+    const email = await waitForEmail(to, since);
 
     const { data }: { data: string } = await mailtrap.get(email.html_path);
     const link = data.match(tokenRegex)?.[1];
