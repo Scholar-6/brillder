@@ -16,6 +16,7 @@ const ProposalPreview: React.FC = () => {
       <div className="tutorial-number">1.</div>
       <Grid container justify="center">
         <div className="tutorial-icon-container svgOnHover">
+          <SpriteIcon name="dashed-circle" className="circle-border" />
           <SpriteIcon name="feather-map" className="w60 h60 active text-theme-dark-blue" />
         </div>
       </Grid>
@@ -29,6 +30,7 @@ const InvestigationPreview: React.FC = () => {
       <div className="tutorial-number">2.</div>
       <Grid container justify="center">
         <div className="tutorial-icon-container svgOnHover">
+          <SpriteIcon name="dashed-circle" className="circle-border" />
           <SpriteIcon name="plus" className="w80 h80 active text-theme-dark-blue" />
         </div>
       </Grid>
@@ -42,6 +44,7 @@ const SynthesisPreview: React.FC = () => {
       <div className="tutorial-number">3.</div>
       <Grid container justify="center">
         <div className="tutorial-icon-container svgOnHover">
+          <SpriteIcon name="dashed-circle" className="circle-border" />
           <SpriteIcon name="list" className="w60 h60 active text-theme-dark-blue" />
         </div>
       </Grid>
@@ -55,6 +58,7 @@ const PlayPreview: React.FC = () => {
       <div className="tutorial-number">4.</div>
       <Grid container justify="center">
         <div className="tutorial-icon-container svgOnHover">
+          <SpriteIcon name="dashed-circle" className="circle-border" />
           <SpriteIcon name="play-thick" className="w80 h80 active m-l-1 text-theme-dark-blue" />
         </div>
       </Grid>
