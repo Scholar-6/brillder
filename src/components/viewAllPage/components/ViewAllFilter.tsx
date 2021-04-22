@@ -6,6 +6,7 @@ import { User } from "model/user";
 
 import SubjectsListV3 from "components/baseComponents/subjectsList/SubjectsListV3";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isSafari } from "react-device-detect";
 
 export enum SortBy {
   None,
@@ -79,7 +80,6 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   }
 
   scrollUp() {
-    console.log('scrool down')
     try {
       const { current } = this.state.scrollArea;
       if (current) {
@@ -89,7 +89,6 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   }
 
   scrollDown() {
-    console.log('scrool down')
     try {
       const { current } = this.state.scrollArea;
       if (current) {
