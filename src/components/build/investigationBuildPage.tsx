@@ -64,7 +64,6 @@ import HintInvalidDialog from './baseComponents/dialogs/HintInvalidDialog';
 import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialog';
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
-import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import routes from "./routes";
 import { deleteQuestion } from "services/axios/brick";
@@ -114,7 +113,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     getNewFirstQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
 
-  const [lastQuestionDialog, setLastQuestionDialog] = React.useState(false);
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
@@ -405,10 +403,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const removeQuestion = (index: number) => {
     if (locked) { return; }
-    if (questions.length === 1) {
-      setLastQuestionDialog(true);
-      return;
-    }
     if (questions[index].type) {
       setDeleteDialog(true);
       setDeleteIndex(index);
@@ -970,11 +964,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           title="Permanently delete<br />this question?"
           close={setDeleteDialog}
           submit={deleteQuestionByIndex}
-        />
-        <ValidationFailedDialog
-          isOpen={lastQuestionDialog}
-          header="You can`t delete last question"
-          close={() => setLastQuestionDialog(false)}
         />
         <SkipTutorialDialog
           open={skipTutorialOpen}
