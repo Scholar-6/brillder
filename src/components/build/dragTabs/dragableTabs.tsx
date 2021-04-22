@@ -196,6 +196,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
         >
           <DragTab
             index={index}
+            deleteHidden={questions.length === 1}
             questionId={question.id}
             active={question.active}
             isValid={isValid}
