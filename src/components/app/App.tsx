@@ -3,7 +3,7 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { isMobileOnly, isTablet} from 'react-device-detect';
+import { isMobileOnly, isSafari, isTablet} from 'react-device-detect';
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -210,6 +210,7 @@ const App: React.FC<AppProps> = props => {
   }
 
   return (
+    <div className={isSafari ? 'root-safari browser-type-container' : 'browser-type-container'}>
     <ThemeProvider theme={theme}>
       <Profiler id="app-tsx" onRender={onRenderCallback} >
       {/* all page routes are here order of routes is important */}
@@ -268,6 +269,7 @@ const App: React.FC<AppProps> = props => {
       <GlobalFailedRequestDialog />
       </Profiler>
     </ThemeProvider>
+    </div>
   );
 }
 
