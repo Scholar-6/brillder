@@ -45,7 +45,7 @@ const SynthesisPreview: React.FC = () => {
       <Grid container justify="center">
         <div className="tutorial-icon-container svgOnHover">
           <SpriteIcon name="dashed-circle" className="circle-border" />
-          <SpriteIcon name="list" className="w60 h60 active text-theme-dark-blue" />
+          <SpriteIcon name="feather-menu" className="w60 h60 active text-theme-dark-blue" />
         </div>
       </Grid>
     </div>

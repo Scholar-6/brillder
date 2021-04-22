@@ -45,7 +45,7 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
           {renderDashedLine()}
           {renderArrow()}
           <div className="icon-container svgOnHover">
-            <SpriteIcon name="list" className="w80 h80 active text-theme-dark-blue" />
+            <SpriteIcon name="feather-menu" className="w80 h80 active text-theme-dark-blue" />
           </div>
           {renderDashedLine()}
           {renderArrow()}

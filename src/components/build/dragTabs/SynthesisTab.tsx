@@ -33,7 +33,7 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
       <CommentIndicator replyType={replyType} />
       <div className={`last-tab svgOnHover ${className}`}>
         {props.tutorialStep === TutorialStep.Synthesis && <SpriteIcon name="dashed-circle" className="circle-border" />}
-        <SpriteIcon name="list-custom" className={`svg ${props.tutorialStep === TutorialStep.Synthesis ? "w80 h80" : "w100 h100"} active icon text-theme-dark-blue`} />
+        <SpriteIcon name="feather-menu" className={`svg ${props.tutorialStep === TutorialStep.Synthesis ? "w80 h80" : "w100 h100"} active icon text-theme-dark-blue`} />
       </div>
     </Grid>
   );
