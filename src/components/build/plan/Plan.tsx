@@ -202,8 +202,10 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                         "numberedList",
                         "blockQuote",
                         "image",
+                        "video"
                       ]}
                       imageDialog={true}
+                      allowMediaEmbed={true}
                     />
                   </div>
                 </Grid>
