@@ -16,7 +16,7 @@ const ProposalPreview: React.FC = () => {
       <div className="tutorial-number">1.</div>
       <Grid container justify="center">
         <div className="tutorial-icon-container svgOnHover">
-          <SpriteIcon name="edit-outline" className="w60 h60 active text-theme-dark-blue" />
+          <SpriteIcon name="feather-map" className="w60 h60 active text-theme-dark-blue" />
         </div>
       </Grid>
     </div>
