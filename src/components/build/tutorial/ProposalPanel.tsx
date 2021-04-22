@@ -39,9 +39,13 @@ const ProposalPanel: React.FC<TutorialProps> = (props) => {
         <Grid container justify="center" item xs={4}>
           <Button onClick={props.skip}>SKIP</Button>
         </Grid>
-        <Grid container justify="flex-end" item xs={4}>
+        <Grid
+          container justify="flex-end" item xs={4}
+          className="hover-move-left"
+          onClick={() => props.next(TutorialStep.Investigation)}
+        >
           <span className="bold">2. The Investigation</span>
-          <div className="right-arrow" onClick={() => props.next(TutorialStep.Investigation)} />
+          <div className="right-arrow" />
         </Grid>
       </Grid>
     </div>
