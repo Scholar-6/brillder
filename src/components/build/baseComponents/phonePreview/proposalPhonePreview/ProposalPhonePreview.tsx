@@ -30,21 +30,19 @@ const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Compo
   }
 
   return (
-    <Hidden only={['xs', 'sm']}>
-      <div className="proposal-phone-preview">
-        <div className="phone">
-          <div className="phone-border">
-            <div className="volume volume1"></div>
-            <div className="volume volume2"></div>
-            <div className="volume volume3"></div>
-            <div className="sleep"></div>
-            <div className="screen">
-              {renderInner()}
-            </div>
+    <div className="proposal-phone-preview">
+      <div className="phone">
+        <div className="phone-border">
+          <div className="volume volume1"></div>
+          <div className="volume volume2"></div>
+          <div className="volume volume3"></div>
+          <div className="sleep"></div>
+          <div className="screen">
+            {renderInner()}
           </div>
         </div>
       </div>
-    </Hidden>
+    </div>
   );
 }
 

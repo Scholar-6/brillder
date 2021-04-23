@@ -7,7 +7,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface LastSaveProps {
-  tutorialStep: TutorialStep;
+  tutorialStep?: TutorialStep;
   isSaving: boolean;
   saveError: boolean;
   updated: string;
