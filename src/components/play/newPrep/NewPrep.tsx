@@ -27,6 +27,7 @@ export interface IntroductionState {
 
 interface Props {
   brick: Brick;
+  briefExpanded?: boolean;
 
   moveNext(): void;
   mode?: PlayMode;
@@ -39,7 +40,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
   const [state, setState] = React.useState({
     prepExpanded: true,
     isStopped: false,
-    briefExpanded: false,
+    briefExpanded: props.briefExpanded ? props.briefExpanded : false,
     duration: null,
   } as IntroductionState);
 
