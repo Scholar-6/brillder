@@ -14,7 +14,7 @@ import "./QuillImageUpload";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
-import ImageUpload from "./QuillImageUpload";
+import ImageUpload, { CustomImageBlot } from "./QuillImageUpload";
 import QuillCustomClipboard from "./QuillCustomClipboard";
 
 function randomEditorId() {
@@ -62,13 +62,15 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
     const [imageDialogFile, setImageDialogFile] = React.useState<File>();
     const [imageDialogData, setImageDialogData] = React.useState<any>(null);
+    const [imageDialogBlot, setImageDialogBlot] = React.useState<CustomImageBlot>();
     const [imageModule, setImageModule] = React.useState<ImageUpload>();
     React.useEffect(() => {
         if(imageModule) {
-            imageModule.openDialog = (file?: File, data?: any) => {
+            imageModule.openDialog = (file?: File, data?: any, blot?: CustomImageBlot) => {
                 setImageDialogFile(file);
                 setImageDialogData(data);
                 setImageDialogOpen(true);
+                setImageDialogBlot(blot);
             }
         }
     }, [imageModule]);
@@ -190,7 +192,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                     }}
                     updateData={(source, caption, align, height) => {
                         if(imageModule) {
-                            imageModule.updateImage.bind(imageModule)({source, caption, align, height});
+                            imageModule.updateImage.bind(imageModule)(imageDialogBlot, {source, caption, align, height});
                         }
                         setImageDialogOpen(false);
                         setImageDialogFile(undefined);
