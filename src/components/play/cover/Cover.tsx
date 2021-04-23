@@ -17,6 +17,7 @@ import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import CoverBioDialog from "components/baseComponents/dialogs/CoverBioDialog";
+import { GENERAL_SUBJECT } from "components/services/subject";
 
 interface IntroductionProps {
   user: User;
@@ -189,16 +190,17 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   <DynamicFont content={stripHtml(brick.title)} />
                 </div>
                 <div className="author-row">
-                  <span>{brick.author.firstName} {brick.author.lastName}</span>
+                  <span>By {brick.author.firstName} {brick.author.lastName}</span>
                   <div className="cover-bio" onClick={() => setBio(true)}>
                     see bio
                     <div className="cover-bio-background" />
                   </div>
                 </div>
+                {brick.isCore || brick.subject?.name === GENERAL_SUBJECT &&
                 <div className="cover-sponsors">
                   <span className="italic">Sponsored By</span>
                   <img alt="scholar6" src="/images/Scholar-6-Logo.svg" />
-                </div>
+                </div>}
                 <div className="image-container centered">
                   <Image
                     locked={!isPublisher}
