@@ -8,6 +8,7 @@ export const PlayBriefLastPrefix = '/brief';
 export const PlayPrePrepLastPrefix = '/pre-prep';
 export const PlayNewPrepLastPrefix = '/new-prep';
 export const PlayPreInvestigationLastPrefix = '/pre-investigation';
+export const PlayLiveLastPrefix = '/live';
 export const PlayPreSynthesisLastPrefix = '/pre-synthesis';
 export const PlaySynthesisLastPrefix = '/synthesis';
 export const PlayPreReviewLastPrefix = '/pre-review';
@@ -42,6 +43,7 @@ export default {
   PlayPrePrepLastPrefix,
   PlayNewPrepLastPrefix,
   PlayPreInvestigationLastPrefix,
+  PlayLiveLastPrefix,
   PlayPreSynthesisLastPrefix,
   PlaySynthesisLastPrefix,
   PlayPreReviewLastPrefix,
