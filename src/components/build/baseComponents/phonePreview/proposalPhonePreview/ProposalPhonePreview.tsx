@@ -2,15 +2,18 @@ import React from 'react';
 import { Hidden } from '@material-ui/core';
 
 import './ProposalPhonePreview.scss';
+import LastSave from '../../lastSave/LastSave';
 
 
 export interface ProposalPhonePreviewProps {
   link?: string
   Component?: any
+  savedHidden?: boolean;
+  updated?: string;
   data?: any
 }
 
-const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Component, data }) => {
+const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, updated, savedHidden, Component, data }) => {
   const renderInner = () => {
     if (link) {
       return (
@@ -29,9 +32,17 @@ const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Compo
     return <div className="custom-component"/>;
   }
 
+  console.log('dd', savedHidden, updated)
+
   return (
-    <Hidden only={['xs', 'sm']}>
+    <div>
       <div className="proposal-phone-preview">
+        {!savedHidden && updated &&
+          <LastSave
+            isSaving={false}
+            updated={updated}
+            saveError={false}
+          />}
         <div className="phone">
           <div className="phone-border">
             <div className="volume volume1"></div>
@@ -44,7 +55,7 @@ const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Compo
           </div>
         </div>
       </div>
-    </Hidden>
+    </div>
   );
 }
 

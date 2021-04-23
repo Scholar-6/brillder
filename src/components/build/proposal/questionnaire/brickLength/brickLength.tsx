@@ -55,6 +55,7 @@ interface BrickLengthProps {
   baseUrl: string;
   length: BrickLengthEnum;
   canEdit: boolean;
+  updated: any;
   saveLength(value: BrickLengthEnum): any;
   saveBrick(data: any): void;
 }
@@ -116,7 +117,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
             baseUrl={props.baseUrl}
           />
         </Grid>
-        <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} />
+        <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} updated={props.updated} />
         <Hidden only={['xs','sm']}>
           <div className="red-right-block"></div>
         </Hidden>
