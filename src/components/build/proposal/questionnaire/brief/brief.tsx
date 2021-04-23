@@ -10,6 +10,7 @@ import { ProposalStep, BrickLengthRoutePart } from "../../model";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 
 interface BriefProps {
@@ -44,15 +45,15 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
             <SpriteIcon name="crosshair" />
           </div>
           <h1>Outline the purpose of this brick.</h1>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!canEdit}
             data={parentBrief}
-            link={true}
+            showToolbar={true}
+            allowLinks={true}
             placeholder="Enter Brief Here..."
             toolbar={[
               'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList'
             ]}
-            onBlur={() => { }}
             onChange={saveBrief}
           />
           <NavigationButtons

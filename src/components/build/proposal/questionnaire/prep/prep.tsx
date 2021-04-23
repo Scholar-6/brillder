@@ -11,6 +11,7 @@ import Navigation from 'components/build/proposal/components/navigation/Navigati
 import YoutubeAndMathQuote from 'components/play/baseComponents/YoutubeAndMathQuote';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { BrickLengthEnum } from "model/brick";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 
 interface PrepProps {
@@ -72,18 +73,17 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             <img className="size2" alt="titles" src="/images/new-brick/prep.png" />
           </div>
           <h1>Add engaging and relevant <br /> preparatory material.</h1>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!props.canEdit}
             data={parentPrep}
+            showToolbar={true}
+            allowMediaEmbed={true}
+            allowLinks={true}
+            imageDialog={true}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
-            mediaEmbed={true}
-            link={true}
             toolbar={[
-              'bold', 'italic', 'fontColor', 'latex',
-              'bulletedList', 'numberedList', 'uploadImageCustom'
+              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
             ]}
-            blockQuote={true}
-            onBlur={() => { }}
             onChange={savePrep}
           />
           {isVisible() &&
