@@ -16,6 +16,7 @@ interface BriefProps {
   baseUrl: string;
   parentBrief: string;
   canEdit: boolean;
+  updated: string;
   saveBrief(brief: string): void;
 }
 
@@ -65,7 +66,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
           />
           <h2 className="pagination-text m-0">3 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={BriefPreviewComponent} data={parentBrief} />
+        <ProposalPhonePreview Component={BriefPreviewComponent} data={parentBrief} updated={props.updated} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

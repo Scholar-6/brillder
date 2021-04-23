@@ -363,6 +363,40 @@
     top: 0;
     right: 0;
   }
+  .saved-info {
+    position: absolute;
+    top: -2vw;
+    left: 0vw;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    > div {
+      width: 100%;
+      > div {
+        width: 100%;
+      }
+    }
+    .saved-info-row {
+      width: 100%;
+      > div {
+        width: 100%;
+        > div {
+          width: 100%;
+          > div {
+            width: 100%;
+          }
+        }
+      }
+    }
+    svg {
+      width: 1.52vw;
+      height: 1.52vw;
+    }
+    .text-container, svg {
+      font-size: 1.05vw;
+      color: var(--theme-dark-blue);
+    }
+  }
 }
 
 .tutorial-page {

@@ -17,6 +17,7 @@ interface PrepProps {
   parentPrep: string;
   canEdit: boolean;
   baseUrl: string;
+  updated: string;
   brickLength: BrickLengthEnum;
   savePrep(prep: string): void;
   saveBrick(prep: string): void;
@@ -101,7 +102,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
           />
           <h2 className="pagination-text">4 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={PrepPreviewComponent} data={parentPrep} />
+        <ProposalPhonePreview Component={PrepPreviewComponent} data={parentPrep} updated={props.updated} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

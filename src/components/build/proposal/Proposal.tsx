@@ -351,6 +351,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             </Route>
             <Route path={[baseUrl + '/length']}>
               <BrickLength
+                updated={brick ? brick.updated : localBrick.updated}
                 baseUrl={baseUrl}
                 length={localBrick.brickLength}
                 canEdit={canEdit}
@@ -360,6 +361,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             </Route>
             <Route path={[baseUrl + '/open-question']}>
               <OpenQuestion
+                updated={localBrick.updated}
                 baseUrl={baseUrl}
                 history={history}
                 selectedQuestion={localBrick.openQuestion}
@@ -371,12 +373,14 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               <Brief
                 baseUrl={baseUrl}
                 parentBrief={localBrick.brief}
+                updated={localBrick.updated}
                 canEdit={canEdit}
                 saveBrief={this.setBrief}
               />
             </Route>
             <Route path={[baseUrl + '/prep']}>
               <Prep
+                updated={localBrick.updated}
                 parentPrep={localBrick.prep}
                 canEdit={canEdit}
                 baseUrl={baseUrl}
