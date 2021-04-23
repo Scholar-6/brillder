@@ -229,7 +229,7 @@ const App: React.FC<AppProps> = props => {
 
         <PlayPreviewRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         {/* Creating new bricks */}
-        <ProposalBrickRoute path={map.ProposalBase} component={Proposal} location={location} />
+        <ProposalBrickRoute path={map.NewBrick} component={Proposal} location={location} />
         {/* Investigation Build */}
         <BuildBrickRoute
           path={[
