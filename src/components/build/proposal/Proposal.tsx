@@ -51,6 +51,7 @@ interface ProposalProps {
 interface ProposalState {
   brick: Brick;
   saving: boolean;
+  hasSaveError: boolean;
   saved: boolean;
   subjects: Subject[];
   isDialogOpen: boolean;
@@ -103,6 +104,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.state = {
       brick: initBrick,
       saved: false,
+      hasSaveError: false,
       saving: false,
       isDialogOpen: false,
       moving: false,
@@ -170,19 +172,23 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   async saveBrick(tempBrick: Brick) {
-    if (this.state.saving === true) { return; }
     let newBrick = null;
-    this.setState({saving: true});
-    const { brick } = this.props;
-    if (tempBrick.id) {
-      await this.props.saveBrick(tempBrick);
-    } else if (brick && brick.id) {
-      tempBrick.id = brick.id;
-      newBrick = await this.props.saveBrick(tempBrick);
-    } else {
-      newBrick = await this.props.createBrick(tempBrick);
+    try {
+      if (this.state.saving === true) { return; }
+      this.setState({saving: true});
+      const { brick } = this.props;
+      if (tempBrick.id) {
+        await this.props.saveBrick(tempBrick);
+      } else if (brick && brick.id) {
+        tempBrick.id = brick.id;
+        newBrick = await this.props.saveBrick(tempBrick);
+      } else {
+        newBrick = await this.props.createBrick(tempBrick);
+      }
+      this.setState({saving: false});
+    } catch {
+      this.setState({hasSaveError: true});
     }
-    this.setState({saving: false});
     return newBrick;
   }
 
@@ -345,6 +351,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             </Route>
             <Route path={[baseUrl + '/length']}>
               <BrickLength
+                updated={brick ? brick.updated : localBrick.updated}
                 baseUrl={baseUrl}
                 length={localBrick.brickLength}
                 canEdit={canEdit}
@@ -354,6 +361,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             </Route>
             <Route path={[baseUrl + '/open-question']}>
               <OpenQuestion
+                updated={localBrick.updated}
                 baseUrl={baseUrl}
                 history={history}
                 selectedQuestion={localBrick.openQuestion}
@@ -365,12 +373,14 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               <Brief
                 baseUrl={baseUrl}
                 parentBrief={localBrick.brief}
+                updated={localBrick.updated}
                 canEdit={canEdit}
                 saveBrief={this.setBrief}
               />
             </Route>
             <Route path={[baseUrl + '/prep']}>
               <Prep
+                updated={localBrick.updated}
                 parentPrep={localBrick.prep}
                 canEdit={canEdit}
                 baseUrl={baseUrl}
