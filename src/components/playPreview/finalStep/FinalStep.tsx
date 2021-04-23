@@ -328,6 +328,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={() => setCopiedLink(false)} />
       <ShareDialog
         isOpen={shareOpen}
+        isPrivatePreview={!brick.isCore}
         link={() => { setShare(false); setLink(true) }}
         invite={() => { setShare(false); setInvite(true) }}
         close={() => setShare(false)}
