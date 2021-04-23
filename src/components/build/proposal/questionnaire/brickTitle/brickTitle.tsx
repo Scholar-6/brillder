@@ -196,7 +196,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                 ?
                 <div className="centered">
                   <PrevButton
-                    to={map.ProposalSubject}
+                    to={baseUrl + "/subject"}
                     isActive={true}
                     onHover={() => { }}
                     onOut={() => { }}
