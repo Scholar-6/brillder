@@ -222,7 +222,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
               </div>
             </div>
           </Grid>
-          <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
+          <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} updated={parentState.updated} />
           <Hidden only={['xs', 'sm']}>
             <div className="red-right-block"></div>
           </Hidden>

@@ -16,6 +16,7 @@ interface OpenQuestionProps {
   selectedQuestion: any;
   canEdit: boolean;
   history: any;
+  updated: string;
   saveOpenQuestion(v: string): void;
 }
 
@@ -69,7 +70,7 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           />
           <h2 className="pagination-text">2 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={HeadComponent} data={selectedQuestion} link="" />
+        <ProposalPhonePreview Component={HeadComponent} data={selectedQuestion} link="" updated={props.updated} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>
