@@ -386,7 +386,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     var index = getQuestionIndex(activeQuestion);
     const updatedQuestions = setQuestionTypeByIndex(questions, index, type);
     setQuestions(updatedQuestions);
-    saveBrickQuestions(updatedQuestions);
+    saveBrickQuestions(updatedQuestions, (brick2: any) => {
+      if(!activeQuestion.id) {
+        const postUpdatedQuestions = updatedQuestions;
+        postUpdatedQuestions[index].id = brick2.questions[index].id;
+        setQuestions(update(questions, { $set: postUpdatedQuestions }));
+        cashBuildQuestion(brickId, index);
+      }
+    });
   };
 
   const convertQuestionTypes = (type: QuestionTypeEnum) => {
