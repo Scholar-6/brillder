@@ -9,6 +9,7 @@ import { stripHtml } from "components/build/questionService/ConvertService";
 import DocumentWirisCKEditor from "components/baseComponents/ckeditor/DocumentWirisEditor";
 import AddAnswerButton from "components/build/baseComponents/addAnswerButton/AddAnswerButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 
 export interface ShortAnswerBuildProps extends UniqueComponentProps {
@@ -45,6 +46,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
     } else {
       setLimitOverflow(true);
     }
+    save();
   };
 
   const addShortAnswer = () => {
@@ -81,14 +83,11 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
     return (
       <div className={className} key={index}>
         {renderDeleteButton(index)}
-        <DocumentWirisCKEditor
+        <QuillEditor
           disabled={locked}
-          validationRequired={props.validationRequired}
-          editOnly={editOnly}
+          validate={props.validationRequired}
           data={answer.value}
           toolbar={["superscript", "subscript"]}
-          placeholder={"Enter Short Answer..."}
-          onBlur={() => save()}
           onChange={(value) => changed(answer, value)}
         />
       </div>

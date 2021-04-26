@@ -9,6 +9,7 @@ import { ChooseOneAnswer } from './types';
 import RemoveItemButton from "../components/RemoveItemButton";
 import SoundRecord from "../sound/SoundRecord";
 import RemoveButton from "../components/RemoveButton";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import YesNoDialog from "components/build/baseComponents/dialogs/YesNoDialog";
 
 
@@ -61,6 +62,8 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     answer.soundFile = "";
     answer.answerType = QuestionValueType.String;
     update();
+    onBlur();
+    save();
   }
 
   let containerClass = "";
@@ -124,17 +127,12 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           fileName={answer.valueFile}
           update={setImage}
         />
-        <DocumentWirisCKEditor
+        <QuillEditor
           disabled={locked}
-          editOnly={editOnly}
           data={answer.value}
-          toolbar={['latex']}
           placeholder="Enter Answer..."
-          validationRequired={validationRequired}
-          onBlur={() => {
-            onBlur();
-            save();
-          }}
+          toolbar={['latex']}
+          validate={validationRequired}
           onChange={value => onTextChanged(answer, value)}
         />
         <SoundRecord

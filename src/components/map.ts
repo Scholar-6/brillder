@@ -8,8 +8,8 @@ export const MainPage = '/home';
 
 export const buildBase = (brickId: number) => `${Build}/brick/` + brickId;
 
-export const ProposalBase = `${Build}/new-brick`;
-export const ProposalBase2 = `${Build}/brick/:brickId`;
+export const NewBrick = `${Build}/new-brick`;
+export const ProposalBase = (brickId: number) => `${Build}/brick/${brickId}`;
 export const BackToWorkPage = '/back-to-work';
 export const AssignmentsPage = '/assignments';
 export const AssignmentsClassPage = AssignmentsPage + '/:classId';
@@ -67,24 +67,22 @@ export const investigationSynthesisSuggestions = (brickId: number) => {
 }
 
 // proposal pages
-export const ProposalSubject = `${ProposalBase2}/subject`;
-export const ProposalTitle = `${ProposalBase2}/brick-title`;
-export const ProposalOpenQuestion = `${ProposalBase2}/open-question`;
-export const ProposalBrief = `${ProposalBase2}/brief`;
-export const ProposalPrep = `${ProposalBase2}/prep`;
-export const ProposalLength = `${ProposalBase2}/length`;
-export const ProposalReview = `${ProposalBase2}/plan`;
+export const ProposalSubject = (brickId: number) => `${ProposalBase(brickId)}/subject`;
+export const ProposalTitle = (brickId: number) => `${ProposalBase(brickId)}/brick-title`;
+export const ProposalOpenQuestion = (brickId: number) => `${ProposalBase(brickId)}/open-question`;
+export const ProposalBrief = (brickId: number) => `${ProposalBase(brickId)}/brief`;
+export const ProposalPrep = (brickId: number) => `${ProposalBase(brickId)}/prep`;
+export const ProposalLength = (brickId: number) => `${ProposalBase(brickId)}/length`;
+export const ProposalReview = (brickId: number) => `${ProposalBase(brickId)}/plan`;
 
 export const Proposal = (brickId: number) => {
   console.log(`${buildBase(brickId)}/plan`);
   return `${buildBase(brickId)}/plan`
 };
 
-export const ProposalReview2 = `${ProposalBase2}/plan`;
-
 // new brick link
-export const ProposalSubjectLink = `${ProposalBase}/subject`;
-export const ProposalTitleLink = `${ProposalBase}/brick-title`;
+export const ProposalSubjectLink = `${NewBrick}/subject`;
+export const ProposalTitleLink = `${NewBrick}/brick-title`;
 
 // play preview
 export const PlayPreviewBase = '/play-preview/brick';
@@ -137,6 +135,7 @@ export default {
   SelectSubjectPage,
   UserPreference,
 
+  NewBrick,
   ProposalBase,
   ProposalSubject,
   ProposalTitle,
@@ -145,7 +144,6 @@ export default {
   ProposalPrep,
   ProposalLength,
   ProposalReview,
-  ProposalReview2,
   ProposalSubjectLink,
   ProposalTitleLink,
 

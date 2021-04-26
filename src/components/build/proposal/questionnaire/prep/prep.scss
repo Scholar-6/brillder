@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .prep-page-questionary {
   .left-block {
@@ -26,6 +26,9 @@
       stroke-width: 1;
       height: 15vw;
     }
+    .image-caption {
+      color: var(--text-white);
+    }
   }
   .typing-text {
     top: 54%;
@@ -38,21 +41,11 @@
   .screen {
     overflow: hidden;
   }
-  .document-editor {
+  .quill-document-editor {
     margin-bottom: 1vh !important;
-    .ck.ck-button.ck-color-table__remove-color {
-      width: calc(100% - 0.4vw) !important;
-      .ck.ck-button__label {
-        font-size: 1.5vw !important;
-      }
-    }
-    .ck-content {
-      height: 29vh !important;
-      text-align: left !important;
-      p {
-        text-align: left !important;
-      }
-    }
+  }
+  .ql-editor {
+    height: 27.5vh !important;
   }
   .prep-bottom-help-text {
     text-align: center;

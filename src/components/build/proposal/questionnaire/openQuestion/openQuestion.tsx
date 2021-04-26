@@ -10,12 +10,14 @@ import Navigation from 'components/build/proposal/components/navigation/Navigati
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from "components/play/baseComponents/MathInHtml";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 interface OpenQuestionProps {
   baseUrl: string;
   selectedQuestion: any;
   canEdit: boolean;
   history: any;
+  updated: string;
   saveOpenQuestion(v: string): void;
 }
 
@@ -49,14 +51,14 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           <p className="sub-header">
             Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.
           </p>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!props.canEdit}
             data={selectedQuestion}
             placeholder="Enter Open Question(s)..."
             toolbar={[
               'bold', 'italic', 'latex'
             ]}
-            onBlur={() => { }}
+            showToolbar={true}
             onChange={saveOpenQuestion}
           />
           <NavigationButtons
@@ -69,7 +71,7 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           />
           <h2 className="pagination-text">2 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={HeadComponent} data={selectedQuestion} link="" />
+        <ProposalPhonePreview Component={HeadComponent} data={selectedQuestion} link="" updated={props.updated} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

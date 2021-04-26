@@ -10,12 +10,14 @@ import { ProposalStep, BrickLengthRoutePart } from "../../model";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 
 interface BriefProps {
   baseUrl: string;
   parentBrief: string;
   canEdit: boolean;
+  updated: string;
   saveBrief(brief: string): void;
 }
 
@@ -44,15 +46,15 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
             <SpriteIcon name="crosshair" />
           </div>
           <h1>Outline the purpose of this brick.</h1>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!canEdit}
             data={parentBrief}
-            link={true}
+            showToolbar={true}
+            allowLinks={true}
             placeholder="Enter Brief Here..."
             toolbar={[
               'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList'
             ]}
-            onBlur={() => { }}
             onChange={saveBrief}
           />
           <NavigationButtons
@@ -65,7 +67,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
           />
           <h2 className="pagination-text m-0">3 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={BriefPreviewComponent} data={parentBrief} />
+        <ProposalPhonePreview Component={BriefPreviewComponent} data={parentBrief} updated={props.updated} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

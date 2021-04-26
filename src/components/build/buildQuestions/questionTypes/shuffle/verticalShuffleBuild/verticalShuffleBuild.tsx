@@ -8,6 +8,7 @@ import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/Add
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import RemoveItemButton from '../../components/RemoveItemButton';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
@@ -45,6 +46,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     answer.valueFile = "";
     answer.answerType = QuestionValueType.String;
     update();
+    save();
   }
 
   const addAnswer = () => {
@@ -98,16 +100,15 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           fileName={answer.valueFile}
           update={setImage}
         />
-        <DocumentWirisCKEditor
+        <QuillEditor
           disabled={locked}
-          editOnly={editOnly}
           data={answer.value}
-          isValid={isValid}
+          validate={validationRequired}
           toolbar={['latex']}
+          isValid={isValid}
           placeholder={"Enter Answer " + (i + 1) + "..."}
           onBlur={() => {
             showSameAnswerPopup(i, state.list, openSameAnswerDialog);
-            save();
           }}
           onChange={value => changed(answer, value)}
         />

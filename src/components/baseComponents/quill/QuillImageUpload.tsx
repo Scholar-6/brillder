@@ -90,7 +90,7 @@ const imageUrlRegex = new RegExp(`${process.env.REACT_APP_BACKEND_HOST}/files/(.
 
 export default class ImageUpload {
     quill: Quill;
-    openDialog: (file?: File, data?: any) => void;
+    openDialog: (file?: File, data?: any, blot?: CustomImageBlot) => void;
 
     constructor(quill: Quill, options: any) {
         this.quill = quill;
@@ -100,22 +100,32 @@ export default class ImageUpload {
             toolbar.addHandler("image", this.uploadHandler.bind(this, toolbar.container));
         }
 
-        quill.on("selection-change", (range, oldRange) => {
-            if (!range) return;
-            const [leaf] = quill.getLeaf(range.index);
-            if (leaf instanceof CustomImageBlot) {
-                leaf.domNode.ondblclick = () => {
-                    const data = CustomImageBlot.value(leaf.domNode);
-                    this.existingImageSelected({ ...data, value: (data.url as string).match(imageUrlRegex)?.[1] });
-                }
-            }
+        quill.on("editor-change", () => {
+            quill.root.querySelectorAll<HTMLDivElement>("div.customImage.image-play-container2").forEach(el => {
+                el.ondblclick = () => {
+                    const blot = Quill.find(el) as CustomImageBlot;
+                    const data = CustomImageBlot.value(blot.domNode);
+                    this.existingImageSelected({ ...data, value: (data.url as string).match(imageUrlRegex)?.[1] }, blot);
+                };
+            })
+        })
 
-            if (!oldRange) return;
-            const [oldLeaf] = quill.getLeaf(oldRange.index);
-            if (oldLeaf instanceof CustomImageBlot) {
-                leaf.domNode.onclick = null;
-            }
-        });
+        // quill.on("selection-change", (range, oldRange) => {
+        //     if (!range) return;
+        //     const [leaf] = quill.getLeaf(range.index);
+        //     if (leaf instanceof CustomImageBlot) {
+        //         leaf.domNode.ondblclick = () => {
+        //             const data = CustomImageBlot.value(leaf.domNode);
+        //             this.existingImageSelected({ ...data, value: (data.url as string).match(imageUrlRegex)?.[1] });
+        //         }
+        //     }
+
+        //     if (!oldRange) return;
+        //     const [oldLeaf] = quill.getLeaf(oldRange.index);
+        //     if (oldLeaf instanceof CustomImageBlot) {
+        //         leaf.domNode.onclick = null;
+        //     }
+        // });
     }
 
     onImagePaste(node: any, delta: Delta) {
@@ -154,8 +164,8 @@ export default class ImageUpload {
         }
     }
 
-    existingImageSelected(data: any) {
-        this.openDialog(undefined, data);
+    existingImageSelected(data: any, blot: any) {
+        this.openDialog(undefined, data, blot);
     }
 
     async uploadImages(file: File, source: string, caption: string, align: ImageAlign, height: number) {
@@ -192,9 +202,7 @@ export default class ImageUpload {
         //this.quill.insertEmbed(range.index + 2, 'newline', '');
     }
 
-    async updateImage(data: any) {
-        const range = this.quill.getSelection(true);
-        const [leaf] = this.quill.getLeaf(range.index);
+    async updateImage(leaf: any, data: any) {
         if (leaf instanceof CustomImageBlot) {
             const leafData = CustomImageBlot.value(leaf.domNode);
             const newData = {
