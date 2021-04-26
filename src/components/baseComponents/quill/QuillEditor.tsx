@@ -25,11 +25,13 @@ interface QuillEditorProps {
     data?: string;
     disabled: boolean;
     placeholder?: string;
+    tabIndex?: number;
     allowLinks?: boolean;
     allowMediaEmbed?: boolean;
     validate?: boolean;
     isValid?: boolean | null;
     toolbar: string[];
+    enabledToolbarOptions?: string[];
     showToolbar?: boolean;
     className?: string;
     imageDialog?: boolean;
@@ -86,7 +88,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         setCurrentQuillId(uniqueId);
     }, [setCurrentQuillId, uniqueId])
 
-    const modules = {
+    const modules = React.useMemo(() => ({
         toolbar: (props.showToolbar ?? false) ? {
             container: `.quill-${uniqueId}`,
         } : false,
@@ -94,7 +96,15 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         mediaembed: props.allowMediaEmbed,
         imageupload: props.imageDialog,
         clipboard: true,
-    }
+        keyboard: {
+            bindings: {
+                tab: {
+                    key: "Tab",
+                    handler: () => true,
+                }
+            }
+        },
+    }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.imageDialog]);
     
     /*
     const toolbarItems: { [key: string]: any } = {
@@ -164,7 +174,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                     quill={quill}
                     quillId={uniqueId}
                     toolbar={props.toolbar}
-                    enabled={props.disabled ? [] : props.toolbar}
+                    enabled={props.disabled ? [] : (props.enabledToolbarOptions ?? props.toolbar)}
                 />
             }
             <ReactQuill
@@ -175,6 +185,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 onFocus={onFocus}
                 readOnly={props.disabled}
                 placeholder={props.placeholder}
+                tabIndex={props.tabIndex}
                 modules={modules}
                 ref={ref}
             />

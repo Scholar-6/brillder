@@ -185,8 +185,23 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                     data={parentState.title}
                     onChange={title => this.onTitleChange(title)}
                     placeholder="Enter Proposed Title Here..."
+                    tabIndex={-1}
                     disabled={!canEdit}
-                    toolbar={['italic']}
+                    showToolbar={true}
+                    toolbar={[
+                      "bold",
+                      "italic",
+                      "fontColor",
+                      "superscript",
+                      "subscript",
+                      "strikethrough",
+                      "latex",
+                      "bulletedList",
+                      "numberedList",
+                      "blockQuote",
+                      "image",
+                    ]}
+                    enabledToolbarOptions={['italic']}
                   />
                 </div>
                 <div className="audience-inputs">
