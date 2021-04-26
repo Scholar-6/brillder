@@ -8,6 +8,7 @@ import { SortCategory, QuestionValueType, SortAnswer } from 'components/interfac
 import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import { showSameAnswerPopup } from '../service/questionBuild';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import ValidationFailedDialog from 'components/baseComponents/dialogs/ValidationFailedDialog';
 
 export interface CategoriseData {
@@ -74,6 +75,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     answer.valueFile = '';
     answer.answerType = QuestionValueType.String;
     update();
+    save();
   }
 
   const addAnswer = (category: SortCategory) => {
@@ -91,6 +93,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   const categoryChanged = (category: any, value: string) => {
     category.name = value;
     update();
+    save();
   }
 
   const addCategory = () => {
@@ -154,12 +157,12 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
           </button>
         }
-        <DocumentWirisEditorComponent
+        <QuillEditor
           disabled={locked}
-          editOnly={editOnly}
           data={answer.value}
           placeholder="Enter Answer..."
           toolbar={['latex']}
+          validate={validationRequired}
           isValid={isValid}
           onBlur={() => {
             showSameAnswerPopup(i, category.answers, openSameAnswerDialog);
@@ -209,13 +212,12 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
               <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
             </button>
           }
-          <DocumentWirisEditorComponent
+          <QuillEditor
             disabled={locked}
-            editOnly={editOnly}
             data={category.name}
             placeholder="Enter Category Heading..."
             toolbar={['latex']}
-            validationRequired={validationRequired}
+            validate={validationRequired}
             onBlur={() => {
               checkCategoriesNames();
               save()

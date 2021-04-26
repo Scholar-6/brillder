@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .build-question-page {
   $left-sidebar-width: 27.5%;
@@ -40,7 +40,7 @@
     transform: rotate(2deg);
   }
 
-  .ck-placeholder:before {
+  .ql-blank:before {
     color: #aaa;
     font-family: $font-family-bold;
   }
@@ -426,10 +426,10 @@
 
 // question placeholder style
 .questions .drop-box {
-  .question-build-text-editor.first .ck-placeholder:before,
-  .unique-component .ck-placeholder:before,
-  .hint-container .ck-placeholder:before {
-    color: #ACACAC;
+  .question-build-text-editor.first .ql-blank:before,
+  .unique-component .ql-blank:before,
+  .hint-container .ql-blank:before {
+    color: #acacac;
     font-family: $font-family-bold;
   }
 }

@@ -23,6 +23,7 @@ export enum PlayButtonStatus {
   Valid
 };
 
+export const SubjectRoutePart = '/subject';
 export const TitleRoutePart = '/brick-title';
 export const OpenQuestionRoutePart = '/open-question';
 export const BrickLengthRoutePart = '/length';

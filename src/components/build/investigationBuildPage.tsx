@@ -66,6 +66,7 @@ import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import routes from "./routes";
+import playRoutes from 'components/play/routes';
 import { deleteQuestion } from "services/axios/brick";
 
 
@@ -385,7 +386,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     var index = getQuestionIndex(activeQuestion);
     const updatedQuestions = setQuestionTypeByIndex(questions, index, type);
     setQuestions(updatedQuestions);
-    saveBrickQuestions(updatedQuestions);
+    saveBrickQuestions(updatedQuestions, (brick2: any) => {
+      if(!activeQuestion.id) {
+        const postUpdatedQuestions = updatedQuestions;
+        postUpdatedQuestions[index].id = brick2.questions[index].id;
+        setQuestions(update(questions, { $set: postUpdatedQuestions }));
+        cashBuildQuestion(brickId, index);
+      }
+    });
   };
 
   const convertQuestionTypes = (type: QuestionTypeEnum) => {
@@ -519,7 +527,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         let buildQuestion = GetCashedBuildQuestion();
 
         if (isSynthesisPage) {
-          history.push(`/play-preview/brick/${brickId}/intro`);
+          history.push(`/play-preview/brick/${brickId}` + playRoutes.PlayNewPrepLastPrefix);
         } else if (
           buildQuestion && buildQuestion.questionNumber &&
           buildQuestion.brickId === brickId &&
@@ -527,7 +535,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         ) {
           history.push(`/play-preview/brick/${brickId}/live`);
         } else {
-          history.push(`/play-preview/brick/${brickId}/intro`);
+          history.push(`/play-preview/brick/${brickId}` + playRoutes.PlayNewPrepLastPrefix);
         }
       } else {
         setProposalResult({ ...proposalRes, isOpen: true });

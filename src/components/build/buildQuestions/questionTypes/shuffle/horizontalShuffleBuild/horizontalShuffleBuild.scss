@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .horizontal-shuffle-build {
   @extend %textCenter;
@@ -8,10 +8,18 @@
     position: relative;
     width: 100%;
     margin: 0;
-    .document-editor {
-      .ck-editor {
-        .ck-content {
-          padding-left: 1vw;
+    .quill-document-editor {
+      .quill {
+        height: 100%;
+        .ql-container {
+          .ql-editor {
+            padding-top: 5vh;
+            padding-left: 0.5vw;
+            padding-right: 3vw;
+            &.ql-blank::before {
+              text-align: left;
+            }
+          }
         }
       }
     }

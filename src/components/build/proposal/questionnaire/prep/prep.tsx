@@ -11,12 +11,14 @@ import Navigation from 'components/build/proposal/components/navigation/Navigati
 import YoutubeAndMathQuote from 'components/play/baseComponents/YoutubeAndMathQuote';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { BrickLengthEnum } from "model/brick";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 
 interface PrepProps {
   parentPrep: string;
   canEdit: boolean;
   baseUrl: string;
+  updated: string;
   brickLength: BrickLengthEnum;
   savePrep(prep: string): void;
   saveBrick(prep: string): void;
@@ -72,18 +74,17 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             <img className="size2" alt="titles" src="/images/new-brick/prep.png" />
           </div>
           <h1>Add engaging and relevant <br /> preparatory material.</h1>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!props.canEdit}
             data={parentPrep}
+            showToolbar={true}
+            allowMediaEmbed={true}
+            allowLinks={true}
+            imageDialog={true}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
-            mediaEmbed={true}
-            link={true}
             toolbar={[
-              'bold', 'italic', 'fontColor', 'latex',
-              'bulletedList', 'numberedList', 'uploadImageCustom'
+              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
             ]}
-            blockQuote={true}
-            onBlur={() => { }}
             onChange={savePrep}
           />
           {isVisible() &&
@@ -101,7 +102,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
           />
           <h2 className="pagination-text">4 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={PrepPreviewComponent} data={parentPrep} />
+        <ProposalPhonePreview Component={PrepPreviewComponent} data={parentPrep} updated={props.updated} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

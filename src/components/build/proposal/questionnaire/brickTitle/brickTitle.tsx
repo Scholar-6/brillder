@@ -22,6 +22,7 @@ import AddSubjectDialog from "./AddSubjectDialog";
 import KeyWordsComponent from "./KeyWords";
 import DifficultySelect from "./DifficultySelect";
 import KeyWordsPlay from "./KeywordsPlay";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
@@ -81,7 +82,7 @@ const BrickTitlePreviewComponent: React.FC<PreviewProps> = (props) => {
       </Grid>
       <div className="brick-preview-container">
         <div className={"brick-title uppercase " + (title ? 'topic-filled' : '')}>
-          {title ? title : 'BRICK TITLE'}
+          {title ? <div dangerouslySetInnerHTML={{ __html: title }} /> : 'BRICK TITLE'}
         </div>
         <div className="brick-topics">
           {keywords && 
@@ -113,6 +114,11 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
     const title = event.target.value.substr(0, 49);
     this.props.saveTitles({ ...this.props.parentState, [value]: title });
   };
+
+  onTitleChange(value: string) {
+    const title = value.substr(0, 49);
+    this.props.saveTitles({ ...this.props.parentState, title });
+  }
 
   moveToRef(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, refName: RefName) {
     if (enterPressed(e)) {
@@ -175,12 +181,27 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <form>
               <Grid item className="input-container">
                 <div className="audience-inputs">
-                  <Input
-                    disabled={!canEdit}
-                    value={parentState.title}
-                    onKeyUp={e => this.moveToRef(e, RefName.subTitleRef)}
-                    onChange={e => this.onChange(e, "title")}
+                  <QuillEditor
+                    data={parentState.title}
+                    onChange={title => this.onTitleChange(title)}
                     placeholder="Enter Proposed Title Here..."
+                    tabIndex={-1}
+                    disabled={!canEdit}
+                    showToolbar={true}
+                    toolbar={[
+                      "bold",
+                      "italic",
+                      "fontColor",
+                      "superscript",
+                      "subscript",
+                      "strikethrough",
+                      "latex",
+                      "bulletedList",
+                      "numberedList",
+                      "blockQuote",
+                      "image",
+                    ]}
+                    enabledToolbarOptions={['italic']}
                   />
                 </div>
                 <div className="audience-inputs">
@@ -196,7 +217,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                 ?
                 <div className="centered">
                   <PrevButton
-                    to={map.ProposalSubject}
+                    to={baseUrl + "/subject"}
                     isActive={true}
                     onHover={() => { }}
                     onOut={() => { }}
@@ -222,7 +243,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
               </div>
             </div>
           </Grid>
-          <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
+          <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} updated={parentState.updated} />
           <Hidden only={['xs', 'sm']}>
             <div className="red-right-block"></div>
           </Hidden>

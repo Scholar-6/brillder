@@ -29,6 +29,8 @@ import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
 import BuildCompletePage from './buildComplete/BuildCompletePage';
 import FinalStep from './finalStep/FinalStep';
 import { calcBrickLiveAttempt, calcBrickReviewAttempt } from 'components/play/services/scoring';
+import routes from './routes';
+import NewPrep from 'components/play/newPrep/NewPrep';
 
 
 export interface BrickAttempt {
@@ -107,21 +109,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const finishBrick = () => {
-    /* 25/09 change to use scoring service
-    // If no answer given or no mark provided for question then return acc accumulated score +0 so
-    // it still has an integer value, else return acc + additional mark
-    let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
-    // MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
-    // is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.
-    let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
-    var ba: BrickAttempt = {
-      brick,
-      score: score,
-      maxScore: maxScore,
-      student: null,
-      answers: attempts
-    };
-    */
     const ba = calcBrickLiveAttempt(brick, attempts);
     setStatus(PlayStatus.Review);
     setBrickAttempt(ba);
@@ -130,16 +117,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const finishReview = () => {
-    /* 25/09 change to use scoring service
-    let score = reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0);
-    let maxScore = reviewAttempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
-    var ba: BrickAttempt = {
-      score,
-      maxScore,
-      oldScore: brickAttempt.score,
-      answers: reviewAttempts
-    };
-    */
     const ba = calcBrickReviewAttempt(brick, reviewAttempts, brickAttempt);
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
@@ -162,12 +139,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (isMobile) {
       hideMobileHeader(true);
     }
-    history.push(`/play-preview/brick/${brick.id}/live`);
+    history.push(routes.previewLive(brick.id));
     setSidebar(true);
   }
 
   const moveToReview = () => {
-    history.push(`/play-preview/brick/${brick.id}/review`);
+    history.push(routes.previewReview(brick.id));
   }
 
   const moveToBuild = () => {
@@ -257,6 +234,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             moveToBuild={moveToBuild}
           />
           <Switch>
+            <Route exact path={routes.newPrepRoute}>
+              <NewPrep brick={brick} moveNext={moveToLive} briefExpanded={true} />
+            </Route>
             <Route exac path="/play-preview/brick/:brickId/intro">
               <Introduction
                 location={location}
@@ -268,7 +248,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 moveNext={moveToLive}
               />
             </Route>
-            <Route exac path="/play-preview/brick/:brickId/live">
+            <Route exac path={routes.preLiveRoute}>
               <Live
                 status={status}
                 attempts={attempts}

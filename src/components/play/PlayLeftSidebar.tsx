@@ -110,10 +110,14 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   renderToggleButton() {
     if (this.props.sidebarRolledUp) {
-      if (this.isLive() || this.isProvisional() || this.isSynthesis() || this.isEnding()) {
-        return <div />
+      if (this.isCover()) {
+        return (
+          <div className="maximize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
+            <SpriteIcon name="maximize" className="active" />
+          </div>
+        );
       }
-      return "";
+      return <div />
     }
     return (
       <div className="maximize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>

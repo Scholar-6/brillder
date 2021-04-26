@@ -14,7 +14,7 @@ import "./QuillImageUpload";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
-import ImageUpload from "./QuillImageUpload";
+import ImageUpload, { CustomImageBlot } from "./QuillImageUpload";
 import QuillCustomClipboard from "./QuillCustomClipboard";
 
 function randomEditorId() {
@@ -25,11 +25,13 @@ interface QuillEditorProps {
     data?: string;
     disabled: boolean;
     placeholder?: string;
+    tabIndex?: number;
     allowLinks?: boolean;
     allowMediaEmbed?: boolean;
     validate?: boolean;
     isValid?: boolean | null;
     toolbar: string[];
+    enabledToolbarOptions?: string[];
     showToolbar?: boolean;
     className?: string;
     imageDialog?: boolean;
@@ -62,13 +64,15 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
     const [imageDialogFile, setImageDialogFile] = React.useState<File>();
     const [imageDialogData, setImageDialogData] = React.useState<any>(null);
+    const [imageDialogBlot, setImageDialogBlot] = React.useState<CustomImageBlot>();
     const [imageModule, setImageModule] = React.useState<ImageUpload>();
     React.useEffect(() => {
         if(imageModule) {
-            imageModule.openDialog = (file?: File, data?: any) => {
+            imageModule.openDialog = (file?: File, data?: any, blot?: CustomImageBlot) => {
                 setImageDialogFile(file);
                 setImageDialogData(data);
                 setImageDialogOpen(true);
+                setImageDialogBlot(blot);
             }
         }
     }, [imageModule]);
@@ -84,7 +88,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         setCurrentQuillId(uniqueId);
     }, [setCurrentQuillId, uniqueId])
 
-    const modules = {
+    const modules = React.useMemo(() => ({
         toolbar: (props.showToolbar ?? false) ? {
             container: `.quill-${uniqueId}`,
         } : false,
@@ -92,7 +96,15 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         mediaembed: props.allowMediaEmbed,
         imageupload: props.imageDialog,
         clipboard: true,
-    }
+        keyboard: {
+            bindings: {
+                tab: {
+                    key: "Tab",
+                    handler: () => true,
+                }
+            }
+        },
+    }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.imageDialog]);
     
     /*
     const toolbarItems: { [key: string]: any } = {
@@ -162,7 +174,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                     quill={quill}
                     quillId={uniqueId}
                     toolbar={props.toolbar}
-                    enabled={props.disabled ? [] : props.toolbar}
+                    enabled={props.disabled ? [] : (props.enabledToolbarOptions ?? props.toolbar)}
                 />
             }
             <ReactQuill
@@ -173,6 +185,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 onFocus={onFocus}
                 readOnly={props.disabled}
                 placeholder={props.placeholder}
+                tabIndex={props.tabIndex}
                 modules={modules}
                 ref={ref}
             />
@@ -190,7 +203,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                     }}
                     updateData={(source, caption, align, height) => {
                         if(imageModule) {
-                            imageModule.updateImage.bind(imageModule)({source, caption, align, height});
+                            imageModule.updateImage.bind(imageModule)(imageDialogBlot, {source, caption, align, height});
                         }
                         setImageDialogOpen(false);
                         setImageDialogFile(undefined);
