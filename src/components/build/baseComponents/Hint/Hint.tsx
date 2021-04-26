@@ -8,6 +8,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import './Hint.scss';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import { QuestionTypeEnum } from 'model/question';
 
 
@@ -93,6 +94,7 @@ const HintComponent: React.FC<HintProps> = ({
     if (locked) { return; }
     setState({ ...state, value });
     onChange({ ...state, value });
+    save();
   }
 
   const onHintListChanged = (value: string, index: number) => {
@@ -100,6 +102,7 @@ const HintComponent: React.FC<HintProps> = ({
     let { list } = state;
     list[index] = value;
     onChange({ ...state, list });
+    save();
   }
 
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
@@ -113,17 +116,14 @@ const HintComponent: React.FC<HintProps> = ({
     if (state.status === HintStatus.All) {
       return (
         <div className="hint-container">
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={locked}
-            editOnly={editOnly}
             data={state.value}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
               'latex', 'insertTable', 'uploadImageCustom'
             ]}
-            placeholder="Enter Hint..."
-            validationRequired={validationRequired}
-            onBlur={() => save()}
+            validate={validationRequired}
             onChange={onHintChanged}
           />
         </div>
@@ -150,17 +150,14 @@ const HintComponent: React.FC<HintProps> = ({
     for (let i = 0; i < props.count; i++) {
       answerHints.push(
         <div className="hint-container" key={i}>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={locked}
-            editOnly={editOnly}
             data={state.list[i]}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
               'latex', 'imageUploadCustom'
             ]}
-            placeholder="Enter Hint"
-            validationRequired={validationRequired}
-            onBlur={() => save()}
+            validate={validationRequired}
             onChange={(v: any) => { onHintListChanged(v, i) }}
           />
         </div>

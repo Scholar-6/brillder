@@ -22,6 +22,8 @@ import FixedTextComponent from "../components/Text/FixedText";
 import { TextComponentObj } from "../components/Text/interface";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import DeleteDialog from "components/build/baseComponents/dialogs/DeleteDialog";
+import { QuillEditorContext } from "components/baseComponents/quill/QuillEditorContext";
+import QuillGlobalToolbar from "components/baseComponents/quill/QuillGlobalToolbar";
 
 
 type QuestionComponentsProps = {
@@ -60,6 +62,7 @@ const QuestionComponents = ({
   const [removeIndex, setRemovedIndex] = useState(-1);
   const [dialogOpen, setDialog] = useState(false);
   const [sameAnswerDialogOpen, setSameAnswerDialog] = useState(false);
+  const editorIdState = React.useState("");
 
   useEffect(() => {
     setComponents(Object.assign([], question.components) as any[]);
@@ -185,44 +188,53 @@ const QuestionComponents = ({
 
   return (
     <div className="questions">
-      <Grid container direction="row" className={validateDropBox(firstComponent)}>
-        <FixedTextComponent
-          locked={locked}
-          editOnly={editOnly}
-          questionId={question.id}
-          data={firstComponent}
-          save={saveBrick}
-          validationRequired={validationRequired}
-          updateComponent={updateFirstComponent}
+      <QuillEditorContext.Provider value={editorIdState}>
+        <QuillGlobalToolbar
+          disabled={locked}
+          availableOptions={[
+            'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
+            'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
+          ]}
         />
-      </Grid>
-      <ReactSortable
-        list={components}
-        animation={150}
-        group={{ name: "cloning-group-name", pull: "clone" }}
-        setList={setList}
-      >
-        {
-          components.map((comp, i) => (
-            <Grid key={`${questionId}-${i}`} container direction="row" className={validateDropBox(comp)}>
-              {renderDropBox(comp, i)}
-            </Grid>
-          ))
-        }
-      </ReactSortable>
-      <DeleteDialog
-        isOpen={dialogOpen}
-        title="Permanently delete<br />this component?"
-        index={removeIndex}
-        submit={removeInnerComponent}
-        close={hideDialog}
-      />
-      <ValidationFailedDialog
-        isOpen={sameAnswerDialogOpen}
-        header="Looks like some answers are the same."
-        label="Correct answers could be marked wrong. Please make sure all answers are different."
-        close={hideSameAnswerDialog}
-      />
+        <Grid container direction="row" className={validateDropBox(firstComponent)}>
+          <FixedTextComponent
+            locked={locked}
+            editOnly={editOnly}
+            questionId={question.id}
+            data={firstComponent}
+            save={saveBrick}
+            validationRequired={validationRequired}
+            updateComponent={updateFirstComponent}
+          />
+        </Grid>
+        <ReactSortable
+          list={components}
+          animation={150}
+          group={{ name: "cloning-group-name", pull: "clone" }}
+          setList={setList}
+        >
+          {
+            components.map((comp, i) => (
+              <Grid key={`${questionId}-${i}`} container direction="row" className={validateDropBox(comp)}>
+                {renderDropBox(comp, i)}
+              </Grid>
+            ))
+          }
+        </ReactSortable>
+        <DeleteDialog
+          isOpen={dialogOpen}
+          title="Permanently delete<br />this component?"
+          index={removeIndex}
+          submit={removeInnerComponent}
+          close={hideDialog}
+        />
+        <ValidationFailedDialog
+          isOpen={sameAnswerDialogOpen}
+          header="Looks like some answers are the same."
+          label="Correct answers could be marked wrong. Please make sure all answers are different."
+          close={hideSameAnswerDialog}
+        />
+      </QuillEditorContext.Provider>
     </div>
   );
 }
