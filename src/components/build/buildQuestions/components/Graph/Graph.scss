@@ -1,48 +1,48 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .question-component-graph-container {
-    @extend %themeRadius;
+  @extend %themeRadius;
 
-    height: 20vw;
+  height: 20vw;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--tab-gray);
+
+  .question-component-graph-header {
+    @extend %textCenter;
+    color: #aaa;
+    font-size: 1.3vw;
+    color: var(--theme-dark-blue);
+    font-family: "Brandon Grotesque Bold";
+  }
+
+  .question-component-graph {
+    flex-grow: 1;
+  }
+
+  .question-component-graph-settings {
+    padding: 0.5vw;
     display: flex;
-    flex-direction: column;
-    background-color: var(--tab-gray);
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
 
-    .question-component-graph-header {
-        @extend %textCenter;
-        color: #aaa;
-        font-family: "Brandon Grotesque Bold";
-        font-size: 1vw;
-        padding: 0.5vw;
+    .MuiToggleButton-root {
+      color: var(--theme-dark-blue);
+
+      &.Mui-disabled {
+        color: var(--dark-gray);
+      }
     }
-
-    .question-component-graph {
-        flex-grow: 1;
-    }
-
-    .question-component-graph-settings {
-        padding: 0.5vw;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        align-items: center;
-
-        .MuiToggleButton-root {
-            color: var(--theme-dark-blue);
-
-            &.Mui-disabled {
-                color: var(--dark-gray);
-            }
-        }
-    }
+  }
 }
 
 .fx {
-    font-family: "Brandon Grotesque Regular";
-    text-transform: none;
-    text-anchor: middle;
-    font-size: 45%;
+  font-family: "Brandon Grotesque Regular";
+  text-transform: none;
+  text-anchor: middle;
+  font-size: 45%;
 }

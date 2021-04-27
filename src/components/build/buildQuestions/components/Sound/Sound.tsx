@@ -135,6 +135,9 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
     
     return (
       <div className="react-recording" onClick={this.props.onFocus}>
+        <div className="text-label-container">
+          Sound
+        </div>
         <Dropzone
           locked={locked}
           status={status}
