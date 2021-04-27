@@ -28,4 +28,11 @@
       background: var(--theme-orange);
     }
   }
+  &.lines-inline {
+    .line {
+      overflow-x: auto;
+      white-space: nowrap;
+      max-width: unset;
+    }
+  }
 }
