@@ -181,12 +181,24 @@
       max-width: $question-build-width;
       min-width: $question-build-width;
       max-height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
-      border: 0.13vw solid var(--tab-gray);
-      background-color: var(--white);
-      border-radius: 0.6vw;
-      padding: 0.2vw 0.2vw 0 0.2vw;
+      position: relative;
+      transform: translateZ(0);
+      background: var(--tab-gray);
+      border-radius: $editor-radius;
+
+      .questions {
+        top: calc(1.9vw + 2vh);
+        margin-left: 0.2vw;
+        display: block;
+        width: calc(100% - 0.4vw);
+        padding-left: 0.2vw;
+        padding-right: 0.2vw;
+        background: white;
+        height: calc(100% - 1.9vw - 2vh - 0.3vw) !important;
+        overflow: auto;
+        border-radius: 0.4vw;
+        overflow-x: hidden;
+      }
     }
 
     .parent-left-sidebar {
