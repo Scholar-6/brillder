@@ -206,6 +206,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       ]}
                       imageDialog={true}
                       allowMediaEmbed={true}
+                      allowLinks={true}
                     />
                   </div>
                 </Grid>

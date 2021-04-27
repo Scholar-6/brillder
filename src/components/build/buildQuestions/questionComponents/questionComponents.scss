@@ -3,9 +3,14 @@
 @import "src/assets/sass/partials/extensions";
 
 .questions {
+  padding-top: 0.2vw;
+  padding-bottom: 0.2vw;
   width: 100%;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: visible;
+  overflow-y: auto;
   .ck.ck-dropdown.ck-color-ui-dropdown {
     padding: 0 !important;
     margin: 0 !important;
@@ -63,7 +68,6 @@
     font-family: $font-family-regular;
   }
 }
-
 
 .unique-component {
   margin: 0.5vh 0;
@@ -175,36 +179,35 @@
 .missing-word-build .invalid-answer,
 .unique-component.invalid-answer {
   .answer-image-drop-button:hover {
-      span {
-        color: var(--white) !important;
-      }
-      .plus-image {
-        color: var(--white) !important;
-      }
+    span {
+      color: var(--white) !important;
     }
-    .sound-record-button:hover {
-      svg {
-        color: var(--white) !important;
-      }
+    .plus-image {
+      color: var(--white) !important;
     }
-    .right-top-icon {
-      opacity: 1;
+  }
+  .sound-record-button:hover {
+    svg {
+      color: var(--white) !important;
+    }
+  }
+  .right-top-icon {
+    opacity: 1;
+    color: var(--dark-gray) !important;
+
+    .back-button {
       color: var(--dark-gray) !important;
+    }
 
+    &:hover {
+      opacity: 1 !important;
+      color: var(--white) !important;
       .back-button {
-        color: var(--dark-gray) !important;
-      }
-   
-      &:hover {
-        opacity: 1 !important;
         color: var(--white) !important;
-        .back-button {
-          color: var(--white) !important;
-        }
       }
     }
+  }
 }
-
 
 .unique-component-wrapper {
   margin: #{$editor-spacing} 0;
@@ -213,6 +216,17 @@
   width: 100%;
   background: var(--tab-gray);
   @extend %themeRadius;
+  .red-build-title {
+    background: var(--theme-orange);
+    color: var(--white);
+    font-size: 1.3vw;
+    font-family: $font-family-bold;
+    margin-left: -0.6vw;
+    border-top-left-radius: 0.6vw;
+    border-top-right-radius: 0.6vw;
+    width: calc(100% + 1.2vw);
+    text-align: center;
+  }
   .unique-component {
     .ql-editor {
       background: var(--solitude-light) !important;

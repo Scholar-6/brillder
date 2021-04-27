@@ -10,6 +10,7 @@ import "./QuillLatex";
 import "./QuillAutoLink";
 import "./QuillMediaEmbed";
 import "./QuillCustomClipboard";
+import "./QuillKeyboard";
 import "./QuillImageUpload";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";
@@ -86,7 +87,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
 
     const onFocus = React.useCallback(() => {
         setCurrentQuillId(uniqueId);
-    }, [setCurrentQuillId, uniqueId])
+    }, [setCurrentQuillId, uniqueId]);
 
     const modules = React.useMemo(() => ({
         toolbar: (props.showToolbar ?? false) ? {
@@ -96,14 +97,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         mediaembed: props.allowMediaEmbed,
         imageupload: props.imageDialog,
         clipboard: true,
-        keyboard: {
-            bindings: {
-                tab: {
-                    key: "Tab",
-                    handler: () => true,
-                }
-            }
-        },
+        keyboard: true,
     }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.imageDialog]);
     
     /*

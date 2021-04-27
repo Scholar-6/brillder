@@ -187,15 +187,15 @@ const QuestionComponents = ({
   }
 
   return (
-    <div className="questions">
-      <QuillEditorContext.Provider value={editorIdState}>
-        <QuillGlobalToolbar
-          disabled={locked}
-          availableOptions={[
-            'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-            'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
-          ]}
-        />
+    <QuillEditorContext.Provider value={editorIdState}>
+      <QuillGlobalToolbar
+        disabled={locked}
+        availableOptions={[
+          'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
+          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
+        ]}
+      />
+      <div className="questions">
         <Grid container direction="row" className={validateDropBox(firstComponent)}>
           <FixedTextComponent
             locked={locked}
@@ -234,8 +234,8 @@ const QuestionComponents = ({
           label="Correct answers could be marked wrong. Please make sure all answers are different."
           close={hideSameAnswerDialog}
         />
-      </QuillEditorContext.Provider>
-    </div>
+      </div>
+    </QuillEditorContext.Provider>
   );
 }
 
