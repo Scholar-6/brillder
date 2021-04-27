@@ -11,6 +11,7 @@ class QuillKeyboard extends Keyboard {
         };
         super(quill, options);
 
+        // hyphen to dash
         this.addBinding({
             key: " ",
             prefix: / -/,
@@ -22,6 +23,21 @@ class QuillKeyboard extends Keyboard {
                 quill.insertText(range.index - 2, "—", "api");
             }
         });
+
+        // straight quotes to curly quotes
+        this.addBinding({
+            key: " ",
+            prefix: /"(.*?)"/,
+            handler: (range: any, context: { prefix: string }) => {
+                const prefixMatch = context.prefix.match(/"(.*)"/)!;
+                const newText = `“${prefixMatch[1]}” `;
+
+                quill.updateContents(new Delta()
+                    .retain(range.index - prefixMatch[0].length)
+                    .delete(prefixMatch[0].length)
+                    .insert(newText));
+            }
+        })
     }
 }
 Quill.register("modules/keyboard", QuillKeyboard);
