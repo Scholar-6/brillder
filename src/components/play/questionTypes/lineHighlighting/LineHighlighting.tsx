@@ -128,8 +128,15 @@ class LineHighlighting extends CompComponent<
       );
     }
 
+    let className = 'question-unique-play line-highlighting-play';
+    if (this.props.component.isPoem) {
+      className += ' lines-inline'
+    } else {
+      className += ' break-lines';
+    }
+
     return (
-      <div className="question-unique-play line-highlighting-play">
+      <div className={className}>
         <p><span className="help-text">Click to highlight.</span></p>
         <div className="lines-container">
           {component.lines.map((line: any, index: number) => (
