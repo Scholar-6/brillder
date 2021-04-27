@@ -1372,3 +1372,12 @@ $new-play-height: calc(100vh - #{$play-footer-height} - #{$progress-bar-height})
 .play-preview-pages .sorted-row .brick-row-container.real-introduction-page .brick-container {
   height: 100% !important;
 }
+
+// words
+.play-preview-pages .sorted-row .words-container .word {
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
+  border-radius: 0.5vw;
+}
