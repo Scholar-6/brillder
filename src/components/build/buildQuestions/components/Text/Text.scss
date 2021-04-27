@@ -1,41 +1,10 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .question-build-text-editor {
   position: relative;
   width: 100%;
-  .ck-toolbar {
-    width: calc(100% - 2vw) !important;
-    .ck.ck-toolbar__items {
-      .ck-button {
-        $size: 1.42vw;
-        height: $size;
-        width: $size;
-        min-width: $size;
-        max-width: $size;
-      }
-      .ck-color-grid__tile {
-        $size: 1.25vw;
-        min-height: $size;
-        max-height: $size;
-        min-width: $size;
-        max-width: $size;
-        border-radius: 0.15vw !important;
-      }
-    }
-  }
-  .ck-editor {
-    width: 100% !important;
-    .ck-content {
-      background-color: var(--tab-gray);
-      padding: 0.5vw !important;
-      text-align: left !important;
-      border-top-left-radius: 0 !important;
-      border-top-right-radius: 0 !important;
-      min-height: 8vh;
-    }
-  }
   .text-label-container {
     margin: 0 60%;
     .text-label {
@@ -47,5 +16,22 @@
       height: 5.5vh;
       font-size: 1.1vw;
     }
+  }
+  .quill-document-editor .ql-container .ql-editor {
+    border-bottom-left-radius: $editor-radius;
+    border-bottom-right-radius: $editor-radius;
+  }
+
+  .text-label-container {
+    margin-left: 0 !important;
+    width: 100%;
+    text-align: center;
+    border-top-left-radius: $editor-radius;
+    border-top-right-radius: $editor-radius;
+    background: var(--tab-gray);
+
+    color: var(--theme-dark-blue);
+    font-size: 1.3vw;
+    font-family: $font-family-bold;
   }
 }

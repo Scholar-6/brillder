@@ -1,0 +1,22 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.build-question-page .image-drag-n-drop {
+  .text-label-container {
+    width: 100%;
+    text-align: center;
+    border-top-left-radius: $editor-radius;
+    border-top-right-radius: $editor-radius;
+    background: var(--tab-gray);
+
+    color: var(--theme-dark-blue);
+    font-size: 1.3vw;
+    font-family: $font-family-bold;
+  }
+  .dropzone {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    background: var(--solitude-light) !important;
+  }
+}
