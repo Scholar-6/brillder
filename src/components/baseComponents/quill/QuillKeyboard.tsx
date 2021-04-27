@@ -24,20 +24,35 @@ class QuillKeyboard extends Keyboard {
             }
         });
 
-        // straight quotes to curly quotes
+        // straight quotes to curly quotes: double
         this.addBinding({
             key: " ",
-            prefix: /"(.*?)"/,
+            prefix: /(^| )"(.*?)"/,
             handler: (range: any, context: { prefix: string }) => {
-                const prefixMatch = context.prefix.match(/"(.*)"/)!;
-                const newText = `“${prefixMatch[1]}” `;
+                const prefixMatch = context.prefix.match(/(^| )"(.*)"/)!;
+                const newText = `${prefixMatch[1]}“${prefixMatch[2]}” `;
 
                 quill.updateContents(new Delta()
                     .retain(range.index - prefixMatch[0].length)
                     .delete(prefixMatch[0].length)
                     .insert(newText));
             }
-        })
+        });
+
+        // straight quotes to curly quotes: single
+        this.addBinding({
+            key: " ",
+            prefix: /(^| )'(.*?)'/,
+            handler: (range: any, context: { prefix: string }) => {
+                const prefixMatch = context.prefix.match(/(^| )'(.*)'/)!;
+                const newText = `${prefixMatch[1]}‘${prefixMatch[2]}’ `;
+
+                quill.updateContents(new Delta()
+                    .retain(range.index - prefixMatch[0].length)
+                    .delete(prefixMatch[0].length)
+                    .insert(newText));
+            }
+        });
     }
 }
 Quill.register("modules/keyboard", QuillKeyboard);
