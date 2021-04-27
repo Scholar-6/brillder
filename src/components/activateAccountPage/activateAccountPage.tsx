@@ -108,7 +108,7 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
       alignItems="center"
     >
       {valid ? <>
-        <Hidden only={["xs"]}>
+        <Hidden>
           <div className="choose-login-desktop">
             <Grid container direction="row" className="first-row">
               <div className="first-col"></div>
