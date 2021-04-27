@@ -10,7 +10,6 @@ import HighlightButton from '../components/HighlightButton';
 import LineStyleDialog from './LineStyleDialog';
 
 
-
 export interface WordHighlightingData {
   text: string;
   isPoem: boolean;
