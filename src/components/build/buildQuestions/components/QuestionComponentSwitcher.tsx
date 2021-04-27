@@ -84,6 +84,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     if (InnerComponent) {
       return (
         <div className="unique-component-wrapper">
+          <div className="red-build-title">Answers</div>
           <InnerComponent
             locked={locked}
             editOnly={editOnly}

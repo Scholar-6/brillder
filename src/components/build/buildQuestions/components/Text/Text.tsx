@@ -28,6 +28,9 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, d
 
   return (
     <div className="question-build-text-editor" onFocus={props.onFocus}>
+      <div className="text-label-container">
+        Text
+      </div>
       <QuillEditor
         disabled={locked}
         data={data.value}
