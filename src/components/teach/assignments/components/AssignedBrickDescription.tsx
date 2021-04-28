@@ -9,6 +9,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { archiveAssignment, sendAssignmentReminder } from "services/axios/brick";
 import { getTotalStudentsCount } from "../service/service";
 import BrickTitle from "components/baseComponents/BrickTitle";
+import ArchiveWarningDialog from "components/baseComponents/dialogs/ArchiveWarningDialog";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
@@ -26,6 +27,7 @@ interface AssignedDescriptionProps {
 }
 
 interface State {
+  warningOpen: boolean;
   archiveHovered: boolean;
 }
 
@@ -34,6 +36,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     super(props);
 
     this.state = {
+      warningOpen: false,
       archiveHovered: false
     }
   }
@@ -184,6 +187,15 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     }
   }
 
+  checkArchive() {
+    const completed = this.isCompleted();
+    if (completed) {
+      this.archiveAssignment();
+    } else {
+      this.setState({warningOpen: true});
+    }
+  }
+
   renderNoAttempt() {
     return (
       <div className="status-text-centered">
@@ -254,8 +266,8 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           {this.renderStudentStatus()}
         </div>
         {!this.props.isArchive &&
-          <div className={`teach-brick-actions-container ${this.isCompleted() ? 'completed' : ''}`}>
-            <div className="archive-button-container" onClick={this.archiveAssignment.bind(this)}>
+          <div className={`teach-brick-actions-container completed`}>
+            <div className="archive-button-container" onClick={this.checkArchive.bind(this)}>
               <div className="green-hover">
                 <div />
               </div>
@@ -263,8 +275,13 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
             </div>
             <div className="css-custom-tooltip">
               Archive brick
-          </div>
+            </div>
           </div>}
+          <ArchiveWarningDialog
+            isOpen={this.state.warningOpen}
+            submit={this.archiveAssignment.bind(this)}
+            close={() => this.setState({ warningOpen: false})}
+          />
       </div>
     );
   }
