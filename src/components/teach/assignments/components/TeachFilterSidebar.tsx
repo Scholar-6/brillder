@@ -306,7 +306,7 @@ class TeachFilterSidebar extends Component<
          <Steps
           enabled={this.props.isNewTeacher}
           steps={[{
-            element: '.classes-box .index-box',
+            element: '.classes-box',
             intro: `<p>Invited students will remain amber until they accept to join your class</p>`,
           },{
             element: '.classes-box',
