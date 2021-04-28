@@ -54,3 +54,11 @@ export const assignToClassByEmails = async (classroom: ClassroomApi, emails: str
     return null;
   }
 }
+
+export const resendInvitation = async (classroom: ClassroomApi, email: string) => {
+  try {
+    return await post<any>(`/classrooms/students/${classroom.id}/resend`, { email });
+  } catch {
+    return null;
+  }
+}
