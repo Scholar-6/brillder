@@ -41,5 +41,29 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <div id="ios-warning" class="os-rotate rotate-instruction-page" style="z-index: 100; position: absolute; display: none">
+      <div>
+        <div class="rotate-button-container triangle">
+          <svg id="alert-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <div class="rotate-text">Brillder is not yet fully optimised for iPad.</div>
+      </div>
+    </div>
+    <script>
+      function iOSversion() {
+        if (/iP(hone|od|ad)/.test(navigator.platform)) {
+          var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+          return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
+        }
+      }
+      let version = iOSversion();
+      if (version.length >= 1 && version[0] <= 12) {
+        document.getElementById('ios-warning').style.display = 'flex';
+      }
+    </script>
   </body>
 </html>
