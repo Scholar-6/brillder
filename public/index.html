@@ -84,10 +84,12 @@
         }
         const iPad = (navigator.userAgent.match(/(iPad)/) /* iOS pre 13 */ || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
         if (iPad) {
-          return [13, 0, 0];
+          var v = (navigator.appVersion).match(/Version\/(\d+)/);
+          return [parseInt(v[1], 10), parseInt(0), parseInt(0)];
         }
       }
       var version = iOSversion();
+      console.log(version);
       if (version && version.length >= 1 && version[0] < 14) {
         document.getElementById('ios-warning').classList.add('flex');
       }
