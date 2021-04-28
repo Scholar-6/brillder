@@ -39,6 +39,28 @@
     <title>Brillder</title>
   </head>
   <body>
+    <style>
+      #ios-warning.flex {
+        width: 100vw;
+        height: 100vh;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        background: #c43c30;
+        color: white;
+        font-size: 4vw;
+      }
+      #ios-warning.flex svg {
+        width: 40vw;
+        height: 40vh;
+        max-width: 50vw;
+        max-height: 50vh;
+      }
+      #ios-warning.flex .rotate-button-container {
+        display: flex;
+        justify-content: center;
+      }
+    </style>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <div id="ios-warning" class="os-rotate rotate-instruction-page" style="z-index: 100; position: absolute; display: none">
@@ -55,14 +77,16 @@
     </div>
     <script>
       function iOSversion() {
-        if (/iP(hone|od|ad)/.test(navigator.platform)) {
+        console.log(navigator.platform, navigator.appVersion)
+        if (/iP(hone|od|ad)/.test(navigator.platform) || /iP(hone|od|ad)/.test(navigator.appVersion)) {
           var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
           return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
         }
       }
-      let version = iOSversion();
-      if (version.length >= 1 && version[0] <= 12) {
-        document.getElementById('ios-warning').style.display = 'flex';
+      var version = iOSversion();
+      console.log(version);
+      if (version && version.length >= 1 && version[0] < 14) {
+        document.getElementById('ios-warning').classList.add('flex');
       }
     </script>
   </body>
