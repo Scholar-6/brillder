@@ -107,6 +107,8 @@ export interface Brick {
   coverImage: string;
   coverImageCaption: string;
   coverImageSource: string;
+  sponsorUrl: string;
+  sponsorLogo: string;
 
   assignments?: Assignment[];
 

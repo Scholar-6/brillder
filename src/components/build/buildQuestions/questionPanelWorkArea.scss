@@ -329,6 +329,10 @@
 
         .line {
           cursor: pointer;
+          border-radius: 0.24vw;
+          margin-top: 0.15vw;
+          margin-bottom: 0.15vw;
+          min-height: 1.5vw;
 
           &.active {
             background: var(--theme-green);

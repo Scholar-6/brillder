@@ -130,6 +130,15 @@ export const setCoreLibrary = async (brickId: number, isCore?: boolean) => {
   }
 }
 
+export const updateBrick = async (brick: Brick) => {
+  try {
+    await put<Brick>(`/brick`, brick);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export const sendToPublisher = async (brickId: number) => {
   try {
     await post<any>(`/brick/sendToPublisher/${brickId}`, {});

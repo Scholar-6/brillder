@@ -98,18 +98,18 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
 
   const addSpecialSignByCode = (words: BuildWord[], signCode: SpecialSymbols, index: number) => {
     if (index >= 1) {
-      words.push({text: String.fromCharCode(signCode), notSelectable: true} as BuildWord);
+      words.push({text: String.fromCharCode(signCode), isPunctuation: true, notSelectable: true} as BuildWord);
     }
   }
 
   const splitBySpecialSign = (words: BuildWord[], signCode: SpecialSymbols) => {
-    let finalWords:BuildWord[] = [];
+    const finalWords:BuildWord[] = [];
     words.forEach(word => {
-      let commas = splitByChar(word.text, signCode);
+      const commas = splitByChar(word.text, signCode);
       if (commas.length >= 2) {
-        for (let index in commas) {
-          let loopWord = { text: commas[index] } as BuildWord;
-          let intIndex = parseInt(index);
+        for (const index in commas) {
+          const loopWord = { text: commas[index] } as BuildWord;
+          const intIndex = parseInt(index);
           addSpecialSignByCode(finalWords, signCode, intIndex);
           addBreakLineInTheEnd(commas, word, loopWord, intIndex);
           disabledEmptyWord(word);

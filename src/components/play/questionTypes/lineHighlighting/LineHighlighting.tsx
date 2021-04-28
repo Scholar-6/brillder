@@ -78,7 +78,7 @@ class LineHighlighting extends CompComponent<
     
     if (this.props.isDefaultBook) {
       return (
-        <div key={index}>
+        <div key={index} className="line-container">
           <span className={className}>{line.text}</span>
         </div>
       );
@@ -110,7 +110,7 @@ class LineHighlighting extends CompComponent<
     }
 
     return (
-      <div key={index}>
+      <div key={index} className="line-container">
         <span className={className} onClick={() => this.highlighting(index)}>
           {line.text}
         </span>

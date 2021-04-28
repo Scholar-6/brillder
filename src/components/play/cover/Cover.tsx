@@ -4,7 +4,7 @@ import DynamicFont from 'react-dynamic-font';
 
 import { AcademicLevelLabels, Brick } from "model/brick";
 
-import Image from "./Image";
+import CoverImage from "./CoverImage";
 import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { useEffect } from "react";
@@ -18,6 +18,7 @@ import { isMobile } from "react-device-detect";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import CoverBioDialog from "components/baseComponents/dialogs/CoverBioDialog";
 import { GENERAL_SUBJECT } from "components/services/subject";
+import SponsorImageComponent from "./SponsorImage";
 
 interface IntroductionProps {
   user: User;
@@ -51,20 +52,6 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const startBrick = () => {
     props.moveNext();
   };
-
-  const updateCover = async (coverData: ImageCoverData) => {
-    const res = await setBrickCover({
-      brickId: brick.id,
-      coverImage: coverData.value,
-      coverImageSource: coverData.imageSource,
-      coverImageCaption: coverData.imageCaption
-    });
-    if (res) {
-      // success
-    } else {
-      // fail
-    }
-  }
 
   const renderPlayButton = () => {
     return (
@@ -156,12 +143,10 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             <KeyWordsPreview keywords={brick.keywords} />
           </div>
           <div className="image-container centered">
-            <Image
+            <CoverImage
               locked={!isPublisher}
-              index={0}
+              brickId={brick.id}
               data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
-              save={updateCover}
-              onFocus={() => { }}
             />
             <div className="cover-info-row">
               {renderBrickCircle()}
@@ -198,18 +183,15 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                     <div className="cover-bio-background" />
                   </div>
                 </div>
-                {brick.isCore || brick.subject?.name === GENERAL_SUBJECT &&
-                <div className="cover-sponsors">
-                  <span className="italic">Sponsored By</span>
-                  <img alt="scholar6" src="/images/Scholar-6-Logo.svg" />
-                </div>}
+                {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
+                  user={props.user}
+                  brick={brick}
+                />}
                 <div className="image-container centered">
-                  <Image
+                  <CoverImage
                     locked={!isPublisher}
-                    index={0}
+                    brickId={brick.id}
                     data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
-                    save={updateCover}
-                    onFocus={() => { }}
                   />
                   <div className="cover-info-row">
                     {renderBrickCircle()}
