@@ -6,23 +6,35 @@ import ImageCloseDialog from 'components/build/buildQuestions/components/Image//
 import ImageCoverDialog from './ImageCoverDialog';
 import { ImageCoverData } from './model';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { setBrickCover } from 'services/axios/brick';
 
 interface ImageProps {
   locked: boolean;
-  index: number;
+  brickId: number;
   data: ImageCoverData;
-  save(comp: ImageCoverData): void;
-
-  // phone preview
-  onFocus(): void;
 }
 
-const ImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
+const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
   const [isOpen, setOpen] = React.useState(false);
   const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.data.value);
   const [isCloseOpen, setCloseDialog] = React.useState(false);
   const [invalid, setInvalid] = React.useState(false);
+
+  
+  const updateCover = async (coverData: ImageCoverData) => {
+    const res = await setBrickCover({
+      brickId: props.brickId,
+      coverImage: coverData.value,
+      coverImageSource: coverData.imageSource,
+      coverImageCaption: coverData.imageCaption
+    });
+    if (res) {
+      // success
+    } else {
+      // fail
+    }
+  }
 
   useEffect(() => {
     setFileName(props.data.value);
@@ -39,7 +51,7 @@ const ImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
       comp.imageCaption = caption;
       comp.imagePermision = true;
       setFileName(comp.value);
-      props.save(comp);
+      updateCover(comp);
       setOpen(false);
     }, () => { });
   }
@@ -49,7 +61,7 @@ const ImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
     comp.imageSource = source;
     comp.imageCaption = caption;
     comp.imagePermision = true;
-    props.save(comp);
+    updateCover(comp);
     setOpen(false);
   }
 
@@ -63,7 +75,7 @@ const ImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
   }
 
   return (
-    <div className="image-drag-n-drop" onClick={props.onFocus}>
+    <div className="image-drag-n-drop">
       <div className={className} onClick={() => {
         if (locked) { return; }
         if (props.data.value) {
@@ -109,4 +121,4 @@ const ImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
 }
 
 
-export default ImageComponent
+export default CoverImageComponent

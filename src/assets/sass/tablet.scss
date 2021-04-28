@@ -237,3 +237,20 @@ html {
     line-height: 1 !important;
   }
 }
+
+// login page
+.login-desktop-page .right-part .icons-container {
+  .glasses {
+    left: 5vw;
+  }
+  .teach-icon {
+    right: 5vw;
+  }
+  .trowel-login {
+    right: 6vw;
+  }
+}
+
+.sorted-row .sort-and-filter-container .sort-box .subjects-filter .subject-list-v2.checked .MuiFormControlLabel-root .MuiTypography-root {
+  color: var(--theme-dark-blue) !important;
+}

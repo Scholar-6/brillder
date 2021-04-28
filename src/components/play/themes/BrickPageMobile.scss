@@ -1381,3 +1381,8 @@ $new-play-height: calc(100vh - #{$play-footer-height} - #{$progress-bar-height})
   padding-right: 0.5vw;
   border-radius: 0.5vw;
 }
+
+// line highlight
+.play-preview-pages .play-preview-panel .line-highlighting-play.lines-inline .line-container {
+  min-height: 6.6vw;
+}

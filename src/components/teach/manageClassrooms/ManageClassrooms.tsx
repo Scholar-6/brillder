@@ -8,7 +8,7 @@ import '../style.scss';
 
 import { User } from "model/user";
 import { MUser, TeachActiveTab } from "../model";
-import { deleteClassroom, getStudents, updateClassroom } from 'services/axios/classroom';
+import { deleteClassroom, getStudents, resendInvitation, updateClassroom } from 'services/axios/classroom';
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import {
@@ -521,6 +521,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
   }
 
+  async resendInvitation(email: string) {
+    if(this.state.activeClassroom) {
+      await resendInvitation(this.state.activeClassroom, email);
+      this.invitationSuccess(1);
+    }
+  }
+
   renderPagination(visibleUsers: MUser[], users: MUser[]) {
     return (
       <UsersPagination
@@ -646,6 +653,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           toggleUser={this.toggleUser.bind(this)}
           unassign={this.unassigningStudent.bind(this)}
           togglePageStudents={this.togglePageStudents.bind(this)}
+          resendInvitation={this.resendInvitation.bind(this)}
         />
         {this.renderPagination(visibleUsers, users)}
       </div>
