@@ -763,3 +763,16 @@ $space-between-boxes: 0.1vw;
     }
   }
 }
+
+
+// #3275 highlight question font-size
+.investigation-build-page .phone-question-preview .mobile-question-component {
+  .lines-container .line,
+  .words-container .word {
+    font-size: 1vw !important;
+  }
+}
+
+.build-question-page .build-question-column .line-highlight-build .hightlight-area .word.active, .build-question-page .build-question-column .word-highlight-build .hightlight-area .word.active {
+  border-radius: 0.3vw;
+}
