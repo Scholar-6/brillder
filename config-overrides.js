@@ -10,8 +10,12 @@ module.exports = function override(config, env) {
     }
 
     config.devtool = false;
+    console.log('try')
 
-    config.plugins = [new webpack.SourceMapDevToolPlugin({})]
+    config.plugins = [new webpack.SourceMapDevToolPlugin({
+        noSources: false,
+        filename: '[name].[fullhash].js.map'
+    })]
 
     config.module.rules = config.module.rules.map(rule => {
         if (rule.oneOf instanceof Array) {
