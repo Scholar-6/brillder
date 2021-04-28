@@ -43,6 +43,7 @@
       #ios-warning.flex {
         width: 100vw;
         height: 100vh;
+        display: block !important;
         display: flex !important;
         align-items: center;
         justify-content: center;
@@ -77,14 +78,16 @@
     </div>
     <script>
       function iOSversion() {
-        console.log(navigator.platform, navigator.appVersion)
         if (/iP(hone|od|ad)/.test(navigator.platform) || /iP(hone|od|ad)/.test(navigator.appVersion)) {
           var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
           return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
         }
+        const iPad = (navigator.userAgent.match(/(iPad)/) /* iOS pre 13 */ || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
+        if (iPad) {
+          return [13, 0, 0];
+        }
       }
       var version = iOSversion();
-      console.log(version);
       if (version && version.length >= 1 && version[0] < 14) {
         document.getElementById('ios-warning').classList.add('flex');
       }
