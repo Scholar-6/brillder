@@ -51,7 +51,7 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
   if (!isAdmin) {
     return (
       <div className="cover-sponsors">
-        <span className="italic">Sponsored By</span>
+        <span className="italic">Commissioned By</span>
         <img alt="scholar6" src={fileName ? fileUrl(fileName) : "/images/Scholar-6-Logo.svg"} />
       </div>
     );
@@ -60,7 +60,7 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
 
   return (
     <div className="cover-sponsors">
-      Sponsored By
+      Commissioned By
       <div className={className} onClick={() => {
         if (fileName) {
           setOpen(true);
