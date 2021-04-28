@@ -240,3 +240,21 @@
     height: 1.5vw;
   }
 }
+
+// sponsor
+.cover-page .cover-sponsors {
+  img {
+    margin-right: 0.5vw;
+    height: 2.4vw;
+  }
+  .dropzone {
+    margin-right: 0.5vw;
+    padding-top: 0.1vw;
+    padding-bottom: 0.1vw;
+    min-height: unset;
+    img {
+      height: 2.4vw;
+      width: auto !important;
+    }
+  }
+}
