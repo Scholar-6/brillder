@@ -6,6 +6,7 @@ import './ClassroomNames.scss';
 interface ClassroomNamesProps {
   studyClassrooms?: any[];
   hasInvitation: boolean;
+  resendInvitation(): void;
 }
 
 interface State {
@@ -133,7 +134,10 @@ class ClassroomNames extends React.Component<ClassroomNamesProps, State> {
                 backgroundColor: classroom.subject?.color
               }}>{classroom.name}</div>)
             }
-            {props.hasInvitation && <div className="classroom-name text-theme-dark-blue pending-label">Pending</div>}
+            {props.hasInvitation && <>
+              <div className="classroom-name text-theme-dark-blue pending-label">Pending</div>
+              <div className="classroom-name resend-label" onClick={e => { e.stopPropagation(); props.resendInvitation(); }}>Resend</div>
+            </>}
           </div>
         </div>
         {scrollNeeded && this.state.canScrollRight && <div className="overflow-fade-end" />}
