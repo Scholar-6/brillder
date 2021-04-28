@@ -14,7 +14,7 @@ class QuillKeyboard extends Keyboard {
         // hyphen to dash
         this.addBinding({
             key: " ",
-            prefix: / -/,
+            prefix: / -$/,
             handler: (range: any, context: any) => {
                 if(!quill) return;
                 console.log(quill);
@@ -27,9 +27,9 @@ class QuillKeyboard extends Keyboard {
         // straight quotes to curly quotes: double
         this.addBinding({
             key: " ",
-            prefix: /(^| )"(.*?)"/,
+            prefix: /(^| )"(.*?)"$/,
             handler: (range: any, context: { prefix: string }) => {
-                const prefixMatch = context.prefix.match(/(^| )"(.*)"/)!;
+                const prefixMatch = context.prefix.match(/(^| )"(.*)"$/)!;
                 const newText = `${prefixMatch[1]}“${prefixMatch[2]}” `;
 
                 quill.updateContents(new Delta()
@@ -42,9 +42,9 @@ class QuillKeyboard extends Keyboard {
         // straight quotes to curly quotes: single
         this.addBinding({
             key: " ",
-            prefix: /(^| )'(.*?)'/,
+            prefix: /(^| )'(.*?)'$/,
             handler: (range: any, context: { prefix: string }) => {
-                const prefixMatch = context.prefix.match(/(^| )'(.*)'/)!;
+                const prefixMatch = context.prefix.match(/(^| )'(.*)'$/)!;
                 const newText = `${prefixMatch[1]}‘${prefixMatch[2]}’ `;
 
                 quill.updateContents(new Delta()
