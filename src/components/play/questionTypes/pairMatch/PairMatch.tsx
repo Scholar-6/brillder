@@ -68,10 +68,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
 
   getState(entry: number): number {
     if (this.props.attempt?.answer[entry]) {
-      if (
-        this.props.attempt.answer[entry].value.toLowerCase().replace(/ /g, '') ===
-        this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')
-      ) {
+      if (this.props.attempt.answer[entry].index === this.props.component.list[entry].index) {
         return 1;
       } else { return -1; }
     } else { return 0; }
