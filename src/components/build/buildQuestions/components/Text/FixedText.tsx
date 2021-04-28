@@ -23,6 +23,7 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
     let comp = Object.assign({}, data);
     comp.value = htmlString;
     props.updateComponent(comp);
+    props.save();
   }
 
   // refresh wiris component after question changed
