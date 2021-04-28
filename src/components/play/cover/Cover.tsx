@@ -18,6 +18,7 @@ import { isMobile } from "react-device-detect";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import CoverBioDialog from "components/baseComponents/dialogs/CoverBioDialog";
 import { GENERAL_SUBJECT } from "components/services/subject";
+import SponsorImageComponent from "./SponsorImage";
 
 interface IntroductionProps {
   user: User;
@@ -198,11 +199,10 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                     <div className="cover-bio-background" />
                   </div>
                 </div>
-                {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) &&
-                <div className="cover-sponsors">
-                  <span className="italic">Sponsored By</span>
-                  <img alt="scholar6" src="/images/Scholar-6-Logo.svg" />
-                </div>}
+                {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
+                  user={props.user}
+                  brick={brick}
+                />}
                 <div className="image-container centered">
                   <Image
                     locked={!isPublisher}
