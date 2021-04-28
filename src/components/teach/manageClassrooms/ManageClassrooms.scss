@@ -87,7 +87,7 @@ $base-build-font-size: 1.25vw;
     .class-header {
       font-family: $font-family-bold;
     }
-    
+
     .record-header {
       cursor: pointer;
     }
@@ -96,7 +96,7 @@ $base-build-font-size: 1.25vw;
   .create-class-button {
     cursor: pointer;
     display: flex;
-    align-items:center;
+    align-items: center;
     padding-left: 1.2vw !important;
     padding-bottom: 2vh !important;
     letter-spacing: 0.02vw;
@@ -276,6 +276,13 @@ $base-build-font-size: 1.25vw;
       &.pending-label {
         max-width: 6vw;
         padding: 0 0.7vw;
+      }
+      &.resend-label {
+        background: var(--theme-dark-blue);
+        color: var(--white);
+        &:hover {
+          background: var(--theme-light-blue);
+        }
       }
     }
   }
