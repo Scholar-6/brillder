@@ -1,7 +1,7 @@
 import React from 'react';
 import SpriteIcon from '../SpriteIcon';
 
-interface QuillGlobalToolbarButtonProps {
+interface QuillToolbarButtonProps {
     name: string;
     value?: string;
     icon?: string;
@@ -11,7 +11,7 @@ interface QuillGlobalToolbarButtonProps {
     format?: any;
 }
 
-const QuillGlobalToolbarButton: React.FC<QuillGlobalToolbarButtonProps> = props => {
+const QuillToolbarButton: React.FC<QuillToolbarButtonProps> = props => {
     return (
         <button
             disabled={!props.enabled}
@@ -26,4 +26,4 @@ const QuillGlobalToolbarButton: React.FC<QuillGlobalToolbarButtonProps> = props 
     );
 };
 
-export default QuillGlobalToolbarButton;
+export default QuillToolbarButton;
