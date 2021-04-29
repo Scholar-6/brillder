@@ -603,6 +603,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       } else {
         props.saveQuestion(getApiQuestion(updatedQuestion)).then((res: Question) => {
           if(callback) { callback(res); }
+          setSavingStatus(false);
         }).catch((err: any) => {
           console.log(err);
           console.log("Error saving brick.");
