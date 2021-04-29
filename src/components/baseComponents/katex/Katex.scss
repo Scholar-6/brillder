@@ -1,5 +1,10 @@
 .katex-rendered {
   .katex-html {
     line-height: 1.9 !important;
+    .base {
+      .mord.mathnormal {
+        margin-right: 0.4vw;
+      }
+    }
   }
 }
