@@ -13,6 +13,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { rightKeyPressed } from 'components/services/key';
 import { isPhone } from 'services/phone';
 import routes from '../routes';
+import previewRoutes from 'components/playPreview/routes';
 import BrickTitle from 'components/baseComponents/BrickTitle';
 import { User } from 'model/user';
 
@@ -113,8 +114,18 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
   }
 
   moveToIntro() {
-    let link = getPlayPath(this.props.isPlayPreview, this.props.brick.id);
-    this.props.history.push(`${link}/intro`);
+    const brickId = this.props.brick.id;
+    let link = '';
+    if (isPhone()) {
+      link = routes.phonePrep(brickId);
+    } else {
+      if (this.props.isPlayPreview) {
+        link = previewRoutes.previewNewPrep(brickId);
+      } else {
+        link = routes.playNewPrep(brickId);
+      }
+    }
+    this.props.history.push(link);
   }
 
   moveToSynthesis() {

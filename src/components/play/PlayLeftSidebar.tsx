@@ -25,7 +25,7 @@ import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
-import { playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
+import routes, { playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
 
 
 interface SidebarProps {
@@ -286,7 +286,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       isAuthor = brick.author.id === this.props.user.id;
     } catch { }
 
-    const link = `/play/brick/${brick.id}/intro`;
+    const link = routes.playNewPrep(brick.id);
 
     return (
       <div>

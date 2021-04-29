@@ -26,6 +26,8 @@ import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
 import { getReviewTime } from "../services/playTimes";
 import BrickTitle from "components/baseComponents/BrickTitle";
+import routes from "../routes";
+import previewRoutes from "components/playPreview/routes";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -85,7 +87,15 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   }
 
   if (status === PlayStatus.Live) {
-    history.push(`${playPath}/intro`);
+    if (isPhone()) {
+      history.push(routes.phonePrep(brick.id))
+    } else {
+      if (props.isPlayPreview) {
+        history.push(previewRoutes.previewNewPrep(brick.id));
+      } else {
+        history.push(routes.playNewPrep(brick.id));
+      }
+    }
     return <PageLoader content="...Loading..." />;
   } else if (status === PlayStatus.Ending) {
     moveToEnding();
