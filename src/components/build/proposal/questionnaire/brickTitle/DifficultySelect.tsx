@@ -3,6 +3,7 @@ import { Select, MenuItem } from "@material-ui/core";
 
 import './DifficultySelect.scss';
 import { AcademicLevel } from "model/brick";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface DifficultySelectProps {
   disabled: boolean;

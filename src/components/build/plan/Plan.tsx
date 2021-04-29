@@ -23,6 +23,7 @@ import brickActions from "redux/actions/brickActions";
 import PlanPreviewComponent from "../baseComponents/phonePreview/plan/PlanPreview";
 import DifficultySelect from "../proposal/questionnaire/brickTitle/DifficultySelect";
 import { getSubjects } from "services/axios/subject";
+import CoreSelect from "../proposal/questionnaire/brickTitle/CoreSelect";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -155,6 +156,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       subjectId={currentBrick.subjectId}
                       onChange={subjectId => changeBrick((brick) => ({ ...brick, subjectId, subject: apiSubjects.find(sub => sub.id === subjectId) }))}
                     />
+                    <CoreSelect disabled={locked} isCore={currentBrick.isCore} onChange={isCore => changeBrick((brick) => ({...brick, isCore}))} />
                   </div>
                   <div className="level-and-length-container">
                     <DifficultySelect
