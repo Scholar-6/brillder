@@ -9,6 +9,9 @@
     color: var(--theme-dark-blue);
     display: flex;
     align-items: center;
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: 2vw;
   }
   .placeholder {
     display: none;
