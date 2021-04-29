@@ -212,7 +212,7 @@
 .unique-component-wrapper {
   margin: #{$editor-spacing} 0;
   padding: $editor-radius;
-  padding-top: 0.3vw;
+  padding-top: 0;
   width: 100%;
   background: var(--tab-gray);
   @extend %themeRadius;
