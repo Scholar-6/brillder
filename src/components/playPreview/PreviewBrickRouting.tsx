@@ -150,7 +150,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const moveToBuild = () => {
-    const isSynthesis = history.location.pathname.search(playRoutes.PlaySynthesisLastPrefix);
+    const isSynthesis = history.location.pathname.indexOf(playRoutes.PlaySynthesisLastPrefix) > -1;
     if (isSynthesis) {
       history.push(buildRoutes.buildSynthesis(brickId));
     } else {
