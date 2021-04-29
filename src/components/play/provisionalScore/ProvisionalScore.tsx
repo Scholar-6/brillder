@@ -125,11 +125,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
       if (this.props.isPlayPreview) {
         link = getPlayPath(this.props.isPlayPreview, this.props.brick.id) + routes.PlaySynthesisLastPrefix;
       } else {
-        if (this.props.user) {
-          link = routes.playSynthesis(this.props.brick.id);
-        } else {
-          link = routes.playPreSynthesis(this.props.brick.id);
-        }
+        link = routes.playPreSynthesis(this.props.brick.id);
       }
     }
     this.props.history.push(link);
