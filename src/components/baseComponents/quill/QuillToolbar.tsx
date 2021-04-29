@@ -1,9 +1,10 @@
 import React from 'react';
 import { Quill } from 'react-quill';
-import QuillGlobalToolbarButton from './QuillGlobalToolbarButton';
+import QuillToolbarButton from './QuillToolbarButton';
+import QuillToolbarColorSelect from './QuillToolbarColorSelect';
+import QuillToolbarAlignSelect from './QuillToolbarAlignSelect';
 import { RangeStatic } from 'quill';
 import _ from 'lodash';
-import QuillGlobalToolbarSelect from './QuillGlobalToolbarSelect';
 import ImageUpload from './QuillImageUpload';
 
 interface QuillToolbarProps {
@@ -51,27 +52,32 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
     const format = React.useMemo(() => props.quill?.getFormat(), [props.quill, id]);
 
     const toolbarItems: { [key: string]: any } = React.useMemo(() => ({
-        bold: (props: any) => <QuillGlobalToolbarButton name="bold" {...props} />,
-        italic: (props: any) => <QuillGlobalToolbarButton name="italic" {...props} />,
-        strikethrough: (props: any) => <QuillGlobalToolbarButton name="strike" {...props} />,
-        fontColor: (props: any) => <QuillGlobalToolbarSelect name="color" {...props}>
-          <option value="#C43C30">Red</option>
-          <option value="#0681DB">Blue</option>
-          <option value="#30C474">Green</option>
-          <option value="#FF9D00">Yellow</option>
-          <option value="#6A2E15">Brown</option>
-          <option value="#4523FF">Purple</option>
-          <option value="#FC7502">Orange</option>
-          <option value="#001C58">DarkBlue</option>
-        </QuillGlobalToolbarSelect>,
-        subscript: (props: any) => <QuillGlobalToolbarButton name="script" value="sub" {...props} />,
-        superscript: (props: any) => <QuillGlobalToolbarButton name="script" value="super" {...props} />,
-        align: <select className="ql-align" />,
-        blockQuote: (props: any) => <QuillGlobalToolbarButton name="blockquote" {...props} />,
-        bulletedList: (props: any) => <QuillGlobalToolbarButton name="list" value="bullet" {...props} />,
-        numberedList: (props: any) => <QuillGlobalToolbarButton name="list" value="ordered" {...props} />,
-        latex: (props: any) => <QuillGlobalToolbarButton name="latex" {...props} />,
-        image: (props: any) => <QuillGlobalToolbarButton name="image" icon="image" {...props} />,
+        bold: (props: any) => <QuillToolbarButton name="bold" {...props} />,
+        italic: (props: any) => <QuillToolbarButton name="italic" {...props} />,
+        strikethrough: (props: any) => <QuillToolbarButton name="strike" {...props} />,
+        fontColor: (props: any) => <QuillToolbarColorSelect name="color" {...props}>
+            <option value="#C43C30">Red</option>
+            <option value="#0681DB">Blue</option>
+            <option value="#30C474">Green</option>
+            <option value="#FF9D00">Yellow</option>
+            <option value="#6A2E15">Brown</option>
+            <option value="#4523FF">Purple</option>
+            <option value="#FC7502">Orange</option>
+            <option value="#001C58">DarkBlue</option>
+        </QuillToolbarColorSelect>,
+        subscript: (props: any) => <QuillToolbarButton name="script" value="sub" {...props} />,
+        superscript: (props: any) => <QuillToolbarButton name="script" value="super" {...props} />,
+        align: (props: any) => <QuillToolbarAlignSelect name="align" {...props}>
+            <option value="left">Left</option>
+            <option value="center">Center</option>
+            <option value="right">Right</option>
+            <option value="justify">Justify</option>
+        </QuillToolbarAlignSelect>,
+        blockQuote: (props: any) => <QuillToolbarButton name="blockquote" {...props} />,
+        bulletedList: (props: any) => <QuillToolbarButton name="list" value="bullet" {...props} />,
+        numberedList: (props: any) => <QuillToolbarButton name="list" value="ordered" {...props} />,
+        latex: (props: any) => <QuillToolbarButton name="latex" {...props} />,
+        image: (props: any) => <QuillToolbarButton name="image" icon="image" {...props} />,
     }), []);
 
     return (
