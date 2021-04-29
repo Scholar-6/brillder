@@ -4,6 +4,7 @@ import { Action, Dispatch } from 'redux';
 import { Brick } from 'model/brick';
 import comments from './comments';
 import service, { getPublicBrickById } from 'services/axios/brick';
+import { Question } from 'model/question';
 
 const fetchBrickSuccess = (data:any) => {
   return {
@@ -76,6 +77,31 @@ const saveBrick = (brick:any) => {
       dispatch(saveBrickFailure(error.message))
       return null;
     });
+  }
+}
+
+const saveQuestionSuccess = (question: Question) => ({
+  type: types.SAVE_QUESTION_SUCCESS,
+  payload: question,
+});
+
+const saveQuestionFailure = (errorMessage: string) => ({
+  type: types.SAVE_QUESTION_FAILURE,
+  error: errorMessage,
+});
+
+const saveQuestion = (question: any) => {
+  return function (dispatch: Dispatch) {
+    return axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/question`, question, { withCredentials: true, timeout: 10000 }
+    ).then(response => {
+      const savedQuestion = response.data as Question;
+      dispatch(saveQuestionSuccess(savedQuestion));
+      return savedQuestion;
+    }).catch(error => {
+      dispatch(saveQuestionFailure(error.message));
+      return null;
+    })
   }
 }
 
@@ -165,6 +191,6 @@ const sendToPublisherConfirmed = () => {
 
 export default {
   fetchBrick, fetchPublicBrick, forgetBrick,
-  createBrick, saveBrick,
+  createBrick, saveBrick, saveQuestion,
   assignEditor, sendToPublisher, sendToPublisherConfirmed
 }
