@@ -82,6 +82,15 @@
       // top: 100%;
       z-index: 1;
     }
+    .q-align .ql-picker-item {
+      width: 1.6vw;
+      height: 1.6vw;
+
+      svg {
+        width: inherit;
+        height: inherit;
+      }
+    }
   }
 }
 
