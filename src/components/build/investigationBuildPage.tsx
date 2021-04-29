@@ -599,7 +599,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setSavingStatus(true);
 
       if (!updatedQuestion.id) {
-        createNewQuestionV2(updatedQuestion, callback);
+        await createNewQuestionV2(updatedQuestion, callback);
+        setSavingStatus(false);
       } else {
         props.saveQuestion(getApiQuestion(updatedQuestion)).then((res: Question) => {
           if(callback) { callback(res); }
