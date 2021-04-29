@@ -134,6 +134,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   moveToBuild() {
+    console.log('move to build')
     if (this.props.moveToBuild) {
       this.props.moveToBuild();
     }
