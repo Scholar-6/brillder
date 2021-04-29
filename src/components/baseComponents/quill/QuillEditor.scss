@@ -64,6 +64,9 @@
       box-shadow: rgba(0, 0, 0, 0.2) 0 2px 8px;
       position: absolute;
       background-color: #fff;
+      &.q-align {
+        width: 2vw;
+      }
       .ql-picker-item {
         margin: 0.2vw;
         padding: 0;
@@ -84,6 +87,22 @@
 
 svg#image {
   stroke-width: 1.8;
+}
+
+.ql-align-left {
+  text-align: left;
+}
+.ql-align-center {
+  text-align: center;
+}
+.ql-align-right {
+  text-align: right;
+}
+.ql-align-justify {
+  text-align: justify;
+}
+s {
+  text-decoration: line-through;
 }
 
 .quill-document-editor {
@@ -124,7 +143,6 @@ svg#image {
       text-align: left;
       p,
       li {
-        text-align: left;
         padding-left: 0;
       }
       div,
