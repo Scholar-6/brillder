@@ -69,6 +69,7 @@ import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import routes from "./routes";
 import playRoutes from 'components/play/routes';
 import { deleteQuestion } from "services/axios/brick";
+import { createQuestion } from "services/axios/question";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -112,10 +113,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   let proposalRes = React.useMemo(() => validateProposal(props.brick), [props.brick]);
 
-  const [questions, setQuestions] = React.useState([
-    getNewFirstQuestion(QuestionTypeEnum.None, true)
-  ] as Question[]);
-
+  const [questions, setQuestions] = React.useState([] as Question[]);
+  
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
@@ -166,6 +165,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   try {
     isAuthor = props.brick.author.id === props.user.id;
   } catch { }
+
+  // when no questions create one.
+  useEffect(() => {
+    console.log(brick);
+    if (brick && (!brick.questions || brick.questions.length === 0)) {
+      createNewQuestionV2(getNewFirstQuestion(QuestionTypeEnum.None, true));
+    }
+  }, []);
 
   // start editing on socket on load.
   useEffect(() => {
@@ -389,6 +396,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const updatedQuestions = setQuestionTypeByIndex(questions, index, type);
     setQuestions(updatedQuestions);
     const questionToSave = updatedQuestions[index];
+
     saveQuestion(questionToSave, (savedQuestion: any) => {
       if(!questionToSave.id) {
         const postUpdatedQuestions = updatedQuestions;
@@ -575,20 +583,32 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setLastAutoSave(time);
   }
 
+  const createNewQuestionV2 = async (initQuestion: Question, callback?: Function) => {
+    const resQuestion = await createQuestion(brickId, getApiQuestion(initQuestion));
+    if (resQuestion) {
+      if(callback) { callback(resQuestion); }
+    } else {
+      console.log("Error creation question.");
+      setSaveError(true);
+    }
+  }
+
   const saveQuestion = async (updatedQuestion: Question, callback?: Function) => {
     if (canEdit === true) {
       setAutoSaveTime();
       setSavingStatus(true);
 
-      console.log("save question ", updatedQuestion);
-      
-      props.saveQuestion(getApiQuestion(updatedQuestion)).then((res: Question) => {
-        if(callback) { callback(res); }
-      }).catch((err: any) => {
-        console.log(err);
-        console.log("Error saving brick.");
-        setSaveError(true);
-      });
+      if (!updatedQuestion.id) {
+        createNewQuestionV2(updatedQuestion, callback);
+      } else {
+        props.saveQuestion(getApiQuestion(updatedQuestion)).then((res: Question) => {
+          if(callback) { callback(res); }
+        }).catch((err: any) => {
+          console.log(err);
+          console.log("Error saving brick.");
+          setSaveError(true);
+        });
+      }
     }
   }
 

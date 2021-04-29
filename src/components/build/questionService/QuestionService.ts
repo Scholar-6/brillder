@@ -20,11 +20,13 @@ import { getDefaultMissingWordAnswer } from "../buildQuestions/questionTypes/mis
 import { getDefaultLineHighlightingAnswer } from "../buildQuestions/questionTypes/highlighting/lineHighlightingBuild/LineHighlightingBuild";
 import { getDefaultWordHighlightingAnswer } from "../buildQuestions/questionTypes/highlighting/wordHighlighting/wordHighlighting";
 
-
-export interface ApiQuestion {
-  id?: number;
+export interface BaseApiQuestion {
   contentBlocks: string;
   type: number;
+}
+
+export interface ApiQuestion extends BaseApiQuestion {
+  id?: number;
   order: number;
 }
 
@@ -180,6 +182,23 @@ export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]
       parsedQuestions.push(q); // question was loaded
     }
   }
+}
+
+export function justParseQuestion(question: ApiQuestion) {
+  const parsedQuestion = JSON.parse(question.contentBlocks);
+  let q = null;
+  if (parsedQuestion.components) {
+    q = {
+      id: question.id,
+      type: question.type,
+      hint: parsedQuestion.hint,
+      order: question.order,
+      firstComponent: parsedQuestion.firstComponent ?
+        parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
+      components: parsedQuestion.components
+    } as Question;
+  }
+  return q;
 }
 
 export function setLastQuestionId(brick: Brick, questions: Question[]) {
