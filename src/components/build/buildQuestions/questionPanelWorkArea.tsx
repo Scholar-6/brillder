@@ -44,10 +44,10 @@ export interface QuestionProps {
   isAuthor: boolean;
   initSuggestionExpanded: boolean;
   undoRedoService: UndoRedoService;
-  saveBrick(): void;
+  saveQuestion(question: Question): void;
   setQuestion(index: number, question: Question): void;
-  updateFirstComponent(component: TextComponentObj): void;
-  updateComponents(components: any[]): void;
+  updateFirstComponent(component: TextComponentObj): Question;
+  updateComponents(components: any[]): Question;
   setQuestionType(type: QuestionTypeEnum): void;
   nextOrNewQuestion(): void;
   getQuestionIndex(question: Question): number;
@@ -76,14 +76,15 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const { type } = question;
 
-  const setQuestionHint = (hintState: HintState) => {
-    if (locked) { return; }
+  const setQuestionHint = (hintState: HintState): Question => {
+    if (locked) { return question; }
     const index = getQuestionIndex(question);
     const updatedQuestion = Object.assign({}, question) as Question;
     updatedQuestion.hint.value = hintState.value;
     updatedQuestion.hint.list = hintState.list;
     updatedQuestion.hint.status = hintState.status;
     props.setQuestion(index, updatedQuestion);
+    return updatedQuestion;
   }
 
   let typeArray: string[] = Object.keys(QuestionTypeObj);
@@ -194,7 +195,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               question={question}
               validationRequired={validationRequired}
               componentFocus={props.componentFocus}
-              saveBrick={props.saveBrick}
+              saveQuestion={props.saveQuestion}
               updateFirstComponent={props.updateFirstComponent}
               updateComponents={props.updateComponents}
               setQuestionHint={setQuestionHint}

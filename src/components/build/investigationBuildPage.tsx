@@ -29,6 +29,7 @@ import {
   activateFirstInvalidQuestion,
   parseQuestion,
   getUniqueComponent,
+  getApiQuestion,
 } from "./questionService/QuestionService";
 import { convertToQuestionType, stripHtml } from "./questionService/ConvertService";
 import { User } from "model/user";
@@ -76,6 +77,7 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
   startEditing(brickId: number): void;
   changeQuestion(questionId?: number): void;
   saveBrick(brick: any): any;
+  saveQuestion(question: any): any;
   updateBrick(brick: any): any;
 }
 
@@ -386,10 +388,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     var index = getQuestionIndex(activeQuestion);
     const updatedQuestions = setQuestionTypeByIndex(questions, index, type);
     setQuestions(updatedQuestions);
-    saveBrickQuestions(updatedQuestions, (brick2: any) => {
-      if(!activeQuestion.id) {
+    const questionToSave = updatedQuestions[index];
+    saveQuestion(questionToSave, (savedQuestion: any) => {
+      if(!questionToSave.id) {
         const postUpdatedQuestions = updatedQuestions;
-        postUpdatedQuestions[index].id = brick2.questions[index].id;
+        postUpdatedQuestions[index].id = savedQuestion.id;
         setQuestions(update(questions, { $set: postUpdatedQuestions }));
         cashBuildQuestion(brickId, index);
       }
@@ -444,7 +447,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setQuestionAndSave = (index: number, question: Question) => {
     let updatedQuestions = update(questions, { [index]: { $set: question } });
     setQuestions(updatedQuestions);
-    saveBrickQuestions(updatedQuestions);
+    // saveBrickQuestions(updatedQuestions);
+    saveQuestion(question)
   }
 
   const { brick } = props;
@@ -571,6 +575,23 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setLastAutoSave(time);
   }
 
+  const saveQuestion = async (updatedQuestion: Question, callback?: Function) => {
+    if (canEdit === true) {
+      setAutoSaveTime();
+      setSavingStatus(true);
+
+      console.log("save question ", updatedQuestion);
+      
+      props.saveQuestion(getApiQuestion(updatedQuestion)).then((res: Question) => {
+        if(callback) { callback(res); }
+      }).catch((err: any) => {
+        console.log(err);
+        console.log("Error saving brick.");
+        setSaveError(true);
+      });
+    }
+  }
+
   const saveBrickQuestions = async (updatedQuestions: Question[], callback?: Function) => {
     if (canEdit === true) {
       setAutoSaveTime();
@@ -671,20 +692,22 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   }
 
-  const updateComponents = (components: any[]) => {
-    if (locked) { return; }
+  const updateComponents = (components: any[]): Question => {
+    if (locked) { return activeQuestion; }
     const index = getQuestionIndex(activeQuestion);
     const updatedQuestions = questions.slice();
     updatedQuestions[index].components = components;
     setQuestions(update(questions, { $set: updatedQuestions }));
+    return updatedQuestions[index];
   }
 
-  const updateFirstComponent = (component: TextComponentObj) => {
-    if (locked) { return; }
+  const updateFirstComponent = (component: TextComponentObj): Question => {
+    if (locked) { return activeQuestion; }
     const index = getQuestionIndex(activeQuestion);
     const updatedQuestions = questions.slice();
     updatedQuestions[index].firstComponent = component;
     setQuestions(update(questions, { $set: updatedQuestions }));
+    return updatedQuestions[index];
   }
 
   const exitAndSave = () => {
@@ -714,7 +737,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         setQuestionType={convertQuestionTypes}
         setPreviousQuestion={setPreviousQuestion}
         nextOrNewQuestion={setNextQuestion}
-        saveBrick={autoSaveBrick}
+        saveQuestion={saveQuestion}
         undo={undo}
         redo={redo}
         undoRedoService={undoRedoService}
@@ -1003,6 +1026,7 @@ const mapDispatch = (dispatch: any) => ({
   startEditing: (brickId: number) => dispatch(socketStartEditing(brickId)),
   changeQuestion: (questionId?: number) => dispatch(socketNavigateToQuestion(questionId)),
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
+  saveQuestion: (question: any) => dispatch(actions.saveQuestion(question)),
   updateBrick: (brick: any) => dispatch(socketUpdateBrick(brick))
 });
 
