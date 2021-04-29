@@ -1,6 +1,3 @@
-import { setAssignmentId } from "localStorage/playAssignmentId";
-
-
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
 export const Build = '/build';
@@ -92,10 +89,6 @@ export const playPreview = (brickId: number) => {
   return  PlayPreviewBase + '/' + brickId;
 }
 
-export const playPreviewIntro = (brickId: number) => {
-  return playPreview(brickId) + PlayIntroLastPrefix;
-}
-
 // play
 export const PlayBase = '/play/brick';
 
@@ -113,11 +106,6 @@ export const PostPlay = '/post-play/brick';
 
 export const postPlay = (brickId: number, userId: number) => {
   return PostPlay + '/' + brickId + '/' + userId;
-}
-
-export const playAssignment = (brickId: number, assignmentId: number) => {
-  setAssignmentId(assignmentId);
-  return `/play/brick/${brickId}/intro`;
 }
 
 export default {
@@ -164,7 +152,6 @@ export default {
   AllSubjects,
 
   postPlay,
-  playAssignment,
   Proposal,
 
   InvestigationBuild,
@@ -172,6 +159,5 @@ export default {
   investigationSynthesisSuggestions,
   investigationBuildQuestion,
   investigationQuestionSuggestions,
-  playPreviewIntro,
   playIntro
 }

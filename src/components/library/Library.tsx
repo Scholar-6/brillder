@@ -29,6 +29,7 @@ import LibrarySubjects from "./components/LibrarySubjects";
 import LibraryPhoneSubjects from "./components/LibraryPhoneSubjects";
 import SingleSubjectAssignments from "./singleSubject/SingleSubjectAssignments";
 import { isPhone } from "services/phone";
+import routes from "components/play/routes";
 
 
 interface BricksListProps {
@@ -231,7 +232,11 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   move(brickId: number) {
-    this.props.history.push(`/play/brick/${brickId}/intro`);
+    if (isPhone()) {
+      this.props.history.push(routes.phonePrep(brickId));
+    } else {
+      this.props.history.push(routes.playNewPrep(brickId));
+    }
   }
 
   handleSortChange = (e: any) => { };

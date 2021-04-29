@@ -7,10 +7,10 @@ import { Brick } from "model/brick";
 import { PlayStatus } from "../model";
 import { BrickAttempt } from "../model";
 import EndingStepper from "./EndingStepper";
-import { getPlayPath } from "../service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isPhone } from "services/phone";
 import BrickTitle from "components/baseComponents/BrickTitle";
+import routes from "../routes";
 
 interface EndingState {
   oldScore: number;
@@ -218,10 +218,14 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   }
 
   render() {
-    const playPath = getPlayPath(false, this.props.brick.id);
+    const brickId = this.props.brick.id;
 
     if (this.props.status === PlayStatus.Live) {
-      this.props.history.push(`${playPath}/intro`);
+      if (isPhone()) {
+        this.props.history.push(routes.phonePrep(brickId));
+      } else {
+        this.props.history.push(routes.playNewPrep(brickId));
+      }
     }
 
     return (

@@ -30,6 +30,8 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ReturnEditorsSuccessDialog from "components/play/finalStep/dialogs/ReturnEditorsSuccessDialog";
 import ReturnAuthorSuccessDialog from "components/play/finalStep/dialogs/ReturnAuthorSuccessDialog";
 import SelfPublishColumn from "./SelfPublishColumn";
+import { isPhone } from "services/phone";
+import routes from "../routes";
 
 enum PublishStatus {
   None,
@@ -77,8 +79,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
   const isAdmin = checkAdmin(user.roles);
   const isPublisher = checkPublisher(user, brick);
-  let isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
-  const link = `/play/brick/${brick.id}/intro`;
+  const isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
+  const link = routes.previewNewPrep(brick.id);
 
   if (!isAuthor && !isCurrentEditor && !isPublisher && !isAdmin) {
     return <Redirect to={map.BackToWorkBuildTab} />;

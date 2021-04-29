@@ -122,10 +122,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   /*eslint-disable-next-line*/
   }, [])
 
-  // by default move to intro
-  let splited = location.pathname.split('/');
+  // by default move to Prep
+  const splited = location.pathname.split('/');
   if (splited.length === 4) {
-    history.push(`/play/brick/${brick.id}/intro`);
+    if (isPhone()) {
+      history.push(routes.phonePrep(brick.id));
+    } else {
+      history.push(routes.playNewPrep(brick.id));
+    }
     return <PageLoader content="...Getting Brick..." />;
   }
 
@@ -322,7 +326,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const renderPhoneFooter = () => {
-    let isIntro = history.location.pathname.slice(-6) === '/intro';
+    let isIntro = history.location.pathname.slice(-6) === routes.PlayPhonePrepLastPrefix;
   
     return <PhonePlayFooter
       brick={brick}
