@@ -560,13 +560,17 @@ $space-between-boxes: 0.1vw;
       .subject-select-container {
         margin-top: 0.5vw;
         width: 100%;
+        display: flex;
         .MuiInputBase-root {
+          margin-right:0.5vw;
           width: 100%;
           &::before,
           &::after {
             content: none !important;
           }
           .MuiSelect-root {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
             border-radius: 0.5vw;
             background: var(--off-white);
             display: inline-flex;
