@@ -6,13 +6,12 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import Tooltip from '@material-ui/core/Tooltip';
 import sprite from "assets/img/icons-sprite.svg";
 import './Hint.scss';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import { QuestionTypeEnum } from 'model/question';
 
 
-const HtmlTooltip = withStyles((theme: any) => ({
+const HtmlTooltip = withStyles(() => ({
   tooltip: {
     backgroundColor: '#193366',
     padding: '1.5vh 1vw',
@@ -119,6 +118,7 @@ const HintComponent: React.FC<HintProps> = ({
           <QuillEditor
             disabled={locked}
             data={state.value}
+            placeholder="Global Hint"
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
               'latex', 'insertTable', 'uploadImageCustom'
@@ -153,6 +153,7 @@ const HintComponent: React.FC<HintProps> = ({
           <QuillEditor
             disabled={locked}
             data={state.list[i]}
+            placeholder={`Answer ${i + 1} Hint`}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
               'latex', 'imageUploadCustom'
