@@ -11,7 +11,7 @@ const KeyWordsPlay: React.FC<KeyWordsProps> = ({ keywords }) => {
   const renderKeyWord = (k: KeyWord, i: number) => {
     return (
       <div key={i} className='key-word-play'>
-        {i > 0 ? ' | ' : ''} {k.name.trim()} {' '}
+        #{k.name.trim()} {' '}
       </div>
     );
   }
