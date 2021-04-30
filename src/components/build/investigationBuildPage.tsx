@@ -166,11 +166,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     isAuthor = props.brick.author.id === props.user.id;
   } catch { }
 
-  // when no questions create one.
+  // when no questions create one and make active.
   useEffect(() => {
-    console.log(brick);
     if (brick && (!brick.questions || brick.questions.length === 0)) {
-      createNewQuestionV2(getNewFirstQuestion(QuestionTypeEnum.None, true));
+      createNewQuestionV2(getNewFirstQuestion(QuestionTypeEnum.None, true), (questionV2:any) => {
+        questionV2.active = true;
+        setQuestions(update(questions, { $set: [questionV2] }));
+        cashBuildQuestion(brickId, 0);
+        activeQuestion = questionV2;
+      });
     }
   }, []);
 
