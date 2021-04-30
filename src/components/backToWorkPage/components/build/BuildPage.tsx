@@ -35,6 +35,8 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { SubjectItem } from "../personalBuild/model";
 import { isTeacherPreference } from "components/services/preferenceService";
 import { isPhone } from "services/phone";
+import PublishedBricks from "./PublishedBricks";
+
 
 interface BuildProps {
   searchString: string;
@@ -676,6 +678,24 @@ class BuildPage extends Component<BuildProps, BuildState> {
             selfPublish={selfPublish}
             onCoreSwitch={this.toggleCore.bind(this)}
           />
+            {this.state.filters.publish ? <PublishedBricks
+              user={this.props.user}
+              finalBricks={finalBricks}
+              shown={this.state.shown}
+              pageSize={18}
+              sortedIndex={this.state.sortedIndex}
+              history={history}
+              filters={this.state.filters}
+              loaded={this.state.bricksLoaded}
+              searchString={searchString}
+              published={published}
+              moveNext={this.moveAllNext.bind(this)}
+              moveBack={this.moveAllBack.bind(this)}
+              switchPublish={this.switchPublish.bind(this)}
+              handleDeleteOpen={this.handleDeleteOpen.bind(this)}
+              handleMouseHover={this.handleMouseHover.bind(this)}
+              handleMouseLeave={this.handleMouseLeave.bind(this)}
+            /> :
             <div className="tab-content">
               <BuildBricks
                 user={this.props.user}
@@ -700,7 +720,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
               />
               {this.renderPagination(finalBricks, threeColumns)}
-          </div>
+          </div>}
         </Grid>
         <DeleteBrickDialog
           isOpen={this.state.deleteDialogOpen}
