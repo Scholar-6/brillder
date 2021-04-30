@@ -633,6 +633,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
     finalBricks = finalBricks.filter(b => b.isCore === true);
 
+
     let selfPublish = 0;
     let personalDraft = 0;
     if (this.state.isAdmin) {
@@ -650,6 +651,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     // publish should have create brick button when empty
     if (this.state.filters.publish) {
       isEmpty = finalBricks.length > 0 ? false : true;
+      finalBricks = finalBricks.filter(b => b.status === BrickStatus.Publish);
     } else {
       const coreNoPublishBricks =  this.state.rawBricks
         .filter(b => b.isCore === true)
