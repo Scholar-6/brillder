@@ -69,7 +69,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     { id: 2, type: QuestionComponentTypeEnum.Quote },
     { id: 3, type: QuestionComponentTypeEnum.Image },
     { id: 4, type: QuestionComponentTypeEnum.Sound },
-    { id: 4, type: QuestionComponentTypeEnum.Graph }
+    { id: 5, type: QuestionComponentTypeEnum.Graph }
   ]);
   const [isCommingSoonOpen, setCommingSoon] = React.useState(false);
   const [commentsShown, setCommentsShown] = React.useState(props.initSuggestionExpanded);

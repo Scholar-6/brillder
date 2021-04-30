@@ -5,7 +5,7 @@ import './chooseSeveralBuild.scss';
 import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 import {ChooseOneAnswer} from '../chooseOneBuild/types';
 import validator from '../../../questionService/UniqueValidator';
-import { showSameAnswerPopup } from '../service/questionBuild';
+import { generateId, showSameAnswerPopup } from '../service/questionBuild';
 
 export interface ChooseSeveralData {
   list: ChooseOneAnswer[];
@@ -22,7 +22,7 @@ export interface ChooseSeveralBuildProps {
 }
 
 export const getDefaultChooseSeveralAnswer = () => {
-  const newAnswer = () => ({value: "", checked: false, valueFile: '' });
+  const newAnswer = () => ({ id: generateId(), value: "", checked: false, valueFile: '' });
 
   return { list: [newAnswer(), newAnswer(), newAnswer()] };
 }
@@ -30,7 +30,7 @@ export const getDefaultChooseSeveralAnswer = () => {
 const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
-  const newAnswer = () => ({value: "", checked: false, valueFile: '' });
+  const newAnswer = () => ({ id: generateId(), value: "", checked: false, valueFile: '' });
 
   if (!data.list) {
     data.list = getDefaultChooseSeveralAnswer().list;
@@ -44,7 +44,11 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   useEffect(() => { setState(data) }, [data]);
 
   const update = () => {
-    setState(Object.assign({}, state));
+    const newState = Object.assign({}, state);
+    newState.list.forEach(answer => {
+      if(!answer.id) answer.id = generateId();
+    });
+    setState(newState);
     updateComponent(state);
   }
 
@@ -80,7 +84,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
           return <ChooseOneAnswerComponent
             locked={locked}
             editOnly={editOnly}
-            key={i}
+            key={answer.id}
             index={i}
             length={data.list.length}
             answer={answer}
