@@ -121,8 +121,9 @@ const HintComponent: React.FC<HintProps> = ({
             placeholder="Global Hint"
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'insertTable', 'uploadImageCustom'
+              'latex', 'insertTable', 'uploadImageCustom', 'image'
             ]}
+            imageDialog={true}
             validate={validationRequired}
             onChange={onHintChanged}
           />
@@ -156,8 +157,9 @@ const HintComponent: React.FC<HintProps> = ({
             placeholder={`Answer ${i + 1} Hint`}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'imageUploadCustom'
+              'latex', 'imageUploadCustom', 'image'
             ]}
+            imageDialog={true}
             validate={validationRequired}
             onChange={(v: any) => { onHintListChanged(v, i) }}
           />
