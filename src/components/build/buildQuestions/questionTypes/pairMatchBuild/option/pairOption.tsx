@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import { QuestionValueType } from '../../types';
 import { Answer } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
@@ -74,6 +73,8 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
   if (isValid === false) {
     customClass += ' invalid-answer';
   }
+
+  console.log('index: ', index, answer.optionType);
 
   return (
     <Grid container item xs={6}>
