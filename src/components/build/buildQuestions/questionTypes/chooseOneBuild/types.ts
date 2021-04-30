@@ -4,6 +4,7 @@ import {QuestionValueType} from '../types';
 
 export interface ChooseOneAnswer extends MainImageProps {
   index?: number;
+  id: number;
   checked: boolean;
   value: string;
   valueFile: string;
