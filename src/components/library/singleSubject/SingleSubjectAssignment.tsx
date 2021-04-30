@@ -6,6 +6,7 @@ import map from "components/map";
 import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademyDifficulty } from "../base/AcademyDifficulty";
 import BrickTitle from "components/baseComponents/BrickTitle";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -74,7 +75,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
       <div className={className}>
         <div className="rotated">
           <div className="rotated-text" style={{ width }}>
-          <BrickTitle title={brick.title} />
+            {stripHtml(brick.title)}
           </div>
         </div>
       </div>
