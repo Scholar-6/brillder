@@ -10,6 +10,7 @@ import BrickBlock from "components/baseComponents/BrickBlock";
 import BrickColDescription from "./BrickColDescription";
 import PublishToggle from "./PublishToggle";
 import CreateBrickBlock from "../CreateBrickBlock";
+import EmptyPage from "./EmptyPage";
 
 interface BuildBricksProps {
   user: User;
@@ -262,23 +263,6 @@ class BuildBricks extends Component<BuildBricksProps, State> {
     );
   }
 
-  renderEmptyPage() {
-    return (
-      <div className="bricks-list-container no-top-padding">
-        <PublishToggle
-          isPublish={this.props.filters.publish}
-          publishedCount={this.props.published}
-          onSwitch={this.props.switchPublish}
-        />
-        <div className="bricks-list">
-          {this.renderFirstEmptyColumn()}
-          {this.renderSecondEmptyColumn()}
-          {this.renderThirdEmptyColumn()}
-        </div>
-      </div>
-    );
-  }
-
   renderRedDescription() {
     let count = 0;
     for (let b of this.props.finalBricks) {
@@ -422,7 +406,7 @@ class BuildBricks extends Component<BuildBricksProps, State> {
     }
 
     if (isEmpty && this.props.loaded) {
-      return this.renderEmptyPage();
+      return <EmptyPage isPublish={this.props.filters.publish} published={this.props.published} switchPublish={this.props.switchPublish} />;
     }
 
     return (
