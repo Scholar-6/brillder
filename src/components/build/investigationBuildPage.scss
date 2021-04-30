@@ -787,3 +787,12 @@ $space-between-boxes: 0.1vw;
 .build-question-page .build-question-column .line-highlight-build .hightlight-area .word.active, .build-question-page .build-question-column .word-highlight-build .hightlight-area .word.active {
   border-radius: 0.3vw;
 }
+
+
+// phone word highlighting
+.phone-question-preview .words-container .word {
+  margin-left: 0.1vw;
+  margin-right: 0.1vw;
+  padding-left: 0.1vw;
+  padding-right: 0.1vw;
+}
