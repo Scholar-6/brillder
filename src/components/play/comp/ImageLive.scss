@@ -10,6 +10,10 @@
 
   &.center {
     justify-content: center;
+    .il-image-container {
+      display: flex;
+      justify-content: center;
+    }
   }
 }
 .image-play {
