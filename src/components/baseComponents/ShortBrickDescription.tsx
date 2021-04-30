@@ -171,6 +171,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
           {this.renderShortBrickInfo(searchString, brick)}
         </div>
         {isExpanded ? this.renderPlayButton() : ""}
+        <div className="visible-on-hover">{brick.id}</div>
       </div>
     );
   }
