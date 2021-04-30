@@ -92,18 +92,19 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     <Grid container item xs={6}>
       <div className={customClass}>
         {renderDeleteButton()}
-        <QuillEditor
-          disabled={locked}
-          data={answer.value}
-          validate={validationRequired}
-          isValid={isValid}
-          toolbar={['latex']}
-          placeholder={"Enter Answer " + (index + 1) + "..."}
-          onBlur={() => {
-            onBlur();
-          }}
-          onChange={value => answerChanged(answer, value)}
-        />
+        {answer.answerType !== QuestionValueType.Image &&
+          <QuillEditor
+            disabled={locked}
+            data={answer.value}
+            validate={validationRequired}
+            isValid={isValid}
+            toolbar={['latex']}
+            placeholder={"Enter Answer " + (index + 1) + "..."}
+            onBlur={() => {
+              onBlur();
+            }}
+            onChange={value => answerChanged(answer, value)}
+          />}
         <QuestionImageDropZone
           answer={answer as any}
           type={answer.answerType || QuestionValueType.None}
