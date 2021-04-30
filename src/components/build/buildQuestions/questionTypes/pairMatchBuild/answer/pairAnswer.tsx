@@ -107,6 +107,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
           />}
         <QuestionImageDropZone
           answer={answer as any}
+          className={answer.answerType === QuestionValueType.Image ? 'pair-image' : ''}
           type={answer.answerType || QuestionValueType.None}
           fileName={answer.valueFile}
           locked={locked}

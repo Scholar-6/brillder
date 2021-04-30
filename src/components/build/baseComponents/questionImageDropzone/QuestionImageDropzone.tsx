@@ -17,13 +17,14 @@ export interface ImageAnswerData extends MainImageProps {
 export interface AnswerProps {
   answer: ImageAnswerData;
   locked: boolean;
+  className?: string;
   type: QuestionValueType;
   fileName: string;
   update(fileName: string): void;
 }
 
 const QuestionImageDropzone: React.FC<AnswerProps> = ({
-  locked, answer, fileName, type, update
+  locked, answer, fileName, type, className, update
 }) => {
   let [file, setFile] = useState(null);
   let [isOpen, setOpen] = useState(false);
@@ -67,7 +68,7 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
   }
 
   return (
-    <div className="question-image-drop">
+    <div className={`question-image-drop ${className ? className : ''}`}>
       <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
         <input {...getInputProps()} />
         {
