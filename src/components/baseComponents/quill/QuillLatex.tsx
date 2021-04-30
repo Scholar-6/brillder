@@ -11,7 +11,7 @@ class LatexBlot extends Inline {
 
     formatAt(index: number, length: number, name: string, value: any): void {
         console.log(index, length, name, value);
-        if(value === false) {
+        if(name === "latex") {
             return super.formatAt(index, length, name, value);
         }
     }
@@ -21,3 +21,5 @@ LatexBlot.className = "latex";
 LatexBlot.tagName = "SPAN";
 
 Quill.register(LatexBlot, true);
+
+Inline.order.push("latex");
