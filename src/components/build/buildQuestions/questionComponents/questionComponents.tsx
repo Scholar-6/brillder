@@ -24,6 +24,7 @@ import ValidationFailedDialog from "components/baseComponents/dialogs/Validation
 import DeleteDialog from "components/build/baseComponents/dialogs/DeleteDialog";
 import { QuillEditorContext } from "components/baseComponents/quill/QuillEditorContext";
 import QuillGlobalToolbar from "components/baseComponents/quill/QuillGlobalToolbar";
+import { generateId } from "../questionTypes/service/questionBuild";
 
 
 type QuestionComponentsProps = {
@@ -74,7 +75,12 @@ const QuestionComponents = ({
   }, [saveQuestion, question]);
 
   const updateComponentsAndSave = React.useCallback((components: any[]) => {
-    const newQuestion = updateComponents(components);
+    const newComponents = components.map(comp => ({
+      ...comp,
+      id: (comp.id && comp.id > 5) ? comp.id : generateId(),
+    }));
+    setComponents(newComponents);
+    const newQuestion = updateComponents(newComponents);
     saveQuestion(newQuestion);
   }, [saveQuestion, question]);
 
@@ -227,7 +233,7 @@ const QuestionComponents = ({
         >
           {
             components.map((comp, i) => (
-              <Grid key={`${questionId}-${i}`} container direction="row" className={validateDropBox(comp)}>
+              <Grid key={`${questionId}-${comp.id}`} container direction="row" className={validateDropBox(comp)}>
                 {renderDropBox(comp, i)}
               </Grid>
             ))
