@@ -23,15 +23,11 @@ const BellButton: React.FC<BellButtonProps> = (props) => {
   const renderCount = () => {
     if (notificationCount <= 0) { return ""; }
  
-    if (isPhone()) {
-      return <span className="bell-text">{notificationCount}</span>;
-    } else {
       return (
         <div className="bell-circle">
-          <DynamicFont content={notificationCount.toString()} />
+          {!isPhone() && <DynamicFont content={notificationCount.toString()} />}
         </div>
       );
-    }
   }
 
 
