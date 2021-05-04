@@ -55,3 +55,31 @@
     }
   }
 }
+
+
+// desktop and tablet
+.bell-button.big-version {
+  #bell {
+    stroke: var(--white);
+  }
+  .bell-cup {
+    fill: inherit;
+  }
+
+  .bell-circle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1.8vw;
+    height: 1.8vw;
+    border-radius: 50%;
+    color: var(--white);
+    text-align: center;
+    background: var(--theme-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-size: 1.2vw;
+  }
+}
