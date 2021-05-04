@@ -6,7 +6,6 @@ import { UniqueComponentProps } from "../types";
 import { ShortAnswerData, ShortAnswerItem } from "./interface";
 
 import { stripHtml } from "components/build/questionService/ConvertService";
-import DocumentWirisCKEditor from "components/baseComponents/ckeditor/DocumentWirisEditor";
 import AddAnswerButton from "components/build/baseComponents/addAnswerButton/AddAnswerButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";

@@ -81,7 +81,7 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
         {
           fileName
             ? <img alt="" style={{ width: '100%' }} src={fileUrl(fileName)} />
-            : <img src="/images/Scholar-6-Logo.svg" />
+            : <img alt="" src="/images/Scholar-6-Logo.svg" />
         }
       </div>
       <ImageSponsorDialog
