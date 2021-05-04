@@ -1,6 +1,8 @@
 import React from "react";
+import DynamicFont from 'react-dynamic-font';
 
 import "./BellButton.scss";
+import { isPhone } from "services/phone";
 
 interface BellButtonProps {
   notificationCount: number;
@@ -13,6 +15,26 @@ const BellButton: React.FC<BellButtonProps> = (props) => {
   if (notificationCount !== 0) {
     className += " bell-full";
   }
+
+  if (!isPhone()) {
+    className += ' big-version'
+  }
+
+  const renderCount = () => {
+    if (notificationCount <= 0) { return ""; }
+ 
+    if (isPhone()) {
+      return <span className="bell-text">{notificationCount}</span>;
+    } else {
+      return (
+        <div className="bell-circle">
+          <DynamicFont content={notificationCount.toString()} />
+        </div>
+      );
+    }
+  }
+
+
   return (
     <div
       id="bell-container"
@@ -26,7 +48,7 @@ const BellButton: React.FC<BellButtonProps> = (props) => {
         />
         <path d="M13.73 21a2 2 0 0 1-3.46 0" />
       </svg>
-      {notificationCount !== 0 && (<span className="bell-text">{notificationCount}</span>)}
+      {renderCount()}
     </div>
   );
 };
