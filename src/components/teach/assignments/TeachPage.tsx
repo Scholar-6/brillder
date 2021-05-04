@@ -378,33 +378,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (classrooms) {
       this.setState({ ...this.state, classrooms});
     } else {
-      
+      // failed
     }
-    /*
-    let students = this.state.users;
-    if (this.state.activeClassroom) {
-      students = this.state.activeClassroom.students as MUser[];
-    }
-    let searchUsers = [];
-    const { searchString } = this.state;
-    for (let student of students) {
-      let res = student.firstName?.toLowerCase().search(searchString.toLowerCase());
-      if (res >= 0) {
-        searchUsers.push(student)
-        continue;
-      }
-      res = student.lastName?.toLocaleLowerCase().search(searchString.toLowerCase());
-      if (res >= 0) {
-        searchUsers.push(student);
-        continue;
-      }
-    }
-    this.setState({
-      isSearching: true,
-      selectedUsers: [],
-      searchUsers
-    });
-    */
   }
 
   renderArchiveButton() {
