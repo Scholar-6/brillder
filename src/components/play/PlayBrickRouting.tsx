@@ -326,13 +326,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const renderPhoneFooter = () => {
-    let isIntro = history.location.pathname.slice(-6) === routes.PlayPhonePrepLastPrefix;
-  
     return <PhonePlayFooter
       brick={brick}
       user={props.user}
       history={history}
-      menuOpen={isIntro}
+      menuOpen={false}
       mode={mode}
       setMode={setMode}
       moveToPostPlay={moveToPostPlay}
