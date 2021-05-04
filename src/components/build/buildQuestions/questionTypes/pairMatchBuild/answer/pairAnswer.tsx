@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import { QuestionValueType } from '../../types';
 import { Answer } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
@@ -22,7 +21,7 @@ export interface PairAnswerProps {
 }
 
 const PairAnswerComponent: React.FC<PairAnswerProps> = ({
-  locked, editOnly, index, length, answer, validationRequired,
+  locked, index, length, answer, validationRequired,
   removeFromList, update, save, onBlur
 }) => {
   const answerChanged = (answer: Answer, value: string) => {

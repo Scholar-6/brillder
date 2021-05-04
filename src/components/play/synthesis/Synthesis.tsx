@@ -15,7 +15,6 @@ import { isPhone } from 'services/phone';
 import TimeProgressbarV2 from '../baseComponents/timeProgressbar/TimeProgressbarV2';
 import BrickTitle from 'components/baseComponents/BrickTitle';
 import routes from '../routes';
-import previewRoutes from 'components/playPreview/routes';
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
