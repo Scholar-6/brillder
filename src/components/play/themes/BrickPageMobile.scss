@@ -12,7 +12,7 @@
 
 $height: 20vw;
 $play-footer-height: $mobile-menu-height;
-$new-play-height: calc(100vh - #{$play-footer-height} - #{$progress-bar-height});
+$new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
 .play-preview-pages {
   // only ending page scroll fix
@@ -47,9 +47,9 @@ $new-play-height: calc(100vh - #{$play-footer-height} - #{$progress-bar-height})
       border-radius: 0;
       height: $new-play-height !important;
       &.real-introduction-page {
-        height: calc(100vh - #{$play-footer-height}) !important;
+        height: calc(100% - #{$play-footer-height}) !important;
         &.expanded {
-          height: calc(100vh - #{$play-footer-height} - #{$progress-bar-height}) !important;
+          height: calc(100% - #{$play-footer-height} - #{$progress-bar-height}) !important;
         }
       }
       transition: 700ms width;

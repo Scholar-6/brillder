@@ -5,7 +5,7 @@
 .main-listing,
 .play-preview-pages {
   background: var(--theme-dark-blue);
-  height: 100vh;
+  height: 100%;
   width: 100%;
   overflow: hidden;
   @include phone_and_tabletP {
