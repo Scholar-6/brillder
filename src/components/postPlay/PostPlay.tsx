@@ -36,6 +36,7 @@ import AnswersPage from "./bookPages/AnswersPage";
 import SynthesisPage from "./bookPages/SynthesisPage";
 import map from "components/map";
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
+import routes from "components/play/routes";
 
 export enum BookState {
   Titles,
@@ -383,7 +384,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                           onMouseLeave={() => this.setState({playHovered: false})}
                           onClick={() =>
                             this.props.history.push(
-                              map.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
+                              routes.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
                             )
                           }
                         >
@@ -449,7 +450,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                         onMouseLeave={() => this.setState({playHovered: false})}
                         onClick={() =>
                           this.props.history.push(
-                            map.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
+                            routes.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
                           )
                         }
                       >

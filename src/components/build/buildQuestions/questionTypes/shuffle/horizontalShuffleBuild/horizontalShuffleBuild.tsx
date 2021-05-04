@@ -5,7 +5,6 @@ import './horizontalShuffleBuild.scss'
 import { QuestionValueType, UniqueComponentProps } from '../../types';
 import { showSameAnswerPopup } from '../../service/questionBuild';
 
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import RemoveItemButton from '../../components/RemoveItemButton';

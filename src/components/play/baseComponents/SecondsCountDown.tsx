@@ -31,7 +31,7 @@ class SecondsCountDown extends React.Component<Props, State> {
         this.setState({isApearing: false});
         setTimeout(() => this.setState({seconds: this.state.seconds - 1, isApearing: true}), 400);
       }
-    }, 1500);
+    }, 1000);
     this.setState({interval});
   }
 

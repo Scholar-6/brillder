@@ -21,6 +21,10 @@
       font-size: 1.25vw;
       color: var(--theme-dark-blue);
     }
+
+    .question-hint.correct {
+      background: var(--off-white) !important;
+    }
   }
 
   .question-hint-global {

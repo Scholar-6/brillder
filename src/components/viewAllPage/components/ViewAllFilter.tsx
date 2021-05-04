@@ -6,7 +6,6 @@ import { User } from "model/user";
 
 import SubjectsListV3 from "components/baseComponents/subjectsList/SubjectsListV3";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { isSafari } from "react-device-detect";
 
 export enum SortBy {
   None,

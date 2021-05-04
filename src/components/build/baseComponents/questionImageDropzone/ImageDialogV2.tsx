@@ -5,17 +5,19 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 import DropImage from "../../buildQuestions/components/Image/DropImage";
 import { ImageComponentData } from "../../buildQuestions/components/Image/model";
+import { fileUrl } from "components/services/uploadFile";
 
 interface DialogProps {
   open: boolean;
   initFile: File | null;
   initData: ImageComponentData;
+  fileName: string;
   upload(file: File, source: string, caption: string, permision: boolean): void;
   updateData(source: string, caption: string, permision: boolean): void;
   setDialog(open: boolean): void;
 }
 
-const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, upload, updateData, setDialog }) => {
+const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, fileName, upload, updateData, setDialog }) => {
   const [source, setSource] = React.useState(initData.imageSource || '');
   const [caption, setCaption] = React.useState(initData.imageCaption || '');
   const [permision, setPermision] = React.useState(initData.imagePermision ? true : false);
@@ -64,6 +66,8 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, upload
     }
   }
 
+  console.log(initData);
+
   return (
     <BaseDialogWrapper open={open} className="image-dialog-container" close={() => setDialog(false)} submit={() => {}}>
       <div className="dialog-header image-dialog image-dialog-answer">
@@ -76,7 +80,9 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, upload
           <div className="centered">
             {removed
               ? <SpriteIcon name="image" className="icon-image" />
-              : <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
+              : initData.value
+                ? <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
+                : <img alt="" src={fileUrl(fileName)} />
             }
           </div>
         </div>

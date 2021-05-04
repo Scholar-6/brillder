@@ -5,7 +5,6 @@ import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/Add
 import { UniqueComponentProps } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import { SortCategory, QuestionValueType, SortAnswer } from 'components/interfaces/sort';
-import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import { showSameAnswerPopup } from '../service/questionBuild';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';

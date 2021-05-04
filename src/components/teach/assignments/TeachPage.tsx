@@ -10,7 +10,7 @@ import actions from 'redux/actions/requestFailed';
 import { User } from "model/user";
 import { Subject } from "model/brick";
 import { TeachClassroom, TeachStudent } from "model/classroom";
-import { createClass, getAllClassrooms } from "components/teach/service";
+import { createClass, getAllClassrooms, searchClassrooms } from "components/teach/service";
 import { checkAdmin, checkTeacher } from "components/services/brickService";
 import { TeachFilters } from '../model';
 import { Assignment } from "model/classroom";
@@ -65,6 +65,7 @@ interface TeachState {
   assignmentStats: ApiAssignemntStats | null;
   totalCount: number;
   subjects: Subject[];
+  searchString: string;
   isSearching: boolean;
   isLoaded: boolean;
   remindersData: RemindersData;
@@ -113,6 +114,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       createClassOpen: false,
 
       totalCount: 0,
+      searchString: '',
       isSearching: false,
       subjects: [],
 
@@ -279,9 +281,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async createClass(name: string, subject: Subject) {
     const newClassroom = await createClass(name, subject);
     if (newClassroom) {
-      await this.loadClasses(newClassroom.id);
-    } else {
-      // creation failed
+      this.props.history.push(map.ManageClassroomsTab + `?classroomId=` + newClassroom.id);
     }
   }
 
@@ -356,6 +356,29 @@ class TeachPage extends Component<TeachProps, TeachState> {
       return this.getLiveClassCount(this.state.activeClassroom);
     } else {
       return this.getLiveClassesCount();
+    }
+  }
+
+  searching(searchString: string) {
+    if (searchString.length === 0) {
+      this.setState({ ...this.state, searchString,
+        isSearching: true,
+        activeClassroom: null,
+        activeAssignment: null,
+        assignmentStats: null,
+        activeStudent: null
+      });
+    } else {
+      this.setState({ ...this.state, searchString });
+    }
+  }
+
+  async search() {
+    const classrooms = await searchClassrooms(this.state.searchString) as TeachClassroom[] | null;
+    if (classrooms) {
+      this.setState({ ...this.state, classrooms});
+    } else {
+      // failed
     }
   }
 
@@ -565,8 +588,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
           placeholder="Search by Name, Email or Subject"
           user={this.props.user}
           history={history}
-          search={() => { }}
-          searching={v => { }}
+          search={this.search.bind(this)}
+          searching={this.searching.bind(this)}
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <TeachFilterSidebar

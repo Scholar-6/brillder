@@ -29,6 +29,8 @@ import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
 import BuildCompletePage from './buildComplete/BuildCompletePage';
 import FinalStep from './finalStep/FinalStep';
 import { calcBrickLiveAttempt, calcBrickReviewAttempt } from 'components/play/services/scoring';
+import playRoutes from "components/play/routes";
+import buildRoutes from 'components/build/routes';
 import routes from './routes';
 import NewPrep from 'components/play/newPrep/NewPrep';
 
@@ -148,7 +150,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const moveToBuild = () => {
-    history.push(`/build/brick/${brickId}/investigation/question`);
+    const isSynthesis = history.location.pathname.indexOf(playRoutes.PlaySynthesisLastPrefix) > -1;
+    if (isSynthesis) {
+      history.push(buildRoutes.buildSynthesis(brickId));
+    } else {
+      history.push(buildRoutes.buildQuesiton(brickId));
+    }
   }
 
   const setSidebar = (state?: boolean) => {
