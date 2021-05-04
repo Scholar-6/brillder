@@ -6,7 +6,7 @@ import CommentPanel from "components/baseComponents/comments/CommentPanel";
 import { CommentLocation } from "model/comments";
 import { ReduxCombinedState } from "redux/reducers";
 
-import { Brick } from "model/brick";
+import { Brick, Subject } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import CommentButton from "../baseComponents/commentButton/CommentButton";
 import RedoButton from "../baseComponents/redoButton";
@@ -22,6 +22,8 @@ import Subjects from "./Subjects";
 import brickActions from "redux/actions/brickActions";
 import PlanPreviewComponent from "../baseComponents/phonePreview/plan/PlanPreview";
 import DifficultySelect from "../proposal/questionnaire/brickTitle/DifficultySelect";
+import { getSubjects } from "services/axios/subject";
+import CoreSelect from "../proposal/questionnaire/brickTitle/CoreSelect";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -34,15 +36,23 @@ export interface PlanProps {
 }
 
 const PlanPage: React.FC<PlanProps> = (props) => {
-  const { subjects } = props.user;
   const { currentBrick, locked } = props;
-  console.log(currentBrick);
+
+  const [apiSubjects, setApiSubjects] = React.useState([] as Subject[]);
 
   const [scrollArea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const [canScroll, setScroll] = React.useState(false);
 
   const [commentsShown, setCommentsShown] = React.useState(false);
   const editorIdState = React.useState("");
+
+  React.useEffect(() => {
+   getSubjects().then(allSubjects => {
+     if (allSubjects) {
+       setApiSubjects(allSubjects);
+     }
+   });
+  }, []);
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -142,10 +152,11 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                   <div className="subject-select-container">
                     <Subjects
                       disabled={locked}
-                      subjects={subjects}
+                      subjects={apiSubjects}
                       subjectId={currentBrick.subjectId}
-                      onChange={subjectId => changeBrick((brick) => ({ ...brick, subjectId, subject: subjects.find(sub => sub.id === subjectId) }))}
+                      onChange={subjectId => changeBrick((brick) => ({ ...brick, subjectId, subject: apiSubjects.find(sub => sub.id === subjectId) }))}
                     />
+                    <CoreSelect disabled={locked} isCore={currentBrick.isCore} onChange={isCore => changeBrick((brick) => ({...brick, isCore}))} />
                   </div>
                   <div className="level-and-length-container">
                     <DifficultySelect

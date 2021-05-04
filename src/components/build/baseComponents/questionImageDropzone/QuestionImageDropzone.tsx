@@ -17,17 +17,18 @@ export interface ImageAnswerData extends MainImageProps {
 export interface AnswerProps {
   answer: ImageAnswerData;
   locked: boolean;
+  className?: string;
   type: QuestionValueType;
   fileName: string;
   update(fileName: string): void;
 }
 
 const QuestionImageDropzone: React.FC<AnswerProps> = ({
-  locked, answer, fileName, type, update
+  locked, answer, fileName, type, className, update
 }) => {
-  let [file, setFile] = useState(null);
-  let [isOpen, setOpen] = useState(false);
-  let [isCloseOpen, setCloseDialog] = useState(false);
+  const [file, setFile] = useState(null);
+  const [isOpen, setOpen] = useState(false);
+  const [isCloseOpen, setCloseDialog] = useState(false);
 
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/jpeg, image/png, .gif',
@@ -60,25 +61,25 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
     updateAnswer(answer.valueFile, source, caption, permision);
   }
  
-  const renderImagePreview = () => {
-    return (
-      <img src={fileUrl(fileName)} alt="" width="100%" height="auto"/>
-    );
-  }
-
   return (
-    <div className="question-image-drop">
-      <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
+    <div className={`question-image-drop ${className ? className : ''}`}>
+      <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})} onClick={e => {
+        if (type === QuestionValueType.Image) {
+          setOpen(true);
+          e.stopPropagation();
+        }
+      }}>
         <input {...getInputProps()} />
         {
           type === QuestionValueType.Image
-            ? renderImagePreview()
+            ? <img src={fileUrl(fileName)} alt="" width="100%" height="auto"/>
             : <AddImageBtnContent />
         }
       </div>
       <ImageDialogV2
         open={isOpen}
         initFile={file}
+        fileName={fileName}
         initData={answer as any}
         upload={upload}
         updateData={updateData}

@@ -7,7 +7,7 @@ declare global {
 }
 
 const getZendeskIframe = () => document.getElementById("launcher") as any;
-const getWidgetIframe = () => document.getElementById("webWidget") as any;
+//const getWidgetIframe = () => document.getElementById("webWidget") as any;
 
 const attachStyleCss = (iframe: any, path: string) => {
   try {
@@ -32,6 +32,7 @@ const initZendeskStyling = (iframe: any) => {
   }
   if (isMobile) { return; }
 
+  /*
   // hide custom fields
   let widgetIframe = getWidgetIframe();
   var innerWidgetDoc = widgetIframe.contentDocument || widgetIframe.contentWindow.document;
@@ -64,6 +65,7 @@ const initZendeskStyling = (iframe: any) => {
 
   style.type = 'text/css';
   style.appendChild(document.createTextNode(css));
+  */
 }
 
 export function minimizeZendeskButton(iframe?: any) {

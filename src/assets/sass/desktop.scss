@@ -34,8 +34,17 @@
   padding-left: 1vw;
   border-radius: 1vw;
   background: var(--white);
+  .visible-on-hover {
+    display: none;
+  }
   &:hover {
     background: var(--tab-gray);
+    .visible-on-hover {
+      display: block;
+      position: absolute;
+      bottom: 0.2vw;
+      right: 0.4vw;
+    }
     .hover-delete-icon {
       height: 3.5vw;
       svg {

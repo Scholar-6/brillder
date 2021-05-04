@@ -1,9 +1,8 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import {QuestionValueType} from '../../types';
-import {Answer} from '../types';
+import { QuestionValueType } from '../../types';
+import { Answer } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
@@ -19,7 +18,7 @@ export interface PairOptionProps {
 }
 
 const PairOptionComponent: React.FC<PairOptionProps> = ({
-  locked, editOnly, index, answer, validationRequired, save, update
+  locked, index, answer, validationRequired, save, update
 }) => {
   const removeImage = () => {
     if (locked) { return; }
@@ -50,7 +49,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
   }
 
   const setImage = (fileName: string) => {
-    if (locked) {return;}
+    if (locked) { return; }
     answer.option = "";
     answer.optionFile = fileName;
     answer.optionType = QuestionValueType.Image;
@@ -75,18 +74,21 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     customClass += ' invalid-answer';
   }
 
+  console.log('index: ', index, answer.optionType);
+
   return (
     <Grid container item xs={6}>
       <div className={customClass}>
-        <QuillEditor
-          disabled={locked}
-          data={answer.option}
-          validate={validationRequired}
-          toolbar={['latex']}
-          isValid={isValid}
-          placeholder={"Enter Option " + (index + 1) + "..."}
-          onChange={value => optionChanged(answer, value)}
-        />
+        {answer.optionType !== QuestionValueType.Image &&
+          <QuillEditor
+            disabled={locked}
+            data={answer.option}
+            validate={validationRequired}
+            toolbar={['latex']}
+            isValid={isValid}
+            placeholder={"Enter Option " + (index + 1) + "..."}
+            onChange={value => optionChanged(answer, value)}
+          />}
         <QuestionImageDropZone
           answer={answer as any}
           type={answer.optionType || QuestionValueType.None}

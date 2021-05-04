@@ -26,6 +26,7 @@ import AdaptBrickColumn from "./AdaptBrickColumn";
 import { checkTeacherOrAdmin } from "components/services/brickService";
 import { isPhone } from "services/phone";
 import BrickTitle from "components/baseComponents/BrickTitle";
+import routes from "../routes";
 
 interface FinalStepProps {
   brick: Brick;
@@ -75,7 +76,10 @@ const FinalStep: React.FC<FinalStepProps> = ({
     };
   });
 
-  const link = `/play/brick/${brick.id}/intro`;
+  let link = routes.playNewPrep(brick.id);
+  if (isPhone()) {
+    link = routes.phonePrep(brick.id);
+  }
 
   let isAuthor = false;
   try {

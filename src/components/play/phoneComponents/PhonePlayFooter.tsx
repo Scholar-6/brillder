@@ -24,6 +24,7 @@ import InvitationSuccessDialog from '../finalStep/dialogs/InvitationSuccessDialo
 import { ReduxCombinedState } from 'redux/reducers';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
+import routes from 'components/play/routes';
 
 interface InviteResult {
   isOpen: boolean;
@@ -75,7 +76,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
   const { history } = props;
 
   const isIntro = () => {
-    return history.location.pathname.slice(-6) === '/intro';
+    return history.location.pathname.slice(-6) === routes.PlayPhonePrepLastPrefix;
   }
 
   const isPrep = () => {
@@ -83,7 +84,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
   }
 
   const isSynthesis = () => {
-    return history.location.pathname.slice(-10) === '/synthesis';
+    return history.location.pathname.slice(-10) === routes.PlaySynthesisLastPrefix;
   }
 
   const isFinalScore = () => {

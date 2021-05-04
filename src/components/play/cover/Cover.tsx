@@ -11,8 +11,6 @@ import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import { User } from "model/user";
 import { checkPublisher } from "components/services/brickService";
-import { setBrickCover } from "services/axios/brick";
-import { ImageCoverData } from "./model";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
 import { stripHtml } from "components/build/questionService/ConvertService";

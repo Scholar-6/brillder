@@ -1,5 +1,4 @@
 import React from 'react';
-import { Hidden } from '@material-ui/core';
 
 import './ProposalPhonePreview.scss';
 import LastSave from '../../lastSave/LastSave';

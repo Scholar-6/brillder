@@ -139,23 +139,21 @@ class TeachFilterSidebar extends Component<
           onClick={(e) => this.toggleClassroom(e, c)}
           title={c.name}
         >
-          <div
-            className={"classroom-name " + (c.active ? "icon-animated" : "")}
-          >
+          <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
             <RadioButton
               checked={c.active}
               color={c.subject.color}
               name={c.subject.name}
             />
             <span className="filter-class-name">{c.name}</span>
-            {c.active && c.students.length > 0 && (
+            {c.active && (c.students.length > 0 || c.studentsInvitations.length > 0) && (
               <div className="classroom-icon svgOnHover">
                 <SpriteIcon name="arrow-right" className="active" />
               </div>
             )}
           </div>
           <div className="right-index">
-            {c.students.length}
+            {c.students.length + c.studentsInvitations.length}
             <SpriteIcon name="users" className="active" />
             {this.renderAssignedCount(c)}
           </div>

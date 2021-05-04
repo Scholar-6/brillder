@@ -99,9 +99,7 @@ $level-size: 6vh;
         white-space: nowrap;
         text-overflow: ellipsis;
         position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        overflow: hidden;
         text-transform: uppercase;
         width: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh - 8vh - 3vh);
         p {

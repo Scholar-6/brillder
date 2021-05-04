@@ -12,6 +12,18 @@
     .ck-content {
       padding-left: 1vw !important;
     }
+    background: var(--solitude-light);
+    .question-image-drop.pair-image {
+      position: relative;
+      margin-top: 0.3vw;
+      margin-bottom: 0.3vw;
+      top: 0;
+      width: 100%;
+      img {
+        margin-right: 1vw;
+        max-width: 9.5vw;
+      }
+    }
     .quill-document-editor {
       .quill {
         height: 100%;

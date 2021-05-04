@@ -11,6 +11,9 @@
       width: 100%;
       top: 0;
     }
+    &.published {
+      padding-top: 0;
+    }
   }
   .index-box.hover-light:hover {
     background: var(--light-blue-alpha3);

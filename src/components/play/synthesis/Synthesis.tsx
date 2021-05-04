@@ -8,13 +8,13 @@ import { PlayStatus } from '../model';
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/build/proposal/model';
-import { getPlayPath } from '../service';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { rightKeyPressed } from 'components/services/key';
 import { getSynthesisTime } from '../services/playTimes';
 import { isPhone } from 'services/phone';
 import TimeProgressbarV2 from '../baseComponents/timeProgressbar/TimeProgressbarV2';
 import BrickTitle from 'components/baseComponents/BrickTitle';
+import routes from '../routes';
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
@@ -30,7 +30,6 @@ interface SynthesisProps {
 const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }) => {
   const history = useHistory();
   const [startTime] = React.useState(moment());
-  const playPath = getPlayPath(props.isPlayPreview, brick.id);
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -47,7 +46,15 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   });
 
   if (status === PlayStatus.Live) {
-    history.push(`${playPath}/intro`);
+    if (isPhone()) {
+      history.push(routes.phonePrep(brick.id));
+    } else {
+      if (props.isPlayPreview) {
+        history.push(routes.playNewPrep(brick.id));
+      } else {
+        history.push(routes.playNewPrep(brick.id));
+      }
+    }
   }
 
   const reviewBrick = () => props.moveNext();

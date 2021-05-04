@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import { QuestionValueType } from '../../types';
 import { Answer } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
@@ -22,7 +21,7 @@ export interface PairAnswerProps {
 }
 
 const PairAnswerComponent: React.FC<PairAnswerProps> = ({
-  locked, editOnly, index, length, answer, validationRequired,
+  locked, index, length, answer, validationRequired,
   removeFromList, update, save, onBlur
 }) => {
   const answerChanged = (answer: Answer, value: string) => {
@@ -92,20 +91,22 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     <Grid container item xs={6}>
       <div className={customClass}>
         {renderDeleteButton()}
-        <QuillEditor
-          disabled={locked}
-          data={answer.value}
-          validate={validationRequired}
-          isValid={isValid}
-          toolbar={['latex']}
-          placeholder={"Enter Answer " + (index + 1) + "..."}
-          onBlur={() => {
-            onBlur();
-          }}
-          onChange={value => answerChanged(answer, value)}
-        />
+        {answer.answerType !== QuestionValueType.Image &&
+          <QuillEditor
+            disabled={locked}
+            data={answer.value}
+            validate={validationRequired}
+            isValid={isValid}
+            toolbar={['latex']}
+            placeholder={"Enter Answer " + (index + 1) + "..."}
+            onBlur={() => {
+              onBlur();
+            }}
+            onChange={value => answerChanged(answer, value)}
+          />}
         <QuestionImageDropZone
           answer={answer as any}
+          className={answer.answerType === QuestionValueType.Image ? 'pair-image' : ''}
           type={answer.answerType || QuestionValueType.None}
           fileName={answer.valueFile}
           locked={locked}

@@ -1,4 +1,6 @@
 import { PlayBase, realPlay } from "components/map";
+import { setAssignmentId } from "localStorage/playAssignmentId";
+import { isPhone } from "services/phone";
 
 const basePlayRoute = PlayBase + '/:brickId';
 
@@ -36,6 +38,25 @@ export const playSynthesis = (brickId: number) => realPlay(brickId) + PlaySynthe
 export const playPreReview = (brickId: number) => realPlay(brickId) + PlayPreReviewLastPrefix;
 export const playReview = (brickId: number) => realPlay(brickId) + PlayReviewLastPrefix;
 
+// phone pages
+export const PlayPhonePrepLastPrefix = '/intro';
+export const phonePrep = (brickId: number) => realPlay(brickId) + PlayPhonePrepLastPrefix;
+
+/**
+ * Set assignment and return link to play
+ * @param brickId BrickId
+ * @param assignmentId AssignmentId
+ * @returns link to play
+ */
+export const playAssignment = (brickId: number, assignmentId: number) => {
+  setAssignmentId(assignmentId);
+  if (isPhone()) {
+    return phonePrep(brickId);
+  } else {
+    return playCover(brickId);
+  }
+}
+
 export default {
   PlayCoverLastPrefix,
   PlaySectionsLastPrefix,
@@ -69,5 +90,11 @@ export default {
   playPreSynthesis,
   playSynthesis,
   playPreReview,
-  playReview
+  playReview,
+
+  playAssignment,
+
+  // phone
+  PlayPhonePrepLastPrefix,
+  phonePrep
 }

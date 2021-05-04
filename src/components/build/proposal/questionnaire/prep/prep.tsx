@@ -5,7 +5,6 @@ import './prep.scss';
 import { ProposalStep, BriefRoutePart } from "../../model";
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import YoutubeAndMathQuote from 'components/play/baseComponents/YoutubeAndMathQuote';

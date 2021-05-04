@@ -11,6 +11,7 @@ import { setBrillderTitle } from "components/services/titleService";
 import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
+import routes from "components/playPreview/routes";
 
 interface PreviewRouteProps {
   exact?: any;
@@ -64,7 +65,7 @@ const PlayPreviewRoute: React.FC<PreviewRouteProps> = ({
           // by default move to intro
           let splited = props.location.pathname.split('/');
           if (splited.length === 4) {
-            props.history.push(`/play-preview/brick/${brickId}/intro`);
+            props.history.push(routes.previewNewPrep(brickId));
             return <PageLoader content="...Getting Brick..." />;
           }
 

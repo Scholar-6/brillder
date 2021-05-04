@@ -67,6 +67,32 @@ export const getAllClassrooms = async () => {
 }
 
 /**
+ * Search classroms
+ * @returns list of classrooms if success or null if failed
+ */
+export const searchClassrooms = async (searchString: string) => {
+  try {
+    const res = await axios.post(
+      process.env.REACT_APP_BACKEND_HOST + "/classrooms",
+      { searchString }, { withCredentials: true }
+    );
+    if (res.data) {
+      let classrooms = (res.data as ClassroomApi[]);
+      for (let classroom of classrooms) {
+        for (let student of classroom.students as MUser[]) {
+          student.selected = false;
+        }
+      }
+      return res.data as ClassroomApi[];
+    }
+    return null;
+  }
+  catch (e) {
+    return null;
+  }
+}
+
+/**
  * Get all classrooms
  * return list of classrooms if success or null if failed
  */

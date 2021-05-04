@@ -24,6 +24,7 @@ import ValidationFailedDialog from "components/baseComponents/dialogs/Validation
 import DeleteDialog from "components/build/baseComponents/dialogs/DeleteDialog";
 import { QuillEditorContext } from "components/baseComponents/quill/QuillEditorContext";
 import QuillGlobalToolbar from "components/baseComponents/quill/QuillGlobalToolbar";
+import { generateId } from "../questionTypes/service/questionBuild";
 
 
 type QuestionComponentsProps = {
@@ -34,10 +35,10 @@ type QuestionComponentsProps = {
   brickId: number;
   question: Question;
   validationRequired: boolean;
-  saveBrick(): void;
-  updateFirstComponent(component: TextComponentObj): void;
-  updateComponents(components: any[]): void;
-  setQuestionHint(hintState: HintState): void;
+  saveQuestion(question: Question): void;
+  updateFirstComponent(component: TextComponentObj): Question;
+  updateComponents(components: any[]): Question;
+  setQuestionHint(hintState: HintState): Question;
 
   // phone preview
   componentFocus(index: number): void;
@@ -45,7 +46,7 @@ type QuestionComponentsProps = {
 
 const QuestionComponents = ({
   questionIndex, locked, editOnly, history, brickId, question, validationRequired,
-  componentFocus, updateComponents, setQuestionHint, saveBrick, updateFirstComponent
+  componentFocus, updateComponents, setQuestionHint, saveQuestion, updateFirstComponent
 }: QuestionComponentsProps) => {
   
   let firstComponent = Object.assign({}, question.firstComponent) as any;
@@ -68,6 +69,26 @@ const QuestionComponents = ({
     setComponents(Object.assign([], question.components) as any[]);
   }, [question]);
 
+  const updateFirstComponentAndSave = React.useCallback((component: TextComponentObj) => {
+    const newQuestion = updateFirstComponent(component);
+    saveQuestion(newQuestion);
+  }, [saveQuestion, question]);
+
+  const updateComponentsAndSave = React.useCallback((components: any[]) => {
+    const newComponents = components.map(comp => ({
+      ...comp,
+      id: (comp.id && comp.id > 5) ? comp.id : generateId(),
+    }));
+    setComponents(newComponents);
+    const newQuestion = updateComponents(newComponents);
+    saveQuestion(newQuestion);
+  }, [saveQuestion, question]);
+
+  const updateHintAndSave = React.useCallback((hintState: HintState) => {
+    const newQuestion = setQuestionHint(hintState);
+    saveQuestion(newQuestion);
+  }, [saveQuestion, question]);
+
   if (questionId !== question.id) {
     setQuestionId(question.id);
     setComponents(Object.assign([], question.components));
@@ -82,8 +103,7 @@ const QuestionComponents = ({
     if(components[componentIndex].type !== QuestionComponentTypeEnum.Component) {
       comps.splice(componentIndex, 1);
       setComponents(comps);
-      updateComponents(comps);
-      saveBrick();
+      updateComponentsAndSave(comps);
     }
     setDialog(false);
   }
@@ -95,7 +115,7 @@ const QuestionComponents = ({
       let copyComponents = Object.assign([], components) as any[];
       copyComponents[index] = compData;
       setComponents(copyComponents);
-      updateComponents(copyComponents);
+      updateComponentsAndSave(copyComponents);
     }
 
     const setEmptyType = () => {
@@ -105,7 +125,6 @@ const QuestionComponents = ({
       } else {
         removeInnerComponent(index);
       }
-      saveBrick();
     }
 
     const { type } = question;
@@ -152,9 +171,9 @@ const QuestionComponents = ({
         componentFocus={() => componentFocus(index)}
         setEmptyType={setEmptyType}
         removeComponent={removeInnerComponent}
-        setQuestionHint={setQuestionHint}
+        setQuestionHint={updateHintAndSave}
         updateComponent={updatingComponent}
-        saveBrick={saveBrick}
+        saveBrick={() => {}}
         openSameAnswerDialog={openSameAnswerDialog}
       />
     );
@@ -163,8 +182,7 @@ const QuestionComponents = ({
   const setList = (components: any) => {
     if (locked) { return; }
     setComponents(components);
-    updateComponents(components);
-    saveBrick();
+    updateComponentsAndSave(components);
   }
 
   const hideDialog = () => {
@@ -202,9 +220,9 @@ const QuestionComponents = ({
             editOnly={editOnly}
             questionId={question.id}
             data={firstComponent}
-            save={saveBrick}
+            save={() => {}}
             validationRequired={validationRequired}
-            updateComponent={updateFirstComponent}
+            updateComponent={updateFirstComponentAndSave}
           />
         </Grid>
         <ReactSortable
@@ -215,7 +233,7 @@ const QuestionComponents = ({
         >
           {
             components.map((comp, i) => (
-              <Grid key={`${questionId}-${i}`} container direction="row" className={validateDropBox(comp)}>
+              <Grid key={`${questionId}-${comp.id}`} container direction="row" className={validateDropBox(comp)}>
                 {renderDropBox(comp, i)}
               </Grid>
             ))

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Input, Hidden } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep, OpenQuestionRoutePart } from "../../model";
