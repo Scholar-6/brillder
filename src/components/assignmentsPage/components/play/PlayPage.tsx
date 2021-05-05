@@ -93,7 +93,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
       isAdmin, isTeach,
 
       filters: {
-        viewAll: true,
+        viewAll: false,
         completed: false,
         submitted: false,
         checked: false
