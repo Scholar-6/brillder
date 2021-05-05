@@ -84,8 +84,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           }
           .custom-tooltip {
             z-index: 100;
-            margin-left: -1.2vw;
-            bottom: -1vw !important;
+            margin-left: 1vw;
+            bottom: -2vw !important;
             width: 6vw;
           }
           &.active {
@@ -2062,4 +2062,37 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
 .play-preview-panel .image-play-container .image-caption {
   font-size: $base-font-size !important;
+}
+
+
+// sidebar circles
+.browser-type-container .play-preview-pages .sorted-row.sorted-row-expanded .play-sidebar.rolled-up .collapsable-sidebar .sidebar-button {
+  .highlight-button {
+    position: relative;
+  }
+
+  $circle-size: 3.5vw;
+
+  .highlight-button .highlight-circle, .assign-class-button .highlight-circle, .assign-class-button .highlight-circle {
+    position: absolute;
+    top: 0vw;
+    left: 0vw;
+
+    img {
+      width: $circle-size;
+      height: $circle-size;
+    }
+
+    span {
+      position: absolute;
+      left: 5vw;
+      width: 6vw;
+      font-family: $font-family-regular;
+      font-size: 1.25vw;
+      text-align: left !important;
+      text-align: left !important;
+      white-space: normal !important;
+    }
+  }
+  
 }

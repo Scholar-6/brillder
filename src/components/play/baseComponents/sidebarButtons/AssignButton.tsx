@@ -10,6 +10,7 @@ import { User } from 'model/user';
 interface ButtonProps {
   user: User;
   history:any;
+  haveCircle?: boolean;
   sidebarRolledUp: boolean;
   openAssignDialog(): void;
 }
@@ -67,13 +68,18 @@ const AssignButton: React.FC<ButtonProps> = (props) => {
     );
   }
 
-  const renderTooltip = () => {
-    return (
-      <div className="custom-tooltip">
-        <div>Assign Brick</div>
-      </div>
-    );
-  }
+  const renderTooltip = () => (
+    <div className="custom-tooltip">
+      <div>Assign Brick</div>
+    </div>
+  );
+
+  const renderCircle = () => (
+    <div className="highlight-circle">
+      <img alt="circle-border" className="highlight-circle dashed-circle" src="/images/borders/small-dash-circle.svg" />
+      <span>Assign Brick</span>
+    </div>
+  )
 
   return (
     <button
@@ -83,6 +89,7 @@ const AssignButton: React.FC<ButtonProps> = (props) => {
     >
       <SpriteIcon name="file-plus" className="active" />
       {hovered && renderTooltip()}
+      {props.haveCircle && renderCircle()}
     </button>
   );
 }

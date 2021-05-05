@@ -16,8 +16,6 @@ interface CounterProps {
 }
 
 const TimeProgressbarV2: React.FC<CounterProps> = (props) => {
-  const {startTime} = props;
-
   const getIntroDuration = () => {
     const durationMins = getPrepareTime(props.brickLength);
     return moment.duration(durationMins, "minutes");

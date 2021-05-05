@@ -68,6 +68,7 @@ interface SidebarState {
   inviteResult: InviteResult;
   selectedItems: any[];
   failedItems: any[];
+  haveBriefCircles: boolean;
 }
 
 class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
@@ -89,6 +90,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         accessGranted: false,
         name: ''
       },
+      haveBriefCircles: props.history.location.pathname.slice(-routes.PlayBriefLastPrefix.length) === routes.PlayBriefLastPrefix,
       selectedItems: [],
       failedItems: []
     }
@@ -251,18 +253,21 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {!this.isCover() && <HighlightTextButton
           mode={this.props.mode}
           sidebarRolledUp={this.props.sidebarRolledUp}
+          haveCircle={this.state.haveBriefCircles}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />}
         {this.renderPrepButton()}
-        <ShareButton sidebarRolledUp={this.props.sidebarRolledUp} share={this.share.bind(this)} />
+        <ShareButton haveCircle={this.state.haveBriefCircles} sidebarRolledUp={this.props.sidebarRolledUp} share={this.share.bind(this)} />
         <AssignButton
           sidebarRolledUp={this.props.sidebarRolledUp}
           user={this.props.user}
+          haveCircle={this.state.haveBriefCircles}
           history={this.props.history}
           openAssignDialog={this.openAssignDialog.bind(this)}
         />
         <AdaptButton
           user={this.props.user}
+          haveCircle={this.state.haveBriefCircles}
           sidebarRolledUp={this.props.sidebarRolledUp}
           onClick={this.onAdaptDialog.bind(this)}
         />

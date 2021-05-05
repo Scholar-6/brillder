@@ -32,7 +32,7 @@ const fetchBrick = (id: number) => {
       })
       .catch((error) => {
         dispatch(fetchBrickFailure(error.message));
-        return { status: error.request.status }
+        return { status: error.request?.status }
       });
   }
 }
