@@ -2084,9 +2084,13 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
 
     span {
+      color: var(--white) !important;
       position: absolute;
       left: 5vw;
-      width: 6vw;
+      width: 7vw;
+      height: 3.5vw;
+      display: flex;
+      align-items: center;
       font-family: $font-family-regular;
       font-size: 1.25vw;
       text-align: left !important;
@@ -2094,5 +2098,4 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       white-space: normal !important;
     }
   }
-  
 }
