@@ -16,6 +16,7 @@ import TermsLink from "components/baseComponents/TermsLink";
 import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
 import { trackSignUp } from "services/matomo";
 import { isPhone } from "services/phone";
+import map from "components/map";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),

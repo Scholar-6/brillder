@@ -15,6 +15,7 @@ import PhoneIcon from "./PhoneIcon";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import TermsLink from "components/baseComponents/TermsLink";
 import { trackSignUp } from "services/matomo";
+import map from "components/map";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -131,7 +132,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
   }
 
   return (
-    <div className="login-desktop-page email-desktop-page">
+    <div className="login-desktop-page">
       <div className="left-part">
         <div className="logo">
           <LoginLogo />
@@ -146,6 +147,11 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
             setHidden={setHidden}
             handleSubmit={handleLoginSubmit}
             register={() => register(email, password)}
+            resetPassword={async () => {
+              const res =await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${email}`, {}, { withCredentials: true })
+              console.log(res);
+              props.history.push(map.ResetPassword)
+            }}
           />
         </div>
       </div>

@@ -1,5 +1,6 @@
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
+export const ResetPassword = '/resetPassword';
 export const Build = '/build';
 export const MainPage = '/home';
 
@@ -111,6 +112,7 @@ export const postPlay = (brickId: number, userId: number) => {
 export default {
   Build,
   ActivateAccount,
+  ResetPassword,
   UserProfile,
   Login,
   MainPage,
