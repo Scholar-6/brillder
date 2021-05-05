@@ -357,7 +357,6 @@
     width: 20vw !important;
     padding: 2.3vh 1vw !important;
     background: var(--theme-dark-blue);
-    margin-bottom: 1vh;
   }
   button {
     border: none;
@@ -375,6 +374,26 @@
     &:hover {
       color: var(--theme-orange);
       background: var(--white);
+    }
+  }
+}
+
+// reset link
+.login-desktop-page .reset-link-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -1.5vh;
+
+  .reset-password-link {
+    transition: all 300ms ease-out;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    cursor: pointer;
+    text-align: right;
+    color: var(--white);
+    font-size: 1vw;
+    &:hover {
+      color: var(--theme-orange);
     }
   }
 }
