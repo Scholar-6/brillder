@@ -2073,7 +2073,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
   $circle-size: 3.5vw;
 
-  .highlight-button .highlight-circle, .assign-class-button .highlight-circle, .assign-class-button .highlight-circle {
+  .highlight-button .highlight-circle, .assign-class-button .highlight-circle {
     position: absolute;
     top: 0vw;
     left: 0vw;
@@ -2096,6 +2096,26 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       text-align: left !important;
       text-align: left !important;
       white-space: normal !important;
+    }
+  }
+
+  // cascade animation
+  .highlight-button .highlight-circle {
+    opacity: 0;
+    animation: fadein 180ms 400ms forwards;
+  }
+  .assign-class-button {
+    .share-circle {
+      opacity: 0;    
+      animation: fadein 580ms 400ms forwards;
+    }
+    .assign-circle {
+      opacity: 0;    
+      animation: fadein 980ms 400ms forwards;
+    }
+    .adapt-circle {
+      opacity: 0;    
+      animation: fadein 1080ms 400ms forwards;
     }
   }
 }
