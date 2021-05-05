@@ -5,7 +5,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import './AssignmentsPage.scss';
 import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import PlayPage from './components/play/PlayPage';
+import AssignmentPage from './components/play/AssignmentPage';
 import { isMobile } from "react-device-detect";
 
 interface AssignmentState {
@@ -69,7 +69,7 @@ class BackToWorkPage extends Component<AssignmentProps, AssignmentState> {
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
           />
-          <PlayPage history={this.props.history} match={this.props.match} />
+          <AssignmentPage history={this.props.history} match={this.props.match} />
         </div>
       </React.Suspense>
     );
