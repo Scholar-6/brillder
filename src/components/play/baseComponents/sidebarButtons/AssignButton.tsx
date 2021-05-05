@@ -75,7 +75,7 @@ const AssignButton: React.FC<ButtonProps> = (props) => {
   );
 
   const renderCircle = () => (
-    <div className="highlight-circle">
+    <div className="highlight-circle assign-circle">
       <img alt="circle-border" className="highlight-circle dashed-circle" src="/images/borders/small-dash-circle.svg" />
       <span>Assign Brick</span>
     </div>

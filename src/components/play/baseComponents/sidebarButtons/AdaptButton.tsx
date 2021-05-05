@@ -32,7 +32,7 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
   );
 
   const renderCircle = () => (
-    <div className="highlight-circle">
+    <div className="highlight-circle adapt-circle">
       <img alt="circle-border" className="highlight-circle dashed-circle" src="/images/borders/small-dash-circle.svg" />
       <span>Adapt Brick</span>
     </div>

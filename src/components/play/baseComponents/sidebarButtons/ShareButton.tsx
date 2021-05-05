@@ -25,7 +25,7 @@ const ShareButton: React.FC<ButtonProps> = (props) => {
   );
 
   const renderCircle = () => (
-    <div className="highlight-circle">
+    <div className="highlight-circle share-circle">
       <img alt="circle-border" className="highlight-circle dashed-circle" src="/images/borders/small-dash-circle.svg" />
       <span>Share Brick</span>
     </div>
