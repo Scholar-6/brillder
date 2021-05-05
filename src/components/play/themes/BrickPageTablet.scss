@@ -1728,11 +1728,11 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
   opacity: 0;
   &.fadein {
     opacity: 0;
-    animation: fadein 500ms linear 0s forwards;
+    animation: fadein 150ms linear 0s forwards;
   }
   &.fadeout {
     opacity: 1;
-    animation: fadeout 150ms linear 0s forwards;
+    animation: fadeout 100ms linear 0s forwards;
   }
 }
 
