@@ -6,6 +6,7 @@ import { PlayMode } from '../../model';
 interface ButtonProps {
   mode: PlayMode | undefined;
   sidebarRolledUp: boolean;
+  haveCircle?: boolean;
   setHighlightMode(): void;
 }
 
@@ -26,13 +27,18 @@ const HighlightTextButton: React.FC<ButtonProps> = (props) => {
     }
   }
 
-  const renderTooltip = () => {
-    return (
-      <div className="custom-tooltip">
-        <div>Highlight Text</div>
-      </div>
-    );
-  }
+  const renderTooltip = () => (
+    <div className="custom-tooltip">
+      <div>Highlight Text</div>
+    </div>
+  );
+
+  const renderCircle = () => (
+    <div className="highlight-circle">
+      <img alt="circle-border" className="highlight-circle dashed-circle" src="/images/borders/small-dash-circle.svg" />
+      <span>Highlight Text</span>
+    </div>
+  );
 
   return (
     <div
@@ -43,6 +49,7 @@ const HighlightTextButton: React.FC<ButtonProps> = (props) => {
       {renderHightlightText()}
       <SpriteIcon name="highlighter" className="active" />
       {props.sidebarRolledUp && hovered && renderTooltip()}
+      {props.haveCircle && renderCircle()}
     </div>
   );
 }
