@@ -2,6 +2,19 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
-.student-assignments-page .sorted-row .brick-row-container .learn-tab-desktop {
+html body #root .browser-type-container .sorted-row .brick-row-container .brick-row-title {
+  height: auto !important;
+}
+
+html body #root .browser-type-container .student-assignments-page .sorted-row .brick-row-container .learn-tab-desktop {
   height: calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh) !important;
+  
+}
+
+.student-assignments-page .bricks-list-container .main-brick-container .brick-container .short-description {
+  padding: 0 !important;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  padding-bottom: 0.5vw;
+  padding-top: 0.5vw;
 }
