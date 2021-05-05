@@ -382,3 +382,10 @@
     }
   }
 }
+
+// background color transparent
+.proposal-phone-preview .typing-text {
+  span, p {
+    background: inherit !important;
+  }
+}
