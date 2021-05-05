@@ -17,9 +17,9 @@ import AssignedBricks from "./AssignedBricks";
 import PlayFilterSidebar from "./PlayFilterSidebar";
 import BackPagePagination from "../BackPagePagination";
 import BackPagePaginationV2 from "../BackPagePaginationV2";
-import { isMobile } from "react-device-detect";
 import MobileLearn from "./MobileLearn";
 import map from "components/map";
+import { isPhone } from "services/phone";
 
 
 interface PlayProps {
@@ -48,7 +48,7 @@ interface PlayState {
   handleKey(e: any): void;
 }
 
-class PlayPage extends Component<PlayProps, PlayState> {
+class AssignmentPage extends Component<PlayProps, PlayState> {
   constructor(props: PlayProps) {
     super(props);
 
@@ -321,7 +321,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
   }
 
   render() {
-    if (isMobile) {
+    if (isPhone()) {
       return (
         <MobileLearn
           shown={true}
@@ -380,4 +380,4 @@ const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e))
 });
 
-export default connect(mapState, mapDispatch)(PlayPage);
+export default connect(mapState, mapDispatch)(AssignmentPage);
