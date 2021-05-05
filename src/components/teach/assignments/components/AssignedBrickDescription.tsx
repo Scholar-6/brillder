@@ -166,7 +166,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     const { byStatus } = this.props.assignment;
     let studentsCompleted = 0;
     if (byStatus) {
-      studentsCompleted = byStatus[1] ? byStatus[1].count : 0;
+      studentsCompleted = byStatus[2] ? byStatus[2].count : 0;
     }
     return studentsCompleted;
   }

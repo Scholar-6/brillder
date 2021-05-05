@@ -108,9 +108,9 @@ class AssignedBricks extends Component<AssignedBricksProps> {
 
   renderAssignedBricks() {
     const {checked, submitted, completed } = this.props.filters;
-    if (!checked && !submitted && !completed) {
-      return this.renderAssignedGroupedBricks();
-    }
+    // if (!checked && !submitted && !completed) {
+    //   return this.renderAssignedGroupedBricks();
+    // }
     return this.renderSortedBricks();
   }
 
