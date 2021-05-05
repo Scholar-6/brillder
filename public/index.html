@@ -44,28 +44,38 @@
         width: 100vw;
         height: 100vh;
         display: block !important;
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
         background: #c43c30;
         color: white;
         font-size: 4vw;
       }
       #ios-warning.flex svg {
-        width: 40vw;
-        height: 40vh;
+        margin-left: 32.5vw;
+        width: 35vw;
+        height: auto;
         max-width: 50vw;
         max-height: 50vh;
       }
+      #ios-warning.flex .rotate-text {
+        position: absolute;
+        margin-top: 0 !important;
+        top: 35vw;
+        left: 0;
+        width: 100vw;
+        font-size: 4vw !important;
+        text-align: center;
+      }
+      #ios-warning.flex .rotate-container {
+        position: relative;
+        margin-top: 30vh;
+      }
       #ios-warning.flex .rotate-button-container {
-        display: flex;
-        justify-content: center;
+        display: block !important;
       }
     </style>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <div id="ios-warning" class="os-rotate rotate-instruction-page" style="z-index: 100; position: absolute; display: none">
-      <div>
+      <div class="rotate-container">
         <div class="rotate-button-container triangle">
           <svg id="alert-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
             <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
