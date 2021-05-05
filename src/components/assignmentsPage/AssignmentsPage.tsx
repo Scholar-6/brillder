@@ -7,6 +7,7 @@ import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import AssignmentPage from './components/play/AssignmentPage';
 import { isMobile } from "react-device-detect";
+import { isPhone } from "services/phone";
 
 interface AssignmentState {
   searchString: string;
@@ -24,6 +25,7 @@ export interface AssignmentProps {
 }
 
 const MobileTheme = React.lazy(() => import('./themes/AssignmentsMobilePage'));
+const TabletTheme = React.lazy(() => import('./themes/AssignmentsTabletPage'));
 const DesktopTheme = React.lazy(() => import('./themes/AssignmentsDesktopPage'));
 
 
@@ -59,7 +61,7 @@ class BackToWorkPage extends Component<AssignmentProps, AssignmentState> {
   render() {
     return (
       <React.Suspense fallback={<></>}>
-        {isMobile ? <MobileTheme /> : <DesktopTheme />}
+        {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
         <div className="main-listing student-assignments-page">
           <PageHeadWithMenu
             page={PageEnum.BackToWork}
