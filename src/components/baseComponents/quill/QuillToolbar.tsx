@@ -39,7 +39,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
             imageUpload.uploadHandler(toolbarNode.current);
             return true;
         }
-        if(props.quill.getFormat()[format] === (value ?? true)) {
+        if(props.quill.getFormat()[format] === (value ?? true) || value === "left") {
             props.quill.format(format, false, "user");
             return false;
         } else {
