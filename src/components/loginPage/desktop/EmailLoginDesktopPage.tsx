@@ -148,8 +148,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
             handleSubmit={handleLoginSubmit}
             register={() => register(email, password)}
             resetPassword={async () => {
-              const res =await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${email}`, {}, { withCredentials: true })
-              console.log(res);
+              const res = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${email}`, {}, { withCredentials: true })
               props.history.push(map.ResetPassword)
             }}
           />

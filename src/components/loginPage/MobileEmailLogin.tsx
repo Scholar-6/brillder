@@ -7,6 +7,7 @@ import TermsLink from "components/baseComponents/TermsLink";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
+import axios from "axios";
 
 
 interface MobileLoginProps {
@@ -48,6 +49,16 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
               required
               placeholder="Email"
             />
+          </div>
+          <div className="phone-reset-link-container">
+            <div className="reset-password-link" onClick={async () => {
+              try {
+                if (this.props.email) {
+                  const res = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${this.props.email}`, {}, { withCredentials: true });
+                  this.props.history.push(map.ResetPassword);
+                }
+              } catch { }
+            }}>Forgot password?</div>
           </div>
           <div className="input-block">
             <input
