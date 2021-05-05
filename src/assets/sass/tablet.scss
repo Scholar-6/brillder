@@ -99,6 +99,13 @@ html {
       font-size: 0.8vw !important;
     }
   }
+  .visible-on-hover {
+    display: block;
+    position: absolute;
+    bottom: 0.2vw;
+    right: 0.4vw;
+    font-size: 1vw !important;
+  }
 }
 
 .stop-cookie-tracking {
