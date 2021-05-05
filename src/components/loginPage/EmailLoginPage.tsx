@@ -137,37 +137,6 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       justify="center"
       alignItems="center"
     >
-      <Hidden only={["xs"]}>
-        <div className="choose-login-desktop">
-          <Grid container direction="row" className="first-row">
-            <div className="first-col"></div>
-            <div className="second-col"></div>
-            <div className="third-col"></div>
-          </Grid>
-          <Grid container direction="row" className="second-row">
-            <div className="first-col">
-              <LoginLogo />
-            </div>
-            <div className="second-col">
-              <DesktopLoginForm
-                email={email}
-                setEmail={setEmail}
-                password={password}
-                setPassword={setPassword}
-                passwordHidden={passwordHidden}
-                setHidden={setHidden}
-                handleSubmit={handleLoginSubmit}
-                register={() => register(email, password)}
-              />
-            </div>
-          </Grid>
-          <Grid container direction="row" className="third-row">
-            <div className="first-col"></div>
-            <TermsLink history={props.history}/>
-            <div className="third-col"></div>
-          </Grid>
-        </div>
-      </Hidden>
       <MobileEmailLogin
         history={props.history}
         email={email}
