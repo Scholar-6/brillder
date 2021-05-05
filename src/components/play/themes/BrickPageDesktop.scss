@@ -1627,6 +1627,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
   .open-question {
     font-family: $font-family-regular-italic;
+
+    span, p {
+      background: inherit !important;
+    }
   }
 }
 
