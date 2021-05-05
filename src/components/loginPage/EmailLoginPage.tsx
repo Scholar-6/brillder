@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Snackbar, Hidden } from "@material-ui/core";
+import { Grid, Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
@@ -7,16 +7,12 @@ import axios from "axios";
 import "./loginPage.scss";
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
-import LoginLogo from './components/LoginLogo';
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import WrongLoginDialog from "./components/WrongLoginDialog";
-import DesktopLoginForm from "./desktop/DesktopLoginForm";
 import MobileEmailLogin from './MobileEmailLogin';
-import TermsLink from "components/baseComponents/TermsLink";
 import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
 import { trackSignUp } from "services/matomo";
 import { isPhone } from "services/phone";
-import map from "components/map";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
