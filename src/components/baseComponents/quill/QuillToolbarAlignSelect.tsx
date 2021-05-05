@@ -24,9 +24,7 @@ const QuillToolbarAlignSelect: React.FC<QuillToolbarAlignSelectProps> = props =>
 
     return (
         <span
-            
             className={`picker q-${props.name}${expanded ? " ql-expanded" : ""}${props.enabled ? "" : " disabled"}`}
-            // onClick={() => props.handler(props.name, "") ?? false}
             onClick={() => props.enabled && setExpanded(e => !e)}
         >
             <span className="picker-label">
