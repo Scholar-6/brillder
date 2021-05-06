@@ -1712,6 +1712,8 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     font-size: 1vw;
   }
   .footer-space {
+    font-size: 2vw;
+    font-family: $font-family-bold;
     width: 23.7vw;
   }
 }
