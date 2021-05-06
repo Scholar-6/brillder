@@ -132,6 +132,9 @@ const ImageDialog: React.FC<DialogProps> = ({
       close={() => setDialog(false)}
       submit={() => {}}
     >
+      <div className="close-button svgOnHover" onClick={() => setDialog(false)}>
+        <SpriteIcon name="cancel" className="w100 h100 active" />
+      </div>
       <div className="dialog-header image-dialog">
         <div className={`cropping ${removed ? "empty" : ""}`}>
           <div className="centered">
