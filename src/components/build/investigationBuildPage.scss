@@ -398,6 +398,11 @@ $space-between-boxes: 0.1vw;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  span, p {
+    color: var(--theme-light-blue) !important;
+    background: inherit !important;
+  }
 }
 
 // words component
@@ -796,3 +801,12 @@ $space-between-boxes: 0.1vw;
   padding-left: 0.1vw;
   padding-right: 0.1vw;
 }
+
+
+// background color
+.phone-preview-component, .phone-question-preview {
+  span, p {
+    background: inherit !important;
+  }
+}
+

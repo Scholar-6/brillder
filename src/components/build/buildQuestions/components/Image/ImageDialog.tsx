@@ -47,7 +47,7 @@ const ImageDialog: React.FC<DialogProps> = ({
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
   const [align, setAlign] = React.useState(
-    initData.imageAlign ? initData.imageAlign : ImageAlign.left
+    initData.imageAlign ? initData.imageAlign : ImageAlign.center
   );
   const [height, setHeight] = React.useState(
     initData.imageHeight ? initData.imageHeight : 30
@@ -77,7 +77,7 @@ const ImageDialog: React.FC<DialogProps> = ({
       setSource(initData.imageSource ?? "");
       setCaption(initData.imageCaption ?? "");
       setPermision(initData.imagePermision ? true : false);
-      setAlign(initData.imageAlign ? initData.imageAlign : ImageAlign.left);
+      setAlign(initData.imageAlign ? initData.imageAlign : ImageAlign.center);
       setHeight(initData.imageHeight ? initData.imageHeight : 30);
     }
     /*eslint-disable-next-line*/
@@ -132,6 +132,9 @@ const ImageDialog: React.FC<DialogProps> = ({
       close={() => setDialog(false)}
       submit={() => {}}
     >
+      <div className="close-button svgOnHover" onClick={() => setDialog(false)}>
+        <SpriteIcon name="cancel" className="w100 h100 active" />
+      </div>
       <div className="dialog-header image-dialog">
         <div className={`cropping ${removed ? "empty" : ""}`}>
           <div className="centered">
@@ -147,6 +150,9 @@ const ImageDialog: React.FC<DialogProps> = ({
             )}
           </div>
           <div className="i-image-footer">
+            <div className="file-name">
+              {file ? file.name : initData.value}
+            </div>
             <div className={"svgOnHover " + className} onClick={handleClick}>
               <SpriteIcon name="plus" className="svg-plus active text-white" />
             </div>

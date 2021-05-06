@@ -18,6 +18,7 @@ interface LoginFormProps {
   setPassword(password: string): void;
   passwordHidden: boolean;
 
+  resetPassword?(): void;
   handleSubmit(e: any): void;
   register(): void;
   setHidden(passwordHidden: boolean): void;
@@ -47,9 +48,10 @@ class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
   }
   
   render() {
-    let className = 'content-box expanded';
+    const {resetPassword} = this.props;
+    let className = '';
     return (
-      <form onSubmit={this.props.handleSubmit} className={className}>
+      <form onSubmit={this.props.handleSubmit} className="content-box expanded">
         <div className="input-block">
           <TypingInput
             required
@@ -60,6 +62,10 @@ class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
             onChange={this.props.setEmail}
           />
         </div>
+        {resetPassword &&
+        <div className="reset-link-container">
+          <div className="reset-password-link" onClick={() => resetPassword()}>Forgot password?</div>
+        </div>}
         <div className="input-block">
           <TypingInput
             required

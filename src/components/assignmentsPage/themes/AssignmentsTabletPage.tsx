@@ -1,5 +1,5 @@
 import React from 'react';
-import './FixedHelpersDesktop.scss';
+import './AssignmentsTabletPage.scss';
 
 const Theme = () => (<React.Fragment></React.Fragment>);
 

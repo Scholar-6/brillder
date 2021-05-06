@@ -99,6 +99,13 @@ html {
       font-size: 0.8vw !important;
     }
   }
+  .visible-on-hover {
+    display: block;
+    position: absolute;
+    bottom: 0.2vw;
+    right: 0.4vw;
+    font-size: 1vw !important;
+  }
 }
 
 .stop-cookie-tracking {
@@ -253,4 +260,9 @@ html {
 
 .sorted-row .sort-and-filter-container .sort-box .subjects-filter .subject-list-v2.checked .MuiFormControlLabel-root .MuiTypography-root {
   color: var(--theme-dark-blue) !important;
+}
+
+
+.global-base-font {
+  font-size: 1.4vw;
 }

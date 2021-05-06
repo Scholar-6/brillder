@@ -361,7 +361,7 @@ const LivePage: React.FC<LivePageProps> = ({
                       setEndTime={props.setEndTime}
                     />
                   </div>
-                  <div className="footer-space" />
+                  <div className="footer-space"><span className="scroll-text">Scroll down</span></div>
                   <div className="new-navigation-buttons">
                     <div className="n-btn back" onClick={prev}>
                       <SpriteIcon name="arrow-left" />

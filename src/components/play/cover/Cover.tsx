@@ -173,10 +173,10 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   <DynamicFont content={stripHtml(brick.title)} />
                 </div>
                 <div className="author-row">
-                  <span>By {brick.author.firstName} {brick.author.lastName}</span>
+                  <span>{brick.author.firstName} {brick.author.lastName}</span>
                   <div className="cover-bio" onClick={() => setBio(true)}>
                     <div className="cover-bio-content">
-                      see bio
+                      Author Profile
                     </div>
                     <div className="cover-bio-background" />
                   </div>

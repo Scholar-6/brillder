@@ -1712,6 +1712,8 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     font-size: 1vw;
   }
   .footer-space {
+    font-size: 2vw;
+    font-family: $font-family-bold;
     width: 23.7vw;
   }
 }
@@ -1728,11 +1730,11 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
   opacity: 0;
   &.fadein {
     opacity: 0;
-    animation: fadein 500ms linear 0s forwards;
+    animation: fadein 150ms linear 0s forwards;
   }
   &.fadeout {
     opacity: 1;
-    animation: fadeout 150ms linear 0s forwards;
+    animation: fadeout 100ms linear 0s forwards;
   }
 }
 
@@ -1785,6 +1787,11 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
   text-transform: uppercase;
   width: 75.5vw;
   @extend %ellipsis;
+
+  span, p {
+    color: var(--theme-light-blue) !important;
+    background: inherit !important;
+  }
 }
 
 // provisional score and final score
@@ -1889,4 +1896,60 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
 // should be invisible in stepper which in live and review
 .play-preview-pages .sorted-row .brick-row-container .brick-container.live-page .introduction-info {
   background: inherit !important;
+}
+
+
+// sidebar circles
+.browser-type-container .play-preview-pages .sorted-row.sorted-row-expanded .play-sidebar.rolled-up .collapsable-sidebar .sidebar-button {
+  .highlight-button {
+    position: relative;
+  }
+
+  $circle-size: 3.5vw;
+
+  .highlight-button .highlight-circle, .assign-class-button .highlight-circle {
+    position: absolute;
+    top: 0vw;
+    left: 0vw;
+
+    img {
+      width: $circle-size;
+      height: $circle-size;
+    }
+
+    span {
+      color: var(--white) !important;
+      position: absolute;
+      left: 5vw;
+      width: 7vw;
+      height: 3.5vw;
+      display: flex;
+      align-items: center;
+      font-family: $font-family-regular;
+      font-size: 1.25vw;
+      text-align: left !important;
+      text-align: left !important;
+      white-space: normal !important;
+    }
+  }
+
+  // cascade animation
+  .highlight-button .highlight-circle {
+    opacity: 0;
+    animation: fadein 180ms 400ms forwards;
+  }
+  .assign-class-button {
+    .share-circle {
+      opacity: 0;    
+      animation: fadein 580ms 400ms forwards;
+    }
+    .assign-circle {
+      opacity: 0;    
+      animation: fadein 980ms 400ms forwards;
+    }
+    .adapt-circle {
+      opacity: 0;    
+      animation: fadein 1080ms 400ms forwards;
+    }
+  }
 }

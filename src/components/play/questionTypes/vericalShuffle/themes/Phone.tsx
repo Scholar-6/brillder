@@ -1,5 +1,5 @@
 import React from 'react';
-import './FixedHelpersMobile.scss';
+import './Phone.scss';
 
 const Theme = () => (<React.Fragment></React.Fragment>);
 

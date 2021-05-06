@@ -21,9 +21,30 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
   const [currentEmail, setCurrentEmail] = React.useState("");
   const [users, setUsers] = React.useState<User[]>([]);
 
+  const getGoogleEmail = (emailString: string) => {
+    const regex = /<(.*)>/g; // The actual regex
+    const matches = regex.exec(emailString);
+    try {
+      if (matches) {
+        const googleEmail = matches[1];
+        if(emailRegex.test(googleEmail)) {
+          return googleEmail;
+        }
+      }
+    } catch (e) {
+      console.log('can`t parse email');
+    }
+    return null;
+  }
+
   const addUser = (email: string) => {
     if (!emailRegex.test(email)) {
-      return;
+      const googleEmail = getGoogleEmail(email);
+      if (googleEmail) {
+        email = googleEmail;
+      } else {
+        return;
+      }
     }
     setCurrentEmail('');
     setUsers(users => [ ...users, { email } as User]);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Snackbar, Hidden } from "@material-ui/core";
+import { Grid, Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
@@ -7,12 +7,9 @@ import axios from "axios";
 import "./loginPage.scss";
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
-import LoginLogo from './components/LoginLogo';
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import WrongLoginDialog from "./components/WrongLoginDialog";
-import DesktopLoginForm from "./desktop/DesktopLoginForm";
 import MobileEmailLogin from './MobileEmailLogin';
-import TermsLink from "components/baseComponents/TermsLink";
 import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
 import { trackSignUp } from "services/matomo";
 import { isPhone } from "services/phone";
@@ -136,37 +133,6 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       justify="center"
       alignItems="center"
     >
-      <Hidden only={["xs"]}>
-        <div className="choose-login-desktop">
-          <Grid container direction="row" className="first-row">
-            <div className="first-col"></div>
-            <div className="second-col"></div>
-            <div className="third-col"></div>
-          </Grid>
-          <Grid container direction="row" className="second-row">
-            <div className="first-col">
-              <LoginLogo />
-            </div>
-            <div className="second-col">
-              <DesktopLoginForm
-                email={email}
-                setEmail={setEmail}
-                password={password}
-                setPassword={setPassword}
-                passwordHidden={passwordHidden}
-                setHidden={setHidden}
-                handleSubmit={handleLoginSubmit}
-                register={() => register(email, password)}
-              />
-            </div>
-          </Grid>
-          <Grid container direction="row" className="third-row">
-            <div className="first-col"></div>
-            <TermsLink history={props.history}/>
-            <div className="third-col"></div>
-          </Grid>
-        </div>
-      </Hidden>
       <MobileEmailLogin
         history={props.history}
         email={email}

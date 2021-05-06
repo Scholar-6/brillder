@@ -19,7 +19,7 @@ interface NavigationProps {
   tutorialStep: TutorialStep;
   isTutorialSkipped: boolean;
   isValid: boolean;
-  moveToReview(): void;
+  moveToPreview(): void;
 
   // other buttons
   isPublisher: boolean;
@@ -147,7 +147,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
           tutorialStep={this.props.tutorialStep}
           isTutorialSkipped={this.props.isTutorialSkipped}
           isValid={this.props.isValid}
-          onClick={this.props.moveToReview}
+          onClick={this.props.moveToPreview}
         />
         <SaveDialog
           open={this.state.saveDialogOpen}

@@ -107,7 +107,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     );
   }
 
-  renderAnswer(answer: ShortAnswerItem, width: number, index: number) {
+  renderAnswer(answer: ShortAnswerItem, index: number) {
     let isCorrect = false;
     if (this.props.isReview || this.props.isBookPreview) {
       isCorrect = this.checkAttemptAnswer(answer, index);
@@ -124,7 +124,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     }
 
     return (
-      <div key={index} className={className} style={{ width: `${width}%` }}>
+      <div key={index} className={className}>
         {this.renderCkeditor(index)}
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}
@@ -139,17 +139,11 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
 
   render() {
     const { component } = this.props;
-    let width = 100;
-    if (component.list && component.list.length >= 1) {
-      width = (100 - 1) / component.list.length;
-    }
-
-    if (this.props.isPreview) width = 100;
 
     return (
       <div className="question-unique-play short-answer-live">
         {component.list.map((answer, index) => {
-          return this.renderAnswer(answer, width, index);
+          return this.renderAnswer(answer, index);
         })}
         {this.renderGlobalHint()}
       </div>

@@ -20,6 +20,10 @@
   margin: 1vw 0 1vw 1.5vw !important;
 }
 
+.global-base-font {
+  font-size: 1.4vw;
+}
+
 .beta-text {
   color: var(--theme-light-blue);
 }
@@ -36,6 +40,7 @@
   background: var(--white);
   .visible-on-hover {
     display: none;
+    font-size: 1vw;
   }
   &:hover {
     background: var(--tab-gray);
@@ -331,6 +336,11 @@
 .brick-inline {
   p {
     display: inline;
+  }
+
+  span, p {
+    color: var(--theme-dark-blue) !important;
+    background: inherit !important;
   }
 }
 

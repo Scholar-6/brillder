@@ -10,7 +10,6 @@ class LatexBlot extends Inline {
     }
 
     formatAt(index: number, length: number, name: string, value: any): void {
-        console.log(index, length, name, value);
         if(name === "latex") {
             return super.formatAt(index, length, name, value);
         }

@@ -246,24 +246,30 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       }
     }
 
+    const {sidebarRolledUp} = this.props;
+    const haveBriefCircles = this.props.history.location.pathname.slice(-routes.PlayBriefLastPrefix.length) === routes.PlayBriefLastPrefix;
+
     return (
       <div className="sidebar-button">
         {!this.isCover() && <HighlightTextButton
           mode={this.props.mode}
-          sidebarRolledUp={this.props.sidebarRolledUp}
+          sidebarRolledUp={sidebarRolledUp}
+          haveCircle={haveBriefCircles}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />}
         {this.renderPrepButton()}
-        <ShareButton sidebarRolledUp={this.props.sidebarRolledUp} share={this.share.bind(this)} />
+        <ShareButton haveCircle={haveBriefCircles} sidebarRolledUp={sidebarRolledUp} share={this.share.bind(this)} />
         <AssignButton
-          sidebarRolledUp={this.props.sidebarRolledUp}
+          sidebarRolledUp={sidebarRolledUp}
           user={this.props.user}
+          haveCircle={haveBriefCircles}
           history={this.props.history}
           openAssignDialog={this.openAssignDialog.bind(this)}
         />
         <AdaptButton
           user={this.props.user}
-          sidebarRolledUp={this.props.sidebarRolledUp}
+          haveCircle={haveBriefCircles}
+          sidebarRolledUp={sidebarRolledUp}
           onClick={this.onAdaptDialog.bind(this)}
         />
       </div>
