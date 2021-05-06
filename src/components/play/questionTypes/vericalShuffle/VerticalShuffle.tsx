@@ -213,7 +213,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
       <React.Suspense fallback={<></>}>
         {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
         <div className="question-unique-play vertical-shuffle-play">
-          <p><span className="help-text">Drag to rearrange.</span></p>
+          <p><span className="help-text">Click on two answers at a time to reorder.</span></p>
           {this.props.isBookPreview ? (
             <div>{this.renderAnswers()}</div>
           ) : (
