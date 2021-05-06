@@ -60,26 +60,18 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
   const updateData = (source: string, caption: string, permision: boolean) => {
     updateAnswer(answer.valueFile, source, caption, permision);
   }
- 
+
   return (
     <div className={`question-image-drop ${className ? className : ''}`}>
-      <div onClick={e => {
-        if (type === QuestionValueType.Image) {
-          setOpen(true);
+      <div
+        className={'dropzone ' + (locked ? 'disabled' : '')}
+        onClick={e => setOpen(true)}
+      >
+        {
+          type === QuestionValueType.Image
+            ? <img src={fileUrl(fileName)} alt="" width="100%" height="auto"/>
+            : <AddImageBtnContent />
         }
-      }}>
-        <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
-          <input {...getInputProps()} onClick={e => {
-            if (type === QuestionValueType.Image) {
-              e.preventDefault();
-            }
-          }} />
-          {
-            type === QuestionValueType.Image
-              ? <img src={fileUrl(fileName)} alt="" width="100%" height="auto"/>
-              : <AddImageBtnContent />
-          }
-        </div>
       </div>
       <ImageDialogV2
         open={isOpen}
