@@ -19,7 +19,7 @@ export const getDefaultVerticalShuffleAnswer = () => {
 }
 
 const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const newAnswer = () => ({ value: "" });
 
