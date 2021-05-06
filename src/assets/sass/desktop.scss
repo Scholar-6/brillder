@@ -40,6 +40,7 @@
   background: var(--white);
   .visible-on-hover {
     display: none;
+    font-size: 1vw;
   }
   &:hover {
     background: var(--tab-gray);
