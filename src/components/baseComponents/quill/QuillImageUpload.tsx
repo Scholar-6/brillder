@@ -53,11 +53,15 @@ export class CustomImageBlot extends Embed {
         containerNode.className = "image-play-container";
         containerNode.contentEditable = "false";
 
+        const imageContainer = document.createElement("div");
+        imageContainer.className = "il-image-container";
+        containerNode.appendChild(imageContainer);
+
         const imageNode = document.createElement("img");
         imageNode.className = "image-play";
         imageNode.setAttribute('style', `height: ${value.imageHeight}vh`);
         imageNode.setAttribute('src', value.url);
-        containerNode.appendChild(imageNode);
+        imageContainer.appendChild(imageNode);
 
         const captionNode = document.createElement("figcaption");
         captionNode.className = "image-caption";
