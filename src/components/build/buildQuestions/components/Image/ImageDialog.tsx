@@ -47,7 +47,7 @@ const ImageDialog: React.FC<DialogProps> = ({
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
   const [align, setAlign] = React.useState(
-    initData.imageAlign ? initData.imageAlign : ImageAlign.left
+    initData.imageAlign ? initData.imageAlign : ImageAlign.center
   );
   const [height, setHeight] = React.useState(
     initData.imageHeight ? initData.imageHeight : 30
@@ -77,7 +77,7 @@ const ImageDialog: React.FC<DialogProps> = ({
       setSource(initData.imageSource ?? "");
       setCaption(initData.imageCaption ?? "");
       setPermision(initData.imagePermision ? true : false);
-      setAlign(initData.imageAlign ? initData.imageAlign : ImageAlign.left);
+      setAlign(initData.imageAlign ? initData.imageAlign : ImageAlign.center);
       setHeight(initData.imageHeight ? initData.imageHeight : 30);
     }
     /*eslint-disable-next-line*/
