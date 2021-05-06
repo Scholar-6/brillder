@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
 import actions from 'redux/actions/brickActions';
-import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
+import { CashQuestionFromPlay, GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { Brick } from 'model/brick';
 import { ComponentAttempt, PlayStatus } from '../play/model';
 import {
@@ -33,6 +33,7 @@ import playRoutes from "components/play/routes";
 import buildRoutes from 'components/build/routes';
 import routes from './routes';
 import NewPrep from 'components/play/newPrep/NewPrep';
+import map from 'components/map';
 
 
 export interface BrickAttempt {
@@ -72,6 +73,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const parsedBrick = parseAndShuffleQuestions(props.brick);
 
   let cashedBuildQuestion = GetCashedBuildQuestion();
+  console.log(cashedBuildQuestion);
 
   const [brick] = React.useState(parsedBrick);
   const [status, setStatus] = React.useState(PlayStatus.Live);
@@ -150,12 +152,19 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const moveToBuild = () => {
-    const isSynthesis = history.location.pathname.indexOf(playRoutes.PlaySynthesisLastPrefix) > -1;
+    const {pathname} = history.location;
+    const isSynthesis = pathname.slice(-playRoutes.PlaySynthesisLastPrefix.length) === playRoutes.PlaySynthesisLastPrefix;
+    const isNewPrep = pathname.slice(-playRoutes.PlayNewPrepLastPrefix.length) === playRoutes.PlayNewPrepLastPrefix;
+
+    let link = buildRoutes.buildQuesiton(brickId);
     if (isSynthesis) {
-      history.push(buildRoutes.buildSynthesis(brickId));
-    } else {
-      history.push(buildRoutes.buildQuesiton(brickId));
+      link = buildRoutes.buildSynthesis(brickId);
+      CashQuestionFromPlay(brickId, -1);
+    } else if (isNewPrep) {
+      link = buildRoutes.buildPlan(brickId);
+      CashQuestionFromPlay(brickId, -1);
     }
+    history.push(link);
   }
 
   const setSidebar = (state?: boolean) => {
@@ -189,10 +198,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const renderHead = () => {
     let isMobileHidden = false;
-    const live = location.pathname.search("/live");
+    const live = location.pathname.search(playRoutes.PlayLiveLastPrefix);
     const score = location.pathname.search("/provisionalScore");
-    const synthesis = location.pathname.search("/synthesis");
-    const review = location.pathname.search("/review");
+    const synthesis = location.pathname.search(playRoutes.PlaySynthesisLastPrefix);
+    const review = location.pathname.search(playRoutes.PlayReviewLastPrefix);
     const ending = location.pathname.search("/ending");
     const publish = location.pathname.search("/publish");
     const finish = location.pathname.search("/finish");
@@ -204,7 +213,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
 
     if (!isMobile && sidebarRolledUp) {
-      return <HomeButton link="/home" />;
+      return <HomeButton link={map.MainPage} />;
     }
     if (isMobile && headerHidden) {
       return <div></div>;
@@ -225,6 +234,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   if (sidebarRolledUp) {
     className += " sorted-row-expanded";
   }
+
+  console.log(history.location.pathname);
 
   return (
     <React.Suspense fallback={<></>}>

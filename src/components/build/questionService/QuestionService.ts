@@ -1,7 +1,7 @@
 import update from "immutability-helper";
 
 import { validateQuestion } from "./ValidateQuestionService";
-import { CasheBuildQuestion, BuildPlayRedirect } from 'localStorage/buildLocalStorage';
+import { CasheBuildQuestion, ClearQuestionCash, BuildPlayRedirect } from 'localStorage/buildLocalStorage';
 
 
 import {
@@ -62,6 +62,10 @@ export function deactiveQuestions(questions: Question[]) {
   const updatedQuestions = questions.slice();
   updatedQuestions.forEach(q => q.active = false);
   return updatedQuestions;
+}
+
+export function clearCashQuestion() {
+  ClearQuestionCash();
 }
 
 export function cashBuildQuestion(brickId: number, questionNumber: number) {
