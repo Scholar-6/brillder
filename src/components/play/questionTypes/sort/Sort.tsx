@@ -44,7 +44,7 @@ interface SortState {
 }
 
 class Sort extends CompComponent<SortProps, SortState> {
-  static unsortedTitle = "Drag from below into the above categories'";
+  static unsortedTitle = "Drag from below into the above categories";
 
   constructor(props: SortProps) {
     super(props);
