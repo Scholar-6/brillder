@@ -398,6 +398,10 @@ $space-between-boxes: 0.1vw;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  span, p {
+    background: inherit !important;
+  }
 }
 
 // words component
