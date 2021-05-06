@@ -10,6 +10,7 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { fileUrl } from 'components/services/uploadFile';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 interface VerticalShuffleChoice {
@@ -188,6 +189,9 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
       }}>
         <div className={`vertical-content ${hasHint ? '' : 'full-height'}`}>
           <Grid container direction="row" justify="center">
+            <div className="circle-index">
+              {switchIndex === i ? <SpriteIcon name="feather-refresh" /> : i + 1}
+            </div>
             {this.renderData(answer)}
           </Grid>
           {this.renderEachHint(i, answer, isCorrect)}
