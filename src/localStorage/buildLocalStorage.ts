@@ -13,6 +13,13 @@ export interface BuildPlayRedirect {
   isTwoOrMoreRedirect: boolean;
 }
 
+export function ClearQuestionCash() {
+  const question = GetCashedBuildQuestion();
+  if (question) {
+    question.questionNumber = -1;
+    localStorage.setItem(BuildQuestionCache, JSON.stringify(question));
+  }
+}
 
 export function CasheBuildQuestion(questionObj: BuildPlayRedirect) {
   let question = GetCashedBuildQuestion();
