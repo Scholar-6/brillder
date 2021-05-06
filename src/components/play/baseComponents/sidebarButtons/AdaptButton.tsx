@@ -6,6 +6,7 @@ import React from 'react';
 interface ButtonProps {
   user: User;
   sidebarRolledUp: boolean;
+  haveCircle?: boolean;
   onClick(): void;
 }
 
@@ -24,13 +25,18 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
     );
   }
 
-  const renderTooltip = () => {
-    return (
-      <div className="custom-tooltip">
-        <div>Adapt Brick</div>
-      </div>
-    );
-  }
+  const renderTooltip = () => (
+    <div className="custom-tooltip">
+      <div>Adapt Brick</div>
+    </div>
+  );
+
+  const renderCircle = () => (
+    <div className="highlight-circle adapt-circle">
+      <img alt="circle-border" className="highlight-circle dashed-circle" src="/images/borders/small-dash-circle.svg" />
+      <span>Adapt Brick</span>
+    </div>
+  );
 
   return (
     <button
@@ -40,6 +46,7 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
     >
       <SpriteIcon name="copy" className="active" />
       {hovered && renderTooltip()}
+      {props.haveCircle && renderCircle()}
     </button>
   );
 }

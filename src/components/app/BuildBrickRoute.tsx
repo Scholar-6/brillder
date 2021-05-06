@@ -23,7 +23,7 @@ interface BuildRouteProps {
   location: any;
   getUser(): void;
   isAuthorized(): void;
-  fetchBrick(id: number): void;
+  fetchBrick(id: number): Promise<any>;
 }
 
 const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
@@ -57,7 +57,11 @@ const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
           // fetch brick
           const brickId = parseInt(props.match.params.brickId);
           if (!rest.brick || !rest.brick.author || rest.brick.id !== brickId) {
-            rest.fetchBrick(brickId);
+            rest.fetchBrick(brickId).then(res => {
+              if (res.status === 403) {
+                props.history.push(map.MainPage);
+              }
+            })
             return <PageLoader content="...Getting Brick..." />;
           }
 

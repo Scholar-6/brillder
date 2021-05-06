@@ -5,7 +5,9 @@ export function clearAssignmentId() {
 }
 
 export function setAssignmentId(assignmentId: number) {
-  localStorage.setItem(PlayAssignmentId, assignmentId.toString());
+  if (assignmentId) {
+    localStorage.setItem(PlayAssignmentId, assignmentId.toString());
+  }
 }
 
 export function getAssignmentId() {

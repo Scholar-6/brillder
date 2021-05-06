@@ -85,7 +85,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
                 className={"brick-length-image brick-length-20-image " + ((length === BrickLengthEnum.S20min) ? "active" : "")}
                 onClick={() => setBrickLength(BrickLengthEnum.S20min)}
               />
-              <Grid container direction="row" justify="center" className="bottom-time-description">
+              <Grid container direction="row" justify="center" className="bottom-time-description global-base-font">
                 20
               </Grid>
             </Grid>
@@ -94,7 +94,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
                 className={"brick-length-image brick-length-40-image " + ((length === BrickLengthEnum.S40min) ? "active" : "")}
                 onClick={() => setBrickLength(BrickLengthEnum.S40min)}
               />
-              <Grid container direction="row" justify="center" className="bottom-time-description">
+              <Grid container direction="row" justify="center" className="bottom-time-description global-base-font">
                 40
               </Grid>
             </Grid>
@@ -103,7 +103,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
                 className={"brick-length-image brick-length-60-image " + ((length === BrickLengthEnum.S60min) ? "active" : "")}
                 onClick={() => setBrickLength(BrickLengthEnum.S60min)}
               />
-              <Grid container direction="row" justify="center" className="bottom-time-description">
+              <Grid container direction="row" justify="center" className="bottom-time-description global-base-font">
                 60
               </Grid>
             </Grid>

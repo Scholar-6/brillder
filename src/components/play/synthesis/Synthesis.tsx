@@ -49,9 +49,8 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     if (isPhone()) {
       history.push(routes.phonePrep(brick.id));
     } else {
-      if (props.isPlayPreview) {
-        history.push(routes.playNewPrep(brick.id));
-      } else {
+      // direct access only for work for play preview
+      if (!props.isPlayPreview) {
         history.push(routes.playNewPrep(brick.id));
       }
     }

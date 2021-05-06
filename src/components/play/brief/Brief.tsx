@@ -11,7 +11,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "../baseComponents/MathInHtml";
 import HighlightHtml from "../baseComponents/HighlightHtml";
 import { PlayMode } from "../model";
-import FixedHelpers from "./FixedHelpers";
 import { User } from "model/user";
 
 interface Props {
@@ -98,7 +97,6 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
           </div>
         </div>
-        <FixedHelpers user={props.user} />
       </div>
     </div>
   );

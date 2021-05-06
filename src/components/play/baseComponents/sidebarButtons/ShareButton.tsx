@@ -3,6 +3,7 @@ import React from 'react';
 
 interface ButtonProps {
   sidebarRolledUp: boolean;
+  haveCircle?: boolean;
   share(): void;
 }
 
@@ -17,13 +18,18 @@ const ShareButton: React.FC<ButtonProps> = (props) => {
     );
   }
 
-  const renderTooltip = () => {
-    return (
-      <div className="custom-tooltip">
-        <div>Share Brick</div>
-      </div>
-    );
-  }
+  const renderTooltip = () => (
+    <div className="custom-tooltip">
+      <div>Share Brick</div>
+    </div>
+  );
+
+  const renderCircle = () => (
+    <div className="highlight-circle share-circle">
+      <img alt="circle-border" className="highlight-circle dashed-circle" src="/images/borders/small-dash-circle.svg" />
+      <span>Share Brick</span>
+    </div>
+  );
 
   return (
     <button
@@ -33,6 +39,7 @@ const ShareButton: React.FC<ButtonProps> = (props) => {
     >
       <SpriteIcon name="feather-share" className="active" />
       {hovered && renderTooltip()}
+      {props.haveCircle && renderCircle()}
     </button>
   );
 }

@@ -60,16 +60,13 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
   const updateData = (source: string, caption: string, permision: boolean) => {
     updateAnswer(answer.valueFile, source, caption, permision);
   }
- 
+
   return (
     <div className={`question-image-drop ${className ? className : ''}`}>
-      <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})} onClick={e => {
-        if (type === QuestionValueType.Image) {
-          setOpen(true);
-          e.stopPropagation();
-        }
-      }}>
-        <input {...getInputProps()} />
+      <div
+        className={'dropzone ' + (locked ? 'disabled' : '')}
+        onClick={e => setOpen(true)}
+      >
         {
           type === QuestionValueType.Image
             ? <img src={fileUrl(fileName)} alt="" width="100%" height="auto"/>

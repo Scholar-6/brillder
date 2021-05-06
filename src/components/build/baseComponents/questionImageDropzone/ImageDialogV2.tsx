@@ -24,7 +24,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, fileNa
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
-  const [removed, setRemoved] = React.useState(null as boolean | null);
+  const [removed, setRemoved] = React.useState(fileName ? false : true);
 
   useEffect(() => {
     if (!file) {
@@ -66,8 +66,6 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, fileNa
     }
   }
 
-  console.log(initData);
-
   return (
     <BaseDialogWrapper open={open} className="image-dialog-container" close={() => setDialog(false)} submit={() => {}}>
       <div className="dialog-header image-dialog image-dialog-answer">
@@ -80,7 +78,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, fileNa
           <div className="centered">
             {removed
               ? <SpriteIcon name="image" className="icon-image" />
-              : initData.value
+              : file
                 ? <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
                 : <img alt="" src={fileUrl(fileName)} />
             }

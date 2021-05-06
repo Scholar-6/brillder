@@ -22,6 +22,7 @@ import {
   deactiveQuestions,
   getActiveQuestion,
   cashBuildQuestion,
+  clearCashQuestion,
   prepareBrickToSave,
   removeQuestionByIndex,
   setQuestionTypeByIndex,
@@ -68,6 +69,7 @@ import BuildNavigation from "./baseComponents/BuildNavigation";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import routes from "./routes";
 import playRoutes from 'components/play/routes';
+import previewRoutes from 'components/playPreview/routes';
 import { deleteQuestion } from "services/axios/brick";
 import { createQuestion } from "services/axios/question";
 
@@ -146,12 +148,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   /* Synthesis */
   let isSynthesisPage = false;
-  if (history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
+  if (history.location.pathname.slice(-routes.BuildSynthesisLastPrefix.length).toLowerCase() === routes.BuildSynthesisLastPrefix) {
     isSynthesisPage = true;
   }
 
   let isPlanPage = false;
-  if (history.location.pathname.slice(-5).toLowerCase() === '/plan') {
+  if (history.location.pathname.slice(-routes.BuildPlanLastPrefix.length).toLowerCase() === routes.BuildPlanLastPrefix) {
     isPlanPage = true;
   }
 
@@ -375,8 +377,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       cashBuildQuestion(brickId, postUpdatedQuestions.length - 1);
     });
 
-    if (history.location.pathname.slice(-10) === '/synthesis') {
-      history.push(`/build/brick/${brickId}/investigation/question`);
+    if (isSynthesisPage) {
+      history.push(routes.buildQuesitonType(brickId));
     }
   };
 
@@ -387,7 +389,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
     if (locked) { return; }
     setQuestionType(type);
-    history.push(`/build/brick/${brickId}/investigation/question-component`);
+    history.push(routes.buildQuesiton(brickId));
   };
 
   const componentFocus = (index: number) => {
@@ -435,13 +437,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const selectQuestion = (index: number) => {
-    if (history.location.pathname.slice(-10) === '/synthesis' || history.location.pathname.slice(-5) === "/plan") {
+    if (isPlanPage || isSynthesisPage) {
       setMovingFromSynthesis(true);
     }
     const updatedQuestions = activateQuestionByIndex(index);
     setQuestions(update(questions, { $set: updatedQuestions }));
-    if (history.location.pathname.slice(-10) === '/synthesis' || history.location.pathname.slice(-5) === "/plan") {
-      history.push(`/build/brick/${brickId}/investigation/question`);
+    if (isPlanPage || isSynthesisPage) {
+      history.push(routes.buildQuesitonType(brickId));
     }
   };
 
@@ -503,10 +505,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   parseQuestions();
 
-  const moveToReview = () => {
-    let invalidQuestion = questions.find(question => {
-      return !validateQuestion(question);
-    });
+  const moveToPreview = () => {
+    const invalidQuestion = questions.find(question => !validateQuestion(question));
 
     // synthesis invalid
     if (!synthesis && !invalidQuestion) {
@@ -541,18 +541,25 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       if (proposalRes.isValid) {
         saveBrick();
         let buildQuestion = GetCashedBuildQuestion();
+        console.log(buildQuestion)
 
-        if (isSynthesisPage) {
-          history.push(`/play-preview/brick/${brickId}` + playRoutes.PlayNewPrepLastPrefix);
+        let link = previewRoutes.previewNewPrep(brickId);
+
+        if (isPlanPage) {
+          clearCashQuestion();
+        } else if (isSynthesisPage) {
+          link = previewRoutes.previewSynthesis(brickId);
         } else if (
-          buildQuestion && buildQuestion.questionNumber &&
+          buildQuestion && buildQuestion.questionNumber >= 0 &&
           buildQuestion.brickId === brickId &&
           buildQuestion.isTwoOrMoreRedirect
         ) {
-          history.push(`/play-preview/brick/${brickId}/live`);
+          link = previewRoutes.previewLive(brickId);
         } else {
-          history.push(`/play-preview/brick/${brickId}` + playRoutes.PlayNewPrepLastPrefix);
+          clearCashQuestion();
         }
+        console.log(link);
+        history.push(link);
       } else {
         setProposalResult({ ...proposalRes, isOpen: true });
       }
@@ -566,7 +573,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const submitInvalidBrick = () => {
     saveBrick();
-    history.push(`/back-to-work`);
+    history.push(map.BackToWorkPage);
   }
 
   const moveToRedTab = () => {
@@ -738,7 +745,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const exitAndSave = () => {
     saveBrick();
-    history.push('/home');
+    history.push(map.MainPage);
   }
 
   const renderBuildQuestion = () => {
@@ -886,7 +893,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const moveToLastQuestion = () => {
-    history.push(`/build/brick/${brickId}/investigation/question-component/${questions[questions.length - 1].id}`);
+    history.push(routes.buildQuesiton(brickId) + `/${questions[questions.length - 1].id}`);
   }
 
   if (!stripHtml(synthesis) || !proposalResult.isValid) {
@@ -904,7 +911,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         user={props.user}
         isTutorialSkipped={isTutorialPassed()}
         isValid={isValid}
-        moveToReview={moveToReview}
+        moveToPreview={moveToPreview}
         isEditor={isCurrentEditor}
         isPublisher={isPublisher}
         isAdmin={isAdmin}

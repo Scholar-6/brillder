@@ -153,22 +153,13 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
                 label="To be completed" />
               <div className="right-index">{toBeCompletedCount}</div>
             </div>
-            <div className="index-box color2">
-              <FormControlLabel
-                checked={filters.submitted}
-                control={
-                  <Radio onClick={() => this.toggleFilter(PlayFilterFields.Submitted)} className={"filter-radio custom-color"} />
-                }
-                label="Submitted to Teacher" />
-              <div className="right-index">{submittedCount}</div>
-            </div>
             <div className="index-box color4">
               <FormControlLabel
                 checked={filters.checked}
                 control={
                   <Radio onClick={() => this.toggleFilter(PlayFilterFields.Checked)} className={"filter-radio custom-color"} />
                 }
-                label="Checked by Teacher" />
+                label="Completed" />
               <div className="right-index">{checkedCount}</div>
             </div>
           </div>
