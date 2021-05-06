@@ -6,6 +6,12 @@
   .invalid {
     background: var(--theme-orange);
   }
+  .close-button .svg {
+    color: var(--theme-dark-blue) !important;
+    &:hover {
+      color: var(--theme-orange) !important;
+    }
+  }
   .MuiPaper-root.MuiDialog-paper {
     padding-bottom: 7.4vw;
     overflow-y: hidden;
