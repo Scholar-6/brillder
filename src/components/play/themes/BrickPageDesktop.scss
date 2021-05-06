@@ -1991,6 +1991,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   text-transform: uppercase;
   width: 75.5vw;
   @extend %ellipsis;
+
+  span, p {
+    color: var(--theme-light-blue) !important;
+    background: inherit !important;
+  }
 }
 
 // provisional score and final score

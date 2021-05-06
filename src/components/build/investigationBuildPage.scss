@@ -400,6 +400,7 @@ $space-between-boxes: 0.1vw;
   }
 
   span, p {
+    color: var(--theme-light-blue) !important;
     background: inherit !important;
   }
 }
