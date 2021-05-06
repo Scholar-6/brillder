@@ -1923,6 +1923,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
   .footer-space {
     width: 26vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
