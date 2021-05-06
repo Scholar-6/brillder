@@ -66,11 +66,14 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
       <div onClick={e => {
         if (type === QuestionValueType.Image) {
           setOpen(true);
-          e.stopPropagation();
         }
       }}>
         <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
-          <input {...getInputProps()} />
+          <input {...getInputProps()} onClick={e => {
+            if (type === QuestionValueType.Image) {
+              e.preventDefault();
+            }
+          }} />
           {
             type === QuestionValueType.Image
               ? <img src={fileUrl(fileName)} alt="" width="100%" height="auto"/>
