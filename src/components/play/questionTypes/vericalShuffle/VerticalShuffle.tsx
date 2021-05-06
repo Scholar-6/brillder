@@ -1,8 +1,6 @@
 import React from 'react';
-import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
 
-import './VerticalShuffle.scss';
 import {CompQuestionProps} from '../types';
 import CompComponent from '../Comp';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
@@ -11,7 +9,13 @@ import { getValidationClassName } from '../service';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { fileUrl } from 'components/services/uploadFile';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { isPhone } from 'services/phone';
+import { isMobile } from 'react-device-detect';
 
+
+const MobileTheme = React.lazy(() => import('./themes/Phone'));
+const TabletTheme = React.lazy(() => import('./themes/Tablet'));
+const DesktopTheme = React.lazy(() => import('./themes/Desktop'));
 
 interface VerticalShuffleChoice {
   value: string;
@@ -206,17 +210,20 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
   render() {
     return (
-      <div className="question-unique-play vertical-shuffle-play">
-        <p><span className="help-text">Drag to rearrange.</span></p>
-        {this.props.isBookPreview ? (
-          <div>{this.renderAnswers()}</div>
-        ) : (
-          <div className="verical-shuffle-sort-list">
-            {this.renderAnswers()}
-          </div>
-        )}
-        {this.renderGlobalHint()}
-      </div>
+      <React.Suspense fallback={<></>}>
+        {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
+        <div className="question-unique-play vertical-shuffle-play">
+          <p><span className="help-text">Drag to rearrange.</span></p>
+          {this.props.isBookPreview ? (
+            <div>{this.renderAnswers()}</div>
+          ) : (
+            <div className="verical-shuffle-sort-list">
+              {this.renderAnswers()}
+            </div>
+          )}
+          {this.renderGlobalHint()}
+        </div>
+      </React.Suspense>
     );
   }
 }
