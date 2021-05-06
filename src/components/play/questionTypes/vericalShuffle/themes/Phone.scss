@@ -10,6 +10,7 @@
 }
 .vertical-shuffle-choice {
   display: flex;
+  border-radius: 2.5vw !important;
 
   @keyframes spinning-v2 {
     0% {
@@ -21,6 +22,8 @@
   }
 
   .vertical-content {
+    border-radius: 4vw;
+    width: 100%;
     position: relative;
     padding-left: 4vw;
     padding-right: 4vw;
@@ -45,14 +48,14 @@
       justify-content: center;
       left: 1vw;
       background: var(--white);
-      width: 2vw;
-      height: 2vw;
+      width: 6vw;
+      height: 6vw;
       font-family: $font-family-black;
       border-radius: 50%;
 
       svg {
-        height: 1.2vw;
-        width: 1.2vw;
+        height: 4vw;
+        width: 4vw;
         color: #8CBAF5;
         animation: spinning-v2 2s infinite linear;
       }
