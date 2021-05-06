@@ -147,6 +147,9 @@ const ImageDialog: React.FC<DialogProps> = ({
             )}
           </div>
           <div className="i-image-footer">
+            <div className="file-name">
+              {file ? file.name : initData.value}
+            </div>
             <div className={"svgOnHover " + className} onClick={handleClick}>
               <SpriteIcon name="plus" className="svg-plus active text-white" />
             </div>
