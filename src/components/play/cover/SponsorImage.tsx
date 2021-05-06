@@ -60,7 +60,7 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
 
   return (
     <div className="cover-sponsors">
-      Commissioned By
+      Commissioned by
       <div className={className} onClick={() => {
         if (fileName) {
           setOpen(true);
