@@ -44,6 +44,8 @@ interface SortState {
 }
 
 class Sort extends CompComponent<SortProps, SortState> {
+  static unsortedTitle = "Drag from below into the above categories'";
+
   constructor(props: SortProps) {
     super(props);
 
@@ -66,9 +68,9 @@ class Sort extends CompComponent<SortProps, SortState> {
     choices = this.shuffle(choices);
 
     if (!props.isReview) {
-      userCats.push({choices: choices, name: 'Unsorted'});
+      userCats.push({choices: choices, name: Sort.unsortedTitle});
     } else {
-      userCats.push({ choices: [], name: "Unsorted" });
+      userCats.push({ choices: [], name: Sort.unsortedTitle });
       this.prepareChoices(userCats);
     }
 
@@ -98,7 +100,7 @@ class Sort extends CompComponent<SortProps, SortState> {
           userCats.push({choices: [], name: cat.name});
         }
     
-        userCats.push({ choices: [], name: "Unsorted" });
+        userCats.push({ choices: [], name: Sort.unsortedTitle });
         this.prepareChoices(userCats);
         this.setState({userCats, choices: this.getChoices()});
       }
@@ -122,7 +124,7 @@ class Sort extends CompComponent<SortProps, SortState> {
             catIndex++;
           }
   
-          userCats.push({choices, name: 'Unsorted'});
+          userCats.push({choices, name: Sort.unsortedTitle});
   
           this.setState({userCats, choices});
         }
@@ -272,7 +274,7 @@ class Sort extends CompComponent<SortProps, SortState> {
         {
           this.state.userCats.map((cat, i) => (
             <div key={i}>
-              <div className="sort-category">
+              <div className={`sort-category ${i === this.state.userCats.length - 1 && 'text-theme-orange'}`}>
                 <MathInHtml value={cat.name} />
               </div>
               <div className="sort-category-list-container">
