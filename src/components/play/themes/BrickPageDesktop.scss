@@ -1922,6 +1922,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     font-size: 1vw;
   }
   .footer-space {
+    padding-left: 6vw;
+    font-size: 2vw;
+    font-family: $font-family-bold;
     width: 26vw;
     display: flex;
     align-items: center;
