@@ -835,14 +835,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
 
-  renderDesktopBricksColumn(bricks: Brick[]) {
-    return (
-      <Grid item xs={9} className="brick-row-container">
-        {this.renderDesktopBricks(bricks)}
-      </Grid>
-    );
-  }
-
   renderMobilePage(expandedBrick: Brick | undefined) {
     return (
       <div>
@@ -892,7 +884,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           clearSubjects={() => this.clearSubjects()}
           filterBySubject={id => this.filterBySubject(id)}
         />
-        {this.renderDesktopBricksColumn(bricks)}
+        <Grid item xs={9} className="brick-row-container">
+          {this.renderDesktopBricks(bricks)}
+        </Grid>
       </Grid>
     );
   }
