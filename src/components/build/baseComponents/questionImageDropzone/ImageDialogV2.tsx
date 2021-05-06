@@ -66,8 +66,6 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, fileNa
     }
   }
 
-  console.log(initData);
-
   return (
     <BaseDialogWrapper open={open} className="image-dialog-container" close={() => setDialog(false)} submit={() => {}}>
       <div className="dialog-header image-dialog image-dialog-answer">
