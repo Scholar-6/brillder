@@ -274,7 +274,7 @@ class Sort extends CompComponent<SortProps, SortState> {
         {
           this.state.userCats.map((cat, i) => (
             <div key={i}>
-              <div className={`sort-category ${i === this.state.userCats.length - 1 && 'text-theme-orange'}`}>
+              <div className={`sort-category ${i === this.state.userCats.length - 1 && 'bg-theme-orange text-white'}`}>
                 <MathInHtml value={cat.name} />
               </div>
               <div className="sort-category-list-container">
