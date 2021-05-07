@@ -166,7 +166,7 @@ class TeachFilterSidebar extends Component<
           </div>
           <div className="right-index">
             {c.students.length + c.studentsInvitations.length}
-            <SpriteIcon name="users" className="active" />
+            <SpriteIcon name="users-custom" className="active" />
             {this.renderAssignedCount(c)}
           </div>
         </div>
@@ -247,7 +247,7 @@ class TeachFilterSidebar extends Component<
           View All Classes
           <div className="right-index">
             {totalCount}
-            <SpriteIcon name="users" className="active" />
+            <SpriteIcon name="users-custom" className="active" />
             <div className="classrooms-box">
               {totalBricks}
               <div />
