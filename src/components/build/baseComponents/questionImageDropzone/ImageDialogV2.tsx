@@ -24,13 +24,14 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, fileNa
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
-  const [removed, setRemoved] = React.useState(fileName ? false : true);
+  const [removed, setRemoved] = React.useState((file || fileName) ? false : true);
 
   useEffect(() => {
     if (!file) {
       if (initFile) {
         setFile(initFile);
         setCroped(initFile);
+        setRemoved(false);
       }
     }
   }, [initFile, initData.value, file]);
