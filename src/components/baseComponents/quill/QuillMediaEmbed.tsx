@@ -1,12 +1,12 @@
-import { Delta } from "quill";
-import { Quill } from "react-quill";
+import Quill, { Delta } from "quill";
+import { Quill as GlobalQuill } from "react-quill";
 
 /*eslint-disable-next-line*/
 const YOUTUBE_REGEXP = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?[\w\?=]*)?/g;
 /*eslint-disable-next-line*/
 const EMBED_REGEXP = /https:\/\/www.youtube.com\/embed\/([\w\-\_]*)/;
 
-const BlockEmbed = Quill.import("blots/block/embed");
+const BlockEmbed = GlobalQuill.import("blots/block/embed");
 class YoutubeEmbed extends BlockEmbed {
     static create(value: string) {
         let node = super.create();
@@ -26,7 +26,7 @@ class YoutubeEmbed extends BlockEmbed {
 }
 YoutubeEmbed.blotName = 'youtube';
 YoutubeEmbed.tagName = 'iframe';
-Quill.register(YoutubeEmbed, true);
+GlobalQuill.register(YoutubeEmbed, true);
 
 export default class MediaEmbed {
     constructor(quill: Quill) {
@@ -53,4 +53,4 @@ export default class MediaEmbed {
     }
 }
 
-Quill.register('modules/mediaembed', MediaEmbed);
+GlobalQuill.register('modules/mediaembed', MediaEmbed);

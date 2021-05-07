@@ -138,7 +138,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 showToolbar={true}
                 toolbar={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-                  'latex', 'bulletedList', 'numberedList', "align", 'blockQuote', "image",
+                  'latex', 'bulletedList', 'numberedList', "align", 'blockQuote', "image", "table"
                 ]}
                 imageDialog={true}
               />

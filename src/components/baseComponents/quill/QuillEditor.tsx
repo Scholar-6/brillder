@@ -1,6 +1,6 @@
-import { Sources, Delta } from "quill";
+import Quill, { Sources, Delta } from "quill";
 import React from "react";
-import ReactQuill, { Quill } from "react-quill"; 
+import ReactQuill, { Quill as GlobalQuill } from "react-quill"; 
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
 import _ from "lodash";
@@ -12,6 +12,7 @@ import "./QuillMediaEmbed";
 import "./QuillCustomClipboard";
 import "./QuillKeyboard";
 import "./QuillImageUpload";
+import "./QuillTableUI";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
@@ -98,6 +99,8 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         imageupload: props.imageDialog,
         clipboard: true,
         keyboard: true,
+        table: true,
+        tableUI: true,
     }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.imageDialog]);
     
     /*

@@ -1,5 +1,5 @@
-import { Delta } from "quill";
-import { Quill } from "react-quill";
+import Quill, { Delta } from "quill";
+import { Quill as GlobalQuill } from "react-quill";
 
 const URL_REGEXP = /https?:\/\/[^\s]+/g;
 
@@ -60,4 +60,4 @@ export default class AutoLink {
     }
 }
 
-Quill.register('modules/autolink', AutoLink);
+GlobalQuill.register('modules/autolink', AutoLink);
