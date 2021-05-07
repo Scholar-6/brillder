@@ -1,0 +1,9 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.image-dialog-v2 {
+  .cropping {
+    background: var(--theme-dark-blue) !important;
+  }
+}
