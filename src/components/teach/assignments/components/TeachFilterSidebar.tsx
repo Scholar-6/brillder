@@ -113,6 +113,7 @@ class TeachFilterSidebar extends Component<
       >
         <span className="student-name">
           {s.email}
+          <button className="btn resend-label">Resend</button>
         </span>
       </div>
     );
