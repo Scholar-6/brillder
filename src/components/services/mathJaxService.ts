@@ -74,5 +74,5 @@ export function isMathJax(el: string) {
 }
 
 export function isLatex(el: string) {
-  return el.indexOf('<span class="latex">') >= 0;
+  return /<span (.*)class="latex"(.*)>/.test(el);
 }
