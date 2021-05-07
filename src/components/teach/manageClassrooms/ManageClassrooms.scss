@@ -114,9 +114,27 @@ $base-build-font-size: 1.25vw;
       }
     }
 
+    //#3318 assign tab button 
     &.assign {
+      .flex-relative {
+        display: flex;
+        position: relative;
+      }
       svg {
         margin-left: 0.3vw;
+      }
+      .custom-tooltip {
+        width: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      &:hover {
+        .custom-tooltip {
+          width: 7vw;
+          top: 0.3vw;
+          left: 2.7vw;
+          font-size: 1vw;
+        }
       }
     }
   }
