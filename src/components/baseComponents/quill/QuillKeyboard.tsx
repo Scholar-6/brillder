@@ -1,6 +1,7 @@
-import { Quill } from "react-quill";
-const Keyboard = Quill.import("modules/keyboard");
-const Delta = Quill.import("delta");
+import Quill from "quill";
+import { Quill as GlobalQuill } from "react-quill";
+const Keyboard = GlobalQuill.import("modules/keyboard");
+const Delta = GlobalQuill.import("delta");
 
 class QuillKeyboard extends Keyboard {
 
@@ -55,6 +56,6 @@ class QuillKeyboard extends Keyboard {
         });
     }
 }
-Quill.register("modules/keyboard", QuillKeyboard);
+GlobalQuill.register("modules/keyboard", QuillKeyboard);
 
 export default QuillKeyboard;

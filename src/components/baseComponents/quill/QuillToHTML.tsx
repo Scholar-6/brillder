@@ -1,8 +1,8 @@
 //import { ImageAlign } from "components/build/buildQuestions/components/Image/model";
-import { DeltaStatic } from "quill";
+import Quill, { DeltaStatic } from "quill";
 //import { DeltaInsertOp, QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 //import Op from "quill-delta/dist/Op";
-import { Quill } from "react-quill";
+import { Quill as GlobalQuill } from "react-quill";
 
 /*
 const quillToHTML = (data: Op[]) => {
@@ -48,7 +48,7 @@ const quillToHTML = (data: Op[]) => {
 let vQuill: Quill;
 const getQuill = () => {
     if(!vQuill) {
-        vQuill = new Quill(document.createElement("div"));
+        vQuill = new GlobalQuill(document.createElement("div"));
     }
     return vQuill;
 }

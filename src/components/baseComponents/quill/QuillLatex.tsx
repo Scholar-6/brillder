@@ -1,8 +1,8 @@
-import { Quill } from "react-quill";
+import { Quill as GlobalQuill } from "react-quill";
 
-const Inline = Quill.import("blots/inline");
-const Text = Quill.import("blots/text");
-const Cursor = Quill.import("blots/cursor");
+const Inline = GlobalQuill.import("blots/inline");
+const Text = GlobalQuill.import("blots/text");
+const Cursor = GlobalQuill.import("blots/cursor");
 
 class LatexBlot extends Inline {
     static formats(): boolean {
@@ -19,6 +19,6 @@ LatexBlot.blotName = "latex";
 LatexBlot.className = "latex";
 LatexBlot.tagName = "SPAN";
 
-Quill.register(LatexBlot, true);
+GlobalQuill.register(LatexBlot, true);
 
 Inline.order.push("latex");
