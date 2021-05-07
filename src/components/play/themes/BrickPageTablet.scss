@@ -687,7 +687,8 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
           .introduction-page {
             padding: 0;
             overflow-y: hidden;
-            height: $introduction-desktop-height;
+            position: static !important;
+            height: 100%;
             padding-left: 1vw;
             .sort-category {
               font-size: $base-font-size !important;
@@ -1712,6 +1713,8 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     font-size: 1vw;
   }
   .footer-space {
+    font-size: 2vw;
+    font-family: $font-family-bold;
     width: 23.7vw;
   }
 }
