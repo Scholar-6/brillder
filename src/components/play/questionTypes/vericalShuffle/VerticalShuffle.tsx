@@ -1,8 +1,6 @@
 import React from 'react';
-import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
 
-import './VerticalShuffle.scss';
 import {CompQuestionProps} from '../types';
 import CompComponent from '../Comp';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
@@ -10,7 +8,14 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { fileUrl } from 'components/services/uploadFile';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { isPhone } from 'services/phone';
+import { isMobile } from 'react-device-detect';
 
+
+const MobileTheme = React.lazy(() => import('./themes/Phone'));
+const TabletTheme = React.lazy(() => import('./themes/Tablet'));
+const DesktopTheme = React.lazy(() => import('./themes/Desktop'));
 
 interface VerticalShuffleChoice {
   value: string;
@@ -36,6 +41,7 @@ enum DragAndDropStatus {
 
 interface VerticalShuffleState {
   status: DragAndDropStatus;
+  switchIndex: number;
   userAnswers: any[];
 }
 
@@ -55,6 +61,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
     this.state = {
       status: DragAndDropStatus.None,
+      switchIndex: -1,
       userAnswers: userAnswers
     };
   }
@@ -147,12 +154,17 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
   renderAnswer(answer:any, i: number) {
     const isCorrect = this.checkAttemptAnswer(i);
+    const {switchIndex} = this.state;
     let className = "vertical-shuffle-choice";
 
     if (!this.props.isPreview && this.props.attempt && this.props.isReview) {
       if (this.state.status !== DragAndDropStatus.Changed) {
         className += getValidationClassName(isCorrect);
       }
+    }
+
+    if (i === this.state.switchIndex) {
+      className += ' active';
     }
 
     if (this.props.isBookPreview) {
@@ -162,9 +174,28 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     const hasHint = this.props.isReview || this.props.isPreview;
     
     return (
-      <div key={i} className={className}>
+      <div key={i} className={className} onClick={() => {
+        if (switchIndex == -1) {
+          this.setState({switchIndex: i});
+        } else {
+          console.log(switchIndex);
+          try {
+            const {userAnswers} = this.state;
+            const shift1 = userAnswers[switchIndex];
+            const shift2 = userAnswers[i];
+            userAnswers[switchIndex] = shift2;
+            userAnswers[i] = shift1;
+            this.setUserAnswers(userAnswers);
+            this.setState({switchIndex: -1});
+            console.log('switch');
+          } catch {}
+        }
+      }}>
         <div className={`vertical-content ${hasHint ? '' : 'full-height'}`}>
           <Grid container direction="row" justify="center">
+            <div className="circle-index">
+              {switchIndex === i ? <SpriteIcon name="feather-refresh" /> : i + 1}
+            </div>
             {this.renderData(answer)}
           </Grid>
           {this.renderEachHint(i, answer, isCorrect)}
@@ -179,24 +210,20 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
   render() {
     return (
-      <div className="question-unique-play vertical-shuffle-play">
-        <p><span className="help-text">Drag to rearrange.</span></p>
-        {this.props.isBookPreview ? (
-          <div>{this.renderAnswers()}</div>
-        ) : (
-          <ReactSortable
-            list={this.state.userAnswers}
-            animation={150}
-            className="verical-shuffle-sort-list"
-            style={{display:"inline-block"}}
-            group={{ name: "cloning-group-name" }}
-            setList={(choices) => this.setUserAnswers(choices)}
-          >
-            {this.renderAnswers()}
-          </ReactSortable>
-        )}
-        {this.renderGlobalHint()}
-      </div>
+      <React.Suspense fallback={<></>}>
+        {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
+        <div className="question-unique-play vertical-shuffle-play">
+          <p><span className="help-text">Click on two answers at a time to reorder.</span></p>
+          {this.props.isBookPreview ? (
+            <div>{this.renderAnswers()}</div>
+          ) : (
+            <div className="verical-shuffle-sort-list">
+              {this.renderAnswers()}
+            </div>
+          )}
+          {this.renderGlobalHint()}
+        </div>
+      </React.Suspense>
     );
   }
 }

@@ -26,20 +26,9 @@ export interface AnswerProps {
 const QuestionImageDropzone: React.FC<AnswerProps> = ({
   locked, answer, fileName, type, className, update
 }) => {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null as File | null);
   const [isOpen, setOpen] = useState(false);
   const [isCloseOpen, setCloseDialog] = useState(false);
-
-  const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/jpeg, image/png, .gif',
-    disabled: locked,
-    onDrop: (files:any[]) => {
-      if (files[0]) {
-        setFile(files[0]);
-        setOpen(true);
-      }
-    }
-  });
 
   const updateAnswer = (fileName: string, source: string, caption: string, permision: boolean) => {
     if (locked) { return; }
@@ -60,16 +49,28 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
   const updateData = (source: string, caption: string, permision: boolean) => {
     updateAnswer(answer.valueFile, source, caption, permision);
   }
- 
+
   return (
     <div className={`question-image-drop ${className ? className : ''}`}>
-      <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})} onClick={e => {
-        if (type === QuestionValueType.Image) {
-          setOpen(true);
-          e.stopPropagation();
-        }
-      }}>
-        <input {...getInputProps()} />
+      <div
+        className={'dropzone ' + (locked ? 'disabled' : '')}
+        onClick={e => {
+          if (type === QuestionValueType.Image) {
+            setOpen(true)
+          } else {
+            let el = document.createElement("input");
+            el.setAttribute("type", "file");
+            el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
+            el.onchange = () => {
+              if (el.files && el.files.length >= 0) {
+                setFile(el.files[0] as File);
+                setOpen(true);
+              }
+            };
+            el.click();
+          }
+        }}
+      >
         {
           type === QuestionValueType.Image
             ? <img src={fileUrl(fileName)} alt="" width="100%" height="auto"/>
