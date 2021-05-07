@@ -338,6 +338,18 @@ $base-build-font-size: 1.25vw;
       white-space: nowrap;
       overflow-x: hidden;
       text-overflow: ellipsis;
+
+      .resend-label {
+        letter-spacing: 0;
+        margin-left:0.3vw;
+        font-size: 1vw;
+        font-family: $font-family-regular;
+        background: var(--theme-dark-blue);
+        color: var(--white);
+        &:hover {
+          background: var(--theme-light-blue);
+        }
+      }
     }
   }
 }
