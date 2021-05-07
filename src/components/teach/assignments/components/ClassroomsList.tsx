@@ -63,6 +63,7 @@ class ClassroomList extends Component<ClassroomListProps> {
           <div>
           <NameAndSubjectForm
             classroom={classroom}
+            inviteHidden={true}
             isArchive={this.props.isArchive}
             onAssigned={() => this.props.reloadClasses()}
             onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}

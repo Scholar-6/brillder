@@ -560,6 +560,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           <NameAndSubjectForm
             isStudents={true}
             inviteHidden={inviteHidden}
+            assignHidden={true}
             moveToAssignemts={() => this.props.history.push('/teach/assigned')}
             classroom={this.state.activeClassroom}
             onChange={this.updateClassroom.bind(this)}
