@@ -30,6 +30,16 @@ Quill.register(YoutubeEmbed, true);
 
 export default class MediaEmbed {
     constructor(quill: Quill) {
+        /* analog for matchAll
+        const regexp = RegExp('foo*','g');
+        const str = 'table football, foosball';
+        
+        while ((matches = regexp.exec(str)) !== null) {
+          console.log(`Found ${matches[0]}. Next starts at ${regexp.lastIndex}.`);
+          // expected output: "Found foo. Next starts at 9."
+          // expected output: "Found foo. Next starts at 19."
+        }*/
+
         quill.clipboard.addMatcher(Node.TEXT_NODE, (node: any, delta: Delta) => {
             const matches: string[] = Array.from(node.data.matchAll(YOUTUBE_REGEXP));
             if (matches && matches.length > 0) {

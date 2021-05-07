@@ -204,22 +204,23 @@ class TeachFilterSidebar extends Component<
       <div className="sort-box">
         <div className="filter-container sort-by-box">
           <div style={{ display: "flex" }}>
-            {finalClasses.length > 1 ? (
-              <div className="class-header" style={{ width: "50%" }}>
-                {finalClasses.length} CLASSES
+            {totalBricks > 1 ? (
+              <div className="class-header" style={{ width: "100%" }}>
+                {totalBricks} ASSIGNMENTS
               </div>
             ) : (
               <div className="class-header" style={{ width: "50%" }}>
-                {finalClasses.length} CLASS
+                1 ASSIGNMENT
               </div>
             )}
           </div>
         </div>
         <div
-          className="create-class-button"
+          className="create-class-button assign"
           onClick={() => this.setState({ createClassOpen: true })}
         >
-          <SpriteIcon name="plus-circle" /> Create Class
+          In {finalClasses.length} Classes
+          <SpriteIcon name="plus-circle" />
         </div>
         <div
           className={
