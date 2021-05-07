@@ -30,17 +30,6 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
   const [isOpen, setOpen] = useState(false);
   const [isCloseOpen, setCloseDialog] = useState(false);
 
-  const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/jpeg, image/png, .gif',
-    disabled: locked,
-    onDrop: (files:File[]) => {
-      if (files[0]) {
-        setFile(files[0]);
-        setOpen(true);
-      }
-    }
-  });
-
   const updateAnswer = (fileName: string, source: string, caption: string, permision: boolean) => {
     if (locked) { return; }
     answer.imageSource = source;
