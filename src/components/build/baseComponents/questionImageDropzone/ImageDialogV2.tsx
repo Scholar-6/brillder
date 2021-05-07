@@ -15,7 +15,7 @@ interface DialogProps {
   fileName: string;
   upload(file: File, source: string, caption: string, permision: boolean): void;
   updateData(source: string, caption: string, permision: boolean): void;
-  setDialog(open: boolean): void;
+  close(): void;
 }
 
 const ImageDialogV2: React.FC<DialogProps> = ({
@@ -25,7 +25,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({
   fileName,
   upload,
   updateData,
-  setDialog,
+  close,
 }) => {
   const [source, setSource] = React.useState(initData.imageSource || "");
   const [caption, setCaption] = React.useState(initData.imageCaption || "");
@@ -82,10 +82,10 @@ const ImageDialogV2: React.FC<DialogProps> = ({
     <BaseDialogWrapper
       open={open}
       className="image-dialog-container image-dialog-v2"
-      close={() => setDialog(false)}
+      close={() => {}}
       submit={() => {}}
     >
-      <div className="close-button svgOnHover" onClick={() => setDialog(false)}>
+      <div className="close-button svgOnHover" onClick={close}>
         <SpriteIcon name="cancel" className="w100 h100 active" />
       </div>
       <div className="dialog-header image-dialog">
