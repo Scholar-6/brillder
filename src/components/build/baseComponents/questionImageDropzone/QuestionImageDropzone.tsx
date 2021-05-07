@@ -84,15 +84,7 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
         initData={answer as any}
         upload={upload}
         updateData={updateData}
-        setDialog={() => setCloseDialog(true)}
-      />
-      <ImageCloseDialog
-        open={isCloseOpen}
-        submit={() => {
-          setCloseDialog(false);
-          setOpen(false);
-        }}
-        close={() => setCloseDialog(false)}
+        close={() => setOpen(false)}
       />
     </div>
   )
