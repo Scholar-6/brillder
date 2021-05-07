@@ -113,6 +113,12 @@ $base-build-font-size: 1.25vw;
         color: var(--theme-orange);
       }
     }
+
+    &.assign {
+      svg {
+        margin-left: 0.3vw;
+      }
+    }
   }
 
   .m-absolute-sort {
