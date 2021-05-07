@@ -220,7 +220,10 @@ class TeachFilterSidebar extends Component<
           onClick={() => this.setState({ createClassOpen: true })}
         >
           In {finalClasses.length} Classes
-          <SpriteIcon name="plus-circle" />
+          <div className="flex-relative">
+            <SpriteIcon name="plus-circle" />
+            <div className="custom-tooltip">Create Class</div>
+          </div>
         </div>
         <div
           className={
