@@ -12,6 +12,10 @@ import RadioButton from "components/baseComponents/buttons/RadioButton";
 import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
 import { Subject } from "model/brick";
 import { isArchived } from "../service/service";
+import InviteStudentEmailDialog from "components/teach/manageClassrooms/components/InviteStudentEmailDialog";
+import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
+import { resendInvitation } from "services/axios/classroom";
+import { ClassroomApi } from "components/teach/service";
 
 enum TeachFilterFields {
   Assigned = "assigned",
@@ -35,6 +39,7 @@ interface FilterSidebarProps {
 interface FilterSidebarState {
   filters: TeachFilters;
   ascending: boolean;
+  isInviteOpen: boolean;
   createClassOpen: boolean;
 }
 
@@ -46,6 +51,7 @@ class TeachFilterSidebar extends Component<
     super(props);
     this.state = {
       ascending: false,
+      isInviteOpen: false,
       filters: {
         assigned: false,
         completed: false,
@@ -59,6 +65,13 @@ class TeachFilterSidebar extends Component<
     filters.assigned = false;
     filters.completed = false;
     this.props.filterChanged(filters);
+  }
+
+  async resendInvitation(s: any) {
+    if(this.props.activeClassroom) {
+      await resendInvitation(this.props.activeClassroom as any, s.email);
+      this.setState({isInviteOpen: true});
+    }
   }
 
   toggleFilter(filter: TeachFilterFields) {
@@ -106,14 +119,12 @@ class TeachFilterSidebar extends Component<
 
   renderInvitation(s: any, key: number) {
     return (
-      <div
-        className="student-row invitation"
-        key={key}
-        onClick={() => this.props.setActiveStudent(s)}
-      >
+      <div className="student-row invitation" key={key}>
         <span className="student-name">
           {s.email}
-          <button className="btn resend-label">Resend</button>
+          <button className="btn resend-label" onClick={
+            () => this.resendInvitation(s)
+          }>Resend</button>
         </span>
       </div>
     );
@@ -320,6 +331,10 @@ class TeachFilterSidebar extends Component<
           onExit={this.onIntroExit.bind(this)}
           onComplete={() => {}}
         />}
+        <StudentInviteSuccessDialog
+          numStudentsInvited={this.state.isInviteOpen ? 1 : 0}
+          close={() => this.setState({isInviteOpen: false})}
+        />
       </Grid>
     );
   }
