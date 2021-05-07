@@ -389,7 +389,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         View All
         <div className="right-index right-index2">
           {this.state.users.length}
-          <SpriteIcon name="users" className="active" />
+          <SpriteIcon name="users-custom" className="active" />
           <div className="classrooms-box">
             {this.state.classrooms.length}
           </div>
