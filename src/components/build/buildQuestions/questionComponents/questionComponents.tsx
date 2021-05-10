@@ -35,6 +35,7 @@ type QuestionComponentsProps = {
   brickId: number;
   question: Question;
   validationRequired: boolean;
+  scrollRef: any;
   saveQuestion(question: Question): void;
   updateFirstComponent(component: TextComponentObj): Question;
   updateComponents(components: any[]): Question;
@@ -45,7 +46,7 @@ type QuestionComponentsProps = {
 }
 
 const QuestionComponents = ({
-  questionIndex, locked, editOnly, history, brickId, question, validationRequired,
+  questionIndex, locked, editOnly, scrollRef, history, brickId, question, validationRequired,
   componentFocus, updateComponents, setQuestionHint, saveQuestion, updateFirstComponent
 }: QuestionComponentsProps) => {
   
@@ -213,7 +214,7 @@ const QuestionComponents = ({
           'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image', 'table'
         ]}
       />
-      <div className="questions">
+      <div className="questions" ref={scrollRef}>
         <Grid container direction="row" className={validateDropBox(firstComponent)}>
           <FixedTextComponent
             locked={locked}
