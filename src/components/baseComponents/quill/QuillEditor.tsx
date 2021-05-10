@@ -31,6 +31,7 @@ interface QuillEditorProps {
     tabIndex?: number;
     allowLinks?: boolean;
     allowMediaEmbed?: boolean;
+    allowTables?: boolean;
     validate?: boolean;
     isValid?: boolean | null;
     toolbar: string[];
@@ -100,8 +101,8 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         imageupload: props.imageDialog,
         clipboard: true,
         keyboard: true,
-        table: true,
-        tableUI: true,
+        table: props.allowTables,
+        tableUI: props.allowTables,
     }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.imageDialog]);
     
     /*

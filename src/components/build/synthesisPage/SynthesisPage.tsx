@@ -136,6 +136,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 data={this.state.synthesis}
                 onChange={this.onSynthesisChange.bind(this)}
                 showToolbar={true}
+                allowTables={true}
                 toolbar={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
                   'latex', 'bulletedList', 'numberedList', "align", 'blockQuote', "image", "table"
