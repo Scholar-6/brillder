@@ -1,4 +1,5 @@
-import Quill, { Delta } from "quill";
+import Quill from "quill";
+import Delta from "quill-delta";
 import { Quill as GlobalQuill } from "react-quill";
 
 const URL_REGEXP = /https?:\/\/[^\s]+/g;

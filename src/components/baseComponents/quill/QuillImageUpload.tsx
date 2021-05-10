@@ -1,5 +1,5 @@
 import { fileUrl, uploadFile } from "components/services/uploadFile";
-import Quill, { DeltaStatic } from "quill";
+import Quill from "quill";
 import Delta from "quill-delta";
 import { Quill as GlobalQuill } from "react-quill";
 import { ImageAlign } from "components/build/buildQuestions/components/Image/model";

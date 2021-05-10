@@ -1,4 +1,5 @@
-import Quill, { Sources, Delta } from "quill";
+import Quill, { Sources } from "quill";
+import Delta from "quill-delta";
 import React from "react";
 import ReactQuill, { Quill as GlobalQuill } from "react-quill"; 
 import "./QuillEditor.scss";
