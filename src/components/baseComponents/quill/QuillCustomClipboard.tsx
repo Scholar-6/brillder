@@ -1,6 +1,7 @@
-import { Quill } from "react-quill";
-const Clipboard = Quill.import("modules/clipboard");
-const Delta = Quill.import("delta");
+import Quill from "quill";
+import { Quill as GlobalQuill } from "react-quill";
+const Clipboard = GlobalQuill.import("modules/clipboard");
+const Delta = GlobalQuill.import("delta");
 
 class QuillCustomClipboard extends Clipboard {
     _onPasteImage?: (node: any, delta: any) => void;
@@ -33,6 +34,6 @@ class QuillCustomClipboard extends Clipboard {
         this.matchers = this.matchers.filter(([selector, matcher]: any) => selector !== name);
     }
 }
-Quill.register("modules/clipboard", QuillCustomClipboard);
+GlobalQuill.register("modules/clipboard", QuillCustomClipboard);
 
 export default QuillCustomClipboard;

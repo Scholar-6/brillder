@@ -1,5 +1,6 @@
 import React from 'react';
-import { Quill } from 'react-quill';
+import Quill from 'quill';
+import { Quill as GlobalQuill } from 'react-quill';
 import { QuillEditorContext } from './QuillEditorContext';
 import _ from 'lodash';
 import QuillToolbar from './QuillToolbar';
@@ -26,7 +27,7 @@ const QuillGlobalToolbar: React.FC<QuillGlobalToolbarProps> = props => {
         if(!(elements && elements.length > 0)) return [null, []];
         const element = elements[0];
         const editorElement = element.getElementsByClassName("quill")[0].getElementsByClassName("ql-container")[0];
-        const newQuill = Quill.find(editorElement) as Quill;
+        const newQuill = GlobalQuill.find(editorElement) as Quill;
         // const reactProps = getReactPropsByNode(element);
         // const toolbar = reactProps.toolbar;
         const toolbarString = element.getAttribute("data-toolbar");

@@ -1,12 +1,12 @@
 import { fileUrl, uploadFile } from "components/services/uploadFile";
-import { DeltaStatic } from "quill";
+import Quill from "quill";
 import Delta from "quill-delta";
-import { Quill } from "react-quill";
+import { Quill as GlobalQuill } from "react-quill";
 import { ImageAlign } from "components/build/buildQuestions/components/Image/model";
 import axios from "axios";
 
-const ImageBlot = Quill.import('formats/image');
-const Embed = Quill.import('blots/block/embed');
+const ImageBlot = GlobalQuill.import('formats/image');
+const Embed = GlobalQuill.import('blots/block/embed');
 
 class Devider extends Embed {
     static create() {
@@ -19,7 +19,7 @@ Devider.blotName = 'devider';
 Devider.tagName = 'div';
 Devider.className = 'invinsible';
 
-Quill.register(Devider);
+GlobalQuill.register(Devider);
 
 class Newline extends Embed {
     static create(value: string) {
@@ -31,7 +31,7 @@ Newline.blotName = 'newlinecustom';
 Newline.tagName = 'p';
 Newline.className = 'new-line-custom';
 
-Quill.register(Newline);
+GlobalQuill.register(Newline);
 
 export class CustomImageBlot extends Embed {
     static blotName = 'customImage';
@@ -88,7 +88,7 @@ export class CustomImageBlot extends Embed {
     }
 }
 CustomImageBlot.tagName="div";
-Quill.register(CustomImageBlot);
+GlobalQuill.register(CustomImageBlot);
 
 const imageUrlRegex = new RegExp(`${process.env.REACT_APP_BACKEND_HOST}/files/(.*)`);
 
@@ -107,7 +107,7 @@ export default class ImageUpload {
         quill.on("editor-change", () => {
             quill.root.querySelectorAll<HTMLDivElement>("div.customImage.image-play-container2").forEach(el => {
                 el.ondblclick = () => {
-                    const blot = Quill.find(el) as CustomImageBlot;
+                    const blot = GlobalQuill.find(el) as CustomImageBlot;
                     const data = CustomImageBlot.value(blot.domNode);
                     this.existingImageSelected({ ...data, value: (data.url as string).match(imageUrlRegex)?.[1] }, blot);
                 };
@@ -247,5 +247,5 @@ export default class ImageUpload {
     // }
 }
 
-Quill.register("modules/imageupload", ImageUpload);
+GlobalQuill.register("modules/imageupload", ImageUpload);
 

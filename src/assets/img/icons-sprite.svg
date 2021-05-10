@@ -812,6 +812,9 @@
     <line x1="15" x2="3" y1="14" y2="14"></line>
     <line x1="15" x2="3" y1="4" y2="4"></line>
   </svg>
+  <svg id="ql-table" viewBox="0 0 20 20" fill="currentColor" stroke-width="0">
+    <path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clip-rule="evenodd" />
+  </svg>
   <svg id="feather-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
     <line x1="8" y1="2" x2="8" y2="18"></line>
