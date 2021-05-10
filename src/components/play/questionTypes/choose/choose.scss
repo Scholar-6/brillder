@@ -37,3 +37,16 @@
     }
   }
 }
+
+// build. question. phone preview
+.phone-question-preview .choose-one-live,
+.choose-several-live {
+  .image-choice {
+    .MuiTouchRipple-root {
+      background: none !important;
+    }
+    .image-container {
+      display: block !important;
+    }
+  }
+}
