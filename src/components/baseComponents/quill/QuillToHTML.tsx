@@ -1,5 +1,6 @@
 //import { ImageAlign } from "components/build/buildQuestions/components/Image/model";
-import Quill, { DeltaStatic } from "quill";
+import Quill from "quill";
+import Delta from "quill-delta";
 //import { DeltaInsertOp, QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 //import Op from "quill-delta/dist/Op";
 import { Quill as GlobalQuill } from "react-quill";
@@ -55,7 +56,7 @@ const getQuill = () => {
 
 const deltaCache = new Map();
 
-const quillToHTMLVirtual = (delta: DeltaStatic) => {
+const quillToHTMLVirtual = (delta: Delta) => {
     const deltaString = JSON.stringify(delta);
     if(deltaCache.has(deltaString)) {
         return deltaCache.get(deltaString);
