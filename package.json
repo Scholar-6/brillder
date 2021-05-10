@@ -84,7 +84,7 @@
     "react-mathjax": "^1.0.1",
     "react-mathjax-preview": "^1.2.4",
     "react-mathjax-ts": "^0.1.2",
-    "react-quill": "https://github.com/Scholar-6/react-quill/tarball/master",
+    "react-quill": "github:Scholar-6/react-quill",
     "react-record": "^1.0.5",
     "react-redux": "7.0.1",
     "react-responsive": "^8.0.3",
