@@ -131,6 +131,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     "numberedList",
                     "blockQuote",
                     "image",
+                    "table",
                   ]}
                 />
                 <Grid container direction="row" className="inner-quills" ref={scrollArea}>
@@ -185,6 +186,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <QuillEditor
                       disabled={locked}
                       data={currentBrick.brief}
+                      allowTables={true}
                       onChange={data => changeBrick((brick) => ({ ...brick, brief: data }))}
                       placeholder="Outline the purpose of this brick."
                       toolbar={[
@@ -194,6 +196,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                         "latex",
                         "bulletedList",
                         "numberedList",
+                        "table"
                       ]}
                     />
                   </div>
@@ -213,11 +216,13 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                         "numberedList",
                         "blockQuote",
                         "image",
-                        "video"
+                        "video",
+                        "table"
                       ]}
                       imageDialog={true}
                       allowMediaEmbed={true}
                       allowLinks={true}
+                      allowTables={true}
                     />
                   </div>
                 </Grid>

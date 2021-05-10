@@ -210,7 +210,7 @@ const QuestionComponents = ({
         disabled={locked}
         availableOptions={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
+          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image', 'table'
         ]}
       />
       <div className="questions">

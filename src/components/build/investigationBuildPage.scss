@@ -399,7 +399,8 @@ $space-between-boxes: 0.1vw;
     text-overflow: ellipsis;
   }
 
-  span, p {
+  span,
+  p {
     color: var(--theme-light-blue) !important;
     background: inherit !important;
   }
@@ -567,7 +568,7 @@ $space-between-boxes: 0.1vw;
         width: 100%;
         display: flex;
         .MuiInputBase-root {
-          margin-right:0.5vw;
+          margin-right: 0.5vw;
           width: 100%;
           &::before,
           &::after {
@@ -730,8 +731,8 @@ $space-between-boxes: 0.1vw;
 
     button,
     .picker.q-color {
-      width: 1.9vw !important;
-      height: 1.9vw !important;
+      width: 1.8vw !important;
+      height: 1.8vw !important;
 
       svg {
         height: 100% !important;
@@ -763,7 +764,6 @@ $space-between-boxes: 0.1vw;
   }
 }
 
-
 // tutorial
 .investigation-build-page {
   .hover-move-left {
@@ -780,7 +780,6 @@ $space-between-boxes: 0.1vw;
   }
 }
 
-
 // #3275 highlight question font-size
 .investigation-build-page .phone-question-preview .mobile-question-component {
   .lines-container .line,
@@ -789,10 +788,18 @@ $space-between-boxes: 0.1vw;
   }
 }
 
-.build-question-page .build-question-column .line-highlight-build .hightlight-area .word.active, .build-question-page .build-question-column .word-highlight-build .hightlight-area .word.active {
+.build-question-page
+  .build-question-column
+  .line-highlight-build
+  .hightlight-area
+  .word.active,
+.build-question-page
+  .build-question-column
+  .word-highlight-build
+  .hightlight-area
+  .word.active {
   border-radius: 0.3vw;
 }
-
 
 // phone word highlighting
 .phone-question-preview .words-container .word {
@@ -802,11 +809,11 @@ $space-between-boxes: 0.1vw;
   padding-right: 0.1vw;
 }
 
-
 // background color
-.phone-preview-component, .phone-question-preview {
-  span, p {
+.phone-preview-component,
+.phone-question-preview {
+  span,
+  p {
     background: inherit !important;
   }
 }
-
