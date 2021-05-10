@@ -1,9 +1,9 @@
 import React from 'react';
-import { Quill } from 'react-quill';
+import { Quill as GlobalQuill } from 'react-quill';
 import QuillToolbarButton from './QuillToolbarButton';
 import QuillToolbarColorSelect from './QuillToolbarColorSelect';
 import QuillToolbarAlignSelect from './QuillToolbarAlignSelect';
-import { RangeStatic } from 'quill';
+import Quill, { RangeStatic } from 'quill';
 import _ from 'lodash';
 import ImageUpload from './QuillImageUpload';
 
@@ -78,6 +78,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         numberedList: (props: any) => <QuillToolbarButton name="list" value="ordered" {...props} />,
         latex: (props: any) => <QuillToolbarButton name="latex" {...props} />,
         image: (props: any) => <QuillToolbarButton name="image" icon="image" {...props} />,
+        table: (props: any) => <QuillToolbarButton name="table" {...props} />,
     }), []);
 
     return (
