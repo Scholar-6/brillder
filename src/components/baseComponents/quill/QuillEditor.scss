@@ -171,6 +171,27 @@ s {
       }
     }
   }
+
+  .ql-table-toggle {
+    background: var(--theme-dark-blue);
+    fill: var(--white);
+  }
+
+  .ql-table-menu {
+    &__item {
+      &-icon {
+        svg {
+          path {
+            fill: var(--theme-dark-blue);
+          }
+        }
+      }
+      &-text {
+        color: var(--theme-dark-blue);
+      }
+    }
+  }
+
   &.content-invalid {
     .ql-container {
       .ql-editor {

@@ -112,18 +112,10 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
       <ImageDialog
         initData={props.data}
         open={isOpen}
-        setDialog={() => setCloseDialog(true)}
+        setDialog={() => setOpen(false)}
         initFile={file}
         upload={upload}
         updateData={updateData}
-      />
-      <ImageCloseDialog
-        open={isCloseOpen}
-        submit={() => {
-          setCloseDialog(false);
-          setOpen(false);
-        }}
-        close={() => setCloseDialog(false)}
       />
     </div>
   );

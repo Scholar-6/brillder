@@ -28,6 +28,7 @@ import { getReviewTime } from "../services/playTimes";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import routes from "../routes";
 import previewRoutes from "components/playPreview/routes";
+import HoveredImage from "../baseComponents/HoveredImage";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -300,6 +301,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       {!isPhone() && <div className="fixed-upper-b-title">
         <BrickTitle title={brick.title} />
       </div>}
+      <HoveredImage />
       <div className="brick-container play-preview-panel review-page">
         <div className="introduction-page">
           <Hidden only={['xs']}>

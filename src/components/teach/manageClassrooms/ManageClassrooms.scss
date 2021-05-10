@@ -113,6 +113,30 @@ $base-build-font-size: 1.25vw;
         color: var(--theme-orange);
       }
     }
+
+    //#3318 assign tab button 
+    &.assign {
+      .flex-relative {
+        display: flex;
+        position: relative;
+      }
+      svg {
+        margin-left: 0.3vw;
+      }
+      .custom-tooltip {
+        width: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      &:hover {
+        .custom-tooltip {
+          width: 7vw;
+          top: 0.3vw;
+          left: 2.7vw;
+          font-size: 1vw;
+        }
+      }
+    }
   }
 
   .m-absolute-sort {
@@ -256,7 +280,7 @@ $base-build-font-size: 1.25vw;
       width: 1.2vw;
       height: 0.8vw;
       border-radius: 0.2vw;
-      border: 0.15vw solid var(--white);
+      border: 0.11vw solid var(--white);
     }
   }
 
@@ -310,10 +334,22 @@ $base-build-font-size: 1.25vw;
   .student-row {
     .student-name {
       max-width: 100%;
-      font-size: $base-build-font-size;
+      font-size: 1.05vw;
       white-space: nowrap;
       overflow-x: hidden;
       text-overflow: ellipsis;
+
+      .resend-label {
+        letter-spacing: 0;
+        margin-left:0.3vw;
+        font-size: 1vw;
+        font-family: $font-family-regular;
+        background: var(--theme-dark-blue);
+        color: var(--white);
+        &:hover {
+          background: var(--theme-light-blue);
+        }
+      }
     }
   }
 }

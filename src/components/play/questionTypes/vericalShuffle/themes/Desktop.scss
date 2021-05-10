@@ -60,3 +60,23 @@
     }
   }
 }
+
+// build. phone preview
+.phone-question-preview .vertical-shuffle-choice .vertical-content {
+  width: 100%;
+  position: relative;
+  padding-left: 3vw;
+  padding-right: 3vw;
+  border-radius: .6vw;
+  .image-container {
+    margin: 0 !important;
+    margin-top: 0.3vh !important;
+  }
+  .circle-index {
+    top: 10%;
+    left: 0.5vw;
+  }
+  img {
+    max-width: 100%;
+  }
+}

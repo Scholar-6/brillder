@@ -2134,3 +2134,22 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
   }
 }
+
+.center-fixed-image {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100vw) !important;
+  height: calc(100vh);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: auto;
+    height: auto;
+    max-width: 50vw;
+    max-height: 40vh !important;
+  }
+}
