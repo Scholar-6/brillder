@@ -25,8 +25,8 @@
     border-radius: 4vw;
     width: 100%;
     position: relative;
-    padding-left: 4vw;
-    padding-right: 4vw;
+    padding-left: 7vw;
+    padding-right: 7vw;
     &.full-height {
       > div {
         height: 100%;
@@ -38,6 +38,7 @@
       width: 100%;
       img {
         width: auto;
+        max-width: 100%;
         max-height: 10vh;
       }
     }
