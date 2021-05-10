@@ -75,6 +75,16 @@
       #ios-warning.flex .rotate-button-container {
         display: block !important;
       }
+
+      #ios-warning.mac-os.flex .rotate-container {
+        margin-top: 10vh; 
+      }
+
+      #ios-warning.mac-os.flex .rotate-text {
+        position: relative;
+        top: unset !important;
+        font-size: 2vw !important;
+      }
     </style>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
@@ -91,6 +101,16 @@
       </div>
     </div>
     <script>
+      console.log(navigator.platform, navigator.appVersion)
+      function getBrowserVersion() {
+        var v = (navigator.appVersion).match(/Version\/(\d+)/);
+        return v;
+      }
+
+      function isMac() {
+        return /Mac/i.test(navigator.platform) || /Mac/.test(navigator.appVersion);
+      }
+
       function iOSversion() {
         if (/iP(od|ad)/.test(navigator.platform) || /iP(od|ad)/.test(navigator.appVersion)) {
           var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
@@ -101,9 +121,17 @@
           var v = (navigator.appVersion).match(/Version\/(\d+)/);
           return [parseInt(v[1], 10), parseInt(0), parseInt(0)];
         }
+
+        if (isMac()) {
+          var v = getBrowserVersion(navigator.appVersion);
+          if (v && v[1] && v[1] < 13) {
+            document.getElementById('ios-warning').classList.add('flex');
+            document.getElementById('ios-warning').classList.add('mac-os');
+            document.getElementById('root').style.display = 'none';
+          }
+        }
       }
       var version = iOSversion();
-      console.log(version);
       if (version && version.length >= 1 && version[0] < 14) {
         document.getElementById('ios-warning').classList.add('flex');
       }
