@@ -46,9 +46,10 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
       <QuillEditor
         disabled={locked}
         data={data.value}
+        allowTables={true}
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-          'latex', 'bulletedList', 'numberedList', 'blockQuote'
+          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'table',
         ]}
         onChange={onChange}
       />
