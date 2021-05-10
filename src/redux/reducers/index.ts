@@ -9,9 +9,11 @@ import requestFailedReducer, {RequestFailedState} from './requestFailed';
 import statsReducer, { StatsState } from './stats';
 import sendPublisher, { SendPublisherState } from './sendPublisher';
 import subjectReducer, { SubjectState } from './subjects';
+import playReducer, { PlayState } from './play';
 
 
 export interface ReduxCombinedState {
+  play: PlayState,
   subjects: SubjectState,
   bricks: BricksState;
   brick: BrickState;
@@ -25,6 +27,7 @@ export interface ReduxCombinedState {
 }
 
 export default combineReducers({
+  play: playReducer,
   subjects: subjectReducer,
   bricks: bricksReducer,
   brick: brickReducer,

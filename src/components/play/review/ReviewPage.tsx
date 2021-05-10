@@ -300,6 +300,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       {!isPhone() && <div className="fixed-upper-b-title">
         <BrickTitle title={brick.title} />
       </div>}
+      <HoveredImage />
       <div className="brick-container play-preview-panel review-page">
         <div className="introduction-page">
           <Hidden only={['xs']}>
