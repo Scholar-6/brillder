@@ -79,10 +79,11 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             showToolbar={true}
             allowMediaEmbed={true}
             allowLinks={true}
+            allowTables={true}
             imageDialog={true}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
             toolbar={[
-              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image'
+              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image', 'table'
             ]}
             onChange={savePrep}
           />
