@@ -4,6 +4,7 @@ import React from "react";
 import ReactQuill, { Quill as GlobalQuill } from "react-quill"; 
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
+import "quill-table-ui/dist/index.css";
 import _ from "lodash";
 //import { ReactComponent as LatexIcon } from "assets/img/latex.svg";
 
