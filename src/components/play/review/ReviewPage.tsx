@@ -28,6 +28,7 @@ import { getReviewTime } from "../services/playTimes";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import routes from "../routes";
 import previewRoutes from "components/playPreview/routes";
+import HoveredImage from "../baseComponents/HoveredImage";
 
 interface ReviewPageProps {
   status: PlayStatus;
