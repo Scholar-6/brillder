@@ -1,12 +1,13 @@
-import { Delta } from "quill";
-import { Quill } from "react-quill";
+import Quill from "quill";
+import Delta from "quill-delta";
+import { Quill as GlobalQuill } from "react-quill";
 
 /*eslint-disable-next-line*/
 const YOUTUBE_REGEXP = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?[\w\?=]*)?/g;
 /*eslint-disable-next-line*/
 const EMBED_REGEXP = /https:\/\/www.youtube.com\/embed\/([\w\-\_]*)/;
 
-const BlockEmbed = Quill.import("blots/block/embed");
+const BlockEmbed = GlobalQuill.import("blots/block/embed");
 class YoutubeEmbed extends BlockEmbed {
     static create(value: string) {
         let node = super.create();
@@ -26,10 +27,20 @@ class YoutubeEmbed extends BlockEmbed {
 }
 YoutubeEmbed.blotName = 'youtube';
 YoutubeEmbed.tagName = 'iframe';
-Quill.register(YoutubeEmbed, true);
+GlobalQuill.register(YoutubeEmbed, true);
 
 export default class MediaEmbed {
     constructor(quill: Quill) {
+        /* analog for matchAll
+        const regexp = RegExp('foo*','g');
+        const str = 'table football, foosball';
+        
+        while ((matches = regexp.exec(str)) !== null) {
+          console.log(`Found ${matches[0]}. Next starts at ${regexp.lastIndex}.`);
+          // expected output: "Found foo. Next starts at 9."
+          // expected output: "Found foo. Next starts at 19."
+        }*/
+
         quill.clipboard.addMatcher(Node.TEXT_NODE, (node: any, delta: Delta) => {
             const matches: string[] = Array.from(node.data.matchAll(YOUTUBE_REGEXP));
             if (matches && matches.length > 0) {
@@ -53,4 +64,4 @@ export default class MediaEmbed {
     }
 }
 
-Quill.register('modules/mediaembed', MediaEmbed);
+GlobalQuill.register('modules/mediaembed', MediaEmbed);
