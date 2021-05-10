@@ -1,29 +1,33 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { fileUrl } from 'components/services/uploadFile';
+import actions from 'redux/actions/play';
 
 interface AnswerProps {
   fileName: string;
   imageCaption?: string;
+
+  hover(value: string): void;
+  blur(): void;
 }
 
-const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption }) => {
-  const [imageHovered, setHover] = React.useState(false);
-  const imageUrl = fileUrl(fileName);
-
+const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, ...props }) => {
   return (
     <div className="image-container">
       <img
-        alt="" src={imageUrl} width="100%"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
+        alt="" src={fileUrl(fileName)} width="100%"
+        onMouseEnter={() => props.hover(fileName)}
+        onMouseLeave={props.blur}
       />
       {imageCaption && <div>{imageCaption}</div>}
-      {imageHovered && <div className="center-fixed-image unselectable">
-        <img alt="" src={imageUrl} />
-      </div>}
     </div>
   );
 }
 
-export default PairMatchImageContent;
+const mapDispatch = (dispatch: any) => ({
+  hover: (fileName: string) => dispatch(actions.setImageHover(fileName)),
+  blur: () => dispatch(actions.setImageBlur()),
+});
+
+export default connect(null, mapDispatch)(PairMatchImageContent);

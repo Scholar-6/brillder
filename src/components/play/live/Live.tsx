@@ -33,6 +33,7 @@ import { getLiveTime } from "../services/playTimes";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import routes from "../routes";
 import previewRoutes from "components/playPreview/routes";
+import HoveredImage from "../baseComponents/HoveredImage";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -336,6 +337,7 @@ const LivePage: React.FC<LivePageProps> = ({
       {!isPhone() && <div className="fixed-upper-b-title">
         <BrickTitle title={brick.title} />
       </div>}
+      <HoveredImage />
       <div className="brick-container play-preview-panel live-page">
         <div className="introduction-page">
           <Hidden only={["xs"]}>
