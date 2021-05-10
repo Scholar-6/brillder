@@ -185,10 +185,11 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               </ReactSortable>
             </div>
           </Grid>
-          <Grid container item xs={5} sm={6} md={6} className="question-components-list" ref={workarea}>
+          <Grid container item xs={5} sm={6} md={6} className="question-components-list">
             <QuestionComponents
               questionIndex={index}
               locked={locked}
+              scrollRef={workarea}
               editOnly={!props.canEdit}
               brickId={brickId}
               history={history}
