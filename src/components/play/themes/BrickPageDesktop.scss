@@ -2135,6 +2135,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 
+.pair-match-play .pair-match-play-choice .MuiListItem-root .center-fixed-image,
 .pair-match-play .pair-match-play-option .option-container .center-fixed-image,
 .center-fixed-image {
   pointer-events: none;

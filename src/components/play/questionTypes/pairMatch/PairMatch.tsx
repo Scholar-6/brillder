@@ -2,7 +2,6 @@ import React from 'react';
 import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 
 import './PairMatch.scss';
 import CompComponent from '../Comp';
@@ -12,8 +11,8 @@ import {Answer} from 'components/build/buildQuestions/questionTypes/pairMatchBui
 import { PairMatchProps, PairMatchState, DragAndDropStatus, PairMatchAnswer, PairMatchComponent } from './interface';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { Hint, HintStatus } from 'model/question';
-import { fileUrl } from 'components/services/uploadFile';
 import PairMatchOption from './PairMatchOption';
+import PairMatchImageContent from './PairMatchImageContent';
 
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
@@ -96,10 +95,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   renderAnswerContent(answer: Answer) {
     if (answer.answerType && answer.answerType === QuestionValueType.Image) {
       return (
-        <div className="image-container">
-          <img alt="" src={fileUrl(answer.valueFile)} width="100%"/>
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
-        </div>
+        <PairMatchImageContent fileName={answer.valueFile} imageCaption={answer.imageCaption} />
       );
     } else {
       return (
