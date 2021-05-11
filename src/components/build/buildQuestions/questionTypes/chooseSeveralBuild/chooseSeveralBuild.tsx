@@ -84,7 +84,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
           return <ChooseOneAnswerComponent
             locked={locked}
             editOnly={editOnly}
-            key={answer.id}
+            key={i}
             index={i}
             length={data.list.length}
             answer={answer}
