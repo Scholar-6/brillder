@@ -10,7 +10,6 @@ import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
-import { fileUrl } from 'components/services/uploadFile';
 import PairMatchImageContent from '../pairMatch/PairMatchImageContent';
 
 
