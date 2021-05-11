@@ -1382,3 +1382,10 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 .play-preview-pages .play-preview-panel .line-highlighting-play.lines-inline .line-container {
   min-height: 6.6vw;
 }
+
+.center-fixed-image {
+  position: fixed;
+  z-index: 10000;
+  max-width: 100vw;
+  max-height: 80vh;
+}
