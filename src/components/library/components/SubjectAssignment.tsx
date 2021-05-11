@@ -28,15 +28,15 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
   }
   const minHeight = 5;
   let height = 0;
-  if (assignment.lastAttemptScore && assignment.maxScore) {
-    const heightInt = (assignment.lastAttemptScore / assignment.maxScore * 100);
+  if (assignment.bestAttemptScore && assignment.maxScore) {
+    const heightInt = (assignment.bestAttemptScore / assignment.maxScore * 100);
     if (heightInt < minHeight) {
       height = minHeight;
     } else {
       height = heightInt;
     }
   }
-  if (assignment.lastAttemptScore === 0) {
+  if (assignment.bestAttemptScore === 0) {
     height = minHeight;
   }
 
