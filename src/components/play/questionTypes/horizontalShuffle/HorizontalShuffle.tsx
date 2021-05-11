@@ -11,6 +11,7 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { fileUrl } from 'components/services/uploadFile';
+import PairMatchImageContent from '../pairMatch/PairMatchImageContent';
 
 
 enum DragAndDropStatus {
@@ -109,12 +110,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
 
   renderData(answer: any) {
     if (answer.answerType === QuestionValueType.Image) {
-      return (
-        <div className="image-container">
-          <img alt="" src={fileUrl(answer.valueFile)} width="100%" />
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
-        </div>
-      );
+      return <PairMatchImageContent fileName={answer.valueFile} imageCaption={answer.imageCaption} />;
     } else {
       return <MathInHtml value={answer.value} />;
     }
