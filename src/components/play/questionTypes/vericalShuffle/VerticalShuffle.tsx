@@ -12,6 +12,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isPhone } from 'services/phone';
 import { isMobile } from 'react-device-detect';
 import PairMatchImageContent from '../pairMatch/PairMatchImageContent';
+import { ReactSortable } from 'react-sortablejs';
 
 
 const MobileTheme = React.lazy(() => import('./themes/Phone'));
@@ -204,21 +205,50 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     return this.state.userAnswers.map((answer, i) => this.renderAnswer(answer, i));
   }
 
+  renderPhone() {
+    return (
+      <div className="question-unique-play vertical-shuffle-play">
+        <p><span className="help-text">Click on two answers at a time to reorder.</span></p>
+        {this.props.isBookPreview ? (
+          <div>{this.renderAnswers()}</div>
+        ) : (
+          <div className="verical-shuffle-sort-list">
+            {this.renderAnswers()}
+          </div>
+        )}
+        {this.renderGlobalHint()}
+      </div>
+    );
+  }
+
+  renderDesktop() {
+    return (
+      <div className="question-unique-play vertical-shuffle-play">
+        <p><span className="help-text">Drag to rearrange.</span></p>
+        {this.props.isBookPreview ? (
+          <div>{this.renderAnswers()}</div>
+        ) : (
+          <ReactSortable
+            list={this.state.userAnswers}
+            animation={150}
+            className="verical-shuffle-sort-list"
+            style={{display:"inline-block"}}
+            group={{ name: "cloning-group-name" }}
+            setList={(choices) => this.setUserAnswers(choices)}
+          >
+            {this.renderAnswers()}
+          </ReactSortable>
+        )}
+        {this.renderGlobalHint()}
+      </div>
+    )
+  }
+
   render() {
     return (
       <React.Suspense fallback={<></>}>
         {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
-        <div className="question-unique-play vertical-shuffle-play">
-          <p><span className="help-text">Click on two answers at a time to reorder.</span></p>
-          {this.props.isBookPreview ? (
-            <div>{this.renderAnswers()}</div>
-          ) : (
-            <div className="verical-shuffle-sort-list">
-              {this.renderAnswers()}
-            </div>
-          )}
-          {this.renderGlobalHint()}
-        </div>
+        {isMobile ? this.renderPhone() : this.renderDesktop()}
       </React.Suspense>
     );
   }
