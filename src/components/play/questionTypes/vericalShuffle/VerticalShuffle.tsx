@@ -22,6 +22,7 @@ const DesktopTheme = React.lazy(() => import('./themes/Desktop'));
 interface VerticalShuffleChoice {
   value: string;
   index: number;
+  valueFile: string;
 }
 
 export interface VerticalShuffleComponent {
@@ -86,6 +87,10 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
       this.props.onAttempted();
     }
     this.setState({ status, userAnswers });
+  }
+
+  checkImages() {
+    return !!this.props.component.list.find(a => a.valueFile);
   }
 
   getAnswer(): any[] {
@@ -206,9 +211,11 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 
   renderPhone() {
+    const haveImage = this.checkImages();
     return (
       <div className="question-unique-play vertical-shuffle-play">
         <p><span className="help-text">Click on two answers at a time to reorder.</span></p>
+        {haveImage && <p><span className="help-text">Hover over images to zoom</span></p>}
         {this.props.isBookPreview ? (
           <div>{this.renderAnswers()}</div>
         ) : (
@@ -222,9 +229,11 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 
   renderDesktop() {
+    const haveImage = this.checkImages();
     return (
       <div className="question-unique-play vertical-shuffle-play">
         <p><span className="help-text">Drag to rearrange.</span></p>
+        {haveImage && <p><span className="help-text">Hover over images to zoom</span></p>}
         {this.props.isBookPreview ? (
           <div>{this.renderAnswers()}</div>
         ) : (
