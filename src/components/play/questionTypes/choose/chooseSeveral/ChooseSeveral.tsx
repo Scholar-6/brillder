@@ -13,7 +13,7 @@ import { ActiveItem } from '../chooseOne/ChooseOne';
 import MathInHtml from '../../../baseComponents/MathInHtml';
 import CompComponent from '../../Comp';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
-import { fileUrl } from 'components/services/uploadFile';
+import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
 
 export type ChooseSeveralAnswer = ActiveItem[];
 
@@ -102,12 +102,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   renderData(answer: ChooseOneAnswer) {
     if (answer.answerType === QuestionValueType.Image) {
-      return (
-        <div className="image-container">
-          <img alt="" src={fileUrl(answer.valueFile)} width="100%" />
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
-        </div>
-      );
+      return <PairMatchImageContent fileName={answer.valueFile} imageCaption={answer.imageCaption} />;
     } else if (answer.answerType === QuestionValueType.Sound && answer.soundFile) {
       return (
         <div style={{width: '100%'}}>

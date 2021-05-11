@@ -11,6 +11,7 @@ import { fileUrl } from 'components/services/uploadFile';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isPhone } from 'services/phone';
 import { isMobile } from 'react-device-detect';
+import PairMatchImageContent from '../pairMatch/PairMatchImageContent';
 
 
 const MobileTheme = React.lazy(() => import('./themes/Phone'));
@@ -51,7 +52,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
     let userAnswers = this.props.component.list;
 
-    let {attempt} = this.props;
+    const {attempt} = this.props;
 
     if (attempt) {
       if (attempt.answer) {
@@ -141,12 +142,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
   renderData(answer: any) {
     if (answer.answerType === QuestionValueType.Image) {
-      return (
-        <div className="image-container">
-          <img alt="" src={fileUrl(answer.valueFile)} width="100%" />
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
-        </div>  
-      );
+      return <PairMatchImageContent fileName={answer.valueFile} imageCaption={answer.imageCaption} />;
     } else {
       return <MathInHtml value={answer.value} />;
     }

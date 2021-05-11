@@ -11,7 +11,6 @@ import ReviewEachHint from '../../../baseComponents/ReviewEachHint';
 import MathInHtml from '../../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneChoice } from 'components/interfaces/chooseOne';
-import { fileUrl } from 'components/services/uploadFile';
 import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
 
 export interface ChooseOneComponent {
