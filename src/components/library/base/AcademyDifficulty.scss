@@ -24,6 +24,29 @@
       width: 100%;
       position: absolute;
       bottom: 0;
+
+      .lib-author {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        .lib-circle {
+          background: var(--white);
+          border-radius: 50%;
+          width: 1.9vw;
+          height: 1.9vw;
+          max-height: 6vh;
+          max-width: 6vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1vw;
+          color: var(--theme-dark-blue);
+        }
+      }
     }
 
     &.smaller {
