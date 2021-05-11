@@ -210,12 +210,12 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   async getAssignments(subjects: SubjectAItem[]) {
-    let rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>();
+    const rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>();
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const finalAssignments = this.filter(rawAssignments, subjects);
       const subjectAssignments = this.getAssignmentSubjects(finalAssignments, subjects);
-      let preselected = this.preselectSubject(subjects);
+      const preselected = this.preselectSubject(subjects);
       if (preselected) {
         this.setState({
           ...this.state, subjects, subjectAssignments, isLoading: false,
