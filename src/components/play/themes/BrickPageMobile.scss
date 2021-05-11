@@ -1386,6 +1386,18 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 .center-fixed-image {
   position: fixed;
   z-index: 10000;
-  max-width: 100vw;
-  max-height: 80vh;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    background: var(--theme-light-blue);
+    max-width: 80vw;
+    max-height: 80vh;
+    border: 2vw solid var(--theme-light-blue);
+    border-radius: 0.8vw;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
 }
