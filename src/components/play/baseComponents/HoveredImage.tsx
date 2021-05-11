@@ -18,7 +18,7 @@ const HoveredImageContent: React.FC<AnswerProps> = ({ imageHovered, fileName }) 
       </div>
     );
   }
-  return <div />;
+  return <div className="tablet-hidden" />;
 }
 
 const mapState = (state: ReduxCombinedState) => ({
