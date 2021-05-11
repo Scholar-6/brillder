@@ -271,7 +271,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
 
   render() {
     const {brickId} = this.props.match.params;
-    if(!brickId) {
+    if(!brickId && this.state.brick.subjectId) {
       const callback = async () => {
         const newBrick = await this.saveBrick(this.state.brick);
         if(newBrick) {
