@@ -248,7 +248,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     return (
       <React.Suspense fallback={<></>}>
         {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
-        {isMobile ? this.renderPhone() : this.renderDesktop()}
+        {isPhone() ? this.renderPhone() : this.renderDesktop()}
       </React.Suspense>
     );
   }
