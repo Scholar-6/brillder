@@ -6,7 +6,6 @@ import {fileUrl, uploadFile} from 'components/services/uploadFile';
 import { QuestionValueType } from "../../buildQuestions/questionTypes/types";
 import AddImageBtnContent from "../AddImageBtnContent";
 import ImageDialogV2 from "./ImageDialogV2";
-import ImageCloseDialog from "components/build/buildQuestions/components/Image/ImageCloseDialog";
 import { MainImageProps } from "components/build/buildQuestions/components/Image/model";
 
 export interface ImageAnswerData extends MainImageProps {
@@ -28,7 +27,6 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
 }) => {
   const [file, setFile] = useState(null as File | null);
   const [isOpen, setOpen] = useState(false);
-  const [isCloseOpen, setCloseDialog] = useState(false);
 
   const updateAnswer = (fileName: string, source: string, caption: string, permision: boolean) => {
     if (locked) { return; }
@@ -38,6 +36,8 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
     update(fileName);
     setOpen(false);
   }
+
+  const removeInitFile = () => setFile(null);
 
   const upload = (file: File, source: string, caption: string, permision: boolean) => {
     if (locked) { return; }
@@ -84,6 +84,7 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
         initData={answer as any}
         upload={upload}
         updateData={updateData}
+        removeInitFile={removeInitFile}
         close={() => setOpen(false)}
       />
     </div>
