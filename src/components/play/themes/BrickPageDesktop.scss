@@ -2157,3 +2157,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
 }
+.play-preview-pages .pair-match-play .image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
