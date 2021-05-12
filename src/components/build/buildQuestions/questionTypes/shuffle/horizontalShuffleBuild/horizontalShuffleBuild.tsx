@@ -6,7 +6,6 @@ import { QuestionValueType, UniqueComponentProps } from '../../types';
 import { showSameAnswerPopup } from '../../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
-import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import RemoveItemButton from '../../components/RemoveItemButton';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
@@ -60,19 +59,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
   const renderAnswer = (answer: any, i: number) => {
     let column = (i % 3) + 1;
 
-    const setImage = (fileName: string) => {
-      if (locked) { return; }
-      answer.value = "";
-      answer.valueFile = fileName;
-      answer.answerType = QuestionValueType.Image;
-      update();
-      save();
-    }
-
     let className = `horizontal-shuffle-box unique-component horizontal-column-${column}`;
-    if (answer.answerType === QuestionValueType.Image) {
-      className += ' big-answer';
-    }
 
     let isValid = null;
     if (validationRequired) {
@@ -90,13 +77,6 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
       <Grid container item xs={4} key={i}>
         <div className={className}>
           <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
-          <QuestionImageDropzone
-            answer={answer as any}
-            type={answer.answerType || QuestionValueType.None}
-            locked={locked}
-            fileName={answer.valueFile}
-            update={setImage}
-          />
           <QuillEditor
             disabled={locked}
             data={answer.value}
