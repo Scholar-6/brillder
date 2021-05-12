@@ -11,6 +11,7 @@ import { MainImageProps } from "components/build/buildQuestions/components/Image
 export interface ImageAnswerData extends MainImageProps {
   value: string;
   valueFile: string;
+  answerType: QuestionValueType;
 }
 
 export interface AnswerProps {
@@ -77,6 +78,7 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
             : <AddImageBtnContent />
         }
       </div>
+      <div className="build-image-caption">{(answer.answerType === QuestionValueType.Image && answer.imageCaption) ? answer.imageCaption : ''}</div>
       <ImageDialogV2
         open={isOpen}
         initFile={file}
