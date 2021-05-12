@@ -14,6 +14,8 @@ import { Hint, HintStatus } from 'model/question';
 import PairMatchOption from './PairMatchOption';
 import PairMatchImageContent from './PairMatchImageContent';
 import ZoomHelpText from '../components/ZoomHelpText';
+import { isMobile } from 'react-device-detect';
+import { isPhone } from 'services/phone';
 
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
@@ -173,8 +175,13 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     const haveImage = this.checkImages();
     return (
       <div className="question-unique-play pair-match-play">
-        <p><span className="help-text">Drag to rearrange.</span></p>
-        {haveImage && <ZoomHelpText />}
+        <p>
+          <span className="help-text">
+            Drag to rearrange. {
+              haveImage && (isPhone() ? 'Double tap images to zoom' : 'Hover over images to zoom.')
+            }
+          </span>
+        </p>
         <Grid container justify="center">
           <List style={{padding: 0}} className="answers-list">
           {
