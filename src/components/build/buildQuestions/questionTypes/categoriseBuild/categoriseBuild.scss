@@ -37,15 +37,15 @@
   }
   .sort-image {
     position: relative;
+    background: var(--solitude-light);
+    .question-image-drop  {
+      padding-top: 0.5vh;
+      padding-bottom: 0.5vh;
+      top: 0;
+      position: relative;
+    }
     input {
       padding-top: 9.5vh;
-    }
-    .quill-document-editor {
-      .ql-container {
-        .ql-editor {
-          padding: 9vh 1vw 1vw 1vw;
-        }
-      }
     }
   }
   .categorise-answer {
