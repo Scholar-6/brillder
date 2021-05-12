@@ -5,9 +5,19 @@
 .vertical-shuffle-build {
   @extend %textCenter;
   .vertical-answer-box {
+    min-height: 2vw;
     position: relative;
     width: 100%;
     margin-bottom: 0.4vh;
+    &.big-answer {
+      background: var(--solitude-light);
+      .question-image-drop {
+        padding-top: 0.5vh;
+        padding-bottom: 0.5vh;
+        top: 0;
+        position: relative !important;
+      }
+    }
     .quill-document-editor {
       .ql-editor {
         padding-top: 5vh;
