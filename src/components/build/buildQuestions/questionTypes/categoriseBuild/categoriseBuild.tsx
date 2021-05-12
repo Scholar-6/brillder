@@ -9,6 +9,7 @@ import { showSameAnswerPopup } from '../service/questionBuild';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import ValidationFailedDialog from 'components/baseComponents/dialogs/ValidationFailedDialog';
+import RemoveButton from '../components/RemoveButton';
 
 export interface CategoriseData {
   categories: SortCategory[];
@@ -26,7 +27,7 @@ export const getDefaultCategoriseAnswer = () => {
 }
 
 const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [categoryHeight, setCategoryHeight] = React.useState('0%');
   const [sameCategoryOpen, setSameCategory] = React.useState(false);
@@ -156,6 +157,8 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
           </button>
         }
+        {answer.answerType === QuestionValueType.Image && <RemoveButton onClick={() => answerChanged(answer, '')} />}
+        {answer.answerType !== QuestionValueType.Image &&
         <QuillEditor
           disabled={locked}
           data={answer.value}
@@ -169,7 +172,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             save();
           }}
           onChange={value => { answerChanged(answer, value) }}
-        />
+        />}
         <QuestionImageDropZone
           answer={answer as any}
           type={answer.answerType || QuestionValueType.None}
