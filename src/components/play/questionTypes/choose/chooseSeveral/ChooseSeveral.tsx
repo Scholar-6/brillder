@@ -201,14 +201,19 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     );
   }
 
+  checkImages() {
+    return !!this.props.component.list.find((a:any) => a.valueFile);
+  }
+
   render() {
     const { component } = this.props;
-
+    const haveImage = this.checkImages();
     return (
       <div className="question-unique-play choose-several-live">
         {
           this.props.isReview && <p><span className="help-text">Choose more than one option.</span></p>
         }
+        {haveImage && <p><span className="help-text">Hover over images to zoom</span></p>}
         {
           component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }

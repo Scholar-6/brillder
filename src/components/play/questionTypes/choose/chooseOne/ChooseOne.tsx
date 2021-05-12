@@ -208,11 +208,16 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     );
   }
 
+  checkImages() {
+    return !!this.props.component.list.find(a => a.valueFile);
+  }
+
   render() {
     const { list } = this.props.component;
+    const haveImage = this.checkImages();
     return (
       <div className="question-unique-play choose-one-live">
-        <div className="center-fixed-image unselectable"></div>
+        {haveImage && <p><span className="help-text">Hover over images to zoom</span></p>}
         {list.map((choice, index) => this.renderChoice(choice, index))}
         {this.renderGlobalHint()}
       </div>

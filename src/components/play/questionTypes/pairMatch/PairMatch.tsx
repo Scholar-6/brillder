@@ -164,10 +164,16 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     );
   }
 
+  checkImages() {
+    return !!this.props.component.list.find((a:any) => a.valueFile || a.optionFile);
+  }
+
   render() {
+    const haveImage = this.checkImages();
     return (
       <div className="question-unique-play pair-match-play">
         <p><span className="help-text">Drag to rearrange.</span></p>
+        {haveImage && <p><span className="help-text">Hover over images to zoom</span></p>}
         <Grid container justify="center">
           <List style={{padding: 0}} className="answers-list">
           {
