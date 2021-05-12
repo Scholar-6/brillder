@@ -8,6 +8,8 @@ import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/Add
 import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import RemoveItemButton from '../../components/RemoveItemButton';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import RemoveButton from '../../components/RemoveButton';
+import image from '__mocks__/@ckeditor/ckeditor5-image/src/image';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
@@ -92,6 +94,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     return (
       <div className={className} key={i}>
         <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
+        {answer.answerType === QuestionValueType.Image && <RemoveButton onClick={() => changed(answer, '')} />}
         <QuestionImageDropzone
           answer={answer as any}
           type={answer.answerType || QuestionValueType.None}
@@ -99,6 +102,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           fileName={answer.valueFile}
           update={setImage}
         />
+        {answer.answerType !== QuestionValueType.Image &&
         <QuillEditor
           disabled={locked}
           data={answer.value}
@@ -110,7 +114,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
             showSameAnswerPopup(i, state.list, openSameAnswerDialog);
           }}
           onChange={value => changed(answer, value)}
-        />
+        />}
       </div>
     );
   }
