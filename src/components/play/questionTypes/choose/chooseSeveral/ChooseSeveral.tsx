@@ -14,6 +14,7 @@ import MathInHtml from '../../../baseComponents/MathInHtml';
 import CompComponent from '../../Comp';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
+import ZoomHelpText from '../../components/ZoomHelpText';
 
 export type ChooseSeveralAnswer = ActiveItem[];
 
@@ -213,7 +214,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
         {
           this.props.isReview && <p><span className="help-text">Choose more than one option.</span></p>
         }
-        {haveImage && <p><span className="help-text">Hover over images to zoom</span></p>}
+        {haveImage && <ZoomHelpText />}
         {
           component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }

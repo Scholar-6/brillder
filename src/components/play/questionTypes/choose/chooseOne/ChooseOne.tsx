@@ -12,6 +12,7 @@ import MathInHtml from '../../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneChoice } from 'components/interfaces/chooseOne';
 import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
+import ZoomHelpText from '../../components/ZoomHelpText';
 
 export interface ChooseOneComponent {
   type: number;
@@ -217,7 +218,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     const haveImage = this.checkImages();
     return (
       <div className="question-unique-play choose-one-live">
-        {haveImage && <p><span className="help-text">Hover over images to zoom</span></p>}
+        {haveImage && <ZoomHelpText />}
         {list.map((choice, index) => this.renderChoice(choice, index))}
         {this.renderGlobalHint()}
       </div>
