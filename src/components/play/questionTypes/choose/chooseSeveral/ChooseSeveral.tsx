@@ -175,7 +175,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     }
 
     return (
-      <Button
+      <div
         className={className}
         key={index}
         onClick={() => this.setActiveItem(choice.index, index)}
@@ -198,7 +198,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
             hint={this.props.question.hint}
           />
         }
-      </Button>
+      </div>
     );
   }
 
