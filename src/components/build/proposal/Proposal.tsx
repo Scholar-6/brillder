@@ -70,7 +70,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     }
     let initBrick = {
       subjectId,
-      brickLength: BrickLengthEnum.None,
+      brickLength: BrickLengthEnum.S20min,
       topic: "",
       subTopic: "",
       alternativeTopics: "",

@@ -55,34 +55,5 @@
         padding-top: 5vh;
       }
     }
-    &:first-child {
-      .quill-document-editor {
-        .ql-container {
-          .ql-editor {
-            border-bottom-left-radius: 0 !important;
-            border-bottom-right-radius: 0 !important;
-          }
-        }
-      }
-    }
-    &:not(:first-child):not(:last-child) {
-      .quill-document-editor {
-        .ql-container {
-          .ql-editor {
-            border-radius: 0 !important;
-          }
-        }
-      }
-    }
-    &:last-child {
-      .quill-document-editor {
-        .ql-container {
-          .ql-editor {
-            border-top-left-radius: 0 !important;
-            border-top-right-radius: 0 !important;
-          }
-        }
-      }
-    }
   }
 }
