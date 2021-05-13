@@ -14,12 +14,7 @@ interface MathHtmlProps {
 
 class YoutubeAndMathInHtml extends Component<MathHtmlProps> {
   isYoutube(el: string) {
-    if (el.indexOf('<figure class="media">') >= 0) {
-      if (el.indexOf('youtube.com/watch') >= 0) {
-        return true;
-      }
-    }
-    return false;
+    return /<iframe.*src=\"https:\/\/www.youtube\.com\/embed/.test(el);
   }
 
   render() {
