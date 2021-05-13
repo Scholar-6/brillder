@@ -3,6 +3,9 @@
 @import 'src/assets/sass/partials/extensions';
 
 .image-dialog-container {
+  .MuiSlider-mark {
+    display: none;
+  }
   .invalid {
     background: var(--theme-orange);
   }
@@ -227,7 +230,7 @@
     }
   }
   .i-s-slider {
-    margin-top: 0.3vw !important;
+    margin-top: 0 !important;
     margin-left: 3vw;
     width: 19vw;
     height: 0.3vw;
@@ -252,11 +255,11 @@
       line-height: 1;
       font-family: $font-family-regular !important;
       &[data-index="0"] {
-        top: -1vw !important;
+        top: -0.75vw !important;
         margin-left: -1.2vw;
       }
       &[data-index="1"] {
-        top: -0.7vw !important;
+        top: -0.45vw !important;
         margin-left: 1.4vw;
       }
     }
