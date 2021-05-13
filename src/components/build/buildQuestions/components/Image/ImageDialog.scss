@@ -34,6 +34,47 @@
       padding: 0.4vw;
       padding-top: 0.6vw;
 
+      .background {
+        position: absolute;
+        border-radius: 50%;
+        top: 0;
+        left: 0;
+        height: 4vw;
+        width: 4vw;
+        transition: all 300ms ease-out;
+        opacity: 0.5;
+        background: var(--theme-green);
+      }
+
+      &:hover .background {
+        top: -0.5vw;
+        left: -0.5vw;
+        position: absolute;
+        border-radius: 50%;
+        top: -0.5vw;
+        left: -0.5vw;
+        height: 5vw;
+        width: 5vw;
+        opacity: 0.5;
+        background: var(--theme-green);
+      }
+
+      .css-custom-tooltip {
+        height: 0;
+        overflow: hidden;
+        top: 1vw;
+        left: 4.7vw;
+        font-size: 1.4vw;
+        padding: 0;
+        text-align:center;
+        width: 5.5vw;
+      }
+      &:hover .css-custom-tooltip {
+        height: auto;
+        opacity: 1;
+      }
+
+
       .svg {
         position: absolute;
         width: 80%;
