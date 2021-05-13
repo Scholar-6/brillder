@@ -219,7 +219,9 @@ const ImageDialog: React.FC<DialogProps> = ({
             }
           }}
         >
+          <div className="background" />
           <SpriteIcon name="upload" />
+          <div className="css-custom-tooltip">Upload</div>
         </div>
       </div>
     </BaseDialogWrapper>
