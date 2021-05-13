@@ -2162,3 +2162,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   align-items: center;
   justify-content: center;
 }
+
+.play-preview-pages .youtube-video-session .youtube-video {
+  width: 100%;
+  > div {
+    display: flex;
+    justify-content: center;
+  }
+}
