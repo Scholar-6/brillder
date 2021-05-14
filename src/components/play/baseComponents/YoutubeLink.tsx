@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import YouTube, { Options as YoutubeOptions } from 'react-youtube';
 import { Grid } from '@material-ui/core';
+import { isPhone } from 'services/phone';
 
 interface YoutubeLinkProps {
   value: string;
@@ -8,15 +9,24 @@ interface YoutubeLinkProps {
 
 const YoutubeLink: React.FC<YoutubeLinkProps> = (props) => {
   const [video, setVideo] = React.useState<any>();
+  const container = React.useRef<HTMLDivElement | null>(null);
   const [isValid, setIsValid] = React.useState(true);
 
   const videoId = React.useMemo(() => {
     const result = props.value.match(/https:\/\/www.youtube\.com\/embed\/([_\-0-9A-Za-z]{11})/);
-    console.log(result);
     if(result) {
       return result[1];
     }
   }, [props.value]);
+
+  const onPlay = React.useCallback((evt) => {
+    if(isPhone()) {
+      const iframe = container.current?.querySelector("iframe");
+      if(!iframe) return;
+      iframe.requestFullscreen?.();
+      window.screen.orientation.lock("landscape");
+    }
+  }, [video]);
 
   const opts: YoutubeOptions = {
     playerVars: {
@@ -26,12 +36,13 @@ const YoutubeLink: React.FC<YoutubeLinkProps> = (props) => {
 
   if (isValid) {
     return (
-      <div className="youtube-video">
+      <div className="youtube-video" ref={container}>
         <YouTube
+          ref={(el) => setVideo(el)}
           videoId={videoId}
           opts={opts}
           onError={() => setIsValid(false)}
-          onReady={(evt) => setVideo(evt.target)}
+          onPlay={onPlay}
         />
       </div>
     );
