@@ -888,7 +888,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       questions.map((question, index) => question.order = index);
       prepareBrickToSave(brick, questions, synthesis);
       pushDiff(brick);
-      props.saveBrick(brick);
+      props.saveBrick(brick).then((brick2: any) => {
+        setSavingStatus(false);
+      });
     }
   }
 
