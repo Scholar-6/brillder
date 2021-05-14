@@ -7,7 +7,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
 import './BuildPage.scss';
-import { Brick, BrickStatus } from "model/brick";
+import { AcademicLevel, Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ThreeColumns, Filters, SortBy } from '../../model';
@@ -133,7 +133,12 @@ class BuildPage extends Component<BuildProps, BuildState> {
         review: true,
         build: true,
         publish: false,
-        isCore
+        isCore,
+
+        level1: true,
+        level2: true,
+        level3: true,
+        level4: true
       },
       handleKey: this.handleKey.bind(this)
     }
@@ -319,6 +324,12 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
   switchPublish() {
     const { filters} = this.state;
+
+    filters.level1 = true;
+    filters.level2 = true;
+    filters.level3 = true;
+    filters.level4 = true;
+
     if (!filters.publish) {
       removeAllFilters(filters);
       filters.publish = true;
@@ -345,8 +356,24 @@ class BuildPage extends Component<BuildProps, BuildState> {
     filters.publish = newFilters.publish;
     filters.review = newFilters.review;
     filters.draft = newFilters.draft;
-    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
+    let finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
     const subjects = this.getBrickSubjects(finalBricks);
+    
+    // published. filter by levels
+    if (filters.publish) {
+      if (!filters.level1) {
+        finalBricks = finalBricks.filter(b => b.academicLevel !== AcademicLevel.First);
+      }
+      if (!filters.level2) {
+        finalBricks = finalBricks.filter(b => b.academicLevel !== AcademicLevel.Second);
+      }
+      if (!filters.level3) {
+        finalBricks = finalBricks.filter(b => b.academicLevel !== AcademicLevel.Third);
+      }
+      if (!filters.level4) {
+        finalBricks = finalBricks.filter(b => b.academicLevel !== AcademicLevel.Fourth);
+      }
+    }
     this.setState({ ...this.state, filters, subjects, finalBricks, sortedIndex: 0 });
   }
 
@@ -662,7 +689,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     return (
       <Grid container direction="row" className="sorted-row build-page-content">
         <FilterSidebar
-          userId={this.props.user.id}
+          user={this.props.user}
           history={this.props.history}
           finalBricks={finalBricks}
           threeColumns={threeColumns}

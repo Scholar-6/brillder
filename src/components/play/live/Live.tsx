@@ -34,6 +34,8 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import routes from "../routes";
 import previewRoutes from "components/playPreview/routes";
 import HoveredImage from "../baseComponents/HoveredImage";
+import { getUniqueComponent } from "components/build/questionService/QuestionService";
+import CategoriseAnswersDialog from "components/baseComponents/dialogs/CategoriesAnswers";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -71,10 +73,10 @@ const LivePage: React.FC<LivePageProps> = ({
   const [isShuffleOpen, setShuffleDialog] = React.useState(false);
   const [isTimeover, setTimeover] = React.useState(false);
   const [isSubmitOpen, setSubmitAnswers] = React.useState(false);
+  const [isCategorizeOpen, setCategorizeDialog] = React.useState(false);
   const [questionScrollRef] = React.useState(React.createRef<HTMLDivElement>());
-  let initAnswers: any[] = [];
 
-  const [answers, setAnswers] = React.useState(initAnswers);
+  const [answers, setAnswers] = React.useState([] as any[]);
   const history = useHistory();
 
   const location = useLocation();
@@ -174,6 +176,18 @@ const LivePage: React.FC<LivePageProps> = ({
     }
   };
 
+  const nextFromCategorize = () => {
+    setCategorizeDialog(false);
+    onQuestionAttempted(activeStep);
+
+    handleStep(activeStep + 1)();
+    if (activeStep >= questions.length - 1) {
+      questions.forEach((question) => (question.edited = false));
+      props.finishBrick();
+      moveToProvisional();
+    }
+  }
+
   const cleanAndNext = () => {
     setShuffleDialog(false);
     handleStep(activeStep + 1)();
@@ -185,12 +199,27 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const next = () => {
     let question = questions[activeStep];
+
+    // if there is unsorted answers show popup
+    if (question.type === QuestionTypeEnum.Sort) {
+      const attempt = questionRefs[activeStep].current?.getAttempt(false);
+      if (attempt && attempt.answer) {
+        for (let choice in attempt.answer) {
+          const catNums = getUniqueComponent(question).categories.length;
+          if (attempt.answer[choice] === catNums) {
+            setCategorizeDialog(true);
+            return;
+          }
+        }
+      }
+    }
+
     if (
       question.type === QuestionTypeEnum.PairMatch ||
       question.type === QuestionTypeEnum.HorizontalShuffle ||
       question.type === QuestionTypeEnum.VerticalShuffle
     ) {
-      let attempt = questionRefs[activeStep].current?.getAttempt(false);
+      const attempt = questionRefs[activeStep].current?.getAttempt(false);
       if (!attempt.dragged) {
         setShuffleDialog(true);
         return;
@@ -442,6 +471,11 @@ const LivePage: React.FC<LivePageProps> = ({
             isOpen={isSubmitOpen}
             submit={submitAndMove}
             close={() => setSubmitAnswers(false)}
+          />
+          <CategoriseAnswersDialog
+            isOpen={isCategorizeOpen}
+            submit={nextFromCategorize}
+            close={() => setCategorizeDialog(false)}
           />
         </div>
       </div>

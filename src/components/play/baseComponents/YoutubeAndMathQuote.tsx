@@ -14,12 +14,7 @@ interface MathHtmlProps {
 
 class YoutubeAndMathInHtmlQuote extends Component<MathHtmlProps> {
   isYoutube(el: string) {
-    if (el.indexOf('<figure class="media">') >= 0) {
-      if (el.indexOf('youtube.com/watch') >= 0) {
-        return true;
-      }
-    }
-    return false;
+    return /<iframe.*src=\"https:\/\/www.youtube\.com\/embed/.test(el);
   }
 
   render() {
@@ -49,8 +44,6 @@ class YoutubeAndMathInHtmlQuote extends Component<MathHtmlProps> {
               return renderLatex(el, i);
             } 
             res = this.isYoutube(el);
-
-
             if (res) {
               return <YoutubeLink key={i} value={el} />;
             }

@@ -11,6 +11,8 @@ import { fileUrl } from 'components/services/uploadFile';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isPhone } from 'services/phone';
 import { isMobile } from 'react-device-detect';
+import PairMatchImageContent from '../pairMatch/PairMatchImageContent';
+import { ReactSortable } from 'react-sortablejs';
 
 
 const MobileTheme = React.lazy(() => import('./themes/Phone'));
@@ -20,6 +22,7 @@ const DesktopTheme = React.lazy(() => import('./themes/Desktop'));
 interface VerticalShuffleChoice {
   value: string;
   index: number;
+  valueFile: string;
 }
 
 export interface VerticalShuffleComponent {
@@ -51,7 +54,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
     let userAnswers = this.props.component.list;
 
-    let {attempt} = this.props;
+    const {attempt} = this.props;
 
     if (attempt) {
       if (attempt.answer) {
@@ -84,6 +87,10 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
       this.props.onAttempted();
     }
     this.setState({ status, userAnswers });
+  }
+
+  checkImages() {
+    return !!this.props.component.list.find(a => a.valueFile);
   }
 
   getAnswer(): any[] {
@@ -141,12 +148,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
   renderData(answer: any) {
     if (answer.answerType === QuestionValueType.Image) {
-      return (
-        <div className="image-container">
-          <img alt="" src={fileUrl(answer.valueFile)} width="100%" />
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
-        </div>  
-      );
+      return <PairMatchImageContent fileName={answer.valueFile} imageCaption={answer.imageCaption} />;
     } else {
       return <MathInHtml value={answer.value} />;
     }
@@ -208,21 +210,54 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     return this.state.userAnswers.map((answer, i) => this.renderAnswer(answer, i));
   }
 
+  renderPhone() {
+    const haveImage = this.checkImages();
+    return (
+      <div className="question-unique-play vertical-shuffle-play">
+        <p><span className="help-text">Click on two answers at a time to reorder.</span></p>
+        {haveImage && <p><span className="help-text">Double tap images to zoom</span></p>}
+        {this.props.isBookPreview ? (
+          <div>{this.renderAnswers()}</div>
+        ) : (
+          <div className="verical-shuffle-sort-list">
+            {this.renderAnswers()}
+          </div>
+        )}
+        {this.renderGlobalHint()}
+      </div>
+    );
+  }
+
+  renderDesktop() {
+    const haveImage = this.checkImages();
+    return (
+      <div className="question-unique-play vertical-shuffle-play">
+        <p><span className="help-text">Drag to rearrange.</span></p>
+        {haveImage && <p><span className="help-text">Hover over images to zoom.</span></p>}
+        {this.props.isBookPreview ? (
+          <div>{this.renderAnswers()}</div>
+        ) : (
+          <ReactSortable
+            list={this.state.userAnswers}
+            animation={150}
+            className="verical-shuffle-sort-list"
+            style={{display:"inline-block"}}
+            group={{ name: "cloning-group-name" }}
+            setList={(choices) => this.setUserAnswers(choices)}
+          >
+            {this.renderAnswers()}
+          </ReactSortable>
+        )}
+        {this.renderGlobalHint()}
+      </div>
+    )
+  }
+
   render() {
     return (
       <React.Suspense fallback={<></>}>
         {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
-        <div className="question-unique-play vertical-shuffle-play">
-          <p><span className="help-text">Click on two answers at a time to reorder.</span></p>
-          {this.props.isBookPreview ? (
-            <div>{this.renderAnswers()}</div>
-          ) : (
-            <div className="verical-shuffle-sort-list">
-              {this.renderAnswers()}
-            </div>
-          )}
-          {this.renderGlobalHint()}
-        </div>
+        {isPhone() ? this.renderPhone() : this.renderDesktop()}
       </React.Suspense>
     );
   }

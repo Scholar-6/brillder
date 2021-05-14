@@ -1954,3 +1954,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     }
   }
 }
+
+.play-preview-pages .tablet-hidden {
+  display: none;
+}

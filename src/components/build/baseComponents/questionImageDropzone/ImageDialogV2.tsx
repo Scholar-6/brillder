@@ -13,6 +13,7 @@ interface DialogProps {
   initFile: File | null;
   initData: ImageComponentData;
   fileName: string;
+  removeInitFile(): void;
   upload(file: File, source: string, caption: string, permision: boolean): void;
   updateData(source: string, caption: string, permision: boolean): void;
   close(): void;
@@ -23,6 +24,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({
   initFile,
   initData,
   fileName,
+  removeInitFile,
   upload,
   updateData,
   close,
@@ -59,6 +61,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({
 
   const handleClick = () => {
     if (!removed) {
+      removeInitFile();
       setFile(null);
       setCroped(null);
       setRemoved(true);
@@ -150,7 +153,9 @@ const ImageDialogV2: React.FC<DialogProps> = ({
             }
           }}
         >
+          <div className="background" />
           <SpriteIcon name="upload" />
+          <div className="css-custom-tooltip">Upload</div>
         </div>
       </div>
     </BaseDialogWrapper>

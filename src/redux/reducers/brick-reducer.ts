@@ -30,6 +30,7 @@ export default (state = BrickInitialState, action: any) => {
       const newBrick = state.brick as Brick;
       const questionIndex = newBrick.questions.findIndex(q => q.id === action.payload.id);
       newBrick.questions[questionIndex] = action.payload;
+      newBrick.updated = action.payload.updated;
       return {
         brick: newBrick,
         error: '',

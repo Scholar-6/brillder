@@ -11,8 +11,8 @@ import ReviewEachHint from '../../../baseComponents/ReviewEachHint';
 import MathInHtml from '../../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneChoice } from 'components/interfaces/chooseOne';
-import { fileUrl } from 'components/services/uploadFile';
 import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
+import ZoomHelpText from '../../components/ZoomHelpText';
 
 export interface ChooseOneComponent {
   type: number;
@@ -209,11 +209,16 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     );
   }
 
+  checkImages() {
+    return !!this.props.component.list.find(a => a.valueFile);
+  }
+
   render() {
     const { list } = this.props.component;
+    const haveImage = this.checkImages();
     return (
       <div className="question-unique-play choose-one-live">
-        <div className="center-fixed-image unselectable"></div>
+        {haveImage && <ZoomHelpText />}
         {list.map((choice, index) => this.renderChoice(choice, index))}
         {this.renderGlobalHint()}
       </div>

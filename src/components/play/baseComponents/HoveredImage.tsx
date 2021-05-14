@@ -3,6 +3,8 @@ import React from 'react';
 import { fileUrl } from 'components/services/uploadFile';
 import { connect } from "react-redux";
 import { ReduxCombinedState } from 'redux/reducers';
+import { isPhone } from 'services/phone';
+import HoveredPhoneImage from './HoveredPhoneImage';
 
 
 interface AnswerProps {
@@ -12,13 +14,17 @@ interface AnswerProps {
 
 const HoveredImageContent: React.FC<AnswerProps> = ({ imageHovered, fileName }) => {
   if (imageHovered) {
+    if (isPhone()) {
+      return <HoveredPhoneImage fileName={fileName} />
+    }
+
     return (
       <div className="center-fixed-image unselectable">
         <img alt="" src={fileUrl(fileName)} />
       </div>
     );
   }
-  return <div />;
+  return <div className="tablet-hidden" />;
 }
 
 const mapState = (state: ReduxCombinedState) => ({
