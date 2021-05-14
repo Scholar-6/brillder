@@ -78,7 +78,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
       {
         state.list.map((answer: any, i: number) => {
           return <ChooseOneAnswerComponent
-            key={answer.id}
+            key={i}
             locked={locked}
             editOnly={editOnly}
             index={i}

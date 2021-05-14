@@ -765,6 +765,16 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             ul > li {
               font-size: $base-font-size;
             }
+            table {
+              table-layout: fixed;
+              width: 100%;
+              border-collapse: collapse;
+              td {
+                outline: none;
+                border: 1px solid var(--theme-dark-blue);
+                padding: 2px 5px;
+              }
+            }
           }
           .MuiBox-root {
             padding: 0;
@@ -2147,9 +2157,26 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   align-items: center;
   justify-content: center;
   img {
+    background: var(--theme-light-blue);
+    border: 1vw solid var(--theme-light-blue);
+    border-radius: 0.5vw;
     width: auto;
     height: auto;
     max-width: 50vw;
     max-height: 40vh !important;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+}
+.play-preview-pages .pair-match-play .image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-preview-pages .youtube-video-session .youtube-video {
+  width: 100%;
+  > div {
+    display: flex;
+    justify-content: center;
   }
 }

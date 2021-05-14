@@ -3,6 +3,12 @@
 @import 'src/assets/sass/partials/extensions';
 
 .my-library {
+  .custom-tooltip.subject-tooltip .brick-inline {
+    p, span {
+      color: var(--white) !important;
+    }
+  }
+
   .subject-title {
     font-size: 2.5vw !important;
     letter-spacing: 0.5vw !important;
@@ -49,6 +55,9 @@
           border-radius: $base-radius;
           .progress-value {
             border-radius: $base-radius;
+            .rotated-text {
+              color: var(--white);
+            }
           }
         }
         .length-20 {
@@ -271,7 +280,7 @@ $level-size: 6vh;
         width: 100%;
       }
       .level {
-        background: var(--tab-gray);
+        background: var(--white);
         width: 100%;
         margin-top: 0.5vh;
         margin-bottom: 0.5vh;

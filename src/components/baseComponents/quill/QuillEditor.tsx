@@ -93,6 +93,13 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         setCurrentQuillId(uniqueId);
     }, [setCurrentQuillId, uniqueId]);
 
+    const onBlur = React.useCallback(() => {
+        if(currentQuillId === uniqueId) {
+            setCurrentQuillId(undefined);
+        }
+        props?.onBlur?.();
+    }, [currentQuillId, setCurrentQuillId, uniqueId, props.onBlur])
+
     const modules = React.useMemo(() => ({
         toolbar: (props.showToolbar ?? false) ? {
             container: `.quill-${uniqueId}`,
@@ -181,7 +188,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 theme="snow"
                 value={data || ""}
                 onChange={onChange}
-                onBlur={props.onBlur}
+                onBlur={onBlur}
                 onFocus={onFocus}
                 readOnly={props.disabled}
                 placeholder={props.placeholder}

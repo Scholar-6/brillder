@@ -71,6 +71,20 @@
       border: transparent;
       .audience-inputs {
         @extend %buildInputs;
+
+        .ql-custom-toolbar {
+          display: none;
+        }
+        .ql-editor.ql-blank::before {
+          left: 0;
+          font-style:initial !important;
+        }
+        .quill-document-editor,
+        .ql-editor {
+          padding-left: 0 !important;
+          font-size: 1.6vw;
+          background: none !important;
+        }
       }
     }
   }

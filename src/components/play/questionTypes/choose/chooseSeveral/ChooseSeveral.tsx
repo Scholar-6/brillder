@@ -13,7 +13,8 @@ import { ActiveItem } from '../chooseOne/ChooseOne';
 import MathInHtml from '../../../baseComponents/MathInHtml';
 import CompComponent from '../../Comp';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
-import { fileUrl } from 'components/services/uploadFile';
+import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
+import ZoomHelpText from '../../components/ZoomHelpText';
 
 export type ChooseSeveralAnswer = ActiveItem[];
 
@@ -102,12 +103,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   renderData(answer: ChooseOneAnswer) {
     if (answer.answerType === QuestionValueType.Image) {
-      return (
-        <div className="image-container">
-          <img alt="" src={fileUrl(answer.valueFile)} width="100%" />
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
-        </div>
-      );
+      return <PairMatchImageContent fileName={answer.valueFile} imageCaption={answer.imageCaption} />;
     } else if (answer.answerType === QuestionValueType.Sound && answer.soundFile) {
       return (
         <div style={{width: '100%'}}>
@@ -179,7 +175,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     }
 
     return (
-      <Button
+      <div
         className={className}
         key={index}
         onClick={() => this.setActiveItem(choice.index, index)}
@@ -202,18 +198,23 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
             hint={this.props.question.hint}
           />
         }
-      </Button>
+      </div>
     );
+  }
+
+  checkImages() {
+    return !!this.props.component.list.find((a:any) => a.valueFile);
   }
 
   render() {
     const { component } = this.props;
-
+    const haveImage = this.checkImages();
     return (
       <div className="question-unique-play choose-several-live">
         {
           this.props.isReview && <p><span className="help-text">Choose more than one option.</span></p>
         }
+        {haveImage && <ZoomHelpText />}
         {
           component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }

@@ -96,23 +96,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   }
 
   //#region Scroll
-  const [canScroll, setScroll] = React.useState(false);
-
-  useEffect(() => {
-    const {current} = workarea;
-    if (current) {
-      if (current.scrollHeight > current.clientHeight) {
-        if (!canScroll) {
-          setScroll(true);
-        }
-      } else {
-        if (canScroll) {
-          setScroll(false);
-        }
-      }
-    }
-  }, [canScroll, workarea, setScroll]);
-  
   const scrollUp = () => {
     if (workarea.current) {
       workarea.current.scrollBy(0, -100);
@@ -135,7 +118,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
         <div className="top-scroll-area">
           <div className="top-button-container">
             <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
-              <SpriteIcon name="arrow-up" className={`active text-theme-orange ${!canScroll && 'disabled'}`} />
+              <SpriteIcon name="arrow-up" className="active text-theme-orange" />
             </button>
           </div>
         </div>
@@ -269,7 +252,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
         <div className="bottom-scroll-area">
           <div className="bottom-button-container">
             <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
-              <SpriteIcon name="arrow-down" className={`active text-theme-orange ${!canScroll && 'disabled'}`} />
+              <SpriteIcon name="arrow-down" className="active text-theme-orange" />
             </button>
           </div>
         </div>

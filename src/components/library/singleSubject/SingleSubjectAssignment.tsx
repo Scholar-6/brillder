@@ -26,15 +26,15 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
   setTimeout(() => {
     const minHeight = 5;
     let height = 0;
-    if (assignment.lastAttemptScore && assignment.maxScore) {
-      const heightInt = (assignment.lastAttemptScore / assignment.maxScore * 100);
+    if (assignment.bestAttemptScore && assignment.maxScore) {
+      const heightInt = (assignment.bestAttemptScore / assignment.maxScore * 100);
       if (heightInt < minHeight) {
         height = minHeight;
       } else {
         height = heightInt;
       }
     }
-    if (assignment.lastAttemptScore === 0) {
+    if (assignment.bestAttemptScore === 0) {
       height = minHeight;
     }
     setHeight(height);
@@ -99,7 +99,8 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (props) =
         <div className="progress-value default-value" onMouseEnter={() => setHover(true)}></div>
         <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }}>
           {height > 40 && renderRotatedTitle("white", height)}
-          {height > 40 && assignment.brick.academicLevel >= AcademicLevel.First && <AcademyDifficulty a={assignment.brick.academicLevel} />}
+          {height > 40 && assignment.brick.academicLevel >= AcademicLevel.First &&
+            <AcademyDifficulty a={assignment.brick.academicLevel} brick={brick} />}
         </div>
       </div>
     </div>

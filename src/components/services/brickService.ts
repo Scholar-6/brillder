@@ -116,8 +116,16 @@ export function checkTeacher(user: User) {
   return user.rolePreference?.roleId === RolePreference.Teacher;
 }
 
+export function checkBuilder(user: User) {
+  return user.rolePreference?.roleId === RolePreference.Builder;
+}
+
 export function checkAdmin(roles: UserRole[]) {
   return roles.some(role => role.roleId === UserType.Admin);
+}
+
+export function isAorP(roles: UserRole[]) {
+  return roles.some(role => role.roleId === UserType.Publisher || role.roleId === UserType.Admin);
 }
 
 export function canEditBrick(brick: Brick, user: User) {
