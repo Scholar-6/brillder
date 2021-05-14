@@ -54,9 +54,9 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderPlayButton = () => {
     return (
       <div>
-        <div className="bolder">Are you ready to learn?</div>
+        <div className="">Are you ready to learn?</div>
         <div className="c-next-btn-container">
-          <button type="button" className="bolder" onClick={startBrick}>
+          <button type="button" className="" onClick={startBrick}>
             Play Now
           </button>
         </div>
