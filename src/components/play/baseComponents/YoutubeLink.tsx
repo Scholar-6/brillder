@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import YouTube, { Options as YoutubeOptions } from 'react-youtube';
 import { Grid } from '@material-ui/core';
 

@@ -12,10 +12,8 @@ import RadioButton from "components/baseComponents/buttons/RadioButton";
 import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
 import { Subject } from "model/brick";
 import { isArchived } from "../service/service";
-import InviteStudentEmailDialog from "components/teach/manageClassrooms/components/InviteStudentEmailDialog";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 import { resendInvitation } from "services/axios/classroom";
-import { ClassroomApi } from "components/teach/service";
 
 enum TeachFilterFields {
   Assigned = "assigned",

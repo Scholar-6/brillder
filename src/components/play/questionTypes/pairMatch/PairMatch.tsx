@@ -13,8 +13,6 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 import { Hint, HintStatus } from 'model/question';
 import PairMatchOption from './PairMatchOption';
 import PairMatchImageContent from './PairMatchImageContent';
-import ZoomHelpText from '../components/ZoomHelpText';
-import { isMobile } from 'react-device-detect';
 import { isPhone } from 'services/phone';
 
 
