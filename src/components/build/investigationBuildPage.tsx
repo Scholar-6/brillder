@@ -825,6 +825,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return false;
   }
 
+
   const renderPanel = () => {
     return (
       <Switch>
@@ -833,6 +834,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             locked={locked}
             editOnly={!canEdit}
             user={props.user}
+            validationRequired={validationRequired}
             initSuggestionExpanded={initSuggestionExpanded}
             selectFirstQuestion={() => selectQuestion(0)}
           />
@@ -1019,9 +1021,17 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         />
         <ProposalInvalidDialog
           isOpen={proposalResult.isOpen}
-          close={() => setProposalResult({ ...proposalResult, isOpen: false })}
-          submit={() => submitInvalidBrick()}
-          hide={() => moveToInvalidProposal()}
+          close={() => {
+            setProposalResult({ ...proposalResult, isOpen: false })
+            setValidation(true);
+          }}
+          submit={() => {
+            submitInvalidBrick();
+          }}
+          hide={() => {
+            moveToInvalidProposal();
+            setValidation(true);
+          }}
         />
         <DeleteDialog
           isOpen={deleteDialogOpen}

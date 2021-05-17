@@ -24,6 +24,7 @@ import PlanPreviewComponent from "../baseComponents/phonePreview/plan/PlanPrevie
 import DifficultySelect from "../proposal/questionnaire/brickTitle/DifficultySelect";
 import { getSubjects } from "services/axios/subject";
 import CoreSelect from "../proposal/questionnaire/brickTitle/CoreSelect";
+import { stripHtml } from "../questionService/ConvertService";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -31,12 +32,13 @@ export interface PlanProps {
   user: User;
   locked: boolean;
   editOnly: boolean;
+  validationRequired: boolean;
   initSuggestionExpanded?: boolean;
   selectFirstQuestion(): void;
 }
 
 const PlanPage: React.FC<PlanProps> = (props) => {
-  const { currentBrick, locked } = props;
+  const { currentBrick, validationRequired, locked } = props;
 
   const [apiSubjects, setApiSubjects] = React.useState([] as Subject[]);
 
@@ -86,11 +88,8 @@ const PlanPage: React.FC<PlanProps> = (props) => {
   }
 
   const changeBrick = React.useMemo(() => {
-    console.log(currentBrick);
     return (changeFn: (brick: Brick) => Brick) => {
-      console.log(currentBrick);
       const newBrick = changeFn(currentBrick);
-      console.log(newBrick);
       props.saveBrick(newBrick);
     };
   }, [currentBrick, props.saveBrick]);
@@ -142,6 +141,8 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       onChange={title => changeBrick((brick) => ({ ...brick, title }))}
                       placeholder="What is your brick about?"
                       disabled={locked}
+                      validate={validationRequired}
+                      isValid={!!stripHtml(currentBrick.title)}
                       toolbar={['italic']}
                     />
                   </div>
@@ -177,6 +178,8 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       disabled={locked}
                       placeholder="Ideally, every brick should point to a bigger question."
                       data={currentBrick.openQuestion}
+                      validate={validationRequired}
+                      isValid={!!stripHtml(currentBrick.openQuestion)}
                       onChange={data => changeBrick((brick) => ({ ...brick, openQuestion: data }))}
                       toolbar={["bold", "italic", "latex"]}
                     />
@@ -189,6 +192,8 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       allowTables={true}
                       onChange={data => changeBrick((brick) => ({ ...brick, brief: data }))}
                       placeholder="Outline the purpose of this brick."
+                      validate={validationRequired}
+                      isValid={!!stripHtml(currentBrick.brief)}
                       toolbar={[
                         "bold",
                         "italic",
@@ -207,6 +212,8 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       disabled={locked}
                       data={currentBrick.prep}
                       onChange={data => changeBrick((brick) => ({ ...brick, prep: data }))}
+                      validate={validationRequired}
+                      isValid={!!stripHtml(currentBrick.prep)}
                       toolbar={[
                         "bold",
                         "italic",
