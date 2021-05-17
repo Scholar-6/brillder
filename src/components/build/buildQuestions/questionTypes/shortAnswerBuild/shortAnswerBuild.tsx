@@ -85,6 +85,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
         <QuillEditor
           disabled={locked}
           validate={props.validationRequired}
+          isValid={!!stripHtml(answer.value)}
           data={answer.value}
           toolbar={["superscript", "subscript"]}
           onChange={(value) => changed(answer, value)}

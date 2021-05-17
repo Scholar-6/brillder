@@ -1,6 +1,7 @@
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, Hint, HintStatus
 } from 'model/question';
+import { stripHtml } from './ConvertService';
 import uniqueValidator from './UniqueValidator';
 
 const getUniqueComponent = (components: any[]) => {
@@ -66,7 +67,7 @@ export const isHintEmpty = (hint: Hint) => {
 export function validateQuestion(question: Question) {
   const {type, hint, components} = question;
 
-  if (!question.firstComponent || !question.firstComponent.value) {
+  if (!question.firstComponent || !stripHtml(question.firstComponent.value)) {
     return false;
   }
 

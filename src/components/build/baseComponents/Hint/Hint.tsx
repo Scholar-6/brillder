@@ -9,6 +9,7 @@ import './Hint.scss';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import { QuestionTypeEnum } from 'model/question';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 
 const HtmlTooltip = withStyles(() => ({
@@ -125,6 +126,7 @@ const HintComponent: React.FC<HintProps> = ({
             ]}
             imageDialog={true}
             validate={validationRequired}
+            isValid={!!stripHtml(state.value)}
             onChange={onHintChanged}
           />
         </div>
@@ -161,6 +163,7 @@ const HintComponent: React.FC<HintProps> = ({
             ]}
             imageDialog={true}
             validate={validationRequired}
+            isValid={!!stripHtml(state.list[i])}
             onChange={(v: any) => { onHintListChanged(v, i) }}
           />
         </div>
