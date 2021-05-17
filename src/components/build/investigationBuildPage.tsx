@@ -879,9 +879,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     let isQuestionValid = validateQuestion(q as any);
     if (!isQuestionValid) {
       isValid = false;
-      console.log('question invalid', q)
-    } else {
-      console.log('question valid', q)
     }
   });
 
@@ -903,7 +900,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     history.push(routes.buildQuesiton(brickId) + `/${questions[questions.length - 1].id}`);
   }
 
-  if (!stripHtml(synthesis) || !proposalResult.isValid) {
+  if (!stripHtml(synthesis) || !proposalRes.isValid) {
     isValid = false;
   }
 
