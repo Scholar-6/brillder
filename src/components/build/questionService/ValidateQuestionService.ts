@@ -25,7 +25,7 @@ const validateComponentValues = (components: any[]) => {
     || c.type === QuestionComponentTypeEnum.Sound
   });
 
-  let invalid = comps.find(c => !c.value);
+  let invalid = comps.find(c => !stripHtml(c.value));
   if (invalid) {
     return false;
   }
