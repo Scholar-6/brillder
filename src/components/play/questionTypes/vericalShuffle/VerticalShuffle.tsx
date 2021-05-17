@@ -7,7 +7,6 @@ import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
-import { fileUrl } from 'components/services/uploadFile';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isPhone } from 'services/phone';
 import { isMobile } from 'react-device-detect';
