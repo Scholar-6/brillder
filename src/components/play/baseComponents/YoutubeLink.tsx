@@ -1,6 +1,7 @@
 import React from 'react';
 import YouTube, { Options as YoutubeOptions } from 'react-youtube';
 import { Grid } from '@material-ui/core';
+import { isPhone } from 'services/phone';
 
 interface YoutubeLinkProps {
   value: string;
@@ -18,10 +19,19 @@ const YoutubeLink: React.FC<YoutubeLinkProps> = (props) => {
     }
   }, [props.value]);
 
-  const opts: YoutubeOptions = {
+  let opts: YoutubeOptions = {
     playerVars: {
       playsinline: 0,
     }
+  };
+
+  if (isPhone()) {
+    opts = {
+      playerVars: {
+        playsinline: 0,
+        fs: 0
+      },
+    };
   }
 
   if (isValid) {
