@@ -31,6 +31,7 @@ interface DragTabsProps {
   comments: Comment[] | null;
   synthesis: string;
   isSynthesisPage: boolean;
+  isPlanValid: boolean;
   validationRequired: boolean;
   tutorialStep: TutorialStep;
   tutorialSkipped: boolean;
@@ -281,7 +282,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             className={`drag-tile-container plan-tab ${isPlanPage ? 'active' : ''}`}
             cols={isPlanPage ? 1.5555 : 2}
           >
-            <PlanTab brickId={this.props.brickId} tutorialStep={props.tutorialStep} isActive={isPlanPage} history={this.props.history} />
+            <PlanTab brickId={this.props.brickId} isValid={!props.validationRequired || props.isPlanValid} tutorialStep={props.tutorialStep} isActive={isPlanPage} history={this.props.history} />
           </GridListTile>
           <ReactSortable
             list={questions}
