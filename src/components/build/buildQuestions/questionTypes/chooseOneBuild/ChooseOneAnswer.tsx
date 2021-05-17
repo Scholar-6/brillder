@@ -10,6 +10,7 @@ import SoundRecord from "../sound/SoundRecord";
 import RemoveButton from "../components/RemoveButton";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import YesNoDialog from "components/build/baseComponents/dialogs/YesNoDialog";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 
 export interface ChooseOneAnswerProps {
@@ -28,7 +29,7 @@ export interface ChooseOneAnswerProps {
 }
 
 const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
-  locked, editOnly, index, length, answer, validationRequired, checkBoxValid,
+  locked, index, length, answer, validationRequired, checkBoxValid,
   removeFromList, update, save, onChecked, onBlur
 }) => {
   const [clearOpen, setClear] = React.useState(false);
@@ -132,6 +133,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           placeholder="Enter Answer..."
           toolbar={['latex']}
           validate={validationRequired}
+          isValid={!!stripHtml(answer.value)}
           onChange={value => onTextChanged(answer, value)}
         />
         <SoundRecord

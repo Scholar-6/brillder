@@ -4,6 +4,7 @@ import React from 'react'
 import './Text.scss'
 import { TextComponentObj } from './interface';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 
 export interface TextComponentProps {
@@ -47,6 +48,8 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
         disabled={locked}
         data={data.value}
         allowTables={true}
+        validate={props.validationRequired}
+        isValid={!!stripHtml(data.value)}
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
           'latex', 'bulletedList', 'numberedList', 'blockQuote', 'table',

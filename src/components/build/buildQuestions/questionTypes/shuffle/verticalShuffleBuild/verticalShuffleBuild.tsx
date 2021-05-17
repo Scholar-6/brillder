@@ -9,7 +9,7 @@ import QuestionImageDropzone from 'components/build/baseComponents/questionImage
 import RemoveItemButton from '../../components/RemoveItemButton';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import RemoveButton from '../../components/RemoveButton';
-import image from '__mocks__/@ckeditor/ckeditor5-image/src/image';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
@@ -82,7 +82,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     let isValid = null;
     if (validationRequired) {
       isValid = true;
-      if ((answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None) && !answer.value) {
+      if ((answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None) && !stripHtml(answer.value)) {
         isValid = false;
       }
     }

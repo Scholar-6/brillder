@@ -879,6 +879,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     let isQuestionValid = validateQuestion(q as any);
     if (!isQuestionValid) {
       isValid = false;
+      console.log('question invalid', q)
+    } else {
+      console.log('question valid', q)
     }
   });
 
