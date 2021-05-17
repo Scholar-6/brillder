@@ -13,6 +13,7 @@ interface SoundProps {
   locked: boolean;
   index: number;
   data: any;
+  validationRequired: boolean;
   save(): void;
   updateComponent(component: any, index: number): void;
   //phone preview
@@ -107,6 +108,12 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
       return;
     }
     this.setState({ blobUrl: "", status: AudioStatus.Start });
+
+    // clean up
+    let comp = Object.assign({}, this.props.data);
+    comp.value = '';
+    this.props.updateComponent(comp, this.props.index);
+    this.props.save();
   }
 
   saveAudio(file: any) {
@@ -132,9 +139,9 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
     const { status } = this.state;
     let canDelete =
       status === AudioStatus.Start || status === AudioStatus.Recording;
-    
+
     return (
-      <div className="react-recording" onClick={this.props.onFocus}>
+      <div className={`react-recording ${(this.props.validationRequired && !this.props.data.value) ? 'invalid' : ''}`} onClick={this.props.onFocus}>
         <div className="text-label-container">
           Sound
         </div>
