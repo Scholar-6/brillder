@@ -7,6 +7,7 @@ import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
 export interface PlanTabProps {
   brickId: number;
   tutorialStep: TutorialStep;
+  isValid: boolean;
   isActive: boolean;
   history: any;
 }
@@ -14,7 +15,7 @@ export interface PlanTabProps {
 const PlanTab: React.FC<PlanTabProps> = (props) => {
   const haveBorder = props.tutorialStep === TutorialStep.Proposal;
   return (
-    <Grid className="drag-tile" container alignContent="center" justify="center" onClick={() => {
+    <Grid className={"drag-tile " + (props.isValid ? "" : " invalid")} container alignContent="center" justify="center" onClick={() => {
       props.history.push(routes.buildPlan(props.brickId))
     }}>
       <div className={`svgOnHover add-tab last-tab ${haveBorder ? 'editor-border' : ''}`}>

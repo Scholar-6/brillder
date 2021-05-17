@@ -850,6 +850,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             locked={locked}
             editOnly={!canEdit}
             synthesis={synthesis}
+            validationRequired={validationRequired}
             initSuggestionExpanded={initSuggestionExpanded}
             onSynthesisChange={saveSynthesis}
             undoRedoService={undoRedoService}
@@ -956,6 +957,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   questions={questions}
                   brickId={brickId}
                   synthesis={synthesis}
+                  isPlanValid={proposalRes.isValid}
                   validationRequired={validationRequired}
                   tutorialSkipped={isTutorialPassed()}
                   openSkipTutorial={openSkipTutorial}
