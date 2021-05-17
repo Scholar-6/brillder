@@ -368,7 +368,9 @@ const FinalStep: React.FC<FinalStepProps> = ({
       />
       <PublishSuccessDialog
         isOpen={publishSuccess === PublishStatus.Popup}
-        close={() => setPublishSuccess(PublishStatus.Published)}
+        close={() => {
+          setPublishSuccess(PublishStatus.Published);
+        }}
       />
       <SendPublisherSuccessDialog isOpen={sendedToPublisher && publisherConfirmed === false} close={() => props.sendToPublisherConfirmed()} />
     </div>
