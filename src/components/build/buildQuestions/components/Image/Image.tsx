@@ -5,7 +5,6 @@ import './Image.scss'
 import {fileUrl, uploadFile} from 'components/services/uploadFile';
 import ImageDialog from './ImageDialog';
 import { ImageAlign, ImageComponentData } from './model';
-import ImageCloseDialog from './ImageCloseDialog';
 
 
 interface ImageProps {
@@ -24,7 +23,6 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   const [isOpen, setOpen] = React.useState(false);
   const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.data.value);
-  const [isCloseOpen, setCloseDialog] = React.useState(false);
   const [invalid, setInvalid] = React.useState(props.validationRequired && !props.data.value);
 
   useEffect(() => {

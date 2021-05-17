@@ -68,7 +68,6 @@ import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
 import routes from "./routes";
-import playRoutes from 'components/play/routes';
 import previewRoutes from 'components/playPreview/routes';
 import { deleteQuestion } from "services/axios/brick";
 import { createQuestion } from "services/axios/question";
