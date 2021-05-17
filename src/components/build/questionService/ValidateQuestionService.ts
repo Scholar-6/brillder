@@ -35,7 +35,7 @@ const validateComponentValues = (components: any[]) => {
 const validateEachHint = (list: any[], answersCount: number) => {
   let index = 0;
   for (let value of list) {
-    if (value === null || value === "") {
+    if (value === null || value === "" || stripHtml(value) === "") {
       return true;
     }
     index++;
@@ -51,7 +51,7 @@ export const validateHint = (hint: Hint, answersCount: number) => {
   if (hint.status === HintStatus.Each) {
     return validateEachHint(hint.list, answersCount);
   } else {
-    return !hint.value;
+    return !stripHtml(hint.value);
   }
 }
 
@@ -85,6 +85,10 @@ export function validateQuestion(question: Question) {
   if (comp.list) {
     answersCount = comp.list.length;
   }
+  if (type === QuestionTypeEnum.MissingWord) {
+    answersCount = comp.choices.length;
+  }
+
   let isHintInvalid = validateHint(hint, answersCount);
   if (isHintInvalid) {
     return false;
