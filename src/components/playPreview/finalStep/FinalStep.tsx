@@ -205,6 +205,10 @@ const FinalStep: React.FC<FinalStepProps> = ({
       return renderAdminColumns();
     }
 
+    if (isAuthor && isPublisher) {
+      return renderAdminColumns();
+    }
+
     if (isAuthor && brick.status === BrickStatus.Draft) {
       if (brick.editors && brick.editors.length > 0) {
         return (
