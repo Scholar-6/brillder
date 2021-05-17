@@ -1,6 +1,7 @@
 import {QuestionValueType} from '../buildQuestions/questionTypes/types';
 import { Answer } from '../buildQuestions/questionTypes/pairMatchBuild/types';
 import { MissingChoice } from '../buildQuestions/questionTypes/missingWordBuild/MissingWordBuild';
+import { stripHtml } from './ConvertService';
 
 
 const getChecked = (list: any[]) => {
@@ -16,16 +17,16 @@ const validateImageAndText = (a: any) => {
 
 const validateImageSoundAndText = (a: any) => {
   if (a.answerType === QuestionValueType.Image) {
-    return !a.valueFile;
+    return !stripHtml(a.valueFile);
   } else if (a.answerType === QuestionValueType.Sound) {
-    return !a.soundFile;
+    return !stripHtml(a.soundFile);
   }
-  return !a.value;
+  return !stripHtml(a.value);
 }
 
 const validateShortAnswerOrShuffle = (comp: any) => {
   if (comp.list && comp.list.length >= 1) {
-    let invalid = comp.list.find((a:any) => !(a.value || a.valueFile || a.soundFile));
+    let invalid = comp.list.find((a:any) => !(!!stripHtml(a.value) || !!stripHtml(a.valueFile) || !!stripHtml(a.soundFile)));
     if (invalid) {
       return false;
     }
