@@ -14,7 +14,8 @@ const AttemptsPage: React.FC<AttemptsPageProps> = (props) => {
     <div className="page4-attempts" onClick={props.onClick}>
       {props.attempts.map((a, i) =>
         {
-          const percentages = Math.round(a.score * 100 / a.maxScore);
+          const middleScore = (a.score + a.oldScore) / 2;
+          const percentages = Math.round(middleScore * 100 / a.maxScore);
           return (
             <div
               key={i}
