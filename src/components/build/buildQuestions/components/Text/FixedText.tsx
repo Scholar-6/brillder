@@ -50,7 +50,9 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
           'latex', 'bulletedList', 'numberedList', 'blockQuote', 'table',
+          'uploadImageCustom', 'image'
         ]}
+        imageDialog={true}
         onChange={onChange}
       />
     </div>
