@@ -10,6 +10,7 @@ interface KeyWordsProps {
   disabled: boolean;
   isHashtags?: boolean;
   keyWords: KeyWord[];
+  validate?: boolean;
   onChange(keyWords: KeyWord[]): void;
 }
 
@@ -84,8 +85,12 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
   }
 
   render() {
+    let invalid = false;
+    if (this.props.validate && this.state.keyWords.length === 0) {
+      invalid = true;
+    }
     return (
-      <div className="key-words">
+      <div className={`key-words ${invalid ? 'content-invalid' : ''}`}>
         {this.props.isHashtags
           ? <KeyWordsPlay keywords={this.state.keyWords} />
           : this.state.keyWords.map(this.renderKeyWord.bind(this))

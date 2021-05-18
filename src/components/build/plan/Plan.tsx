@@ -149,6 +149,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                   <KeyWordsComponent
                     disabled={locked}
                     keyWords={currentBrick.keywords}
+                    validate={validationRequired}
                     onChange={keywords => changeBrick((brick) => ({ ...brick, keywords }))}
                   />
                   <div className="subject-select-container">
