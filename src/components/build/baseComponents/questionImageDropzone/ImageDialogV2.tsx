@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Checkbox from "@material-ui/core/Checkbox";
 
 import "./ImageDialogV2.scss";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -7,6 +6,7 @@ import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapp
 import DropImage from "../../buildQuestions/components/Image/DropImage";
 import { ImageComponentData } from "../../buildQuestions/components/Image/model";
 import { fileUrl } from "components/services/uploadFile";
+import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
 
 interface DialogProps {
   open: boolean;
@@ -90,7 +90,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({
       <div className="close-button svgOnHover" onClick={close}>
         <SpriteIcon name="cancel" className="w100 h100 active" />
       </div>
-      <div className="dialog-header image-dialog" style={{maxWidth: '35vw'}}>
+      <div className="dialog-header image-dialog">
         <div className={`cropping ${removed ? "empty" : ""}`}>
           <div className="centered">
             {removed ? (
@@ -125,22 +125,13 @@ const ImageDialogV2: React.FC<DialogProps> = ({
           onChange={(e) => setSource(e.target.value)}
           placeholder="Add link to source or name of owner..."
         />
-        <div onClick={() => setPermision(!permision)}>
-          <Checkbox
-            checked={permision}
-            className={validationRequired ? "required" : ""}
-          />
-          I am aware of licence restrictions around the publication of images online. I have checked this image is available for use without such restriction or within Creative Commons criteria which allow commercial use.
-          <span className="text-theme-orange">*</span>
-        </div>
-        <div onClick={() => setCopyright(!copyright)}>
-          <Checkbox
-            checked={copyright}
-            className={validationRequired ? "required" : ""}
-          />
-          I am creating a brick for educational use with my own students and can therefore use licensed images consistent with the exemptions for education in the Copyright Designs and Patents Act, 1988.
-          <span className="text-theme-orange">*</span>
-        </div>
+        <CopyrightCheckboxes
+          validationRequired={validationRequired}
+          permision={permision}
+          setPermision={setPermision}
+          copyright={copyright}
+          setCopyright={setCopyright}
+        />
         <input
           value={caption}
           onChange={(e) => setCaption(e.target.value)}

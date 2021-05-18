@@ -9,6 +9,7 @@ import { ImageAlign, ImageComponentData } from "./model";
 import Slider from "@material-ui/core/Slider";
 import ImageDesktopPreview from "./ImageDesktopPreview";
 import { fileUrl } from "components/services/uploadFile";
+import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
 
 interface DialogProps {
   open: boolean;
@@ -40,9 +41,8 @@ const ImageDialog: React.FC<DialogProps> = ({
 }) => {
   const [source, setSource] = React.useState(initData.imageSource || "");
   const [caption, setCaption] = React.useState(initData.imageCaption || "");
-  const [permision, setPermision] = React.useState(
-    initData.imagePermision ? true : false
-  );
+  const [permision, setPermision] = React.useState(initData.imagePermision ? true : false);
+  const [copyright, setCopyright] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
@@ -84,7 +84,7 @@ const ImageDialog: React.FC<DialogProps> = ({
   }, [open]);
 
   let canUpload = false;
-  if (permision && source && !removed) {
+  if ((permision || copyright) && source && !removed) {
     canUpload = true;
   }
 
@@ -192,14 +192,13 @@ const ImageDialog: React.FC<DialogProps> = ({
           onChange={(e) => setSource(e.target.value)}
           placeholder="Add link to source or name of owner..."
         />
-        <div onClick={() => setPermision(!permision)}>
-          <Checkbox
-            checked={permision}
-            className={validationRequired ? "required" : ""}
-          />
-          I have permision to distribute this image
-          <span className="text-theme-orange">*</span>
-        </div>
+         <CopyrightCheckboxes
+          validationRequired={validationRequired}
+          permision={permision}
+          setPermision={setPermision}
+          copyright={copyright}
+          setCopyright={setCopyright}
+        />
         <input
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
