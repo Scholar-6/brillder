@@ -56,6 +56,10 @@ export const investigationBuildQuestion = (brickId: number, questionId: number) 
   return InvestigationBuild(brickId) + `/${questionId}`;
 }
 
+export const investigationBuildQuestionType = (brickId: number, questionId: number) => {
+  return investigation(brickId) + `/question/${questionId}`;
+}
+
 export const investigationQuestionSuggestions = (brickId: number, questionId: number) => {
   return investigationBuildQuestion(brickId, questionId) + '?suggestionsExpanded=true'
 }
@@ -160,6 +164,7 @@ export default {
   InvestigationSynthesis,
   investigationSynthesisSuggestions,
   investigationBuildQuestion,
+  investigationBuildQuestionType,
   investigationQuestionSuggestions,
   playIntro
 }

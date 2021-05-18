@@ -46,8 +46,8 @@ export interface QuestionProps {
   undoRedoService: UndoRedoService;
   saveQuestion(question: Question): void;
   setQuestion(index: number, question: Question): void;
-  updateFirstComponent(component: TextComponentObj): Question;
-  updateComponents(components: any[]): Question;
+  updateFirstComponent(component: TextComponentObj): Question | undefined;
+  updateComponents(components: any[]): Question | undefined;
   setQuestionType(type: QuestionTypeEnum): void;
   nextOrNewQuestion(): void;
   getQuestionIndex(question: Question): number;
