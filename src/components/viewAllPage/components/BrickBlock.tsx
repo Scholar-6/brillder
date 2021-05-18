@@ -67,6 +67,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
   }
 
   return (
+    <div className="animated-brick-container">
     <Grow
       in={props.shown}
       style={{ transformOrigin: "0 0 0" }}
@@ -78,7 +79,9 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
             <div style={{background: color}}>III</div>
           </div>
           {brick.coverImage &&
-            <img alt="" src={fileUrl(brick.coverImage)} />
+            <div className="scroll-block">
+              <img alt="" src={fileUrl(brick.coverImage)} />
+            </div>
           }
           <div className="bottom-description-color"></div>
           <div className="bottom-description">
@@ -87,6 +90,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
         </div>
       </div>
     </Grow>
+    </div>
   );
 }
 
