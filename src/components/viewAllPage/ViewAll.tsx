@@ -97,12 +97,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     super(props);
 
     let isAdmin = false;
-    let pageSize = 15;
-    if (props.user) {
-      isAdmin = checkAdmin(props.user.roles);
-    } else {
-      pageSize = 18;
-    }
 
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
@@ -135,7 +129,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       searchString,
       activeSubject: {} as SubjectItem,
       isSearching: false,
-      pageSize,
+      pageSize: 6,
       isLoading: true,
 
       isClearFilter: false,
