@@ -10,7 +10,7 @@ interface Props {
 const CopyrightCheckboxes: React.FC<Props> = (props) => {
   const {permision, validationRequired} = props;
   return (
-    <div>
+    <div className="light-font permision-buttons">
       <div onClick={() => props.setPermision(permision ? permision === true ? 1 : true : true)}>
         <Checkbox
           checked={permision === true}
