@@ -5,73 +5,81 @@
 
 .animated-brick-container {
 
-.flex-brick-container {
-  height: calc(#{$bricks-height / 2.5});
-  display: flex;
-  align-items: center;
-  transition: all 400ms ease-out !important;
+  .flex-brick-container {
+    height: calc(#{$bricks-height / 2.5});
+    display: flex;
+    align-items: center;
+    transition: all 400ms ease-out !important;
 
-  &:hover {
-    margin-top: calc(#{$bricks-height / -34});
+    &:hover {
+      margin-top: calc(#{$bricks-height / -34});
+    }
+
+    .publish-brick-container {
+      min-width: 22vw;
+      cursor: pointer;
+      position: relative;
+      border-radius: 0.95vw;
+      margin-left: 0.9vw;
+      margin-right: 0.9vw;
+      overflow: hidden;
+      height: calc(#{$bricks-height / 3});
+
+      .level {
+        position: absolute;
+        z-index: 3;
+        right: 1vh;
+        top: 1vh;
+      }
+
+      .level>div {
+        height: 4.5vh;
+        width: 4.5vh;
+        border-radius: 50%;
+        font-size: 2.3vh;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      img {
+        width: 100%;
+      }
+
+      .bottom-description-color {
+        height: 3vw;
+        opacity: 0.8;
+        background: var(--tab-gray);
+      }
+
+      .bottom-description-color,
+      .bottom-description {
+        color: var(--theme-dark-blue);
+        height: 3vw;
+        font-size: 0.95vw;
+        letter-spacing: 1;
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .scroll-block {
+        height: 100%;
+        width: 100%;
+        overflow-y: scroll;
+      }
+
+      .p-cover-icon {
+        background: var(--tab-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--theme-dark-blue);
+      }
+    }
   }
-
-  .publish-brick-container {
-    min-width: 22vw;
-    cursor: pointer;
-    position: relative;
-    border-radius: 0.95vw;
-    margin-left: 0.9vw;
-    margin-right: 0.9vw;
-    overflow: hidden;
-    height: calc(#{$bricks-height / 3});
-
-    .level {
-      position: absolute;
-      z-index: 3;
-      right: 1vh;
-      top: 1vh;
-    }
-
-    .level>div {
-      height: 4.5vh;
-      width: 4.5vh;
-      border-radius: 50%;
-      font-size: 2.3vh;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    img {
-      width: 100%;
-    }
-
-    .bottom-description-color {
-      height: 3vw;
-      opacity: 0.8;
-      background: var(--tab-gray);
-    }
-
-    .bottom-description-color,
-    .bottom-description {
-      color: var(--theme-dark-blue);
-      height: 3vw;
-      font-size: 0.95vw;
-      letter-spacing: 1;
-      position: absolute;
-      bottom: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-    }
-
-    .scroll-block {
-      height: 100%;
-      width: 100%;
-      overflow-y: scroll;
-    }
-  }
-}
 }
