@@ -138,7 +138,7 @@
         .cover-info-row {
           position: absolute;
           $shift: 0.6vw;
-          top: calc(1vh + #{$shift});
+          top: calc(0.7vh + #{$shift});
           left: calc(0.5vw + #{$shift});
           display: flex;
           font-size: 2vw;
