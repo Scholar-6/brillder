@@ -5,7 +5,7 @@ import './ImageDialog.scss';
 import { ImageCoverData } from "./model";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
-import DropImage from "components/build/buildQuestions/components/Image/DropImage";
+import DropCoverImage from "./DropCoverImage";
 
 
 interface DialogProps {
@@ -80,7 +80,7 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
           <div className="centered">
             {removed
               ? <SpriteIcon name="image" className="icon-image" />
-              : <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
+              : <DropCoverImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
             }
           </div>
         </div>
