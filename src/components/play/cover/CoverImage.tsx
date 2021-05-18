@@ -21,7 +21,6 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
   const [isCloseOpen, setCloseDialog] = React.useState(false);
   const [invalid, setInvalid] = React.useState(false);
 
-  
   const updateCover = async (coverData: ImageCoverData) => {
     const res = await setBrickCover({
       brickId: props.brickId,
@@ -37,7 +36,9 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
   }
 
   useEffect(() => {
-    setFileName(props.data.value);
+    if (!fileName) {
+      setFileName(props.data.value);
+    }
     if (props.data.value) {
       setInvalid(false);
     }
@@ -50,9 +51,9 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
       comp.imageSource = source;
       comp.imageCaption = caption;
       comp.imagePermision = true;
-      setFileName(comp.value);
       updateCover(comp);
       setOpen(false);
+      setFileName(comp.value);
     }, () => { });
   }
 
