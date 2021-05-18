@@ -157,6 +157,15 @@
               border-radius: 50%;
             }
           }
+          .subject-and-name {
+            margin-top: 0.2vw;
+            display: flex;
+            align-items: center;
+          }
+          .flex-center {
+            display: flex;
+            align-items: center;
+          }
           .svg {
             margin-left: 0.5vw;
             width: $circle-size;
@@ -167,12 +176,12 @@
     }
     .introduction-info {
       font-size: $base-popup-font-size;
+      font-family: $font-family-bold;
       .c-next-btn-container {
         margin-top: 4vh;
         display: flex;
         justify-content: center;
         button {
-          font-family: $font-family-regular;
           transition: all 300ms ease-out;
           border: none;
           outline: none;
