@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useDropzone } from "react-dropzone";
 
 import './QuestionImageDropzone.scss';
 import {fileUrl, uploadFile} from 'components/services/uploadFile';

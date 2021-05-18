@@ -24,7 +24,7 @@ import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDe
 import ViewAllFilter, { SortBy } from "./components/ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
-import BrickBlock from "components/baseComponents/BrickBlock";
+import BrickBlock from "./components/BrickBlock";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
@@ -97,12 +97,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     super(props);
 
     let isAdmin = false;
-    let pageSize = 15;
-    if (props.user) {
-      isAdmin = checkAdmin(props.user.roles);
-    } else {
-      pageSize = 18;
-    }
 
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
@@ -135,7 +129,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       searchString,
       activeSubject: {} as SubjectItem,
       isSearching: false,
-      pageSize,
+      pageSize: 6,
       isLoading: true,
 
       isClearFilter: false,
@@ -438,7 +432,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
 
-    if (index + pageSize <= bricks.length) {
+    if (index + pageSize <= bricks.length - 1) {
       this.setState({ ...this.state, sortedIndex: index + this.state.pageSize });
     }
   }
@@ -569,8 +563,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }, 1400);
   }
 
-  renderSortedBricks = (bricks: Brick[]) => {
-    let data = prepareVisibleBricks(
+  renderSortedBricks(bricks: Brick[]) {
+    const data = prepareVisibleBricks(
       this.state.sortedIndex,
       this.state.pageSize,
       bricks

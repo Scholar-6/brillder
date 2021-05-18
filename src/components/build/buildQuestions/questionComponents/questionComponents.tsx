@@ -25,6 +25,7 @@ import DeleteDialog from "components/build/baseComponents/dialogs/DeleteDialog";
 import { QuillEditorContext } from "components/baseComponents/quill/QuillEditorContext";
 import QuillGlobalToolbar from "components/baseComponents/quill/QuillGlobalToolbar";
 import { generateId } from "../questionTypes/service/questionBuild";
+import map from "components/map";
 
 
 type QuestionComponentsProps = {
@@ -37,8 +38,8 @@ type QuestionComponentsProps = {
   validationRequired: boolean;
   scrollRef: any;
   saveQuestion(question: Question): void;
-  updateFirstComponent(component: TextComponentObj): Question;
-  updateComponents(components: any[]): Question;
+  updateFirstComponent(component: TextComponentObj): Question | undefined;
+  updateComponents(components: any[]): Question | undefined;
   setQuestionHint(hintState: HintState): Question;
 
   // phone preview
@@ -72,6 +73,7 @@ const QuestionComponents = ({
 
   const updateFirstComponentAndSave = React.useCallback((component: TextComponentObj) => {
     const newQuestion = updateFirstComponent(component);
+    if(!newQuestion) return;
     saveQuestion(newQuestion);
   }, [saveQuestion, question]);
 
@@ -82,6 +84,7 @@ const QuestionComponents = ({
     }));
     setComponents(newComponents);
     const newQuestion = updateComponents(newComponents);
+    if(!newQuestion) return;
     saveQuestion(newQuestion);
   }, [saveQuestion, question]);
 
@@ -151,7 +154,7 @@ const QuestionComponents = ({
     } else if (type === QuestionTypeEnum.WordHighlighting) {
       uniqueComponent = WordHighlightingComponent;
     } else {
-      history.push(`/build/brick/${brickId}/investigation/question`);
+      history.push(map.investigationBuildQuestionType(brickId, question.id));
       return <PageLoader content="...Loading..." />;
     }
 

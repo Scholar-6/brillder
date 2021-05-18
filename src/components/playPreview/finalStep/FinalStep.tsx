@@ -205,6 +205,10 @@ const FinalStep: React.FC<FinalStepProps> = ({
       return renderAdminColumns();
     }
 
+    if (isAuthor && isPublisher) {
+      return renderAdminColumns();
+    }
+
     if (isAuthor && brick.status === BrickStatus.Draft) {
       if (brick.editors && brick.editors.length > 0) {
         return (
@@ -364,7 +368,9 @@ const FinalStep: React.FC<FinalStepProps> = ({
       />
       <PublishSuccessDialog
         isOpen={publishSuccess === PublishStatus.Popup}
-        close={() => setPublishSuccess(PublishStatus.Published)}
+        close={() => {
+          setPublishSuccess(PublishStatus.Published);
+        }}
       />
       <SendPublisherSuccessDialog isOpen={sendedToPublisher && publisherConfirmed === false} close={() => props.sendToPublisherConfirmed()} />
     </div>

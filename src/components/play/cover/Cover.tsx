@@ -54,7 +54,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderPlayButton = () => {
     return (
       <div>
-        <div className="bolder">Are you ready to learn?</div>
+        <div>Are you ready to learn?</div>
         <div className="c-next-btn-container">
           <button type="button" className="bolder" onClick={startBrick}>
             Play Now
@@ -193,9 +193,11 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   />
                   <div className="cover-info-row">
                     {renderBrickCircle()}
-                    {brick.subject?.name},
-                  Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
-                    <div className="hover-area">
+                    <div className="subject-and-name">
+                      {brick.subject?.name},
+                      Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
+                    </div>
+                    <div className="hover-area flex-center">
                       <SpriteIcon name="help-circle-custom" />
                       <div className="hover-content">
                         <div>Brillder focusses on universal concepts and topics, not specific exam courses.</div>

@@ -70,11 +70,13 @@ interface AppProps {
 const App: React.FC<AppProps> = props => {
   setBrillderTitle();
   const location = useLocation();
+  const [iframeFullScreen, setIframe] = React.useState(false);
   const [showWarning, setWarning] = React.useState(isTablet ? true: false)
   const [termsData, setTermsData] = React.useState({
     isLoading: false,
     termsVersion: ''
   });
+
   const [zendeskCreated, setZendesk] = React.useState(false);
   const isHorizontal = () => {
     // Apple does not seem to have the window.screen api so we have to use deprecated window.orientation instead.
@@ -89,6 +91,18 @@ const App: React.FC<AppProps> = props => {
   const [horizontal, setHorizontal] = React.useState(isHorizontal());
 
   useEffect(() => {
+    document.addEventListener('fullscreenchange', (event:any) => {
+      try {
+        if (document.fullscreenElement) {
+          if (event.target.tagName === 'IFRAME') {
+            setIframe(true);
+          } else {
+            setIframe(false);
+          }
+        }
+      } catch { }
+    });
+
     window.addEventListener("orientationchange", (event: any) => {
       setHorizontal(isHorizontal());
     });
@@ -168,7 +182,7 @@ const App: React.FC<AppProps> = props => {
   }
   
   // If is mobile and landscape tell them to go to portrait
-  else if (isMobileOnly && horizontal) {
+  else if (isMobileOnly && horizontal && !iframeFullScreen) {
     return <RotateInstruction />;
   }
 
@@ -234,9 +248,9 @@ const App: React.FC<AppProps> = props => {
         <BuildBrickRoute
           path={[
             "/build/brick/:brickId/investigation/question-component/:questionId",
-            "/build/brick/:brickId/investigation/question-component",
+            // "/build/brick/:brickId/investigation/question-component",
             "/build/brick/:brickId/investigation/question/:questionId",
-            "/build/brick/:brickId/investigation/question",
+            // "/build/brick/:brickId/investigation/question",
             "/build/brick/:brickId"
           ]}
           component={BuildRouter}
