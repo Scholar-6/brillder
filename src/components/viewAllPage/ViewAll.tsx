@@ -24,7 +24,7 @@ import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDe
 import ViewAllFilter, { SortBy } from "./components/ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
-import BrickBlock from "components/baseComponents/BrickBlock";
+import BrickBlock from "./components/BrickBlock";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
@@ -569,8 +569,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }, 1400);
   }
 
-  renderSortedBricks = (bricks: Brick[]) => {
-    let data = prepareVisibleBricks(
+  renderSortedBricks(bricks: Brick[]) {
+    const data = prepareVisibleBricks(
       this.state.sortedIndex,
       this.state.pageSize,
       bricks
