@@ -23,6 +23,7 @@ interface GraphProps {
     locked: boolean;
     index: number;
     data: any;
+    validationRequired: boolean;
     save(): void;
     updateComponent(component: any, index: number): void;
     // phone preview
@@ -107,7 +108,7 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
             setGraphState={setGraphState}
             setGraphSettings={setGraphSettings}
         />
-        <div className="question-component-graph-settings">
+        <div className={`question-component-graph-settings ${(props.validationRequired && !graphState) ? 'invalid' : ''}`}>
             <Tooltip title="Add / Edit Expressions">
                 <Fab onClick={() => setDialogOpen(true)} color="primary">
                     <SvgIcon fontSize="default">
