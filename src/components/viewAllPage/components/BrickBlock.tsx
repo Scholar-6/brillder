@@ -4,7 +4,7 @@ import { Box } from "@material-ui/core";
 import queryString from 'query-string';
 
 import './BrickBlock.scss';
-import { Brick, BrickStatus } from "model/brick";
+import { AcademicLevel, Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 
 import { playCover } from "components/play/routes";
@@ -63,6 +63,16 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     }
   }
 
+  const romanNumerals = () => {
+    switch(brick.academicLevel) {
+      case 1: return 'I';
+      case 2: return 'II';
+      case 3: return 'III';
+      case 4: return 'IV';
+      default: return '';
+    }
+  }
+
   if (!brick.id) {
     return <div className="main-brick-container"></div>;
   }
@@ -77,7 +87,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       <div className="flex-brick-container" onClick={move}>
         <div className="publish-brick-container" onMouseLeave={props.handleMouseLeave}>
           <div className="level">
-            <div style={{background: color}}>{brick.academicLevel}</div>
+            <div style={{background: color}}>{romanNumerals()}</div>
           </div>
           {brick.coverImage ?
             <div className="scroll-block">
