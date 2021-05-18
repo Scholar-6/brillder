@@ -24,7 +24,6 @@ class ViewAllMobile extends Component<ViewAllProps> {
   renderSortedMobileBrickContainer = (
     brick: Brick,
     key: number,
-    row: any = 0
   ) => {
     const color = getBrickColor(brick);
     const circleIcon = getAssignmentIcon(brick);
@@ -33,7 +32,7 @@ class ViewAllMobile extends Component<ViewAllProps> {
       <div className="main-brick-container">
         <Box className="brick-container">
           <div
-            className={`sorted-brick absolute-container brick-row-${row} ${brick.expanded ? "brick-hover" : ""}`}
+            className={`sorted-brick absolute-container brick-row-1 ${brick.expanded ? "brick-hover" : ""}`}
             onClick={() => this.props.handleMobileClick(key)}
           >
             <ShortBrickDescription
@@ -52,16 +51,12 @@ class ViewAllMobile extends Component<ViewAllProps> {
   };
 
   renderSortedMobileBricks = () => {
-    let { sortedIndex } = this.props;
     let bricksList = [];
-    for (let i = 0 + sortedIndex; i < this.props.pageSize + sortedIndex; i++) {
-      const { finalBricks } = this.props;
-      if (finalBricks[i]) {
-        let row = Math.floor(i / 3);
-        bricksList.push(
-          this.renderSortedMobileBrickContainer(finalBricks[i], i, row + 1)
-        );
-      }
+    let i = 0;
+    const { finalBricks } = this.props;
+    for (let brick of finalBricks) {
+      i++;
+      bricksList.push(this.renderSortedMobileBrickContainer(brick, i));
     }
     return (
       <Swiper>

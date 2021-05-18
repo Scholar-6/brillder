@@ -320,6 +320,10 @@ h3 {
   font-family: $font-family-regular;
 }
 
+.light-font {
+  font-family: $font-family-light;
+}
+
 .bold {
   font-family: $font-family-bold;
 }
@@ -362,6 +366,9 @@ h3 {
   .dropzone {
     background: var(--tab-gray) !important;
     border-color: var(--gray) !important;
+    &.invalid {
+      background: var(--theme-orange) !important;
+    }
   }
 }
 .dropzone:hover {

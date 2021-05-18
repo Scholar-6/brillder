@@ -108,14 +108,12 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
     const { filters } = this.props;
 
     let toBeCompletedCount = 0;
-    let submittedCount = 0;
     let checkedCount = 0;
 
     for (const assignment of this.props.assignments) {
       if (assignment.status === AssignmentBrickStatus.ToBeCompleted) {
         toBeCompletedCount++;
       } else if (assignment.status === AssignmentBrickStatus.SubmitedToTeacher) {
-        submittedCount++;
       } else if (assignment.status === AssignmentBrickStatus.CheckedByTeacher) {
         checkedCount++;
       }

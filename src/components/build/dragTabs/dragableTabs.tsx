@@ -31,9 +31,11 @@ interface DragTabsProps {
   comments: Comment[] | null;
   synthesis: string;
   isSynthesisPage: boolean;
+  isPlanValid: boolean;
   validationRequired: boolean;
   tutorialStep: TutorialStep;
   tutorialSkipped: boolean;
+  currentQuestionIndex: number;
   openSkipTutorial(): void;
   createNewQuestion(): void;
   moveToSynthesis(): void;
@@ -163,7 +165,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     ) => {
       let titleClassNames = "drag-tile-container";
       let cols = 2;
-      if (question.active) {
+      if (index === this.props.currentQuestionIndex) {
         titleClassNames += " active";
         cols = 3;
       }
@@ -174,7 +176,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       }
 
       let width = (100 * 2) / (comlumns - 2);
-      if (question.active) {
+      if (index === this.props.currentQuestionIndex) {
         width = (100 * 3) / (comlumns - 2);
       }
 
@@ -198,7 +200,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             index={index}
             deleteHidden={questions.length === 1}
             questionId={question.id}
-            active={question.active}
+            active={index === this.props.currentQuestionIndex}
             isValid={isValid}
             getHasReplied={getHasReplied}
             selectQuestion={props.selectQuestion}
@@ -281,7 +283,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             className={`drag-tile-container plan-tab ${isPlanPage ? 'active' : ''}`}
             cols={isPlanPage ? 1.5555 : 2}
           >
-            <PlanTab brickId={this.props.brickId} tutorialStep={props.tutorialStep} isActive={isPlanPage} history={this.props.history} />
+            <PlanTab brickId={this.props.brickId} isValid={!props.validationRequired || props.isPlanValid} tutorialStep={props.tutorialStep} isActive={isPlanPage} history={this.props.history} />
           </GridListTile>
           <ReactSortable
             list={questions}

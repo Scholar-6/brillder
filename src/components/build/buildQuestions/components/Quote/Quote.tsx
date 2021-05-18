@@ -2,6 +2,7 @@ import React from 'react'
 
 import './Quote.scss'
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 
 export interface QuoteComponentProps {
@@ -34,6 +35,7 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, ...
         placeholder=""
         toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
         validate={props.validationRequired}
+        isValid={!!stripHtml(data.value)}
         onBlur={() => props.save()}
         onChange={onChange}
       />

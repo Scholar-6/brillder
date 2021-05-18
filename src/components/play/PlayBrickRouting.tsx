@@ -94,6 +94,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [startTime, setStartTime] = React.useState(undefined);
   const [mode, setMode] = React.useState(PlayMode.Normal);
   const [liveEndTime, setLiveEndTime] = React.useState(null as any);
+  const [reviewEndTime, setReviewEndTime] = React.useState(null as any);
   const location = useLocation();
   const finalStep = location.pathname.search("/finalStep") >= 0;
   const [headerHidden, setHeader] = React.useState(false);
@@ -465,6 +466,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             updateAttempts={updateReviewAttempts}
             attempts={attempts}
             finishBrick={finishReview}
+            endTime={reviewEndTime}
+            setEndTime={time => {
+              if (reviewEndTime === null) {
+                setReviewEndTime(time);
+              }
+            }}
           />
           {isPhone() && renderPhoneFooter()}
         </Route>

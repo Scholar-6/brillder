@@ -49,7 +49,6 @@ class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
   
   render() {
     const {resetPassword} = this.props;
-    let className = '';
     return (
       <form onSubmit={this.props.handleSubmit} className="content-box expanded">
         <div className="input-block">

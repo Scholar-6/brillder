@@ -3,6 +3,7 @@ import { Grid } from "@material-ui/core";
 import { TutorialStep } from "../tutorial/TutorialPanelWorkArea";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import CommentIndicator from "../baseComponents/CommentIndicator";
+import { stripHtml } from "../questionService/ConvertService";
 
 export interface SynthesisTabProps {
   columns: number;
@@ -25,7 +26,7 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
 
   return (
     <Grid
-      className={`drag-tile ${props.validationRequired && !props.synthesis ? "invalid" : ""}`}
+      className={`drag-tile ${props.validationRequired && !stripHtml(props.synthesis) ? "invalid" : ""}`}
       container
       alignContent="center"
       justify="center"

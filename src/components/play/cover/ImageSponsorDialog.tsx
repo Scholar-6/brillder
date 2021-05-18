@@ -5,6 +5,7 @@ import './ImageDialog.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 import DropImage from "components/build/buildQuestions/components/Image/DropImage";
+import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
 
 
 interface DialogProps {
@@ -16,7 +17,7 @@ interface DialogProps {
 }
 
 const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, upload, setDialog }) => {
-  const [permision, setPermision] = React.useState(false);
+  const [permision, setPermision] = React.useState(false as boolean | 1);
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
@@ -80,11 +81,11 @@ const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, 
             }
           </div>
         </div>
-        <div onClick={() => setPermision(!permision)}>
-          <Checkbox checked={permision} className={validationRequired ? 'required' : ''} />
-          I have permision to distribute this image
-          <span className="text-theme-orange">*</span>
-        </div>
+        <CopyrightCheckboxes
+          validationRequired={validationRequired}
+          permision={permision}
+          setPermision={setPermision}
+        />
       </div>
       <div className="centered last-button">
         <div className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {

@@ -8,6 +8,7 @@ import { showSameAnswerPopup } from '../../service/questionBuild';
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import RemoveItemButton from '../../components/RemoveItemButton';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 export const getDefaultHorizontalShuffleAnswer = () => {
   const newAnswer = () => ({ value: "" });
@@ -64,7 +65,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
     let isValid = null;
     if (validationRequired) {
       isValid = true;
-      if (answer.answerType === QuestionValueType.String && !answer.value) {
+      if (answer.answerType === QuestionValueType.String && !stripHtml(answer.value)) {
         isValid = false;
       }
     }

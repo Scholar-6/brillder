@@ -9,6 +9,18 @@
   width: 100%;
   flex-wrap: wrap;
   flex-basis: 100%;
+
+  &.content-invalid {
+    background: var(--theme-orange) !important;
+    input {
+      color: var(--white) !important;
+      &::placeholder {
+        opacity: 1 !important;
+        color: var(--white) !important;
+      }
+    }
+  }
+
   .key-word {
     line-height: 1.5;
     display: flex;
@@ -31,6 +43,7 @@
     width: auto !important;
     font-size: 1.6vw;
     min-width: 4vw;
+    padding-left: 0.4vw;
     &::placeholder {
       color: var(--theme-dark-blue);
       opacity: 0.42;

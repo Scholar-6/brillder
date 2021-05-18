@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Grid, Select, FormControl } from '@material-ui/core';
 import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -46,8 +46,8 @@ export interface QuestionProps {
   undoRedoService: UndoRedoService;
   saveQuestion(question: Question): void;
   setQuestion(index: number, question: Question): void;
-  updateFirstComponent(component: TextComponentObj): Question;
-  updateComponents(components: any[]): Question;
+  updateFirstComponent(component: TextComponentObj): Question | undefined;
+  updateComponents(components: any[]): Question | undefined;
   setQuestionType(type: QuestionTypeEnum): void;
   nextOrNewQuestion(): void;
   getQuestionIndex(question: Question): number;

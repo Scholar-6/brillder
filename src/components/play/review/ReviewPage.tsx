@@ -40,6 +40,10 @@ interface ReviewPageProps {
   updateAttempts(attempt: any, index: number): any;
   finishBrick(): void;
 
+  // things related to count down
+  endTime: any;
+  setEndTime(time: Moment): void;
+
   // only for real play
   mode?: PlayMode;
 }
@@ -320,9 +324,12 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                     <TimeProgressbar
                       onEnd={onEnd}
                       minutes={minutes}
-                      endTime={null}
+                      endTime={props.endTime}
                       brickLength={brick.brickLength}
-                      setEndTime={() => { }}
+                      setEndTime={a => {
+                        console.log('set end')
+                        props.setEndTime(a);
+                      }}
                     />
                   </div>
                   <div className="footer-space"><span className="scroll-text">Scroll down</span></div>
@@ -346,7 +353,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
               </Grid>
               <Grid item sm={4} xs={12}>
                 <div className="introduction-info">
-                  <CountDown brickLength={brick.brickLength} endTime={null} setEndTime={() => { }} onEnd={onEnd} />
                   <div className="intro-text-row f-align-self-start m-t-5">
                     <ReviewStepper
                       questions={questions}
