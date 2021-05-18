@@ -672,6 +672,8 @@ $space-between-boxes: 0.1vw;
             font-family: $font-family-regular;
             background: var(--off-white);
             border-radius: 0.5vw;
+            display: flex;
+            align-items: center;
           }
         }
       }
