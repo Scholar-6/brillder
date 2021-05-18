@@ -18,9 +18,7 @@ import { isHighlightInvalid, validateHint, validateQuestion } from "./questionSe
 import {
   getNewQuestion,
   getNewFirstQuestion,
-  activeQuestionByIndex,
   deactiveQuestions,
-  getActiveQuestion,
   cashBuildQuestion,
   clearCashQuestion,
   prepareBrickToSave,
@@ -668,44 +666,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       });
     }
   };
-
-  const autoSaveBrick = () => {
-    setSavingStatus(true);
-    prepareBrickToSave(brick, questions, synthesis);
-    if (canEdit === true) {
-      let time = Date.now();
-      let delay = 500;
-
-      try {
-        if (process.env.REACT_APP_BUILD_AUTO_SAVE_DELAY) {
-          delay = parseInt(process.env.REACT_APP_BUILD_AUTO_SAVE_DELAY);
-        }
-      } catch { }
-
-      if (time - lastAutoSave >= delay) {
-        console.log('auto save brick');
-        pushDiff(brick);
-        setCurrentBrick(brick);
-        setLastAutoSave(time);
-        props.saveBrick(brick).then((res: Brick) => {
-          console.log(`${new Date(time)} -> ${res.updated}`);
-          const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
-          if(timeDifference > 10000) {
-            console.log("Not updated properly!!");
-            setSaveError(true);
-          } else {
-            setSavingStatus(false);
-            setSaveError(false);
-          }
-        }).catch((err: any) => {
-          console.log("Error saving brick!");
-          setSaveError(true);
-        });
-      } else {
-        setSavingStatus(false);
-      }
-    }
-  }
 
   const updateComponents = (components: any[]): Question | undefined => {
     if(!currentQuestionIndex || currentQuestionIndex < 0) return;
