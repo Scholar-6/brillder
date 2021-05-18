@@ -85,6 +85,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [headerHidden, hideMobileHeader] = React.useState(false);
   const [liveEndTime, setLiveEndTime] = React.useState(null as any);
+  const [reviewEndTime, setReviewEndTime] = React.useState(null as any);
 
   useEffect(() => {
     if (props.brick) {
@@ -307,6 +308,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 updateAttempts={updateReviewAttempts}
                 attempts={attempts}
                 finishBrick={finishReview}
+                endTime={reviewEndTime}
+                setEndTime={time => {
+                  if (reviewEndTime === null) {
+                    setReviewEndTime(time);
+                  }
+                }}
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/ending">
