@@ -432,7 +432,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
 
-    if (index + pageSize <= bricks.length) {
+    if (index + pageSize <= bricks.length - 1) {
       this.setState({ ...this.state, sortedIndex: index + this.state.pageSize });
     }
   }
