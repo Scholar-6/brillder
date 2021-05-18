@@ -21,7 +21,7 @@ interface DialogProps {
 const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, updateData, setDialog }) => {
   const [source, setSource] = React.useState(initData.imageSource || '');
   const [caption, setCaption] = React.useState(initData.imageCaption || '');
-  const [permision, setPermision] = React.useState(initData.imagePermision ? true : false);
+  const [permision, setPermision] = React.useState(initData.imagePermision ? true : false as boolean | 1);
   const [copyright, setCopyright] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
@@ -40,7 +40,7 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
   }, [initFile, file, initData.value]);
 
   let canUpload = false;
-  if ((permision || copyright) && source && !removed) {
+  if (permision && source && !removed) {
     canUpload = true;
   }
 
@@ -100,8 +100,6 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
           validationRequired={validationRequired}
           permision={permision}
           setPermision={setPermision}
-          copyright={copyright}
-          setCopyright={setCopyright}
         />
         <input
           value={caption}

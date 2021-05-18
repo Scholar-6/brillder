@@ -704,6 +704,9 @@ $space-between-boxes: 0.1vw;
       }
       .prep-container {
         margin-bottom: 0.5vw;
+        iframe {
+          width: 100%;
+        }
       }
     }
     .right-sidebar {

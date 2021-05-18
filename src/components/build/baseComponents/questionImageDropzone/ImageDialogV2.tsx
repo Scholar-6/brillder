@@ -14,8 +14,8 @@ interface DialogProps {
   initData: ImageComponentData;
   fileName: string;
   removeInitFile(): void;
-  upload(file: File, source: string, caption: string, permision: boolean): void;
-  updateData(source: string, caption: string, permision: boolean): void;
+  upload(file: File, source: string, caption: string, permision: boolean | 1): void;
+  updateData(source: string, caption: string, permision: boolean | 1): void;
   close(): void;
 }
 
@@ -31,8 +31,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({
 }) => {
   const [source, setSource] = React.useState(initData.imageSource || "");
   const [caption, setCaption] = React.useState(initData.imageCaption || "");
-  const [permision, setPermision] = React.useState(initData.imagePermision ? true : false);
-  const [copyright, setCopyright] = React.useState(false);
+  const [permision, setPermision] = React.useState(initData.imagePermision ? true : false as boolean | 1);
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
@@ -49,7 +48,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({
   }, [initFile, initData.value, file]);
 
   let canUpload = false;
-  if ((permision || copyright) && source && !removed) {
+  if ((permision) && source && !removed) {
     canUpload = true;
   }
 
@@ -129,8 +128,6 @@ const ImageDialogV2: React.FC<DialogProps> = ({
           validationRequired={validationRequired}
           permision={permision}
           setPermision={setPermision}
-          copyright={copyright}
-          setCopyright={setCopyright}
         />
         <input
           value={caption}

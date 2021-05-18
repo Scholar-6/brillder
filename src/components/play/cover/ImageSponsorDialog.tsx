@@ -17,8 +17,7 @@ interface DialogProps {
 }
 
 const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, upload, setDialog }) => {
-  const [permision, setPermision] = React.useState(false);
-  const [copyright, setCopyright] = React.useState(false);
+  const [permision, setPermision] = React.useState(false as boolean | 1);
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
@@ -36,7 +35,7 @@ const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, 
   }, [initFile, file, initValue]);
 
   let canUpload = false;
-  if ((permision || copyright) && !removed) {
+  if (permision && !removed) {
     canUpload = true;
   }
 
@@ -86,8 +85,6 @@ const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, 
           validationRequired={validationRequired}
           permision={permision}
           setPermision={setPermision}
-          copyright={copyright}
-          setCopyright={setCopyright}
         />
       </div>
       <div className="centered last-button">
