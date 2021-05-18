@@ -668,7 +668,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const updateComponents = (components: any[]): Question | undefined => {
-    if(!currentQuestionIndex || currentQuestionIndex < 0) return;
+    if(currentQuestionIndex < 0) return;
     if (locked) { return activeQuestion!; }
     const updatedQuestions = questions.slice();
     updatedQuestions[currentQuestionIndex].components = components;
