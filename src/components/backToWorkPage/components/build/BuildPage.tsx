@@ -295,7 +295,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     if (!this.state.filters.isCore) {
       finalBricks = rawBricks.filter(b => !b.isCore);
     }
-    let subjects = this.getBrickSubjects(rawBricks);
+    const subjects = this.getBrickSubjects(rawBricks);
     this.setState({ ...this.state, finalBricks, subjects, rawBricks, threeColumns, bricksLoaded: true });
   }
 
@@ -311,8 +311,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
       filters.publish = false;
     }
     const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
+    const subjects = this.getBrickSubjects(finalBricks);
     const threeColumns = prepareTreeRows(this.state.rawBricks, this.state.filters, this.props.user.id);
-    this.setState({ ...this.state, sortedIndex: 0, threeColumns, filters, finalBricks });
+    this.setState({ ...this.state, subjects, sortedIndex: 0, threeColumns, filters, finalBricks });
   }
 
   handleSortChange = (e: React.ChangeEvent<HTMLInputElement>) => {
