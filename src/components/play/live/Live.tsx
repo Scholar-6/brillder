@@ -332,18 +332,6 @@ const LivePage: React.FC<LivePageProps> = ({
     );
   }
 
-  const renderCountDown = () => {
-    return (
-      <CountDown
-        isLive={true}
-        onEnd={onEnd}
-        endTime={props.endTime}
-        brickLength={brick.brickLength}
-        setEndTime={props.setEndTime}
-      />
-    );
-  }
-
   const renderMobileButtons = () => {
     return (
       <div className="action-footer mobile-footer-fixed-buttons">
@@ -360,6 +348,7 @@ const LivePage: React.FC<LivePageProps> = ({
   }
 
   const minutes = getLiveTime(brick.brickLength);
+
 
   return (
     <div className="brick-row-container live-container">
@@ -413,7 +402,6 @@ const LivePage: React.FC<LivePageProps> = ({
               </Grid>
               <Grid item xs={4}>
                 <div className="introduction-info">
-                  {renderCountDown()}
                   <div className="intro-text-row f-align-self-start m-t-5">
                     {renderStepper()}
                   </div>
@@ -430,7 +418,6 @@ const LivePage: React.FC<LivePageProps> = ({
           </Hidden>
           <Hidden only={["sm", "md", "lg", "xl"]}>
             <div className="introduction-info">
-              {renderCountDown()}
               <div className="intro-text-row">
                 <span className="phone-stepper-head">
                   <span className="bold">{brick.subject?.name}</span> <BrickTitle title={brick.title} />
