@@ -677,7 +677,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const updateFirstComponent = (component: TextComponentObj): Question | undefined => {
-    if(!currentQuestionIndex || currentQuestionIndex < 0) return;
+    if(currentQuestionIndex < 0) return;
     if (locked) { return activeQuestion!; }
     const updatedQuestions = questions.slice();
     updatedQuestions[currentQuestionIndex].firstComponent = component;
