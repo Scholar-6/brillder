@@ -10,7 +10,7 @@ const DashboardPagination: React.FC<any> = props => {
   if (bricksLength <= pageSize) return <div></div>;
 
   const showPrev = sortedIndex >= pageSize;
-  const showNext = sortedIndex + pageSize <= bricksLength;
+  const showNext = sortedIndex + pageSize <= bricksLength - 1;
 
   let firstBrickIndex = sortedIndex + 1;
   let lastBrickIndex = sortedIndex + pageSize;
