@@ -12,6 +12,7 @@ import { setAssignmentId } from "localStorage/playAssignmentId";
 import map from "components/map";
 import buildRoutes from 'components/build/routes';
 import { fileUrl } from "components/services/uploadFile";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -78,9 +79,13 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
           <div className="level">
             <div style={{background: color}}>III</div>
           </div>
-          {brick.coverImage &&
+          {brick.coverImage ?
             <div className="scroll-block">
               <img alt="" src={fileUrl(brick.coverImage)} />
+            </div>
+            :
+            <div className="p-cover-icon">
+              <SpriteIcon name="image" />
             </div>
           }
           <div className="bottom-description-color"></div>
