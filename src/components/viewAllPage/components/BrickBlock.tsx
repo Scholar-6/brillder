@@ -77,7 +77,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       <div className="flex-brick-container" onClick={move}>
         <div className="publish-brick-container" onMouseLeave={props.handleMouseLeave}>
           <div className="level">
-            <div style={{background: color}}>III</div>
+            <div style={{background: color}}>{brick.academicLevel}</div>
           </div>
           {brick.coverImage ?
             <div className="scroll-block">
