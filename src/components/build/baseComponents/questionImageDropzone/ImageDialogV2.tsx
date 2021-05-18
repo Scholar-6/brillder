@@ -31,9 +31,8 @@ const ImageDialogV2: React.FC<DialogProps> = ({
 }) => {
   const [source, setSource] = React.useState(initData.imageSource || "");
   const [caption, setCaption] = React.useState(initData.imageCaption || "");
-  const [permision, setPermision] = React.useState(
-    initData.imagePermision ? true : false
-  );
+  const [permision, setPermision] = React.useState(initData.imagePermision ? true : false);
+  const [copyright, setCopyright] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
@@ -50,7 +49,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({
   }, [initFile, initData.value, file]);
 
   let canUpload = false;
-  if (permision && source && !removed) {
+  if ((permision || copyright) && source && !removed) {
     canUpload = true;
   }
 
@@ -91,7 +90,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({
       <div className="close-button svgOnHover" onClick={close}>
         <SpriteIcon name="cancel" className="w100 h100 active" />
       </div>
-      <div className="dialog-header image-dialog">
+      <div className="dialog-header image-dialog" style={{maxWidth: '35vw'}}>
         <div className={`cropping ${removed ? "empty" : ""}`}>
           <div className="centered">
             {removed ? (
@@ -131,7 +130,15 @@ const ImageDialogV2: React.FC<DialogProps> = ({
             checked={permision}
             className={validationRequired ? "required" : ""}
           />
-          I have permision to distribute this image
+          I am aware of licence restrictions around the publication of images online. I have checked this image is available for use without such restriction or within Creative Commons criteria which allow commercial use.
+          <span className="text-theme-orange">*</span>
+        </div>
+        <div onClick={() => setCopyright(!copyright)}>
+          <Checkbox
+            checked={copyright}
+            className={validationRequired ? "required" : ""}
+          />
+          I am creating a brick for educational use with my own students and can therefore use licensed images consistent with the exemptions for education in the Copyright Designs and Patents Act, 1988.
           <span className="text-theme-orange">*</span>
         </div>
         <input
