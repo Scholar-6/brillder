@@ -34,6 +34,7 @@ interface DragTabsProps {
   validationRequired: boolean;
   tutorialStep: TutorialStep;
   tutorialSkipped: boolean;
+  currentQuestionIndex: number;
   openSkipTutorial(): void;
   createNewQuestion(): void;
   moveToSynthesis(): void;
@@ -163,7 +164,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     ) => {
       let titleClassNames = "drag-tile-container";
       let cols = 2;
-      if (question.active) {
+      if (index === this.props.currentQuestionIndex) {
         titleClassNames += " active";
         cols = 3;
       }
@@ -174,7 +175,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       }
 
       let width = (100 * 2) / (comlumns - 2);
-      if (question.active) {
+      if (index === this.props.currentQuestionIndex) {
         width = (100 * 3) / (comlumns - 2);
       }
 
@@ -198,7 +199,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             index={index}
             deleteHidden={questions.length === 1}
             questionId={question.id}
-            active={question.active}
+            active={index === this.props.currentQuestionIndex}
             isValid={isValid}
             getHasReplied={getHasReplied}
             selectQuestion={props.selectQuestion}
