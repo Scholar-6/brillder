@@ -60,7 +60,9 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
                 } else {
                   this.props.setEmptyEmail(true);
                 }
-              } catch { }
+              } catch {
+                // failed
+              }
             }}>Forgot password?</div>
           </div>
           <div className="input-block">
