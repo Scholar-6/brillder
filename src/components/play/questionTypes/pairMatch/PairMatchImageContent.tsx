@@ -50,12 +50,16 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
   }
   return (
     <div className="image-container">
-      <img
-        alt="" src={fileUrl(fileName)} width="100%"
-        onMouseEnter={() => props.hover(fileName)}
-        onMouseLeave={props.blur}
-      />
+      <div>
+        <div className="flex-align">
+          <img
+            alt="" src={fileUrl(fileName)} width="100%"
+            onMouseEnter={() => props.hover(fileName)}
+            onMouseLeave={props.blur}
+          />
+        </div>
       {imageCaption && <div>{imageCaption}</div>}
+      </div>
     </div>
   );
 }
