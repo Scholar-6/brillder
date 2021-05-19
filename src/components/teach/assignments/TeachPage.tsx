@@ -522,6 +522,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (this.state.isLoaded && (this.state.classrooms.length === 0 || (activeClassroom && activeClassroom?.assignments.length === 0))) {
       return this.renderEmptyTabContent();
     }
+
     return (
       <div className="tab-content">
         <div className="classroom-list-buttons">

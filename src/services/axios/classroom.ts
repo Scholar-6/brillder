@@ -47,6 +47,14 @@ export const getStudents = async () => {
   }
 }
 
+export const getClassInvitations = async (searchString?: string) => {
+  try {
+    return await post<Student[]>("/classrooms/studentsInvitations", {});
+  } catch {
+    return null;
+  }
+}
+
 export const assignToClassByEmails = async (classroom: ClassroomApi, emails: string[]) => {
   try {
     return await post<any>(`/classrooms/students/${classroom.id}/new`, { emails });

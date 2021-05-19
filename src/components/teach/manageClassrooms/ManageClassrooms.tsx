@@ -8,7 +8,7 @@ import '../style.scss';
 
 import { User } from "model/user";
 import { MUser, TeachActiveTab } from "../model";
-import { deleteClassroom, getStudents, resendInvitation, updateClassroom } from 'services/axios/classroom';
+import { deleteClassroom, getClassInvitations, getStudents, resendInvitation, updateClassroom } from 'services/axios/classroom';
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import {
@@ -80,6 +80,8 @@ interface UsersListState {
   inviteOpen: boolean;
   numStudentsInvited: number;
 
+  pendingUsers: [];
+
   pageStudentsSelected: boolean;
 }
 
@@ -121,6 +123,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       inviteOpen: false,
       numStudentsInvited: 0,
 
+      pendingUsers: [],
+
       pageStudentsSelected: false
     };
 
@@ -152,6 +156,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       }
     }
     this.setState({ isLoaded: true, activeClassroom });
+    await this.getInvitations();
+  }
+
+  async getInvitations() {
+    await getClassInvitations();
   }
 
   async loadData() {
