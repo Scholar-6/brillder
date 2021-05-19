@@ -5,12 +5,13 @@ import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
 
 import userActions from "../../redux/actions/user";
-import { isAuthenticated, Brick } from "model/brick";
+import { isAuthenticated, Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
+import { checkAdmin } from "components/services/brickService";
 
 interface BuildRouteProps {
   exact?: any;
@@ -50,6 +51,17 @@ const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
       }
     }
 
+    // #3374 brillder
+    const canAccess = (brick: Brick) => {
+      const isAdmin = checkAdmin(rest.user.roles);
+      if (isAdmin) { return true; }
+
+      if (brick.isCore && brick.status === BrickStatus.Publish) {
+        return false;
+      }
+      return true;
+    }
+
     return (
       <Route
         {...rest}
@@ -70,14 +82,20 @@ const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
           if (found === -1) {
             const isSynthesis = rest.location.pathname.indexOf('/synthesis');
             if (isSynthesis) {
-              return <Component {...props} />;
+              if (canAccess(rest.brick)) {
+                return <Component {...props} />;
+              }
+              return <Redirect to={map.Login} />;
             }
 
             props.history.push(`/build/brick/${brickId}/investigation`);
             return <PageLoader content="...Getting Brick..." />;
           }
 
-          return <Component {...props} />;
+          if (canAccess(rest.brick)) {
+            return <Component {...props} />;
+          }
+          return <Redirect to={map.Login} />;
         }}
       />
     );
