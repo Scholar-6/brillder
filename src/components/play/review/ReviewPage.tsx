@@ -15,7 +15,6 @@ import { getPlayPath, scrollToStep } from "../service";
 import ReviewStepper from "./ReviewStepper";
 import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
-import CountDown from "../baseComponents/CountDown";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers";
 import SpriteIcon from "components/baseComponents/SpriteIcon";

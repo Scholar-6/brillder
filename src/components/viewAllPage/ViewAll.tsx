@@ -12,7 +12,7 @@ import { User } from "model/user";
 import { Notification } from 'model/notifications';
 import { Brick, Subject, SubjectItem } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
-import { checkAdmin, getAssignmentIcon } from "components/services/brickService";
+import { getAssignmentIcon } from "components/services/brickService";
 import { getCurrentUserBricks, getPublicBricks, getPublishedBricks, searchBricks, searchPublicBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
 

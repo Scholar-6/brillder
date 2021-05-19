@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Checkbox from "@material-ui/core/Checkbox";
 
 import './ImageDialog.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";

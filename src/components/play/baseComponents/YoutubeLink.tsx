@@ -13,7 +13,6 @@ const YoutubeLink: React.FC<YoutubeLinkProps> = (props) => {
 
   const videoId = React.useMemo(() => {
     const result = props.value.match(/https:\/\/www.youtube\.com\/embed\/([_\-0-9A-Za-z]{11})/);
-    console.log(result);
     if(result) {
       return result[1];
     }
