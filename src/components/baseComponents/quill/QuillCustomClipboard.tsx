@@ -6,6 +6,20 @@ const Delta = GlobalQuill.import("delta");
 class QuillCustomClipboard extends Clipboard {
     _onPasteImage?: (node: any, delta: any) => void;
 
+    /* 5/19/2021 #3347 copy pasting plain text
+    onPaste (range:any, b: any) {
+       const text = b.text;
+       const delta = new Delta()
+       .retain(range.index)
+       .delete(range.length)
+       .insert(text);
+       const index = text.length + range.index
+       const length = 0
+       this.quill.updateContents(delta, 'silent')
+       this.quill.setSelection(index, length, 'silent')
+       this.quill.scrollIntoView()
+    }*/
+
     get onPasteImage(): typeof QuillCustomClipboard._onPasteImage {
         return this._onPasteImage;
     }
