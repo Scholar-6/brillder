@@ -42,6 +42,12 @@ class QuillCustomClipboard extends Clipboard {
         this.addMatcher("img", () => {
             return new Delta();
         });
+
+        this.addMatcher("span", (node: any, delta: any) => {
+            const newDelta = delta.compose(new Delta().retain(delta.length(), { color: null, background: null }));
+            console.log(delta, newDelta);
+            return newDelta;
+        })
     }
 
     removeMatcher(name: string) {
