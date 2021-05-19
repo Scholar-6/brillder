@@ -25,7 +25,7 @@ import {
   removeQuestionByIndex,
   setQuestionTypeByIndex,
   setLastQuestionId,
-  activateFirstInvalidQuestion,
+  getFirstInvalidQuestionIndex,
   parseQuestion,
   getUniqueComponent,
   getApiQuestion,
@@ -295,7 +295,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   let canEdit = React.useMemo(() => canEditBrick(props.brick, props.user), [props.brick, props.user]);
 
-  /* Changing question number by tabs in build */
+  //#region Changing questions in build
   const setPreviousQuestion = React.useCallback(() => {
     if (currentQuestionIndex >= 1) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
@@ -310,12 +310,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   }, []);
 
-  const saveSynthesis = (text: string) => {
-    synthesis = text;
-    setSynthesis(synthesis);
-    saveBrick();
-  }
-
   const setNextQuestion = React.useCallback(() => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -323,7 +317,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       history.push(map.ProposalReview(brickId));
     }
   }, [questions, history]);
-  /* Changing question in build */
+  //#endregion
 
   const createNewQuestion = () => {
     if (!isTutorialPassed()) {
@@ -342,6 +336,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     });
 
   };
+
+  const saveSynthesis = (text: string) => {
+    synthesis = text;
+    setSynthesis(synthesis);
+    saveBrick();
+  }
 
   const moveToSynthesis = () => {
     history.push(map.InvestigationSynthesis(brickId));
@@ -422,7 +422,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     saveQuestion(question)
   }
 
-  // Logic for on every render.
+  //#region Logic for on every render.
   const { brick } = props;
 
   if (!brick || brick.id !== brickId) {
@@ -449,7 +449,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setMovingFromSynthesis(false);
     }
   }
-  // Logic for on every render.
+  //#endregion
 
   const parseQuestions = () => {
     if (brick.questions && loaded === false) {
@@ -557,9 +557,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const moveToRedTab = () => {
-    const updatedQuestions = deactiveQuestions(questions);
-    activateFirstInvalidQuestion(updatedQuestions);
-    setQuestions(update(questions, { $set: updatedQuestions }));
+    const invalidQuestionIndex = getFirstInvalidQuestionIndex(questions);
+    if(invalidQuestionIndex) {
+      setCurrentQuestionIndex(invalidQuestionIndex);
+    }
   }
 
   const hideInvalidBrick = () => {
