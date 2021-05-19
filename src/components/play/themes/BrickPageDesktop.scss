@@ -2158,8 +2158,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   justify-content: center;
   img {
     background: var(--theme-light-blue);
-    border: 1vw solid var(--theme-light-blue);
-    border-radius: 0.5vw;
+    border: 0.4vw solid var(--theme-light-blue);
+    border-radius: 0.3vw;
     width: auto;
     height: auto;
     max-width: 50vw;
