@@ -16,7 +16,6 @@ import { Brick } from "model/brick";
 import { PlayMode } from "../model";
 import { getPlayPath, scrollToStep } from "../service";
 
-import CountDown from "../baseComponents/CountDown";
 import LiveStepper from "./components/LiveStepper";
 import TabPanel from "../baseComponents/QuestionTabPanel";
 import ShuffleAnswerDialog from "components/baseComponents/failedRequestDialog/ShuffleAnswerDialog";
