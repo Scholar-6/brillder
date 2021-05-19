@@ -61,7 +61,7 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           <div><BrickTitle title={brick.title} /></div>
         </div>}
         <div className="progress-value default-value" onMouseEnter={() => setHover(true)} />
-        <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }}>
+        <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%', maxHeight: '100%' }}>
           {height > 40 && assignment.brick.academicLevel >= AcademicLevel.First && <AcademyDifficulty a={assignment.brick.academicLevel} className="smaller" />}
         </div>
       </div>

@@ -214,7 +214,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : disabledColor}`}>
           <BlocksIcon />
           <span className={`item-description flex-number ${isActive ? '' : 'disabled'}`}>
-            My Assignments {this.state.assignedCount &&
+            My Assignments {this.state.assignedCount > 0 &&
             <div className="m-red-circle">
               <DynamicFont content={this.state.assignedCount.toString()} />
             </div>}
