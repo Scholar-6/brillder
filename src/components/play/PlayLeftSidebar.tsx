@@ -206,6 +206,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           <div className="prep-button" onClick={() => this.props.history.push(playNewPrep(this.props.brick.id))}>
             <SpriteIcon name="file-text" />
             <div>Prep</div>
+            <div className="absolute-circle">
+              <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg" />
+              <div className="prep-help-text">Click here to go back to Prep tasks</div>
+            </div>
           </div>
           {<div className="grey-line"><div /></div>}
         </div>
