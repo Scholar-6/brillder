@@ -215,7 +215,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
           <BlocksIcon />
           <span className={`item-description flex-number ${isActive ? '' : 'disabled'}`}>
             My Assignments {this.state.assignedCount &&
-            <div className="m-red-circle"><DynamicFont content={this.state.assignedCount.toString()} />
+            <div className="m-red-circle">
+              <DynamicFont content={this.state.assignedCount.toString()} />
             </div>}
           </span>
         </button>
