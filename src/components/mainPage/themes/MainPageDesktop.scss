@@ -182,6 +182,27 @@
           background: var(--theme-light-blue) !important;
         }
       }
+      .flex-number {
+        display: flex;
+        align-items: center;
+
+        .m-red-circle {
+          background: var(--theme-orange);
+          width: 1.6vw;
+          height: 1.6vw;
+          border-radius: 50%;
+          font-size: 1vw;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          overflow: hidden;
+
+          span {
+            margin-left: 0.3vw;
+          }
+        }
+      }
     }
     .item-description {
       padding: 0;
