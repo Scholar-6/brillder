@@ -9,12 +9,13 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 import axios from "axios";
 
-
 interface MobileLoginProps {
   email: string;
   password: string;
   passwordHidden: boolean;
   history: History;
+  setEmailSended(v: boolean): void;
+  setEmptyEmail(v: boolean): void;
   setEmail(email: string): void;
   setPassword(password: string): void;
   setHidden(hidden: boolean): void;
@@ -53,7 +54,12 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
           <div className="phone-reset-link-container">
             <div className="reset-password-link" onClick={async () => {
               try {
-                this.props.email && await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${this.props.email}`, {}, { withCredentials: true });
+                if (this.props.email) {
+                  await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${this.props.email}`, {}, { withCredentials: true });
+                  this.props.setEmailSended(true);
+                } else {
+                  this.props.setEmptyEmail(true);
+                }
               } catch { }
             }}>Forgot password?</div>
           </div>

@@ -15,6 +15,7 @@ import PhoneIcon from "./PhoneIcon";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import TermsLink from "components/baseComponents/TermsLink";
 import { trackSignUp } from "services/matomo";
+import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -34,6 +35,9 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
     initPolicyOpen = true;
   }
   const [isPolicyOpen, setPolicyDialog] = useState(initPolicyOpen);
+
+  const [emptyEmail, setEmptyEmail] = useState(false);
+  const [emailSended, setEmailSended] = useState(false);
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
@@ -148,7 +152,13 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
             register={() => register(email, password)}
             resetPassword={async () => {
               try {
-                email && await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${email}`, {}, { withCredentials: true });
+                if (email) {
+                  const res = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${email}`, {}, { withCredentials: true });
+                  console.log(res);
+                  setEmailSended(true);
+                } else {
+                  setEmptyEmail(true);
+                }
               } catch {}
             }}
           />
@@ -203,6 +213,14 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
         onClose={() => toggleAlertMessage(false)}
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
+      />
+      <TextDialog
+        isOpen={emailSended} close={() => setEmailSended(false)}
+        label="Now check your email for a password reset link."
+      />
+      <TextDialog
+        isOpen={emptyEmail} close={() => setEmptyEmail(false)}
+        label="You need to enter an email before clicking this."
       />
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
     </div>
