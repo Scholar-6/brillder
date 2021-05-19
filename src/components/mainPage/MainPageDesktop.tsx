@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import 'intro.js/introjs.css';
 // @ts-ignore
 import { Steps } from 'intro.js-react';
-
+import DynamicFont from 'react-dynamic-font';
 
 import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
@@ -69,6 +69,8 @@ interface MainPageState {
 
   isNewTeacher: boolean;
 
+  assignedCount: number;
+
   // for students
   backWorkActive: boolean;
   isMyLibraryOpen: boolean;
@@ -118,6 +120,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isStudent,
       isBuilder,
 
+      assignedCount: 0,
+
       isDesktopOpen: false,
       secondaryLabel: '',
       secondPart: ' not yet been optimised for mobile devices.',
@@ -142,7 +146,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   async preparationForStudent() {
     let bricks = await getAssignedBricks();
     if (bricks && bricks.length > 0) {
-      this.setState({ backWorkActive: true });
+      this.setState({ backWorkActive: true, assignedCount: bricks.length });
     }
   }
 
@@ -209,7 +213,11 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : disabledColor}`}>
           <BlocksIcon />
-          <span className={`item-description ${isActive ? '' : 'disabled'}`}>Assignments</span>
+          <span className={`item-description flex-number ${isActive ? '' : 'disabled'}`}>
+            My Assignments {this.state.assignedCount &&
+            <div className="m-red-circle"><DynamicFont content={this.state.assignedCount.toString()} />
+            </div>}
+          </span>
         </button>
       </div>
     );
