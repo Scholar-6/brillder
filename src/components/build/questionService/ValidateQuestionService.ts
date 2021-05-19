@@ -85,7 +85,7 @@ export function validateQuestion(question: Question) {
   if (comp.list) {
     answersCount = comp.list.length;
   }
-  if (type === QuestionTypeEnum.MissingWord) {
+  if (type === QuestionTypeEnum.MissingWord && comp.choices) {
     answersCount = comp.choices.length;
   }
 
