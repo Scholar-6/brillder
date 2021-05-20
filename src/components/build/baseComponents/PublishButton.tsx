@@ -5,7 +5,7 @@ import { publishBrick } from "services/axios/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSuccessDialog";
 import { Brick } from "model/brick";
-import YesNoDialog from "./dialogs/YesNoDialog";
+import SendToPublisherDialog from "./dialogs/SendToPublisherDialog";
 
 export interface ButtonProps {
   disabled: boolean;
@@ -46,12 +46,11 @@ const PublishButton: React.FC<ButtonProps> = props => {
         <SpriteIcon name="award" />
         {hovered && <div className="custom-tooltip">Publish</div>}
       </div>
-      <YesNoDialog
+      <SendToPublisherDialog
         isOpen={state === PublishStatus.Publishing}
-        title="Are you convinced this brick meets our publication standards?"
         close={() => setState(PublishStatus.None)}
         submit={async () => {
-          let success = await publishBrick(brick.id);
+          const success = await publishBrick(brick.id);
           if (success) {
             setState(PublishStatus.Published)
           }

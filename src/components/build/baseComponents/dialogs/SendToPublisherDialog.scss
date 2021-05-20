@@ -1,0 +1,45 @@
+.send-publish-dialog {
+  .MuiPaper-root {
+    max-width: 60vw !important;
+  }
+  .MuiButtonBase-root {
+    margin-left: 0.5vw;
+    margin-right: 1vw;
+  }
+  .MuiButtonBase-root, .MuiTypography-root {
+    padding: 0.2vw;
+    padding: 0;
+  }
+  .MuiSvgIcon-root {
+    margin: 0 !important;
+  }
+  .MuiTypography-root {
+    font-size: 1.2vw;
+  }
+
+  .title {
+    font-size: 1.8vw !important;
+    margin-bottom: 1vh;
+  }
+
+  .dialog-footer {
+    justify-content: center !important;
+    > div > div {
+      width: 30vw;
+      display: flex;
+
+      .flex-button  {
+        display: flex;
+        align-items: center;
+        svg {
+          width: 1.5vw;
+          height: 1.5vw;
+        }
+        .flex-center {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
