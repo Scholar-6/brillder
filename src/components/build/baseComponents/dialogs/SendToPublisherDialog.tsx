@@ -4,6 +4,7 @@ import { FormControlLabel, Checkbox } from "@material-ui/core";
 
 import './SendToPublisherDialog.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import SendToPublisherDialog2 from "./SendToPublisher2Dialog";
 
 interface DialogProps {
   isOpen: boolean;
@@ -16,6 +17,8 @@ const SendToPublisherDialog: React.FC<DialogProps> = (props) => {
   const [checked2, setChecked2] = React.useState(false);
   const [checked3, setChecked3] = React.useState(false);
   const [checked4, setChecked4] = React.useState(false);
+
+  const [invalid, setInvalid] = React.useState(false);
 
   const isValid = () => {
     if (checked1 && checked2 && checked3 && checked4) {
@@ -56,7 +59,7 @@ const SendToPublisherDialog: React.FC<DialogProps> = (props) => {
             <span>It's not ready yet!</span>
           </button>
           <div className={`btn flex-button btn-md no-button ${isValid() ? 'bg-green text-white' : 'bg-gray'}`} onClick={() => {
-            isValid() && props.submit();
+            isValid() ? props.submit() : setInvalid(true);
           }}>
             <div>Send to Publisher</div>
             <div className="flex-center">
@@ -66,6 +69,7 @@ const SendToPublisherDialog: React.FC<DialogProps> = (props) => {
         </div>
         </div>
       </div>
+      <SendToPublisherDialog2 isOpen={invalid} close={() => setInvalid(false)} />
     </BaseDialogWrapper>
   );
 }
