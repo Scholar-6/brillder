@@ -2,6 +2,10 @@
   .MuiPaper-root {
     max-width: 60vw !important;
   }
+  .MuiFormControlLabel-root {
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+  }
   .MuiButtonBase-root {
     margin-left: 0.5vw;
     margin-right: 1vw;
@@ -18,11 +22,12 @@
   }
 
   .title {
-    font-size: 1.8vw !important;
+    font-size: 1.7vw !important;
     margin-bottom: 1vh;
   }
 
   .dialog-footer {
+    margin-top: 1vh;
     justify-content: center !important;
     > div > div {
       width: 30vw;
@@ -40,6 +45,12 @@
           align-items: center;
         }
       }
+    }
+    .bg-gray {
+      color: #B5B5B5 !important;
+    }
+    .bg-gray:hover {
+      background: var(--tab-gray) !important;
     }
   }
 }
