@@ -296,7 +296,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       isAuthor = brick.author.id === this.props.user.id;
     } catch { }
 
-    const link = routes.playNewPrep(brick.id);
+    const link = routes.playCover(brick.id);
 
     return (
       <div>

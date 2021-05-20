@@ -106,7 +106,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
       isAuthor = brick.author.id === props.user.id;
     } catch { }
 
-    const link = `/play/brick/${brick.id}/prep`;
+    const link = routes.playCover(brick.id);
 
     return <div>
       {canSee && <div>

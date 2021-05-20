@@ -76,10 +76,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     };
   });
 
-  let link = routes.playNewPrep(brick.id);
-  if (isPhone()) {
-    link = routes.phonePrep(brick.id);
-  }
+  const link = routes.playCover(brick.id);
 
   let isAuthor = false;
   try {
