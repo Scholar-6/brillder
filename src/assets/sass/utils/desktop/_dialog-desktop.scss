@@ -365,3 +365,21 @@
     }
   }
 }
+
+.create-classroom-dialog .title, .dialog-box .title {
+  font-size: 1.5vw;
+}
+
+.MuiButtonBase-root.MuiIconButton-root.MuiRadio-root.white {
+  width: 2vw;
+  height: 2vw;
+
+  svg {
+    width: 2vw !important;
+    height: 2vw !important;
+  }
+}
+
+.text-dialog .MuiPaper-root.MuiDialog-paper {
+  max-width: 38vw !important;
+}
