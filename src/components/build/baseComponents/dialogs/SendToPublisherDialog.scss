@@ -1,4 +1,8 @@
 .send-publish-dialog {
+  .MuiDialog-container .MuiDialog-paperScrollPaper {
+    padding-bottom: 3.4vh !important;
+    padding-top: 3.4vh !important;
+  }
   .MuiPaper-root {
     max-width: 58vw !important;
   }
@@ -24,6 +28,10 @@
   .title {
     font-size: 1.7vw !important;
     margin-bottom: 1vh;
+  }
+
+  .dialog-header {
+    margin-bottom: 1vh !important;
   }
 
   .dialog-footer {
