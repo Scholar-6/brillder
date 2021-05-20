@@ -390,10 +390,9 @@
   font-size: 1vw;
 }
 
-.introduction-page {
-  li {
-    font-size: 1.4vw;
-  }
+.introduction-page,
+.phone-question-preview,
+.proposal-phone-preview {
   li[data-list=bullet] {
     list-style: none;
     &::before {
@@ -403,4 +402,16 @@
       margin-right: 0.3vw;
     }
   }
+}
+
+.proposal-phone-preview, .phone-question-preview li {
+  font-size: 1vw;
+  &[data-list=bullet]::before {
+    font-size: 1.3vw;
+    margin-right: 0.3vw;
+  }
+}
+
+.introduction-page li {
+  font-size: 1.4vw;
 }
