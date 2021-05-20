@@ -1,10 +1,9 @@
 import React from "react";
 import Grow from "@material-ui/core/Grow";
-import { Box } from "@material-ui/core";
 import queryString from 'query-string';
 
 import './BrickBlock.scss';
-import { AcademicLevel, Brick, BrickStatus } from "model/brick";
+import { Brick } from "model/brick";
 import { User } from "model/user";
 
 import { playCover } from "components/play/routes";

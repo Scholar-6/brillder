@@ -91,15 +91,6 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
           </div>
         </div>
-        {props.user &&
-        <div className="fixed-helpers-container">
-          <div className="circles">
-            <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg" />
-          </div>
-          <div className="prep">
-            <span>Click here to go back to Prep tasks</span>
-          </div>
-        </div>}
       </div>
     </div>
   );
