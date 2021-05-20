@@ -24,7 +24,6 @@ interface SynthesisPreviewProps {
 const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
   data
 }) => {
-  console.log(data.synthesis, stripHtml(data.synthesis))
   if (!data.synthesis || !stripHtml(data.synthesis)) {
     const {brickLength} = data;
     return (
