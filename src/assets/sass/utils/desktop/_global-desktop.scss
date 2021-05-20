@@ -423,9 +423,21 @@ h3 {
   text-transform: unset !important;
 }
 
-.MuiInputBase-input::placeholder {
-}
-
 .inline {
   display: inline;
+}
+
+
+.question-unique-play .choose-choice.image-choice {
+  line-height: 1 !important;
+  .image-container {
+    img {
+      width: auto;
+      max-height: 10vh !important;
+    }
+  }
+}
+
+.question-unique-play .pair-match-play-option .image-container {
+  background: var(--tab-gray);
 }
