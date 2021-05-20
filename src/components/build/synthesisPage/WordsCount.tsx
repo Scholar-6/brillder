@@ -24,10 +24,18 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
   }
 
   getTimeText(count: number) {
-    const minutes = Math.floor(count / 150);
-    let seconds = count % 150;
-    seconds =  Math.round((seconds / 150) * 6) * 10;
+    const constant = 150;
+    let minutes = Math.floor(count / constant);
+    let seconds = count % constant;
+    console.log(minutes, seconds);
+    seconds =  Math.round((seconds / constant) * 6) * 10;
     let res = '';
+
+    if (seconds === 60) {
+      minutes += 1;
+      seconds = 0;
+    }
+
     if (minutes > 0) {
       if (minutes === 1) {
         res += `${minutes} min `;
@@ -35,6 +43,7 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
         res += `${minutes} mins `;
       }
     }
+
     res += `${seconds} secs`;
     return res;
   }
@@ -66,8 +75,12 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
   render() {
     return (
       <div className="synthesis-words-count">
-        <div>Words: {this.state.count}</div>
-        <div>Est. Reading Time: {this.state.timeText}</div>
+        <div className="bold bigger">Words</div>
+        <div><span className="text-orange bold">Current</span> | Recommended</div>
+        <div><span className="text-orange bold">{this.state.count}</span> | 1200-1600</div>
+        <div className="bold bigger">Reading Time</div>
+        <div><span className="text-orange bold">Current</span> | Recommended</div>
+        <div><span className="text-orange bold">{this.state.timeText}</span> | 8 mins</div>
       </div>
     );
   }

@@ -355,7 +355,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         />
         <InviteDialog
           canEdit={true} brick={brick} isOpen={this.state.inviteOpen} hideAccess={true} isAuthor={isAuthor}
-          submit={name => this.setState({ inviteResult: { isOpen: true, name, accessGranted: false } })}
+          submit={name => {
+            this.setState({ inviteResult: { isOpen: true, name, accessGranted: false } })
+          }}
           close={() => this.setState({ inviteOpen: false })}
         />
         <InvitationSuccessDialog

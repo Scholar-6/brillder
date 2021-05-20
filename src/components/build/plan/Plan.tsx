@@ -129,6 +129,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     "bulletedList",
                     "numberedList",
                     "blockQuote",
+                    "align",
                     "image",
                     "table",
                   ]}
@@ -202,6 +203,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                         "latex",
                         "bulletedList",
                         "numberedList",
+                        "align",
                         "table"
                       ]}
                     />

@@ -1,0 +1,65 @@
+.send-publish-dialog {
+  .MuiDialog-container .MuiDialog-paperScrollPaper {
+    padding-bottom: 3.4vh !important;
+    padding-top: 3.4vh !important;
+  }
+  .MuiPaper-root {
+    max-width: 58vw !important;
+  }
+  .MuiFormControlLabel-root {
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+  }
+  .MuiButtonBase-root {
+    margin-left: 0.5vw;
+    margin-right: 1vw;
+  }
+  .MuiButtonBase-root, .MuiTypography-root {
+    padding: 0.2vw;
+    padding: 0;
+  }
+  .MuiSvgIcon-root {
+    margin: 0 !important;
+  }
+  .MuiTypography-root {
+    font-size: 1.2vw;
+  }
+
+  .title {
+    font-size: 1.7vw !important;
+    margin-bottom: 1vh;
+  }
+
+  .dialog-header {
+    margin-bottom: 1vh !important;
+  }
+
+  .dialog-footer {
+    margin-top: 1vh;
+    justify-content: center !important;
+    > div > div {
+      width: 30vw;
+      display: flex;
+
+      .flex-button  {
+        display: flex;
+        align-items: center;
+        svg {
+          margin-left: 0.4vw;
+          width: 1.5vw;
+          height: 1.5vw;
+        }
+        .flex-center {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+    .bg-gray {
+      color: #B5B5B5 !important;
+    }
+    .bg-gray:hover {
+      background: var(--tab-gray) !important;
+    }
+  }
+}
