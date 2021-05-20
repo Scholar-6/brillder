@@ -75,12 +75,12 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
   render() {
     return (
       <div className="synthesis-words-count">
-        <div className="bold">Words</div>
-        <div><span className="text-orange">Current</span> | Recommended</div>
-        <div><span className="text-orange">{this.state.count}</span> | 1200-1600</div>
-        <div className="bold">Reading Time</div>
-        <div><span className="text-orange">Current</span> | Recommended</div>
-        <div><span className="text-orange">{this.state.timeText}</span> | 8 mins</div>
+        <div className="bold bigger">Words</div>
+        <div><span className="text-orange bold">Current</span> | Recommended</div>
+        <div><span className="text-orange bold">{this.state.count}</span> | 1200-1600</div>
+        <div className="bold bigger">Reading Time</div>
+        <div><span className="text-orange bold">Current</span> | Recommended</div>
+        <div><span className="text-orange bold">{this.state.timeText}</span> | 8 mins</div>
       </div>
     );
   }
