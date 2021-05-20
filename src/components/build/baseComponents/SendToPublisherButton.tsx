@@ -8,6 +8,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SendPublisherSuccessDialog from "components/playPreview/finalStep/SendPublisherSuccess";
 import { Brick, BrickStatus } from "model/brick";
 import YesNoDialog from "./dialogs/YesNoDialog";
+import SendToPublisherDialog from "./dialogs/SendToPublisherDialog";
 
 export interface ButtonProps {
   disabled: boolean;
@@ -49,12 +50,11 @@ const SendToPublisherButton: React.FC<ButtonProps> = props => {
         <SpriteIcon name="send" />
         {hovered && <div className="custom-tooltip">Send to Publisher</div>}
       </div>
-      <YesNoDialog
+      <SendToPublisherDialog
         isOpen={isOpen}
-        title="Are you convinced this brick meets our publication standards?"
         close={() => setState(false)}
         submit={async () => {
-          let res = await props.sendToPublisher(props.brick.id);
+          const res = await props.sendToPublisher(props.brick.id);
           if (res === true) {
             // change brick status
             props.brick.status = BrickStatus.Review;
