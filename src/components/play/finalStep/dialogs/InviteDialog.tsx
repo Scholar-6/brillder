@@ -9,6 +9,7 @@ import { Brick, Editor } from 'model/brick';
 import { inviteUser } from 'services/axios/brick';
 import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import PrivateConfirmDialog from 'components/baseComponents/dialogs/PrivateConfirmDialog';
 
 interface InviteProps {
   canEdit: boolean;
@@ -25,6 +26,7 @@ interface InviteProps {
 
 const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [accessGranted, setAccess] = React.useState(null as boolean | null);
+  const [confirmPrivate, setConfirmPrivate] = React.useState(false);
 
   const [isValid, setValid] = React.useState(false);
   const [editors, setEditors] = React.useState<Editor[]>([]);
@@ -44,7 +46,7 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
     props.submit(getNameText(), accessGranted || false);
   }
 
-  const inviteUserById = async (userId: number, fullName: string) => {
+  const inviteUserById = async (userId: number) => {
     let success = await inviteUser(brick.id, userId);
     if (success) {
       props.submit(getNameText(), accessGranted || false);
@@ -60,10 +62,12 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
         saveEditor(editors.map(editor => editor.id));
         props.close();
       } else {
-        editors.forEach(editor => {
-          inviteUserById(editor.id, editor.firstName);
-        });
-        setEditors([]);
+        if (brick.isCore) {
+          editors.forEach(editor => inviteUserById(editor.id));
+          setEditors([]);
+        } else {
+          setConfirmPrivate(true);
+        }
       }
     }
   };
@@ -157,9 +161,24 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
       <div className="dialog-footer" style={{ justifyContent: 'center' }}>
         {renderSendButton()}
       </div>
+      <PrivateConfirmDialog
+        isOpen={confirmPrivate}
+        close={() => {
+          setConfirmPrivate(false);
+          setEditors([]);
+          props.close();
+        }}
+        submit={() => {
+          setConfirmPrivate(false);
+          editors.forEach(editor => inviteUserById(editor.id));
+          setEditors([]);
+          props.close();
+        }}
+      />
     </Dialog>
   );
 }
+
 
 const mapDispatch = (dispatch: any) => ({
   assignEditor: (brick: any, editors: number[]) => dispatch(actions.assignEditor(brick, editors))
