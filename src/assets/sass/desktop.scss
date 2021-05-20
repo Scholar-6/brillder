@@ -389,3 +389,18 @@
 .permision-buttons {
   font-size: 1vw;
 }
+
+.introduction-page {
+  li {
+    font-size: 1.4vw;
+  }
+  li[data-list=bullet] {
+    list-style: none;
+    &::before {
+      content: "•";
+      line-height: 1;
+      font-size: 2vw;
+      margin-right: 0.3vw;
+    }
+  }
+}

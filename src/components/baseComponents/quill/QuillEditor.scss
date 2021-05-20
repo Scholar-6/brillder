@@ -216,3 +216,7 @@ s {
     stroke-width: 1.5 !important;
   }
 }
+
+.ql-editor.ql-blank::before {
+  font-style: normal !important;
+}
