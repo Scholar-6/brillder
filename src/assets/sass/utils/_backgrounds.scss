@@ -27,6 +27,12 @@
     }
   }
 }
+
+.bg-green {
+  cursor: pointer;
+  background-color: var(--theme-green) !important;
+}
+
 .bg-theme-orange {
   background-color: var(--theme-orange) !important;
   &.btn {

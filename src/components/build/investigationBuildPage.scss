@@ -758,6 +758,15 @@ $space-between-boxes: 0.1vw;
       }
     }
 
+    .picker.q-align {
+      width: 1.8vw !important;
+      height: 1.8vw !important;
+      .svg {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
     button:disabled {
       svg {
         &:hover {

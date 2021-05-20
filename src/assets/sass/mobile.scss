@@ -221,3 +221,22 @@
 .visible-on-hover {
   display: none;
 }
+
+.introduction-page,
+.phone-question-preview,
+.proposal-phone-preview {
+  li[data-list=bullet] {
+    list-style: none;
+    &::before {
+      content: "•";
+      line-height: 1;
+      font-size: 6vw;
+      margin-left: 0.5vw;
+      margin-right: 2vw;
+    }
+  }
+}
+
+.introduction-page li {
+  font-size: 4.5vw;
+}

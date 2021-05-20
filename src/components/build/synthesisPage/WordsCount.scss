@@ -1,6 +1,11 @@
 .synthesis-words-count {
   margin-top: 10vh;
   text-align: center;
-  font-size: 0.9vw;
+  font-size: 1.1vw;
   color: var(--theme-dark-blue);
+
+  .bigger {
+    margin-top: 3vh;
+    font-size: 1.5vw;
+  }
 }
