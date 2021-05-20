@@ -214,12 +214,11 @@ export function setLastQuestionId(brick: Brick, questions: Question[]) {
   return updatedQuestions;
 }
 
-export function activateFirstInvalidQuestion(qs: Question[]) {
-  for (const q of qs) {
+export function getFirstInvalidQuestionIndex(qs: Question[]) {
+  for (const [i, q] of Array.from(qs.entries())) {
     let isQuestionValid = validateQuestion(q as any);
     if (!isQuestionValid) {
-      q.active = true;
-      return;
+      return i;
     }
   }
 }

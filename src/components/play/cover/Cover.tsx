@@ -77,37 +77,37 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             <div className="container">
               <div className="white-circle">1</div>
               <div className="l-text">
-                Preparation: stimulus content gets you in the zone.
+                Preparation: <span className="regular">stimulus content gets you in the zone.</span>
               </div>
             </div>
             <div className="container">
               <div className="white-circle">2</div>
               <div className="l-text">
-                Investigation: challenging interactive questions make you think.
+                Investigation: <span className="regular">challenging interactive questions make you think.</span>
               </div>
             </div>
             <div className="container">
               <div className="white-circle">3</div>
               <div className="l-text">
-                A preliminary score
+                <span className="regular">A preliminary score</span>
               </div>
             </div>
             <div className="container">
               <div className="white-circle">4</div>
               <div className="l-text">
-                Synthesis: explanation.
+                Synthesis: <span className="regular">explanation.</span>
               </div>
             </div>
             <div className="container">
               <div className="white-circle">5</div>
               <div className="l-text">
-                Review: hints help you correct your answers.
+                Review: <span className="regular">hints help you correct your answers.</span>
               </div>
             </div>
             <div className="container">
               <div className="white-circle">6</div>
               <div className="l-text">
-                A final score
+              <span className="regular">A final score</span>
               </div>
             </div>
           </div>
@@ -204,26 +204,28 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                         <br />
                         <div>LEVELS:</div>
                         <div className="container">
-                          <div className="white-circle">1</div>
+                          <div className="white-circle">I</div>
                           <div className="l-text">
-                            <div>I Foundation</div>
-                            <div>For 15-16 yr-olds, equivalent to GCSE / IB Middle Years / High School Diploma</div>
+                            <div>Foundation</div>
+                            <div className="regular">For 15-16 yr-olds, equivalent to GCSE / IB Middle Years / High School Diploma</div>
                           </div>
                         </div>
                         <br />
                         <div className="container">
-                          <div className="white-circle">2</div>
+                          <div className="white-circle">II</div>
+                          <div className="flex-center and-sign">&</div>
+                          <div className="white-circle">III</div>
                           <div className="l-text">
-                            <div>II & III Core</div>
-                            <div>For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
+                            <div>Core</div>
+                            <div className="regular">For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
                           </div>
                         </div>
                         <br />
                         <div className="container">
-                          <div className="white-circle">3</div>
+                          <div className="white-circle">IV</div>
                           <div className="l-text">
-                            <div>IV Extension</div>
-                            <div>College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>
+                            <div>Extension</div>
+                            <div className="regular">College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>
                           </div>
                         </div>
                       </div>

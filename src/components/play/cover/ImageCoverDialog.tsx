@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Checkbox from "@material-ui/core/Checkbox";
 
 import './ImageDialog.scss';
 import { ImageCoverData } from "./model";
@@ -22,7 +21,6 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
   const [source, setSource] = React.useState(initData.imageSource || '');
   const [caption, setCaption] = React.useState(initData.imageCaption || '');
   const [permision, setPermision] = React.useState(initData.imagePermision ? true : false as boolean | 1);
-  const [copyright, setCopyright] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);

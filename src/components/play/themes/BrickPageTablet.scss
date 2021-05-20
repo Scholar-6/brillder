@@ -198,6 +198,26 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
               width: calc(#{$icons-size} * 1.4) !important;
               height: calc(#{$icons-size} * 1.4) !important;
             }
+            .absolute-circle {
+              top: 0;
+              left: -0.6vw;
+              position: absolute;
+              img {
+                width: 5vw;
+                height: 5vw;
+              }
+              .prep-help-text {
+                position: absolute;
+                top: 0;
+                height: 5vw;
+                left: 5.7vw;
+                width: 7.4vw;
+                line-height: 1.3;
+                display: flex;
+                font-size: 1.25vw;
+                align-items: center;
+              }
+            }
             div {
               width: 100%;
               position: absolute;

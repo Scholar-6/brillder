@@ -7,9 +7,10 @@ import map from 'components/map';
 import TypingInput from 'components/loginPage/components/TypingInput';
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import LoginLogo from 'components/loginPage/components/LoginLogo';
+import TextDialog from 'components/baseComponents/dialogs/TextDialog';
 
 interface ResetPasswordPageProps {
-  
+  history: any;
 }
 
 const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
@@ -17,6 +18,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
   const [passwordHidden, setPasswordHidden] = React.useState<boolean>(true);
   const [password, setPassword] = React.useState<string>("");
   const [confirmPassword, setConfirmPassword] = React.useState<string>("");
+  const [success, setSuccess] = React.useState(false);
 
   const { search } = useLocation();
   const params = new URLSearchParams(search);
@@ -39,7 +41,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
     try {
       if(password === confirmPassword) {
         await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/changePassword/${token}`, { password: password });
-        setValid(false);
+        setSuccess(true);
       }
     } catch(e) {
       console.log(e);
@@ -112,6 +114,11 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
           </Grid>
         </div>
         : <Redirect to={map.Login} />}
+      <TextDialog
+        isOpen={success}
+        label="Your password has been changed successfully."
+        close={() => props.history.push(map.Login)}
+      />
     </Grid>
   );
 };

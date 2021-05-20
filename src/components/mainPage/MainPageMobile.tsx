@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Grid } from "@material-ui/core";
 import 'swiper/swiper.scss';
+import DynamicFont from 'react-dynamic-font';
 
 import './themes/MainPageMobile.scss';
 import actions from "redux/actions/auth";
@@ -21,6 +22,7 @@ import MobileButtonWrap from "./MobileButtonWrap";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import LibraryButton from "./components/LibraryButton";
 import BlocksIcon from "./components/BlocksIcon";
+import { getAssignedBricks } from "services/axios/brick";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -54,6 +56,8 @@ interface MainPageState {
 
   isSwiping: boolean;
 
+  assignedCount: number;
+
   // for mobile popopup
   isDesktopOpen: boolean;
   secondaryLabel: string;
@@ -80,10 +84,21 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isStudent,
       isBuilder,
 
+      assignedCount: 0,
+
       isDesktopOpen: false,
       secondaryLabel: '',
       secondPart: ' not yet been optimised for mobile devices.'
     } as any;
+
+    this.preparationForStudent();
+  }
+
+  async preparationForStudent() {
+    let bricks = await getAssignedBricks();
+    if (bricks && bricks.length > 0) {
+      this.setState({ assignedCount: bricks.length });
+    }
   }
 
   renderCreateButton() {
@@ -128,8 +143,12 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       }}>
         <button className="btn btn-transparent text-theme-orange zoom-item">
           <BlocksIcon />
-          <span className="item-description">
-            {this.props.user.rolePreference?.roleId === UserType.Teacher ? 'Shared with Me' : 'Assignments'}
+          <span className="item-description flex-number">
+            {this.props.user.rolePreference?.roleId === UserType.Teacher ? 'Shared with Me' : 'My Assignments'}
+            {this.state.assignedCount &&
+            <div className="m-red-circle">
+              <DynamicFont content={this.state.assignedCount.toString()} />
+            </div>}
           </span>
         </button>
       </div>

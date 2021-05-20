@@ -13,6 +13,7 @@ import MobileEmailLogin from './MobileEmailLogin';
 import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
 import { trackSignUp } from "services/matomo";
 import { isPhone } from "services/phone";
+import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -39,6 +40,9 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
   const [isLoginWrong, setLoginWrong] = React.useState(false);
 
+  const [emptyEmail, setEmptyEmail] = useState(false);
+  const [emailSended, setEmailSended] = useState(false);
+  
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
       return true;
@@ -122,7 +126,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
   };
 
   if (!isPhone()) {
-    return <EmailLoginDesktopPage history={props.history} match={props.match} />
+    return <EmailLoginDesktopPage history={props.history} match={props.match} />;
   }
 
   return (
@@ -137,6 +141,8 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
         history={props.history}
         email={email}
         setEmail={setEmail}
+        setEmailSended={setEmailSended}
+        setEmptyEmail={setEmptyEmail}
         password={password}
         setPassword={setPassword}
         passwordHidden={passwordHidden}
@@ -156,6 +162,14 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
         action={<React.Fragment></React.Fragment>}
       />
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
+      <TextDialog
+        isOpen={emailSended} close={() => setEmailSended(false)}
+        label="Now check your email for a password reset link."
+      />
+      <TextDialog
+        isOpen={emptyEmail} close={() => setEmptyEmail(false)}
+        label="You need to enter an email before clicking this."
+      />
     </Grid>
   );
 };
