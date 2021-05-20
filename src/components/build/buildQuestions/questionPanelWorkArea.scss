@@ -42,7 +42,7 @@
 
   .ql-blank:before {
     color: #aaa;
-    font-family: $font-family-bold;
+    font-family: $font-family-bold !important;
   }
 
   ::placeholder {
