@@ -26,7 +26,6 @@ import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
 import routes, { playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
-import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
 
 interface SidebarProps {
@@ -69,7 +68,6 @@ interface SidebarState {
   inviteResult: InviteResult;
   selectedItems: any[];
   failedItems: any[];
-  privateSuccess: boolean;
 }
 
 class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
@@ -91,7 +89,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         accessGranted: false,
         name: ''
       },
-      privateSuccess: false,
       selectedItems: [],
       failedItems: []
     }
@@ -359,18 +356,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         <InviteDialog
           canEdit={true} brick={brick} isOpen={this.state.inviteOpen} hideAccess={true} isAuthor={isAuthor}
           submit={name => {
-            if (brick.isCore) {
-              this.setState({ inviteResult: { isOpen: true, name, accessGranted: false } })
-            } else {
-              this.setState({ privateSuccess: true });
-            }
+            this.setState({ inviteResult: { isOpen: true, name, accessGranted: false } })
           }}
           close={() => this.setState({ inviteOpen: false })}
-        />
-        <TextDialog
-          isOpen={this.state.privateSuccess}
-          close={() => this.setState({privateSuccess: false})}
-          label="I am only sharing this brick with my own students and colleagues in my school or college consistent with the exemptions for education in the Copyright Designs and Patents Act, 1988."
         />
         <InvitationSuccessDialog
           isAuthor={isAuthor}
