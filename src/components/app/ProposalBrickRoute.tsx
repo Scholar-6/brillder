@@ -7,10 +7,11 @@ import brickActions from "redux/actions/brickActions";
 import userActions from "../../redux/actions/user";
 import { isAuthenticated, Brick } from "model/brick";
 import { User } from "model/user";
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
+import { Helmet } from "react-helmet";
 
 interface BuildRouteProps {
   exact?: any;
@@ -31,7 +32,6 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
   ...rest
 }) => {
   console.log('proposal')
-  setBrillderTitle();
 
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!rest.user) {
@@ -51,7 +51,10 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
       }
     }
 
-    return (
+    return <>
+      <Helmet>
+        <title>{getBrillderTitle()}</title>
+      </Helmet>
       <Route
         {...rest}
         render={(props) => {
@@ -78,7 +81,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
           return <Component {...props} />;
         }}
       />
-    );
+    </>;
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized();
     return <PageLoader content="...Checking rights..." />;

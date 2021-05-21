@@ -8,7 +8,7 @@ import "./PostPlay.scss";
 import { ReduxCombinedState } from "redux/reducers";
 import { Brick, Subject } from "model/brick";
 import { User } from "model/user";
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { BrickFieldNames, PlayButtonStatus } from "../build/proposal/model";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import {
@@ -37,6 +37,7 @@ import SynthesisPage from "./bookPages/SynthesisPage";
 import map from "components/map";
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
+import { Helmet } from "react-helmet";
 
 export enum BookState {
   Titles,
@@ -284,10 +285,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       return <Redirect to="/home" />;
     }
 
-    if (brick.title) {
-      setBrillderTitle(brick.title);
-    }
-
     let color = "#B0B0AD";
     if (brick.subjectId) {
       const subject = this.state.subjects.find(s => s.id === brick.subjectId);
@@ -351,6 +348,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     return (
       <div className="post-play-page">
+        <Helmet>
+          <title>{getBrillderTitle(brick.title)}</title>
+        </Helmet>
         <HomeButton onClick={() => this.props.history.push('/')} />
         <Grid
           container

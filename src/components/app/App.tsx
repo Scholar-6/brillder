@@ -2,6 +2,7 @@ import React, { Profiler, useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { isMobileOnly, isSafari, isTablet} from 'react-device-detect';
 
@@ -41,7 +42,7 @@ import UnauthorizedRoute from './unauthorized/UnauthorizedRoute';
 
 import BrickWrapper from './BrickWrapper';
 
-import { setBrillderTitle } from 'components/services/titleService';
+import { getBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'services/zendesk';
 import map from 'components/map';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
@@ -68,7 +69,6 @@ interface AppProps {
 }
 
 const App: React.FC<AppProps> = props => {
-  setBrillderTitle();
   const location = useLocation();
   const [iframeFullScreen, setIframe] = React.useState(false);
   const [showWarning, setWarning] = React.useState(isTablet ? true: false)
@@ -225,6 +225,9 @@ const App: React.FC<AppProps> = props => {
 
   return (
     <div className={isSafari ? 'root-safari browser-type-container' : 'browser-type-container'}>
+    <Helmet>
+      <title>{getBrillderTitle()}</title>
+    </Helmet>
     <ThemeProvider theme={theme}>
       <Profiler id="app-tsx" onRender={onRenderCallback} >
       {/* all page routes are here order of routes is important */}

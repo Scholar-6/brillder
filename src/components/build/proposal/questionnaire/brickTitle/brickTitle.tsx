@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import { Helmet } from "react-helmet";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep, OpenQuestionRoutePart } from "../../model";
 import { AcademicLevel, Brick, KeyWord, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { enterPressed } from "components/services/key";
 
 import NextButton from '../../components/nextButton';
@@ -150,9 +151,6 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
 
   render() {
     const { parentState, canEdit, baseUrl, saveTitles } = this.props;
-    if (parentState.title) {
-      setBrillderTitle(parentState.title);
-    }
 
     let subjectName = '';
     try {
@@ -164,6 +162,9 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
 
     return (
       <div className="tutorial-page brick-title-page">
+        <Helmet>
+          <title>{getBrillderTitle(parentState.title)}</title>
+        </Helmet>
         <Navigation
           baseUrl={baseUrl}
           step={ProposalStep.BrickTitle}
