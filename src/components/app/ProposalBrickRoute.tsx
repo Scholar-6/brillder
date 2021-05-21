@@ -30,7 +30,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  console.log('proposal')
+  console.log('render')
   setBrillderTitle();
 
   if (rest.isAuthenticated === isAuthenticated.True) {

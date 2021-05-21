@@ -5,7 +5,7 @@ import { Brick } from "model/brick";
 import './ExpandedMobileBrickDescription.scss';
 import SpriteIcon from "./SpriteIcon";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
-import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
+import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/components/KeywordsPlay";
 import BrickTitle from "./BrickTitle";
 
 
