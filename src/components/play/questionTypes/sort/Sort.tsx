@@ -139,13 +139,13 @@ class Sort extends CompComponent<SortProps, SortState> {
   prepareChoices(userCats: UserCategory[]) {
     const {answer} = this.props.attempt;
     Object.keys(answer).forEach(value => {
-      let keys = value.split('_');
+      const keys = value.split('_');
 
-      let catIndex = parseInt(keys[0]);
-      let answerIndex = parseInt(keys[1]);
+      const catIndex = parseInt(keys[0]);
+      const answerIndex = parseInt(keys[1]);
 
       try {
-        let catAnswer = this.props.component.categories[catIndex].answers[answerIndex];
+        const catAnswer = this.props.component.categories[catIndex].answers[answerIndex];
 
         let choice = Object.assign({}, catAnswer) as SortAnswer;
         choice.text = choice.value;
@@ -244,6 +244,11 @@ class Sort extends CompComponent<SortProps, SortState> {
       className += getValidationClassName(isCorrect);
     }
 
+    const keys = choice.value.split('_');
+
+    const catIndex = parseInt(keys[0]);
+    const answerIndex = parseInt(keys[1]);
+
     return (
       <div className={className} key={i}>
         <ListItem className="sort-choice-custom">
@@ -254,7 +259,7 @@ class Sort extends CompComponent<SortProps, SortState> {
                 isPhonePreview={this.props.isPreview}
                 isReview={this.props.isReview}
                 isCorrect={isCorrect}
-                index={choiceIndex}
+                index={catIndex + answerIndex}
                 hint={this.props.question.hint}
               />
             }
