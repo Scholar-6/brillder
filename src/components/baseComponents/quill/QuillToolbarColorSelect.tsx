@@ -17,14 +17,27 @@ const QuillToolbarColorSelect: React.FC<QuillToolbarColorSelectProps> = props =>
     const getItem = (node: React.ReactElement) => {
         const name = node.props.children;
         const value = node.props.value;
-        return <span className="ql-picker-item ql-primary" style={{ backgroundColor: value }} data-label={name} data-value={value} onClick={() => props.handler(props.name, value) ?? false}></span>;
+        return (
+            <span
+                className="ql-picker-item ql-primary"
+                style={{ backgroundColor: value }}
+                data-label={name}
+                data-value={value}
+                // Must be onMouseDown not onClick so it executes before blur events.
+                onMouseDown={(evt) => {
+                    props.handler(props.name, value);
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                    setExpanded(e => !e);
+                }}
+            />
+        );
     }
 
     return (
         <span
             
             className={`picker q-${props.name}${expanded ? " ql-expanded" : ""}${props.enabled ? "" : " disabled"}`}
-            // onClick={() => props.handler(props.name, "") ?? false}
             onClick={() => props.enabled && setExpanded(e => !e)}
         >
             <span className="picker-label">
