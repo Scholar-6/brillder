@@ -24,6 +24,10 @@
     border-top-left-radius: 0.5vw;
     border-bottom-left-radius: 0.5vw;
 
+    .question-hint {
+      border-radius: 0 !important;
+    }
+
     .option-container {
       width: 100%;
       overflow: scroll;
@@ -99,6 +103,9 @@
     margin-top: 5px;
     margin-bottom: 5px;
     background: var(--solitude-light);
+
+    border-top-right-radius: 0.5vw;
+    border-bottom-right-radius: 0.5vw;
 
     p {
       text-align: center !important;
