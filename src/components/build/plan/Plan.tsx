@@ -14,16 +14,16 @@ import UndoButton from "../baseComponents/UndoButton";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import { QuillEditorContext } from "components/baseComponents/quill/QuillEditorContext";
 import QuillGlobalToolbar from "components/baseComponents/quill/QuillGlobalToolbar";
-import KeyWordsComponent from "../proposal/questionnaire/brickTitle/KeyWords";
+import KeyWordsComponent from "../proposal/questionnaire/brickTitle/components/KeyWords";
 import { User } from "model/user";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import BrickLength from "./BrickLength";
 import Subjects from "./Subjects";
 import brickActions from "redux/actions/brickActions";
 import PlanPreviewComponent from "../baseComponents/phonePreview/plan/PlanPreview";
-import DifficultySelect from "../proposal/questionnaire/brickTitle/DifficultySelect";
+import DifficultySelect from "../proposal/questionnaire/brickTitle/components/DifficultySelect";
 import { getSubjects } from "services/axios/subject";
-import CoreSelect from "../proposal/questionnaire/brickTitle/CoreSelect";
+import CoreSelect from "../proposal/questionnaire/brickTitle/components/CoreSelect";
 import { stripHtml } from "../questionService/ConvertService";
 
 export interface PlanProps {

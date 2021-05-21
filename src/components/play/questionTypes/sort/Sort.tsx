@@ -71,7 +71,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       userCats.push({choices: choices, name: Sort.unsortedTitle});
     } else {
       userCats.push({ choices: [], name: Sort.unsortedTitle });
-      this.prepareChoices(userCats);
+      this.prepareChoices(userCats, choices);
     }
 
     // this is bad but it fixed issue. input answers should not be array.
@@ -136,24 +136,35 @@ class Sort extends CompComponent<SortProps, SortState> {
    * When user selected choices in question and go back to this question.
    * move choices in exact positions user drag them in.
    */
-  prepareChoices(userCats: UserCategory[]) {
+  prepareChoices(userCats: UserCategory[], choices?: SortAnswer[]) {
+    let hadError = false;
     const {answer} = this.props.attempt;
     Object.keys(answer).forEach(value => {
-      let keys = value.split('_');
+      const keys = value.split('_');
 
-      let catIndex = parseInt(keys[0]);
-      let answerIndex = parseInt(keys[1]);
+      const catIndex = parseInt(keys[0]);
+      const answerIndex = parseInt(keys[1]);
 
       try {
-        let catAnswer = this.props.component.categories[catIndex].answers[answerIndex];
+        const catAnswer = this.props.component.categories[catIndex].answers[answerIndex];
 
         let choice = Object.assign({}, catAnswer) as SortAnswer;
         choice.text = choice.value;
         choice.value = value;
   
         userCats[answer[value]].choices.push(choice as SortAnswer);
-      } catch {}
+      } catch (e) {
+        hadError = true;
+      }
     });
+
+    // if error emptify results
+    if (hadError) {
+      if (choices) {
+        userCats.forEach(cat => cat.choices = []);
+        userCats[userCats.length - 1].choices = choices;
+      }
+    }
   }
 
   setUserAnswers(userCats: any[]) {
@@ -228,6 +239,24 @@ class Sort extends CompComponent<SortProps, SortState> {
     return <MathInHtml value={choice.text} />;
   }
 
+  getHintIndex(choice: SortAnswer) {
+    const keys = choice.value.split('_');
+
+    const catIndex = parseInt(keys[0]);
+    const answerIndex = parseInt(keys[1]);
+
+    let realIndex = answerIndex;
+    let catInd = 0;
+    for (const cat of this.props.component.categories) {
+      if (catIndex <= catInd) {
+        break;
+      }
+      realIndex += cat.answers.length;
+      catInd += 1;
+    }
+    return realIndex;
+  }
+
   renderChoice(choice: SortAnswer, i: number, choiceIndex: number) {
     let isCorrect = this.getState(choice.value) === 1;
     let className="sortable-item";
@@ -244,6 +273,8 @@ class Sort extends CompComponent<SortProps, SortState> {
       className += getValidationClassName(isCorrect);
     }
 
+    const realIndex = this.getHintIndex(choice);
+
     return (
       <div className={className} key={i}>
         <ListItem className="sort-choice-custom">
@@ -254,7 +285,7 @@ class Sort extends CompComponent<SortProps, SortState> {
                 isPhonePreview={this.props.isPreview}
                 isReview={this.props.isReview}
                 isCorrect={isCorrect}
-                index={choiceIndex}
+                index={realIndex}
                 hint={this.props.question.hint}
               />
             }
@@ -267,6 +298,8 @@ class Sort extends CompComponent<SortProps, SortState> {
   render() {
     let count = -1;
     const incrementCount = () => count++;
+
+    const unsorted = this.state.userCats[this.state.userCats.length - 1];
 
     return (
       <div className="question-unique-play sort-play">
@@ -289,7 +322,7 @@ class Sort extends CompComponent<SortProps, SortState> {
                   <ReactSortable
                     list={cat.choices as any[]}
                     animation={150}
-                    className="sortable-list"
+                    className={`${i === this.state.userCats.length - 1 ? 'unsorted' : unsorted.choices.length === 0 ? '' : 'category'} sortable-list`}
                     group={{ name: "cloning-group-name"}}
                     setList={(list) => this.updateCategory(list, i)}
                   >

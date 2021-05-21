@@ -2,7 +2,7 @@ import React from "react";
 
 import "./PlanPreview.scss";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import KeyWordsPlay from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
+import KeyWordsPlay from "components/build/proposal/questionnaire/brickTitle/components/KeywordsPlay";
 import { User } from "model/user";
 import BrickCircle from "components/baseComponents/BrickCircle";
 import { AcademicLevelLabels, Brick } from "model/brick";

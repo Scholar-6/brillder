@@ -51,7 +51,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
             showToolbar={true}
             allowLinks={true}
             allowTables={true}
-            placeholder="Enter Brief Here..."
+            placeholder="Enter Brief Here"
             toolbar={[
               'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'table'
             ]}

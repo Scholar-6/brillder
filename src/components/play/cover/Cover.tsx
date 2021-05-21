@@ -5,7 +5,7 @@ import DynamicFont from 'react-dynamic-font';
 import { AcademicLevelLabels, Brick } from "model/brick";
 
 import CoverImage from "./CoverImage";
-import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
+import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/components/KeywordsPlay";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";

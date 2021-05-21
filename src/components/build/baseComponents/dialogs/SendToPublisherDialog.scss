@@ -7,12 +7,17 @@
     max-width: 58vw !important;
   }
   .MuiFormControlLabel-root {
-    margin-top: 0.5vh;
-    margin-bottom: 0.5vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    display: flex;
+    align-items: flex-start;
   }
   .MuiButtonBase-root {
     margin-left: 0.5vw;
     margin-right: 1vw;
+  }
+  .MuiCheckbox-root {
+    margin-top: 0.25vw;
   }
   .MuiButtonBase-root, .MuiTypography-root {
     padding: 0.2vw;
@@ -28,6 +33,7 @@
   .title {
     font-size: 1.7vw !important;
     margin-bottom: 1vh;
+    text-align: center;
   }
 
   .dialog-header {

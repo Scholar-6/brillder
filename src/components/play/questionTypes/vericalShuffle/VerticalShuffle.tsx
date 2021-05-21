@@ -231,8 +231,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     const haveImage = this.checkImages();
     return (
       <div className="question-unique-play vertical-shuffle-play">
-        <p><span className="help-text">Drag to rearrange.</span></p>
-        {haveImage && <p><span className="help-text">Hover over images to zoom.</span></p>}
+        <p><span className="help-text">Drag to rearrange.   {haveImage && <span>Hover over images to zoom.</span>}</span></p>
         {this.props.isBookPreview ? (
           <div>{this.renderAnswers()}</div>
         ) : (
