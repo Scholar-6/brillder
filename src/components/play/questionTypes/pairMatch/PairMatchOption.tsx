@@ -5,14 +5,30 @@ import { QuestionValueType } from 'components/build/buildQuestions/questionTypes
 import { Answer } from 'components/build/buildQuestions/questionTypes/pairMatchBuild/types';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import PairMatchImageContent from './PairMatchImageContent';
+import { Hint, HintStatus } from 'model/question';
 
 interface OptionProps {
   index: number;
   item: any;
+  isReview?: boolean;
+  isPreview?: boolean;
+  hint: Hint;
 }
 
 const PairMatchOption: React.FC<OptionProps> = (props) => {
   const { item, index } = props;
+
+  const renderEachHint = (hint: Hint, i: number) => {
+    if (hint.status === HintStatus.Each) {
+      let value = hint.list[i];
+      return (
+        <div className="question-hint">
+          <MathInHtml value={value} />
+        </div>
+      );
+    }
+    return '';
+  }
 
   const renderOptionContent = (answer: Answer) => {
     if (answer.optionType && answer.optionType === QuestionValueType.Image) {
@@ -32,6 +48,11 @@ const PairMatchOption: React.FC<OptionProps> = (props) => {
     <ListItem key={index} className={className}>
       <div className="option-container">
         {renderOptionContent(item as any)}
+        {props.isPreview ?
+          renderEachHint(props.hint, index)
+          : props.isReview &&
+          renderEachHint(props.hint, index)
+        }
       </div>
     </ListItem>
   );

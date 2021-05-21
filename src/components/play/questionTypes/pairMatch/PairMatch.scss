@@ -21,6 +21,8 @@
     width: 100%;
     overflow: hidden;
     background-color: var(--tab-gray);
+    border-top-left-radius: 0.5vw;
+    border-bottom-left-radius: 0.5vw;
 
     .option-container {
       width: 100%;
