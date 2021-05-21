@@ -327,7 +327,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             className="proposal-router"
           >
             <Route path={map.ProposalStart}>
-              <StartBuildingPage />
+              <StartBuildingPage history={history} />
             </Route>
             <Route path={[baseUrl + '/subject']}>
               <SubjectPage
