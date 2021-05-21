@@ -76,10 +76,10 @@ const HintComponent: React.FC<HintProps> = ({
   const [state, setState] = React.useState(initState);
 
   React.useEffect(() => {
-    if(props.value) {
+    if (props.value) {
       setState({ ...state, value: props.value });
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [props.value])
 
   if (state.index !== index) {
@@ -172,8 +172,26 @@ const HintComponent: React.FC<HintProps> = ({
     return answerHints;
   }
 
+  const renderNormalToggle = () => {
+    return (
+      <ToggleButtonGroup className="hint-toggle-group" value={state.status} exclusive onChange={handleStatusChange}>
+        <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.Each}>
+          Each Answer
+        </ToggleButton>
+        <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.All}>
+          All Answers
+        </ToggleButton>
+      </ToggleButtonGroup>
+    );
+  }
+
   const renderToggleButton = () => {
-    const {list} = props.component;
+    const { list } = props.component;
+
+    if (props.questionType === QuestionTypeEnum.Sort) {
+      return renderNormalToggle();
+    }
+
     if (
       !list || list.length <= 1 ||
       props.questionType === QuestionTypeEnum.WordHighlighting ||
@@ -187,16 +205,7 @@ const HintComponent: React.FC<HintProps> = ({
         </ToggleButtonGroup>
       );
     }
-    return (
-      <ToggleButtonGroup className="hint-toggle-group" value={state.status} exclusive onChange={handleStatusChange}>
-        <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.Each}>
-          Each Answer
-        </ToggleButton>
-        <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.All}>
-          All Answers
-        </ToggleButton>
-      </ToggleButtonGroup>
-    );
+    return renderNormalToggle();
   }
 
   return (
@@ -217,7 +226,7 @@ const HintComponent: React.FC<HintProps> = ({
                 <React.Fragment>
                   <div>Hints written here are introduced to</div>
                   <div>the student in the Review phase.</div>
-                  <div style={{marginTop: '1.2vw'}}>
+                  <div style={{ marginTop: '1.2vw' }}>
                     Good hints usher the student closer to the correct answer,
                     or the correct strategy, without giving it away.
                   </div>

@@ -1,0 +1,51 @@
+.hover-area.custom {
+  display: flex;
+  align-items: center;
+  svg {
+    width: 2.5vw;
+    height: 2.5vw;
+  }
+
+  .container {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    display: flex;
+    .white-circle {
+      display: inline;
+      background: var(--white);
+      width: 1.6vw;
+      height: 1.6vw;
+      border-radius: 50%;
+      color: var(--theme-dark-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .and-sign {
+      margin-left: 0.1vw;
+      margin-right: 0.2vw;
+      height: 1.6vw;
+    }
+    .l-text {
+      margin-left: 0.3vw;
+      width: calc(100% - 2vw);
+    }
+  }
+  position: relative;
+  .hover-content {
+    display: none;
+  }
+  &:hover .hover-content {
+    width: 30vw;
+    font-size: 1.1vw;
+    z-index: 100000;
+    display: block;
+    position: absolute;
+    top: 3vw;
+    left: -10vw;
+    color: var(--white);
+    border-radius: 1vw;
+    padding: 1.4vw 2vw;
+    background: var(--theme-light-blue);
+  }
+}

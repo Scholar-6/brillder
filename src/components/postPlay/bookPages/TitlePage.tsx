@@ -2,7 +2,7 @@ import React from "react";
 
 import { Brick } from "model/brick";
 import { Grid } from "@material-ui/core";
-import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
+import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/components/KeywordsPlay";
 import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface TitlePageProps {

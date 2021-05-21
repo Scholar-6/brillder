@@ -182,31 +182,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
     );
   }
 
-  const renderAdminColumns = () => {
-    const { status } = brick;
-    return (
-      <Grid className="share-row" container direction="row" justify="center">
-        {renderInviteColumn()}
-        {(status === BrickStatus.Build || status === BrickStatus.Review) && renderReturnToAuthorColumn()}
-        {status === BrickStatus.Review && renderReturnToEditorsColumn()}
-        {status !== BrickStatus.Publish && <PublishColumn onClick={() => publish(brick.id)} />}
-      </Grid>
-    );
-  }
-
   const renderActionColumns = () => {
-    const canPublish = isPublisher && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published;
+    const canPublish = isPublisher && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published && brick.status === BrickStatus.Review;
 
     if (!brick.isCore) {
       return renderPersonalColumns();
-    }
-
-    if (isAdmin) {
-      return renderAdminColumns();
-    }
-
-    if (isAuthor && isPublisher) {
-      return renderAdminColumns();
     }
 
     if (isAuthor && brick.status === BrickStatus.Draft) {
@@ -236,7 +216,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       );
     }
 
-    if (isCurrentEditor && brick.status === BrickStatus.Build) {
+    if ((isCurrentEditor || isAdmin) && brick.status === BrickStatus.Build) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
           { renderReturnToAuthorColumn()}

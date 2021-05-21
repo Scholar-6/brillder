@@ -105,21 +105,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
       publishDisabled = true;
     }
 
-    if (this.props.isAdmin) {
-      return (
-        <BuildPublishButton
-          disabled={publishDisabled}
-          brick={this.props.brick}
-          history={this.props.history}
-          onFinish={() => {
-            this.setState({brickStatus: BrickStatus.Publish});
-            this.props.history.push(map.playCover(this.props.brick.id));
-          }}
-        />
-      );
-    }
-
-    if (this.props.isPublisher) {
+    if (this.props.isPublisher || this.props.isAdmin) {
       if (!publishDisabled) {
         publishDisabled = brickStatus === BrickStatus.Draft || brickStatus === BrickStatus.Build;
       }
