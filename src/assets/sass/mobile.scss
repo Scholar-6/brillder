@@ -240,3 +240,16 @@
 .introduction-page li {
   font-size: 4.5vw;
 }
+
+// sort play fixes
+.question-live-play .question-unique-play .sort-category {
+  border-top-left-radius: 2vw;
+  border-top-right-radius: 2vw;
+}
+
+.question-live-play .question-unique-play .sortable-list {
+  .MuiTypography-root {
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
+  }
+}
