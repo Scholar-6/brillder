@@ -273,6 +273,8 @@ class Sort extends CompComponent<SortProps, SortState> {
     let count = -1;
     const incrementCount = () => count++;
 
+    const unsorted = this.state.userCats[this.state.userCats.length - 1];
+
     return (
       <div className="question-unique-play sort-play">
         <p><span className="help-text">Drag to rearrange.</span></p>
@@ -294,7 +296,7 @@ class Sort extends CompComponent<SortProps, SortState> {
                   <ReactSortable
                     list={cat.choices as any[]}
                     animation={150}
-                    className="sortable-list"
+                    className={`${i === this.state.userCats.length - 1 ? 'unsorted' : unsorted.choices.length === 0 ? '' : 'category'} sortable-list`}
                     group={{ name: "cloning-group-name"}}
                     setList={(list) => this.updateCategory(list, i)}
                   >
