@@ -23,7 +23,7 @@ const PairMatchOption: React.FC<OptionProps> = (props) => {
       let value = hint.list[i];
       return (
         <div className="question-hint">
-          <MathInHtml value={value} />
+          <div className="bold inline"><p>Hint:</p></div> <MathInHtml className="inline" value={value} />
         </div>
       );
     }
