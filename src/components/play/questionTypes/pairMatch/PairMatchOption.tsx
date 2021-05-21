@@ -13,10 +13,16 @@ interface OptionProps {
   isReview?: boolean;
   isPreview?: boolean;
   hint: Hint;
+  state: any;
 }
 
 const PairMatchOption: React.FC<OptionProps> = (props) => {
   const { item, index } = props;
+
+  let correct = false;
+  if (props.state === 1) {
+    correct = true;
+  }
 
   const renderEachHint = (hint: Hint, i: number) => {
     if (hint.status === HintStatus.Each) {
@@ -44,6 +50,10 @@ const PairMatchOption: React.FC<OptionProps> = (props) => {
   if (item.optionType === QuestionValueType.Image) {
     className += " image-choice";
   }
+  if (props.isReview && correct) {
+    className += ' correct';
+  }
+
   return (
     <ListItem key={index} className={className}>
       <div className="option-container">
