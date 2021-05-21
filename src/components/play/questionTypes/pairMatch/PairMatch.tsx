@@ -10,7 +10,6 @@ import {QuestionValueType} from 'components/build/buildQuestions/questionTypes/t
 import {Answer} from 'components/build/buildQuestions/questionTypes/pairMatchBuild/types';
 import { PairMatchProps, PairMatchState, DragAndDropStatus, PairMatchAnswer, PairMatchComponent } from './interface';
 import MathInHtml from '../../baseComponents/MathInHtml';
-import { Hint, HintStatus } from 'model/question';
 import PairMatchOption from './PairMatchOption';
 import PairMatchImageContent from './PairMatchImageContent';
 import { isPhone } from 'services/phone';
@@ -166,7 +165,16 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         <Grid container justify="center">
           <List style={{padding: 0}} className="answers-list">
           {
-            this.props.component.list.map((item:any, i) => <PairMatchOption item={item} isPreview={this.props.isPreview} hint={this.props.question.hint} isReview={this.props.isReview} index={i} />)
+            this.props.component.list.map((item:any, i) =>
+              <PairMatchOption
+                state={this.getState(i)}
+                item={item}
+                isPreview={this.props.isPreview}
+                hint={this.props.question.hint}
+                isReview={this.props.isReview}
+                index={i}
+              />
+            )
           }
           </List>
           {
