@@ -1,6 +1,11 @@
 .hover-area.custom {
   display: flex;
   align-items: center;
+  svg {
+    width: 2.5vw;
+    height: 2.5vw;
+  }
+
   .container {
     margin-top: 1vh;
     margin-bottom: 1vh;

@@ -204,12 +204,56 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                     ]}
                     enabledToolbarOptions={['italic']}
                   />
+                  <div className="absolute-title-help">
+                    <HoverHelp>
+                      Be punchy and succinct. This ought to be written in Camel or Sentence Case, and give a reasonable indication of the content of the brick. If you would like to use a more playful title, remember to add relevant keywords in the section below, so that your brick is more likely to appear to interested learners.
+                    </HoverHelp>
+                  </div>
                 </div>
                 <div className="audience-inputs">
                   <KeyWordsComponent disabled={!canEdit} keyWords={parentState.keywords} onChange={this.props.setKeywords.bind(this)} />
+                  <div className="absolute-keyword-help">
+                    <HoverHelp>
+                      Keywords are best thought of as likely search terms, and are ultimately curated by Publishers for each subject. For multi-word keywords, separate words with a hyphen, eg. ‘19th-Century’.
+                    </HoverHelp>
+                  </div>
                 </div>
                 <div className="audience-inputs">
                   <DifficultySelect disabled={!canEdit} level={parentState.academicLevel} onChange={this.props.setAcademicLevel.bind(this)} />
+                  <div className="absolute-difficult-help">
+                    <HoverHelp>
+                    <div className="flex-content">
+                    <div>Brillder focusses on universal concepts and topics, not specific exam courses.</div>
+                    <br />
+                    <div>LEVELS:</div>
+                    <div className="container">
+                      <div className="white-circle">I</div>
+                      <div className="l-text">
+                        <div>Foundation</div>
+                        <div className="regular">For 15-16 yr-olds, equivalent to GCSE / IB Middle Years / High School Diploma</div>
+                      </div>
+                    </div>
+                    <br />
+                    <div className="container">
+                      <div className="white-circle">II</div>
+                      <div className="and-sign">&</div>
+                      <div className="white-circle">III</div>
+                      <div className="l-text smaller">
+                        <div>Core</div>
+                        <div className="regular">For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
+                      </div>
+                    </div>
+                    <br />
+                    <div className="container">
+                      <div className="white-circle">IV</div>
+                      <div className="l-text">
+                        <div>Extension</div>
+                        <div className="regular">College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>
+                      </div>
+                    </div>
+                  </div>
+                    </HoverHelp>
+                  </div>
                 </div>
               </Grid>
             </form>
