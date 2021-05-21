@@ -110,18 +110,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     }
   }
 
-  renderEachHint(hint: Hint, i: number) {
-    if (hint.status === HintStatus.Each) {
-      let value = hint.list[i];
-      return (
-        <div className="question-hint">
-          <MathInHtml value={value} />
-        </div>
-      );
-    }
-    return '';
-  }
-
   renderAnswer(answer: any, i: number) {
     let className = "pair-match-play-choice";
     if (answer.answerType === QuestionValueType.Image) {
@@ -154,11 +142,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
           <div style={{width: '100%'}}>
             {this.renderAnswerContent(answer)}
-            {this.props.isPreview ?
-              this.renderEachHint(this.props.question.hint, i)
-              : this.props.isReview &&
-              this.renderEachHint(this.props.question.hint, answer.index)
-            }
           </div>
         </div>
       </div>
@@ -183,7 +166,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         <Grid container justify="center">
           <List style={{padding: 0}} className="answers-list">
           {
-            this.props.component.list.map((item:any, i) => <PairMatchOption item={item} index={i} />)
+            this.props.component.list.map((item:any, i) => <PairMatchOption item={item} isPreview={this.props.isPreview} hint={this.props.question.hint} isReview={this.props.isReview} index={i} />)
           }
           </List>
           {
