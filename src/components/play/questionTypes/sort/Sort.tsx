@@ -239,6 +239,24 @@ class Sort extends CompComponent<SortProps, SortState> {
     return <MathInHtml value={choice.text} />;
   }
 
+  getHintIndex(choice: SortAnswer) {
+    const keys = choice.value.split('_');
+
+    const catIndex = parseInt(keys[0]);
+    const answerIndex = parseInt(keys[1]);
+
+    let realIndex = answerIndex;
+    let catInd = 0;
+    for (const cat of this.props.component.categories) {
+      if (catIndex <= catInd) {
+        break;
+      }
+      realIndex += cat.answers.length;
+      catInd += 1;
+    }
+    return realIndex;
+  }
+
   renderChoice(choice: SortAnswer, i: number, choiceIndex: number) {
     let isCorrect = this.getState(choice.value) === 1;
     let className="sortable-item";
@@ -255,20 +273,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       className += getValidationClassName(isCorrect);
     }
 
-    const keys = choice.value.split('_');
-
-    const catIndex = parseInt(keys[0]);
-    const answerIndex = parseInt(keys[1]);
-
-    let realIndex = answerIndex;
-    let catInd = 0;
-    for (const cat of this.props.component.categories) {
-      if (catIndex <= catInd) {
-        break;
-      }
-      realIndex += cat.answers.length;
-      catInd += 1;
-    }
+    const realIndex = this.getHintIndex(choice);
 
     return (
       <div className={className} key={i}>
