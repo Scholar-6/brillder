@@ -78,6 +78,8 @@
         .ql-editor.ql-blank::before {
           left: 0;
           font-style:initial !important;
+          color: var(--theme-dark-blue) !important;
+          opacity: 0.4 !important;
         }
         .quill-document-editor,
         .ql-editor {

@@ -81,7 +81,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             allowLinks={true}
             allowTables={true}
             imageDialog={true}
-            placeholder="Enter Instructions, Links to Videos and Webpages Here…"
+            placeholder="Add instructions, links to videos, webpages, and resources"
             toolbar={[
               'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image', 'table'
             ]}

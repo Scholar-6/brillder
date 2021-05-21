@@ -185,7 +185,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                   <QuillEditor
                     data={parentState.title}
                     onChange={title => this.onTitleChange(title)}
-                    placeholder="Enter Proposed Title Here..."
+                    placeholder="Proposed Title"
                     tabIndex={-1}
                     disabled={!canEdit}
                     showToolbar={true}

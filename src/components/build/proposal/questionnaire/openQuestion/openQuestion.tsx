@@ -53,10 +53,8 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           <QuillEditor
             disabled={!props.canEdit}
             data={selectedQuestion}
-            placeholder="Enter Open Question(s)..."
-            toolbar={[
-              'bold', 'italic', 'latex'
-            ]}
+            placeholder="Open Question"
+            toolbar={['bold', 'italic', 'latex']}
             showToolbar={true}
             onChange={saveOpenQuestion}
           />
