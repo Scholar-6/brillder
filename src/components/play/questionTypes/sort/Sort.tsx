@@ -260,6 +260,16 @@ class Sort extends CompComponent<SortProps, SortState> {
     const catIndex = parseInt(keys[0]);
     const answerIndex = parseInt(keys[1]);
 
+    let realIndex = answerIndex;
+    let catInd = 0;
+    for (const cat of this.props.component.categories) {
+      if (catIndex <= catInd) {
+        break;
+      }
+      realIndex += cat.answers.length;
+      catInd += 1;
+    }
+
     return (
       <div className={className} key={i}>
         <ListItem className="sort-choice-custom">
@@ -270,7 +280,7 @@ class Sort extends CompComponent<SortProps, SortState> {
                 isPhonePreview={this.props.isPreview}
                 isReview={this.props.isReview}
                 isCorrect={isCorrect}
-                index={catIndex + answerIndex}
+                index={realIndex}
                 hint={this.props.question.hint}
               />
             }
