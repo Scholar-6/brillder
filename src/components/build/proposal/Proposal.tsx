@@ -19,7 +19,7 @@ import { Brick, Author } from "model/brick";
 import { User } from "model/user";
 import CloseProposalDialog from "components/build/baseComponents/dialogs/CloseProposalDialog";
 import VersionLabel from "components/baseComponents/VersionLabel";
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames, BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, SubjectRoutePart, TitleRoutePart } from "./model";
@@ -34,6 +34,7 @@ import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { buildQuesitonType } from "../routes";
+import { Helmet } from "react-helmet";
 
 interface ProposalProps {
   history: History;
@@ -285,8 +286,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const { history } = this.props;
     const canEdit = canEditBrick(this.state.brick, this.props.user);
 
-    setBrillderTitle();
-
     if (this.state.saved && this.state.moving === false) {
       this.setState({moving: true});
 
@@ -319,6 +318,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     return (
       <MuiThemeProvider>
         <div>
+          <Helmet>
+            <title>{getBrillderTitle()}</title>
+          </Helmet>
           <HomeButton onClick={() => this.openDialog()} />
           <div
             style={{ width: "100%", height: "100%" }}

@@ -7,11 +7,12 @@ import brickActions from "redux/actions/brickActions";
 import userActions from "../../redux/actions/user";
 import { isAuthenticated, Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
 import { checkAdmin } from "components/services/brickService";
+import { Helmet } from "react-helmet";
 
 interface BuildRouteProps {
   exact?: any;
@@ -31,8 +32,6 @@ const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  setBrillderTitle();
-
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!rest.user) {
       rest.getUser();
@@ -62,7 +61,10 @@ const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
       return true;
     }
 
-    return (
+    return <>
+      <Helmet>
+        <title>{getBrillderTitle()}</title>
+      </Helmet>
       <Route
         {...rest}
         render={(props) => {
@@ -98,7 +100,7 @@ const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
           return <Redirect to={map.Login} />;
         }}
       />
-    );
+    </>;
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized();
     return <PageLoader content="...Checking rights..." />;
