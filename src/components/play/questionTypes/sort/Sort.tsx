@@ -71,7 +71,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       userCats.push({choices: choices, name: Sort.unsortedTitle});
     } else {
       userCats.push({ choices: [], name: Sort.unsortedTitle });
-      this.prepareChoices(userCats);
+      this.prepareChoices(userCats, choices);
     }
 
     // this is bad but it fixed issue. input answers should not be array.
@@ -136,7 +136,8 @@ class Sort extends CompComponent<SortProps, SortState> {
    * When user selected choices in question and go back to this question.
    * move choices in exact positions user drag them in.
    */
-  prepareChoices(userCats: UserCategory[]) {
+  prepareChoices(userCats: UserCategory[], choices?: SortAnswer[]) {
+    let hadError = false;
     const {answer} = this.props.attempt;
     Object.keys(answer).forEach(value => {
       const keys = value.split('_');
@@ -152,8 +153,18 @@ class Sort extends CompComponent<SortProps, SortState> {
         choice.value = value;
   
         userCats[answer[value]].choices.push(choice as SortAnswer);
-      } catch {}
+      } catch (e) {
+        hadError = true;
+      }
     });
+
+    // if error emptify results
+    if (hadError) {
+      if (choices) {
+        userCats.forEach(cat => cat.choices = []);
+        userCats[userCats.length - 1].choices = choices;
+      }
+    }
   }
 
   setUserAnswers(userCats: any[]) {
