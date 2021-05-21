@@ -31,8 +31,6 @@ const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, updat
     return <div className="custom-component"/>;
   }
 
-  console.log('dd', savedHidden, updated)
-
   return (
     <div>
       <div className="proposal-phone-preview">

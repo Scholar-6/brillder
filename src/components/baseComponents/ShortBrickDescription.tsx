@@ -8,7 +8,7 @@ import AuthorSearchRow from "./AuthorRow";
 import { User, UserType } from "model/user";
 import BrickCircle from "./BrickCircle";
 import { canDelete } from "components/services/brickService";
-import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
+import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/components/KeywordsPlay";
 import BrickTitle from "./BrickTitle";
 
 interface ShortDescriptionProps {

@@ -18,11 +18,12 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import a from 'indefinite';
 import map from "components/map";
 import { User } from "model/user";
-import AddSubjectDialog from "./AddSubjectDialog";
-import KeyWordsComponent from "./KeyWords";
-import DifficultySelect from "./DifficultySelect";
-import KeyWordsPlay from "./KeywordsPlay";
+import AddSubjectDialog from "./components/AddSubjectDialog";
+import KeyWordsComponent from "./components/KeyWords";
+import DifficultySelect from "./components/DifficultySelect";
+import KeyWordsPlay from "./components/KeywordsPlay";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
