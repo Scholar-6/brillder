@@ -6,7 +6,7 @@ const HoverHelp: React.FC<any> = () => {
   const [hover, setHover] = React.useState(false);
   return (
     <div className="hover-area">
-      <SpriteIcon name="help-circle-custom" onClick={() => setFirstPhonePopup(true)} />
+      <SpriteIcon name="help-circle-custom" />
       {!isPhone() &&
         <div className="hover-content">
           <div>A brick is a learning unit that should take either 20, 40, or 60 minutes to complete.</div>
