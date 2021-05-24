@@ -17,6 +17,8 @@ import { stripHtml } from "components/build/questionService/ConvertService";
 import CoverBioDialog from "components/baseComponents/dialogs/CoverBioDialog";
 import { GENERAL_SUBJECT } from "components/services/subject";
 import SponsorImageComponent from "./SponsorImage";
+import CoverAuthorRow from "./components/coverAuthorRow/CoverAuthorRow";
+import CoverPlay from "./components/coverAuthorRow/CoverPlay";
 
 interface IntroductionProps {
   user: User;
@@ -52,19 +54,6 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
   const startBrick = () => {
     props.moveNext();
-  };
-
-  const renderPlayButton = () => {
-    return (
-      <div>
-        <div>Are you ready to learn?</div>
-        <div className="c-next-btn-container">
-          <button type="button" onClick={startBrick}>
-            Play Now
-          </button>
-        </div>
-      </div>
-    );
   };
 
   const renderFirstRow = () => {
@@ -234,7 +223,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </div>
           </div>
           <div className="introduction-info">
-            {renderPlayButton()}
+            <CoverPlay onClick={startBrick} />
           </div>
         </div>
       </React.Suspense>
@@ -253,15 +242,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 <div className="brick-title q-brick-title">
                   <DynamicFont content={stripHtml(brick.title)} />
                 </div>
-                <div className="author-row">
-                  <span>{brick.author.firstName} {brick.author.lastName}</span>
-                  <div className="cover-bio" onClick={() => setBio(true)}>
-                    <div className="cover-bio-content">
-                      Author Profile
-                    </div>
-                    <div className="cover-bio-background" />
-                  </div>
-                </div>
+                <CoverAuthorRow brick={brick} setBio={setBio} />
                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
                   user={props.user}
                   brick={brick}
@@ -320,7 +301,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </Grid>
             <Grid item sm={4} xs={12}>
               <div className="introduction-info">
-                {renderPlayButton()}
+                <CoverPlay onClick={startBrick} />
               </div>
             </Grid>
           </Grid>
