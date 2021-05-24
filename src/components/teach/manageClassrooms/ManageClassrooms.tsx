@@ -683,9 +683,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       return (
         <div className="tab-content">
           <StudentTable
+            isPending={true}
             history={this.props.history}
             users={visibleUsers}
-            isClassroom={false}
             isAdmin={this.state.isAdmin}
             selectedUsers={this.state.pendingUsers}
             sortBy={this.state.sortBy}

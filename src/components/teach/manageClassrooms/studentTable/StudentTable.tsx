@@ -16,12 +16,13 @@ interface StudentTableProps {
   history: any;
   users: MUser[];
   selectedUsers: MUser[];
-  isClassroom: boolean;
+  isClassroom?: boolean;
   isAdmin: boolean;
 
   sortBy: UserSortBy;
   isAscending: boolean;
   pageStudentsSelected: boolean;
+  isPending?: boolean;
 
   toggleUser(userId: number): void;
   sort(sortBy: UserSortBy): void;
@@ -113,6 +114,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
             </div>
             <div className="classroom-names">
               <ClassroomNames
+                isPending={props.isPending}
                 studyClassrooms={user.studyClassrooms}
                 hasInvitation={user.hasInvitation}
                 resendInvitation={() => props.resendInvitation(user.email)}
