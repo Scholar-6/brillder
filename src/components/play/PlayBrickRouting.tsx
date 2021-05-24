@@ -375,6 +375,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     return <>
       <Helmet>
         <title>{getBrillderTitle(brick.title)}</title>
+        <meta property="og:title" content={brick.title} />
+        <meta property="og:type" content="article" />
+        <meta property="og:description" content={brick.openQuestion} />
+        <meta property="og:image" content={brick.coverImage} />
       </Helmet>
       <Switch>
         <Route exac path={routes.coverRoute}>
