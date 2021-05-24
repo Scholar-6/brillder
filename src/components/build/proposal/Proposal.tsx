@@ -180,7 +180,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       this.setState({saving: true});
       const { brick } = this.props;
       if (tempBrick.id) {
-        await this.props.saveBrick(tempBrick);
+        newBrick = await this.props.saveBrick(tempBrick);
       } else if (brick && brick.id) {
         tempBrick.id = brick.id;
         newBrick = await this.props.saveBrick(tempBrick);
@@ -188,7 +188,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
         newBrick = await this.props.createBrick(tempBrick);
       }
       this.setState({saving: false});
-    } catch {
+    } catch (e) {
       this.setState({hasSaveError: true});
     }
     return newBrick;
@@ -273,12 +273,16 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
 
   render() {
     const {brickId} = this.props.match.params;
-    console.log(this.state.brick.subjectId);
-    if(!brickId && this.state.brick.subjectId) {
+
+    if(!brickId) {
       const callback = async () => {
         const newBrick = await this.saveBrick(this.state.brick);
         if(newBrick) {
-          history.push(map.ProposalSubject(newBrick.id));
+          if (this.state.brick.subjectId) {
+            history.push(map.ProposalTitle(newBrick.id));
+          } else {
+            history.push(map.ProposalSubject(newBrick.id));
+          }
         }
       }
       callback();
