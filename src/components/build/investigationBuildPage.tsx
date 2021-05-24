@@ -18,7 +18,6 @@ import { isHighlightInvalid, validateHint, validateQuestion } from "./questionSe
 import {
   getNewQuestion,
   getNewFirstQuestion,
-  deactiveQuestions,
   cashBuildQuestion,
   clearCashQuestion,
   prepareBrickToSave,
