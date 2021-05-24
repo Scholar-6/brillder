@@ -64,7 +64,7 @@ import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialo
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
-import routes from "./routes";
+import routes, { moveToPlan } from "./routes";
 import previewRoutes from 'components/playPreview/routes';
 import { deleteQuestion } from "services/axios/brick";
 import { createQuestion } from "services/axios/question";
@@ -300,8 +300,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setPrevFromPhone = React.useCallback(() => {
     if (currentQuestionIndex >= 1) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
+    } else {
+      moveToPlan(history, brickId);
     }
-  }, []);
+  }, [questions, currentQuestionIndex]);
 
   const setNextQuestion = React.useCallback(() => {
     if (currentQuestionIndex < questions.length - 1) {
@@ -911,7 +913,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <PhoneQuestionPreview
               question={activeQuestion!}
               focusIndex={focusIndex}
-              getQuestionIndex={getQuestionIndex}
               nextQuestion={setNextQuestion}
               prevQuestion={setPrevFromPhone}
             />
