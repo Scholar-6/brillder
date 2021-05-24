@@ -80,7 +80,7 @@ class NotificationPanel extends Component<NotificationPanelProps, NotificationsS
           if (isMobile) {
             this.setState({needDesktopOpen: true});
           } else {
-            history.push(map.postPlay(brick.id, this.props.user.id));
+            history.push(map.postPlay(brick.id, notification.sender.id));
           }
         } else if (notification.type === NotificationType.ReturnedToEditor) {
           history.push(map.InvestigationBuild(brick.id));
