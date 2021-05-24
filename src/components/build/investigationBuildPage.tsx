@@ -336,10 +336,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     saveBrick();
   }
 
-  const moveToSynthesis = () => {
-    history.push(map.InvestigationSynthesis(brickId));
-  }
-
   const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
     if (locked) { return; }
     setQuestionType(type);
@@ -889,6 +885,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   setQuestions={switchQuestions}
                   questions={questions}
                   brickId={brickId}
+                  questionId={parseInt(params.questionId)}
                   synthesis={synthesis}
                   isPlanValid={proposalRes.isValid}
                   validationRequired={validationRequired}
@@ -897,7 +894,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   tutorialStep={isTutorialPassed() ? TutorialStep.None : step}
                   isSynthesisPage={isSynthesisPage}
                   currentQuestionIndex={currentQuestionIndex}
-                  moveToSynthesis={moveToSynthesis}
                   createNewQuestion={createNewQuestion}
                   selectQuestion={selectQuestion}
                   removeQuestion={removeQuestion}

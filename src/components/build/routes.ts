@@ -42,6 +42,14 @@ export const buildSynthesis = (brickId: number) => build(brickId) + BuildSynthes
 export const buildQuesitonType = (brickId: number) => investigationBuild(brickId) + BuildQuestionTypeLastPrefix;
 export const buildQuesiton = (brickId: number) => investigationBuild(brickId) + BuildQuestionLastPrefix;
 
+export const moveToSynthesis = (history: any, brickId: number) => {
+  history.push(buildSynthesis(brickId))
+}
+
+export const moveToPlan = (history: any, brickId: number) => {
+  history.push(buildPlan(brickId));
+}
+
 export default {
   InvestigationPrefix,
   BuildSubjectLastPrefix,

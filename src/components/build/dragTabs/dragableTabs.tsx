@@ -14,7 +14,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
 import { User } from "model/user";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
-import routes from "../routes";
+import routes, {moveToPlan, moveToSynthesis} from "../routes";
 import PlanTab from "./PlanTab";
 
 interface Question {
@@ -26,6 +26,7 @@ interface Question {
 interface DragTabsProps {
   history: any;
   brickId: number;
+  questionId: number;
   questions: Question[];
   user: User;
   comments: Comment[] | null;
@@ -38,7 +39,6 @@ interface DragTabsProps {
   currentQuestionIndex: number;
   openSkipTutorial(): void;
   createNewQuestion(): void;
-  moveToSynthesis(): void;
   setQuestions(questions: any): void;
   selectQuestion(e: any): void;
   moveToLastQuestion(): void;
@@ -72,30 +72,31 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     if (e.target.classList.contains("ck-content")) { return; }
     if (e.target.classList.contains("ql-editor")) { return; }
 
+    const {pathname} = this.props.history.location;
+
     if (leftKeyPressed(e)) {
-      if (this.props.history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
-        let keyIndex = this.props.questions.length;
-        this.props.selectQuestion(keyIndex - 1)
+      if (pathname.slice(-routes.BuildSynthesisLastPrefix.length).toLowerCase() === routes.BuildSynthesisLastPrefix) {
+        this.props.selectQuestion(this.props.questions.length - 1);
       } else {
-        let keyIndex = this.props.questions.findIndex(q => q.active === true);
+        const keyIndex = this.props.questions.findIndex(q => q.id === this.props.questionId);
 
         if (keyIndex > 0) {
           this.props.selectQuestion(keyIndex - 1)
+        } else {
+          moveToPlan(this.props.history, this.props.brickId)
         }
       }
     } else if (rightKeyPressed(e)) {
-      let isSynthesisPage = false;
-      if (this.props.history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
-        isSynthesisPage = true;
-      }
-      
-      if (!isSynthesisPage) {
-        let keyIndex = this.props.questions.findIndex(q => q.active === true);
+      if (pathname.slice(-routes.BuildPlanLastPrefix.length) === routes.BuildPlanLastPrefix) {
+        this.props.selectQuestion(0);
+      } else if (pathname.slice(-routes.BuildSynthesisLastPrefix.length).toLowerCase() === routes.BuildSynthesisLastPrefix) {
+      } else {
+        const keyIndex = this.props.questions.findIndex(q => q.id === this.props.questionId);
   
         if (keyIndex < this.props.questions.length - 1) { 
           this.props.selectQuestion(keyIndex + 1);
         } else {
-          this.props.moveToSynthesis();
+          moveToSynthesis(this.props.history, this.props.brickId);
         }
       }
     }
@@ -240,7 +241,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
         <GridListTile
           onClick={() => {
             if (props.tutorialSkipped) {
-              props.moveToSynthesis();
+              moveToSynthesis(this.props.history, this.props.brickId);
             } else {
               props.openSkipTutorial();
             }
