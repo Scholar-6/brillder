@@ -234,13 +234,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       parsedQuestions = parsedQuestions.filter(q => q !== null)
         .sort((qa, qb) => qa.order - qb.order);
       if (parsedQuestions.length > 0) {
-        let buildQuestion = GetCashedBuildQuestion();
-        if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
-          parsedQuestions.forEach(q => q.active = false);
-          parsedQuestions[buildQuestion.questionNumber].active = true;
-        } else {
-          parsedQuestions[0].active = true;
-        }
         setQuestions(q => update(q, { $set: parsedQuestions }));
       }
     }
@@ -469,12 +462,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           }
         }
         if (initQuestionSet === false) {
-          let buildQuestion = GetCashedBuildQuestion();
-          if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
-            parsedQuestions[buildQuestion.questionNumber].active = true;
-          } else {
-            parsedQuestions[0].active = true;
-          }
+          parsedQuestions[0].active = true;
         }
         setQuestions(update(questions, { $set: parsedQuestions }));
         setStatus(update(loaded, { $set: true }));
@@ -520,7 +508,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       if (proposalRes.isValid) {
         saveBrick();
         let buildQuestion = GetCashedBuildQuestion();
-        console.log(buildQuestion)
 
         let link = previewRoutes.previewNewPrep(brickId);
 

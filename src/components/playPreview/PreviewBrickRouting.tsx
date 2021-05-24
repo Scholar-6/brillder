@@ -164,6 +164,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     } else if (isNewPrep) {
       link = buildRoutes.buildPlan(brickId);
       CashQuestionFromPlay(brickId, -1);
+    } else {
+      const data = GetCashedBuildQuestion();
+      if (data?.brickId === brickId) {
+        link += '/' + brick.questions[data.questionNumber].id;
+      }
     }
     history.push(link);
   }
