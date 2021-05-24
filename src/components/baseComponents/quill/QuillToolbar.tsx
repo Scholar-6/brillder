@@ -1,5 +1,5 @@
 import React from 'react';
-import { Quill as GlobalQuill } from 'react-quill';
+//import { Quill as GlobalQuill } from 'react-quill';
 import QuillToolbarButton from './QuillToolbarButton';
 import QuillToolbarColorSelect from './QuillToolbarColorSelect';
 import QuillToolbarAlignSelect from './QuillToolbarAlignSelect';

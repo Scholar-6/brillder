@@ -5,7 +5,7 @@ import { Quill as GlobalQuill } from "react-quill";
 import { ImageAlign } from "components/build/buildQuestions/components/Image/model";
 import axios from "axios";
 
-const ImageBlot = GlobalQuill.import('formats/image');
+//const ImageBlot = GlobalQuill.import('formats/image');
 const Embed = GlobalQuill.import('blots/block/embed');
 
 class Devider extends Embed {
@@ -173,7 +173,7 @@ export default class ImageUpload {
     }
 
     async uploadImages(file: File, source: string, caption: string, align: ImageAlign, height: number) {
-        const length = this.quill.getLength();
+        //const length = this.quill.getLength();
         const range = this.quill.getSelection(true);
         const res = await new Promise<any>((resolve, reject) => uploadFile(file, resolve, reject));
         const fileName = res.data.fileName;
