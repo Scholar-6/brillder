@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import queryString from 'query-string';
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
@@ -29,7 +30,7 @@ import {
   HintStatus,
 } from "model/question";
 import { calcBrickLiveAttempt, calcBrickReviewAttempt } from './services/scoring';
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { prefillAttempts } from "components/services/PlayService";
 import PlayLeftSidebar from './PlayLeftSidebar';
 import { PlayMode } from './model';
@@ -110,7 +111,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [userToken, setUserToken] = React.useState<string>();
   const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
-  setBrillderTitle(brick.title);
 
   // only cover page should have big sidebar
   useEffect(() => {
@@ -372,7 +372,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const renderRouter = () => {
-    return (
+    return <>
+      <Helmet>
+        <title>{getBrillderTitle(brick.title)}</title>
+        <meta property="og:title" content={brick.title} />
+        <meta property="og:type" content="article" />
+        <meta property="og:description" content={brick.openQuestion} />
+        <meta property="og:image" content={brick.coverImage} />
+      </Helmet>
       <Switch>
         <Route exac path={routes.coverRoute}>
           <Cover
@@ -501,7 +508,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           close={() => setFailed(false)}
         />
       </Switch>
-    );
+    </>;
   };
 
   let className = "sorted-row";

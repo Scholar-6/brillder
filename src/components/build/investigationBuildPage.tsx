@@ -33,7 +33,7 @@ import {
 import { convertToQuestionType, stripHtml } from "./questionService/ConvertService";
 import { User } from "model/user";
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { canEditBrick, checkAdmin, checkPublisher } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { validateProposal } from 'components/build/proposal/service/validation';
@@ -69,6 +69,7 @@ import routes from "./routes";
 import previewRoutes from 'components/playPreview/routes';
 import { deleteQuestion } from "services/axios/brick";
 import { createQuestion } from "services/axios/question";
+import { Helmet } from "react-helmet";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -429,7 +430,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return <PageLoader content="...Loading..." />;
   }
 
-  setBrillderTitle(props.brick.title);
   locked = canEdit ? locked : true;
 
   if (isSynthesisPage === true || isPlanPage === true) {
@@ -854,6 +854,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const renderBuildPage = () => {
     return (
       <div className="investigation-build-page">
+      <Helmet>
+        <title>{getBrillderTitle(props.brick.title)}</title>
+      </Helmet>
       <BuildNavigation
         tutorialStep={step}
         user={props.user}

@@ -1,6 +1,6 @@
 import { stripHtml } from "components/build/questionService/ConvertService";
 
-export function setBrillderTitle(brickTitle?: string) {
+export function getBrillderTitle(brickTitle?: string) {
   let title = "Brillder";
   if (brickTitle) {
     title = stripHtml(brickTitle);
@@ -11,5 +11,5 @@ export function setBrillderTitle(brickTitle?: string) {
       title = "dev-" + title;
     }
   }
-  document.title = title;
+  return title;
 }
