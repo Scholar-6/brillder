@@ -75,7 +75,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           if (isMobile) {
             setNeedDesktopOpen(true);
           } else {
-            history.push(map.postPlay(brick.id, props.user.id));
+            history.push(map.postPlay(brick.id, notification.sender.id));
           }
         } else if (notification.type === NotificationType.ReturnedToEditor) {
           history.push(map.InvestigationBuild(brick.id));
