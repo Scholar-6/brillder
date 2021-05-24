@@ -1,3 +1,4 @@
+import { MUser } from 'components/teach/model';
 import { ClassroomApi } from 'components/teach/service';
 import { TeachClassroom } from 'model/classroom';
 import { Student } from 'model/user';
@@ -49,7 +50,7 @@ export const getStudents = async () => {
 
 export const getClassInvitations = async (searchString?: string) => {
   try {
-    return await post<Student[]>("/classrooms/studentsInvitations", {});
+    return await post<MUser[]>("/classrooms/studentsInvitations", {});
   } catch {
     return null;
   }
