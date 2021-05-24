@@ -192,6 +192,10 @@ const HintComponent: React.FC<HintProps> = ({
       return renderNormalToggle();
     }
 
+    if (props.questionType === QuestionTypeEnum.MissingWord && props.component.choices.length > 1) {
+      return renderNormalToggle();
+    }
+
     if (
       !list || list.length <= 1 ||
       props.questionType === QuestionTypeEnum.WordHighlighting ||
