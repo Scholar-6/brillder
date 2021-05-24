@@ -87,7 +87,10 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           props.forgetBrick();
           await props.fetchBrick(notification.brick.id);
           history.push(map.Proposal(notification.brick.id));
-        } else if (notification.type === NotificationType.RemindedToPlayBrick) {
+        } else if (
+          notification.type === NotificationType.RemindedToPlayBrick ||
+          notification.type === NotificationType.StudentAssignedBrick
+        ) {
           history.push(map.playIntro(notification.brick.id));
         }
       }
