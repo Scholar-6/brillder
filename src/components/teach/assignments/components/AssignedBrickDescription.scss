@@ -79,23 +79,50 @@
     $border-radius: calc(#{$bricks-height / 6.35 / 15});
     $margin-height: calc(#{$bricks-height / 6.35 / 50});
 
-    .brick-middle {
-      border-radius: 0.4vw;
+    .brick-relative {
+      position: relative;
       width: 100%;
       height: calc(#{$bricks-height / 6.35 / 2.4});
-      svg {
-        transition: all 300ms ease-out;
-        width: 80%;
-        margin-left: 10%;
-        height: inherit;
-        color: white;
-        &.rotated {
-          transform: rotate(90deg);
+
+      .brick-middle {
+        position: absolute;
+        z-index: 3;
+        border-radius: 0.4vw;
+        width: 100%;
+        height: calc(#{$bricks-height / 6.35 / 2.4});
+        svg {
+          transition: all 300ms ease-out;
+          width: 80%;
+          margin-left: 10%;
+          height: inherit;
+          color: white;
+          &.rotated {
+            transform: rotate(90deg);
+          }
         }
       }
+      .hover-area {
+        z-index: 2;
+        transition: all 300ms ease-out;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 0.5vw;
+        width: 100%;
+        height: calc(calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35/2.4);
+      }
+
       &:hover {
         svg {
           transform: rotate(90deg);
+        }
+        .hover-area {
+          background: var(--theme-dark-blue);
+          opacity: 0.5;
+          top: -0.8vh;
+          left: -0.5vw;
+          width: calc(100% + 1vw);
+          height: calc(calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35/2.4 + 1.6vh);
         }
       }
     }
