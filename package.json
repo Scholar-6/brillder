@@ -19,7 +19,7 @@
     "@ckeditor/ckeditor5-table": "^22.0.0",
     "@ckeditor/ckeditor5-theme-lark": "^22.0.0",
     "@ckeditor/ckeditor5-ui": "^22.0.0",
-    "@datadog/datadog-ci": "^0.11.7",
+    "@datadog/datadog-ci": "^0.11.11",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
