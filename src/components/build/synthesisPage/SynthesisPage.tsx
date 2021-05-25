@@ -168,7 +168,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                     />
                   </div>
                   <div style={{width: "100%"}}>
-                    <CountSynthesis value={this.state.synthesis} />
+                    <CountSynthesis brickLength={this.props.currentBrick.brickLength} value={this.state.synthesis} />
                   </div>
                 </div>
               </Grid>
