@@ -51,6 +51,7 @@ export interface Hint {
 
 export interface Question {
   id: number;
+  brickQuestionId: number;
   active: boolean;
   type: QuestionTypeEnum;
   hint: Hint;
