@@ -20,6 +20,7 @@ import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
 import ImageUpload, { CustomImageBlot } from "./QuillImageUpload";
 import QuillCustomClipboard from "./QuillCustomClipboard";
+import ValidationFailedDialog from "../dialogs/ValidationFailedDialog";
 
 function randomEditorId() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -65,6 +66,8 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     const [uniqueId] = React.useState(randomEditorId());
     const [data, setData] = React.useState(props.data);
     const [quill, setQuill] = React.useState<Quill | null>(null);
+
+    const [imageInvalid, setImageInvalid] = React.useState(false);
 
     const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
     const [imageDialogFile, setImageDialogFile] = React.useState<File>();
@@ -197,13 +200,18 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 ref={ref}
             />
             {props.imageDialog &&
-                <ImageDialog
+                <div>
+                  <ImageDialog
                     initData={imageDialogData ?? {}}
                     initFile={imageDialogFile ?? null}
                     open={imageDialogOpen}
-                    upload={(...args) => {
+                    upload={async(...args) => {
                         if(imageModule) {
-                            imageModule.uploadImages.bind(imageModule)(...args);
+                            const res = await imageModule.uploadImages.bind(imageModule)(...args);
+                            if (!res) {
+                              setImageInvalid(true);
+                              return;
+                            }
                         }
                         setImageDialogOpen(false);
                         setImageDialogFile(undefined);
@@ -216,7 +224,12 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                         setImageDialogFile(undefined);
                     }}
                     setDialog={open => setImageDialogOpen(false)}
-                />
+                  />
+                  <ValidationFailedDialog
+                    isOpen={imageInvalid} close={() => setImageInvalid(false)}
+                    header="This image is too large, try shrinking it."
+                  />
+                </div>
             }
         </div>
     );
