@@ -39,6 +39,12 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
             imageUpload.uploadHandler(toolbarNode.current);
             return true;
         }
+        if(format === "table") {
+            const betterTable = props.quill.getModule("better-table");
+            betterTable.insertTable(2, 2);
+            console.log(props.quill.getContents());
+            return true;
+        }
         if(props.quill.getFormat()[format] === (value ?? true) || value === "left") {
             props.quill.format(format, false, "user");
             return false;
