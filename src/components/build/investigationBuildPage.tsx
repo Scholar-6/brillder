@@ -519,10 +519,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           buildQuestion.isTwoOrMoreRedirect
         ) {
           link = previewRoutes.previewLive(brickId);
+          cashBuildQuestion(brickId, currentQuestionIndex);
         } else {
           clearCashQuestion();
         }
-        console.log(link);
         history.push(link);
       } else {
         setProposalResult({ ...proposalRes, isOpen: true });

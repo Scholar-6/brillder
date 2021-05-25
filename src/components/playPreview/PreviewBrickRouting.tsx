@@ -167,7 +167,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     } else {
       const data = GetCashedBuildQuestion();
       if (data?.brickId === brickId) {
-        link += '/' + brick.questions[data.questionNumber].id;
+        try {
+          link += '/' + brick.questions[data.questionNumber].id;
+        } catch {
+
+        }
       }
     }
     history.push(link);
