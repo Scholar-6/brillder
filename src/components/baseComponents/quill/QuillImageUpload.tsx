@@ -172,12 +172,15 @@ export default class ImageUpload {
         this.openDialog(undefined, data, blot);
     }
 
+    /**
+     * @returns true if success false if failed
+     */
     async uploadImages(file: File, source: string, caption: string, align: ImageAlign, height: number) {
         //const length = this.quill.getLength();
         const range = this.quill.getSelection(true);
         const res = await new Promise<any>((resolve, reject) => uploadFile(file, resolve, reject));
         if (!res) {
-          return;
+          return false;
         }
         const fileName = res.data.fileName;
 
@@ -207,6 +210,7 @@ export default class ImageUpload {
         });
         this.quill.insertEmbed(range.index + 1, 'devider', '');
         //this.quill.insertEmbed(range.index + 2, 'newline', '');
+        return true;
     }
 
     async updateImage(leaf: any, data: any) {
