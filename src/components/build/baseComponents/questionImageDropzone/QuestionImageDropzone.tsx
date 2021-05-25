@@ -6,7 +6,6 @@ import { QuestionValueType } from "../../buildQuestions/questionTypes/types";
 import AddImageBtnContent from "../AddImageBtnContent";
 import ImageDialogV2 from "./ImageDialogV2";
 import { MainImageProps } from "components/build/buildQuestions/components/Image/model";
-import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 
 export interface ImageAnswerData extends MainImageProps {
