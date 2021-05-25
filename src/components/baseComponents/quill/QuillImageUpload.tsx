@@ -176,6 +176,9 @@ export default class ImageUpload {
         //const length = this.quill.getLength();
         const range = this.quill.getSelection(true);
         const res = await new Promise<any>((resolve, reject) => uploadFile(file, resolve, reject));
+        if (!res) {
+          return;
+        }
         const fileName = res.data.fileName;
 
         /*

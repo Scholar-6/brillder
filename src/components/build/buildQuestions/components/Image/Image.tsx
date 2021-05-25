@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Grid } from '@material-ui/core';
 
 import './Image.scss'
 import {fileUrl, uploadFile} from 'components/services/uploadFile';
 import ImageDialog from './ImageDialog';
 import { ImageAlign, ImageComponentData } from './model';
+import ValidationFailedDialog from 'components/baseComponents/dialogs/ValidationFailedDialog';
 
 
 interface ImageProps {
@@ -20,10 +21,11 @@ interface ImageProps {
 }
 
 const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
-  const [isOpen, setOpen] = React.useState(false);
-  const [file, setFile] = React.useState(null as File | null);
-  const [fileName, setFileName] = React.useState(props.data.value);
-  const [invalid, setInvalid] = React.useState(props.validationRequired && !props.data.value);
+  const [isOpen, setOpen] = useState(false);
+  const [imageInvalid, setImageInvalid] = useState(false);
+  const [file, setFile] = useState(null as File | null);
+  const [fileName, setFileName] = useState(props.data.value);
+  const [invalid, setInvalid] = useState(props.validationRequired && !props.data.value);
 
   useEffect(() => {
     setFileName(props.data.value);
@@ -47,7 +49,9 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
       setFileName(comp.value);
       props.save();
       setOpen(false);
-    }, () => { });
+    }, () => {
+      setImageInvalid(true);
+    });
   }
 
   const updateData = (source: string, caption: string, align: ImageAlign, height: number) => {
@@ -114,6 +118,10 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
         initFile={file}
         upload={upload}
         updateData={updateData}
+      />
+      <ValidationFailedDialog
+        isOpen={imageInvalid} close={() => setImageInvalid(false)}
+        header="This image is too large, try shrinking it."
       />
     </div>
   );
