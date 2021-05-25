@@ -123,14 +123,12 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const handleStep = (step: number) => () => {
     setActiveAnswer();
-    let newStep = activeStep + 1;
-
-    if (props.isPlayPreview) {
-      CashQuestionFromPlay(brick.id, newStep);
-    }
     setTimeout(() => {
       setPrevStep(activeStep);
       setActiveStep(step);
+      if (props.isPlayPreview) {
+        CashQuestionFromPlay(brick.id, step);
+      }
     }, 100);
   };
 
