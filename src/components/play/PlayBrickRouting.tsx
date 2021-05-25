@@ -56,6 +56,7 @@ import PreInvestigationPage from "./preInvestigation/PreInvestigation";
 import PreSynthesis from "./preSynthesis/PreSynthesis";
 import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
+import { trackSignUp } from "services/matomo";
 
 
 function shuffle(a: any[]) {
@@ -303,6 +304,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         props.setUser(user);
         setUnauthorized(false);
         setUserToken(token);
+        trackSignUp();
       } else {
         setInvalidEmail(true);
       }
