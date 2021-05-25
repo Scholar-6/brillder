@@ -6,6 +6,8 @@ import { QuestionValueType } from "../../buildQuestions/questionTypes/types";
 import AddImageBtnContent from "../AddImageBtnContent";
 import ImageDialogV2 from "./ImageDialogV2";
 import { MainImageProps } from "components/build/buildQuestions/components/Image/model";
+import TextDialog from "components/baseComponents/dialogs/TextDialog";
+import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 
 export interface ImageAnswerData extends MainImageProps {
   value: string;
@@ -25,6 +27,7 @@ export interface AnswerProps {
 const QuestionImageDropzone: React.FC<AnswerProps> = ({
   locked, answer, fileName, type, className, update
 }) => {
+  const [imageInvalid, setInvalid] = useState(false);
   const [file, setFile] = useState(null as File | null);
   const [isOpen, setOpen] = useState(false);
 
@@ -43,7 +46,9 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
     if (locked) { return; }
     return uploadFile(file, (res: any) => {
       updateAnswer(res.data.fileName, source, caption, permision);
-    }, () => { });
+    }, (e: any) => {
+      setInvalid(true);
+    });
   }
 
   const updateData = (source: string, caption: string, permision: boolean) => {
@@ -87,6 +92,10 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
         updateData={updateData}
         removeInitFile={removeInitFile}
         close={() => setOpen(false)}
+      />
+      <ValidationFailedDialog
+        isOpen={imageInvalid} close={() => setInvalid(false)}
+        header="This image is too large, try shrinking it."
       />
     </div>
   )
