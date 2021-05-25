@@ -169,8 +169,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       if (data?.brickId === brickId) {
         try {
           link += '/' + brick.questions[data.questionNumber].id;
-        } catch {
-
+        } catch (e) {
+          console.log('can`t get cashed question');
         }
       }
     }
