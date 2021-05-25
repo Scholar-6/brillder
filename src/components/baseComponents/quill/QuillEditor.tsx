@@ -14,7 +14,7 @@ import "./QuillMediaEmbed";
 import "./QuillCustomClipboard";
 import "./QuillKeyboard";
 import "./QuillImageUpload";
-import "./QuillTableUI";
+import QuillBetterTable from "./QuillBetterTable";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
@@ -108,9 +108,16 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         mediaembed: props.allowMediaEmbed,
         imageupload: props.imageDialog,
         clipboard: true,
-        keyboard: true,
-        table: props.allowTables,
-        tableUI: props.allowTables,
+        keyboard: {
+            bindings: QuillBetterTable.keyboardBindings,
+        },
+        table: false,
+        'better-table': props.allowTables ? {
+            operationMenu: {
+                items: {},
+            },
+        } : false,
+        // tableUI: props.allowTables,
     }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.imageDialog]);
     
     /*
