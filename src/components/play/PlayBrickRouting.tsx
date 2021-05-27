@@ -155,6 +155,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setBrickAttempt(ba);
     setReviewAttempts(Object.assign([], attempts));
     setStatus(PlayStatus.Review);
+    saveBrickAttempt(ba);
   };
 
   const finishReview = () => {
