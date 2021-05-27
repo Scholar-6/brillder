@@ -153,7 +153,9 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
             resetPassword={async () => {
               try {
                 if (email) {
-                  await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${email}`, {}, { withCredentials: true });
+                  try {
+                    await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${email}`, {}, { withCredentials: true });
+                  } catch {}
                   setEmailSended(true);
                 } else {
                   setEmptyEmail(true);
