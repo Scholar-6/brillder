@@ -27,6 +27,7 @@ export interface BaseApiQuestion {
 
 export interface ApiQuestion extends BaseApiQuestion {
   id?: number;
+  brickQuestionId?: number;
   order: number;
 }
 
@@ -105,6 +106,7 @@ export function getApiQuestion(question: Question) {
   } as ApiQuestion;
   if (question.id) {
     apiQuestion.id = question.id;
+    apiQuestion.brickQuestionId = question.brickQuestionId;
     apiQuestion.type = question.type;
   }
   apiQuestion.order = question.order;
@@ -172,6 +174,7 @@ export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]
   if (parsedQuestion.components) {
     let q = {
       id: question.id,
+      brickQuestionId: question.brickQuestionId,
       type: question.type,
       hint: parsedQuestion.hint,
       order: question.order,
@@ -194,6 +197,7 @@ export function justParseQuestion(question: ApiQuestion) {
   if (parsedQuestion.components) {
     q = {
       id: question.id,
+      brickQuestionId: question.brickQuestionId,
       type: question.type,
       hint: parsedQuestion.hint,
       order: question.order,
