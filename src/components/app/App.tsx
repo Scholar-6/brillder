@@ -62,6 +62,7 @@ import { getTerms } from 'services/axios/terms';
 import IPadWarning from 'components/baseComponents/rotateInstruction/IPadWarning';
 import BuildRouter from 'components/build/BuildRouter';
 import ProposalBrickRoute from './ProposalBrickRoute';
+import StartBuildingPage from 'components/build/StartBuilding/StartBuilding';
 
 interface AppProps {
   user: User;
@@ -246,6 +247,7 @@ const App: React.FC<AppProps> = props => {
 
         <PlayPreviewRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         {/* Creating new bricks */}
+        <ProposalBrickRoute path={map.ProposalStart} component={StartBuildingPage} location={location} />
         <ProposalBrickRoute path={map.NewBrick} component={Proposal} location={location} />
         {/* Investigation Build */}
         <BuildBrickRoute

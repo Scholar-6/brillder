@@ -34,7 +34,7 @@ import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { buildQuesitonType } from "../routes";
-import StartBuildingPage from "./questionnaire/StartBuilding/StartBuilding";
+import StartBuildingPage from "../StartBuilding/StartBuilding";
 import { Helmet } from "react-helmet";
 
 interface ProposalProps {
@@ -332,9 +332,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             style={{ width: "100%", height: "100%" }}
             className="proposal-router"
           >
-            <Route path={map.ProposalStart}>
-              <StartBuildingPage history={history} />
-            </Route>
             <Route path={[baseUrl + '/subject']}>
               <SubjectPage
                 location={history.location}
