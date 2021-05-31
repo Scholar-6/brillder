@@ -1,6 +1,8 @@
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
-import React from "react";
+import { Brick } from "model/brick";
+import React, { useEffect } from "react";
+import { getLatestBrick } from "services/axios/brick";
 import PlayDialog from "./PlayDialog";
 
 import './StartBuilding.scss';
@@ -13,6 +15,18 @@ const StartBuildingPage: React.FC<Props> = ({
   history
 }) => {
   const [isOpen, setOpen] = React.useState(false);
+  const [brick, setBrick] = React.useState(null as Brick | null);
+
+  useEffect(() => {
+   const loadBrick = async() => {
+     const initBrick = await getLatestBrick();
+     if (initBrick) {
+       setBrick(initBrick);
+     }
+   }
+   loadBrick();
+  }, [])
+
   return (
     <div className="start-building">
       <div>
