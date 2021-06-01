@@ -44,7 +44,7 @@ const StartBuildingPage: React.FC<Props> = ({
           </button>
         </div>
       </div>
-      <PlayDialog isOpen={isOpen} close={() => setOpen(false)} />
+      {brick && <PlayDialog isOpen={isOpen} brick={brick} close={() => setOpen(false)} />}
     </div>
   );
 }
