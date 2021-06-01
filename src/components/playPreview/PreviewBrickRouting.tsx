@@ -355,23 +355,25 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
   /* Parsing each Question object from json <contentBlocks> */
   if (!brick) { return brick; }
   const parsedQuestions: Question[] = [];
-  for (const question of brick.questions) {
-    if (!question.components) {
-      try {
-        const parsedQuestion = JSON.parse(question.contentBlocks as string);
-        if (parsedQuestion.components) {
-          let q = {
-            id: question.id,
-            type: question.type,
-            hint: parsedQuestion.hint,
-            firstComponent: parsedQuestion.firstComponent ? parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
-            components: parsedQuestion.components
-          } as Question;
-          parsedQuestions.push(q);
-        }
-      } catch (e) { }
-    } else {
-      parsedQuestions.push(question);
+  if (brick.questions) {
+    for (const question of brick.questions) {
+      if (!question.components) {
+        try {
+          const parsedQuestion = JSON.parse(question.contentBlocks as string);
+          if (parsedQuestion.components) {
+            let q = {
+              id: question.id,
+              type: question.type,
+              hint: parsedQuestion.hint,
+              firstComponent: parsedQuestion.firstComponent ? parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
+              components: parsedQuestion.components
+            } as Question;
+            parsedQuestions.push(q);
+          }
+        } catch (e) { }
+      } else {
+        parsedQuestions.push(question);
+      }
     }
   }
 
