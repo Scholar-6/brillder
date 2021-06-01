@@ -74,8 +74,6 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     customClass += ' invalid-answer';
   }
 
-  console.log('index: ', index, answer.optionType);
-
   return (
     <Grid container item xs={6}>
       <div className={customClass}>

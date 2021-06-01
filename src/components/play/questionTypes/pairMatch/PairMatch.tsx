@@ -169,6 +169,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
               <PairMatchOption
                 state={this.getState(i)}
                 item={item}
+                key={i}
                 isPreview={this.props.isPreview}
                 hint={this.props.question.hint}
                 isReview={this.props.isReview}
