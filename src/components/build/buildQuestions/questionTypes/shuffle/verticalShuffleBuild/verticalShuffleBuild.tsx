@@ -106,7 +106,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
         <QuillEditorContainer
           locked={locked}
           object={answer}
-          fieldName="answer"
+          fieldName="value"
           validationRequired={validationRequired}
           toolbar={['latex']}
           isValid={isValid}
