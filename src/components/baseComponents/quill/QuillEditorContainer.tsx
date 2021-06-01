@@ -7,7 +7,7 @@ export interface ContainerProps {
   object: any;
   fieldName: string;
   toolbar: string[];
-  isValid: boolean | null | undefined;
+  isValid?: boolean | null | undefined;
   placeholder: string;
   validationRequired: boolean;
   onBlur?(): void;
