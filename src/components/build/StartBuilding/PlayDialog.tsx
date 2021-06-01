@@ -10,10 +10,15 @@ import CoverImageComponent from "components/play/cover/CoverImage";
 import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/components/KeywordsPlay";
 import { AcademicLevelLabels, Brick } from "model/brick";
 import BrickTitle from "components/baseComponents/BrickTitle";
+import DummyProgressbarCountdown from "components/play/baseComponents/timeProgressbar/DummyTimeProgressbar";
+import { getPrepareTime } from "components/play/services/playTimes";
+import { formatTwoLastDigits } from "components/services/brickService";
+import map from "components/map";
 
 interface DialogProps {
   isOpen: boolean;
   brick: Brick;
+  history: any;
   close(): void;
 }
 
@@ -164,6 +169,24 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
     );
   };
 
+  const renderPrepFooter = () => {
+    return (
+      <div className="prep-footer">
+        <div className="progressbar-container">
+          <div className="time-container">
+            <DummyProgressbarCountdown value={100} deadline={true} />
+          </div>
+          <div className="time-string">
+            {formatTwoLastDigits(getPrepareTime(brick.brickLength))}:00
+          </div>
+        </div>
+        <div className="button-container" onClick={() => props.history.push(map.ProposalSubjectLink)}>
+          Exit & Start Building <SpriteIcon name="arrow-right" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Dialog
       open={props.isOpen}
@@ -176,7 +199,9 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
         className="dialog-close"
         onClick={close}
       />
-      <div className="footer" />
+      <div className="footer">
+        {status === PlayStatus.Prep && renderPrepFooter()}
+      </div>
     </Dialog>
   );
 };
