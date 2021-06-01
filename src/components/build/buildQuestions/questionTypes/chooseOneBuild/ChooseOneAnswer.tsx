@@ -11,6 +11,7 @@ import RemoveButton from "../components/RemoveButton";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import YesNoDialog from "components/build/baseComponents/dialogs/YesNoDialog";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import QuillEditorContainer from "components/baseComponents/quill/QuillEditorContainer";
 
 
 export interface ChooseOneAnswerProps {
@@ -127,12 +128,13 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           fileName={answer.valueFile}
           update={setImage}
         />
-        <QuillEditor
-          disabled={locked}
-          data={answer.value}
+        <QuillEditorContainer
+          locked={locked}
+          object={answer}
+          fieldName="value"
           placeholder="Enter Answer..."
           toolbar={['latex']}
-          validate={validationRequired}
+          validationRequired={validationRequired}
           isValid={!!stripHtml(answer.value)}
           onChange={value => onTextChanged(answer, value)}
         />
