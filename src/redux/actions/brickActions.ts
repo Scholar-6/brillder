@@ -95,7 +95,7 @@ const saveQuestionFailure = (errorMessage: string) => ({
 const saveQuestion = (question: any) => {
   return function (dispatch: Dispatch) {
     return axios.put(
-      `${process.env.REACT_APP_BACKEND_HOST}/question/${question.id}`, question, { withCredentials: true, timeout: 10000 }
+      `${process.env.REACT_APP_BACKEND_HOST}/question/${question.brickQuestionId}`, question, { withCredentials: true, timeout: 10000 }
     ).then(response => {
       const savedQuestion = response.data as Question;
       dispatch(saveQuestionSuccess(savedQuestion));
