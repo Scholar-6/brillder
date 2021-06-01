@@ -24,15 +24,6 @@ const YoutubeLink: React.FC<YoutubeLinkProps> = (props) => {
     }
   };
 
-  if (isPhone()) {
-    opts = {
-      playerVars: {
-        playsinline: 0,
-        fs: 0
-      },
-    };
-  }
-
   if (isValid) {
     return (
       <div className="youtube-video">
