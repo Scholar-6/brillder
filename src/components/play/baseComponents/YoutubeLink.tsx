@@ -1,7 +1,7 @@
 import React from 'react';
 import YouTube, { Options as YoutubeOptions } from 'react-youtube';
 import { Grid } from '@material-ui/core';
-import { isPhone } from 'services/phone';
+import { SetYoutubeClick, UnsetYoutubeClick } from 'localStorage/play';
 
 interface YoutubeLinkProps {
   value: string;
@@ -24,23 +24,22 @@ const YoutubeLink: React.FC<YoutubeLinkProps> = (props) => {
     }
   };
 
-  if (isPhone()) {
-    opts = {
-      playerVars: {
-        playsinline: 0,
-        fs: 0
-      },
-    };
+  const rememberYoutube = () => {
+    SetYoutubeClick();
+    setTimeout(() => {
+      UnsetYoutubeClick();
+    }, 2000);
   }
 
   if (isValid) {
     return (
-      <div className="youtube-video">
+      <div className="youtube-video" onClick={() => console.log('click')}>
         <YouTube
           videoId={videoId}
           opts={opts}
           onError={() => setIsValid(false)}
           onReady={(evt) => setVideo(evt.target)}
+          onPlaybackQualityChange={rememberYoutube}
         />
       </div>
     );
