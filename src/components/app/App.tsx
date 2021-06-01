@@ -105,7 +105,7 @@ const App: React.FC<AppProps> = props => {
     });
 
     window.addEventListener("orientationchange", (event: any) => {
-      setHorizontal(isHorizontal());
+      //setHorizontal(isHorizontal());
     });
 
     // download mamoto
