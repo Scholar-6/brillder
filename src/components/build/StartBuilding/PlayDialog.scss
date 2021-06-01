@@ -279,3 +279,38 @@
     margin-top: 2vh;
   }
 }
+
+.dialog-box.play-dialog .footer .prep-footer {
+  position: relative;
+  .progressbar-container {
+    margin-left: 2.5vw;
+    display: flex;
+    align-items: center;
+    height: 7vh;
+    .time-container {
+      width: 17vw;
+      margin-right: 0.6vw;
+      .MuiLinearProgress-root {
+        width: 100%;
+      }
+    }
+  }
+  .button-container {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    font-size: 4vh;
+    height: 7vh;
+    right: 0;
+    display: flex;
+    align-items: center;
+    color: var(--theme-dark-blue);
+    font-family: $font-family-bold;
+    svg {
+      margin-left: 1vh;
+      margin-right: 0.5vh;
+      height: 5.5vh;
+      width: 5.5vh;
+    }
+  }
+}
