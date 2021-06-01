@@ -5,6 +5,7 @@ import { Answer } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import QuillEditorContainer from "components/baseComponents/quill/QuillEditorContainer";
 
 
 export interface PairAnswerProps {
@@ -92,16 +93,15 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
       <div className={customClass}>
         {renderDeleteButton()}
         {answer.answerType !== QuestionValueType.Image &&
-          <QuillEditor
-            disabled={locked}
-            data={answer.value}
-            validate={validationRequired}
-            isValid={isValid}
+          <QuillEditorContainer
+            locked={locked}
+            object={answer}
+            fieldName="value"
+            validationRequired={validationRequired}
             toolbar={['latex']}
+            isValid={isValid}
             placeholder={"Enter Answer " + (index + 1) + "..."}
-            onBlur={() => {
-              onBlur();
-            }}
+            onBlur={onBlur}
             onChange={value => answerChanged(answer, value)}
           />}
         <QuestionImageDropZone
