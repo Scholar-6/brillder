@@ -63,6 +63,7 @@ import IPadWarning from 'components/baseComponents/rotateInstruction/IPadWarning
 import BuildRouter from 'components/build/BuildRouter';
 import ProposalBrickRoute from './ProposalBrickRoute';
 import StartBuildingPage from 'components/build/StartBuilding/StartBuilding';
+import { GetYoutubeClick } from 'localStorage/play';
 
 interface AppProps {
   user: User;
@@ -105,7 +106,10 @@ const App: React.FC<AppProps> = props => {
     });
 
     window.addEventListener("orientationchange", (event: any) => {
-      //setHorizontal(isHorizontal());
+      const clicked = GetYoutubeClick();
+      if (!clicked) {
+        setHorizontal(isHorizontal());
+      }
     });
 
     // download mamoto
