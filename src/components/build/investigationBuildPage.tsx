@@ -558,6 +558,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setLastAutoSave(time);
   }
 
+  // Create a new question.
   const createNewQuestionV2 = async (initQuestion: Question, callback?: Function) => {
     const resQuestion = await createQuestion(brickId, getApiQuestion(initQuestion));
     if (resQuestion) {
@@ -568,6 +569,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   }
 
+  // Save a single question.
   const saveQuestion = async (updatedQuestion: Question, callback?: Function) => {
     if (canEdit === true) {
       setAutoSaveTime();
@@ -589,6 +591,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   }
 
+  // Save the whole brick, not including individual questions.
+  // Also called for changing question ordering.
   const saveBrick = () => {
     setSavingStatus(true);
     prepareBrickToSave(brick, questions, synthesis);
