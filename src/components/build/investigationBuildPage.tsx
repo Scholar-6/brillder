@@ -601,7 +601,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       //const diff = getBrickDiff(currentBrick, brick);
       pushDiff(brick);
       setCurrentBrick(brick);
-      props.saveBrick(brick).then((res: Brick) => {
+      const brickToSave = {
+        ...brick,
+        questions: brick.questions.map((question: Question) => ({
+          ...question, contentBlocks: undefined, type: undefined,
+        })),
+      };
+      props.saveBrick(brickToSave).then((res: Brick) => {
         const time = Date.now();
         console.log(`${new Date(time)} -> ${res.updated}`);
         const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
@@ -785,7 +791,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       questions.map((question, index) => question.order = index);
       prepareBrickToSave(brick, questions, synthesis);
       pushDiff(brick);
-      props.saveBrick(brick).then((brick2: any) => {
+      const brickToSave = {
+        ...brick,
+        questions: brick.questions.map((question: Question) => ({
+          ...question, contentBlocks: undefined, type: undefined,
+        })),
+      };
+      props.saveBrick(brickToSave).then((brick2: any) => {
         setSavingStatus(false);
       });
     }
