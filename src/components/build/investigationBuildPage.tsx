@@ -78,6 +78,7 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
   changeQuestion(questionId?: number): void;
   saveBrick(brick: any): any;
   saveQuestion(question: any): any;
+  createQuestion(brickId: number, question: any): any;
   updateBrick(brick: any): any;
 }
 
@@ -321,15 +322,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
     if (!canEdit) { return; }
     if (locked) { return; }
-    const updatedQuestions = questions.slice();
-    updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, false));
-    saveBrickQuestions(updatedQuestions, (brick2: any) => {
-      const postUpdatedQuestions = setLastQuestionId(brick2, updatedQuestions);
-      setQuestions(update(questions, { $set: postUpdatedQuestions }));
-      cashBuildQuestion(brickId, postUpdatedQuestions.length - 1);
-      history.push(map.investigationBuildQuestionType(brickId, postUpdatedQuestions[postUpdatedQuestions.length - 1].id));
+    const newQuestion = getNewQuestion(QuestionTypeEnum.None, false);
+    createNewQuestionV2(newQuestion, (savedQuestion: any) => {
+      const allQuestions = questions.concat(savedQuestion);
+      setQuestions(update(questions, { $set: allQuestions }));
+      cashBuildQuestion(brickId, allQuestions.length - 1);
+      history.push(map.investigationBuildQuestionType(brickId, savedQuestion.id));
     });
-
   };
 
   const saveSynthesis = (text: string) => {
@@ -587,42 +586,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           setSaveError(true);
         });
       }
-    }
-  }
-
-  const saveBrickQuestions = async (updatedQuestions: Question[], callback?: Function) => {
-    if (canEdit === true) {
-      setAutoSaveTime();
-      setSavingStatus(true);
-      prepareBrickToSave(brick, updatedQuestions, synthesis);
-
-      console.log('save brick questions', brick);
-      const diffBrick = {
-        ...brick,
-        questions: brick.questions.filter((q: Question) => q.id)
-      } as Brick;
-      pushDiff(diffBrick);
-      setCurrentBrick(diffBrick);
-      props.saveBrick(brick).then((res: Brick) => {
-        const time = Date.now();
-        console.log(`${new Date(time)} -> ${res.updated}`);
-        const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
-        if(timeDifference > 10000) {
-          console.log("Not updated properly!!");
-          setSaveError(true);
-        } else {
-          setSavingStatus(false);
-          setSaveError(false);
-        }
-        console.log(res.questions.length)
-        if (callback) {
-          callback(res);
-        }
-      }).catch((err: any) => {
-        console.log(err)
-        console.log("Error saving brick.");
-        setSaveError(true);
-      });
     }
   }
 
@@ -1011,6 +974,7 @@ const mapDispatch = (dispatch: any) => ({
   changeQuestion: (questionId?: number) => dispatch(socketNavigateToQuestion(questionId)),
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   saveQuestion: (question: any) => dispatch(actions.saveQuestion(question)),
+  createQuestion: (brickId: number, question: any) => dispatch(actions.createQuestion(brickId, question)),
   updateBrick: (brick: any) => dispatch(socketUpdateBrick(brick))
 });
 
