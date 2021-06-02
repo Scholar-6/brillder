@@ -10,6 +10,7 @@ const BrickInitialState: BrickState = {
 }
 
 export default (state = BrickInitialState, action: any) => {
+  const newBrick = state.brick as Brick;
   switch (action.type) {
     case types.FETCH_BRICK_FAILURE:
       return {
@@ -27,7 +28,6 @@ export default (state = BrickInitialState, action: any) => {
         error: ''
       }
     case types.SAVE_QUESTION_SUCCESS:
-      const newBrick = state.brick as Brick;
       const questionIndex = newBrick.questions.findIndex(q => q.id === action.payload.id);
       newBrick.questions[questionIndex] = action.payload;
       newBrick.updated = action.payload.updated;
@@ -39,6 +39,12 @@ export default (state = BrickInitialState, action: any) => {
       return {
         brick: action.payload,
         error: ''
+      }
+    case types.CREATE_QUESTION_SUCCESS:
+      newBrick.questions.push(action.payload);
+      return {
+        brick: newBrick,
+        error: '',
       }
     case types.FORGET_BRICK:
       return BrickInitialState
