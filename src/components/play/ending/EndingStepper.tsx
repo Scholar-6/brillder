@@ -24,7 +24,9 @@ const EndingStepper: React.FC<ReviewStepperProps> = ({
     questionIndex++;
     let index = questionIndex;
 
-    if (attempt.liveCorrect || attempt.reviewCorrect) {
+    // In the play-preview review there is no stored attempt?
+    // TODO figure out how to handle this properly on play-preview
+    if (attempt && (attempt.liveCorrect || attempt.reviewCorrect)) {
       if (attempt.liveCorrect && attempt.reviewCorrect) {
         return <SuccessStep key={index} index={index} handleStep={() => { }} />
       }
