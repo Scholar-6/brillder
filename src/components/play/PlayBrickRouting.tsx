@@ -172,7 +172,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const createBrickAttempt = async (brickAttempt: BrickAttempt) => {
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
-    brickAttempt.studentId = props.user.id;
+    if (props.user) {
+      brickAttempt.studentId = props.user.id;
+    }
 
     const assignmentId = getAssignmentId();
     if (assignmentId) {
@@ -180,7 +182,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
     return axios.post(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
-      { brickAttempt, userId: props.user.id },
+      { brickAttempt, userId: props.user?.id },
       { withCredentials: true }
     ).then(async (response) => {
       clearAssignmentId();
