@@ -69,10 +69,11 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           }
         }}
       >
-        <div>
+        <div className="brick-relative">
           <div className="brick-middle" style={{ background: color }}>
             <SpriteIcon name="arrow-right" className={isExpanded ? "rotated" : "active"} />
           </div>
+          <div className="hover-area" style={{ background: color }} />
         </div>
       </div>
     );

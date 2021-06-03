@@ -10,6 +10,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import ValidationFailedDialog from 'components/baseComponents/dialogs/ValidationFailedDialog';
 import RemoveButton from '../components/RemoveButton';
+import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
 
 export interface CategoriseData {
   categories: SortCategory[];
@@ -159,12 +160,13 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
         }
         {answer.answerType === QuestionValueType.Image && <RemoveButton onClick={() => answerChanged(answer, '')} />}
         {answer.answerType !== QuestionValueType.Image &&
-        <QuillEditor
-          disabled={locked}
-          data={answer.value}
+        <QuillEditorContainer
+          locked={locked}
+          object={answer}
+          fieldName="value"
           placeholder="Enter Answer..."
           toolbar={['latex']}
-          validate={validationRequired}
+          validationRequired={validationRequired}
           isValid={isValid}
           onBlur={() => {
             showSameAnswerPopup(i, category.answers, openSameAnswerDialog);
@@ -214,12 +216,13 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
               <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
             </button>
           }
-          <QuillEditor
-            disabled={locked}
-            data={category.name}
+          <QuillEditorContainer
+            locked={locked}
+            object={category}
+            fieldName="name"
             placeholder="Enter Category Heading..."
             toolbar={['latex']}
-            validate={validationRequired}
+            validationRequired={validationRequired}
             onBlur={() => {
               checkCategoriesNames();
               save()

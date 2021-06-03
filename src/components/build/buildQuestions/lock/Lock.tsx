@@ -11,7 +11,7 @@ export interface LockComponentProps {
   onChange(): void;
 }
 
-const LockComponent: React.FC<LockComponentProps> = ({locked, disabled, onChange}) => {
+const LockComponent: React.FC<LockComponentProps> = ({ locked, disabled, onChange }) => {
   const [lock, setLock] = React.useState(locked);
   const toggleLock = () => {
     if (disabled) { return; }
@@ -23,14 +23,14 @@ const LockComponent: React.FC<LockComponentProps> = ({locked, disabled, onChange
       <Grid container justify="center" className="lock-container" item sm={12}>
         <div className="container">
           <div className="lock-second-container">
-          {
-            lock
-              ? <SpriteIcon name="lock" className="lock-icon" onClick={toggleLock} />
-              : <SpriteIcon name="feather-unlock" className="unlock-icon" onClick={toggleLock} />
-          }
-          <div className="css-custom-tooltip">
-            Lock brick?
-          </div>
+            {
+              lock
+                ? <SpriteIcon name="lock" className="lock-icon" onClick={toggleLock} />
+                : <SpriteIcon name="feather-unlock" className="unlock-icon" onClick={toggleLock} />
+            }
+            <div className="css-custom-tooltip">
+              Lock brick?
+            </div>
           </div>
         </div>
       </Grid>

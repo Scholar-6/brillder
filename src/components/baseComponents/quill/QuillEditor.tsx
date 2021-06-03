@@ -14,12 +14,13 @@ import "./QuillMediaEmbed";
 import "./QuillCustomClipboard";
 import "./QuillKeyboard";
 import "./QuillImageUpload";
-import "./QuillTableUI";
+import QuillBetterTable from "./QuillBetterTable";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
 import ImageUpload, { CustomImageBlot } from "./QuillImageUpload";
 import QuillCustomClipboard from "./QuillCustomClipboard";
+import ValidationFailedDialog from "../dialogs/ValidationFailedDialog";
 
 function randomEditorId() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -66,6 +67,8 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     const [data, setData] = React.useState(props.data);
     const [quill, setQuill] = React.useState<Quill | null>(null);
 
+    const [imageInvalid, setImageInvalid] = React.useState(false);
+
     const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
     const [imageDialogFile, setImageDialogFile] = React.useState<File>();
     const [imageDialogData, setImageDialogData] = React.useState<any>(null);
@@ -108,9 +111,16 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         mediaembed: props.allowMediaEmbed,
         imageupload: props.imageDialog,
         clipboard: true,
-        keyboard: true,
-        table: props.allowTables,
-        tableUI: props.allowTables,
+        keyboard: {
+            bindings: QuillBetterTable.keyboardBindings,
+        },
+        table: false,
+        'better-table': props.allowTables ? {
+            operationMenu: {
+                items: {},
+            },
+        } : false,
+        // tableUI: props.allowTables,
     }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.imageDialog]);
     
     /*
@@ -197,13 +207,18 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 ref={ref}
             />
             {props.imageDialog &&
-                <ImageDialog
+                <div>
+                  <ImageDialog
                     initData={imageDialogData ?? {}}
                     initFile={imageDialogFile ?? null}
                     open={imageDialogOpen}
-                    upload={(...args) => {
+                    upload={async(...args) => {
                         if(imageModule) {
-                            imageModule.uploadImages.bind(imageModule)(...args);
+                            const res = await imageModule.uploadImages.bind(imageModule)(...args);
+                            if (!res) {
+                              setImageInvalid(true);
+                              return;
+                            }
                         }
                         setImageDialogOpen(false);
                         setImageDialogFile(undefined);
@@ -216,7 +231,12 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                         setImageDialogFile(undefined);
                     }}
                     setDialog={open => setImageDialogOpen(false)}
-                />
+                  />
+                  <ValidationFailedDialog
+                    isOpen={imageInvalid} close={() => setImageInvalid(false)}
+                    header="This image is too large, try shrinking it."
+                  />
+                </div>
             }
         </div>
     );

@@ -38,9 +38,9 @@ const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, 
     canUpload = true;
   }
 
-  let className = "add-image-button"
+  let className = "add-image-button";
   if (!removed) {
-    className += " remove-image"
+    className += " remove-image";
   }
 
   const handleClick = () => {

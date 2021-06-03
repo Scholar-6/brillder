@@ -4,6 +4,7 @@ import React from 'react';
 import './ClassroomNames.scss';
 
 interface ClassroomNamesProps {
+  isPending?: boolean;
   studyClassrooms?: any[];
   hasInvitation: boolean;
   resendInvitation(): void;
@@ -135,7 +136,7 @@ class ClassroomNames extends React.Component<ClassroomNamesProps, State> {
               }}>{classroom.name}</div>)
             }
             {props.hasInvitation && <>
-              <div className="classroom-name text-theme-dark-blue pending-label">Pending</div>
+              {!this.props.isPending && <div className="classroom-name text-theme-dark-blue pending-label">Pending</div>}
               <div className="classroom-name resend-label" onClick={e => { e.stopPropagation(); props.resendInvitation(); }}>Resend</div>
             </>}
           </div>

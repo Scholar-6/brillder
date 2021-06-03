@@ -18,7 +18,6 @@ import { isHighlightInvalid, validateHint, validateQuestion } from "./questionSe
 import {
   getNewQuestion,
   getNewFirstQuestion,
-  deactiveQuestions,
   cashBuildQuestion,
   clearCashQuestion,
   prepareBrickToSave,
@@ -33,7 +32,7 @@ import {
 import { convertToQuestionType, stripHtml } from "./questionService/ConvertService";
 import { User } from "model/user";
 import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { canEditBrick, checkAdmin, checkPublisher } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { validateProposal } from 'components/build/proposal/service/validation';
@@ -65,10 +64,11 @@ import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialo
 import SkipTutorialDialog from "./baseComponents/dialogs/SkipTutorialDialog";
 import BuildNavigation from "./baseComponents/BuildNavigation";
 import DeleteDialog from "./baseComponents/dialogs/DeleteDialog";
-import routes from "./routes";
+import routes, { moveToPlan } from "./routes";
 import previewRoutes from 'components/playPreview/routes';
 import { deleteQuestion } from "services/axios/brick";
 import { createQuestion } from "services/axios/question";
+import { Helmet } from "react-helmet";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -78,6 +78,7 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
   changeQuestion(questionId?: number): void;
   saveBrick(brick: any): any;
   saveQuestion(question: any): any;
+  createQuestion(brickId: number, question: any): any;
   updateBrick(brick: any): any;
 }
 
@@ -234,13 +235,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       parsedQuestions = parsedQuestions.filter(q => q !== null)
         .sort((qa, qb) => qa.order - qb.order);
       if (parsedQuestions.length > 0) {
-        let buildQuestion = GetCashedBuildQuestion();
-        if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
-          parsedQuestions.forEach(q => q.active = false);
-          parsedQuestions[buildQuestion.questionNumber].active = true;
-        } else {
-          parsedQuestions[0].active = true;
-        }
         setQuestions(q => update(q, { $set: parsedQuestions }));
       }
     }
@@ -307,8 +301,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setPrevFromPhone = React.useCallback(() => {
     if (currentQuestionIndex >= 1) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
+    } else {
+      moveToPlan(history, brickId);
     }
-  }, []);
+  }, [questions, currentQuestionIndex]);
 
   const setNextQuestion = React.useCallback(() => {
     if (currentQuestionIndex < questions.length - 1) {
@@ -326,25 +322,19 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
     if (!canEdit) { return; }
     if (locked) { return; }
-    const updatedQuestions = questions.slice();
-    updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, false));
-    saveBrickQuestions(updatedQuestions, (brick2: any) => {
-      const postUpdatedQuestions = setLastQuestionId(brick2, updatedQuestions);
-      setQuestions(update(questions, { $set: postUpdatedQuestions }));
-      cashBuildQuestion(brickId, postUpdatedQuestions.length - 1);
-      history.push(map.investigationBuildQuestionType(brickId, postUpdatedQuestions[postUpdatedQuestions.length - 1].id));
+    const newQuestion = getNewQuestion(QuestionTypeEnum.None, false);
+    createNewQuestionV2(newQuestion, (savedQuestion: any) => {
+      const allQuestions = questions.concat(savedQuestion);
+      setQuestions(update(questions, { $set: allQuestions }));
+      cashBuildQuestion(brickId, allQuestions.length - 1);
+      history.push(map.investigationBuildQuestionType(brickId, savedQuestion.id));
     });
-
   };
 
   const saveSynthesis = (text: string) => {
     synthesis = text;
     setSynthesis(synthesis);
     saveBrick();
-  }
-
-  const moveToSynthesis = () => {
-    history.push(map.InvestigationSynthesis(brickId));
   }
 
   const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
@@ -429,7 +419,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return <PageLoader content="...Loading..." />;
   }
 
-  setBrillderTitle(props.brick.title);
   locked = canEdit ? locked : true;
 
   if (isSynthesisPage === true || isPlanPage === true) {
@@ -470,12 +459,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           }
         }
         if (initQuestionSet === false) {
-          let buildQuestion = GetCashedBuildQuestion();
-          if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
-            parsedQuestions[buildQuestion.questionNumber].active = true;
-          } else {
-            parsedQuestions[0].active = true;
-          }
+          parsedQuestions[0].active = true;
         }
         setQuestions(update(questions, { $set: parsedQuestions }));
         setStatus(update(loaded, { $set: true }));
@@ -521,7 +505,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       if (proposalRes.isValid) {
         saveBrick();
         let buildQuestion = GetCashedBuildQuestion();
-        console.log(buildQuestion)
 
         let link = previewRoutes.previewNewPrep(brickId);
 
@@ -535,10 +518,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           buildQuestion.isTwoOrMoreRedirect
         ) {
           link = previewRoutes.previewLive(brickId);
+          cashBuildQuestion(brickId, currentQuestionIndex);
         } else {
           clearCashQuestion();
         }
-        console.log(link);
         history.push(link);
       } else {
         setProposalResult({ ...proposalRes, isOpen: true });
@@ -575,6 +558,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setLastAutoSave(time);
   }
 
+  // Create a new question.
   const createNewQuestionV2 = async (initQuestion: Question, callback?: Function) => {
     const resQuestion = await createQuestion(brickId, getApiQuestion(initQuestion));
     if (resQuestion) {
@@ -585,6 +569,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   }
 
+  // Save a single question.
   const saveQuestion = async (updatedQuestion: Question, callback?: Function) => {
     if (canEdit === true) {
       setAutoSaveTime();
@@ -606,42 +591,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   }
 
-  const saveBrickQuestions = async (updatedQuestions: Question[], callback?: Function) => {
-    if (canEdit === true) {
-      setAutoSaveTime();
-      setSavingStatus(true);
-      prepareBrickToSave(brick, updatedQuestions, synthesis);
-
-      console.log('save brick questions', brick);
-      const diffBrick = {
-        ...brick,
-        questions: brick.questions.filter((q: Question) => q.id)
-      } as Brick;
-      pushDiff(diffBrick);
-      setCurrentBrick(diffBrick);
-      props.saveBrick(brick).then((res: Brick) => {
-        const time = Date.now();
-        console.log(`${new Date(time)} -> ${res.updated}`);
-        const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
-        if(timeDifference > 10000) {
-          console.log("Not updated properly!!");
-          setSaveError(true);
-        } else {
-          setSavingStatus(false);
-          setSaveError(false);
-        }
-        console.log(res.questions.length)
-        if (callback) {
-          callback(res);
-        }
-      }).catch((err: any) => {
-        console.log(err)
-        console.log("Error saving brick.");
-        setSaveError(true);
-      });
-    }
-  }
-
+  // Save the whole brick, not including individual questions.
+  // Also called for changing question ordering.
   const saveBrick = () => {
     setSavingStatus(true);
     prepareBrickToSave(brick, questions, synthesis);
@@ -650,7 +601,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       //const diff = getBrickDiff(currentBrick, brick);
       pushDiff(brick);
       setCurrentBrick(brick);
-      props.saveBrick(brick).then((res: Brick) => {
+      const brickToSave = {
+        ...brick,
+        questions: brick.questions.map((question: Question) => ({
+          ...question, contentBlocks: undefined, type: undefined,
+        })),
+      };
+      props.saveBrick(brickToSave).then((res: Brick) => {
         const time = Date.now();
         console.log(`${new Date(time)} -> ${res.updated}`);
         const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
@@ -834,7 +791,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       questions.map((question, index) => question.order = index);
       prepareBrickToSave(brick, questions, synthesis);
       pushDiff(brick);
-      props.saveBrick(brick).then((brick2: any) => {
+      const brickToSave = {
+        ...brick,
+        questions: brick.questions.map((question: Question) => ({
+          ...question, contentBlocks: undefined, type: undefined,
+        })),
+      };
+      props.saveBrick(brickToSave).then((brick2: any) => {
         setSavingStatus(false);
       });
     }
@@ -854,6 +817,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const renderBuildPage = () => {
     return (
       <div className="investigation-build-page">
+      <Helmet>
+        <title>{getBrillderTitle(props.brick.title)}</title>
+      </Helmet>
       <BuildNavigation
         tutorialStep={step}
         user={props.user}
@@ -900,6 +866,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   setQuestions={switchQuestions}
                   questions={questions}
                   brickId={brickId}
+                  questionId={parseInt(params.questionId)}
                   synthesis={synthesis}
                   isPlanValid={proposalRes.isValid}
                   validationRequired={validationRequired}
@@ -908,7 +875,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   tutorialStep={isTutorialPassed() ? TutorialStep.None : step}
                   isSynthesisPage={isSynthesisPage}
                   currentQuestionIndex={currentQuestionIndex}
-                  moveToSynthesis={moveToSynthesis}
                   createNewQuestion={createNewQuestion}
                   selectQuestion={selectQuestion}
                   removeQuestion={removeQuestion}
@@ -926,7 +892,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <PhoneQuestionPreview
               question={activeQuestion!}
               focusIndex={focusIndex}
-              getQuestionIndex={getQuestionIndex}
               nextQuestion={setNextQuestion}
               prevQuestion={setPrevFromPhone}
             />
@@ -1025,6 +990,7 @@ const mapDispatch = (dispatch: any) => ({
   changeQuestion: (questionId?: number) => dispatch(socketNavigateToQuestion(questionId)),
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   saveQuestion: (question: any) => dispatch(actions.saveQuestion(question)),
+  createQuestion: (brickId: number, question: any) => dispatch(actions.createQuestion(brickId, question)),
   updateBrick: (brick: any) => dispatch(socketUpdateBrick(brick))
 });
 

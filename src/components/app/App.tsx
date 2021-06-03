@@ -2,6 +2,7 @@ import React, { Profiler, useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { isMobileOnly, isSafari, isTablet} from 'react-device-detect';
 
@@ -41,7 +42,7 @@ import UnauthorizedRoute from './unauthorized/UnauthorizedRoute';
 
 import BrickWrapper from './BrickWrapper';
 
-import { setBrillderTitle } from 'components/services/titleService';
+import { getBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'services/zendesk';
 import map from 'components/map';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
@@ -61,6 +62,8 @@ import { getTerms } from 'services/axios/terms';
 import IPadWarning from 'components/baseComponents/rotateInstruction/IPadWarning';
 import BuildRouter from 'components/build/BuildRouter';
 import ProposalBrickRoute from './ProposalBrickRoute';
+import StartBuildingPage from 'components/build/StartBuilding/StartBuilding';
+import { GetYoutubeClick } from 'localStorage/play';
 
 interface AppProps {
   user: User;
@@ -68,7 +71,6 @@ interface AppProps {
 }
 
 const App: React.FC<AppProps> = props => {
-  setBrillderTitle();
   const location = useLocation();
   const [iframeFullScreen, setIframe] = React.useState(false);
   const [showWarning, setWarning] = React.useState(isTablet ? true: false)
@@ -104,7 +106,10 @@ const App: React.FC<AppProps> = props => {
     });
 
     window.addEventListener("orientationchange", (event: any) => {
-      setHorizontal(isHorizontal());
+      const clicked = GetYoutubeClick();
+      if (!clicked) {
+        setHorizontal(isHorizontal());
+      }
     });
 
     // download mamoto
@@ -225,6 +230,9 @@ const App: React.FC<AppProps> = props => {
 
   return (
     <div className={isSafari ? 'root-safari browser-type-container' : 'browser-type-container'}>
+    <Helmet>
+      <title>{getBrillderTitle()}</title>
+    </Helmet>
     <ThemeProvider theme={theme}>
       <Profiler id="app-tsx" onRender={onRenderCallback} >
       {/* all page routes are here order of routes is important */}
@@ -243,6 +251,7 @@ const App: React.FC<AppProps> = props => {
 
         <PlayPreviewRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         {/* Creating new bricks */}
+        <ProposalBrickRoute path={map.ProposalStart} component={StartBuildingPage} location={location} />
         <ProposalBrickRoute path={map.NewBrick} component={Proposal} location={location} />
         {/* Investigation Build */}
         <BuildBrickRoute

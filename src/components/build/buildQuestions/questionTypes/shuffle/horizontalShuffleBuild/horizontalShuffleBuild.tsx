@@ -7,8 +7,8 @@ import { showSameAnswerPopup } from '../../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import RemoveItemButton from '../../components/RemoveItemButton';
-import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import { stripHtml } from 'components/build/questionService/ConvertService';
+import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
 
 export const getDefaultHorizontalShuffleAnswer = () => {
   const newAnswer = () => ({ value: "" });
@@ -78,10 +78,11 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
       <Grid container item xs={4} key={i}>
         <div className={className}>
           <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
-          <QuillEditor
-            disabled={locked}
-            data={answer.value}
-            validate={validationRequired}
+          <QuillEditorContainer
+            locked={locked}
+            object={answer}
+            fieldName="value"
+            validationRequired={validationRequired}
             toolbar={['latex']}
             isValid={isValid}
             placeholder={"Enter A" + (i + 1) + "..."}

@@ -8,9 +8,12 @@ import TypingInput from 'components/loginPage/components/TypingInput';
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import LoginLogo from 'components/loginPage/components/LoginLogo';
 import TextDialog from 'components/baseComponents/dialogs/TextDialog';
+import authActions from "redux/actions/auth";
+import { connect } from 'react-redux';
 
 interface ResetPasswordPageProps {
   history: any;
+  checkAuth(): void;
 }
 
 const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
@@ -40,7 +43,8 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
   const resetPassword = async () => {
     try {
       if(password === confirmPassword) {
-        await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/changePassword/${token}`, { password: password });
+        await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/changePassword/${token}`, { password: password }, { withCredentials: true });
+        props.checkAuth();
         setSuccess(true);
       }
     } catch(e) {
@@ -117,10 +121,16 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
       <TextDialog
         isOpen={success}
         label="Your password has been changed successfully."
-        close={() => props.history.push(map.Login)}
+        close={() => props.history.push(map.MainPage)}
       />
     </Grid>
   );
 };
 
-export default ResetPasswordPage;
+const mapDispatch = (dispatch: any) => ({
+  checkAuth: () => dispatch(authActions.isAuthorized()),
+});
+
+const connector = connect(() => {}, mapDispatch);
+
+export default connector(ResetPasswordPage);

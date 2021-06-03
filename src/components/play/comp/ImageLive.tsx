@@ -30,6 +30,7 @@ const ImageLive: React.FC<ImageProps> = ({ component, refs }) => {
               style={{height}}
             />
           </div>
+          {component.imageSource && <figure className="image-source">{component.imageSource}</figure>}
           {component.imageCaption && <figcaption className="image-caption">{component.imageCaption}</figcaption>}
         </div>
       </div>

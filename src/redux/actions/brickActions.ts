@@ -95,13 +95,38 @@ const saveQuestionFailure = (errorMessage: string) => ({
 const saveQuestion = (question: any) => {
   return function (dispatch: Dispatch) {
     return axios.put(
-      `${process.env.REACT_APP_BACKEND_HOST}/question`, question, { withCredentials: true, timeout: 10000 }
+      `${process.env.REACT_APP_BACKEND_HOST}/question/${question.brickQuestionId}`, question, { withCredentials: true, timeout: 10000 }
     ).then(response => {
       const savedQuestion = response.data as Question;
       dispatch(saveQuestionSuccess(savedQuestion));
       return savedQuestion;
     }).catch(error => {
       dispatch(saveQuestionFailure(error.message));
+      return null;
+    })
+  }
+}
+
+const createQuestionSuccess = (question: Question) => ({
+  type: types.CREATE_QUESTION_SUCCESS,
+  payload: question,
+});
+
+const createQuestionFailure = (errorMessage: string) => ({
+  type: types.CREATE_QUESTION_FAILURE,
+  error: errorMessage,
+});
+
+const createQuestion = (brickId: number, question: any) => {
+  return function (dispatch: Dispatch) {
+    return axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/question/new/${brickId}`, question, { withCredentials: true, timeout: 10000 }
+    ).then(response => {
+      const savedQuestion = response.data as Question;
+      dispatch(createQuestionSuccess(savedQuestion));
+      return savedQuestion;
+    }).catch(error => {
+      dispatch(createQuestionFailure(error.message));
       return null;
     })
   }
@@ -193,6 +218,6 @@ const sendToPublisherConfirmed = () => {
 
 export default {
   fetchBrick, fetchPublicBrick, forgetBrick,
-  createBrick, saveBrick, saveQuestion,
+  createBrick, saveBrick, createQuestion, saveQuestion,
   assignEditor, sendToPublisher, sendToPublisherConfirmed
 }

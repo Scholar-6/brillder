@@ -1,5 +1,5 @@
 import React from 'react';
-import { Quill as GlobalQuill } from 'react-quill';
+//import { Quill as GlobalQuill } from 'react-quill';
 import QuillToolbarButton from './QuillToolbarButton';
 import QuillToolbarColorSelect from './QuillToolbarColorSelect';
 import QuillToolbarAlignSelect from './QuillToolbarAlignSelect';
@@ -37,6 +37,12 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         if(format === "image") {
             const imageUpload = props.quill.getModule("imageupload") as ImageUpload
             imageUpload.uploadHandler(toolbarNode.current);
+            return true;
+        }
+        if(format === "table") {
+            const betterTable = props.quill.getModule("better-table");
+            betterTable.insertTable(2, 2);
+            console.log(props.quill.getContents());
             return true;
         }
         if(props.quill.getFormat()[format] === (value ?? true) || value === "left") {

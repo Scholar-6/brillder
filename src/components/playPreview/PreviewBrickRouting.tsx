@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from "react-helmet";
 import { Route, Switch } from 'react-router-dom';
 import { connect } from "react-redux";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
@@ -10,7 +11,7 @@ import { ComponentAttempt, PlayStatus } from '../play/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
-import { setBrillderTitle } from 'components/services/titleService';
+import { getBrillderTitle } from 'components/services/titleService';
 import { prefillAttempts } from 'components/services/PlayService';
 import { ReduxCombinedState } from 'redux/reducers';
 import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
@@ -101,7 +102,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     return <PageLoader content="...Loading brick..." />;
   }
 
-  setBrillderTitle(brick.title);
 
   const updateAttempts = (attempt: any, index: number) => {
     attempts[index] = attempt;
@@ -164,6 +164,15 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     } else if (isNewPrep) {
       link = buildRoutes.buildPlan(brickId);
       CashQuestionFromPlay(brickId, -1);
+    } else {
+      const data = GetCashedBuildQuestion();
+      if (data?.brickId === brickId) {
+        try {
+          link += '/' + brick.questions[data.questionNumber].id;
+        } catch (e) {
+          console.log('can`t get cashed question');
+        }
+      }
     }
     history.push(link);
   }
@@ -242,6 +251,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     <React.Suspense fallback={<></>}>
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
       <div className="play-preview-pages">
+        <Helmet>
+          <title>{getBrillderTitle(brick.title)}</title>
+        </Helmet>
         {renderHead()}
         <div className={className}>
           <PlayLeftSidebar
@@ -343,23 +355,25 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
   /* Parsing each Question object from json <contentBlocks> */
   if (!brick) { return brick; }
   const parsedQuestions: Question[] = [];
-  for (const question of brick.questions) {
-    if (!question.components) {
-      try {
-        const parsedQuestion = JSON.parse(question.contentBlocks as string);
-        if (parsedQuestion.components) {
-          let q = {
-            id: question.id,
-            type: question.type,
-            hint: parsedQuestion.hint,
-            firstComponent: parsedQuestion.firstComponent ? parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
-            components: parsedQuestion.components
-          } as Question;
-          parsedQuestions.push(q);
-        }
-      } catch (e) { }
-    } else {
-      parsedQuestions.push(question);
+  if (brick.questions) {
+    for (const question of brick.questions) {
+      if (!question.components) {
+        try {
+          const parsedQuestion = JSON.parse(question.contentBlocks as string);
+          if (parsedQuestion.components) {
+            let q = {
+              id: question.id,
+              type: question.type,
+              hint: parsedQuestion.hint,
+              firstComponent: parsedQuestion.firstComponent ? parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
+              components: parsedQuestion.components
+            } as Question;
+            parsedQuestions.push(q);
+          }
+        } catch (e) { }
+      } else {
+        parsedQuestions.push(question);
+      }
     }
   }
 

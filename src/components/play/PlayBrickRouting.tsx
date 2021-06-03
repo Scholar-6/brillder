@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import queryString from 'query-string';
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
@@ -29,7 +30,7 @@ import {
   HintStatus,
 } from "model/question";
 import { calcBrickLiveAttempt, calcBrickReviewAttempt } from './services/scoring';
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { prefillAttempts } from "components/services/PlayService";
 import PlayLeftSidebar from './PlayLeftSidebar';
 import { PlayMode } from './model';
@@ -55,6 +56,7 @@ import PreInvestigationPage from "./preInvestigation/PreInvestigation";
 import PreSynthesis from "./preSynthesis/PreSynthesis";
 import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
+import { trackSignUp } from "services/matomo";
 
 
 function shuffle(a: any[]) {
@@ -110,7 +112,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [userToken, setUserToken] = React.useState<string>();
   const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
-  setBrillderTitle(brick.title);
 
   // only cover page should have big sidebar
   useEffect(() => {
@@ -154,6 +155,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setBrickAttempt(ba);
     setReviewAttempts(Object.assign([], attempts));
     setStatus(PlayStatus.Review);
+    saveBrickAttempt(ba);
   };
 
   const finishReview = () => {
@@ -170,7 +172,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const createBrickAttempt = async (brickAttempt: BrickAttempt) => {
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
-    brickAttempt.studentId = props.user.id;
+    if (props.user) {
+      brickAttempt.studentId = props.user.id;
+    }
 
     const assignmentId = getAssignmentId();
     if (assignmentId) {
@@ -178,7 +182,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
     return axios.post(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
-      { brickAttempt, userId: props.user.id },
+      { brickAttempt, userId: props.user?.id },
       { withCredentials: true }
     ).then(async (response) => {
       clearAssignmentId();
@@ -303,6 +307,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         props.setUser(user);
         setUnauthorized(false);
         setUserToken(token);
+        trackSignUp();
       } else {
         setInvalidEmail(true);
       }
@@ -372,7 +377,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const renderRouter = () => {
-    return (
+    return <>
+      <Helmet>
+        <title>{getBrillderTitle(brick.title)}</title>
+        <meta property="og:title" content={brick.title} />
+        <meta property="og:type" content="article" />
+        <meta property="og:description" content={brick.openQuestion} />
+        <meta property="og:image" content={brick.coverImage} />
+      </Helmet>
       <Switch>
         <Route exac path={routes.coverRoute}>
           <Cover
@@ -501,7 +513,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           close={() => setFailed(false)}
         />
       </Switch>
-    );
+    </>;
   };
 
   let className = "sorted-row";
@@ -556,6 +568,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             hint: parsedQuestion.hint,
             firstComponent: parsedQuestion.firstComponent ? parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
             components: parsedQuestion.components,
+            brickQuestionId: question.brickQuestionId
           } as Question;
           parsedQuestions.push(q);
         }
