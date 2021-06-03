@@ -234,6 +234,9 @@
     }
     .custom-component {
       border-radius: 1.6vw;
+      blockquote {
+       color: var(--theme-dark-blue);
+      }
       &.mobile-question-component {
         div {
           > .text-play {

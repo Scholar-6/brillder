@@ -31,6 +31,15 @@ export const getPublicBricks = async () => {
   }
 }
 
+
+export const getLatestBrick = async () => {
+  try {
+    return await get<Brick>('/brick/public/lastest');
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Get bricks by status
  * return list of bricks if success or null if failed

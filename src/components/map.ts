@@ -83,6 +83,7 @@ export const Proposal = (brickId: number) => {
 };
 
 // new brick link
+export const ProposalStart = `${NewBrick}/start-building`;
 export const ProposalSubjectLink = `${NewBrick}/subject`;
 export const ProposalTitleLink = `${NewBrick}/brick-title`;
 
@@ -134,6 +135,7 @@ export default {
   UserPreference,
 
   NewBrick,
+  ProposalStart,
   ProposalBase,
   ProposalSubject,
   ProposalTitle,

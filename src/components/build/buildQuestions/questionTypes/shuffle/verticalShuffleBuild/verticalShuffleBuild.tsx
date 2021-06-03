@@ -7,9 +7,9 @@ import { showSameAnswerPopup } from '../../service/questionBuild';
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import RemoveItemButton from '../../components/RemoveItemButton';
-import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import RemoveButton from '../../components/RemoveButton';
 import { stripHtml } from 'components/build/questionService/ConvertService';
+import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
@@ -103,10 +103,11 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           update={setImage}
         />
         {answer.answerType !== QuestionValueType.Image &&
-        <QuillEditor
-          disabled={locked}
-          data={answer.value}
-          validate={validationRequired}
+        <QuillEditorContainer
+          locked={locked}
+          object={answer}
+          fieldName="value"
+          validationRequired={validationRequired}
           toolbar={['latex']}
           isValid={isValid}
           placeholder={"Enter Answer " + (i + 1) + "..."}

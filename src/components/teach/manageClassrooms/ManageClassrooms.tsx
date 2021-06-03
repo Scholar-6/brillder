@@ -80,7 +80,8 @@ interface UsersListState {
   inviteOpen: boolean;
   numStudentsInvited: number;
 
-  pendingUsers: [];
+  isPending: boolean;
+  pendingUsers: MUser[];
 
   pageStudentsSelected: boolean;
 }
@@ -123,6 +124,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       inviteOpen: false,
       numStudentsInvited: 0,
 
+      isPending: false,
       pendingUsers: [],
 
       pageStudentsSelected: false
@@ -160,7 +162,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   async getInvitations() {
-    await getClassInvitations();
+    const pendingUsers = await getClassInvitations();
+    if (pendingUsers) {
+      for (const u of pendingUsers) {
+        u.hasInvitation = true;
+      }
+      this.setState({pendingUsers});
+    }
   }
 
   async loadData() {
@@ -326,7 +334,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   setActiveClassroom(activeClassroom: ClassroomApi) {
     this.unselectAllStudents();
     activeClassroom.isActive = true;
-    this.setState({ activeClassroom, page: 0, pageStudentsSelected: false, pageSize: this.state.classPageSize, selectedUsers: [], isSearching: false });
+    this.setState({ activeClassroom, page: 0, isPending: false, pageStudentsSelected: false, pageSize: this.state.classPageSize, selectedUsers: [], isSearching: false });
   }
 
   async deleteClass() {
@@ -367,7 +375,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   unselectClasses() {
     this.unselectionClasses();
     this.setState({
-      activeClassroom: null, pageStudentsSelected: false, pageSize: this.state.viewAllPageSize, page: 0, isSearching: false
+      activeClassroom: null, isPending: false, pageStudentsSelected: false,
+      pageSize: this.state.viewAllPageSize, page: 0, isSearching: false
     });
   }
 
@@ -389,7 +398,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   renderViewAllFilter() {
     let className = "m-view-all index-box hover-light item-box2";
-    if (!this.state.activeClassroom) {
+    if (!this.state.activeClassroom && !this.state.isPending) {
       className += " active";
     }
 
@@ -402,6 +411,26 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           <div className="classrooms-box">
             {this.state.classrooms.length}
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderPendingFilter() {
+    let className = "m-view-all index-box hover-light item-box2";
+    if (this.state.isPending) {
+      className += " active";
+    }
+
+    return (
+      <div className={className} onClick={() => {
+        this.unselectClasses();
+        this.setState({isPending: true});
+      }}>
+        Pending
+        <div className="right-index right-index2">
+          {this.state.pendingUsers.length}
+          <SpriteIcon name="users-custom" className="active" />
         </div>
       </div>
     );
@@ -433,6 +462,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             <SpriteIcon name="plus-circle" /> Create Class
           </div>
           {this.renderViewAllFilter()}
+          {this.renderPendingFilter()}
         </div>
         <div className="sort-box subject-scrollable">
           <div className="subject-indexes-box filter-container manage-classrooms-filter">
@@ -646,6 +676,31 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
 
     const visibleUsers = this.getUsersByPage(users);
+
+    if (this.state.isPending) {
+      const visibleUsers = this.getUsersByPage(this.state.pendingUsers);
+
+      return (
+        <div className="tab-content">
+          <StudentTable
+            isPending={true}
+            history={this.props.history}
+            users={visibleUsers}
+            isAdmin={this.state.isAdmin}
+            selectedUsers={this.state.pendingUsers}
+            sortBy={this.state.sortBy}
+            isAscending={this.state.isAscending}
+            pageStudentsSelected={this.state.pageStudentsSelected}
+            sort={this.sortByLastName.bind(this)}
+            toggleUser={this.toggleUser.bind(this)}
+            unassign={this.unassigningStudent.bind(this)}
+            togglePageStudents={this.togglePageStudents.bind(this)}
+            resendInvitation={this.resendInvitation.bind(this)}
+          />
+          {this.renderPagination(visibleUsers, users)}
+        </div>
+      );
+    }
 
     return (
       <div className="tab-content">

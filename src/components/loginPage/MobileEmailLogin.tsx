@@ -55,7 +55,9 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
             <div className="reset-password-link" onClick={async () => {
               try {
                 if (this.props.email) {
-                  await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${this.props.email}`, {}, { withCredentials: true });
+                  try {
+                    await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${this.props.email}`, {}, { withCredentials: true });
+                  } catch {}
                   this.props.setEmailSended(true);
                 } else {
                   this.props.setEmptyEmail(true);

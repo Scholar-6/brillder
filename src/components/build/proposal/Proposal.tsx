@@ -19,7 +19,7 @@ import { Brick, Author } from "model/brick";
 import { User } from "model/user";
 import CloseProposalDialog from "components/build/baseComponents/dialogs/CloseProposalDialog";
 import VersionLabel from "components/baseComponents/VersionLabel";
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames, BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, SubjectRoutePart, TitleRoutePart } from "./model";
@@ -34,6 +34,8 @@ import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { buildQuesitonType } from "../routes";
+import StartBuildingPage from "../StartBuilding/StartBuilding";
+import { Helmet } from "react-helmet";
 
 interface ProposalProps {
   history: History;
@@ -178,7 +180,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       this.setState({saving: true});
       const { brick } = this.props;
       if (tempBrick.id) {
-        await this.props.saveBrick(tempBrick);
+        newBrick = await this.props.saveBrick(tempBrick);
       } else if (brick && brick.id) {
         tempBrick.id = brick.id;
         newBrick = await this.props.saveBrick(tempBrick);
@@ -186,7 +188,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
         newBrick = await this.props.createBrick(tempBrick);
       }
       this.setState({saving: false});
-    } catch {
+    } catch (e) {
       this.setState({hasSaveError: true});
     }
     return newBrick;
@@ -271,12 +273,16 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
 
   render() {
     const {brickId} = this.props.match.params;
-    console.log(this.state.brick.subjectId);
-    if(!brickId && this.state.brick.subjectId) {
+
+    if(!brickId) {
       const callback = async () => {
         const newBrick = await this.saveBrick(this.state.brick);
         if(newBrick) {
-          history.push(map.ProposalSubject(newBrick.id));
+          if (this.state.brick.subjectId) {
+            history.push(map.ProposalTitle(newBrick.id));
+          } else {
+            history.push(map.ProposalSubject(newBrick.id));
+          }
         }
       }
       callback();
@@ -285,8 +291,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const baseUrl = this.getBaseUrl();
     const { history } = this.props;
     const canEdit = canEditBrick(this.state.brick, this.props.user);
-
-    setBrillderTitle();
 
     if (this.state.saved && this.state.moving === false) {
       this.setState({moving: true});
@@ -320,6 +324,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     return (
       <MuiThemeProvider>
         <div>
+          <Helmet>
+            <title>{getBrillderTitle()}</title>
+          </Helmet>
           <HomeButton onClick={() => this.openDialog()} />
           <div
             style={{ width: "100%", height: "100%" }}

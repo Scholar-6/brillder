@@ -1,8 +1,8 @@
 import { Quill as GlobalQuill } from "react-quill";
 
 const Inline = GlobalQuill.import("blots/inline");
-const Text = GlobalQuill.import("blots/text");
-const Cursor = GlobalQuill.import("blots/cursor");
+//const Text = GlobalQuill.import("blots/text");
+//const Cursor = GlobalQuill.import("blots/cursor");
 
 class LatexBlot extends Inline {
     static formats(): boolean {

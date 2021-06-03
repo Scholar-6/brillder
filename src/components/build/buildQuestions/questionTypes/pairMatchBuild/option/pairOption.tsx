@@ -4,7 +4,7 @@ import { QuestionValueType } from '../../types';
 import { Answer } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import QuillEditorContainer from "components/baseComponents/quill/QuillEditorContainer";
 
 
 export interface PairOptionProps {
@@ -74,16 +74,15 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     customClass += ' invalid-answer';
   }
 
-  console.log('index: ', index, answer.optionType);
-
   return (
     <Grid container item xs={6}>
       <div className={customClass}>
         {answer.optionType !== QuestionValueType.Image &&
-          <QuillEditor
-            disabled={locked}
-            data={answer.option}
-            validate={validationRequired}
+          <QuillEditorContainer
+            locked={locked}
+            object={answer}
+            fieldName="option"
+            validationRequired={validationRequired}
             toolbar={['latex']}
             isValid={isValid}
             placeholder={"Enter Option " + (index + 1) + "..."}

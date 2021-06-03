@@ -1,7 +1,9 @@
+import { BrickLengthEnum } from 'model/brick';
 import React from 'react';
 import './WordsCount.scss';
 
 interface CountProps {
+  brickLength: BrickLengthEnum;
   value: string;
 }
 
@@ -73,18 +75,31 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
   }
 
   render() {
+    let min = 600;
+    let max = 800;
+    let mins = 4;
+
+    if (this.props.brickLength === BrickLengthEnum.S40min) {
+      mins = 8;
+      min = 1200;
+      max = 1600;
+    } else if (this.props.brickLength === BrickLengthEnum.S60min) {
+      mins = 12;
+      min = 1800;
+      max = 2000;
+    }
     let overflow = false;
-    if (this.state.count > 1200) {
+    if (this.state.count > min) {
       overflow = true;
     }
     return (
       <div className="synthesis-words-count">
         <div className="bold bigger">Words</div>
         <div><span className={`bold + ${overflow ? 'text-orange' : ''}`}>Current</span> | Recommended</div>
-        <div><span className={`bold + ${overflow ? 'text-orange' : ''}`}>{this.state.count}</span> | 1200-1600</div>
+        <div><span className={`bold + ${overflow ? 'text-orange' : ''}`}>{this.state.count}</span> | {min}-{max}</div>
         <div className="bold bigger">Reading Time</div>
         <div><span className={`bold + ${overflow ? 'text-orange' : ''}`}>Current</span> | Recommended</div>
-        <div><span className={`bold + ${overflow ? 'text-orange' : ''}`}>{this.state.timeText}</span> | 8 mins</div>
+        <div><span className={`bold + ${overflow ? 'text-orange' : ''}`}>{this.state.timeText}</span> | {mins} mins</div>
       </div>
     );
   }

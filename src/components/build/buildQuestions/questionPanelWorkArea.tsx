@@ -24,6 +24,7 @@ import UndoRedoService from 'components/services/UndoRedoService';
 import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoButton from '../baseComponents/UndoButton';
 import RedoButton from '../baseComponents/redoButton';
+import StatusCircle from '../baseComponents/statusCircle/StatusCircle';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -236,6 +237,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   </Grid>
                 </Grid>
                 <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+                <StatusCircle status={props.currentBrick.status} isCore={props.currentBrick.isCore} />
               </div>
             }
             <Grid className={`question-comments-panel ${!commentsShown && 'hidden'}`} item container direction="row" justify="flex-start" xs>

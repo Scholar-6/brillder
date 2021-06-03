@@ -32,7 +32,7 @@ const BuildRouter: React.FC<InvestigationBuildProps> = (props) => {
   axios.interceptors.response.use((response) => {
     return response;
   }, function (error) {
-    if (error.response.status === 403) {
+    if (error.response && error.response.status === 403) {
       setReload(true);
     }
   });

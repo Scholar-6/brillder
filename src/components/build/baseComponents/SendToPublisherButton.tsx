@@ -7,7 +7,6 @@ import { ReduxCombinedState } from "redux/reducers";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SendPublisherSuccessDialog from "components/playPreview/finalStep/SendPublisherSuccess";
 import { Brick, BrickStatus } from "model/brick";
-import YesNoDialog from "./dialogs/YesNoDialog";
 import SendToPublisherDialog from "./dialogs/SendToPublisherDialog";
 
 export interface ButtonProps {

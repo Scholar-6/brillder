@@ -79,7 +79,7 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
           if (isMobile) {
             this.setState({needDesktopOpen: true});
           } else {
-            history.push(map.postPlay(brick.id, this.props.user.id));
+            history.push(map.postPlay(brick.id, notification.sender.id));
           }
         } else if (notification.type === NotificationType.ReturnedToEditor) {
           history.push(map.InvestigationBuild(brick.id));
@@ -91,7 +91,10 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
           this.props.forgetBrick();
           await this.props.fetchBrick(notification.brick.id);
           history.push(map.Proposal(notification.brick.id));
-        } else if (notification.type === NotificationType.RemindedToPlayBrick) {
+        } else if (
+          notification.type === NotificationType.RemindedToPlayBrick ||
+          notification.type === NotificationType.StudentAssignedBrick
+        ) {
           history.push(map.playIntro(notification.brick.id));
         }
       }

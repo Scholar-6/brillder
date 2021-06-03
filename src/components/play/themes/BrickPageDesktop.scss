@@ -1824,7 +1824,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   .introduction-page {
     padding-top: 0 !important;
     .open-question {
-      padding: 0 4vw !important;
+      padding: 0 7vw !important;
       > div {
         $font-size: 2vw;
         font-size: $font-size !important;
@@ -1834,7 +1834,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       }
     }
     .introduction-content {
-      padding: 0 4vw !important;
+      padding: 0 7vw !important;
       .brief-title {
         .italic {
           color: var(--theme-dark-blue);
