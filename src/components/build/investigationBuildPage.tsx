@@ -24,7 +24,6 @@ import {
   prepareBrickToSave,
   removeQuestionByIndex,
   setQuestionTypeByIndex,
-  setLastQuestionId,
   getFirstInvalidQuestionIndex,
   parseQuestion,
   getUniqueComponent,

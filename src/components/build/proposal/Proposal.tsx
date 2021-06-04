@@ -34,7 +34,6 @@ import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { buildQuesitonType } from "../routes";
-import StartBuildingPage from "../StartBuilding/StartBuilding";
 import { Helmet } from "react-helmet";
 
 interface ProposalProps {
