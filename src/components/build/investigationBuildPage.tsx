@@ -113,6 +113,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   let proposalRes = React.useMemo(() => validateProposal(props.brick), [props.brick]);
 
+  const [isSwitching, setSwitching] = React.useState(false);
   const [questions, setQuestions] = React.useState([] as Question[]);
   
   const [loaded, setStatus] = React.useState(false);
@@ -388,10 +389,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const selectQuestion = (index: number) => {
+    setSwitching(true);
     if (isPlanPage || isSynthesisPage) {
       setMovingFromSynthesis(true);
     }
     setCurrentQuestionIndex(index);
+    setTimeout(() => {
+      setSwitching(false);
+    }, 200);
   };
 
   const toggleLock = () => {
@@ -649,6 +654,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const renderBuildQuestion = () => {
+    if (isSwitching) {
+      console.log('switching')
+      return <div />
+    }
     return (
       <QuestionPanelWorkArea
         brickId={brickId}
@@ -785,6 +794,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const switchQuestions = (questions: Question[]) => {
     if (canEdit === true) {
+      console.log('switch')
+      setSwitching(true);
       setQuestions(questions);
       setAutoSaveTime();
       setSavingStatus(true);
@@ -799,6 +810,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       };
       props.saveBrick(brickToSave).then((brick2: any) => {
         setSavingStatus(false);
+        setSwitching(false);
       });
     }
   }
