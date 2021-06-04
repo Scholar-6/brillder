@@ -184,7 +184,7 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
           />
         );
       });
-    res.unshift(<CreateBrickBlock history={this.props.history} isCore={true} />);
+    res.unshift(<CreateBrickBlock history={this.props.history} isCore={false} />);
     return res;
   }
 

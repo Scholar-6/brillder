@@ -3,6 +3,8 @@ import { Route } from "react-router-dom";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { connect } from "react-redux";
 import { History, Location } from "history";
+import queryString from 'query-string';
+
 
 import "./Proposal.scss";
 import actions from "redux/actions/brickActions";
@@ -69,9 +71,14 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     if (subjects.length === 1) {
       subjectId = subjects[0].id;
     }
+
+    const values = queryString.parse(props.location.search);
+    const isCore = this.getCore(values);
+
     let initBrick = {
       subjectId,
       brickLength: BrickLengthEnum.S20min,
+      isCore,
       topic: "",
       subTopic: "",
       alternativeTopics: "",
@@ -122,6 +129,15 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.state.handleKey, false);
+  }
+
+  getCore(values: queryString.ParsedQuery<string>) {
+    if (values.isCore === 'false') {
+      return false;
+    } else if (values.isCore === 'true') {
+      return true;
+    }
+    return false;
   }
 
   async handleKey(e: any) {
@@ -277,10 +293,12 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       const callback = async () => {
         const newBrick = await this.saveBrick(this.state.brick);
         if(newBrick) {
+          const values = queryString.parse(this.props.location.search);
+          const isCore = this.getCore(values);
           if (this.state.brick.subjectId) {
-            history.push(map.ProposalTitle(newBrick.id));
+            history.push(map.ProposalTitle(newBrick.id) + '?isCore=' + isCore);
           } else {
-            history.push(map.ProposalSubject(newBrick.id));
+            history.push(map.ProposalSubject(newBrick.id) + '?isCore=' + isCore);
           }
         }
       }
