@@ -85,6 +85,7 @@ export const Proposal = (brickId: number) => {
 // new brick link
 export const ProposalStart = `${NewBrick}/start-building`;
 export const ProposalSubjectLink = `${NewBrick}/subject`;
+export const ProposalSubjectCoreLink = (isCore: boolean) => `${NewBrick}/subject?isCore=` + isCore;
 export const ProposalTitleLink = `${NewBrick}/brick-title`;
 
 // play preview
@@ -145,6 +146,7 @@ export default {
   ProposalLength,
   ProposalReview,
   ProposalSubjectLink,
+  ProposalSubjectCoreLink,
   ProposalTitleLink,
 
   BackToWorkPage,
