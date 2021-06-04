@@ -5,6 +5,7 @@ import { Grid, Hidden } from "@material-ui/core";
 import update from "immutability-helper";
 import { connect } from "react-redux";
 import queryString from 'query-string';
+import {createBrowserHistory} from 'history';
 
 import "./investigationBuildPage.scss";
 import map from 'components/map';
@@ -113,9 +114,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   let proposalRes = React.useMemo(() => validateProposal(props.brick), [props.brick]);
 
-  const [isSwitching, setSwitching] = React.useState(false);
   const [questions, setQuestions] = React.useState([] as Question[]);
-  
+
+  const rerenderHistory = createBrowserHistory({forceRefresh:true});
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
@@ -184,7 +185,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     startEditing(brickId)
   }, [brickId, startEditing]);
 
-
   const [currentBrick, setCurrentBrick] = React.useState({ ...props.brick });
 
   // const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
@@ -192,7 +192,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return questions.findIndex(q => q.id === parseInt(params.questionId));
   }, [questions, params]);
   const setCurrentQuestionIndex = React.useCallback((index: number) => {
-    history.push(map.investigationBuildQuestion(props.brick.id, questions[index].id));
+    rerenderHistory.push(map.investigationBuildQuestion(props.brick.id, questions[index].id));
   }, [questions, history]);
   let activeQuestion = React.useMemo(() => (currentQuestionIndex >= 0) ? questions[currentQuestionIndex] : undefined, [currentQuestionIndex, questions]);
 
@@ -389,14 +389,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const selectQuestion = (index: number) => {
-    setSwitching(true);
     if (isPlanPage || isSynthesisPage) {
       setMovingFromSynthesis(true);
     }
     setCurrentQuestionIndex(index);
-    setTimeout(() => {
-      setSwitching(false);
-    }, 200);
   };
 
   const toggleLock = () => {
@@ -654,10 +650,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const renderBuildQuestion = () => {
-    if (isSwitching) {
-      console.log('switching')
-      return <div />
-    }
     return (
       <QuestionPanelWorkArea
         brickId={brickId}
@@ -794,8 +786,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const switchQuestions = (questions: Question[]) => {
     if (canEdit === true) {
-      console.log('switch')
-      setSwitching(true);
       setQuestions(questions);
       setAutoSaveTime();
       setSavingStatus(true);
@@ -810,7 +800,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       };
       props.saveBrick(brickToSave).then((brick2: any) => {
         setSavingStatus(false);
-        setSwitching(false);
       });
     }
   }
