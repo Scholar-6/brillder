@@ -3,6 +3,9 @@
 @import "src/assets/sass/partials/extensions";
 
 .notification-popup {
+  top: 5.834vw !important;
+  left: unset !important;
+  right: 0;
   margin-top: 0.5vw;
   .MuiPopover-paper {
     background-color: var(--theme-light-blue);
