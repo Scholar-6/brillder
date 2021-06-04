@@ -14,6 +14,8 @@ import { User } from 'model/user';
 import { isMobile } from 'react-device-detect';
 import SpriteIcon from '../SpriteIcon';
 import DesktopVersionDialogV2 from 'components/build/baseComponents/dialogs/DesktopVersionDialogV2';
+import { isPhone } from 'services/phone';
+import routes from 'components/play/routes';
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -62,36 +64,44 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
       }
 
       if (notification.brick && notification.brick.id) {
-        const {brick} = notification;
-        if (notification.type === NotificationType.NewCommentOnBrick) {
+        const {type, brick} = notification;
+        if (type === NotificationType.NewCommentOnBrick) {
           if (notification.question && notification.question.id >= 1) {
             history.push(map.investigationQuestionSuggestions(brick.id, notification.question.id));
           } else {
             history.push(map.investigationSynthesisSuggestions(brick.id))
           }
-        } else if (notification.type === NotificationType.InvitedToPlayBrick) {
-          history.push(map.playIntro(brick.id));
-        } else if (notification.type === NotificationType.BrickAttemptSaved) {
+        } else if (type === NotificationType.InvitedToPlayBrick) {
+          if (isPhone()) {
+            history.push(map.playIntro(brick.id));
+          } else {
+            history.push(routes.playCover(brick.id));
+          }
+        } else if (type === NotificationType.BrickAttemptSaved) {
           if (isMobile) {
             setNeedDesktopOpen(true);
           } else {
             history.push(map.postPlay(brick.id, notification.sender.id));
           }
-        } else if (notification.type === NotificationType.ReturnedToEditor) {
+        } else if (type === NotificationType.ReturnedToEditor) {
           history.push(map.InvestigationBuild(brick.id));
-        } else if (notification.type === NotificationType.AssignedToEdit) {
+        } else if (type === NotificationType.AssignedToEdit) {
           props.forgetBrick();
-          await props.fetchBrick(notification.brick.id);
-          history.push(map.Proposal(notification.brick.id));
-        } else if (notification.type === NotificationType.ReturnedToAuthor) {
+          await props.fetchBrick(brick.id);
+          history.push(map.Proposal(brick.id));
+        } else if (type === NotificationType.ReturnedToAuthor) {
           props.forgetBrick();
-          await props.fetchBrick(notification.brick.id);
-          history.push(map.Proposal(notification.brick.id));
+          await props.fetchBrick(brick.id);
+          history.push(map.Proposal(brick.id));
         } else if (
-          notification.type === NotificationType.RemindedToPlayBrick ||
-          notification.type === NotificationType.StudentAssignedBrick
+          type === NotificationType.RemindedToPlayBrick ||
+          type === NotificationType.StudentAssignedBrick
         ) {
-          history.push(map.playIntro(notification.brick.id));
+          if (isPhone()) {
+            history.push(map.playIntro(brick.id));
+          } else {
+            history.push(routes.playCover(brick.id));
+          }
         }
       }
     }
