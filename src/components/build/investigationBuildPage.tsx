@@ -5,7 +5,6 @@ import { Grid, Hidden } from "@material-ui/core";
 import update from "immutability-helper";
 import { connect } from "react-redux";
 import queryString from 'query-string';
-import {createBrowserHistory} from 'history';
 
 import "./investigationBuildPage.scss";
 import map from 'components/map';
@@ -115,7 +114,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const [questions, setQuestions] = React.useState([] as Question[]);
 
-  const rerenderHistory = createBrowserHistory({forceRefresh:true});
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
@@ -191,7 +189,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return questions.findIndex(q => q.id === parseInt(params.questionId));
   }, [questions, params]);
   const setCurrentQuestionIndex = React.useCallback((index: number) => {
-    rerenderHistory.push(map.investigationBuildQuestion(props.brick.id, questions[index].id));
+    history.push(map.investigationBuildQuestion(props.brick.id, questions[index].id));
   }, [questions, history]);
   let activeQuestion = React.useMemo(() => (currentQuestionIndex >= 0) ? questions[currentQuestionIndex] : undefined, [currentQuestionIndex, questions]);
 
