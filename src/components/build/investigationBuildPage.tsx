@@ -603,8 +603,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setCurrentBrick(brick);
       const brickToSave = {
         ...brick,
-        questions: brick.questions.map((question: Question) => ({
-          ...question, contentBlocks: undefined, type: undefined,
+        questions: brick.questions.map((question: Question, idx: number) => ({
+          ...question, contentBlocks: undefined, type: undefined, order: idx
         })),
       };
       props.saveBrick(brickToSave).then((res: Brick) => {
