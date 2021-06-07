@@ -12,6 +12,13 @@
     }
   }
 
+  .synthesis-header {
+    align-items: center !important;
+    padding-top: 8vw !important;
+    padding-bottom: 8vw !important;
+    color: var(--theme-dark-blue);
+  }
+
   .introduction-info {
     .intro-text-row {
       text-align: center;
