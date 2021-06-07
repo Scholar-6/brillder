@@ -127,6 +127,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
           <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
             <div className="left-sidebar">
               <ReactSortable
+                key={question.brickQuestionId}
                 list={componentTypes}
                 group={{ name: "cloning-group-name", pull: "clone" }}
                 setList={setComponentType} sort={false}
