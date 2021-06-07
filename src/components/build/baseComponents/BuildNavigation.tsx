@@ -143,7 +143,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         <div className="build-navigation-buttons">
           {(this.props.isEditor || this.props.isAdmin) && this.renderReturnToAuthorButton()}
           {(this.props.isPublisher || this.props.isAuthor) && this.renderReturnToEditorButton()}
-          {(this.props.isEditor || this.props.isAdmin) && this.renderSendToPublisherButton()}
+          {(this.props.isEditor || this.props.isAdmin || this.props.isPublisher) && this.renderSendToPublisherButton()}
           {this.props.isPublisher && this.renderPublisherButtons()}
         </div>
       </div>
