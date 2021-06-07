@@ -12,6 +12,7 @@ export function showSameAnswerPopup(i: number, list: any, openSameAnswerDialog: 
   }
 }
 
+// implementation of Java's hashCode function from https://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
 const hashCode = (str: string) => {
   var hash = 0, i, chr;
   if (str.length === 0) return hash;
