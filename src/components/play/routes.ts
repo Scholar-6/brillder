@@ -11,6 +11,7 @@ export const PlayPrePrepLastPrefix = '/pre-prep';
 export const PlayNewPrepLastPrefix = '/prep';
 export const PlayPreInvestigationLastPrefix = '/pre-investigation';
 export const PlayLiveLastPrefix = '/live';
+export const PlayProvisionalScoreLastPrefix = '/provisionalScore';
 export const PlayPreSynthesisLastPrefix = '/pre-synthesis';
 export const PlaySynthesisLastPrefix = '/synthesis';
 export const PlayPreReviewLastPrefix = '/pre-review';
@@ -33,6 +34,7 @@ export const playBrief = (brickId: number) => realPlay(brickId) + PlayBriefLastP
 export const playPrePrep = (brickId: number) => realPlay(brickId) + PlayPrePrepLastPrefix;
 export const playNewPrep = (brickId: number) => realPlay(brickId) + PlayNewPrepLastPrefix;
 export const playPreInvesigation = (brickId: number) => realPlay(brickId) + PlayPreInvestigationLastPrefix;
+export const playProvisionalScore = (brickId: number) => realPlay(brickId) + PlayProvisionalScoreLastPrefix;
 export const playPreSynthesis = (brickId: number) => realPlay(brickId) + PlayPreSynthesisLastPrefix;
 export const playSynthesis = (brickId: number) => realPlay(brickId) + PlaySynthesisLastPrefix;
 export const playPreReview = (brickId: number) => realPlay(brickId) + PlayPreReviewLastPrefix;
@@ -65,6 +67,7 @@ export default {
   PlayNewPrepLastPrefix,
   PlayPreInvestigationLastPrefix,
   PlayLiveLastPrefix,
+  PlayProvisionalScoreLastPrefix,
   PlayPreSynthesisLastPrefix,
   PlaySynthesisLastPrefix,
   PlayPreReviewLastPrefix,
@@ -87,6 +90,7 @@ export default {
   playPrePrep,
   playNewPrep,
   playPreInvesigation,
+  playProvisionalScore,
   playPreSynthesis,
   playSynthesis,
   playPreReview,
