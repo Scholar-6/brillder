@@ -97,7 +97,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   }
 
   const renderSpendTime = () => {
-    return <p><span>Aim to spend {getSynthesisTime(brick.brickLength)} minutes on this section.</span></p>;
+    return <div>Aim to spend {getSynthesisTime(brick.brickLength)} minutes on this section.</div>;
   }
 
   const renderBrickCircle = (color: string) => {
@@ -112,13 +112,13 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
 
   const renderMobileHeader = (color: string) => {
     return (
-      <div className="intro-header expanded-intro-header">
+      <div className="intro-header expanded-intro-header synthesis-header">
         <div className="vertical-center">
           {renderBrickCircle(color)}
         </div>
         <div className="r-title-container">
-          <span className="heading synthesis-title">Synthesis</span>
-          <span>{renderSpendTime()}</span>
+          <div className="heading synthesis-title">Synthesis</div>
+          {renderSpendTime()}
         </div>
       </div>
     );
