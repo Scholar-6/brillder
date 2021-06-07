@@ -194,6 +194,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return this.props.history.location.pathname.slice(-10) === '/synthesis';
   }
 
+  isPrep() {
+    return this.props.history.location.pathname.slice(-routes.PlayNewPrepLastPrefix.length) === routes.PlayNewPrepLastPrefix;
+  }
+
   isEnding() {
     return this.props.history.location.pathname.slice(-7) === '/ending';
   }
@@ -255,7 +259,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     return (
       <div className="sidebar-button">
-        {!this.isCover() && <HighlightTextButton
+        {(this.isPrep() || this.isSynthesis()) && <HighlightTextButton
           mode={this.props.mode}
           sidebarRolledUp={sidebarRolledUp}
           haveCircle={haveBriefCircles}
