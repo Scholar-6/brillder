@@ -1,4 +1,4 @@
-import {YoutubeClicked} from './types';
+import {AttemptCash, YoutubeClicked} from './types';
 
 export function SetYoutubeClick() {
   localStorage.setItem(YoutubeClicked, "true");
@@ -10,4 +10,13 @@ export function GetYoutubeClick() {
 
 export function UnsetYoutubeClick() {
   localStorage.removeItem(YoutubeClicked);
+}
+
+
+export function CashAttempt(attemptCash: any) {
+  localStorage.setItem(AttemptCash, attemptCash);
+}
+
+export function GetCashedPlayAttempt() {
+  return localStorage.getItem(AttemptCash);
 }

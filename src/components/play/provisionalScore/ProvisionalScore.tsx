@@ -180,6 +180,8 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
   render() {
     const { status, brick, attempts } = this.props;
 
+    console.log('status proposal ', status)
+
     if (status === PlayStatus.Live) {
       this.moveToIntro();
     }
