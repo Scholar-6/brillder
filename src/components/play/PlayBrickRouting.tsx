@@ -405,24 +405,24 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <Route exact path={routes.prePrepRoute}>
           <PrePrep brick={brick} mode={mode} moveNext={moveToNewPrep} onHighlight={onHighlight} />
         </Route>
-        <Route exact path={routes.newPrepRoute}>
-          <NewPrep brick={brick} mode={mode} moveNext={moveToPreInvestigation} onHighlight={onHighlight} />
-        </Route>
         <Route exact path={routes.preInvestigationRoute}>
           <PreInvestigationPage user={props.user} brick={brick} moveNext={moveToLive} />
         </Route>
 
         <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
-          <Introduction
-            location={props.location}
-            history={history}
-            mode={mode}
-            brick={brick}
-            startTime={startTime}
-            setStartTime={setStartTime}
-            moveNext={moveToLive}
-            onHighlight={onHighlight}
-          />
+          {isPhone() ? 
+            <Introduction
+              location={props.location}
+              history={history}
+              mode={mode}
+              brick={brick}
+              startTime={startTime}
+              setStartTime={setStartTime}
+              moveNext={moveToLive}
+              onHighlight={onHighlight}
+            />
+            : <NewPrep brick={brick} mode={mode} moveNext={moveToPreInvestigation} onHighlight={onHighlight} />
+          }
           {isPhone() && renderPhoneFooter()}
         </Route>
         <Route exac path="/play/brick/:brickId/live">
