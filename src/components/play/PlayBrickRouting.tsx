@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import queryString from 'query-string';
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
+import moment from 'moment';
 
 import Cover from "./cover/Cover";
 import Sections from "./sections/Sections";
@@ -57,6 +58,7 @@ import PreSynthesis from "./preSynthesis/PreSynthesis";
 import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
 import { trackSignUp } from "services/matomo";
+import { CashAttempt, GetCashedPlayAttempt } from "localStorage/play";
 
 
 function shuffle(a: any[]) {
@@ -85,33 +87,105 @@ const TabletTheme = React.lazy(() => import('./themes/BrickPageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/BrickPageDesktopTheme'));
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  const parsedBrick = parseAndShuffleQuestions(props.brick);
-  const [saveFailed, setFailed] = React.useState(false);
+  const {history} = props;
+
+  let parsedBrick = null;
+  let initAttempts:any = [];
+  let initReviewAttempts:any = [];
+  let initMode = PlayMode.Normal;
+  let initStatus = PlayStatus.Live;
+  let initLiveEndTime:any = null;
+  let initReviewEndTime:any = null;
+  let initAttemptId:any = null;
+
+  const cashAttemptString = GetCashedPlayAttempt();
+
+  const [restoredFromCash, setRestored] = React.useState(false);
+
+  if (cashAttemptString && !restoredFromCash) {
+    // parsing cashed play
+    const cashAttempt = JSON.parse(cashAttemptString);
+    if (cashAttempt.brick.id == props.brick.id) {
+      parsedBrick = cashAttempt.brick;
+      initAttempts = cashAttempt.attempts;
+      initReviewAttempts = cashAttempt.reviewAttempts;
+      initMode = cashAttempt.mode;
+      initLiveEndTime = cashAttempt.liveEndTime ? moment(cashAttempt.liveEndTime) : null;
+      initReviewEndTime = cashAttempt.reviewEndTime ? moment(cashAttempt.reviewEndTime) : null;
+      initAttemptId = cashAttempt.attemptId;
+      initStatus = parseInt(cashAttempt.status);
+      
+      let isProvisional = history.location.pathname.slice(-routes.PlayProvisionalScoreLastPrefix.length) == routes.PlayProvisionalScoreLastPrefix;
+      if (!isProvisional && cashAttempt.lastPageUrl === routes.PlayProvisionalScoreLastPrefix && initStatus === PlayStatus.Review) {
+        history.push(routes.playProvisionalScore(props.brick.id))
+      }
+      let isSynthesis = history.location.pathname.slice(-routes.PlaySynthesisLastPrefix.length) == routes.PlaySynthesisLastPrefix;
+      if (!isSynthesis && cashAttempt.lastPageUrl === routes.PlaySynthesisLastPrefix && initStatus === PlayStatus.Review) {
+        history.push(routes.playProvisionalScore(props.brick.id))
+      }
+      setRestored(true);
+    } else {
+      parsedBrick = parseAndShuffleQuestions(props.brick);
+      initAttempts = prefillAttempts(parsedBrick.questions);
+      initReviewAttempts = initAttempts;
+    }
+  } else {
+    parsedBrick = parseAndShuffleQuestions(props.brick);
+    initAttempts = prefillAttempts(parsedBrick.questions);
+    initReviewAttempts = initAttempts;
+  }
+
   const [brick, setBrick] = React.useState(parsedBrick);
-  const initAttempts = prefillAttempts(brick.questions);
-  const [status, setStatus] = React.useState(PlayStatus.Live);
+  const [status, setStatus] = React.useState(initStatus);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
-  const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
+  const [reviewAttempts, setReviewAttempts] = React.useState(initReviewAttempts);
   const [startTime, setStartTime] = React.useState(undefined);
-  const [mode, setMode] = React.useState(PlayMode.Normal);
-  const [liveEndTime, setLiveEndTime] = React.useState(null as any);
-  const [reviewEndTime, setReviewEndTime] = React.useState(null as any);
-  const location = useLocation();
-  const finalStep = location.pathname.search("/finalStep") >= 0;
-  const [headerHidden, setHeader] = React.useState(false);
+  const [mode, setMode] = React.useState(initMode);
+  const [liveEndTime, setLiveEndTime] = React.useState(initLiveEndTime);
+  const [reviewEndTime, setReviewEndTime] = React.useState(initReviewEndTime);
+  const [attemptId, setAttemptId] = React.useState<string>(initAttemptId);
+
+
   const [unauthorizedOpen, setUnauthorized] = React.useState(false);
+  const [headerHidden, setHeader] = React.useState(false);
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [searchString, setSearchString] = React.useState("");
-  const [attemptId, setAttemptId] = React.useState<string>();
+  const [saveFailed, setFailed] = React.useState(false);
 
+  const location = useLocation();
+  const finalStep = location.pathname.search("/finalStep") >= 0;
 
-  const {history} = props;
 
   // used for unauthenticated user.
   const [userToken, setUserToken] = React.useState<string>();
   const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
+  const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
+    let lastPageUrl = lastUrl;
+    if (!lastUrl) {
+      let found = location.pathname.match(`[^/]+(?=/$|$)`);
+      if (found) {
+        lastPageUrl = '/' + found[0];
+      }
+    }
+    if (tempStatus) {
+      tempStatus = status;
+    }
+    CashAttempt(JSON.stringify({
+      brick,
+      lastPageUrl,
+      status: tempStatus,
+      attempts,
+      reviewAttempts,
+      attemptId,
+      startTime,
+      reviewEndTime,
+      liveEndTime,
+      brickAttempt,
+      mode,
+    }));
+  }
 
   // only cover page should have big sidebar
   useEffect(() => {
@@ -124,6 +198,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   /*eslint-disable-next-line*/
   }, [])
 
+  /*
   // by default move to Prep
   const splited = location.pathname.split('/');
   if (splited.length === 4) {
@@ -133,12 +208,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       history.push(routes.playNewPrep(brick.id));
     }
     return <PageLoader content="...Getting Brick..." />;
-  }
+  }*/
 
   const updateAttempts = (attempt: any, index: number) => {
     if (attempt) {
       attempts[index] = attempt;
       setAttempts(attempts);
+      cashAttempt();
     }
   };
 
@@ -146,6 +222,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (attempt) {
       reviewAttempts[index] = attempt;
       setReviewAttempts(reviewAttempts);
+      cashAttempt();
     }
   };
 
@@ -440,6 +517,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 setLiveEndTime(time);
               }
             }}
+            moveNext={() => cashAttempt(routes.PlayProvisionalScoreLastPrefix, PlayStatus.Review)}
           />
           {isPhone() && renderPhoneFooter()}
         </Route>
@@ -451,6 +529,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             status={status}
             brick={brick}
             attempts={attempts}
+            moveNext={() => cashAttempt(routes.PlaySynthesisLastPrefix)}
           />
           {isPhone() && renderPhoneFooter()}
         </Route>

@@ -49,6 +49,7 @@ interface LivePageProps {
   // things related to count down
   endTime: any;
   setEndTime(time: Moment): void;
+  moveNext?(): void;
 
   // only for real play
   mode?: PlayMode;
@@ -111,6 +112,7 @@ const LivePage: React.FC<LivePageProps> = ({
   const moveToProvisional = () => {
     let playPath = getPlayPath(props.isPlayPreview, brick.id);
     history.push(`${playPath}/provisionalScore`);
+    props.moveNext && props.moveNext();
   }
 
   if (status > PlayStatus.Live) {

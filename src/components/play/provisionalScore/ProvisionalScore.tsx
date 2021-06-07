@@ -33,6 +33,8 @@ interface ProvisionalScoreProps {
   status: PlayStatus;
   brick: Brick;
   attempts: any[];
+  moveNext?(): void;
+  moveToPrep?(): void;
 }
 
 class ProvisionalScore extends React.Component<ProvisionalScoreProps, ProvisionalScoreState> {
@@ -126,6 +128,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
       }
     }
     this.props.history.push(link);
+    this.props.moveToPrep?.();
   }
 
   moveToSynthesis() {
@@ -140,6 +143,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
       }
     }
     this.props.history.push(link);
+    this.props.moveNext?.();
   }
 
   renderFooter() {
@@ -179,6 +183,8 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
 
   render() {
     const { status, brick, attempts } = this.props;
+
+    console.log('status proposal ', status)
 
     if (status === PlayStatus.Live) {
       this.moveToIntro();
