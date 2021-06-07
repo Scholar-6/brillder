@@ -100,7 +100,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const cashAttemptString = GetCashedPlayAttempt();
 
-  if (cashAttemptString) {
+  const [restoredFromCash, setRestored] = React.useState(false);
+
+  if (cashAttemptString && !restoredFromCash) {
     // parsing cashed play
     const cashAttempt = JSON.parse(cashAttemptString);
     if (cashAttempt.brick.id == props.brick.id) {
@@ -112,14 +114,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       initReviewEndTime = cashAttempt.reviewEndTime ? moment(cashAttempt.reviewEndTime) : null;
       initAttemptId = cashAttempt.attemptId;
       initStatus = parseInt(cashAttempt.status);
-      console.log(cashAttempt.status);
       
       let isProvisional = history.location.pathname.slice(-routes.PlayProvisionalScoreLastPrefix.length) == routes.PlayProvisionalScoreLastPrefix;
-      console.log('url', cashAttempt.lastPageUrl, history.location.pathname.slice(-routes.PlayProvisionalScoreLastPrefix.length));
       if (!isProvisional && cashAttempt.lastPageUrl === routes.PlayProvisionalScoreLastPrefix && initStatus === PlayStatus.Review) {
-        console.log('provisional');
         history.push(routes.playProvisionalScore(props.brick.id))
       }
+      let isSynthesis = history.location.pathname.slice(-routes.PlaySynthesisLastPrefix.length) == routes.PlaySynthesisLastPrefix;
+      if (!isSynthesis && cashAttempt.lastPageUrl === routes.PlaySynthesisLastPrefix && initStatus === PlayStatus.Review) {
+        history.push(routes.playProvisionalScore(props.brick.id))
+      }
+      setRestored(true);
     } else {
       parsedBrick = parseAndShuffleQuestions(props.brick);
       initAttempts = prefillAttempts(parsedBrick.questions);
@@ -157,7 +161,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [userToken, setUserToken] = React.useState<string>();
   const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
-  const cashAttempt = (lastUrl?: string) => {
+  const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
     let lastPageUrl = lastUrl;
     if (!lastUrl) {
       let found = location.pathname.match(`[^/]+(?=/$|$)`);
@@ -165,11 +169,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         lastPageUrl = '/' + found[0];
       }
     }
-    console.log('cashing status', status);
+    if (tempStatus) {
+      tempStatus = status;
+    }
     CashAttempt(JSON.stringify({
       brick,
       lastPageUrl,
-      status,
+      status: tempStatus,
       attempts,
       reviewAttempts,
       attemptId,
@@ -181,11 +187,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }));
   }
 
-  const rotateChange = () => {
-    cashAttempt();
-    window.removeEventListener("orientationchange", rotateChange);
-  }
-
   // only cover page should have big sidebar
   useEffect(() => {
     if (!isPhone()) {
@@ -194,9 +195,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         setSidebar(true);
       }
     }
-  
-    window.addEventListener("orientationchange", rotateChange);
-    /*eslint-disable-next-line*/
+  /*eslint-disable-next-line*/
   }, [])
 
   /*
@@ -518,9 +517,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 setLiveEndTime(time);
               }
             }}
-            moveNext={() => {
-              cashAttempt(routes.PlayProvisionalScoreLastPrefix);
-            }}
+            moveNext={() => cashAttempt(routes.PlayProvisionalScoreLastPrefix, PlayStatus.Review)}
           />
           {isPhone() && renderPhoneFooter()}
         </Route>
@@ -532,6 +529,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             status={status}
             brick={brick}
             attempts={attempts}
+            moveNext={() => cashAttempt(routes.PlaySynthesisLastPrefix)}
           />
           {isPhone() && renderPhoneFooter()}
         </Route>
