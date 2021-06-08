@@ -95,7 +95,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   renderAnswerContent(answer: Answer) {
     if (answer.answerType && answer.answerType === QuestionValueType.Image) {
       return (
-        <PairMatchImageContent fileName={answer.valueFile} imageCaption={answer.imageCaption} />
+        <PairMatchImageContent
+          fileName={answer.valueFile}
+          imageCaption={answer.imageCaption}
+          imageSource={answer.imageSource}
+        />
       );
     } else {
       return (
