@@ -27,6 +27,7 @@ import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
 import routes, { playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
 
+declare var Brillder: any;
 
 interface SidebarProps {
   history: any;
@@ -259,7 +260,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     return (
       <div className="sidebar-button">
-        {(this.isPrep() || this.isSynthesis()) && <HighlightTextButton
+        {(Brillder.testing.highlighter && (this.isPrep() || this.isSynthesis())) && <HighlightTextButton
           mode={this.props.mode}
           sidebarRolledUp={sidebarRolledUp}
           haveCircle={haveBriefCircles}
