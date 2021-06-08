@@ -147,7 +147,9 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
   renderData(answer: any) {
     if (answer.answerType === QuestionValueType.Image) {
-      return <PairMatchImageContent fileName={answer.valueFile} imageCaption={answer.imageCaption} />;
+      return <PairMatchImageContent
+        fileName={answer.valueFile} imageCaption={answer.imageCaption}
+        imageSource={answer.imageSource} />;
     } else {
       return <MathInHtml value={answer.value} />;
     }
