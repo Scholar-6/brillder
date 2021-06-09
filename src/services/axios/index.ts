@@ -43,6 +43,14 @@ export const post = async <T>(path: string, params: any) => {
   return null;
 }
 
+export const postRes = async (path: string, params: any) => {
+  return await axios.post(
+    process.env.REACT_APP_BACKEND_HOST + path,
+    params,
+    { withCredentials: true }
+  );
+}
+
 export const put = async <T>(path: string, params: any) => {
   const res = await axios.put(
     process.env.REACT_APP_BACKEND_HOST + path,

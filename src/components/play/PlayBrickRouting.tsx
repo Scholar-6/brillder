@@ -60,6 +60,7 @@ import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentI
 import { trackSignUp } from "services/matomo";
 import { CashAttempt, GetCashedPlayAttempt } from "localStorage/play";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/UnauthorizedUserDialogV2";
+import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
 
 function shuffle(a: any[]) {
@@ -162,6 +163,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   // used for unauthenticated user.
   const [userToken, setUserToken] = React.useState<string>();
+  const [emailInvalidPopup, setInvalidEmailPopup] = React.useState(false); // null - before submit button clicked, true - invalid
   const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
   const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
@@ -366,18 +368,29 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
+  const validate = (data: any) => {
+    if (data === 400) {
+      setInvalidEmailPopup(true);
+    }
+    setInvalidEmail(true);
+  }
+
+  const setUser = (data: any) => {
+    const { user, token } = data;
+    props.setUser(user);
+    setUserToken(token);
+    trackSignUp();
+  }
+
   const createInactiveAccount = async (email: string) => {
     if (!props.user) {
       // create a new account for an unauthorized user.
-      let data = await createUserByEmail(email);
-      if (data) {
-        const { user, token } = data;
-        props.setUser(user);
-        setUnauthorized(false);
-        setUserToken(token);
-        trackSignUp();
+      const data = await createUserByEmail(email);
+      if (data === 400 || !data) {
+        validate(data);
       } else {
-        setInvalidEmail(true);
+        setUser(data);
+        setUnauthorized(false);
       }
     }
   }
@@ -385,15 +398,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const createInactiveAccountV2 = async (email: string) => {
     if (!props.user) {
       // create a new account for an unauthorized user.
-      let data = await createUserByEmail(email);
-      if (data) {
-        const { user, token } = data;
-        props.setUser(user);
-        setUnauthorizedV2(false);
-        setUserToken(token);
-        trackSignUp();
+      const data = await createUserByEmail(email);
+      if (data === 400 || !data) {
+        validate(data);
       } else {
-        setInvalidEmail(true);
+        setUser(data);
+        setUnauthorizedV2(false);
       }
     }
   }
@@ -640,6 +650,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           login={(email) => createInactiveAccountV2(email)}
           again={again}
           close={() => setUnauthorizedV2(false)}
+        />
+        <TextDialog
+          isOpen={emailInvalidPopup} close={() => setInvalidEmailPopup(false)}
+          label="You might already have an account, try signing in."
         />
       </div>
     </React.Suspense>
