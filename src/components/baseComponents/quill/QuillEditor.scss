@@ -154,7 +154,7 @@ s {
       li {
         padding-left: 0;
       }
-      div,
+      div:not(.quill-desmos >),
       p,
       strong,
       span {

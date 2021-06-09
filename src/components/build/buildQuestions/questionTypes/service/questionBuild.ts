@@ -27,5 +27,5 @@ const hashCode = (str: string) => {
 export const generateId = () => {
   const dateNumber = Date.now().valueOf();
   const randomNumber = Math.floor(Math.random() * 65536);
-  return hashCode(dateNumber.toString() + randomNumber.toString());
+  return Math.abs(hashCode(dateNumber.toString() + randomNumber.toString()));
 }

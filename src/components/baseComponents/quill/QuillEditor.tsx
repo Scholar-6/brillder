@@ -14,6 +14,7 @@ import "./QuillMediaEmbed";
 import "./QuillCustomClipboard";
 import "./QuillKeyboard";
 import "./QuillImageUpload";
+import "./QuillDesmos";
 import QuillBetterTable from "./QuillBetterTable";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";
@@ -21,6 +22,9 @@ import QuillToolbar from "./QuillToolbar";
 import ImageUpload, { CustomImageBlot } from "./QuillImageUpload";
 import QuillCustomClipboard from "./QuillCustomClipboard";
 import ValidationFailedDialog from "../dialogs/ValidationFailedDialog";
+import { GraphSettings } from "components/build/buildQuestions/components/Graph/Graph";
+import QuillDesmos, { DesmosBlot } from "./QuillDesmos";
+import QuillDesmosDialog from "./QuillDesmosDialog";
 
 function randomEditorId() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -34,6 +38,7 @@ interface QuillEditorProps {
     allowLinks?: boolean;
     allowMediaEmbed?: boolean;
     allowTables?: boolean;
+    allowDesmos?: boolean;
     validate?: boolean;
     isValid?: boolean | null;
     toolbar: string[];
@@ -85,6 +90,29 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         }
     }, [imageModule]);
 
+    const [desmosDialogOpen, setDesmosDialogOpen] = React.useState(false);
+    const [desmosValue, setDesmosValue] = React.useState<{ graphSettings: GraphSettings, graphState: any }>({
+        graphState: null,
+        graphSettings: {
+            showSidebar: false,
+            showSettings: false,
+            allowPanning: false,
+            trace: false,
+            pointsOfInterest: false
+        }
+    });
+    const [desmosBlotId, setDesmosBlotId] = React.useState<string>();
+    const [desmosModule, setDesmosModule] = React.useState<QuillDesmos>();
+    React.useEffect(() => {
+        if(desmosModule) {
+            desmosModule.openDialog = (value?: any, blot?: DesmosBlot) => {
+                setDesmosValue(value);
+                setDesmosBlotId(value.id);
+                setDesmosDialogOpen(true);
+            }
+        }
+    }, [desmosModule])
+
     const [clipboardModule, setClipboardModule] = React.useState<QuillCustomClipboard>();
     React.useEffect(() => {
         if(imageModule && clipboardModule) {
@@ -120,8 +148,9 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 items: {},
             },
         } : false,
+        desmos: props.allowDesmos,
         // tableUI: props.allowTables,
-    }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.imageDialog]);
+    }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.allowDesmos, props.imageDialog]);
     
     /*
     const toolbarItems: { [key: string]: any } = {
@@ -154,6 +183,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         if(node) {
             const editor = node.getEditor();
             setImageModule(editor.getModule("imageupload") as ImageUpload);
+            setDesmosModule(editor.getModule("desmos") as QuillDesmos);
             setClipboardModule(editor.getModule("clipboard") as QuillCustomClipboard);
             editor.on("editor-change", () => {
                 const clipboard = editor.getModule("clipboard");
@@ -237,6 +267,22 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                     header="This image is too large, try shrinking it."
                   />
                 </div>
+            }
+            {props.allowDesmos &&
+                <QuillDesmosDialog
+                    graphState={desmosValue.graphState}
+                    graphSettings={desmosValue.graphSettings}
+                    isOpen={desmosDialogOpen}
+                    close={() => {
+                        setDesmosDialogOpen(false);
+                    }}
+                    setGraphState={(state) => {
+                        if(desmosModule) {
+                            desmosModule.updateGraph.bind(desmosModule)({ id: desmosBlotId, graphState: state });
+                        }
+                    }}
+                    setGraphSettings={() => {}}
+                />
             }
         </div>
     );
