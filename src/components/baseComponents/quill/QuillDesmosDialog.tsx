@@ -3,10 +3,12 @@ import Dialog from '@material-ui/core/Dialog';
 //@ts-ignore
 import Desmos from 'desmos';
 
-import { GraphSettings } from './Graph';
+import { GraphSettings } from 'components/build/buildQuestions/components/Graph/Graph';
 
-import './GraphDialog.scss';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import 'components/build/buildQuestions/components/Graph/GraphDialog.scss';
+import _ from 'lodash';
+import { Grid, IconButton } from '@material-ui/core';
+import SpriteIcon from '../SpriteIcon';
 
 interface GraphDialogProps {
   isOpen: boolean;
@@ -17,7 +19,9 @@ interface GraphDialogProps {
   setGraphSettings(settings: GraphSettings): void;
 }
 
-const GraphDialog: React.FC<GraphDialogProps> = props => {
+const QuillDesmosDialog: React.FC<GraphDialogProps> = props => {
+  const [calculator, setCalculator] = React.useState<any>();
+
   const graphCallback = React.useCallback(elt => {
     if(elt) {
       var calculator = Desmos.GraphingCalculator(elt, {
@@ -27,11 +31,32 @@ const GraphDialog: React.FC<GraphDialogProps> = props => {
       if(initialProps.current.graphState) {
         calculator.setState(initialProps.current.graphState);
       }
-      calculator.observeEvent('change', () => {
+      calculator.observeEvent('change', _.debounce(() => {
         initialProps.current.setGraphState(calculator.getState());
-      });
+      }, 500));
+      setCalculator(calculator);
     }
-  }, [])
+  }, []);
+
+  React.useEffect(() => {
+    if(calculator) {
+      calculator.unobserveEvent('change');
+      calculator.observeEvent('change', _.debounce(() => {
+        props.setGraphState(calculator.getState());
+      }, 1000));
+    }
+    return () => {
+      if(calculator) {
+        calculator.unobserveEvent('change');
+      }
+    }
+  }, [calculator, props.setGraphState]);
+
+  React.useEffect(() => {
+    if(calculator) {
+      calculator.setState(props.graphState);
+    }
+  }, [calculator, props.graphState]);
 
   const initialProps = React.useRef(props);
 
@@ -49,4 +74,4 @@ const GraphDialog: React.FC<GraphDialogProps> = props => {
   );
 };
 
-export default GraphDialog;
+export default QuillDesmosDialog;
