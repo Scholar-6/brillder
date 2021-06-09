@@ -626,6 +626,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {renderRouter()}
         </div>
         <UnauthorizedUserDialog
+          history={history}
           isOpen={unauthorizedOpen}
           emailInvalid={emailInvalid}
           login={(email) => createInactiveAccount(email)}
@@ -633,6 +634,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           close={() => setUnauthorized(false)}
         />
         <UnauthorizedUserDialogV2
+          history={history}
           isOpen={unauthorizedOpenV2}
           emailInvalid={emailInvalid}
           login={(email) => createInactiveAccountV2(email)}

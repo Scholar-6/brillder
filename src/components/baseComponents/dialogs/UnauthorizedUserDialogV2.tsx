@@ -1,10 +1,12 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import { TextField } from "@material-ui/core";
+import map from "components/map";
 
 interface UnauthorizedProps {
   emailInvalid: boolean | null; // null - before submit
   isOpen: boolean;
+  history: any;
   login(email: string): void;
   again(): void;
   close(): void;
@@ -30,6 +32,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
           value={email}
           onChange={evt => setEmail(evt.target.value)}
         />
+        <div className="small-text-link" onClick={() => props.history.push(map.Login)}>Already a member? Sign in here.</div>
         <div className="dialog-footer">
           <button className="btn btn-md bg-gray no-button" onClick={props.again}>
             <span className="bold">Not yet</span>
