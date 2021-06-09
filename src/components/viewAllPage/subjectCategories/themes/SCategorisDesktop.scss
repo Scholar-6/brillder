@@ -12,4 +12,23 @@
   .sorted-row .brick-row-container {
     width: calc(100vw - #{$sidebar-width} - 2.4vw);
   }
+  .subject-categories {
+    color: var(--theme-dark-blue);
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        width: 10vw;
+        height: 10vw;
+      }
+      .cat-name {
+        text-align: center;
+      }
+      .two-circles {
+        width: auto;
+        height: 6vw;
+      }
+    }
+  }
 }
