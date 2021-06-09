@@ -6,6 +6,7 @@ import QuillToolbarAlignSelect from './QuillToolbarAlignSelect';
 import Quill, { RangeStatic } from 'quill';
 import _ from 'lodash';
 import ImageUpload from './QuillImageUpload';
+import DesmosModule from './QuillDesmos';
 
 interface QuillToolbarProps {
     className?: string;
@@ -37,6 +38,11 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         if(format === "image") {
             const imageUpload = props.quill.getModule("imageupload") as ImageUpload
             imageUpload.uploadHandler(toolbarNode.current);
+            return true;
+        }
+        if(format === "desmos") {
+            const desmos = props.quill.getModule("desmos") as DesmosModule;
+            desmos.newGraphHandler();
             return true;
         }
         if(format === "table") {
@@ -85,6 +91,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         latex: (props: any) => <QuillToolbarButton name="latex" {...props} />,
         image: (props: any) => <QuillToolbarButton name="image" icon="image" {...props} />,
         table: (props: any) => <QuillToolbarButton name="table" {...props} />,
+        desmos: (props: any) => <QuillToolbarButton name="desmos" {...props} />,
     }), []);
 
     return (

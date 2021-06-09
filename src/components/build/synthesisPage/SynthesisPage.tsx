@@ -139,11 +139,12 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 onChange={this.onSynthesisChange.bind(this)}
                 showToolbar={true}
                 allowTables={true}
+                allowDesmos={true}
                 validate={this.props.validationRequired}
                 isValid={!!stripHtml(this.state.synthesis)}
                 toolbar={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-                  'latex', 'bulletedList', 'numberedList', "align", 'blockQuote', "image", "table"
+                  'latex', 'bulletedList', 'numberedList', "align", 'blockQuote', "image", "table", "desmos"
                 ]}
                 imageDialog={true}
               />
