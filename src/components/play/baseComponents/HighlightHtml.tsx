@@ -2,7 +2,6 @@ import React from "react";
 
 import { PlayMode } from "../model";
 
-import DocumentHighlight from "components/baseComponents/ckeditor/DocumentHighlighting";
 import YoutubeAndMathInHtml from "./YoutubeAndMath";
 
 interface SelectableProps {
@@ -15,7 +14,7 @@ interface SelectableProps {
 const HighlightHtml: React.FC<SelectableProps> = (props) => {
   const { mode } = props;
   if ((mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) && props.onHighlight) {
-    return <DocumentHighlight onChange={props.onHighlight} mode={mode} data={props.value} />;
+    // render highlihger
   }
   return <YoutubeAndMathInHtml isSynthesisParser={props.isSynthesis} value={props.value} />;
 };

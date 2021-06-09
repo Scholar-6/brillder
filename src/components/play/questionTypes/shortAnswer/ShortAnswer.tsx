@@ -10,7 +10,6 @@ import {
   ShortAnswerItem,
 } from "components/build/buildQuestions/questionTypes/shortAnswerBuild/interface";
 import { stripHtml } from "components/build/questionService/ConvertService";
-import DocumentWirisEditorComponent from "components/baseComponents/ckeditor/DocumentWirisEditor";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
 import { getValidationClassName } from "../service";
 
@@ -95,6 +94,8 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     if (this.props.isBookPreview) {
       return <MathInHtml value={value} />;
     }
+    return <input value={value} onChange={(e) => this.setUserAnswer(e.target.value, index)} />;
+    /*
     return (
       <DocumentWirisEditorComponent
         data={value}
@@ -104,7 +105,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
         onBlur={() => { }}
         placeholder={`Answer ${index + 1}`}
       />
-    );
+    );*/
   }
 
   renderAnswer(answer: ShortAnswerItem, index: number) {
