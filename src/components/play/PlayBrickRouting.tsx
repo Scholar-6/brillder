@@ -44,7 +44,6 @@ import map, { playIntro } from "components/map";
 import userActions from 'redux/actions/user';
 import { User } from "model/user";
 import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
-import PageLoader from "components/baseComponents/loaders/pageLoader";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
 import { createUserByEmail } from "services/axios/user";
@@ -59,7 +58,6 @@ import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
 import { trackSignUp } from "services/matomo";
 import { CashAttempt, GetCashedPlayAttempt } from "localStorage/play";
-import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/UnauthorizedUserDialogV2";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
 
@@ -148,9 +146,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [reviewEndTime, setReviewEndTime] = React.useState(initReviewEndTime);
   const [attemptId, setAttemptId] = React.useState<string>(initAttemptId);
 
-  const isCover = props.history.location.pathname.slice(-6) === '/cover';
 
-  const [unauthorizedOpenV2, setUnauthorizedV2] = React.useState(isCover);
   const [unauthorizedOpen, setUnauthorized] = React.useState(false);
   const [headerHidden, setHeader] = React.useState(false);
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
@@ -159,7 +155,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const location = useLocation();
   const finalStep = location.pathname.search("/finalStep") >= 0;
-
 
   // used for unauthenticated user.
   const [userToken, setUserToken] = React.useState<string>();
@@ -395,19 +390,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
-  const createInactiveAccountV2 = async (email: string) => {
-    if (!props.user) {
-      // create a new account for an unauthorized user.
-      const data = await createUserByEmail(email);
-      if (data === 400 || !data) {
-        validate(data);
-      } else {
-        setUser(data);
-        setUnauthorizedV2(false);
-      }
-    }
-  }
-
   const again = () => {
     history.push(`/play/dashboard`);
   }
@@ -486,6 +468,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={history}
             brick={brick}
+            setUserToken={setUserToken}
+            setUser={setUser}
             moveNext={coverMoveNext}
           />
           {isPhone() && renderPhoneFooter()}
@@ -642,14 +626,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           login={(email) => createInactiveAccount(email)}
           again={again}
           close={() => setUnauthorized(false)}
-        />
-        <UnauthorizedUserDialogV2
-          history={history}
-          isOpen={unauthorizedOpenV2}
-          emailInvalid={emailInvalid}
-          login={(email) => createInactiveAccountV2(email)}
-          again={again}
-          close={() => setUnauthorizedV2(false)}
         />
         <TextDialog
           isOpen={emailInvalidPopup} close={() => setInvalidEmailPopup(false)}
