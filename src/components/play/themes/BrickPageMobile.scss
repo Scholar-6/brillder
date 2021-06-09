@@ -476,13 +476,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               .document-editor {
                 border-radius: 0 !important;
                 background: transparent !important;
-                .ck-editor {
-                  .ck-content {
-                    background: transparent !important;
-                    border-radius: 0 !important;
-                    padding: 0.5vw 0 !important;
-                  }
-                }
               }
             }
             &.review-content {
@@ -1263,20 +1256,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 // short answer .ck-editor
 .question-unique-play.short-answer-live .short-answer-input .document-editor {
   $toolbar-width: 18vw;
-  .ck-editor {
-    height: 25vw !important;
-    width: calc(100% - #{$toolbar-width}) !important;
-  }
-  .ck-toolbar {
-    width: $toolbar-width !important;
-    .ck.ck-button {
-      padding: 0 !important;
-    }
-    .ck.ck-icon {
-      width: 5.5vw !important;
-      height: 5.5vw !important;
-    }
-  }
 }
 
 .youtube-video {

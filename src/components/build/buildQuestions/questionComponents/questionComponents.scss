@@ -11,17 +11,6 @@
   flex-direction: column;
   overflow: visible;
   overflow-y: auto;
-  .ck.ck-dropdown.ck-color-ui-dropdown {
-    padding: 0 !important;
-    margin: 0 !important;
-    .ck-dropdown__button {
-      max-width: none !important;
-    }
-    .ck.ck-icon.ck-button__icon {
-      width: 1.25vw;
-      height: 1.25vw;
-    }
-  }
   .dropzone {
     border: 0 !important;
   }
@@ -46,17 +35,6 @@
   }
   .add-dropbox {
     margin-bottom: 0.2vw;
-  }
-  .question-build-text-editor {
-    &.first {
-      .ck-editor {
-        .ck-content {
-          p {
-            @extend %fw-6;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -112,38 +90,10 @@
         margin: 0 !important;
         padding: 0;
         color: var(--theme-dark-blue);
-        .ck-button__label {
-          font-family: $font-family-regular;
-        }
-        .ck-icon {
-          font-size: 0.5vw;
-        }
-      }
-    }
-    .ck-dropdown {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 0.2vw;
-      .ck-dropdown__panel {
-        top: 0 !important;
-        height: 100% !important;
-        box-shadow: none !important;
-        border: 0 !important;
       }
     }
   }
   &.big-answer {
-    .document-editor {
-      .ck-content {
-        padding-top: 9vh;
-        padding-bottom: 0;
-        p {
-          margin: 2vh 0 !important;
-        }
-      }
-    }
     .left-ckeckbox {
       z-index: 1;
       padding: 0.45vw;
