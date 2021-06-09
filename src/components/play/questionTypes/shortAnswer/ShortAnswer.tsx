@@ -12,6 +12,7 @@ import {
 import { stripHtml } from "components/build/questionService/ConvertService";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
 import { getValidationClassName } from "../service";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 export type ShortAnswerAnswer = string[];
 
@@ -94,7 +95,14 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     if (this.props.isBookPreview) {
       return <MathInHtml value={value} />;
     }
-    return <input value={value} onChange={(e) => this.setUserAnswer(e.target.value, index)} />;
+    return <QuillEditor
+      disabled={false}
+      showToolbar={true}
+      data={value}
+      placeholder={`Answer ${index + 1}`}
+      toolbar={['superscript', 'subscript']}
+      onChange={v => this.setUserAnswer(v, index)}
+    />
     /*
     return (
       <DocumentWirisEditorComponent
