@@ -59,6 +59,7 @@ import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
 import { trackSignUp } from "services/matomo";
 import { CashAttempt, GetCashedPlayAttempt } from "localStorage/play";
+import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/UnauthorizedUserDialogV2";
 
 
 function shuffle(a: any[]) {
@@ -146,7 +147,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [reviewEndTime, setReviewEndTime] = React.useState(initReviewEndTime);
   const [attemptId, setAttemptId] = React.useState<string>(initAttemptId);
 
+  const isCover = props.history.location.pathname.slice(-6) === '/cover';
 
+  const [unauthorizedOpenV2, setUnauthorizedV2] = React.useState(isCover);
   const [unauthorizedOpen, setUnauthorized] = React.useState(false);
   const [headerHidden, setHeader] = React.useState(false);
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
@@ -197,18 +200,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   /*eslint-disable-next-line*/
   }, [])
-
-  /*
-  // by default move to Prep
-  const splited = location.pathname.split('/');
-  if (splited.length === 4) {
-    if (isPhone()) {
-      history.push(routes.phonePrep(brick.id));
-    } else {
-      history.push(routes.playNewPrep(brick.id));
-    }
-    return <PageLoader content="...Getting Brick..." />;
-  }*/
 
   const updateAttempts = (attempt: any, index: number) => {
     if (attempt) {
@@ -624,6 +615,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           login={(email) => createInactiveAccount(email)}
           again={again}
           close={() => setUnauthorized(false)}
+        />
+        <UnauthorizedUserDialogV2
+          isOpen={unauthorizedOpenV2}
+          emailInvalid={emailInvalid}
+          login={(email) => createInactiveAccount(email)}
+          again={again}
+          close={() => setUnauthorizedV2(false)}
         />
       </div>
     </React.Suspense>
