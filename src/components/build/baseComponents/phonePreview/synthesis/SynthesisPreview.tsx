@@ -2,6 +2,8 @@ import React from "react";
 
 // @ts-ignore
 import MathJax from "react-mathjax-preview";
+//@ts-ignore
+import Desmos from 'desmos';
 import {
   isMathJax, parseSynthesisDataToArray, isLatex
 } from "components/services/mathJaxService";
@@ -24,6 +26,48 @@ interface SynthesisPreviewProps {
 const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
   data
 }) => {
+  const renderedRef = React.createRef<HTMLDivElement>();
+  const [calcs, setCalcs] = React.useState<Desmos.GraphingCalculator[]>();
+
+  const renderGraph = (el: Element) => {
+    const value = JSON.parse(el.getAttribute("data-value") as string);
+
+    const desmos = Desmos.GraphingCalculator(el, {
+      fontSize: Desmos.FontSizes.VERY_SMALL,
+      expressions: false,
+      settingsMenu: false,
+      lockViewport: true,
+      pointsOfInterest: true,
+      trace: true,
+    });
+    desmos.setState(value.graphState);
+
+    return desmos;
+  }
+
+  React.useEffect(() => {
+    if(renderedRef && renderedRef.current) {
+      const elt = renderedRef.current;
+      const elements = elt.getElementsByClassName("quill-desmos");
+
+      calcs?.forEach((calc: any) => {
+        if(calc) {
+          calc.destroy();
+        }
+      });
+
+      const newCalcs = [];
+
+      for(const element of Array.from(elements)) {
+        element.innerHTML = "";
+        const calc = renderGraph(element);
+        newCalcs.push(calc);
+      }
+
+      setCalcs(newCalcs);
+    }
+  }, [data]);
+
   if (!data.synthesis || !stripHtml(data.synthesis)) {
     const {brickLength} = data;
     return (
@@ -80,7 +124,7 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
       <div className="synthesis-title" style={{ textAlign: "center" }}>
         Synthesis
       </div>
-      <div className="synthesis-text">
+      <div ref={renderedRef} className="synthesis-text">
         {arr.map((el: any, i: number) => {
           const res = isMathJax(el);
           const latex = isLatex(el);
