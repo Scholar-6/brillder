@@ -382,6 +382,22 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
+  const createInactiveAccountV2 = async (email: string) => {
+    if (!props.user) {
+      // create a new account for an unauthorized user.
+      let data = await createUserByEmail(email);
+      if (data) {
+        const { user, token } = data;
+        props.setUser(user);
+        setUnauthorizedV2(false);
+        setUserToken(token);
+        trackSignUp();
+      } else {
+        setInvalidEmail(true);
+      }
+    }
+  }
+
   const again = () => {
     history.push(`/play/dashboard`);
   }
@@ -619,7 +635,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <UnauthorizedUserDialogV2
           isOpen={unauthorizedOpenV2}
           emailInvalid={emailInvalid}
-          login={(email) => createInactiveAccount(email)}
+          login={(email) => createInactiveAccountV2(email)}
           again={again}
           close={() => setUnauthorizedV2(false)}
         />
