@@ -54,6 +54,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
     };
 
     this.loadSubjects();
+
   }
 
   async loadSubjects() {
@@ -87,6 +88,9 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
     return this.state.subjects.some(r => r.checked);
   }
 
+  moveToArt() {
+  }
+
   render() {
     return (
       <React.Suspense fallback={<></>}>
@@ -96,7 +100,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
           <Grid item xs={9} className="brick-row-container view-all-subjects subject-categories">
             <div className="row">
               <div>
-                <div>
+                <div onClick={this.moveToArt}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/canvas.svg" />
                   </div>
@@ -104,7 +108,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
               <div>
-                <div>
+                <div onClick={() => {}}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/internet.svg" />
                   </div>
@@ -112,7 +116,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
               <div>
-                <div>
+                <div onClick={() => {}}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/book.svg" />
                   </div>
@@ -120,7 +124,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
               <div>
-                <div>
+                <div onClick={() => {}}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/education.svg" />
                   </div>
@@ -130,13 +134,15 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
             </div>
             <div className="row">
               <div>
-                <div>
-                  <img alt="" src="/images/subject-categories/translating.svg" />
+                <div onClick={() => {}}>
+                  <div className="flex-center">
+                    <img alt="" src="/images/subject-categories/translating.svg" />
+                  </div>
                   <div className="cat-name">Languages</div>
                 </div>
               </div>
               <div>
-                <div>
+                <div onClick={() => {}}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/binary-code.svg" />
                   </div>
@@ -144,7 +150,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
               <div>
-                <div>
+                <div onClick={() => {}}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/chemistry.svg" />
                   </div>
@@ -152,7 +158,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
               <div>
-                <div>
+                <div onClick={() => {}}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/economics.svg" />
                   </div>
