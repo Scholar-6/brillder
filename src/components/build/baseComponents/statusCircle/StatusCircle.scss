@@ -28,13 +28,13 @@
   }
   .build-status-circle {
     margin: 0.25vw;
-    $size: 2.8vw;
+    $size: 2.4vw;
     height: $size;
     width: $size;
 
 
     &.border-green {
-      $size: 2.3vw;
+      $size: 1.9vw;
       height: $size;
       width: $size;
       border-radius: 50%;
