@@ -15,6 +15,43 @@
     margin-bottom: 2.5vh;
   }
 
+  .book-navigator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-bottom-left-radius: 2vw;
+    width: calc(100vw - 2vw - #{$home-button-size});
+    background: var(--theme-light-blue);
+    height: $home-button-size;
+    display: flex;
+    font-size: 2vw;
+
+    svg {
+      height: 3vw;
+      width: 3vw;
+    }
+
+    .prep-tab {
+      width: 7%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .question-tab {
+      width: 4%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        margin-left: 0.4vw;
+        width: 1.3vw;
+        height: 1.3vw;
+        stroke-width:3;
+      }
+    }
+  }
+
   .expand-title {
     color: var(--theme-dark-blue);
     line-height: 1.3;

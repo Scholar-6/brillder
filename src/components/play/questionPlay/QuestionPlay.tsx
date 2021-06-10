@@ -172,7 +172,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
         <div>
           {
             question.firstComponent?.value &&
-              <TextLive mode={this.props.mode} component={question.firstComponent} className="bolder" />
+              <TextLive mode={this.props.mode} component={question.firstComponent} />
           }
           {
             question.components.map((component, index) => renderComponent(component, index))

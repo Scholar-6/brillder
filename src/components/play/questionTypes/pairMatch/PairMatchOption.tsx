@@ -38,7 +38,11 @@ const PairMatchOption: React.FC<OptionProps> = (props) => {
 
   const renderOptionContent = (answer: Answer) => {
     if (answer.optionType && answer.optionType === QuestionValueType.Image) {
-      return <PairMatchImageContent fileName={answer.optionFile} imageCaption={answer.imageCaption} />
+      return <PairMatchImageContent
+        fileName={answer.optionFile}
+        imageCaption={answer.imageCaption}
+        imageSource={answer.imageSource}
+      />
     }
     return <MathInHtml value={answer.option} />;
   }

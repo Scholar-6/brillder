@@ -47,6 +47,7 @@ $space-between-boxes: 0.1vw;
       }
       blockquote {
         border-left: 5px solid var(--tab-gray);
+        font-size: 1vw;
         padding-left: 1.8vh;
       }
       table {
@@ -486,6 +487,12 @@ $space-between-boxes: 0.1vw;
     overflow: auto;
   }
 
+  .bs-circles-container {
+    position: absolute;
+    bottom: 15.1vh;
+    right: 1.8vw;
+  }
+
   .inner-question-type {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -784,6 +791,11 @@ $space-between-boxes: 0.1vw;
         margin-left: 0.3vw;
         margin-right: 0.3vw;
       }
+    }
+  }
+  .synthesis-page {
+    .bs-circles-container {
+      margin-top: 10vh;
     }
   }
 }

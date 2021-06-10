@@ -9,6 +9,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 interface AnswerProps {
   fileName: string;
   imageCaption?: string;
+  imageSource?: string;
 
   hovered: boolean;
   hover(value: string): void;
@@ -44,7 +45,7 @@ const PhoneImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, ...p
   );
 }
 
-const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, ...props }) => {
+const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, imageSource, ...props }) => {
   if (isPhone()) {
     return <PhoneImageContent fileName={fileName} imageCaption={imageCaption} {...props} />
   }
@@ -58,6 +59,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
             onMouseLeave={props.blur}
           />
         </div>
+      {imageSource && <div className="image-source">{imageSource}</div>}
       {imageCaption && <div>{imageCaption}</div>}
       </div>
     </div>

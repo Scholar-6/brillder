@@ -238,6 +238,7 @@ const App: React.FC<AppProps> = props => {
       {/* all page routes are here order of routes is important */}
       <Switch>
         <UnauthorizedRoute path={map.AllSubjects} component={ViewAll} />
+        <UnauthorizedRoute path={map.SubjectCategories} component={ViewAll} />
         <UnauthorizedRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <UnauthorizedRoute path={map.ViewAllPage} component={ViewAll} />

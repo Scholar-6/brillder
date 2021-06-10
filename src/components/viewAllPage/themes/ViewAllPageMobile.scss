@@ -247,7 +247,7 @@
   }
 
   .bricks-list-container {
-    height: calc(100vh - 39.5vh - 6vw - 5vw - 60px);
+    height: calc(100vh - 39.5vh - 6vw - 5vw - 74px);
     overflow-y: scroll;
   }
 }
@@ -371,7 +371,7 @@
 
 // all subjects page height
 .dashboard-all-subjects {
-  height: calc(100% - 60px) !important;
+  height: calc(100% - 74px) !important;
   .brick-row-container {
     height: 100%;
     .subjects-column {

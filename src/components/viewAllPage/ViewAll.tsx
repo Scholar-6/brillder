@@ -35,13 +35,20 @@ import { clearProposal } from "localStorage/proposal";
 import ViewAllMobile from "./ViewAllMobile";
 import CreateOneButton from "components/viewAllPage/components/CreateOneButton";
 import RecommendButton from "components/viewAllPage/components/RecommendBuilderButton";
+import SubjectCategoriesComponent from './subjectCategories/SubjectCategories';
 
-import { removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject, getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks, expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks, sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds } from './service/viewAll';
+import {
+  removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject,
+  getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks,
+  expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks,
+  sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds
+} from './service/viewAll';
 import { filterByCurretUser } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 import AllSubjects from "./allSubjectsPage/AllSubjects";
 import MobileCategory from "./MobileCategory";
 import { playCover } from "components/play/routes";
+import { isPhone } from "services/phone";
 
 
 interface ViewAllProps {
@@ -100,7 +107,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
-    if (!values.isViewAll && !values.subjectId && !values.searchString) {
+    const isSubjectCategory = props.location.pathname.slice(-map.SubjectCategoriesPrefix.length) == map.SubjectCategoriesPrefix;
+    if (!isSubjectCategory && !values.isViewAll && !values.subjectId && !values.searchString && !values.subjectIds) {
       let link = map.AllSubjects;
       if (values.newTeacher) {
         link += '?' + map.NewTeachQuery;
@@ -183,7 +191,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   addWheelListener() {
-    const {current} = this.state.bricksRef;
+    const { current } = this.state.bricksRef;
     if (current) {
       current.addEventListener('wheel', this.state.onBricksWheel, false);
     }
@@ -196,7 +204,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.state.handleKey, false);
-    const {current} = this.state.bricksRef;
+    const { current } = this.state.bricksRef;
     if (current) {
       current.removeEventListener('wheel', this.state.onBricksWheel, false);
     }
@@ -261,7 +269,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     const bricks = await getPublishedBricks();
     if (bricks) {
-      
+
       let bs = sortAllBricks(bricks);
       let finalBricks = this.filter(bs, this.state.isAllSubjects, this.state.isCore);
       let { subjects } = this.state;
@@ -363,7 +371,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
    * Check all subjects based on isCore.
    */
   checkAllSubjects() {
-    let {subjects} = this.state;
+    let { subjects } = this.state;
     if (this.state.isCore) {
       subjects.forEach(s => {
         if (s.publicCount > 0) {
@@ -532,7 +540,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     let bricks: Brick[] | null = [];
     const { pathname } = this.props.location;
     if (pathname.slice(pathname.length - 13, pathname.length) === '/all-subjects') {
-      this.setState({isSearching: true})
+      this.setState({ isSearching: true })
       this.props.history.push(map.ViewAllPage + '?searchString=' + searchString);
     }
     if (this.props.user) {
@@ -698,7 +706,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             if (s.id === subjectId) {
               clearProposal();
               await this.props.forgetBrick();
-              this.props.history.push(map.ProposalSubjectLink  + '?selectedSubject=' + subjectId);
+              this.props.history.push(map.ProposalSubjectLink + '?selectedSubject=' + subjectId);
             } else {
               this.setState({ noSubjectOpen: true, activeSubject: filterSubjects[0] });
             }
@@ -890,7 +898,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       user={this.props.user}
       history={this.props.history} location={this.props.location}
       filterByOneSubject={this.filterByOneSubject.bind(this)}
-      setViewAll={() => this.setState({isViewAll: true})}
+      setViewAll={() => this.setState({ isViewAll: true })}
       checkSubjectsWithBricks={() => this.checkSubjectsWithBricks(this.state.subjects)}
     />
   }
@@ -921,7 +929,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       <React.Suspense fallback={<></>}>
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
         <div className={pageClass}>
-          <Hidden only={["sm", "md", "lg", "xl"]}>
+          {isPhone() ?
             <Switch>
               <Route exec path={map.AllSubjects}>
                 <PageHeadWithMenu
@@ -934,29 +942,55 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                 />
                 {this.renderAllSubjectsPage()}
               </Route>
+              <Route exec path={map.SubjectCategories}>
+                <PageHeadWithMenu
+                  page={PageEnum.ViewAll}
+                  user={this.props.user}
+                  placeholder={"Search Ongoing Projects & Published Bricks…"}
+                  history={this.props.history}
+                  search={() => this.search()}
+                  searching={(v: string) => this.searching(v)}
+                />
+                <SubjectCategoriesComponent
+                  user={this.props.user}
+                  history={this.props.history} location={this.props.location}
+                  filterByOneSubject={this.filterByOneSubject.bind(this)}
+                  setViewAll={() => this.setState({ isViewAll: true })}
+                  checkSubjectsWithBricks={() => this.checkSubjectsWithBricks(this.state.subjects)}
+                />
+              </Route>
               <Route exec path={map.ViewAllPage}>
                 <MobileCategory history={this.props.history} isSearching={this.state.isSearching} location={this.props.location} />
               </Route>
             </Switch>
-          </Hidden>
-          <Hidden only={["xs"]}>
-            <PageHeadWithMenu
-              page={PageEnum.ViewAll}
-              user={this.props.user}
-              placeholder={"Search Subjects, Topics, Titles & more"}
-              history={this.props.history}
-              search={() => this.search()}
-              searching={(v) => this.searching(v)}
-            />
-            <Switch>
-              <Route exec path={map.AllSubjects}>
-                {this.renderAllSubjectsPage()}
-              </Route>
-              <Route exec path={map.ViewAllPage}>
-                {this.renderDesktopViewAllPage(bricks)}
-              </Route>
-            </Switch>
-          </Hidden>
+            : <div>
+              <PageHeadWithMenu
+                page={PageEnum.ViewAll}
+                user={this.props.user}
+                placeholder={"Search Subjects, Topics, Titles & more"}
+                history={this.props.history}
+                search={() => this.search()}
+                searching={(v) => this.searching(v)}
+              />
+              <Switch>
+                <Route exec path={map.AllSubjects}>
+                  {this.renderAllSubjectsPage()}
+                </Route>
+                <Route exec path={map.SubjectCategories}>
+                  <SubjectCategoriesComponent
+                    user={this.props.user}
+                    history={this.props.history} location={this.props.location}
+                    filterByOneSubject={this.filterByOneSubject.bind(this)}
+                    setViewAll={() => this.setState({ isViewAll: true })}
+                    checkSubjectsWithBricks={() => this.checkSubjectsWithBricks(this.state.subjects)}
+                  />
+                </Route>
+                <Route exec path={map.ViewAllPage}>
+                  {this.renderDesktopViewAllPage(bricks)}
+                </Route>
+              </Switch>
+            </div>
+          }
           <DeleteBrickDialog
             isOpen={this.state.deleteDialogOpen}
             brickId={this.state.deleteBrickId}

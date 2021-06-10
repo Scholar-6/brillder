@@ -1,0 +1,47 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.dashboard-page {
+  $sidebar-width: 17.5vw;
+  .sorted-row {
+    .sort-and-filter-container.subject-category-sidebar {
+      width: 17.5vw !important;
+    }
+  }
+  .sorted-row .brick-row-container {
+    width: calc(100vw - #{$sidebar-width} - 2.4vw);
+  }
+  .subject-categories {
+    color: var(--theme-dark-blue);
+    .row {
+      height: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25%;
+        > div {
+          cursor: pointer;
+        }
+      }
+      img {
+        width: 18vw;
+        max-width: 18vw;
+        max-height: 20vh;
+      }
+      .cat-name {
+        font-size: 1.5vw;
+        font-family: $font-family-bold;
+        text-align: center;
+      }
+      .two-circles {
+        width: auto;
+        height: 6vw;
+      }
+    }
+  }
+}

@@ -55,7 +55,7 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
               const { value } = evt.target;
               props.onChange(value);
             }}
-            placeholder={props.placeholder ? props.placeholder : "Enter emails here"}
+            placeholder={props.placeholder ? props.placeholder : "Enter or Paste up to 50 emails here."}
             variant="outlined"
           />
         );

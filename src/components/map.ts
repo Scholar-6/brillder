@@ -39,6 +39,9 @@ export const NewTeachQuery = 'newTeacher=true';
 
 export const ViewAllPage = '/play/dashboard';
 export const AllSubjects = ViewAllPage + '/all-subjects';
+export const SubjectCategoriesPrefix = '/subject-categories';
+export const SubjectCategories = ViewAllPage + SubjectCategoriesPrefix;
+
 
 const investigation = (brickId: number) => {
   return `/build/brick/${brickId}/investigation`;
@@ -85,6 +88,7 @@ export const Proposal = (brickId: number) => {
 // new brick link
 export const ProposalStart = `${NewBrick}/start-building`;
 export const ProposalSubjectLink = `${NewBrick}/subject`;
+export const ProposalSubjectCoreLink = (isCore: boolean) => `${NewBrick}/subject?isCore=` + isCore;
 export const ProposalTitleLink = `${NewBrick}/brick-title`;
 
 // play preview
@@ -145,6 +149,7 @@ export default {
   ProposalLength,
   ProposalReview,
   ProposalSubjectLink,
+  ProposalSubjectCoreLink,
   ProposalTitleLink,
 
   BackToWorkPage,
@@ -162,6 +167,8 @@ export default {
 
   ViewAllPage,
   AllSubjects,
+  SubjectCategoriesPrefix,
+  SubjectCategories,
 
   postPlay,
   Proposal,

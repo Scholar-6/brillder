@@ -507,7 +507,6 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
             top: 0;
             width: 100%;
             height: calc(100vh - #{$home-button-size} - #{$sorted-row-margin-top});
-            // overflow: hidden;
             .question-title {
               font-family: $font-family-black;
               color: var(--theme-dark-blue);
@@ -521,19 +520,11 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
               .document-editor {
                 border-radius: 0 !important;
                 background: transparent !important;
-                .ck-editor {
-                  .ck-content {
-                    background: transparent !important;
-                    border-radius: 0 !important;
-                    padding: 0.5vw 0 !important;
-                  }
-                }
               }
             }
             &.review-content {
               width: calc(100% - 7vw) !important;
               margin: 0 3vw 1vw 4vw;
-              // padding-top: 1.5vh;
             }
           }
 

@@ -48,6 +48,7 @@ const PublishButton: React.FC<ButtonProps> = props => {
       </div>
       <SendToPublisherDialog
         isOpen={state === PublishStatus.Publishing}
+        isPublishing={true}
         close={() => setState(PublishStatus.None)}
         submit={async () => {
           const success = await publishBrick(brick.id);
