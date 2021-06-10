@@ -10,6 +10,7 @@ import RemoveItemButton from '../../components/RemoveItemButton';
 import RemoveButton from '../../components/RemoveButton';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
+import SoundRecord from '../../sound/SoundRecord';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
@@ -74,9 +75,32 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
       save();
     }
 
+    const setSound = (soundFile: string, caption: string) => {
+      if (locked) { return; }
+      answer.value = '';
+      answer.valueFile = '';
+      answer.soundFile = soundFile;
+      answer.soundCaption = caption;
+      answer.answerType = QuestionValueType.Sound;
+      update();
+      save();
+    }
+
+    const onTextChanged = (answer: any, value: string) => {
+      if (locked) { return; }
+      answer.value = value;
+      answer.valueFile = "";
+      answer.soundFile = "";
+      answer.answerType = QuestionValueType.String;
+      update();
+      save();
+    }
+
     let className = 'vertical-answer-box unique-component';
     if (answer.answerType === QuestionValueType.Image) {
       className += ' big-answer';
+    } else {
+      className += ' vertical-string';
     }
 
     let isValid = null;
@@ -91,10 +115,38 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
       className += ' invalid-answer';
     }
 
+    if (answer.answerType === QuestionValueType.Sound) {
+      return (
+        <div className="verical-sound unique-component" key={i}>
+          <RemoveButton onClick={() => changed(answer, '')} />
+          <SoundRecord
+            locked={locked}
+            answer={answer}
+            save={setSound}
+            clear={() => onTextChanged(answer, '')}
+          />
+        </div>
+      );
+    } else if (answer.answerType === QuestionValueType.Image) {
+      return (
+        <div className={className} key={i}>
+          <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
+          {answer.answerType === QuestionValueType.Image && <RemoveButton onClick={() => changed(answer, '')} />}
+          <QuestionImageDropzone
+            answer={answer as any}
+            type={answer.answerType || QuestionValueType.None}
+            locked={locked}
+            fileName={answer.valueFile}
+            update={setImage}
+          />
+        </div>
+      );
+    }
+
+
     return (
       <div className={className} key={i}>
         <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
-        {answer.answerType === QuestionValueType.Image && <RemoveButton onClick={() => changed(answer, '')} />}
         <QuestionImageDropzone
           answer={answer as any}
           type={answer.answerType || QuestionValueType.None}
@@ -102,7 +154,6 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           fileName={answer.valueFile}
           update={setImage}
         />
-        {answer.answerType !== QuestionValueType.Image &&
         <QuillEditorContainer
           locked={locked}
           object={answer}
@@ -115,7 +166,13 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
             showSameAnswerPopup(i, state.list, openSameAnswerDialog);
           }}
           onChange={value => changed(answer, value)}
-        />}
+        />
+        <SoundRecord
+          locked={locked}
+          answer={answer}
+          save={setSound}
+          clear={() => onTextChanged(answer, '')}
+        />
       </div>
     );
   }
