@@ -25,6 +25,7 @@ import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import { createUserByEmail } from "services/axios/user";
 import { trackSignUp } from "services/matomo";
 import map from "components/map";
+import routes from "../routes";
 
 
 interface IntroductionProps {
@@ -64,10 +65,6 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     setInvalidEmail(true);
   }
 
-  const again = () => {
-    props.history.push(map.ViewAllPage);
-  }
-
   const setUser = (data: any) => {
     const { user, token } = data;
     props.setUser(user);
@@ -84,6 +81,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       } else {
         setUser(data);
         setUnauthorizedV2(false);
+        startBrick();
       }
     }
   }
@@ -364,8 +362,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         isOpen={unauthorizedOpenV2}
         emailInvalid={emailInvalid}
         login={(email) => createInactiveAccountV2(email)}
-        again={again}
-        close={() => setUnauthorizedV2(false)}
+        notyet={() => startBrick()}
       />
       <TextDialog
         isOpen={emailInvalidPopup} close={() => setInvalidEmailPopup(false)}
