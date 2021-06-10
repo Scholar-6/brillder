@@ -15,6 +15,7 @@ import UndoButton from '../baseComponents/UndoButton';
 import CountSynthesis from './WordsCount';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import { stripHtml } from '../questionService/ConvertService';
+import StatusCircle from '../baseComponents/statusCircle/StatusCircle';
 
 
 export interface SynthesisProps {
@@ -116,6 +117,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
 
   render() {
     const {canScroll} = this.state;
+    const {currentBrick} = this.props;
 
     if (!this.state.isLoaded) {
       return <div />
@@ -169,7 +171,10 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                     />
                   </div>
                   <div style={{width: "100%"}}>
-                    <CountSynthesis brickLength={this.props.currentBrick.brickLength} value={this.state.synthesis} />
+                    <CountSynthesis brickLength={currentBrick.brickLength} value={this.state.synthesis} />
+                  </div>
+                  <div className="bs-circles-container">
+                    <StatusCircle status={currentBrick.status} isCore={currentBrick.isCore} />
                   </div>
                 </div>
               </Grid>
@@ -177,7 +182,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
             <Grid className={`synthesis-comments-panel ${!this.state.commentsShown && "hidden"}`} item>
               <CommentPanel
                 currentLocation={CommentLocation.Synthesis}
-                currentBrick={this.props.currentBrick}
+                currentBrick={currentBrick}
                 setCommentsShown={this.setCommentsShown.bind(this)}
                 haveBackButton={true}
               />
