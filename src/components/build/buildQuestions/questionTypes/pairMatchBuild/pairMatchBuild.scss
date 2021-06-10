@@ -10,9 +10,6 @@
   .pair-match-option,
   .pair-match-answer {
     border-radius: 0.6vw;
-    .ck-content {
-      padding-left: 1vw !important;
-    }
     background: var(--solitude-light);
     .question-image-drop.pair-image {
       position: relative;
@@ -36,11 +33,6 @@
           }
         }
       }
-    }
-  }
-  .pair-image {
-    .ck-content {
-      padding-top: 9.5vh !important;
     }
   }
 }

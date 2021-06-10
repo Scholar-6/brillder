@@ -421,3 +421,44 @@
   margin-top: -0.2vw;
   font-size: 1vw;
 }
+
+
+// short answer live
+.play-preview-panel .short-answer-live {
+  .ql-custom-toolbar .formats button svg {
+    height: 2vw;
+    width: 2vw;
+  }
+
+  .ql-custom-toolbar {
+    position: absolute;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding: 0 !important;
+    overflow: hidden;
+    height: 100%;
+    z-index: 10;
+    right: 0;
+    display: flex;
+    align-items: center;
+    width: 6vw;
+    .formats {
+      height: 4vw;
+      width: 100%;
+      button {
+        height: 2vw;
+        width: 80%;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+  .ql-container {
+    min-height: 4vw;
+    width: calc(100% - 6vw);
+    .ql-editor {
+      border-top-left-radius: 0.6vw !important;
+      border-bottom-left-radius: 0.6vw !important;
+    }
+  }
+}

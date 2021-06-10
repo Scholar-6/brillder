@@ -275,6 +275,19 @@
         }
       }
     }
+    &.set-user-email-dialog {
+      .bold {
+        font-size: 5.5vw;
+      }
+      .MuiFormControl-root {
+        margin-bottom: 0.7vh !important;
+      }
+      .small-text-link {
+        text-align: center;
+        font-size: 4.5vw;
+        margin-bottom: 3vh;
+      }
+    }
   }
   &.unlimited {
     .MuiDialog-paperWidthSm {

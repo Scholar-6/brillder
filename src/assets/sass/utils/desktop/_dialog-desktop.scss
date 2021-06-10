@@ -292,6 +292,22 @@
         }
       }
     }
+    &.set-user-email-dialog {
+      .MuiFormControl-root {
+        margin-bottom: 0.7vh !important;
+      }
+      .small-text-link {
+        text-align: center;
+        font-size: 1vw;
+        margin-bottom: 3vh;
+        cursor: pointer;
+        transition: all 300ms ease-out;
+
+        &:hover {
+          color: var(--theme-orange);
+        }
+      }
+    }
   }
   &.unlimited {
     .MuiDialog-paperWidthSm {

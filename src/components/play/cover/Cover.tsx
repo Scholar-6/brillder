@@ -19,12 +19,22 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 import SponsorImageComponent from "./SponsorImage";
 import CoverAuthorRow from "./components/coverAuthorRow/CoverAuthorRow";
 import CoverPlay from "./components/coverAuthorRow/CoverPlay";
+import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/UnauthorizedUserDialogV2";
+import TextDialog from "components/baseComponents/dialogs/TextDialog";
+
+import { createUserByEmail } from "services/axios/user";
+import { trackSignUp } from "services/matomo";
+import map from "components/map";
+import routes from "../routes";
+
 
 interface IntroductionProps {
   user: User;
   brick: Brick;
   location: any;
   history: any;
+  setUserToken(token: string): any;
+  setUser(user: User): void;
   moveNext(): void;
 }
 
@@ -35,8 +45,46 @@ const DesktopTheme = React.lazy(() => import('./themes/CoverDesktopTheme'));
 const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const [bioOpen, setBio] = React.useState(false);
 
+  const [unauthorizedOpenV2, setUnauthorizedV2] = React.useState(false);
+
   const [firstPhonePopup, setFirstPhonePopup] = React.useState(false);
   const [secondPhonePopup, setSecondPhonePopup] = React.useState(false);
+  const [emailInvalidPopup, setInvalidEmailPopup] = React.useState(false); // null - before submit button clicked, true - invalid
+  const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
+
+  const userTimeout = setTimeout(() => {
+    if (!props.user) {
+      setUnauthorizedV2(true);
+    }
+  }, 10000);
+
+  const validate = (data: any) => {
+    if (data === 400) {
+      setInvalidEmailPopup(true);
+    }
+    setInvalidEmail(true);
+  }
+
+  const setUser = (data: any) => {
+    const { user, token } = data;
+    props.setUser(user);
+    props.setUserToken(token);
+    trackSignUp();
+  }
+
+  const createInactiveAccountV2 = async (email: string) => {
+    if (!props.user) {
+      // create a new account for an unauthorized user.
+      const data = await createUserByEmail(email);
+      if (data === 400 || !data) {
+        validate(data);
+      } else {
+        setUser(data);
+        setUnauthorizedV2(false);
+        startBrick();
+      }
+    }
+  }
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -49,6 +97,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
     return function cleanup() {
       document.removeEventListener("keydown", handleMove, false);
+      clearTimeout(userTimeout);
     };
   });
 
@@ -308,6 +357,17 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         </div>
         <CoverBioDialog isOpen={bioOpen} user={brick.author} close={() => setBio(false)} />
       </div>
+      <UnauthorizedUserDialogV2
+        history={props.history}
+        isOpen={unauthorizedOpenV2}
+        emailInvalid={emailInvalid}
+        login={(email) => createInactiveAccountV2(email)}
+        notyet={() => startBrick()}
+      />
+      <TextDialog
+        isOpen={emailInvalidPopup} close={() => setInvalidEmailPopup(false)}
+        label="You might already have an account, try signing in."
+      />
     </React.Suspense>
   );
 };

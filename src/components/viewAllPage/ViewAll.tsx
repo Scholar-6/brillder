@@ -35,6 +35,7 @@ import { clearProposal } from "localStorage/proposal";
 import ViewAllMobile from "./ViewAllMobile";
 import CreateOneButton from "components/viewAllPage/components/CreateOneButton";
 import RecommendButton from "components/viewAllPage/components/RecommendBuilderButton";
+import SubjectCategoriesComponent from './subjectCategories/SubjectCategories';
 
 import { removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject, getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks, expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks, sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds } from './service/viewAll';
 import { filterByCurretUser } from "components/backToWorkPage/service";
@@ -100,7 +101,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
-    if (!values.isViewAll && !values.subjectId && !values.searchString) {
+    const isSubjectCategory = props.location.pathname.slice(-map.SubjectCategoriesPrefix.length) == map.SubjectCategoriesPrefix;
+    if (!isSubjectCategory && !values.isViewAll && !values.subjectId && !values.searchString) {
       let link = map.AllSubjects;
       if (values.newTeacher) {
         link += '?' + map.NewTeachQuery;
@@ -951,6 +953,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             <Switch>
               <Route exec path={map.AllSubjects}>
                 {this.renderAllSubjectsPage()}
+              </Route>
+              <Route exec path={map.SubjectCategories}>
+                <SubjectCategoriesComponent
+                  user={this.props.user}
+                  history={this.props.history} location={this.props.location}
+                  filterByOneSubject={this.filterByOneSubject.bind(this)}
+                  setViewAll={() => this.setState({isViewAll: true})}
+                  checkSubjectsWithBricks={() => this.checkSubjectsWithBricks(this.state.subjects)}
+                />
               </Route>
               <Route exec path={map.ViewAllPage}>
                 {this.renderDesktopViewAllPage(bricks)}
