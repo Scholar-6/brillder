@@ -462,3 +462,11 @@
     }
   }
 }
+
+.q-highlighter {
+  display: inline;
+  background: var(--theme-yellow);
+  padding-left: 0.2vw;
+  padding-right: 0.2vw;
+  border-radius: 0.5vw;
+}
