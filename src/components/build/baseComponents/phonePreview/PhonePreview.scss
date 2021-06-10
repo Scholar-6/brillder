@@ -232,11 +232,6 @@
       &.mobile-question-component {
         div {
           > .text-play {
-            &:first-child {
-              p {
-                @extend %fw-6;
-              }
-            }
             img {
               width: 100%;
             }
