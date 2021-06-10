@@ -942,6 +942,23 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                 />
                 {this.renderAllSubjectsPage()}
               </Route>
+              <Route exec path={map.SubjectCategories}>
+                <PageHeadWithMenu
+                  page={PageEnum.ViewAll}
+                  user={this.props.user}
+                  placeholder={"Search Ongoing Projects & Published Bricks…"}
+                  history={this.props.history}
+                  search={() => this.search()}
+                  searching={(v: string) => this.searching(v)}
+                />
+                <SubjectCategoriesComponent
+                  user={this.props.user}
+                  history={this.props.history} location={this.props.location}
+                  filterByOneSubject={this.filterByOneSubject.bind(this)}
+                  setViewAll={() => this.setState({ isViewAll: true })}
+                  checkSubjectsWithBricks={() => this.checkSubjectsWithBricks(this.state.subjects)}
+                />
+              </Route>
               <Route exec path={map.ViewAllPage}>
                 <MobileCategory history={this.props.history} isSearching={this.state.isSearching} location={this.props.location} />
               </Route>
