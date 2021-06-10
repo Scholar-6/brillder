@@ -3,12 +3,21 @@ import { ChooseSeveralAnswer } from "components/play/questionTypes/choose/choose
 
 const markLiveChoices = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
     const choices = component.list;
+
+    let correctCount = 0;
+    for (let [index, choice] of choices.entries()) {
+        const checked = attempt.answer.findIndex(a => a.shuffleIndex === index) >= 0;
+        if (checked===choice.checked){
+            correctCount += 1;
+        }
+    }
+
     for (let [index, choice] of choices.entries()) {
         const checked = attempt.answer.findIndex(a => a.shuffleIndex === index) >= 0;
         if (checked === choice.checked || (checked === false && !choice.checked)) {
-            attempt.marks += 2;
+            attempt.marks += 1;
         } else {
-            attempt.marks += 0.5;
+            //attempt.marks += 0.5;
             attempt.correct = false;
         }
     }
@@ -16,7 +25,7 @@ const markLiveChoices = (component: any, attempt: ComponentAttempt<ChooseSeveral
 }
 
 const mark = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
-    const markValue = 2;
+    const markValue = 1;
 
     attempt.correct = true;
     attempt.marks = 0;
@@ -32,3 +41,9 @@ const mark = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) =>
 }
 
 export default mark;
+
+
+/* idea
+total marks is the number of options (already in place)
+marks awarded are distributed evenly via correctly selected options
+need: length of list of correct choices (correctChoices?) */

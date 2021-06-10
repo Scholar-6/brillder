@@ -1,7 +1,7 @@
 import { ComponentAttempt } from "components/play/model";
 
 const mark = (component: any, attempt: ComponentAttempt<any>) => {
-    const markIncrement = 2;
+    const markIncrement = 2; //change to be proportional with number of options?
 
     attempt.correct = true;
     attempt.marks = 0;
@@ -12,7 +12,7 @@ const mark = (component: any, attempt: ComponentAttempt<any>) => {
             if (component.choices[index].answers[choice.value].checked === true) {
                 attempt.marks += markIncrement;
             } else {
-                attempt.marks += 0.5;
+                //attempt.marks += 0.5;
                 attempt.correct = false;
             }
         } else {
