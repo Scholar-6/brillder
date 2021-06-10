@@ -15,14 +15,24 @@
   .subject-categories {
     color: var(--theme-dark-blue);
     .row {
+      height: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      svg {
-        width: 10vw;
-        height: 10vw;
+      > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25%;
+      }
+      img {
+        width: 18vw;
+        max-width: 18vw;
+        max-height: 20vh;
       }
       .cat-name {
+        font-size: 1.5vw;
+        font-family: $font-family-bold;
         text-align: center;
       }
       .two-circles {
