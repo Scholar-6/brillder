@@ -8,15 +8,14 @@ interface UnauthorizedProps {
   isOpen: boolean;
   history: any;
   login(email: string): void;
-  again(): void;
-  close(): void;
+  notyet(): void;
 }
 
 const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
   const [email, setEmail] = React.useState("");
 
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue set-user-email-dialog">
+    <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog">
       <div className="dialog-header">
         <div className="bold">Great that you've clicked a Brick. To play this amazing, authored resource for free can we have your email?</div>
       </div>
@@ -34,7 +33,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
         />
         <div className="small-text-link" onClick={() => props.history.push(map.Login)}>Already a member? Sign in here.</div>
         <div className="dialog-footer">
-          <button className="btn btn-md bg-gray no-button" onClick={props.again}>
+          <button className="btn btn-md bg-gray no-button" onClick={props.notyet}>
             <span className="bold">Not yet</span>
           </button>
           <button type="submit" className="btn btn-md bg-theme-orange yes-button">
