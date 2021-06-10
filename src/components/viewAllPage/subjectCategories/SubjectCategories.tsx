@@ -96,55 +96,68 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
           <Grid item xs={9} className="brick-row-container view-all-subjects subject-categories">
             <div className="row">
               <div>
-                <svg viewBox="0 0 60 60">
-                  <circle cx="23" cy="25" r="10" fill="#3E93FC"></circle>
-                  <circle cx="37" cy="25" r="10" fill="#BFC86D"></circle>
-                </svg>
-                <div className="cat-name">Arts</div>
+                <div>
+                  <div className="flex-center">
+                    <img alt="" src="/images/subject-categories/canvas.svg" />
+                  </div>
+                  <div className="cat-name">Arts</div>
+                </div>
               </div>
               <div>
-                <svg viewBox="0 0 60 60">
-                  <circle cx="30" cy="30" r="10" fill="#C6B5C0"></circle>
-                </svg>
-                <div className="cat-name">Ceteral & Topical</div>
+                <div>
+                  <div className="flex-center">
+                    <img alt="" src="/images/subject-categories/internet.svg" />
+                  </div>
+                  <div className="cat-name">Ceteral & Topical</div>
+                </div>
               </div>
               <div>
-                <svg viewBox="0 0 60 60">
-                  <circle cx="27" cy="33" r="10" fill="#B2FC89"></circle>
-                  <circle cx="24" cy="30" r="10" fill="#B061FF"></circle>
-                  <circle cx="24" cy="27" r="10" fill="#905640"></circle>
-                  <circle cx="28" cy="25" r="10" fill="#E1C58F"></circle>
-                  <circle cx="33" cy="25" r="10" fill="#B8B8B8"></circle>
-                  <circle cx="33" cy="33" r="10" fill="#D057D9"></circle>
-                  <circle cx="32" cy="34" r="10" fill="#D5D0B6"></circle>
-                  <circle cx="29" cy="36" r="10" fill="#857E7D"></circle>
-                </svg>
-                <div className="cat-name">Humanities & Social Sciences</div>
+                <div>
+                  <div className="flex-center">
+                    <img alt="" src="/images/subject-categories/book.svg" />
+                  </div>
+                  <div className="cat-name">Humanities & Social Sciences</div>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <div className="flex-center">
+                    <img alt="" src="/images/subject-categories/education.svg" />
+                  </div>
+                  <div className="cat-name">School Client</div>
+                </div>
               </div>
             </div>
             <div className="row">
               <div>
-                <svg viewBox="0 0 50 50">
-                  <circle cx="30" cy="18" r="10" fill="#D42B25"></circle>
-                  <circle cx="23" cy="30" r="10" fill="#FF82D8"></circle>
-                  <circle cx="37" cy="30" r="10" fill="#FFF058"></circle>
-                </svg>
-                <div className="cat-name">Languages</div>
+                <div>
+                  <img alt="" src="/images/subject-categories/translating.svg" />
+                  <div className="cat-name">Languages</div>
+                </div>
               </div>
               <div>
-                <svg viewBox="0 0 40 30" className="two-circles">
-                  <circle cx="13" cy="15" r="10" fill="#FF5A00"></circle>
-                  <circle cx="27" cy="15" r="10" fill="#ABF7CF"></circle>
-                </svg>
-                <div className="cat-name">Maths and Computing</div>
+                <div>
+                  <div className="flex-center">
+                    <img alt="" src="/images/subject-categories/binary-code.svg" />
+                  </div>
+                  <div className="cat-name">Maths and Computing</div>
+                </div>
               </div>
               <div>
-                <svg viewBox="0 0 50 50">
-                  <circle cx="30" cy="18" r="10" fill="#68D462"></circle>
-                  <circle cx="23" cy="30" r="10" fill="#72E1D2"></circle>
-                  <circle cx="37" cy="30" r="10" fill="#FFAE00"></circle>
-                </svg>
-                <div className="cat-name">Science</div>
+                <div>
+                  <div className="flex-center">
+                    <img alt="" src="/images/subject-categories/chemistry.svg" />
+                  </div>
+                  <div className="cat-name">Science</div>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <div className="flex-center">
+                    <img alt="" src="/images/subject-categories/economics.svg" />
+                  </div>
+                  <div className="cat-name">Corporate</div>
+                </div>
               </div>
             </div>
           </Grid>
