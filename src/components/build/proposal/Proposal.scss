@@ -389,3 +389,14 @@
     background: inherit !important;
   }
 }
+
+.proposal-router .tutorial-page {
+  .ql-custom-toolbar .formats button svg, .quill-document-editor .ql-toolbar .formats button svg {
+    width: 3vw;
+    height: 3vw;
+  }
+  .ql-custom-toolbar .formats .picker svg, .quill-document-editor .ql-toolbar .formats .picker svg {
+    height: 3vw;
+    width: 3vw;
+  }
+}

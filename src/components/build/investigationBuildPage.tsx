@@ -23,7 +23,6 @@ import {
   prepareBrickToSave,
   removeQuestionByIndex,
   setQuestionTypeByIndex,
-  setLastQuestionId,
   getFirstInvalidQuestionIndex,
   parseQuestion,
   getUniqueComponent,
@@ -114,7 +113,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let proposalRes = React.useMemo(() => validateProposal(props.brick), [props.brick]);
 
   const [questions, setQuestions] = React.useState([] as Question[]);
-  
+
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
@@ -182,7 +181,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   useEffect(() => {
     startEditing(brickId)
   }, [brickId, startEditing]);
-
 
   const [currentBrick, setCurrentBrick] = React.useState({ ...props.brick });
 
@@ -603,8 +601,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setCurrentBrick(brick);
       const brickToSave = {
         ...brick,
-        questions: brick.questions.map((question: Question) => ({
-          ...question, contentBlocks: undefined, type: undefined,
+        questions: brick.questions.map((question: Question, idx: number) => ({
+          ...question, contentBlocks: undefined, type: undefined, order: idx
         })),
       };
       props.saveBrick(brickToSave).then((res: Brick) => {

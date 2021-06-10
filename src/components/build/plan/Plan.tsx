@@ -25,6 +25,7 @@ import DifficultySelect from "../proposal/questionnaire/brickTitle/components/Di
 import { getSubjects } from "services/axios/subject";
 import CoreSelect from "../proposal/questionnaire/brickTitle/components/CoreSelect";
 import { stripHtml } from "../questionService/ConvertService";
+import StatusCircle from "../baseComponents/statusCircle/StatusCircle";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -262,6 +263,9 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                   />
                 </div>
                 <div style={{ width: "100%" }}></div>
+              </div>
+              <div className="bs-circles-container">
+                <StatusCircle status={currentBrick.status} isCore={currentBrick.isCore} />
               </div>
             </Grid>
           )}

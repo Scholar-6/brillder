@@ -8,7 +8,6 @@ import { ChooseOneAnswer } from './types';
 import RemoveItemButton from "../components/RemoveItemButton";
 import SoundRecord from "../sound/SoundRecord";
 import RemoveButton from "../components/RemoveButton";
-import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import YesNoDialog from "components/build/baseComponents/dialogs/YesNoDialog";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import QuillEditorContainer from "components/baseComponents/quill/QuillEditorContainer";

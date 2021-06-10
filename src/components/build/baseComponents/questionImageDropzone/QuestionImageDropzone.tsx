@@ -12,9 +12,11 @@ export interface ImageAnswerData extends MainImageProps {
   value: string;
   valueFile: string;
   answerType: QuestionValueType;
+  imageOptionCaption: string; // only for pairMatch
 }
 
 export interface AnswerProps {
+  isOption?: boolean; // only for pair match
   answer: ImageAnswerData;
   locked: boolean;
   className?: string;
@@ -24,7 +26,7 @@ export interface AnswerProps {
 }
 
 const QuestionImageDropzone: React.FC<AnswerProps> = ({
-  locked, answer, fileName, type, className, update
+  locked, answer, fileName, type, className, isOption, update
 }) => {
   const [imageInvalid, setInvalid] = useState(false);
   const [file, setFile] = useState(null as File | null);
@@ -33,7 +35,11 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
   const updateAnswer = (fileName: string, source: string, caption: string, permision: boolean) => {
     if (locked) { return; }
     answer.imageSource = source;
-    answer.imageCaption = caption;
+    if (isOption) {
+      answer.imageOptionCaption = caption;
+    } else {
+      answer.imageCaption = caption;
+    }
     answer.imagePermision = permision;
     update(fileName);
     setOpen(false);
@@ -52,6 +58,16 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
 
   const updateData = (source: string, caption: string, permision: boolean) => {
     updateAnswer(answer.valueFile, source, caption, permision);
+  }
+
+  const renderCaption = () => {
+    if (type === QuestionValueType.Image && answer.imageCaption) {
+      if (isOption) {
+        return answer.imageOptionCaption;
+      }
+      return answer.imageCaption;
+    }
+    return '';
   }
 
   return (
@@ -81,7 +97,9 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
             : <AddImageBtnContent />
         }
       </div>
-      <div className="build-image-caption">{(answer.answerType === QuestionValueType.Image && answer.imageCaption) ? answer.imageCaption : ''}</div>
+      <div className="build-image-caption">
+        {renderCaption()}
+      </div>
       <ImageDialogV2
         open={isOpen}
         initFile={file}

@@ -8,6 +8,7 @@ import SendToPublisherDialog2 from "./SendToPublisher2Dialog";
 
 interface DialogProps {
   isOpen: boolean;
+  isPublishing?: boolean; // true if user click to publish
   close(): void;
   submit(): void;
 }
@@ -61,7 +62,7 @@ const SendToPublisherDialog: React.FC<DialogProps> = (props) => {
           <div className={`btn flex-button btn-md no-button ${isValid() ? 'bg-green text-white' : 'bg-gray'}`} onClick={() => {
             isValid() ? props.submit() : setInvalid(true);
           }}>
-            <div>Send to Publisher</div>
+            <div>{props.isPublishing ? 'Publish' : 'Send to Publisher'}</div>
             <div className="flex-center">
               <SpriteIcon name="send" />
             </div>

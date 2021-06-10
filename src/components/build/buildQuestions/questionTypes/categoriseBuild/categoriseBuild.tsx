@@ -7,7 +7,6 @@ import QuestionImageDropZone from 'components/build/baseComponents/questionImage
 import { SortCategory, QuestionValueType, SortAnswer } from 'components/interfaces/sort';
 import { showSameAnswerPopup } from '../service/questionBuild';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import ValidationFailedDialog from 'components/baseComponents/dialogs/ValidationFailedDialog';
 import RemoveButton from '../components/RemoveButton';
 import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';

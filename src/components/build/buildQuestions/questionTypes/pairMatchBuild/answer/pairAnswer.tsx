@@ -4,7 +4,6 @@ import { QuestionValueType } from '../../types';
 import { Answer } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import QuillEditorContainer from "components/baseComponents/quill/QuillEditorContainer";
 
 

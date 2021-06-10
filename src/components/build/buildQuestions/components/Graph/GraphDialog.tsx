@@ -6,6 +6,7 @@ import Desmos from 'desmos';
 import { GraphSettings } from './Graph';
 
 import './GraphDialog.scss';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface GraphDialogProps {
   isOpen: boolean;
@@ -40,6 +41,9 @@ const GraphDialog: React.FC<GraphDialogProps> = props => {
     onClose={props.close}
     className="dialog-box light-blue graph-dialog"
   >
+    <div className="close-button svgOnHover" onClick={props.close}>
+      <SpriteIcon name="cancel" className="w100 h100 active" />
+    </div>
     <div className="graph-dialog-desmos" ref={graphCallback} />
   </Dialog>
   );

@@ -83,7 +83,11 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   renderData(answer: ChooseOneChoice) {
     if (answer.answerType === QuestionValueType.Image) {
-      return <PairMatchImageContent fileName={answer.valueFile} imageCaption={answer.imageCaption} />;
+      return <PairMatchImageContent
+        fileName={answer.valueFile}
+        imageCaption={answer.imageCaption}
+        imageSource={answer.imageSource}
+      />;
     } else if (answer.answerType === QuestionValueType.Sound) {
       return (
         <div style={{width: '100%'}}>

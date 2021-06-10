@@ -1,5 +1,7 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
+import { ReactSortable } from 'react-sortablejs';
+import { isMobile } from 'react-device-detect';
 
 import {CompQuestionProps} from '../types';
 import CompComponent from '../Comp';
@@ -9,9 +11,8 @@ import { getValidationClassName } from '../service';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isPhone } from 'services/phone';
-import { isMobile } from 'react-device-detect';
 import PairMatchImageContent from '../pairMatch/PairMatchImageContent';
-import { ReactSortable } from 'react-sortablejs';
+import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 
 
 const MobileTheme = React.lazy(() => import('./themes/Phone'));
@@ -147,7 +148,16 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
   renderData(answer: any) {
     if (answer.answerType === QuestionValueType.Image) {
-      return <PairMatchImageContent fileName={answer.valueFile} imageCaption={answer.imageCaption} />;
+      return <PairMatchImageContent
+        fileName={answer.valueFile} imageCaption={answer.imageCaption}
+        imageSource={answer.imageSource} />;
+    } else if (answer.answerType === QuestionValueType.Sound) {
+      return (
+        <div style={{width: '100%'}}>
+          <Audio src={answer.soundFile} />
+          <div>{answer.soundCaption}</div>
+        </div>
+      );
     } else {
       return <MathInHtml value={answer.value} />;
     }

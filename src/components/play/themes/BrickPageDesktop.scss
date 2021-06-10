@@ -614,13 +614,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               .document-editor {
                 border-radius: 0 !important;
                 background: transparent !important;
-                .ck-editor {
-                  .ck-content {
-                    background: transparent !important;
-                    border-radius: 0 !important;
-                    padding: 0.5vw 0 !important;
-                  }
-                }
               }
             }
             &.review-content {
@@ -780,6 +773,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             margin-bottom: 1.5vh;
             blockquote {
               border-left: 0.3vw solid var(--tab-gray);
+              font-size: 1.4vw;
               padding-left: 1.8vw;
             }
             ul > li {
@@ -1598,6 +1592,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     #react-mathjax-preview p,
     p {
       font-size: 1.15vw;
+    }
+    blockquote {
+      font-size: 1.4vw;
     }
   }
 

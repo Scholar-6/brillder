@@ -4,6 +4,7 @@ import { Brick } from "model/brick";
 import React, { useEffect } from "react";
 import { getLatestBrick } from "services/axios/brick";
 import PlayDialog from "./PlayDialog";
+import queryString from 'query-string';
 
 import './StartBuilding.scss';
 
@@ -16,6 +17,16 @@ const StartBuildingPage: React.FC<Props> = ({
 }) => {
   const [isOpen, setOpen] = React.useState(false);
   const [brick, setBrick] = React.useState(null as Brick | null);
+
+  let isCore = false;
+  const values = queryString.parse(history.location.search);
+  if (values.isCore) {
+    if (values.isCore === 'false') {
+      isCore = false;
+    } else if (values.isCore === 'true') {
+      isCore = true;
+    }
+  }
 
   useEffect(() => {
    const loadBrick = async() => {
@@ -39,7 +50,7 @@ const StartBuildingPage: React.FC<Props> = ({
           <button className="btn btn-gray" onClick={() => setOpen(true)}>
             See an example
           </button>
-          <button className="btn blue" onClick={() => history.push(map.ProposalSubjectLink)}>
+          <button className="btn blue" onClick={() => history.push(map.ProposalSubjectCoreLink(isCore))}>
             Start Building
           </button>
         </div>

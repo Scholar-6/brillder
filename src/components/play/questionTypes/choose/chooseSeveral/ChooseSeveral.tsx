@@ -102,7 +102,11 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   renderData(answer: ChooseOneAnswer) {
     if (answer.answerType === QuestionValueType.Image) {
-      return <PairMatchImageContent fileName={answer.valueFile} imageCaption={answer.imageCaption} />;
+      return <PairMatchImageContent
+        fileName={answer.valueFile}
+        imageCaption={answer.imageCaption}
+        imageSource={answer.imageSource}
+      />;
     } else if (answer.answerType === QuestionValueType.Sound && answer.soundFile) {
       return (
         <div style={{width: '100%'}}>

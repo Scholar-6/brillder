@@ -1,0 +1,15 @@
+.quill-desmos {
+  position: relative;
+  height: 20vw;
+  cursor: default;
+
+  .desmos-edit-button {
+    position: absolute;
+    right: 0.5vw;
+    top: 0.5vw;
+    z-index: 10;
+    .MuiSvgIcon-root {
+      z-index: 11;
+    }
+  }
+}

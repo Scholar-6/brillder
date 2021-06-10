@@ -739,7 +739,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 loaded={this.state.bricksLoaded}
                 searchString={searchString}
                 published={published}
-                isCorePage={false}
+                isCorePage={true}
                 moveNext={this.moveNext.bind(this)}
                 moveBack={this.moveBack.bind(this)}
                 switchPublish={this.switchPublish.bind(this)}
