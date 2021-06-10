@@ -75,6 +75,17 @@ export const sortAndCheckSubjects = (subjects: Subject[], values: queryString.Pa
       }
     }
   });
+  if (values.subjectIds) {
+    const subjectIds = values.subjectIds as string;
+    const idsArray = subjectIds.split(',');
+    subjects.forEach(s => {
+      for (const id of idsArray) {
+        if (s.id === parseInt(id)) {
+          s.checked = true;
+        }
+      }
+    });
+  }
 }
 
 export const prepareYourBricks = (currentBricks: Brick[]) => {

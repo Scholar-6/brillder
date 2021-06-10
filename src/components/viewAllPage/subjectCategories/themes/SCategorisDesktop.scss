@@ -24,6 +24,9 @@
         align-items: center;
         justify-content: center;
         width: 25%;
+        > div {
+          cursor: pointer;
+        }
       }
       img {
         width: 18vw;
