@@ -1,26 +1,28 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .graph-dialog {
-    height: 40vw;
-    width: 50vw;
+  height: 40vw;
+  width: 50vw;
+  position: relative;
 
-    .MuiDialog-container {
-        width: 100%;
-        height: 100%;
+  .MuiDialog-container {
+    width: 100%;
+    height: 100%;
 
-        .MuiPaper-root {
-            width: 100%;
-            height: 100%;
-        }
+    .MuiPaper-root {
+      width: 100%;
+      height: 100%;
+      padding-top: 3rem !important;
     }
+  }
 
-    margin: auto;
-    display: flex;
-    flex-direction: column;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
 
-    .graph-dialog-desmos {
-        flex-grow: 1;
-    }
+  .graph-dialog-desmos {
+    flex-grow: 1;
+  }
 }

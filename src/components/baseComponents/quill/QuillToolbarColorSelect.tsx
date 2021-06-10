@@ -43,7 +43,7 @@ const QuillToolbarColorSelect: React.FC<QuillToolbarColorSelectProps> = props =>
             <span className="picker-label">
                 <SpriteIcon name={"ql-" + props.name} />
             </span>
-            <span id={`picker-options-${uniqueId}`} className="picker-options">
+            <span id={`picker-options-${uniqueId}`} className="picker-options" onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}>
                 { props.children && React.Children.map(props.children as any, getItem) }
             </span>
         </span>

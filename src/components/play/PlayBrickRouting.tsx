@@ -44,7 +44,6 @@ import map, { playIntro } from "components/map";
 import userActions from 'redux/actions/user';
 import { User } from "model/user";
 import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
-import PageLoader from "components/baseComponents/loaders/pageLoader";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
 import { createUserByEmail } from "services/axios/user";
@@ -59,6 +58,7 @@ import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
 import { trackSignUp } from "services/matomo";
 import { CashAttempt, GetCashedPlayAttempt } from "localStorage/play";
+import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
 
 function shuffle(a: any[]) {
@@ -156,9 +156,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const location = useLocation();
   const finalStep = location.pathname.search("/finalStep") >= 0;
 
-
   // used for unauthenticated user.
   const [userToken, setUserToken] = React.useState<string>();
+  const [emailInvalidPopup, setInvalidEmailPopup] = React.useState(false); // null - before submit button clicked, true - invalid
   const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
   const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
@@ -197,18 +197,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   /*eslint-disable-next-line*/
   }, [])
-
-  /*
-  // by default move to Prep
-  const splited = location.pathname.split('/');
-  if (splited.length === 4) {
-    if (isPhone()) {
-      history.push(routes.phonePrep(brick.id));
-    } else {
-      history.push(routes.playNewPrep(brick.id));
-    }
-    return <PageLoader content="...Getting Brick..." />;
-  }*/
 
   const updateAttempts = (attempt: any, index: number) => {
     if (attempt) {
@@ -375,18 +363,29 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
+  const validate = (data: any) => {
+    if (data === 400) {
+      setInvalidEmailPopup(true);
+    }
+    setInvalidEmail(true);
+  }
+
+  const setUser = (data: any) => {
+    const { user, token } = data;
+    props.setUser(user);
+    setUserToken(token);
+    trackSignUp();
+  }
+
   const createInactiveAccount = async (email: string) => {
     if (!props.user) {
       // create a new account for an unauthorized user.
-      let data = await createUserByEmail(email);
-      if (data) {
-        const { user, token } = data;
-        props.setUser(user);
-        setUnauthorized(false);
-        setUserToken(token);
-        trackSignUp();
+      const data = await createUserByEmail(email);
+      if (data === 400 || !data) {
+        validate(data);
       } else {
-        setInvalidEmail(true);
+        setUser(data);
+        setUnauthorized(false);
       }
     }
   }
@@ -469,6 +468,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={history}
             brick={brick}
+            setUserToken={setUserToken}
+            setUser={setUser}
             moveNext={coverMoveNext}
           />
           {isPhone() && renderPhoneFooter()}
@@ -619,11 +620,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {renderRouter()}
         </div>
         <UnauthorizedUserDialog
+          history={history}
           isOpen={unauthorizedOpen}
           emailInvalid={emailInvalid}
           login={(email) => createInactiveAccount(email)}
           again={again}
           close={() => setUnauthorized(false)}
+        />
+        <TextDialog
+          isOpen={emailInvalidPopup} close={() => setInvalidEmailPopup(false)}
+          label="You might already have an account, try signing in."
         />
       </div>
     </React.Suspense>

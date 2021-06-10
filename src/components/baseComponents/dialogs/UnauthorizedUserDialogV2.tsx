@@ -8,18 +8,16 @@ interface UnauthorizedProps {
   isOpen: boolean;
   history: any;
   login(email: string): void;
-  again(): void;
-  close(): void;
+  notyet(): void;
 }
 
-const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
+const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
   const [email, setEmail] = React.useState("");
 
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue set-user-email-dialog">
+    <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog">
       <div className="dialog-header">
-        <div className="bold">Before you can review your answers and learn how to improve your score, you need to create an account.</div>
-        <div className="bold">Creating an account is free, no obligations.</div>
+        <div className="bold">Great that you've clicked a Brick. To play this amazing, authored resource for free can we have your email?</div>
       </div>
       <form onSubmit={(e) => {
         e.preventDefault();
@@ -27,7 +25,7 @@ const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
       }}>
         <TextField
           variant="standard"
-          placeholder="Enter your email to create an account"
+          placeholder="Enter a valid email"
           type="email"
           className={`dialog-input ${props.emailInvalid ? 'm-input-theme-orange' : ''}`}
           value={email}
@@ -35,11 +33,11 @@ const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
         />
         <div className="small-text-link" onClick={() => props.history.push(map.Login)}>Already a member? Sign in here.</div>
         <div className="dialog-footer">
-          <button type="submit" className="btn btn-md bg-theme-orange yes-button">
-            <span className="bold">Create Account</span>
+          <button className="btn btn-md bg-gray no-button" onClick={props.notyet}>
+            <span className="bold">Not yet</span>
           </button>
-          <button className="btn btn-md bg-gray no-button" onClick={props.again}>
-            <span className="bold">Try another brick</span>
+          <button type="submit" className="btn btn-md bg-theme-orange yes-button">
+            <span className="bold">Sure</span>
           </button>
         </div>
       </form>
@@ -47,4 +45,4 @@ const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
   );
 };
 
-export default UnauthorizedUserDialog;
+export default UnauthorizedUserDialogV2;

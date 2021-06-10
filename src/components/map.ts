@@ -39,6 +39,9 @@ export const NewTeachQuery = 'newTeacher=true';
 
 export const ViewAllPage = '/play/dashboard';
 export const AllSubjects = ViewAllPage + '/all-subjects';
+export const SubjectCategoriesPrefix = '/subject-categories';
+export const SubjectCategories = ViewAllPage + SubjectCategoriesPrefix;
+
 
 const investigation = (brickId: number) => {
   return `/build/brick/${brickId}/investigation`;
@@ -164,6 +167,8 @@ export default {
 
   ViewAllPage,
   AllSubjects,
+  SubjectCategoriesPrefix,
+  SubjectCategories,
 
   postPlay,
   Proposal,
