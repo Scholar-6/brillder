@@ -531,6 +531,23 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                     </div>
                   </div>
                 </SwiperSlide>
+                <SwiperSlide>
+                <div className="mobile-attempts">
+                    <div className="header">Synthesis</div>
+                    <div className="scroll-content">
+                      <div className="expanded-text">
+                        <HighlightHtml
+                          value={brick.synthesis}
+                          mode={PlayMode.Normal}
+                          onHighlight={() => { }}
+                        />
+                      </div>
+                    </div>
+                    <div className="footer">
+                      Swipe to view Questions
+                    </div>
+                  </div>
+                </SwiperSlide>
               </Swiper>
             </div>
           }
