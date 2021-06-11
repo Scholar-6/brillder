@@ -34,6 +34,7 @@ export const playBrief = (brickId: number) => realPlay(brickId) + PlayBriefLastP
 export const playPrePrep = (brickId: number) => realPlay(brickId) + PlayPrePrepLastPrefix;
 export const playNewPrep = (brickId: number) => realPlay(brickId) + PlayNewPrepLastPrefix;
 export const playPreInvesigation = (brickId: number) => realPlay(brickId) + PlayPreInvestigationLastPrefix;
+export const playInvestigation = (brickId: number) => realPlay(brickId) + PlayLiveLastPrefix;
 export const playProvisionalScore = (brickId: number) => realPlay(brickId) + PlayProvisionalScoreLastPrefix;
 export const playPreSynthesis = (brickId: number) => realPlay(brickId) + PlayPreSynthesisLastPrefix;
 export const playSynthesis = (brickId: number) => realPlay(brickId) + PlaySynthesisLastPrefix;
@@ -90,6 +91,7 @@ export default {
   playPrePrep,
   playNewPrep,
   playPreInvesigation,
+  playInvestigation,
   playProvisionalScore,
   playPreSynthesis,
   playSynthesis,
