@@ -446,38 +446,55 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 slidesPerView={1}
                 loop={true}
                 loopedSlides={20}
-                direction="vertical"
                 pagination={{ clickable: true }}
                 onClick={(e) => { }}
                 onSwiper={swiper => {
                   this.setState({ ...this.state, swiper });
                 }}
               >
-                <div className="mobile-attempts">
-                  <div className="green-button-container1">
-                    <div className="green-button-container2">
-                      <div className="play-text">Play Again</div>
-                      <div className="green-button-container3"
-                        onClick={() =>
-                          this.props.history.push(
-                            routes.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
-                          )
-                        }
-                      >
-                        <PlayGreenButton onClick={() => { }} />
+                <SwiperSlide>
+                  <div className="mobile-attempts">
+                    <div className="green-button-container1">
+                      <div className="green-button-container2">
+                        <div className="play-text">Play Again</div>
+                        <div className="green-button-container3"
+                          onClick={() =>
+                            this.props.history.push(
+                              routes.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
+                            )
+                          }
+                        >
+                          <PlayGreenButton onClick={() => { }} />
+                        </div>
                       </div>
                     </div>
+                    <AttemptsPhonePage
+                      attempts={this.state.attempts}
+                      index={this.state.activeAttemptIndex}
+                      setActiveAttempt={this.setActiveAttempt.bind(this)}
+                      onClick={this.moveToIntroduction.bind(this)}
+                    />
+                    <div className="footer">
+                      Swipe to view Questions
+                    </div>
                   </div>
-                  <AttemptsPhonePage
-                    attempts={this.state.attempts}
-                    index={this.state.activeAttemptIndex}
-                    setActiveAttempt={this.setActiveAttempt.bind(this)}
-                    onClick={this.moveToIntroduction.bind(this)}
-                  />
-                  <div className="footer">
-                    Swipe to view Questions
-                </div>
-                </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="mobile-attempts">
+                    <div className="header" dangerouslySetInnerHTML={{__html: brick.title}}></div>
+                    <AttemptsPhonePage
+                      attempts={this.state.attempts}
+                      index={this.state.activeAttemptIndex}
+                      setActiveAttempt={this.setActiveAttempt.bind(this)}
+                      onClick={this.moveToIntroduction.bind(this)}
+                    />
+                    <div className="footer">
+                      Swipe to view Questions
+                    </div>
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide></SwiperSlide>
+                <SwiperSlide></SwiperSlide>
               </Swiper>
             </div>
           }
