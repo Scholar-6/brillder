@@ -39,6 +39,7 @@ import routes from "components/play/routes";
 import { Helmet } from "react-helmet";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
+import PostPhonePlay from "./PostPhonePlay";
 
 const MobileTheme = React.lazy(() => import('./themes/PageMobileTheme'));
 const TabletTheme = React.lazy(() => import('./themes/PageTabletTheme'));
@@ -351,9 +352,13 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       return '';
     }
 
+    if (isPhone()) {
+      return <PostPhonePlay {...this.props} />
+    }
+
     return (
       <React.Suspense fallback={<></>}>
-        {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
+        {isMobile ? <TabletTheme /> : <DesktopTheme />}
         <div className="post-play-page">
           <Helmet>
             <title>{getBrillderTitle(brick.title)}</title>
