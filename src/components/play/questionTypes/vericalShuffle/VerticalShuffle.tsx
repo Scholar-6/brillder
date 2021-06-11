@@ -153,7 +153,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
         imageSource={answer.imageSource} />;
     } else if (answer.answerType === QuestionValueType.Sound) {
       return (
-        <div style={{width: '100%'}}>
+        <div>
           <Audio src={answer.soundFile} />
           <div>{answer.soundCaption}</div>
         </div>
