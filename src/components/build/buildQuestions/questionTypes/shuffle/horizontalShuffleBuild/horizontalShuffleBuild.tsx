@@ -9,6 +9,9 @@ import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/Add
 import RemoveItemButton from '../../components/RemoveItemButton';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
+import RemoveButton from '../../components/RemoveButton';
+import SoundRecord from '../../sound/SoundRecord';
+
 
 export const getDefaultHorizontalShuffleAnswer = () => {
   const newAnswer = () => ({ value: "" });
@@ -70,13 +73,50 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
       }
     }
 
+    const setSound = (soundFile: string, caption: string) => {
+      if (locked) { return; }
+      answer.value = '';
+      answer.valueFile = '';
+      answer.soundFile = soundFile;
+      answer.soundCaption = caption;
+      answer.answerType = QuestionValueType.Sound;
+      update();
+      save();
+    }
+
+    const onTextChanged = (answer: any, value: string) => {
+      if (locked) { return; }
+      answer.value = value;
+      answer.valueFile = "";
+      answer.soundFile = "";
+      answer.answerType = QuestionValueType.String;
+      update();
+      save();
+    }
+
     if (isValid === false) {
       className += ' invalid-answer';
     }
 
+    if (answer.answerType === QuestionValueType.Sound) {
+      return (
+        <Grid container item xs={4} key={i}>
+          <div className="horizontal-sound unique-component" key={i}>
+            <RemoveButton onClick={() => changed(answer, '')} />
+            <SoundRecord
+              locked={locked}
+              answer={answer}
+              save={setSound}
+              clear={() => onTextChanged(answer, '')}
+            />
+          </div>
+        </Grid>
+      );
+    }
+
     return (
       <Grid container item xs={4} key={i}>
-        <div className={className}>
+        <div className={className + " horizontal-string"}>
           <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
           <QuillEditorContainer
             locked={locked}
@@ -90,6 +130,12 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
               showSameAnswerPopup(i, state.list, openSameAnswerDialog);
             }}
             onChange={value => changed(answer, value)}
+          />
+          <SoundRecord
+            locked={locked}
+            answer={answer}
+            save={setSound}
+            clear={() => onTextChanged(answer, '')}
           />
         </div>
       </Grid>
