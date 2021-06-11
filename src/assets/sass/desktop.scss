@@ -364,6 +364,7 @@
       }
     }
   }
+  
 
   .subject-scrollable {
     overflow-y: auto;
@@ -384,6 +385,9 @@
     font-size: 1vw !important;
     line-height: 1 !important;
   }
+}
+.dashboard-page .sorted-row {
+  flex-wrap: unset;
 }
 
 .permision-buttons {

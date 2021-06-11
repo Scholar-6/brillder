@@ -34,12 +34,23 @@ export interface Editor extends UserBase {
   username: string;
 }
 
+export enum SubjectGroup {
+  None = 0,
+  Arts,
+  Languages,
+  HumanitiesAndSocialSciences,
+  GeneralTopical,
+  Science,
+  MathsAndComputing
+}
+
 export interface Subject {
   id: number;
   name: string;
   color: string;
   publishedBricksCount: number;
   userCount: number;
+  group: SubjectGroup;
   checked?: boolean;
 
   // view all page

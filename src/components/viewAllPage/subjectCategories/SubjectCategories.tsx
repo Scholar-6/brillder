@@ -2,28 +2,25 @@ import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import queryString from 'query-string';
 import "swiper/swiper.scss";
-import { isIPad13, isMobile, isTablet } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import { User } from "model/user";
-import { Subject, SubjectItem } from "model/brick";
-import { getSubjects } from "services/axios/subject";
+import { Subject, SubjectGroup } from "model/brick";
 import map from "components/map";
 import SubjectCategoriesSidebar from "./SubjectCategoriesSidebar";
 import { isPhone } from "services/phone";
 
-
 interface AllSubjectsProps {
   user: User;
+  subjects: Subject[];
   history: any;
   location: any;
   setViewAll(): void;
+  setSubjectGroup(sGroup: SubjectGroup): void;
   filterByOneSubject(subjectId: number): void;
   checkSubjectsWithBricks(): void;
 }
 
 interface AllSubjectsState {
-  subjects: SubjectItem[];
-  totalSubjects: Subject[];
-  activeSubject: SubjectItem;
   showFilters: boolean;
   searchString: string;
   isAllSubjects: boolean;
@@ -45,51 +42,21 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
     }
 
     this.state = {
-      subjects: [],
-      totalSubjects: [],
-      activeSubject: {} as SubjectItem,
       failedRequest: false,
       searchString: '',
       isAllSubjects: true,
       showFilters
     };
-
-    this.loadSubjects();
-
   }
 
-  async loadSubjects() {
-    let subjects = await getSubjects() as SubjectItem[] | null;
+  moveToGroup(sGroup: SubjectGroup) {
+    this.props.setSubjectGroup(sGroup);
 
-    if (subjects) {
-      subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
-      this.setState({ ...this.state, subjects, totalSubjects: subjects });
-    } else {
-      this.setState({ ...this.state, failedRequest: true });
-    }
-    return subjects;
-  }
-
-  onSubjectSelected(subjectId: number) {
-    const { subjects } = this.state;
-    const subject = subjects.find(s => s.id === subjectId);
-    if (subject) {
-      this.props.filterByOneSubject(subject.id);
-      let link = map.ViewAllPage + `?subjectId=${subject.id}`;
-
-      const values = queryString.parse(this.props.location.search);
-      if (values.newTeacher) {
-        link += '&' + map.NewTeachQuery;
-      }
-      this.props.history.push(link);
-    }
-  }
-
-  isFilterClear() {
-    return this.state.subjects.some(r => r.checked);
-  }
-
-  moveToArt() {
+    const artStrIds = this.props.subjects
+      .filter(s => s.group === sGroup)
+      .map(s => s.id)
+      .join(',');
+    this.props.history.push(map.ViewAllPage + '?subjectIds=' + artStrIds);
   }
 
   render() {
@@ -103,7 +70,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               <div> following subject categories.</div>
             </div>
             <div className="subject-category">
-              <div onClick={this.moveToArt}>
+              <div onClick={() => this.moveToGroup(SubjectGroup.Arts)}>
                 <div className="flex-center">
                   <img alt="" src="/images/subject-categories/canvas.svg" />
                 </div>
@@ -178,7 +145,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
           <Grid item xs={9} className="brick-row-container view-all-subjects subject-categories">
             <div className="row">
               <div>
-                <div onClick={this.moveToArt}>
+                <div onClick={() => this.moveToGroup(SubjectGroup.Arts)}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/canvas.svg" />
                   </div>
@@ -186,7 +153,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => this.moveToGroup(SubjectGroup.GeneralTopical)}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/internet.svg" />
                   </div>
@@ -194,7 +161,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => this.moveToGroup(SubjectGroup.HumanitiesAndSocialSciences)}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/book.svg" />
                   </div>
@@ -202,7 +169,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => {}}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/education.svg" />
                   </div>
@@ -212,7 +179,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
             </div>
             <div className="row">
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => this.moveToGroup(SubjectGroup.Languages)}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/translating.svg" />
                   </div>
@@ -220,7 +187,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => this.moveToGroup(SubjectGroup.MathsAndComputing)}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/binary-code.svg" />
                   </div>
@@ -228,7 +195,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => this.moveToGroup(SubjectGroup.Science)}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/chemistry.svg" />
                   </div>
@@ -236,7 +203,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => {}}>
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/economics.svg" />
                   </div>
