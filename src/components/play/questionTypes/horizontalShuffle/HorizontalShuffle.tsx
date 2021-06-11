@@ -10,7 +10,7 @@ import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
-import PairMatchImageContent from '../pairMatch/PairMatchImageContent';
+import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 
 
 enum DragAndDropStatus {
@@ -108,11 +108,15 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   }
 
   renderData(answer: any) {
-    if (answer.answerType === QuestionValueType.Image) {
-      return <PairMatchImageContent fileName={answer.valueFile} imageCaption={answer.imageCaption} />;
-    } else {
-      return <MathInHtml value={answer.value} />;
+    if (answer.answerType === QuestionValueType.Sound) {
+      return (
+        <div style={{width: '100%'}}>
+          <Audio src={answer.soundFile} />
+          <div>{answer.soundCaption}</div>
+        </div>
+      );
     }
+    return <MathInHtml value={answer.value} />;
   }
 
   renderAnswer(answer: any, i: number) {
