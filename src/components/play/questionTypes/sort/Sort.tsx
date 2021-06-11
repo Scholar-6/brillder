@@ -238,7 +238,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       );
     } else if (choice.answerType === QuestionValueType.Sound) {
       return (
-        <div style={{width: '100%'}}>
+        <div style={{width: '100%'}} className="audio-play">
           <Audio src={choice.soundFile} />
           <div>{choice.soundCaption}</div>
         </div>
