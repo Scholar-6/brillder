@@ -172,6 +172,61 @@
         }
       }
     }
+    $header-height: 10vh;
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: $header-height;
+      font-size: 10vw;
+      white-space: nowrap;
+      overflow-x: hidden;
+      font-family: $font-family-bold;
+      text-overflow: ellipsis;
+      p {
+        text-align: center;
+        font-family: $font-family-bold;
+        font-size: 10vw;
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    .scroll-content {
+      background: var(--white);
+      overflow-y: auto;
+      height: calc(100% - #{$header-height} - #{$footer-height});
+      padding-left: 5vw;
+      padding-right: 5vw;
+
+      .open-question {
+        font-family: $font-family-regular-italic;
+        margin-top: 2vh;
+        font-size: 5vw;
+        p {
+          font-family: inherit;
+          font-size: inherit;
+        }
+      }
+      .expand-title {
+        font-size: 8vw;
+        .centered {
+          width: 15vw;
+          .round-icon {
+            width: 8vw;
+            height: 8vw;
+          }
+        }
+      }
+      .expanded-text {
+        padding-top: 2vh;
+        font-size: 5vw;
+        p {
+          font-size: inherit;
+        }
+      }
+    }
     .footer {
       border-bottom-left-radius: $panel-radius;
       border-bottom-right-radius: $panel-radius;

@@ -6,7 +6,8 @@ import queryString from 'query-string';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 
-
+import { PlayMode } from "components/play/model";
+import HighlightHtml from "components/play/baseComponents/HighlightHtml";
 import { ReduxCombinedState } from "redux/reducers";
 import { Brick, Subject } from "model/brick";
 import { User } from "model/user";
@@ -481,19 +482,55 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="mobile-attempts">
-                    <div className="header" dangerouslySetInnerHTML={{__html: brick.title}}></div>
-                    <AttemptsPhonePage
-                      attempts={this.state.attempts}
-                      index={this.state.activeAttemptIndex}
-                      setActiveAttempt={this.setActiveAttempt.bind(this)}
-                      onClick={this.moveToIntroduction.bind(this)}
-                    />
+                    <div className="header" dangerouslySetInnerHTML={{ __html: brick.title }}></div>
+                    <div className="scroll-content">
+                      <div className="open-question" dangerouslySetInnerHTML={{ __html: brick.openQuestion }}></div>
+                      <div className="expand-title" style={{ marginTop: '4vh' }}>
+                        <span>Brief</span>
+                        <div className="centered text-white">
+                          <div className="round-icon b-green">
+                            <SpriteIcon name="arrow-down" className="arrow" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="expanded-text">
+                        <HighlightHtml
+                          value={brick.brief}
+                          mode={PlayMode.Normal}
+                          onHighlight={() => { }}
+                        />
+                      </div>
+                    </div>
                     <div className="footer">
                       Swipe to view Questions
                     </div>
                   </div>
                 </SwiperSlide>
-                <SwiperSlide></SwiperSlide>
+                <SwiperSlide>
+                  <div className="mobile-attempts">
+                    <div className="header" dangerouslySetInnerHTML={{ __html: brick.title }}></div>
+                    <div className="scroll-content">
+                      <div className="expand-title" style={{ marginTop: '4vh' }}>
+                        <span>Prep</span>
+                        <div className="centered text-white">
+                          <div className="round-icon b-green">
+                            <SpriteIcon name="arrow-down" className="arrow" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="expanded-text">
+                        <HighlightHtml
+                          value={brick.prep}
+                          mode={PlayMode.Normal}
+                          onHighlight={() => { }}
+                        />
+                      </div>
+                    </div>
+                    <div className="footer">
+                      Swipe to view Questions
+                    </div>
+                  </div>
+                </SwiperSlide>
                 <SwiperSlide></SwiperSlide>
               </Swiper>
             </div>
