@@ -37,9 +37,6 @@ import map from "components/map";
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
 import { Helmet } from "react-helmet";
-import { isPhone } from "services/phone";
-import { isMobile } from "react-device-detect";
-import PostPhonePlay from "./PostPhonePlay";
 
 const MobileTheme = React.lazy(() => import('./themes/PageMobileTheme'));
 const TabletTheme = React.lazy(() => import('./themes/PageTabletTheme'));
@@ -352,13 +349,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       return '';
     }
 
-    if (isPhone()) {
-      return <PostPhonePlay {...this.props} />
-    }
-
     return (
       <React.Suspense fallback={<></>}>
-        {isMobile ? <TabletTheme /> : <DesktopTheme />}
+        <MobileTheme />
         <div className="post-play-page">
           <Helmet>
             <title>{getBrillderTitle(brick.title)}</title>
@@ -380,8 +373,8 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
           >
             <Grid className="main-text-container">
               <h1>This book is yours.</h1>
-              <h2>Hover your mouse over the cover to</h2>
-              <h2>see a summary of your results.</h2>
+              <h2>Click on the cover to see a summary</h2>
+              <h2>of your results.</h2>
               {this.state.showLibraryButton &&
                 <button onClick={() => this.props.history.push(map.MyLibrary + '?subjectId=' + brick.subjectId)}>
                   View it in my library

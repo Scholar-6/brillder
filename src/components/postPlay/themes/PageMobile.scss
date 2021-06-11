@@ -6,8 +6,21 @@
   height: 100% !important;
   background: var(--theme-dark-blue);
   color: var(--white);
-  $book-height: 60vh;
-  $real-book-height: 64vh;
+  $home-button-size: 45px;
+  $zendesk-size: 74px;
+  $book-height: calc(100vh - #{$home-button-size} - #{$zendesk-size} - 30vh);
+  $real-book-height: calc(100vh - #{$home-button-size} - #{$zendesk-size} - 35vh);
+
+  .home-button-container {
+    button {
+      border-bottom-right-radius: 9px;
+      background: var(--theme-light-blue) !important;
+      svg {
+        width: 75% !important;
+        height: 75% !important;
+      }
+    }
+  }
 
   h2 {
     font-family: $font-family-bold;
@@ -16,37 +29,39 @@
   }
 
   .book-navigator {
+    overflow-x: scroll;
     position: absolute;
     top: 0;
     right: 0;
     border-bottom-left-radius: 2vw;
+    height: $home-button-size;
     width: calc(100vw - 2vw - #{$home-button-size});
     background: var(--theme-light-blue);
     height: $home-button-size;
     display: flex;
-    font-size: 2vw;
+    font-size: 20px;
 
     svg {
-      height: 3vw;
-      width: 3vw;
+      height: 30px;
+      width: 30px;
     }
 
     .prep-tab {
-      width: 7%;
+      width: 45px;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
     .question-tab {
-      width: 4%;
+      width: 70px;
       display: flex;
       justify-content: center;
       align-items: center;
       svg {
         margin-left: 0.4vw;
-        width: 1.3vw;
-        height: 1.3vw;
+        width: 15px;
+        height: 15px;
         stroke-width:3;
       }
     }
@@ -150,39 +165,48 @@
 
   .main-text-container {
     position: fixed;
+    top: $home-button-size;
     height: 100%;
-    width: 38vw;
-    top: 16.1vh;
-    left: 16vw;
+    width: 92vw;
+    left: 4vw;
     margin-top: 2vh;
 
     h1 {
       font-weight: normal !important;
       font-family: $font-family-black;
       letter-spacing: 0.05vw;
-      font-size: 2.8vw;
+      font-size: 10.4vw;
+      line-height: 0;
+      padding-top: 5vh;
+      padding-bottom: 5vh;
       margin: 0;
-      line-height: 2;
+    }
+
+    h2.desktop {
+      display: none;
     }
 
     h2 {
       font-weight: normal !important;
-      font-size: 1.9vw;
+      font-size: 6vw;
+      line-height: 0;
+      padding-bottom: 4vh;
       font-family: $font-family-regular;
       margin: 0;
-      line-height: 2.3;
     }
 
     button {
+      position: fixed;
+      bottom: 2vh;
       border: none;
       outline: none;
-      border-radius: 1vw;
-      margin-top: 8vh;
-      margin-left: 4.7vw;
+      left: 74px;
+      border-radius: 1.2vh;
       font-family: $font-family-bold;
-      font-size: 1.85vw;
+      font-size: 6.4vw;
+      line-height: 0;
       background: var(--theme-orange);
-      padding: 0.9vh 1.8vw;
+      padding: 2.5vh 1.8vw;
       transition: all 300ms ease-out !important;
 
       &:hover {
@@ -195,10 +219,10 @@
   .book-main-container {
     position: fixed;
     z-index: 200;
-    right: 0;
-    width: 45.15vw;
-    height: 100%;
-    top: 0;
+    left: 4vw;
+    width: 92vw;
+    height: 50vh;
+    top: calc(45px + 22vh);
     transition: all 0.8s ease-in-out;
   }
 
@@ -207,10 +231,9 @@
     perspective: 100vw;
     width: 0;
     left: 0;
-    $book-radius: 0.4vw;
+    $book-radius: 2vw;
 
     .book {
-      margin-top: 15.5vh;
       transform-style: preserve-3d;
       -webkit-transform-style: preserve-3d;
       position: relative;
@@ -275,7 +298,7 @@
     .front,
     .front-cover,
     .back {
-      width: 30.5vw;
+      width: 84vw;
       height: $real-book-height;
       background: var(--theme-dark-blue);
     }
@@ -291,7 +314,7 @@
       .page-stitch {
         position: absolute;
         height: 100%;
-        width: 1.76vw;
+        width: 4vw;
 
         .vertical-line,
         .horizontal-line {
@@ -302,11 +325,11 @@
         .vertical-line {
           height: 100%;
           right: 0;
-          width: 0.8vw;
+          width: 2vw;
         }
 
         .horizontal-line {
-          height: 0.8vw;
+          height: 2vw;
           width: 100%;
         }
 
@@ -333,17 +356,17 @@
         flex-direction: column;
 
         .image-background-container {
-          width: 10vw;
-          height: 10vw;
+          width: 40vw;
+          height: 40vw;
           @extend %flexCenter;
-          margin: 8vh auto;
+          margin: 6.5vh auto 3vh auto;
           background: var(--white);
-          border-radius: 0.4vw;
-          padding: 0.4vw;
+          border-radius: 2vw;
+          padding: 1vw;
 
           .svg {
-            width: 100%;
-            height: 100%;
+            width: 85%;
+            height: 85%;
           }
         }
 
@@ -351,14 +374,18 @@
           margin: 0 1.8vw;
           text-transform: uppercase;
           color: var(--theme-dark-blue);
-          font-size: 1.8vw;
+          font-size: 6vw;
           overflow-x: hidden;
           height: 18vh;
+          p {
+            font-size: 6vw;
+            white-space: nowrap;
+          }
         }
 
         .names-row {
           margin-bottom: 3vh;
-          font-size: 2.4vw;
+          font-size: 6vw;
           height: 7vh;
           color: var(--theme-light-blue);
         }
