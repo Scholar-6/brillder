@@ -819,6 +819,12 @@
   <svg id="ql-table" viewBox="0 0 20 20" fill="currentColor" stroke-width="0">
     <path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clip-rule="evenodd" />
   </svg>
+  <svg id="ql-desmos" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line y1="18.346716" x2="23.739717" x1="0.32480454" y2="6.6392584" />
+    <circle cx="17.235577" cy="9.8190613" r="2.3125842" stroke="none" />
+    <circle cx="5.9617281" cy="15.311449" r="2.3125842" stroke="none" />
+    <path d="m 1.6001625,4.4712083 c 0,0 4.4077853,14.3238567 8.6294075,14.3238567 4.221622,0 8.25766,-14.3238567 8.25766,-14.3238567" />
+  </svg>
   <svg id="feather-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
     <line x1="8" y1="2" x2="8" y2="18"></line>
