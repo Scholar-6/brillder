@@ -67,6 +67,7 @@ export const filterSearchBricks = (searchBricks: Brick[], isCore: boolean) => {
 }
 
 export const sortAndCheckSubjects = (subjects: Subject[], values: queryString.ParsedQuery<string>) => {
+  console.log('checking subjects');
   subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
   subjects.forEach(s => {
     if (values.subjectId) {

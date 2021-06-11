@@ -10,7 +10,7 @@ import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
-import { Brick, Subject, SubjectItem } from "model/brick";
+import { Brick, Subject, SubjectGroup, SubjectItem } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { getAssignmentIcon } from "components/services/brickService";
 import { getCurrentUserBricks, getPublicBricks, getPublishedBricks, searchBricks, searchPublicBricks } from "services/axios/brick";
@@ -234,15 +234,30 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
    * Load subject and check by query string
    */
   async loadSubjects(values: queryString.ParsedQuery<string>) {
-    let subjects = await getSubjects() as SubjectItem[] | null;
+    const subjects = await getSubjects() as SubjectItem[] | null;
+
+    console.log('loading subjects');
 
     if (subjects) {
       sortAndCheckSubjects(subjects, values);
       this.setState({ ...this.state, subjects });
+      console.log('set subjects', subjects);
     } else {
       this.setState({ ...this.state, failedRequest: true });
     }
     return subjects;
+  }
+
+  setSubjectGroup(sGroup: SubjectGroup) {
+    const {subjects} = this.state;
+    for (const s of subjects) {
+      s.checked = false;
+      if (s.group == sGroup) {
+        s.checked = true;
+      }
+    }
+    this.setState({isLoading: true});
+    this.loadBricks();
   }
 
   async loadUnauthorizedBricks() {
@@ -269,7 +284,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     const bricks = await getPublishedBricks();
     if (bricks) {
-
       let bs = sortAllBricks(bricks);
       let finalBricks = this.filter(bs, this.state.isAllSubjects, this.state.isCore);
       let { subjects } = this.state;
@@ -953,9 +967,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                 />
                 <SubjectCategoriesComponent
                   user={this.props.user}
+                  subjects={this.state.subjects}
                   history={this.props.history} location={this.props.location}
                   filterByOneSubject={this.filterByOneSubject.bind(this)}
                   setViewAll={() => this.setState({ isViewAll: true })}
+                  setSubjectGroup={this.setSubjectGroup.bind(this)}
                   checkSubjectsWithBricks={() => this.checkSubjectsWithBricks(this.state.subjects)}
                 />
               </Route>
@@ -979,9 +995,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                 <Route exec path={map.SubjectCategories}>
                   <SubjectCategoriesComponent
                     user={this.props.user}
+                    subjects={this.state.subjects}
                     history={this.props.history} location={this.props.location}
                     filterByOneSubject={this.filterByOneSubject.bind(this)}
                     setViewAll={() => this.setState({ isViewAll: true })}
+                    setSubjectGroup={this.setSubjectGroup.bind(this)}
                     checkSubjectsWithBricks={() => this.checkSubjectsWithBricks(this.state.subjects)}
                   />
                 </Route>
