@@ -15,6 +15,7 @@
     button {
       border-bottom-right-radius: 9px;
       background: var(--theme-light-blue) !important;
+
       svg {
         width: 75% !important;
         height: 75% !important;
@@ -58,12 +59,133 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
       svg {
         margin-left: 0.4vw;
         width: 15px;
         height: 15px;
-        stroke-width:3;
+        stroke-width: 3;
       }
+    }
+  }
+
+  .home-button-container button .return-arrow {
+    padding: 4px;
+    width: 57% !important;
+    height: 57% !important;
+    border-radius: 50%;
+    stroke-width: 2.5;
+    background: var(--theme-orange);
+    color: var(--theme-dark-blue);
+  }
+
+  .mobile-attempts {
+    $footer-height: 6vh;
+    $panel-radius: 3vw;
+    position: relative;
+    border-radius: $panel-radius;
+    margin-left: 5vw !important;
+    margin-right: 5vw !important;
+    margin-top: 3vh;
+    height: calc(100vh - #{$home-button-size} - #{$zendesk-size} - 4vh - 2vh);
+    color: var(--theme-dark-blue);
+    background: var(--tab-gray);
+
+    .play-text {
+      font-size: 9vw;
+      margin-right: 3vw;
+      margin-top: 0 !important;
+      display: flex;
+      align-items: center;
+    }
+
+    .green-button-container2 {
+      padding-top: 2vh;
+      padding-bottom: 3.2vh;
+
+      .green-button-container3 {
+        width: 22vw !important;
+        height: 22vw !important;
+        padding: 3vw;
+        border-radius: 50%;
+        background: var(--theme-green-alpha3);
+
+        button {
+          width: 16vw !important;
+          height: 16vw !important;
+
+          svg {
+            stroke-width: 1 !important;
+          }
+        }
+      }
+    }
+
+    .attempts {
+      background: var(--white);
+      height: calc(100% - 22vw - 2vh - 3.2vh - #{$footer-height});
+      overflow-y: auto;
+    }
+
+    .attempt-info {
+      border-bottom: 0.2vh solid var(--tab-gray);
+      padding-top: 1.5vh;
+      padding-bottom: 1.5vh;
+      background: var(--white);
+      display: flex;
+      position: relative;
+      .percentage {
+        margin-left: 2vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 14vw;
+        height: 14vw;
+        border-radius: 50%;
+        color: var(--white);
+        font-size: 7.5vw;
+        font-family: $font-family-bold;
+        background: var(--theme-green);
+      }
+      .score-text {
+        display: flex;
+        align-items: center;
+        margin-left: 2.5vw;
+        font-size: 7vw;
+        font-family: $font-family-bold;
+        color: var(--theme-dark-blue);
+      }
+      .clock-time {
+        position: absolute;
+        right: 8vw;
+        top: calc(1.5vh + 9.4vw);
+        font-size: 4.6vw;
+      }
+      &.active {
+        background: var(--theme-green);
+        .percentage {
+          color: var(--theme-green);
+          background: var(--white);
+        }
+        .score-text {
+          color: white;
+        }
+      }
+    }
+    .footer {
+      border-bottom-left-radius: $panel-radius;
+      border-bottom-right-radius: $panel-radius;
+      width: 100%;
+      background: var(--tab-gray);
+      position: absolute;
+      bottom: 0;
+      font-size: 7vw;
+      height: $footer-height;
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      font-family: $font-family-bold;
     }
   }
 
@@ -75,13 +197,15 @@
     height: 4vw;
     margin: 5vh 0 1vh 0;
     font: 2.4vw $font-family-bold;
-    > span {
+
+    >span {
       &:first-child {
         @include tabletP {
           width: 6vw;
         }
       }
     }
+
     .round-icon {
       width: 2vw;
       border-radius: 50%;
@@ -90,9 +214,11 @@
       overflow: hidden;
       position: relative;
       transition: 500ms transform ease-in-out;
+
       &.b-yellow {
         transform: rotate(-90deg);
       }
+
       .arrow {
         height: 80%;
         width: 80%;
@@ -101,6 +227,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
       }
+
       &:not(.b-green) {
         &:hover {
           @include tabletP {
@@ -377,6 +504,7 @@
           font-size: 6vw;
           overflow-x: hidden;
           height: 18vh;
+
           p {
             font-size: 6vw;
             white-space: nowrap;
@@ -911,6 +1039,7 @@
     font-size: 1.2vw;
     font-family: $font-family-light;
     @extend %transitionAll300;
+
     &.hidden {
       opacity: 0;
     }
@@ -952,6 +1081,7 @@
         opacity: 0.5 !important;
         background: var(--theme-green);
         @extend %transitionAll300;
+
         &.hovered {
           top: -10%;
           left: -10%;

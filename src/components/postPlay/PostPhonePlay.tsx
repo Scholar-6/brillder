@@ -3,6 +3,9 @@ import Grid from "@material-ui/core/Grid";
 import { History } from "history";
 import { connect } from "react-redux";
 import queryString from 'query-string';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
+
 
 import { ReduxCombinedState } from "redux/reducers";
 import { Brick, Subject } from "model/brick";
@@ -29,7 +32,6 @@ import IntroPrepPage from "./bookPages/IntroPrepPage";
 import FrontPage from "./bookPages/FrontPage";
 import TitlePage from "./bookPages/TitlePage";
 import OverallPage from "./bookPages/OverallPage";
-import AttemptsPage from "./bookPages/AttemptsPage";
 import QuestionPage from "./bookPages/QuestionPage";
 import AnswersPage from "./bookPages/AnswersPage";
 import SynthesisPage from "./bookPages/SynthesisPage";
@@ -37,10 +39,9 @@ import map from "components/map";
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
 import { Helmet } from "react-helmet";
+import AttemptsPhonePage from "./bookPages/AttemptsPhonePage";
 
 const MobileTheme = React.lazy(() => import('./themes/PageMobileTheme'));
-const TabletTheme = React.lazy(() => import('./themes/PageTabletTheme'));
-const DesktopTheme = React.lazy(() => import('./themes/PageDesktopTheme'));
 
 export enum BookState {
   Titles,
@@ -62,6 +63,7 @@ interface ProposalProps {
 }
 
 interface ProposalState {
+  swiper: any;
   isFirstHover: boolean;
   firstHoverTimeout: number;
   closeTimeout: number;
@@ -102,6 +104,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       pageFlipDelay: 1200,
       attempts: [],
       subjects: [],
+      swiper: null,
       firstHoverTimeout: -1,
       playHovered: false,
       showLibraryButton,
@@ -185,34 +188,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     console.log(error, info);
     this.props.history.push('/home');
   }
-
-  openDialog = () => this.setState({});
-  closeDialog = () => this.setState({});
-
-  onBookHover() {
-    clearTimeout(this.state.closeTimeout);
-    if (this.state.isFirstHover) {
-      if (this.state.firstHoverTimeout === -1) {
-        const firstHoverTimeout = setTimeout(() => {
-          this.setState({ firstHoverTimeout: -1, isFirstHover: false, bookHovered: true });
-        }, 600);
-        this.setState({ firstHoverTimeout });
-      }
-    } else {
-      if (!this.state.bookHovered) {
-        this.setState({ bookHovered: true, animationRunning: true });
-        setTimeout(() => { this.setState({ animationRunning: false }) }, this.state.pageFlipDelay);
-      }
-    }
-  }
-
-  onBookClose() {
-    const closeTimeout = setTimeout(() => {
-      this.setState({ bookHovered: false });
-    }, 400);
-    this.setState({ closeTimeout });
-  }
-
 
   animationFlipRelease() {
     setTimeout(() => this.setState({ animationRunning: false }), this.state.pageFlipDelay);
@@ -335,20 +310,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       return {};
     }
 
-    const renderBookMark = () => {
-      if (!this.state.bookHovered) return '';
-      const { bookState } = this.state;
-      if (bookState === BookState.QuestionPage || bookState === BookState.Introduction || bookState === BookState.Synthesis) {
-        return (
-          <SpriteIcon
-            name="custom-bookmark"
-            className={`bookmark ${this.state.animationRunning ? "hidden" : ""}`}
-          />
-        );
-      }
-      return '';
-    }
-
     return (
       <React.Suspense fallback={<></>}>
         <MobileTheme />
@@ -356,7 +317,15 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
           <Helmet>
             <title>{getBrillderTitle(brick.title)}</title>
           </Helmet>
-          <HomeButton onClick={() => this.props.history.push('/')} />
+          {this.state.bookHovered
+
+            ? <div className="home-button-container">
+              <button type="button" className="btn btn-transparent svgOnHover home-button">
+                <SpriteIcon name="corner-up-left" className="return-arrow" />
+              </button>
+            </div>
+            : <HomeButton onClick={() => this.props.history.push('/')} />
+          }
           <div className="book-navigator">
             <div className="prep-tab" onClick={this.moveToTitles.bind(this)}>
               <SpriteIcon name="file-text" />
@@ -365,36 +334,92 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
               {i + 1} {this.state.attempts[0].answers[i].correct ? <SpriteIcon name="ok" className="text-theme-green" /> : <SpriteIcon name="cancel-custom" className="text-orange" />}
             </div>)}
           </div>
-          <Grid
-            container
-            direction="row"
-            style={{ height: "100% !important" }}
-            justify="center"
-          >
-            <Grid className="main-text-container">
-              <h1>This book is yours.</h1>
-              <h2>Click on the cover to see a summary</h2>
-              <h2>of your results.</h2>
-              {this.state.showLibraryButton &&
-                <button onClick={() => this.props.history.push(map.MyLibrary + '?subjectId=' + brick.subjectId)}>
-                  View it in my library
+          {!this.state.bookHovered ?
+            <Grid
+              container
+              direction="row"
+              style={{ height: "100% !important" }}
+              justify="center"
+            >
+              <Grid className="main-text-container">
+                <h1>This book is yours.</h1>
+                <h2>Click on the cover to see a summary</h2>
+                <h2>of your results.</h2>
+                {this.state.showLibraryButton &&
+                  <button onClick={() => this.props.history.push(map.MyLibrary + '?subjectId=' + brick.subjectId)}>
+                    View it in my library
               </button>}
-            </Grid>
-            <div className={bookClass}>
-              <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>
-                <div className="book" onMouseOver={this.onBookHover.bind(this)}>
-                  <div className="back"></div>
-                  <TitlePage brick={brick} color={color} />
-                  <OverallPage onClick={this.moveToAttempts.bind(this)} />
-                  <IntroBriefPage brick={brick} color={color} onClick={this.moveToAttempts.bind(this)} />
-                  <IntroPrepPage brick={brick} color={color} onClick={this.moveToQuestions.bind(this)} />
-                  <div className="page3-empty" onClick={this.moveToTitles.bind(this)}>
-                    <div className="flipped-page">
+              </Grid>
+              <div className={bookClass}>
+                <div className="book-container">
+                  <div className="book">
+                    <div className="back"></div>
+                    <TitlePage brick={brick} color={color} />
+                    <OverallPage onClick={this.moveToAttempts.bind(this)} />
+                    <IntroBriefPage brick={brick} color={color} onClick={this.moveToAttempts.bind(this)} />
+                    <IntroPrepPage brick={brick} color={color} onClick={this.moveToQuestions.bind(this)} />
+                    <div className="page3-empty" onClick={this.moveToTitles.bind(this)}>
+                      <div className="flipped-page">
+                        <div className="green-button-container1">
+                          <div className="green-button-container2">
+                            <div className="green-button-container3"
+                              onClick={() =>
+                                this.props.history.push(
+                                  routes.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
+                                )
+                              }
+                            >
+                              <div className={`custom-hover-container ${this.state.playHovered ? 'hovered' : ''}`}></div>
+                              <PlayGreenButton onClick={() => { }} />
+                            </div>
+                          </div>
+                          <div className="play-text">Play Again</div>
+                        </div>
+                      </div>
+                    </div>
+                    {questions.map((q, i) => {
+                      if (i <= this.state.questionIndex + 1 && i >= this.state.questionIndex - 1) {
+                        let res = [];
+                        if (i === 0) {
+                          res.push(<div className="page3-cover first" style={getQuestionCoverStyle(i)}></div>);
+                        }
+                        if (this.state.attempt) {
+                          res.push(<QuestionPage
+                            i={i}
+                            question={q}
+                            questionIndex={this.state.questionIndex}
+                            activeAttempt={this.state.attempt}
+                            mode={this.state.mode}
+                            bookHovered={this.state.bookHovered}
+                            bookState={this.state.bookState}
+                            prevQuestion={this.prevQuestion.bind(this)}
+                          />);
+                        }
+                        res.push(<AnswersPage
+                          i={i}
+                          mode={this.state.mode}
+                          isLast={questions.length - 1 === i}
+                          questionIndex={this.state.questionIndex}
+                          activeAttempt={this.state.attempt}
+                          bookHovered={this.state.bookHovered}
+                          bookState={this.state.bookState}
+                          setMode={mode => this.setState({ mode })}
+                          nextQuestion={this.nextQuestion.bind(this)}
+                        />);
+                        return res;
+                      } else {
+                        return <div key={i} className={`question${i}`}></div>
+                      }
+                    })}
+
+                    <div className="page6"></div>
+                    <div className="page5"></div>
+                    <div className="front-cover"></div>
+                    <SynthesisPage synthesis={brick.synthesis} onClick={this.moveBackToQuestions.bind(this)} />
+                    <div className="book-page last-question-cover">
                       <div className="green-button-container1">
                         <div className="green-button-container2">
                           <div className="green-button-container3"
-                            onMouseEnter={() => this.setState({ playHovered: true })}
-                            onMouseLeave={() => this.setState({ playHovered: false })}
                             onClick={() =>
                               this.props.history.push(
                                 routes.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
@@ -408,80 +433,54 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                         <div className="play-text">Play Again</div>
                       </div>
                     </div>
+                    <FrontPage brick={brick} student={student} color={color} onClick={() => {
+                      this.setState({ bookHovered: true });
+                      this.moveToAttempts.bind(this)
+                    }} />
                   </div>
-                  {renderBookMark()}
-                  <AttemptsPage
+                </div>
+              </div>
+            </Grid>
+            : <div>
+              <Swiper
+                slidesPerView={1}
+                loop={true}
+                loopedSlides={20}
+                direction="vertical"
+                pagination={{ clickable: true }}
+                onClick={(e) => { }}
+                onSwiper={swiper => {
+                  this.setState({ ...this.state, swiper });
+                }}
+              >
+                <div className="mobile-attempts">
+                  <div className="green-button-container1">
+                    <div className="green-button-container2">
+                      <div className="play-text">Play Again</div>
+                      <div className="green-button-container3"
+                        onClick={() =>
+                          this.props.history.push(
+                            routes.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
+                          )
+                        }
+                      >
+                        <PlayGreenButton onClick={() => { }} />
+                      </div>
+                    </div>
+                  </div>
+                  <AttemptsPhonePage
                     attempts={this.state.attempts}
                     index={this.state.activeAttemptIndex}
                     setActiveAttempt={this.setActiveAttempt.bind(this)}
                     onClick={this.moveToIntroduction.bind(this)}
                   />
-                  {questions.map((q, i) => {
-                    if (i <= this.state.questionIndex + 1 && i >= this.state.questionIndex - 1) {
-                      let res = [];
-                      if (i === 0) {
-                        res.push(<div className="page3-cover first" style={getQuestionCoverStyle(i)}></div>);
-                      }
-                      if (this.state.attempt) {
-                        res.push(<QuestionPage
-                          i={i}
-                          question={q}
-                          questionIndex={this.state.questionIndex}
-                          activeAttempt={this.state.attempt}
-                          mode={this.state.mode}
-                          bookHovered={this.state.bookHovered}
-                          bookState={this.state.bookState}
-                          prevQuestion={this.prevQuestion.bind(this)}
-                        />);
-                      }
-                      res.push(<AnswersPage
-                        i={i}
-                        mode={this.state.mode}
-                        isLast={questions.length - 1 === i}
-                        questionIndex={this.state.questionIndex}
-                        activeAttempt={this.state.attempt}
-                        bookHovered={this.state.bookHovered}
-                        bookState={this.state.bookState}
-                        setMode={mode => this.setState({ mode })}
-                        nextQuestion={this.nextQuestion.bind(this)}
-                      />);
-                      return res;
-                    } else {
-                      return <div key={i} className={`question${i}`}></div>
-                    }
-                  })}
-
-                  <div className="page6"></div>
-                  <div className="page5"></div>
-                  <div className="front-cover"></div>
-                  <SynthesisPage synthesis={brick.synthesis} onClick={this.moveBackToQuestions.bind(this)} />
-                  <div className="book-page last-question-cover">
-                    <div className="green-button-container1">
-                      <div className="green-button-container2">
-                        <div className="green-button-container3"
-                          onMouseEnter={() => this.setState({ playHovered: true })}
-                          onMouseLeave={() => this.setState({ playHovered: false })}
-                          onClick={() =>
-                            this.props.history.push(
-                              routes.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
-                            )
-                          }
-                        >
-                          <div className={`custom-hover-container ${this.state.playHovered ? 'hovered' : ''}`}></div>
-                          <PlayGreenButton onClick={() => { }} />
-                        </div>
-                      </div>
-                      <div className="play-text">Play Again</div>
-                    </div>
-                  </div>
-                  <FrontPage brick={brick} student={student} color={color} />
+                  <div className="footer">
+                    Swipe to view Questions
                 </div>
-              </div>
+                </div>
+              </Swiper>
             </div>
-            <div className={`arrow-description ${this.state.bookHovered ? 'shown' : 'hidden'}`}>
-              Click or use arrow keys to flick through your book
-          </div>
-          </Grid>
+          }
         </div>
       </React.Suspense>
     );

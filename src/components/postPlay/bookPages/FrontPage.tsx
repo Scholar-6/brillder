@@ -9,9 +9,10 @@ interface FrontPageProps {
   brick: Brick;
   color: string;
   student: User;
+  onClick?(): void;
 }
 
-const FrontPage: React.FC<FrontPageProps> = ({brick, student, color}) => {
+const FrontPage: React.FC<FrontPageProps> = ({brick, student, color, onClick}) => {
   const renderUserRow = () => {
     const { firstName, lastName } = student;
     return (
@@ -23,7 +24,7 @@ const FrontPage: React.FC<FrontPageProps> = ({brick, student, color}) => {
   };
 
   return (
-    <div className="front">
+    <div className="front" onClick={() => onClick?.()}>
       <div className="page-stitch" style={{ background: color }}>
         <div className="vertical-line"></div>
         <div className="horizontal-line top-line-1"></div>
