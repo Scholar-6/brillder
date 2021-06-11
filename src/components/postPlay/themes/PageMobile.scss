@@ -409,23 +409,15 @@
   }
 
   .book-container {
-    display: flex;
-    perspective: 100vw;
-    width: 0;
-    left: 0;
     $book-radius: 2vw;
+    width: 100%;
 
     .book {
-      transform-style: preserve-3d;
-      -webkit-transform-style: preserve-3d;
+      width: 100%;
       position: relative;
       height: $real-book-height;
-      backface-visibility: visible;
     }
 
-    .front {
-      transform: rotateY(0deg);
-    }
 
     .front,
     .front-cover,
@@ -442,15 +434,11 @@
     .page4,
     .page5,
     .page6 {
-      transform-style: preserve-3d;
-      -webkit-transform-style: preserve-3d;
       position: absolute;
       width: 30.1vw;
       height: 100%;
       top: 0;
       left: 0;
-      transform-origin: left center;
-      transition: transform 1s ease-in-out, box-shadow 0.7s ease-in-out;
       border-bottom-right-radius: $book-radius;
       border-top-right-radius: $book-radius;
     }
@@ -480,7 +468,7 @@
     .front,
     .front-cover,
     .back {
-      width: 84vw;
+      width: 100%;
       height: $real-book-height;
       background: var(--theme-dark-blue);
     }
@@ -742,7 +730,6 @@
     width: 4vh;
     top: 1vh;
     transform-style: preserve-3d;
-    transform: translate3d(0, 0, 100px) scale($scale);
     @extend %transitionAll300;
 
     &.hidden {
@@ -755,12 +742,6 @@
   .book-main-container {
     &.expanded {
       width: 50vw;
-
-      .front {
-        transform: rotateY(-160deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 10;
-      }
 
       .front-cover {
         transform: rotateY(-159.6deg) scale($scale);

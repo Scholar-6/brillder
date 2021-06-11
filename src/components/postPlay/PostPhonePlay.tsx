@@ -531,7 +531,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                     </div>
                   </div>
                 </SwiperSlide>
-                <SwiperSlide></SwiperSlide>
               </Swiper>
             </div>
           }
