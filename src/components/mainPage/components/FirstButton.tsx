@@ -37,7 +37,7 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
     <div
       className={className}
       onClick={() => {
-        let link = map.AllSubjects;
+        let link = map.SubjectCategories;
         if (props.isNewTeacher) {
           link += '?' + map.NewTeachQuery;
         }
