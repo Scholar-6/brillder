@@ -1,5 +1,6 @@
 import Quill from "quill";
 import { Quill as GlobalQuill } from "react-quill";
+import { QuillValidColors } from "./QuillEditor";
 const Clipboard = GlobalQuill.import("modules/clipboard");
 const Delta = GlobalQuill.import("delta");
 
@@ -43,11 +44,12 @@ class QuillCustomClipboard extends Clipboard {
             return new Delta();
         });
 
-        this.addMatcher("span", (node: any, delta: any) => {
-            const newDelta = delta.compose(new Delta().retain(delta.length(), { color: null, background: null }));
-            console.log(delta, newDelta);
+        this.addMatcher(Node.ELEMENT_NODE, (node: any, delta: any) => {
+            const shouldStripColor = !delta.ops.find((op: any) => Object.values(QuillValidColors).find(col => col.toLowerCase() === op.attributes?.color?.toLowerCase?.()));
+            console.log(JSON.stringify(delta));
+            const newDelta = delta.compose(new Delta().retain(delta.length(), { color: shouldStripColor ? false : undefined, background: false }));
             return newDelta;
-        })
+        });
     }
 
     removeMatcher(name: string) {
