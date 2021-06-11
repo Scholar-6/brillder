@@ -78,7 +78,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
             </div>
             <div className="subject-category">
-              <div onClick={() => { }}>
+              <div onClick={() => this.moveToGroup(SubjectGroup.GeneralTopical)}>
                 <div className="flex-center">
                   <img alt="" src="/images/subject-categories/internet.svg" />
                 </div>
@@ -86,7 +86,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
             </div>
             <div className="subject-category">
-              <div onClick={() => { }}>
+              <div onClick={() => this.moveToGroup(SubjectGroup.HumanitiesAndSocialSciences)}>
                 <div className="flex-center">
                   <img alt="" src="/images/subject-categories/book.svg" />
                 </div>
@@ -94,7 +94,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
             </div>
             <div className="subject-category">
-              <div onClick={() => { }}>
+              <div onClick={() => this.moveToGroup(SubjectGroup.Languages)}>
                 <div className="flex-center">
                   <img alt="" src="/images/subject-categories/translating.svg" />
                 </div>
@@ -102,7 +102,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
             </div>
             <div className="subject-category">
-              <div onClick={() => { }}>
+              <div onClick={() => this.moveToGroup(SubjectGroup.MathsAndComputing)}>
                 <div className="flex-center">
                   <img alt="" src="/images/subject-categories/binary-code.svg" />
                 </div>
@@ -110,7 +110,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
             </div>
             <div className="subject-category">
-              <div onClick={() => { }}>
+              <div onClick={() => this.moveToGroup(SubjectGroup.Science)}>
                 <div className="flex-center">
                   <img alt="" src="/images/subject-categories/chemistry.svg" />
                 </div>
