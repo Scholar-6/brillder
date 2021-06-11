@@ -7,6 +7,7 @@ import Quill, { RangeStatic } from 'quill';
 import _ from 'lodash';
 import ImageUpload from './QuillImageUpload';
 import DesmosModule from './QuillDesmos';
+import { QuillValidColors } from './QuillEditor';
 
 interface QuillToolbarProps {
     className?: string;
@@ -68,14 +69,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         italic: (props: any) => <QuillToolbarButton name="italic" {...props} />,
         strikethrough: (props: any) => <QuillToolbarButton name="strike" {...props} />,
         fontColor: (props: any) => <QuillToolbarColorSelect name="color" {...props}>
-            <option value="#C43C30">Red</option>
-            <option value="#0681DB">Blue</option>
-            <option value="#30C474">Green</option>
-            <option value="#FF9D00">Yellow</option>
-            <option value="#6A2E15">Brown</option>
-            <option value="#4523FF">Purple</option>
-            <option value="#FC7502">Orange</option>
-            <option value="#001C58">DarkBlue</option>
+            {Object.entries(QuillValidColors).map(([k, v]) => <option value={v}>{k}</option>)}
         </QuillToolbarColorSelect>,
         subscript: (props: any) => <QuillToolbarButton name="script" value="sub" {...props} />,
         superscript: (props: any) => <QuillToolbarButton name="script" value="super" {...props} />,

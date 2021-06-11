@@ -34,7 +34,7 @@ export const getPublicBricks = async () => {
 
 export const getLatestBrick = async () => {
   try {
-    return await get<Brick>('/brick/public/lastest');
+    return await get<Brick>('/brick/public/latest');
   } catch {
     return null;
   }
