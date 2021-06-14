@@ -7,7 +7,7 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
     attempt.maxMarks = component.list.length;
 
     // The maximum number of marks is divided between all answers.
-    let markIncrement = 1 //attempt.maxMarks / component.list.length;
+    let markIncrement = attempt.maxMarks / component.list.length;
     attempt.correct = true;
     attempt.marks = 0;
 
@@ -22,7 +22,6 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
             } else {
                 // the answer is not correct.
                 attempt.correct = false;
-                //attempt.marks += 0.5;
             }
         } else {
             // the answer is not filled in.

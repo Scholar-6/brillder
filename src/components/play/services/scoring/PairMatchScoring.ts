@@ -11,7 +11,6 @@ const mark = (component: PairMatchComponent, attempt: ComponentAttempt<any>) => 
         if(answer.index === component.list[index].index) {
             attempt.marks += markIncrement;
         } else {
-            //attempt.marks += 0.25;
             attempt.correct = false;
         }
     });
