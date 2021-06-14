@@ -9,6 +9,7 @@ export interface AuthState {
   isRedirectedToProfile: boolean;
   defaultPreference?: UserType;
   defaultSubject?: number;
+  intendedPath: string;
   error: string;
 }
 
@@ -18,6 +19,7 @@ const AccountInitialState: AuthState = {
   isRedirectedToProfile: false,
   defaultPreference: undefined,
   defaultSubject: undefined,
+  intendedPath: "/home",
   error: ""
 }
 
@@ -30,13 +32,15 @@ export default (state = AccountInitialState, action: any) => {
     case types.LOGIN_SUCCESS:
       return { ...state, isAuthenticated: isAuthenticated.True } as AuthState;
     case types.LOGIN_FAILURE:
-      return { isAuthenticated: isAuthenticated.False, error: action.error } as AuthState;
+      return { ...state, isAuthenticated: isAuthenticated.False, error: action.error } as AuthState;
     case types.LOGOUT_SUCCESS:
-      return { isAuthenticated: isAuthenticated.False } as AuthState;
+      return { ...state, isAuthenticated: isAuthenticated.False } as AuthState;
     case types.AUTHORIZED_SUCCESS:
       return { ...state, isAuthenticated: isAuthenticated.True } as AuthState;
     case types.AUTHORIZED_FAILURE: 
-      return { isAuthenticated: isAuthenticated.False} as AuthState;
+      return { ...state, isAuthenticated: isAuthenticated.False} as AuthState;
+    case types.SET_INTENDED_PATH:
+      return { ...state, intendedPath: action.path } as AuthState;
     default: return state;
   }
 }
