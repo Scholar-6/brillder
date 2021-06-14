@@ -4,7 +4,7 @@ import { stripHtmlExceptSubAndSup as stripHtml } from "components/build/question
 import { ComponentAttempt } from "components/play/model";
 
 const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerAnswer>) => {
-    attempt.maxMarks = component.list.length;
+    attempt.maxMarks = 6;
 
     // The maximum number of marks is divided between all answers.
     let markIncrement = attempt.maxMarks / component.list.length;

@@ -32,7 +32,6 @@ const mark = (component: HorizontalShuffleComponent | VerticalShuffleComponent, 
         attempt.marks = Math.ceil(attempt.marks * (12 / attempt.maxMarks));
         attempt.maxMarks = 12;
     }
-    if(!attempt.dragged) {attempt.marks=0} 
     
     return attempt;
 }
