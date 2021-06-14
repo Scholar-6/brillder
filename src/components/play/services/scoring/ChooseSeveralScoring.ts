@@ -3,21 +3,20 @@ import { ChooseSeveralAnswer } from "components/play/questionTypes/choose/choose
 
 const markLiveChoices = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
     const choices = component.list;
-
+/*
     let correctCount = 0;
     for (let [index, choice] of choices.entries()) {
         const checked = attempt.answer.findIndex(a => a.shuffleIndex === index) >= 0;
         if (checked===choice.checked){
             correctCount += 1;
         }
-    }
+    }*/
 
     for (let [index, choice] of choices.entries()) {
         const checked = attempt.answer.findIndex(a => a.shuffleIndex === index) >= 0;
         if (checked === choice.checked || (checked === false && !choice.checked)) {
             attempt.marks += 1;
         } else {
-            //attempt.marks += 0.5;
             attempt.correct = false;
         }
     }
