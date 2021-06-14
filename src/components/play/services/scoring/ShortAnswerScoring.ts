@@ -22,7 +22,6 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
             } else {
                 // the answer is not correct.
                 attempt.correct = false;
-                attempt.marks += 0.5;
             }
         } else {
             // the answer is not filled in.
