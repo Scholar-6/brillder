@@ -131,4 +131,11 @@ const setDefaultUserProperties = (defaultPreference: UserType | undefined, defau
   }
 }
 
-export default { login, logout, loginSuccess, setLogoutSuccess, isAuthorized, redirectedToProfile, setDefaultUserProperties }
+const setIntendedPath = (path: string) => {
+  return {
+    type: types.SET_INTENDED_PATH,
+    path,
+  }
+}
+
+export default { login, logout, loginSuccess, setLogoutSuccess, isAuthorized, redirectedToProfile, setDefaultUserProperties, setIntendedPath }
