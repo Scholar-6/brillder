@@ -3,7 +3,7 @@ import { ComponentAttempt } from "components/play/model";
 
 const mark = (component: IPlayWordComponent, attempt: ComponentAttempt<any>) => {
     attempt.correct = true;
-    attempt.maxMarks = 6; //change to reflect number of options?
+    attempt.maxMarks = 6;
 
     component.words.forEach((word, index) => {
         const isChecked = attempt.answer.indexOf(index) !== -1;
