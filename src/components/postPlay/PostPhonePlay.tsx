@@ -43,6 +43,7 @@ import { Helmet } from "react-helmet";
 import AttemptsPhonePage from "./bookPages/AttemptsPhonePage";
 import ReviewEye from "./components/ReviewEye";
 import PhoneQuestionHead from "./phone/PhoneQuestionHead";
+import QuestionPlay from "components/play/questionPlay/QuestionPlay";
 
 const MobileTheme = React.lazy(() => import('./themes/PageMobileTheme'));
 
@@ -351,7 +352,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 {this.state.showLibraryButton &&
                   <button onClick={() => this.props.history.push(map.MyLibrary + '?subjectId=' + brick.subjectId)}>
                     View it in my library
-              </button>}
+                  </button>}
               </Grid>
               <div className={bookClass}>
                 <div className="book-container">
@@ -478,7 +479,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       onClick={this.moveToIntroduction.bind(this)}
                     />
                     <div className="footer">
-                      Swipe to view Questions
+                      Swipe to view Questions <SpriteIcon name="flaticon-swipe" />
                     </div>
                   </div>
                 </SwiperSlide>
@@ -504,7 +505,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       </div>
                     </div>
                     <div className="footer">
-                      Swipe to view Questions
+                      Swipe to view Questions <SpriteIcon name="flaticon-swipe" />
                     </div>
                   </div>
                 </SwiperSlide>
@@ -529,7 +530,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       </div>
                     </div>
                     <div className="footer">
-                      Swipe to view Questions
+                      Swipe to view Questions <SpriteIcon name="flaticon-swipe" />
                     </div>
                   </div>
                 </SwiperSlide>
@@ -544,9 +545,19 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                         setMode={mode => this.setState({ mode })}
                       />
                       <div className="scroll-content">
+                        <QuestionPage
+                          i={i}
+                          question={q}
+                          questionIndex={this.state.questionIndex}
+                          activeAttempt={this.state.attempt as any}
+                          mode={this.state.mode}
+                          bookHovered={this.state.bookHovered}
+                          bookState={this.state.bookState}
+                          prevQuestion={this.prevQuestion.bind(this)}
+                        />
                       </div>
                       <div className="footer">
-                        Swipe to view Questions
+                        Swipe to view Questions <SpriteIcon name="flaticon-swipe" />
                       </div>
                     </div>
                   </SwiperSlide>
@@ -564,7 +575,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       </div>
                     </div>
                     <div className="footer">
-                      Swipe to view Questions
+                      Swipe to view Questions <SpriteIcon name="flaticon-swipe" />
                     </div>
                   </div>
                 </SwiperSlide>

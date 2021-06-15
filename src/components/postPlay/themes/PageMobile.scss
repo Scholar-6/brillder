@@ -234,13 +234,20 @@
       background: var(--tab-gray);
       position: absolute;
       bottom: 0;
-      font-size: 7vw;
+      font-size: 6.5vw;
       height: $footer-height;
       display: flex;
       text-align: center;
       align-items: center;
       justify-content: center;
       font-family: $font-family-bold;
+
+      svg {
+        margin-left: 2vw;
+        height: 4.1vh;
+        width: 4.1vh;
+        color: var(--theme-dark-blue);
+      }
     }
   }
 
@@ -304,44 +311,6 @@
       color: var(--theme-dark-blue);
       font-family: $font-family-regular;
       font-size: 1vw;
-    }
-  }
-
-  .flipped-page {
-    height: 100%;
-    width: 100%;
-    -moz-transform: scale(-1, 1);
-    -webkit-transform: scale(-1, 1);
-    -o-transform: scale(-1, 1);
-    -ms-transform: scale(-1, 1);
-    transform: scale(-1, 1);
-
-    padding-top: 3.5vh;
-    color: var(--theme-dark-blue);
-
-    &.question-page {
-      padding-top: 1.5vh;
-      padding-left: 10%;
-      padding-right: 10%;
-      position: relative;
-
-      .question-number {
-        width: 10%;
-        position: absolute;
-        left: 0;
-        top: calc(1.5vh + 0.57vw);
-        @extend %flexCenter;
-
-        div {
-          width: 1.6vw;
-          height: 1.6vw;
-          background: var(--tab-gray);
-          border-radius: 50%;
-          font-size: 1.4vw;
-          font-family: $font-family-bold;
-          @extend %flexCenter;
-        }
-      }
     }
   }
 
@@ -452,11 +421,6 @@
       >div {
         border-bottom-right-radius: $book-radius !important;
         border-top-right-radius: $book-radius !important;
-      }
-
-      >.flipped-page {
-        border-bottom-left-radius: $book-radius !important;
-        border-top-left-radius: $book-radius !important;
       }
     }
 
@@ -617,36 +581,6 @@
       }
     }
 
-    .page1 {
-      .flipped-page {
-        .circle-icon {
-          margin-top: 2vh;
-          margin-bottom: 2vh;
-          height: 5vw;
-          width: 5vw;
-          border-radius: 50%;
-        }
-
-        .proposal-titles {
-          font-weight: normal;
-          margin-left: 3vw;
-          margin-right: 3vw;
-          margin-top: 3vh;
-          font-family: $font-family-regular;
-          text-align: left;
-          margin-left: 3.1vw;
-          font-size: 1.3vw;
-
-          .title {
-            font-family: $font-family-bold;
-            text-transform: uppercase;
-            letter-spacing: 0.3vw;
-            height: 20vh;
-          }
-        }
-      }
-    }
-
     .page2 {
       background: #fdfdfd;
 
@@ -744,42 +678,28 @@
       width: 50vw;
 
       .front-cover {
-        transform: rotateY(-159.6deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 10;
         background: #efefef;
       }
 
-      .back {
-        transform: rotateY(-20deg) scale($scale);
-      }
     }
 
     &.hovered {
 
       .page1,
       .page1-cover {
-        transform: rotateY(-130deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 5;
       }
 
       .page2 {
-        transform: rotateY(-50deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 4;
       }
 
-      .page3-empty {
-        transform: rotateY(-49.8deg) scale($scale);
-      }
-
-      .page4-attempts {
-        transform: rotateY(-31deg) scale($scale);
-      }
 
       .page6 {
-        transform: rotateY(-30deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 8;
       }
@@ -1091,12 +1011,6 @@
   }
 }
 
-.page3-empty {
-  .flipped-page {
-    @extend %flexCenter;
-  }
-}
-
 .green-button-container1 {
   .green-button-container2 {
     width: 100%;
@@ -1224,5 +1138,36 @@
     background: var(--white);
     overflow-y: auto;
     height: calc(100% - #{$header-height} - #{$footer-height});
+    font-size: 4.5vw !important;
+    .text-play {
+      font-size: inherit;
+      p {
+        font-size: inherit;
+      }
+    }
+    .quotes-live {
+      font-size: inherit !important;
+      p {
+        font-size: inherit !important;
+      }
+    }
+    .question-unique-play {
+      font-size: inherit !important;
+      .help-text {
+        font-size: 3vw !important;
+      }
+      .words-container, .lines-container {
+        font-size: inherit !important;
+        .word, .line {
+          font-size: inherit !important;
+        }
+      }
+      .pair-match-play-option, .pair-match-play-choice, .sort-choice-custom, .sort-category {
+        font-size: inherit !important;
+        p {
+          font-size: inherit !important;
+        }
+      }
+    }
   }
 }
