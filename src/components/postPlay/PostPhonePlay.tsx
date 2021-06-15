@@ -24,7 +24,6 @@ import { PlayAttempt } from "model/attempt";
 import { Redirect } from "react-router-dom";
 import { loadSubjects } from "components/services/subject";
 
-import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
@@ -41,9 +40,9 @@ import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
 import { Helmet } from "react-helmet";
 import AttemptsPhonePage from "./bookPages/AttemptsPhonePage";
-import ReviewEye from "./components/ReviewEye";
+
 import PhoneQuestionHead from "./phone/PhoneQuestionHead";
-import QuestionPlay from "components/play/questionPlay/QuestionPlay";
+import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 const MobileTheme = React.lazy(() => import('./themes/PageMobileTheme'));
 
@@ -321,6 +320,15 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
           <Helmet>
             <title>{getBrillderTitle(brick.title)}</title>
           </Helmet>
+          <PageHeadWithMenu
+            page={PageEnum.Book}
+            user={this.props.user}
+            placeholder="Search Ongoing Projects & Published Bricks…"
+            history={this.props.history}
+            search={() => {}}
+            searching={() => {}}
+          />
+          {/*
           {this.state.bookHovered
 
             ? <div className="home-button-container">
@@ -328,8 +336,8 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <SpriteIcon name="corner-up-left" className="return-arrow" />
               </button>
             </div>
-            : <HomeButton onClick={() => this.props.history.push('/')} />
-          }
+            :  <HomeButton onClick={() => this.props.history.push('/')} />
+          }*/}
           <div className="book-navigator">
             <div className="prep-tab" onClick={this.moveToTitles.bind(this)}>
               <SpriteIcon name="file-text" />
@@ -349,10 +357,12 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <h1>This book is yours.</h1>
                 <h2>Click on the cover to see a summary</h2>
                 <h2>of your results.</h2>
+                <div className="button-container">
                 {this.state.showLibraryButton &&
                   <button onClick={() => this.props.history.push(map.MyLibrary + '?subjectId=' + brick.subjectId)}>
                     View it in my library
                   </button>}
+                </div>
               </Grid>
               <div className={bookClass}>
                 <div className="book-container">

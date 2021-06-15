@@ -11,14 +11,51 @@
   $book-height: calc(100vh - #{$home-button-size} - #{$zendesk-size} - 30vh);
   $real-book-height: calc(100vh - #{$home-button-size} - #{$zendesk-size} - 35vh);
 
+  .upper-part {
+    position: fixed;
+    z-index: 10;
+    bottom: 0;
+    width: 100vw;
+    .page-header {
+      background: var(--theme-light-blue);
+      width: 100vw;
+      height: $zendesk-size;
+      display: flex;
+      align-items: center;
+      .logout-container {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        width: 100% !important;
+        flex-wrap: inherit !important;
+        justify-content: space-between;
+      }
+      .search-container {
+        svg {
+          height: 40px !important;
+          width: 40px !important;
+        }
+      }
+    }
+  }
+
+  .more-button {
+    margin-right: 5vw;
+  }
+
+  .bell-button {
+    margin-left: 4vw;
+  }
+
   .home-button-container {
+    margin-left: calc(74px + 3vw);
     button {
       border-bottom-right-radius: 9px;
       background: var(--theme-light-blue) !important;
 
       svg {
-        width: 75% !important;
-        height: 75% !important;
+        width: 100% !important;
+        height: 100% !important;
       }
     }
   }
@@ -34,9 +71,8 @@
     position: absolute;
     top: 0;
     right: 0;
-    border-bottom-left-radius: 2vw;
     height: $home-button-size;
-    width: calc(100vw - 2vw - #{$home-button-size});
+    width: 100vw;
     background: var(--theme-light-blue);
     height: $home-button-size;
     display: flex;
@@ -61,7 +97,7 @@
       align-items: center;
 
       svg {
-        margin-left: 0.4vw;
+        margin-left: 1vw;
         width: 15px;
         height: 15px;
         stroke-width: 3;
@@ -289,18 +325,6 @@
         left: 50%;
         transform: translate(-50%, -50%);
       }
-
-      &:not(.b-green) {
-        &:hover {
-          @include tabletP {
-            animation-duration: 1s;
-            animation-delay: 0s;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease;
-            animation-name: pulse-yellow;
-          }
-        }
-      }
     }
 
     .image {
@@ -346,23 +370,21 @@
       margin: 0;
     }
 
-    button {
-      position: fixed;
-      bottom: 2vh;
-      border: none;
-      outline: none;
-      left: 74px;
-      border-radius: 1.2vh;
-      font-family: $font-family-bold;
-      font-size: 6.4vw;
-      line-height: 0;
-      background: var(--theme-orange);
-      padding: 2.5vh 1.8vw;
-      transition: all 300ms ease-out !important;
-
-      &:hover {
-        background: var(--white);
-        color: var(--theme-dark-blue);
+    .button-container {
+      position: relative;
+      button {
+        position: absolute;
+        border: none;
+        top: -5.8vh;
+        left: 38vw;
+        outline: none;
+        border-radius: 4vw;
+        font-family: $font-family-bold;
+        font-size: 5.5vw;
+        line-height: 0;
+        background: var(--theme-orange);
+        padding: 2vh 4vw;
+        transition: all 300ms ease-out !important;
       }
     }
   }
@@ -568,13 +590,6 @@
           border-radius: 50%;
         }
 
-        &:hover {
-          span {
-            opacity: 0.5;
-            color: var(--theme-dark-blue);
-          }
-        }
-
         &.active {
           color: var(--theme-dark-blue);
         }
@@ -683,26 +698,6 @@
         background: #efefef;
       }
 
-    }
-
-    &.hovered {
-
-      .page1,
-      .page1-cover {
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 5;
-      }
-
-      .page2 {
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 4;
-      }
-
-
-      .page6 {
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 8;
-      }
     }
 
     &.attempts-list {
@@ -1031,13 +1026,6 @@
         opacity: 0.5 !important;
         background: var(--theme-green);
         @extend %transitionAll300;
-
-        &.hovered {
-          top: -10%;
-          left: -10%;
-          width: 120%;
-          height: 120%;
-        }
       }
     }
   }
