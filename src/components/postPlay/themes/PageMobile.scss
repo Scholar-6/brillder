@@ -1139,6 +1139,9 @@
     overflow-y: auto;
     height: calc(100% - #{$header-height} - #{$footer-height});
     font-size: 4.5vw !important;
+    .desktop {
+      display: none;
+    }
     .text-play {
       font-size: inherit;
       p {
