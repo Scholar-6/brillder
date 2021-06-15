@@ -164,6 +164,11 @@
   .short-answer-input {
     width: 100% !important;
     margin-bottom: 1.5vh;
+
+    .quill-document-editor .ql-custom-toolbar .formats svg {
+      height: 2vw;
+      width: 2vw;
+    }
   }
   .question-hint-global {
     border-radius: $border-radius;
