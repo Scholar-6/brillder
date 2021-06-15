@@ -15,6 +15,10 @@
     margin-bottom: 2.5vh;
   }
 
+  .expanded-text, .result-page, .eye-text {
+    color: var(--theme-dark-blue);
+  }
+
   .book-navigator {
     position: absolute;
     top: 0;
@@ -210,7 +214,7 @@
     $book-radius: 0.4vw;
 
     .book {
-      margin-top: 15.5vh;
+      margin-top: calc(#{$home-button-size} + 8vh);
       transform-style: preserve-3d;
       -webkit-transform-style: preserve-3d;
       position: relative;
@@ -880,7 +884,7 @@
     z-index: 1;
     position: fixed;
     color: var(--white);
-    bottom: 5vh;
+    bottom: calc(37px - 0.6vw);
     font-size: 1.2vw;
     font-family: $font-family-light;
     @extend %transitionAll300;
