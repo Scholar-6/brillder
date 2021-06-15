@@ -176,6 +176,10 @@
         width: inherit;
       }
     }
+    .ql-editor {
+      padding-top: 1vh;
+      padding-bottom: 1vh;
+    }
     .ql-blank::before {
       font-size: 4.5vw;
     }
