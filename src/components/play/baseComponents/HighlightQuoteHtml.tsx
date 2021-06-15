@@ -1,3 +1,4 @@
+import QuillEditorHighlighter from "components/baseComponents/quill/QuillEditorHighlighter";
 import React from "react";
 
 import { PlayMode } from "../model";
@@ -14,6 +15,9 @@ interface SelectableProps {
 const HighlightQuoteHtml: React.FC<SelectableProps> = (props) => {
   const { mode } = props;
   if ((mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) && props.onHighlight) {
+    return <QuillEditorHighlighter
+      data={props.value}
+    />
     // render highlighter
   }
   return <YoutubeAndMathInHtml isSynthesisParser={props.isSynthesis} value={props.value} />;
