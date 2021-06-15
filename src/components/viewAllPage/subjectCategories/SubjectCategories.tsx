@@ -77,7 +77,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 <div className="flex-center">
                   <img alt="" src="/images/subject-categories/internet.svg" />
                 </div>
-                <div className="cat-name">Ceteral & Topical</div>
+                <div className="cat-name">General & Topical</div>
               </div>
             </div>
             <div className="subject-category">
@@ -152,7 +152,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                   <div className="flex-center">
                     <img alt="" src="/images/subject-categories/internet.svg" />
                   </div>
-                  <div className="cat-name">Ceteral & Topical</div>
+                  <div className="cat-name">General & Topical</div>
                 </div>
               </div>
               <div>
