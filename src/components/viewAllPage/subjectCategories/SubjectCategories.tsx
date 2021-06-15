@@ -51,12 +51,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
 
   moveToGroup(sGroup: SubjectGroup) {
     this.props.setSubjectGroup(sGroup);
-
-    const artStrIds = this.props.subjects
-      .filter(s => s.group === sGroup)
-      .map(s => s.id)
-      .join(',');
-    this.props.history.push(map.ViewAllPage + '?subjectIds=' + artStrIds);
+    this.props.history.push(map.ViewAllPage + '?subjectGroup=' + sGroup);
   }
 
   render() {

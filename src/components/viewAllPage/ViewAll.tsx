@@ -108,8 +108,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
     const isSubjectCategory = props.location.pathname.slice(-map.SubjectCategoriesPrefix.length) == map.SubjectCategoriesPrefix;
-    if (!isSubjectCategory && !values.isViewAll && !values.subjectId && !values.searchString && !values.subjectIds) {
-      let link = map.AllSubjects;
+    if (!isSubjectCategory && !values.isViewAll && !values.subjectId && !values.searchString && !values.subjectIds && !values.subjectGroup) {
+      let link = map.SubjectCategories;
       if (values.newTeacher) {
         link += '?' + map.NewTeachQuery;
       }
@@ -274,28 +274,31 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadBricks(values?: queryString.ParsedQuery<string>) {
-    const currentBricks = await getCurrentUserBricks();
-    if (currentBricks) {
-      let yourBricks = prepareYourBricks(currentBricks);
-      this.setState({ ...this.state, yourBricks });
-    } else {
-      this.setState({ ...this.state, failedRequest: true });
-    }
-
-    const bricks = await getPublishedBricks();
-    if (bricks) {
-      let bs = sortAllBricks(bricks);
-      let finalBricks = this.filter(bs, this.state.isAllSubjects, this.state.isCore);
-      let { subjects } = this.state;
-      countSubjectBricks(subjects, bs);
-      subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
-      if (values && values.isViewAll) {
-        this.checkSubjectsWithBricks(subjects);
-        finalBricks = this.filter(bricks, this.state.isAllSubjects, this.state.isCore);
+    if (this.props.user) {
+      const currentBricks = await getCurrentUserBricks();
+      if (currentBricks) {
+        let yourBricks = prepareYourBricks(currentBricks);
+        this.setState({ ...this.state, yourBricks });
+      } else {
+        this.setState({ ...this.state, failedRequest: true });
       }
-      this.setState({ ...this.state, subjects, bricks, isLoading: false, finalBricks, shown: true });
+      const bricks = await getPublishedBricks();
+      if (bricks) {
+        let bs = sortAllBricks(bricks);
+        let finalBricks = this.filter(bs, this.state.isAllSubjects, this.state.isCore);
+        let { subjects } = this.state;
+        countSubjectBricks(subjects, bs);
+        subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
+        if (values && values.isViewAll) {
+          this.checkSubjectsWithBricks(subjects);
+          finalBricks = this.filter(bricks, this.state.isAllSubjects, this.state.isCore);
+        }
+        this.setState({ ...this.state, subjects, bricks, isLoading: false, finalBricks, shown: true });
+      } else {
+        this.setState({ ...this.state, isLoading: false, failedRequest: true });
+      }
     } else {
-      this.setState({ ...this.state, isLoading: false, failedRequest: true });
+      this.setState({isLoading: false});
     }
   }
 
@@ -343,7 +346,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     } else {
       filterSubjects = prepareUserSubjects(this.state.subjects, this.state.userSubjects);
     }
-
+ 
     if (showAll === true) {
       filterSubjects = this.state.subjects.map(s => s.id);
     }
@@ -369,7 +372,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     let checked = this.state.subjects.find(s => s.checked === true);
     if (!checked) {
-      this.props.history.push(map.AllSubjects + '?filter=true');
+      this.props.history.push(map.SubjectCategories + '?filter=true');
     }
 
     this.setState({ ...this.state, isViewAll: false, shown: false });
@@ -407,7 +410,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   selectAllSubjects(isViewAll: boolean) {
     if (isViewAll === false) {
-      this.props.history.push(map.AllSubjects);
+      this.props.history.push(map.SubjectCategories);
     } else {
       this.checkAllSubjects();
       const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, isViewAll);
