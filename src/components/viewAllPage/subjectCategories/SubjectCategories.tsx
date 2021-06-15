@@ -52,7 +52,11 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
 
   moveToGroup(sGroup: SubjectGroup) {
     this.props.setSubjectGroup(sGroup);
-    this.props.history.push(map.ViewAllPage + '?subjectGroup=' + sGroup);
+    let link = map.ViewAllPage + '?subjectGroup=' + sGroup;
+    if (this.props.user) {
+      link += '&mySubject=true';
+    }
+    this.props.history.push(link);
   }
 
   render() {

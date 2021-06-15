@@ -165,9 +165,19 @@
     width: 100% !important;
     margin-bottom: 1.5vh;
 
-    .quill-document-editor .ql-custom-toolbar .formats svg {
-      height: 2vw;
-      width: 2vw;
+    .quill-document-editor .ql-custom-toolbar .formats {
+      padding-left: 3vw;
+      button {
+        height: 7vw;
+        width: 7vw;
+      }
+      svg {
+        height: inherit;
+        width: inherit;
+      }
+    }
+    .ql-blank::before {
+      font-size: 4.5vw;
     }
   }
   .question-hint-global {

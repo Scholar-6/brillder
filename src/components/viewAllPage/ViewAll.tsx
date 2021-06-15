@@ -121,6 +121,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isViewAll = true;
     }
 
+    let isAllSubjects = true;
+    if (values.mySubject) {
+      isAllSubjects = false;
+    }
+    console.log(values, isAllSubjects);
+
     this.state = {
       yourBricks: [],
       bricks: [],
@@ -145,7 +151,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isAdmin,
       isCore: true,
       shown: false,
-      isAllSubjects: true,
+      isAllSubjects,
       isViewAll,
       handleKey: this.handleKey.bind(this),
 
@@ -256,7 +262,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         s.checked = true;
       }
     }
-    this.setState({isLoading: true});
+    if (this.props.user) {
+      this.setState({isLoading: true, isAllSubjects: false});
+    } else {
+      this.setState({isLoading: true});
+    }
     this.loadBricks();
   }
 
