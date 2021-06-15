@@ -123,7 +123,7 @@
     border-radius: $panel-radius;
     margin-left: 5vw !important;
     margin-right: 5vw !important;
-    margin-top: 3vh;
+    margin-top: calc(45px + 3vh);
     height: calc(100vh - #{$home-button-size} - #{$zendesk-size} - 4vh - 2vh);
     color: var(--theme-dark-blue);
     background: var(--tab-gray);
