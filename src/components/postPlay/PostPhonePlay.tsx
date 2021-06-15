@@ -41,6 +41,8 @@ import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
 import { Helmet } from "react-helmet";
 import AttemptsPhonePage from "./bookPages/AttemptsPhonePage";
+import ReviewEye from "./components/ReviewEye";
+import PhoneQuestionHead from "./phone/PhoneQuestionHead";
 
 const MobileTheme = React.lazy(() => import('./themes/PageMobileTheme'));
 
@@ -531,8 +533,26 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                     </div>
                   </div>
                 </SwiperSlide>
+                {questions.map((q, i) => (
+                  <SwiperSlide key={i + 5}>
+                    <div className="mobile-attempts question">
+                      <PhoneQuestionHead
+                        i={i}
+                        title={brick.title}
+                        mode={this.state.mode}
+                        activeAttempt={this.state.attempt}
+                        setMode={mode => this.setState({ mode })}
+                      />
+                      <div className="scroll-content">
+                      </div>
+                      <div className="footer">
+                        Swipe to view Questions
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
                 <SwiperSlide>
-                <div className="mobile-attempts">
+                  <div className="mobile-attempts">
                     <div className="header">Synthesis</div>
                     <div className="scroll-content">
                       <div className="expanded-text">
