@@ -7,7 +7,7 @@ import { User } from "model/user";
 import SubjectsListV3 from "components/baseComponents/subjectsList/SubjectsListV3";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import AddSubjectDialog from "components/baseComponents/dialogs/AddSubjectDialog";
-import { AcademicLevel, AcademicLevelLabels } from "model/brick";
+import { AcademicLevel, AcademicLevelLabels, SubjectGroup, SubjectGroupNames } from "model/brick";
 
 export enum SortBy {
   None,
@@ -22,6 +22,8 @@ interface FilterProps {
   isClearFilter: any;
   isCore: boolean;
   user: User;
+
+  subjectGroup?: SubjectGroup | null;
 
   isAllSubjects: boolean;
   setAllSubjects(value: boolean): void;
@@ -139,6 +141,20 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     );
   }
 
+  renderCategoryLabelBox() {
+    const {subjectGroup} = this.props;
+    let name = 'Subjects';
+
+    if (subjectGroup) {
+      name = SubjectGroupNames[subjectGroup];
+    }
+    return (
+      <div className="filter-header subject-category-name">
+        <span>{name}</span>
+      </div>
+    );
+  }
+
   renderSubjectsToggle() {
     const { isAllSubjects } = this.props;
     if (!this.props.user) {
@@ -240,14 +256,15 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               {this.renderAcademicLevel(AcademicLevel.Third)}
               {this.renderAcademicLevel(AcademicLevel.Fourth)}
             </div>
-            {this.renderSubjectLabelBox()}
+            {this.props.user ? this.renderSubjectLabelBox() : this.renderCategoryLabelBox() }
             {this.renderSubjectsToggle()}
             <div className="scroll-buttons">
+              {this.props.user &&
               <FormControlLabel
                 className="radio-container"
                 checked={this.props.isViewAll}
                 control={<Radio onClick={() => this.props.selectAllSubjects(!this.props.isViewAll)} />}
-                label="All" />
+                label="All" />}
               <SpriteIcon name="arrow-up" className={`${!this.state.canScroll ? 'disabled' : ''}`} onClick={this.scrollUp.bind(this)} />
               <SpriteIcon name="arrow-down" className={`${!this.state.canScroll ? 'disabled' : ''}`} onClick={this.scrollDown.bind(this)} />
               {this.props.isClearFilter &&
@@ -259,6 +276,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
           </div>
           <div className="sort-box subject-scrollable" ref={this.state.scrollArea}>
             <SubjectsListV3
+              user={this.props.user}
               isPublic={this.props.isCore}
               subjects={subjects}
               isAllSubjects={isAllSubjects}
@@ -266,6 +284,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               isSelected={this.props.isClearFilter}
               filterHeight={this.state.filterHeight}
               openSubjectPopup={() => this.setState({ isSubjectPopupOpen: true })}
+              selectAll={isAll => this.props.selectAllSubjects(!isAll)}
               filterBySubject={this.props.filterBySubject}
             />
           </div>
