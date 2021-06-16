@@ -62,8 +62,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
-    if (!values.isViewAll && !values.subjectId && !values.searchString && !this.props.isSearching && !values.subjectGroup) {
-      this.props.history.push(map.SubjectCategories);
+    if (!values.isViewAll && !values.subjectId && !values.searchString && !this.props.isSearching && !values.subjectGroup ) {
+      //this.props.history.push(map.SubjectCategories);
     }
 
     let isViewAll = false;
