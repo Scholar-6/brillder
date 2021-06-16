@@ -346,6 +346,31 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...state, finalBricks, sortBy });
   };
 
+  filterUnauthorized(bricks: Brick[], showAll?: boolean, levels?: AcademicLevel[]) {
+    if (this.state.isSearching) {
+      bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
+    }
+
+    let filterSubjects:any[] = [];
+    if (this.state.subjectGroup) {
+      const groupSubjects = this.state.subjects.filter(s => s.group === this.state.subjectGroup);
+      filterSubjects = getCheckedSubjectIds(groupSubjects);
+
+      if (showAll === true) {
+        filterSubjects = groupSubjects.map(s => s.id);
+      }
+    }
+
+    if (levels && levels.length > 0) {
+      bricks = filterByLevels(bricks, levels);
+    }
+
+    if (filterSubjects.length > 0) {
+      return sortAndFilterBySubject(bricks, filterSubjects);
+    }
+    return bricks;
+  }
+
   filter(bricks: Brick[], isAllSubjects: boolean, isCore: boolean, showAll?: boolean, levels?: AcademicLevel[]) {
     if (this.state.isSearching) {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
@@ -400,7 +425,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...this.state, isViewAll: false, shown: false });
     setTimeout(() => {
       try {
-        const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, false, this.state.filterLevels);
+        let finalBricks:Brick[] = [];
+        if (this.props.user) {
+          finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, false, this.state.filterLevels);
+        } else {
+          finalBricks = this.filterUnauthorized(this.state.bricks, this.state.isViewAll, this.state.filterLevels);
+        }
         this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
       } catch { }
     }, 1400);
@@ -410,7 +440,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({filterLevels, shown: false });
     setTimeout(() => {
       try {
-        const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, this.state.isViewAll, filterLevels);
+        let finalBricks:Brick[] = [];
+        if (this.props.user) {
+          finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, this.state.isViewAll, filterLevels);
+        } else {
+          finalBricks = this.filterUnauthorized(this.state.bricks, this.state.isViewAll, filterLevels);
+        }
         this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
       } catch { }
     }, 1400);
@@ -441,12 +476,19 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   selectAllSubjects(isViewAll: boolean) {
-    if (isViewAll === false) {
-      this.props.history.push(map.SubjectCategories);
+    if (this.props.user) {
+      if (isViewAll !== false) {
+        this.checkAllSubjects();
+        const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, isViewAll);
+        this.setState({ isViewAll, finalBricks, isClearFilter: this.isFilterClear() });
+      }
     } else {
-      this.checkAllSubjects();
-      const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, isViewAll);
-      this.setState({ isViewAll, finalBricks, isClearFilter: this.isFilterClear() });
+      if (isViewAll === false) {
+        this.props.history.push(map.SubjectCategories);
+      } else {
+        const finalBricks = this.filterUnauthorized(this.state.bricks, isViewAll, this.state.filterLevels);
+        this.setState({ isViewAll, finalBricks, isClearFilter: this.isFilterClear() });
+      }
     }
   }
 
