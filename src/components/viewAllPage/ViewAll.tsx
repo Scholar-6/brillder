@@ -109,7 +109,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
     const isSubjectCategory = props.location.pathname.slice(-map.SubjectCategoriesPrefix.length) == map.SubjectCategoriesPrefix;
-    if (!isSubjectCategory && !values.isViewAll && !values.mySubject && !values.subjectId && !values.searchString && !values.subjectIds && !values.subjectGroup) {
+    if (!isSubjectCategory && !values.isViewAll && !values.mySubject && !values.subjectId && !values.searchString && !values.subjectIds && !values.subjectGroup && !isPhone()) {
       let link = map.SubjectCategories;
       if (values.newTeacher) {
         link += '?' + map.NewTeachQuery;
@@ -391,6 +391,16 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     setTimeout(() => {
       try {
         const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore);
+        this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
+      } catch { }
+    }, 1400);
+  }
+
+  filterByLevel(filterLevels: AcademicLevel[]) {
+    this.setState({filterLevels, shown: false });
+    setTimeout(() => {
+      try {
+        const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore );
         this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
       } catch { }
     }, 1400);
