@@ -66,7 +66,9 @@ const saveBrickFailure = (errorMessage:string) => {
 
 const saveBrick = (brick:any) => {
   return function (dispatch: Dispatch) {
-    brick.questions = [];
+    if (brick.questions) {
+      brick.questions.map((q: any) => ({ id: q.id, brickQuestionId: q.brickQuestionId, order: q.order }));
+    }
     brick.type = 1;
     return axios.put(
       process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true, timeout: 10000}
