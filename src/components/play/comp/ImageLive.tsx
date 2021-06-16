@@ -29,8 +29,10 @@ const ImageLive: React.FC<ImageProps> = ({ component, refs }) => {
               src={fileUrl(component.value)}
               style={{height}}
             />
+            {component.imageSource && <div className="image-source-container">
+              <figure className="image-source">{component.imageSource}</figure>
+            </div>}
           </div>
-          {component.imageSource && <figure className="image-source">{component.imageSource}</figure>}
           {component.imageCaption && <figcaption className="image-caption">{component.imageCaption}</figcaption>}
         </div>
       </div>

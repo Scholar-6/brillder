@@ -420,12 +420,22 @@
   font-size: 1.4vw;
 }
 
-.image-source {
-  line-height: 1;
-  margin-top: -0.2vw;
-  font-size: 1vw;
-}
 
+
+.il-image-container {
+  position: relative;
+  .image-source-container {
+    width: 0;
+    position: absolute;
+    bottom: 0;
+    right: -0.6vw;
+    .image-source {
+      transform: rotate(-90deg);
+      line-height: 1;
+      font-size: 0.6vw;
+    }
+  }
+}
 
 // short answer live
 .play-preview-panel .short-answer-live {
