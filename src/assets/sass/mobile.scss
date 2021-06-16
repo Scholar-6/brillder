@@ -276,3 +276,18 @@
     font-size: 4.5vw !important;
   }
 }
+
+.il-image-container {
+  position: relative;
+  .image-source-container {
+    width: 0;
+    position: absolute;
+    bottom: 0;
+    right: -1.2vw;
+    .image-source {
+      transform: rotate(-90deg);
+      line-height: 1;
+      font-size: 3vw;
+    }
+  }
+}

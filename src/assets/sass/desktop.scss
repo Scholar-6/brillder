@@ -432,6 +432,9 @@
     .image-source {
       transform: rotate(-90deg);
       line-height: 1;
+      white-space: nowrap;
+      display: inline-block;
+      transform-origin: 50% 50%;
       font-size: 0.6vw;
     }
   }
