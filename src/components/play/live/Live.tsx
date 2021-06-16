@@ -42,6 +42,7 @@ interface LivePageProps {
   brick: Brick;
   questions: Question[];
   isPlayPreview?: boolean;
+  history: any;
   previewQuestionIndex?: number;
   updateAttempts(attempt: any, index: number): any;
   finishBrick(): void;
@@ -58,6 +59,7 @@ interface LivePageProps {
 const LivePage: React.FC<LivePageProps> = ({
   status,
   questions,
+  history,
   brick,
   ...props
 }) => {
@@ -77,7 +79,6 @@ const LivePage: React.FC<LivePageProps> = ({
   const [questionScrollRef] = React.useState(React.createRef<HTMLDivElement>());
 
   const [answers, setAnswers] = React.useState([] as any[]);
-  const history = useHistory();
 
   const location = useLocation();
   const theme = useTheme();
@@ -131,7 +132,9 @@ const LivePage: React.FC<LivePageProps> = ({
       if (props.isPlayPreview) {
         CashQuestionFromPlay(brick.id, step);
       }
-      history.push(routes.playInvestigation(brick.id) + '?activeStep=' + step);
+      if (!props.isPlayPreview) {
+        history.push(routes.playInvestigation(brick.id) + '?activeStep=' + step);
+      }
     }, 100);
   };
 
