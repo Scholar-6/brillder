@@ -7,6 +7,7 @@ import { User } from "model/user";
 import SubjectsListV3 from "components/baseComponents/subjectsList/SubjectsListV3";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import AddSubjectDialog from "components/baseComponents/dialogs/AddSubjectDialog";
+import { AcademicLevelLabels } from "model/brick";
 
 export enum SortBy {
   None,
@@ -31,6 +32,7 @@ interface FilterProps {
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   clearSubjects(): void;
   filterBySubject(id: number): void;
+  filterByLevel(level: number): void;
 }
 
 interface FilterState {
@@ -87,7 +89,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       if (current) {
         current.scrollBy(0, -window.screen.height / 30);
       }
-    } catch {}
+    } catch { }
   }
 
   scrollDown() {
@@ -96,7 +98,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       if (current) {
         current.scrollBy(0, window.screen.height / 30);
       }
-    } catch {}
+    } catch { }
   }
 
   expandFilter() {
@@ -105,6 +107,14 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       filterExpanded: true,
       filterHeight: "auto",
     });
+  }
+
+  renderFilterLabelBox() {
+    return (
+      <div className="filter-header">
+        <span>Filter</span>
+      </div>
+    );
   }
 
   renderSubjectLabelBox() {
@@ -116,7 +126,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   }
 
   renderSubjectsToggle() {
-    const {isAllSubjects} = this.props;
+    const { isAllSubjects } = this.props;
     if (!this.props.user) {
       return "";
     }
@@ -153,7 +163,6 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
 
   render() {
     let { subjects, isAllSubjects } = this.props;
-    console.log(isAllSubjects);
     if (!isAllSubjects) {
       subjects = [];
       for (let subject of this.props.userSubjects) {
@@ -170,34 +179,61 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
         <div className="flex-height-box">
           <div className="sort-box">
             <div className="filter-container sort-by-box view-all-sort-box" style={{ height: '6.5vw' }}>
-            <div className="sort-header">Sort By</div>
-            <RadioGroup
-              className="sort-group"
-              aria-label="SortBy"
-              name="SortBy"
-              value={this.props.sortBy}
-              onChange={this.props.handleSortChange}
-            >
-              <Grid container direction="row">
-                <Grid item xs={6}>
-                  <FormControlLabel
-                    value={SortBy.Popularity}
-                    style={{ marginRight: 0, width: "50%" }}
-                    control={<Radio className="sortBy" />}
-                    label="Popularity"
-                  />
+              <div className="sort-header">Sort By</div>
+              <RadioGroup
+                className="sort-group"
+                aria-label="SortBy"
+                name="SortBy"
+                value={this.props.sortBy}
+                onChange={this.props.handleSortChange}
+              >
+                <Grid container direction="row">
+                  <Grid item xs={6}>
+                    <FormControlLabel
+                      value={SortBy.Popularity}
+                      style={{ marginRight: 0, width: "50%" }}
+                      control={<Radio className="sortBy" />}
+                      label="Popularity"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControlLabel
+                      value={SortBy.Date}
+                      style={{ marginRight: 0 }}
+                      control={<Radio className="sortBy" />}
+                      label="Date Added"
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                  <FormControlLabel
-                    value={SortBy.Date}
-                    style={{ marginRight: 0 }}
-                    control={<Radio className="sortBy" />}
-                    label="Date Added"
-                  />
-                </Grid>
-              </Grid>
-            </RadioGroup>
-          </div>
+              </RadioGroup>
+            </div>
+            {this.renderFilterLabelBox()}
+            <div className="sort-box level-filter-box">
+              <FormControlLabel
+                value={SortBy.Popularity}
+                style={{ marginRight: 0, width: "50%" }}
+                control={<Radio className="sortBy" />}
+                label={`Level ${AcademicLevelLabels[1]}`}
+              />
+              <FormControlLabel
+                value={SortBy.Popularity}
+                style={{ marginRight: 0, width: "50%" }}
+                control={<Radio className="sortBy" />}
+                label={`Level ${AcademicLevelLabels[2]}`}
+              />
+              <FormControlLabel
+                value={SortBy.Popularity}
+                style={{ marginRight: 0, width: "50%" }}
+                control={<Radio className="sortBy" />}
+                label={`Level ${AcademicLevelLabels[3]}`}
+              />
+              <FormControlLabel
+                value={SortBy.Popularity}
+                style={{ marginRight: 0, width: "50%" }}
+                control={<Radio className="sortBy" />}
+                label={`Level ${AcademicLevelLabels[4]}`}
+              />
+            </div>
             {this.renderSubjectLabelBox()}
             {this.renderSubjectsToggle()}
             <div className="scroll-buttons">
@@ -212,7 +248,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
                 <button
                   className="btn-transparent filter-icon arrow-cancel"
                   onClick={() => this.props.selectAllSubjects(!this.props.isViewAll)}
-              ></button>}
+                ></button>}
             </div>
           </div>
           <div className="sort-box subject-scrollable" ref={this.state.scrollArea}>
@@ -223,7 +259,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               isAll={this.props.isViewAll}
               isSelected={this.props.isClearFilter}
               filterHeight={this.state.filterHeight}
-              openSubjectPopup={() => this.setState({isSubjectPopupOpen: true})}
+              openSubjectPopup={() => this.setState({ isSubjectPopupOpen: true })}
               filterBySubject={this.props.filterBySubject}
             />
           </div>
@@ -231,8 +267,8 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
         <div className="sidebar-footer" />
         <AddSubjectDialog
           isOpen={this.state.isSubjectPopupOpen}
-          success={subject => {}}
-          close={() => this.setState({isSubjectPopupOpen: false})}
+          success={subject => { }}
+          close={() => this.setState({ isSubjectPopupOpen: false })}
         />
       </Grid>
     );
