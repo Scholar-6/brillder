@@ -6,6 +6,7 @@ import { User } from "model/user";
 
 import SubjectsListV3 from "components/baseComponents/subjectsList/SubjectsListV3";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import AddSubjectDialog from "components/baseComponents/dialogs/AddSubjectDialog";
 
 export enum SortBy {
   None,
@@ -33,6 +34,7 @@ interface FilterProps {
 }
 
 interface FilterState {
+  isSubjectPopupOpen: boolean;
   canScroll: boolean;
   scrollArea: React.RefObject<any>;
   filterExpanded: boolean;
@@ -43,6 +45,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   constructor(props: FilterProps) {
     super(props);
     this.state = {
+      isSubjectPopupOpen: false,
       canScroll: false,
       scrollArea: React.createRef(),
       filterHeight: "auto",
@@ -113,15 +116,16 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   }
 
   renderSubjectsToggle() {
+    const {isAllSubjects} = this.props;
     if (!this.props.user) {
       return "";
     }
     return (
       <div className="subjects-toggle">
         <div
-          className={`${!this.props.isAllSubjects ? 'toggle-button my-subjects active' : 'toggle-button my-subjects not-active'}`}
+          className={`${!isAllSubjects ? 'toggle-button my-subjects active' : 'toggle-button my-subjects not-active'}`}
           onClick={() => {
-            if (this.props.isAllSubjects) {
+            if (isAllSubjects) {
               this.props.setAllSubjects(false);
             }
           }}
@@ -136,7 +140,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
         <div
           className={`${this.props.isAllSubjects ? 'toggle-button all-subjects active' : 'toggle-button all-subjects not-active'}`}
           onClick={() => {
-            if (!this.props.isAllSubjects) {
+            if (!isAllSubjects) {
               this.props.setAllSubjects(true);
             }
           }}
@@ -148,8 +152,9 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   }
 
   render() {
-    let { subjects } = this.props;
-    if (!this.props.isAllSubjects) {
+    let { subjects, isAllSubjects } = this.props;
+    console.log(isAllSubjects);
+    if (!isAllSubjects) {
       subjects = [];
       for (let subject of this.props.userSubjects) {
         for (let s of this.props.subjects) {
@@ -214,14 +219,21 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
             <SubjectsListV3
               isPublic={this.props.isCore}
               subjects={subjects}
+              isAllSubjects={isAllSubjects}
               isAll={this.props.isViewAll}
               isSelected={this.props.isClearFilter}
               filterHeight={this.state.filterHeight}
+              openSubjectPopup={() => this.setState({isSubjectPopupOpen: true})}
               filterBySubject={this.props.filterBySubject}
             />
           </div>
         </div>
         <div className="sidebar-footer" />
+        <AddSubjectDialog
+          isOpen={this.state.isSubjectPopupOpen}
+          success={subject => {}}
+          close={() => this.setState({isSubjectPopupOpen: false})}
+        />
       </Grid>
     );
   }
