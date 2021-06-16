@@ -108,7 +108,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
     const isSubjectCategory = props.location.pathname.slice(-map.SubjectCategoriesPrefix.length) == map.SubjectCategoriesPrefix;
-    if (!isSubjectCategory && !values.isViewAll && !values.subjectId && !values.searchString && !values.subjectIds && !values.subjectGroup) {
+    if (!isSubjectCategory && !values.isViewAll && !values.mySubject && !values.subjectId && !values.searchString && !values.subjectIds && !values.subjectGroup) {
       let link = map.SubjectCategories;
       if (values.newTeacher) {
         link += '?' + map.NewTeachQuery;
