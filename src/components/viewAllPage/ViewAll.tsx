@@ -911,6 +911,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           }}
           handleSortChange={e => this.handleSortChange(e)}
           clearSubjects={() => this.clearSubjects()}
+          filterByLevel={() => {}}
           filterBySubject={id => this.filterBySubject(id)}
         />
         <Grid item xs={9} className="brick-row-container">
