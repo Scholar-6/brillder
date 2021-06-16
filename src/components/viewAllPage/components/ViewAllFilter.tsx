@@ -283,6 +283,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               isAll={this.props.isViewAll}
               isSelected={this.props.isClearFilter}
               filterHeight={this.state.filterHeight}
+              subjectGroup={this.props.subjectGroup}
               openSubjectPopup={() => this.setState({ isSubjectPopupOpen: true })}
               selectAll={isAll => this.props.selectAllSubjects(!isAll)}
               filterBySubject={this.props.filterBySubject}
