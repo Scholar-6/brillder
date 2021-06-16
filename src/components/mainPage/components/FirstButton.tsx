@@ -40,6 +40,8 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
         let link = map.SubjectCategories;
         if (props.isNewTeacher) {
           link += '?' + map.NewTeachQuery;
+        } if (props.user) {
+          link = map.ViewAllPage + '?mySubject=true';
         }
         props.history.push(link);
       }}
