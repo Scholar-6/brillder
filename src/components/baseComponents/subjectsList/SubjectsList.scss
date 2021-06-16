@@ -29,6 +29,23 @@
       }
     }
   }
+  .create-subject-button {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    padding-top: 0.4vh;
+    padding-bottom: 0.4vh;
+
+    svg {
+      margin-left: 1vw;
+      margin-right: 0.4vw;
+      height: 1.6vw;
+      width: 1.6vw;
+    }
+    &:hover {
+      background: var(--light-blue-alpha3);
+    }
+  }
 }
 
 .subject-border {
