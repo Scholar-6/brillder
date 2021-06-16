@@ -261,3 +261,18 @@
 .image-source {
   font-size: 4vw;
 }
+
+.play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .question-live-play .quill-document-editor {
+  input, textarea {
+    font-size: 4.5vw !important;
+  }
+  .ql-blank::before {
+    font-size: 4.5vw !important;
+  }
+  p {
+    font-size: 4.5vw !important;
+  }
+  input:focus {
+    font-size: 4.5vw !important;
+  }
+}
