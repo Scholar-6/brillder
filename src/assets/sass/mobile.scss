@@ -279,6 +279,8 @@
 
 .il-image-container {
   position: relative;
+  width: auto;
+  max-width: 95%;
   .image-source-container {
     width: 0;
     position: absolute;
@@ -286,6 +288,8 @@
     right: -1.2vw;
     .image-source {
       transform: rotate(-90deg);
+      white-space: nowrap;
+      display: inline-block;
       line-height: 1;
       font-size: 3vw;
     }
