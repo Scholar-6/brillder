@@ -110,6 +110,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               isViewAll={false}
               selectAllSubjects={() => {}}
               clearSubjects={() => { }}
+              levels={[]}
               filterBySubject={id => this.onSubjectSelected(id)}
               filterByLevel={() => {}}
             />
