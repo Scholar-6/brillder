@@ -10,7 +10,7 @@ import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
-import { Brick, Subject, SubjectGroup, SubjectItem } from "model/brick";
+import { AcademicLevel, Brick, Subject, SubjectGroup, SubjectItem } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { getAssignmentIcon } from "components/services/brickService";
 import { getCurrentUserBricks, getPublicBricks, getPublishedBricks, searchBricks, searchPublicBricks } from "services/axios/brick";
@@ -67,6 +67,7 @@ interface ViewAllState {
   isSearching: boolean;
   sortBy: SortBy;
 
+  filterLevels: AcademicLevel[];
   subjects: SubjectItem[];
   userSubjects: Subject[];
 
@@ -146,6 +147,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       pageSize: 6,
       isLoading: true,
 
+      filterLevels: [],
       isClearFilter: false,
       failedRequest: false,
       isAdmin,
@@ -911,7 +913,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           }}
           handleSortChange={e => this.handleSortChange(e)}
           clearSubjects={() => this.clearSubjects()}
-          filterByLevel={() => {}}
+          levels={this.state.filterLevels}
+          filterByLevel={filterLevels => this.setState({filterLevels})}
           filterBySubject={id => this.filterBySubject(id)}
         />
         <Grid item xs={9} className="brick-row-container">

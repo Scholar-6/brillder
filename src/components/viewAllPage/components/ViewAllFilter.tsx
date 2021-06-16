@@ -7,7 +7,7 @@ import { User } from "model/user";
 import SubjectsListV3 from "components/baseComponents/subjectsList/SubjectsListV3";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import AddSubjectDialog from "components/baseComponents/dialogs/AddSubjectDialog";
-import { AcademicLevelLabels } from "model/brick";
+import { AcademicLevel, AcademicLevelLabels } from "model/brick";
 
 export enum SortBy {
   None,
@@ -32,7 +32,9 @@ interface FilterProps {
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   clearSubjects(): void;
   filterBySubject(id: number): void;
-  filterByLevel(level: number): void;
+
+  levels: AcademicLevel[];
+  filterByLevel(level: AcademicLevel[]): void;
 }
 
 interface FilterState {
@@ -80,6 +82,18 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
           this.setState({ canScroll: false });
         }
       }
+    }
+  }
+
+  filterByLevel(level: AcademicLevel) {
+    const {levels} = this.props;
+    const found = levels.find(l => l == level);
+    if (found) {
+      const newLevels = levels.filter(l => l !== level);
+      this.props.filterByLevel(newLevels);
+    } else {
+      levels.push(level);
+      this.props.filterByLevel(levels);
     }
   }
 
@@ -161,6 +175,18 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     );
   }
 
+  renderAcademicLevel(loopLevel: AcademicLevel) {
+    const found = this.props.levels.find(l => l == loopLevel);
+    return (
+      <FormControlLabel
+        value={SortBy.Popularity}
+        style={{ marginRight: 0, width: "50%" }}
+        control={<Radio className="sortBy" checked={!!found} onClick={() => this.filterByLevel(loopLevel)} />}
+        label={`Level ${AcademicLevelLabels[loopLevel]}`}
+      />
+    )
+  }
+
   render() {
     let { subjects, isAllSubjects } = this.props;
     if (!isAllSubjects) {
@@ -209,30 +235,10 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
             </div>
             {this.renderFilterLabelBox()}
             <div className="sort-box level-filter-box">
-              <FormControlLabel
-                value={SortBy.Popularity}
-                style={{ marginRight: 0, width: "50%" }}
-                control={<Radio className="sortBy" />}
-                label={`Level ${AcademicLevelLabels[1]}`}
-              />
-              <FormControlLabel
-                value={SortBy.Popularity}
-                style={{ marginRight: 0, width: "50%" }}
-                control={<Radio className="sortBy" />}
-                label={`Level ${AcademicLevelLabels[2]}`}
-              />
-              <FormControlLabel
-                value={SortBy.Popularity}
-                style={{ marginRight: 0, width: "50%" }}
-                control={<Radio className="sortBy" />}
-                label={`Level ${AcademicLevelLabels[3]}`}
-              />
-              <FormControlLabel
-                value={SortBy.Popularity}
-                style={{ marginRight: 0, width: "50%" }}
-                control={<Radio className="sortBy" />}
-                label={`Level ${AcademicLevelLabels[4]}`}
-              />
+              {this.renderAcademicLevel(AcademicLevel.First)}
+              {this.renderAcademicLevel(AcademicLevel.Second)}
+              {this.renderAcademicLevel(AcademicLevel.Third)}
+              {this.renderAcademicLevel(AcademicLevel.Fourth)}
             </div>
             {this.renderSubjectLabelBox()}
             {this.renderSubjectsToggle()}
