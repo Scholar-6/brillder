@@ -1,12 +1,15 @@
 import React from "react";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { ReduxCombinedState } from "redux/reducers";
+import { connect } from "react-redux";
 
 interface Props {
+  intendedPath: string;
   label: string;
 }
 
-const GoogleDesktopButton: React.FC<Props> = ({label}) => {
-  const googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/build`;
+const GoogleDesktopButton: React.FC<Props> = ({label, intendedPath}) => {
+  const googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login${intendedPath}`;
 
   return (
     <a className="google-button-desktop svgOnHover" href={googleLink}>
@@ -16,4 +19,8 @@ const GoogleDesktopButton: React.FC<Props> = ({label}) => {
   );
 };
 
-export default GoogleDesktopButton;
+const mapState = (state: ReduxCombinedState) => ({
+  intendedPath: state.auth.intendedPath,
+});
+
+export default connect(mapState)(GoogleDesktopButton);
