@@ -131,8 +131,7 @@ const LivePage: React.FC<LivePageProps> = ({
       setActiveStep(step);
       if (props.isPlayPreview) {
         CashQuestionFromPlay(brick.id, step);
-      }
-      if (!props.isPlayPreview) {
+      } else {
         history.push(routes.playInvestigation(brick.id) + '?activeStep=' + step);
       }
     }, 100);
