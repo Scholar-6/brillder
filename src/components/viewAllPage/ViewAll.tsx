@@ -262,6 +262,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   setSubjectGroup(sGroup: SubjectGroup) {
+    for (const s of this.state.subjects) {
+      s.checked = false;
+    }
     if (this.props.user) {
       this.setState({isLoading: true, isAllSubjects: false});
     } else {
@@ -486,6 +489,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (isViewAll === false) {
         this.props.history.push(map.SubjectCategories);
       } else {
+        for (let s of this.state.subjects) {
+          s.checked = false;
+        }
         const finalBricks = this.filterUnauthorized(this.state.bricks, isViewAll, this.state.filterLevels);
         this.setState({ isViewAll, finalBricks, isClearFilter: this.isFilterClear() });
       }
