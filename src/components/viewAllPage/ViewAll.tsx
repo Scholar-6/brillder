@@ -10,7 +10,7 @@ import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
-import { AcademicLevel, Brick, Subject, SubjectGroup, SubjectItem } from "model/brick";
+import { AcademicLevel, Brick, Subject, SubjectGroup, SubjectGroupNames, SubjectItem } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { getAssignmentIcon } from "components/services/brickService";
 import { getCurrentUserBricks, getPublicBricks, getPublishedBricks, searchBricks, searchPublicBricks } from "services/axios/brick";
@@ -132,6 +132,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     let subjectGroup = null;
     if (values.subjectGroup) {
       subjectGroup = parseInt(values.subjectGroup as string) as SubjectGroup;
+      isViewAll = true;
     }
 
     this.state = {
@@ -251,12 +252,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async loadSubjects(values: queryString.ParsedQuery<string>) {
     const subjects = await getSubjects() as SubjectItem[] | null;
 
-    console.log('loading subjects');
-
     if (subjects) {
       sortAndCheckSubjects(subjects, values);
       this.setState({ ...this.state, subjects });
-      console.log('set subjects', subjects);
     } else {
       this.setState({ ...this.state, failedRequest: true });
     }
@@ -264,27 +262,20 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   setSubjectGroup(sGroup: SubjectGroup) {
-    const {subjects} = this.state;
-    for (const s of subjects) {
-      s.checked = false;
-      if (s.group == sGroup) {
-        s.checked = true;
-      }
-    }
     if (this.props.user) {
       this.setState({isLoading: true, isAllSubjects: false});
     } else {
-      this.setState({isLoading: true});
+      this.setState({isLoading: true, isViewAll: true});
     }
-    this.loadBricks();
     this.setState({subjectGroup: sGroup});
+    this.loadUnauthorizedBricks();
   }
 
   async loadUnauthorizedBricks() {
     const bricks = await getPublicBricks();
     if (bricks) {
-      let finalBricks = this.filter(bricks, this.state.isAllSubjects, true);
-      let { subjects } = this.state;
+      const finalBricks = this.filter(bricks, this.state.isAllSubjects, true);
+      const { subjects } = this.state;
       countSubjectBricks(subjects, bricks);
       subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
       this.setState({ ...this.state, bricks, isLoading: false, finalBricks, shown: true });
@@ -360,13 +351,20 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
 
-    let filterSubjects = [];
-    if (isAllSubjects) {
-      filterSubjects = getCheckedSubjectIds(this.state.subjects);
-    } else {
-      filterSubjects = prepareUserSubjects(this.state.subjects, this.state.userSubjects);
+    let filterSubjects:any[] = [];
+    if (this.props.user) {
+      // authorized user
+      if (isAllSubjects) {
+        filterSubjects = getCheckedSubjectIds(this.state.subjects);
+      } else {
+        filterSubjects = prepareUserSubjects(this.state.subjects, this.state.userSubjects);
+      }
+    } else if (this.state.subjectGroup) {
+      // unauthorized user see groups of subjects
+      const groupSubjects = this.state.subjects.filter(s => s.group === this.state.subjectGroup);
+      filterSubjects = groupSubjects.map(s => s.id);
     }
- 
+
     if (showAll === true) {
       filterSubjects = this.state.subjects.map(s => s.id);
     }
@@ -728,6 +726,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   renderMainTitle(filterSubjects: number[]) {
+    if (!this.props.user && this.state.subjectGroup) {
+      return SubjectGroupNames[this.state.subjectGroup];
+    }
+
     if (filterSubjects.length === 1) {
       const subjectId = filterSubjects[0];
       const subject = this.state.subjects.find(s => s.id === subjectId);
