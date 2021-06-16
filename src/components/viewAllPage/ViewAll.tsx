@@ -43,7 +43,7 @@ import {
   expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks,
   sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds
 } from './service/viewAll';
-import { filterByCurretUser } from "components/backToWorkPage/service";
+import { filterByCurretUser, filterByLevels } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 import AllSubjects from "./allSubjectsPage/AllSubjects";
 import MobileCategory from "./MobileCategory";
@@ -347,7 +347,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...state, finalBricks, sortBy });
   };
 
-  filter(bricks: Brick[], isAllSubjects: boolean, isCore: boolean, showAll?: boolean) {
+  filter(bricks: Brick[], isAllSubjects: boolean, isCore: boolean, showAll?: boolean, levels?: AcademicLevel[]) {
     if (this.state.isSearching) {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
@@ -366,6 +366,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     bricks = this.filterByCore(bricks, isCore);
     if (!isCore && !this.state.isAdmin) {
       bricks = filterByCurretUser(bricks, this.props.user.id);
+    }
+
+    if (levels) {
+      bricks = filterByLevels(bricks, levels);
     }
 
     if (filterSubjects.length > 0) {
@@ -390,7 +394,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...this.state, isViewAll: false, shown: false });
     setTimeout(() => {
       try {
-        const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore);
+        const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, false, this.state.filterLevels);
         this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
       } catch { }
     }, 1400);
@@ -400,7 +404,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({filterLevels, shown: false });
     setTimeout(() => {
       try {
-        const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore );
+        const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, this.state.isViewAll, filterLevels);
         this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
       } catch { }
     }, 1400);
@@ -924,7 +928,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           handleSortChange={e => this.handleSortChange(e)}
           clearSubjects={() => this.clearSubjects()}
           levels={this.state.filterLevels}
-          filterByLevel={filterLevels => this.setState({filterLevels})}
+          filterByLevel={lvs => this.filterByLevel(lvs)}
           filterBySubject={id => this.filterBySubject(id)}
         />
         <Grid item xs={9} className="brick-row-container">
