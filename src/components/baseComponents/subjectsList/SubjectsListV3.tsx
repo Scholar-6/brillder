@@ -107,10 +107,17 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
     let checkedSubjects = subjects.filter((s) => s.checked);
     let otherSubjects = subjects.filter((s) => !s.checked);
 
+    let viewAllCount = 0;
+
     if (!this.props.user && this.props.subjectGroup) {
       const groupSubjects = subjects.filter(s => s.group == this.props.subjectGroup);
       checkedSubjects = groupSubjects.filter((s) => s.checked);
       otherSubjects = groupSubjects.filter((s) => !s.checked);
+      for (let s of groupSubjects) {
+        if (s.publicCount) {
+          viewAllCount += s.publicCount;
+        }
+      }
     } else {
       checkedSubjects = subjects.filter((s) => s.checked);
       otherSubjects = subjects.filter((s) => !s.checked);
@@ -135,7 +142,7 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
               <span>Add a subject</span>
             </div>
           }
-          {!this.props.user && this.renderViewAllItem(10)}
+          {!this.props.user && this.renderViewAllItem(viewAllCount)}
         </AnimateHeight>
       </Grid>
     );
