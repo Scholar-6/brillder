@@ -81,6 +81,8 @@ interface ViewAllState {
   deleteDialogOpen: boolean;
   deleteBrickId: number;
 
+  subjectGroup: SubjectGroup | null;
+
   handleKey(e: any): void;
 
   isClearFilter: any;
@@ -126,7 +128,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (values.mySubject) {
       isAllSubjects = false;
     }
-    console.log(values, isAllSubjects);
+
+    let subjectGroup = null;
+    if (values.subjectGroup) {
+      subjectGroup = parseInt(values.subjectGroup as string) as SubjectGroup;
+    }
 
     this.state = {
       yourBricks: [],
@@ -146,6 +152,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isSearching: false,
       pageSize: 6,
       isLoading: true,
+      subjectGroup,
 
       filterLevels: [],
       isClearFilter: false,
@@ -270,6 +277,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       this.setState({isLoading: true});
     }
     this.loadBricks();
+    this.setState({subjectGroup: sGroup});
   }
 
   async loadUnauthorizedBricks() {
@@ -916,6 +924,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           sortBy={this.state.sortBy}
           subjects={this.state.subjects}
           userSubjects={this.state.userSubjects}
+          subjectGroup={this.state.subjectGroup}
           isCore={this.state.isCore}
           isClearFilter={this.state.isClearFilter}
           isAllSubjects={this.state.isAllSubjects}
