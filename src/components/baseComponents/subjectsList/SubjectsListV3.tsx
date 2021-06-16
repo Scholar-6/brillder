@@ -3,7 +3,7 @@ import { Grid, FormControlLabel } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
 import "./SubjectsList.scss";
-import { Subject } from "model/brick";
+import { Subject, SubjectGroup } from "model/brick";
 import RadioButton from "../buttons/RadioButton";
 import SpriteIcon from "../SpriteIcon";
 import { User } from "model/user";
@@ -16,6 +16,7 @@ interface PublishedSubjectsProps {
   isPublic: boolean;
   isSelected: boolean;
   isAll: boolean;
+  subjectGroup?: SubjectGroup | null;
   selectAll(v: boolean): void;
   openSubjectPopup(): void;
   filterBySubject(id: number): void;
@@ -102,8 +103,18 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
 
   render() {
     const { subjects } = this.props;
+
     let checkedSubjects = subjects.filter((s) => s.checked);
     let otherSubjects = subjects.filter((s) => !s.checked);
+
+    if (!this.props.user && this.props.subjectGroup) {
+      const groupSubjects = subjects.filter(s => s.group == this.props.subjectGroup);
+      checkedSubjects = groupSubjects.filter((s) => s.checked);
+      otherSubjects = groupSubjects.filter((s) => !s.checked);
+    } else {
+      checkedSubjects = subjects.filter((s) => s.checked);
+      otherSubjects = subjects.filter((s) => !s.checked);
+    }
 
     return (
       <Grid
