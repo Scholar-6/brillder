@@ -63,6 +63,15 @@ export class CustomImageBlot extends Embed {
         imageNode.setAttribute('src', value.url);
         imageContainer.appendChild(imageNode);
 
+        const containerSource = document.createElement("div");
+        containerSource.className = "image-source-container";
+        imageContainer.appendChild(containerSource);
+
+        const source = document.createElement("div");
+        source.textContent = value.imageSource;
+        source.className = "image-source";
+        containerSource.appendChild(source);
+
         const captionNode = document.createElement("figcaption");
         captionNode.className = "image-caption";
         captionNode.textContent = value.imageCaption;
