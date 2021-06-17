@@ -430,11 +430,11 @@
       position: absolute;
       bottom: 0;
       right: -0.9vw;
-      height: 100%;
+      height: calc(100% - 0.2vw);
       overflow:hidden;
       .image-source {
         position: absolute;
-        bottom: 0.5vw;
+        bottom: 0.75vw;
         transform: rotate(-90deg);
         line-height: 1;
         white-space: nowrap;
