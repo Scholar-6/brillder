@@ -5,13 +5,16 @@ import AnimateHeight from "react-animate-height";
 import "./SubjectsList.scss";
 import { Subject } from "model/brick";
 import RadioButton from "../buttons/RadioButton";
+import SpriteIcon from "../SpriteIcon";
 
 interface PublishedSubjectsProps {
   filterHeight: string;
+  isAllSubjects: boolean;
   subjects: Subject[];
   isPublic: boolean;
   isSelected: boolean;
   isAll: boolean;
+  openSubjectPopup(): void;
   filterBySubject(id: number): void;
 }
 
@@ -79,6 +82,12 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
         >
           {checkedSubjects.map(this.renderSubjectItem.bind(this))}
           {otherSubjects.map(this.renderSubjectItem.bind(this))}
+          {!this.props.isAllSubjects && 
+            <div className="create-subject-button" onClick={this.props.openSubjectPopup}>
+              <SpriteIcon name="plus-circle" />
+              <span>Add a subject</span>
+            </div>
+          }
         </AnimateHeight>
       </Grid>
     );

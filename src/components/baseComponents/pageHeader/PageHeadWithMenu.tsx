@@ -19,7 +19,8 @@ export enum PageEnum {
   MainPage,
   Profile,
   Play,
-  MyLibrary
+  MyLibrary,
+  Book,
 }
 
 interface HeaderMenuProps {
@@ -98,6 +99,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
         <PageHeader ref={this.pageHeader}
           searchPlaceholder={placeholder}
           link={this.props.link}
+          page={this.props.page}
           history={this.props.history}
           search={() => this.props.search()}
           searching={(v: string) => this.props.searching(v)}

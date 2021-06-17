@@ -9,6 +9,7 @@ import {getUniqueComponent} from './QuestionService';
 export function stripHtml(html: string) {
   const div = document.createElement("div");
   div.innerHTML = html;
+  div.querySelectorAll(".quill-desmos").forEach(el => div.removeChild(el));
   return div.textContent || div.innerText || "";
 }
 

@@ -13,6 +13,7 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
 import routes from "components/playPreview/routes";
 import { Helmet } from "react-helmet";
+import LoginRedirect from "components/baseComponents/LoginRedirect";
 
 interface PreviewRouteProps {
   exact?: any;
@@ -79,7 +80,7 @@ const PlayPreviewRoute: React.FC<PreviewRouteProps> = ({
     rest.isAuthorized();
     return <PageLoader content="...Checking rights..." />;
   } else {
-    return <Redirect to={map.Login} />;
+    return <LoginRedirect />;
   }
 };
 

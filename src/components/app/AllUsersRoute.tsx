@@ -9,6 +9,7 @@ import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import map from 'components/map';
+import LoginRedirect from 'components/baseComponents/LoginRedirect';
 
 
 interface AllUsersRouteProps {
@@ -42,7 +43,7 @@ const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, use
     rest.isAuthorized();
     return <PageLoader content="...Checking rights..." />;
   } else {
-    return <Redirect to={map.Login} />;
+    return <LoginRedirect />;
   }
 }
 

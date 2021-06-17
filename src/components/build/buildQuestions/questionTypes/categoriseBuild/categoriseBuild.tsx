@@ -10,6 +10,8 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import ValidationFailedDialog from 'components/baseComponents/dialogs/ValidationFailedDialog';
 import RemoveButton from '../components/RemoveButton';
 import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
+import SoundRecord from '../sound/SoundRecord';
+
 
 export interface CategoriseData {
   categories: SortCategory[];
@@ -53,7 +55,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       }
       category.height = 'auto';
       for (let answer of category.answers) {
-        if (answer.answerType !== QuestionValueType.Image) {
+        if (answer.answerType !== QuestionValueType.Image && answer.answerType !== QuestionValueType.Sound) {
           if (!answer.value) {
             category.height = "0%";
           }
@@ -123,6 +125,27 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       save();
     }
 
+    const setSound = (soundFile: string, caption: string) => {
+      if (locked) { return; }
+      answer.value = '';
+      answer.valueFile = '';
+      answer.soundFile = soundFile;
+      answer.soundCaption = caption;
+      answer.answerType = QuestionValueType.Sound;
+      update();
+      save();
+    }
+
+    const onTextChanged = (answer: any, value: string) => {
+      if (locked) { return; }
+      answer.value = value;
+      answer.valueFile = "";
+      answer.soundFile = "";
+      answer.answerType = QuestionValueType.String;
+      update();
+      save();
+    }
+
     let isValid = null;
     if (validationRequired) {
       isValid = true;
@@ -147,6 +170,20 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           }
         }
       }
+    }
+
+    if (answer.answerType === QuestionValueType.Sound) {
+      return (
+        <div className="categorise-sound unique-component" key={i}>
+          <RemoveButton onClick={() => answerChanged(answer, '')} />
+          <SoundRecord
+            locked={locked}
+            answer={answer as any}
+            save={setSound}
+            clear={() => onTextChanged(answer, '')}
+          />
+        </div>
+      );
     }
 
     return (
@@ -180,6 +217,12 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           fileName={answer.valueFile}
           locked={locked}
           update={setImage}
+        />
+        <SoundRecord
+          locked={locked}
+          answer={answer as any}
+          save={setSound}
+          clear={() => onTextChanged(answer, '')}
         />
       </div>
     );

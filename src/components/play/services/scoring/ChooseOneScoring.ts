@@ -2,7 +2,7 @@ import { ChooseOneComponent, ChooseOneAnswer } from "components/play/questionTyp
 import { ScoreFunction } from "../scoring";
 
 const mark: ScoreFunction<ChooseOneComponent, ChooseOneAnswer> = (component, attempt) => {
-    attempt.maxMarks = 6; //1;
+    attempt.maxMarks = 6;
 
     // set attempt.correct to true by answer index.
     attempt.correct = false;

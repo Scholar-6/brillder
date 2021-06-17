@@ -75,11 +75,11 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
     >
       <div className="flipped-page question-page">
         <div style={{ display: "flex" }}>
-          <div className="question-number">
+          <div className="question-number desktop">
             <div>{i + 1}</div>
           </div>
           <div className="question-scrollable">
-            <h2>{renderTitle()}</h2>
+            <h2 className="desktop">{renderTitle()}</h2>
             {mode === undefined
               ? <QuestionPlay question={question} isPhonePreview={true} isDefaultBook={true} answers={[]} />
               : 

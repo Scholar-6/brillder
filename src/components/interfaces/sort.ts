@@ -2,6 +2,7 @@ export enum QuestionValueType {
   None,
   String,
   Image,
+  Sound
 }
 
 export interface SortAnswer {
@@ -9,6 +10,8 @@ export interface SortAnswer {
   value: string;
   valueFile: string;
   answerType: QuestionValueType;
+  soundFile?: string;
+  soundCaption?: string;
   choosen?: boolean;
 }
   

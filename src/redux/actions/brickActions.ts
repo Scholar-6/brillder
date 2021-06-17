@@ -66,6 +66,9 @@ const saveBrickFailure = (errorMessage:string) => {
 
 const saveBrick = (brick:any) => {
   return function (dispatch: Dispatch) {
+    if (brick.questions) {
+      brick.questions.map((q: any) => ({ id: q.id, brickQuestionId: q.brickQuestionId, order: q.order }));
+    }
     brick.type = 1;
     return axios.put(
       process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true, timeout: 10000}
@@ -91,6 +94,24 @@ const saveQuestionFailure = (errorMessage: string) => ({
   type: types.SAVE_QUESTION_FAILURE,
   error: errorMessage,
 });
+
+const saveBrickQuestions = (questions:any) => {
+  return function (dispatch: Dispatch) {
+    if (questions) {
+      questions.map((q: any) => ({ id: q.id, brickQuestionId: q.brickQuestionId, order: q.order }));
+    }
+    return axios.post(
+      process.env.REACT_APP_BACKEND_HOST + '/question/reorder', questions, {withCredentials: true, timeout: 10000}
+    ).then(response => {
+      dispatch(saveBrickSuccess(response.data));
+      return response.data;
+    }).catch(error => {
+      dispatch(saveBrickFailure(error.message))
+      return null;
+    });
+  }
+}
+
 
 const saveQuestion = (question: any) => {
   return function (dispatch: Dispatch) {
@@ -218,6 +239,6 @@ const sendToPublisherConfirmed = () => {
 
 export default {
   fetchBrick, fetchPublicBrick, forgetBrick,
-  createBrick, saveBrick, createQuestion, saveQuestion,
+  createBrick, saveBrick, createQuestion, saveQuestion, saveBrickQuestions,
   assignEditor, sendToPublisher, sendToPublisherConfirmed
 }

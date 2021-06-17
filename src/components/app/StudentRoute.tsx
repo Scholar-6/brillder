@@ -9,6 +9,7 @@ import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import map from 'components/map';
+import LoginRedirect from 'components/baseComponents/LoginRedirect';
 
 interface StudentRouteProps {
   path: string;
@@ -43,7 +44,7 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, inner
     rest.isAuthorized()
     return <PageLoader content="...Checking rights..." />;
   } else {
-    return <Redirect to={map.Login} />
+    return <LoginRedirect />
   }
 }
 

@@ -11,6 +11,7 @@ import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/model';
 import {SortCategory, SortAnswer, QuestionValueType} from 'components/interfaces/sort';
 import { DragAndDropStatus } from '../pairMatch/interface';
+import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import { getValidationClassName } from '../service';
@@ -234,6 +235,13 @@ class Sort extends CompComponent<SortProps, SortState> {
           alt="" className="sort-image-choice"
           src={`${process.env.REACT_APP_BACKEND_HOST}/files/${choice.valueFile}`}
         />
+      );
+    } else if (choice.answerType === QuestionValueType.Sound) {
+      return (
+        <div style={{width: '100%'}} className="audio-play">
+          <Audio src={choice.soundFile} />
+          <div>{choice.soundCaption}</div>
+        </div>
       );
     }
     return <MathInHtml value={choice.text} />;

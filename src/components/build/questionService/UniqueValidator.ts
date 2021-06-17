@@ -8,13 +8,6 @@ const getChecked = (list: any[]) => {
   return list.find((a:any) => a.checked === true);
 }
 
-const validateImageAndText = (a: any) => {
-  if (a.answerType === QuestionValueType.Image) {
-    return !a.valueFile;
-  }
-  return !a.value;
-}
-
 const validateImageSoundAndText = (a: any) => {
   if (a.answerType === QuestionValueType.Image) {
     return !stripHtml(a.valueFile);
@@ -121,7 +114,7 @@ const validateSort = (comp: any) => {
       if (!c.name) {
         return true;
       }
-      const invalid = c.answers.find(validateImageAndText);
+      const invalid = c.answers.find(validateImageSoundAndText);
       if (invalid) {
         return true;
       }

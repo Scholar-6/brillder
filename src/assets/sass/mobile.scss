@@ -164,6 +164,25 @@
   .short-answer-input {
     width: 100% !important;
     margin-bottom: 1.5vh;
+
+    .quill-document-editor .ql-custom-toolbar .formats {
+      padding-left: 3vw;
+      button {
+        height: 7vw;
+        width: 7vw;
+      }
+      svg {
+        height: inherit;
+        width: inherit;
+      }
+    }
+    .ql-editor {
+      padding-top: 1vh;
+      padding-bottom: 1vh;
+    }
+    .ql-blank::before {
+      font-size: 4.5vw;
+    }
   }
   .question-hint-global {
     border-radius: $border-radius;
@@ -241,4 +260,63 @@
 
 .image-source {
   font-size: 4vw;
+}
+
+.play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .question-live-play .quill-document-editor {
+  input, textarea {
+    font-size: 4.5vw !important;
+  }
+  .ql-blank::before {
+    font-size: 4.5vw !important;
+  }
+  p {
+    font-size: 4.5vw !important;
+  }
+  input:focus {
+    font-size: 4.5vw !important;
+  }
+}
+
+.il-image-container {
+    position: relative;
+    .image-source-container {
+      width: 1.2vw;
+      position: absolute;
+      bottom: 0;
+      right: -0.9vw;
+      height: 100%;
+      overflow:hidden;
+      .image-source {
+        position: absolute;
+        bottom: 0.5vw;
+        transform: rotate(-90deg);
+        line-height: 1;
+        white-space: nowrap;
+        display: inline-block;
+        font-size: 0.6vw;
+      }
+    }
+  }
+
+
+.il-image-container .ili-image-container {
+  position: relative;
+  width: auto;
+  max-width: 95%;
+  height: 100%;
+  .image-source-container {
+    width: 4vw;
+    height: calc(100% - 4vw);
+    position: absolute;
+    bottom: 2vw;
+    right: -4vw;
+    overflow: hidden;
+    .image-source {
+      transform: rotate(-90deg);
+      white-space: nowrap;
+      display: inline-block;
+      line-height: 1;
+      font-size: 3vw;
+    }
+  }
 }
