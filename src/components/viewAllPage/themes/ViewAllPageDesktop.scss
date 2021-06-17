@@ -335,3 +335,19 @@
     color: var(--white) !important;
   }
 }
+
+.sorted-row .sort-and-filter-container .sort-box .filter-header.subject-category-name {
+  color: gray;
+  background: var(--white);
+  text-align: center;
+  text-transform: none;
+  span {
+    letter-spacing: 0;
+    width: 100%;
+    text-align: inherit;
+  }
+}
+
+.dashboard-page .sorted-row .brick-row-container {
+  padding-top: 0 !important;
+}

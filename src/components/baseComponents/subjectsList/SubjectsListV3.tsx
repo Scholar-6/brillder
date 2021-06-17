@@ -3,22 +3,59 @@ import { Grid, FormControlLabel } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
 import "./SubjectsList.scss";
-import { Subject } from "model/brick";
+import { Subject, SubjectGroup } from "model/brick";
 import RadioButton from "../buttons/RadioButton";
 import SpriteIcon from "../SpriteIcon";
+import { User } from "model/user";
 
 interface PublishedSubjectsProps {
+  user: User;
   filterHeight: string;
   isAllSubjects: boolean;
   subjects: Subject[];
   isPublic: boolean;
   isSelected: boolean;
   isAll: boolean;
+  subjectGroup?: SubjectGroup | null;
+  selectAll(v: boolean): void;
   openSubjectPopup(): void;
   filterBySubject(id: number): void;
 }
 
 class SubjectsListV3 extends Component<PublishedSubjectsProps> {
+  renderViewAllItem(count: number) {
+    let className = "subject-list-v2";
+    if (this.props.isAll) {
+      className += " checked";
+    }
+
+    return (
+      <Grid
+        container
+        direction="row"
+        className={className}
+        onClick={() => this.props.selectAll(this.props.isAll)}
+      >
+        <Grid item xs={11} className="filter-container subjects-indexes-box view-all-subjects">
+          <SpriteIcon name="glasses" />
+          <span>
+            All Subjects
+          </span>
+        </Grid>
+        <Grid item xs={1} className="published-count">
+          <Grid
+            container
+            alignContent="center"
+            justify="center"
+            style={{ height: "100%", margin: "0 0" }}
+          >
+            {count && count > 0 ? count : ""}
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  }
+
   renderSubjectItem(subject: Subject, i: number) {
     let count = this.props.isPublic
       ? subject.publicCount
@@ -66,8 +103,25 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
 
   render() {
     const { subjects } = this.props;
+
     let checkedSubjects = subjects.filter((s) => s.checked);
     let otherSubjects = subjects.filter((s) => !s.checked);
+
+    let viewAllCount = 0;
+
+    if (!this.props.user && this.props.subjectGroup) {
+      const groupSubjects = subjects.filter(s => s.group == this.props.subjectGroup);
+      checkedSubjects = groupSubjects.filter((s) => s.checked);
+      otherSubjects = groupSubjects.filter((s) => !s.checked);
+      for (let s of groupSubjects) {
+        if (s.publicCount) {
+          viewAllCount += s.publicCount;
+        }
+      }
+    } else {
+      checkedSubjects = subjects.filter((s) => s.checked);
+      otherSubjects = subjects.filter((s) => !s.checked);
+    }
 
     return (
       <Grid
@@ -88,6 +142,7 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
               <span>Add a subject</span>
             </div>
           }
+          {!this.props.user && this.renderViewAllItem(viewAllCount)}
         </AnimateHeight>
       </Grid>
     );
