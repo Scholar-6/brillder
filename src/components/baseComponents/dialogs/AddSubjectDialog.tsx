@@ -39,11 +39,10 @@ const AddSubjectDialog: React.FC<AddSubjectProps> = (props) => {
   }
 
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog assign-dialog-new">
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog assign-dialog-new add-subject-dialog">
       <div className="dialog-header">
-        <div className="r-popup-title bold">Select subject</div>
+        <div className="r-popup-title bold">Select a subject to add</div>
         <Autocomplete
-          freeSolo
           value={subject}
           options={subjects}
           onChange={(e: any, v: any) => setSubject(v)}
@@ -73,7 +72,7 @@ const AddSubjectDialog: React.FC<AddSubjectProps> = (props) => {
               {...params}
               variant="standard"
               label=""
-              placeholder="Search for a brick you know, or try your luck!"
+              placeholder="Click to select a subject"
             />
           )}
         />
