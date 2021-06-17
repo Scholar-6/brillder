@@ -16,8 +16,8 @@
 #launcher {
   left: 0 !important;
   margin: 7px !important;
-  width: 60px !important;
-  height: 60px !important;
+  width: 50px !important;
+  height: 50px !important;
   padding: 4px !important;
 }
 
@@ -115,11 +115,12 @@
   margin-right: 2vw !important;
 }
 .time-container {
+  filter: drop-shadow(0mm -10px 8px rgba(0, 0, 0, 0.2));
   $height: 10px;
   $width: 100%;
   left: 0;
   position: fixed;
-  bottom: 20vw;
+  bottom: $mobile-menu-height;
   width: $width !important;
   padding: 8px;
   background-color: var(--tab-gray);
