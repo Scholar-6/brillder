@@ -77,6 +77,7 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
   changeQuestion(questionId?: number): void;
   saveBrick(brick: any): any;
   saveQuestion(question: any): any;
+  saveBrickQuestions(questions: any): void;
   createQuestion(brickId: number, question: any): any;
   updateBrick(brick: any): any;
 }
@@ -321,6 +322,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (!canEdit) { return; }
     if (locked) { return; }
     const newQuestion = getNewQuestion(QuestionTypeEnum.None, false);
+    newQuestion.order = questions?.length;
     createNewQuestionV2(newQuestion, (savedQuestion: any) => {
       const allQuestions = questions.concat(savedQuestion);
       setQuestions(update(questions, { $set: allQuestions }));
@@ -787,17 +789,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setAutoSaveTime();
       setSavingStatus(true);
       questions.map((question, index) => question.order = index);
-      prepareBrickToSave(brick, questions, synthesis);
-      pushDiff(brick);
-      const brickToSave = {
-        ...brick,
-        questions: brick.questions.map((question: Question) => ({
-          ...question, contentBlocks: undefined, type: undefined,
-        })),
-      };
-      props.saveBrick(brickToSave).then((brick2: any) => {
-        setSavingStatus(false);
-      });
+
+      props.saveBrickQuestions(questions);
+
     }
   }
 
@@ -988,6 +982,7 @@ const mapDispatch = (dispatch: any) => ({
   changeQuestion: (questionId?: number) => dispatch(socketNavigateToQuestion(questionId)),
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   saveQuestion: (question: any) => dispatch(actions.saveQuestion(question)),
+  saveBrickQuestions: (questions: any) => dispatch(actions.saveBrickQuestions(questions)),
   createQuestion: (brickId: number, question: any) => dispatch(actions.createQuestion(brickId, question)),
   updateBrick: (brick: any) => dispatch(socketUpdateBrick(brick))
 });
