@@ -45,6 +45,13 @@ const GraphDialog: React.FC<GraphDialogProps> = props => {
       <SpriteIcon name="cancel" className="w100 h100 active" />
     </div>
     <div className="graph-dialog-desmos" ref={graphCallback} />
+    <div className="centered last-button">
+      <div className="upload-button active" onClick={props.close}>
+        <div className="background" />
+        <SpriteIcon name="upload" />
+        <div className="css-custom-tooltip">Insert</div>
+      </div>
+    </div>
   </Dialog>
   );
 };

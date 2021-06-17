@@ -74,7 +74,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const parsedBrick = parseAndShuffleQuestions(props.brick);
 
   let cashedBuildQuestion = GetCashedBuildQuestion();
-  console.log(cashedBuildQuestion);
 
   const [brick] = React.useState(parsedBrick);
   const [status, setStatus] = React.useState(PlayStatus.Live);
@@ -245,8 +244,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     className += " sorted-row-expanded";
   }
 
-  console.log(history.location.pathname);
-
   return (
     <React.Suspense fallback={<></>}>
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
@@ -281,6 +278,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             </Route>
             <Route exac path={routes.preLiveRoute}>
               <Live
+                history={history}
                 status={status}
                 attempts={attempts}
                 previewQuestionIndex={getBuildQuestionNumber()}

@@ -50,10 +50,48 @@
   }
   .categorise-answer {
     position: relative;
-    .quill-document-editor {
-      .ql-editor {
-        padding-top: 5vh;
+    .question-image-drop {
+      left: unset;
+      display: flex;
+      align-items: center;
+      top: 0;
+      right: 6vw;
+      width: 4vw;
+      height: 100%;
+      position: absolute;
+    }
+    .sound-record-button {
+      position: absolute;
+      cursor: pointer;
+      right: 3.5vw;
+      top: 0;
+      height: 100%;
+      @extend %flexCenter;
+      svg {
+        @extend %transitionAll300;
+        height: 100%;
+        width: 2vw;
+        color: var(--dark-gray);
+      }
+      &:hover {
+        .svg {
+          color: var(--theme-orange);
+        }
       }
     }
+    .quill-document-editor {
+      .ql-editor {
+        padding-right: 10vw;
+        padding-left: 2vw;
+      }
+      .ql-editor.ql-blank::before {
+        left: 2vw;
+      }
+    }
+  }
+  .categorise-sound {
+    margin-bottom: 0.4vh;
+    border-radius: 0.8vw;
+    background: var(--solitude-light);
   }
 }

@@ -10,6 +10,8 @@
     }
   }
   .sorted-row .brick-row-container {
+    padding-top: 5vh;
+    padding-bottom: 5vh;
     width: calc(100vw - #{$sidebar-width} - 2.4vw);
   }
   .subject-categories {
@@ -34,6 +36,7 @@
         max-height: 20vh;
       }
       .cat-name {
+        margin-top: 2vh;
         font-size: 1.5vw;
         font-family: $font-family-bold;
         text-align: center;

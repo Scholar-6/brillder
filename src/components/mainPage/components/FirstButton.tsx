@@ -5,6 +5,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { User } from "model/user";
 import map from "components/map";
 import { isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
+import { isPhone } from "services/phone";
 
 interface FirstButtonProps {
   user: User;
@@ -37,11 +38,17 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
     <div
       className={className}
       onClick={() => {
-        let link = map.AllSubjects;
+        let link = map.SubjectCategories;
         if (props.isNewTeacher) {
           link += '?' + map.NewTeachQuery;
+        } if (props.user) {
+          link = map.ViewAllPage + '?mySubject=true';
         }
-        props.history.push(link);
+        if (isPhone()) {
+          props.history.push(map.ViewAllPage);
+        } else {
+          props.history.push(link);
+        }
       }}
     >
       <div className="eye-glass-icon">

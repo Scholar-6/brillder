@@ -15,11 +15,8 @@ const mark = (component: any, attempt: ComponentAttempt<any>) => {
     if (attempt.correct) {
         attempt.marks = attempt.maxMarks;
     } else {
-        if(attempt.answer.length === 0) {
-            attempt.marks = 0;
-        } else {
-            attempt.marks = 2;
-        }
+        attempt.marks = 0;
+
     }
 
     return attempt;

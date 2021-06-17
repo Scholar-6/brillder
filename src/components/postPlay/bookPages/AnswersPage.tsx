@@ -6,6 +6,8 @@ import { BookState } from "../PostPlay";
 
 import './AnswersPage.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import ReviewEye from "../components/ReviewEye";
+import LiveEye from "../components/LiveEye";
 
 interface AnswersPageProps {
   i: number;
@@ -65,17 +67,7 @@ const AnswersPage: React.FC<AnswersPageProps> = ({
               ? <SpriteIcon name="ok" className="text-theme-green" />
               : <SpriteIcon name="cancel" className="text-theme-orange" />
             }
-            {
-              mode === true || mode === undefined
-                ? <SpriteIcon name="eye-off" className="text-dark-gray eye active" onClick={e => {
-                    e.stopPropagation();
-                    setMode(false);
-                  }} />
-                : <SpriteIcon name="eye-on" className="text-theme-dark-blue eye active" onClick={e => {
-                  e.stopPropagation();
-                  setMode(undefined);
-                }} />
-            }
+            <LiveEye mode={mode} setMode={setMode} />
           </div>
         </div>
         <div className="col">
@@ -85,17 +77,7 @@ const AnswersPage: React.FC<AnswersPageProps> = ({
               ? <SpriteIcon name="ok" className="text-theme-green" />
               : <SpriteIcon name="cancel" className="text-theme-orange" />
             }
-            {
-              mode === true
-                ? <SpriteIcon name="eye-on" className="text-theme-dark-blue eye active" onClick={e => {
-                  e.stopPropagation();
-                  setMode(undefined);
-                }} />
-                : <SpriteIcon name="eye-off" className="text-dark-gray eye active" onClick={e => {
-                    e.stopPropagation();
-                    setMode(true);
-                  }} />
-            }
+            <ReviewEye mode={mode} setMode={setMode} />
           </div>
         </div>
       </div>

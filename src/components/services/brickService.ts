@@ -73,6 +73,14 @@ export function getDateString(inputDateString: string) {
   return `${date}.${month}.${year}`;
 }
 
+export function getAttemptDateString(inputDateString: string) {
+  const dateObj = new Date(inputDateString);
+  const year = dateObj.getFullYear();
+  const month = getMonth(dateObj);
+  const date = getDate(dateObj);
+  return `${date}/${month}/${year}`;
+}
+
 export function checkTeacherOrAdmin(user: User) {
   if (user.rolePreference?.roleId === RolePreference.Teacher) {
     return true;

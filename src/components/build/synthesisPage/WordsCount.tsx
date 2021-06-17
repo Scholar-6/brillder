@@ -1,5 +1,6 @@
 import { BrickLengthEnum } from 'model/brick';
 import React from 'react';
+import { stripHtml } from '../questionService/ConvertService';
 import './WordsCount.scss';
 
 interface CountProps {
@@ -56,7 +57,7 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
     }
 
     //eslint-disable-next-line
-    let res = value.replace(/\&nbsp;/g, '');
+    let res = stripHtml(value).replace(/\&nbsp;/g, '');
     res = res.replace("   ", "");
     res = res.replace("  ", " ");
     let count = res.split(" ").length;

@@ -30,6 +30,17 @@ function randomEditorId() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
 }
 
+export const QuillValidColors = {
+    "Red": "#C43C30",
+    "Blue": "#0681DB",
+    "Green": "#30C474",
+    "Yellow": "#FF9D00",
+    "Brown": "#6A2E15",
+    "Purple": "#4523FF",
+    "Orange": "#FC7502",
+    "DarkBlue": "#001C58",
+};
+
 interface QuillEditorProps {
     data?: string;
     disabled: boolean;

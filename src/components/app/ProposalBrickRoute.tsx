@@ -12,6 +12,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
 import { Helmet } from "react-helmet";
+import LoginRedirect from "components/baseComponents/LoginRedirect";
 
 interface BuildRouteProps {
   exact?: any;
@@ -86,7 +87,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
     rest.isAuthorized();
     return <PageLoader content="...Checking rights..." />;
   } else {
-    return <Redirect to={map.Login} />;
+    return <LoginRedirect />;
   }
 };
 

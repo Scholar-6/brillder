@@ -2,28 +2,26 @@ import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import queryString from 'query-string';
 import "swiper/swiper.scss";
-import { isIPad13, isMobile, isTablet } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import { User } from "model/user";
-import { Subject, SubjectItem } from "model/brick";
-import { getSubjects } from "services/axios/subject";
+import { Subject, SubjectGroup } from "model/brick";
 import map from "components/map";
 import SubjectCategoriesSidebar from "./SubjectCategoriesSidebar";
 import { isPhone } from "services/phone";
-
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface AllSubjectsProps {
   user: User;
+  subjects: Subject[];
   history: any;
   location: any;
   setViewAll(): void;
+  setSubjectGroup(sGroup: SubjectGroup): void;
   filterByOneSubject(subjectId: number): void;
   checkSubjectsWithBricks(): void;
 }
 
 interface AllSubjectsState {
-  subjects: SubjectItem[];
-  totalSubjects: Subject[];
-  activeSubject: SubjectItem;
   showFilters: boolean;
   searchString: string;
   isAllSubjects: boolean;
@@ -45,51 +43,20 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
     }
 
     this.state = {
-      subjects: [],
-      totalSubjects: [],
-      activeSubject: {} as SubjectItem,
       failedRequest: false,
       searchString: '',
       isAllSubjects: true,
       showFilters
     };
-
-    this.loadSubjects();
-
   }
 
-  async loadSubjects() {
-    let subjects = await getSubjects() as SubjectItem[] | null;
-
-    if (subjects) {
-      subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
-      this.setState({ ...this.state, subjects, totalSubjects: subjects });
-    } else {
-      this.setState({ ...this.state, failedRequest: true });
+  moveToGroup(sGroup: SubjectGroup) {
+    this.props.setSubjectGroup(sGroup);
+    let link = map.ViewAllPage + '?subjectGroup=' + sGroup;
+    if (this.props.user) {
+      link += '&mySubject=true';
     }
-    return subjects;
-  }
-
-  onSubjectSelected(subjectId: number) {
-    const { subjects } = this.state;
-    const subject = subjects.find(s => s.id === subjectId);
-    if (subject) {
-      this.props.filterByOneSubject(subject.id);
-      let link = map.ViewAllPage + `?subjectId=${subject.id}`;
-
-      const values = queryString.parse(this.props.location.search);
-      if (values.newTeacher) {
-        link += '&' + map.NewTeachQuery;
-      }
-      this.props.history.push(link);
-    }
-  }
-
-  isFilterClear() {
-    return this.state.subjects.some(r => r.checked);
-  }
-
-  moveToArt() {
+    this.props.history.push(link);
   }
 
   render() {
@@ -103,48 +70,49 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               <div> following subject categories.</div>
             </div>
             <div className="subject-category">
-              <div onClick={this.moveToArt}>
+              <div onClick={() => this.moveToGroup(SubjectGroup.Arts)}>
                 <div className="flex-center">
-                  <img alt="" src="/images/subject-categories/canvas.svg" />
+                  <SpriteIcon name="category-canvas" />
                 </div>
                 <div className="cat-name">Arts</div>
               </div>
             </div>
             <div className="subject-category">
-              <div onClick={() => { }}>
+              <div onClick={() => this.moveToGroup(SubjectGroup.GeneralTopical)}>
                 <div className="flex-center">
-                  <img alt="" src="/images/subject-categories/internet.svg" />
+                  <SpriteIcon name="category-internet" />
                 </div>
-                <div className="cat-name">Ceteral & Topical</div>
+                <div className="cat-name">General & Topical</div>
               </div>
             </div>
             <div className="subject-category">
-              <div onClick={() => { }}>
+              <div onClick={() => this.moveToGroup(SubjectGroup.HumanitiesAndSocialSciences)}>
                 <div className="flex-center">
-                  <img alt="" src="/images/subject-categories/book.svg" />
+                  <SpriteIcon name="category-book" />
                 </div>
                 <div className="cat-name">Humanities & Social Sciences</div>
               </div>
             </div>
             <div className="subject-category">
-              <div onClick={() => { }}>
+              <div onClick={() => this.moveToGroup(SubjectGroup.Languages)}>
                 <div className="flex-center">
-                  <img alt="" src="/images/subject-categories/translating.svg" />
+                  <SpriteIcon name="category-translation" />
                 </div>
                 <div className="cat-name">Languages</div>
               </div>
             </div>
             <div className="subject-category">
-              <div onClick={() => { }}>
+              <div onClick={() => this.moveToGroup(SubjectGroup.MathsAndComputing)}>
                 <div className="flex-center">
-                  <img alt="" src="/images/subject-categories/binary-code.svg" />
+                  <SpriteIcon name="binary-code" />
                 </div>
                 <div className="cat-name">Maths and Computing</div>
               </div>
             </div>
             <div className="subject-category">
-              <div onClick={() => { }}>
+              <div onClick={() => this.moveToGroup(SubjectGroup.Science)}>
                 <div className="flex-center">
+                  <SpriteIcon name="category-chemistry" />
                   <img alt="" src="/images/subject-categories/chemistry.svg" />
                 </div>
                 <div className="cat-name">Science</div>
@@ -153,7 +121,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
             <div className="subject-category">
               <div onClick={() => { }}>
                 <div className="flex-center">
-                  <img alt="" src="/images/subject-categories/education.svg" />
+                  <SpriteIcon name="category-education" />
                 </div>
                 <div className="cat-name">School Client</div>
               </div>
@@ -161,7 +129,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
             <div className="subject-category">
               <div onClick={() => { }}>
                 <div className="flex-center">
-                  <img alt="" src="/images/subject-categories/economics.svg" />
+                  <SpriteIcon name="category-economics" />
                 </div>
                 <div className="cat-name">Corporate</div>
               </div>
@@ -178,33 +146,33 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
           <Grid item xs={9} className="brick-row-container view-all-subjects subject-categories">
             <div className="row">
               <div>
-                <div onClick={this.moveToArt}>
+                <div onClick={() => this.moveToGroup(SubjectGroup.Arts)}>
                   <div className="flex-center">
-                    <img alt="" src="/images/subject-categories/canvas.svg" />
+                    <SpriteIcon name="category-canvas" />
                   </div>
                   <div className="cat-name">Arts</div>
                 </div>
               </div>
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => this.moveToGroup(SubjectGroup.GeneralTopical)}>
                   <div className="flex-center">
-                    <img alt="" src="/images/subject-categories/internet.svg" />
+                    <SpriteIcon name="category-internet" />
                   </div>
-                  <div className="cat-name">Ceteral & Topical</div>
+                  <div className="cat-name">General & Topical</div>
                 </div>
               </div>
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => this.moveToGroup(SubjectGroup.HumanitiesAndSocialSciences)}>
                   <div className="flex-center">
-                    <img alt="" src="/images/subject-categories/book.svg" />
+                    <SpriteIcon name="category-book" />
                   </div>
                   <div className="cat-name">Humanities & Social Sciences</div>
                 </div>
               </div>
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => {}}>
                   <div className="flex-center">
-                    <img alt="" src="/images/subject-categories/education.svg" />
+                    <SpriteIcon name="category-education" />
                   </div>
                   <div className="cat-name">School Client</div>
                 </div>
@@ -212,33 +180,33 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
             </div>
             <div className="row">
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => this.moveToGroup(SubjectGroup.Languages)}>
                   <div className="flex-center">
-                    <img alt="" src="/images/subject-categories/translating.svg" />
+                    <SpriteIcon name="category-translation" />
                   </div>
                   <div className="cat-name">Languages</div>
                 </div>
               </div>
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => this.moveToGroup(SubjectGroup.MathsAndComputing)}>
                   <div className="flex-center">
-                    <img alt="" src="/images/subject-categories/binary-code.svg" />
+                    <SpriteIcon name="binary-code" />
                   </div>
                   <div className="cat-name">Maths and Computing</div>
                 </div>
               </div>
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => this.moveToGroup(SubjectGroup.Science)}>
                   <div className="flex-center">
-                    <img alt="" src="/images/subject-categories/chemistry.svg" />
+                    <SpriteIcon name="category-chemistry" />
                   </div>
                   <div className="cat-name">Science</div>
                 </div>
               </div>
               <div>
-                <div onClick={() => { }}>
+                <div onClick={() => {}}>
                   <div className="flex-center">
-                    <img alt="" src="/images/subject-categories/economics.svg" />
+                    <SpriteIcon name="category-economics" />
                   </div>
                   <div className="cat-name">Corporate</div>
                 </div>

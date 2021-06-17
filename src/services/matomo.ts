@@ -32,6 +32,7 @@ export function trackSignUp() {
   if (_mtm) {
     try {
       _mtm.push({"event": "synthesis-signup"});
+      console.log('matomo synthesis-signup event')
     } catch {
       console.log('matomo sign up tracking error');
     }

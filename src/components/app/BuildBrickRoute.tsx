@@ -13,6 +13,7 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
 import { checkAdmin } from "components/services/brickService";
 import { Helmet } from "react-helmet";
+import LoginRedirect from "components/baseComponents/LoginRedirect";
 
 interface BuildRouteProps {
   exact?: any;
@@ -87,7 +88,7 @@ const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
               if (canAccess(rest.brick)) {
                 return <Component {...props} />;
               }
-              return <Redirect to={map.Login} />;
+              return <LoginRedirect />;
             }
 
             props.history.push(`/build/brick/${brickId}/investigation`);
@@ -97,7 +98,7 @@ const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
           if (canAccess(rest.brick)) {
             return <Component {...props} />;
           }
-          return <Redirect to={map.Login} />;
+          return <LoginRedirect />;
         }}
       />
     </>;
@@ -105,7 +106,7 @@ const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
     rest.isAuthorized();
     return <PageLoader content="...Checking rights..." />;
   } else {
-    return <Redirect to={map.Login} />;
+    return <LoginRedirect />;
   }
 };
 

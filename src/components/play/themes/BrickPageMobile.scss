@@ -1380,3 +1380,46 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
 }
+
+// sound components
+.play-preview-pages .audio-play {
+  text-align: center;
+}
+.play-preview-pages .custom-audio-controls {
+  height: 6vw;
+  .button-container {
+    width: 10vw;
+    svg {
+      width: 5vw;
+      height: 5vw;
+    }
+  }
+  .time-text {
+    font-size: 3vw;
+    width: 20vw;
+  }
+  input {
+    height: 1.5vw;
+  }
+  input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 3vw;
+    height: 3vw;
+  }
+  
+  input::-moz-range-thumb {
+    width: 3vw;
+    height: 3vw;
+    cursor: pointer;
+  }
+  .volume-container-main {
+    .volume-container {
+      width: 5vw;
+      svg {
+        height: 4vw;
+        width: 4vw;
+      }
+    }
+  }
+}

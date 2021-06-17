@@ -87,7 +87,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     return attempt;
   }
 
-  renderCkeditor(index: number) {
+  renderQuill(index: number) {
     let value = this.state.userAnswers[index];
     if (this.props.isPreview) {
       value = this.props.component.list[index].value;
@@ -103,17 +103,6 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
       toolbar={['superscript', 'subscript']}
       onChange={v => this.setUserAnswer(v, index)}
     />
-    /*
-    return (
-      <DocumentWirisEditorComponent
-        data={value}
-        disabled={false}
-        onChange={v => this.setUserAnswer(v, index)}
-        toolbar={["superscript", "subscript"]}
-        onBlur={() => { }}
-        placeholder={`Answer ${index + 1}`}
-      />
-    );*/
   }
 
   renderAnswer(answer: ShortAnswerItem, index: number) {
@@ -134,7 +123,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
 
     return (
       <div key={index} className={className}>
-        {this.renderCkeditor(index)}
+        {this.renderQuill(index)}
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}
           isReview={this.props.isReview}
