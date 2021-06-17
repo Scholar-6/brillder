@@ -423,25 +423,24 @@
 
 
 .il-image-container {
-  position: relative;
   .ili-image-container {
     position: relative;
-  }
-  .image-source-container {
-    width: 1.2vw;
-    position: absolute;
-    bottom: 0;
-    right: -0.9vw;
-    height: 100%;
-    overflow:hidden;
-    .image-source {
+    .image-source-container {
+      width: 1.2vw;
       position: absolute;
-      bottom: 0.5vw;
-      transform: rotate(-90deg);
-      line-height: 1;
-      white-space: nowrap;
-      display: inline-block;
-      font-size: 0.6vw;
+      bottom: 0;
+      right: -0.9vw;
+      height: 100%;
+      overflow:hidden;
+      .image-source {
+        position: absolute;
+        bottom: 0.5vw;
+        transform: rotate(-90deg);
+        line-height: 1;
+        white-space: nowrap;
+        display: inline-block;
+        font-size: 0.6vw;
+      }
     }
   }
 }
