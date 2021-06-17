@@ -424,11 +424,14 @@
 
 .il-image-container {
   position: relative;
+  .ili-image-container {
+    position: relative;
+  }
   .image-source-container {
     width: 1.2vw;
     position: absolute;
     bottom: 0;
-    right: -0.6vw;
+    right: -0.9vw;
     height: 100%;
     overflow:hidden;
     .image-source {
