@@ -95,6 +95,24 @@ const saveQuestionFailure = (errorMessage: string) => ({
   error: errorMessage,
 });
 
+const saveBrickQuestions = (questions:any) => {
+  return function (dispatch: Dispatch) {
+    if (questions) {
+      questions.map((q: any) => ({ id: q.id, brickQuestionId: q.brickQuestionId, order: q.order }));
+    }
+    return axios.post(
+      process.env.REACT_APP_BACKEND_HOST + '/question/reorder', questions, {withCredentials: true, timeout: 10000}
+    ).then(response => {
+      // dispatch(saveQuestionSuccess(savedBrick));
+      // return savedBrick;
+    }).catch(error => {
+      dispatch(saveBrickFailure(error.message))
+      return null;
+    });
+  }
+}
+
+
 const saveQuestion = (question: any) => {
   return function (dispatch: Dispatch) {
     return axios.put(
@@ -221,6 +239,6 @@ const sendToPublisherConfirmed = () => {
 
 export default {
   fetchBrick, fetchPublicBrick, forgetBrick,
-  createBrick, saveBrick, createQuestion, saveQuestion,
+  createBrick, saveBrick, createQuestion, saveQuestion, saveBrickQuestions,
   assignEditor, sendToPublisher, sendToPublisherConfirmed
 }
