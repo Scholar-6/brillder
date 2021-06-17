@@ -461,7 +461,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         if (initQuestionSet === false) {
           parsedQuestions[0].active = true;
         }
-        setQuestions(update(questions, { $set: parsedQuestions }));
+
+        const parsedOrderedQuestions = parsedQuestions
+          .filter(q => q !== null)
+          .sort((qa, qb) => qa.order - qb.order);
+
+        setQuestions(update(questions, { $set: parsedOrderedQuestions }));
         setStatus(update(loaded, { $set: true }));
       }
     }
@@ -597,7 +602,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setSavingStatus(true);
     prepareBrickToSave(brick, questions, synthesis);
     if (canEdit === true) {
-      console.log('save brick')
       //const diff = getBrickDiff(currentBrick, brick);
       pushDiff(brick);
       setCurrentBrick(brick);
