@@ -103,8 +103,8 @@ const saveBrickQuestions = (questions:any) => {
     return axios.post(
       process.env.REACT_APP_BACKEND_HOST + '/question/reorder', questions, {withCredentials: true, timeout: 10000}
     ).then(response => {
-      // dispatch(saveQuestionSuccess(savedBrick));
-      // return savedBrick;
+      dispatch(saveBrickSuccess(response.data));
+      return response.data;
     }).catch(error => {
       dispatch(saveBrickFailure(error.message))
       return null;
