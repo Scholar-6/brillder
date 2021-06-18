@@ -121,3 +121,19 @@ export const acceptTerms = async(termsAndConditionsAcceptedVersion: string) => {
     return null;
   }
 }
+
+/**
+ * Assign new subject to current user
+ */
+export const addSubject = async(subjectId: number) => {
+  try {
+    const data = await put<string>('/user/addSubject/' + subjectId, {});
+    console.log(data);
+    if (data === "OK") {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    return null;
+  }
+}

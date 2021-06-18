@@ -49,6 +49,8 @@ import AllSubjects from "./allSubjectsPage/AllSubjects";
 import MobileCategory from "./MobileCategory";
 import { playCover } from "components/play/routes";
 import { isPhone } from "services/phone";
+import AddSubjectDialog from "components/baseComponents/dialogs/AddSubjectDialog";
+import { addSubject } from "services/axios/user";
 
 
 interface ViewAllProps {
@@ -75,6 +77,7 @@ interface ViewAllState {
   finalBricks: Brick[];
   isLoading: boolean;
 
+  isSubjectPopupOpen: boolean;
   noSubjectOpen: boolean;
   activeSubject: SubjectItem;
   dropdownShown: boolean;
@@ -142,6 +145,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       subjects: [],
       userSubjects: props.user ? Object.assign([], props.user.subjects) : [],
       sortedIndex: 0,
+      
+      isSubjectPopupOpen: false,
       noSubjectOpen: false,
       deleteDialogOpen: false,
       deleteBrickId: -1,
@@ -922,6 +927,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
 
+  async addSubject(s: Subject) {
+    const res = await addSubject(s.id);
+    if (res) {
+      this.setState({isSubjectPopupOpen: false});
+    }
+  }
+
   renderDesktopBricks(bricks: Brick[]) {
     const filterSubjects = getCheckedSubjectIds(this.state.subjects);
 
@@ -993,6 +1005,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             const finalBricks = this.filter(this.state.bricks, isAllSubjects, this.state.isCore);
             this.setState({ isAllSubjects, finalBricks, sortedIndex: 0 });
           }}
+          openAddSubjectPopup={() => this.setState({ isSubjectPopupOpen: true})}
           handleSortChange={e => this.handleSortChange(e)}
           clearSubjects={() => this.clearSubjects()}
           levels={this.state.filterLevels}
@@ -1123,6 +1136,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             subject={this.state.activeSubject}
             history={this.props.history}
             close={() => this.setState({ noSubjectOpen: false })}
+          />
+          <AddSubjectDialog
+            isOpen={this.state.isSubjectPopupOpen}
+            success={this.addSubject.bind(this)}
+            close={() => this.setState({ isSubjectPopupOpen: false })}
           />
         </div >
       </React.Suspense>

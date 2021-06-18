@@ -34,8 +34,9 @@ const AddSubjectDialog: React.FC<AddSubjectProps> = (props) => {
   useEffect(() => { loadSubjects() }, []);
 
   const addSubject = async () => {
-    //const subjects =  props.user.subjects.map(s => s.id);
-    props.close();
+    if (subject) {
+      props.success(subject);
+    }
   }
 
   return (
