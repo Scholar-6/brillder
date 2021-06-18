@@ -5,10 +5,10 @@ import { User } from "model/user";
 
 import SubjectsListV3 from "components/baseComponents/subjectsList/SubjectsListV3";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import AddSubjectDialog from "components/baseComponents/dialogs/AddSubjectDialog";
 import {
   AcademicLevel,
   AcademicLevelLabels,
+  Subject,
   SubjectGroup,
   SubjectGroupNames,
 } from "model/brick";
@@ -32,6 +32,8 @@ interface FilterProps {
 
   isAllSubjects: boolean;
   setAllSubjects(value: boolean): void;
+
+  openAddSubjectPopup(): void;
 
   isViewAll: boolean;
   selectAllSubjects(isViewAll: boolean): void;
@@ -374,20 +376,13 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               isSelected={this.props.isClearFilter}
               filterHeight={this.state.filterHeight}
               subjectGroup={this.props.subjectGroup}
-              openSubjectPopup={() =>
-                this.setState({ isSubjectPopupOpen: true })
-              }
+              openSubjectPopup={this.props.openAddSubjectPopup}
               selectAll={(isAll) => this.props.selectAllSubjects(!isAll)}
               filterBySubject={this.props.filterBySubject}
             />
           </div>
         </div>
         <div className="sidebar-footer" />
-        <AddSubjectDialog
-          isOpen={this.state.isSubjectPopupOpen}
-          success={(subject) => {}}
-          close={() => this.setState({ isSubjectPopupOpen: false })}
-        />
       </Grid>
     );
   }
