@@ -54,6 +54,7 @@ export const getCheckedSubjects = (subjects: SubjectItem[]) => {
 
 export const sortAndFilterBySubject = (bricks: Brick[], filterSubjects: number[]) => {
   const filtered = filterBySubjects(bricks, filterSubjects);
+  console.log(66, filtered.length)
   sortBySubjectId(filtered, filterSubjects);
   return filtered;
 }
@@ -196,4 +197,17 @@ export const prepareUserSubjects = (subjects: SubjectItem[], userSubjects: Subje
   }
   subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
   return getCheckedSubjectIds(subjects);
+}
+
+export const onlyPrepareUserSubjects = (subjects: SubjectItem[], userSubjects: Subject[]) => {
+  const ss = [];
+  for (let subject of userSubjects) {
+    for (let s of subjects) {
+      if (s.id === subject.id) {
+        ss.push(s);
+      }
+    }
+  }
+  subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
+  return ss;
 }
