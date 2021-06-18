@@ -7,16 +7,28 @@
   background: var(--theme-dark-blue);
   height: 100%;
   width: 100%;
-  font-family: $font-family-regular;
+  .create-subject-button {
+    font-size: 1.05vw;
+    font-family: $font-family-light;
+  }
   .level-filter-box {
     position: relative;
+    .MuiTypography-root {
+      font-family: $font-family-light !important;
+      font-size: 1.05vw;
+    }
     .absolute-difficult-help {
       width: 4vw !important;
       position: absolute;
       right: 0;
       top: calc(1.3vh + 0.7vw);
       .hover-content {
+        background: var(--tab-gray);
+        color: var(--theme-dark-blue);
         right: 0;
+      }
+      .l-text.smaller {
+        width: calc(100% - 4vw);
       }
       .hover-area.custom {
         &:hover .hover-content {
