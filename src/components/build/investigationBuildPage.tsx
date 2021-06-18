@@ -77,7 +77,7 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
   changeQuestion(questionId?: number): void;
   saveBrick(brick: any): any;
   saveQuestion(question: any): any;
-  saveBrickQuestions(questions: any): void;
+  saveBrickQuestions(questions: any): any;
   createQuestion(brickId: number, question: any): any;
   updateBrick(brick: any): any;
 }
@@ -790,8 +790,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setSavingStatus(true);
       questions.map((question, index) => question.order = index);
 
-      props.saveBrickQuestions(questions);
-
+      props.saveBrickQuestions(questions).then(() => {
+        setSavingStatus(false);
+      }).catch((err: any) => {
+          console.log(err);
+          console.log("Error saving brick.");
+          setSaveError(true);
+      });
     }
   }
 
