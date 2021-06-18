@@ -386,12 +386,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         filterSubjects = getCheckedSubjectIds(this.state.subjects);
       } else {
         const userSubjects = onlyPrepareUserSubjects(this.state.subjects, this.state.userSubjects);
-        filterSubjects = userSubjects.map(s => s.id);
-        console.log(3, filterSubjects);
-        //let isChecked = filterSubjects.filter(s = s.checked === true);
-        //if (isChecked) {
-          //filterSubjects = only
-        //}
+        const isChecked = userSubjects.find(s => s.checked == true);
+        console.log(isChecked);
+        if (isChecked) {
+          filterSubjects = getCheckedSubjectIds(userSubjects);
+        } else {
+          filterSubjects = userSubjects.map(s => s.id);
+        }
       }
     } else if (this.state.subjectGroup) {
       // unauthorized user see groups of subjects
@@ -403,18 +404,18 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       filterSubjects = this.state.subjects.map(s => s.id);
     }
 
+    console.log(showAll);
+
     bricks = this.filterByCore(bricks, isCore);
     if (!isCore && !this.state.isAdmin) {
       bricks = filterByCurretUser(bricks, this.props.user.id);
     }
 
-    console.log(3, bricks.length)
-
     if (levels && levels.length > 0) {
       bricks = filterByLevels(bricks, levels);
     }
 
-    console.log(filterSubjects, bricks.length)
+    console.log(bricks.length, filterSubjects.length);
 
     if (filterSubjects.length > 0) {
       return sortAndFilterBySubject(bricks, filterSubjects);
@@ -455,7 +456,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       try {
         let finalBricks:Brick[] = [];
         if (this.props.user) {
-          finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, this.state.isViewAll, filterLevels);
+          finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, false, filterLevels);
         } else {
           finalBricks = this.filterUnauthorized(this.state.bricks, this.state.isViewAll, filterLevels);
         }
