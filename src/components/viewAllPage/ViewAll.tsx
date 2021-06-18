@@ -12,7 +12,7 @@ import { User } from "model/user";
 import { Notification } from 'model/notifications';
 import { AcademicLevel, Brick, Subject, SubjectGroup, SubjectGroupNames, SubjectItem } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
-import { getAssignmentIcon } from "components/services/brickService";
+import { checkAdmin, getAssignmentIcon } from "components/services/brickService";
 import { getCurrentUserBricks, getPublicBricks, getPublishedBricks, searchBricks, searchPublicBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
 
@@ -41,7 +41,7 @@ import {
   removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject,
   getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks,
   expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks,
-  sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds, onlyPrepareUserSubjects
+  sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds, onlyPrepareUserSubjects, countSubjectBricksV2
 } from './service/viewAll';
 import { filterByCurretUser, filterByLevels } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
@@ -106,7 +106,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   constructor(props: ViewAllProps) {
     super(props);
 
-    let isAdmin = false;
+    const isAdmin = checkAdmin(props.user.roles);
 
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
@@ -301,7 +301,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         let bs = sortAllBricks(bricks);
         let finalBricks = this.filter(bs, this.state.isAllSubjects, this.state.isCore);
         let { subjects } = this.state;
-        countSubjectBricks(subjects, bs);
+        countSubjectBricksV2(subjects, bs, this.props.user, this.state.isAdmin);
         subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
         if (values && values.isViewAll) {
           this.checkSubjectsWithBricks(subjects);
@@ -387,7 +387,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       } else {
         const userSubjects = onlyPrepareUserSubjects(this.state.subjects, this.state.userSubjects);
         const isChecked = userSubjects.find(s => s.checked == true);
-        console.log(isChecked);
         if (isChecked) {
           filterSubjects = getCheckedSubjectIds(userSubjects);
         } else {
@@ -404,18 +403,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       filterSubjects = this.state.subjects.map(s => s.id);
     }
 
-    console.log(showAll);
-
     bricks = this.filterByCore(bricks, isCore);
+    console.log(isCore, bricks.length, this.state.isAdmin);
     if (!isCore && !this.state.isAdmin) {
       bricks = filterByCurretUser(bricks, this.props.user.id);
     }
 
+    console.log(bricks.length)
+
     if (levels && levels.length > 0) {
       bricks = filterByLevels(bricks, levels);
     }
-
-    console.log(bricks.length, filterSubjects.length);
 
     if (filterSubjects.length > 0) {
       return sortAndFilterBySubject(bricks, filterSubjects);
