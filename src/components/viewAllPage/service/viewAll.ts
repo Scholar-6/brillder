@@ -54,7 +54,6 @@ export const getCheckedSubjects = (subjects: SubjectItem[]) => {
 
 export const sortAndFilterBySubject = (bricks: Brick[], filterSubjects: number[]) => {
   const filtered = filterBySubjects(bricks, filterSubjects);
-  console.log(66, filtered.length)
   sortBySubjectId(filtered, filterSubjects);
   return filtered;
 }
