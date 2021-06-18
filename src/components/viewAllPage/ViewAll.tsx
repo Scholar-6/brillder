@@ -41,7 +41,7 @@ import {
   removeByIndex, sortByPopularity, prepareUserSubjects, sortByDate, sortAndFilterBySubject,
   getCheckedSubjects, prepareVisibleBricks, toggleSubject, renderTitle, hideBricks,
   expandBrick, sortAllBricks, countSubjectBricks, prepareYourBricks,
-  sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds
+  sortAndCheckSubjects, filterSearchBricks, getCheckedSubjectIds, onlyPrepareUserSubjects
 } from './service/viewAll';
 import { filterByCurretUser, filterByLevels } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
@@ -385,7 +385,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (isAllSubjects) {
         filterSubjects = getCheckedSubjectIds(this.state.subjects);
       } else {
-        filterSubjects = prepareUserSubjects(this.state.subjects, this.state.userSubjects);
+        const userSubjects = onlyPrepareUserSubjects(this.state.subjects, this.state.userSubjects);
+        filterSubjects = userSubjects.map(s => s.id);
+        console.log(3, filterSubjects);
+        //let isChecked = filterSubjects.filter(s = s.checked === true);
+        //if (isChecked) {
+          //filterSubjects = only
+        //}
       }
     } else if (this.state.subjectGroup) {
       // unauthorized user see groups of subjects
@@ -402,9 +408,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricks = filterByCurretUser(bricks, this.props.user.id);
     }
 
-    if (levels) {
+    console.log(3, bricks.length)
+
+    if (levels && levels.length > 0) {
       bricks = filterByLevels(bricks, levels);
     }
+
+    console.log(filterSubjects, bricks.length)
 
     if (filterSubjects.length > 0) {
       return sortAndFilterBySubject(bricks, filterSubjects);
