@@ -1371,13 +1371,35 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   align-items: center;
   justify-content: center;
 
+  .sd-image-container {
+    position: relative;
+  }
+
   img {
-    background: var(--theme-light-blue);
+    background: var(--white);
+    padding-right: 4vw;
     max-width: 80vw;
     max-height: 80vh;
     border: 2vw solid var(--theme-light-blue);
     border-radius: 0.8vw;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  .hover-source-container2 {
+    bottom: 3.5vw;
+    right: 1vw;
+    position: absolute;
+    height: calc(100% - 6vw);
+    width: 5vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    .image-source {
+      position: absolute;
+      bottom: 0.7vw;
+      font-size: 3vw;
+      transform: rotate(-90deg);
+      text-overflow: ellipsis;
+    }
   }
 }
 
