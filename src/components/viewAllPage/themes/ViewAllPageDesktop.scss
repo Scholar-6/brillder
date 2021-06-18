@@ -8,6 +8,24 @@
   height: 100%;
   width: 100%;
   font-family: $font-family-regular;
+  .level-filter-box {
+    position: relative;
+    .absolute-difficult-help {
+      width: 4vw !important;
+      position: absolute;
+      right: 0;
+      top: calc(1.3vh + 0.7vw);
+      .hover-content {
+        right: 0;
+      }
+      .hover-area.custom {
+        &:hover .hover-content {
+          top: -8vw;
+          left: 3vw;
+        }
+      }
+    }
+  }
   .sorted-row {
     border-top-left-radius: 8vw;
     .sort-and-filter-container {
