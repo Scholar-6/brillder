@@ -22,6 +22,10 @@
       position: absolute;
       right: 0;
       top: calc(1.3vh + 0.7vw);
+      .white-circle {
+        background: var(--theme-dark-blue);
+        color: var(--white);
+      }
       .hover-content {
         background: var(--tab-gray);
         color: var(--theme-dark-blue);
