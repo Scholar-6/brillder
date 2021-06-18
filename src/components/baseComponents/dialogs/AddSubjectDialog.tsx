@@ -10,9 +10,11 @@ import './AssignBrickClass.scss';
 import actions from 'redux/actions/requestFailed';
 import SpriteIcon from '../SpriteIcon';
 import { getSubjects } from 'services/axios/subject';
+import { Subject } from 'model/brick';
 
 interface AddSubjectProps {
   isOpen: boolean;
+  userSubjects: Subject[];
   success(subject: any): void;
   close(): void;
   requestFailed(e: string): void;
@@ -23,8 +25,12 @@ const AddSubjectDialog: React.FC<AddSubjectProps> = (props) => {
   const [subject, setSubject] = React.useState(null as any);
 
   const loadSubjects = async () => {
-    const loadedSubjects = await getSubjects();
+    let loadedSubjects = await getSubjects();
+     
     if (loadedSubjects) {
+      for (let s2 of props.userSubjects) {
+        loadedSubjects = loadedSubjects.filter(s => s2.id !== s.id);
+      }
       setSubjects(loadedSubjects);
     } else {
       props.requestFailed('Can`t load subjects');

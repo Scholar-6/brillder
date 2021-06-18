@@ -128,7 +128,6 @@ export const acceptTerms = async(termsAndConditionsAcceptedVersion: string) => {
 export const addSubject = async(subjectId: number) => {
   try {
     const data = await put<string>('/user/addSubject/' + subjectId, {});
-    console.log(data);
     if (data === "OK") {
       return true;
     }
