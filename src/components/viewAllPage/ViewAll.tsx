@@ -111,7 +111,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   constructor(props: ViewAllProps) {
     super(props);
 
-    const isAdmin = checkAdmin(props.user.roles);
+    let isAdmin = false;
+    if (props.user) {
+      isAdmin = checkAdmin(props.user.roles);
+    }
 
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
