@@ -8,6 +8,7 @@ import "swiper/swiper.scss";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
 import brickActions from "redux/actions/brickActions";
+import userActions from '../../redux/actions/user';
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
 import { AcademicLevel, Brick, Subject, SubjectGroup, SubjectGroupNames, SubjectItem } from "model/brick";
@@ -58,6 +59,7 @@ interface ViewAllProps {
   notifications: Notification[] | null;
   history: any;
   location: any;
+  getUser(): Promise<any>;
   forgetBrick(): Promise<any>;
 }
 
@@ -931,6 +933,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const res = await addSubject(s.id);
     if (res) {
       this.setState({isSubjectPopupOpen: false});
+      const user = await this.props.getUser();
+      if (user) {
+        this.setState({userSubjects: user.subjects});
+      }
     }
   }
 
@@ -1137,11 +1143,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             history={this.props.history}
             close={() => this.setState({ noSubjectOpen: false })}
           />
+          {this.state.isSubjectPopupOpen &&
           <AddSubjectDialog
             isOpen={this.state.isSubjectPopupOpen}
+            userSubjects={this.state.userSubjects}
             success={this.addSubject.bind(this)}
             close={() => this.setState({ isSubjectPopupOpen: false })}
-          />
+          />}
         </div >
       </React.Suspense>
     );
@@ -1154,6 +1162,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
+  getUser: () => dispatch(userActions.getUser()),
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
 });
 
