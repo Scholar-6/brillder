@@ -1,5 +1,6 @@
 import queryString from 'query-string';
 import { Brick, BrickStatus, Subject, SubjectItem } from "model/brick";
+import { User } from 'model/user';
 
 export const getCheckedSubjectIds = (subjects: Subject[]) => {
   const filterSubjects = [];
@@ -111,6 +112,34 @@ export const countSubjectBricks = (subjects: any[], bricks: Brick[]) => {
           s.publicCount += 1;
         } else {
           s.personalCount += 1;
+        }
+      }
+    }
+  }
+}
+
+const countPersonalBrick = (s: any, b: Brick, user: User, isAdmin: boolean) => {
+  if (isAdmin) {
+    s.personalCount += 1;
+  } else {
+    if (b.author.id == user.id) {
+      s.personalCount += 1;
+    }
+  }
+}
+
+export const countSubjectBricksV2 = (subjects: any[], bricks: Brick[], user: User, isAdmin: boolean) => {
+  subjects.forEach((s: any) => {
+    s.publicCount = 0;
+    s.personalCount = 0;
+  });
+  for (let b of bricks) {
+    for (let s of subjects) {
+      if (s.id === b.subjectId) {
+        if (b.isCore) {
+          s.publicCount += 1;
+        } else {
+          countPersonalBrick(s, b, user, isAdmin);
         }
       }
     }
