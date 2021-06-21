@@ -13,6 +13,7 @@ import {
   SubjectGroupNames,
 } from "model/brick";
 import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
+import RadioButton from "components/baseComponents/buttons/RadioButton";
 
 export enum SortBy {
   None,
@@ -32,6 +33,7 @@ interface FilterProps {
 
   isAllSubjects: boolean;
   setAllSubjects(value: boolean): void;
+  selectUserSubjects(value: boolean): void;
 
   openAddSubjectPopup(): void;
 
@@ -330,18 +332,10 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
             {this.renderSubjectsToggle()}
             <div className="scroll-buttons">
               {this.props.user && (
-                <FormControlLabel
-                  className="radio-container"
-                  checked={this.props.isViewAll}
-                  control={
-                    <Radio
-                      onClick={() =>
-                        this.props.selectAllSubjects(!this.props.isViewAll)
-                      }
-                    />
-                  }
-                  label="All"
-                />
+                <div className="radio-container flex-center" onClick={() => this.props.selectUserSubjects(!this.props.isViewAll)}>
+                  <RadioButton checked={this.props.isViewAll} name="" color="#001c58" />
+                  All
+                </div>
               )}
               <SpriteIcon
                 name="arrow-up"
