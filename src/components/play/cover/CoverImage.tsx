@@ -101,7 +101,7 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
             : (
               <div>
                 <SpriteIcon name="image" />
-                <div>Click to add a cover image.</div>
+                <div className="cover-image-placeholder">Click to add a cover image.</div>
               </div>
             )
         }

@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .image-dialog-container {
   .invalid {
@@ -33,7 +33,7 @@
         width: 80%;
         height: 70%;
       }
-  
+
       &.active {
         cursor: pointer;
         background: var(--theme-green);
@@ -180,7 +180,8 @@
     margin-left: 3vw;
     width: 19vw;
     height: 0.3vw;
-    .MuiSlider-track, .MuiSlider-rail {
+    .MuiSlider-track,
+    .MuiSlider-rail {
       height: inherit !important;
       border-bottom-left-radius: 0.5vw;
       border-top-left-radius: 0.5vw;
@@ -240,4 +241,8 @@
   .flex-inline {
     padding-top: 1vh;
   }
+}
+.cover-image-placeholder {
+  color: var(--theme-dark-blue);
+  font-size: 2.25rem;
 }
