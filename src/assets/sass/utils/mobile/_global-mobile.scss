@@ -259,6 +259,10 @@ h3 {
     background: var(--theme-orange);
   }
 }
+.pair-match-play-choice.image-choice .image-container img {
+  max-width: 100%;
+}
+
 .short-answer-input.correct {
   $border-radius: 1vw;
 

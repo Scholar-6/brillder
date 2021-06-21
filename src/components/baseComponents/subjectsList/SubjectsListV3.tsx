@@ -23,39 +23,6 @@ interface PublishedSubjectsProps {
 }
 
 class SubjectsListV3 extends Component<PublishedSubjectsProps> {
-  renderViewAllItem(count: number) {
-    let className = "subject-list-v2";
-    if (this.props.isAll) {
-      className += " checked";
-    }
-
-    return (
-      <Grid
-        container
-        direction="row"
-        className={className}
-        onClick={() => this.props.selectAll(this.props.isAll)}
-      >
-        <Grid item xs={11} className="filter-container subjects-indexes-box view-all-subjects">
-          <SpriteIcon name="glasses" />
-          <span>
-            All Subjects
-          </span>
-        </Grid>
-        <Grid item xs={1} className="published-count">
-          <Grid
-            container
-            alignContent="center"
-            justify="center"
-            style={{ height: "100%", margin: "0 0" }}
-          >
-            {count && count > 0 ? count : ""}
-          </Grid>
-        </Grid>
-      </Grid>
-    );
-  }
-
   renderSubjectItem(subject: Subject, i: number) {
     let count = this.props.isPublic
       ? subject.publicCount
@@ -113,7 +80,7 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
       const groupSubjects = subjects.filter(s => s.group == this.props.subjectGroup);
       checkedSubjects = groupSubjects.filter((s) => s.checked);
       otherSubjects = groupSubjects.filter((s) => !s.checked);
-      for (let s of groupSubjects) {
+      for (let s of subjects) {
         if (s.publicCount) {
           viewAllCount += s.publicCount;
         }
@@ -142,7 +109,6 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
               <span>Add a subject</span>
             </div>
           }
-          {!this.props.user && this.renderViewAllItem(viewAllCount)}
         </AnimateHeight>
       </Grid>
     );

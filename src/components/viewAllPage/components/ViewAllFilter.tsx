@@ -8,11 +8,12 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import {
   AcademicLevel,
   AcademicLevelLabels,
-  Subject,
   SubjectGroup,
   SubjectGroupNames,
 } from "model/brick";
 import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
+import RadioButton from "components/baseComponents/buttons/RadioButton";
+import SubjectsListV4 from "components/baseComponents/subjectsList/SubjectsListV4";
 
 export enum SortBy {
   None,
@@ -30,8 +31,11 @@ interface FilterProps {
 
   subjectGroup?: SubjectGroup | null;
 
+  isAllCategory: boolean;
+
   isAllSubjects: boolean;
   setAllSubjects(value: boolean): void;
+  selectUserSubjects(value: boolean): void;
 
   openAddSubjectPopup(): void;
 
@@ -112,7 +116,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       if (current) {
         current.scrollBy(0, -window.screen.height / 30);
       }
-    } catch {}
+    } catch { }
   }
 
   scrollDown() {
@@ -121,7 +125,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       if (current) {
         current.scrollBy(0, window.screen.height / 30);
       }
-    } catch {}
+    } catch { }
   }
 
   expandFilter() {
@@ -170,11 +174,10 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     return (
       <div className="subjects-toggle">
         <div
-          className={`${
-            !isAllSubjects
+          className={`${!isAllSubjects
               ? "toggle-button my-subjects active"
               : "toggle-button my-subjects not-active"
-          }`}
+            }`}
           onClick={() => {
             if (isAllSubjects) {
               this.props.setAllSubjects(false);
@@ -187,11 +190,10 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
           <div className="text-container">My Subjects</div>
         </div>
         <div
-          className={`${
-            this.props.isAllSubjects
+          className={`${this.props.isAllSubjects
               ? "toggle-button all-subjects active"
               : "toggle-button all-subjects not-active"
-          }`}
+            }`}
           onClick={() => {
             if (!isAllSubjects) {
               this.props.setAllSubjects(true);
@@ -330,18 +332,10 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
             {this.renderSubjectsToggle()}
             <div className="scroll-buttons">
               {this.props.user && (
-                <FormControlLabel
-                  className="radio-container"
-                  checked={this.props.isViewAll}
-                  control={
-                    <Radio
-                      onClick={() =>
-                        this.props.selectAllSubjects(!this.props.isViewAll)
-                      }
-                    />
-                  }
-                  label="All"
-                />
+                <div className="radio-container flex-center" onClick={() => this.props.selectUserSubjects(!this.props.isViewAll)}>
+                  <RadioButton checked={this.props.isViewAll} name="" color="#001c58" />
+                  All
+                </div>
               )}
               <SpriteIcon
                 name="arrow-up"
@@ -367,19 +361,33 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
             className="sort-box subject-scrollable"
             ref={this.state.scrollArea}
           >
-            <SubjectsListV3
-              user={this.props.user}
-              isPublic={this.props.isCore}
-              subjects={subjects}
-              isAllSubjects={isAllSubjects}
-              isAll={this.props.isViewAll}
-              isSelected={this.props.isClearFilter}
-              filterHeight={this.state.filterHeight}
-              subjectGroup={this.props.subjectGroup}
-              openSubjectPopup={this.props.openAddSubjectPopup}
-              selectAll={(isAll) => this.props.selectAllSubjects(!isAll)}
-              filterBySubject={this.props.filterBySubject}
-            />
+            {this.props.user ?
+              <SubjectsListV3
+                user={this.props.user}
+                isPublic={this.props.isCore}
+                subjects={subjects}
+                isAllSubjects={isAllSubjects}
+                isAll={this.props.isViewAll}
+                isSelected={this.props.isClearFilter}
+                filterHeight={this.state.filterHeight}
+                subjectGroup={this.props.subjectGroup}
+                openSubjectPopup={this.props.openAddSubjectPopup}
+                selectAll={(isAll) => this.props.selectAllSubjects(!isAll)}
+                filterBySubject={this.props.filterBySubject}
+              />
+              : <SubjectsListV4
+                user={this.props.user}
+                subjects={subjects}
+                isAllCategory={this.props.isAllCategory}
+                isAll={this.props.isViewAll}
+                isSelected={this.props.isClearFilter}
+                filterHeight={this.state.filterHeight}
+                subjectGroup={this.props.subjectGroup}
+                openSubjectPopup={this.props.openAddSubjectPopup}
+                selectAll={(isAll) => this.props.selectAllSubjects(!isAll)}
+                filterBySubject={this.props.filterBySubject}
+              />
+            }
           </div>
         </div>
         <div className="sidebar-footer" />

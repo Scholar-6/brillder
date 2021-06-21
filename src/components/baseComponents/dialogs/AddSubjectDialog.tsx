@@ -58,7 +58,7 @@ const AddSubjectDialog: React.FC<AddSubjectProps> = (props) => {
           getOptionLabel={(option: any) => option.name}
           renderOption={(loopSubject: any) => (
             <React.Fragment>
-              <MenuItem>
+              <MenuItem >
                 <ListItemIcon>
                   <SvgIcon>
                     <SpriteIcon
