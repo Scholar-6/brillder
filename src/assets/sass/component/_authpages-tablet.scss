@@ -328,9 +328,6 @@
     }
     .button-box {
       &.mobile-button-box {
-        @include phone_and_tabletP {
-          background: var(--tab-gray);
-        }
         .mobile-policy-text {
           @include phone_and_tabletP {
             color: var(--theme-dark-blue);
@@ -349,11 +346,6 @@
         letter-spacing: 0.1vw;
         transition: all 0.2s ease-in-out;
         margin-bottom: 2.7vh;
-        @include phone_and_tabletP {
-          font-size: 4.8vw;
-          padding: 0.5vh 1.2vw;
-          border-radius: 2.4vw !important;
-        }
         @include tabletP {
           border-radius: $button-radius !important;
           font-size: 1.4vw;

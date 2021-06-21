@@ -165,17 +165,3 @@
     background: var(--theme-dark-blue);
   }
 }
-
-.mobile-button-box {
-  @include phone_and_tabletP {
-    background-color: $button-box;
-    border-top-right-radius: 10vw;
-    overflow: hidden;
-    margin-top: 34px;
-    height: calc(61% - 34px);
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: flex-end !important;
-    padding: 8vh 6vw 0;
-  }
-}

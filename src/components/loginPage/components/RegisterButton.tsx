@@ -9,7 +9,7 @@ const RegisterButton: React.FC<RegisterButtonProps> = props => {
   return (
     <button className="email-button svgOnHover" onClick={props.onClick}>
       <SpriteIcon name="email" className="active" />
-      <span>Register &nbsp;|&nbsp; Sign in with email</span>
+      <span>Sign in with email</span>
     </button>
   );
 };
