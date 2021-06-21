@@ -399,3 +399,12 @@
 .text-dialog .MuiPaper-root.MuiDialog-paper {
   max-width: 38vw !important;
 }
+
+.add-subject-dialog {
+  .MuiAutocomplete-root {
+    margin-top: 2vh !important;
+  }
+  .MuiButtonBase-root.MuiIconButton-root.MuiAutocomplete-popupIndicator {
+    margin: 0;
+  }
+}

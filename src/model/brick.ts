@@ -41,8 +41,15 @@ export enum SubjectGroup {
   HumanitiesAndSocialSciences,
   GeneralTopical,
   Science,
-  MathsAndComputing
+  MathsAndComputing,
+  SchoolClient,
+  Corporate
 }
+
+export const SubjectGroupNames = [
+  '', 'Arts', 'Languages', 'Humanities & Social Sciences', 'General & Topical',
+  'Science', 'Maths and Computing', 'School Client', 'Corporate'
+]
 
 export interface Subject {
   id: number;
