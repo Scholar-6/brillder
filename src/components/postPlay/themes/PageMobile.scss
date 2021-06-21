@@ -7,7 +7,7 @@
   background: var(--theme-dark-blue);
   color: var(--white);
   $home-button-size: 45px;
-  $zendesk-size: 74px;
+  $zendesk-size: 17.5vw;
   $book-height: calc(100vh - #{$home-button-size} - #{$zendesk-size} - 30vh);
   $real-book-height: calc(100vh - #{$home-button-size} - #{$zendesk-size} - 35vh);
 
@@ -71,27 +71,28 @@
     position: absolute;
     top: 0;
     right: 0;
-    height: $home-button-size;
     width: 100vw;
     background: var(--theme-light-blue);
-    height: $home-button-size;
+    height: $mobile-menu-height;
     display: flex;
-    font-size: 20px;
+    font-size: 7vw;
 
     svg {
-      height: 30px;
-      width: 30px;
+      margin-left: 4vw;
+      margin-right: 4vw;
+      height: 10vw;
+      width: 10vw;
     }
 
     .prep-tab {
-      width: 45px;
+      width: 22vw;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
     .question-tab {
-      width: 70px;
+      width: 15vw;
       display: flex;
       font-family: $font-family-bold;
       justify-content: center;
@@ -99,8 +100,8 @@
 
       svg {
         margin-left: 1vw;
-        width: 15px;
-        height: 15px;
+        width: 5vw;
+        height: 5vw;
         stroke-width: 3;
       }
     }
@@ -279,7 +280,22 @@
       justify-content: center;
       font-family: $font-family-bold;
 
+      @keyframes right-left {
+        0% {
+          margin-right: 2vw;
+        }
+        30% {
+          margin-right: 4vw;
+        }
+        100% {
+          margin-right: 2vw;
+        }
+      }
+
       svg {
+        right: 0;
+        position: absolute;
+        animation: right-left 1s infinite;
         margin-left: 2vw;
         height: 4.1vh;
         width: 4.1vh;
@@ -351,7 +367,7 @@
       font-weight: normal !important;
       font-family: $font-family-black;
       letter-spacing: 0.05vw;
-      font-size: 10.4vw;
+      font-size: 9vw;
       line-height: 0;
       padding-top: 5vh;
       padding-bottom: 5vh;
@@ -396,7 +412,7 @@
     left: 4vw;
     width: 92vw;
     height: 50vh;
-    top: calc(45px + 22vh);
+    top: calc(45px + 21vh);
     transition: all 0.8s ease-in-out;
   }
 
@@ -1147,6 +1163,7 @@
       font-size: inherit !important;
       .help-text {
         font-size: 3vw !important;
+        font-family: $font-family-regular-italic !important;
       }
       .words-container, .lines-container {
         font-size: inherit !important;

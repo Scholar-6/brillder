@@ -98,7 +98,12 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
         {
           fileName
             ? <img alt="" style={{ width: '100%' }} src={fileUrl(fileName)} />
-            : <SpriteIcon name="image" />
+            : (
+              <div>
+                <SpriteIcon name="image" />
+                <div className="cover-image-placeholder">Click to add a cover image.</div>
+              </div>
+            )
         }
       </div>
       <ImageCoverDialog

@@ -12,6 +12,7 @@ export interface ImageAnswerData extends MainImageProps {
   value: string;
   valueFile: string;
   answerType: QuestionValueType;
+  imageOptionSource: string; // only for pairMatch
   imageOptionCaption: string; // only for pairMatch
 }
 
@@ -34,10 +35,11 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
 
   const updateAnswer = (fileName: string, source: string, caption: string, permision: boolean) => {
     if (locked) { return; }
-    answer.imageSource = source;
     if (isOption) {
+      answer.imageOptionSource = source;
       answer.imageOptionCaption = caption;
     } else {
+      answer.imageSource = source;
       answer.imageCaption = caption;
     }
     answer.imagePermision = permision;
@@ -104,6 +106,7 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
         open={isOpen}
         initFile={file}
         fileName={fileName}
+        isOption={isOption}
         initData={answer as any}
         upload={upload}
         updateData={updateData}

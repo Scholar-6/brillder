@@ -12,18 +12,20 @@ interface AnswerProps {
   imageSource?: string;
 
   hovered: boolean;
-  hover(value: string): void;
+  hover(value: string, source?: string): void;
   blur(): void;
 }
 
 const PhoneImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, ...props }) => {
   const [lastClick, setLastClick] = React.useState(0);
 
+
   const onDoubleClick = () => {
     if (props.hovered) {
       props.blur();
     } else {
-      props.hover(fileName)
+      console.log(props.imageSource);
+      props.hover(fileName, props.imageSource);
     }
   }
 
@@ -47,7 +49,7 @@ const PhoneImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, ...p
 
 const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, imageSource, ...props }) => {
   if (isPhone()) {
-    return <PhoneImageContent fileName={fileName} imageCaption={imageCaption} {...props} />
+    return <PhoneImageContent fileName={fileName} imageCaption={imageCaption} imageSource={imageSource} {...props} />
   }
   return (
     <div className="image-container">
@@ -55,11 +57,10 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
         <div className="flex-align">
           <img
             alt="" src={fileUrl(fileName)} width="100%"
-            onMouseEnter={() => props.hover(fileName)}
+            onMouseEnter={() => props.hover(fileName, imageSource)}
             onMouseLeave={props.blur}
           />
         </div>
-      {imageSource && <div className="image-source">{imageSource}</div>}
       {imageCaption && <div>{imageCaption}</div>}
       </div>
     </div>
@@ -71,7 +72,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  hover: (fileName: string) => dispatch(actions.setImageHover(fileName)),
+  hover: (fileName: string, imageSource: string) => dispatch(actions.setImageHover(fileName, imageSource)),
   blur: () => dispatch(actions.setImageBlur()),
 });
 

@@ -11,9 +11,8 @@ import { User } from "model/user";
 interface PublishedSubjectsProps {
   user: User;
   filterHeight: string;
-  isAllSubjects: boolean;
+  isAllCategory: boolean;
   subjects: Subject[];
-  isPublic: boolean;
   isSelected: boolean;
   isAll: boolean;
   subjectGroup?: SubjectGroup | null;
@@ -22,11 +21,45 @@ interface PublishedSubjectsProps {
   filterBySubject(id: number): void;
 }
 
-class SubjectsListV3 extends Component<PublishedSubjectsProps> {
+/**
+ * Based on selected category
+ */
+class SubjectsListV4 extends Component<PublishedSubjectsProps> {
+  renderViewAllItem(count: number) {
+    let className = "subject-list-v2";
+    if (this.props.isAll) {
+      className += " checked";
+    }
+
+    return (
+      <Grid
+        container
+        direction="row"
+        className={className}
+        onClick={() => this.props.selectAll(this.props.isAll)}
+      >
+        <Grid item xs={11} className="filter-container subjects-indexes-box view-all-subjects">
+          <SpriteIcon name="glasses" />
+          <span>
+            All Subjects
+          </span>
+        </Grid>
+        <Grid item xs={1} className="published-count">
+          <Grid
+            container
+            alignContent="center"
+            justify="center"
+            style={{ height: "100%", margin: "0 0" }}
+          >
+            {count && count > 0 ? count : ""}
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  }
+
   renderSubjectItem(subject: Subject, i: number) {
-    let count = this.props.isPublic
-      ? subject.publicCount
-      : subject.personalCount;
+    const count = subject.publicCount
 
     let className = "subject-list-v2";
     if (subject.checked) {
@@ -76,7 +109,7 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
 
     let viewAllCount = 0;
 
-    if (!this.props.user && this.props.subjectGroup) {
+    if (this.props.subjectGroup) {
       const groupSubjects = subjects.filter(s => s.group == this.props.subjectGroup);
       checkedSubjects = groupSubjects.filter((s) => s.checked);
       otherSubjects = groupSubjects.filter((s) => !s.checked);
@@ -103,16 +136,11 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
         >
           {checkedSubjects.map(this.renderSubjectItem.bind(this))}
           {otherSubjects.map(this.renderSubjectItem.bind(this))}
-          {!this.props.isAllSubjects && 
-            <div className="create-subject-button" onClick={this.props.openSubjectPopup}>
-              <SpriteIcon name="plus-circle" />
-              <span>Add a subject</span>
-            </div>
-          }
+          {this.renderViewAllItem(viewAllCount)}
         </AnimateHeight>
       </Grid>
     );
   }
 }
 
-export default SubjectsListV3;
+export default SubjectsListV4;

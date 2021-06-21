@@ -186,7 +186,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           </div>
           <div className="image-container centered">
             <CoverImage
-              locked={!isPublisher}
+              locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user.id)}
               brickId={brick.id}
               data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
             />
@@ -298,7 +298,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 />}
                 <div className="image-container centered">
                   <CoverImage
-                    locked={!isPublisher}
+                    locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user.id)}
                     brickId={brick.id}
                     data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
                   />

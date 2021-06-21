@@ -162,7 +162,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         <p>
           <span className="help-text">
             Drag to rearrange. {
-              haveImage && (isPhone() ? 'Double tap images to zoom' : 'Hover over images to zoom.')
+              haveImage && (isPhone() ? 'Double tap images to zoom.' : 'Hover over images to zoom.')
             }
           </span>
         </p>
