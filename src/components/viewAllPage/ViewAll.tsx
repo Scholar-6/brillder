@@ -79,6 +79,8 @@ interface ViewAllState {
   finalBricks: Brick[];
   isLoading: boolean;
 
+  isAllCategory: boolean;
+
   isSubjectPopupOpen: boolean;
   noSubjectOpen: boolean;
   activeSubject: SubjectItem;
@@ -137,10 +139,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isAllSubjects = false;
     }
 
+    let isAllCategory = false;
     let subjectGroup = null;
     if (values.subjectGroup) {
       subjectGroup = parseInt(values.subjectGroup as string) as SubjectGroup;
-      isViewAll = true;
+      isAllCategory = true;
     }
 
     this.state = {
@@ -164,6 +167,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       pageSize: 6,
       isLoading: true,
       subjectGroup,
+
+      isAllCategory,
 
       filterLevels: [],
       isClearFilter: false,
@@ -278,7 +283,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (this.props.user) {
       this.setState({ isLoading: true, isAllSubjects: false });
     } else {
-      this.setState({ isLoading: true, isViewAll: true });
+      this.setState({ isLoading: true, isViewAll: false, isAllCategory: true });
     }
     this.setState({ subjectGroup: sGroup });
     this.loadUnauthorizedBricks();
@@ -370,7 +375,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       filterSubjects = getCheckedSubjectIds(groupSubjects);
 
       if (showAll === true) {
-        filterSubjects = groupSubjects.map(s => s.id);
+        filterSubjects = this.state.subjects.map(s => s.id);
       }
     }
 
@@ -531,15 +536,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         this.setState({ isViewAll, finalBricks, isClearFilter: this.isFilterClear() });
       }
     } else {
-      if (isViewAll === false) {
-        this.props.history.push(map.SubjectCategories);
-      } else {
-        for (let s of this.state.subjects) {
-          s.checked = false;
-        }
-        const finalBricks = this.filterUnauthorized(this.state.bricks, isViewAll, this.state.filterLevels);
-        this.setState({ isViewAll, finalBricks, isClearFilter: this.isFilterClear() });
+      for (let s of this.state.subjects) {
+        s.checked = false;
       }
+      const finalBricks = this.filterUnauthorized(this.state.bricks, isViewAll, this.state.filterLevels);
+      this.setState({ isViewAll, finalBricks, isClearFilter: this.isFilterClear() });
     }
   }
 
@@ -1044,6 +1045,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           isClearFilter={this.state.isClearFilter}
           isAllSubjects={this.state.isAllSubjects}
           isViewAll={this.state.isViewAll}
+          isAllCategory={this.state.isAllCategory}
           selectAllSubjects={this.selectAllSubjects.bind(this)}
           selectUserSubjects={this.selectUserSubjects.bind(this)}
           setAllSubjects={isAllSubjects => {
