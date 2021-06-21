@@ -77,7 +77,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         italic: (props: any) => <QuillToolbarButton name="italic" {...props} />,
         strikethrough: (props: any) => <QuillToolbarButton name="strike" {...props} />,
         fontColor: (props: any) => <QuillToolbarColorSelect name="color" {...props}>
-            {Object.entries(QuillValidColors).map(([k, v]) => <option value={v}>{k}</option>)}
+            {Object.entries(QuillValidColors).map(([k, v]) => <option key={k} value={v}>{k}</option>)}
         </QuillToolbarColorSelect>,
         subscript: (props: any) => <QuillToolbarButton name="script" value="sub" {...props} />,
         superscript: (props: any) => <QuillToolbarButton name="script" value="super" {...props} />,
