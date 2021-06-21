@@ -104,8 +104,11 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               userSubjects={this.props.user ? this.props.user.subjects : []}
               isCore={true}
               isClearFilter={this.isFilterClear()}
+              openAddSubjectPopup={() => {}}
+              isAllCategory={false}
               isAllSubjects={this.state.isAllSubjects}
               setAllSubjects={isAllSubjects => this.setState({ isAllSubjects })}
+              selectUserSubjects={() => {}}
               handleSortChange={() => { }}
               isViewAll={false}
               selectAllSubjects={() => {}}

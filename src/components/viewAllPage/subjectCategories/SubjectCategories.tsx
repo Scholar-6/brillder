@@ -52,11 +52,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
 
   moveToGroup(sGroup: SubjectGroup) {
     this.props.setSubjectGroup(sGroup);
-    let link = map.ViewAllPage + '?subjectGroup=' + sGroup;
-    if (this.props.user) {
-      link += '&mySubject=true';
-    }
-    this.props.history.push(link);
+    this.props.history.push(map.ViewAllPage + '?subjectGroup=' + sGroup);
   }
 
   render() {
@@ -147,7 +143,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
             <div className="row">
               <div>
                 <div onClick={() => this.moveToGroup(SubjectGroup.Arts)}>
-                  <div className="flex-center">
+                  <div className="flex-center zoom-item">
                     <SpriteIcon name="category-canvas" />
                   </div>
                   <div className="cat-name">Arts</div>
@@ -155,7 +151,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
               <div>
                 <div onClick={() => this.moveToGroup(SubjectGroup.GeneralTopical)}>
-                  <div className="flex-center">
+                  <div className="flex-center zoom-item">
                     <SpriteIcon name="category-internet" />
                   </div>
                   <div className="cat-name">General & Topical</div>
@@ -163,7 +159,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
               <div>
                 <div onClick={() => this.moveToGroup(SubjectGroup.HumanitiesAndSocialSciences)}>
-                  <div className="flex-center">
+                  <div className="flex-center zoom-item">
                     <SpriteIcon name="category-book" />
                   </div>
                   <div className="cat-name">Humanities & Social Sciences</div>
@@ -171,7 +167,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
               <div>
                 <div onClick={() => {}}>
-                  <div className="flex-center">
+                  <div className="flex-center zoom-item">
                     <SpriteIcon name="category-education" />
                   </div>
                   <div className="cat-name">School Client</div>
@@ -181,7 +177,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
             <div className="row">
               <div>
                 <div onClick={() => this.moveToGroup(SubjectGroup.Languages)}>
-                  <div className="flex-center">
+                  <div className="flex-center zoom-item">
                     <SpriteIcon name="category-translation" />
                   </div>
                   <div className="cat-name">Languages</div>
@@ -189,7 +185,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
               <div>
                 <div onClick={() => this.moveToGroup(SubjectGroup.MathsAndComputing)}>
-                  <div className="flex-center">
+                  <div className="flex-center zoom-item">
                     <SpriteIcon name="binary-code" />
                   </div>
                   <div className="cat-name">Maths and Computing</div>
@@ -197,7 +193,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
               <div>
                 <div onClick={() => this.moveToGroup(SubjectGroup.Science)}>
-                  <div className="flex-center">
+                  <div className="flex-center zoom-item">
                     <SpriteIcon name="category-chemistry" />
                   </div>
                   <div className="cat-name">Science</div>
@@ -205,7 +201,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
               <div>
                 <div onClick={() => {}}>
-                  <div className="flex-center">
+                  <div className="flex-center zoom-item">
                     <SpriteIcon name="category-economics" />
                   </div>
                   <div className="cat-name">Corporate</div>
