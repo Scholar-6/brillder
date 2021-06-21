@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 
@@ -6,8 +5,14 @@ import { User } from "model/user";
 
 import SubjectsListV3 from "components/baseComponents/subjectsList/SubjectsListV3";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import AddSubjectDialog from "components/baseComponents/dialogs/AddSubjectDialog";
-import { AcademicLevel, AcademicLevelLabels } from "model/brick";
+import {
+  AcademicLevel,
+  AcademicLevelLabels,
+  Subject,
+  SubjectGroup,
+  SubjectGroupNames,
+} from "model/brick";
+import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
 
 export enum SortBy {
   None,
@@ -23,8 +28,12 @@ interface FilterProps {
   isCore: boolean;
   user: User;
 
+  subjectGroup?: SubjectGroup | null;
+
   isAllSubjects: boolean;
   setAllSubjects(value: boolean): void;
+
+  openAddSubjectPopup(): void;
 
   isViewAll: boolean;
   selectAllSubjects(isViewAll: boolean): void;
@@ -54,7 +63,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       scrollArea: React.createRef(),
       filterHeight: "auto",
       filterExpanded: true,
-    }
+    };
   }
 
   componentDidUpdate() {
@@ -86,10 +95,10 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   }
 
   filterByLevel(level: AcademicLevel) {
-    const {levels} = this.props;
-    const found = levels.find(l => l == level);
+    const { levels } = this.props;
+    const found = levels.find((l) => l == level);
     if (found) {
-      const newLevels = levels.filter(l => l !== level);
+      const newLevels = levels.filter((l) => l !== level);
       this.props.filterByLevel(newLevels);
     } else {
       levels.push(level);
@@ -103,7 +112,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       if (current) {
         current.scrollBy(0, -window.screen.height / 30);
       }
-    } catch { }
+    } catch {}
   }
 
   scrollDown() {
@@ -112,7 +121,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       if (current) {
         current.scrollBy(0, window.screen.height / 30);
       }
-    } catch { }
+    } catch {}
   }
 
   expandFilter() {
@@ -139,6 +148,20 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     );
   }
 
+  renderCategoryLabelBox() {
+    const { subjectGroup } = this.props;
+    let name = "Subjects";
+
+    if (subjectGroup) {
+      name = SubjectGroupNames[subjectGroup];
+    }
+    return (
+      <div className="filter-header subject-category-name">
+        <span>{name}</span>
+      </div>
+    );
+  }
+
   renderSubjectsToggle() {
     const { isAllSubjects } = this.props;
     if (!this.props.user) {
@@ -147,7 +170,11 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     return (
       <div className="subjects-toggle">
         <div
-          className={`${!isAllSubjects ? 'toggle-button my-subjects active' : 'toggle-button my-subjects not-active'}`}
+          className={`${
+            !isAllSubjects
+              ? "toggle-button my-subjects active"
+              : "toggle-button my-subjects not-active"
+          }`}
           onClick={() => {
             if (isAllSubjects) {
               this.props.setAllSubjects(false);
@@ -157,12 +184,14 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
           <div className="icon-container">
             <SpriteIcon name="user" />
           </div>
-          <div className="text-container">
-            My Subjects
-          </div>
+          <div className="text-container">My Subjects</div>
         </div>
         <div
-          className={`${this.props.isAllSubjects ? 'toggle-button all-subjects active' : 'toggle-button all-subjects not-active'}`}
+          className={`${
+            this.props.isAllSubjects
+              ? "toggle-button all-subjects active"
+              : "toggle-button all-subjects not-active"
+          }`}
           onClick={() => {
             if (!isAllSubjects) {
               this.props.setAllSubjects(true);
@@ -176,15 +205,21 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   }
 
   renderAcademicLevel(loopLevel: AcademicLevel) {
-    const found = this.props.levels.find(l => l == loopLevel);
+    const found = this.props.levels.find((l) => l == loopLevel);
     return (
       <FormControlLabel
         value={SortBy.Popularity}
         style={{ marginRight: 0, width: "50%" }}
-        control={<Radio className="sortBy" checked={!!found} onClick={() => this.filterByLevel(loopLevel)} />}
+        control={
+          <Radio
+            className="sortBy"
+            checked={!!found}
+            onClick={() => this.filterByLevel(loopLevel)}
+          />
+        }
         label={`Level ${AcademicLevelLabels[loopLevel]}`}
       />
-    )
+    );
   }
 
   render() {
@@ -204,7 +239,10 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       <Grid container item xs={3} className="sort-and-filter-container">
         <div className="flex-height-box">
           <div className="sort-box">
-            <div className="filter-container sort-by-box view-all-sort-box" style={{ height: '6.5vw' }}>
+            <div
+              className="filter-container sort-by-box view-all-sort-box"
+              style={{ height: "6.5vw" }}
+            >
               <div className="sort-header">Sort By</div>
               <RadioGroup
                 className="sort-group"
@@ -239,43 +277,112 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               {this.renderAcademicLevel(AcademicLevel.Second)}
               {this.renderAcademicLevel(AcademicLevel.Third)}
               {this.renderAcademicLevel(AcademicLevel.Fourth)}
+              <div className="absolute-difficult-help">
+                <HoverHelp>
+                  <div className="flex-content">
+                    <div>
+                      Brillder focusses on universal concepts and topics, not
+                      specific exam courses.
+                    </div>
+                    <br />
+                    <div>LEVELS:</div>
+                    <div className="container">
+                      <div className="white-circle">I</div>
+                      <div className="l-text">
+                        <div>Foundation</div>
+                        <div className="regular">
+                          For 15-16 yr-olds, equivalent to GCSE / IB Middle
+                          Years / High School Diploma
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                    <div className="container">
+                      <div className="white-circle">II</div>
+                      <div className="and-sign">&</div>
+                      <div className="white-circle">III</div>
+                      <div className="l-text smaller">
+                        <div>Core</div>
+                        <div className="regular">
+                          For 17-18 yr-olds, equivalent to A-level / IB / High
+                          School Honors
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                    <div className="container">
+                      <div className="white-circle">IV</div>
+                      <div className="l-text">
+                        <div>Extension</div>
+                        <div className="regular">
+                          College / Undergraduate level, to challenge Oxbridge
+                          (UK) or Advanced Placement (US) students
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </HoverHelp>
+              </div>
             </div>
-            {this.renderSubjectLabelBox()}
+            {this.props.user
+              ? this.renderSubjectLabelBox()
+              : this.renderCategoryLabelBox()}
             {this.renderSubjectsToggle()}
             <div className="scroll-buttons">
-              <FormControlLabel
-                className="radio-container"
-                checked={this.props.isViewAll}
-                control={<Radio onClick={() => this.props.selectAllSubjects(!this.props.isViewAll)} />}
-                label="All" />
-              <SpriteIcon name="arrow-up" className={`${!this.state.canScroll ? 'disabled' : ''}`} onClick={this.scrollUp.bind(this)} />
-              <SpriteIcon name="arrow-down" className={`${!this.state.canScroll ? 'disabled' : ''}`} onClick={this.scrollDown.bind(this)} />
-              {this.props.isClearFilter &&
+              {this.props.user && (
+                <FormControlLabel
+                  className="radio-container"
+                  checked={this.props.isViewAll}
+                  control={
+                    <Radio
+                      onClick={() =>
+                        this.props.selectAllSubjects(!this.props.isViewAll)
+                      }
+                    />
+                  }
+                  label="All"
+                />
+              )}
+              <SpriteIcon
+                name="arrow-up"
+                className={`${!this.state.canScroll ? "disabled" : ""}`}
+                onClick={this.scrollUp.bind(this)}
+              />
+              <SpriteIcon
+                name="arrow-down"
+                className={`${!this.state.canScroll ? "disabled" : ""}`}
+                onClick={this.scrollDown.bind(this)}
+              />
+              {this.props.isClearFilter && (
                 <button
                   className="btn-transparent filter-icon arrow-cancel"
-                  onClick={() => this.props.selectAllSubjects(!this.props.isViewAll)}
-                ></button>}
+                  onClick={() =>
+                    this.props.selectAllSubjects(!this.props.isViewAll)
+                  }
+                ></button>
+              )}
             </div>
           </div>
-          <div className="sort-box subject-scrollable" ref={this.state.scrollArea}>
+          <div
+            className="sort-box subject-scrollable"
+            ref={this.state.scrollArea}
+          >
             <SubjectsListV3
+              user={this.props.user}
               isPublic={this.props.isCore}
               subjects={subjects}
               isAllSubjects={isAllSubjects}
               isAll={this.props.isViewAll}
               isSelected={this.props.isClearFilter}
               filterHeight={this.state.filterHeight}
-              openSubjectPopup={() => this.setState({ isSubjectPopupOpen: true })}
+              subjectGroup={this.props.subjectGroup}
+              openSubjectPopup={this.props.openAddSubjectPopup}
+              selectAll={(isAll) => this.props.selectAllSubjects(!isAll)}
               filterBySubject={this.props.filterBySubject}
             />
           </div>
         </div>
         <div className="sidebar-footer" />
-        <AddSubjectDialog
-          isOpen={this.state.isSubjectPopupOpen}
-          success={subject => { }}
-          close={() => this.setState({ isSubjectPopupOpen: false })}
-        />
       </Grid>
     );
   }

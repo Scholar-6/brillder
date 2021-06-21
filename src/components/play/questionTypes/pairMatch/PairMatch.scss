@@ -20,9 +20,13 @@
     padding: 0;
     width: 100%;
     overflow: hidden;
-    background-color: var(--tab-gray);
+    background-color: var(--tab-gray) !important;
     border-top-left-radius: 0.5vw;
     border-bottom-left-radius: 0.5vw;
+
+    .image-source {
+      display: none;
+    }
 
     .question-hint {
       border-radius: 0 !important;

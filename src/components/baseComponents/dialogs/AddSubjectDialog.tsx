@@ -10,9 +10,11 @@ import './AssignBrickClass.scss';
 import actions from 'redux/actions/requestFailed';
 import SpriteIcon from '../SpriteIcon';
 import { getSubjects } from 'services/axios/subject';
+import { Subject } from 'model/brick';
 
 interface AddSubjectProps {
   isOpen: boolean;
+  userSubjects: Subject[];
   success(subject: any): void;
   close(): void;
   requestFailed(e: string): void;
@@ -23,8 +25,12 @@ const AddSubjectDialog: React.FC<AddSubjectProps> = (props) => {
   const [subject, setSubject] = React.useState(null as any);
 
   const loadSubjects = async () => {
-    const loadedSubjects = await getSubjects();
+    let loadedSubjects = await getSubjects();
+     
     if (loadedSubjects) {
+      for (let s2 of props.userSubjects) {
+        loadedSubjects = loadedSubjects.filter(s => s2.id !== s.id);
+      }
       setSubjects(loadedSubjects);
     } else {
       props.requestFailed('Can`t load subjects');
@@ -34,16 +40,16 @@ const AddSubjectDialog: React.FC<AddSubjectProps> = (props) => {
   useEffect(() => { loadSubjects() }, []);
 
   const addSubject = async () => {
-    //const subjects =  props.user.subjects.map(s => s.id);
-    props.close();
+    if (subject) {
+      props.success(subject);
+    }
   }
 
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog assign-dialog-new">
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog assign-dialog-new add-subject-dialog">
       <div className="dialog-header">
-        <div className="r-popup-title bold">Select subject</div>
+        <div className="r-popup-title bold">Select a subject to add</div>
         <Autocomplete
-          freeSolo
           value={subject}
           options={subjects}
           onChange={(e: any, v: any) => setSubject(v)}
@@ -73,7 +79,7 @@ const AddSubjectDialog: React.FC<AddSubjectProps> = (props) => {
               {...params}
               variant="standard"
               label=""
-              placeholder="Search for a brick you know, or try your luck!"
+              placeholder="Click to select a subject"
             />
           )}
         />
