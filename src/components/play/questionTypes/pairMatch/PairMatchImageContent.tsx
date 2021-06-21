@@ -61,7 +61,6 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
             onMouseLeave={props.blur}
           />
         </div>
-      {imageSource && <div className="image-source">{imageSource}</div>}
       {imageCaption && <div>{imageCaption}</div>}
       </div>
     </div>
