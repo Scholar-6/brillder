@@ -90,6 +90,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
           />}
         <QuestionImageDropZone
           answer={answer as any}
+          isOption={true}
           type={answer.optionType || QuestionValueType.None}
           fileName={answer.optionFile}
           locked={locked}
