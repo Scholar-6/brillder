@@ -146,6 +146,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isAllCategory = true;
     }
 
+    console.log(isAllSubjects);
+
     this.state = {
       yourBricks: [],
       bricks: [],
@@ -280,12 +282,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     for (const s of this.state.subjects) {
       s.checked = false;
     }
-    if (this.props.user) {
-      this.setState({ isLoading: true, isAllSubjects: false });
-    } else {
-      this.setState({ isLoading: true, isViewAll: false, isAllCategory: true });
-    }
-    this.setState({ subjectGroup: sGroup });
+    this.setState({ isLoading: true, isAllSubjects: true, isAllCategory: true, subjectGroup: sGroup });
     this.loadUnauthorizedBricks();
   }
 
@@ -395,9 +392,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     let filterSubjects: any[] = [];
-    if (this.props.user) {
-      // authorized user
-      if (isAllSubjects) {
+    if (isAllSubjects) {
         filterSubjects = getCheckedSubjectIds(this.state.subjects);
       } else {
         const userSubjects = onlyPrepareUserSubjects(this.state.subjects, this.state.userSubjects);
@@ -408,7 +403,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           filterSubjects = userSubjects.map(s => s.id);
         }
       }
-    } else if (this.state.subjectGroup) {
+    if (this.state.subjectGroup) {
       // unauthorized user see groups of subjects
       const groupSubjects = this.state.subjects.filter(s => s.group === this.state.subjectGroup);
       filterSubjects = groupSubjects.map(s => s.id);
@@ -443,7 +438,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     toggleSubject(this.state.userSubjects, id);
 
     let checked = this.state.subjects.find(s => s.checked === true);
-    if (!checked) {
+    if (this.state.isAllSubjects && !checked) {
       this.props.history.push(map.SubjectCategories + '?filter=true');
     }
 

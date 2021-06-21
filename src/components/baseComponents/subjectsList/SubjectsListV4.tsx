@@ -22,7 +22,6 @@ interface PublishedSubjectsProps {
 }
 
 /**
- * Unauthorized user subject list.
  * Based on selected category
  */
 class SubjectsListV4 extends Component<PublishedSubjectsProps> {
@@ -110,7 +109,7 @@ class SubjectsListV4 extends Component<PublishedSubjectsProps> {
 
     let viewAllCount = 0;
 
-    if (!this.props.user && this.props.subjectGroup) {
+    if (this.props.subjectGroup) {
       const groupSubjects = subjects.filter(s => s.group == this.props.subjectGroup);
       checkedSubjects = groupSubjects.filter((s) => s.checked);
       otherSubjects = groupSubjects.filter((s) => !s.checked);
