@@ -1,12 +1,14 @@
 import React from "react";
-import { Hidden } from "@material-ui/core";
 import { History } from "history";
 
-import { LoginState } from "./loginPage";
+import { LoginState } from "../loginPage";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import GoogleButton from "./components/GoogleButton";
-import RegisterButton from "./components/RegisterButton";
+import GoogleButton from "../components/GoogleButton";
+import RegisterButton from "../components/RegisterButton";
 import TermsLink from "components/baseComponents/TermsLink";
+import { Route, Switch } from "react-router-dom";
+import { FirstPage, EmailSignPage, RegisterPage } from "../desktop/routes";
+import MobileRegisterPage from './MobileRegister';
 
 interface MobileLoginState {
   animationFinished: boolean;
@@ -64,14 +66,16 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
                 alt="text"
                 src="/images/choose-user/brillder-white-text.svg"
               />
-              <SpriteIcon name="arrow-down" />
+              <h1>
+                Join the revolution
+              </h1>
             </div>
           </div>
           <div className="mobile-button-box button-box">
             <div className="button-box">
               <div className="text-box">
                 <span>New to Brillder?</span>
-                <div className="join-button" onClick={() => { }}>
+                <div className="join-button" onClick={() => this.props.history.push(RegisterPage)}>
                   Join Now
                   <SpriteIcon name="arrow-right" />
                 </div>
@@ -89,12 +93,17 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
   render() {
     const { loginState } = this.props;
     return (
-      <Hidden only={["sm", "md", "lg", "xl"]}>
-        {loginState !== LoginState.ChooseLogin &&
-          loginState !== LoginState.ChooseLoginAnimation
-          ? this.renderSignInPage()
-          : this.renderChooseLoginPage(loginState)}
-      </Hidden>
+      <Switch>
+        <Route exact path={[FirstPage, EmailSignPage]}>
+          {loginState !== LoginState.ChooseLogin &&
+            loginState !== LoginState.ChooseLoginAnimation
+            ? this.renderSignInPage()
+            : this.renderChooseLoginPage(loginState)}
+        </Route>
+        <Route exact path={RegisterPage}>
+          <MobileRegisterPage history={this.props.history} email="" />
+        </Route>
+      </Switch>
     );
   }
 }

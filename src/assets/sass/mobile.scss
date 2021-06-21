@@ -332,7 +332,7 @@
     &.mobile-button-box {
       background: var(--theme-light-blue);
     }
-    a, button {
+    a, button.email-button {
       justify-content: flex-start !important;
       font-size: 5.5vw;
       border-radius: 4vw !important;
@@ -372,6 +372,55 @@
         width: 10vw;
         height: 10vw;
       }
+    }
+  }
+  .logo-box {
+    position: relative;
+    height: 45% !important;
+    .logo-box-inner {
+      height: 65% !important;
+      margin-bottom: 2%;
+    }
+    &.big {
+      height: 100% !important;
+    }
+    .h-arrow-down {
+      position: absolute;
+      bottom: 2.5vh;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      left: 0;
+      svg {
+        opacity: 0;
+        animation: fadein 0.5s 2s forwards;
+        color: var(--white);
+        width: 4.7vh;
+        height: 4.7vh;
+      }
+    }
+  }
+  .button-box {
+    margin-top: 1.7vh !important;
+  }
+  .input-block.button-box .orange-button {
+    border-radius: 3vw !important;
+    margin: 0 !important;
+    font-size: 5.5vw !important;
+    text-transform: none !important;
+    color: var(--white) !important;
+    background: var(--theme-orange) !important;
+  }
+  .m-register-box {
+    button {
+      margin: 0 !important;
+      padding-top: 1vh !important;
+      padding-bottom: 1vh !important;
+      letter-spacing: 1vw !important;
+      font-size: 5vw !important;
+      text-transform: capitalize !important;
+      color: var(--white) !important;
+      background: var(--theme-orange) !important;
     }
   }
 }
