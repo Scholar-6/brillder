@@ -935,18 +935,19 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
 
-  renderFirstRow(filterSubjects: number[], bricks: Brick[]) {
-    if (this.state.isSearching || filterSubjects.length !== 0) {
+  renderFirstRow(bricks: Brick[]) {
+    if (bricks.length > 0) {
       return (
         <div className="main-brick-container">
           <div className="centered text-theme-dark-blue title found">
             {renderTitle(bricks)}
             <CreateOneButton onClick={this.moveToCreateOne.bind(this)} />
-            <RecommendButton />
+            {/*<RecommendButton />*/}
           </div>
         </div>
       );
     }
+    return '';
   }
 
   renderDesktopBricksPanel(filterSubjects: number[], bricks: Brick[]) {
@@ -960,7 +961,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
     return (
       <div className="bricks-list-container bricks-container-mobile" ref={this.state.bricksRef}>
-        {this.renderFirstRow(filterSubjects, bricks)}
+        {this.renderFirstRow(bricks)}
         <div className="bricks-list">{this.renderSortedBricks(bricks)}</div>
       </div>
     );
