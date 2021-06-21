@@ -150,7 +150,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       subjects: [],
       userSubjects: props.user ? Object.assign([], props.user.subjects) : [],
       sortedIndex: 0,
-      
+
       isSubjectPopupOpen: false,
       noSubjectOpen: false,
       deleteDialogOpen: false,
@@ -276,11 +276,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       s.checked = false;
     }
     if (this.props.user) {
-      this.setState({isLoading: true, isAllSubjects: false});
+      this.setState({ isLoading: true, isAllSubjects: false });
     } else {
-      this.setState({isLoading: true, isViewAll: true});
+      this.setState({ isLoading: true, isViewAll: true });
     }
-    this.setState({subjectGroup: sGroup});
+    this.setState({ subjectGroup: sGroup });
     this.loadUnauthorizedBricks();
   }
 
@@ -322,7 +322,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         this.setState({ ...this.state, isLoading: false, failedRequest: true });
       }
     } else {
-      this.setState({isLoading: false});
+      this.setState({ isLoading: false });
     }
   }
 
@@ -364,7 +364,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
 
-    let filterSubjects:any[] = [];
+    let filterSubjects: any[] = [];
     if (this.state.subjectGroup) {
       const groupSubjects = this.state.subjects.filter(s => s.group === this.state.subjectGroup);
       filterSubjects = getCheckedSubjectIds(groupSubjects);
@@ -389,7 +389,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
 
-    let filterSubjects:any[] = [];
+    let filterSubjects: any[] = [];
     if (this.props.user) {
       // authorized user
       if (isAllSubjects) {
@@ -414,12 +414,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     bricks = this.filterByCore(bricks, isCore);
-    console.log(isCore, bricks.length, this.state.isAdmin);
+
     if (!isCore && !this.state.isAdmin) {
       bricks = filterByCurretUser(bricks, this.props.user.id);
     }
-
-    console.log(bricks.length)
 
     if (levels && levels.length > 0) {
       bricks = filterByLevels(bricks, levels);
@@ -447,7 +445,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...this.state, isViewAll: false, shown: false });
     setTimeout(() => {
       try {
-        let finalBricks:Brick[] = [];
+        let finalBricks: Brick[] = [];
         if (this.props.user) {
           finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, false, this.state.filterLevels);
         } else {
@@ -459,10 +457,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   filterByLevel(filterLevels: AcademicLevel[]) {
-    this.setState({filterLevels, shown: false });
+    this.setState({ filterLevels, shown: false });
     setTimeout(() => {
       try {
-        let finalBricks:Brick[] = [];
+        let finalBricks: Brick[] = [];
         if (this.props.user) {
           finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, false, filterLevels);
         } else {
@@ -497,6 +495,34 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
+  checkUserSubject(s: Subject) {
+    const found = this.state.userSubjects.find(s2 => s2.id == s.id);
+    if (found) {
+      s.checked = true;
+    }
+  }
+
+  checkUserSubjects() {
+    let { subjects } = this.state;
+    if (this.state.isCore) {
+      subjects.forEach(s => {
+        if (s.publicCount > 0) {
+          this.checkUserSubject(s);
+        } else {
+          s.checked = false;
+        }
+      });
+    } else {
+      subjects.forEach(s => {
+        if (s.personalCount && s.personalCount > 0) {
+          this.checkUserSubject(s);
+        } else {
+          s.checked = false;
+        }
+      });
+    }
+  }
+
   selectAllSubjects(isViewAll: boolean) {
     if (this.props.user) {
       if (isViewAll !== false) {
@@ -514,6 +540,14 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         const finalBricks = this.filterUnauthorized(this.state.bricks, isViewAll, this.state.filterLevels);
         this.setState({ isViewAll, finalBricks, isClearFilter: this.isFilterClear() });
       }
+    }
+  }
+
+  selectUserSubjects(isViewAll: boolean) {
+    if (this.props.user) {
+      this.checkUserSubjects();
+      const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore);
+      this.setState({ isViewAll, finalBricks, isClearFilter: this.isFilterClear() });
     }
   }
 
@@ -935,10 +969,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async addSubject(s: Subject) {
     const res = await addSubject(s.id);
     if (res) {
-      this.setState({isSubjectPopupOpen: false});
+      this.setState({ isSubjectPopupOpen: false });
       const user = await this.props.getUser();
       if (user) {
-        this.setState({userSubjects: user.subjects});
+        this.setState({ userSubjects: user.subjects });
       }
     }
   }
@@ -1010,11 +1044,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           isAllSubjects={this.state.isAllSubjects}
           isViewAll={this.state.isViewAll}
           selectAllSubjects={this.selectAllSubjects.bind(this)}
+          selectUserSubjects={this.selectUserSubjects.bind(this)}
           setAllSubjects={isAllSubjects => {
             const finalBricks = this.filter(this.state.bricks, isAllSubjects, this.state.isCore);
             this.setState({ isAllSubjects, finalBricks, sortedIndex: 0 });
           }}
-          openAddSubjectPopup={() => this.setState({ isSubjectPopupOpen: true})}
+          openAddSubjectPopup={() => this.setState({ isSubjectPopupOpen: true })}
           handleSortChange={e => this.handleSortChange(e)}
           clearSubjects={() => this.clearSubjects()}
           levels={this.state.filterLevels}
@@ -1147,12 +1182,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             close={() => this.setState({ noSubjectOpen: false })}
           />
           {this.state.isSubjectPopupOpen &&
-          <AddSubjectDialog
-            isOpen={this.state.isSubjectPopupOpen}
-            userSubjects={this.state.userSubjects}
-            success={this.addSubject.bind(this)}
-            close={() => this.setState({ isSubjectPopupOpen: false })}
-          />}
+            <AddSubjectDialog
+              isOpen={this.state.isSubjectPopupOpen}
+              userSubjects={this.state.userSubjects}
+              success={this.addSubject.bind(this)}
+              close={() => this.setState({ isSubjectPopupOpen: false })}
+            />}
         </div >
       </React.Suspense>
     );

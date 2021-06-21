@@ -107,6 +107,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               openAddSubjectPopup={() => {}}
               isAllSubjects={this.state.isAllSubjects}
               setAllSubjects={isAllSubjects => this.setState({ isAllSubjects })}
+              selectUserSubjects={() => {}}
               handleSortChange={() => { }}
               isViewAll={false}
               selectAllSubjects={() => {}}
