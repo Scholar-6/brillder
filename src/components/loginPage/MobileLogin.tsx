@@ -41,7 +41,7 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
   renderPrivacyPolicy() {
     return (
       <div className="mobile-policy-text">
-        <TermsLink history={this.props.history}/>
+        <TermsLink history={this.props.history} />
       </div>
     );
   }
@@ -64,11 +64,21 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
                 alt="text"
                 src="/images/choose-user/brillder-white-text.svg"
               />
+              <SpriteIcon name="arrow-down" />
             </div>
           </div>
           <div className="mobile-button-box button-box">
-            <RegisterButton onClick={this.props.moveToLogin} />
+            <div className="button-box">
+              <div className="text-box">
+                <span>New to Brillder?</span>
+                <div className="join-button" onClick={() => { }}>
+                  Join Now
+                  <SpriteIcon name="arrow-right" />
+                </div>
+              </div>
+            </div>
             <GoogleButton />
+            <RegisterButton onClick={this.props.moveToLogin} />
             {this.state.animationFinished && this.renderPrivacyPolicy()}
           </div>
         </div>

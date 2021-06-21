@@ -7,7 +7,7 @@ const GoogleButton: React.FC = () => {
   return (
     <a className="google-button svgOnHover" href={googleLink}>
       <SpriteIcon name="gmail" className="active" />
-      <span>Register &nbsp;|&nbsp; Sign in with Google</span>
+      <span>Sign in with Google</span>
     </a>
   );
 };
