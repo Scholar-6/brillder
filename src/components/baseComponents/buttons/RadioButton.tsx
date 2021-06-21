@@ -34,5 +34,5 @@ const RadioButton: React.FC<Props> = ({checked, color, name}) => {
   }
   return renderDefault();
 }
-
+ 
 export default RadioButton;

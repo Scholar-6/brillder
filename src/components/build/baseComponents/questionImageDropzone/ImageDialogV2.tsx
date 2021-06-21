@@ -4,14 +4,14 @@ import "./ImageDialogV2.scss";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 import DropImage from "../../buildQuestions/components/Image/DropImage";
-import { ImageComponentData } from "../../buildQuestions/components/Image/model";
 import { fileUrl } from "components/services/uploadFile";
 import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
 
 interface DialogProps {
+  isOption?: boolean; // only pair match
   open: boolean;
   initFile: File | null;
-  initData: ImageComponentData;
+  initData: any;
   fileName: string;
   removeInitFile(): void;
   upload(file: File, source: string, caption: string, permision: boolean | 1): void;
@@ -20,6 +20,7 @@ interface DialogProps {
 }
 
 const ImageDialogV2: React.FC<DialogProps> = ({
+  isOption,
   open,
   initFile,
   initData,
@@ -29,8 +30,17 @@ const ImageDialogV2: React.FC<DialogProps> = ({
   updateData,
   close,
 }) => {
-  const [source, setSource] = React.useState(initData.imageSource || "");
-  const [caption, setCaption] = React.useState(initData.imageCaption || "");
+  let initSource = initData.imageSource;
+  if (isOption) {
+    initSource = initData.imageOptionSource;
+  }
+  let initCaption = initData.imageCaption;
+  if (isOption) {
+    initCaption = initData.imageOptionCaption;
+  }
+  console.log(isOption, initData.imageOptionSource, initData.imageSource);
+  const [source, setSource] = React.useState(initSource || "");
+  const [caption, setCaption] = React.useState(initCaption || "");
   const [permision, setPermision] = React.useState(initData.imagePermision ? true : false as boolean | 1);
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);

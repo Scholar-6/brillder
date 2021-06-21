@@ -712,6 +712,8 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             index: a.index,
             valueFile: a.valueFile,
             answerType: a.answerType,
+            imageSource: a.imageSource,
+            imageCaption: a.imageCaption
           }));
           c.choices = shuffle(choices);
         }
