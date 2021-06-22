@@ -2,150 +2,97 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
-.user-preference-page .user-preference-container .radio-container svg, .user-preference-page .user-preference-container .radio-container input {
-  padding: 0.4vw;
-}
-
-.user-preference-page .user-preference-container .radio-container svg, .user-preference-page .user-preference-container .radio-container {
-  .MuiIconButton-label:hover {
-    background: var(--theme-dark-blue-alpha3) !important;
-    border-radius: 50%;
-  }
-}
-
-.user-preference-page {
-  background-color: var(--theme-dark-blue);
-  color: var(--theme-dark-blue) !important;
+.s-user-preference-page {
   height: 100%;
+  background: var(--theme-dark-blue);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
 
-  .user-preference-container {
-    background-color: var(--white);
-    padding: 4vh 6vw;
+  h2 {
+    padding-top: 7vh;
+    padding-bottom: 4vh;
+    text-align: center;
+    font-size: 4vw;
+    font-family: $font-family-bold;
+  }
 
-    border-radius: $main-panel-radius;
 
-    position: relative;
+  .ef-flex {
+    display: flex;
+  }
 
-    .MuiRadio-root {
-      color: rgba(0, 0, 0, 0.54);
-      color: var(--theme-dark-blue) !important;
-    }
-
-    .round-button {
-      background: var(--theme-green) !important;
-      svg {
-        $padding: 0.7vw;
-        padding: $padding;
-        color: var(--white);
-        height: calc(100% - #{$padding * 2}) !important;
-        width: calc(100% - #{$padding * 2}) !important;
-      }
-    }
-
-    .pointer {
-      cursor: pointer;
-    }
-
-    h2 {
-      text-transform: none !important;
-      text-align: center !important;
-      display: block !important;
-      padding: 0 !important;
-      width: 100%;
-      font-size: 3.1vw !important;
-      margin-top: 0vw;
-      font-family: $font-family-black !important;
-    }
-
-    .user-preference-subtitle {
-      font-family: $font-family-bold;
-      padding: 0 !important;
-      font-size: 2.1vw;
-      margin-top: 2vh;
-    }
+  .ef-radio-box {
+    width: 50%;
+    max-width: 30vw;
+    overflow: hidden;
 
     .radio-container {
-      @extend %flexToYCenter;
-      margin-top: 5vh;
+      cursor: pointer;
+      border-radius: 0.8vw;
+      padding-top: 1vh;
+      padding-bottom: 1.6vh;
+      padding-left: 1.5vw;
+      padding-right: 1vw;
+      margin-left: 1vw;
+      margin-right: 1vw;
+      margin-top: 3vh;
+      margin-bottom: 3vh;
 
-      .MuiRadio-root {
+      .MuiButtonBase-root {
         padding: 0;
-        margin-right: 2vw;
+        margin-right: 1vw;
+        margin-bottom: 1vw;
       }
 
-      svg,
-      input {
-        height: 2.8vw;
-        width: 2.8vw;
+      .MuiSvgIcon-root {
+        height: 2vw;
+        width: 2vw;
+        color: var(--white);
       }
 
       .radio-text {
-        font-size: 2.5vw !important;
-        font-family: $font-family-bold !important;
+        height: 3vh;
+        font-family: $font-family-bold;
+        font-size: 2vw;
       }
+
+      .ef-label {
+        font-size: 1.5vw;
+        margin-left: 3.2vw;
+      }
+
+      &.active {
+        background: var(--theme-light-blue);     
+      }
+
       &.disabled {
-        color: rgba(0, 0, 0, 0.54) !important;
-        .MuiIconButton-label {
-          opacity: 0.5;
-          color: rgba(0, 0, 0, 0.54) !important;
+        cursor: inherit;
+        color: #757575;
+        .MuiSvgIcon-root {
+          color: #757575;
         }
       }
-    }
-
-    .inner-radio-text {
-      margin-left: 5.8vw;
-      font-size: 1.1vw;
-
-      &.last-one {
-        font-family: $font-family-regular-italic;
-        margin-top: 5vh;
-
-        .bold {
-          font-family: $font-family-bold-italic;
-        }
-      }
-    }
-
-    .user-preference-next {
-      position: absolute;
-      bottom: 3vw;
-      right: 3vw;
-      left: auto;
-      display: inline;
     }
   }
 
-  @include phone_and_tabletP {
-    .user-preference-container {
-      border-radius: 8vw;
-      height: 80%;
-      width: 95%;
-      h2 {
-        font-size: 5.5vw !important;
-      }
-      .user-preference-subtitle {
-        margin-top: 1vh;
-        font-size: 4vw;
-        text-align: center;
-      }
-      .radio-container {
-        margin-top: 3vh;
-        .input, svg {
-          height: 6vw;
-          width: 6vw;
-        }
-      }
-      .radio-container .radio-text {
-        font-size: 5vw !important;
-      }
-      .inner-radio-text {
-        margin-left: 8vw;
-        font-size: 3.5vw;
-      }
-      .user-preference-next {
-        height: 7vh;
-        width: 7vh;
-      }
+  .ss-user-preference-next {
+    position: absolute;
+    right: 6vw;
+    top: calc(50vh - 3vw);
+    background: var(--theme-orange);
+    border-radius: 50%;
+    height: 6vw;
+    width: 6vw;
+    letter-spacing: 0.1vw;
+    font-size: 1.6vw;
+    padding-right: 1.9vw;
+    svg {
+      position: absolute;
+      top: 2vw;
+      right: 0;
+      width: 2vw;
+      height: 2vw;
     }
   }
 }
