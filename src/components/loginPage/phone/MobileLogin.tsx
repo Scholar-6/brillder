@@ -66,9 +66,9 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
                 alt="text"
                 src="/images/choose-user/brillder-white-text.svg"
               />
-              <h1>
-                Join the revolution
-              </h1>
+              <div className="h-arrow-down">
+                <SpriteIcon name="arrow-down" />
+              </div>
             </div>
           </div>
           <div className="mobile-button-box button-box">
