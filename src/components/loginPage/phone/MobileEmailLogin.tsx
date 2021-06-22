@@ -92,7 +92,7 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
             <Button
               variant="contained"
               color="primary"
-              className="sign-in-button orange-button"
+              className="sign-in-button orange-button bold"
               type="submit"
             >
               Sign in
