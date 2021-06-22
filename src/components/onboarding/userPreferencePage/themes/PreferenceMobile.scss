@@ -1,3 +1,100 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.s-user-preference-page {
+  height: 100%;
+  background: var(--theme-dark-blue);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+
+  h2 {
+    padding-left: 8vw;
+    padding-right: 4vw;
+    padding-top: 7vh;
+    padding-bottom: 4vh;
+    text-align: left;
+    font-size: 9vw;
+    font-family: $font-family-bold;
+  }
+
+
+  .ef-flex {
+    display: flex;
+  }
+
+  .ef-radio-box {
+    width: 50%;
+    max-width: 30vw;
+    overflow: hidden;
+
+    .radio-container {
+      cursor: pointer;
+      border-radius: 0.8vw;
+      padding-top: 1vh;
+      padding-bottom: 1.6vh;
+      padding-left: 1.5vw;
+      padding-right: 1vw;
+      margin-left: 1vw;
+      margin-right: 1vw;
+      margin-top: 3vh;
+      margin-bottom: 3vh;
+
+      .MuiButtonBase-root {
+        padding: 0;
+        margin-right: 1vw;
+        margin-bottom: 1vw;
+      }
+
+      .MuiSvgIcon-root {
+        height: 2vw;
+        width: 2vw;
+        color: var(--white);
+      }
+
+      .radio-text {
+        height: 3vh;
+        font-family: $font-family-bold;
+        font-size: 2vw;
+      }
+
+      .ef-label {
+        font-size: 1.5vw;
+        margin-left: 3.2vw;
+      }
+
+      &.active {
+        background: var(--theme-light-blue);     
+      }
+
+      &.disabled {
+        cursor: inherit;
+        color: #757575;
+        .MuiSvgIcon-root {
+          color: #757575;
+        }
+      }
+    }
+  }
+
+  .ss-user-preference-next {
+    position: absolute;
+    right: 6vw;
+    top: calc(50vh - 3vw);
+    background: var(--theme-orange);
+    border-radius: 50%;
+    height: 6vw;
+    width: 6vw;
+    letter-spacing: 0.1vw;
+    font-size: 1.6vw;
+    padding-right: 1.9vw;
+    svg {
+      position: absolute;
+      top: 2vw;
+      right: 0;
+      width: 2vw;
+      height: 2vw;
+    }
+  }
+}
