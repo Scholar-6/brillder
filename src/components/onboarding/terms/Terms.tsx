@@ -13,6 +13,7 @@ import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import { acceptTerms } from "services/axios/user";
 import userActions from 'redux/actions/user';
 import { getTerms } from "services/axios/terms";
+import { isPhone } from "services/phone";
 
 interface BricksListProps {
   user: User;
@@ -31,6 +32,7 @@ interface Part {
 
 interface BricksListState {
   parts: Part[];
+  accepted: boolean;
   lastModifiedDate: string;
 }
 
@@ -44,6 +46,7 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
 
     this.state = {
       parts: [],
+      accepted: false,
       lastModifiedDate: ''
     };
 
@@ -85,7 +88,7 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
       <React.Suspense fallback={<></>}>
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
         <Grid
-          className="user-preference-page terms-page-container"
+          className={`user-preference-page terms-page-container ${this.state.accepted ? 'terms-accepted' : ''}`}
           container direction="column"
           justify="center" alignItems="center"
         >
@@ -100,12 +103,23 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
             <div className="bottom-button" onClick={async() => {
               const success = await acceptTerms(this.state.lastModifiedDate);
               if (success) {
+                this.setState({accepted: true});
                 await this.props.getUser();
                 const values = queryString.parse(this.props.history.location.search);
-                if (values.onlyAcceptTerms) {
-                  this.props.history.push('/home');
+                if (isPhone()) {
+                  setTimeout(() => {
+                    if (values.onlyAcceptTerms) {
+                      this.props.history.push('/home');
+                    } else {
+                      this.props.history.push(map.UserPreference);
+                    }
+                  }, 1000);
                 } else {
-                  this.props.history.push(map.UserPreference);
+                  if (values.onlyAcceptTerms) {
+                    this.props.history.push('/home');
+                  } else {
+                    this.props.history.push(map.UserPreference);
+                  }
                 }
               }
             }}>
