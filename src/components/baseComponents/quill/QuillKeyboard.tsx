@@ -54,6 +54,14 @@ class QuillKeyboard extends Keyboard {
                     .insert(newText));
             }
         });
+
+        this.addBinding({
+            key: "y",
+            shortKey: true,
+            handler: (range: any, context: any) => {
+                (quill as any).history.redo();
+            }
+        });
     }
 }
 GlobalQuill.register("modules/keyboard", QuillKeyboard);

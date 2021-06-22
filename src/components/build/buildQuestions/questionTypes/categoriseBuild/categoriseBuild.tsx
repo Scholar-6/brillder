@@ -29,7 +29,7 @@ export const getDefaultCategoriseAnswer = () => {
 }
 
 const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
-  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog, removeHintAt
 }) => {
   const [categoryHeight, setCategoryHeight] = React.useState('0%');
   const [sameCategoryOpen, setSameCategory] = React.useState(false);
@@ -88,6 +88,11 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
 
   const removeAnswer = (category: SortCategory, index: number) => {
     category.answers.splice(index, 1);
+    
+    const catIndex = state.categories.indexOf(category);
+    let hintIndex = state.categories.slice(0, catIndex).reduce((idx, cat) => idx + cat.answers.length, 0);
+    hintIndex += index;
+    removeHintAt(hintIndex);
     update();
     save();
   }

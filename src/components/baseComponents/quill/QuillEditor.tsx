@@ -1,7 +1,7 @@
 import Quill, { Sources } from "quill";
 import Delta from "quill-delta";
 import React from "react";
-import ReactQuill from "react-quill"; 
+import ReactQuill, { Quill as GlobalQuill } from "react-quill"; 
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
 import "quill-table-ui/dist/index.css";
@@ -152,6 +152,9 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         clipboard: true,
         keyboard: {
             bindings: QuillBetterTable.keyboardBindings,
+        },
+        history: {
+            userOnly: true,
         },
         table: false,
         'better-table': props.allowTables ? {

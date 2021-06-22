@@ -37,7 +37,7 @@ export const getDefaultMissingWordAnswer = () => {
 }
 
 const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
-  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog, removeHintAt
 }) => {
   const [height, setHeight] = React.useState('0%');
   useEffect(() => calculateHeight());
@@ -98,6 +98,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
 
   const removeChoice = (index: number) => {
     state.choices.splice(index, 1);
+    removeHintAt(index);
     update();
     save();
   }

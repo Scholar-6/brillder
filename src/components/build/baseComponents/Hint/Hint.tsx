@@ -74,6 +74,7 @@ const HintComponent: React.FC<HintProps> = ({
   }
 
   const [state, setState] = React.useState(initState);
+  const [listLength, setListLength] = React.useState(props.count ?? 0);
 
   React.useEffect(() => {
     if (props.value) {
@@ -150,26 +151,27 @@ const HintComponent: React.FC<HintProps> = ({
       }
     }
 
-    for (let i = 0; i < props.count; i++) {
-      answerHints.push(
-        <div className="hint-container" key={i}>
-          <QuillEditor
-            disabled={locked}
-            data={state.list[i]}
-            placeholder={`Answer ${i + 1} Hint`}
-            toolbar={[
-              'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'imageUploadCustom', 'image'
-            ]}
-            imageDialog={true}
-            validate={validationRequired}
-            isValid={!!stripHtml(state.list[i])}
-            onChange={(v: any) => { onHintListChanged(v, i) }}
-          />
-        </div>
-      );
+    if(props.count !== listLength) {
+      setListLength(props.count);
     }
-    return answerHints;
+
+    return Array.from(Array(props.count)).map((_, i) => (
+      <div className="hint-container" key={`${listLength}-${i}`}>
+        <QuillEditor
+          disabled={locked}
+          data={state.list[i]}
+          placeholder={`Answer ${i + 1} Hint`}
+          toolbar={[
+            'bold', 'italic', 'fontColor', 'superscript', 'subscript',
+            'latex', 'imageUploadCustom', 'image'
+          ]}
+          imageDialog={true}
+          validate={validationRequired}
+          isValid={!!stripHtml(state.list[i])}
+          onChange={(v: any) => { onHintListChanged(v, i) }}
+        />
+      </div>
+    ));
   }
 
   const renderNormalToggle = () => {
