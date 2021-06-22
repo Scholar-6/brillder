@@ -9,7 +9,7 @@ import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import WrongLoginDialog from "./components/WrongLoginDialog";
-import MobileEmailLogin from './MobileEmailLogin';
+import MobileEmailLogin from './phone/MobileEmailLogin';
 import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
 import { trackSignUp } from "services/matomo";
 import { isPhone } from "services/phone";
