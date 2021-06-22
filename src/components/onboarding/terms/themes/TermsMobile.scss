@@ -2,6 +2,17 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
+.user-preference-page.terms-page-container .onboarding-terms {
+  transition: all 0.5s 0.5s ease-out;
+}
+
+.user-preference-page.terms-page-container.terms-accepted .onboarding-terms {
+  opacity: 0;
+  .bottom-button {
+    background: var(--theme-green);
+  }
+}
+
 .terms-page-container {
   padding-top: 5% !important;
   margin-bottom: 64px !important;
