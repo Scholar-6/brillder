@@ -109,13 +109,16 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
     return (
       <div className="second-item">
         <div className="logo-box">
-          <div className="logo-box-inner">
-            <div className="logo-image mobile">
-              <SpriteIcon name="logo" className="active text-theme-orange" onClick={() => props.history.push(map.Login)} />
+          <div>
+            <div className="flex-center h-images-container">
+              <SpriteIcon name="brain-white-thunder" />
+              <div className="brain-container">
+                <SpriteIcon name="logo" className="active text-theme-orange" onClick={() => props.history.push(map.Login)} />
+                <p className="d-label">Brillder</p>
+              </div>
             </div>
-          </div>
-          <div className="h-arrow-down">
-            <SpriteIcon name="arrow-down" />
+            <p className="bold g-big">Join the</p>
+            <p className="bold g-big">revolution.</p>
           </div>
         </div>
         <div className="mobile-button-box button-box m-register-box">
@@ -139,7 +142,7 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
   }
 
   return (
-    <div className="first-col">
+    <div className="first-col mobile-register">
       {renderSignInPage()}
     </div>
   );

@@ -423,6 +423,41 @@
       background: var(--theme-orange) !important;
     }
   }
+  .mobile-register {
+    .logo-box {
+      padding-top: 8%;
+      align-items: flex-start;
+      .h-images-container {
+        padding-bottom: 20%;
+        svg {
+          max-height: 12vh;
+          width: 50vw;
+        }
+        .brain-container {
+          .d-label {
+            padding-right: 1vw;
+            line-height: 0.6;
+            margin: 0;
+            color: var(--white);
+            font-family: $font-family-light;
+            text-align: center;
+            font-size: 7.4vw;
+          }
+        }
+      }
+      p.g-big {
+        line-height: 0;
+        padding-bottom: 8vh;
+        margin-left: 12vw;
+        color: var(--white);
+        font-size: 16vw;
+        text-align: left;
+      }
+    }
+    .m-register-box {
+      margin-top: 4vh !important;
+    }
+  }
 }
 
 .mobile-button-box {
