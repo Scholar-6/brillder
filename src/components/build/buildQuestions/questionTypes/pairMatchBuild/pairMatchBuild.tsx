@@ -20,7 +20,7 @@ export const getDefaultPairMatchAnswer = () => {
 }
 
 const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog, removeHintAt
 }) => {
   const newAnswer = () => ({ option: "", value: "" });
 
@@ -49,6 +49,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   const removeFromList = (index: number) => {
     if (locked) { return; }
     state.list.splice(index, 1);
+    removeHintAt(index);
     update();
     save();
   }
