@@ -23,7 +23,7 @@ export const getDefaultChooseOneAnswer = () => {
 }
 
 const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog, removeHintAt
 }) => {
   const newAnswer = () => ({ id: generateId(), value: "", checked: false, valueFile: "" });
 
@@ -66,6 +66,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   const removeFromList = (index: number) => {
     if (locked) { return; }
     state.list.splice(index, 1);
+    removeHintAt(index);
     update();
     save();
   }

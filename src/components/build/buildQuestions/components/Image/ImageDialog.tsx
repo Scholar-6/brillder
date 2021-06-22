@@ -20,7 +20,7 @@ interface DialogProps {
     caption: string,
     align: ImageAlign,
     height: number
-  ): void;
+  ): any;
   updateData(
     source: string,
     caption: string,
@@ -51,6 +51,7 @@ const ImageDialog: React.FC<DialogProps> = ({
     initData.imageHeight ? initData.imageHeight : 30
   );
   const [removed, setRemoved] = React.useState(null as boolean | null);
+  const [isSaving, setSaving] = React.useState(false);
 
   useEffect(() => {
     if (!file) {
@@ -122,6 +123,10 @@ const ImageDialog: React.FC<DialogProps> = ({
       label: "+",
     },
   ];
+
+  if (!open) {
+    return <div />;
+  }
 
   return (
     <BaseDialogWrapper
@@ -204,13 +209,21 @@ const ImageDialog: React.FC<DialogProps> = ({
       <div className="centered last-button">
         <div
           className={`upload-button ${canUpload ? "active" : "disabled"}`}
-          onClick={() => {
-            if (cropedFile && canUpload) {
-              upload(cropedFile, source, caption, align, height);
-            } else if (canUpload) {
-              updateData(source, caption, align, height);
-            } else {
-              setValidation(true);
+          onClick={async() => {
+            if (!isSaving) {
+              setSaving(true);
+              if (cropedFile && canUpload) {
+                const res = await upload(cropedFile, source, caption, align, height);
+                if (res) {
+                  setSaving(false);
+                }
+              } else if (canUpload) {
+                updateData(source, caption, align, height);
+                setSaving(false);
+              } else {
+                setValidation(true);
+                setSaving(false);
+              }
             }
           }}
         >

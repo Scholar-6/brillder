@@ -19,6 +19,7 @@ export interface ChooseSeveralBuildProps {
   save(): void;
   updateComponent(component:any):void;
   openSameAnswerDialog(): void;
+  removeHintAt(index: number): void;
 }
 
 export const getDefaultChooseSeveralAnswer = () => {
@@ -28,7 +29,7 @@ export const getDefaultChooseSeveralAnswer = () => {
 }
 
 const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog, removeHintAt
 }) => {
   const newAnswer = () => ({ id: generateId(), value: "", checked: false, valueFile: '' });
 
@@ -70,6 +71,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   const removeFromList = (index: number) => {
     if (locked) { return; }
     state.list.splice(index, 1);
+    removeHintAt(index);
     update();
     save();
   }
