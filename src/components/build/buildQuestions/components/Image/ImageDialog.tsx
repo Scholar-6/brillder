@@ -51,6 +51,7 @@ const ImageDialog: React.FC<DialogProps> = ({
     initData.imageHeight ? initData.imageHeight : 30
   );
   const [removed, setRemoved] = React.useState(null as boolean | null);
+  const [isSaving, setSaving] = React.useState(false);
 
   useEffect(() => {
     if (!file) {
@@ -204,13 +205,18 @@ const ImageDialog: React.FC<DialogProps> = ({
       <div className="centered last-button">
         <div
           className={`upload-button ${canUpload ? "active" : "disabled"}`}
-          onClick={() => {
-            if (cropedFile && canUpload) {
-              upload(cropedFile, source, caption, align, height);
-            } else if (canUpload) {
-              updateData(source, caption, align, height);
-            } else {
-              setValidation(true);
+          onClick={async () => {
+            if (!isSaving) {
+              setSaving(true);
+              if (cropedFile && canUpload) {
+                await upload(cropedFile, source, caption, align, height);
+              } else if (canUpload) {
+                updateData(source, caption, align, height);
+                setSaving(false);
+              } else {
+                setValidation(true);
+                setSaving(false);
+              }
             }
           }}
         >
