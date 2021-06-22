@@ -117,8 +117,7 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
                 <p className="d-label">Brillder</p>
               </div>
             </div>
-            <p className="bold g-big">Join the</p>
-            <p className="bold g-big">revolution.</p>
+            <p className="bold g-big">Join the revolution.</p>
           </div>
         </div>
         <div className="mobile-button-box button-box m-register-box">

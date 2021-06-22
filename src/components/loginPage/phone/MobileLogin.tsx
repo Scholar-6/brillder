@@ -7,8 +7,9 @@ import GoogleButton from "../components/GoogleButton";
 import RegisterButton from "../components/RegisterButton";
 import TermsLink from "components/baseComponents/TermsLink";
 import { Route, Switch } from "react-router-dom";
-import { FirstPage, EmailSignPage, RegisterPage } from "../desktop/routes";
+import { FirstPage, EmailSignPage, RegisterPage, JoinPage } from "../desktop/routes";
 import MobileRegisterPage from './MobileRegister';
+import MobileJoinPage from './MobileJoin';
 
 interface MobileLoginState {
   animationFinished: boolean;
@@ -73,9 +74,9 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
           </div>
           <div className="mobile-button-box button-box">
             <div className="button-box">
-              <div className="text-box">
+              <div className="text-box gg-text-box">
                 <span>New to Brillder?</span>
-                <div className="join-button" onClick={() => this.props.history.push(RegisterPage)}>
+                <div className="join-button" onClick={() => this.props.history.push(JoinPage)}>
                   Join Now
                   <SpriteIcon name="arrow-right" />
                 </div>
@@ -99,6 +100,9 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
             loginState !== LoginState.ChooseLoginAnimation
             ? this.renderSignInPage()
             : this.renderChooseLoginPage(loginState)}
+        </Route>
+        <Route exact path={JoinPage}>
+          <MobileJoinPage history={this.props.history} />
         </Route>
         <Route exact path={RegisterPage}>
           <MobileRegisterPage history={this.props.history} email="" />

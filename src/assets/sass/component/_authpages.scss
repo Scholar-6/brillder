@@ -3,7 +3,7 @@
   height: 100%;
   @extend %posRelative;
   .logo-box {
-    background-color: transparent;
+    background-color: var(--theme-light-blue) !important;
     @extend %flexCenter;
     @include phone_and_tabletP {
       background: var(--theme-light-blue);

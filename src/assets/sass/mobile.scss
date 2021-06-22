@@ -356,10 +356,14 @@
       letter-spacing: 1vw;
     }
 
+    .gg-text-box {
+      font-size: 4.6vw;
+    }
+
     .join-button {
       cursor: pointer;
       position: absolute;
-      top: -2vw;
+      top: -1.5vw;
       left: 50vw;
       width: 40vw;
       display: flex;
@@ -375,6 +379,7 @@
     }
   }
   .logo-box {
+    background: var(--theme-light-blue) !important;
     position: relative;
     height: 45% !important;
     .logo-box-inner {
@@ -382,6 +387,8 @@
       margin-bottom: 2%;
     }
     &.big {
+      transition: unset !important;
+      background: var(--theme-light-blue) !important;
       height: 100% !important;
     }
     .h-arrow-down {
@@ -400,8 +407,22 @@
       }
     }
   }
-  .button-box {
-    margin-top: 1.7vh !important;
+  .mobile-button-box {
+    padding-top: 9% !important;
+    margin-top: 8% !important;
+
+    .input-block.button-box {
+      margin: 0 !important;
+      .bold .MuiButton-label {
+        font-family: $font-family-bold !important;
+      }
+    }
+    .google-button, .email-button {
+      padding: 2.5vh 5vw !important;
+      span {
+        letter-spacing: 0.5vw !important;
+      }
+    }
   }
   .input-block.button-box .orange-button {
     border-radius: 3vw !important;
@@ -428,7 +449,7 @@
       padding-top: 8%;
       align-items: flex-start;
       .h-images-container {
-        padding-bottom: 20%;
+        padding-bottom: 15%;
         svg {
           max-height: 12vh;
           width: 50vw;
@@ -448,14 +469,26 @@
       p.g-big {
         line-height: 0;
         padding-bottom: 8vh;
-        margin-left: 12vw;
+        margin-left: 10vw;
         color: var(--white);
-        font-size: 16vw;
+        font-size: 11vw;
         text-align: left;
       }
     }
     .m-register-box {
       margin-top: 4vh !important;
+    }
+  }
+  .mobile-join {
+    .google-button, .email-button {
+      font-size: 5.5vw !important;
+      margin-bottom: 8% !important;
+    }
+    .email-button {
+      text-transform: unset !important;
+    }
+    .fe-sign-in {
+      margin-left: 3vw;
     }
   }
 }
