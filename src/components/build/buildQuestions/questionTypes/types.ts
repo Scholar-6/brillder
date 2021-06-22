@@ -13,4 +13,5 @@ export interface UniqueComponentProps {
   save(): void;
   updateComponent(component: any): void;
   openSameAnswerDialog(): void;
+  removeHintAt(index: number): void;
 }

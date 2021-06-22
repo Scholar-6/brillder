@@ -81,6 +81,13 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
       }
     }
 
+    const removeHintAt = (index: number) => {
+      if(hint.list) {
+        hint.list.splice(index, 1);
+      }
+      props.setQuestionHint({ index: props.questionIndex, ...hint });
+    }
+
     if (InnerComponent) {
       return (
         <div className="unique-component-wrapper">
@@ -93,6 +100,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
             validationRequired={validationRequired}
             updateComponent={updateComponent}
             openSameAnswerDialog={props.openSameAnswerDialog}
+            removeHintAt={removeHintAt}
           />
           <HintComponent
             index={props.questionIndex}
