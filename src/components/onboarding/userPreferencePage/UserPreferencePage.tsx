@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Radio } from '@material-ui/core';
+import { Radio } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 import './UserPreferencePage.scss';
@@ -11,6 +11,8 @@ import { checkAdmin } from 'components/services/brickService';
 import { setUserPreference } from 'services/axios/user';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { isPhone } from 'services/phone';
+import { isMobile } from 'react-device-detect';
 
 interface UserPreferencePageProps {
   user: User;
@@ -19,9 +21,13 @@ interface UserPreferencePageProps {
   getUser(): void;
 }
 
+const MobileTheme = React.lazy(() => import('./themes/PreferenceMobileTheme'));
+const TabletTheme = React.lazy(() => import('./themes/PreferenceTabletTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/PreferenceDesktopTheme'));
+
 const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
   const isAdmin = checkAdmin(props.user.roles);
-  const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId ?? props.defaultPreference);
+  const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId ?? props.defaultPreference ?? UserType.Student);
 
   const handleChange = async (roleId: RolePreference, disabled: boolean) => {
     if (disabled || !roleId) {
@@ -40,8 +46,8 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
     if (preference) {
       handleChange(preference, false);
     }
-  /* eslint-disable-next-line */
-}, [props.defaultPreference]);
+    /* eslint-disable-next-line */
+  }, [props.defaultPreference]);
 
   const renderRadioButton = (roleId: RolePreference) => {
     return <Radio checked={preference === roleId} value={roleId} />;
@@ -64,53 +70,54 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
       className += ' disabled';
     }
 
+    if (preference === roleId) {
+      className += ' active';
+    }
+
     return (
-      <div>
+      <div className="ef-radio-box">
         <div className={className} onClick={() => handleChange(roleId as RolePreference, disabled)}>
           {renderRadioButton(roleId as RolePreference)}
           <span className="radio-text pointer">{name}</span>
-        </div>
-        <div className="inner-radio-text pointer" onClick={() => handleChange(roleId as RolePreference, disabled)}>
-          {children}
+          <div className="ef-label">{children}</div>
         </div>
       </div>
     );
   }
 
   return (
-    <Grid
-      className="user-preference-page"
-      container direction="column"
-      justify="center" alignItems="center"
-    >
-      <Grid className="user-preference-container" item>
-        <h2>Thank you for signing up to Brillder!</h2>
-        <p className="user-preference-subtitle">
-          Which of the following best describes you?
-        </p>
-        <RadioContainer roleId={RolePreference.Student} name="Student">
-          I want to play brick content, receive assignments and feedback, or join a course.
-        </RadioContainer>
-        <RadioContainer roleId={RolePreference.Builder} name="Builder">
-          I want to build and submit brick content for paid publication.
-        </RadioContainer>
-        <RadioContainer roleId={RolePreference.Teacher} name="Teacher / Tutor">
-          I want to assign brick content, and provide feedback to my students.<br />
-          <i>Use my institution's license or start a 30-day free trial for personal use.</i>
-        </RadioContainer>
-        <RadioContainer roleId={UserType.Institution} name="Institution">
-          I want to manage classes, students and teachers.<br />
-          <i>Start a 30-day free trial for institutional use.</i>
-        </RadioContainer>
-        <button
-          type="button"
-          className={`user-preference-next svgOnHover ${preference ? "play-green animated pulse-green duration-1s" : "play-gray disabled"}`}
-          onClick={moveNext}
-        >
-          <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
-        </button>
-      </Grid>
-    </Grid>
+    <React.Suspense fallback={<></>}>
+      {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
+      <div className="s-user-preference-page">
+        <div className="ef-container">
+          <h2>Which of the following best describes you?</h2>
+          <div className="ef-flex">
+            <RadioContainer roleId={RolePreference.Student} name="Student">
+              I want to learn, receive assignments and feedback, or join a course.
+            </RadioContainer>
+            <RadioContainer roleId={RolePreference.Builder} name="Builder">
+              I want to build and submit content for paid publication.
+            </RadioContainer>
+          </div>
+          <div className="ef-flex">
+            <RadioContainer roleId={RolePreference.Teacher} name="Teacher / Tutor">
+              I want to assign Brillder content and provide feedback to my students.<br />
+            </RadioContainer>
+            <RadioContainer roleId={UserType.Institution} name="Institution">
+              I want to manage classes, students, and teachers.<br />
+            </RadioContainer>
+          </div>
+          <button
+            type="button"
+            className="btn ss-user-preference-next"
+            onClick={moveNext}
+          >
+            Next
+            <SpriteIcon name="arrow-right" />
+          </button>
+        </div>
+      </div>
+    </React.Suspense>
   );
 };
 
