@@ -85,11 +85,11 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
       <React.Suspense fallback={<></>}>
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
         <Grid
-          className="user-preference-page"
+          className="user-preference-page terms-page-container"
           container direction="column"
           justify="center" alignItems="center"
         >
-          <Grid className="user-preference-container terms-page-container" item>
+          <Grid className="user-preference-container terms-page-container onboarding-terms" item>
             <div className="terms-page">
               <div>
                 {this.state.parts.map((p) => (

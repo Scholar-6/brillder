@@ -2,92 +2,103 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-.terms-page {
-  font-size: 3vw;
-  height: calc(95% - 6vw);
-  max-width: 100%;
-  margin: 0 !important;
-  padding-left: 6vw;
-  padding-right: 6vw;
-  overflow: hidden;
-  color: var(--theme-dark-blue);
-  background: var(--white);
-
-  >div {
-    padding-top: 5vh;
-    padding-bottom: 4vh;
-    height: 100%;
-    overflow: auto !important;
-  }
-
-  ol {
-    margin-left: 1vw;
-    overflow-x: hidden;
-  }
-
-  h1 {
-    margin-top: 1.3vw;
-    margin-bottom: 1.3vw;
-    text-align: center;
-    font-size: 3vw;
-  }
-
-  h2 {
-    padding-top: 1vw !important;
-    padding-bottom: 1vw !important;
-    line-height: 1 !important;
-    text-align: left !important;
-    font-size: 2.1vw !important;
-  }
-
-  h3 {
-    line-height: 2 !important;
-    text-align: left !important;
-    font-size: 1.7vw;
-  }
-
-  h1,
-  h2,
-  h3 {
-    letter-spacing: 0;
-    font-family: $font-family-bold;
-    color: var(--theme-orange);
-  }
-}
-
 .terms-page-container {
-  padding: 0 !important;
-  overflow: hidden;
-  background: inherit !important;
+  padding-top: 5% !important;
+  margin-bottom: 64px !important;
+  height: 100% !important;
+  .terms-page {
+    font-size: 3vw;
+    height: calc(93% - 10vw);
+    max-width: 100%;
+    margin: 0 !important;
+    padding-left: 6vw;
+    padding-right: 6vw;
+    overflow: hidden;
+    color: var(--theme-dark-blue);
+    background: var(--white);
 
-  .bottom-button {
-    cursor: pointer;
-    transition: all 300ms ease-out;
-    background: var(--theme-green);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2.5vw;
-    height: calc(5% + 6vw);
+    >div {
+      padding-top: 5vh;
+      padding-bottom: 4vh;
+      height: 100%;
+      overflow: auto !important;
+    }
 
-    .MuiButtonBase-root {
-      width: 4.6vw;
-      height: 4.6vw;
+    ol {
+      margin-left: 1vw;
+      overflow-x: hidden;
+    }
 
-      .MuiIconButton-label {
-        border-radius: 50%;
+    h1 {
+      margin-top: 1.3vw;
+      margin-bottom: 1.3vw;
+      text-align: center;
+      font-size: 3vw;
+    }
+
+    h2 {
+      padding-top: 1vw !important;
+      padding-bottom: 1vw !important;
+      line-height: 1 !important;
+      text-align: left !important;
+      font-size: 2.1vw !important;
+    }
+
+    h3 {
+      line-height: 2 !important;
+      text-align: left !important;
+      font-size: 1.7vw;
+    }
+
+    h1,
+    h2,
+    h3 {
+      letter-spacing: 0;
+      font-family: $font-family-bold;
+    }
+
+    h1 {
+      font-size: 12.2vw !important;
+    }
+  }
+
+  .terms-page-container {
+    padding: 0 !important;
+    overflow: hidden;
+    background: inherit !important;
+
+    .bottom-button {
+      cursor: pointer;
+      transition: all 300ms ease-out;
+      background: var(--theme-orange);
+      display: flex;
+      color: var(--white);
+      justify-content: center;
+      align-items: center;
+      font-size: 5vw;
+      padding-right: 20vw;
+      height: calc(7% + 10vw);
+
+      .MuiButtonBase-root {
+        margin-left: 8vw;
+        margin-right: 12vw;
+
+        width: 4.6vw;
+        height: 4.6vw;
+
+        .MuiIconButton-label {
+          border-radius: 50%;
+        }
       }
 
-      margin-right: 0.4vw;
-    }
+      .MuiIconButton-colorSecondary {
+        color: var(--white) !important;
+      }
 
-    .MuiIconButton-colorSecondary {
-      color: #001c58 !important;
-    }
-
-    .MuiSvgIcon-root {
-      width: 3vw;
-      height: 3vw;
+      .MuiSvgIcon-root {
+        width: 10vw;
+        height: 10vw;
+      }
     }
   }
 }
