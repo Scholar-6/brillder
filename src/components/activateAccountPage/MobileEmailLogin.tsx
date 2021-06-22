@@ -24,7 +24,6 @@ interface MobileLoginProps {
 }
 
 class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
-
   renderSignInPage() {
     return (
       <div className="second-item">
@@ -78,7 +77,7 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
               }
             >
               Register
-              </Button>
+            </Button>
             <Button
               variant="contained"
               color="primary"
@@ -86,10 +85,10 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
               type="submit"
             >
               Sign in
-              </Button>
+            </Button>
           </div>
           <div className="mobile-policy-text">
-            <TermsLink history={this.props.history}/>
+            <TermsLink history={this.props.history} />
           </div>
         </form>
       </div>
@@ -98,11 +97,9 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
 
   render() {
     return (
-      <Hidden only={["sm", "md", "lg", "xl"]}>
-        <div className="first-col">
-          {this.renderSignInPage()}
-        </div>
-      </Hidden>
+      <div className="first-col">
+        {this.renderSignInPage()}
+      </div>
     );
   }
 }

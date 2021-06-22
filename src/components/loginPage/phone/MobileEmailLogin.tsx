@@ -33,8 +33,11 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
         <div className="logo-box">
           <div className="logo-box-inner">
             <div className="logo-image mobile">
-              <SpriteIcon name="login" className="active text-theme-orange" onClick={() => this.props.history.push(map.Login)} />
+              <SpriteIcon name="logo" className="active text-theme-orange" onClick={() => this.props.history.push(map.Login)} />
             </div>
+          </div>
+          <div className="h-arrow-down">
+            <SpriteIcon name="arrow-down" />
           </div>
         </div>
         <form
@@ -89,18 +92,7 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps> {
             <Button
               variant="contained"
               color="primary"
-              className="sign-up-button"
-              type="button"
-              onClick={() =>
-                this.props.register(this.props.email, this.props.password)
-              }
-            >
-              Register
-              </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              className="sign-in-button"
+              className="sign-in-button orange-button bold"
               type="submit"
             >
               Sign in
