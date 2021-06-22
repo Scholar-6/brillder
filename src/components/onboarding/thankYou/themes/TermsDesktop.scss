@@ -33,6 +33,10 @@
       font-size: 2vw;
       font-family: $font-family-bold;
       background: var(--theme-orange);
+      
+      &:hover {
+        background: var(--theme-light-blue);
+      }
     }
   }
 
