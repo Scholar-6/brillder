@@ -24,8 +24,6 @@ import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
 import { createUserByEmail } from "services/axios/user";
 import { trackSignUp } from "services/matomo";
-import map from "components/map";
-import routes from "../routes";
 
 
 interface IntroductionProps {
