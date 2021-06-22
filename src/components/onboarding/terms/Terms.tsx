@@ -6,8 +6,6 @@ import queryString from 'query-string';
 // @ts-ignore
 import marked from "marked";
 
-import { User } from "model/user";
-import { ReduxCombinedState } from "redux/reducers";
 import map from "components/map";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import { acceptTerms } from "services/axios/user";
@@ -16,7 +14,6 @@ import { getTerms } from "services/axios/terms";
 import { isPhone } from "services/phone";
 
 interface BricksListProps {
-  user: User;
   history: any;
   location: any;
 
@@ -111,7 +108,7 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
                     if (values.onlyAcceptTerms) {
                       this.props.history.push('/home');
                     } else {
-                      this.props.history.push(map.UserPreference);
+                      this.props.history.push(map.ThankYouPage);
                     }
                   }, 1000);
                 } else {
@@ -133,13 +130,9 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
   }
 }
 
-const mapState = (state: ReduxCombinedState) => ({
-  user: state.user.user,
-});
-
 
 const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
 });
 
-export default connect(mapState, mapDispatch)(TermsSignUp);
+export default connect(null, mapDispatch)(TermsSignUp);
