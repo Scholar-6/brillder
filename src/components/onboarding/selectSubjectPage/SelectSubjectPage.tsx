@@ -16,6 +16,8 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 
 import SubjectsColumnV2 from "./SubjectsColumnV2";
 import { isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
+import { isPhone } from "services/phone";
+import { hideZendesk } from "services/zendesk";
 
 
 interface AllSubjectsProps {
@@ -45,6 +47,12 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     };
 
     this.loadSubjects();
+  }
+
+  componentDidMount() {
+    if (isPhone()) {
+      hideZendesk();
+    }
   }
 
   async loadSubjects() {
@@ -121,9 +129,32 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     let titleVerb = 'build';
     if (isTeacherPreference(this.props.user)) {
       titleVerb = 'teach';
-    } else if(isStudentPreference(this.props.user)) {
+    } else if (isStudentPreference(this.props.user)) {
       titleVerb = 'play';
     }
+
+    if (isPhone()) {
+      return (
+        <React.Suspense fallback={<></>}>
+          <MobileTheme />
+          <div className="select-subject-page">
+            <div className="df-space-before-titles" />
+            <h1>What kind of bricks</h1>
+            <h1>will you {titleVerb}?</h1>
+            <div className="df-space-after-titles" />
+            <SubjectsColumnV2
+              subjects={this.state.subjects}
+              next={this.submit.bind(this)}
+              onClick={this.onSubjectSelected.bind(this)}
+            />
+            <div className="df-button-box">
+              <button className="btn theme-orange" onClick={this.submit.bind(this)}>Next</button>
+            </div>
+          </div>
+        </React.Suspense>
+      );
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}

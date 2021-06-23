@@ -1,0 +1,106 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.s-user-preference-page {
+  height: 100%;
+  background: var(--theme-dark-blue);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+
+  .ef-space-before-title {
+    height: 4%;
+  }
+
+  .ef-head-container {
+    height: 10%;
+    h2 {
+      display: flex;
+      align-items: center;
+      padding-left: 11vw;
+      padding-right: 4vw;
+      line-height: 0;
+      height: 50%;
+      text-align: left;
+      font-size: 8.2vw;
+      font-family: $font-family-black;
+    }
+  }
+
+  .ef-space-after-title {
+    height: 2%;
+  }
+
+  .ef-radio-box {
+    width: 100%;
+
+    .radio-container {
+      cursor: pointer;
+      border-radius: 3.5vw;
+      padding-top: 0vh;
+      padding-bottom: 0.6vh;
+      padding-left: 3vw;
+      padding-right: 3vw;
+      margin-left: 4vw;
+      margin-right: 4vw;
+      margin-top: 1vh;
+      margin-bottom: 1vh;
+
+      .MuiButtonBase-root {
+        padding: 0;
+        margin-right: 3vw;
+        margin-bottom: 3.5vw;
+      }
+
+      .MuiSvgIcon-root {
+        height: 6vw;
+        width: 6vw;
+        color: var(--white);
+      }
+
+      .radio-text {
+        font-family: $font-family-bold;
+        font-size: 7vw;
+      }
+
+      .ef-label {
+        font-size: 5vw;
+        margin-left: 10vw;
+        font-family: $font-family-light;
+      }
+
+      &.active {
+        background: var(--theme-light-blue);     
+      }
+
+      &.disabled {
+        cursor: inherit;
+        color: #757575;
+        .MuiSvgIcon-root {
+          color: #757575;
+        }
+      }
+    }
+  }
+
+  .ef-main-radio-context {
+    height: calc(100% - 4% - 10% - 2% - 10%);
+    overflow-y: auto;
+  }
+
+  .ss-user-preference-next {
+    right: 6vw;
+    top: calc(50vh - 3vw);
+    background: var(--theme-orange);
+    border-radius: 3vw;
+    min-height: 6%;
+    margin-left: 10vw;
+    width: 80vw;
+    letter-spacing: 0.1vw;
+    font-size: 7vw;
+    svg {
+      display: none;
+    }
+  }
+}
