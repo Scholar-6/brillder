@@ -33,7 +33,6 @@ interface ReviewPageProps {
   status: PlayStatus;
   brick: Brick;
   history: any;
-  startTime?: Moment;
   attempts: any[];
   isPlayPreview?: boolean;
   updateAttempts(attempt: any, index: number): any;
