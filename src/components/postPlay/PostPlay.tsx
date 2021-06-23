@@ -41,7 +41,6 @@ import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
 import PostPhonePlay from "./PostPhonePlay";
 
-const MobileTheme = React.lazy(() => import('./themes/PageMobileTheme'));
 const TabletTheme = React.lazy(() => import('./themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/PageDesktopTheme'));
 

@@ -35,7 +35,6 @@ import OverallPage from "./bookPages/OverallPage";
 import QuestionPage from "./bookPages/QuestionPage";
 import AnswersPage from "./bookPages/AnswersPage";
 import SynthesisPage from "./bookPages/SynthesisPage";
-import map from "components/map";
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
 import { Helmet } from "react-helmet";

@@ -1,6 +1,5 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
-import { FormControlLabel, Radio } from "@material-ui/core";
 
 interface SubjectDialogProps {
   isOpen: boolean;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import queryString from 'query-string';

@@ -11,7 +11,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "../baseComponents/MathInHtml";
 import HighlightHtml from "../baseComponents/HighlightHtml";
 import { PlayMode } from "../model";
-import moment from "moment";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 import { getPrepareTime } from "../services/playTimes";
@@ -35,8 +34,6 @@ interface Props {
 }
 
 const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
-  const [startTime] = React.useState(moment());
-
   const [state, setState] = React.useState({
     prepExpanded: true,
     isStopped: false,
