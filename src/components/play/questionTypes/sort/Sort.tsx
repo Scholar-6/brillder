@@ -68,12 +68,8 @@ class Sort extends CompComponent<SortProps, SortState> {
 
     choices = this.shuffle(choices);
 
-    if (!props.isReview) {
-      userCats.push({choices: choices, name: Sort.unsortedTitle});
-    } else {
-      userCats.push({ choices: [], name: Sort.unsortedTitle });
-      this.prepareChoices(userCats, choices);
-    }
+    userCats.push({ choices: [], name: Sort.unsortedTitle });
+    this.prepareChoices(userCats, choices);
 
     // this is bad but it fixed issue. input answers should not be array.
     if (props.answers && props.answers.length !== 0) {
