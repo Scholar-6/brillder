@@ -8,7 +8,6 @@ interface YoutubeLinkProps {
 }
 
 const YoutubeLink: React.FC<YoutubeLinkProps> = (props) => {
-  const [video, setVideo] = React.useState<any>();
   const [isValid, setIsValid] = React.useState(true);
 
   const videoId = React.useMemo(() => {
@@ -38,7 +37,6 @@ const YoutubeLink: React.FC<YoutubeLinkProps> = (props) => {
           videoId={videoId}
           opts={opts}
           onError={() => setIsValid(false)}
-          onReady={(evt) => setVideo(evt.target)}
           onPlaybackQualityChange={rememberYoutube}
         />
       </div>
