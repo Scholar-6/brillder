@@ -173,6 +173,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         questionV2.active = true;
         setQuestions(update(questions, { $set: [questionV2] }));
         cashBuildQuestion(brickId, 0);
+        //eslint-disable-next-line
         activeQuestion = questionV2;
       });
     }
@@ -191,6 +192,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }, [questions, params]);
   const setCurrentQuestionIndex = React.useCallback((index: number) => {
     history.push(map.investigationBuildQuestion(props.brick.id, questions[index].id));
+  /*eslint-disable-next-line*/
   }, [questions, history]);
   let activeQuestion = React.useMemo(() => (currentQuestionIndex >= 0) ? questions[currentQuestionIndex] : undefined, [currentQuestionIndex, questions]);
 
@@ -295,6 +297,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } else {
       history.push(map.ProposalReview(brickId));
     }
+  /*eslint-disable-next-line*/
   }, [history]);
 
   const setPrevFromPhone = React.useCallback(() => {
@@ -303,6 +306,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } else {
       moveToPlan(history, brickId);
     }
+  /*eslint-disable-next-line*/
   }, [questions, currentQuestionIndex]);
 
   const setNextQuestion = React.useCallback(() => {
@@ -311,6 +315,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } else {
       history.push(map.ProposalReview(brickId));
     }
+  /*eslint-disable-next-line*/
   }, [questions, history]);
   //#endregion
 

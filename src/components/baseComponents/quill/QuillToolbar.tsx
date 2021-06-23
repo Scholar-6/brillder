@@ -61,7 +61,6 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         }
     }, [props.quill, toolbarNode]);
 
-    /*eslint-disable-next-line*/
     const format = React.useMemo(() => {
         const selection = props.quill?.getSelection(false);
         console.log(selection);
@@ -70,6 +69,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         } else {
             return null;
         }
+    //eslint-disable-next-line
     }, [props.quill, id]);
 
     const toolbarItems: { [key: string]: any } = React.useMemo(() => ({

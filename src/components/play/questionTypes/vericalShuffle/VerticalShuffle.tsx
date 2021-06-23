@@ -186,7 +186,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     
     return (
       <div key={i} className={className} onClick={() => {
-        if (switchIndex == -1) {
+        if (switchIndex === -1) {
           this.setState({switchIndex: i});
         } else {
           console.log(switchIndex);

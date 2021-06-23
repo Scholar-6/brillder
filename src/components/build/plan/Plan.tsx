@@ -93,6 +93,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
       const newBrick = changeFn(currentBrick);
       props.saveBrick(newBrick);
     };
+  /*eslint-disable-next-line*/
   }, [currentBrick, props.saveBrick]);
 
   return (

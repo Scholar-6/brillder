@@ -140,6 +140,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
             setCurrentQuillId(undefined);
         }
         props?.onBlur?.();
+    /*eslint-disable-next-line*/
     }, [currentQuillId, setCurrentQuillId, uniqueId, props.onBlur])
 
     const modules = React.useMemo(() => ({
@@ -164,6 +165,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         } : false,
         desmos: props.allowDesmos,
         // tableUI: props.allowTables,
+    /*eslint-disable-next-line*/
     }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.allowDesmos, props.imageDialog]);
     
     /*

@@ -120,7 +120,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
-    const isSubjectCategory = props.location.pathname.slice(-map.SubjectCategoriesPrefix.length) == map.SubjectCategoriesPrefix;
+    const isSubjectCategory = props.location.pathname.slice(-map.SubjectCategoriesPrefix.length) === map.SubjectCategoriesPrefix;
     if (!isSubjectCategory && !values.isViewAll && !values.mySubject && !values.subjectId && !values.searchString && !values.subjectIds && !values.subjectGroup && !isPhone()) {
       let link = map.SubjectCategories;
       if (values.newTeacher) {
@@ -396,7 +396,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         filterSubjects = getCheckedSubjectIds(this.state.subjects);
       } else {
         const userSubjects = onlyPrepareUserSubjects(this.state.subjects, this.state.userSubjects);
-        const isChecked = userSubjects.find(s => s.checked == true);
+        const isChecked = userSubjects.find(s => s.checked === true);
         if (isChecked) {
           filterSubjects = getCheckedSubjectIds(userSubjects);
         } else {
@@ -496,7 +496,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   checkUserSubject(s: Subject) {
-    const found = this.state.userSubjects.find(s2 => s2.id == s.id);
+    const found = this.state.userSubjects.find(s2 => s2.id === s.id);
     if (found) {
       s.checked = true;
     }

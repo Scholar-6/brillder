@@ -15,6 +15,7 @@ const LoginRedirect: React.FC<LoginRedirectProps> = props => {
     React.useEffect(() => {
         console.log("setting intended path to ", location.pathname)
         props.setIntendedPath(location.pathname);
+    /*eslint-disable-next-line*/
     }, [location]);
 
     return <Redirect to={map.Login} />;

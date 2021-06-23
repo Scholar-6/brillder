@@ -110,7 +110,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (isCover) {
       CashAttempt('');
     }
-    if (cashAttempt.brick.id == props.brick.id && !isCover) {
+    if (cashAttempt.brick.id === props.brick.id && !isCover) {
       parsedBrick = cashAttempt.brick;
       initAttempts = cashAttempt.attempts;
       initReviewAttempts = cashAttempt.reviewAttempts;
@@ -123,11 +123,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         initPrepEndTime = moment(cashAttempt.prepEndTime);
       }
       
-      let isProvisional = history.location.pathname.slice(-routes.PlayProvisionalScoreLastPrefix.length) == routes.PlayProvisionalScoreLastPrefix;
+      const isProvisional = history.location.pathname.slice(-routes.PlayProvisionalScoreLastPrefix.length) === routes.PlayProvisionalScoreLastPrefix;
       if (!isProvisional && cashAttempt.lastPageUrl === routes.PlayProvisionalScoreLastPrefix && initStatus === PlayStatus.Review) {
         history.push(routes.playProvisionalScore(props.brick.id))
       }
-      let isSynthesis = history.location.pathname.slice(-routes.PlaySynthesisLastPrefix.length) == routes.PlaySynthesisLastPrefix;
+      const isSynthesis = history.location.pathname.slice(-routes.PlaySynthesisLastPrefix.length) === routes.PlaySynthesisLastPrefix;
       if (!isSynthesis && cashAttempt.lastPageUrl === routes.PlaySynthesisLastPrefix && initStatus === PlayStatus.Review) {
         history.push(routes.playProvisionalScore(props.brick.id))
       }
@@ -172,7 +172,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
     let lastPageUrl = lastUrl;
     if (!lastUrl) {
-      let found = location.pathname.match(`[^/]+(?=/$|$)`);
+      const found = location.pathname.match(`[^/]+(?=/$|$)`);
       if (found) {
         lastPageUrl = '/' + found[0];
       }
