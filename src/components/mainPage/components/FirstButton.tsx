@@ -34,21 +34,27 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
     className += ' zoom-item'
   }
 
+  const link = React.useMemo(() => {
+    let link = map.SubjectCategories;
+    if (props.isNewTeacher) {
+      link += '?' + map.NewTeachQuery;
+    } if (props.user) {
+      link = map.ViewAllPage + '?mySubject=true';
+    }
+    if (isPhone()) {
+      return map.ViewAllPage;
+    } else {
+      return link;
+    }
+  }, [props.isNewTeacher, props.user]);
+
   return (
-    <div
+    <a
+      href={window.location.origin + link}
       className={className}
-      onClick={() => {
-        let link = map.SubjectCategories;
-        if (props.isNewTeacher) {
-          link += '?' + map.NewTeachQuery;
-        } if (props.user) {
-          link = map.ViewAllPage + '?mySubject=true';
-        }
-        if (isPhone()) {
-          props.history.push(map.ViewAllPage);
-        } else {
-          props.history.push(link);
-        }
+      onClick={evt => {
+        evt.preventDefault();
+        props.history.push(link);
       }}
     >
       <div className="eye-glass-icon">
@@ -69,7 +75,7 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
         </div>
       </div>
       <span className="item-description">{renderViewAllLabel()}</span>
-    </div>
+    </a>
   );
 }
 
