@@ -122,7 +122,7 @@ const countPersonalBrick = (s: any, b: Brick, user: User, isAdmin: boolean) => {
   if (isAdmin) {
     s.personalCount += 1;
   } else {
-    if (b.author.id == user.id) {
+    if (b.author.id === user.id) {
       s.personalCount += 1;
     }
   }

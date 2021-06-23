@@ -61,8 +61,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     if (subjects) {
       subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
       subjects = subjects.map(s => {
-        const checked = this.props.user.subjects.findIndex(s2 => s2.id === s.id) > -1
-          || this.props.user.subjects.length <= 1 && s.id === this.props.defaultSubject;
+        const checked = this.props.user.subjects.findIndex(s2 => s2.id === s.id) > -1 || (this.props.user.subjects.length <= 1 && s.id === this.props.defaultSubject);
         return { ...s, checked: checked };
       });
       this.setState({ ...this.state, subjects });
