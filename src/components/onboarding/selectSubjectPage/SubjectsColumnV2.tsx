@@ -4,6 +4,7 @@ import { Subject } from "model/brick";
 import { GENERAL_SUBJECT, CURRENT_AFFAIRS_SUBJECT } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
+import { isPhone } from "services/phone";
 
 interface Props {
   subjects: Subject[];
@@ -55,6 +56,9 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, next, onClick }) => {
   }
 
   const renderNextButton = () => {
+    if (isPhone()) {
+      return '';
+    }
     return (
       <div className="subject-item next-button" onClick={next}>
         <div className="subject-name">Next</div>
