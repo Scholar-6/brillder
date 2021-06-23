@@ -90,22 +90,26 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
       {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
       <div className="s-user-preference-page">
         <div className="ef-container">
+          {isPhone() && <div className="ef-space-before-title" />}
           <h2>Which of the following best describes you?</h2>
-          <div className="ef-flex">
-            <RadioContainer roleId={RolePreference.Student} name="Student">
-              I want to learn, receive assignments and feedback, or join a course.
-            </RadioContainer>
-            <RadioContainer roleId={RolePreference.Builder} name="Builder">
-              I want to build and submit content for paid publication.
-            </RadioContainer>
-          </div>
-          <div className="ef-flex">
-            <RadioContainer roleId={RolePreference.Teacher} name="Teacher / Tutor">
-              I want to assign Brillder content and provide feedback to my students.<br />
-            </RadioContainer>
-            <RadioContainer roleId={UserType.Institution} name="Institution">
-              I want to manage classes, students, and teachers.<br />
-            </RadioContainer>
+          {isPhone() && <div className="ef-space-after-title" />}
+          <div className="ef-main-radio-context">
+            <div className="ef-flex">
+              <RadioContainer roleId={RolePreference.Student} name="Student">
+                I want to learn, receive assignments and feedback, or join a course.
+              </RadioContainer>
+              <RadioContainer roleId={RolePreference.Builder} name="Builder">
+                I want to build and submit content for paid publication.
+              </RadioContainer>
+            </div>
+            <div className="ef-flex">
+              <RadioContainer roleId={RolePreference.Teacher} name="Teacher / Tutor">
+                I want to assign Brillder content and provide feedback to my students.<br />
+              </RadioContainer>
+              <RadioContainer roleId={UserType.Institution} name="Institution">
+                I want to manage classes, students, and teachers.<br />
+              </RadioContainer>
+            </div>
           </div>
           <button
             type="button"
