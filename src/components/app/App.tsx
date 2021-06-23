@@ -48,6 +48,7 @@ import map from 'components/map';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
 import TeachPage from 'components/teach/assignments/TeachPage';
 import Terms from 'components/onboarding/terms/Terms';
+import ThankYouPage from 'components/onboarding/thankYou/ThankYou';
 import PlayPreviewRoute from './PlayPreviewRoute';
 import EmailLoginPage from 'components/loginPage/EmailLoginPage';
 import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSubjectPage';
@@ -57,7 +58,7 @@ import RotateIPadInstruction from 'components/baseComponents/rotateInstruction/R
 import { isPhone } from 'services/phone';
 import { setupMatomo } from 'services/matomo';
 import { ReduxCombinedState } from 'redux/reducers';
-import { User } from 'model/user';
+import { User, UserType } from 'model/user';
 import { getTerms } from 'services/axios/terms';
 import IPadWarning from 'components/baseComponents/rotateInstruction/IPadWarning';
 import BuildRouter from 'components/build/BuildRouter';
@@ -258,9 +259,7 @@ const App: React.FC<AppProps> = props => {
         <BuildBrickRoute
           path={[
             "/build/brick/:brickId/investigation/question-component/:questionId",
-            // "/build/brick/:brickId/investigation/question-component",
             "/build/brick/:brickId/investigation/question/:questionId",
-            // "/build/brick/:brickId/investigation/question",
             "/build/brick/:brickId"
           ]}
           component={BuildRouter}
@@ -274,6 +273,7 @@ const App: React.FC<AppProps> = props => {
         <BuildRoute path="/home" component={MainPage} location={location} />
 
         <AllUsersRoute path={map.UserProfile} component={UserProfilePage} />
+        <AllUsersRoute path={map.ThankYouPage} component={ThankYouPage} isPreferencePage={true} />
         <AllUsersRoute path={map.UserPreference} component={UserPreferencePage} isPreferencePage={true} />
         <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
         <AllUsersRoute path={map.MobileUsername} component={MobileUsernamePage} />
