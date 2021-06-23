@@ -19,7 +19,7 @@
     text-align: center;
     .th-title {
       padding-top: 10vh;
-      font-family: $font-family-bold;
+      font-family: $font-family-black;
       font-size: 4vw;
     }
     .th-last-text {
@@ -28,9 +28,10 @@
     }
     button {
       margin-top: 11vh;
-      padding: 0.5vh 1vw;
+      padding: 0.5vh 2vw;
       border-radius: 0.8vw;
       font-size: 2vw;
+      letter-spacing: 0 !important;
       font-family: $font-family-bold;
       background: var(--theme-orange);
       
@@ -117,9 +118,13 @@
           }
 
           .th-phone-brillder {
-            font-size: 3.6vw;
+            height: 4vw;
             text-align: center;
-            color: var(--theme-dark-blue);
+
+            svg {
+              height: 4vw !important;
+              width: 10vw;
+            }
           }
         }
       }
