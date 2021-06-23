@@ -81,7 +81,9 @@ const ThankYou: React.FC<Props> = (props) => {
                     <div className="icon-container">
                       <SpriteIcon name="logo" />
                     </div>
-                    <div className="th-phone-brillder">Brillder</div>
+                    <div className="th-phone-brillder">
+                      <SpriteIcon name="brillder-text" />
+                    </div>
                   </div>
                 </div>
               </div>
