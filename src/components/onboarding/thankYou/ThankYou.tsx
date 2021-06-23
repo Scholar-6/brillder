@@ -4,6 +4,7 @@ import { isMobile } from 'react-device-detect';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isPhone } from "services/phone";
 import map from "components/map";
+import { hideZendesk } from "services/zendesk";
 
 interface Props {
   history: any;
@@ -16,6 +17,12 @@ const DesktopTheme = React.lazy(() => import('./themes/TermsDesktopTheme'));
 
 
 const ThankYou: React.FC<Props> = (props) => {
+  React.useEffect(() => {
+    if (isPhone()) {
+      hideZendesk();
+    }
+  }, []);
+
   const moveNext = () => {
     props.history.push(map.UserPreference);
   }

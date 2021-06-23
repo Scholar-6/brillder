@@ -13,16 +13,23 @@
     height: 4%;
   }
 
-  h2 {
-    padding-left: 8vw;
-    padding-right: 4vw;
-    text-align: left;
-    font-size: 9vw;
-    font-family: $font-family-bold;
+  .ef-head-container {
+    height: 10%;
+    h2 {
+      display: flex;
+      align-items: center;
+      padding-left: 11vw;
+      padding-right: 4vw;
+      line-height: 0;
+      height: 50%;
+      text-align: left;
+      font-size: 8.2vw;
+      font-family: $font-family-bold;
+    }
   }
 
   .ef-space-after-title {
-    height: 0;
+    height: 2%;
   }
 
   .ef-radio-box {
@@ -77,6 +84,7 @@
   }
 
   .ef-main-radio-context {
+    height: calc(100% - 4% - 10% - 2% - 10%);
     overflow-y: auto;
   }
 
@@ -85,12 +93,11 @@
     top: calc(50vh - 3vw);
     background: var(--theme-orange);
     border-radius: 3vw;
-    height: 5%;
-    min-height: 6vw;
+    min-height: 6%;
     margin-left: 10vw;
     width: 80vw;
     letter-spacing: 0.1vw;
-    font-size: 6vw;
+    font-size: 7vw;
     svg {
       display: none;
     }
