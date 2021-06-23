@@ -135,25 +135,27 @@ class Sort extends CompComponent<SortProps, SortState> {
    */
   prepareChoices(userCats: UserCategory[], choices?: SortAnswer[]) {
     let hadError = false;
-    const {answer} = this.props.attempt;
-    Object.keys(answer).forEach(value => {
-      const keys = value.split('_');
-
-      const catIndex = parseInt(keys[0]);
-      const answerIndex = parseInt(keys[1]);
-
-      try {
-        const catAnswer = this.props.component.categories[catIndex].answers[answerIndex];
-
-        let choice = Object.assign({}, catAnswer) as SortAnswer;
-        choice.text = choice.value;
-        choice.value = value;
+    if (this.props.attempt) {
+      const {answer} = this.props.attempt;
+      Object.keys(answer).forEach(value => {
+        const keys = value.split('_');
   
-        userCats[answer[value]].choices.push(choice as SortAnswer);
-      } catch (e) {
-        hadError = true;
-      }
-    });
+        const catIndex = parseInt(keys[0]);
+        const answerIndex = parseInt(keys[1]);
+  
+        try {
+          const catAnswer = this.props.component.categories[catIndex].answers[answerIndex];
+  
+          let choice = Object.assign({}, catAnswer) as SortAnswer;
+          choice.text = choice.value;
+          choice.value = value;
+    
+          userCats[answer[value]].choices.push(choice as SortAnswer);
+        } catch (e) {
+          hadError = true;
+        }
+      });
+    }
 
     // if error emptify results
     if (hadError) {
