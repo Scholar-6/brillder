@@ -13,6 +13,7 @@ import { setUserPreference } from 'services/axios/user';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isPhone } from 'services/phone';
 import { isMobile } from 'react-device-detect';
+import { hideZendesk } from 'services/zendesk';
 
 interface UserPreferencePageProps {
   user: User;
@@ -41,6 +42,12 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
       console.log(e);
     }
   }
+
+  React.useEffect(() => {
+    if (isPhone()) {
+      hideZendesk();
+    }
+  }, []);
 
   React.useEffect(() => {
     if (preference) {
@@ -91,7 +98,10 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
       <div className="s-user-preference-page">
         <div className="ef-container">
           {isPhone() && <div className="ef-space-before-title" />}
-          <h2>Which of the following best describes you?</h2>
+          {isPhone() ? <div className="ef-head-container">
+            <h2>Which of the following</h2>
+            <h2>best describes you?</h2>
+          </div> : <h2>Which of the following best describes you?</h2>}
           {isPhone() && <div className="ef-space-after-title" />}
           <div className="ef-main-radio-context">
             <div className="ef-flex">

@@ -238,3 +238,55 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
     setZendeskMode(iframe, location);
   }
 }
+
+
+export function hideZendesk() {
+  var dd = getZendeskIframe();
+  if (dd) {
+    dd.style.display = 'none';
+  } else {
+    setTimeout(() => {
+      var dd = getZendeskIframe();
+      if (dd) {
+        dd.style.display = 'none';
+      } else {
+        setTimeout(() => {
+          var dd = getZendeskIframe();
+          if (dd) {
+            dd.style.display = 'none';
+          } else {
+            setTimeout(() => {
+              var dd = getZendeskIframe();
+              if (dd) {
+                dd.style.display = 'none';
+              } else {
+                console.log('can`t hide zendesk');
+              }
+            }, 1000);
+          }
+        }, 500);
+      }
+    }, 200);
+  }
+}
+
+export function showZendesk() {
+  var dd = getZendeskIframe();
+  if (dd) {
+    dd.style.display = 'block';
+  } else {
+    setTimeout(() => {
+      var dd = getZendeskIframe();
+      if (dd) {
+        dd.style.display = 'block';
+      } else {
+        setTimeout(() => {
+          var dd = getZendeskIframe();
+          if (dd) {
+            dd.style.display = 'block';
+          }
+        }, 500);
+      }
+    }, 200);
+  }
+}

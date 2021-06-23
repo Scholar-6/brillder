@@ -17,6 +17,7 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 import SubjectsColumnV2 from "./SubjectsColumnV2";
 import { isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 import { isPhone } from "services/phone";
+import { hideZendesk } from "services/zendesk";
 
 
 interface AllSubjectsProps {
@@ -46,6 +47,12 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     };
 
     this.loadSubjects();
+  }
+
+  componentDidMount() {
+    if (isPhone()) {
+      hideZendesk();
+    }
   }
 
   async loadSubjects() {
@@ -141,7 +148,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
               onClick={this.onSubjectSelected.bind(this)}
             />
             <div className="df-button-box">
-              <button className="btn theme-orange">Next</button>
+              <button className="btn theme-orange" onClick={this.submit.bind(this)}>Next</button>
             </div>
           </div>
         </React.Suspense>

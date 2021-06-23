@@ -12,6 +12,7 @@ import { acceptTerms } from "services/axios/user";
 import userActions from 'redux/actions/user';
 import { getTerms } from "services/axios/terms";
 import { isPhone } from "services/phone";
+import { hideZendesk } from "services/zendesk";
 
 interface BricksListProps {
   history: any;
@@ -48,6 +49,12 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
     };
 
     this.getTerms();
+  }
+
+  componentDidMount() {
+    if (isPhone()) {
+      hideZendesk();
+    }
   }
 
   async getTerms() {

@@ -259,9 +259,7 @@ const App: React.FC<AppProps> = props => {
         <BuildBrickRoute
           path={[
             "/build/brick/:brickId/investigation/question-component/:questionId",
-            // "/build/brick/:brickId/investigation/question-component",
             "/build/brick/:brickId/investigation/question/:questionId",
-            // "/build/brick/:brickId/investigation/question",
             "/build/brick/:brickId"
           ]}
           component={BuildRouter}
