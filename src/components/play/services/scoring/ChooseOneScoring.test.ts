@@ -15,7 +15,7 @@ const mockComponent: ChooseOneComponent = {
 
 describe("choose one scoring", () => {
     
-    it("should mark a correct answer with 6 marks", () => {
+    it("should mark a correct answer with 4 marks", () => {
         // arrange
         const mockAttempt: ComponentAttempt<ChooseOneAnswer> = {
             answer: {shuffleIndex: 1, realIndex: 1 }
@@ -25,12 +25,12 @@ describe("choose one scoring", () => {
         const result = mark(mockComponent, mockAttempt);
 
         // assert
-        expect(result.marks).toStrictEqual(6);
-        expect(result.maxMarks).toStrictEqual(6);
+        expect(result.marks).toStrictEqual(4);
+        expect(result.maxMarks).toStrictEqual(4);
         expect(result.correct).toStrictEqual(true);
     });
 
-    it("should mark an incorrect answer with 0.5 marks", () => {
+    it("should mark an incorrect answer with 0 marks", () => {
         // arrange
         const mockAttempt: ComponentAttempt<ChooseOneAnswer> = {
             answer: { realIndex: 0, shuffleIndex: 0 }
@@ -40,8 +40,8 @@ describe("choose one scoring", () => {
         const result = mark(mockComponent, mockAttempt);
 
         // assert
-        expect(result.marks).toStrictEqual(0.5);
-        expect(result.maxMarks).toStrictEqual(6);
+        expect(result.marks).toStrictEqual(0);
+        expect(result.maxMarks).toStrictEqual(4);
         expect(result.correct).toStrictEqual(false);
     });
 
@@ -56,7 +56,7 @@ describe("choose one scoring", () => {
 
         // assert
         expect(result.marks).toStrictEqual(0);
-        expect(result.maxMarks).toStrictEqual(6);
+        expect(result.maxMarks).toStrictEqual(4);
         expect(result.correct).toStrictEqual(false);
     });
 

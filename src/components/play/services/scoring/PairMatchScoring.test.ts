@@ -16,7 +16,7 @@ const mockComponent: PairMatchComponent = {
 
 describe("pair match scoring", () => {
 
-    it("should mark a correct answer with n marks", () => {
+    it("should mark a correct answer with 5 marks", () => {
         // arrange
         const mockAttempt: ComponentAttempt<PairMatchAnswer> = {
             answer: [
@@ -37,7 +37,7 @@ describe("pair match scoring", () => {
         expect(result.correct).toStrictEqual(true);
     });
 
-    it("should mark incorrect answers with 0.25 each", () => {
+    it("should mark incorrect answers with 0", () => {
         // arrange
         const mockAttempt: ComponentAttempt<PairMatchAnswer> = {
             answer: [
@@ -53,9 +53,30 @@ describe("pair match scoring", () => {
         const result = mark(mockComponent, mockAttempt);
 
         // assert
-        expect(result.marks).toStrictEqual(1.25);
+        expect(result.marks).toStrictEqual(0);
         expect(result.maxMarks).toStrictEqual(5);
         expect(result.correct).toStrictEqual(false);
-    });
+    })
+    
+    it("should mark incorrect answers with 3 marks", () => {
+        // arrange
+        const mockAttempt: ComponentAttempt<PairMatchAnswer> = {
+            answer: [
+                { index: 0 },
+                { index: 1 },
+                { index: 2 },
+                { index: 4 },
+                { index: 3 }
+            ]
+        } as ComponentAttempt<PairMatchAnswer>;
+
+        // act
+        const result = mark(mockComponent, mockAttempt);
+
+        // assert
+        expect(result.marks).toStrictEqual(3);
+        expect(result.maxMarks).toStrictEqual(5);
+        expect(result.correct).toStrictEqual(false);
+    })
 
 });
