@@ -40,8 +40,10 @@
     width: 100%;
     color: var(--theme-dark-blue);
     font-size: 6vw;
+    padding-top: 0.8vh;
+    padding-bottom: 0.8vh;
     background: var(--white);
-    border-bottom: 0.1vh solid var(--tab-gray);
+    border-bottom: 0.2vh solid var(--tab-gray);
 
     display: flex;
     align-items: center;
