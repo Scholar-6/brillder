@@ -24,7 +24,7 @@
       height: 50%;
       text-align: left;
       font-size: 8.2vw;
-      font-family: $font-family-bold;
+      font-family: $font-family-black;
     }
   }
 
@@ -67,6 +67,7 @@
       .ef-label {
         font-size: 5vw;
         margin-left: 10vw;
+        font-family: $font-family-light;
       }
 
       &.active {
