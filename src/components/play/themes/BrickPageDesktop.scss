@@ -2196,6 +2196,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     overflow:hidden;
     text-overflow: ellipsis;
     .image-source {
+      white-space: nowrap;
       position: absolute;
       bottom: 0.7vw;
       font-size: 0.8vw;
