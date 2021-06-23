@@ -256,7 +256,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
   prepareAttempt(component: VerticalShuffleComponent, attempt: ComponentAttempt<any>) {
     if (this.state.status === DragAndDropStatus.Changed) {
-      attempt.dragged = true;
+      attempt.dragged =true;
     }
     return attempt;
   }
