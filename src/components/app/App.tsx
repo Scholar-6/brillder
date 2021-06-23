@@ -58,7 +58,7 @@ import RotateIPadInstruction from 'components/baseComponents/rotateInstruction/R
 import { isPhone } from 'services/phone';
 import { setupMatomo } from 'services/matomo';
 import { ReduxCombinedState } from 'redux/reducers';
-import { User, UserType } from 'model/user';
+import { User } from 'model/user';
 import { getTerms } from 'services/axios/terms';
 import IPadWarning from 'components/baseComponents/rotateInstruction/IPadWarning';
 import BuildRouter from 'components/build/BuildRouter';

@@ -1,5 +1,4 @@
 import Quill from "quill";
-import Delta from "quill-delta";
 import { Quill as GlobalQuill } from "react-quill";
 
 //@ts-ignore
@@ -10,7 +9,6 @@ import { Fab, SvgIcon, Tooltip } from "@material-ui/core";
 import React from "react";
 import ReactDOM from "react-dom";
 import sprite from 'assets/img/icons-sprite.svg';
-import GraphDialog from "components/build/buildQuestions/components/Graph/GraphDialog";
 import { generateId } from "components/build/buildQuestions/questionTypes/service/questionBuild";
 
 const Embed = GlobalQuill.import('blots/block/embed');

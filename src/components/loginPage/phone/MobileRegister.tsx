@@ -1,14 +1,15 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { History } from "history";
-import TermsLink from "components/baseComponents/TermsLink";
+import { Snackbar } from "@material-ui/core";
+import axios from "axios";
 
+import TermsLink from "components/baseComponents/TermsLink";
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
-import axios from "axios";
 import DesktopLoginForm from "../desktop/DesktopLoginForm";
-import { connect } from "react-redux";
 
 
 interface MobileLoginProps {
@@ -23,7 +24,6 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState(props.email || "");
   const [password, setPassword] = useState("");
-  const [isLoginWrong, setLoginWrong] = React.useState(false);
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -105,8 +105,8 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
     });
   };
 
-  const renderSignInPage = () => {
-    return (
+  return (
+    <div className="first-col mobile-register">
       <div className="second-item">
         <div className="logo-box">
           <div>
@@ -137,12 +137,14 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
           </div>
         </div>
       </div>
-    );
-  }
-
-  return (
-    <div className="first-col mobile-register">
-      {renderSignInPage()}
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={alertShown}
+        autoHideDuration={1500}
+        onClose={() => toggleAlertMessage(false)}
+        message={alertMessage}
+        action={<React.Fragment></React.Fragment>}
+      />
     </div>
   );
 }

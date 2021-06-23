@@ -1,7 +1,7 @@
 import Quill, { Sources } from "quill";
 import Delta from "quill-delta";
 import React from "react";
-import ReactQuill, { Quill as GlobalQuill } from "react-quill"; 
+import ReactQuill from "react-quill"; 
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
 import "quill-table-ui/dist/index.css";
