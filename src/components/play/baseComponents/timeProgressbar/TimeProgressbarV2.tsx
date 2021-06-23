@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import ProgressbarCountdown from "./ProgressbarCountdown";
 import { BrickLengthEnum } from "model/brick";
@@ -11,8 +11,9 @@ interface CounterProps {
   isIntro?: boolean;
   isSynthesis?: boolean;
   brickLength: BrickLengthEnum;
-  startTime: any;
+  endTime?: string;
   onEnd(): void;
+  setEndTime(endTime: string): void;
 }
 
 const TimeProgressbarV2: React.FC<CounterProps> = (props) => {
@@ -38,16 +39,21 @@ const TimeProgressbarV2: React.FC<CounterProps> = (props) => {
   const getEndTime = () => {
     const duration = getDuration();
     let endTime = moment().add(duration);
-    //if (startTime) {
-      //endTime = startTime.add(duration);
-    //}
     return endTime;
   }
 
-  
-  const duration = getDuration().asMilliseconds();
-  const endTime = getEndTime();
+  useEffect(() => {
+    if (!props.endTime) {
+      props.setEndTime(getEndTime());
+    }
+  }, []);
 
+  const duration = getDuration().asMilliseconds();
+  let endTime:any = props.endTime;
+  if (!endTime) {
+    endTime = getEndTime();
+  }
+  
   return <ProgressbarCountdown onEnd={props.onEnd} minutes={props.minutes} duration={duration} endTime={endTime} />;
 };
 

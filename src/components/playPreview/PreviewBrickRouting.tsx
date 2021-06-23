@@ -81,7 +81,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const initAttempts = prefillAttempts(brick.questions);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
-  const [startTime, setStartTime] = React.useState(undefined);
+  const [prepEndTime, setPrepEndTime] = React.useState('');
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [headerHidden, hideMobileHeader] = React.useState(false);
   const [liveEndTime, setLiveEndTime] = React.useState(null as any);
@@ -271,8 +271,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 history={history}
                 brick={brick}
                 isPlayPreview={true}
-                startTime={startTime}
-                setStartTime={setStartTime}
+                endTime={prepEndTime}
+                setEndTime={setPrepEndTime}
                 moveNext={moveToLive}
               />
             </Route>
@@ -314,7 +314,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 isPlayPreview={true}
                 status={status}
                 brick={brick}
-                startTime={startTime}
                 updateAttempts={updateReviewAttempts}
                 attempts={attempts}
                 finishBrick={finishReview}

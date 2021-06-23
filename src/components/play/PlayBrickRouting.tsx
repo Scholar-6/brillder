@@ -97,6 +97,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   let initLiveEndTime:any = null;
   let initReviewEndTime:any = null;
   let initAttemptId:any = null;
+  let initPrepEndTime:any = undefined;
 
   const cashAttemptString = GetCashedPlayAttempt();
 
@@ -118,6 +119,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       initReviewEndTime = cashAttempt.reviewEndTime ? moment(cashAttempt.reviewEndTime) : null;
       initAttemptId = cashAttempt.attemptId;
       initStatus = parseInt(cashAttempt.status);
+      if (cashAttempt.prepEndTime) {
+        initPrepEndTime = moment(cashAttempt.prepEndTime);
+      }
       
       let isProvisional = history.location.pathname.slice(-routes.PlayProvisionalScoreLastPrefix.length) == routes.PlayProvisionalScoreLastPrefix;
       if (!isProvisional && cashAttempt.lastPageUrl === routes.PlayProvisionalScoreLastPrefix && initStatus === PlayStatus.Review) {
@@ -144,7 +148,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initReviewAttempts);
-  const [startTime, setStartTime] = React.useState(undefined);
+  const [prepEndTime, setPrepEndTime] = React.useState(initPrepEndTime);
   const [mode, setMode] = React.useState(initMode);
   const [liveEndTime, setLiveEndTime] = React.useState(initLiveEndTime);
   const [reviewEndTime, setReviewEndTime] = React.useState(initReviewEndTime);
@@ -183,7 +187,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       attempts,
       reviewAttempts,
       attemptId,
-      startTime,
+      prepEndTime,
       reviewEndTime,
       liveEndTime,
       brickAttempt,
@@ -498,9 +502,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               history={history}
               mode={mode}
               brick={brick}
-              startTime={startTime}
-              setStartTime={setStartTime}
+              endTime={prepEndTime}
+              setEndTime={setPrepEndTime}
               moveNext={moveToLive}
+              cashAttempt={cashAttempt}
               onHighlight={onHighlight}
             />
             : <NewPrep brick={brick} mode={mode} moveNext={moveToPreInvestigation} onHighlight={onHighlight} />
@@ -558,7 +563,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             mode={mode}
             status={status}
             history={history}
-            startTime={startTime}
             brick={brick}
             updateAttempts={updateReviewAttempts}
             attempts={attempts}
