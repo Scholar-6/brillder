@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // @ts-ignore
 import MathJax from 'react-mathjax-preview'
 
-import {isMathJax, isLatex, parseDataToArrayQuote} from 'components/services/mathJaxService';
+import {isMathJax, isLatex, parseDataToArray} from 'components/services/mathJaxService';
 import YoutubeLink from './YoutubeLink';
 import './YoutubeAndMath.scss'
 import Katex from 'components/baseComponents/katex/Katex';
@@ -18,7 +18,7 @@ class YoutubeAndMathInHtmlQuote extends Component<MathHtmlProps> {
   }
 
   render() {
-    let arr = parseDataToArrayQuote(this.props.value);
+    let arr = parseDataToArray(this.props.value);
 
     const renderMath = (data: string, i: number) => {
       return <MathJax math={data} key={i} />;
