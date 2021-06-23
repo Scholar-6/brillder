@@ -83,7 +83,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       style={{ transformOrigin: "0 0 0" }}
       timeout={index * 150}
     >
-      <div className="flex-brick-container" onClick={move}>
+      <a href={window.location.origin + map.playCover(brick.id)} className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
         <div className="publish-brick-container" onMouseLeave={props.handleMouseLeave}>
           <div className="level">
             <div style={{background: color}}>{romanNumerals()}</div>
@@ -102,7 +102,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
             <div className="bold brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
           </div>
         </div>
-      </div>
+      </a>
     </Grow>
     </div>
   );
