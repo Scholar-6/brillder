@@ -75,6 +75,7 @@ const QuestionComponents = ({
     const newQuestion = updateFirstComponent(component);
     if(!newQuestion) return;
     saveQuestion(newQuestion);
+  /*eslint-disable-next-line*/
   }, [saveQuestion, question]);
 
   const updateComponentsAndSave = React.useCallback((components: any[]) => {
@@ -86,11 +87,13 @@ const QuestionComponents = ({
     const newQuestion = updateComponents(newComponents);
     if(!newQuestion) return;
     saveQuestion(newQuestion);
+  /*eslint-disable-next-line*/
   }, [saveQuestion, question]);
 
   const updateHintAndSave = React.useCallback((hintState: HintState) => {
     const newQuestion = setQuestionHint(hintState);
     saveQuestion(newQuestion);
+  /*eslint-disable-next-line*/
   }, [saveQuestion, question]);
 
   if (questionId !== question.id) {

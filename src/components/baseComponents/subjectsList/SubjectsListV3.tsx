@@ -75,7 +75,7 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
     let otherSubjects = subjects.filter((s) => !s.checked);
 
     if (!this.props.user && this.props.subjectGroup) {
-      const groupSubjects = subjects.filter(s => s.group == this.props.subjectGroup);
+      const groupSubjects = subjects.filter(s => s.group === this.props.subjectGroup);
       checkedSubjects = groupSubjects.filter((s) => s.checked);
       otherSubjects = groupSubjects.filter((s) => !s.checked);
     } else {

@@ -42,6 +42,7 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
     if (props.data.value) {
       setInvalid(false);
     }
+  /*eslint-disable-next-line*/
   }, [props]);
 
   const upload = (file: File, source: string, caption: string) => {

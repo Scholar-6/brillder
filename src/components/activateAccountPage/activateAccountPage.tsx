@@ -57,6 +57,7 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
     }
 
     verifyToken();
+  /*eslint-disable-next-line*/
   }, [token, props.history, setValid]);
 
   if(!valid && valid !== false) {

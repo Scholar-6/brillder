@@ -37,6 +37,7 @@ const AddSubjectDialog: React.FC<AddSubjectProps> = (props) => {
     }
   }
 
+  /*eslint-disable-next-line*/
   useEffect(() => { loadSubjects() }, []);
 
   const addSubject = async () => {

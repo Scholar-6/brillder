@@ -49,6 +49,7 @@ const QuillDesmosDialog: React.FC<GraphDialogProps> = props => {
         calculator.unobserveEvent('change');
       }
     }
+  /*eslint-disable-next-line*/
   }, [calculator, props.setGraphState]);
 
   React.useEffect(() => {

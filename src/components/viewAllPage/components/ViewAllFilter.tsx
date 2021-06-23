@@ -100,7 +100,8 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
 
   filterByLevel(level: AcademicLevel) {
     const { levels } = this.props;
-    const found = levels.find((l) => l == level);
+    
+    const found = levels.find((l) => l === level);
     if (found) {
       const newLevels = levels.filter((l) => l !== level);
       this.props.filterByLevel(newLevels);
@@ -207,7 +208,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   }
 
   renderAcademicLevel(loopLevel: AcademicLevel) {
-    const found = this.props.levels.find((l) => l == loopLevel);
+    const found = this.props.levels.find((l) => l === loopLevel);
     return (
       <FormControlLabel
         value={SortBy.Popularity}
