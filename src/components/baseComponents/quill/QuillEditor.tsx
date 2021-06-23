@@ -261,11 +261,12 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                             const res = await imageModule.uploadImages.bind(imageModule)(...args);
                             if (!res) {
                               setImageInvalid(true);
-                              return;
+                              return false;
                             }
                         }
                         setImageDialogOpen(false);
                         setImageDialogFile(undefined);
+                        return true;
                     }}
                     updateData={(source, caption, align, height) => {
                         if(imageModule) {
