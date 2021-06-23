@@ -1,5 +1,4 @@
-import React from "react";
-import { Moment } from "moment";
+import React, { useEffect } from "react";
 import queryString from 'query-string';
 import { isMobile } from 'react-device-detect';
 
@@ -16,16 +15,17 @@ import { isPhone } from "services/phone";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 import BrickTitle from "components/baseComponents/BrickTitle";
 
-const moment = require("moment");
 interface IntroductionProps {
   isPlayPreview?: boolean;
-  startTime?: Moment;
+  endTime?: string;
   brick: Brick;
   location: any;
   history: any;
 
-  setStartTime(startTime: any): void;
+  setEndTime(endTime: string): void;
   moveNext(): void;
+
+  cashAttempt?(): void;
 
   // only real play
   mode?: PlayMode;
@@ -57,20 +57,20 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     duration: null,
   } as IntroductionState);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (props.cashAttempt) {
+        props.cashAttempt();
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [props.endTime]);
+
   const toggleBrief = () => {
     setState({ ...state, briefExpanded: !state.briefExpanded });
   };
 
   const togglePrep = () => {
-    if (!props.startTime) {
-      props.setStartTime(moment());
-    }
-
-    if (!state.prepExpanded && state.duration) {
-      let time = moment().subtract(state.duration);
-      props.setStartTime(time);
-    }
-
     // phone has diferent logic.
     if (isPhone()) {
       if (state.prepExpanded) {
@@ -116,12 +116,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (!state.prepExpanded) {
       togglePrep();
       return;
-    }
-    if (!props.startTime) {
-      props.setStartTime(moment());
-    } else if (state.isStopped && state.duration) {
-      let time = moment().subtract(state.duration);
-      props.setStartTime(time);
     }
     props.moveNext();
   };
@@ -304,7 +298,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 <TimeProgressbarV2
                   isIntro={true}
                   onEnd={() => { }}
-                  startTime={props.startTime}
+                  endTime={props.endTime}
+                  setEndTime={props.setEndTime}
                   brickLength={brick.brickLength}
                 />
               </div>}
