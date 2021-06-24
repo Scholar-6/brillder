@@ -117,7 +117,13 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
           </div>
         </div>
         <div className="left-sidebar">
-          <CoverPlay onClick={() => setStatus(PlayStatus.Prep)} />
+          <div>
+            <CoverPlay onClick={() => setStatus(PlayStatus.Prep)} />
+            <div className="efw-arrow-container">
+              <SpriteIcon name="expample-arrow-1" />
+            </div>
+            <div className="efw-help-text">Click here to see next page</div>
+          </div>
         </div>
       </div>
     );
