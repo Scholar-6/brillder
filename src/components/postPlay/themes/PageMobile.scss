@@ -68,7 +68,6 @@
 
   .book-navigator {
     overflow-x: scroll;
-    position: absolute;
     top: 0;
     right: 0;
     width: 100vw;
@@ -107,6 +106,13 @@
     }
   }
 
+  .post-book-swiper {
+    height: calc(100% - 17.5vw - 68px) !important;
+    .swiper-container {
+      height: 100%;
+    }
+  }
+
   .home-button-container button .return-arrow {
     padding: 4px;
     width: 57% !important;
@@ -124,8 +130,8 @@
     border-radius: $panel-radius;
     margin-left: 5vw !important;
     margin-right: 5vw !important;
-    margin-top: calc(45px + 3vh);
-    height: calc(100vh - #{$home-button-size} - #{$zendesk-size} - 4vh - 2vh);
+    margin-top: 5%;
+    height: 95%;
     color: var(--theme-dark-blue);
     background: var(--tab-gray);
 
@@ -329,10 +335,6 @@
       overflow: hidden;
       position: relative;
       transition: 500ms transform ease-in-out;
-
-      &.b-yellow {
-        transform: rotate(-90deg);
-      }
 
       .arrow {
         height: 80%;
@@ -716,280 +718,7 @@
       }
 
     }
-
-    &.attempts-list {
-      .page2 {
-        transform: rotateY(-130.2deg) scale($scale);
-      }
-
-      .page3-empty {
-        transform: rotateY(-130deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 5;
-      }
-
-      .page4-attempts {
-        transform: rotateY(-50deg) scale($scale);
-      }
-
-      .front {
-        transform: rotateY(-180deg) scale($scale);
-      }
-
-      .page1-cover {
-        transform: rotateY(-179deg) scale($scale);
-      }
-
-      .page1 {
-        transform: rotateY(-159.5deg) scale($scale);
-      }
-
-      .introduction-brief {
-        transform: rotateY(-49.5deg) scale($scale);
-      }
-
-      .introduction-prep {
-        transform: rotateY(-30deg) scale($scale);
-      }
-
-      .page6 {
-        transform: rotateY(-30deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 8;
-      }
-    }
-
-    &.introduction {
-      .page2 {
-        transform: rotateY(-179.2deg) scale($scale);
-      }
-
-      .page3-empty {
-        transform: rotateY(-179deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 5;
-      }
-
-      .page4-attempts {
-        transform: rotateY(-176.5deg) scale($scale);
-      }
-
-      .introduction-brief {
-        transform: rotateY(-176deg) scale($scale);
-      }
-
-      .introduction-prep {
-        transform: rotateY(-4deg) scale($scale);
-      }
-
-      .page3 {
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 6;
-
-        &.first {
-          transform: rotateY(-3.5deg) scale($scale);
-        }
-      }
-
-      .front,
-      .front-cover,
-      .page1-cover,
-      .page1 {
-        transform: rotateY(-180deg) scale($scale);
-      }
-
-      .page3-cover.first {
-        transform: rotateY(-3.5 deg) scale($scale);
-      }
-
-      .page4 {
-        &.first {
-          transform: rotateY(-3.5deg) scale($scale);
-        }
-      }
-
-      .page6 {
-        transform: rotateY(-3deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 8;
-      }
-
-      .back {
-        transform: rotateY(0.5deg) scale($scale);
-      }
-    }
-
-    &.question-attempt {
-      .front {
-        transform: rotateY(-181deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 10;
-      }
-
-      .front-cover {
-        transform: rotateY(-179deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 10;
-        background: #efefef;
-      }
-
-      .page3-empty,
-      .page4-attempts {
-        transform: rotateY(-178.3deg) scale($scale);
-      }
-
-      .back {
-        transform: rotateY(0.4deg) scale($scale);
-      }
-
-      .page1 {
-        transform: rotateY(-180deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 5;
-      }
-
-      .page2 {
-        transform: rotateY(-178.3deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 4;
-      }
-
-      .page3 {
-        transform: rotateY(-176deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 6;
-        color: var(--theme-dark-blue);
-      }
-
-      .page3-cover {
-        transform: rotateY(-175deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 6;
-      }
-
-      .page4 {
-        transform: rotateY(-4deg) scale($scale);
-        box-shadow: none;
-        z-index: 7;
-        color: var(--theme-dark-blue);
-      }
-
-      .page6 {
-        transform: rotateY(0.5deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 8;
-      }
-
-      .back {
-        transform: rotateY(0.5deg) scale($scale);
-      }
-
-      .introduction-brief {
-        transform: rotateY(-178.3deg) scale($scale);
-      }
-
-      .introduction-prep {
-        transform: rotateY(-178.3deg) scale($scale);
-      }
-
-      .synthesis-page {
-        transform: rotateY(-2deg) scale($scale);
-      }
-
-      .last-question-cover {
-        border-radius: 0 !important;
-        transform: rotateY(-2deg) scale($scale);
-      }
-    }
-
-    &.synthesis {
-      .front {
-        transform: rotateY(-181deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 10;
-      }
-
-      .front-cover {
-        transform: rotateY(-180deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 10;
-        background: #efefef;
-      }
-
-      .page3-empty,
-      .page4-attempts {
-        transform: rotateY(-180deg) scale($scale);
-      }
-
-      .back {
-        transform: rotateY(0.4deg) scale($scale);
-      }
-
-      .page1 {
-        transform: rotateY(-180deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 5;
-      }
-
-      .page2 {
-        transform: rotateY(-180deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 4;
-      }
-
-      .page3 {
-        transform: rotateY(-178deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 6;
-        color: var(--theme-dark-blue);
-      }
-
-      .page3-cover {
-        transform: rotateY(-180deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 6;
-      }
-
-      .page4 {
-        transform: rotateY(-180deg) scale($scale);
-      }
-
-      .page6 {
-        transform: rotateY(0.5deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-        z-index: 8;
-      }
-
-      .back {
-        transform: rotateY(0.5deg) scale($scale);
-      }
-
-      .introduction-brief,
-      .introduction-prep {
-        transform: rotateY(-178.3deg) scale($scale);
-      }
-
-      .last-question-result {
-        transform: rotateY(-178deg) scale($scale);
-        box-shadow: none;
-        z-index: 7;
-        color: var(--theme-dark-blue);
-      }
-
-      .synthesis-page {
-        transform: rotateY(-177deg) scale($scale);
-      }
-
-      .last-question-cover {
-        border-radius: 0 !important;
-        transform: rotateY(-3deg) scale($scale);
-      }
-    }
-
-    .wrong {
-      background: var(--theme-orange) !important;
-    }
-  }
+ }
 
   //#endregion
   .arrow-description {
