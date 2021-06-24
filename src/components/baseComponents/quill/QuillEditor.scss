@@ -51,6 +51,15 @@
           cursor: default;
         }
       }
+      .picker-label {
+        display: inline-block;
+        width: 1.8vw !important;
+        height: 1.8vw !important;
+        svg {
+          width: 100% !important;
+          height: 100% !important;
+        }
+      }
     }
     input.ql-image {
       display: none;

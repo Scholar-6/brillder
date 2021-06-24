@@ -15,6 +15,8 @@ import "./QuillCustomClipboard";
 import "./QuillKeyboard";
 import "./QuillImageUpload";
 import "./QuillDesmos";
+import "./QuillCapitalization";
+import "./QuillBlockQuote";
 import QuillBetterTable from "./QuillBetterTable";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";
@@ -165,8 +167,8 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         } : false,
         desmos: props.allowDesmos,
         // tableUI: props.allowTables,
-    /*eslint-disable-next-line*/
-    }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.allowDesmos, props.imageDialog]);
+        capitalization: true,
+    }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.allowTables, props.allowDesmos, props.imageDialog]);
     
     /*
     const toolbarItems: { [key: string]: any } = {
