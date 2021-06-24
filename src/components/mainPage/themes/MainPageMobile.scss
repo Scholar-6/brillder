@@ -50,6 +50,9 @@
   .my-library-button {
     button {
       color: var(--theme-light-blue) !important;
+      &.active {
+        color: var(--theme-orange) !important;
+      }
     }
   }
   .view-item-container,
