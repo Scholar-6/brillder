@@ -41,6 +41,7 @@ import AttemptsPhonePage from "./bookPages/AttemptsPhonePage";
 
 import PhoneQuestionHead from "./phone/PhoneQuestionHead";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import PhoneQuestionPage from "./phone/PhoneQuestionPage";
 
 const MobileTheme = React.lazy(() => import('./themes/PageMobileTheme'));
 
@@ -142,6 +143,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
   }
 
   moveToQuestion(questionIndex: number) {
+    if (this.state.swiper) {
+      this.state.swiper.slideTo(questionIndex + 3, 200);
+    }
     this.setState({ bookState: BookState.QuestionPage, bookHovered: true, questionIndex });
   }
 
@@ -220,20 +224,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       parseQuestion(question as ApiQuestion, questions);
     }
 
-    const getQuestionCoverStyle = (index: number) => {
-      const scale = 1.15;
-      if (this.state.bookHovered && this.state.bookState === BookState.QuestionPage) {
-        if (index === this.state.questionIndex) {
-          return { transform: `rotateY(-178.1deg) scale(${scale})` }
-        } else if (index < this.state.questionIndex) {
-          return { transform: `rotateY(-178.2deg) scale(${scale})` };
-        } else if (index > this.state.questionIndex) {
-          return { transform: `rotateY(-3.7deg) scale(${scale})` };
-        }
-      }
-      return {};
-    }
-
     return (
       <React.Suspense fallback={<></>}>
         <MobileTheme />
@@ -294,7 +284,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                     <IntroBriefPage brick={brick} color={color} onClick={this.moveToAttempts.bind(this)} />
                     <IntroPrepPage brick={brick} color={color} onClick={this.moveToQuestions.bind(this)} />
                     <div className="page3-empty" onClick={this.moveToTitles.bind(this)}>
-                      <div className="flipped-page">
+                      <div>
                         <div className="green-button-container1">
                           <div className="green-button-container2">
                             <div className="green-button-container3"
@@ -316,7 +306,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       if (i <= this.state.questionIndex + 1 && i >= this.state.questionIndex - 1) {
                         let res = [];
                         if (i === 0) {
-                          res.push(<div className="page3-cover first" style={getQuestionCoverStyle(i)}></div>);
+                          res.push(<div className="page3-cover first"/>);
                         }
                         if (this.state.attempt) {
                           res.push(<QuestionPage
@@ -376,7 +366,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 </div>
               </div>
             </Grid>
-            : <div>
+            : <div className="post-book-swiper">
               <Swiper
                 slidesPerView={1}
                 loop={true}
@@ -476,14 +466,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                         setMode={mode => this.setState({ mode })}
                       />
                       <div className="scroll-content">
-                        <QuestionPage
+                        <PhoneQuestionPage
                           i={i}
                           question={q}
-                          questionIndex={this.state.questionIndex}
                           activeAttempt={this.state.attempt as any}
                           mode={this.state.mode}
-                          bookHovered={this.state.bookHovered}
-                          bookState={this.state.bookState}
                           prevQuestion={this.prevQuestion.bind(this)}
                         />
                       </div>
