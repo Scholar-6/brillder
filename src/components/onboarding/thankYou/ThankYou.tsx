@@ -5,6 +5,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isPhone } from "services/phone";
 import map from "components/map";
 import { hideZendesk } from "services/zendesk";
+import TypingLabel from "components/baseComponents/TypingLabel";
 
 interface Props {
   history: any;
@@ -17,6 +18,8 @@ const DesktopTheme = React.lazy(() => import('./themes/TermsDesktopTheme'));
 
 
 const ThankYou: React.FC<Props> = (props) => {
+  const [isAnimated, setAnimated] = React.useState(false);
+
   React.useEffect(() => {
     if (isPhone()) {
       hideZendesk();
@@ -61,11 +64,19 @@ const ThankYou: React.FC<Props> = (props) => {
         <div className="left-part">
           <div className="th-title-container">
             <p className="th-title">Thank you for signing up to Brillder!</p>
-            <p className="text-center th-last-text">It's great to have you on board.</p>
+            <p className="text-center th-last-text">
+              <TypingLabel label="It's great to have you on board." onEnd={() => setAnimated(true)} />
+            </p>
+            {isAnimated &&
             <div className="flex-center">
               <button className="btn theme-orange" onClick={moveNext}>Start 30 second setup</button>
-            </div>
+            </div>}
           </div>
+          {isAnimated &&
+            <div className="th-arrow-container">
+              <SpriteIcon name="thank-you-arrow" />
+            </div>
+          }
         </div>
         <div className="right-part">
           <div className="blue-right-block" />
