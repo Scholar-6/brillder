@@ -58,5 +58,6 @@
     font-size: 8vw;
     background: var(--theme-orange);
     color: var(--white);
+    animation: fadein 2s ease-out forwards;
   }
 }

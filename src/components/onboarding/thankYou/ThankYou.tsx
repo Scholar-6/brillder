@@ -47,12 +47,15 @@ const ThankYou: React.FC<Props> = (props) => {
             <p className="th-title">to Brillder!</p>
           </div>
           <div className="th-after-title-space" />
-          <p className="text-center th-last-text">It's great to have you on board.</p>
+          <p className="text-center th-last-text">
+            <TypingLabel label="It's great to have you on board." onEnd={() => setAnimated(true)} />
+          </p>
           <div className="th-before-button-space" />
-
-          <div className="flex-center">
-            <button className="btn theme-orange" onClick={moveNext}>Start 30 second setup</button>
-          </div>
+          {isAnimated &&
+            <div className="flex-center">
+              <button className="btn theme-orange" onClick={moveNext}>Start 30 second setup</button>
+            </div>
+          }
         </div>
       </React.Suspense>
     );
