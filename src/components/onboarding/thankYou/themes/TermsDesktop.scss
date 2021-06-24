@@ -26,6 +26,7 @@
       margin-top: 9vh;
       font-size: 2vw;
     }
+
     button {
       margin-top: 11vh;
       padding: 0.5vh 2vw;
@@ -34,10 +35,29 @@
       letter-spacing: 0 !important;
       font-family: $font-family-bold;
       background: var(--theme-orange);
+
+      animation: fadein 2s ease-out forwards;
       
       &:hover {
         background: var(--theme-light-blue);
       }
+    }
+    @keyframes th-floating {
+      0% {
+       margin-top: 3vh;
+      }
+      50% {
+        margin-top: 5vh;
+      }
+      100% {
+        margin-top: 3vh;
+      }
+    }
+    .th-arrow-container {
+      display: flex;
+      margin-top: 4vh;
+      justify-content: center;
+      animation: th-floating 2s ease-out infinite;
     }
   }
 
