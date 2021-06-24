@@ -358,21 +358,22 @@
   }
 
   .main-text-container {
-    position: fixed;
-    top: $home-button-size;
     height: 100%;
     width: 92vw;
     left: 4vw;
-    margin-top: 2vh;
+    margin-top: 0;
+    padding-bottom: 2vh;
 
     h1 {
       font-weight: normal !important;
       font-family: $font-family-black;
       letter-spacing: 0.05vw;
+      display: flex;
+      align-items: center;
       font-size: 9vw;
       line-height: 0;
-      padding-top: 5vh;
-      padding-bottom: 5vh;
+      padding-top: 0.5vh;
+      height: 5vh;
       margin: 0;
     }
 
@@ -384,7 +385,9 @@
       font-weight: normal !important;
       font-size: 6vw;
       line-height: 0;
-      padding-bottom: 4vh;
+      height: 4vh;
+      display: flex;
+      align-items: center;
       font-family: $font-family-regular;
       margin: 0;
     }
@@ -409,13 +412,10 @@
   }
 
   .book-main-container {
-    position: fixed;
     z-index: 200;
     left: 4vw;
     width: 92vw;
     height: 50vh;
-    top: calc(45px + 21vh);
-    transition: all 0.8s ease-in-out;
   }
 
   .book-container {
