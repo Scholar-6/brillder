@@ -3,7 +3,6 @@ import { Grid } from '@material-ui/core';
 
 import {CompQuestionProps} from '../types';
 import CompComponent from '../Comp';
-import {ComponentAttempt} from 'components/play/model';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
@@ -252,13 +251,6 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
         {this.renderGlobalHint()}
       </div>
     )
-  }
-
-  prepareAttempt(component: VerticalShuffleComponent, attempt: ComponentAttempt<any>) {
-    if (this.state.status === DragAndDropStatus.Changed) {
-      attempt.dragged =true;
-    }
-    return attempt;
   }
 
   render() {
