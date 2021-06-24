@@ -139,9 +139,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
   const [focusIndex, setFocusIndex] = React.useState(-1);
-  // time of last autosave
-  let [lastAutoSave, setLastAutoSave] = React.useState(Date.now());
-
   const [undoRedoService] = React.useState(UndoRedoService.instance);
 
   /* Synthesis */
@@ -173,6 +170,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         questionV2.active = true;
         setQuestions(update(questions, { $set: [questionV2] }));
         cashBuildQuestion(brickId, 0);
+        //eslint-disable-next-line
         activeQuestion = questionV2;
       });
     }
@@ -191,6 +189,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }, [questions, params]);
   const setCurrentQuestionIndex = React.useCallback((index: number) => {
     history.push(map.investigationBuildQuestion(props.brick.id, questions[index].id));
+  /*eslint-disable-next-line*/
   }, [questions, history]);
   let activeQuestion = React.useMemo(() => (currentQuestionIndex >= 0) ? questions[currentQuestionIndex] : undefined, [currentQuestionIndex, questions]);
 
@@ -295,6 +294,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } else {
       history.push(map.ProposalReview(brickId));
     }
+  /*eslint-disable-next-line*/
   }, [history]);
 
   const setPrevFromPhone = React.useCallback(() => {
@@ -303,6 +303,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } else {
       moveToPlan(history, brickId);
     }
+  /*eslint-disable-next-line*/
   }, [questions, currentQuestionIndex]);
 
   const setNextQuestion = React.useCallback(() => {
@@ -311,6 +312,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } else {
       history.push(map.ProposalReview(brickId));
     }
+  /*eslint-disable-next-line*/
   }, [questions, history]);
   //#endregion
 
@@ -557,12 +559,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     moveToRedTab();
   }
 
-  const setAutoSaveTime = () => {
-    let time = Date.now();
-    lastAutoSave = time;
-    setLastAutoSave(time);
-  }
-
   // Create a new question.
   const createNewQuestionV2 = async (initQuestion: Question, callback?: Function) => {
     const resQuestion = await createQuestion(brickId, getApiQuestion(initQuestion));
@@ -577,7 +573,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   // Save a single question.
   const saveQuestion = async (updatedQuestion: Question, callback?: Function) => {
     if (canEdit === true) {
-      setAutoSaveTime();
       setSavingStatus(true);
 
       if (!updatedQuestion.id) {
@@ -790,7 +785,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const switchQuestions = (questions: Question[]) => {
     if (canEdit === true) {
       setQuestions(questions);
-      setAutoSaveTime();
       setSavingStatus(true);
       questions.map((question, index) => question.order = index);
 

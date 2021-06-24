@@ -46,6 +46,7 @@ const TimeProgressbarV2: React.FC<CounterProps> = (props) => {
     if (!props.endTime) {
       props.setEndTime(getEndTime());
     }
+  /*eslint-disable-next-line*/
   }, []);
 
   const duration = getDuration().asMilliseconds();

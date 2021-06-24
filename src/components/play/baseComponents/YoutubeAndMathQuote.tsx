@@ -14,6 +14,7 @@ interface MathHtmlProps {
 
 class YoutubeAndMathInHtmlQuote extends Component<MathHtmlProps> {
   isYoutube(el: string) {
+    /*eslint-disable-next-line*/
     return /<iframe.*src=\"https:\/\/www.youtube\.com\/embed/.test(el);
   }
 

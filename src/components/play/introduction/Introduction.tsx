@@ -64,6 +64,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       }
     }, 1000);
     return () => clearInterval(interval);
+  /*eslint-disable-next-line*/
   }, [props.endTime]);
 
   const toggleBrief = () => {

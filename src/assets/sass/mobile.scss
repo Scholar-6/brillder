@@ -205,12 +205,6 @@
   }
 }
 
-// user preference page
-.user-preference-container {
-  height: 70% !important;
-  margin-bottom: 40% !important;
-}
-
 .brick-inline {
   p {
     display: inline;
@@ -503,4 +497,13 @@
   flex-direction: column-reverse;
   justify-content: flex-end !important;
   padding: 8vh 9vw 0;
+}
+
+
+// zendesk
+.user-preference-page.terms-page-container ~ .beta-text,
+.thank-you-page ~ .beta-text,
+.s-user-preference-page ~ .beta-text,
+.select-subject-page ~ .beta-text {
+  display: none;
 }

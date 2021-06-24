@@ -2,7 +2,6 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
-import { Answer } from 'components/build/buildQuestions/questionTypes/pairMatchBuild/types';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import PairMatchImageContent from './PairMatchImageContent';
 import { Hint, HintStatus } from 'model/question';

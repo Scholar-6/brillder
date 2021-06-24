@@ -23,13 +23,13 @@ const TutorialLabels: React.FC<LabelProps> = (props) => {
                   Click the red icon to Exit & Save
                 </Grid>
               </div>
-              {props.tutorialStep != TutorialStep.Proposal &&
+              {props.tutorialStep !== TutorialStep.Proposal &&
               <div className="tutorial-add-label" style={{ height: '100%' }}>
                 <Grid container alignContent="center" justify="center" style={{ height: '100%' }}>
                   Add Question Panel
                 </Grid>
               </div>}
-              {props.tutorialStep != TutorialStep.Proposal &&
+              {props.tutorialStep !== TutorialStep.Proposal &&
               <div className="tutorial-synthesis-label" style={{ height: '100%' }}>
                 <Grid container alignContent="center" justify="center" style={{ height: '100%' }}>
                   Synthesis

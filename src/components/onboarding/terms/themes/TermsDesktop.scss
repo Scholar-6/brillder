@@ -2,6 +2,14 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
+.user-preference-page.terms-page-container {
+  background: var(--theme-dark-blue) !important;
+
+  .terms-page-container {
+    background: var(--theme-dark-blue) !important;
+  }
+}
+
 .terms-page {
   max-width: 56vw;
   height: 70vh !important;

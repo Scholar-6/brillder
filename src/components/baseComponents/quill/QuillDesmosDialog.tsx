@@ -7,7 +7,6 @@ import { GraphSettings } from 'components/build/buildQuestions/components/Graph/
 
 import 'components/build/buildQuestions/components/Graph/GraphDialog.scss';
 import _ from 'lodash';
-import { Grid, IconButton } from '@material-ui/core';
 import SpriteIcon from '../SpriteIcon';
 
 interface GraphDialogProps {
@@ -50,6 +49,7 @@ const QuillDesmosDialog: React.FC<GraphDialogProps> = props => {
         calculator.unobserveEvent('change');
       }
     }
+  /*eslint-disable-next-line*/
   }, [calculator, props.setGraphState]);
 
   React.useEffect(() => {

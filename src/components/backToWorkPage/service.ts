@@ -50,7 +50,7 @@ export const filterByCurretUser = (bricks: Brick[], userId: number) => {
 
 export const filterByLevels = (bricks: Brick[], levels: AcademicLevel[]) => {
   return bricks.filter(b => {
-    const found = levels.find(l => b.academicLevel == l);
+    const found = levels.find(l => b.academicLevel === l);
     return !!found;
   });
 }

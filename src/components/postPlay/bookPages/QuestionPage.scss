@@ -7,6 +7,9 @@
       blockquote {
         border-left: 5px solid var(--tab-gray);
         padding-left: 1.8vh;
+        &.no-break {
+          white-space: nowrap;
+        }
       }
       .words-container.preview.false {
         max-width: 100%;

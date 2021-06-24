@@ -34,6 +34,7 @@ const AssignButton: React.FC<ButtonProps> = (props) => {
         setNewTeacher(true);
       }, 1000);
     }
+  /*eslint-disable-next-line*/
   }, []);
   
   if (!props.user) { return <span></span>; }
