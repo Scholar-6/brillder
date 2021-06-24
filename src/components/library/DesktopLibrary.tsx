@@ -334,17 +334,6 @@ class Library extends Component<BricksListProps, BricksListState> {
     return data;
   };
 
-  renderEmptyCategory(name: string) {
-    return (
-      <div className="brick-row-title">
-        <button className="btn btn-transparent svgOnHover">
-          <span>{name}</span>
-          <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" />
-        </button>
-      </div>
-    );
-  }
-
   renderMainTitle(filterSubjects: number[]) {
     if (filterSubjects.length === 1) {
       const subjectId = filterSubjects[0];
