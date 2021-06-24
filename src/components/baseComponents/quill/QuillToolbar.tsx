@@ -8,6 +8,7 @@ import _ from 'lodash';
 import ImageUpload from './QuillImageUpload';
 import DesmosModule from './QuillDesmos';
 import { QuillValidColors } from './QuillEditor';
+import QuillCapitalization from './QuillCapitalization';
 
 interface QuillToolbarProps {
     className?: string;
@@ -52,6 +53,11 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
             console.log(props.quill.getContents());
             return true;
         }
+        if(format === "caps") {
+            const capitalization = props.quill.getModule("capitalization") as QuillCapitalization;
+            capitalization.format(value);
+            return true;
+        }
         if(props.quill.getFormat()[format] === (value ?? true) || value === "left") {
             props.quill.format(format, false, "user");
             return false;
@@ -94,6 +100,11 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         image: (props: any) => <QuillToolbarButton name="image" icon="image" {...props} />,
         table: (props: any) => <QuillToolbarButton name="table" {...props} />,
         desmos: (props: any) => <QuillToolbarButton name="desmos" {...props} />,
+        caps: (props: any) => <QuillToolbarAlignSelect name="caps" {...props} format={{ caps: "title" }}>
+            <option value="upper">Upper</option>
+            <option value="lower">Lower</option>
+            <option value="title">Title</option>
+        </QuillToolbarAlignSelect>,
     }), []);
 
     return (
