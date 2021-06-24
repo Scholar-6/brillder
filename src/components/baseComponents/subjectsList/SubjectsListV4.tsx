@@ -110,7 +110,7 @@ class SubjectsListV4 extends Component<PublishedSubjectsProps> {
     let viewAllCount = 0;
 
     if (this.props.subjectGroup) {
-      const groupSubjects = subjects.filter(s => s.group == this.props.subjectGroup);
+      const groupSubjects = subjects.filter(s => s.group === this.props.subjectGroup);
       checkedSubjects = groupSubjects.filter((s) => s.checked);
       otherSubjects = groupSubjects.filter((s) => !s.checked);
       for (let s of subjects) {

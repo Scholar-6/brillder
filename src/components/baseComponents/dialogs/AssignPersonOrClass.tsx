@@ -73,6 +73,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (!emailRegex.test(currentEmail)) { return; }
     setCurrentEmail('');
     setUsers(users => [ ...users, { email: currentEmail} as User]);
+  //eslint-disable-next-line
   }, [currentEmail]);
 
   const createClassAndAssign = async () => {
@@ -106,8 +107,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             props.success([newClassroom], []);
 
             // only for new classes
-            if (classes.length == 0) {
-              props.history.push(map.TeachAssignedTab + '?classroomId=' + newClassroom.id + '&' + map.NewTeachQuery + '&' + 'assignmentExpanded=true');
+            if (classes.length === 0) {
+              props.history.push(`${map.TeachAssignedTab}?classroomId=${newClassroom.id}&${map.NewTeachQuery}&assignmentExpanded=true`);
             }
           }
           await getClasses();
@@ -162,7 +163,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (isSaving) { return; }
     setSaving(true);
 
-    if (isCreating == false) {
+    if (isCreating === false) {
       const res = await assignToExistingBrick(existingClass);
       if (res) {
         props.success([existingClass], []);
@@ -213,7 +214,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           className="select-existed-class"
           MenuProps={{ classes: { paper: 'select-classes-list' } }}
           value={existingClass.id}
-          onChange={e => setExistingClass(classes.find(c => c.id == e.target.value))}
+          onChange={e => setExistingClass(classes.find(c => c.id === parseInt(e.target.value as string)))}
         >
           {classes.map((c: any, i) =>
             <MenuItem value={c.id} key={i}>
@@ -267,7 +268,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     </div>
   );
 
-  if (classes.length == 0) {
+  if (classes.length === 0) {
     return (
       <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
         <div className="dialog-header">

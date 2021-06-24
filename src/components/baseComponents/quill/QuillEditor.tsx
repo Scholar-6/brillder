@@ -1,7 +1,7 @@
 import Quill, { Sources } from "quill";
 import Delta from "quill-delta";
 import React from "react";
-import ReactQuill, { Quill as GlobalQuill } from "react-quill"; 
+import ReactQuill from "react-quill"; 
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
 import "quill-table-ui/dist/index.css";
@@ -15,6 +15,8 @@ import "./QuillCustomClipboard";
 import "./QuillKeyboard";
 import "./QuillImageUpload";
 import "./QuillDesmos";
+import "./QuillCapitalization";
+import "./QuillBlockQuote";
 import QuillBetterTable from "./QuillBetterTable";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";
@@ -140,6 +142,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
             setCurrentQuillId(undefined);
         }
         props?.onBlur?.();
+    /*eslint-disable-next-line*/
     }, [currentQuillId, setCurrentQuillId, uniqueId, props.onBlur])
 
     const modules = React.useMemo(() => ({
@@ -164,7 +167,8 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         } : false,
         desmos: props.allowDesmos,
         // tableUI: props.allowTables,
-    }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.allowDesmos, props.imageDialog]);
+        capitalization: true,
+    }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.allowTables, props.allowDesmos, props.imageDialog]);
     
     /*
     const toolbarItems: { [key: string]: any } = {

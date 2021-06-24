@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import moment from 'moment';
 
 import './Synthesis.scss';
 import { AcademicLevelLabels, Brick } from 'model/brick';

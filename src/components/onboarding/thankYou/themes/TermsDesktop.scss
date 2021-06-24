@@ -1,0 +1,153 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.thank-you-page {
+  height: 100%;
+  background: var(--theme-dark-blue);
+  display: flex;
+
+  .left-part,
+  .right-part {
+    width: 50%;
+  }
+
+  .left-part {
+    padding-left: 8vw;
+    padding-right: 5vw;
+    color: var(--white);
+    text-align: center;
+    .th-title {
+      padding-top: 10vh;
+      font-family: $font-family-black;
+      font-size: 4vw;
+    }
+    .th-last-text {
+      margin-top: 9vh;
+      font-size: 2vw;
+    }
+
+    button {
+      margin-top: 11vh;
+      padding: 0.5vh 2vw;
+      border-radius: 0.8vw;
+      font-size: 2vw;
+      letter-spacing: 0 !important;
+      font-family: $font-family-bold;
+      background: var(--theme-orange);
+
+      animation: fadein 2s ease-out forwards;
+      
+      &:hover {
+        background: var(--theme-light-blue);
+      }
+    }
+    @keyframes th-floating {
+      0% {
+       margin-top: 3vh;
+      }
+      50% {
+        margin-top: 5vh;
+      }
+      100% {
+        margin-top: 3vh;
+      }
+    }
+    .th-arrow-container {
+      display: flex;
+      margin-top: 4vh;
+      justify-content: center;
+      animation: th-floating 2s ease-out infinite;
+    }
+  }
+
+  .right-part {
+
+    .blue-right-block {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      background: var(--theme-light-blue);
+      height: 74.9vh;
+      width: 43.8vw;
+      border-top-left-radius: 2vw;
+      z-index: 1;
+    }
+
+    .phone-username-preview {
+      z-index: 2;
+
+      .phone {
+        background: var(--white);
+
+        .phone-border {
+          background-color: var(--tab-gray);
+        }
+
+        .volume,
+        .sleep,
+        .screen {
+          background: var(--white) !important;
+        }
+
+        .screen {
+          border-radius: 1.6vw;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          &.username-screen {
+            padding-top: 3vw;
+            align-items: flex-start;
+          }
+
+          .icon-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+          }
+
+          .username {
+            text-align: center;
+            font-size: 1.7vw;
+            font-family: $font-family-bold;
+            text-transform: uppercase;
+            color: var(--theme-dark-blue);
+            width: 100%;
+            overflow-x: auto;
+          }
+
+          .username-help-label {
+            margin-top: 1vh;
+            text-align: center;
+            font-size: 1.7vw;
+            color: var(--theme-dark-blue);
+            font-family: $font-family-regular-italic;
+            transition: all 300ms ease-out;
+
+            &.smaller {
+              font-size: 1.4vw;
+            }
+          }
+
+          svg {
+            transition: all 300ms ease-out !important;
+            max-width: auto;
+            height: 14vw;
+            color: var(--theme-orange);
+          }
+
+          .th-phone-brillder {
+            height: 4vw;
+            text-align: center;
+
+            svg {
+              height: 4vw !important;
+              width: 10vw;
+            }
+          }
+        }
+      }
+    }
+  }
+}

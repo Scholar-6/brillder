@@ -66,6 +66,7 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
 
       setCalcs(newCalcs);
     }
+  /*eslint-disable-next-line*/
   }, [data]);
 
   if (!data.synthesis || !stripHtml(data.synthesis)) {

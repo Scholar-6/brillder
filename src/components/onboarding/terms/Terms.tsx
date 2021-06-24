@@ -6,16 +6,15 @@ import queryString from 'query-string';
 // @ts-ignore
 import marked from "marked";
 
-import { User } from "model/user";
-import { ReduxCombinedState } from "redux/reducers";
 import map from "components/map";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import { acceptTerms } from "services/axios/user";
 import userActions from 'redux/actions/user';
 import { getTerms } from "services/axios/terms";
+import { isPhone } from "services/phone";
+import { hideZendesk } from "services/zendesk";
 
 interface BricksListProps {
-  user: User;
   history: any;
   location: any;
 
@@ -31,6 +30,7 @@ interface Part {
 
 interface BricksListState {
   parts: Part[];
+  accepted: boolean;
   lastModifiedDate: string;
 }
 
@@ -44,10 +44,17 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
 
     this.state = {
       parts: [],
+      accepted: false,
       lastModifiedDate: ''
     };
 
     this.getTerms();
+  }
+
+  componentDidMount() {
+    if (isPhone()) {
+      hideZendesk();
+    }
   }
 
   async getTerms() {
@@ -85,11 +92,11 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
       <React.Suspense fallback={<></>}>
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
         <Grid
-          className="user-preference-page"
+          className={`user-preference-page terms-page-container ${this.state.accepted ? 'terms-accepted' : ''}`}
           container direction="column"
           justify="center" alignItems="center"
         >
-          <Grid className="user-preference-container terms-page-container" item>
+          <Grid className="user-preference-container terms-page-container onboarding-terms" item>
             <div className="terms-page">
               <div>
                 {this.state.parts.map((p) => (
@@ -100,12 +107,23 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
             <div className="bottom-button" onClick={async() => {
               const success = await acceptTerms(this.state.lastModifiedDate);
               if (success) {
+                this.setState({accepted: true});
                 await this.props.getUser();
                 const values = queryString.parse(this.props.history.location.search);
-                if (values.onlyAcceptTerms) {
-                  this.props.history.push('/home');
+                if (isPhone()) {
+                  setTimeout(() => {
+                    if (values.onlyAcceptTerms) {
+                      this.props.history.push('/home');
+                    } else {
+                      this.props.history.push(map.ThankYouPage);
+                    }
+                  }, 1000);
                 } else {
-                  this.props.history.push(map.UserPreference);
+                  if (values.onlyAcceptTerms) {
+                    this.props.history.push('/home');
+                  } else {
+                    this.props.history.push(map.UserPreference);
+                  }
                 }
               }
             }}>
@@ -119,13 +137,9 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
   }
 }
 
-const mapState = (state: ReduxCombinedState) => ({
-  user: state.user.user,
-});
-
 
 const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
 });
 
-export default connect(mapState, mapDispatch)(TermsSignUp);
+export default connect(null, mapDispatch)(TermsSignUp);

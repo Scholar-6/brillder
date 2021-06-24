@@ -133,7 +133,6 @@ const HintComponent: React.FC<HintProps> = ({
         </div>
       );
     }
-    const answerHints: any[] = [];
 
     if (!props.count) {
       return <PageLoader content="...Preparing hints..." />;

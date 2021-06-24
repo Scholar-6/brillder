@@ -6,6 +6,10 @@
   padding: 0 !important;
 }
 
+.dialog-box.play-dialog .MuiDialog-container .MuiDialog-paperScrollPaper {
+  border-radius: 1.2vw !important;
+}
+
 .play-dialog .MuiPaper-root {
   $footer-height: 7vh;
   border-radius: 1.3 vw !important;
@@ -25,6 +29,10 @@
     right: 1vw;
   }
 
+  .hover-area.custom {
+    font-family: $font-family-regular !important;
+  }
+
   .dialog-header.cover-content {
     height: 80vh;
     padding: 1.2vw;
@@ -38,6 +46,10 @@
         height: 2.3vw;
         width: 2.3vw;
       }
+    }
+
+    .author-row.cover-author-row {
+      font-family: $font-family-regular;
     }
 
     .hover-orange-text {
@@ -54,6 +66,7 @@
       margin-top: 0.5vh;
       display: flex;
       position: relative;
+      font-family: $font-family-regular;
 
       .hover-area {
         left: unset;
@@ -72,6 +85,7 @@
       position: relative;
 
       .image-drag-n-drop {
+        width: 100%;
         overflow: hidden;
         border-radius: 0.5vw;
         background: var(--tab-gray);
@@ -187,24 +201,52 @@
       color: var(--theme-dark-blue);
 
       .c-next-btn-container {
+        margin-top: 4vh;
         display: flex;
         justify-content: center;
-
         button {
-          margin-top: 2vh;
-          padding: 1vh 1.3vw;
-          font-size: 1.4vw;
           font-family: $font-family-bold;
+          transition: all 300ms ease-out;
           border: none;
           outline: none;
-          background: var(--theme-orange);
+          font-size: 1.7vw;
+          border-radius: 0.7vw;
+          padding: 1.4vh 1.9vw;
           color: var(--white);
-
+          background: var(--theme-orange);
           &:hover {
             background: var(--theme-green);
           }
         }
       }
+    }
+    @keyframes efw-floating {
+      0% {
+        margin-top: 1vh;
+      }
+      50% {
+        margin-top: 0vh;
+      }
+      100% {
+        margin-top: 1vh;
+      }
+    }
+    .efw-arrow-container {
+      margin-top: 1vh;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      height: 13vh;
+      svg {
+        animation: efw-floating 2s ease-out infinite;
+        position: absolute;
+        height: 11vh;
+      }
+    }
+    .efw-help-text {
+      text-align: center;
+      font-size: 1.25vw;
+      color: var(--theme-dark-blue);
     }
   }
 
