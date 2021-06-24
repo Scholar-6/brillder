@@ -1,6 +1,23 @@
 import { ComponentAttempt } from "components/play/model";
 import { ChooseSeveralAnswer } from "components/play/questionTypes/choose/chooseSeveral/ChooseSeveral";
 
+const mark = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
+    const markValue = 1;
+
+    attempt.correct = true;
+    attempt.marks = 0;
+    attempt.maxMarks = 0;
+
+    markLiveChoices(component, attempt);
+
+    if (attempt.answer.length === 0) {
+        attempt.marks = 0;
+    }
+
+    return attempt;
+}
+
+
 const markLiveChoices = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
     const choices = component.list;
 
@@ -29,20 +46,6 @@ const markLiveChoices = (component: any, attempt: ComponentAttempt<ChooseSeveral
     return attempt;
 }
 
-const mark = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
-    const markValue = 1;
 
-    attempt.correct = true;
-    attempt.marks = 0;
-    attempt.maxMarks = 0;
-
-    markLiveChoices(component, attempt);
-
-    if (attempt.answer.length === 0) {
-        attempt.marks = 0;
-    }
-
-    return attempt;
-}
 
 export default mark;
