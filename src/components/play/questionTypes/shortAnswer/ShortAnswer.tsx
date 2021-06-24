@@ -68,7 +68,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
 
   checkAttemptAnswer(answer: ShortAnswerItem, index: number) {
     const answerValue = stripHtml(answer.value);
-    if (this.props.attempt.answer) {
+    if (this.props.attempt && this.props.attempt.answer) {
       let attepmtValue = stripHtml(this.props.attempt.answer[index]);
 
       if (
