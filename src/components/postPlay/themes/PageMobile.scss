@@ -106,6 +106,10 @@
     }
   }
 
+  .wefw-book-container {
+    height: calc(100% - 17.5vw - 68px) !important;
+  }
+
   .post-book-swiper {
     height: calc(100% - 17.5vw - 68px) !important;
     .swiper-container {
@@ -358,11 +362,13 @@
   }
 
   .main-text-container {
-    height: 100%;
+    display: flex;
+    align-items: center;
+    min-height: 30%;
+    margin-left: 4vw;
     width: 92vw;
     left: 4vw;
     margin-top: 0;
-    padding-bottom: 2vh;
 
     h1 {
       font-weight: normal !important;
@@ -375,6 +381,10 @@
       padding-top: 0.5vh;
       height: 5vh;
       margin: 0;
+    }
+
+    .wefw-sub-title {
+      margin-top: 1vh;
     }
 
     h2.desktop {
@@ -399,13 +409,15 @@
         border: none;
         top: -4vh;
         left: 38vw;
+        width: 54vw;
         outline: none;
         border-radius: 4vw;
         font-family: $font-family-bold;
         font-size: 5.5vw;
         line-height: 0;
         background: var(--theme-orange);
-        padding: 2vh 4vw;
+        text-align: center;
+        padding: 2vh 0;
         transition: all 300ms ease-out !important;
       }
     }
@@ -413,38 +425,25 @@
 
   .book-main-container {
     z-index: 200;
-    left: 4vw;
-    width: 92vw;
-    height: 50vh;
+    margin-left: 6.5vw;
+    width: 87vw;
+    height: 77%;
+    max-height: 120vw;
   }
 
   .book-container {
     $book-radius: 2vw;
     width: 100%;
+    height: 100%;
 
     .book {
       width: 100%;
       position: relative;
-      height: $real-book-height;
+      height: 100%;
     }
 
 
-    .front,
-    .front-cover,
-    .back,
-    .book-page,
-    .page1,
-    .page1-cover,
-    .page2,
-    .page3,
-    .page3-cover,
-    .page4-cover,
-    .page3-empty,
-    .page4-attempts,
-    .page4,
-    .page5,
-    .page6 {
-      position: absolute;
+    .front {
       width: 30.1vw;
       height: 100%;
       top: 0;
@@ -470,11 +469,8 @@
       border-top-left-radius: 0 !important;
     }
 
-    .front,
-    .front-cover,
-    .back {
+    .front {
       width: 100%;
-      height: $real-book-height;
       background: var(--theme-dark-blue);
     }
 
@@ -547,15 +543,15 @@
 
         .brick-title {
           margin: 0 1.8vw;
+          margin-left: 5vw;
           text-transform: uppercase;
           color: var(--theme-dark-blue);
           font-size: 6vw;
-          overflow-x: hidden;
+          width: 80vw;
           height: 18vh;
 
           p {
             font-size: 6vw;
-            white-space: nowrap;
           }
         }
 

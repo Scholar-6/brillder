@@ -143,6 +143,13 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.setState({ bookState: BookState.QuestionPage, bookHovered: true, questionIndex });
   }
 
+  moveToPrep() {
+    if (this.state.swiper) {
+      this.state.swiper.slideTo(1, 200);
+    }
+    this.setState({ bookState: BookState.QuestionPage, bookHovered: true });
+  }
+
   moveToQuestions() {
     this.setState({ bookState: BookState.QuestionPage, questionIndex: 0 });
   }
@@ -230,45 +237,35 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             user={this.props.user}
             placeholder="Search Ongoing Projects & Published Bricks…"
             history={this.props.history}
-            search={() => {}}
-            searching={() => {}}
+            search={() => { }}
+            searching={() => { }}
           />
-          {/*
-          {this.state.bookHovered
-
-            ? <div className="home-button-container">
-              <button type="button" className="btn btn-transparent svgOnHover home-button">
-                <SpriteIcon name="corner-up-left" className="return-arrow" />
-              </button>
-            </div>
-            :  <HomeButton onClick={() => this.props.history.push('/')} />
-          }*/}
-          <div className="book-navigator">
-            <div className="prep-tab" onClick={this.moveToTitles.bind(this)}>
-              <SpriteIcon name="file-text" />
-            </div>
-            {questions.map((q, i) => <div className="question-tab" onClick={() => this.moveToQuestion(i)}>
-              {i + 1} {this.state.attempts[0].answers[i].correct ? <SpriteIcon name="ok" className="text-theme-green" /> : <SpriteIcon name="cancel-custom" className="text-orange" />}
-            </div>)}
-          </div>
+          {this.state.bookHovered &&
+            <div className="book-navigator">
+              <div className="prep-tab" onClick={this.moveToPrep.bind(this)}>
+                <SpriteIcon name="file-text" />
+              </div>
+              {questions.map((q, i) => <div className="question-tab" onClick={() => this.moveToQuestion(i)}>
+                {i + 1} {this.state.attempts[0].answers[i].correct ? <SpriteIcon name="ok" className="text-theme-green" /> : <SpriteIcon name="cancel-custom" className="text-orange" />}
+              </div>)}
+            </div>}
           {!this.state.bookHovered ?
-            <Grid
-              container
-              direction="row"
-              style={{ height: "100% !important" }}
-              justify="center"
-            >
-              <Grid className="main-text-container">
-                <h1>This book is yours.</h1>
-                <h2>Click on the cover to see a summary</h2>
-                <h2>of your results.</h2>
-                <div className="button-container">
-                {this.state.showLibraryButton &&
-                  <button onClick={() => this.props.history.push(map.MyLibrary + '?subjectId=' + brick.subjectId)}>
-                    View it in my library
-                </button>}
+            <div className="wefw-book-container">
+              <div className="main-text-container">
+                <div>
+                  <h1>This book is yours.</h1>
+                  <div className="wefw-sub-title">
+                    <h2>Click on the cover to see a summary</h2>
+                    <h2>of your results.</h2>
+                    <div className="button-container">
+                      {this.state.showLibraryButton &&
+                        <button onClick={() => this.props.history.push(map.MyLibrary + '?subjectId=' + brick.subjectId)}>
+                          View it in my library
+                        </button>}
+                    </div>
+                  </div>
                 </div>
-              </Grid>
+              </div>
               <div className={bookClass}>
                 <div className="book-container">
                   <div className="book">
@@ -279,7 +276,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                   </div>
                 </div>
               </div>
-            </Grid>
+            </div>
             : <div className="post-book-swiper">
               <Swiper
                 slidesPerView={1}
