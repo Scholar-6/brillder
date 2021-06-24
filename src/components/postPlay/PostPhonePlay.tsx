@@ -26,14 +26,7 @@ import { loadSubjects } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
-import IntroBriefPage from "./bookPages/IntroBriefPage";
-import IntroPrepPage from "./bookPages/IntroPrepPage";
 import FrontPage from "./bookPages/FrontPage";
-import TitlePage from "./bookPages/TitlePage";
-import OverallPage from "./bookPages/OverallPage";
-import QuestionPage from "./bookPages/QuestionPage";
-import AnswersPage from "./bookPages/AnswersPage";
-import SynthesisPage from "./bookPages/SynthesisPage";
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
 import { Helmet } from "react-helmet";
@@ -42,6 +35,7 @@ import AttemptsPhonePage from "./bookPages/AttemptsPhonePage";
 import PhoneQuestionHead from "./phone/PhoneQuestionHead";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import PhoneQuestionPage from "./phone/PhoneQuestionPage";
+import map from "components/map";
 
 const MobileTheme = React.lazy(() => import('./themes/PageMobileTheme'));
 

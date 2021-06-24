@@ -18,7 +18,6 @@ import { LibraryAssignmentBrick } from "model/assignment";
 import LibraryFilter from "./components/LibraryFilter";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { getStudentClassrooms } from "services/axios/classroom";
 import { TeachClassroom } from "model/classroom";
