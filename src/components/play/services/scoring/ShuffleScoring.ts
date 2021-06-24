@@ -27,15 +27,15 @@ const mark = (component: HorizontalShuffleComponent | VerticalShuffleComponent, 
             attempt.correct = false;
         }
     })
-/*
+
     if(attempt.maxMarks > 12) {
         attempt.marks = Math.ceil(attempt.marks * (12 / attempt.maxMarks));
         attempt.maxMarks = 12;
-    }*/
-
+    }
+/*
     //scales to an n point scale
     attempt.marks = parseFloat((attempt.marks * (n / attempt.maxMarks)).toFixed(2));
-    attempt.maxMarks = n;
+    attempt.maxMarks = n;*/
 
     if(!attempt.dragged) {attempt.marks=0} 
     return attempt;
