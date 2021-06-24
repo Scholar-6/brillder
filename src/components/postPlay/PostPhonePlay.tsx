@@ -13,7 +13,6 @@ import { Brick, Subject } from "model/brick";
 import { User } from "model/user";
 import { getBrillderTitle } from "components/services/titleService";
 import { BrickFieldNames, PlayButtonStatus } from "../build/proposal/model";
-import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import {
   ApiQuestion,
   parseQuestion,
@@ -66,22 +65,16 @@ interface ProposalProps {
 
 interface ProposalState {
   swiper: any;
-  isFirstHover: boolean;
-  firstHoverTimeout: number;
-  closeTimeout: number;
   bookHovered: boolean;
   bookState: BookState;
   questionIndex: number;
-  animationRunning: boolean;
   activeAttemptIndex: number;
-  pageFlipDelay: number;
   subjects: Subject[];
   attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
   mode?: boolean; // live - false, review - true, undefined - default
   playHovered: boolean;
   showLibraryButton: boolean;
-  handleKey(e: any): void;
 }
 
 class PostPlay extends React.Component<ProposalProps, ProposalState> {
@@ -97,71 +90,20 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.state = {
       bookState: BookState.Titles,
       questionIndex: 0,
-      animationRunning: false,
       activeAttemptIndex: 0,
       attempt: null,
-      closeTimeout: -1,
       bookHovered: false,
-      isFirstHover: true,
-      pageFlipDelay: 1200,
       attempts: [],
       subjects: [],
       swiper: null,
-      firstHoverTimeout: -1,
       playHovered: false,
       showLibraryButton,
-      handleKey: this.handleKey.bind(this)
     };
     this.loadData();
   }
 
-  componentDidMount() {
-    document.addEventListener("keydown", this.state.handleKey, false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.state.handleKey, false);
-  }
-
-  handleKey(e: any) {
-    let { bookState } = this.state;
-    let newState = -1;
-    if (rightKeyPressed(e)) {
-      if (bookState === BookState.Titles) {
-        newState = BookState.Attempts;
-      } else if (bookState === BookState.Attempts) {
-        newState = BookState.Introduction;
-      } else if (bookState === BookState.Introduction) {
-        newState = BookState.QuestionPage;
-      } else if (bookState === BookState.QuestionPage) {
-        this.nextQuestion();
-      }
-      if (newState !== -1) {
-        this.movePage(newState);
-        if (this.state.animationRunning) { return; }
-        this.setState({ bookState: newState, animationRunning: true });
-        this.animationFlipRelease();
-      }
-    } else if (leftKeyPressed(e)) {
-      if (bookState === BookState.Attempts) {
-        newState = BookState.Titles;
-      } else if (bookState === BookState.Introduction) {
-        newState = BookState.Attempts;
-      } else if (bookState === BookState.QuestionPage) {
-        this.prevQuestion();
-      } else if (bookState === BookState.Synthesis) {
-        newState = BookState.QuestionPage;
-      }
-      if (newState !== -1) {
-        this.movePage(newState);
-      }
-    }
-  }
-
   movePage(bookState: BookState) {
-    if (this.state.animationRunning) { return; }
-    this.setState({ bookState, animationRunning: true });
-    this.animationFlipRelease();
+    this.setState({ bookState });
   }
 
   prepareAttempt(attempt: PlayAttempt) {
@@ -191,66 +133,46 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.props.history.push('/home');
   }
 
-  animationFlipRelease() {
-    setTimeout(() => this.setState({ animationRunning: false }), this.state.pageFlipDelay);
-  }
-
   moveToTitles() {
-    if (this.state.animationRunning) { return; }
-    this.setState({ bookState: BookState.Titles, animationRunning: true });
-    this.animationFlipRelease();
+    this.setState({ bookState: BookState.Titles });
   }
 
   moveToAttempts() {
-    if (this.state.animationRunning) { return; }
-    this.setState({ bookState: BookState.Attempts, animationRunning: true });
-    this.animationFlipRelease();
+    this.setState({ bookState: BookState.Attempts });
   }
 
   moveToQuestions() {
-    if (this.state.animationRunning) { return; }
-    this.setState({ bookState: BookState.QuestionPage, questionIndex: 0, animationRunning: true });
-    this.animationFlipRelease();
+    this.setState({ bookState: BookState.QuestionPage, questionIndex: 0 });
   }
 
   moveBackToQuestions() {
-    if (this.state.animationRunning) { return; }
-    this.setState({ bookState: BookState.QuestionPage, animationRunning: true });
-    this.animationFlipRelease();
+    this.setState({ bookState: BookState.QuestionPage });
   }
 
   moveToIntroduction() {
-    if (this.state.animationRunning) { return; }
-    this.setState({ bookState: BookState.Introduction, questionIndex: 0, animationRunning: true });
-    this.animationFlipRelease();
+    this.setState({ bookState: BookState.Introduction, questionIndex: 0 });
   }
 
   moveToSynthesis() {
-    if (this.state.animationRunning) { return; }
-    this.setState({ bookState: BookState.Synthesis, animationRunning: true });
-    this.animationFlipRelease();
+    this.setState({ bookState: BookState.Synthesis });
   }
 
   nextQuestion() {
     if (!this.state.attempt) { return; }
     const { brick } = this.state.attempt;
-    if (this.state.animationRunning) { return; }
     if (this.state.questionIndex < brick.questions.length - 1) {
-      this.setState({ questionIndex: this.state.questionIndex + 1, mode: undefined, animationRunning: true });
-      this.animationFlipRelease();
+      this.setState({ questionIndex: this.state.questionIndex + 1, mode: undefined });
     } else {
       this.moveToSynthesis();
     }
   }
 
   prevQuestion() {
-    if (this.state.animationRunning) { return; }
     if (this.state.questionIndex === 0) {
       this.moveToIntroduction();
     }
     if (this.state.questionIndex > 0) {
-      this.setState({ questionIndex: this.state.questionIndex - 1, mode: undefined, animationRunning: true });
-      this.animationFlipRelease();
+      this.setState({ questionIndex: this.state.questionIndex - 1, mode: undefined });
     }
   }
 
@@ -287,10 +209,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       } else if (bookState === BookState.Synthesis) {
         bookClass += ` expanded synthesis`;
       }
-    }
-
-    if (!this.state.bookHovered || this.state.animationRunning) {
-      bookClass += ' closed';
     }
 
     let questions: Question[] = [];
