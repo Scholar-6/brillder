@@ -58,7 +58,7 @@ describe("pair match scoring", () => {
         expect(result.correct).toStrictEqual(false);
     })
     
-    it("should mark incorrect answers with 3 marks", () => {
+    it("should mark 3 out of 5 pairs, with 3 marks. marked as incorrect", () => {
         // arrange
         const mockAttempt: ComponentAttempt<PairMatchAnswer> = {
             answer: [
