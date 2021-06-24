@@ -16,9 +16,25 @@ const mockComponent: any = {
 }
 
 describe("choose one scoring", () => {
+/*
+  it("should mark an correct answer with 6 marks", () => {
+    // arrange
+    const mockAttempt: ComponentAttempt<ChooseSeveralAnswer> = {
+        answer: [0, 2, 4] as number[]
+    } as any;
 
-  it("should mark a correct answer with 6 marks", () => {
-    /* 11/4/2020
+    // act
+    const result = mark(mockComponent, mockAttempt);
+
+    // assert
+    expect(result.marks).toStrictEqual(6); // full marks
+    expect(result.maxMarks).toStrictEqual(6);
+    expect(result.correct).toStrictEqual(true);
+});*/
+
+
+  /*it("should mark a correct answer with 5 marks", () => {
+     11/4/2020
     // arrange
     const mockAttempt: ComponentAttempt<ChooseSeveralAnswer> = {
         answer: [0, 2, 4]
@@ -31,8 +47,8 @@ describe("choose one scoring", () => {
     expect(result.marks).toStrictEqual(10);
     expect(result.maxMarks).toStrictEqual(10);
     expect(result.correct).toStrictEqual(true);
-    */
-  });
+    
+  });*/
 
   /* 11/4/2020
   it("should mark an incorrect answer with 0.5 marks", () => {
@@ -80,6 +96,11 @@ describe("choose one scoring", () => {
       expect(result.correct).toStrictEqual(false);
   })
   */
+
+
+
+
+  
   it("#2706 Correct answer marked wrong in review", () => {
     let component = {
       chosen: false,
@@ -89,13 +110,13 @@ describe("choose one scoring", () => {
           checked: false,
           index: 2,
           soundFile: "",
-          value: '<p><span class="latex">63.4</span></p>',
+          value: 'A',
           valueFile: "",
         },
         {
           answerType: 1,
           checked: true,
-          index: 4,
+          index: 3,
           soundFile: "",
           value: '<p><span class="latex">296.6</span></p>',
           valueFile: ""
@@ -111,80 +132,34 @@ describe("choose one scoring", () => {
         {
           answerType: 1,
           checked: true,
-          index: 8,
+          index: 0,
           soundFile: "",
           value: '<p style="text-align:justify;"><span class="latex">116.6</span></p>',
           valueFile: ""
         },
-        {
-          answerType: 1,
-          checked: true,
-          index: 5,
-          soundFile: "",
-          value: '<p><span class="latex">180</span></p>',
-          valueFile: ""
-        },
-        {
-          answerType: 1,
-          index: 7,
-          soundFile: "",
-          value: '<p style="text-align:justify;"><span class="latex">270</span></p>',
-          valueFile: "",
-        },
-        {
-          answerType: 1,
-          checked: false,
-          index: 9,
-          soundFile: "",
-          value: '<p style="text-align:justify;"><span class="latex">360</span></p>',
-          valueFile: "",
-        },
-        {
-          answerType: 1,
-          checked: false,
-          index: 0,
-          soundFile: "",
-          value: '<p><span class="latex">-63.4</span></p>',
-          valueFile: "",
-        },
-        {
-          answerType: 1,
-          checked: false,
-          index: 6,
-          soundFile: "",
-          value: '<p><span class="latex">476.6</span></p>',
-          valueFile: "",
-        },
-        {
-          answerType: 1,
-          checked: false,
-          index: 3,
-          soundFile: "",
-          value: '<p><span class="latex">90</span></p>',
-          valueFile: ""
-        },
+        
       ],
-      selected: false,
+      selected: true,
       type: 127
     } as any;
 
     const mockAttempt: ComponentAttempt<ChooseSeveralAnswer> = {
       answer: [
-        { realIndex: 5, shuffleIndex: 4 },
-        { realIndex: 8, shuffleIndex: 3 },
-        { realIndex: 4, shuffleIndex: 1 },
+        { realIndex: 3, shuffleIndex: 1 },
+        { realIndex: 0, shuffleIndex: 3 },
       ],
-      attempted: false,
-      correct: false,
-      marks: 0,
-      maxMarks: 20,
+      attempted: true,
+      correct: true,
+      marks: 4,
+      maxMarks: 4,
       questionId: 76699,
     } as any;
 
     const result = mark(component, mockAttempt);
 
-    expect(result.marks).toStrictEqual(20);
-    expect(result.maxMarks).toStrictEqual(20);
+    expect(result.marks).toStrictEqual(4);
+    expect(result.maxMarks).toStrictEqual(4);
     expect(result.correct).toStrictEqual(true);
   })
+  
 });
