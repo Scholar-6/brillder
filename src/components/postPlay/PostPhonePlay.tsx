@@ -317,7 +317,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="mobile-attempts">
-                    <div className="header" dangerouslySetInnerHTML={{ __html: brick.title }}></div>
+                    <div className="header">
+                      <div className="header-absolute" dangerouslySetInnerHTML={{ __html: brick.title }} />
+                    </div>
                     <div className="scroll-content">
                       <div className="open-question" dangerouslySetInnerHTML={{ __html: brick.openQuestion }}></div>
                       <div className="expand-title" style={{ marginTop: '4vh' }}>
@@ -343,7 +345,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="mobile-attempts">
-                    <div className="header" dangerouslySetInnerHTML={{ __html: brick.title }}></div>
+                    <div className="header">
+                      <div className="header-absolute" dangerouslySetInnerHTML={{ __html: brick.title }} />
+                    </div>
                     <div className="scroll-content">
                       <div className="expand-title" style={{ marginTop: '4vh' }}>
                         <span>Prep</span>
@@ -393,7 +397,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 ))}
                 <SwiperSlide>
                   <div className="mobile-attempts">
-                    <div className="header">Synthesis</div>
+                    <div className="header">
+                      <div className="header-absolute">
+                        Synthesis
+                      </div>
+                    </div>
                     <div className="scroll-content">
                       <div className="expanded-text">
                         <HighlightHtml
