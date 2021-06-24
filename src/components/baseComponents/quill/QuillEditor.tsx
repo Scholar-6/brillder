@@ -16,6 +16,7 @@ import "./QuillKeyboard";
 import "./QuillImageUpload";
 import "./QuillDesmos";
 import "./QuillCapitalization";
+import "./QuillBlockQuote";
 import QuillBetterTable from "./QuillBetterTable";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";

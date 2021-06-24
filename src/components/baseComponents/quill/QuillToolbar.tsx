@@ -9,6 +9,7 @@ import ImageUpload from './QuillImageUpload';
 import DesmosModule from './QuillDesmos';
 import { QuillValidColors } from './QuillEditor';
 import QuillCapitalization from './QuillCapitalization';
+import LineStyleDialog from 'components/build/buildQuestions/questionTypes/highlighting/wordHighlighting/LineStyleDialog';
 
 interface QuillToolbarProps {
     className?: string;
@@ -22,6 +23,8 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
     const [id, setId] = React.useState<number>(0);
     const update = React.useCallback(() => setId(id => id + 1), [setId]);
     const toolbarNode = React.createRef<HTMLDivElement>();
+
+    const [lineStyleDialogOpen, setLineStyleDialogOpen] = React.useState(false);
 
     React.useEffect(() => {
         const onSelectChange = (range: RangeStatic) => {
@@ -62,10 +65,25 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
             props.quill.format(format, false, "user");
             return false;
         } else {
-            props.quill.format(format, value ?? true, "user");
+            if(format === "blockquote") {
+                if(props.quill.getFormat()[format]) {
+                    props.quill.format(format, false, "user");
+                } else {
+                    setLineStyleDialogOpen(true);
+                }
+            } else {
+                props.quill.format(format, value ?? true, "user");
+            }
             return true;
         }
     }, [props.quill, toolbarNode]);
+
+    const blockQuoteFormat = React.useCallback((noBreakLines: boolean) => {
+        if(!props.quill) return;
+
+        props.quill.format("blockquote", { noBreakLines }, "user");
+        setLineStyleDialogOpen(false);
+    }, [props.quill, setLineStyleDialogOpen]);
 
     const format = React.useMemo(() => {
         const selection = props.quill?.getSelection(false);
@@ -120,6 +138,12 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
                     />
                 })}
             </div>
+            {props.toolbar.includes("blockQuote") && (
+                <LineStyleDialog
+                    isOpen={lineStyleDialogOpen}
+                    submit={blockQuoteFormat}
+                />
+            )}
         </div>
     );
 };
