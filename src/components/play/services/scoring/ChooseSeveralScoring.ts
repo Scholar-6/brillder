@@ -10,9 +10,10 @@ const mark = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) =>
 
     markLiveChoices(component, attempt);
 
+    /* \\24 June 2021 redundant
     if (attempt.answer.length === 0) {
         attempt.marks = 0;
-    }
+    }*/
 
     return attempt;
 }
@@ -26,11 +27,12 @@ const markLiveChoices = (component: any, attempt: ComponentAttempt<ChooseSeveral
         if (choice.checked){
             attempt.maxMarks += 2;
         }
-
-        if (checked === choice.checked && choice.checked) {
+        //checked is whether the user has selected. 
+        //choice.checked is whether it is supposed to be selected
+        if (checked && choice.checked) {
             attempt.marks += 2;
         } 
-        else if (!choice.checked && checked){
+        else if (checked && !choice.checked ){
             attempt.marks -= 1;
             attempt.correct = false;
         }
