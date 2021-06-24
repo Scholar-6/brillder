@@ -15,7 +15,7 @@ const mockComponent: ChooseOneComponent = {
 
 describe("choose one scoring", () => {
     
-    it("should mark a correct answer with 4 marks", () => {
+    it("should mark a correct answer with 4 marks if 3 options", () => {
         // arrange
         const mockAttempt: ComponentAttempt<ChooseOneAnswer> = {
             answer: {shuffleIndex: 1, realIndex: 1 }
