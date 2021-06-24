@@ -28,12 +28,10 @@
     display: none;
   }
   .all-subject-assignments {
-    // height: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh) !important;
     height: calc(100% - 8%) !important;
     padding: 0 !important;
     .my-library-list {
       width: calc(100% - 4vw);
-      // height: calc(100vh - 86px - 80px);
       height: 100%;
       padding: 0 2vw;
       margin: 0 2vw;

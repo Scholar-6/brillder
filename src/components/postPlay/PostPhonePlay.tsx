@@ -269,10 +269,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <h2>Click on the cover to see a summary</h2>
                 <h2>of your results.</h2>
                 <div className="button-container">
-                {/*this.state.showLibraryButton &&
+                {this.state.showLibraryButton &&
                   <button onClick={() => this.props.history.push(map.MyLibrary + '?subjectId=' + brick.subjectId)}>
                     View it in my library
-                </button>*/}
+                </button>}
                 </div>
               </Grid>
               <div className={bookClass}>

@@ -122,7 +122,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   renderLibraryButton() {
     return (
       <LibraryButton
-        isActive={true} isMobile={true} history={this.props.history} isSwiping={this.state.isSwiping}
+        isActive={true} history={this.props.history} isSwiping={this.state.isSwiping}
         onClick={() => this.setState({ isMyLibraryOpen: true })}
         onMobileClick={() => {
           this.setState({
