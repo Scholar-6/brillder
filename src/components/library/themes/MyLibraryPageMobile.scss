@@ -18,6 +18,29 @@
       font-family: $font-family-bold;
       color: var(--white);
     }
+
+    .progress-value {
+      position: relative;
+    }
+    .rotated-container {
+      bottom: 0;
+      right: 0;
+      position: absolute;
+      width: 100% !important;
+      .rotated {
+        transform: rotate(270deg);
+        .rotated-text {
+          padding-bottom: 3vh;
+          padding-top: 3vh;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+    .length-40 .rotated-container .rotated {
+      margin-bottom: 2.6vw;
+    }
   }
 
   .page-header {
@@ -27,20 +50,24 @@
   .page-navigation {
     display: none;
   }
+
   .all-subject-assignments {
     height: calc(100% - 8%) !important;
     padding: 0 !important;
+
     .my-library-list {
       width: calc(100% - 4vw);
       height: 100%;
       padding: 0 2vw;
       margin: 0 2vw;
       overflow-y: scroll;
+
       .libary-container-1 {
         height: calc(34vh + 8vw);
         margin-left: 0.5vw;
         margin-right: 0.5vw;
         max-width: 100%;
+
         .ml-subject {
           color: var(--theme-dark-blue);
           font-family: $font-family-bold;
@@ -49,6 +76,7 @@
           padding-top: 1vh;
           padding-bottom: 2vh;
         }
+
         .libary-container {
           width: max-content;
           max-width: 100%;
@@ -57,17 +85,20 @@
           background: var(--white);
           border-radius: 1vw;
           padding: 1.5vw;
-          > div {
+
+          >div {
             width: 100%;
             display: flex;
             flex-direction: row;
             overflow: auto;
           }
         }
+
         .assignment-progressbar {
           position: relative;
           height: 100%;
           display: inline-block;
+
           .assignment {
             cursor: pointer;
             height: 100%;
@@ -90,28 +121,35 @@
 
             &.length-20 {
               width: $base-brick-width;
+
               .progress-value {
                 width: $base-brick-width;
               }
             }
+
             &.length-40 {
               width: $base-brick-width * 2;
+
               .progress-value {
                 width: $base-brick-width * 2;
               }
             }
+
             &.length-60 {
               width: $base-brick-width * 4;
+
               .progress-value {
                 width: $base-brick-width * 4;
               }
             }
           }
+
           .progress-value {
             position: absolute;
             bottom: 0;
             border-radius: 1vw;
           }
+
           .subject-tooltip {
             background: var(--theme-light-blue);
             color: var(--tab-gray);
@@ -124,61 +162,77 @@
       }
     }
   }
+
   .subjects-filter {
     height: 25vh !important;
   }
+
   .classroom-filter-custom {
     height: 25vh;
     overflow-y: scroll;
   }
+
   .one-subject {
     padding-top: 3vh;
     padding-left: 2vw;
     padding-right: 2vw;
     padding-bottom: 12vh;
     height: 100%;
+
     .libary-container {
       background: var(--white);
       border-radius: 0.7vw;
       height: 100%;
       $base-side-margin: 0.32vw;
-      > div {
+
+      >div {
         height: 100%;
         $base-width: 5vw;
+
         .assignment {
           margin-left: $base-side-margin;
           margin-right: $base-side-margin;
           $base-radius: 0.35vw;
           border-radius: $base-radius;
+
           .progress-value {
             border-radius: $base-radius;
           }
         }
+
         .length-20 {
           width: $base-width;
+
           .rotated .rotated-text {
             height: $base-width;
           }
+
           .progress-value {
             width: $base-width;
           }
         }
+
         .length-40 {
           $width: calc(#{$base-width} * 2);
           width: $width;
+
           .rotated .rotated-text {
             height: $width;
           }
+
           .progress-value {
             width: $width;
           }
         }
+
         .length-60 {
           $width: calc(#{$base-width} * 4);
           width: $width;
+
           .rotated .rotated-text {
             height: $width;
           }
+
           .progress-value {
             width: $width;
           }
