@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .phone-question-preview,
 .proposal-phone-preview {
@@ -113,7 +113,7 @@
             padding-bottom: 0px !important;
             p {
               font-size: 1vw !important;
-              padding:0.5vw 0;
+              padding: 0.5vw 0;
             }
           }
         }
@@ -227,7 +227,10 @@
     .custom-component {
       border-radius: 1.6vw;
       blockquote {
-       color: var(--theme-dark-blue);
+        color: var(--theme-dark-blue);
+        &.no-break {
+          white-space: nowrap;
+        }
       }
       &.mobile-question-component {
         div {

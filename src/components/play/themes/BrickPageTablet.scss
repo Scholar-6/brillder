@@ -676,6 +676,9 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
             blockquote {
               border-left: 0.3vw solid var(--tab-gray);
               padding-left: 1.8vw;
+              &.no-break {
+                white-space: nowrap;
+              }
             }
             ul > li {
               font-size: $base-font-size;
