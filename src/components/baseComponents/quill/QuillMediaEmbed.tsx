@@ -52,6 +52,30 @@ TedEmbed.blotName = 'ted';
 TedEmbed.tagName = 'iframe';
 GlobalQuill.register(TedEmbed, true);
 
+const VIMEO_REGEXP = /http(?:s?):\/\/vimeo.com\/([\d]*)/g;
+const VIMEO_EMBED_REGEXP = /http(?:s?):\/\/player.vimeo.com\/video\/([\d]*)/g;
+class VimeoEmbed extends BlockEmbed {
+    static create(value: string) {
+        let node = super.create();
+        node.setAttribute("width", "640");
+        node.setAttribute("height", "360");
+        node.setAttribute("frameborder", "0");
+        node.setAttribute("allow", "autoplay; fullscreen; picture-in-picture");
+        node.setAttribute("allowfullscreen", "true");
+        node.setAttribute("src", "https://player.vimeo.com/video/" + value);
+        return node;
+    }
+
+    static value(node: VimeoEmbed) {
+        const src: string = node.getAttribute("src");
+        const id = src.match(VIMEO_EMBED_REGEXP)?.[1];
+        return id;
+    }
+}
+VimeoEmbed.blotName = 'vimeo';
+VimeoEmbed.tagName = 'iframe';
+GlobalQuill.register(VimeoEmbed, true);
+
 export default class MediaEmbed {
     constructor(quill: Quill) {
         /* analog for matchAll
@@ -107,7 +131,30 @@ export default class MediaEmbed {
                 delta.ops = ops;
             }
             return delta;
-        })
+        });
+
+        clipboard.addMatcher(Node.TEXT_NODE, (node: any, delta: Delta) => {
+            const matches: string[] = Array.from(node.data.matchAll(VIMEO_REGEXP));
+            console.log(matches);
+            if(matches && matches.length > 0) {
+                console.log(matches);
+                const ops = [];
+                let str: string = node.data;
+                for (const match of matches) {
+                    const split = str.split(match[0]);
+                    const beforeLink = split.shift();
+
+                    ops.push({ insert: beforeLink });
+                    ops.push({ insert: "\n" });
+                    ops.push({ insert: { vimeo: match[1] } });
+                    ops.push({ insert: "\n" });
+                    str = split.join(match);
+                }
+                ops.push({ insert: str });
+                delta.ops = ops;
+            }
+            return delta;
+        });
     }
 }
 
