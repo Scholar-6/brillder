@@ -32,7 +32,6 @@ class QuillCustomClipboard extends Clipboard {
 
         this.addMatcher(Node.ELEMENT_NODE, (node: any, delta: any) => {
             const shouldStripColor = !!delta.ops.find((op: any) => op.attributes?.color && !Object.values(QuillValidColors).find(col => col.toLowerCase() === op.attributes?.color?.toLowerCase?.()));
-            console.log(delta, shouldStripColor);
             const newDelta = delta.compose(new Delta().retain(delta.length(), { color: shouldStripColor ? false : undefined, background: false }));
             return newDelta;
         });
