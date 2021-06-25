@@ -211,9 +211,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     return (
       <div>
         <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
-        <SpriteIcon name="" />
-        <SpriteIcon name="corner-up-left" onClick={() => setExit(true)} />
-        <SpriteIcon name="feather-share" />
+        <SpriteIcon name="logo" className="text-theme-orange" onClick={() => setExit(true)} />
         {(isIntro() || isPrep() || isFinalScore() || isSynthesis())
           ? <SpriteIcon name="" />
           : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id) + '?prepExtanded=true&resume=true')} />}

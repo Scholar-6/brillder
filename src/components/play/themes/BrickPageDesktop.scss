@@ -1995,6 +1995,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 .pre-investigation {
+  color: var(--theme-dark-blue);
   .fixed-helpers-container {
     position: fixed;
     left: 6vw;

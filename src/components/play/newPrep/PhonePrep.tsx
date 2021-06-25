@@ -1,14 +1,10 @@
 import React, { useEffect } from "react";
-import queryString from 'query-string';
-import { isMobile } from 'react-device-detect';
 
-import { AcademicLevelLabels, Brick, BrickLengthEnum } from "model/brick";
+import { Brick } from "model/brick";
 import { PlayMode } from "../model";
 import { BrickFieldNames } from 'components/build/proposal/model';
 
 import HighlightHtml from '../baseComponents/HighlightHtml';
-import IntroductionDetails from "./IntroductionDetails";
-import PrepareText from './PrepareText';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 import { isPhone } from "services/phone";
@@ -39,19 +35,9 @@ export interface IntroductionState {
   duration: any;
 }
 
-const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
-  let isPrep = props.location.pathname.slice(-5) === '/prep';
-  const values = queryString.parse(props.location.search);
-  let initPrepExpanded = false;
-  let resume = false;
-  if (values.prepExtanded === 'true' || isPrep) {
-    initPrepExpanded = true;
-  }
-  if (values.resume === 'true') {
-    resume = true;
-  }
+const PhonePrepPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const [state, setState] = React.useState({
-    prepExpanded: initPrepExpanded,
+    prepExpanded: true,
     isStopped: false,
     briefExpanded: false,
     duration: null,
@@ -82,10 +68,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           prepExpanded: false,
         });
       } else {
-        if (!isPrep) {
-          // move to prep page
-          props.history.push(`/play/brick/${brick.id}/prep`);
-        }
         setState({
           ...state,
           isStopped: false,
@@ -111,14 +93,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         prepExpanded: true,
       });
     }
-  };
-
-  const startBrick = () => {
-    if (!state.prepExpanded) {
-      togglePrep();
-      return;
-    }
-    props.moveNext();
   };
 
   const renderMobileBriefTitle = () => {
@@ -164,22 +138,19 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   };
 
   const renderPrepExpandText = () => {
-    if (state.prepExpanded) {
-      return (
-        <div className="expanded-text prep-box">
-          <HighlightQuoteHtml
-            value={brick.prep}
-            mode={props.mode}
-            onHighlight={value => {
-              if (props.onHighlight) {
-                props.onHighlight(BrickFieldNames.prep, value)
-              }
-            }}
-          />
-        </div>
-      );
-    }
-    return "";
+    return (
+      <div className="expanded-text prep-box">
+        <HighlightQuoteHtml
+          value={brick.prep}
+          mode={props.mode}
+          onHighlight={value => {
+            if (props.onHighlight) {
+              props.onHighlight(BrickFieldNames.prep, value)
+            }
+          }}
+        />
+      </div>
+    );
   };
 
   return (
@@ -199,9 +170,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 brickLength={brick.brickLength}
               />
             </div>
-            <div className="action-footer mobile-footer-fixed-buttons">
-              <SpriteIcon name={isPrep ? "arrow-right" : "play-thick"} className="mobile-next-button intro-mobile-next-button" onClick={startBrick} />
-            </div>
           </div>
           <div className="introduction-content">
             <div className="fe-open-question" dangerouslySetInnerHTML={{ __html: brick.openQuestion }} />
@@ -216,4 +184,4 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   );
 };
 
-export default IntroductionPage;
+export default PhonePrepPage;

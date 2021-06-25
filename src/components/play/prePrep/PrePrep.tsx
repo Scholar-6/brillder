@@ -4,7 +4,6 @@ import { Brick } from "model/brick";
 
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
-import { isPhone } from "services/phone";
 import { BrickFieldNames } from 'components/build/proposal/model';
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
