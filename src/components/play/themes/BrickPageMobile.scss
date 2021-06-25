@@ -56,6 +56,83 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       font-size: 5vw;
     }
   }
+  .seconds-countdown-container {
+    font-family: $font-family-bold;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40vw;
+  }
+  .pre-investigation {
+    color: var(--theme-dark-blue);
+    height: calc(100% - 74px) !important;
+    text-align: center;
+
+    .introduction-page {
+      height: 93%;
+    }
+    .ss-phone-before-title {
+      height: 13%;
+    }
+
+    .title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 8.3vw;
+      line-height: 0;
+      height: 0;
+      font-family: $font-family-bold;
+    }
+    .ss-phone-after-title {
+      height: 9%;
+    }
+    .like-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 10vw;
+      height: 10.5%;
+      font-family: $font-family-bold;
+      font-size: 8vw;
+      border-radius: 3.4vw;
+      width: 80vw;
+      background: var(--tab-gray);
+
+      &.orange {
+        color: var(--white);
+        background: var(--theme-orange);
+      }
+    }
+    .ss-phone-between-button {
+      height: 2%;
+    }
+    
+    .fixed-bottom-click-area {
+      position: fixed;
+      z-index: 20000;
+      bottom: 0;
+      right: 0;
+      height: 17.5vw;
+      width: 60vw;
+    }
+
+    .ss-phone-after-buttons {
+      height: 6%;
+    }
+
+    .footer {
+      font-family: $font-family-regular-italic;
+      padding: 0 3vw;
+      font-size: 4.5vw;
+      .underline-border {
+        font-size: 6vw;
+        font-family: $font-family-bold-italic;
+        color: var(--theme-orange);
+      }
+    }
+  }
   .f-fixed-arrow-button {
     height: 64px;
     position: fixed;
@@ -64,7 +141,9 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     color: var(--white);
     display: flex;
     align-items: center;
-    width: 46vw;
+    justify-content: flex-end;
+    margin-right: 2vw;
+    width: 53vw;
     font-size: 8vw;
     font-family: $font-family-bold;
 

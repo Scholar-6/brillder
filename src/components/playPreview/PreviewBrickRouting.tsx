@@ -17,7 +17,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
 import { User } from 'model/user';
 
-import Introduction from 'components/play/introduction/Introduction';
+import Introduction from 'components/play/newPrep/PhonePrep';
 import Live from 'components/play/live/Live';
 import ProvisionalScore from 'components/play/provisionalScore/ProvisionalScore';
 import Synthesis from 'components/play/synthesis/Synthesis';

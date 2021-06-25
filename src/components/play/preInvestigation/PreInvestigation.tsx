@@ -34,10 +34,6 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
     };
   });
 
-  if (isPhone()) {
-    return <div />;
-  }
-
   if (isMoving) {
     return (
       <div className="brick-row-container live-container">

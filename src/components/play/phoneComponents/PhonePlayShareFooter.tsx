@@ -32,6 +32,7 @@ interface InviteResult {
 interface FooterProps {
   brick: Brick;
   history: any;
+  next(): void;
 
   isAuthenticated: isAuthenticated;
   user: User;
@@ -168,7 +169,7 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
           : <SpriteIcon name="" />
         }
         <SpriteIcon name="" />
-        <SpriteIcon name="arrow-right" onClick={() => history.push(routes.playPrePrep(brick.id))} />
+        <SpriteIcon name="arrow-right" onClick={props.next} />
       </div>
     );
   }

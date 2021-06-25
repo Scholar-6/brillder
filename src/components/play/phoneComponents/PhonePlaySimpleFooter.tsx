@@ -10,12 +10,13 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { ReduxCombinedState } from 'redux/reducers';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
-import routes from '../routes';
 
 
 interface FooterProps {
   brick: Brick;
   history: any;
+  btnText: string;
+  next(): void;
 
   isAuthenticated: isAuthenticated;
   user: User;
@@ -45,9 +46,9 @@ const PhonePlaySimpleFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="" />
         <div
           className="f-fixed-arrow-button"
-          onClick={() => history.push(routes.playNewPrep(brick.id))}
+          onClick={props.next}
         >
-          Start Prep
+          {props.btnText}
           <SpriteIcon name="arrow-right" className="text-white" />
         </div>
       </div>
