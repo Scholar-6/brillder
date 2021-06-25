@@ -2,7 +2,7 @@ import { ComponentAttempt } from "components/play/model";
 import { ChooseSeveralAnswer } from "components/play/questionTypes/choose/chooseSeveral/ChooseSeveral";
 
 const mark = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
-    const markValue = 1;
+    //const markValue = 1;
 
     attempt.correct = true;
     attempt.marks = 0;
