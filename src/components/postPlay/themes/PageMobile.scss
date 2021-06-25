@@ -1014,6 +1014,21 @@
           font-size: inherit !important;
         }
       }
+
+      &.vertical-shuffle-play {
+        .vertical-content {
+          font-size: 4.5vw !important;
+          p {
+            font-size: 4.5vw !important;
+          }
+        }
+      }
+      .question-hint-global {
+        font-size: 4.5vw !important;
+        p {
+          font-size: 4.5vw !important;
+        }
+      }
     }
   }
 }
