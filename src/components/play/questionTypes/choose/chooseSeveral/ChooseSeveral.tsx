@@ -8,6 +8,7 @@ import { ComponentAttempt } from 'components/play/model';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneAnswer } from 'components/build/buildQuestions/questionTypes/chooseOneBuild/types';
 import { ActiveItem } from '../chooseOne/ChooseOne';
+import { ChooseSeveralChoice } from 'components/interfaces/chooseSeveral';
 
 import MathInHtml from '../../../baseComponents/MathInHtml';
 import CompComponent from '../../Comp';
@@ -16,7 +17,10 @@ import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
 import ZoomHelpText from '../../components/ZoomHelpText';
 
 export type ChooseSeveralAnswer = ActiveItem[];
-
+export interface ChooseSeveralComponent {
+  type: number;
+  list: ChooseSeveralChoice[];
+}
 interface ChooseSeveralProps extends CompQuestionProps {
   component: any;
   attempt: ComponentAttempt<ChooseSeveralAnswer>;
