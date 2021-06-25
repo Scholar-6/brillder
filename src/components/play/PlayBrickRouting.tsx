@@ -59,6 +59,8 @@ import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentI
 import { trackSignUp } from "services/matomo";
 import { CashAttempt, GetCashedPlayAttempt } from "localStorage/play";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
+import PhonePlaySimpleFooter from "./phoneComponents/PhonePlaySimpleFooter";
+import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
 
 
 function shuffle(a: any[]) {
@@ -346,7 +348,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const moveToBrief = () => history.push(playBrief(brick.id));
   const moveToPrePrep = () => history.push(playPrePrep(brick.id));
   const moveToNewPrep = () => history.push(playNewPrep(brick.id));
-  const moveToIntro = () => history.push(playIntro(brick.id));
+  const moveToIntro = () => history.push(playBrief(brick.id));
   const moveToPreInvestigation = () => history.push(playPreInvesigation(brick.id));
 
   const moveToReview = () => {
@@ -485,15 +487,19 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route exact path={routes.briefRoute}>
           <Brief brick={brick} mode={mode} user={props.user} moveNext={moveToPrePrep} onHighlight={onHighlight} />
+          {isPhone() && <PhonePlayShareFooter brick={brick} history={history} />}
         </Route>
         <Route exact path={routes.sectionsRoute}>
           <Sections brick={brick} moveNext={moveToBrief} />
+          {isPhone() && <PhonePlayShareFooter brick={brick} history={history} />}
         </Route>
         <Route exact path={routes.prePrepRoute}>
           <PrePrep brick={brick} mode={mode} moveNext={moveToNewPrep} onHighlight={onHighlight} />
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} />}
         </Route>
         <Route exact path={routes.preInvestigationRoute}>
           <PreInvestigationPage user={props.user} brick={brick} moveNext={moveToLive} />
+          {isPhone() && renderPhoneFooter()}
         </Route>
 
         <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
