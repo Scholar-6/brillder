@@ -89,72 +89,32 @@ export default class MediaEmbed {
         }*/
         const clipboard = quill.getModule("clipboard");
 
-        quill.clipboard.addMatcher(Node.TEXT_NODE, (node: any, delta: Delta) => {
-            const matches: string[] = Array.from(node.data.matchAll(YOUTUBE_REGEXP));
-            if (matches && matches.length > 0) {
-                console.log(matches);
-                const ops = [];
-                let str: string = node.data;
-                for (const match of matches) {
-                    const split = str.split(match[0]);
-                    const beforeLink = split.shift();
-                    ops.push({ insert: beforeLink });
-                    ops.push({ insert: "\n" });
-                    ops.push({ insert: { youtube: match[1] } });
-                    ops.push({ insert: "\n" });
-                    str = split.join(match);
+        const addMatcherFor = (regexp: RegExp, blotName: string) => {
+            clipboard.addMatcher(Node.TEXT_NODE, (node: any, delta: Delta) => {
+                const matches: string[] = Array.from(node.data.matchAll(regexp));
+                if (matches && matches.length > 0) {
+                    console.log(matches);
+                    const ops = [];
+                    let str: string = node.data;
+                    for (const match of matches) {
+                        const split = str.split(match[0]);
+                        const beforeLink = split.shift();
+                        ops.push({ insert: beforeLink });
+                        ops.push({ insert: "\n" });
+                        ops.push({ insert: { [blotName]: match[1] } });
+                        ops.push({ insert: "\n" });
+                        str = split.join(match);
+                    }
+                    ops.push({ insert: str });
+                    delta.ops = ops;
                 }
-                ops.push({ insert: str });
-                delta.ops = ops;
-            }
-            return delta;
-        });
+                return delta;
+            });
+        }
 
-        clipboard.addMatcher(Node.TEXT_NODE, (node: any, delta: Delta) => {
-            const matches: string[] = Array.from(node.data.matchAll(TED_REGEXP));
-            console.log(matches);
-            if(matches && matches.length > 0) {
-                console.log(matches);
-                const ops = [];
-                let str: string = node.data;
-                for (const match of matches) {
-                    const split = str.split(match[0]);
-                    const beforeLink = split.shift();
-
-                    ops.push({ insert: beforeLink });
-                    ops.push({ insert: "\n" });
-                    ops.push({ insert: { ted: match[1] } });
-                    ops.push({ insert: "\n" });
-                    str = split.join(match);
-                }
-                ops.push({ insert: str });
-                delta.ops = ops;
-            }
-            return delta;
-        });
-
-        clipboard.addMatcher(Node.TEXT_NODE, (node: any, delta: Delta) => {
-            const matches: string[] = Array.from(node.data.matchAll(VIMEO_REGEXP));
-            console.log(matches);
-            if(matches && matches.length > 0) {
-                console.log(matches);
-                const ops = [];
-                let str: string = node.data;
-                for (const match of matches) {
-                    const split = str.split(match[0]);
-                    const beforeLink = split.shift();
-
-                    ops.push({ insert: beforeLink });
-                    ops.push({ insert: "\n" });
-                    ops.push({ insert: { vimeo: match[1] } });
-                    ops.push({ insert: "\n" });
-                    str = split.join(match);
-                }
-                ops.push({ insert: str });
-                delta.ops = ops;
-            }
-            return delta;
-        });
+        addMatcherFor(YOUTUBE_REGEXP, "youtube");
+        addMatcherFor(TED_REGEXP, "ted");
+        addMatcherFor(VIMEO_REGEXP, "vimeo");
     }
 }
 
