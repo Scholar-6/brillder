@@ -53,7 +53,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const [state, setState] = React.useState({
     prepExpanded: initPrepExpanded,
     isStopped: false,
-    briefExpanded: true,
+    briefExpanded: false,
     duration: null,
   } as IntroductionState);
 
@@ -64,7 +64,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       }
     }, 1000);
     return () => clearInterval(interval);
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [props.endTime]);
 
   const toggleBrief = () => {
@@ -121,63 +121,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     props.moveNext();
   };
 
-  let color = "#B0B0AD";
-
-  if (brick.subject) {
-    color = brick.subject.color;
-  }
-
-  let timeToSpend = 5;
-  if (brick.brickLength === BrickLengthEnum.S40min) {
-    timeToSpend = 10;
-  } else if (brick.brickLength === BrickLengthEnum.S60min) {
-    timeToSpend = 15;
-  }
-
-  const renderDesktopPlayText = () => {
-    if (resume) {
-      return (
-        <div>
-          <h2>Resume</h2>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <h3 className="ready-text">Ready?</h3>
-        <h2>{state.prepExpanded ? 'Play Brick' : 'Start Prep'}</h2>
-      </div>
-    );
-  }
-
-  const renderPlayButton = () => {
-    if (isPhone()) {
-      return (
-        <div className="action-footer mobile-footer-fixed-buttons">
-          <SpriteIcon name={isPrep ? "arrow-right" : "play-thick"} className="mobile-next-button intro-mobile-next-button" onClick={startBrick} />
-        </div>
-      );
-    }
-    return (
-      <div className="action-footer">
-        <div></div>
-        <div className="direction-info">
-          {renderDesktopPlayText()}
-        </div>
-        <div>
-          <button
-            type="button"
-            className={state.prepExpanded ? "play-preview svgOnHover play-green" : "play-preview svgOnHover play-gray"}
-            onClick={startBrick}
-          >
-            <SpriteIcon name="play-thin" className="w80 h80 svg-default m-l-02" />
-            <SpriteIcon name="play-thick" className="w80 h80 colored m-l-02" />
-          </button>
-        </div>
-      </div>
-    );
-  };
-
   const renderMobileBriefTitle = () => {
     return (
       <div className="brief-title" style={{ marginTop: '4vh' }}>
@@ -200,32 +143,24 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             <SpriteIcon name="arrow-down" className="arrow" />
           </div>
         </div>
-        {!state.prepExpanded && !isMobile &&
-          <em className="help-prep">
-            Expand to start the timer. Aim to spend around {timeToSpend} minutes on this section.
-          </em>
-        }
       </div>
     );
   };
 
   const renderBriefExpandText = () => {
-    if (state.briefExpanded) {
-      return (
-        <div className="expanded-text">
-          <HighlightHtml
-            value={brick.brief}
-            mode={props.mode}
-            onHighlight={value => {
-              if (props.onHighlight) {
-                props.onHighlight(BrickFieldNames.brief, value)
-              }
-            }}
-          />
-        </div>
-      );
-    }
-    return "";
+    return (
+      <div className="expanded-text">
+        <HighlightHtml
+          value={brick.brief}
+          mode={props.mode}
+          onHighlight={value => {
+            if (props.onHighlight) {
+              props.onHighlight(BrickFieldNames.brief, value)
+            }
+          }}
+        />
+      </div>
+    );
   };
 
   const renderPrepExpandText = () => {
@@ -247,69 +182,32 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     return "";
   };
 
-  const renderBrickCircle = (color: string) => {
-    return (
-      <div className="left-brick-circle">
-        <div className="round-button" style={{ background: `${color}` }}>
-          {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
-        </div>
-      </div>
-    );
-  }
-
-  const renderHeader = () => {
-    return (
-      <div className="intro-header">
-        {renderBrickCircle(color)}
-        <div className="intro-desktop-title">
-          <BrickTitle title={brick.title} />
-        </div>
-      </div>
-    );
-  };
-
-  const renderMobileHeader = () => {
-    if (state.prepExpanded) {
-      return (
-        <div className="intro-header expanded-intro-header">
-          <div className="vertical-center">
-            {renderBrickCircle(color)}
-          </div>
-          <div className="r-title-container">
-            <h1><BrickTitle title={brick.title} /></h1>
-            <p><PrepareText brickLength={brick.brickLength} /></p>
-          </div>
-        </div>
-      );
-    }
-    return renderHeader();
-  };
-
   return (
-    <div className={`brick-row-container real-introduction-page ${state.prepExpanded ? 'expanded' : ''}`}>
+    <div className="brick-row-container real-introduction-page">
       <div className="brick-container">
         <div className="introduction-page">
-          {renderMobileHeader()}
+          <div className="fixed-upper-b-title">
+            <BrickTitle title={brick.title} />
+          </div>
           <div className="introduction-info">
-            {!state.prepExpanded ?
-              <div>
-                <IntroductionDetails brickLength={brick.brickLength} />
-              </div>
-              : <div className="time-container">
-                <TimeProgressbarV2
-                  isIntro={true}
-                  onEnd={() => { }}
-                  endTime={props.endTime}
-                  setEndTime={props.setEndTime}
-                  brickLength={brick.brickLength}
-                />
-              </div>}
-            {renderPlayButton()}
+            <div className="time-container">
+              <TimeProgressbarV2
+                isIntro={true}
+                onEnd={() => { }}
+                endTime={props.endTime}
+                setEndTime={props.setEndTime}
+                brickLength={brick.brickLength}
+              />
+            </div>
+            <div className="action-footer mobile-footer-fixed-buttons">
+              <SpriteIcon name={isPrep ? "arrow-right" : "play-thick"} className="mobile-next-button intro-mobile-next-button" onClick={startBrick} />
+            </div>
           </div>
           <div className="introduction-content">
+            <div className="fe-open-question" dangerouslySetInnerHTML={{ __html: brick.openQuestion }} />
             {renderMobileBriefTitle()}
-            {renderBriefExpandText()}
-            {state.prepExpanded && renderPrepTitle()}
+            {state.briefExpanded && renderBriefExpandText()}
+            {renderPrepTitle()}
             {state.prepExpanded && renderPrepExpandText()}
           </div>
         </div>

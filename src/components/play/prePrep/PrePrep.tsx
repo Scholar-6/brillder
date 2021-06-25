@@ -36,10 +36,6 @@ const PrePrepPage: React.FC<Props> = ({ brick, ...props }) => {
     };
   });
 
-  if (isPhone()) {
-    return <div />;
-  }
-
   const minutes = getPrepareTime(brick.brickLength);
 
   return (

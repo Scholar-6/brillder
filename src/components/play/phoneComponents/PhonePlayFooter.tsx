@@ -213,10 +213,10 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
         <SpriteIcon name="" />
         <SpriteIcon name="corner-up-left" onClick={() => setExit(true)} />
+        <SpriteIcon name="feather-share" />
         {(isIntro() || isPrep() || isFinalScore() || isSynthesis())
           ? <SpriteIcon name="" />
           : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id) + '?prepExtanded=true&resume=true')} />}
-        <SpriteIcon name="" />
         <SpriteIcon name="" />
         <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
         <SpriteIcon name="" />

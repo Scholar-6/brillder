@@ -15,6 +15,63 @@ $play-footer-height: $mobile-menu-height;
 $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
 .play-preview-pages {
+  .fe-open-question {
+    margin-top: 2vh;
+    font-family: $font-family-regular-italic;
+  }
+  .fixed-upper-b-title {
+    height: 7%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--theme-light-blue);
+    span, p {
+      font-size: 5vw !important;
+      color: var(--white) !important;
+    }
+  }
+  .play-pre-prep-page {
+    .icon-container {
+      height: 55%;
+      display: flex;
+      justify-content: center;
+      svg {
+        padding-top: 4vh;
+        width: 66vw;
+        color: var(--theme-orange);
+      }
+    }
+    .introduction-page {
+      padding-left: 10vw !important;
+      padding-right: 10vw !important;
+    }
+    .image-title {
+      text-align: center;
+      font-family: $font-family-bold;
+      font-size: 8vw;
+    }
+    .help-text {
+      margin-top: 4vh;
+      text-align: center;
+      font-size: 5vw;
+    }
+  }
+  .f-fixed-arrow-button {
+    height: 64px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    width: 46vw;
+    font-size: 8vw;
+    font-family: $font-family-bold;
+
+    svg {
+      width: 11vw !important;
+    }
+  }
   // only ending page scroll fix
   .sorted-row .brick-row-container .brick-container.ending-page .introduction-page .question-live-play {
     overflow: hidden !important;
@@ -345,7 +402,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
           }
           .action-footer {
             display: flex;
-            color: var(--theme-dark-blue);
+            color: var(--white);
             align-items: center;
             justify-content: flex-end;
             width: 100%;
@@ -1083,7 +1140,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     z-index: 19999;
     position: fixed;
     bottom: 0;
-    background: var(--tab-gray);
+    background: var(--theme-light-blue);
     height: $play-footer-height;
     width: 100%;
     > div {
@@ -1096,13 +1153,13 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     }
     svg {
       stroke-width: 2;
-      color: var(--theme-dark-blue);
+      color: var(--white);
       width: calc(100% / 7.4);
       height: $height / 1.6;
     }
 
     svg.rotate-90 {
-      color: var(--theme-dark-blue);
+      color: var(--white);
       transform: rotate(90deg);
     }
     .exit-text {
@@ -1112,7 +1169,14 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       font-size: 9vw;
       left: calc(50% - 20vw);
       font-family: $font-family-bold;
-      color: var(--theme-dark-blue);
+      color: var(--white);
+    }
+  }
+  .phone-share-footer {
+    > div {
+      svg {
+        width: calc(100% / 6.2);
+      }
     }
   }
 }
