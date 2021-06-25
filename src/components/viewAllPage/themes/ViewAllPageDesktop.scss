@@ -254,6 +254,14 @@
         align-items: flex-start !important;
       }
     }
+    .sort-box.subject-scrollable {
+      .subject-list-v2 {
+        .subjects-indexes-box {
+          font-family: $font-family-light;
+          font-size: 1.05vw;
+        }
+      }
+    }
   }
   .view-all-toggle {
     position: absolute;
