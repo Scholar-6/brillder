@@ -2,11 +2,12 @@ import { ComponentAttempt } from "components/play/model";
 import { ChooseSeveralComponent, ChooseSeveralAnswer } from "components/play/questionTypes/choose/chooseSeveral/ChooseSeveral";
 
 const mark = (component: ChooseSeveralComponent, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
+    // See examples of choices and attempt in comment below
     const choices: Array<any> = component.list;
-    // If max marks is 2 x the number of correct options 
+    //console.log(`choices ${choices}`);
+    //console.log(`attempt ${Object.entries(attempt)}`);
+    // max marks is 2 x the number of correct options 
     attempt.maxMarks = choices.filter((choice) => choice.checked === true).length * 2;
-    // If max marks is 2 x the total options
-    //attempt.maxMarks = choices.length * 2;
 
     const whatTheAnswersShouldBe = choices.reduce((a, e, i) => { if(e.checked) a.push(i); return a;}, []);
     //console.log(`whatTheAnswersShouldBe ${whatTheAnswersShouldBe}`);
@@ -28,7 +29,7 @@ const mark = (component: ChooseSeveralComponent, attempt: ComponentAttempt<Choos
     return attempt;
 }
 
-/*e.g. component.list = [
+/*e.g. choices = [
     {"id":816243701,
     "value":"<p>One</p>",
     "checked":true,
