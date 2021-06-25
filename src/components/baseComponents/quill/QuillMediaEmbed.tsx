@@ -42,6 +42,7 @@ export default class MediaEmbed {
         }*/
 
         quill.clipboard.addMatcher(Node.TEXT_NODE, (node: any, delta: Delta) => {
+            console.log("matcher running");
             const matches: string[] = Array.from(node.data.matchAll(YOUTUBE_REGEXP));
             if (matches && matches.length > 0) {
                 console.log(matches);
