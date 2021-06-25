@@ -12,7 +12,10 @@ export interface ChooseSeveralChoice extends MainImageProps {
   value: string;
   valueFile: string;
   answerType: QuestionValueType;
-  soundFile: string;
+  soundFile?: string;
   checked: boolean;
-  soundCaption: string;
+  soundCaption?: string;
+  imageCaption?: string;
+  imagePermision?: boolean;
+  imageSource?: string;
 }
