@@ -635,6 +635,10 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             .synthesis-content {
               width: 100%;
               height: auto;
+
+              li {
+                font-size: 4.5vw;
+              }
             }
           }
         }
@@ -736,15 +740,30 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                width: 17vw;
-                height: 17vw;
+                width: 20vw;
+                height: 20vw;
                 border-radius: 50%;
                 background: var(--theme-green);
               }
+              $star-base-size: 12vw;
+              $star-anim-size: 14vw;
+              @keyframes grow {
+                0% {
+                  width: $star-base-size;
+                  height: $star-base-size;
+                }
+                50% {
+                  width: $star-anim-size;
+                  height: $star-anim-size;
+                }
+                100% {
+                  width: $star-base-size;
+                  height: $star-base-size;
+                }
+              }
               svg {
-                width: 10vw;
-                height: 10vw;
                 color: var(--white);
+                animation: grow 1s ease-out infinite;
               }
             }
             p {
@@ -1089,9 +1108,9 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .exit-text {
       position: fixed;
       z-index: 100000;
-      bottom: 6vw;
+      bottom: 3vw;
       font-size: 9vw;
-      left: calc(50% - 10vw);
+      left: calc(50% - 20vw);
       font-family: $font-family-bold;
       color: var(--theme-dark-blue);
     }
@@ -1253,6 +1272,20 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         font-size: 5vw !important;
       }
     }
+  }
+}
+
+.brick-row-container.complete-container ~ .phone-play-footer {
+  background: var(--theme-light-blue);
+  .exit-text {
+    color: var(--white);
+  }
+  .play-preview:after {
+    content: none !important;
+  }
+  .play-preview {
+    bottom: 0;
+    background: inherit !important;
   }
 }
 
@@ -1454,4 +1487,30 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   //filter: drop-shadow(0mm 8px 8px rgba(0, 0, 0, 0.2));
 }
 .intro-text-row {
+}
+
+
+// final step
+.play-preview-pages .sorted-row .brick-row-container .mobile-final-step-page {
+  .introduction-page p.gge-break-line {
+    white-space: unset !important;
+    text-overflow: inherit !important;
+    overflow: visible !important;
+    font-size: 7vw !important;
+    .brick-inline {
+      font-size: inherit !important;
+      white-space: unset !important;
+      text-overflow: inherit !important;
+      overflow: visible !important;
+      p {
+        font-size: inherit !important;
+        white-space: unset !important;
+        text-overflow: inherit !important;
+        overflow: visible !important;
+      }
+    }
+  }
+  .brick-inline {
+    display: inline;
+  }
 }

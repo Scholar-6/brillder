@@ -364,6 +364,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const moveToPostPlay = () => {
+    console.log('move')
     if(props.isAuthenticated === isAuthenticated.True) {
       history.push(map.postPlay(brick.id, props.user.id));
     } else if (userToken) {
