@@ -26,6 +26,7 @@ class YoutubeEmbed extends BlockEmbed {
     }
 }
 YoutubeEmbed.blotName = 'youtube';
+YoutubeEmbed.className = 'youtube-video';
 YoutubeEmbed.tagName = 'iframe';
 GlobalQuill.register(YoutubeEmbed, true);
 
@@ -49,11 +50,12 @@ class TedEmbed extends BlockEmbed {
     }
 }
 TedEmbed.blotName = 'ted';
+TedEmbed.className = 'ted-video';
 TedEmbed.tagName = 'iframe';
 GlobalQuill.register(TedEmbed, true);
 
 const VIMEO_REGEXP = /http(?:s?):\/\/vimeo.com\/([\d]*)/g;
-const VIMEO_EMBED_REGEXP = /http(?:s?):\/\/player.vimeo.com\/video\/([\d]*)/g;
+const VIMEO_EMBED_REGEXP = /http(?:s?):\/\/player.vimeo.com\/video\/([\d]*)/;
 class VimeoEmbed extends BlockEmbed {
     static create(value: string) {
         let node = super.create();
@@ -73,6 +75,7 @@ class VimeoEmbed extends BlockEmbed {
     }
 }
 VimeoEmbed.blotName = 'vimeo';
+VimeoEmbed.className = 'vimeo-video';
 VimeoEmbed.tagName = 'iframe';
 GlobalQuill.register(VimeoEmbed, true);
 
