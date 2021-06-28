@@ -198,14 +198,11 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <button
           type="button"
           className="play-preview svgOnHover roller-red m-b-10"
-          onClick={() => {
-            history.push(map.ViewAllPage)
-            return props.moveToPostPlay;
-          }}
+          onClick={props.moveToPostPlay}
         >
           <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
         </button>
-        <span className="exit-text">Exit</span>
+        <span className="exit-text">See Results</span>
       </div>
     );
   }

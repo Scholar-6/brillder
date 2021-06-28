@@ -23,7 +23,6 @@ import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/Unauthor
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
 import { createUserByEmail } from "services/axios/user";
-import { trackSignUp } from "services/matomo";
 
 
 interface IntroductionProps {
@@ -67,8 +66,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     const { user, token } = data;
     props.setUser(user);
     props.setUserToken(token);
-    trackSignUp();
-  }
+    }
 
   const createInactiveAccountV2 = async (email: string) => {
     if (!props.user) {

@@ -1,34 +1,61 @@
 import { ComponentAttempt } from "components/play/model";
-import { ChooseSeveralAnswer } from "components/play/questionTypes/choose/chooseSeveral/ChooseSeveral";
+import { ChooseSeveralComponent, ChooseSeveralAnswer } from "components/play/questionTypes/choose/chooseSeveral/ChooseSeveral";
 
-const markLiveChoices = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
-    const choices = component.list;
+const mark = (component: ChooseSeveralComponent, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
+    // See examples of choices and attempt in comment below
+    const choices: Array<any> = component.list;
+    //console.log(`choices ${choices}`);
+    //console.log(`attempt ${Object.entries(attempt)}`);
+    // max marks is 2 x the number of correct options 
+    attempt.maxMarks = choices.filter((choice) => choice.checked === true).length * 2;
 
-    for (let [index, choice] of choices.entries()) {
-        const checked = attempt.answer.findIndex(a => a.shuffleIndex === index) >= 0;
-        if (checked === choice.checked || (checked === false && !choice.checked)) {
-            attempt.marks += 1;
-        } else {
-            attempt.correct = false;
-        }
-    }
-    return attempt;
-}
+    const whatTheAnswersShouldBe = choices.reduce((a, e, i) => { if(e.checked) a.push(i); return a;}, []);
+    //console.log(`whatTheAnswersShouldBe ${whatTheAnswersShouldBe}`);
+    const whatTheUserSelected = attempt.answer.map(a => a.realIndex);
+    //console.log(`whatTheUserSelected ${whatTheUserSelected}`);
+    const correctUserAnswers = whatTheUserSelected.filter(a => whatTheAnswersShouldBe.includes(a));
+    //console.log(`correctUserAnswers ${correctUserAnswers}`);
+    const howManyThingsTheUserMissed = whatTheAnswersShouldBe.filter((a: number) => !whatTheUserSelected.includes(a)).length;
+    //console.log(`howManyThingsTheUserMissed ${howManyThingsTheUserMissed}`);
 
-const mark = (component: any, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
-    const markValue = 1;
+    // 2 points for every correct answer, subtract 1 for every missed answer
+    attempt.marks = (correctUserAnswers.length * 2) - howManyThingsTheUserMissed;
+    // minimum mark is 0
+    attempt.marks = attempt.marks < 0 ? 0 : attempt.marks;
 
-    attempt.correct = true;
-    attempt.marks = 0;
-
-    attempt.maxMarks = component.list.length * markValue;
-    markLiveChoices(component, attempt);
-
-    if (attempt.answer.length === 0) {
-        attempt.marks = 0;
-    }
+    // If there are more possible correct answers then correct user answers then the attempt is incorrect
+    attempt.correct = !(whatTheAnswersShouldBe.length > correctUserAnswers.length);
 
     return attempt;
 }
+
+/*e.g. choices = [
+    {"id":816243701,
+    "value":"<p>One</p>",
+    "checked":true,
+    "valueFile":"",
+    "soundFile":"",
+    "answerType":1},
+    {"id":816243701,
+    "value":"<p>Two</p>",
+    "checked":true,
+    "valueFile":"",
+    "soundFile":"",
+    "answerType":1},
+    {"id":816243701,
+    "value":"<p>Three</p>",
+    "checked":false,
+    "valueFile":"",
+    "soundFile":"",
+    "answerType":1},
+]*/
+/* e.g. attempt = {
+    answer: [{realIndex: 2, shuffleIndex: 0},{realIndex: 0, shuffleIndex:1}]
+    attempted: true
+    correct: false
+    marks: 0
+    maxMarks: 4
+    questionId: 236538
+} */
 
 export default mark;

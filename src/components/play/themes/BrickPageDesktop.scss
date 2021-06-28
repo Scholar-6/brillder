@@ -2084,10 +2084,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     animation-delay: 0s;
   }
   .s-fade2 {
-    animation-delay: 1s;
+    animation-delay: 0.5s;
   }
   .s-fade3 {
-    animation-delay: 2s;
+    animation-delay: 1s;
   }
   .like-button {
     font-family: $font-family-bold;
