@@ -31,7 +31,7 @@ interface ProvisionalScoreProps {
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
-  liveDurationMs?: number;
+  liveDurationMs?: null | moment.Duration;
   attempts: any[];
   moveNext?(): void;
   moveToPrep?(): void;
@@ -156,11 +156,11 @@ class ProvisionalScore extends React.Component<
   }
 
   prepareDuration() {
-    const secondsLeft = this.props.liveDurationMs;
-    if (secondsLeft) {
-      const minuteSeconds = Math.floor(secondsLeft % 60);
-      const minutesLeft = Math.floor(secondsLeft / 60);
-      return minutesLeft + 'minutes' + minuteSeconds + 'seconds';
+    const duration = this.props.liveDurationMs;
+    if (duration) {
+      const minuteSeconds = duration.seconds();
+      const minutesLeft = duration.minutes();
+      return minutesLeft + ' mins ' + minuteSeconds + ' seconds';
     }
     return '';
   }
@@ -219,7 +219,10 @@ class ProvisionalScore extends React.Component<
             <div className="attempted-text">
               Attempted: {attempted} | {attempts.length}
             </div>
-            <div>{this.prepareDuration()}</div>
+            <div className="duration">
+              <SpriteIcon name="clock" />
+              <div>{this.prepareDuration()}</div>
+            </div>
           </div>
         </div>
       );
