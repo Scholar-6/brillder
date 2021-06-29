@@ -1765,6 +1765,21 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       font-size: 7vw;
       font-family: $font-family-bold;
     }
+    .duration {
+      margin-top: 1vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7vw;
+      svg {
+        stroke-width: 2.5;
+        width: 8vw;
+        height: 8vw;
+      }
+      div {
+        margin-left: 1.5vw;
+      }
+    }
   }
 }
 
