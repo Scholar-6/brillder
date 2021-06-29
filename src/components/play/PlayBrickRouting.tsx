@@ -159,7 +159,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [reviewEndTime, setReviewEndTime] = React.useState(initReviewEndTime);
   const [attemptId, setAttemptId] = React.useState<string>(initAttemptId);
 
-  const [liveDurationMs, setLiveDurationMs] = React.useState(0);
+  const [liveDurationMs, setLiveDurationMs] = React.useState(null as null | moment.Duration);
 
   const [unauthorizedOpen, setUnauthorized] = React.useState(false);
   const [headerHidden, setHeader] = React.useState(false);
@@ -229,14 +229,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const settingLiveDuration = () => {
-    const now = moment();
-    console.log(getLiveTime(brick.brickLength));
-    now.subtract({minutes: getLiveTime(brick.brickLength)});
-    console.log('now', now);
-    const dif = moment.duration(liveEndTime.diff(now));
-    console.log(now, liveEndTime, dif.seconds(), dif.minutes());
-    
-    setLiveDurationMs(dif.milliseconds());
+    const now = moment().add(getLiveTime(brick.brickLength), 'minutes');
+    const dif = moment.duration(now.diff(liveEndTime));
+    setLiveDurationMs(dif);
   }
 
   const finishLive = () => {
