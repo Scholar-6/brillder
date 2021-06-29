@@ -11,6 +11,7 @@ import { PlayMode } from "../model";
 import { getPrepareTime } from "../services/playTimes";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import BrickTitle from "components/baseComponents/BrickTitle";
+import { isPhone } from "services/phone";
 
 interface Props {
   brick: Brick;
@@ -53,6 +54,9 @@ const PrePrepPage: React.FC<Props> = ({ brick, ...props }) => {
           <div className="help-text">
             The <span className="underline">progress bar</span> will show you how much time you have spent preparing.
           </div>
+          {isPhone() && <div className="fe-arrow-container">
+            <SpriteIcon name="play-red-arrow" />
+          </div>}
           <div className="new-layout-footer" style={{ display: 'none' }}>
             <div className="title-column">
               <DummyProgressbarCountdown value={23} />
