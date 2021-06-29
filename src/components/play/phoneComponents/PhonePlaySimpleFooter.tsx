@@ -43,7 +43,6 @@ const PhonePlaySimpleFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         <SpriteIcon name="" />
-        <SpriteIcon name="" />
         <div
           className="f-fixed-arrow-button"
           onClick={props.next}
@@ -71,7 +70,4 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 export default connect(mapState)(PhonePlaySimpleFooter);
-function setAssign(arg0: boolean): void {
-  throw new Error('Function not implemented.');
-}
 
