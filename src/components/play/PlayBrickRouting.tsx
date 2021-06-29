@@ -54,6 +54,7 @@ import PrePrep from "./prePrep/PrePrep";
 import NewPrep from "./newPrep/NewPrep";
 import PhonePreInvestigationPage from "./preInvestigation/PhonePreInvestigation";
 import PreInvestigationPage from "./preInvestigation/PreInvestigation";
+import PhonePreSynthesisPage from "./preSynthesis/PhonePreSynthesis";
 import PreSynthesis from "./preSynthesis/PreSynthesis";
 import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
@@ -553,11 +554,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             attempts={attempts}
             moveNext={() => cashAttempt(routes.PlaySynthesisLastPrefix)}
           />
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={() => history.push(routes.playSynthesis(brick.id))} />}
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={() => history.push(routes.playPreSynthesis(brick.id))} />}
         </Route>
 
         <Route exact path={routes.preSynthesisRoute}>
-          <PreSynthesis brick={brick} history={history} />
+          {isPhone()
+            ? <PhonePreSynthesisPage brick={brick} moveNext={() => {
+              history.push(routes.playSynthesis(brick.id))}} /> 
+            : <PreSynthesis brick={brick} history={history} />
+          }
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={() => history.push(routes.playSynthesis(brick.id))} />}
         </Route>
 
         <Route exac path={routes.synthesisRoute}>

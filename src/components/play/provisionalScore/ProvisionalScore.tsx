@@ -6,7 +6,6 @@ import "react-circular-progressbar/dist/styles.css";
 import "./ProvisionalScore.scss";
 import { Brick } from "model/brick";
 import { PlayStatus } from "../model";
-import { getPlayPath } from "../service";
 
 import ReviewStepper from "../review/ReviewStepper";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -135,14 +134,10 @@ class ProvisionalScore extends React.Component<
   moveToIntro() {
     const brickId = this.props.brick.id;
     let link = "";
-    if (isPhone()) {
-      link = routes.phonePrep(brickId);
+    if (this.props.isPlayPreview) {
+      link = previewRoutes.previewNewPrep(brickId);
     } else {
-      if (this.props.isPlayPreview) {
-        link = previewRoutes.previewNewPrep(brickId);
-      } else {
-        link = routes.playNewPrep(brickId);
-      }
+      link = routes.playNewPrep(brickId);
     }
     this.props.history.push(link);
     this.props.moveToPrep?.();
@@ -150,41 +145,13 @@ class ProvisionalScore extends React.Component<
 
   moveToSynthesis() {
     let link = "";
-    if (isPhone()) {
-      link =
-        getPlayPath(this.props.isPlayPreview, this.props.brick.id) +
-        routes.PlaySynthesisLastPrefix;
+    if (this.props.isPlayPreview) {
+      link = previewRoutes.previewPreSynthesis(this.props.brick.id);
     } else {
-      if (this.props.isPlayPreview) {
-        link =
-          getPlayPath(this.props.isPlayPreview, this.props.brick.id) +
-          routes.PlaySynthesisLastPrefix;
-      } else {
-        link = routes.playPreSynthesis(this.props.brick.id);
-      }
+      link = routes.playPreSynthesis(this.props.brick.id);
     }
     this.props.history.push(link);
     this.props.moveNext?.();
-  }
-
-  renderFooter() {
-    return (
-      <div className="action-footer">
-        <div></div>
-        <div className="direction-info text-center">
-          <h2>Synthesis</h2>
-        </div>
-        <div>
-          <button
-            type="button"
-            className="play-preview svgOnHover play-green"
-            onClick={this.moveToSynthesis.bind(this)}
-          >
-            <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
-          </button>
-        </div>
-      </div>
-    );
   }
 
   render() {
@@ -229,16 +196,14 @@ class ProvisionalScore extends React.Component<
                   counterClockwise={true}
                   value={this.state.value}
                 />
-                <div className="score-data">
-                  {this.state.value}%
-                </div>
+                <div className="score-data">{this.state.value}%</div>
               </div>
             </div>
             <div className="attempted-numbers">
-              <SpriteIcon name="cancel-custom" className="text-orange" />
-              : {attempts.length - numberOfcorrect}
-              <SpriteIcon name="check-icon" className="text-theme-green" />
-              : {numberOfcorrect}
+              <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
+              {attempts.length - numberOfcorrect}
+              <SpriteIcon name="check-icon" className="text-theme-green" />:{" "}
+              {numberOfcorrect}
             </div>
             <div className="attempted-text">
               Attempted: {attempted} | {attempts.length}

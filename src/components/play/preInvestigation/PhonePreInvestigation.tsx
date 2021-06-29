@@ -1,9 +1,6 @@
 import React from "react";
 
 import { Brick } from "model/brick";
-
-import { useEffect } from "react";
-import { rightKeyPressed } from "components/services/key";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import { getLiveTime } from "../services/playTimes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
@@ -17,20 +14,6 @@ interface Props {
 
 const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
   const [isMoving, setMoving] = React.useState(false);
-
-  useEffect(() => {
-    function handleMove(e: any) {
-      if (rightKeyPressed(e)) {
-        setMoving(true);
-      }
-    }
-
-    document.addEventListener("keydown", handleMove, false);
-
-    return function cleanup() {
-      document.removeEventListener("keydown", handleMove, false);
-    };
-  });
 
   if (isMoving) {
     return (
@@ -72,7 +55,6 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
         </div>
       </div>
       <div className="fixed-bottom-click-area" onClick={(e) => {
-          console.log('on click');
           e.stopPropagation();
           setMoving(true);
         }} />
