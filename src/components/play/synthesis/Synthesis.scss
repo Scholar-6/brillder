@@ -97,11 +97,19 @@
 
     table {
       color: var(--theme-dark-blue);
+      background: var(--off-white);
       @include phone_and_tabletP {
         font-size: 3.5vw;
       }
       @include tabletP {
         font-size: 1.05vw;
+      }
+      tr {
+        border: 3px solid var(--white) !important;
+      }
+      td {
+        border: 3px solid var(--white) !important;
+        padding: 4px 8px !important;
       }
     }
   }
