@@ -2,17 +2,15 @@ import React from "react";
 
 import { Brick } from "model/brick";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
-import { getLiveTime } from "../services/playTimes";
+import { getSynthesisTime } from "../services/playTimes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
-import { User } from "model/user";
 
 interface Props {
-  user: User;
   brick: Brick;
   moveNext(): void;
 }
 
-const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
+const PhonePreSynthesisPage: React.FC<Props> = ({ brick, ...props }) => {
   const [isMoving, setMoving] = React.useState(false);
 
   if (isMoving) {
@@ -26,7 +24,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
     );
   }
 
-  const minutes = getLiveTime(brick.brickLength);
+  const minutes = getSynthesisTime(brick.brickLength);
 
   return (
     <div className="pre-investigation">
@@ -34,19 +32,19 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
       <div className="introduction-page">
         <div className="ss-phone-before-title" />
         <div className="title s-fade1">
-          Time for some questions.
+          Deepen your understanding.
         </div>
         <div className="ss-phone-after-title" />
         <div className="like-button">Preparation</div>
         <div className="ss-phone-between-button" />
-        <div className="like-button orange" onClick={() => setMoving(true)}>Investigation</div>
+        <div className="like-button">Investigation</div>
         <div className="ss-phone-between-button" />
-        <div className="like-button">Synthesis</div>
+        <div className="like-button orange" onClick={() => setMoving(true)}>Synthesis</div>
         <div className="ss-phone-between-button" />
         <div className="like-button">Review</div>
         <div className="ss-phone-after-buttons" />
         <div className="footer s-fade3">
-          You have<span className="underline-border"> {minutes} minutes </span>to complete the investigation. Once time is up, you will get a provisional score.
+          Spend about<span className="underline-border"> {minutes} minutes </span>on this stage before reviewing your answers to improve your score.
         </div>
         <div className="new-layout-footer">
           <div className="time-container">
@@ -62,4 +60,4 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
   );
 };
 
-export default PreInvestigationPage;
+export default PhonePreSynthesisPage;
