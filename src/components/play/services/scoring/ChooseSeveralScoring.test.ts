@@ -8,9 +8,9 @@ describe("3 options 2 correct", () => {
   let mockComponent: ChooseSeveralComponent = {
     type: 127,
     list: [
-      { index: 1, value: "A", valueFile: "", answerType: QuestionValueType.String, checked: true },
-      { index: 2, value: "B", valueFile: "", answerType: QuestionValueType.String, checked: false },
-      { index: 3, value: "C", valueFile: "", answerType: QuestionValueType.String, checked: true },
+      { index: 1, value: "B", valueFile: "", answerType: QuestionValueType.String, checked: false },
+      { index: 2, value: "C", valueFile: "", answerType: QuestionValueType.String, checked: true },
+      { index: 0, value: "A", valueFile: "", answerType: QuestionValueType.String, checked: true },
     ],
   };
 
@@ -30,7 +30,7 @@ describe("3 options 2 correct", () => {
   it("should give full marks for all correct options selected", () => {
     // arrange
     const mockAttempt: ComponentAttempt<ChooseSeveralAnswer> = { 
-      answer: [ {shuffleIndex: 2, realIndex: 0}, {shuffleIndex: 1, realIndex: 2} ], 
+      answer: [ {shuffleIndex: 2, realIndex: 0}, {shuffleIndex: 0, realIndex: 2} ], 
       correct: false, marks: 0, maxMarks: 0, attempted: true, questionId: 1
     };
 
@@ -65,13 +65,13 @@ describe("6 options 4 correct", () => {
   let mockComponent: ChooseSeveralComponent = {
     type: 127,
     list: [
-      { index: 1, value: "A", valueFile: "", answerType: QuestionValueType.String, checked: true },
-      { index: 2, value: "B", valueFile: "", answerType: QuestionValueType.String, checked: false },
-      { index: 3, value: "C", valueFile: "", answerType: QuestionValueType.String, checked: true },
-      { index: 4, value: "", valueFile: "123.jpg", answerType: QuestionValueType.String, checked: true, imageCaption: "D", imagePermision: true, imageSource: "attribution" },
+      { index: 1, value: "B", valueFile: "", answerType: QuestionValueType.String, checked: false },
+      { index: 2, value: "C", valueFile: "", answerType: QuestionValueType.String, checked: true },
+      { index: 3, value: "", valueFile: "123.jpg", answerType: QuestionValueType.String, checked: true, imageCaption: "D", imagePermision: true, imageSource: "attribution" },
       { index: 4, value: "", valueFile: "456.jpg", answerType: QuestionValueType.String, checked: false, imageCaption: "E", imagePermision: true, imageSource: "attribution" },
       { index: 5, value: "", valueFile: "", answerType: QuestionValueType.String, soundFile: "123.mp3", checked: true, soundCaption: "F" },
-      { index: 5, value: "", valueFile: "", answerType: QuestionValueType.String, soundFile: "456.mp3", checked: false, soundCaption: "G" },
+      { index: 6, value: "", valueFile: "", answerType: QuestionValueType.String, soundFile: "456.mp3", checked: false, soundCaption: "G" },
+      { index: 0, value: "A", valueFile: "", answerType: QuestionValueType.String, checked: true },
     ],
   };
 
