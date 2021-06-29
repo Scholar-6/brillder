@@ -421,9 +421,9 @@ const LivePage: React.FC<LivePageProps> = ({
           <Hidden only={["sm", "md", "lg", "xl"]}>
             <div className="introduction-info">
               <div className="intro-text-row">
-                <span className="phone-stepper-head">
-                  <span className="bold">{brick.subject?.name}</span> <BrickTitle title={brick.title} />
-                </span>
+                <div className="phone-stepper-head">
+                  <BrickTitle title={brick.title} />
+                </div>
                 {renderStepper()}
               </div>
             </div>
