@@ -4,7 +4,6 @@ import { Question } from "model/question";
 import { ComponentAttempt } from "../model";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { isMobile } from "react-device-detect";
 import { isPhone } from "services/phone";
 
 interface ReviewStepperProps {
@@ -71,7 +70,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
   };
 
   let className = 'stepper';
-  if (isMobile && noScrolling) {
+  if (isPhone() && noScrolling) {
     className += ' inline';
   }
 

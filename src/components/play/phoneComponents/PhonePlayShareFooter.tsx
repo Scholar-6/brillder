@@ -164,11 +164,10 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
         <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
         <SpriteIcon name="logo" className="text-theme-orange" onClick={() => setExit(true)} />
         <SpriteIcon name="feather-share" onClick={() => setShare(true)} />
-        {canSee 
+        {canSee
           ? <SpriteIcon name="file-plus" onClick={() => setAssign(true)} />
           : <SpriteIcon name="" />
         }
-        <SpriteIcon name="" />
         <SpriteIcon name="arrow-right" onClick={props.next} />
       </div>
     );

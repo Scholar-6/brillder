@@ -29,10 +29,6 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
     setState({ ...state, briefExpanded: !state.briefExpanded });
   };
 
-  const startBrick = () => {
-    props.moveNext();
-  };
-
   const renderMobileBriefTitle = () => {
     return (
       <div className="brief-title" style={{ marginTop: '4vh' }}>

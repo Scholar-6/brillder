@@ -44,6 +44,26 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .introduction-page {
       padding-left: 10vw !important;
       padding-right: 10vw !important;
+
+      .new-layout-footer {
+        position: fixed;
+        right: 0;
+        bottom: 17.5vw;
+        padding: 8px;
+        background: var(--theme-light-blue);
+        width: 100vw;
+        display: block !important;
+        .title-column {
+          .MuiLinearProgress-root {
+            border-radius: 1.5vw;
+            width: 100% !important;
+            height: 10px !important;
+          }
+        }
+        .minutes-footer, .footer-space, .new-navigation-buttons {
+          display: none;
+        }
+      }
     }
     .image-title {
       text-align: center;
@@ -1233,11 +1253,12 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     svg {
       stroke-width: 2;
       color: var(--white);
-      width: calc(100% / 7.4);
+      width: calc(100% / 6.3);
       height: $height / 1.6;
     }
 
     svg.rotate-90 {
+      margin-right: -2.8vw;
       color: var(--white);
       transform: rotate(90deg);
     }
@@ -1254,7 +1275,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   .phone-share-footer {
     > div {
       svg {
-        width: calc(100% / 6.2);
+        width: calc(100% / 4.9);
       }
     }
   }
@@ -1655,5 +1676,74 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   }
   .brick-inline {
     display: inline;
+  }
+}
+
+.phone-provisional-score {
+  height: calc(100% - 17.5vw);
+  .header {
+    background: var(--theme-light-blue);
+    .stepper {
+      padding: 0vh 5vw;
+      padding-bottom: 1.3vh;
+      display: block;
+      width: 100vw;
+      .step {
+        margin-left: 2vw;
+        font-size: 7vw;
+        color: var(--white);
+        display: inline-block;
+        align-items: center;
+      }
+    }
+    svg {
+      width: 7vw;
+      height: 7vw;
+    }
+  }
+  .content {
+    height: auto;
+    .title {
+      font-size: 10.5vw;
+      margin-top: 3.5vh;
+      font-family: $font-family-black;
+      text-align: center;
+      color: var(--theme-dark-blue);
+    }
+    .pr-progress-center {
+      margin-top: 2.5vh;
+      display: flex;
+      width: 100vw;
+      justify-content: center;
+      .pr-progress-container {
+        $size: 60vw;
+        width: $size;
+        height: $size;
+        position: relative;
+        .circle-progress {
+          overflow: visible;
+          .CircularProgressbar-trail {
+            //display: none;
+            stroke-width: 9;
+          }
+          .CircularProgressbar-path {
+            stroke: var(--theme-yellow) !important;
+            stroke-width: 9;
+          }
+        }
+        .score-data {
+          top: 0;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--theme-dark-blue);
+          font-size: 19vw;
+          font-family: $font-family-bold;
+        }
+      }
+    }
   }
 }
