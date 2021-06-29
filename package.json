@@ -1,6 +1,6 @@
 {
   "name": "brillder",
-  "version": "10.9.0",
+  "version": "10.10.0",
   "private": false,
   "dependencies": {
     "@datadog/datadog-ci": "^0.11.11",
@@ -92,8 +92,9 @@
   },
   "scripts": {
     "start": "react-app-rewired start --scripts-version react-scripts",
-    "build": "node generateSitemap.js && react-app-rewired build --scripts-version react-scripts",
+    "build": "node generateSitemap.js && react-app-rewired build --scripts-version react-scripts && npm run test-junit",
     "test": "react-app-rewired test --scripts-version react-scripts",
+    "test-junit": "react-app-rewired test --scripts-version react-scripts --testResultsProcessor \"jest-junit\" --watchAll false",
     "e2e": "react-app-rewired test --scripts-version react-scripts --roots test --testMatch \"<rootDir>/test/**/*.{spec,test}.{js,ts}\" --env node",
     "eject": "react-scripts eject"
   },
@@ -126,6 +127,7 @@
     "copy-webpack-plugin": "^6.2.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
+    "jest-junit": "^12.2.0",
     "react-app-rewired": "^2.1.6",
     "react-test-renderer": "^16.14.0",
     "redux-mock-store": "^1.5.4",
