@@ -60,7 +60,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       maxPScore,
 
       interval: 0,
-      handleMove: this.handleMove.bind(this)
+      handleMove: this.handleMove.bind(this),
     };
   }
 
@@ -93,20 +93,25 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
         tempCurrentScore = currentScore;
       }
 
-      this.setState({ liveScore: tempLiveScore, reviewScore: tempReviewScore, currentScore: tempCurrentScore });
+      this.setState({
+        liveScore: tempLiveScore,
+        reviewScore: tempReviewScore,
+        currentScore: tempCurrentScore,
+      });
 
-      if (liveScore === this.state.liveScore && reviewScore === tempReviewScore && currentScore === tempCurrentScore) {
+      if (
+        liveScore === this.state.liveScore &&
+        reviewScore === tempReviewScore &&
+        currentScore === tempCurrentScore
+      ) {
         clearInterval(interval);
       }
     }, 100);
     this.setState({ interval });
-
-    //document.addEventListener("keydown", this.state.handleMove, false);
   }
 
   componentWillUnmount() {
     clearInterval(this.state.interval);
-    //document.removeEventListener("keydown", this.state.handleMove, false);
   }
 
   handleMove() {
@@ -202,7 +207,11 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   renderPhoneButton() {
     return (
       <div className="action-footer mobile-footer-fixed-buttons">
-        <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={this.props.move} />
+        <SpriteIcon
+          name="arrow-right"
+          className="mobile-next-button"
+          onClick={this.props.move}
+        />
       </div>
     );
   }
@@ -212,7 +221,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       <EndingStepper
         questions={this.props.brick.questions}
         attempts={this.props.brickAttempt.answers}
-        handleStep={() => { }}
+        handleStep={() => {}}
       />
     );
   }
@@ -228,60 +237,123 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       }
     }
 
+    if (isPhone()) {
+      const { answers, liveAnswers } = this.props.brickAttempt;
+      let attempted = 0;
+      let numberOfFailed = 0;
+      let numberOfyellow = 0;
+      let numberOfcorrect = 0;
+      for (let i = 0; i < answers.length; i++) {
+        const answer = answers[i];
+        const liveAnswer = liveAnswers?.[i] || null;
+        if (answer.attempted || liveAnswer?.attempted) {
+          attempted += 1;
+        }
+        if (answer.correct && liveAnswer?.correct) {
+          numberOfcorrect += 1;
+        } else if (answer.correct) {
+          numberOfyellow += 1;
+        } else if (liveAnswer?.correct) {
+          numberOfyellow += 1;
+        } else {
+          numberOfFailed += 1;
+        }
+      }
+      return (
+        <div className="phone-provisional-score">
+          <div
+            className="fixed-upper-b-title"
+            dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
+          />
+          <div className="header">{this.renderStepper()}</div>
+          <div className="content">
+            <div className="title">Final Score</div>
+            <div className="pr-progress-center">
+              <div className="pr-progress-container">
+                <CircularProgressbar
+                  className="circle-progress-first"
+                  strokeWidth={4}
+                  counterClockwise={true}
+                  value={this.state.liveScore}
+                />
+                <Grid
+                  container
+                  justify="center"
+                  alignContent="center"
+                  className="score-circle"
+                >
+                  <CircularProgressbar
+                    className="circle-progress-second"
+                    counterClockwise={true}
+                    strokeWidth={4}
+                    value={this.state.reviewScore}
+                  />
+                </Grid>
+                <Grid
+                  container
+                  justify="center"
+                  alignContent="center"
+                  className="score-circle"
+                >
+                  <CircularProgressbar
+                    className="circle-progress-third"
+                    counterClockwise={true}
+                    strokeWidth={4}
+                    value={this.state.currentScore}
+                  />
+                </Grid>
+                <div className="score-data">{3}%</div>
+              </div>
+            </div>
+            <div className="attempted-numbers">
+              <SpriteIcon name="cancel-custom" className="text-orange" />: {numberOfFailed} 
+              <SpriteIcon name="check-icon" className="text-yellow" />: {numberOfyellow}
+              <SpriteIcon name="check-icon" className="text-theme-green" />: {numberOfcorrect}
+            </div>
+            <div className="attempted-text">Attempted: {attempted} | {answers.length}</div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="brick-row-container ending-container">
-        <Hidden only={["xs"]}>
-          <div className="brick-container play-preview-panel ending-page">
-            <div className="fixed-upper-b-title">
-              <BrickTitle title={this.props.brick.title} />
-            </div>
-            <Grid container direction="row">
-              <Grid item xs={8}>
-                <div className="introduction-page">
-                  <h1 className="title">Final Score</h1>
-                  {this.renderProgressBars()}
-                </div>
-                <div className="new-layout-footer" style={{ display: 'none' }}>
-                  <div className="time-container" />
-                  <div className="minutes-footer" />
-                  <div className="footer-space" />
-                  <div className="new-navigation-buttons">
-                    <div className="n-btn next" onClick={this.props.move}>
-                      Next
-                      <SpriteIcon name="arrow-right" />
-                    </div>
-                  </div>
-                </div>
-              </Grid>
-              <Grid item xs={4}>
-                <div className="introduction-info">
-                  <div className="intro-header">
-                    <div>
-                      Range: {this.state.minPScore}%-{this.state.maxPScore}%
-                    </div>
-                  </div>
-                  <div className="intro-text-row f-align-self-start m-t-5">
-                    {this.renderStepper()}
-                  </div>
-                </div>
-              </Grid>
-            </Grid>
+        <div className="brick-container play-preview-panel ending-page">
+          <div className="fixed-upper-b-title">
+            <BrickTitle title={this.props.brick.title} />
           </div>
-        </Hidden>
-        <Hidden only={["sm", "md", "lg", "xl"]}>
-          <div className="brick-container play-preview-panel ending-page mobile-ending-page">
-            <div className="introduction-page">
+          <Grid container direction="row">
+            <Grid item xs={8}>
+              <div className="introduction-page">
+                <h1 className="title">Final Score</h1>
+                {this.renderProgressBars()}
+              </div>
+              <div className="new-layout-footer" style={{ display: "none" }}>
+                <div className="time-container" />
+                <div className="minutes-footer" />
+                <div className="footer-space" />
+                <div className="new-navigation-buttons">
+                  <div className="n-btn next" onClick={this.props.move}>
+                    Next
+                    <SpriteIcon name="arrow-right" />
+                  </div>
+                </div>
+              </div>
+            </Grid>
+            <Grid item xs={4}>
               <div className="introduction-info">
-                <div className="intro-text-row">
-                  <span className="heading text-center">Final Score</span>
+                <div className="intro-header">
+                  <div>
+                    Range: {this.state.minPScore}%-{this.state.maxPScore}%
+                  </div>
+                </div>
+                <div className="intro-text-row f-align-self-start m-t-5">
                   {this.renderStepper()}
                 </div>
               </div>
-              {this.renderProgressBars()}
-              {isPhone() ? this.renderPhoneButton() : this.renderFooter()}
-            </div>
-          </div>
-        </Hidden>
+            </Grid>
+          </Grid>
+        </div>
       </div>
     );
   }
