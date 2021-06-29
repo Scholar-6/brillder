@@ -243,7 +243,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const finishBrick = () => {
-    history.push(`/play/brick/${brick.id}/finalStep`);
+    history.push(routes.playFinalStep(brick.id));
   }
 
   const createBrickAttempt = async (brickAttempt: BrickAttempt) => {
@@ -602,7 +602,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brickAttempt={brickAttempt}
             move={finishBrick}
           />
-          {isPhone() && renderPhoneFooter()}
+          {isPhone() && <PhonePlaySimpleFooter
+            brick={brick} history={history} btnText="Next" next={finishBrick}
+          />}
         </Route>
         <Route exac path="/play/brick/:brickId/finalStep">
           <FinalStep
