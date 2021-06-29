@@ -182,9 +182,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .introduction-page
     .question-live-play {
     overflow: hidden !important;
-    .circle-progress-container {
-      height: 100% !important;
-    }
     .play-footer-label {
       z-index: 1000000;
       left: 44vw;
@@ -631,9 +628,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               color: var(--theme-dark-blue);
               font-size: 6vw;
             }
-            .circle-progress-container {
-              height: inherit !important;
-            }
             .short-answer-input {
               border-radius: 0 !important;
               background: transparent !important;
@@ -804,85 +798,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
               li {
                 font-size: 4.5vw;
-              }
-            }
-          }
-        }
-        .circle-progress-container {
-          position: relative;
-          width: 100%;
-          .circle-progress-first {
-            height: 50vh;
-            width: 50vh;
-            .CircularProgressbar-path {
-              stroke: #ffb55f !important;
-            }
-          }
-
-          .circle-progress-second {
-            height: 46vh;
-            width: 46vh;
-
-            .CircularProgressbar-path {
-              stroke: #317fe0 !important;
-            }
-          }
-
-          .circle-progress-third {
-            height: 42.5vh;
-            width: 42.5vh;
-
-            .CircularProgressbar-path {
-              stroke: #38c36d !important;
-            }
-          }
-
-          .circle-progress {
-            height: 50vh;
-            width: 50vh;
-
-            .CircularProgressbar-path {
-              stroke: #ffb55f !important;
-            }
-
-            svg {
-              overflow: overlay;
-
-              circle {
-                stroke-width: 4.5 !important;
-              }
-            }
-          }
-
-          .score-circle {
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: inherit;
-            position: absolute;
-          }
-
-          .score-data {
-            position: absolute;
-            height: inherit !important;
-            width: 50vh;
-            top: 0;
-            color: var(--theme-dark-blue);
-            @extend %textCenter;
-            > div {
-              height: inherit !important;
-              .score-precentage {
-                font-family: $font-family-black;
-                color: var(--theme-dark-blue);
-                line-height: 1;
-                font-size: 14vh;
-              }
-
-              .score-number {
-                font-family: $font-family-bold;
-                color: var(--theme-dark-blue);
-                line-height: 1;
-                font-size: 4vh;
               }
             }
           }
@@ -1762,12 +1677,36 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             stroke-width: 9;
           }
         }
+        .circle-progress-first .CircularProgressbar-path {
+          stroke: var(--theme-green) !important;
+        }
         .score-circle {
           position: absolute;
           top:0;
           left: 0;
           width: 100%;
           height: 100%;
+
+          .circle-progress-second {
+            position: absolute;
+            width: 55.3vw;
+            height: 55.3vw;
+            top: 2.35vw;
+            left: 2.35vw;
+            .CircularProgressbar-path {
+              stroke: #0081E2;
+            }
+          }
+          .circle-progress-third {
+            position: absolute;
+            width: 50.6vw;
+            height: 50.6vw;
+            top: 4.7vw;
+            left: 4.7vw;
+            .CircularProgressbar-path {
+              stroke: var(--theme-yellow);
+            }
+          }
         }
         .score-data {
           top: 0;
