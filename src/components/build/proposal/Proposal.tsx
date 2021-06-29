@@ -267,7 +267,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const brick = { ...this.state.brick, prep } as Brick;
     this.saveLocalBrick(brick);
     const newBrick = await this.saveBrick(brick);
-    console.log(newBrick);
     this.props.history.push(buildQuesitonType(brick.id));
   };
 
@@ -291,14 +290,16 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
 
     if(!brickId) {
       const callback = async () => {
-        const newBrick = await this.saveBrick(this.state.brick);
-        if(newBrick) {
-          const values = queryString.parse(this.props.location.search);
-          const isCore = this.getCore(values);
-          if (this.state.brick.subjectId) {
-            history.push(map.ProposalTitle(newBrick.id) + '?isCore=' + isCore);
-          } else {
-            history.push(map.ProposalSubject(newBrick.id) + '?isCore=' + isCore);
+        if (this.state.brick.subjectId) {
+          const newBrick = await this.saveBrick(this.state.brick);
+          if(newBrick) {
+            const values = queryString.parse(this.props.location.search);
+            const isCore = this.getCore(values);
+            if (this.state.brick.subjectId) {
+              history.push(map.ProposalTitle(newBrick.id) + '?isCore=' + isCore);
+            } else {
+              history.push(map.ProposalSubject(newBrick.id) + '?isCore=' + isCore);
+            }
           }
         }
       }

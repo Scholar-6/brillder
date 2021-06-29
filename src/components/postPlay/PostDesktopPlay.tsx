@@ -357,6 +357,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
             <title>{getBrillderTitle(brick.title)}</title>
           </Helmet>
           <HomeButton onClick={() => this.props.history.push('/')} />
+            {/*
           <div className="book-navigator">
             <div className="prep-tab" onClick={this.moveToTitles.bind(this)}>
               <SpriteIcon name="file-text" />
@@ -365,6 +366,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
               {i + 1} {this.state.attempts[0].answers[i].correct ? <SpriteIcon name="ok" className="text-theme-green" /> : <SpriteIcon name="cancel-custom" className="text-orange" />}
             </div>)}
           </div>
+            */}
           <Grid
             container
             direction="row"
