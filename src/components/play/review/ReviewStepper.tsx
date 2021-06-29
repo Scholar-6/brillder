@@ -23,7 +23,9 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
   handleStep,
   attempts,
 }) => {
-  const [stepperRef] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+  const [stepperRef] = React.useState(
+    React.createRef() as React.RefObject<HTMLDivElement>
+  );
 
   let questionIndex = 0;
 
@@ -32,46 +34,58 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
     questionIndex++;
     let index = questionIndex;
 
-    let className = 'step';
+    let className = "step";
 
-    if (activeStep !== undefined && activeStep !== null && activeStep + 1 === questionIndex) {
-      className += ' current'
+    if (
+      activeStep !== undefined &&
+      activeStep !== null &&
+      activeStep + 1 === questionIndex
+    ) {
+      className += " current";
     }
 
     // render step for invalid question
     if (!attempt) {
-      className += ' failed';
+      className += " failed";
       return (
         <div className={className} key={key} onClick={handleStep(index - 1)}>
           <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
           <SpriteIcon name="cancel" className="active text-theme-orange" />
-          <div className="underline"><div/></div>
+          <div className="underline">
+            <div />
+          </div>
         </div>
       );
     }
 
     if (attempt.correct) {
-      className += ' success';
+      className += " success";
     } else {
-      className += ' failed';
+      className += " failed";
     }
 
     // render step normal questions
     return (
       <div className={className} key={key} onClick={handleStep(index - 1)}>
-        <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
-        <SpriteIcon
-          name={attempt.correct ? "ok" : "cancel"}
-          className={`svg active ${attempt.correct ? "text-theme-green" : "text-theme-orange"}`}
-        />
-        <div className="underline"><div/></div>
+        <div>
+          <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
+          <SpriteIcon
+            name={attempt.correct ? "ok" : "cancel-custom"}
+            className={`svg active ${
+              attempt.correct ? "text-theme-green" : "text-theme-orange"
+            }`}
+          />
+          <div className="underline">
+            <div />
+          </div>
+        </div>
       </div>
     );
   };
 
-  let className = 'stepper';
+  let className = "stepper";
   if (isPhone() && noScrolling) {
-    className += ' inline';
+    className += " inline";
   }
 
   const getStepSize = () => {
@@ -80,7 +94,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
     } catch {
       return 50;
     }
-  }
+  };
 
   const scrollBack = () => {
     try {
@@ -89,8 +103,8 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
         el.scrollBy(-getStepSize(), 0);
       }
     } catch {}
-  }
-  
+  };
+
   const scrollNext = () => {
     try {
       if (stepperRef.current) {
@@ -98,7 +112,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
         el.scrollBy(getStepSize(), 0);
       }
     } catch {}
-  }
+  };
 
   if (isPhone()) {
     return (
@@ -110,9 +124,17 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
 
   return (
     <div className={className} ref={stepperRef}>
-      {questions.length > 19 && <div className="scroll-back-button" style={{display: 'none'}}><SpriteIcon onClick={scrollBack} name="arrow-left" /></div>}
+      {questions.length > 19 && (
+        <div className="scroll-back-button" style={{ display: "none" }}>
+          <SpriteIcon onClick={scrollBack} name="arrow-left" />
+        </div>
+      )}
       {questions.map((q, index) => renderQuestionStep(index))}
-      {questions.length > 19 && <div className="scroll-next-button" style={{display: 'none'}}><SpriteIcon name="arrow-right" onClick={scrollNext} /></div>}
+      {questions.length > 19 && (
+        <div className="scroll-next-button" style={{ display: "none" }}>
+          <SpriteIcon name="arrow-right" onClick={scrollNext} />
+        </div>
+      )}
     </div>
   );
 };

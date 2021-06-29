@@ -195,7 +195,16 @@ class ProvisionalScore extends React.Component<
     }
 
     if (isPhone()) {
-      console.log(status, attempts);
+      let attempted = 0;
+      let numberOfcorrect = 0;
+      for (let attempt of attempts) {
+        if (attempt.attempted === true) {
+          attempted += 1;
+        }
+        if (attempt.correct === true) {
+          numberOfcorrect += 1;
+        }
+      }
       return (
         <div className="phone-provisional-score">
           <div
@@ -224,6 +233,15 @@ class ProvisionalScore extends React.Component<
                   {this.state.value}%
                 </div>
               </div>
+            </div>
+            <div className="attempted-numbers">
+              <SpriteIcon name="cancel-custom" className="text-orange" />
+              : {attempts.length - numberOfcorrect}
+              <SpriteIcon name="check-icon" className="text-theme-green" />
+              : {numberOfcorrect}
+            </div>
+            <div className="attempted-text">
+              Attempted: {attempted} | {attempts.length}
             </div>
           </div>
         </div>

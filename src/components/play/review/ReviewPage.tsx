@@ -372,7 +372,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
             <div className="intro-header">
               <div className="intro-text-row">
                 <span className="phone-stepper-head">
-                  <span className="bold">{brick.subject?.name}</span> <BrickTitle title={brick.title} />
+                  <BrickTitle title={brick.title} />
                 </span>
                 <ReviewStepper
                   questions={questions}
