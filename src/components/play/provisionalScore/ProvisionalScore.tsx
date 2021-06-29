@@ -31,6 +31,7 @@ interface ProvisionalScoreProps {
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
+  liveDurationMs?: number;
   attempts: any[];
   moveNext?(): void;
   moveToPrep?(): void;
@@ -154,6 +155,16 @@ class ProvisionalScore extends React.Component<
     this.props.moveNext?.();
   }
 
+  prepareDuration() {
+    const secondsLeft = this.props.liveDurationMs;
+    if (secondsLeft) {
+      const minuteSeconds = Math.floor(secondsLeft % 60);
+      const minutesLeft = Math.floor(secondsLeft / 60);
+      return minutesLeft + 'minutes' + minuteSeconds + 'seconds';
+    }
+    return '';
+  }
+
   render() {
     const { status, brick, attempts } = this.props;
 
@@ -208,6 +219,7 @@ class ProvisionalScore extends React.Component<
             <div className="attempted-text">
               Attempted: {attempted} | {attempts.length}
             </div>
+            <div>{this.prepareDuration()}</div>
           </div>
         </div>
       );

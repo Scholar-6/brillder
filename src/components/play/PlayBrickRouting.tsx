@@ -63,6 +63,7 @@ import { CashAttempt, GetCashedPlayAttempt } from "localStorage/play";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import PhonePlaySimpleFooter from "./phoneComponents/PhonePlaySimpleFooter";
 import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
+import { getLiveTime } from "./services/playTimes";
 
 
 function shuffle(a: any[]) {
@@ -158,6 +159,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [reviewEndTime, setReviewEndTime] = React.useState(initReviewEndTime);
   const [attemptId, setAttemptId] = React.useState<string>(initAttemptId);
 
+  const [liveDurationMs, setLiveDurationMs] = React.useState(0);
 
   const [unauthorizedOpen, setUnauthorized] = React.useState(false);
   const [headerHidden, setHeader] = React.useState(false);
@@ -226,6 +228,17 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   };
 
+  const settingLiveDuration = () => {
+    const now = moment();
+    console.log(getLiveTime(brick.brickLength));
+    now.subtract({minutes: getLiveTime(brick.brickLength)});
+    console.log('now', now);
+    const dif = moment.duration(liveEndTime.diff(now));
+    console.log(now, liveEndTime, dif.seconds(), dif.minutes());
+    
+    setLiveDurationMs(dif.milliseconds());
+  }
+
   const finishLive = () => {
     var ba = calcBrickLiveAttempt(brick, attempts);
     setStatus(PlayStatus.Review);
@@ -233,6 +246,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setReviewAttempts(Object.assign([], attempts));
     setStatus(PlayStatus.Review);
     saveBrickAttempt(ba);
+    settingLiveDuration();
   };
 
   const finishReview = () => {
@@ -552,6 +566,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             status={status}
             brick={brick}
             attempts={attempts}
+            liveDurationMs={liveDurationMs}
             moveNext={() => cashAttempt(routes.PlaySynthesisLastPrefix)}
           />
           {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={() => history.push(routes.playPreSynthesis(brick.id))} />}
