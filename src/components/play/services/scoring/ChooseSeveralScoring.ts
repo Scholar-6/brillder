@@ -4,12 +4,12 @@ import { ChooseSeveralComponent, ChooseSeveralAnswer } from "components/play/que
 const mark = (component: ChooseSeveralComponent, attempt: ComponentAttempt<ChooseSeveralAnswer>) => {
     // See examples of choices and attempt in comment below
     const choices: Array<any> = component.list;
-    //console.log(`choices ${choices}`);
+    //console.log(`choices ${Object.entries(choices[0])}`);
     //console.log(`attempt ${Object.entries(attempt)}`);
     // max marks is 2 x the number of correct options 
     attempt.maxMarks = choices.filter((choice) => choice.checked === true).length * 2;
 
-    const whatTheAnswersShouldBe = choices.reduce((a, e, i) => { if(e.checked) a.push(i); return a;}, []);
+    const whatTheAnswersShouldBe = choices.reduce((a, e, i) => { if(e.checked) a.push(e.index); return a;}, []);
     //console.log(`whatTheAnswersShouldBe ${whatTheAnswersShouldBe}`);
     const whatTheUserSelected = attempt.answer.map(a => a.realIndex);
     //console.log(`whatTheUserSelected ${whatTheUserSelected}`);
@@ -35,19 +35,22 @@ const mark = (component: ChooseSeveralComponent, attempt: ComponentAttempt<Choos
     "checked":true,
     "valueFile":"",
     "soundFile":"",
-    "answerType":1},
+    "answerType":1,
+    "index": 1},
     {"id":816243701,
     "value":"<p>Two</p>",
     "checked":true,
     "valueFile":"",
     "soundFile":"",
-    "answerType":1},
+    "answerType":1
+    "index": 2},
     {"id":816243701,
     "value":"<p>Three</p>",
     "checked":false,
     "valueFile":"",
     "soundFile":"",
-    "answerType":1},
+    "answerType":1
+    "index": 3},
 ]*/
 /* e.g. attempt = {
     answer: [{realIndex: 2, shuffleIndex: 0},{realIndex: 0, shuffleIndex:1}]
