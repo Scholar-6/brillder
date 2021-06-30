@@ -5,6 +5,7 @@ import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTi
 import { getLiveTime } from "../services/playTimes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
 import { User } from "model/user";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface Props {
   user: User;
@@ -18,7 +19,10 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
   if (isMoving) {
     return (
       <div className="pre-investigation">
-        <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
+        <div
+          className="fixed-upper-b-title q-brick-title"
+          dangerouslySetInnerHTML={{ __html: brick.title }}
+        />
         <div className="introduction-page">
           <SecondsCountDown onEnd={props.moveNext} />
         </div>
@@ -30,34 +34,45 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="pre-investigation">
-      <div className="fixed-upper-b-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
+      <div
+        className="fixed-upper-b-title"
+        dangerouslySetInnerHTML={{ __html: brick.title }}
+      />
       <div className="introduction-page">
         <div className="ss-phone-before-title" />
-        <div className="title s-fade1">
-          Time for some questions.
-        </div>
+        <div className="title s-fade1">Time for some questions.</div>
         <div className="ss-phone-after-title" />
         <div className="like-button">Preparation</div>
         <div className="ss-phone-between-button" />
-        <div className="like-button orange" onClick={() => setMoving(true)}>Investigation</div>
+        <div className="like-button orange" onClick={() => setMoving(true)}>
+          Investigation
+        </div>
         <div className="ss-phone-between-button" />
         <div className="like-button">Synthesis</div>
         <div className="ss-phone-between-button" />
         <div className="like-button">Review</div>
         <div className="ss-phone-after-buttons" />
         <div className="footer s-fade3">
-          You have<span className="underline-border"> {minutes} minutes </span>to complete the investigation. Once time is up, you will get a provisional score.
+          You have<span className="underline-border"> {minutes} minutes </span>
+          to complete the investigation. Once time is up, you will get a
+          provisional score.
         </div>
         <div className="new-layout-footer">
           <div className="time-container">
             <DummyProgressbarCountdown value={100} deadline={true} />
           </div>
         </div>
+        <div className="fe-arrow-container">
+          <SpriteIcon name="play-red-arrow" />
+        </div>
       </div>
-      <div className="fixed-bottom-click-area" onClick={(e) => {
+      <div
+        className="fixed-bottom-click-area"
+        onClick={(e) => {
           e.stopPropagation();
           setMoving(true);
-        }} />
+        }}
+      />
     </div>
   );
 };
