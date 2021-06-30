@@ -507,3 +507,115 @@
 .select-subject-page ~ .beta-text {
   display: none;
 }
+
+
+// assign dialog
+.assign-dialog .dialog-header {
+  $radius: 2vw;
+
+  svg {
+    color: var(--white) !important;
+    width: 3.7vw;
+    height: 3.7vw;
+  }
+
+  .MuiFormControlLabel-root {
+    margin-right: 0 !important;
+  }
+
+  > .r-popup-title {
+    padding-left: 5vw !important;
+    padding-right: 5vw !important;
+  }
+
+
+  .MuiFormControlLabel-root:first-child {
+    margin-right: 2vw !important;
+  }
+
+  .r-class-selection {
+    display: flex;
+    justify-content: center;
+    .MuiInputBase-root {
+      background: unset !important;
+    }
+    .select-existed-class {
+      &::before {
+        content: '' !important;
+        display: none !important;
+      }
+      width: 60vw !important;
+
+      .MuiSelect-root {
+        overflow: hidden;
+        border-top-left-radius: $radius;
+        border-bottom-left-radius: $radius;
+        background: var(--white);
+        color: var(--theme-dark-blue);
+        display: flex;
+        align-items: center;
+        .MuiSvgIcon-root {
+          margin-left: 2vw;
+          margin-right: 2vw;
+          width: 5vw;
+          height: 5vw;
+        }
+        .MuiListItemText-primary {
+          text-align: left;
+          font-size: 4.5vw !important;
+        }
+      }
+      .MuiListItemIcon-root {
+        min-width: unset !important;
+      }
+    }
+    .r-brick-level {
+      display: flex;
+      background: var(--tab-gray);
+      color: var(--theme-dark-blue);
+      align-items: center;
+      justify-content: center;
+      border-top-right-radius: $radius;
+      border-bottom-right-radius: $radius;
+      width: 20vw !important;
+      font-size: 4.5vw;
+    }
+  }
+  .r-regular-center {
+    margin: 1.5vh 0 2vh 0 !important;
+    font-size: 4.5vw;
+  }
+  .r-class-inputs {
+    display: flex;
+    input {
+      padding: 0 !important;
+      padding-left: 2vw !important;
+      border-top-left-radius: $radius !important;
+      border-bottom-left-radius: $radius !important;
+      font-size: 4.5vw !important;
+      width: 60vw !important;
+    }
+    div {
+      border-top-right-radius: $radius;
+      border-bottom-right-radius: $radius;
+      background: var(--tab-gray);
+      color: var(--theme-dark-blue);
+      font-size: 4.5vw !important;
+      width: 23vw !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .r-student-emails .MuiOutlinedInput-root {
+    border-radius: $radius !important;
+  }
+  .r-radio-buttons {
+    .inline {
+      margin-left: 2vw;
+    }
+    .select-date {
+      background: var(--theme-dark-blue) !important;
+    }
+  }
+}
