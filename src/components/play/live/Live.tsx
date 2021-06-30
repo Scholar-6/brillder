@@ -363,129 +363,135 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const minutes = getLiveTime(brick.brickLength);
 
-  const renderMobile = () => {
+  const renderDialogs = () => {
     return (
       <div>
-        <div className="introduction-info">
-          <div className="intro-text-row">
-            <div className="phone-stepper-head">
-              <BrickTitle title={brick.title} />
-            </div>
-            {renderStepper()}
-          </div>
-        </div>
-        <div className="introduction-content" ref={questionScrollRef}>
-          {questions.map(renderQuestionContainer)}
-          {renderMobileButtons()}
-          <div className="time-container">
-            <TimeProgressbar
-              isLive={true}
-              onEnd={onEnd}
-              endTime={props.endTime}
-              brickLength={brick.brickLength}
-              setEndTime={props.setEndTime}
-            />
-          </div>
-        </div>
+        <ShuffleAnswerDialog
+          isOpen={isShuffleOpen}
+          submit={() => nextFromShuffle()}
+          hide={() => setShuffleDialog(false)}
+          close={() => cleanAndNext()}
+        />
+        <SubmitAnswersDialog
+          isOpen={isSubmitOpen}
+          submit={submitAndMove}
+          close={() => setSubmitAnswers(false)}
+        />
+        <CategoriseAnswersDialog
+          isOpen={isCategorizeOpen}
+          submit={nextFromCategorize}
+          close={() => setCategorizeDialog(false)}
+        />
       </div>
     );
   };
 
-  const renderDesktop = () => {
+  if (isPhone()) {
     return (
-      <Grid container direction="row">
-        <Grid item xs={8}>
-          <SwipeableViews
-            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={activeStep}
-            className="swipe-view"
-            style={{ width: "100%" }}
-            onChangeIndex={handleStep}
-          >
-            {questions.map(renderQuestionContainer)}
-          </SwipeableViews>
-          <div className="new-layout-footer" style={{ display: "none" }}>
-            <div className="time-container">
-              <TimeProgressbar
-                isLive={true}
-                onEnd={onEnd}
-                minutes={minutes}
-                endTime={props.endTime}
-                brickLength={brick.brickLength}
-                setEndTime={props.setEndTime}
-              />
-            </div>
-            <div className="footer-space">
-              <span className="scroll-text">Scroll down</span>
-            </div>
-            <div className="new-navigation-buttons">
-              <div className="n-btn back" onClick={prev}>
-                <SpriteIcon name="arrow-left" />
-                Back
+      <div className="brick-row-container live-container">
+        <HoveredImage />
+        <div className="brick-container play-preview-panel live-page real-live-page">
+          <div className="introduction-page">
+            <div className="introduction-info">
+              <div className="intro-text-row">
+                <div className="phone-stepper-head">
+                  <BrickTitle title={brick.title} />
+                </div>
+                {renderStepper()}
               </div>
-              <div
-                className="n-btn next"
-                onClick={() => {
-                  if (questions.length - 1 > activeStep) {
-                    next();
-                  } else {
-                    setSubmitAnswers(true);
-                  }
-                }}
-              >
-                Next
-                <SpriteIcon name="arrow-right" />
+            </div>
+            <div className="introduction-content" ref={questionScrollRef}>
+              {questions.map(renderQuestionContainer)}
+              {renderMobileButtons()}
+              <div className="time-container">
+                <TimeProgressbar
+                  isLive={true}
+                  onEnd={onEnd}
+                  endTime={props.endTime}
+                  brickLength={brick.brickLength}
+                  setEndTime={props.setEndTime}
+                />
               </div>
             </div>
           </div>
-        </Grid>
-        <Grid item xs={4}>
-          <div className="introduction-info">
-            <div className="intro-text-row f-align-self-start m-t-5">
-              {renderStepper()}
-            </div>
-            <LiveActionFooter
-              questions={questions}
-              activeStep={activeStep}
-              prev={prev}
-              next={next}
-              setSubmitAnswers={setSubmitAnswers}
-            />
-          </div>
-        </Grid>
-      </Grid>
+        </div>
+        {renderDialogs()}
+      </div>
     );
-  };
+  }
 
   return (
     <div className="brick-row-container live-container">
-      {!isPhone() && (
-        <div className="fixed-upper-b-title">
-          <BrickTitle title={brick.title} />
-        </div>
-      )}
+      <div className="fixed-upper-b-title">
+        <BrickTitle title={brick.title} />
+      </div>
       <HoveredImage />
       <div className="brick-container play-preview-panel live-page real-live-page">
         <div className="introduction-page">
-          {isPhone() ? renderMobile() : renderDesktop()}
-          <ShuffleAnswerDialog
-            isOpen={isShuffleOpen}
-            submit={() => nextFromShuffle()}
-            hide={() => setShuffleDialog(false)}
-            close={() => cleanAndNext()}
-          />
-          <SubmitAnswersDialog
-            isOpen={isSubmitOpen}
-            submit={submitAndMove}
-            close={() => setSubmitAnswers(false)}
-          />
-          <CategoriseAnswersDialog
-            isOpen={isCategorizeOpen}
-            submit={nextFromCategorize}
-            close={() => setCategorizeDialog(false)}
-          />
+          <Grid container direction="row">
+            <Grid item xs={8}>
+              <SwipeableViews
+                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                index={activeStep}
+                className="swipe-view"
+                style={{ width: "100%" }}
+                onChangeIndex={handleStep}
+              >
+                {questions.map(renderQuestionContainer)}
+              </SwipeableViews>
+              <div className="new-layout-footer" style={{ display: "none" }}>
+                <div className="time-container">
+                  <TimeProgressbar
+                    isLive={true}
+                    onEnd={onEnd}
+                    minutes={minutes}
+                    endTime={props.endTime}
+                    brickLength={brick.brickLength}
+                    setEndTime={props.setEndTime}
+                  />
+                </div>
+                <div className="footer-space">
+                  <span className="scroll-text">Scroll down</span>
+                </div>
+                <div className="new-navigation-buttons">
+                  <div className="n-btn back" onClick={prev}>
+                    <SpriteIcon name="arrow-left" />
+                    Back
+                  </div>
+                  <div
+                    className="n-btn next"
+                    onClick={() => {
+                      if (questions.length - 1 > activeStep) {
+                        next();
+                      } else {
+                        setSubmitAnswers(true);
+                      }
+                    }}
+                  >
+                    Next
+                    <SpriteIcon name="arrow-right" />
+                  </div>
+                </div>
+              </div>
+            </Grid>
+            <Grid item xs={4}>
+              <div className="introduction-info">
+                <div className="intro-text-row f-align-self-start m-t-5">
+                  {renderStepper()}
+                </div>
+                <LiveActionFooter
+                  questions={questions}
+                  activeStep={activeStep}
+                  prev={prev}
+                  next={next}
+                  setSubmitAnswers={setSubmitAnswers}
+                />
+              </div>
+            </Grid>
+          </Grid>
         </div>
       </div>
+      {renderDialogs()}
     </div>
   );
 };
