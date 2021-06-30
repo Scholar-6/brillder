@@ -55,7 +55,7 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
   };
 
   return (
-    <div className="brick-row-container real-introduction-page">
+    <div className="brick-row-container play-brief-page">
       <div className="brick-container">
         <div className="introduction-page">
           <div className="fixed-upper-b-title">

@@ -4,6 +4,7 @@ import { Brick } from "model/brick";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import { getSynthesisTime } from "../services/playTimes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface Props {
   brick: Brick;
@@ -45,6 +46,9 @@ const PhonePreSynthesisPage: React.FC<Props> = ({ brick, ...props }) => {
         <div className="ss-phone-after-buttons" />
         <div className="footer s-fade3">
           Spend about<span className="underline-border"> {minutes} minutes </span>on this stage before reviewing your answers to improve your score.
+        </div>
+        <div className="fe-arrow-container">
+          <SpriteIcon name="play-red-arrow" />
         </div>
         <div className="new-layout-footer">
           <div className="time-container">
