@@ -268,9 +268,16 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </div>
           </div>
           <div className="introduction-info">
-            <CoverPlay onClick={startBrick} />
+            <CoverPlay onClick={() => props.user ? startBrick() : setUnauthorizedV2(true)} />
           </div>
         </div>
+        <UnauthorizedUserDialogV2
+          history={props.history}
+          isOpen={unauthorizedOpenV2}
+          emailInvalid={emailInvalid}
+          login={(email) => createInactiveAccountV2(email)}
+          notyet={() => startBrick()}
+        />
       </React.Suspense>
     );
   }
@@ -346,7 +353,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </Grid>
             <Grid item sm={4} xs={12}>
               <div className="introduction-info">
-                <CoverPlay onClick={startBrick} />
+                <CoverPlay onClick={() => props.user ? startBrick() : setUnauthorizedV2(true)} />
               </div>
             </Grid>
           </Grid>
