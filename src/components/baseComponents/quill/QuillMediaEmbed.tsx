@@ -30,8 +30,8 @@ YoutubeEmbed.className = 'youtube-video';
 YoutubeEmbed.tagName = 'iframe';
 GlobalQuill.register(YoutubeEmbed, true);
 
-const TED_REGEXP = /http(?:s?):\/\/www.ted.com\/talks\/([\w\-\_?&=]*)/g;
-const TED_EMBED_REGEXP = /https:\/\/embed.ted.com\/talks\/([\w\-\_]*)/;
+const TED_REGEXP = /http(?:s?):\/\/www.ted.com\/talks\/([\w\-_?&=]*)/g;
+const TED_EMBED_REGEXP = /https:\/\/embed.ted.com\/talks\/([\w\-_]*)/;
 class TedEmbed extends BlockEmbed {
     static create(value: string) {
         let node = super.create();
