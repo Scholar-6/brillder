@@ -9,11 +9,7 @@ export default class AutoLink {
         // on typing check autolink
         quill.on('text-change', function(delta:any, oldDelta: any, source: any) {
           function isWhitespace(ch:any) {
-            var whiteSpace = false
-            if ((ch == ' ') || (ch == '\t') || (ch == '\n')) {
-              whiteSpace = true;
-            }
-            return whiteSpace;
+            return [' ', '\t', '\n'].includes(ch);
           }
   
           var regex = /https?:\/\/[^\s]+$/;
