@@ -103,6 +103,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   let initReviewEndTime:any = null;
   let initAttemptId:any = null;
   let initPrepEndTime:any = undefined;
+  let initLiveDuration:null | moment.Duration = null;
+  let initReviewDuration:null | moment.Duration = null;
 
   const cashAttemptString = GetCashedPlayAttempt();
 
@@ -115,6 +117,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (isCover) {
       CashAttempt('');
     }
+
     if (cashAttempt.brick.id === props.brick.id && !isCover) {
       parsedBrick = cashAttempt.brick;
       initAttempts = cashAttempt.attempts;
@@ -124,6 +127,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       initReviewEndTime = cashAttempt.reviewEndTime ? moment(cashAttempt.reviewEndTime) : null;
       initAttemptId = cashAttempt.attemptId;
       initStatus = parseInt(cashAttempt.status);
+      initLiveDuration = cashAttempt.liveDuration;
+      initReviewDuration = cashAttempt.reviewDuration;
       if (cashAttempt.prepEndTime) {
         initPrepEndTime = moment(cashAttempt.prepEndTime);
       }
@@ -159,8 +164,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [reviewEndTime, setReviewEndTime] = React.useState(initReviewEndTime);
   const [attemptId, setAttemptId] = React.useState<string>(initAttemptId);
 
-  const [liveDuration, setLiveDuration] = React.useState(null as null | moment.Duration);
-  const [reviewDuration, setReviewDuration] = React.useState(null as null | moment.Duration);
+  const [liveDuration, setLiveDuration] = React.useState(initLiveDuration);
+  const [reviewDuration, setReviewDuration] = React.useState(initReviewDuration);
 
   const [unauthorizedOpen, setUnauthorized] = React.useState(false);
   const [headerHidden, setHeader] = React.useState(false);
@@ -198,6 +203,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       reviewEndTime,
       liveEndTime,
       brickAttempt,
+      liveDuration,
+      reviewDuration,
       mode,
     }));
   }
@@ -236,10 +243,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const settingReviewDuration = () => {
-    console.log('review time', getReviewTime(brick.brickLength));
     const now = moment().add(getReviewTime(brick.brickLength), 'minutes');
     const dif = moment.duration(now.diff(reviewEndTime));
-    console.log('setting review', moment(), now, reviewEndTime, dif);
     setReviewDuration(dif);
   }
 
@@ -387,7 +392,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const moveToPostPlay = () => {
-    console.log('move')
     if(props.isAuthenticated === isAuthenticated.True) {
       history.push(map.postPlay(brick.id, props.user.id));
     } else if (userToken) {
@@ -607,7 +611,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             endTime={reviewEndTime}
             setEndTime={time => {
               if (reviewEndTime === null) {
-                console.log('review end time', time);
                 setReviewEndTime(time);
               }
             }}
