@@ -25,7 +25,7 @@ import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDe
 import ViewAllFilter, { SortBy } from "./components/ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
-import BrickBlock from "./components/BrickBlock";
+import BrickBlock from "./components/BrickBlock16x9";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
