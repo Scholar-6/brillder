@@ -47,6 +47,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     justify-content: center;
     background: var(--theme-light-blue);
     color: var(--white);
+    font-family: $font-family-bold;
     padding-top: 2vh;
     padding-bottom: 2vh;
     span,
