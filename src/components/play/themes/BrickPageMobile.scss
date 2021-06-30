@@ -1828,22 +1828,22 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   .introduction-page {
     overflow: visible !important;
     flex-flow: unset !important;
-    > div {
-      height: 100%;
-      .introduction-info {
-        height: 25vw !important;
-      }
-      .introduction-content {
-        height: calc(100% - 17.5vw - 26px) !important;
-        .question-live-play {
-          padding-bottom: 3vh;
-        }
+    display: block !important;
+    height: 100%;
+    .introduction-info {
+      height: 25vw !important;
+    }
+    .introduction-content {
+      height: calc(100% - 17.5vw - 26px) !important;
+      .question-live-play {
+        padding-bottom: 3vh;
       }
     }
   }
 }
 
 .play-preview-pages .fixed-stepper-triangle {
+  display: none;
   position: fixed;
   z-index: 100;
   top: 24.6vw !important;
