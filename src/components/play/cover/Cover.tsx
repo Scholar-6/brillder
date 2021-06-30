@@ -22,16 +22,15 @@ import CoverPlay from "./components/coverAuthorRow/CoverPlay";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/UnauthorizedUserDialogV2";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
-import { createUserByEmail } from "services/axios/user";
+import { CreateByEmailRes, createUserByEmail } from "services/axios/user";
 
 
-interface IntroductionProps {
+interface Props {
   user: User;
   brick: Brick;
   location: any;
   history: any;
-  setUserToken(token: string): any;
-  setUser(user: User): void;
+  setUser(data: CreateByEmailRes): void;
   moveNext(): void;
 }
 
@@ -39,7 +38,7 @@ const MobileTheme = React.lazy(() => import('./themes/CoverMobileTheme'));
 const TabletTheme = React.lazy(() => import('./themes/CoverTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/CoverDesktopTheme'));
 
-const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
+const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [bioOpen, setBio] = React.useState(false);
 
   const [unauthorizedOpenV2, setUnauthorizedV2] = React.useState(false);
@@ -62,12 +61,6 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     setInvalidEmail(true);
   }
 
-  const setUser = (data: any) => {
-    const { user, token } = data;
-    props.setUser(user);
-    props.setUserToken(token);
-    }
-
   const createInactiveAccountV2 = async (email: string) => {
     if (!props.user) {
       // create a new account for an unauthorized user.
@@ -75,7 +68,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       if (data === 400 || !data) {
         validate(data);
       } else {
-        setUser(data);
+        props.setUser(data);
         setUnauthorizedV2(false);
         startBrick();
       }
