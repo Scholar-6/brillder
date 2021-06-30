@@ -4,13 +4,15 @@ import { CircularProgressbar } from "react-circular-progressbar";
 
 import "./Ending.scss";
 import { Brick } from "model/brick";
-import { PlayStatus } from "../model";
-import { BrickAttempt } from "../model";
+import { PlayStatus } from "../../model";
+import { BrickAttempt } from "../../model";
 import EndingStepper from "./EndingStepper";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isPhone } from "services/phone";
 import BrickTitle from "components/baseComponents/BrickTitle";
-import routes from "../routes";
+import routes from "../../routes";
+import moment from "moment";
+import { prepareDuration } from "../service";
 
 interface EndingState {
   oldScore: number;
@@ -24,7 +26,6 @@ interface EndingState {
   maxPScore: number;
 
   interval: number;
-  handleMove(): void;
 }
 
 interface EndingProps {
@@ -33,6 +34,10 @@ interface EndingProps {
   history: any;
   location: any;
   brickAttempt: BrickAttempt;
+
+  liveDuration?: null | moment.Duration;
+  reviewDuration?: null | moment.Duration;
+
   move(): void;
 }
 
@@ -60,18 +65,17 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       maxPScore,
 
       interval: 0,
-      handleMove: this.handleMove.bind(this),
     };
   }
 
   componentDidMount() {
-    let step = 3;
+    const step = 3;
     const { oldScore } = this.state;
     const { score, maxScore } = this.props.brickAttempt;
-    let liveScore = Math.round((oldScore * 100) / maxScore);
-    let reviewScore = Math.round((score * 100) / maxScore);
-    let currentScore = Math.round(((oldScore + score) * 50) / maxScore);
-    let interval = setInterval(() => {
+    const liveScore = Math.round((oldScore * 100) / maxScore);
+    const reviewScore = Math.round((score * 100) / maxScore);
+    const currentScore = Math.round(((oldScore + score) * 50) / maxScore);
+    const interval = setInterval(() => {
       let tempReviewScore = this.state.reviewScore;
       let tempLiveScore = this.state.liveScore;
       let tempCurrentScore = this.state.currentScore;
@@ -112,10 +116,6 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
 
   componentWillUnmount() {
     clearInterval(this.state.interval);
-  }
-
-  handleMove() {
-    this.props.move();
   }
 
   renderProgressBars() {
@@ -180,38 +180,6 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
         <div className="p-help-text">
           This is an average of your provisional score and your review score.
         </div>
-      </div>
-    );
-  }
-
-  renderFooter() {
-    return (
-      <div className="action-footer">
-        <div></div>
-        <div className="direction-info text-center">
-          <h2>Summary</h2>
-        </div>
-        <div>
-          <button
-            type="button"
-            className="play-preview svgOnHover play-green"
-            onClick={this.props.move}
-          >
-            <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  renderPhoneButton() {
-    return (
-      <div className="action-footer mobile-footer-fixed-buttons">
-        <SpriteIcon
-          name="arrow-right"
-          className="mobile-next-button"
-          onClick={this.props.move}
-        />
       </div>
     );
   }
@@ -306,11 +274,29 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
               </div>
             </div>
             <div className="attempted-numbers">
-              <SpriteIcon name="cancel-custom" className="text-orange" />: {numberOfFailed} 
-              <SpriteIcon name="check-icon" className="text-yellow" />: {numberOfyellow}
-              <SpriteIcon name="check-icon" className="text-theme-green" />: {numberOfcorrect}
+              <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
+              {numberOfFailed}
+              <SpriteIcon name="check-icon" className="text-yellow" />:{" "}
+              {numberOfyellow}
+              <SpriteIcon
+                name="check-icon"
+                className="text-theme-green"
+              />: {numberOfcorrect}
             </div>
-            <div className="attempted-text">Attempted: {attempted} | {answers.length}</div>
+            <div className="attempted-text">
+              Attempted: {attempted} | {answers.length}
+            </div>
+            {this.props.liveDuration && (
+              <div className="duration">
+                <SpriteIcon name="clock" />
+                <div>{prepareDuration(this.props.liveDuration)}</div>
+              </div>
+            )}
+            {this.props.reviewDuration && (
+              <div className="review-duration">
+                + {prepareDuration(this.props.reviewDuration)} Review
+              </div>
+            )}
           </div>
         </div>
       );
