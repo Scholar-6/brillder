@@ -92,7 +92,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start --scripts-version react-scripts",
-    "build": "node generateSitemap.js && react-app-rewired build --scripts-version react-scripts && npm run test-junit",
+    "build": "node generateSitemap.js && react-app-rewired build --scripts-version react-scripts",
     "test": "react-app-rewired test --scripts-version react-scripts",
     "test-junit": "react-app-rewired test --scripts-version react-scripts --testResultsProcessor \"jest-junit\" --watchAll false",
     "e2e": "react-app-rewired test --scripts-version react-scripts --roots test --testMatch \"<rootDir>/test/**/*.{spec,test}.{js,ts}\" --env node",
