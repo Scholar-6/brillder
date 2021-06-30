@@ -12,10 +12,10 @@ import Cover from "./cover/Cover";
 import Sections from "./sections/Sections";
 import Introduction from "./newPrep/PhonePrep";
 import Live from "./live/Live";
-import ProvisionalScore from "./provisionalScore/ProvisionalScore";
+import ProvisionalScore from "./scorePages/provisionalScore/ProvisionalScore";
 import Synthesis from "./synthesis/Synthesis";
 import Review from "./review/ReviewPage";
-import Ending from "./ending/Ending";
+import Ending from "./scorePages/ending/Ending";
 import FinalStep from "./finalStep/FinalStep";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import PageHeadWithMenu, {
@@ -63,7 +63,7 @@ import { CashAttempt, GetCashedPlayAttempt } from "localStorage/play";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import PhonePlaySimpleFooter from "./phoneComponents/PhonePlaySimpleFooter";
 import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
-import { getLiveTime } from "./services/playTimes";
+import { getLiveTime, getReviewTime } from "./services/playTimes";
 
 
 function shuffle(a: any[]) {
@@ -159,7 +159,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [reviewEndTime, setReviewEndTime] = React.useState(initReviewEndTime);
   const [attemptId, setAttemptId] = React.useState<string>(initAttemptId);
 
-  const [liveDurationMs, setLiveDurationMs] = React.useState(null as null | moment.Duration);
+  const [liveDuration, setLiveDuration] = React.useState(null as null | moment.Duration);
+  const [reviewDuration, setReviewDuration] = React.useState(null as null | moment.Duration);
 
   const [unauthorizedOpen, setUnauthorized] = React.useState(false);
   const [headerHidden, setHeader] = React.useState(false);
@@ -231,7 +232,15 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const settingLiveDuration = () => {
     const now = moment().add(getLiveTime(brick.brickLength), 'minutes');
     const dif = moment.duration(now.diff(liveEndTime));
-    setLiveDurationMs(dif);
+    setLiveDuration(dif);
+  }
+
+  const settingReviewDuration = () => {
+    console.log('review time', getReviewTime(brick.brickLength));
+    const now = moment().add(getReviewTime(brick.brickLength), 'minutes');
+    const dif = moment.duration(now.diff(reviewEndTime));
+    console.log('setting review', moment(), now, reviewEndTime, dif);
+    setReviewDuration(dif);
   }
 
   const finishLive = () => {
@@ -249,6 +258,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
     saveBrickAttempt(ba);
+    settingReviewDuration();
   };
 
   const finishBrick = () => {
@@ -561,7 +571,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             status={status}
             brick={brick}
             attempts={attempts}
-            liveDurationMs={liveDurationMs}
+            liveDuration={liveDuration}
             moveNext={() => cashAttempt(routes.PlaySynthesisLastPrefix)}
           />
           {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={() => history.push(routes.playPreSynthesis(brick.id))} />}
@@ -597,6 +607,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             endTime={reviewEndTime}
             setEndTime={time => {
               if (reviewEndTime === null) {
+                console.log('review end time', time);
                 setReviewEndTime(time);
               }
             }}
@@ -610,6 +621,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brick={brick}
             history={history}
             brickAttempt={brickAttempt}
+            liveDuration={liveDuration}
+            reviewDuration={reviewDuration}
             move={finishBrick}
           />
           {isPhone() && <PhonePlaySimpleFooter

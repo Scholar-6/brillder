@@ -5,16 +5,17 @@ import "react-circular-progressbar/dist/styles.css";
 
 import "./ProvisionalScore.scss";
 import { Brick } from "model/brick";
-import { PlayStatus } from "../model";
+import { PlayStatus } from "../../model";
 
-import ReviewStepper from "../review/ReviewStepper";
+import ReviewStepper from "../../review/ReviewStepper";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
-import routes from "../routes";
+import routes from "../../routes";
 import previewRoutes from "components/playPreview/routes";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { User } from "model/user";
+import { prepareDuration } from "../service";
 
 interface ProvisionalScoreState {
   value: number;
@@ -31,7 +32,7 @@ interface ProvisionalScoreProps {
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
-  liveDurationMs?: null | moment.Duration;
+  liveDuration?: null | moment.Duration;
   attempts: any[];
   moveNext?(): void;
   moveToPrep?(): void;
@@ -98,40 +99,6 @@ class ProvisionalScore extends React.Component<
     document.removeEventListener("keydown", this.state.handleMove, false);
   }
 
-  renderProgressBar() {
-    return (
-      <div className="question-live-play">
-        <Grid
-          container
-          justify="center"
-          alignContent="center"
-          className="circle-progress-container"
-        >
-          <CircularProgressbar
-            className="circle-progress"
-            strokeWidth={4}
-            counterClockwise={true}
-            value={this.state.value}
-          />
-          <div className="score-data">
-            <Grid container justify="center" alignContent="center">
-              <div>
-                <div className="score-precentage">{this.state.value}%</div>
-                <div className="score-number">
-                  {this.state.score}/{this.state.maxScore}
-                </div>
-              </div>
-            </Grid>
-          </div>
-        </Grid>
-        <div className="p-help-text">
-          Now read the author's synthesis to deepen your understanding of the
-          topic.
-        </div>
-      </div>
-    );
-  }
-
   moveToIntro() {
     const brickId = this.props.brick.id;
     let link = "";
@@ -153,16 +120,6 @@ class ProvisionalScore extends React.Component<
     }
     this.props.history.push(link);
     this.props.moveNext?.();
-  }
-
-  prepareDuration() {
-    const duration = this.props.liveDurationMs;
-    if (duration) {
-      const minuteSeconds = duration.seconds();
-      const minutesLeft = duration.minutes();
-      return minutesLeft + ' mins ' + minuteSeconds + ' seconds';
-    }
-    return '';
   }
 
   render() {
@@ -213,16 +170,20 @@ class ProvisionalScore extends React.Component<
             <div className="attempted-numbers">
               <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
               {attempts.length - numberOfcorrect}
-              <SpriteIcon name="check-icon" className="text-theme-green" />:{" "}
-              {numberOfcorrect}
+              <SpriteIcon
+                name="check-icon"
+                className="text-theme-green"
+              />: {numberOfcorrect}
             </div>
             <div className="attempted-text">
               Attempted: {attempted} | {attempts.length}
             </div>
-            <div className="duration">
-              <SpriteIcon name="clock" />
-              <div>{this.prepareDuration()}</div>
-            </div>
+            {this.props.liveDuration && (
+              <div className="duration">
+                <SpriteIcon name="clock" />
+                <div>{prepareDuration(this.props.liveDuration)}</div>
+              </div>
+            )}
           </div>
         </div>
       );
@@ -238,7 +199,37 @@ class ProvisionalScore extends React.Component<
             <Grid item xs={8}>
               <div className="introduction-page">
                 <h1 className="title">Provisional Score</h1>
-                {this.renderProgressBar()}
+                <div className="question-live-play">
+                  <Grid
+                    container
+                    justify="center"
+                    alignContent="center"
+                    className="circle-progress-container"
+                  >
+                    <CircularProgressbar
+                      className="circle-progress"
+                      strokeWidth={4}
+                      counterClockwise={true}
+                      value={this.state.value}
+                    />
+                    <div className="score-data">
+                      <Grid container justify="center" alignContent="center">
+                        <div>
+                          <div className="score-precentage">
+                            {this.state.value}%
+                          </div>
+                          <div className="score-number">
+                            {this.state.score}/{this.state.maxScore}
+                          </div>
+                        </div>
+                      </Grid>
+                    </div>
+                  </Grid>
+                  <div className="p-help-text">
+                    Now read the author's synthesis to deepen your understanding
+                    of the topic.
+                  </div>
+                </div>
               </div>
               <div className="new-layout-footer" style={{ display: "none" }}>
                 <div className="time-container" />
