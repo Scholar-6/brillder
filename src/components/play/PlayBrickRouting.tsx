@@ -46,7 +46,7 @@ import { User } from "model/user";
 import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
-import { createUserByEmail } from "services/axios/user";
+import { CreateByEmailRes, createUserByEmail } from "services/axios/user";
 import routes, { playBrief, PlayCoverLastPrefix, playNewPrep, playPreInvesigation, playPrePrep, playSections } from "./routes";
 import { isPhone } from "services/phone";
 import Brief from "./brief/Brief";
@@ -379,7 +379,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setInvalidEmail(true);
   }
 
-  const setUser = (data: any) => {
+  const setUser = (data: CreateByEmailRes) => {
     const { user, token } = data;
     props.setUser(user);
     setUserToken(token);
@@ -477,7 +477,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={history}
             brick={brick}
-            setUserToken={setUserToken}
             setUser={setUser}
             moveNext={coverMoveNext}
           />
