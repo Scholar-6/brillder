@@ -392,14 +392,12 @@ const LivePage: React.FC<LivePageProps> = ({
         <HoveredImage />
         <div className="brick-container play-preview-panel live-page real-live-page">
           <div className="introduction-page">
-            <div className="introduction-info">
-              <div className="intro-text-row">
+            <div className="intro-text-row">
                 <div className="phone-stepper-head">
                   <BrickTitle title={brick.title} />
                 </div>
                 {renderStepper()}
               </div>
-            </div>
             <div className="introduction-content" ref={questionScrollRef}>
               {questions.map(renderQuestionContainer)}
               {renderMobileButtons()}

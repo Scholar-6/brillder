@@ -47,6 +47,8 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     justify-content: center;
     background: var(--theme-light-blue);
     color: var(--white);
+    padding-top: 2vh;
+    padding-bottom: 2vh;
     span,
     p {
       font-size: 5vw !important;
@@ -70,19 +72,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       padding-left: 10vw !important;
       padding-right: 10vw !important;
       padding-bottom: 9vh !important;
-
-      .fe-arrow-container {
-        width: calc(100% - 20vw);
-        display: flex;
-        justify-content: center;
-        position: absolute;
-        bottom: 0;
-        svg {
-          transform: rotate(180deg);
-          width: 10vw;
-          height: 9vh;
-        }
-      }
 
       .new-layout-footer {
         position: fixed;
@@ -127,14 +116,19 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   }
   .pre-investigation {
     color: var(--theme-dark-blue);
-    height: calc(100% - 74px) !important;
+    height: calc(100% - 17.5vw - 26px) !important;
     text-align: center;
 
     .introduction-page {
+      position: relative;
       height: 93%;
     }
     .ss-phone-before-title {
       height: 13%;
+    }
+
+    .fe-arrow-container {
+      width: 100vw !important;
     }
 
     .title {
@@ -1814,6 +1808,10 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   }
 }
 
+.play-preview-pages .sorted-row .brick-row-container.real-introduction-page {
+  height: calc(100% - 17.5vw - 26px) !important;
+}
+
 .play-preview-pages
   .sorted-row
   .brick-row-container
@@ -1830,7 +1828,8 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     flex-flow: unset !important;
     display: block !important;
     height: 100%;
-    .introduction-info {
+    .intro-text-row {
+      position: relative;
       height: 25vw !important;
     }
     .introduction-content {
@@ -1854,4 +1853,17 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   border-left: $size solid transparent;
   border-right: $size solid transparent;
   border-top: $size solid var(--theme-light-blue);
+}
+
+.play-preview-pages .fe-arrow-container {
+  width: calc(100% - 20vw);
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  svg {
+    transform: rotate(180deg);
+    width: 10vw;
+    height: 9vh;
+  }
 }
