@@ -21,6 +21,7 @@ import { getBrickColor } from "services/brick";
 import { getPublicBricks, searchPublicBricks } from "services/axios/brick";
 import BrickCircle from "components/baseComponents/BrickCircle";
 import routes from "components/play/routes";
+import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 
 
 const MobileTheme = React.lazy(() => import('./themes/ViewAllPageMobileTheme'));
@@ -296,7 +297,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         const circleIcon = getAssignmentIcon(brick);
         bricksList.push({
           brick,
-          elem: <ShortBrickDescription circleIcon={circleIcon} searchString="" brick={brick} index={i} color={color} />
+          elem: <PhoneTopBrick16x9 circleIcon={circleIcon} searchString="" brick={brick} index={i} color={color} />
         });
       }
     }
@@ -305,7 +306,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       <Swiper slidesPerView={1}>
         {bricksList.map((b, i) =>
           <SwiperSlide key={i} onClick={() => this.handleClick(b.brick.id)}>
-            {i === 0 && <div className="week-brick">{b.brick.subject?.name} brick of the week</div>}
+            {i === 0 && <div className="week-brick">Brick of the week</div>}
             {b.elem}
           </SwiperSlide>
         )}
