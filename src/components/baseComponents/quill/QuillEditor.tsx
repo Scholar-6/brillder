@@ -149,9 +149,9 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         toolbar: (props.showToolbar ?? false) ? {
             container: `.quill-${uniqueId}`,
         } : false,
-        autolink: props.allowLinks,
-        mediaembed: props.allowMediaEmbed,
-        imageupload: props.imageDialog,
+        autolink: props.allowLinks ?? false,
+        mediaembed: props.allowMediaEmbed ?? false,
+        imageupload: props.imageDialog ?? false,
         clipboard: true,
         keyboard: {
             bindings: QuillBetterTable.keyboardBindings,
@@ -160,12 +160,12 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
             userOnly: true,
         },
         table: false,
-        'better-table': props.allowTables ? {
+        'better-table': props.allowTables ?? false ? {
             operationMenu: {
                 items: {},
             },
         } : false,
-        desmos: props.allowDesmos,
+        desmos: props.allowDesmos ?? false,
         // tableUI: props.allowTables,
         capitalization: true,
     }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.allowTables, props.allowDesmos, props.imageDialog]);

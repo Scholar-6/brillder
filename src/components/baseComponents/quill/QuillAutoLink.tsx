@@ -10,7 +10,7 @@ const Embed = GlobalQuill.import("blots/block/embed");
 
 export class LinkEmbedBlot extends Embed {
   static blotName = "link-embed";
-  static tagName = "div";
+  static tagName = "a";
   static className = "link-embed";
 
   static create(value: any) {
@@ -97,7 +97,7 @@ export default class AutoLink {
                 const ops: any[] = [];
                 let str: string = node.data;
                 for(const match of matches) {
-                    if(match.match(YOUTUBE_REGEXP) || match.match(TED_REGEXP) || match.match(VIMEO_REGEXP)) {
+                    if(quill.getModule("mediaembed") && (match.match(YOUTUBE_REGEXP) || match.match(TED_REGEXP) || match.match(VIMEO_REGEXP))) {
                       continue;
                     }
                     const split = str.split(match);

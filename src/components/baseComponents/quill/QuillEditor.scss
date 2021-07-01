@@ -127,6 +127,9 @@ s {
   background-color: var(--tab-gray);
   border-radius: $editor-radius;
   overflow: hidden;
+  display: block;
+  color: var(--text-blue) !important;
+  text-decoration: none !important;
   img {
     width: 100%;
     object-fit: cover;
