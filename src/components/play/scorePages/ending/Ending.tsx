@@ -189,7 +189,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       <EndingStepper
         questions={this.props.brick.questions}
         attempts={this.props.brickAttempt.answers}
-        handleStep={() => {}}
+        handleStep={() => { }}
       />
     );
   }
@@ -274,14 +274,19 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
               </div>
             </div>
             <div className="attempted-numbers">
-              <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
-              {numberOfFailed}
-              <SpriteIcon name="check-icon" className="text-yellow" />:{" "}
-              {numberOfyellow}
-              <SpriteIcon
-                name="check-icon"
-                className="text-theme-green"
-              />: {numberOfcorrect}
+              <div>
+                <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
+                {numberOfFailed}
+              </div>
+              <div>
+                <SpriteIcon name="check-icon" className="text-yellow" />:{" "}
+                {numberOfyellow}
+              </div>
+              <div>
+                <SpriteIcon
+                  name="check-icon"
+                  className="text-theme-green"
+                />: {numberOfcorrect}</div>
             </div>
             <div className="attempted-text">
               Attempted: {attempted} | {answers.length}
