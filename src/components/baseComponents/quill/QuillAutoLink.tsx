@@ -2,6 +2,7 @@ import Quill from "quill";
 import Delta from "quill-delta";
 import { Quill as GlobalQuill } from "react-quill";
 import axios from "axios";
+import { TED_REGEXP, VIMEO_REGEXP, YOUTUBE_REGEXP } from "./QuillMediaEmbed";
 
 const URL_REGEXP = /https?:\/\/[^\s]+/g;
 
@@ -96,6 +97,9 @@ export default class AutoLink {
                 const ops: any[] = [];
                 let str: string = node.data;
                 for(const match of matches) {
+                    if(match.match(YOUTUBE_REGEXP) || match.match(TED_REGEXP) || match.match(VIMEO_REGEXP)) {
+                      continue;
+                    }
                     const split = str.split(match);
                     const beforeLink = split.shift();
                     ops.push({ insert: beforeLink });
@@ -104,9 +108,7 @@ export default class AutoLink {
 
                     getLinkMetadata(match).then((linkMetadata) => {
                       if(!selection) return;
-                      console.log(selection.index + str.length);
                       const [embed, offset] = quill.getLeaf(selection.index + str.length);
-                      console.log(linkMetadata);
                       embed.replaceWith("link-embed", { ...linkMetadata });
                     });
                 }
