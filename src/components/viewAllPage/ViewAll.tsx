@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
-import { Swiper, SwiperSlide } from "swiper/react";
 import queryString from "query-string";
 import { Route, Switch } from "react-router-dom";
 import "swiper/swiper.scss";
@@ -38,16 +37,12 @@ import PageHeadWithMenu, {
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
-import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
-import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import ViewAllFilter, { SortBy } from "./components/ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import BrickBlock from "./components/BrickBlock16x9";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
-import { getBrickColor } from "services/brick";
 import map from "components/map";
 import NoSubjectDialog from "components/baseComponents/dialogs/NoSubjectDialog";
 import { clearProposal } from "localStorage/proposal";
