@@ -987,4 +987,5 @@
       <path id="Icon_feather-chevron-right" data-name="Icon feather-chevron-right" d="M0,18,9,9,0,0" transform="translate(1456.773 979.595) rotate(-8)" fill="none" stroke="#c43c30" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
     </g>
   </svg>
+  <svg id="f-more-vertical" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
 </svg>
