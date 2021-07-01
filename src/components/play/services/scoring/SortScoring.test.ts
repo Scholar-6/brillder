@@ -21,7 +21,7 @@ const mockComponent: SortComponent = {
 
 describe("sort scoring", () => {
 
-    it("should mark a correct answer with 4 marks", () => {
+    it("should mark a correct answer with n marks", () => {
         // arrange
         const mockAttempt = {
             answer: {
@@ -41,7 +41,7 @@ describe("sort scoring", () => {
         expect(result.correct).toStrictEqual(true);
     });
 
-    it("should mark an incorrect answer with 0", () => {
+    it("should mark an incorrect answer with 0.25 each", () => {
         const mockAttempt = {
             answer: {
                 "2_1": 1,
@@ -55,12 +55,12 @@ describe("sort scoring", () => {
         const result = mark(mockComponent, mockAttempt);
 
         // assert
-        expect(result.marks).toStrictEqual(0);
+        expect(result.marks).toStrictEqual(1);
         expect(result.maxMarks).toStrictEqual(4);
         expect(result.correct).toStrictEqual(false);
     });
 
-    it("should mark a blank answer with 0", () => {
+    it("should mark a blank answer with 0 each", () => {
         const mockAttempt = {
             answer: {
                 "A": 3,
@@ -75,25 +75,6 @@ describe("sort scoring", () => {
 
         // assert
         expect(result.marks).toStrictEqual(0);
-        expect(result.maxMarks).toStrictEqual(4);
-        expect(result.correct).toStrictEqual(false);
-    });
-
-    it("should mark an attempted answer with 1 for each correctly placed", () => {
-        const mockAttempt = {
-            answer: {
-                "0.0": 0,
-                "1.0": 1,
-                "0.1": 3,
-                "1.1": 3
-            }
-        } as ComponentAttempt<any>;
-
-        // act
-        const result = mark(mockComponent, mockAttempt);
-
-        // assert
-        expect(result.marks).toStrictEqual(2);
         expect(result.maxMarks).toStrictEqual(4);
         expect(result.correct).toStrictEqual(false);
     });
