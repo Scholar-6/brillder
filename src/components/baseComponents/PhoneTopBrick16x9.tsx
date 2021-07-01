@@ -10,6 +10,7 @@ import BrickCircle from "./BrickCircle";
 import { canDelete } from "components/services/brickService";
 import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/components/KeywordsPlay";
 import BrickTitle from "./BrickTitle";
+import { fileUrl } from "components/services/uploadFile";
 
 interface Props {
   brick: Brick;
@@ -67,14 +68,6 @@ class PhoneTopBrick16x9 extends Component<Props> {
     )
   }
 
-  renderShortBrickInfo(searchString: string, brick: Brick) {
-    return (
-      <div className="short-brick-info">
-        <BrickTitle title={brick.title} />
-      </div>
-    );
-  }
-
   renderDeleteButton(brick: Brick) {
     const { user } = this.props;
     let isAdmin = false;
@@ -120,24 +113,27 @@ class PhoneTopBrick16x9 extends Component<Props> {
     }
 
     return (
-      <div>
-        <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
-          {color
-            && (
-              <BrickCircle
-                color={color}
-                circleIcon={this.props.circleIcon}
-                circleClass={this.props.circleClass}
-                iconColor={this.props.iconColor}
-                canHover={true}
-                label={label}
-                onClick={() => this.props.move ? this.props.move() : {}}
-              />
-            )
-          }
-          {this.renderShortBrickInfo(searchString, brick)}
-          {isExpanded ? this.renderPlayButton() : ""}
+      <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
+        {color
+          && (
+            <BrickCircle
+              color={color}
+              circleIcon={this.props.circleIcon}
+              circleClass={this.props.circleClass}
+              iconColor={this.props.iconColor}
+              canHover={true}
+              label={label}
+              onClick={() => this.props.move ? this.props.move() : {}}
+            />
+          )
+        }
+        <div className="p-blue-background" />
+        <img alt="" className="p-cover-image" src={fileUrl(brick.coverImage)} />
+        <div className="bottom-description-color" />
+        <div className="bottom-description">
+          <BrickTitle title={brick.title} />
         </div>
+        {/*isExpanded ? this.renderPlayButton() : ""*/}
       </div>
     );
   }
