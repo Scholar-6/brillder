@@ -63,7 +63,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
-    if (!values.isViewAll && !values.subjectId && !values.searchString && !this.props.isSearching && !values.subjectGroup ) {
+    if (!values.isViewAll && !values.subjectId && !values.searchString && !this.props.isSearching && !values.subjectGroup) {
       //this.props.history.push(map.SubjectCategories);
     }
 
@@ -96,12 +96,12 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   async loadData() {
     const bricks = await getPublicBricks();
     if (bricks) {
-      const subjects:Subject[] = [];
+      const subjects: Subject[] = [];
       let finalBricks = bricks;
       for (let brick of bricks) {
         let res = subjects.find(s => s.id === brick.subjectId);
         if (!res) {
-          subjects.push({...brick.subject} as Subject);
+          subjects.push({ ...brick.subject } as Subject);
         }
       }
       if (this.state.subjectId > 0) {
@@ -214,11 +214,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   selectSubject(subject: Subject) {
     const finalBricks = this.state.bricks.filter(b => b.subject?.id === subject.id);
-    this.setState({finalBricks});
+    this.setState({ finalBricks });
   }
 
   renderSubject(subject: Subject, key: number) {
-    const {color} = subject;
+    const { color } = subject;
 
     return (
       <Grow
@@ -235,7 +235,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                   color={color}
                   canHover={true}
                   label=""
-                  onClick={() => {}}
+                  onClick={() => { }}
                 />
                 <span>{subject.name}</span>
               </div>
@@ -334,7 +334,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       <Grid item xs={9} className="brick-row-container">
         <div className="brick-row-title" onClick={() => this.props.history.push('/play/dashboard')}>
           <button className="btn btn-transparent svgOnHover">
-            <span>New</span>
+            <span>My Subjects</span>
             <SpriteIcon name="arrow-down" className="active text-theme-dark-blue" />
           </button>
         </div>
@@ -348,7 +348,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   render() {
     const expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
 
-    let pageClass = 'main-listing dashboard-page mobile-category';
+    let pageClass = 'main-listing dashboard-page mobile-category phone-view-all';
     if (expandedBrick) {
       pageClass += ' expanded';
     }
@@ -365,12 +365,25 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
           />
-          <div className="mobile-scroll-bricks">
+          <div className="mobile-scroll-bricks phone-top-bricks16x9">
             {this.renderMobileBricks(expandedBrick)}
           </div>
+          <div className="ss-tabs-container">
+            <div className="ss-tab-1 active">
+              <SpriteIcon name="user-custom" />
+              My Subjects
+            </div>
+            <div className="ss-tab-2">
+              All Subjects
+            </div>
+          </div>
+          <div className="va-bricks-container">
+
+          </div>
+          {/*
           <Grid container direction="row" className="sorted-row">
             {this.state.finalBricks.length === 0 ? this.renderSubjects() : this.renderBricks()}
-          </Grid>
+          </Grid>*/}
         </div>
       </React.Suspense>
     );
