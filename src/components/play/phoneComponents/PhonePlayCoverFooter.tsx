@@ -34,8 +34,6 @@ interface FooterProps {
   history: any;
   next(): void;
 
-  isCover?: boolean;
-
   isAuthenticated: isAuthenticated;
   user: User;
 }
@@ -170,7 +168,7 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
           ? <SpriteIcon name="file-plus" onClick={() => setAssign(true)} />
           : <SpriteIcon name="" />
         }
-        {props.isCover ? <svg /> : <SpriteIcon name="arrow-right" onClick={props.next} />}
+        <svg />
       </div>
     );
   }
