@@ -9,22 +9,22 @@ const mark = (component: ChooseSeveralComponent, attempt: ComponentAttempt<Choos
     // max marks is 2 x the number of correct options 
     attempt.maxMarks = choices.filter((choice) => choice.checked === true).length * 2;
 
-    const whatTheAnswersShouldBe = choices.reduce((a, e, i) => { if(e.checked) a.push(e.index); return a;}, []);
+    const whatTheAnswersShouldBe : number[] = choices.reduce((a, e, i) => { if(e.checked) a.push(e.index); return a;}, []);
     //console.log(`whatTheAnswersShouldBe ${whatTheAnswersShouldBe}`);
     const whatTheUserSelected = attempt.answer.map(a => a.realIndex);
     //console.log(`whatTheUserSelected ${whatTheUserSelected}`);
-    const correctUserAnswers = whatTheUserSelected.filter(a => whatTheAnswersShouldBe.includes(a));
+    const correctUserAnswers : number[] = whatTheUserSelected.filter(a => whatTheAnswersShouldBe.includes(a));
     //console.log(`correctUserAnswers ${correctUserAnswers}`);
-    const howManyThingsTheUserMissed = whatTheAnswersShouldBe.filter((a: number) => !whatTheUserSelected.includes(a)).length;
-    //console.log(`howManyThingsTheUserMissed ${howManyThingsTheUserMissed}`);
+    const whatTheAnswersShouldNotBe = choices.reduce((a, e, i) => { if(!e.checked) a.push(e.index); return a;}, []);
+    const incorrectUserAnswers = whatTheUserSelected.filter(a => whatTheAnswersShouldNotBe.includes(a)).length;
 
-    // 2 points for every correct answer, subtract 1 for every missed answer
-    attempt.marks = (correctUserAnswers.length * 2) - howManyThingsTheUserMissed;
+    // 2 points for every correct answer, subtract 1 for every incorrect choice
+    attempt.marks = (correctUserAnswers.length * 2) - incorrectUserAnswers;
     // minimum mark is 0
     attempt.marks = attempt.marks < 0 ? 0 : attempt.marks;
 
     // If there are more possible correct answers then correct user answers then the attempt is incorrect
-    attempt.correct = !(whatTheAnswersShouldBe.length > correctUserAnswers.length);
+    attempt.correct = JSON.stringify(whatTheAnswersShouldBe.sort((a,b) => a-b)) === JSON.stringify(correctUserAnswers.sort((a,b) => a-b));
 
     return attempt;
 }
