@@ -123,6 +123,23 @@ s {
   text-decoration: line-through;
 }
 
+.link-embed {
+  background-color: var(--tab-gray);
+  border-radius: $editor-radius;
+  overflow: hidden;
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
+  .embed-title {
+    font-family: $font-family-bold;
+    padding: 0 1rem;
+  }
+  .embed-description {
+    padding: 0 1rem 0.5rem 1rem;
+  }
+}
+
 .quill-document-editor {
   border-radius: $editor-radius;
   background-color: var(--tab-gray);
