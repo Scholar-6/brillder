@@ -301,7 +301,6 @@ const LivePage: React.FC<LivePageProps> = ({
           number={index + 1}
         />
         <div className="question-live-play review-content">
-          <div className="question-title">Investigation</div>
           {renderQuestion(question, index)}
         </div>
       </TabPanel>

@@ -507,7 +507,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             setUser={setUser}
             moveNext={coverMoveNext}
           />
-          {isPhone() && renderPhoneFooter()}
+          {isPhone() && <PhonePlayShareFooter isCover={true} brick={brick} history={history} next={coverMoveNext} />}
         </Route>
         <Route exact path={routes.briefRoute}>
           <Brief brick={brick} mode={mode} user={props.user} moveNext={moveToPrePrep} onHighlight={onHighlight} />

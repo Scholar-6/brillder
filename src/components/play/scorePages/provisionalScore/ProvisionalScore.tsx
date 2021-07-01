@@ -151,7 +151,7 @@ class ProvisionalScore extends React.Component<
               noScrolling={true}
               questions={this.props.brick.questions}
               attempts={this.props.attempts}
-              handleStep={() => {}}
+              handleStep={() => { }}
             />
           </div>
           <div className="content">
@@ -168,12 +168,16 @@ class ProvisionalScore extends React.Component<
               </div>
             </div>
             <div className="attempted-numbers">
-              <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
-              {attempts.length - numberOfcorrect}
-              <SpriteIcon
-                name="check-icon"
-                className="text-theme-green"
-              />: {numberOfcorrect}
+              <div>
+                <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
+                {attempts.length - numberOfcorrect}
+              </div>
+              <div>
+                <SpriteIcon
+                  name="check-icon"
+                  className={numberOfcorrect >= 1 ? "text-theme-green" : "text-tab-gray"}
+                />: {numberOfcorrect}
+              </div>
             </div>
             <div className="attempted-text">
               Attempted: {attempted} | {attempts.length}
@@ -252,7 +256,7 @@ class ProvisionalScore extends React.Component<
                   <ReviewStepper
                     questions={brick.questions}
                     attempts={attempts}
-                    handleStep={() => {}}
+                    handleStep={() => { }}
                   />
                 </div>
               </div>
