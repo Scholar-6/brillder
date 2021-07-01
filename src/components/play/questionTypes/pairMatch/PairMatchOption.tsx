@@ -5,6 +5,7 @@ import { QuestionValueType } from 'components/build/buildQuestions/questionTypes
 import MathInHtml from '../../baseComponents/MathInHtml';
 import PairMatchImageContent from './PairMatchImageContent';
 import { Hint, HintStatus } from 'model/question';
+import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 
 interface OptionProps {
   index: number;
@@ -42,6 +43,13 @@ const PairMatchOption: React.FC<OptionProps> = (props) => {
         imageCaption={answer.imageOptionCaption ?? answer.imageCaption}
         imageSource={answer.imageOptionSource ?? answer.imageSource}
       />
+    } else if (answer.optionType && answer.optionType === QuestionValueType.Sound) {
+      return (
+        <div style={{ width: '100%' }}>
+          <Audio src={answer.optionSoundFile} />
+          <div>{answer.optionSoundCaption ? answer.optionSoundCaption : 'Click to select'}</div>
+        </div>
+      );
     }
     return <MathInHtml value={answer.option} />;
   }
