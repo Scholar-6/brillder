@@ -5,6 +5,8 @@ import { Answer } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditorContainer from "components/baseComponents/quill/QuillEditorContainer";
+import SoundRecord from "../../sound/SoundRecord";
+import { ChooseOneAnswer } from "../../chooseOneBuild/types";
 
 
 export interface PairOptionProps {
@@ -39,7 +41,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     return "";
   }
 
-  const optionChanged = (answer: Answer, value: string) => {
+  const onTextChanged = (answer: Answer, value: string) => {
     if (locked) { return; }
     answer.option = value;
     answer.optionFile = "";
@@ -53,6 +55,17 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     answer.option = "";
     answer.optionFile = fileName;
     answer.optionType = QuestionValueType.Image;
+    update();
+    save();
+  }
+
+  const setSound = (soundFile: string, caption: string) => {
+    if (locked) { return; }
+    answer.value = '';
+    answer.valueFile = '';
+    answer.optionSoundFile = soundFile;
+    answer.optionSoundCaption = caption;
+    answer.optionType = QuestionValueType.Sound;
     update();
     save();
   }
@@ -74,20 +87,56 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     customClass += ' invalid-answer';
   }
 
+  const soundAnswer = {
+    answerType: answer.optionType,
+    soundFile: answer.optionSoundFile,
+    soundCaption: answer.optionSoundCaption
+  } as ChooseOneAnswer;
+
+  if (answer.optionType === QuestionValueType.Sound) {
+    return (
+      <Grid container item xs={6}>
+        <div className="choose-sound">
+          <SoundRecord
+            locked={locked}
+            answer={soundAnswer}
+            save={setSound}
+            clear={() => onTextChanged(answer, '')}
+          />
+        </div>
+      </Grid>
+    );
+  } else if (answer.optionType === QuestionValueType.Image) {
+    return (
+      <Grid container item xs={6}>
+        <div className={customClass}>
+          {renderDeleteButton()}
+          <QuestionImageDropZone
+            answer={answer as any}
+            isOption={true}
+            type={answer.optionType || QuestionValueType.None}
+            fileName={answer.optionFile}
+            locked={locked}
+            update={setImage}
+          />
+        </div>
+      </Grid>
+    );
+  }
+
   return (
     <Grid container item xs={6}>
       <div className={customClass}>
-        {answer.optionType !== QuestionValueType.Image &&
-          <QuillEditorContainer
-            locked={locked}
-            object={answer}
-            fieldName="option"
-            validationRequired={validationRequired}
-            toolbar={['latex']}
-            isValid={isValid}
-            placeholder={"Enter Option " + (index + 1) + "..."}
-            onChange={value => optionChanged(answer, value)}
-          />}
+        <QuillEditorContainer
+          locked={locked}
+          object={answer}
+          fieldName="option"
+          validationRequired={validationRequired}
+          toolbar={['latex']}
+          isValid={isValid}
+          placeholder={"Enter Option " + (index + 1) + "..."}
+          onChange={value => onTextChanged(answer, value)}
+        />
         <QuestionImageDropZone
           answer={answer as any}
           isOption={true}
@@ -95,6 +144,12 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
           fileName={answer.optionFile}
           locked={locked}
           update={setImage}
+        />
+        <SoundRecord
+          locked={locked}
+          answer={soundAnswer}
+          save={setSound}
+          clear={() => onTextChanged(answer, '')}
         />
         {renderDeleteButton()}
       </div>

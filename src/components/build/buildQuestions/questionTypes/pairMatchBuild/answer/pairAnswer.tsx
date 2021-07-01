@@ -5,6 +5,8 @@ import { Answer } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditorContainer from "components/baseComponents/quill/QuillEditorContainer";
+import SoundRecord from "../../sound/SoundRecord";
+import { ChooseOneAnswer } from "../../chooseOneBuild/types";
 
 
 export interface PairAnswerProps {
@@ -24,10 +26,11 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
   locked, index, length, answer, validationRequired,
   removeFromList, update, save, onBlur
 }) => {
-  const answerChanged = (answer: Answer, value: string) => {
+  const onTextChanged = (answer: Answer, value: string) => {
     if (locked) { return; }
     answer.value = value;
     answer.valueFile = "";
+    answer.valueSoundFile = "";
     answer.answerType = QuestionValueType.String;
     update();
     save();
@@ -36,6 +39,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
   const removeImage = () => {
     if (locked) { return; }
     answer.valueFile = "";
+    answer.valueSoundFile = "";
     answer.answerType = QuestionValueType.None;
     update();
     save();
@@ -81,35 +85,89 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
   const setImage = (fileName: string) => {
     if (locked) { return; }
     answer.value = "";
+    answer.valueSoundFile = "";
     answer.valueFile = fileName;
     answer.answerType = 2;
     update();
     save();
   }
 
+  const setSound = (soundFile: string, caption: string) => {
+    if (locked) { return; }
+    answer.value = '';
+    answer.valueFile = '';
+    answer.valueSoundFile = soundFile;
+    answer.valueSoundCaption = caption;
+    answer.answerType = QuestionValueType.Sound;
+    update();
+    save();
+  }
+
+  const soundAnswer = {
+    answerType: answer.answerType,
+    soundFile: answer.valueSoundFile,
+    soundCaption: answer.valueSoundCaption
+  } as ChooseOneAnswer;
+
+  if (answer.answerType === QuestionValueType.Sound) {
+    return (
+      <Grid container item xs={6}>
+        <div className="choose-sound">
+          <SoundRecord
+            locked={locked}
+            answer={soundAnswer}
+            save={setSound}
+            clear={() => onTextChanged(answer, '')}
+          />
+        </div>
+      </Grid>
+    );
+  } else if (answer.answerType === QuestionValueType.Image) {
+    return (
+      <Grid container item xs={6}>
+        <div className={customClass}>
+          {renderDeleteButton()}
+          <QuestionImageDropZone
+            answer={answer as any}
+            className="pair-image"
+            type={answer.answerType || QuestionValueType.None}
+            fileName={answer.valueFile}
+            locked={locked}
+            update={setImage}
+          />
+        </div>
+      </Grid>
+    );
+  }
+
   return (
     <Grid container item xs={6}>
       <div className={customClass}>
         {renderDeleteButton()}
-        {answer.answerType !== QuestionValueType.Image &&
-          <QuillEditorContainer
-            locked={locked}
-            object={answer}
-            fieldName="value"
-            validationRequired={validationRequired}
-            toolbar={['latex']}
-            isValid={isValid}
-            placeholder={"Enter Answer " + (index + 1) + "..."}
-            onBlur={onBlur}
-            onChange={value => answerChanged(answer, value)}
-          />}
+        <QuillEditorContainer
+          locked={locked}
+          object={answer}
+          fieldName="value"
+          validationRequired={validationRequired}
+          toolbar={['latex']}
+          isValid={isValid}
+          placeholder={"Answer " + (index + 1) + "..."}
+          onBlur={onBlur}
+          onChange={value => onTextChanged(answer, value)}
+        />
         <QuestionImageDropZone
           answer={answer as any}
-          className={answer.answerType === QuestionValueType.Image ? 'pair-image' : ''}
+          className=""
           type={answer.answerType || QuestionValueType.None}
           fileName={answer.valueFile}
           locked={locked}
           update={setImage}
+        />
+        <SoundRecord
+          locked={locked}
+          answer={soundAnswer}
+          save={setSound}
+          clear={() => onTextChanged(answer, '')}
         />
       </div>
     </Grid>
