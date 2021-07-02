@@ -293,14 +293,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
                         color: var(--theme-dark-blue);
                         margin-left: 4vw;
                     }
-                    .gg-fixed-triangle {
-                        position: absolute;
-                        top: 0vw;
-                        z-index: 100;
-                        height: 5vw;
-                        width: 5vw;
-                        background: var(--theme-dark-blue);
-                    }
                     .stepper {
                         width: 100%;
                         display: flex;
@@ -1824,7 +1816,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 }
 
 .play-preview-pages .fixed-stepper-triangle {
-    display: none;
     position: fixed;
     z-index: 100;
     top: 24.6vw !important;
