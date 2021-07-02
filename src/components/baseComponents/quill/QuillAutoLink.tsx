@@ -22,20 +22,24 @@ export class LinkEmbedBlot extends Embed {
     node.setAttribute("href", value.url);
     node.setAttribute("target", "_blank")
 
-    const image = document.createElement("img");
-    image.src = value.image;
-    image.alt = value.title;
-    node.appendChild(image);
+    if(value.image && value.image !== "undefined") {
+      const image = document.createElement("img");
+      image.src = value.image;
+      image.alt = value.title;
+      node.appendChild(image);
+    }
 
     const title = document.createElement("div");
     title.classList.add("embed-title");
     title.textContent = value.title;
     node.appendChild(title);
 
-    const description = document.createElement("div");
-    description.classList.add("embed-description");
-    description.textContent = value.description;
-    node.appendChild(description);
+    if(value.description && value.description !== "undefined") {
+      const description = document.createElement("div");
+      description.classList.add("embed-description");
+      description.textContent = value.description;
+      node.appendChild(description);
+    }
 
     return node;
   }
@@ -116,6 +120,26 @@ export default class AutoLink {
                 delta.ops = ops;
             }
             return delta;
+        });
+
+        quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node: any, delta: Delta, ...args: any[]) => {
+          const linkEmbed = (delta.ops.find((op: any) => op.insert["link-embed"])?.insert as any)?.["link-embed"];
+          if(linkEmbed) {
+            console.log(node);
+            if(linkEmbed.title === "Loading..." && linkEmbed.url) {
+              getLinkMetadata(linkEmbed.url).then((linkMetadata) => {
+                const domNode = document.querySelector(`a.link-embed[data-url="${linkEmbed.url}"]`);
+                if(!domNode) return;
+                const blot = GlobalQuill.find(domNode);
+                console.log(blot);
+                // if(!selection) return;
+                // const [embed, offset] = quill.getLeaf(selection.index + str.length);
+                blot.replaceWith("link-embed", { ...linkMetadata });
+              });
+            }
+          }
+
+          return delta;
         });
     }
 }

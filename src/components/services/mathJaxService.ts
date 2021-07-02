@@ -13,7 +13,10 @@ const splitByTags = (value: string) => {
 
 export function parseDataToArray(value: string): Array<string> {
   try {
-    return splitByTags(value);
+    // return splitByTags(value);
+    const el = document.createElement("div");
+    el.insertAdjacentHTML("beforeend", value);
+    return Array.from(el.children).map(e => e.outerHTML);
   } catch {
     return [];
   }
