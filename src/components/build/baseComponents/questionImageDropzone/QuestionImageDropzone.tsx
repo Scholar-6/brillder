@@ -63,7 +63,7 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
   }
 
   const renderCaption = () => {
-    if (type === QuestionValueType.Image && answer.imageCaption) {
+    if (type === QuestionValueType.Image) {
       if (isOption) {
         return answer.imageOptionCaption;
       }

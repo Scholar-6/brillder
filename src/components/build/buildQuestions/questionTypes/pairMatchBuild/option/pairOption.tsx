@@ -97,6 +97,11 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     soundCaption: answer.optionSoundCaption
   } as ChooseOneAnswer;
 
+  const imageAnswer = {
+    answerType: answer.optionType,
+    imageCaption: answer.imageCaption
+  }
+
   if (answer.optionType === QuestionValueType.Sound) {
     return (
       <Grid container item xs={6}>
@@ -139,7 +144,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
           validationRequired={validationRequired}
           toolbar={['latex']}
           isValid={isValid}
-          placeholder={"Enter Option " + (index + 1) + "..."}
+          placeholder={"Option " + (index + 1) + "..."}
           onChange={value => onTextChanged(answer, value)}
         />
         <QuestionImageDropZone
