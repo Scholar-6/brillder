@@ -9,6 +9,14 @@
   $book-height: 60vh;
   $real-book-height: 64vh;
 
+  .word {
+    padding-left: 0.05vw;
+    padding-right: 0.05vw;
+    margin-left: 0.05vw;
+    margin-right: 0.05vw;
+    border-radius: 0.2vw;
+  }
+
   h2 {
     font-family: $font-family-bold;
     font-size: 1.7vw;
