@@ -395,6 +395,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       } else {
         setUser(data);
         setUnauthorized(false);
+        history.push(routes.playReview(brick.id));
       }
     }
   }
