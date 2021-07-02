@@ -38,7 +38,6 @@ const ImageDialogV2: React.FC<DialogProps> = ({
   if (isOption) {
     initCaption = initData.imageOptionCaption;
   }
-  console.log(isOption, initData.imageOptionSource, initData.imageSource);
   const [source, setSource] = React.useState(initSource || "");
   const [caption, setCaption] = React.useState(initCaption || "");
   const [permision, setPermision] = React.useState(initData.imagePermision ? true : false as boolean | 1);
