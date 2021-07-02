@@ -4,11 +4,9 @@ import './ShortBrickDescription.scss';
 import { AcademicLevel, AcademicLevelLabels, Brick } from "model/brick";
 
 import SpriteIcon from "./SpriteIcon";
-import AuthorSearchRow from "./AuthorRow";
 import { User, UserType } from "model/user";
 import BrickCircle from "./BrickCircle";
 import { canDelete } from "components/services/brickService";
-import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/components/KeywordsPlay";
 import BrickTitle from "./BrickTitle";
 import { fileUrl } from "components/services/uploadFile";
 
@@ -19,8 +17,6 @@ interface Props {
   iconColor?: string;
   user?: User;
   handleDeleteOpen?(id: number): void;
-
-  searchString: string;
 
   circleClass?: string;
 
@@ -97,7 +93,7 @@ class PhoneTopBrick16x9 extends Component<Props> {
   }
 
   render() {
-    const { color, brick, isMobile, isExpanded, searchString, index } = this.props;
+    const { color, brick, isMobile, isExpanded, index } = this.props;
     let className = "short-description phone-top-brick-16x9";
 
     if (isMobile && isExpanded) {

@@ -451,9 +451,77 @@
         }
     }
     .va-bricks-container {
+        overflow-y: scroll;
+        padding-bottom: 2vh;
+        padding-left: 4vw;
         margin-top: -0.2vw;
         height: calc(100% - 56.5vw - 6vh - 74px);
         width: 100vw;
         background: var(--white);
+        .bricks-scroll-row {
+            overflow-x: scroll;
+        }
+        .bricks-flex-row {
+            display: flex;
+        }
+        .gg-subject-name {
+            font-size: 6.5vw;
+            padding-left: 1vw;
+            padding-top: 2vh;
+            padding-bottom: 2vh;
+            font-family: $font-family-bold;
+            color: var(--theme-dark-blue);
+        }
+        .phone-top-brick-16x9 {
+            border-radius: 3.5vw;
+            overflow: hidden;
+            margin-right: 2vw;
+            position: relative;
+            width: 58vw;
+            height: 33vw;
+            padding: 0 !important;
+            .p-cover-image {
+                width: 100%;
+            }
+            .left-brick-circle {
+                top: 2vw;
+                right: 2vw;
+                position: absolute;
+                .round-button {
+                    border-radius: 50%;
+                    $size: 8vw;
+                    width: $size !important;
+                    height: $size !important;
+                }
+            }
+            .bottom-description-color,
+            .bottom-description {
+                position: absolute;
+                bottom: -0.2vw;
+                height: 9vw;
+                width: 100%;
+            }
+            .bottom-description-color {
+                opacity: 0.8;
+                background: var(--tab-gray);
+                z-index: 10;
+            }
+            .bottom-description {
+                color: var(--theme-dark-blue);
+                font-family: $font-family-bold;
+                display: flex;
+                font-size: 4vw;
+                align-items: center;
+                justify-content: center;
+                z-index: 13;
+                .brick-inline {
+                    padding-left: 1vw;
+                    padding-right: 1vw;
+                    overflow-x: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
+        }
     }
 }
