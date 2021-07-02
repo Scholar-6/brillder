@@ -52,7 +52,7 @@ interface BricksListState {
   isSearching: boolean;
   finalBricks: Brick[];
   isViewAll: boolean;
-  subjects: Subject[];
+  subjects: any[];
   subjectId: number;
   shown: boolean;
 }
@@ -96,16 +96,20 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   async loadData() {
     const bricks = await getPublicBricks();
     if (bricks) {
-      const subjects: Subject[] = [];
+      const subjects: any[] = [];
       let finalBricks = bricks;
       for (let brick of bricks) {
         let res = subjects.find(s => s.id === brick.subjectId);
         if (!res) {
-          subjects.push({ ...brick.subject } as Subject);
+          subjects.push({ ...brick.subject, bricks: [] });
         }
       }
       if (this.state.subjectId > 0) {
         finalBricks = bricks.filter(b => b.subjectId === this.state.subjectId);
+      }
+      for (let brick of bricks) {
+        const subject = subjects.find(s => s.id === brick.subjectId);
+        subject.bricks.push(brick);
       }
       this.setState({
         ...this.state,
@@ -166,7 +170,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     const { searchString } = this.state;
     const bricks = await searchPublicBricks(searchString);
     if (bricks) {
-      this.hideBricks();
+      const {subjects} = this.state;
+      for (let subject of subjects) {
+        subject.bricks = [];
+      }
+      for (let brick of bricks) {
+        const subject = subjects.find(s => s.id === brick.subjectId);
+        subject.bricks.push(brick);
+      }
       this.setState({
         ...this.state,
         finalBricks: bricks,
@@ -297,7 +308,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         const circleIcon = getAssignmentIcon(brick);
         bricksList.push({
           brick,
-          elem: <PhoneTopBrick16x9 circleIcon={circleIcon} searchString="" brick={brick} index={i} color={color} />
+          elem: <PhoneTopBrick16x9 circleIcon={circleIcon} brick={brick} index={i} color={color} />
         });
       }
     }
@@ -378,7 +389,17 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             </div>
           </div>
           <div className="va-bricks-container">
-
+            {this.state.subjects.map((s, n) => <div key={n}>
+              <div className="gg-subject-name">{s.name}</div>
+              <div className="bricks-scroll-row">
+                <div className="bricks-flex-row" style={{width: (s.bricks.length * 60) + 2 + 'vw'}}>
+                  {s.bricks.map((b: any, i: number) => {
+                    const color = getBrickColor(b as Brick);
+                    return <PhoneTopBrick16x9 circleIcon="" brick={b} index={i} color={color} />;
+                  })}
+                </div>
+              </div>
+            </div>)}
           </div>
           {/*
           <Grid container direction="row" className="sorted-row">
