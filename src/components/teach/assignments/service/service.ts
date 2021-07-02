@@ -2,7 +2,7 @@ import { Assignment, TeachClassroom } from "model/classroom";
 import { TeachListItem } from "../components/ClassroomsList";
 
 export const isArchived = (assignment: Assignment) => {
-  return assignment.studentStatus && assignment.studentStatus.length > 0 && assignment.studentStatus[0].status == 3;
+  return assignment.isArchived === true;
 }
 
 export const convertClassAssignments = (items: any[], classroom: TeachClassroom, isArchive: boolean) => {
@@ -12,7 +12,7 @@ export const convertClassAssignments = (items: any[], classroom: TeachClassroom,
       assignment
     };
 
-    if (isArchived(assignment)) {
+    if (assignment.isArchived === true) {
       if (isArchive) {
         items.push(item);
       }

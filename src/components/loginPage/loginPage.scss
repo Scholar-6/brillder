@@ -1,7 +1,6 @@
 @import 'src/assets/sass/partials/variables';
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
-@import 'src/assets/sass/component/authpages';
 
 .login-page ~ .beta-text {
   @include phone_and_tabletP {
@@ -179,5 +178,16 @@
     flex-direction: column-reverse;
     justify-content: flex-end !important;
     padding: 8vh 6vw 0;
+  }
+  .phone-reset-link-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -2.7vh;
+    .reset-password-link {
+      color: var(--white);
+      margin-top: 0.5vh;
+      margin-bottom: 0.5vh;
+    }
   }
 }

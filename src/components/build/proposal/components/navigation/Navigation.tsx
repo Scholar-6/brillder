@@ -1,24 +1,21 @@
 import React from "react";
 import { useHistory } from 'react-router-dom';
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { connect } from 'react-redux';
 
 import './Navigation.scss';
 import { ReduxCombinedState } from 'redux/reducers';
-import { ProposalStep, PlayButtonStatus, PrepRoutePart, BriefRoutePart, OpenQuestionRoutePart, TitleRoutePart, BrickLengthRoutePart } from "../../model";
-import PlayButton from "components/build/baseComponents/PlayButton";
+import { ProposalStep, PrepRoutePart, BriefRoutePart, OpenQuestionRoutePart, TitleRoutePart, BrickLengthRoutePart } from "../../model";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface NextButtonProps {
   step: ProposalStep;
-  playStatus: PlayButtonStatus;
   brickId?: number;
   baseUrl?: string;
   onMove(): void;
-  saveAndPreview(): void;
 }
 
-const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, baseUrl, playStatus, ...props }) => {
+const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, baseUrl, ...props }) => {
   const history = useHistory()
 
   const move = (route: string) => {
@@ -73,35 +70,10 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, baseUrl, 
     );
   }
 
-  const renderButtonsContainer = () => {
-    if (playStatus !== PlayButtonStatus.Hidden) {
-      return (
-        <div className="navigation-container">
-          <div className="play-preview-button-container">
-            <PlayButton
-              isValid={playStatus === PlayButtonStatus.Valid}
-              tutorialStep={-1}
-              isTutorialSkipped={true}
-              onClick={props.saveAndPreview}
-            />
-          </div>
-          <div className="navigation-left">
-            {renderButtons()}
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div className="navigation-container">
-        {renderButtons()}
-      </div>
-    );
-  }
-
   return (
-    <Hidden only={['xs', 'sm']}>
-      {renderButtonsContainer()}
-    </Hidden>
+    <div className="navigation-container">
+      {renderButtons()}
+    </div>
   );
 }
 

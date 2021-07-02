@@ -2,7 +2,8 @@
 import React from 'react'
 
 import './Text.scss'
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 
 export interface TextComponentProps {
@@ -23,23 +24,24 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, d
     let comp = Object.assign({}, data);
     comp.value = htmlString;
     props.updateComponent(comp, index);
+    props.save();
   }
 
   return (
     <div className="question-build-text-editor" onFocus={props.onFocus}>
-      <DocumentWirisCKEditor
+      <div className="text-label-container">
+        Text
+      </div>
+      <QuillEditor
         disabled={locked}
-        editOnly={editOnly}
         data={data.value}
-        placeholder=""
-        colorsExpanded={true}
+        validate={props.validationRequired}
+        isValid={!!stripHtml(data.value)}
+        allowTables={true}
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-          'latex', 'insertTable', 'bulletedList', 'numberedList'
+          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'table',
         ]}
-        blockQuote={true}
-        validationRequired={props.validationRequired}
-        onBlur={() => props.save()}
         onChange={onChange}
       />
     </div>

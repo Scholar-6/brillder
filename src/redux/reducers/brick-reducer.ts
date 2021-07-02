@@ -1,3 +1,4 @@
+import { Brick } from 'model/brick';
 import types from '../types';
 
 export interface BrickState {
@@ -9,6 +10,7 @@ const BrickInitialState: BrickState = {
 }
 
 export default (state = BrickInitialState, action: any) => {
+  const newBrick = state.brick as Brick;
   switch (action.type) {
     case types.FETCH_BRICK_FAILURE:
       return {
@@ -25,10 +27,24 @@ export default (state = BrickInitialState, action: any) => {
         brick: action.payload,
         error: ''
       }
+    case types.SAVE_QUESTION_SUCCESS:
+      const questionIndex = newBrick.questions.findIndex(q => q.id === action.payload.id);
+      newBrick.questions[questionIndex] = action.payload;
+      newBrick.updated = action.payload.updated;
+      return {
+        brick: newBrick,
+        error: '',
+      }
     case types.CREATE_BRICK_SUCCESS:
       return {
         brick: action.payload,
         error: ''
+      }
+    case types.CREATE_QUESTION_SUCCESS:
+      newBrick.questions.push(action.payload);
+      return {
+        brick: newBrick,
+        error: '',
       }
     case types.FORGET_BRICK:
       return BrickInitialState

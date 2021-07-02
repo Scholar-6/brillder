@@ -1,77 +1,80 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
+// @ts-ignore
+import { Steps } from 'intro.js-react';
 
-import './TeachFilterSidebar.scss';
+import "./TeachFilterSidebar.scss";
 import { TeachClassroom, TeachStudent } from "model/classroom";
-import { TeachFilters } from '../../model';
+import { TeachFilters } from "../../model";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import EmptyFilter from "../filter/EmptyFilter";
 import RadioButton from "components/baseComponents/buttons/RadioButton";
 import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
 import { Subject } from "model/brick";
 import { isArchived } from "../service/service";
+import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
+import { resendInvitation } from "services/axios/classroom";
 
 enum TeachFilterFields {
-  Assigned = 'assigned',
-  Completed = 'completed'
+  Assigned = "assigned",
+  Completed = "completed",
 }
 
 interface FilterSidebarProps {
   isLoaded: boolean;
+  isNewTeacher: boolean;
   classrooms: TeachClassroom[];
   activeStudent: TeachStudent | null;
   activeClassroom: TeachClassroom | null;
   setActiveStudent(s: TeachStudent): void;
   setActiveClassroom(id: number | null): void;
   filterChanged(filters: TeachFilters): void;
+  hideIntro(): void;
   createClass(name: string, subject: Subject): void;
   isArchive: boolean;
 }
 
 interface FilterSidebarState {
-  filterExpanded: boolean;
   filters: TeachFilters;
-  isClearFilter: boolean;
+  ascending: boolean;
+  isInviteOpen: boolean;
   createClassOpen: boolean;
 }
 
-class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
+class TeachFilterSidebar extends Component<
+  FilterSidebarProps,
+  FilterSidebarState
+> {
   constructor(props: FilterSidebarProps) {
     super(props);
     this.state = {
-      filterExpanded: true,
-      isClearFilter: false,
+      ascending: false,
+      isInviteOpen: false,
       filters: {
         assigned: false,
-        completed: false
+        completed: false,
       },
-      createClassOpen: false
+      createClassOpen: false,
     };
   }
-
-  hideFilter() { this.setState({ filterExpanded: false }) }
-  expandFilter() { this.setState({ filterExpanded: true }) }
 
   clearStatus() {
     const { filters } = this.state;
     filters.assigned = false;
     filters.completed = false;
-    this.filterClear(filters);
     this.props.filterChanged(filters);
   }
 
-  filterClear(filters: TeachFilters) {
-    if (filters.assigned || filters.completed) {
-      this.setState({ isClearFilter: true, filters });
-    } else {
-      this.setState({ isClearFilter: false, filters });
+  async resendInvitation(s: any) {
+    if(this.props.activeClassroom) {
+      await resendInvitation(this.props.activeClassroom as any, s.email);
+      this.setState({isInviteOpen: true});
     }
   }
 
   toggleFilter(filter: TeachFilterFields) {
     const { filters } = this.state;
     filters[filter] = !filters[filter];
-    this.filterClear(filters);
     this.props.filterChanged(filters);
   }
 
@@ -100,8 +103,40 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     }
 
     return (
-      <div className={className} key={key} onClick={() => this.props.setActiveStudent(s)}>
-        <span className="student-name">{s.firstName} {s.lastName}</span>
+      <div
+        className={className}
+        key={key}
+        onClick={() => this.props.setActiveStudent(s)}
+      >
+        <span className="student-name">
+          {s.firstName} {s.lastName}
+        </span>
+      </div>
+    );
+  }
+
+  renderInvitation(s: any, key: number) {
+    return (
+      <div className="student-row invitation" key={key}>
+        <span className="student-name">
+          {s.email}
+          <button className="btn resend-label" onClick={
+            () => this.resendInvitation(s)
+          }>Resend</button>
+        </span>
+      </div>
+    );
+  }
+
+  renderAssignedCount(c: TeachClassroom) {
+    const count = this.getClassAssignedCount(c);
+    if (count <= 0) {
+      return <div />;
+    }
+    return (
+      <div className="classrooms-box">
+        {count}
+        <div />
       </div>
     );
   }
@@ -109,31 +144,37 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
   renderClassroom(c: TeachClassroom, i: number) {
     return (
       <div key={i} className="classes-box">
-        <div className={"index-box " + (c.active ? "active" : "")} onClick={e => this.toggleClassroom(e, c)} title={c.name}>
+        <div
+          className={"index-box " + (c.active ? "active" : "")}
+          onClick={(e) => this.toggleClassroom(e, c)}
+          title={c.name}
+        >
           <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
-            <RadioButton checked={c.active} color={c.subject.color} name={c.subject.name} />
+            <RadioButton
+              checked={c.active}
+              color={c.subject.color}
+              name={c.subject.name}
+            />
             <span className="filter-class-name">{c.name}</span>
-            {
-              c.active &&
+            {c.active && (c.students.length > 0 || c.studentsInvitations.length > 0) && (
               <div className="classroom-icon svgOnHover">
                 <SpriteIcon name="arrow-right" className="active" />
               </div>
-            }
+            )}
           </div>
           <div className="right-index">
-            {c.students.length}
-            <SpriteIcon name="users" className="active" />
-            <div className="classrooms-box">
-              {this.getClassAssignedCount(c)}
-            </div>
+            {c.students.length + c.studentsInvitations.length}
+            <SpriteIcon name="users-custom" className="active" />
+            {this.renderAssignedCount(c)}
           </div>
         </div>
         {c.active && c.students.map(this.renderStudent.bind(this))}
+        {c.active && c.studentsInvitations.map(this.renderInvitation.bind(this))}
       </div>
     );
   }
 
-  getClassAssignedCount(classroom: TeachClassroom) {
+  getClassAssignedCount(classroom: any) {
     let classBricks = 0;
     for (const assignment of classroom.assignments) {
       const archived = isArchived(assignment);
@@ -151,49 +192,91 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
   }
 
   renderClassesBox() {
+    let finalClasses = [];
+    for (const cls of this.props.classrooms) {
+      let finalClass = Object.assign({}, cls) as any;
+      finalClass.assigned = this.getClassAssignedCount(finalClass);
+      finalClasses.push(finalClass);
+    }
+    if (this.state.ascending) {
+      finalClasses = finalClasses.sort((a, b) => a.assigned - b.assigned);
+    } else {
+      finalClasses = finalClasses.sort((a, b) => b.assigned - a.assigned);
+    }
     let totalBricks = 0;
     let totalCount = 0;
     for (let classroom of this.props.classrooms) {
       totalCount += classroom.students.length;
       totalBricks += this.getClassAssignedCount(classroom);
     }
-    let className = "sort-box teach-sort-box";
-    if (!this.state.filterExpanded) {
-      className += " sort-box-expanded";
-    }
     return (
-      <div className={className}>
+      <div className="sort-box teach-sort-box flex-height-box">
+      <div className="sort-box">
         <div className="filter-container sort-by-box">
-          <div style={{ display: 'flex' }}>
-            <div className="class-header" style={{ width: '50%' }}>CLASSES</div>
+          <div style={{ display: "flex" }}>
+            {totalBricks > 1 ? (
+              <div className="class-header" style={{ width: "100%" }}>
+                {totalBricks} ASSIGNMENTS
+              </div>
+            ) : (
+              <div className="class-header" style={{ width: "50%" }}>
+                1 ASSIGNMENT
+              </div>
+            )}
           </div>
         </div>
-        <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
-          + Create Class
+        <div
+          className="create-class-button assign"
+          onClick={() => this.setState({ createClassOpen: true })}
+        >
+          In {finalClasses.length} Classes
+          <div className="flex-relative">
+            <SpriteIcon name="plus-circle" />
+            <div className="custom-tooltip">Create Class</div>
+          </div>
         </div>
-        <div className="filter-container indexes-box classrooms-filter">
-          <div
-            className={"index-box " + (!this.props.activeClassroom ? "active" : "")}
-            onClick={this.removeClassrooms.bind(this)}
-          >
-            View All Classes
-            <div className="right-index">
-              {totalCount}
-              <SpriteIcon name="users" className="active" />
-              <div className="classrooms-box">
-                {totalBricks}
-              </div>
+        <div
+          className={
+            "index-box m-view-all " +
+            (!this.props.activeClassroom ? "active" : "")
+          }
+          onClick={this.removeClassrooms.bind(this)}
+        >
+          View All Classes
+          <div className="right-index">
+            {totalCount}
+            <SpriteIcon name="users-custom" className="active" />
+            <div className="classrooms-box">
+              {totalBricks}
+              <div />
             </div>
           </div>
-          {this.props.classrooms.map(this.renderClassroom.bind(this))}
+          <div className="m-absolute-sort">
+            <SpriteIcon
+              name={
+                this.state.ascending
+                  ? "hero-sort-ascending"
+                  : "hero-sort-descending"
+              }
+              onClick={() =>
+                this.setState({ ascending: !this.state.ascending })
+              }
+            />
+          </div>
+        </div>
+        </div>
+      <div className="sort-box subject-scrollable">
+        <div className="filter-container indexes-box classrooms-filter">
+          {finalClasses.map(this.renderClassroom.bind(this))}
         </div>
       </div>
+      </div>
     );
-  };
+  }
 
   renderContent() {
     if (!this.props.isLoaded) {
-      return <div></div>
+      return <div></div>;
     }
     if (this.props.isLoaded && this.props.classrooms.length === 0) {
       return <EmptyFilter />;
@@ -201,17 +284,54 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     return this.renderClassesBox();
   }
 
+  onIntroExit() {
+    this.props.hideIntro();
+  }
+
+  onIntroChanged(e: any) {
+    if (e !== 0) {
+      this.props.hideIntro();
+    }
+  }
+
   render() {
     return (
-      <Grid container item xs={3} className="sort-and-filter-container teach-assigned">
+      <Grid
+        container
+        item
+        xs={3}
+        className="sort-and-filter-container teach-assigned"
+      >
         {this.renderContent()}
+        <div className="sidebar-footer" />
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
           submit={(name, subject) => {
             this.props.createClass(name, subject);
-            this.setState({ createClassOpen: false })
+            this.setState({ createClassOpen: false });
           }}
-          close={() => { this.setState({ createClassOpen: false }) }}
+          close={() => {
+            this.setState({ createClassOpen: false });
+          }}
+        />
+        {this.props.isNewTeacher &&
+         <Steps
+          enabled={this.props.isNewTeacher}
+          steps={[{
+            element: '.classes-box',
+            intro: `<p>Invited students will remain amber until they accept to join your class</p>`,
+          },{
+            element: '.classes-box',
+            intro: `<p>Invited students will remain amber until they accept to join your class</p>`,
+          }]}
+          initialStep={0}
+          onChange={this.onIntroChanged.bind(this)}
+          onExit={this.onIntroExit.bind(this)}
+          onComplete={() => {}}
+        />}
+        <StudentInviteSuccessDialog
+          numStudentsInvited={this.state.isInviteOpen ? 1 : 0}
+          close={() => this.setState({isInviteOpen: false})}
         />
       </Grid>
     );

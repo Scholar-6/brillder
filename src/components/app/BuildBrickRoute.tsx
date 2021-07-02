@@ -5,12 +5,15 @@ import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
 
 import userActions from "../../redux/actions/user";
-import { isAuthenticated, Brick } from "model/brick";
+import { isAuthenticated, Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
+import { checkAdmin } from "components/services/brickService";
+import { Helmet } from "react-helmet";
+import LoginRedirect from "components/baseComponents/LoginRedirect";
 
 interface BuildRouteProps {
   exact?: any;
@@ -23,15 +26,13 @@ interface BuildRouteProps {
   location: any;
   getUser(): void;
   isAuthorized(): void;
-  fetchBrick(id: number): void;
+  fetchBrick(id: number): Promise<any>;
 }
 
-const BuildBrickRoute: React.FC<BuildRouteProps> = ({
+const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  setBrillderTitle();
-
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!rest.user) {
       rest.getUser();
@@ -50,14 +51,32 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
       }
     }
 
-    return (
+    // #3374 brillder
+    const canAccess = (brick: Brick) => {
+      const isAdmin = checkAdmin(rest.user.roles);
+      if (isAdmin) { return true; }
+
+      if (brick.isCore && brick.status === BrickStatus.Publish) {
+        return false;
+      }
+      return true;
+    }
+
+    return <>
+      <Helmet>
+        <title>{getBrillderTitle()}</title>
+      </Helmet>
       <Route
         {...rest}
         render={(props) => {
           // fetch brick
           const brickId = parseInt(props.match.params.brickId);
           if (!rest.brick || !rest.brick.author || rest.brick.id !== brickId) {
-            rest.fetchBrick(brickId);
+            rest.fetchBrick(brickId).then(res => {
+              if (res.status === 403) {
+                props.history.push(map.MainPage);
+              }
+            })
             return <PageLoader content="...Getting Brick..." />;
           }
 
@@ -66,22 +85,28 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
           if (found === -1) {
             const isSynthesis = rest.location.pathname.indexOf('/synthesis');
             if (isSynthesis) {
-              return <Component {...props} />;
+              if (canAccess(rest.brick)) {
+                return <Component {...props} />;
+              }
+              return <LoginRedirect />;
             }
 
             props.history.push(`/build/brick/${brickId}/investigation`);
             return <PageLoader content="...Getting Brick..." />;
           }
 
-          return <Component {...props} />;
+          if (canAccess(rest.brick)) {
+            return <Component {...props} />;
+          }
+          return <LoginRedirect />;
         }}
       />
-    );
+    </>;
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized();
     return <PageLoader content="...Checking rights..." />;
   } else {
-    return <Redirect to={map.Login} />;
+    return <LoginRedirect />;
   }
 };
 
@@ -100,4 +125,4 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(mapState, mapDispatch);
 
-export default connector(BuildBrickRoute);
+export default connector(ProposalBrickRoute);

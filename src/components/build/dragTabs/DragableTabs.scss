@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 $distance: 2px;
 $tile-height: 100%;
@@ -10,6 +10,9 @@ $tile-height: 100%;
   width: 100%;
   background: var(--theme-dark-blue) !important;
   height: 6.2%;
+  > .MuiGridList-root {
+    overflow: inherit !important;
+  }
   .drag-container {
     width: 100% !important;
     margin: 0 !important;
@@ -18,6 +21,9 @@ $tile-height: 100%;
     display: flex;
     .drag-tile-container {
       flex: 1;
+      > .MuiGridListTile-tile {
+        overflow: inherit !important;
+      }
     }
   }
   .drag-tile-container {
@@ -59,6 +65,7 @@ $tile-height: 100%;
     }
   }
   .draggable-tab {
+    position: relative;
     width: 100%;
     height: 100%;
     @extend %textCenter;
@@ -83,24 +90,53 @@ $tile-height: 100%;
       opacity: 1;
     }
     .remove-icon {
+      position: absolute;
       width: 1.2vw;
       height: 1.2vw;
       display: none;
       padding: 0.3vw;
+      color: var(--white) !important;
+
+      .css-custom-tooltip {
+        width: 8vw;
+        height: 0;
+        left: 1.5vw;
+        overflow:hidden;
+      }
+
       &.active {
         display: flex;
         position: absolute;
-        right: 0.3vw;
-        top: 0.3vw;
+        height: 0.7vw;
+        width: 0.7vw;
+        top: -1.4vw !important;
+
+        border-radius: 50%;
+
+        svg {
+          position: absolute;
+          width: 1.9vw !important;
+          height: 1.9vw !important;
+        }
       }
       .svg {
         stroke-width: 2.2;
       }
 
       &:hover {
+        animation-name: fade-orange;
+        animation-duration: 0.5s;
+        animation-delay: 0s;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+
         .svg {
-          color: var(--theme-orange) !important;
+          color: var(--theme-dark-blue) !important;
           stroke-width: 3;
+        }
+        .css-custom-tooltip {
+          opacity: 1;
+          height: auto;
         }
       }
     }
@@ -150,20 +186,11 @@ $tile-height: 100%;
     border: 0;
     border-radius: 50%;
     @extend %flexCenter;
-    &:before {
-      content: ' ';
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      border-width: 0.1vw;
-      border-style: dashed;
-      border-color: var(--theme-orange);
-      border-radius: 50%;
-    }
-    .svg {
-      @extend %removePosition;
+    .circle-border {
+      width: 2vw !important;
+      height: 2vw !important;
+      color: var(--theme-orange) !important;
+      position: absolute !important;
     }
   }
 
@@ -307,7 +334,6 @@ $tile-height: 100%;
   .drag-tile-container.active {
     .drag-tile {
       background: white !important;
-      
       .tab-number {
         font-family: $font-family-bold !important;
       }
@@ -318,7 +344,7 @@ $tile-height: 100%;
       }
       &.invalid {
         .tab-number {
-         color: var(--white) !important;
+          color: var(--white) !important;
         }
         .svg {
           color: var(--white) !important;
@@ -332,4 +358,9 @@ $tile-height: 100%;
       }
     }
   }
+}
+
+// plan tab
+.drag-tabs .drag-tile-container.plan-tab {
+  margin-right: 2px;
 }

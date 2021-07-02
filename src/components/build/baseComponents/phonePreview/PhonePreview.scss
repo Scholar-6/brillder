@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .phone-question-preview,
 .proposal-phone-preview {
@@ -92,14 +92,6 @@
       .document-editor {
         border-radius: 0 !important;
         background: transparent !important;
-        .ck-editor {
-          .ck-content {
-            background: transparent !important;
-            border-radius: 0 !important;
-            padding: 0.5vw 0 !important;
-            border-bottom: 1px solid var(--gray) !important;
-          }
-        }
       }
     }
     .MuiButton-label {
@@ -121,7 +113,7 @@
             padding-bottom: 0px !important;
             p {
               font-size: 1vw !important;
-              padding:0.5vw 0;
+              padding: 0.5vw 0;
             }
           }
         }
@@ -234,14 +226,15 @@
     }
     .custom-component {
       border-radius: 1.6vw;
+      blockquote {
+        color: var(--theme-dark-blue);
+        &.no-break {
+          white-space: nowrap;
+        }
+      }
       &.mobile-question-component {
         div {
           > .text-play {
-            &:first-child {
-              p {
-                @extend %fw-6;
-              }
-            }
             img {
               width: 100%;
             }

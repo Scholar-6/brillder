@@ -30,12 +30,10 @@ const LogoutDialog: React.FC<LogoutComponentProps> = (props) => {
         <div>you want to log out?</div>
       </div>
       <div className="dialog-footer">
-        <button className="btn btn-md bg-theme-orange yes-button"
-          onClick={logout}>
+        <button className="btn btn-md bg-theme-orange yes-button" onClick={logout}>
           <span>Yes</span>
         </button>
-        <button className="btn btn-md bg-gray no-button"
-          onClick={props.close}>
+        <button className="btn btn-md bg-gray no-button" onClick={props.close}>
           <span>No</span>
         </button>
       </div>

@@ -1,7 +1,6 @@
 import React from "react";
 
 import { Subject } from "model/brick";
-import { GENERAL_SUBJECT, CURRENT_AFFAIRS_SUBJECT } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
 
@@ -40,9 +39,6 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
     let row = [];
 
     for (let subject of subjects) {
-      if (subject.name === GENERAL_SUBJECT || subject.name === CURRENT_AFFAIRS_SUBJECT) {
-        continue;
-      }
       row.push(subject);
       if (isOdd && row.length >= 3) {
         isOdd = false;
@@ -64,7 +60,6 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
         {list.map((row, i) =>
           <div key={i} className="subject-row">
             {row.map((s, j) => renderSubject(s, j))}
-            {i === list.length - 1 && renderViewAllButton()}
           </div>
         )}
       </div>

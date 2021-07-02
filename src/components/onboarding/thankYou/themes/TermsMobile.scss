@@ -1,0 +1,63 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.thank-you-page {
+  height: 100%;
+  background: var(--theme-light-blue);
+  color: var(--white);
+
+  .th-before-image-space {
+    height: 5%;
+  }
+
+  svg {
+    height: 20vh;
+    width: auto;
+    padding-top: 0%;
+    color: var(--theme-orange);
+  }
+
+  .th-brillder {
+    font-family: $font-family-light;
+    line-height: 0;
+    padding-top: 2.4vh;
+    letter-spacing: 1vw;
+    font-size: 4.5vh;
+  }
+
+  .th-after-image-space {
+    height: 12%;
+  }
+
+  .th-title-container {
+    height: 24%;
+    .th-title {
+      line-height: 0;
+      height: 33.3%;
+      font-family: $font-family-black;
+      text-align: center;
+      font-size: 11vw;
+    }
+  }
+  .th-after-title-space {
+    height: 7%;
+  }
+  .th-last-text {
+    line-height: 0;
+    padding-top: 0;
+    font-size: 6.2vw;
+  }
+  .th-before-button-space {
+    height: 7%;
+  }
+  button {
+    width: 84vw;
+    border-radius: 4vw;
+    padding: 1vh;
+    font-size: 8vw;
+    background: var(--theme-orange);
+    color: var(--white);
+    animation: fadein 2s ease-out forwards;
+  }
+}

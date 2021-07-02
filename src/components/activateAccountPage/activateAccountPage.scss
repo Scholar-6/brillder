@@ -1,15 +1,9 @@
 @import 'src/assets/sass/partials/variables';
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
-@import 'src/assets/sass/component/authpages';
 
 .login-page ~ .beta-text {
-  @include phone_and_tabletP {
-    color: var(--theme-dark-blue);
-  }
-  @include tabletP {
-    color: var(--theme-orange);
-  }
+  color: var(--theme-orange);
 }
 
 .choose-login-desktop {
@@ -164,19 +158,5 @@
   .first-col.filled {
     z-index: 100;
     background: var(--theme-dark-blue);
-  }
-}
-
-.mobile-button-box {
-  @include phone_and_tabletP {
-    background-color: $button-box;
-    border-top-right-radius: 10vw;
-    overflow: hidden;
-    margin-top: 34px;
-    height: calc(61% - 34px);
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: flex-end !important;
-    padding: 8vh 6vw 0;
   }
 }

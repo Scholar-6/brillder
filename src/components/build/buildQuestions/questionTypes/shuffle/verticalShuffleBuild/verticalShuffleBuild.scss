@@ -1,12 +1,79 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .vertical-shuffle-build {
   @extend %textCenter;
+  .verical-sound {
+    margin-bottom: 0.4vh;
+    border-radius: 0.8vw;
+    background: var(--solitude-light);
+  }
   .vertical-answer-box {
+    min-height: 2vw;
     position: relative;
+    border-radius: 0.8vw;
     width: 100%;
     margin-bottom: 0.4vh;
+    .question-image-drop {
+      left: unset;
+      display: flex;
+      align-items: center;
+      top: 0;
+      right: 6vw;
+      width: 4vw;
+      height: 100%;
+      position: absolute;
+    }
+    &.big-answer {
+      height: 14vh;
+      background: var(--solitude-light);
+      .question-image-drop {
+        padding-top: 0.5vh;
+        padding-bottom: 0.5vh;
+        top: 1vh;
+        width: 100%;
+        left: 0;
+        display: block;
+        position: relative !important;
+        .dropzone {
+          display: block;
+        }
+        .dropzone > img {
+          height: 8vh;
+        }
+      }
+    }
+    .quill-document-editor {
+      .ql-editor {
+        padding-left: 2vw;
+        padding-right: 10vw;
+      }
+      .ql-editor.ql-blank::before {
+        left: 2vw;
+      }
+    }
+    
+    &.vertical-string {
+      .sound-record-button {
+        position: absolute;
+        cursor: pointer;
+        right: 3.5vw;
+        top: 0;
+        height: 100%;
+        @extend %flexCenter;
+        svg {
+          @extend %transitionAll300;
+          height: 100%;
+          width: 2vw;
+          color: var(--dark-gray);
+        }
+        &:hover {
+          .svg {
+            color: var(--theme-orange);
+          }
+        }
+      }
+    }
   }
 }

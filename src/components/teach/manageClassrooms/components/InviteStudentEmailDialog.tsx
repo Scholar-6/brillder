@@ -20,12 +20,31 @@ const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
   const [currentEmail, setCurrentEmail] = React.useState("");
   const [users, setUsers] = React.useState<User[]>([]);
-  const [emailInvalid, setEmailInvalid] = React.useState<boolean>(false);
+
+  const getGoogleEmail = (emailString: string) => {
+    const regex = /<(.*)>/g; // The actual regex
+    const matches = regex.exec(emailString);
+    try {
+      if (matches) {
+        const googleEmail = matches[1];
+        if(emailRegex.test(googleEmail)) {
+          return googleEmail;
+        }
+      }
+    } catch (e) {
+      console.log('can`t parse email');
+    }
+    return null;
+  }
 
   const addUser = (email: string) => {
     if (!emailRegex.test(email)) {
-      setEmailInvalid(true);
-      return;
+      const googleEmail = getGoogleEmail(email);
+      if (googleEmail) {
+        email = googleEmail;
+      } else {
+        return;
+      }
     }
     setCurrentEmail('');
     setUsers(users => [ ...users, { email } as User]);
@@ -33,7 +52,6 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
 
   const onAddUser = React.useCallback(() => {
     if (!emailRegex.test(currentEmail)) {
-      setEmailInvalid(true);
       return;
     }
     setCurrentEmail('');
@@ -44,7 +62,6 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
     const currentUsers = users;
     if (!emailRegex.test(currentEmail)) {
       if (users.length <= 0) {
-        setEmailInvalid(true);
         return;
       }
     } else {
@@ -58,7 +75,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
       { withCredentials: true }
     );
     props.close(currentUsers.length);
-  }, [users, currentEmail])
+  }, [users, props, currentEmail])
 
   const checkSpaces = (email: string) => {
     const emails = email.split(' ');
@@ -80,10 +97,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
         <div className="bold m-b-10">Invite students by email.</div>
         <div className="text-center f-s-2">You can invite between 1 and 50 students to a class</div>
         <AutocompleteUsernameButEmail
-          editorError=""
-          placeholder="hello"
           currentEmail={currentEmail}
-          onBlur={() => {}}
           users={users}
           onAddEmail={onAddUser}
           onChange={email => checkSpaces(email.trim())}

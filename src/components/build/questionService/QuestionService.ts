@@ -1,7 +1,7 @@
 import update from "immutability-helper";
 
 import { validateQuestion } from "./ValidateQuestionService";
-import { CasheBuildQuestion, BuildPlayRedirect } from 'localStorage/buildLocalStorage';
+import { CasheBuildQuestion, ClearQuestionCash, BuildPlayRedirect } from 'localStorage/buildLocalStorage';
 
 
 import {
@@ -20,11 +20,14 @@ import { getDefaultMissingWordAnswer } from "../buildQuestions/questionTypes/mis
 import { getDefaultLineHighlightingAnswer } from "../buildQuestions/questionTypes/highlighting/lineHighlightingBuild/LineHighlightingBuild";
 import { getDefaultWordHighlightingAnswer } from "../buildQuestions/questionTypes/highlighting/wordHighlighting/wordHighlighting";
 
-
-export interface ApiQuestion {
-  id?: number;
+export interface BaseApiQuestion {
   contentBlocks: string;
   type: number;
+}
+
+export interface ApiQuestion extends BaseApiQuestion {
+  id?: number;
+  brickQuestionId?: number;
   order: number;
 }
 
@@ -60,6 +63,10 @@ export function deactiveQuestions(questions: Question[]) {
   const updatedQuestions = questions.slice();
   updatedQuestions.forEach(q => q.active = false);
   return updatedQuestions;
+}
+
+export function clearCashQuestion() {
+  ClearQuestionCash();
 }
 
 export function cashBuildQuestion(brickId: number, questionNumber: number) {
@@ -99,6 +106,7 @@ export function getApiQuestion(question: Question) {
   } as ApiQuestion;
   if (question.id) {
     apiQuestion.id = question.id;
+    apiQuestion.brickQuestionId = question.brickQuestionId;
     apiQuestion.type = question.type;
   }
   apiQuestion.order = question.order;
@@ -166,6 +174,7 @@ export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]
   if (parsedQuestion.components) {
     let q = {
       id: question.id,
+      brickQuestionId: question.brickQuestionId,
       type: question.type,
       hint: parsedQuestion.hint,
       order: question.order,
@@ -182,6 +191,24 @@ export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]
   }
 }
 
+export function justParseQuestion(question: ApiQuestion) {
+  const parsedQuestion = JSON.parse(question.contentBlocks);
+  let q = null;
+  if (parsedQuestion.components) {
+    q = {
+      id: question.id,
+      brickQuestionId: question.brickQuestionId,
+      type: question.type,
+      hint: parsedQuestion.hint,
+      order: question.order,
+      firstComponent: parsedQuestion.firstComponent ?
+        parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
+      components: parsedQuestion.components
+    } as Question;
+  }
+  return q;
+}
+
 export function setLastQuestionId(brick: Brick, questions: Question[]) {
   const savedQuestions = brick.questions;
   const updatedQuestions = deactiveQuestions(questions);
@@ -191,12 +218,11 @@ export function setLastQuestionId(brick: Brick, questions: Question[]) {
   return updatedQuestions;
 }
 
-export function activateFirstInvalidQuestion(qs: Question[]) {
-  for (const q of qs) {
+export function getFirstInvalidQuestionIndex(qs: Question[]) {
+  for (const [i, q] of Array.from(qs.entries())) {
     let isQuestionValid = validateQuestion(q as any);
     if (!isQuestionValid) {
-      q.active = true;
-      return;
+      return i;
     }
   }
 }

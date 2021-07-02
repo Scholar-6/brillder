@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Grid, Hidden } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import queryString from 'query-string';
 import { Moment } from 'moment';
 
@@ -14,9 +14,8 @@ import { PlayStatus, ComponentAttempt } from "../model";
 import { CashQuestionFromPlay } from "localStorage/buildLocalStorage";
 import { Brick } from "model/brick";
 import { PlayMode } from "../model";
-import { getPlayPath, getAssignQueryString, scrollToStep } from "../service";
+import { getPlayPath, scrollToStep } from "../service";
 
-import CountDown from "../baseComponents/CountDown";
 import LiveStepper from "./components/LiveStepper";
 import TabPanel from "../baseComponents/QuestionTabPanel";
 import ShuffleAnswerDialog from "components/baseComponents/failedRequestDialog/ShuffleAnswerDialog";
@@ -29,6 +28,13 @@ import MobilePrevButton from "./components/MobilePrevButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
+import { getLiveTime } from "../services/playTimes";
+import BrickTitle from "components/baseComponents/BrickTitle";
+import routes from "../routes";
+import previewRoutes from "components/playPreview/routes";
+import HoveredImage from "../baseComponents/HoveredImage";
+import { getUniqueComponent } from "components/build/questionService/QuestionService";
+import CategoriseAnswersDialog from "components/baseComponents/dialogs/CategoriesAnswers";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -36,6 +42,7 @@ interface LivePageProps {
   brick: Brick;
   questions: Question[];
   isPlayPreview?: boolean;
+  history: any;
   previewQuestionIndex?: number;
   updateAttempts(attempt: any, index: number): any;
   finishBrick(): void;
@@ -43,6 +50,7 @@ interface LivePageProps {
   // things related to count down
   endTime: any;
   setEndTime(time: Moment): void;
+  moveNext?(): void;
 
   // only for real play
   mode?: PlayMode;
@@ -51,6 +59,7 @@ interface LivePageProps {
 const LivePage: React.FC<LivePageProps> = ({
   status,
   questions,
+  history,
   brick,
   ...props
 }) => {
@@ -66,11 +75,10 @@ const LivePage: React.FC<LivePageProps> = ({
   const [isShuffleOpen, setShuffleDialog] = React.useState(false);
   const [isTimeover, setTimeover] = React.useState(false);
   const [isSubmitOpen, setSubmitAnswers] = React.useState(false);
+  const [isCategorizeOpen, setCategorizeDialog] = React.useState(false);
   const [questionScrollRef] = React.useState(React.createRef<HTMLDivElement>());
-  let initAnswers: any[] = [];
 
-  const [answers, setAnswers] = React.useState(initAnswers);
-  const history = useHistory();
+  const [answers, setAnswers] = React.useState([] as any[]);
 
   const location = useLocation();
   const theme = useTheme();
@@ -104,7 +112,8 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const moveToProvisional = () => {
     let playPath = getPlayPath(props.isPlayPreview, brick.id);
-    history.push(`${playPath}/provisionalScore${getAssignQueryString(location)}`);
+    history.push(`${playPath}/provisionalScore`);
+    props.moveNext && props.moveNext();
   }
 
   if (status > PlayStatus.Live) {
@@ -117,14 +126,14 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const handleStep = (step: number) => () => {
     setActiveAnswer();
-    let newStep = activeStep + 1;
-
-    if (props.isPlayPreview) {
-      CashQuestionFromPlay(brick.id, newStep);
-    }
     setTimeout(() => {
       setPrevStep(activeStep);
       setActiveStep(step);
+      if (props.isPlayPreview) {
+        CashQuestionFromPlay(brick.id, step);
+      } else {
+        history.push(routes.playInvestigation(brick.id) + '?activeStep=' + step);
+      }
     }, 100);
   };
 
@@ -169,6 +178,18 @@ const LivePage: React.FC<LivePageProps> = ({
     }
   };
 
+  const nextFromCategorize = () => {
+    setCategorizeDialog(false);
+    onQuestionAttempted(activeStep);
+
+    handleStep(activeStep + 1)();
+    if (activeStep >= questions.length - 1) {
+      questions.forEach((question) => (question.edited = false));
+      props.finishBrick();
+      moveToProvisional();
+    }
+  }
+
   const cleanAndNext = () => {
     setShuffleDialog(false);
     handleStep(activeStep + 1)();
@@ -180,12 +201,27 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const next = () => {
     let question = questions[activeStep];
+
+    // if there is unsorted answers show popup
+    if (question.type === QuestionTypeEnum.Sort) {
+      const attempt = questionRefs[activeStep].current?.getAttempt(false);
+      if (attempt && attempt.answer) {
+        for (let choice in attempt.answer) {
+          const catNums = getUniqueComponent(question).categories.length;
+          if (attempt.answer[choice] === catNums) {
+            setCategorizeDialog(true);
+            return;
+          }
+        }
+      }
+    }
+
     if (
       question.type === QuestionTypeEnum.PairMatch ||
       question.type === QuestionTypeEnum.HorizontalShuffle ||
       question.type === QuestionTypeEnum.VerticalShuffle
     ) {
-      let attempt = questionRefs[activeStep].current?.getAttempt(false);
+      const attempt = questionRefs[activeStep].current?.getAttempt(false);
       if (!attempt.dragged) {
         setShuffleDialog(true);
         return;
@@ -273,13 +309,17 @@ const LivePage: React.FC<LivePageProps> = ({
   const moveToPrep = () => {
     let attempt = questionRefs[activeStep].current?.getRewritedAttempt(false);
     props.updateAttempts(attempt, activeStep);
-    let playPath = getPlayPath(props.isPlayPreview, brick.id);
-    const values = queryString.parse(location.search);
-    let link = `${playPath}/intro?prepExtanded=true&resume=true&activeStep=${activeStep}`;
-    if (values.assignmentId) {
-      link += '&assignmentId=' + values.assignmentId;
+    let link = '';
+    if (isPhone()) {
+      link = routes.phonePrep(brick.id);
+    } else {
+      if (props.isPlayPreview) {
+        link = previewRoutes.previewNewPrep(brick.id);
+      } else {
+        link = routes.playNewPrep(brick.id);
+      }
     }
-    history.push(link);
+    history.push(link + `?prepExtanded=true&resume=true&activeStep=${activeStep}`);
   }
 
   const renderStepper = () => {
@@ -290,18 +330,6 @@ const LivePage: React.FC<LivePageProps> = ({
         previousStep={prevStep}
         handleStep={handleStep}
         moveToPrep={moveToPrep}
-      />
-    );
-  }
-
-  const renderCountDown = () => {
-    return (
-      <CountDown
-        isLive={true}
-        onEnd={onEnd}
-        endTime={props.endTime}
-        brickLength={brick.brickLength}
-        setEndTime={props.setEndTime}
       />
     );
   }
@@ -321,8 +349,15 @@ const LivePage: React.FC<LivePageProps> = ({
     );
   }
 
+  const minutes = getLiveTime(brick.brickLength);
+
+
   return (
     <div className="brick-row-container live-container">
+      {!isPhone() && <div className="fixed-upper-b-title">
+        <BrickTitle title={brick.title} />
+      </div>}
+      <HoveredImage />
       <div className="brick-container play-preview-panel live-page">
         <div className="introduction-page">
           <Hidden only={["xs"]}>
@@ -342,17 +377,13 @@ const LivePage: React.FC<LivePageProps> = ({
                     <TimeProgressbar
                       isLive={true}
                       onEnd={onEnd}
+                      minutes={minutes}
                       endTime={props.endTime}
                       brickLength={brick.brickLength}
                       setEndTime={props.setEndTime}
                     />
                   </div>
-                  <div className="title-column">
-                    <div>
-                      <div className="subject">{brick.subject?.name}</div>
-                      <div>{brick.title}</div>
-                    </div>
-                  </div>
+                  <div className="footer-space"><span className="scroll-text">Scroll down</span></div>
                   <div className="new-navigation-buttons">
                     <div className="n-btn back" onClick={prev}>
                       <SpriteIcon name="arrow-left" />
@@ -373,7 +404,6 @@ const LivePage: React.FC<LivePageProps> = ({
               </Grid>
               <Grid item xs={4}>
                 <div className="introduction-info">
-                  {renderCountDown()}
                   <div className="intro-text-row f-align-self-start m-t-5">
                     {renderStepper()}
                   </div>
@@ -390,9 +420,10 @@ const LivePage: React.FC<LivePageProps> = ({
           </Hidden>
           <Hidden only={["sm", "md", "lg", "xl"]}>
             <div className="introduction-info">
-              {renderCountDown()}
               <div className="intro-text-row">
-                <span className="phone-stepper-head"><span className="bold">{brick.subject?.name}</span> {brick.title}</span>
+                <span className="phone-stepper-head">
+                  <span className="bold">{brick.subject?.name}</span> <BrickTitle title={brick.title} />
+                </span>
                 {renderStepper()}
               </div>
             </div>
@@ -429,6 +460,11 @@ const LivePage: React.FC<LivePageProps> = ({
             isOpen={isSubmitOpen}
             submit={submitAndMove}
             close={() => setSubmitAnswers(false)}
+          />
+          <CategoriseAnswersDialog
+            isOpen={isCategorizeOpen}
+            submit={nextFromCategorize}
+            close={() => setCategorizeDialog(false)}
           />
         </div>
       </div>

@@ -11,7 +11,6 @@ const mark = (component: PairMatchComponent, attempt: ComponentAttempt<any>) => 
         if(answer.index === component.list[index].index) {
             attempt.marks += markIncrement;
         } else {
-            attempt.marks += 0.25;
             attempt.correct = false;
         }
     });
@@ -20,3 +19,12 @@ const mark = (component: PairMatchComponent, attempt: ComponentAttempt<any>) => 
 }
 
 export default mark;
+
+/* i think we can't necessarily only give points
+if the user has interacted - for one the random 
+output of options maybe be correct, but also 
+the user may agree with whatever the system 
+outputs initially - unless we explicitly 
+tell the user that they must interact with the 
+options to score any points, but i don't like
+that*/

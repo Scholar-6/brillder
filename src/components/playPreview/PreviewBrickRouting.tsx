@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
+import { Helmet } from "react-helmet";
 import { Route, Switch } from 'react-router-dom';
 import { connect } from "react-redux";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
 import actions from 'redux/actions/brickActions';
-import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
+import { CashQuestionFromPlay, GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { Brick } from 'model/brick';
 import { ComponentAttempt, PlayStatus } from '../play/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
-import { setBrillderTitle } from 'components/services/titleService';
+import { getBrillderTitle } from 'components/services/titleService';
 import { prefillAttempts } from 'components/services/PlayService';
 import { ReduxCombinedState } from 'redux/reducers';
 import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
@@ -29,6 +30,11 @@ import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
 import BuildCompletePage from './buildComplete/BuildCompletePage';
 import FinalStep from './finalStep/FinalStep';
 import { calcBrickLiveAttempt, calcBrickReviewAttempt } from 'components/play/services/scoring';
+import playRoutes from "components/play/routes";
+import buildRoutes from 'components/build/routes';
+import routes from './routes';
+import NewPrep from 'components/play/newPrep/NewPrep';
+import map from 'components/map';
 
 
 export interface BrickAttempt {
@@ -75,10 +81,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const initAttempts = prefillAttempts(brick.questions);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
-  const [startTime, setStartTime] = React.useState(undefined);
+  const [prepEndTime, setPrepEndTime] = React.useState('');
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [headerHidden, hideMobileHeader] = React.useState(false);
   const [liveEndTime, setLiveEndTime] = React.useState(null as any);
+  const [reviewEndTime, setReviewEndTime] = React.useState(null as any);
 
   useEffect(() => {
     if (props.brick) {
@@ -94,7 +101,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     return <PageLoader content="...Loading brick..." />;
   }
 
-  setBrillderTitle(brick.title);
 
   const updateAttempts = (attempt: any, index: number) => {
     attempts[index] = attempt;
@@ -107,21 +113,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const finishBrick = () => {
-    /* 25/09 change to use scoring service
-    // If no answer given or no mark provided for question then return acc accumulated score +0 so
-    // it still has an integer value, else return acc + additional mark
-    let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
-    // MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
-    // is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.
-    let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
-    var ba: BrickAttempt = {
-      brick,
-      score: score,
-      maxScore: maxScore,
-      student: null,
-      answers: attempts
-    };
-    */
     const ba = calcBrickLiveAttempt(brick, attempts);
     setStatus(PlayStatus.Review);
     setBrickAttempt(ba);
@@ -130,16 +121,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const finishReview = () => {
-    /* 25/09 change to use scoring service
-    let score = reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0);
-    let maxScore = reviewAttempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
-    var ba: BrickAttempt = {
-      score,
-      maxScore,
-      oldScore: brickAttempt.score,
-      answers: reviewAttempts
-    };
-    */
     const ba = calcBrickReviewAttempt(brick, reviewAttempts, brickAttempt);
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
@@ -162,16 +143,37 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (isMobile) {
       hideMobileHeader(true);
     }
-    history.push(`/play-preview/brick/${brick.id}/live`);
+    history.push(routes.previewLive(brick.id));
     setSidebar(true);
   }
 
   const moveToReview = () => {
-    history.push(`/play-preview/brick/${brick.id}/review`);
+    history.push(routes.previewReview(brick.id));
   }
 
   const moveToBuild = () => {
-    history.push(`/build/brick/${brickId}/investigation/question`);
+    const {pathname} = history.location;
+    const isSynthesis = pathname.slice(-playRoutes.PlaySynthesisLastPrefix.length) === playRoutes.PlaySynthesisLastPrefix;
+    const isNewPrep = pathname.slice(-playRoutes.PlayNewPrepLastPrefix.length) === playRoutes.PlayNewPrepLastPrefix;
+
+    let link = buildRoutes.buildQuesiton(brickId);
+    if (isSynthesis) {
+      link = buildRoutes.buildSynthesis(brickId);
+      CashQuestionFromPlay(brickId, -1);
+    } else if (isNewPrep) {
+      link = buildRoutes.buildPlan(brickId);
+      CashQuestionFromPlay(brickId, -1);
+    } else {
+      const data = GetCashedBuildQuestion();
+      if (data?.brickId === brickId) {
+        try {
+          link += '/' + brick.questions[data.questionNumber].id;
+        } catch (e) {
+          console.log('can`t get cashed question');
+        }
+      }
+    }
+    history.push(link);
   }
 
   const setSidebar = (state?: boolean) => {
@@ -205,10 +207,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const renderHead = () => {
     let isMobileHidden = false;
-    const live = location.pathname.search("/live");
+    const live = location.pathname.search(playRoutes.PlayLiveLastPrefix);
     const score = location.pathname.search("/provisionalScore");
-    const synthesis = location.pathname.search("/synthesis");
-    const review = location.pathname.search("/review");
+    const synthesis = location.pathname.search(playRoutes.PlaySynthesisLastPrefix);
+    const review = location.pathname.search(playRoutes.PlayReviewLastPrefix);
     const ending = location.pathname.search("/ending");
     const publish = location.pathname.search("/publish");
     const finish = location.pathname.search("/finish");
@@ -220,7 +222,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
 
     if (!isMobile && sidebarRolledUp) {
-      return <HomeButton link="/home" />;
+      return <HomeButton link={map.MainPage} />;
     }
     if (isMobile && headerHidden) {
       return <div></div>;
@@ -246,6 +248,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     <React.Suspense fallback={<></>}>
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
       <div className="play-preview-pages">
+        <Helmet>
+          <title>{getBrillderTitle(brick.title)}</title>
+        </Helmet>
         {renderHead()}
         <div className={className}>
           <PlayLeftSidebar
@@ -257,19 +262,23 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             moveToBuild={moveToBuild}
           />
           <Switch>
+            <Route exact path={routes.newPrepRoute}>
+              <NewPrep brick={brick} moveNext={moveToLive} briefExpanded={true} />
+            </Route>
             <Route exac path="/play-preview/brick/:brickId/intro">
               <Introduction
                 location={location}
                 history={history}
                 brick={brick}
                 isPlayPreview={true}
-                startTime={startTime}
-                setStartTime={setStartTime}
+                endTime={prepEndTime}
+                setEndTime={setPrepEndTime}
                 moveNext={moveToLive}
               />
             </Route>
-            <Route exac path="/play-preview/brick/:brickId/live">
+            <Route exac path={routes.preLiveRoute}>
               <Live
+                history={history}
                 status={status}
                 attempts={attempts}
                 previewQuestionIndex={getBuildQuestionNumber()}
@@ -301,16 +310,19 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             </Route>
             <Route exac path="/play-preview/brick/:brickId/review">
               <Review
+                history={history}
                 isPlayPreview={true}
                 status={status}
-                questions={brick.questions}
                 brick={brick}
-                brickId={brick.id}
-                startTime={startTime}
-                brickLength={brick.brickLength}
                 updateAttempts={updateReviewAttempts}
                 attempts={attempts}
                 finishBrick={finishReview}
+                endTime={reviewEndTime}
+                setEndTime={time => {
+                  if (reviewEndTime === null) {
+                    setReviewEndTime(time);
+                  }
+                }}
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/ending">
@@ -340,23 +352,25 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
   /* Parsing each Question object from json <contentBlocks> */
   if (!brick) { return brick; }
   const parsedQuestions: Question[] = [];
-  for (const question of brick.questions) {
-    if (!question.components) {
-      try {
-        const parsedQuestion = JSON.parse(question.contentBlocks as string);
-        if (parsedQuestion.components) {
-          let q = {
-            id: question.id,
-            type: question.type,
-            hint: parsedQuestion.hint,
-            firstComponent: parsedQuestion.firstComponent ? parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
-            components: parsedQuestion.components
-          } as Question;
-          parsedQuestions.push(q);
-        }
-      } catch (e) { }
-    } else {
-      parsedQuestions.push(question);
+  if (brick.questions) {
+    for (const question of brick.questions) {
+      if (!question.components) {
+        try {
+          const parsedQuestion = JSON.parse(question.contentBlocks as string);
+          if (parsedQuestion.components) {
+            let q = {
+              id: question.id,
+              type: question.type,
+              hint: parsedQuestion.hint,
+              firstComponent: parsedQuestion.firstComponent ? parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
+              components: parsedQuestion.components
+            } as Question;
+            parsedQuestions.push(q);
+          }
+        } catch (e) { }
+      } else {
+        parsedQuestions.push(question);
+      }
     }
   }
 
@@ -400,7 +414,9 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             value: a.value,
             index: a.index,
             valueFile: a.valueFile,
-            answerType: a.answerType
+            answerType: a.answerType,
+            imageSource: a.imageSource,
+            imageCaption: a.imageCaption
           }));
           c.choices = shuffle(choices);
         }

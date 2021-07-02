@@ -17,16 +17,22 @@ const ProposalPanel: React.FC<TutorialProps> = (props) => {
         <h1>There are 4 steps to the build process.</h1>
         <Grid container justify="center">
           <div className="editor-border svgOnHover border-animation">
-            <SpriteIcon name="edit-outline" className="w80 h80 active text-theme-dark-blue" />
+            <SpriteIcon name="dashed-circle" className="circle-border" />
+            <SpriteIcon name="feather-map" className="w80 h80 active text-theme-dark-blue" />
           </div>
         </Grid>
         <p className="center">
-          You can <span className="bold">Edit Your Plan</span> at anytime by clicking the text to the left of this window.
+          You can <span className="bold">Edit Your Plan</span> at anytime by clicking the icon in the first tab on the left.
         </p>
         <div className="proposal-box">
           <h2>1. The Plan</h2>
-          <p>If you’ve made it here, then you’ve at least made a start on your plan. If you are working with an editor, they will receive a notification at this point and be able to view the draft plan of your brick.</p>
-          <p className="last-text bold">The Plan can also be accessed via your ‘Back to Work’ page.</p>
+          <p>
+            If you’ve made it here, then you’ve at least made a start on your plan.
+            You will need to complete all fields if you want your brick to be published.
+          </p>
+          <p className="last-text bold">
+            The Plan can also be accessed by clicking the ‘Build Bricks’ button on your homepage.
+          </p>
         </div>
       </div>
       <Grid container direction="row" className="button-row">
@@ -34,9 +40,13 @@ const ProposalPanel: React.FC<TutorialProps> = (props) => {
         <Grid container justify="center" item xs={4}>
           <Button onClick={props.skip}>SKIP</Button>
         </Grid>
-        <Grid container justify="flex-end" item xs={4}>
+        <Grid
+          container justify="flex-end" item xs={4}
+          className="hover-move-left"
+          onClick={() => props.next(TutorialStep.Investigation)}
+        >
           <span className="bold">2. The Investigation</span>
-          <div className="right-arrow" onClick={() => props.next(TutorialStep.Investigation)} />
+          <div className="right-arrow" />
         </Grid>
       </Grid>
     </div>

@@ -44,10 +44,6 @@
             background: var(--white);
           }
 
-          &.not-active:hover {
-            background: var(--off-white) !important;
-          }
-
           &:nth-child(odd) {
             margin-right: 0.4%;
           }
@@ -83,6 +79,7 @@
         }
       }
       .scroll-buttons {
+        position: relative;
         @extend %flexCenter;
         background: var(--white);
         height: 2vw;
@@ -90,10 +87,31 @@
           cursor: pointer;
           width: 1.7vw;
           height: 1.7vw;
-          color: var(--theme-orange);
+          color: var(--theme-dark-blue);
 
           &.disabled {
             color: var(--tab-gray);
+          }
+        }
+        .radio-container {
+          position: absolute;
+          left: 1.27vw;
+          color: var(--theme-dark-blue);
+          svg {
+            width: 1.4vw;
+            height: 1.4vw;
+            color: var(--theme-dark-blue);
+          }
+          .MuiFormControlLabel-label {
+            font-size: 1.05vw;
+            font-family: $font-family-light !important;
+          }
+        }
+        .arrow-cancel {
+          position: absolute;
+          right: 1.5vw;
+          &::after, &::before {
+            background: var(--theme-dark-blue);
           }
         }
       }
@@ -148,13 +166,6 @@
               font-size: 1.3vw;
               margin: 0.8vh 0.5%;
               border-radius: 0.8vw;
-            }
-            &:hover {
-              background: var(--theme-dark-blue) !important;
-              color: var(--white) !important;
-              .icon {
-                color: var(--theme-dark-blue) !important;
-              }
             }
             .round-circle-container {
               left: 0.8vw;
@@ -254,12 +265,6 @@
       @extend %transitionAll300;
       margin-top: calc(#{$bricks-height / 90});
       max-height: calc(#{$bricks-height / 12});
-    }
-
-    &:hover {
-      svg {
-        transform: rotate(10deg);
-      }
     }
   }
 

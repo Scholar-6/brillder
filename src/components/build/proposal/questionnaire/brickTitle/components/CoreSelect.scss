@@ -1,0 +1,35 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.core-select {
+  width: 30%;
+  height: 100%;
+  position: relative;
+  color: var(--theme-dark-blue);
+  .fixed-icon {
+    cursor: pointer;
+    z-index: 100;
+    height: 100%;
+    position: absolute;
+    width: 27%;
+    border-top-left-radius: 0.5vw;
+    border-bottom-left-radius: 0.5vw;
+    pointer-events: none;
+    background: #e4e8ee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      stroke-width: 2;
+      width: 1.5vw;
+      height: 1.5vw;
+    }
+  }
+  .MuiSelect-root {
+    padding-left: 2vw;
+    min-height: 2vw;
+    font-size: 1.05vw;
+    font-family: $font-family-regular;
+  }
+}

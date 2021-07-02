@@ -16,12 +16,15 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 
 import SubjectsColumnV2 from "./SubjectsColumnV2";
 import { isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
+import { isPhone } from "services/phone";
+import { hideZendesk } from "services/zendesk";
 
 
 interface AllSubjectsProps {
   history: any;
 
   user: User;
+  defaultSubject?: number;
   getUser(): Promise<void>;
 }
 
@@ -46,11 +49,21 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     this.loadSubjects();
   }
 
+  componentDidMount() {
+    if (isPhone()) {
+      hideZendesk();
+    }
+  }
+
   async loadSubjects() {
     let subjects = await getSubjects() as SubjectItem[] | null;
 
     if (subjects) {
       subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
+      subjects = subjects.map(s => {
+        const checked = this.props.user.subjects.findIndex(s2 => s2.id === s.id) > -1 || (this.props.user.subjects.length <= 1 && s.id === this.props.defaultSubject);
+        return { ...s, checked: checked };
+      });
       this.setState({ ...this.state, subjects });
     } else {
       this.setState({ ...this.state, failedRequest: true });
@@ -93,7 +106,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
       if (isStudentPreference(user)) {
         this.props.history.push(map.MainPage);
       } else if (isTeacherPreference(user)) {
-        this.props.history.push(map.MainPage + '?new=true');
+        this.props.history.push(map.MainPage + '?' + map.NewTeachQuery);
       } else {
         this.props.history.push(map.UserProfile + '?onboardingUser=true');
       }
@@ -115,9 +128,32 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     let titleVerb = 'build';
     if (isTeacherPreference(this.props.user)) {
       titleVerb = 'teach';
-    } else if(isStudentPreference(this.props.user)) {
+    } else if (isStudentPreference(this.props.user)) {
       titleVerb = 'play';
     }
+
+    if (isPhone()) {
+      return (
+        <React.Suspense fallback={<></>}>
+          <MobileTheme />
+          <div className="select-subject-page">
+            <div className="df-space-before-titles" />
+            <h1>What kind of bricks</h1>
+            <h1>will you {titleVerb}?</h1>
+            <div className="df-space-after-titles" />
+            <SubjectsColumnV2
+              subjects={this.state.subjects}
+              next={this.submit.bind(this)}
+              onClick={this.onSubjectSelected.bind(this)}
+            />
+            <div className="df-button-box">
+              <button className="btn theme-orange" onClick={this.submit.bind(this)}>Next</button>
+            </div>
+          </div>
+        </React.Suspense>
+      );
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
@@ -135,7 +171,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
 }
 
 
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user, defaultSubject: state.auth.defaultSubject });
 
 const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),

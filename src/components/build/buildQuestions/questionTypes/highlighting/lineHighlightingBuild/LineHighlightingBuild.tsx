@@ -8,6 +8,7 @@ import { TextareaAutosize } from '@material-ui/core';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import { HighlightMode } from '../model';
 import HighlightButton from '../components/HighlightButton';
+import LineStyleDialog from '../wordHighlighting/LineStyleDialog';
 
 
 export interface Line {
@@ -18,6 +19,7 @@ export interface Line {
 export interface LineHighlightingData {
   text: string;
   lines: Line[];
+  isPoem: boolean;
   mode: HighlightMode;
 }
 
@@ -33,6 +35,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
   locked, data, validationRequired, save, updateComponent
 }) => {
   const [state, setState] = React.useState(data);
+  const [isOpen, setDialog] = React.useState(false);
 
   useEffect(() => {
     if (!data.text) { data.text = ''; }
@@ -59,6 +62,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
     if (state.mode === HighlightMode.Edit) {
       state.mode = HighlightMode.Input;
     } else {
+      setDialog(true);
       state.mode = HighlightMode.Edit;
       state.lines = prepareLines(state.text);
     }
@@ -114,6 +118,21 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
     );
   }
 
+  const renderPoemToggle = () => {
+    let className = 'poem-toggle';
+    if (state.isPoem) {
+      className += ' active';
+    }
+    return (
+      <div className={className} onClick={() => {
+        state.isPoem = !state.isPoem;
+        update();
+      }}>
+        br
+      </div>
+    );
+  }
+
   return (
     <div className="line-highlight-build">
       <div className="component-title">
@@ -126,9 +145,18 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
         list={state.lines}
         switchMode={switchMode}
       />
+      {renderPoemToggle()}
       <div className="input-container">
         {renderBox()}
       </div>
+      <LineStyleDialog isOpen={isOpen}
+        submit={v => {
+          state.isPoem = v;
+          update();
+          setDialog(false);
+        }}
+        value={data.isPoem}
+      />
     </div>
   )
 }

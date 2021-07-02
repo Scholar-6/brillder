@@ -8,6 +8,7 @@ import Katex from 'components/baseComponents/katex/Katex';
 
 interface MathHtmlProps {
   value: string;
+  className?: string;
 }
 
 class MathInHtml extends Component<MathHtmlProps> {
@@ -23,7 +24,7 @@ class MathInHtml extends Component<MathHtmlProps> {
     }
 
     if (arr.length === 0) {
-      return <div >{this.props.value}</div>;
+      return <div className={this.props.className}>{this.props.value}</div>;
     }
 
     return (
@@ -35,7 +36,7 @@ class MathInHtml extends Component<MathHtmlProps> {
         } else if (latex) {
           return renderLatex(el, i);
         } else {
-          return <div  key={i} dangerouslySetInnerHTML={{ __html: el }} />
+          return <div className={this.props.className} key={i} dangerouslySetInnerHTML={{ __html: el }} />
         }
       })
     );

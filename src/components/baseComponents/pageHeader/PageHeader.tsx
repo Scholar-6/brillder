@@ -13,6 +13,7 @@ import SpriteIcon from '../SpriteIcon';
 import { isAuthenticated } from 'model/assignment';
 import map from 'components/map';
 import UnauthorizedMenu from 'components/app/unauthorized/UnauthorizedMenu';
+import { PageEnum } from './PageHeadWithMenu';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -23,13 +24,16 @@ const mapState = (state: ReduxCombinedState) => ({
 const mapDispatch = (dispatch: any) => ({
   getNotifications: () => dispatch(notificationActions.getNotifications())
 });
-
+ 
 const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
 
 
-interface UsersListProps {
+interface Props {
   searchPlaceholder: string;
   link?: string;
+  page: PageEnum;
+  
+  history: any;
   search(): void;
   searching(value: string): void;
   showDropdown(): void;
@@ -40,7 +44,8 @@ interface UsersListProps {
   isAuthenticated: isAuthenticated;
   getNotifications(): void
 }
-interface MyState {
+
+interface State {
   searchVisible: boolean;
   searchAnimation: string;
   // mobile
@@ -48,7 +53,7 @@ interface MyState {
 }
 
 
-class PageHeader extends Component<UsersListProps, MyState> {
+class PageHeader extends Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -95,13 +100,14 @@ class PageHeader extends Component<UsersListProps, MyState> {
         <div className={!searchVisible ? "page-header" : "page-header active"}>
           <Hidden only={['sm', 'md', 'lg', 'xl']}>
             <div className="logout-container">
-              {!searchVisible &&
+              {!searchVisible && this.props.page !== PageEnum.Book &&
                 <div className="header-btn help-button svgOnHover">
                   <SpriteIcon name="help-thin" className="svg-default" />
                 </div>
               }
               {!searchVisible && <HomeButton link={link} />}
               <div className={searchVisible ? "search-container active animated slideInRight" : "search-container"}>
+                {this.props.page !== PageEnum.Book &&
                 <div className={searchVisible ? 'search-area active' : 'search-area'}>
                   <input
                     className="search-input"
@@ -110,12 +116,15 @@ class PageHeader extends Component<UsersListProps, MyState> {
                     placeholder={this.props.searchPlaceholder}
                   />
                 </div>
+                }
                 {searchVisible ?
                   <div className="btn btn-transparent close-search svgOnHover" onClick={() => this.toggleSearch()}>
                     <SpriteIcon name="arrow-right" className="w100 h100 text-tab-gray" />
                   </div>
                   :
-                  <div className="btn btn-transparent open-search svgOnHover" onClick={() => this.renderSearch()}>
+                  <div className="btn btn-transparent open-search svgOnHover" onClick={() => {
+                    this.props.page !== PageEnum.Book && this.renderSearch()
+                  }}>
                     <SpriteIcon name="search" className="w100 h100 active text-theme-orange" />
                   </div>
                 }
@@ -124,7 +133,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
                     <SpriteIcon name="settings" className="w80 h80 text-theme-orange" />
                   </div>
                 }
-                {!this.props.isAuthenticated &&
+                {(!this.props.isAuthenticated || this.props.isAuthenticated === isAuthenticated.False) &&
                   <UnauthorizedMenu isOpen={this.state.dropdownShown} closeDropdown={this.hideDropdown.bind(this)} />
                 }
               </div>
@@ -164,6 +173,11 @@ class PageHeader extends Component<UsersListProps, MyState> {
                     onClick={evt => this.props.showNotifications(evt)}
                   />
                   <MoreButton onClick={() => this.props.showDropdown()} />
+                </Grid>
+              }
+              {this.props.isAuthenticated === isAuthenticated.False &&
+                <Grid container direction="row" className="action-container">
+                  <div className="login-button" onClick={() => this.props.history.push(map.Login)}>Login | Register</div>
                 </Grid>
               }
             </div >

@@ -31,6 +31,15 @@ export const getPublicBricks = async () => {
   }
 }
 
+
+export const getLatestBrick = async () => {
+  try {
+    return await get<Brick>('/brick/public/latest');
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Get bricks by status
  * return list of bricks if success or null if failed
@@ -130,6 +139,15 @@ export const setCoreLibrary = async (brickId: number, isCore?: boolean) => {
   }
 }
 
+export const updateBrick = async (brick: Brick) => {
+  try {
+    await put<Brick>(`/brick`, brick);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export const sendToPublisher = async (brickId: number) => {
   try {
     await post<any>(`/brick/sendToPublisher/${brickId}`, {});
@@ -189,6 +207,29 @@ export const sendAssignmentReminder = async (assignmentId: number) => {
 export const archiveAssignment = async (assignmentId: number) => {
   try {
     return await post<AssignmentBrick>(`/brick/assignment/${assignmentId}/archive`, {});
+  } catch {
+    return false;
+  }
+}
+
+export const deleteQuestion = async (questionId: number) => {
+  try {
+    return await axiosDelete(`/question/${questionId}`);
+  } catch {
+    return false;
+  }
+}
+
+export interface CoverImageData {
+  brickId: number;
+  coverImage: string;
+  coverImageSource: string;
+  coverImageCaption: string;
+}
+
+export const setBrickCover = async (data: CoverImageData) => {
+  try {
+    return await post<any>(`/brick/cover`, data);
   } catch {
     return false;
   }

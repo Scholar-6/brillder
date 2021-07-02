@@ -1,5 +1,4 @@
 import React from 'react'
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
 import './SynthesisPage.scss';
 import { Grid } from '@material-ui/core';
@@ -14,6 +13,9 @@ import UndoRedoService from 'components/services/UndoRedoService';
 import RedoButton from '../baseComponents/redoButton';
 import UndoButton from '../baseComponents/UndoButton';
 import CountSynthesis from './WordsCount';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import { stripHtml } from '../questionService/ConvertService';
+import StatusCircle from '../baseComponents/statusCircle/StatusCircle';
 
 
 export interface SynthesisProps {
@@ -22,6 +24,7 @@ export interface SynthesisProps {
   editOnly: boolean;
   synthesis: string;
   undoRedoService: UndoRedoService;
+  validationRequired: boolean;
   initSuggestionExpanded: boolean;
   onSynthesisChange(text: string): void;
   undo(): void;
@@ -29,6 +32,7 @@ export interface SynthesisProps {
 }
 
 interface SynthesisState {
+  isLoaded: boolean;
   synthesis: string;
   scrollArea: any;
   canScroll: boolean;
@@ -40,12 +44,20 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
   constructor(props: SynthesisProps) {
     super(props);
     this.state = {
+      isLoaded: false,
       synthesis: props.synthesis,
       canScroll: false,
       scrollArea: null,
       ref: React.createRef() as React.RefObject<HTMLDivElement>,
       commentsShown: props.initSuggestionExpanded
     }
+    this.setLoaded();
+  }
+
+  setLoaded () {
+    setTimeout(() => {
+      this.setState({isLoaded: true});
+    }, 500);
   }
 
   componentDidMount() {
@@ -53,7 +65,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
       try {
         let {current} = this.state.ref;
         if (current) {
-          let scrollArea = current.getElementsByClassName("ck-content")[0];
+          let scrollArea = current.getElementsByClassName("ql-editor")[0];
           let canScroll = false;
           if (scrollArea.scrollHeight > scrollArea.clientHeight) {
             canScroll = true;
@@ -92,17 +104,24 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
 
   onSynthesisChange(text: string) {
     const {scrollArea} = this.state;
-    let canScroll = false;
-    if (scrollArea.scrollHeight > scrollArea.clientHeight) {
-      canScroll = true;
-    }
+    if(scrollArea) {
+      let canScroll = false;
+      if (scrollArea.scrollHeight > scrollArea.clientHeight) {
+        canScroll = true;
+      }
 
-    this.setState({ synthesis: text, canScroll });
+      this.setState({ synthesis: text, canScroll });
+    }
     this.props.onSynthesisChange(text);
   }
 
   render() {
     const {canScroll} = this.state;
+    const {currentBrick} = this.props;
+
+    if (!this.state.isLoaded) {
+      return <div />
+    }
 
     return (
       <div className="question-type synthesis-page">
@@ -116,22 +135,21 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
         <div className="inner-question-type" ref={this.state.ref}>
           <Grid container direction="row" alignItems="stretch">
             <Grid item xs className="synthesis-input-container">
-              <DocumentWirisCKEditor
+              <QuillEditor
                 disabled={this.props.locked}
-                editOnly={this.props.editOnly}
                 data={this.state.synthesis}
-                placeholder=""
-                colorsExpanded={true}
-                toolbar={[
-                  'bold', 'italic', 'fontColor',
-                  'superscript', 'subscript', 'strikethrough',
-                  'latex', 'insertTable', 'alignment',
-                  'bulletedList', 'numberedList', 'uploadImageCustom', 'addComment'
-                ]}
-                blockQuote={true}
-                defaultAlignment="justify"
-                onBlur={() => { }}
                 onChange={this.onSynthesisChange.bind(this)}
+                showToolbar={true}
+                allowTables={true}
+                allowDesmos={true}
+                allowLinks={true}
+                validate={this.props.validationRequired}
+                isValid={!!stripHtml(this.state.synthesis)}
+                toolbar={[
+                  'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
+                  'latex', 'bulletedList', 'numberedList', "align", 'blockQuote', "image", "table", "desmos", "caps"
+                ]}
+                imageDialog={true}
               />
             </Grid>
             { !this.state.commentsShown &&
@@ -154,7 +172,10 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                     />
                   </div>
                   <div style={{width: "100%"}}>
-                    <CountSynthesis value={this.state.synthesis} />
+                    <CountSynthesis brickLength={currentBrick.brickLength} value={this.state.synthesis} />
+                  </div>
+                  <div className="bs-circles-container">
+                    <StatusCircle status={currentBrick.status} isCore={currentBrick.isCore} />
                   </div>
                 </div>
               </Grid>
@@ -162,7 +183,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
             <Grid className={`synthesis-comments-panel ${!this.state.commentsShown && "hidden"}`} item>
               <CommentPanel
                 currentLocation={CommentLocation.Synthesis}
-                currentBrick={this.props.currentBrick}
+                currentBrick={currentBrick}
                 setCommentsShown={this.setCommentsShown.bind(this)}
                 haveBackButton={true}
               />

@@ -1,5 +1,4 @@
 import React from "react";
-import { isMobile } from "react-device-detect";
 import './LibraryButton.scss';
 
 interface ButtonProps {
@@ -29,12 +28,6 @@ const LibraryButton: React.FC<ButtonProps> = props => {
   }
 
   const onClick = () => {
-    if (isMobile) {
-      if (!props.isSwiping) {
-        props.onMobileClick();
-      }
-      return;
-    }
     if (isActive) { 
       props.history.push('/my-library');
     } else {
@@ -46,11 +39,7 @@ const LibraryButton: React.FC<ButtonProps> = props => {
   if (isActive) {
     className += ' active zoom-item text-theme-orange svgOnHover';
   } else {
-    if (props.isMobile) {
-      className += ' text-theme-light-blue';
-    } else {
-      className += ' text-theme-dark-blue';
-    }
+    className += ' text-theme-dark-blue';
   }
 
   return (

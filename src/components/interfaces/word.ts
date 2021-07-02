@@ -9,6 +9,7 @@ export enum SpecialSymbols {
 
 export interface Word {
   text: string,
+  isPunctuation?: boolean;
   isBreakLine?: boolean,
   notSelectable?: boolean,
   checked: boolean

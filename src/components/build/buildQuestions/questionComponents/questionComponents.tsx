@@ -20,8 +20,12 @@ import { getNonEmptyComponent } from "../../questionService/ValidateQuestionServ
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import FixedTextComponent from "../components/Text/FixedText";
 import { TextComponentObj } from "../components/Text/interface";
-import DeleteComponentDialog from "./deleteComponentDialog";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
+import DeleteDialog from "components/build/baseComponents/dialogs/DeleteDialog";
+import { QuillEditorContext } from "components/baseComponents/quill/QuillEditorContext";
+import QuillGlobalToolbar from "components/baseComponents/quill/QuillGlobalToolbar";
+import { generateId } from "../questionTypes/service/questionBuild";
+import map from "components/map";
 
 
 type QuestionComponentsProps = {
@@ -32,18 +36,19 @@ type QuestionComponentsProps = {
   brickId: number;
   question: Question;
   validationRequired: boolean;
-  saveBrick(): void;
-  updateFirstComponent(component: TextComponentObj): void;
-  updateComponents(components: any[]): void;
-  setQuestionHint(hintState: HintState): void;
+  scrollRef: any;
+  saveQuestion(question: Question): void;
+  updateFirstComponent(component: TextComponentObj): Question | undefined;
+  updateComponents(components: any[]): Question | undefined;
+  setQuestionHint(hintState: HintState): Question;
 
   // phone preview
   componentFocus(index: number): void;
 }
 
 const QuestionComponents = ({
-  questionIndex, locked, editOnly, history, brickId, question, validationRequired,
-  componentFocus, updateComponents, setQuestionHint, saveBrick, updateFirstComponent
+  questionIndex, locked, editOnly, scrollRef, history, brickId, question, validationRequired,
+  componentFocus, updateComponents, setQuestionHint, saveQuestion, updateFirstComponent
 }: QuestionComponentsProps) => {
   
   let firstComponent = Object.assign({}, question.firstComponent) as any;
@@ -60,10 +65,36 @@ const QuestionComponents = ({
   const [removeIndex, setRemovedIndex] = useState(-1);
   const [dialogOpen, setDialog] = useState(false);
   const [sameAnswerDialogOpen, setSameAnswerDialog] = useState(false);
+  const editorIdState = React.useState("");
 
   useEffect(() => {
     setComponents(Object.assign([], question.components) as any[]);
   }, [question]);
+
+  const updateFirstComponentAndSave = React.useCallback((component: TextComponentObj) => {
+    const newQuestion = updateFirstComponent(component);
+    if(!newQuestion) return;
+    saveQuestion(newQuestion);
+  /*eslint-disable-next-line*/
+  }, [saveQuestion, question]);
+
+  const updateComponentsAndSave = React.useCallback((components: any[]) => {
+    const newComponents = components.map(comp => ({
+      ...comp,
+      id: (comp.id && comp.id > 5) ? comp.id : generateId(),
+    }));
+    setComponents(newComponents);
+    const newQuestion = updateComponents(newComponents);
+    if(!newQuestion) return;
+    saveQuestion(newQuestion);
+  /*eslint-disable-next-line*/
+  }, [saveQuestion, question]);
+
+  const updateHintAndSave = React.useCallback((hintState: HintState) => {
+    const newQuestion = setQuestionHint(hintState);
+    saveQuestion(newQuestion);
+  /*eslint-disable-next-line*/
+  }, [saveQuestion, question]);
 
   if (questionId !== question.id) {
     setQuestionId(question.id);
@@ -76,10 +107,12 @@ const QuestionComponents = ({
   const removeInnerComponent = (componentIndex: number) => {
     if (locked) { return; }
     const comps = Object.assign([], components) as any[];
-    comps.splice(componentIndex, 1);
-    setComponents(comps);
-    updateComponents(comps);
-    saveBrick();
+    if(components[componentIndex].type !== QuestionComponentTypeEnum.Component) {
+      comps.splice(componentIndex, 1);
+      setComponents(comps);
+      updateComponentsAndSave(comps);
+    }
+    setDialog(false);
   }
 
   let canRemove = (components.length > 3) ? true : false;
@@ -89,7 +122,7 @@ const QuestionComponents = ({
       let copyComponents = Object.assign([], components) as any[];
       copyComponents[index] = compData;
       setComponents(copyComponents);
-      updateComponents(copyComponents);
+      updateComponentsAndSave(copyComponents);
     }
 
     const setEmptyType = () => {
@@ -99,7 +132,6 @@ const QuestionComponents = ({
       } else {
         removeInnerComponent(index);
       }
-      saveBrick();
     }
 
     const { type } = question;
@@ -125,7 +157,7 @@ const QuestionComponents = ({
     } else if (type === QuestionTypeEnum.WordHighlighting) {
       uniqueComponent = WordHighlightingComponent;
     } else {
-      history.push(`/build/brick/${brickId}/investigation/question`);
+      history.push(map.investigationBuildQuestionType(brickId, question.id));
       return <PageLoader content="...Loading..." />;
     }
 
@@ -146,9 +178,9 @@ const QuestionComponents = ({
         componentFocus={() => componentFocus(index)}
         setEmptyType={setEmptyType}
         removeComponent={removeInnerComponent}
-        setQuestionHint={setQuestionHint}
+        setQuestionHint={updateHintAndSave}
         updateComponent={updatingComponent}
-        saveBrick={saveBrick}
+        saveBrick={() => {}}
         openSameAnswerDialog={openSameAnswerDialog}
       />
     );
@@ -157,8 +189,7 @@ const QuestionComponents = ({
   const setList = (components: any) => {
     if (locked) { return; }
     setComponents(components);
-    updateComponents(components);
-    saveBrick();
+    updateComponentsAndSave(components);
   }
 
   const hideDialog = () => {
@@ -181,40 +212,55 @@ const QuestionComponents = ({
   }
 
   return (
-    <div className="questions">
-      <Grid container direction="row" className={validateDropBox(firstComponent)}>
-        <FixedTextComponent
-          locked={locked}
-          editOnly={editOnly}
-          questionId={question.id}
-          data={firstComponent}
-          save={saveBrick}
-          validationRequired={validationRequired}
-          updateComponent={updateFirstComponent}
-        />
-      </Grid>
-      <ReactSortable
-        list={components}
-        animation={150}
-        group={{ name: "cloning-group-name", pull: "clone" }}
-        setList={setList}
-      >
-        {
-          components.map((comp, i) => (
-            <Grid key={`${questionId}-${i}`} container direction="row" className={validateDropBox(comp)}>
-              {renderDropBox(comp, i)}
-            </Grid>
-          ))
-        }
-      </ReactSortable>
-      <DeleteComponentDialog isOpen={dialogOpen} removeIndex={removeIndex} submit={removeInnerComponent} close={hideDialog} />
-      <ValidationFailedDialog
-        isOpen={sameAnswerDialogOpen}
-        header="Looks like some answers are the same."
-        label="Correct answers could be marked wrong. Please make sure all answers are different."
-        close={hideSameAnswerDialog}
+    <QuillEditorContext.Provider value={editorIdState}>
+      <QuillGlobalToolbar
+        disabled={locked}
+        availableOptions={[
+          'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
+          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image', 'table'
+        ]}
       />
-    </div>
+      <div className="questions" ref={scrollRef}>
+        <Grid container direction="row" className={validateDropBox(firstComponent)}>
+          <FixedTextComponent
+            locked={locked}
+            editOnly={editOnly}
+            questionId={question.id}
+            data={firstComponent}
+            save={() => {}}
+            validationRequired={validationRequired}
+            updateComponent={updateFirstComponentAndSave}
+          />
+        </Grid>
+        <ReactSortable
+          list={components}
+          animation={150}
+          group={{ name: "cloning-group-name", pull: "clone" }}
+          setList={setList}
+        >
+          {
+            components.map((comp, i) => (
+              <Grid key={`${questionId}-${comp.id}`} container direction="row" className={validateDropBox(comp)}>
+                {renderDropBox(comp, i)}
+              </Grid>
+            ))
+          }
+        </ReactSortable>
+        <DeleteDialog
+          isOpen={dialogOpen}
+          title="Permanently delete<br />this component?"
+          index={removeIndex}
+          submit={removeInnerComponent}
+          close={hideDialog}
+        />
+        <ValidationFailedDialog
+          isOpen={sameAnswerDialogOpen}
+          header="Looks like some answers are the same."
+          label="Correct answers could be marked wrong. Please make sure all answers are different."
+          close={hideSameAnswerDialog}
+        />
+      </div>
+    </QuillEditorContext.Provider>
   );
 }
 

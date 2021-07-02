@@ -3,20 +3,18 @@ import { Grid, Hidden } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
 import update from "immutability-helper";
-import { useHistory, useLocation } from "react-router-dom";
 import { Moment } from "moment";
 
 import "./ReviewPage.scss";
 import { Question } from "model/question";
 import { PlayStatus } from "../model";
 import { PlayMode } from "../model";
-import { Brick, BrickLengthEnum } from "model/brick";
-import { getPlayPath, getAssignQueryString, scrollToStep } from "../service";
+import { Brick } from "model/brick";
+import { getPlayPath, scrollToStep } from "../service";
 
 import ReviewStepper from "./ReviewStepper";
 import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
-import CountDown from "../baseComponents/CountDown";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -25,18 +23,24 @@ import MobilePrevButton from "../live/components/MobilePrevButton";
 import MobileNextButton from "../live/components/MobileNextButton";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
+import { getReviewTime } from "../services/playTimes";
+import BrickTitle from "components/baseComponents/BrickTitle";
+import routes from "../routes";
+import previewRoutes from "components/playPreview/routes";
+import HoveredImage from "../baseComponents/HoveredImage";
 
 interface ReviewPageProps {
   status: PlayStatus;
-  brickId: number;
   brick: Brick;
-  questions: Question[];
-  brickLength: BrickLengthEnum;
-  startTime?: Moment;
+  history: any;
   attempts: any[];
   isPlayPreview?: boolean;
   updateAttempts(attempt: any, index: number): any;
   finishBrick(): void;
+
+  // things related to count down
+  endTime: any;
+  setEndTime(time: Moment): void;
 
   // only for real play
   mode?: PlayMode;
@@ -44,15 +48,14 @@ interface ReviewPageProps {
 
 const ReviewPage: React.FC<ReviewPageProps> = ({
   status,
-  questions,
   updateAttempts,
   attempts,
+  history,
+  brick,
   finishBrick,
-  brickId,
   ...props
 }) => {
-  const history = useHistory();
-  const location = useLocation();
+  const {questions} = brick;
   const [activeStep, setActiveStep] = React.useState(0);
   let initAnswers: any[] = [];
   const [answers, setAnswers] = React.useState(initAnswers);
@@ -60,7 +63,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const [questionScrollRef] = React.useState(React.createRef<HTMLDivElement>());
 
   const theme = useTheme();
-  let playPath = getPlayPath(props.isPlayPreview, brickId);
+  let playPath = getPlayPath(props.isPlayPreview, brick.id);
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -83,11 +86,19 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   });
 
   const moveToEnding = () => {
-    history.push(`${playPath}/ending${getAssignQueryString(location)}`)
+    history.push(`${playPath}/ending`)
   }
 
   if (status === PlayStatus.Live) {
-    history.push(`${playPath}/intro${getAssignQueryString(location)}`)
+    if (isPhone()) {
+      history.push(routes.phonePrep(brick.id))
+    } else {
+      if (props.isPlayPreview) {
+        history.push(previewRoutes.previewNewPrep(brick.id));
+      } else {
+        history.push(routes.playNewPrep(brick.id));
+      }
+    }
     return <PageLoader content="...Loading..." />;
   } else if (status === PlayStatus.Ending) {
     moveToEnding();
@@ -285,8 +296,14 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     );
   }
 
+  const minutes = getReviewTime(brick.brickLength);
+
   return (
     <div className="brick-row-container review-container">
+      {!isPhone() && <div className="fixed-upper-b-title">
+        <BrickTitle title={brick.title} />
+      </div>}
+      <HoveredImage />
       <div className="brick-container play-preview-panel review-page">
         <div className="introduction-page">
           <Hidden only={['xs']}>
@@ -303,19 +320,17 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 <div className="new-layout-footer" style={{ display: 'none' }}>
                   <div className="time-container">
                     <TimeProgressbar
-                      isLive={true}
                       onEnd={onEnd}
-                      endTime={null}
-                      brickLength={props.brickLength}
-                      setEndTime={() => { }}
+                      minutes={minutes}
+                      endTime={props.endTime}
+                      brickLength={brick.brickLength}
+                      setEndTime={a => {
+                        console.log('set end')
+                        props.setEndTime(a);
+                      }}
                     />
                   </div>
-                  <div className="title-column">
-                    <div>
-                      <div className="subject">{props.brick.subject?.name}</div>
-                      <div>{props.brick.title}</div>
-                    </div>
-                  </div>
+                  <div className="footer-space"><span className="scroll-text">Scroll down</span></div>
                   <div className="new-navigation-buttons">
                     <div className="n-btn back" onClick={prev}>
                       <SpriteIcon name="arrow-left" />
@@ -336,7 +351,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
               </Grid>
               <Grid item sm={4} xs={12}>
                 <div className="introduction-info">
-                  <CountDown brickLength={props.brickLength} endTime={null} setEndTime={() => { }} onEnd={onEnd} />
                   <div className="intro-text-row f-align-self-start m-t-5">
                     <ReviewStepper
                       questions={questions}
@@ -357,7 +371,9 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
           <Hidden only={["sm", "md", "lg", "xl"]}>
             <div className="intro-header">
               <div className="intro-text-row">
-                <span className="phone-stepper-head"><span className="bold">{props.brick.subject?.name}</span> {props.brick.title}</span>
+                <span className="phone-stepper-head">
+                  <span className="bold">{brick.subject?.name}</span> <BrickTitle title={brick.title} />
+                </span>
                 <ReviewStepper
                   questions={questions}
                   attempts={attempts}
@@ -386,7 +402,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                   isLive={true}
                   onEnd={onEnd}
                   endTime={null}
-                  brickLength={props.brickLength}
+                  brickLength={brick.brickLength}
                   setEndTime={() => { }}
                 />
               </div>

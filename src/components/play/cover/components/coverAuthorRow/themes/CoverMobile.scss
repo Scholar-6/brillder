@@ -1,0 +1,10 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.author-row.cover-author-row {
+  padding-right: 2vw;
+  font-size: 6vw;
+  @extend %ellipsis;
+  text-transform: capitalize;
+}

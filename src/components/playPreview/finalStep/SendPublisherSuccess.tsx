@@ -31,7 +31,7 @@ const SendPublisherSuccessDialog: React.FC<SendPublisherProps> = props => {
           </ListItemAvatar>
         </ListItem>
         <ListItem>
-          <ListItemText primary="Publisher will be able to publish this brick" className="italic" style={{ minWidth: '30vw' }} />
+          <ListItemText primary="Your brick is one step away from publication!" className="italic" style={{ minWidth: '30vw' }} />
         </ListItem>
       </div>
     </Dialog>

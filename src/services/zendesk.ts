@@ -12,78 +12,67 @@ const getWidgetIframe = () => document.getElementById("webWidget") as any;
 const attachStyleCss = (iframe: any, path: string) => {
   try {
     const cssLink = document.createElement("link");
-    cssLink.href = path; 
+    cssLink.href = path;
     cssLink.rel = "stylesheet";
     cssLink.type = "text/css";
     const innnerDoc = iframe.contentDocument || iframe.contentWindow;
     innnerDoc.head.appendChild(cssLink);
   } catch (e) {
-    console.log('can`t attach zendesk styles' , e);
+    console.log('can`t attach zendesk styles', e);
   }
 }
 
 const initZendeskStyling = (iframe: any) => {
   if (isPhone()) {
     attachStyleCss(iframe, '/zendesk/zendesk_mobile.css');
-  }
-  if (isTablet || isIPad13) {
+  } else if (isTablet || isIPad13) {
     attachStyleCss(iframe, '/zendesk/zendesk_tablet.css');
+  } else {
+    attachStyleCss(iframe, '/zendesk/zendesk_desktop.css');
   }
   if (isMobile) { return; }
-  var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-  // iframe.style.height = '2.3vw';
-  let div = innerDoc.querySelectorAll('#Embed > div')[0]
-  div.style.position = "absolute";
-  div.style.width = '100%';
-  div.style.height = '100%';
-  let button = innerDoc.getElementsByTagName("button")[0];
-  button.style.padding = '0 0 0 19.5vw';
-  button.style.width = '100%';
-  button.style.height = '100%';
-  let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
-  btnContent.style.paddingRight = "0";
-  let helpText = innerDoc.getElementsByClassName("label-3kk12");
-  helpText[0].style.opacity = 1;
-  helpText[0].style.fontSize = '15vw';
-  let svg = innerDoc.getElementsByTagName("svg")[0];
-  let svgSize = '48vh';
-  svg.style.minWidth = svgSize;
-  svg.style.minHeight = svgSize;
-  svg.style.width = svgSize;
-  svg.style.height = svgSize;
+}
 
+const initZendeskPopupStyling = () => {
+  let success = false;
   // hide custom fields
-  let widgetIframe = getWidgetIframe();
-  var innerWidgetDoc = widgetIframe.contentDocument || widgetIframe.contentWindow.document;
-
-  var css = `
-    input[name='key:${process.env.REACT_APP_ZENDESK_AGENT_FIELD}'],
-    input[name='key:${process.env.REACT_APP_ZENDESK_SCREEN_SIZE_FIELD}']
-      {
-        margin: 0;
-        padding: 0;
-        border: none;
-        height: 0;
-        min-height: 0;
-        overflow: hidden;
-        pointer-events: none;
-        cursor: not-allowed;
-
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
+  try {
+    const widgetIframe = getWidgetIframe();
+    const innerWidgetDoc = widgetIframe.contentDocument || widgetIframe.contentWindow.document;
+    const css = `
+      input[name='key:${process.env.REACT_APP_ZENDESK_AGENT_FIELD}'],
+      input[name='key:${process.env.REACT_APP_ZENDESK_SCREEN_SIZE_FIELD}']
+        {
+          margin: 0;
+          padding: 0;
+          border: none;
+          height: 0;
+          min-height: 0;
+          overflow: hidden;
+          pointer-events: none;
+          cursor: not-allowed;
+  
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
     `;
-  var head = innerWidgetDoc.head || innerWidgetDoc.getElementsByTagName('head')[0];
-  var style = document.createElement('style');
-
-  head.appendChild(style);
-
-  style.type = 'text/css';
-  style.appendChild(document.createTextNode(css));
+    const head = innerWidgetDoc.head || innerWidgetDoc.getElementsByTagName('head')[0];
+    const style = document.createElement('style');
+  
+    head.appendChild(style);
+  
+    style.type = 'text/css';
+    style.appendChild(document.createTextNode(css));
+    success = true;
+    console.log('attached styles to zendesk widget');
+  } catch {
+    console.log('can`t find zendesk widget')
+  }
+  return success;
 }
 
 export function minimizeZendeskButton(iframe?: any) {
@@ -92,19 +81,12 @@ export function minimizeZendeskButton(iframe?: any) {
     iframe = getZendeskIframe();
     if (!iframe) { return; }
   }
-  // iframe.style.height = '2.6vw';
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-  let div = innerDoc.querySelectorAll('#Embed > div')[0]
-  div.style.marginLeft = '13%';
-  div.style.width = '47.18%';
-  div.style.height = '100%';
-  var button = innerDoc.getElementsByTagName("button")[0];
-  button.style.paddingLeft = "12.26vw";
-  let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
-  btnContent.style.padding = 0;
-  let helpText = innerDoc.getElementsByClassName("label-3kk12");
-  helpText[0].style.opacity = 0;
-  helpText[0].style.width = 0;
+
+  let div = innerDoc.querySelectorAll('#Embed')[0]
+  if (div) {
+    div.classList.add("minimized");
+  }
 }
 
 export function maximizeZendeskButton(iframe?: any) {
@@ -114,18 +96,8 @@ export function maximizeZendeskButton(iframe?: any) {
     if (!iframe) { return; }
   }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-  // iframe.style.height = '2.3vw';
-  let div = innerDoc.querySelectorAll('#Embed > div')[0]
-  div.style.marginLeft = '0';
-  div.style.width = '100%';
-  div.style.height = '100%';
-  let button = innerDoc.getElementsByTagName("button")[0];
-  button.style.paddingLeft = '19.5vw';
-  let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
-  btnContent.style.paddingRight = "7vw";
-  let helpText = innerDoc.getElementsByClassName("label-3kk12");
-  helpText[0].style.opacity = 1;
-  helpText[0].style.width = "100%";
+  let div = innerDoc.querySelectorAll('#Embed')[0]
+  div.classList.remove("minimized");
 }
 
 function addZendesk() {
@@ -242,6 +214,20 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
           initZendeskStyling(iframe);
           setZendeskMode(iframe, location);
           clearInterval(interval);
+          var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+          var buttons = innerDoc.getElementsByTagName('button');
+          if (buttons.length === 1) {
+            buttons[0].onclick = function () {
+              const widgetInterval = setInterval(() => {
+                const success = initZendeskPopupStyling();
+                if (success) {
+                  clearInterval(widgetInterval);
+                }
+              }, 100);
+            }
+          } else {
+            console.log('can`t find zendesk button');
+          }
         } catch {
           console.log('can`t get zendesk element');
         }
@@ -253,69 +239,54 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
   }
 }
 
-/**
- * Task #2782. For play on phone zendesk button should be smaller and fixed in footer.
- * Button size and position are from .\src\components\play\themes\BrickPageMobile.scss
- */
-const setMobilePlayButton = (iframe: any, pathname: string) => {
-  if (!isMobile && (isTablet || isIPad13)) {
-    return;
-  }
 
-  if (!isPlayPage(pathname)) {
-    return;
+export function hideZendesk() {
+  var dd = getZendeskIframe();
+  if (dd) {
+    dd.style.display = 'none';
+  } else {
+    setTimeout(() => {
+      var dd = getZendeskIframe();
+      if (dd) {
+        dd.style.display = 'none';
+      } else {
+        setTimeout(() => {
+          var dd = getZendeskIframe();
+          if (dd) {
+            dd.style.display = 'none';
+          } else {
+            setTimeout(() => {
+              var dd = getZendeskIframe();
+              if (dd) {
+                dd.style.display = 'none';
+              } else {
+                console.log('can`t hide zendesk');
+              }
+            }, 1000);
+          }
+        }, 500);
+      }
+    }, 200);
   }
-
-  setMobilePlayButtonStyle(iframe);
 }
 
-const setMobilePlayButtonStyle = (iframe: any) => {
-  if (!iframe) {
-    iframe = getZendeskIframe();
-    if (!iframe) { return; }
+export function showZendesk() {
+  var dd = getZendeskIframe();
+  if (dd) {
+    dd.style.display = 'block';
+  } else {
+    setTimeout(() => {
+      var dd = getZendeskIframe();
+      if (dd) {
+        dd.style.display = 'block';
+      } else {
+        setTimeout(() => {
+          var dd = getZendeskIframe();
+          if (dd) {
+            dd.style.display = 'block';
+          }
+        }, 500);
+      }
+    }, 200);
   }
-
-  try {
-    const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-    iframe.style.display = 'flex';
-    iframe.style.alignItems = 'center';
-    iframe.style.justifyContent = 'center';
-    // iframe.style.width = '12.5%';
-    // iframe.style.height = '20vw';
-    const div = innerDoc.querySelectorAll('#Embed > div')[0]
-    div.style.position = 'absolute';
-    div.style.bottom = '0';
-    div.style.left = '0';
-    div.style.marginLeft = '0';
-    div.style.width = '100%';
-    div.style.height = '80%';
-
-    const button = innerDoc.getElementsByTagName("button")[0];
-    button.style.maxWidth = '76vw';
-    button.style.padding = '0';
-    button.style.paddingLeft = '0';
-
-    // make button full size and position
-    const btnContent = button.getElementsByClassName("u-inlineBlock")[0];
-    btnContent.style.display = 'flex';
-    btnContent.style.alignItems = 'center';
-    btnContent.style.justifyContent = 'center';
-    btnContent.style.width = '100vw';
-    btnContent.style.height = '100vw';
-    btnContent.style.padding = '0';
-    btnContent.style.paddingRight = "0";
-
-    const helpText = innerDoc.getElementsByClassName("label-3kk12");
-    helpText[0].style.display = 'none';
-
-    // make icon fyll size
-    const icon = innerDoc.getElementsByTagName('svg')[0];
-    icon.style.height = '100%';
-    icon.style.width = '100%';
-
-    // hide icon white circle
-    let g = icon.getElementById("Layer_4");
-    let whiteCircle = g.children[g.children.length - 1];
-    whiteCircle.style.fillOpacity = '0';
-  } catch { }
 }

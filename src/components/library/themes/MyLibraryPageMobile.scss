@@ -2,58 +2,113 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-.my-library {
-  $base-brick-width: 3.2vw;
+.phone-my-library {
+  $base-brick-width: 5vw;
+
+  .ml-content {
+    height: calc(100% - 64px);
+
+    .ml-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--theme-light-blue);
+      min-height: 8%;
+      font-size: 8vw;
+      font-family: $font-family-bold;
+      color: var(--white);
+    }
+
+    .progress-value {
+      position: relative;
+    }
+    .rotated-container {
+      bottom: 0;
+      right: 0;
+      position: absolute;
+      width: 100% !important;
+      .rotated {
+        transform: rotate(270deg);
+        .rotated-text {
+          padding-bottom: 3vh;
+          padding-top: 3vh;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+    .length-40 .rotated-container .rotated {
+      margin-bottom: 2.6vw;
+    }
+  }
+
+  .page-header {
+    height: 64px !important;
+  }
 
   .page-navigation {
     display: none;
   }
+
   .all-subject-assignments {
-    // height: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh) !important;
-    height: calc(100vh - 53px - 80px) !important;
+    height: calc(100% - 8%) !important;
     padding: 0 !important;
+
     .my-library-list {
       width: calc(100% - 4vw);
-      // height: calc(100vh - 86px - 80px);
       height: 100%;
-      padding: 2vw;
-      margin: 2vw;
+      padding: 0 2vw;
+      margin: 0 2vw;
+      overflow-y: scroll;
+
       .libary-container-1 {
-        height: 30vh;
+        height: calc(34vh + 8vw);
         margin-left: 0.5vw;
         margin-right: 0.5vw;
         max-width: 100%;
-        display: inline-flex;
+
+        .ml-subject {
+          color: var(--theme-dark-blue);
+          font-family: $font-family-bold;
+          font-size: 8vw;
+          line-height: 1;
+          padding-top: 1vh;
+          padding-bottom: 2vh;
+        }
+
         .libary-container {
           width: max-content;
           max-width: 100%;
-          height: 90%;
+          height: calc(30vh);
           display: flex;
-          background: var(--tab-gray);
+          background: var(--white);
           border-radius: 1vw;
           padding: 1.5vw;
-          > div {
+
+          >div {
             width: 100%;
             display: flex;
             flex-direction: row;
-            overflow: auto;
+            overflow: hidden;
           }
         }
+
         .assignment-progressbar {
           position: relative;
           height: 100%;
           display: inline-block;
+
           .assignment {
             cursor: pointer;
             height: 100%;
             width: 100%;
-            margin-left: 0.2vw;
-            margin-right: 0.2vw;
-            border-radius: 0.25vw;
+            margin-left: 0.8vw;
+            margin-right: 0.8vw;
+            border-radius: 1vw;
 
             &.default {
-              // background: var(--tab-gray) !important;
-              background-color: var(--white) !important;
+              background: var(--tab-gray) !important;
             }
 
             &.assigned {
@@ -62,36 +117,39 @@
 
             .default-value {
               height: 100%;
-              &:hover {
-                opacity: 0.5;
-                background: var(--theme-light-blue) !important;
-              }
             }
 
             &.length-20 {
               width: $base-brick-width;
+
               .progress-value {
                 width: $base-brick-width;
               }
             }
+
             &.length-40 {
               width: $base-brick-width * 2;
+
               .progress-value {
                 width: $base-brick-width * 2;
               }
             }
+
             &.length-60 {
               width: $base-brick-width * 4;
+
               .progress-value {
                 width: $base-brick-width * 4;
               }
             }
           }
+
           .progress-value {
             position: absolute;
             bottom: 0;
-            border-radius: 0.25vw;
+            border-radius: 1vw;
           }
+
           .subject-tooltip {
             background: var(--theme-light-blue);
             color: var(--tab-gray);
@@ -104,131 +162,88 @@
       }
     }
   }
+
   .subjects-filter {
     height: 25vh !important;
   }
+
   .classroom-filter-custom {
     height: 25vh;
     overflow-y: scroll;
   }
-  .index-box.hover-light:hover {
-    background: var(--light-blue-alpha3);
-  }
+
   .one-subject {
     padding-top: 3vh;
     padding-left: 2vw;
     padding-right: 2vw;
     padding-bottom: 12vh;
     height: 100%;
+
     .libary-container {
       background: var(--white);
       border-radius: 0.7vw;
       height: 100%;
       $base-side-margin: 0.32vw;
-      > div {
+
+      >div {
         height: 100%;
         $base-width: 5vw;
+
         .assignment {
           margin-left: $base-side-margin;
           margin-right: $base-side-margin;
           $base-radius: 0.35vw;
           border-radius: $base-radius;
+
           .progress-value {
             border-radius: $base-radius;
           }
         }
+
         .length-20 {
           width: $base-width;
+
           .rotated .rotated-text {
             height: $base-width;
           }
+
           .progress-value {
             width: $base-width;
           }
         }
+
         .length-40 {
           $width: calc(#{$base-width} * 2);
           width: $width;
+
           .rotated .rotated-text {
             height: $width;
           }
+
           .progress-value {
             width: $width;
           }
         }
+
         .length-60 {
           $width: calc(#{$base-width} * 4);
           width: $width;
+
           .rotated .rotated-text {
             height: $width;
           }
+
           .progress-value {
             width: $width;
           }
-        }
-      }
-      .assignment-progressbar {
-        position: relative;
-        height: 100%;
-        display: inline-block;
-
-        .assignment {
-          cursor: pointer;
-          height: 100%;
-          width: 1vw;
-          margin-left: 0.2vw;
-          margin-right: 0.2vw;
-          border-radius: 0.25vw;
-
-          &.default {
-            background: var(--tab-gray) !important;
-          }
-
-          &.assigned {
-            opacity: 0.2;
-          }
-
-          .default-value {
-            height: 100%;
-            &:hover {
-              opacity: 0.5;
-              background: var(--theme-light-blue) !important;
-            }
-          }
-
-          &.length-20 {
-            width: $base-brick-width;
-            .progress-value {
-              width: $base-brick-width;
-            }
-          }
-          &.length-40 {
-            width: $base-brick-width * 2;
-            .progress-value {
-              width: $base-brick-width * 2;
-            }
-          }
-          &.length-60 {
-            width: $base-brick-width * 2;
-            .progress-value {
-              width: $base-brick-width * 2;
-            }
-          }
-        }
-        .progress-value {
-          position: absolute;
-          bottom: 0;
-          border-radius: 0.25vw;
-        }
-        .subject-tooltip {
-          background: var(--theme-light-blue);
-          color: var(--tab-gray);
-          margin-top: calc((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 2.5vh) / 4);
-          text-align: center;
-          transform: translate(-25%, 0);
-          z-index: 1000;
         }
       }
     }
   }
+}
+
+// spaces
+.my-library .all-subject-assignments .my-library-list .libary-container-1 .assignment-progressbar .assignment {
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
 }

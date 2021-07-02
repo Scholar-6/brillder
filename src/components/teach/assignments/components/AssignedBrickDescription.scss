@@ -4,7 +4,7 @@
 
 .assigned-brick-description {
   position: relative;
-  padding-left: 3vw !important;
+  padding-left: 2vw !important;
 
   @include tabletP {
     height: calc(#{$bricks-height / 6.35});
@@ -47,7 +47,7 @@
 
   .short-brick-info {
     font-size: 0.8vw;
-    padding-left: 2.5vw;
+    padding-left: 2vw;
     width: 30vw;
     padding-top: 0;
     @extend %flexToXCenter;
@@ -68,60 +68,62 @@
   }
   .vertical-brick {
     cursor: pointer;
-    width: calc(#{$bricks-height / 6.35 / 1.5 / 2.38});
+    width: calc(#{$bricks-height / 6.35 / 1.4});
     @extend %flexCenter;
     border-left: 0;
     border-right: 0;
     border-radius: 0.3vw;
-    height: calc(#{$bricks-height / 6.35 / 1.5});
+    height: calc(#{$bricks-height / 6.35});
     width: width;
 
     $border-radius: calc(#{$bricks-height / 6.35 / 15});
     $margin-height: calc(#{$bricks-height / 6.35 / 50});
 
-    .brick-top,
-    .brick-top-middle,
-    .brick-middle,
-    .brick-bottom-middle,
-    .brick-bottom {
+    .brick-relative {
+      position: relative;
       width: 100%;
-    }
+      height: calc(#{$bricks-height / 6.35 / 2.4});
 
-    .brick-top,
-    .brick-top-middle,
-    .brick-bottom-middle,
-    .brick-bottom {
-      height: calc(#{$bricks-height / 6.35 / 20});
-    }
+      .brick-middle {
+        position: absolute;
+        z-index: 3;
+        border-radius: 0.4vw;
+        width: 100%;
+        height: calc(#{$bricks-height / 6.35 / 2.4});
+        svg {
+          transition: all 300ms ease-out;
+          width: 80%;
+          margin-left: 10%;
+          height: inherit;
+          color: white;
+          &.rotated {
+            transform: rotate(90deg);
+          }
+        }
+      }
+      .hover-area {
+        z-index: 2;
+        transition: all 300ms ease-out;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 0.5vw;
+        width: 100%;
+        height: calc(calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35/2.4);
+      }
 
-    .brick-top,
-    .brick-top-middle {
-      margin-bottom: $margin-height;
-    }
-
-    .brick-bottom,
-    .brick-bottom-middle {
-      margin-top: $margin-height;
-    }
-
-    .brick-top {
-      border-top-left-radius: $border-radius;
-      border-top-right-radius: $border-radius;
-    }
-
-    .brick-bottom {
-      border-bottom-left-radius: $border-radius;
-      border-bottom-right-radius: $border-radius;
-    }
-
-    .brick-middle {
-      width: 100%;
-      height: calc(#{$bricks-height / 6.35 / 3});
-      svg {
-        width: 80%;
-        margin-left: 10%;
-        height: inherit;
-        color: white;
+      &:hover {
+        svg {
+          transform: rotate(90deg);
+        }
+        .hover-area {
+          background: var(--theme-dark-blue);
+          opacity: 0.5;
+          top: -0.8vh;
+          left: -0.5vw;
+          width: calc(100% + 1vw);
+          height: calc(calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35/2.4 + 1.6vh);
+        }
       }
     }
   }

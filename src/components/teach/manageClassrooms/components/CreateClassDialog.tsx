@@ -39,7 +39,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   }, [props.user.roles, props.user.subjects]);
 
   React.useEffect(() => {
-    if(subjects && subjects.length == 1) {
+    if(subjects && subjects.length === 1) {
       setSubjectIndex(subjects.findIndex(s => s.name === "General") ?? 0);
     }
   }, [subjects])

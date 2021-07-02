@@ -23,34 +23,6 @@
       height: 1.5vw !important;
     }
   }
-  .poem-toggle {
-    border-radius: 50%;
-    position: absolute;
-    width: 2vw;
-    height: 2vw;
-    font-size: 0.9vw;
-    top: 0;
-    right: 0vw;
-    background: #f5f6f7;
-    color: #acacac;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    
-    &.active {
-      color: var(--white);
-      background: var(--theme-green);
-    }
-
-    &:hover {
-      background: var(--white);
-
-      &.active {
-        color: #acacac;
-      }
-    }
-  }
   .words-input {
     resize: none;
     margin-bottom: 0 !important;
@@ -62,3 +34,4 @@
     max-width: 100%;
   }
 }
+

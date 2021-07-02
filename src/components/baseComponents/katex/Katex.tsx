@@ -7,46 +7,46 @@ import React from 'react';
 import './Katex.scss';
 
 interface KatexProps {
-    latex: string;    
+  latex: string;
 }
 
 const Katex: React.FC<KatexProps> = props => {
-    const vectorMacro = (matrixEnv: string) => (ctx: any) => {
-        const arg = ctx.consumeArgs(1)[0] as any[];
-        const str = arg.reduce((prev, curr) => curr.text + prev, "") as string;
-        //eslint-disable-next-line
-        const elements = str.replace(/\,/g, "\\\\")
-        return `\\begin{${matrixEnv}}${elements}\\end{${matrixEnv}}`;
-    };
+  const vectorMacro = (matrixEnv: string) => (ctx: any) => {
+    const arg = ctx.consumeArgs(1)[0] as any[];
+    const str = arg.reduce((prev, curr) => curr.text + prev, "") as string;
+    //eslint-disable-next-line
+    const elements = str.replace(/\,/g, "\\\\")
+    return `\\begin{${matrixEnv}}${elements}\\end{${matrixEnv}}`;
+  };
 
+  const ref = React.createRef<HTMLDivElement>();
+  React.useEffect(() => {
     const macros = {
-        "\\vector": vectorMacro("matrix"),
-        "\\pvector": vectorMacro("pmatrix"),
-        "\\bvector": vectorMacro("bmatrix"),
+      "\\vector": vectorMacro("matrix"),
+      "\\pvector": vectorMacro("pmatrix"),
+      "\\bvector": vectorMacro("bmatrix"),
     }
 
-    const ref = React.createRef<HTMLDivElement>();
-    React.useEffect(() => {
-        if(ref.current) {
-            const spans = ref.current.getElementsByClassName("latex");
-            while(spans.length > 0) {
-                const el = spans[0];
-                try {
-                    katex.render(el.textContent!, el as HTMLSpanElement, {
-                        throwOnError: false,
-                        macros
-                    });
-                    el.className = "katex-rendered";
-                } catch (e) {
-                    console.log(e);
-                }
-            }
+    if (ref.current) {
+      const spans = ref.current.getElementsByClassName("latex");
+      while (spans.length > 0) {
+        const el = spans[0];
+        try {
+          katex.render(el.textContent!, el as HTMLSpanElement, {
+            throwOnError: false,
+            macros
+          });
+          el.className = "katex-rendered";
+        } catch (e) {
+          console.log(e);
         }
-    }, [ref]);
+      }
+    }
+  }, [ref]);
 
-    return (
-        <div ref={ref} className="katex-overflow-scroll" dangerouslySetInnerHTML={{ __html: props.latex }} />
-    );
+  return (
+    <div ref={ref} className="katex-overflow-scroll" dangerouslySetInnerHTML={{ __html: props.latex }} />
+  );
 };
 
 export default Katex;

@@ -10,9 +10,9 @@ import {
   ShortAnswerItem,
 } from "components/build/buildQuestions/questionTypes/shortAnswerBuild/interface";
 import { stripHtml } from "components/build/questionService/ConvertService";
-import DocumentWirisEditorComponent from "components/baseComponents/ckeditor/DocumentWirisEditor";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
 import { getValidationClassName } from "../service";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 export type ShortAnswerAnswer = string[];
 
@@ -68,7 +68,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
 
   checkAttemptAnswer(answer: ShortAnswerItem, index: number) {
     const answerValue = stripHtml(answer.value);
-    if (this.props.attempt.answer) {
+    if (this.props.attempt && this.props.attempt.answer) {
       let attepmtValue = stripHtml(this.props.attempt.answer[index]);
 
       if (
@@ -87,7 +87,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     return attempt;
   }
 
-  renderCkeditor(index: number) {
+  renderQuill(index: number) {
     let value = this.state.userAnswers[index];
     if (this.props.isPreview) {
       value = this.props.component.list[index].value;
@@ -95,19 +95,17 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     if (this.props.isBookPreview) {
       return <MathInHtml value={value} />;
     }
-    return (
-      <DocumentWirisEditorComponent
-        data={value}
-        disabled={false}
-        onChange={v => this.setUserAnswer(v, index)}
-        toolbar={["superscript", "subscript"]}
-        onBlur={() => { }}
-        placeholder={`Answer ${index + 1}`}
-      />
-    );
+    return <QuillEditor
+      disabled={false}
+      showToolbar={true}
+      data={value}
+      placeholder={`Answer ${index + 1}`}
+      toolbar={['superscript', 'subscript']}
+      onChange={v => this.setUserAnswer(v, index)}
+    />
   }
 
-  renderAnswer(answer: ShortAnswerItem, width: number, index: number) {
+  renderAnswer(answer: ShortAnswerItem, index: number) {
     let isCorrect = false;
     if (this.props.isReview || this.props.isBookPreview) {
       isCorrect = this.checkAttemptAnswer(answer, index);
@@ -124,8 +122,8 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     }
 
     return (
-      <div key={index} className={className} style={{ width: `${width}%` }}>
-        {this.renderCkeditor(index)}
+      <div key={index} className={className}>
+        {this.renderQuill(index)}
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}
           isReview={this.props.isReview}
@@ -139,17 +137,11 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
 
   render() {
     const { component } = this.props;
-    let width = 100;
-    if (component.list && component.list.length >= 1) {
-      width = (100 - 1) / component.list.length;
-    }
-
-    if (this.props.isPreview) width = 100;
 
     return (
       <div className="question-unique-play short-answer-live">
         {component.list.map((answer, index) => {
-          return this.renderAnswer(answer, width, index);
+          return this.renderAnswer(answer, index);
         })}
         {this.renderGlobalHint()}
       </div>

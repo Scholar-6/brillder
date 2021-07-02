@@ -3,17 +3,13 @@ import { Avatar, Chip, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import './AutocompleteUsername.scss';
-import { suggestUsername } from "services/axios/user";
 import { UserBase } from "model/user";
 import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface AutocompleteProps {
-  editorError: string;
-  placeholder: string;
+  placeholder?: string;
   currentEmail: string;
-  onBlur(): void;
-
   users: UserBase[];
   onChange(email: string): void;
   onAddEmail(): void;
@@ -21,11 +17,8 @@ interface AutocompleteProps {
 }
 
 const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
-  users, setUsers,
-  ...props
+  users, setUsers, ...props
 }) => {
-  const [suggestions, setSuggestions] = React.useState([] as UserBase[]);
-
   return (
     <Autocomplete
       multiple
@@ -45,11 +38,9 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
         return (
           <TextField
             {...params}
-            error={props.editorError !== ""}
-            helperText={props.editorError}
+            helperText={""}
             value={props.currentEmail}
             fullWidth
-            onBlur={() => props.onBlur()}
             onKeyPress={e => {
               if (e.key === "Enter" || e.key === ' ') {
                 const user = users.find(u => u.email.toLocaleLowerCase() === props.currentEmail.toLocaleLowerCase());
@@ -62,20 +53,9 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
             }}
             onChange={(evt) => {
               const { value } = evt.target;
-              if (value.length >= 2) {
-                suggestUsername(value).then((res) => {
-                  if (res && res.length > 0) {
-                    setSuggestions(res);
-                  } else {
-                    setSuggestions([]);
-                  }
-                });
-              } else {
-                setSuggestions([]);
-              }
               props.onChange(value);
             }}
-            placeholder="Enter emails here"
+            placeholder={props.placeholder ? props.placeholder : "Enter or Paste up to 50 emails here."}
             variant="outlined"
           />
         );

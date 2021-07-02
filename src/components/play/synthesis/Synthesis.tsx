@@ -1,21 +1,19 @@
 import React, { useEffect } from 'react';
-import { Grid } from '@material-ui/core';
-import moment from 'moment';
 
 import './Synthesis.scss';
 import { AcademicLevelLabels, Brick } from 'model/brick';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { PlayStatus } from '../model';
-import TimerWithClock from "../baseComponents/TimerWithClock";
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/build/proposal/model';
-import { getPlayPath, getAssignQueryString } from '../service';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { rightKeyPressed } from 'components/services/key';
-import { getReviewTime, getSynthesisTime } from '../services/playTimes';
+import { getSynthesisTime } from '../services/playTimes';
 import { isPhone } from 'services/phone';
 import TimeProgressbarV2 from '../baseComponents/timeProgressbar/TimeProgressbarV2';
+import BrickTitle from 'components/baseComponents/BrickTitle';
+import routes from '../routes';
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
@@ -30,9 +28,6 @@ interface SynthesisProps {
 
 const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }) => {
   const history = useHistory();
-  const location = useLocation();
-  const [startTime] = React.useState(moment());
-  const playPath = getPlayPath(props.isPlayPreview, brick.id);
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -49,12 +44,17 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   });
 
   if (status === PlayStatus.Live) {
-    history.push(`${playPath}/intro${getAssignQueryString(location)}`);
+    if (isPhone()) {
+      history.push(routes.phonePrep(brick.id));
+    } else {
+      // direct access only for work for play preview
+      if (!props.isPlayPreview) {
+        history.push(routes.playNewPrep(brick.id));
+      }
+    }
   }
 
-  const reviewBrick = () => {
-    props.moveNext();
-  }
+  const reviewBrick = () => props.moveNext();
 
   const renderSynthesisContent = () => {
     return (
@@ -95,7 +95,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   }
 
   const renderSpendTime = () => {
-    return <p><span>Aim to spend {getSynthesisTime(brick.brickLength)} minutes on this section.</span></p>;
+    return <div>Aim to spend {getSynthesisTime(brick.brickLength)} minutes on this section.</div>;
   }
 
   const renderBrickCircle = (color: string) => {
@@ -110,13 +110,13 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
 
   const renderMobileHeader = (color: string) => {
     return (
-      <div className="intro-header expanded-intro-header">
+      <div className="intro-header expanded-intro-header synthesis-header">
         <div className="vertical-center">
           {renderBrickCircle(color)}
         </div>
         <div className="r-title-container">
-          <span className="heading synthesis-title">Synthesis</span>
-          <span>{renderSpendTime()}</span>
+          <div className="heading synthesis-title">Synthesis</div>
+          {renderSpendTime()}
         </div>
       </div>
     );
@@ -138,38 +138,40 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
             {isPhone() ? renderPhoneButton() : renderFooter()}
           </div>
           <div className="time-container">
-            <TimeProgressbarV2 isSynthesis={true} startTime={startTime} onEnd={() => {}} brickLength={brick.brickLength} />
+            <TimeProgressbarV2 isSynthesis={true} setEndTime={() => {}} onEnd={() => { }} brickLength={brick.brickLength} />
           </div>
         </div>
       </div>
     );
   }
 
+  const minutes = getSynthesisTime(brick.brickLength);
+
   return (
     <div className="brick-row-container synthesis-container">
       {isPhone() ? renderMobile() :
         <div className="brick-container play-preview-panel synthesis-page">
-          <Grid container direction="row">
-            <Grid item xs={8}>
-              <div className="introduction-page">
-                <h1 className="title">Synthesis</h1>
-                <hr className="cuting-line"></hr>
-                {renderSynthesisContent()}
+          <div className="fixed-upper-b-title">
+            <BrickTitle title={brick.title} />
+          </div>
+          <div className="header">
+            Synthesis
+          </div>
+          <div className="introduction-page">
+            {renderSynthesisContent()}
+            <div className="new-layout-footer" style={{ display: 'none' }}>
+              <div className="time-container">
+                <TimeProgressbarV2 isSynthesis={true} minutes={minutes} setEndTime={() => {}} onEnd={() => { }} brickLength={brick.brickLength} />
               </div>
-            </Grid>
-            <Grid item xs={4}>
-              <div className="introduction-info">
-                <TimerWithClock isArrowUp={true} startTime={startTime} brickLength={brick.brickLength} />
-                <div className="intro-text-row">
-                  {renderSpendTime()}
-                  <br />
-                  <p>When you’re ready to move on, you will have</p>
-                  <p>{getReviewTime(brick.brickLength)} minutes to try to improve your score.</p>
+              <div className="footer-space" />
+              <div className="new-navigation-buttons">
+                <div className="n-btn next" onClick={props.moveNext}>
+                  Review
+                  <SpriteIcon name="arrow-right" />
                 </div>
-                {renderFooter()}
               </div>
-            </Grid>
-          </Grid>
+            </div>
+          </div>
         </div>
       }
     </div>

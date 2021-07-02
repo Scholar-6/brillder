@@ -13,9 +13,6 @@
 
   .teach-sort-box {
     height: 100%;
-    .classrooms-filter {
-      height: calc(100% - 4vh - 1vw - 1.9vw) !important;
-    }
   }
 
   .index-box {
@@ -23,6 +20,9 @@
     height: 4.7vh !important;
     font-size: 1.05vw !important;
     font-family: $font-family-regular;
+    .right-index .svg {
+      stroke-width: 1.5;
+    }
   }
   .white-box {
     margin-left: 0.3vw;
@@ -161,7 +161,7 @@
         &.color7 {
           .round-button,
           .right-index {
-            border: 0.15vw solid var(--theme-yellow);
+            border: 0.11vw solid var(--theme-yellow);
             padding: 0.1vw 0.4vw;
             color: var(--theme-yellow);
             background: inherit;
@@ -199,7 +199,7 @@
         &.color5 {
           .round-button,
           .right-index {
-            border: 0.15vw solid var(--theme-green);
+            border: 0.11vw solid var(--theme-green);
             background: inherit;
             color: var(--theme-green);
             padding: 0.1vw 0.4vw;
@@ -319,7 +319,7 @@
       &.color7 {
         .round-button,
         .right-index {
-          border: 0.15vw solid var(--theme-yellow);
+          border: 0.11vw solid var(--theme-yellow);
           padding: 0.1vw 0.4vw;
           color: var(--theme-yellow);
           background: inherit;
@@ -357,7 +357,7 @@
       &.color5 {
         .round-button,
         .right-index {
-          border: 0.15vw solid var(--theme-green);
+          border: 0.11vw solid var(--theme-green);
           background: inherit;
           color: var(--theme-green);
           padding: 0.1vw 0.4vw;
@@ -499,5 +499,54 @@
   }
   .empty-tab-content {
     height: 80%;
+  }
+
+  .assignment-tab-content-text {
+    padding-top: 0.1vw;
+    padding-bottom: 0.1vw;
+    border-radius: 0.9vw;
+    margin-top: 1vw;
+    margin-left: 6.7vw;
+    margin-right: 6.7vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    background: var(--tab-gray);
+
+    p {
+      font-size: 1.5vw;
+      color: var(--theme-dark-blue);
+      margin-top: 1.5vw;
+      margin-bottom: 1.5vw;
+    }
+  }
+}
+
+// view all button
+.manage-classrooms-page {
+  .m-view-all {
+    display: flex;
+    align-items: center;
+    font-size: 1.05vw;
+    font-family: $font-family-regular;
+    padding-left: 1.4vw;
+    height: 4.7vh !important;
+    
+    &.active {
+      background-color: var(--theme-orange);
+    }
+    .right-index {
+      display: flex;
+      align-items: center;
+      right: 1.2vw !important;
+      color: var(--white) !important;
+      background: inherit !important;
+      svg {
+        margin-left: 0.2vw;
+      }
+      .svg {
+        width: 1.3vw;
+        height: 1.3vw;
+      }
+    }
   }
 }

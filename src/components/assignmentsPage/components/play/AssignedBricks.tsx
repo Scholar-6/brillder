@@ -34,9 +34,9 @@ class AssignedBricks extends Component<AssignedBricksProps> {
     if (item.status === AssignmentBrickStatus.ToBeCompleted) {
       return 'color1';
     } else if (item.status === AssignmentBrickStatus.SubmitedToTeacher) {
-      return 'color2';
-    } else if (item.status === AssignmentBrickStatus.CheckedByTeacher) {
       return 'color3';
+    } else if (item.status === AssignmentBrickStatus.CheckedByTeacher) {
+      return 'color4';
     }
     return '';
   }
@@ -107,10 +107,6 @@ class AssignedBricks extends Component<AssignedBricksProps> {
   }
 
   renderAssignedBricks() {
-    const {checked, submitted, completed } = this.props.filters;
-    if (!checked && !submitted && !completed) {
-      return this.renderAssignedGroupedBricks();
-    }
     return this.renderSortedBricks();
   }
 

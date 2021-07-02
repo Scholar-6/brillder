@@ -14,12 +14,6 @@
     padding: 5px;
     border: 2px solid var(--black-blue);
   }
-
-  .ck-content {
-    @include phone_and_tabletP {
-      font-size: 4vw;
-    }
-  }
 }
 
 .lines-container,

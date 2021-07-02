@@ -78,7 +78,7 @@ class LineHighlighting extends CompComponent<
     
     if (this.props.isDefaultBook) {
       return (
-        <div key={index}>
+        <div key={index} className="line-container">
           <span className={className}>{line.text}</span>
         </div>
       );
@@ -110,7 +110,7 @@ class LineHighlighting extends CompComponent<
     }
 
     return (
-      <div key={index}>
+      <div key={index} className="line-container">
         <span className={className} onClick={() => this.highlighting(index)}>
           {line.text}
         </span>
@@ -128,8 +128,15 @@ class LineHighlighting extends CompComponent<
       );
     }
 
+    let className = 'question-unique-play line-highlighting-play';
+    if (this.props.component.isPoem) {
+      className += ' lines-inline'
+    } else {
+      className += ' break-lines';
+    }
+
     return (
-      <div className="question-unique-play line-highlighting-play">
+      <div className={className}>
         <p><span className="help-text">Click to highlight.</span></p>
         <div className="lines-container">
           {component.lines.map((line: any, index: number) => (

@@ -9,6 +9,29 @@
 }
 
 .brick-title-page {
+  .absolute-title-help {
+    position: absolute;
+    right: 0;
+    top: 1.5vw;
+  }
+  .absolute-keyword-help {
+    position: absolute;
+    right: 0;
+    top: -0.5vw;
+  }
+  .absolute-difficult-help {
+    position: absolute;
+    right: 0;
+    z-index: 199;
+    top: -0.8vw;
+
+    .hover-area.custom {
+      &:hover .hover-content {
+        top: -20vw;
+        left: 3vw;
+      }
+    }
+  }
   .left-block {
     $margin-desktop-left: 11vw;
 
@@ -71,6 +94,22 @@
       border: transparent;
       .audience-inputs {
         @extend %buildInputs;
+
+        .ql-custom-toolbar {
+          display: none;
+        }
+        .ql-editor.ql-blank::before {
+          left: 0;
+          font-style:initial !important;
+          color: var(--theme-dark-blue) !important;
+          opacity: 0.4 !important;
+        }
+        .quill-document-editor,
+        .ql-editor {
+          padding-left: 0 !important;
+          font-size: 1.6vw;
+          background: none !important;
+        }
       }
     }
   }

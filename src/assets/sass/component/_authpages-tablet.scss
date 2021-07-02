@@ -1,0 +1,469 @@
+.auth-page {
+  background: var(--theme-dark-blue);
+  height: 100%;
+  @extend %posRelative;
+  .logo-box {
+    background-color: var(--theme-dark-blue) !important;
+    @extend %flexCenter;
+    @include phone_and_tabletP {
+      background: var(--theme-light-blue);
+      height: calc(39%) !important;
+      border-bottom-right-radius: 10vw;
+      overflow: hidden;
+      transition: all 2000ms ease-out !important;
+    }
+    .logo-text-image {
+      @include phone_and_tabletP {
+        transition: all 800ms ease-out !important;
+        width: 55vw;
+        max-height: 20vw !important;
+        opacity: 0;
+      }
+    }
+    .logo-box-inner {
+      @include phone_and_tabletP {
+        transition: all 2000ms ease-out !important;
+        width: 100%;
+        height: 80%;
+      }
+      .logo-image {
+        width: 100%;
+        height: 100%;
+        color: var(--theme-orange);
+        @extend %flexCenter;
+        @include phone_and_tabletP {
+        }
+        @include tabletP {
+          height: 28vh;
+          margin-bottom: 5vh;
+        }
+        .svg {
+          @include phone_and_tabletP {
+            transition: all 2000ms ease-out !important;
+            height: 100%;
+            width: 100%;
+          }
+        }
+        &.mobile {
+          display: none;
+          @include phone_and_tabletP {
+            display: block;
+          }
+        }
+      }
+    }
+    .logo-text-image {
+      height: 6vh;
+    }
+    .website {
+      @include phone_and_tabletP {
+        display: none;
+      }
+    }
+  }
+  .big {
+    @include phone_and_tabletP {
+      background: var(--theme-light-blue) !important;
+      height: 100% !important;
+    }
+    .logo-box-inner {
+      @include phone_and_tabletP {
+        height: 90vw;
+        width: 100%;
+      }
+    }
+    .svg {
+      @include phone_and_tabletP {
+        width: 100vw;
+        height: 70vw;
+      }
+    }
+    .logo-text-image {
+      @include phone_and_tabletP {
+        opacity: 1;
+      }
+    }
+  }
+  .back-col {
+    display: none;
+    @include phone_and_tabletP {
+      position: absolute;
+      top: 48%;
+      left: 50%;
+      transform: translate(-47%, -50%);
+    }
+    @include phone {
+      height: 13.3vh;
+      width: 28.3vw;
+    }
+    @include desktop {
+      height: 13.3vh;
+      width: 32.3vw;
+    }
+    .back-box {
+      @extend %textCenter;
+      @include phone_and_tabletP {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .back-button {
+        @include phone {
+          height: 10.6vw;
+          width: 13vw;
+          color: var(--white);
+          margin-top: -1.5vh;
+        }
+        @include tabletP {
+          height: 5.6vw;
+          width: 6vw;
+          color: var(--theme-orange);
+          transform: rotate(90deg);
+        }
+      }
+    }
+  }
+  .first-col {
+    height: 100%;
+    @include phone {
+      width: 100%;
+    }
+    @include tabletP {
+      width: 33.6vw;
+    }
+    @include desktop {
+      width: 29.6vw;
+    }
+
+    .first-item {
+      height: 14.7vh;
+      @include phone_and_tabletP {
+        display: none;
+      }
+    }
+    .second-item {
+      margin-top: 4.7vh;
+      height: 80.6vh;
+      @extend %textCenter;
+      @include phone_and_tabletP {
+        margin: 0;
+        height: 100%;
+      }
+    }
+  }
+  .second-col {
+    margin-left: 2.7vw;
+    width: 29.7vw;
+    height: 100%;
+    @include phone_and_tabletP {
+      display: none;
+    }
+    .first-item {
+      height: 70.9vh;
+    }
+    .second-item {
+      margin-top: 4.7vh;
+      height: 24.4vh;
+    }
+  }
+  .first-col,
+  .second-col {
+    .first-item {
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+    .second-item {
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
+    .first-item,
+    .second-item {
+      background: var(--theme-light-blue);
+      @include phone_and_tabletP {
+        background-color: transparent;
+      }
+    }
+  }
+  &.login-page {
+    @include phone_and_tabletP {
+      &:focus-within {
+        z-index: 999999;
+      }
+    }
+    .logo-box {
+      @include tabletP {
+        background-color: transparent;
+        height: calc(40vh - 2vh);
+      }
+    }
+    .content-box,
+    .button-box {
+      transition: width ease-in-out 300ms;
+      @extend %flexCenter;
+      @include phone {
+        width: 100%;
+      }
+      @include tabletP {
+        width: 90%;
+        justify-content: space-between;
+        margin: 0px auto;
+        margin-top: 16vh;
+      }
+      @include tabletL {
+        width: 80%;
+      }
+      &.expanding {
+        .google-button,
+        .email-button {
+          transition: all 450ms ease-out;
+          width: 100%;
+        }
+        .button-box {
+          margin-top: -100px;
+          z-index: -1;
+          transition: all 450ms ease-out;
+        }
+      }
+      &.expanded {
+        .button-box {
+          margin-top: 0px;
+          z-index: 1;
+        }
+      }
+      &.mobile-button-box {
+        .mobile-policy-text {
+          position: fixed;
+          bottom: 2.4vh;
+          width: 88vw;
+          @extend %textCenter;
+          font-size: 6vw;
+          line-height: 1;
+        }
+      }
+    }
+    .content-box {
+      @extend %flexColumn;
+      .button-box {
+        width: 100%;
+      }
+      .input-block {
+        margin-bottom: 2.7vh;
+        &:last-child {
+          margin-bottom: 0;
+          button {
+            margin-bottom: 0;
+          }
+        }
+        input {
+          color: var(--white);
+          @extend %textCenter;
+          background: var(--theme-dark-blue);
+          box-sizing: border-box !important;
+          padding: 2.5vh !important;
+          @include phone_and_tabletP {
+            min-height: 6.663vh;
+            border-radius: 2.4vw;
+          }
+          @include tabletP {
+            min-height: 9.663vh;
+          }
+          &::-webkit-input-placeholder {
+            color: var(--white);
+            opacity: 0.8;
+          }
+        }
+        .hide-password-icon-container {
+          @extend %flexCenter;
+          position: absolute;
+          right: 1.3vw;
+          top: 0;
+          padding: 0.5vw 1vw;
+          height: 100%;
+          .hide-password-icon {
+            height: 37%;
+            opacity: 0.7;
+            color: var(--theme-orange);
+            z-index: 5;
+          }
+        }
+      }
+      .register-success {
+        position: fixed;
+        top: 24.1vh;
+        left: 19.2vw;
+        color: var(--white);
+        .thanks-info {
+          cursor: pointer;
+          @extend %posRelative;
+          line-height: 1.43;
+          font-size: 7.15vh;
+
+          .register-success-icon {
+            @extend %posAbsolute;
+            top: 0.3vh;
+            left: -14.6vh;
+            font-size: 10.7vh;
+            color: var(--theme-orange);
+          }
+        }
+        .contact-info {
+          margin-top: 16.4vh;
+          line-height: 1;
+          font-size: 3.6vh;
+        }
+      }
+      &.mobile-button-box {
+        @include phone_and_tabletP {
+          background: var(--theme-light-blue);
+          justify-content: flex-start !important;
+        }
+        .mobile-policy-text {
+          @include phone_and_tabletP {
+            color: var(--theme-orange);
+          }
+          @include tabletP {
+            color: var(--white);
+          }
+        }
+      }
+    }
+    .button-box {
+      &.mobile-button-box {
+        .mobile-policy-text {
+          @include phone_and_tabletP {
+            color: var(--theme-dark-blue);
+          }
+          @include tabletP {
+            color: var(--white);
+          }
+        }
+      }
+      a,
+      button {
+        font-family: $font-family-regular;
+        box-shadow: none;
+        border: 0;
+        text-transform: none;
+        letter-spacing: 0.1vw;
+        transition: all 0.2s ease-in-out;
+        margin-bottom: 2.7vh;
+        @include tabletP {
+          border-radius: $button-radius !important;
+          font-size: 1.4vw;
+          padding: 0.8vh 1.2vw;
+        }
+        @include desktop {
+          font-size: 1vw;
+        }
+      }
+      .sign-up-button,
+      .sign-in-button {
+        width: calc(50% - 2vw);
+        background: var(--theme-orange);
+        flex: 1;
+        text-transform: uppercase;
+        letter-spacing: 0.2vw;
+        padding: 0.7vw;
+        @include phone_and_tabletP {
+          color: var(--black-blue);
+          border-radius: 2.4vw !important;
+        }
+        .MuiButton-label {
+          @include phone_and_tabletP {
+            font-family: $font-family-black;
+            letter-spacing: 1vw;
+          }
+        }
+      }
+      .sign-up-button {
+        color: var(--white);
+        @include phone_and_tabletP {
+          margin-right: 3vw;
+        }
+        @include tabletP {
+          margin-right: 1vw;
+        }
+      }
+      .sign-in-button {
+        color: var(--theme-dark-blue);
+        background-color: var(--white);
+        @include phone_and_tabletP {
+          margin-left: 3vw;
+        }
+        @include tabletP {
+          margin-left: 1vw;
+        }
+      }
+      .reset-password-button {
+        color: var(--theme-dark-blue);
+        background-color: var(--white);
+        flex: 1;
+        text-transform: uppercase;
+        letter-spacing: 0.2vw;
+        padding: 0.7vw;
+        @include phone_and_tabletP {
+          color: var(--black-blue);
+          border-radius: 2.4vw !important;
+        }
+        .MuiButton-label {
+          @include phone_and_tabletP {
+            font-family: $font-family-black;
+            letter-spacing: 1vw;
+          }
+        }
+      }
+      .email-button,
+      .google-button {
+        @extend %flexCenter;
+        padding: 2.5vh;
+        @include phone_and_tabletP {
+          width: 100%;
+          min-height: 6.663vh;
+        }
+        @include tabletP {
+          min-height: 9.663vh;
+          width: 30vw;
+        }
+        @include desktop {
+          width: 22vw;
+        }
+        .svg {
+          transition: all 0.2s ease-in-out;
+          margin-right: 1vw;
+          @extend %removePosition;
+          @include phone {
+            width: 9.5vw;
+            height: 9.5vw;
+          }
+          @include tabletP {
+            width: 2.5vw;
+            height: 2.5vw;
+          }
+          @include desktop {
+            width: 2.3vw;
+            height: 2.3vw;
+          }
+        }
+        .MuiButton-label {
+          justify-content: flex-start;
+        }
+      }
+      .email-button {
+        background: var(--theme-orange);
+        @include phone_and_tabletP {
+          order: 2;
+        }
+        .svg,
+        span {
+          color: var(--white);
+        }
+      }
+      .google-button {
+        background: var(--white);
+        span {
+          color: var(--theme-dark-blue);
+        }
+      }
+    }
+  }
+}

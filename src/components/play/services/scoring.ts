@@ -66,6 +66,18 @@ export const calcBrickReviewAttempt = (brick: Brick, answers: ComponentAttempt<a
     ...attempt,
     liveCorrect: brickAttempt.liveAnswers![index] ? brickAttempt.liveAnswers![index].correct : false
   }));
+
+  for (let i = 0; i < reviewAnswers.length; i++) {
+    const reviewAnswer = reviewAnswers[i];
+    const liveAnswer = brickAttempt.liveAnswers![i];
+    if (liveAnswer && liveAnswer.correct && liveAnswer.liveCorrect) {
+      //#3439 pair match fix
+      if (reviewAnswer.marks === reviewAnswer.maxMarks) {
+        reviewAnswer.reviewCorrect = true;
+      }
+    }
+  }
+
   return {
     brick, score, oldScore: brickAttempt.score, maxScore, student: null, answers: reviewAnswers, liveAnswers: brickAttempt.liveAnswers
   } as BrickAttempt;

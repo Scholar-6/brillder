@@ -11,7 +11,7 @@ export function acceptCookies() {
 export function getCookies() {
   try {
     const res = localStorage.getItem(CookiesPolicy) as string;
-    if (res == "true") {
+    if (res === "true") {
       return true;
     }
     return false;

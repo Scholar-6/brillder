@@ -1,4 +1,3 @@
-import LabelTyping from "components/baseComponents/LabelTyping";
 import React, { Component } from "react";
 
 interface EmptyState {

@@ -1,0 +1,85 @@
+* {
+  margin: 0 !important;
+  padding: 0 !important;
+  transition: all ease-in 300ms;
+}
+
+div {
+  width: 100% !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+  height: 100% !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  right: unset !important;
+}
+
+#Embed style {
+  display: none !important
+}
+
+#Embed>div,
+#Embed>div>div,
+#Embed>div>div>.wrapper-AtBcr {
+  display: flex !important;
+}
+
+#Embed>div>div>.wrapper-AtBcr {
+  align-items: center !important;
+  height: 100% !important;
+  padding: 0 10vw !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+#Embed>div>div>.wrapper-AtBcr>span.label-3kk12 {
+  font-size: 15vw !important;
+  line-height: 20vw !important;
+  vertical-align: top !important;
+  width: auto !important;
+}
+
+#Embed>div>div>.wrapper-AtBcr>.Icon {
+  margin: 0 10vw 0 0 !important;
+}
+
+#Embed>div>div>.wrapper-AtBcr>.Icon svg {
+  width: 28vw !important;
+  min-width: 28vw !important;
+  min-height: 28vw !important;
+  height: 28vw !important;
+}
+
+.zEWidget-launcher {
+  background-color: var(--theme-orange) !important;
+  left: 5% !important;
+  bottom: -1vh !important;
+  width: 17vw !important;
+  opacity: 0 !important;
+}
+
+/*=============================================
+=            ZENDESK MINIMIZED            =
+=============================================*/
+
+#Embed.minimized>div>div>.wrapper-AtBcr {
+  width: 44.04vw !important;
+  min-width: 44.04vw !important;
+  max-width: 44.04vw !important;
+  padding: 0 5vw !important;
+  justify-content: center !important;
+}
+
+#Embed.minimized>div>div>.wrapper-AtBcr>span.label-3kk12 {
+  display: none !important;
+}
+
+#Embed.minimized>div>div>.wrapper-AtBcr>.Icon {
+  margin: 0 !important;
+}
+
+/*=====  End of ZENDESK MINIMIZED  ======*/

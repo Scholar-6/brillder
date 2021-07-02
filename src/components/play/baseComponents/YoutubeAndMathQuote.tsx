@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // @ts-ignore
 import MathJax from 'react-mathjax-preview'
 
-import {isMathJax, isLatex, parseDataToArrayQuote} from 'components/services/mathJaxService';
+import {isMathJax, isLatex, parseDataToArray} from 'components/services/mathJaxService';
 import YoutubeLink from './YoutubeLink';
 import './YoutubeAndMath.scss'
 import Katex from 'components/baseComponents/katex/Katex';
@@ -14,16 +14,12 @@ interface MathHtmlProps {
 
 class YoutubeAndMathInHtmlQuote extends Component<MathHtmlProps> {
   isYoutube(el: string) {
-    if (el.indexOf('<figure class="media">') >= 0) {
-      if (el.indexOf('youtube.com/watch') >= 0) {
-        return true;
-      }
-    }
-    return false;
+    /*eslint-disable-next-line*/
+    return /<iframe.*src=\"https:\/\/www.youtube\.com\/embed/.test(el);
   }
 
   render() {
-    let arr = parseDataToArrayQuote(this.props.value);
+    let arr = parseDataToArray(this.props.value);
 
     const renderMath = (data: string, i: number) => {
       return <MathJax math={data} key={i} />;
@@ -49,8 +45,6 @@ class YoutubeAndMathInHtmlQuote extends Component<MathHtmlProps> {
               return renderLatex(el, i);
             } 
             res = this.isYoutube(el);
-
-
             if (res) {
               return <YoutubeLink key={i} value={el} />;
             }

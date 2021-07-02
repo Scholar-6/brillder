@@ -12,7 +12,6 @@ import { PlayStatus } from "components/play/model";
 import { checkAdmin, checkPublisher } from "components/services/brickService";
 import { publishBrick, returnToAuthor, returnToEditor } from "services/axios/brick";
 
-import Clock from "components/play/baseComponents/Clock";
 import ShareDialog from 'components/play/finalStep/dialogs/ShareDialog';
 import InviteEditorDialog from './InviteEditorDialog';
 import LinkDialog from 'components/play/finalStep/dialogs/LinkDialog';
@@ -31,6 +30,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ReturnEditorsSuccessDialog from "components/play/finalStep/dialogs/ReturnEditorsSuccessDialog";
 import ReturnAuthorSuccessDialog from "components/play/finalStep/dialogs/ReturnAuthorSuccessDialog";
 import SelfPublishColumn from "./SelfPublishColumn";
+import routes from "../routes";
 
 enum PublishStatus {
   None,
@@ -78,8 +78,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
   const isAdmin = checkAdmin(user.roles);
   const isPublisher = checkPublisher(user, brick);
-  let isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
-  const link = `/play/brick/${brick.id}/intro`;
+  const isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
+  const link = routes.previewNewPrep(brick.id);
 
   if (!isAuthor && !isCurrentEditor && !isPublisher && !isAdmin) {
     return <Redirect to={map.BackToWorkBuildTab} />;
@@ -182,27 +182,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
     );
   }
 
-  const renderAdminColumns = () => {
-    const { status } = brick;
-    return (
-      <Grid className="share-row" container direction="row" justify="center">
-        {renderInviteColumn()}
-        {(status === BrickStatus.Build || status === BrickStatus.Review) && renderReturnToAuthorColumn()}
-        {status === BrickStatus.Review && renderReturnToEditorsColumn()}
-        {status !== BrickStatus.Publish && <PublishColumn onClick={() => publish(brick.id)} />}
-      </Grid>
-    );
-  }
-
   const renderActionColumns = () => {
-    const canPublish = isPublisher && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published;
+    const canPublish = isPublisher && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published && brick.status === BrickStatus.Review;
 
     if (!brick.isCore) {
       return renderPersonalColumns();
-    }
-
-    if (isAdmin) {
-      return renderAdminColumns();
     }
 
     if (isAuthor && brick.status === BrickStatus.Draft) {
@@ -232,7 +216,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       );
     }
 
-    if (isCurrentEditor && brick.status === BrickStatus.Build) {
+    if ((isCurrentEditor || isAdmin) && brick.status === BrickStatus.Build) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
           { renderReturnToAuthorColumn()}
@@ -303,9 +287,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
             </Grid>
             <Grid item xs={4}>
               <div className="introduction-info">
-                <div className="intro-header">
-                  <Clock brickLength={brick.brickLength} />
-                </div>
                 <div className="intro-text-row">
                 </div>
                 <ExitButton onClick={() =>
@@ -332,6 +313,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={() => setCopiedLink(false)} />
       <ShareDialog
         isOpen={shareOpen}
+        isPrivatePreview={!brick.isCore}
         link={() => { setShare(false); setLink(true) }}
         invite={() => { setShare(false); setInvite(true) }}
         close={() => setShare(false)}
@@ -366,7 +348,10 @@ const FinalStep: React.FC<FinalStepProps> = ({
       />
       <PublishSuccessDialog
         isOpen={publishSuccess === PublishStatus.Popup}
-        close={() => setPublishSuccess(PublishStatus.Published)}
+        close={() => {
+          setPublishSuccess(PublishStatus.Published);
+          history.push(map.playCover(brick.id));
+        }}
       />
       <SendPublisherSuccessDialog isOpen={sendedToPublisher && publisherConfirmed === false} close={() => props.sendToPublisherConfirmed()} />
     </div>

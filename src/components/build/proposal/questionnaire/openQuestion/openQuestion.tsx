@@ -2,23 +2,22 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './openQuestion.scss';
-import { ProposalStep, PlayButtonStatus, TitleRoutePart } from "../../model";
+import { ProposalStep, TitleRoutePart } from "../../model";
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from "components/play/baseComponents/MathInHtml";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 interface OpenQuestionProps {
   baseUrl: string;
   selectedQuestion: any;
   canEdit: boolean;
-  playStatus: PlayButtonStatus;
   history: any;
+  updated: string;
   saveOpenQuestion(v: string): void;
-  saveAndPreview(): void;
 }
 
 const HeadComponent: React.FC<any> = ({ data }) => {
@@ -40,8 +39,6 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
       <Navigation
         baseUrl={props.baseUrl}
         step={ProposalStep.OpenQuestion}
-        playStatus={props.playStatus}
-        saveAndPreview={props.saveAndPreview}
         onMove={() => saveOpenQuestion(selectedQuestion)}
       />
       <Grid container direction="row">
@@ -53,14 +50,12 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           <p className="sub-header">
             Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.
           </p>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!props.canEdit}
             data={selectedQuestion}
-            placeholder="Enter Open Question(s)..."
-            toolbar={[
-              'bold', 'italic', 'latex'
-            ]}
-            onBlur={() => { }}
+            placeholder="Open Question"
+            toolbar={['bold', 'italic', 'latex']}
+            showToolbar={true}
             onChange={saveOpenQuestion}
           />
           <NavigationButtons
@@ -73,7 +68,7 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           />
           <h2 className="pagination-text">2 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={HeadComponent} data={selectedQuestion} link="" />
+        <ProposalPhonePreview Component={HeadComponent} data={selectedQuestion} link="" updated={props.updated} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { Profiler, useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import { isMobileOnly, isTablet} from 'react-device-detect';
+import { isMobileOnly, isSafari, isTablet} from 'react-device-detect';
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -19,7 +20,6 @@ import MainPage from 'components/mainPage/mainPage';
 import BackToWorkPage from '../backToWorkPage/BackToWork';
 import AssignmentsPage from '../assignmentsPage/AssignmentsPage';
 import UsersListPage from '../userManagement/UsersList';
-import InvestigationBuildPage from 'components/build/investigationBuildPage'
 import LoginPage from '../loginPage/loginPage';
 import ResetPasswordPage from '../resetPasswordPage/ResetPasswordPage';
 import ActivateAccountPage from '../activateAccountPage/activateAccountPage';
@@ -42,12 +42,13 @@ import UnauthorizedRoute from './unauthorized/UnauthorizedRoute';
 
 import BrickWrapper from './BrickWrapper';
 
-import { setBrillderTitle } from 'components/services/titleService';
+import { getBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'services/zendesk';
 import map from 'components/map';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
 import TeachPage from 'components/teach/assignments/TeachPage';
 import Terms from 'components/onboarding/terms/Terms';
+import ThankYouPage from 'components/onboarding/thankYou/ThankYou';
 import PlayPreviewRoute from './PlayPreviewRoute';
 import EmailLoginPage from 'components/loginPage/EmailLoginPage';
 import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSubjectPage';
@@ -59,6 +60,11 @@ import { setupMatomo } from 'services/matomo';
 import { ReduxCombinedState } from 'redux/reducers';
 import { User } from 'model/user';
 import { getTerms } from 'services/axios/terms';
+import IPadWarning from 'components/baseComponents/rotateInstruction/IPadWarning';
+import BuildRouter from 'components/build/BuildRouter';
+import ProposalBrickRoute from './ProposalBrickRoute';
+import StartBuildingPage from 'components/build/StartBuilding/StartBuilding';
+import { GetYoutubeClick } from 'localStorage/play';
 
 interface AppProps {
   user: User;
@@ -66,12 +72,14 @@ interface AppProps {
 }
 
 const App: React.FC<AppProps> = props => {
-  setBrillderTitle();
   const location = useLocation();
+  const [iframeFullScreen, setIframe] = React.useState(false);
+  const [showWarning, setWarning] = React.useState(isTablet ? true: false)
   const [termsData, setTermsData] = React.useState({
     isLoading: false,
     termsVersion: ''
   });
+
   const [zendeskCreated, setZendesk] = React.useState(false);
   const isHorizontal = () => {
     // Apple does not seem to have the window.screen api so we have to use deprecated window.orientation instead.
@@ -86,8 +94,23 @@ const App: React.FC<AppProps> = props => {
   const [horizontal, setHorizontal] = React.useState(isHorizontal());
 
   useEffect(() => {
+    document.addEventListener('fullscreenchange', (event:any) => {
+      try {
+        if (document.fullscreenElement) {
+          if (event.target.tagName === 'IFRAME') {
+            setIframe(true);
+          } else {
+            setIframe(false);
+          }
+        }
+      } catch { }
+    });
+
     window.addEventListener("orientationchange", (event: any) => {
-      setHorizontal(isHorizontal());
+      const clicked = GetYoutubeClick();
+      if (!clicked) {
+        setHorizontal(isHorizontal());
+      }
     });
 
     // download mamoto
@@ -101,7 +124,7 @@ const App: React.FC<AppProps> = props => {
         let res = document.body.requestFullscreen();
         res.then(() => {
           if (window.screen.orientation && window.screen.orientation.lock) {
-            window.screen.orientation.lock('portrait');
+            window.screen.orientation.lock('portrait').catch((e) => console.log(e));
             console.log('lock screen');
           }
         });
@@ -159,9 +182,13 @@ const App: React.FC<AppProps> = props => {
   if ( isTablet && !horizontal) {
     return <RotateIPadInstruction />;
   }
+
+  if (isTablet && showWarning) {
+    return <IPadWarning hideWarning={() => setWarning(false)} />
+  }
   
-  // // If is mobile and landscape tell them to go to portrait
-  else if (isMobileOnly && horizontal) {
+  // If is mobile and landscape tell them to go to portrait
+  else if (isMobileOnly && horizontal && !iframeFullScreen) {
     return <RotateInstruction />;
   }
 
@@ -185,11 +212,34 @@ const App: React.FC<AppProps> = props => {
     }
   }
 
+  const onRenderCallback = (
+    id: any, // the "id" prop of the Profiler tree that has just committed
+    phase: any, // either "mount" (if the tree just mounted) or "update" (if it re-rendered)
+    actualDuration: any, // time spent rendering the committed update
+    baseDuration: any, // estimated time to render the entire subtree without memoization
+    startTime: any, // when React began rendering this update
+    commitTime: any, // when React committed this update
+    interactions: any // the Set of interactions belonging to this update
+  ) => {
+    // if more then 100ms log it.
+    if (baseDuration > 100) {
+      console.log('heavy: ', id, phase, baseDuration, startTime, actualDuration, commitTime);
+    } else if (baseDuration > 75) {
+      console.log('medium:', id, phase, baseDuration, startTime, actualDuration, commitTime);
+    }
+  }
+
   return (
+    <div className={isSafari ? 'root-safari browser-type-container' : 'browser-type-container'}>
+    <Helmet>
+      <title>{getBrillderTitle()}</title>
+    </Helmet>
     <ThemeProvider theme={theme}>
+      <Profiler id="app-tsx" onRender={onRenderCallback} >
       {/* all page routes are here order of routes is important */}
       <Switch>
         <UnauthorizedRoute path={map.AllSubjects} component={ViewAll} />
+        <UnauthorizedRoute path={map.SubjectCategories} component={ViewAll} />
         <UnauthorizedRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <UnauthorizedRoute path={map.ViewAllPage} component={ViewAll} />
@@ -202,27 +252,28 @@ const App: React.FC<AppProps> = props => {
         <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
 
         <PlayPreviewRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
+        {/* Creating new bricks */}
+        <ProposalBrickRoute path={map.ProposalStart} component={StartBuildingPage} location={location} />
+        <ProposalBrickRoute path={map.NewBrick} component={Proposal} location={location} />
+        {/* Investigation Build */}
         <BuildBrickRoute
           path={[
             "/build/brick/:brickId/investigation/question-component/:questionId",
-            "/build/brick/:brickId/investigation/question-component",
             "/build/brick/:brickId/investigation/question/:questionId",
-            "/build/brick/:brickId/investigation/question",
             "/build/brick/:brickId"
           ]}
-          component={InvestigationBuildPage}
+          component={BuildRouter}
           location={location}
         />
-        <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
-        <BuildRoute path="/build/brick/:brickId" component={Proposal} location={location} />
-        <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
+        <BuildRoute path={map.AssignmentsClassPage} component={AssignmentsPage} location={location} />
         <BuildRoute path={map.AssignmentsPage} component={AssignmentsPage} location={location} />
         <BuildRoute path="/users" component={UsersListPage} location={location} />
         <BuildRoute path={map.UserProfile + '/:userId'} component={UserProfilePage} location={location} />
         <BuildRoute path="/home" component={MainPage} location={location} />
 
         <AllUsersRoute path={map.UserProfile} component={UserProfilePage} />
+        <AllUsersRoute path={map.ThankYouPage} component={ThankYouPage} isPreferencePage={true} />
         <AllUsersRoute path={map.UserPreference} component={UserPreferencePage} isPreferencePage={true} />
         <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
         <AllUsersRoute path={map.MobileUsername} component={MobileUsernamePage} />
@@ -231,7 +282,7 @@ const App: React.FC<AppProps> = props => {
         <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
         <AuthRoute path={map.Login} component={LoginPage} />
         <AuthRoute path="/login/:privacy" component={LoginPage} />
-        <AuthRoute path="/resetPassword" component={ResetPasswordPage} />
+        <AuthRoute path={map.ResetPassword} component={ResetPasswordPage} />
         <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
         <Route path={map.TermsSignUp} component={Terms} />
         <Route path={map.TermsPage} component={PublicTerms} />
@@ -240,7 +291,9 @@ const App: React.FC<AppProps> = props => {
       </Switch>
       <VersionLabel />
       <GlobalFailedRequestDialog />
+      </Profiler>
     </ThemeProvider>
+    </div>
   );
 }
 

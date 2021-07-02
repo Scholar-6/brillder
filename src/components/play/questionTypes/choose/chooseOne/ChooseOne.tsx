@@ -11,7 +11,8 @@ import ReviewEachHint from '../../../baseComponents/ReviewEachHint';
 import MathInHtml from '../../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneChoice } from 'components/interfaces/chooseOne';
-import { fileUrl } from 'components/services/uploadFile';
+import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
+import ZoomHelpText from '../../components/ZoomHelpText';
 
 export interface ChooseOneComponent {
   type: number;
@@ -82,12 +83,11 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   renderData(answer: ChooseOneChoice) {
     if (answer.answerType === QuestionValueType.Image) {
-      return (
-        <div className="image-container">
-          <img alt="" src={fileUrl(answer.valueFile)} />
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
-        </div>
-      );
+      return <PairMatchImageContent
+        fileName={answer.valueFile}
+        imageCaption={answer.imageCaption}
+        imageSource={answer.imageSource}
+      />;
     } else if (answer.answerType === QuestionValueType.Sound) {
       return (
         <div style={{width: '100%'}}>
@@ -213,10 +213,16 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     );
   }
 
+  checkImages() {
+    return !!this.props.component.list.find(a => a.valueFile);
+  }
+
   render() {
     const { list } = this.props.component;
+    const haveImage = this.checkImages();
     return (
       <div className="question-unique-play choose-one-live">
+        {haveImage && <ZoomHelpText />}
         {list.map((choice, index) => this.renderChoice(choice, index))}
         {this.renderGlobalHint()}
       </div>

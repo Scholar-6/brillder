@@ -5,10 +5,13 @@ import './horizontalShuffleBuild.scss'
 import { QuestionValueType, UniqueComponentProps } from '../../types';
 import { showSameAnswerPopup } from '../../service/questionBuild';
 
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
-import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import RemoveItemButton from '../../components/RemoveItemButton';
+import { stripHtml } from 'components/build/questionService/ConvertService';
+import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
+import RemoveButton from '../../components/RemoveButton';
+import SoundRecord from '../../sound/SoundRecord';
+
 
 export const getDefaultHorizontalShuffleAnswer = () => {
   const newAnswer = () => ({ value: "" });
@@ -16,7 +19,7 @@ export const getDefaultHorizontalShuffleAnswer = () => {
 }
 
 const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const newAnswer = () => ({ value: "" });
 
@@ -40,6 +43,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
     answer.valueFile = "";
     answer.answerType = QuestionValueType.String;
     update();
+    save();
   }
 
   const addAnswer = () => {
@@ -59,55 +63,79 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
   const renderAnswer = (answer: any, i: number) => {
     let column = (i % 3) + 1;
 
-    const setImage = (fileName: string) => {
-      if (locked) { return; }
-      answer.value = "";
-      answer.valueFile = fileName;
-      answer.answerType = QuestionValueType.Image;
-      update();
-      save();
-    }
-
     let className = `horizontal-shuffle-box unique-component horizontal-column-${column}`;
-    if (answer.answerType === QuestionValueType.Image) {
-      className += ' big-answer';
-    }
 
     let isValid = null;
     if (validationRequired) {
       isValid = true;
-      if (answer.answerType === QuestionValueType.String && !answer.value) {
+      if (answer.answerType === QuestionValueType.String && !stripHtml(answer.value)) {
         isValid = false;
       }
+    }
+
+    const setSound = (soundFile: string, caption: string) => {
+      if (locked) { return; }
+      answer.value = '';
+      answer.valueFile = '';
+      answer.soundFile = soundFile;
+      answer.soundCaption = caption;
+      answer.answerType = QuestionValueType.Sound;
+      update();
+      save();
+    }
+
+    const onTextChanged = (answer: any, value: string) => {
+      if (locked) { return; }
+      answer.value = value;
+      answer.valueFile = "";
+      answer.soundFile = "";
+      answer.answerType = QuestionValueType.String;
+      update();
+      save();
     }
 
     if (isValid === false) {
       className += ' invalid-answer';
     }
 
+    if (answer.answerType === QuestionValueType.Sound) {
+      return (
+        <Grid container item xs={4} key={i}>
+          <div className="horizontal-sound unique-component" key={i}>
+            <RemoveButton onClick={() => changed(answer, '')} />
+            <SoundRecord
+              locked={locked}
+              answer={answer}
+              save={setSound}
+              clear={() => onTextChanged(answer, '')}
+            />
+          </div>
+        </Grid>
+      );
+    }
+
     return (
       <Grid container item xs={4} key={i}>
-        <div className={className}>
+        <div className={className + " horizontal-string"}>
           <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
-          <QuestionImageDropzone
-            answer={answer as any}
-            type={answer.answerType || QuestionValueType.None}
+          <QuillEditorContainer
             locked={locked}
-            fileName={answer.valueFile}
-            update={setImage}
-          />
-          <DocumentWirisCKEditor
-            disabled={locked}
-            editOnly={editOnly}
-            data={answer.value}
-            isValid={isValid}
+            object={answer}
+            fieldName="value"
+            validationRequired={validationRequired}
             toolbar={['latex']}
+            isValid={isValid}
             placeholder={"Enter A" + (i + 1) + "..."}
             onBlur={() => {
               showSameAnswerPopup(i, state.list, openSameAnswerDialog);
-              save();
             }}
             onChange={value => changed(answer, value)}
+          />
+          <SoundRecord
+            locked={locked}
+            answer={answer}
+            save={setSound}
+            clear={() => onTextChanged(answer, '')}
           />
         </div>
       </Grid>

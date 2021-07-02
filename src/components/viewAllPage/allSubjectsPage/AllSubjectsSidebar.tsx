@@ -24,7 +24,7 @@ class AllSubjectsSidebar extends Component<any, State> {
             <TypingLabel className="bold title f-1-9vw" label="Click to select a Subject" onEnd={() => this.setState({finished: true})} />
           </div>
           <div>
-            { this.state.finished && <TypingLabel className="bold title f-1-9vw" label=" or View All bricks." onEnd={() => {}} /> }
+            { this.state.finished && <TypingLabel className="bold title f-1-9vw" label=" that interests you." onEnd={() => {}} /> }
           </div>
         </div>
       </Grid>

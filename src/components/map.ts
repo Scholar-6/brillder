@@ -1,16 +1,23 @@
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
+export const ResetPassword = '/resetPassword';
 export const Build = '/build';
 export const MainPage = '/home';
-export const ProposalBase = `${Build}/new-brick`;
-export const ProposalBase2 = `${Build}/brick/:brickId`;
+
+export const buildBase = (brickId: number) => `${Build}/brick/` + brickId;
+
+export const NewBrick = `${Build}/new-brick`;
+export const ProposalBase = (brickId: number) => `${Build}/brick/${brickId}`;
 export const BackToWorkPage = '/back-to-work';
 export const AssignmentsPage = '/assignments';
+export const AssignmentsClassPage = AssignmentsPage + '/:classId';
 export const MyLibrary = '/my-library';
 export const Onboarding = '/onboarding';
 export const TermsPage = '/terms';
 
+
 export const TermsSignUp = Onboarding + '/terms';
+export const ThankYouPage = Onboarding + '/thank-you';
 export const SetUsername = Onboarding + '/set-username';
 export const MobileUsername = Onboarding + '/mobile-username';
 export const SelectSubjectPage = Onboarding + '/select-subjects';
@@ -27,8 +34,15 @@ export const TeachAssignedArchiveTab = TeachAssignedTab + '/archive';
 export const ManageClassroomsTab = '/teach/manage-classrooms';
 
 
+// query strings
+export const NewTeachQuery = 'newTeacher=true';
+
+
 export const ViewAllPage = '/play/dashboard';
 export const AllSubjects = ViewAllPage + '/all-subjects';
+export const SubjectCategoriesPrefix = '/subject-categories';
+export const SubjectCategories = ViewAllPage + SubjectCategoriesPrefix;
+
 
 const investigation = (brickId: number) => {
   return `/build/brick/${brickId}/investigation`;
@@ -46,6 +60,10 @@ export const investigationBuildQuestion = (brickId: number, questionId: number) 
   return InvestigationBuild(brickId) + `/${questionId}`;
 }
 
+export const investigationBuildQuestionType = (brickId: number, questionId: number) => {
+  return investigation(brickId) + `/question/${questionId}`;
+}
+
 export const investigationQuestionSuggestions = (brickId: number, questionId: number) => {
   return investigationBuildQuestion(brickId, questionId) + '?suggestionsExpanded=true'
 }
@@ -55,30 +73,32 @@ export const investigationSynthesisSuggestions = (brickId: number) => {
 }
 
 // proposal pages
-export const ProposalSubject = `${ProposalBase2}/subject`;
-export const ProposalTitle = `${ProposalBase2}/brick-title`;
-export const ProposalOpenQuestion = `${ProposalBase2}/open-question`;
-export const ProposalBrief = `${ProposalBase2}/brief`;
-export const ProposalPrep = `${ProposalBase2}/prep`;
-export const ProposalLength = `${ProposalBase2}/length`;
-export const ProposalReview = `${ProposalBase2}/plan`;
+export const ProposalSubject = (brickId: number) => `${ProposalBase(brickId)}/subject`;
+export const ProposalTitle = (brickId: number) => `${ProposalBase(brickId)}/brick-title`;
+export const ProposalOpenQuestion = (brickId: number) => `${ProposalBase(brickId)}/open-question`;
+export const ProposalBrief = (brickId: number) => `${ProposalBase(brickId)}/brief`;
+export const ProposalPrep = (brickId: number) => `${ProposalBase(brickId)}/prep`;
+export const ProposalLength = (brickId: number) => `${ProposalBase(brickId)}/length`;
+export const ProposalReview = (brickId: number) => `${ProposalBase(brickId)}/plan`;
 
-export const ProposalReview2 = `${ProposalBase2}/plan`;
+export const Proposal = (brickId: number) => {
+  console.log(`${buildBase(brickId)}/plan`);
+  return `${buildBase(brickId)}/plan`
+};
 
 // new brick link
-export const ProposalSubjectLink = `${ProposalBase}/subject`;
-export const ProposalTitleLink = `${ProposalBase}/brick-title`;
+export const ProposalStart = `${NewBrick}/start-building`;
+export const ProposalSubjectLink = `${NewBrick}/subject`;
+export const ProposalSubjectCoreLink = (isCore: boolean) => `${NewBrick}/subject?isCore=` + isCore;
+export const ProposalTitleLink = `${NewBrick}/brick-title`;
 
 // play preview
 export const PlayPreviewBase = '/play-preview/brick';
 export const PlayIntroLastPrefix = '/intro';
+export const PlayCoverLastPrefix = '/cover';
 
 export const playPreview = (brickId: number) => {
   return  PlayPreviewBase + '/' + brickId;
-}
-
-export const playPreviewIntro = (brickId: number) => {
-  return playPreview(brickId) + PlayIntroLastPrefix;
 }
 
 // play
@@ -91,6 +111,9 @@ export const realPlay = (brickId: number) => {
 export const playIntro = (brickId: number) => {
   return realPlay(brickId) + PlayIntroLastPrefix;
 }
+export const playCover = (brickId: number) => {
+  return realPlay(brickId) + PlayCoverLastPrefix;
+}
 
 // post play
 
@@ -100,13 +123,10 @@ export const postPlay = (brickId: number, userId: number) => {
   return PostPlay + '/' + brickId + '/' + userId;
 }
 
-export const playAssignment = (brickId: number, assignmentId: number) => {
-  return `/play/brick/${brickId}/intro?assignmentId=${assignmentId}`
-}
-
 export default {
   Build,
   ActivateAccount,
+  ResetPassword,
   UserProfile,
   Login,
   MainPage,
@@ -114,11 +134,14 @@ export default {
 
   TermsPage,
   TermsSignUp,
+  ThankYouPage,
   SetUsername,
   MobileUsername,
   SelectSubjectPage,
   UserPreference,
 
+  NewBrick,
+  ProposalStart,
   ProposalBase,
   ProposalSubject,
   ProposalTitle,
@@ -127,12 +150,13 @@ export default {
   ProposalPrep,
   ProposalLength,
   ProposalReview,
-  ProposalReview2,
   ProposalSubjectLink,
+  ProposalSubjectCoreLink,
   ProposalTitleLink,
 
   BackToWorkPage,
   AssignmentsPage,
+  AssignmentsClassPage,
   BackToWorkTeachTab,
   BackToWorkBuildTab,
   BackToWorkLearnTab,
@@ -141,17 +165,22 @@ export default {
   TeachAssignedArchiveTab,
   ManageClassroomsTab,
 
+  NewTeachQuery,
+
   ViewAllPage,
   AllSubjects,
+  SubjectCategoriesPrefix,
+  SubjectCategories,
 
   postPlay,
-  playAssignment,
+  Proposal,
 
   InvestigationBuild,
   InvestigationSynthesis,
   investigationSynthesisSuggestions,
   investigationBuildQuestion,
+  investigationBuildQuestionType,
   investigationQuestionSuggestions,
-  playPreviewIntro,
-  playIntro
+  playIntro,
+  playCover,
 }

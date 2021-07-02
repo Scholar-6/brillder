@@ -324,40 +324,44 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   renderSortAndFilterBox = () => {
     return (
-      <div className="sort-box">
-        <div className="filter-container sort-by-box">
-          <div className="sort-header">Filter by: Role</div>
-          <RadioGroup
-            className="sort-group"
-            aria-label="SortBy"
-            name="SortBy"
-            value={this.state.sortBy}
-          >
-            <Grid container direction="row">
-              {this.state.roles.map((role, i) => (
-                <Grid item xs={4} key={i}>
-                  <FormControlLabel
-                    checked={role.checked}
-                    control={<Radio onClick={() => this.toggleRole(role)} className={"filter-radio"} />}
-                    label={role.name}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </RadioGroup>
+      <div className="flex-height-box">
+        <div className="sort-box">
+          <div className="filter-container sort-by-box">
+            <div className="sort-header">Filter by: Role</div>
+            <RadioGroup
+              className="sort-group"
+              aria-label="SortBy"
+              name="SortBy"
+              value={this.state.sortBy}
+            >
+              <Grid container direction="row">
+                {this.state.roles.map((role, i) => (
+                  <Grid item xs={4} key={i}>
+                    <FormControlLabel
+                      checked={role.checked}
+                      control={<Radio onClick={() => this.toggleRole(role)} className={"filter-radio"} />}
+                      label={role.name}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </RadioGroup>
+          </div>
+          <CustomFilterBox
+            label="Filter by: Subject"
+            isClearFilter={this.state.isClearFilter}
+            setHeight={filterHeight => this.setState({filterHeight})}
+            clear={this.clearStatus.bind(this)}
+          />
         </div>
-        <CustomFilterBox
-          label="Filter by: Subject"
-          isClearFilter={this.state.isClearFilter}
-          setHeight={filterHeight => this.setState({filterHeight})}
-          clear={this.clearStatus.bind(this)}
-        />
-        <SubjectsList
-          subjects={this.state.subjects}
-          filterHeight={this.state.filterHeight}
-          filterBySubject={this.filterBySubject}
-          showUserCount={true}
-        />
+        <div className="sort-box subject-scrollable">
+          <SubjectsList
+            subjects={this.state.subjects}
+            filterHeight={this.state.filterHeight}
+            filterBySubject={this.filterBySubject}
+            showUserCount={true}
+          />
+        </div>
       </div>
     );
   };
@@ -382,15 +386,16 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     for (let role of user.roles) {
       if (role.roleId === UserType.Admin) {
         type += "A";
-      } else if (user.rolePreference?.roleId === RolePreference.Builder) {
-        type += "B";
       } else if (role.roleId === UserType.Publisher) {
         type += "P";
-      } else if (user.rolePreference?.roleId === RolePreference.Student) {
-        type += "S";
-      } else if (user.rolePreference?.roleId === RolePreference.Teacher) {
-        type += "T";
       }
+    }
+    if (user.rolePreference?.roleId === RolePreference.Builder) {
+      type += "B";
+    } else if (user.rolePreference?.roleId === RolePreference.Student) {
+      type += "S";
+    } else if (user.rolePreference?.roleId === RolePreference.Teacher) {
+      type += "T";
     }
     return type;
   }
@@ -549,8 +554,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           searching={(v: string) => this.searching(v)}
         />
         <Grid container direction="row" className="sorted-row">
-          <Grid container item xs={3} className="sort-and-filter-container">
+          <Grid container item xs={3} className="sort-and-filter-container users-filter">
             {this.renderSortAndFilterBox()}
+            <div className="sidebar-footer" />
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             {this.renderTableHeader()}

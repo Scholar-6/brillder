@@ -2,7 +2,7 @@ import { ChooseOneComponent, ChooseOneAnswer } from "components/play/questionTyp
 import { ScoreFunction } from "../scoring";
 
 const mark: ScoreFunction<ChooseOneComponent, ChooseOneAnswer> = (component, attempt) => {
-    attempt.maxMarks = 6;
+    attempt.maxMarks = (component.list.length-1)*2;
 
     // set attempt.correct to true by answer index.
     attempt.correct = false;
@@ -13,10 +13,10 @@ const mark: ScoreFunction<ChooseOneComponent, ChooseOneAnswer> = (component, att
     if (attempt.correct) {
         // if the attempt is correct, then add the marks.
         attempt.marks = attempt.maxMarks;
-    } else if (attempt.answer && attempt.answer?.shuffleIndex !== -1) {
-        // if there is an answer given, give the student an extra half a mark.
-        attempt.marks = 0.5;
-    } else {
+
+    }
+
+    else {
         attempt.marks = 0;
     }
     

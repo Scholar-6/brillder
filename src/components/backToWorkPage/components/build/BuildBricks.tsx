@@ -10,6 +10,7 @@ import BrickBlock from "components/baseComponents/BrickBlock";
 import BrickColDescription from "./BrickColDescription";
 import PublishToggle from "./PublishToggle";
 import CreateBrickBlock from "../CreateBrickBlock";
+import EmptyPage from "./EmptyPage";
 
 interface BuildBricksProps {
   user: User;
@@ -107,7 +108,7 @@ class BuildBricks extends Component<BuildBricksProps, State> {
       }
 
       if (brick.isCreateLink) {
-        return <CreateBrickBlock history={this.props.history} isCore={this.props.isCorePage} />;
+        return <CreateBrickBlock key={-10} history={this.props.history} isCore={this.props.isCorePage} />;
       }
 
       // render first row as description
@@ -143,7 +144,8 @@ class BuildBricks extends Component<BuildBricksProps, State> {
   }
 
   renderSortedBricks = () => {
-    const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize, this.props.finalBricks)
+    const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize - 1, this.props.finalBricks)
+    data.unshift({brick: {isCreateLink: true} as Brick});
 
     return data.map(item => {
       const { brick } = item;
@@ -151,6 +153,10 @@ class BuildBricks extends Component<BuildBricksProps, State> {
       let iconColor = '';
       if (brick.editors && brick.editors.findIndex((e: any) => e.id === this.props.user.id) >= 0) {
         circleIcon = "edit-outline";
+      }
+
+      if (brick.isCreateLink) {
+        return <CreateBrickBlock key={-10} history={this.props.history} isCore={this.props.isCorePage} />;
       }
 
       return <BrickBlock
@@ -252,23 +258,6 @@ class BuildBricks extends Component<BuildBricksProps, State> {
           <div className="last-text italic">
             You will receive a notification if your brick is published, and it will appear in the Public Library.
           </div>
-        </div>
-      </div>
-    );
-  }
-
-  renderEmptyPage() {
-    return (
-      <div className="bricks-list-container no-top-padding">
-        <PublishToggle
-          isPublish={this.props.filters.publish}
-          publishedCount={this.props.published}
-          onSwitch={this.props.switchPublish}
-        />
-        <div className="bricks-list">
-          {this.renderFirstEmptyColumn()}
-          {this.renderSecondEmptyColumn()}
-          {this.renderThirdEmptyColumn()}
         </div>
       </div>
     );
@@ -417,7 +406,7 @@ class BuildBricks extends Component<BuildBricksProps, State> {
     }
 
     if (isEmpty && this.props.loaded) {
-      return this.renderEmptyPage();
+      return <EmptyPage isPublish={this.props.filters.publish} published={this.props.published} switchPublish={this.props.switchPublish} />;
     }
 
     return (

@@ -6,7 +6,7 @@ import ChooseOneAnswerComponent from './ChooseOneAnswer';
 import { ChooseOneAnswer } from './types';
 import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
-import { showSameAnswerPopup } from '../service/questionBuild';
+import { generateId, showSameAnswerPopup } from '../service/questionBuild';
 
 export interface ChooseOneData {
   list: ChooseOneAnswer[];
@@ -17,15 +17,15 @@ export interface ChooseOneBuildProps extends UniqueComponentProps {
 }
 
 export const getDefaultChooseOneAnswer = () => {
-  const newAnswer = () => ({ value: "", checked: false, valueFile: "" });
+  const newAnswer = () => ({ id: generateId(), value: "", checked: false, valueFile: "" });
 
   return { list: [newAnswer(), newAnswer(), newAnswer()] };
 }
 
 const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog, removeHintAt
 }) => {
-  const newAnswer = () => ({ value: "", checked: false, valueFile: "" });
+  const newAnswer = () => ({ id: generateId(), value: "", checked: false, valueFile: "" });
 
   if (!data.list) {
     data.list = getDefaultChooseOneAnswer().list;
@@ -37,7 +37,11 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   useEffect(() => { setState(data) }, [data]);
 
   const update = () => {
-    setState(Object.assign({}, state));
+    const newState = Object.assign({}, state);
+    newState.list.forEach(answer => {
+      if(!answer.id) answer.id = generateId();
+    });
+    setState(newState);
     updateComponent(state);
   }
 
@@ -62,6 +66,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   const removeFromList = (index: number) => {
     if (locked) { return; }
     state.list.splice(index, 1);
+    removeHintAt(index);
     update();
     save();
   }

@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from 'react-router-dom';
 
 import './nextButton.scss';
-import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, ProposalStep, TitleRoutePart } from "../model";
+import { BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalStep, TitleRoutePart } from "../model";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface NextButtonProps {
@@ -33,10 +33,8 @@ const NextButton:React.FC<NextButtonProps> = (
           return history.push(baseUrl + BrickLengthRoutePart);
         case ProposalStep.BrickLength:
           return history.push(baseUrl + BriefRoutePart);
-          case ProposalStep.Brief:
+        case ProposalStep.Brief:
           return history.push(baseUrl + PrepRoutePart);
-        case ProposalStep.Prep:
-          return history.push(baseUrl + ProposalReviewPart);
       }
     }
   }

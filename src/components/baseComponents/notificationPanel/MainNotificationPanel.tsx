@@ -14,6 +14,8 @@ import { checkTeacherEditorOrAdmin } from 'components/services/brickService';
 import { User } from 'model/user';
 import SpriteIcon from '../SpriteIcon';
 import DesktopVersionDialogV2 from 'components/build/baseComponents/dialogs/DesktopVersionDialogV2';
+import { isPhone } from 'services/phone';
+import routes from 'components/play/routes';
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -66,33 +68,44 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
       }
 
       if (notification.brick && notification.brick.id) {
-        const {brick} = notification;
-        if (notification.type === NotificationType.NewCommentOnBrick) {
+        const {type, brick} = notification;
+        if (type === NotificationType.NewCommentOnBrick) {
           if (notification.question && notification.question.id >= 1) {
             history.push(map.investigationQuestionSuggestions(brick.id, notification.question.id));
           } else {
             history.push(map.investigationSynthesisSuggestions(brick.id))
           }
-        } else if (notification.type === NotificationType.InvitedToPlayBrick) {
-          history.push(map.playIntro(brick.id));
-        } else if (notification.type === NotificationType.BrickAttemptSaved) {
+        } else if (type === NotificationType.InvitedToPlayBrick) {
+          if (isPhone()) {
+            history.push(map.playIntro(brick.id));
+          } else {
+            history.push(routes.playCover(brick.id));
+          }
+        } else if (type === NotificationType.BrickAttemptSaved) {
           if (isMobile) {
             this.setState({needDesktopOpen: true});
           } else {
-            history.push(map.postPlay(brick.id, this.props.user.id));
+            history.push(map.postPlay(brick.id, notification.sender.id));
           }
-        } else if (notification.type === NotificationType.ReturnedToEditor) {
+        } else if (type === NotificationType.ReturnedToEditor) {
           history.push(map.InvestigationBuild(brick.id));
-        } else if (notification.type === NotificationType.AssignedToEdit) {
+        } else if (type === NotificationType.AssignedToEdit) {
           this.props.forgetBrick();
-          await this.props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
-        } else if (notification.type === NotificationType.ReturnedToAuthor) {
+          await this.props.fetchBrick(brick.id);
+          history.push(map.Proposal(brick.id));
+        } else if (type === NotificationType.ReturnedToAuthor) {
           this.props.forgetBrick();
-          await this.props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
-        } else if (notification.type === NotificationType.RemindedToPlayBrick) {
-          history.push(map.playIntro(notification.brick.id));
+          await this.props.fetchBrick(brick.id);
+          history.push(map.Proposal(brick.id));
+        } else if (
+          type === NotificationType.RemindedToPlayBrick ||
+          type === NotificationType.StudentAssignedBrick
+        ) {
+          if (isPhone()) {
+            history.push(map.playIntro(brick.id));
+          } else {
+            history.push(routes.playCover(brick.id));
+          }
         }
       }
     }
@@ -235,8 +248,8 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
                   </div>
                   <div className="content-box">
                     <div className="notification-detail">
-                      <p className="notif-title">{notification.title}</p>
-                      <p className="notif-desc">{notification.text}</p>
+                      <p className="notif-title" dangerouslySetInnerHTML={{__html: notification.title}} />
+                      <p className="notif-desc" dangerouslySetInnerHTML={{__html: notification.text}} />
                     </div>
                     <div className="actions">
                       <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>

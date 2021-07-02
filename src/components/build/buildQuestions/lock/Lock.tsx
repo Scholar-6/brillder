@@ -1,9 +1,8 @@
 import React from 'react'
-import LockIcon from '@material-ui/icons/Lock';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { Grid } from '@material-ui/core';
 
 import './Lock.scss'
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 export interface LockComponentProps {
@@ -12,7 +11,7 @@ export interface LockComponentProps {
   onChange(): void;
 }
 
-const LockComponent: React.FC<LockComponentProps> = ({locked, disabled, onChange}) => {
+const LockComponent: React.FC<LockComponentProps> = ({ locked, disabled, onChange }) => {
   const [lock, setLock] = React.useState(locked);
   const toggleLock = () => {
     if (disabled) { return; }
@@ -22,15 +21,18 @@ const LockComponent: React.FC<LockComponentProps> = ({locked, disabled, onChange
   return (
     <Grid container direction="row">
       <Grid container justify="center" className="lock-container" item sm={12}>
-        <div>
-          {
-            lock
-              ? <LockIcon className="lock-icon" onClick={toggleLock} />
-              : <LockOpenIcon className="unlock-icon" onClick={toggleLock} />
-          }
+        <div className="container">
+          <div className="lock-second-container">
+            {
+              lock
+                ? <SpriteIcon name="lock" className="lock-icon" onClick={toggleLock} />
+                : <SpriteIcon name="feather-unlock" className="unlock-icon" onClick={toggleLock} />
+            }
+            <div className="css-custom-tooltip">
+              Lock brick?
+            </div>
+          </div>
         </div>
-        <div className="lock-text">Lock</div>
-        <div className="lock-text">brick?</div>
       </Grid>
     </Grid>
   );

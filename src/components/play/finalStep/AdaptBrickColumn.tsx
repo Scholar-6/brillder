@@ -15,7 +15,7 @@ const AdaptBrickColumn: React.FC<ShareProps> = props => {
         <div className="button-container">
           <SpriteIcon name="copy" className="active" />
         </div>
-        <div className="link-text">Adapt brick</div>
+        <div className="link-text">Adapt</div>
       </div>
     </Grid>
   );

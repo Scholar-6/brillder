@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .tutorial-page {
   font-family: $font-family-regular;
@@ -12,13 +12,6 @@
     /* Edge */
     color: #aaa;
   }
-  .ck-editor {
-    .ck-content {
-      p {
-        font-size: 1.35vw !important;
-      }
-    }
-  }
   .tutorial-pagination {
     display: flex;
     align-items: center;
@@ -27,6 +20,7 @@
     left: 0;
     bottom: 10vh;
     width: 60vw;
+    
     .tut-next,
     .tut-prev {
       @include phone_and_tabletL {
@@ -104,14 +98,6 @@
   }
 }
 
-.media {
-  &.ck-placeholder {
-    &:before {
-      content: none !important;
-    }
-  }
-}
-
 .brief-page,
 .open-question-page,
 .prep-page-questionary {
@@ -123,7 +109,7 @@
         font-size: 8vw;
       }
     }
-    .document-editor {
+    .quill-document-editor {
       margin: 4vh auto;
       @include phone_and_tabletL {
         width: 100%;
@@ -132,8 +118,8 @@
       @include tabletL {
         width: 42.7vw;
       }
-      .ck-toolbar {
-        padding-left: 0;
+      .ql-toolbar {
+        padding-left: 1vw;
         border: none;
         @include phone_and_tabletL {
           border-top-left-radius: 5.1vw !important;
@@ -143,7 +129,9 @@
           border-top-left-radius: 2.1vw !important;
           border-top-right-radius: 2.1vw !important;
         }
-        .ck-button {
+        button,
+        select,
+        span {
           padding-top: 0;
           padding-bottom: 0;
           color: var(--theme-dark-blue);
@@ -161,55 +149,16 @@
             margin-left: 0vw;
           }
         }
-        .ck-color-table__remove-color {
-          color: var(--theme-dark-blue);
-          padding: 0.5vh 0.7vw;
-          width: 12vw;
-          font-size: 1.1vw;
-        }
-        .ck-color-grid__tile {
-          min-width: 2vw;
-          min-height: 2vw;
-          border-radius: 0.2vw;
-        }
-        .ck-toolbar__items {
+        .ql-formats {
           background: var(--tab-gray) !important;
           @include phone_and_tabletL {
             padding: 1vh 2vw;
           }
-          .ck-color-ui-dropdown {
-            margin-right: 0;
-            @extend %m0;
-            width: 3.8vw;
-            .ck-button {
-              padding: 0 !important;
-            }
-          }
-          > .ck-button:nth-child(1) {
-            border-top-left-radius: 1.5vw;
-            margin-top: 0.5vw;
-            margin-bottom: 0.5vw;
-            margin-left: 0.5vw;
-          }
-          > .ck:nth-child(4) {
-            @include phone_and_tabletL {
-              margin-left: 59vw;
-            }
-            @include phone_and_tabletP {
-              margin-left: 35vw;
-            }
-            @include tabletL {
-              margin-left: 16vw;
-            }
-          }
-          > .ck:nth-child(7) {
-            border-top-right-radius: 1.5vw;
-          }
         }
       }
-      .ck-editor {
+      .ql-container {
         width: 100%;
-        .ck-content {
+        .ql-editor {
           border: none !important;
           box-shadow: none !important;
           background: var(--solitude-light);
@@ -239,6 +188,23 @@
               margin: 0;
             }
           }
+        }
+      }
+      .picker-options {
+        padding: 0 !important;
+        width: 8vw;
+        display: none;
+        border: 1px solid transparent;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 2px 8px;
+        position: absolute;
+        background-color: #fff;
+        .ql-picker-item {
+          margin: 0.21vw;
+          padding: 0;
+          border-radius: 0.2vw;
+          min-width: 2.2vw;
+          min-height: 2.2vw;
+          display: inline-block;
         }
       }
     }
@@ -286,9 +252,9 @@
         }
       }
     }
-    .document-editor {
+    .quill-document-editor {
       border-radius: 2.1vw !important;
-      .ck-editor {
+      .ql-container {
         width: 100% !important;
       }
     }
@@ -363,6 +329,40 @@
     top: 0;
     right: 0;
   }
+  .saved-info {
+    position: absolute;
+    top: -3vw;
+    left: 0.5vw;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    > div {
+      width: 100%;
+      > div {
+        width: 100%;
+      }
+    }
+    .saved-info-row {
+      width: 100%;
+      > div {
+        width: 100%;
+        > div {
+          width: 100%;
+          > div {
+            width: 100%;
+          }
+        }
+      }
+    }
+    svg {
+      width: 1.52vw;
+      height: 1.52vw;
+    }
+    .text-container, svg {
+      font-size: 1.05vw;
+      color: var(--theme-dark-blue);
+    }
+  }
 }
 
 .tutorial-page {
@@ -380,5 +380,23 @@
     a {
       color: var(--blue) !important;
     }
+  }
+}
+
+// background color transparent
+.proposal-phone-preview .typing-text {
+  span, p {
+    background: inherit !important;
+  }
+}
+
+.proposal-router .tutorial-page {
+  .ql-custom-toolbar .formats button svg, .quill-document-editor .ql-toolbar .formats button svg {
+    width: 3vw;
+    height: 3vw;
+  }
+  .ql-custom-toolbar .formats .picker svg, .quill-document-editor .ql-toolbar .formats .picker svg {
+    height: 3vw;
+    width: 3vw;
   }
 }

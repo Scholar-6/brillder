@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
-import axios from 'axios';
+import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
 import { connect } from 'react-redux';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -10,16 +8,21 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import './AssignPersonOrClass.scss';
 import { ReduxCombinedState } from 'redux/reducers';
 import actions from 'redux/actions/requestFailed';
-import { UserBase } from 'model/user';
+import { User } from 'model/user';
 import { Classroom } from 'model/classroom';
-import { Brick } from 'model/brick';
-import { getClassrooms, getStudents } from 'services/axios/classroom';
+import { AcademicLevelLabels, Brick, Subject } from 'model/brick';
+import { assignToClassByEmails, getClassrooms } from 'services/axios/classroom';
 import SpriteIcon from '../SpriteIcon';
 import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
 import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
+import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
+import { createClass } from 'components/teach/service';
+import map from 'components/map';
+import InvalidDialog from 'components/build/baseComponents/dialogs/InvalidDialog';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
+  history: any;
   isOpen: boolean;
   success(items: any[], failed: any[]): void;
   close(): void;
@@ -27,218 +30,274 @@ interface AssignPersonOrClassProps {
 }
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
+  const [isSaving, setSaving] = React.useState(false);
   const [value] = React.useState("");
-  /*eslint-disable-next-line*/
+  const [existingClass, setExistingClass] = React.useState(null as any);
+  const [isCreating, setCreating] = React.useState(false);
   const [deadlineDate, setDeadline] = React.useState(null as null | Date);
-  const [selectedObjs, setSelected] = React.useState<any[]>([]);
-  const [students, setStudents] = React.useState<UserBase[]>([]);
   const [classes, setClasses] = React.useState<Classroom[]>([]);
-  const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
-  const [haveDeadline, toggleDeadline] = React.useState(null as boolean | null);
+  const [haveDeadline, toggleDeadline] = React.useState(false);
+  const [newClassName, setNewClassName] = React.useState('');
 
-  const getAllStudents = React.useCallback(async () => {
-    let students = await getStudents();
-    if (!students) {
-      students = [];
-    }
+  // validation
+  const [validationRequired, setValidation] = React.useState(false);
+  const [isInvalidOpen, showInvalid] = React.useState(false);
 
-    for (let student of students) {
-      student.isStudent = true;
+  //#region New Class
+  const [currentEmail, setCurrentEmail] = React.useState("");
+  const [users, setUsers] = React.useState<User[]>([]);
+
+  //eslint-disable-next-line
+  const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  const addUser = (email: string) => {
+    if (!emailRegex.test(email)) { return; }
+    setCurrentEmail('');
+    setUsers(users => [ ...users, { email } as User]);
+  }
+
+  const checkSpaces = (email: string) => {
+    const emails = email.split(' ');
+    if (emails.length >= 2) {
+      for (let email of emails) {
+        addUser(email);
+      }
+    } else {
+      setCurrentEmail(email.trim());
     }
-    setStudents(students);
-  }, []);
+  }
+
+  const validate = () => (!newClassName || users.length === 0) ? false : true;
+
+  const onAddUser = React.useCallback(() => {
+    if (!emailRegex.test(currentEmail)) { return; }
+    setCurrentEmail('');
+    setUsers(users => [ ...users, { email: currentEmail} as User]);
+  //eslint-disable-next-line
+  }, [currentEmail]);
+
+  const createClassAndAssign = async () => {
+    try {
+      // validation
+      const isValid = validate();
+      if (isValid === false) {
+        setValidation(true);
+        showInvalid(true);
+        return;
+      }
+
+      const subject = props.brick.subject as Subject;
+      if (newClassName) {
+        const newClassroom = await createClass(newClassName, subject);
+        if (newClassroom) {
+          // assign students to class
+          const currentUsers = users;
+          if (!emailRegex.test(currentEmail)) {
+            if (users.length <= 0) {
+              return;
+            }
+          } else {
+            setUsers(users => [ ...users, { email: currentEmail } as User ]);
+            currentUsers.push({ email: currentEmail} as User);
+            setCurrentEmail("");
+          }
+          const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
+          if (res && res.length > 0) {
+            await assignToExistingBrick(newClassroom);
+            props.success([newClassroom], []);
+
+            // only for new classes
+            if (classes.length === 0) {
+              props.history.push(`${map.TeachAssignedTab}?classroomId=${newClassroom.id}&${map.NewTeachQuery}&assignmentExpanded=true`);
+            }
+          }
+          await getClasses();
+        } else {
+          console.log('failed to create class');
+        }
+      } else {
+        console.log('class name is empty');
+      }
+    } catch {
+      console.log('failed create class and assign students');
+    }
+    // clear data
+    setUsers([]);
+    setNewClassName('');
+  }
+  //#endregion
 
   const getClasses = React.useCallback(async () => {
     let classrooms = await getClassrooms();
-    if (!classrooms) {
-      classrooms = [];
-    }
+    if (!classrooms) { classrooms = []; }
 
-    if (!classrooms) {
-      classrooms = [];
-    }
+    classrooms = classrooms.filter(c => c.subjectId > 0);
 
-    for (let classroom of classrooms) {
+    for (const classroom of classrooms) {
       classroom.isClass = true;
+    }
+  
+    if (classrooms.length > 0) {
+      setExistingClass(classrooms[0]);
+    } else {
+      setCreating(true);
     }
 
     setClasses(classrooms);
   }, []);
 
   useEffect(() => {
-    getAllStudents();
     getClasses();
-  }, [value, getAllStudents, getClasses]);
+  }, [value, getClasses]);
 
-  const assignToStudents = async (studentsIds: Number[]) => {
-    let data = { studentsIds } as any;
-    if (haveDeadline) {
-      data.deadline = deadlineDate;
-    }
-    return await axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/brick/assignStudents/${props.brick.id}`,
-      data,
-      { withCredentials: true }
-    ).then(res => {
-      return res.data as any[];
-    }).catch(() => {
-      props.requestFailed('Can`t assign student to brick');
-      return false;
-    });
-  }
-
-  const assignToClasses = async (classesIds: Number[]) => {
-    let data = { classesIds, deadline: null } as AssignClassData;
+  const assignToExistingBrick = async (classroom: any) => {
+    let data = { classesIds: [classroom.id], deadline: null } as AssignClassData;
     if (haveDeadline && deadlineDate) {
       data.deadline = deadlineDate;
     }
-    const res = await assignClasses(props.brick.id, data);
-    if (res === false) {
-      props.requestFailed('Can`t assign class to brick');
-    }
-    return res;
-  }
-
-  const hide = () => setAutoCompleteDropdown(false);
-
-  const onClassroomInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { value } = event.target;
-    if (value && value.length >= 2) {
-      setAutoCompleteDropdown(true);
-    } else {
-      setAutoCompleteDropdown(false);
-    }
-  }
-
-  const classroomSelected = (objs: any[]) => {
-    setSelected(objs);
-    setAutoCompleteDropdown(false);
-  }
-
-  const getSelectedIds = () => {
-    let res = {
-      classroomIds: [],
-      studentIds: []
-    } as any;
-
-    for (let obj of selectedObjs) {
-      if (obj.isStudent) {
-        res.studentIds.push(obj.id);
-      } else {
-        res.classroomIds.push(obj.id);
-      }
-    }
-    return res;
-  }
-
-  const removeFailedObjs = (failedStudents: any[], failedClasses: any[]) => {
-    return selectedObjs.filter(obj => {
-      if (obj.isStudent) {
-        let found = failedStudents.find(c => c.student.id === obj.id);
-        if (found) {
-          return false;
-        }
-      } else {
-        let found = failedClasses.find(c => c.classroom.id === obj.id)
-        if (found) {
-          return false;
-        }
-      }
-      return true;
-    });
+    return await assignClasses(props.brick.id, data);
   }
 
   const assign = async () => {
-    const { studentIds, classroomIds } = getSelectedIds();
+    // prevent from double click
+    if (isSaving) { return; }
+    setSaving(true);
 
-    let failedClasses: any[] = [];
-    let failedStudents: any[] = [];
-    let failedItems: any[] = [];
-
-    let good = true;
-    if (studentIds.length > 0) {
-      let res = await assignToStudents(studentIds);
-      if (!res) {
-        good = false;
+    if (isCreating === false) {
+      const res = await assignToExistingBrick(existingClass);
+      if (res) {
+        props.success([existingClass], []);
       }
-      if (res instanceof Array && res.length > 0) {
-        failedItems = res;
-        failedStudents = res;
-      }
-    }
-    if (classroomIds.length > 0) {
-      let res = await assignToClasses(classroomIds);
-      if (res === false) {
-        good = false;
-      }
-      if (res instanceof Array && res.length > 0) {
-        failedClasses = res;
-        failedItems.push(...res);
-      }
-    }
-    if (good) {
-      let assignedObjs = Object.assign([], selectedObjs) as any[];
-      if (failedItems.length > 0) {
-        assignedObjs = removeFailedObjs(failedStudents, failedClasses);
-      }
-      props.success(assignedObjs, failedItems);
     } else {
-      props.close();
+      await createClassAndAssign();
     }
+    setSaving(false);
+  }
+
+  const renderBrickLevel = () => (
+    <div className="r-brick-level">
+      Level {AcademicLevelLabels[props.brick.academicLevel]}
+    </div>
+  );
+
+  const renderNew = () => {
+    return (
+      <div className="r-new-class">
+        <div className="r-class-inputs">
+          <input value={newClassName} className={(validationRequired && !newClassName) ? 'invalid' : ''} placeholder="Class Name" onChange={e => setNewClassName(e.target.value)} />
+          {renderBrickLevel()}
+        </div>
+        <div className="r-regular-center">Invite between 1 and 50 students to your class</div>
+        <div className={`r-student-emails ${(validationRequired && users.length === 0) ? 'invalid' : '' }`}>
+          <AutocompleteUsernameButEmail
+            placeholder="Type or paste student emails"
+            currentEmail={currentEmail}
+            users={users}
+            onAddEmail={onAddUser}
+            onChange={email => checkSpaces(email.trim())}
+            setUsers={users => {
+              setCurrentEmail('');
+              setUsers(users as User[]);
+            }}
+          />
+        </div>
+        <InvalidDialog isOpen={isInvalidOpen} label="Please fill in the fields in red" close={() => showInvalid(false)} />
+      </div>
+    )
+  }
+  
+  const renderExisting = () => {
+    if (classes.length <= 0) { return <div />; }
+    return (
+      <div className="r-class-selection">
+        <Select
+          className="select-existed-class"
+          MenuProps={{ classes: { paper: 'select-classes-list' } }}
+          value={existingClass.id}
+          onChange={e => setExistingClass(classes.find(c => c.id === parseInt(e.target.value as string)))}
+        >
+          {classes.map((c: any, i) =>
+            <MenuItem value={c.id} key={i}>
+              <ListItemIcon>
+                <SvgIcon>
+                  <SpriteIcon
+                    name="circle-filled"
+                    className="w100 h100 active"
+                    style={{ color: c.subject.color }}
+                  />
+                </SvgIcon>
+              </ListItemIcon>
+              <ListItemText>{c.name}</ListItemText>
+            </MenuItem>
+          )}
+        </Select>
+        {renderBrickLevel()}
+      </div>
+    );
+  }
+
+  const renderFooter = () => (
+    <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
+      <button
+        className="btn btn-md bg-theme-orange yes-button icon-button r-long"
+        onClick={assign} style={{ width: 'auto' }}
+      >
+        <div className="centered">
+          <span className="label">Assign</span>
+        </div>
+      </button>
+    </div>
+  );
+
+  const renderDeadline = () => (
+    <div>
+      <div className="r-popup-title bold">When is it due?</div>
+      <div className="r-radio-buttons">
+        <FormControlLabel
+          checked={haveDeadline === false}
+          control={<Radio onClick={() => toggleDeadline(false)} />}
+          label="No deadline"
+        />
+        <FormControlLabel
+          checked={haveDeadline === true}
+          control={<Radio onClick={() => toggleDeadline(true)} />}
+          label="Set date"
+        />
+        {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
+      </div>
+    </div>
+  );
+
+  if (classes.length === 0) {
+    return (
+      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
+        <div className="dialog-header">
+          <div className="r-popup-title bold r-first-class">Create Your First Class</div>
+          {renderNew()}
+          {renderDeadline()}
+          {renderFooter()}
+        </div>
+      </Dialog>
+    );
   }
 
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
       <div className="dialog-header">
         <div className="r-popup-title bold">Who would you like to assign this brick to?</div>
-        <Autocomplete
-          multiple
-          freeSolo
-          open={autoCompleteOpen}
-          options={[...classes, ...students]}
-          onChange={(e: any, c: any) => classroomSelected(c)}
-          getOptionLabel={(option: any) => option.isStudent ? `Student ${option.firstName} ${option.lastName} (${option.username})` : 'Class ' + option.name}
-          renderInput={(params: any) => (
-            <TextField
-              onBlur={() => hide()}
-              {...params}
-              onChange={e => onClassroomInput(e)}
-              variant="standard"
-              label="Students and Classes: "
-              placeholder="Search for students and classes"
-            />
-          )}
-          renderOption={(option: any) => (
-            <React.Fragment>
-              {option.isStudent
-                ? <span><span className="bold">Student</span> {option.firstName} {option.lastName}</span>
-                : <span><span className="bold">Class</span> {option.name}</span>
-              }
-            </React.Fragment>
-          )}
-        />
-        <div className="r-popup-title bold">When is it due?</div>
-        <div className="r-radio-buttons">
+        <div className="r-radio-row">
           <FormControlLabel
-            checked={haveDeadline === false}
-            control={<Radio onClick={() => toggleDeadline(false)} />}
-            label="No deadline"
-          />
+            checked={!isCreating}
+            control={<Radio onClick={() => setCreating(false)} className={"filter-radio custom-color"} />}
+            label="An Existing Class" />
           <FormControlLabel
-            checked={haveDeadline === true}
-            control={<Radio onClick={() => toggleDeadline(true)} />}
-            label="Set date"
-          />
-          {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
+            checked={isCreating}
+            control={<Radio onClick={() => setCreating(true)} className={"filter-radio custom-color"} />}
+            label="Create A New Class" />
         </div>
-        <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
-          <button className="btn btn-md bg-theme-orange yes-button icon-button" onClick={assign} style={{ width: 'auto' }}>
-            <div className="centered">
-              <span className="label">Assign Brick</span>
-              <SpriteIcon name="file-plus" />
-            </div>
-          </button>
-        </div>
+        {isCreating ? renderNew() : renderExisting()}
+        {renderDeadline()}
+        {renderFooter()}
       </div>
     </Dialog>
   );

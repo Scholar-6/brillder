@@ -1,43 +1,105 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .image-dialog-container {
+  .MuiSlider-mark {
+    display: none;
+  }
   .invalid {
     background: var(--theme-orange);
+  }
+  .close-button .svg {
+    color: var(--theme-dark-blue) !important;
+    &:hover {
+      color: var(--theme-orange) !important;
+    }
   }
   .MuiPaper-root.MuiDialog-paper {
     padding-bottom: 7.4vw;
     overflow-y: hidden;
     min-width: 34vw;
     .dialog-header.image-dialog {
+      overflow: scroll;
       position: relative;
       overflow-y: auto;
+      padding-bottom: calc(4vw + 1.5vw);
     }
-    .upload-button {
-      position: absolute;
-      bottom: 1.5vw;
-      background: var(--tab-gray);
-      color: var(--dark-gray);
-      border-radius: 50%;
-      $size: 4vw;
-      width: $size !important;
-      height: $size !important;
-      padding: 0.4vw;
-      padding-top: 0.6vw;
+  }
+}
 
-      .svg {
-        position: absolute;
-        width: 80%;
-        height: 70%;
-      }
-  
-      &.active {
-        cursor: pointer;
-        background: var(--theme-green);
-        color: var(--white);
-      }
-    }
+.upload-button {
+  position: absolute;
+  bottom: 1.5vw;
+  background: var(--tab-gray);
+  color: var(--dark-gray);
+  border-radius: 50%;
+  $size: 4vw;
+  width: $size !important;
+  height: $size !important;
+  padding: 0.4vw;
+  padding-top: 0.6vw;
+
+  .background {
+    position: absolute;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    height: 4vw;
+    width: 4vw;
+    opacity: 0.5;
+  }
+
+  &.active .background {
+    position: absolute;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    height: 4vw;
+    width: 4vw;
+    transition: all 300ms ease-out;
+    opacity: 0.5;
+    background: var(--theme-green);
+  }
+
+  &.active:hover .background {
+    top: -0.5vw;
+    left: -0.5vw;
+    position: absolute;
+    border-radius: 50%;
+    top: -0.5vw;
+    left: -0.5vw;
+    height: 5vw;
+    width: 5vw;
+    opacity: 0.5;
+    background: var(--theme-green);
+  }
+
+  .css-custom-tooltip {
+    height: 0;
+    overflow: hidden;
+    top: 1vw;
+    left: 4.7vw;
+    font-size: 1.4vw;
+    padding: 0;
+    text-align: center;
+    width: 5.5vw;
+  }
+  &:hover .css-custom-tooltip {
+    height: auto;
+    opacity: 1;
+  }
+
+  .svg {
+    position: absolute;
+    width: 80%;
+    height: 70%;
+  }
+
+  &.active {
+    cursor: pointer;
+    background: var(--theme-green);
+    color: var(--white);
   }
 }
 
@@ -47,6 +109,7 @@
   padding-left: 1vw;
   padding-right: 1vw;
   $font-size: 1.3vw;
+  max-width: 35vw;
   font-size: $font-size !important;
 
   > div {
@@ -97,7 +160,7 @@
     margin-top: 2vh;
     color: var(--theme-dark-blue);
     background: var(--tab-gray);
-    border-radius: 0.6vw;
+    border-radius: $editor-radius;
     padding: 0.2vh 1vw;
     width: calc(100% - 2vw);
     &::placeholder {
@@ -162,17 +225,46 @@
     }
   }
   .cropping.empty {
-    @extend %flexCenter;
+    .icon-image {
+      height: 20vh !important;
+      width: 20vh !important;
+    }
   }
-  .icon-image {
-    height: 13vh !important;
-    width: 13vh !important;
-  }
-  .MuiSlider-markLabel {
-    font-size: 1.5vw !important;
-    line-height: 1;
-    font-family: $font-family-regular !important;
-    color: var(--theme-dark-blue) !important;
+  .i-s-slider {
+    margin-top: 0 !important;
+    margin-left: 3vw;
+    width: 19vw;
+    height: 0.3vw;
+    .MuiSlider-track,
+    .MuiSlider-rail {
+      height: inherit !important;
+      border-bottom-left-radius: 0.5vw;
+      border-top-left-radius: 0.5vw;
+    }
+    .MuiSlider-rail {
+      border-radius: 0.5vw;
+    }
+    .MuiSlider-thumb {
+      width: 1vw !important;
+      height: 1vw !important;
+      margin-top: -0.3vw !important;
+      margin-bottom: 0 !important;
+    }
+    .MuiSlider-markLabel {
+      position: absolute !important;
+      font-size: 3vw !important;
+      color: var(--theme-orange) !important;
+      line-height: 1;
+      font-family: $font-family-regular !important;
+      &[data-index="0"] {
+        top: -0.75vw !important;
+        margin-left: -1.2vw;
+      }
+      &[data-index="1"] {
+        top: -0.45vw !important;
+        margin-left: 1.4vw;
+      }
+    }
   }
   .absolute {
     padding-top: 0;
@@ -185,8 +277,24 @@
     margin-top: 40vh;
     margin-bottom: 1.5vw;
   }
-}
-
-.image-dialog-answer {
-  min-height: auto !important;
+  .i-image-footer {
+    background: var(--tab-gray);
+    width: 100%;
+    border-bottom-left-radius: 0.5vw;
+    border-bottom-right-radius: 0.5vw;
+    height: 2.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    .add-image-button {
+      position: relative !important;
+      margin-top: 0.8vw;
+      width: 2vw;
+      height: 2vw;
+    }
+    .file-name {
+      width: 100%;
+      text-align: center;
+    }
+  }
 }

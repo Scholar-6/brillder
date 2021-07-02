@@ -72,14 +72,23 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
     return subjects;
   }
 
-
   onSubjectSelected(subjectId: number) {
     const { subjects } = this.state;
     const subject = subjects.find(s => s.id === subjectId);
     if (subject) {
       this.props.filterByOneSubject(subject.id);
-      this.props.history.push(map.ViewAllPage + `?subjectId=${subject.id}`);
+      let link = map.ViewAllPage + `?subjectId=${subject.id}`;
+
+      const values = queryString.parse(this.props.location.search);
+      if (values.newTeacher) {
+        link += '&' + map.NewTeachQuery;
+      }
+      this.props.history.push(link);
     }
+  }
+
+  isFilterClear() {
+    return this.state.subjects.some(r => r.checked);
   }
 
   render() {
@@ -94,12 +103,19 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               subjects={this.state.subjects}
               userSubjects={this.props.user ? this.props.user.subjects : []}
               isCore={true}
-              isClearFilter={() => { }}
+              isClearFilter={this.isFilterClear()}
+              openAddSubjectPopup={() => {}}
+              isAllCategory={false}
               isAllSubjects={this.state.isAllSubjects}
               setAllSubjects={isAllSubjects => this.setState({ isAllSubjects })}
+              selectUserSubjects={() => {}}
               handleSortChange={() => { }}
+              isViewAll={false}
+              selectAllSubjects={() => {}}
               clearSubjects={() => { }}
+              levels={[]}
               filterBySubject={id => this.onSubjectSelected(id)}
+              filterByLevel={() => {}}
             />
             : this.props.user ? <AllSubjectsSidebar /> : <UnauthorizedSidebar />
           }
