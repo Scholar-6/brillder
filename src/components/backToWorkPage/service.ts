@@ -1,4 +1,4 @@
-import { Brick, BrickStatus } from 'model/brick';
+import { AcademicLevel, Brick, BrickStatus } from 'model/brick';
 import { SortBy, Filters, ThreeColumns } from './model';
 
 const getBrickById = (bricks: Brick[], brickId: number) => {
@@ -46,6 +46,13 @@ export const filterByNoEditor = (bricks: Brick[], userId: number) => {
 
 export const filterByCurretUser = (bricks: Brick[], userId: number) => {
   return bricks.filter(b => b.author.id === userId);
+}
+
+export const filterByLevels = (bricks: Brick[], levels: AcademicLevel[]) => {
+  return bricks.filter(b => {
+    const found = levels.find(l => b.academicLevel === l);
+    return !!found;
+  });
 }
 
 export const checkPrivateBrick = (b: Brick) => {

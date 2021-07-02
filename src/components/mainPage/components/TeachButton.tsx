@@ -93,7 +93,7 @@ const TeachButton: React.FC<TeachButtonProps> = props => {
 
   return (
     <div
-      className="manage-classes svgOnHover"
+      className={`manage-classes svgOnHover ${props.disabled ? 'disabled' : ''}`}
       onMouseEnter={() => setLeaved(false)}
       onMouseLeave={() => setLeaved(true)}
       onClick={() => {

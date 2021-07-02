@@ -55,7 +55,7 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
   }
 
   async loadAssignments() {
-    let res = (await getStudentAssignments(this.props.activeStudent.id)) as Assignment[] | null;
+    const res = (await getStudentAssignments(this.props.activeStudent.id)) as Assignment[] | null;
     if (res) {
       const archived = res.filter(res => res.studentStatus && res.studentStatus.length > 0 &&  res.studentStatus[0].status === 3);
       const assignments = res.filter(res => !res.studentStatus || !res.studentStatus[0] ||  res.studentStatus[0].status < 3);

@@ -5,10 +5,13 @@ import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/Add
 import { UniqueComponentProps } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import { SortCategory, QuestionValueType, SortAnswer } from 'components/interfaces/sort';
-import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import { showSameAnswerPopup } from '../service/questionBuild';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import ValidationFailedDialog from 'components/baseComponents/dialogs/ValidationFailedDialog';
+import RemoveButton from '../components/RemoveButton';
+import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
+import SoundRecord from '../sound/SoundRecord';
+
 
 export interface CategoriseData {
   categories: SortCategory[];
@@ -26,7 +29,7 @@ export const getDefaultCategoriseAnswer = () => {
 }
 
 const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog, removeHintAt
 }) => {
   const [categoryHeight, setCategoryHeight] = React.useState('0%');
   const [sameCategoryOpen, setSameCategory] = React.useState(false);
@@ -52,7 +55,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       }
       category.height = 'auto';
       for (let answer of category.answers) {
-        if (answer.answerType !== QuestionValueType.Image) {
+        if (answer.answerType !== QuestionValueType.Image && answer.answerType !== QuestionValueType.Sound) {
           if (!answer.value) {
             category.height = "0%";
           }
@@ -74,6 +77,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     answer.valueFile = '';
     answer.answerType = QuestionValueType.String;
     update();
+    save();
   }
 
   const addAnswer = (category: SortCategory) => {
@@ -84,6 +88,11 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
 
   const removeAnswer = (category: SortCategory, index: number) => {
     category.answers.splice(index, 1);
+    
+    const catIndex = state.categories.indexOf(category);
+    let hintIndex = state.categories.slice(0, catIndex).reduce((idx, cat) => idx + cat.answers.length, 0);
+    hintIndex += index;
+    removeHintAt(hintIndex);
     update();
     save();
   }
@@ -91,6 +100,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   const categoryChanged = (category: any, value: string) => {
     category.name = value;
     update();
+    save();
   }
 
   const addCategory = () => {
@@ -116,6 +126,27 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       answer.value = "";
       answer.valueFile = fileName;
       answer.answerType = QuestionValueType.Image;
+      update();
+      save();
+    }
+
+    const setSound = (soundFile: string, caption: string) => {
+      if (locked) { return; }
+      answer.value = '';
+      answer.valueFile = '';
+      answer.soundFile = soundFile;
+      answer.soundCaption = caption;
+      answer.answerType = QuestionValueType.Sound;
+      update();
+      save();
+    }
+
+    const onTextChanged = (answer: any, value: string) => {
+      if (locked) { return; }
+      answer.value = value;
+      answer.valueFile = "";
+      answer.soundFile = "";
+      answer.answerType = QuestionValueType.String;
       update();
       save();
     }
@@ -146,6 +177,20 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       }
     }
 
+    if (answer.answerType === QuestionValueType.Sound) {
+      return (
+        <div className="categorise-sound unique-component" key={i}>
+          <RemoveButton onClick={() => answerChanged(answer, '')} />
+          <SoundRecord
+            locked={locked}
+            answer={answer as any}
+            save={setSound}
+            clear={() => onTextChanged(answer, '')}
+          />
+        </div>
+      );
+    }
+
     return (
       <div key={i} className={customClass}>
         {
@@ -154,12 +199,15 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
           </button>
         }
-        <DocumentWirisEditorComponent
-          disabled={locked}
-          editOnly={editOnly}
-          data={answer.value}
+        {answer.answerType === QuestionValueType.Image && <RemoveButton onClick={() => answerChanged(answer, '')} />}
+        {answer.answerType !== QuestionValueType.Image &&
+        <QuillEditorContainer
+          locked={locked}
+          object={answer}
+          fieldName="value"
           placeholder="Enter Answer..."
           toolbar={['latex']}
+          validationRequired={validationRequired}
           isValid={isValid}
           onBlur={() => {
             showSameAnswerPopup(i, category.answers, openSameAnswerDialog);
@@ -167,13 +215,19 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             save();
           }}
           onChange={value => { answerChanged(answer, value) }}
-        />
+        />}
         <QuestionImageDropZone
           answer={answer as any}
           type={answer.answerType || QuestionValueType.None}
           fileName={answer.valueFile}
           locked={locked}
           update={setImage}
+        />
+        <SoundRecord
+          locked={locked}
+          answer={answer as any}
+          save={setSound}
+          clear={() => onTextChanged(answer, '')}
         />
       </div>
     );
@@ -209,10 +263,10 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
               <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
             </button>
           }
-          <DocumentWirisEditorComponent
-            disabled={locked}
-            editOnly={editOnly}
-            data={category.name}
+          <QuillEditorContainer
+            locked={locked}
+            object={category}
+            fieldName="name"
             placeholder="Enter Category Heading..."
             toolbar={['latex']}
             validationRequired={validationRequired}

@@ -2,14 +2,15 @@ import React from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 
 import './ChooseOneAnswer.scss';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import QuestionImageDropzone from "components/build/baseComponents/questionImageDropzone/QuestionImageDropzone";
 import { QuestionValueType } from "../types";
 import { ChooseOneAnswer } from './types';
 import RemoveItemButton from "../components/RemoveItemButton";
 import SoundRecord from "../sound/SoundRecord";
-import DeleteDialog from "components/baseComponents/deleteBrickDialog/DeleteDialog";
 import RemoveButton from "../components/RemoveButton";
+import YesNoDialog from "components/build/baseComponents/dialogs/YesNoDialog";
+import { stripHtml } from "components/build/questionService/ConvertService";
+import QuillEditorContainer from "components/baseComponents/quill/QuillEditorContainer";
 
 
 export interface ChooseOneAnswerProps {
@@ -28,7 +29,7 @@ export interface ChooseOneAnswerProps {
 }
 
 const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
-  locked, editOnly, index, length, answer, validationRequired, checkBoxValid,
+  locked, index, length, answer, validationRequired, checkBoxValid,
   removeFromList, update, save, onChecked, onBlur
 }) => {
   const [clearOpen, setClear] = React.useState(false);
@@ -61,6 +62,8 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     answer.soundFile = "";
     answer.answerType = QuestionValueType.String;
     update();
+    onBlur();
+    save();
   }
 
   let containerClass = "";
@@ -106,9 +109,9 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
             fileName={answer.valueFile}
             update={setImage}
           />
-          <DeleteDialog
+          <YesNoDialog
             isOpen={clearOpen}
-            label="Delete image?"
+            title="Delete image?"
             submit={() => onTextChanged(answer, '')}
             close={() => setClear(false)}
           />
@@ -124,17 +127,14 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           fileName={answer.valueFile}
           update={setImage}
         />
-        <DocumentWirisCKEditor
-          disabled={locked}
-          editOnly={editOnly}
-          data={answer.value}
-          toolbar={['latex']}
+        <QuillEditorContainer
+          locked={locked}
+          object={answer}
+          fieldName="value"
           placeholder="Enter Answer..."
+          toolbar={['latex']}
           validationRequired={validationRequired}
-          onBlur={() => {
-            onBlur();
-            save();
-          }}
+          isValid={!!stripHtml(answer.value)}
           onChange={value => onTextChanged(answer, value)}
         />
         <SoundRecord

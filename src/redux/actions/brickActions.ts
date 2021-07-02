@@ -4,6 +4,7 @@ import { Action, Dispatch } from 'redux';
 import { Brick } from 'model/brick';
 import comments from './comments';
 import service, { getPublicBrickById } from 'services/axios/brick';
+import { Question } from 'model/question';
 
 const fetchBrickSuccess = (data:any) => {
   return {
@@ -23,13 +24,15 @@ const fetchBrick = (id: number) => {
   return function (dispatch: any) {
     return axios.get(process.env.REACT_APP_BACKEND_HOST + '/brick/' + id, {withCredentials: true})
       .then(res => {
-        let brick = res.data as Brick;
+        const brick = res.data as Brick;
         brick.questions.sort((q1, q2) => q1.order - q2.order);
         dispatch(fetchBrickSuccess(brick));
         dispatch(comments.getComments(brick.id));
+        return { status: res.status };
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(fetchBrickFailure(error.message));
+        return { status: error.request?.status }
       });
   }
 }
@@ -63,6 +66,9 @@ const saveBrickFailure = (errorMessage:string) => {
 
 const saveBrick = (brick:any) => {
   return function (dispatch: Dispatch) {
+    if (brick.questions) {
+      brick.questions.map((q: any) => ({ id: q.id, brickQuestionId: q.brickQuestionId, order: q.order }));
+    }
     brick.type = 1;
     return axios.put(
       process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true, timeout: 10000}
@@ -76,6 +82,74 @@ const saveBrick = (brick:any) => {
       dispatch(saveBrickFailure(error.message))
       return null;
     });
+  }
+}
+
+const saveQuestionSuccess = (question: Question) => ({
+  type: types.SAVE_QUESTION_SUCCESS,
+  payload: question,
+});
+
+const saveQuestionFailure = (errorMessage: string) => ({
+  type: types.SAVE_QUESTION_FAILURE,
+  error: errorMessage,
+});
+
+const saveBrickQuestions = (questions:any) => {
+  return function (dispatch: Dispatch) {
+    if (questions) {
+      questions.map((q: any) => ({ id: q.id, brickQuestionId: q.brickQuestionId, order: q.order }));
+    }
+    return axios.post(
+      process.env.REACT_APP_BACKEND_HOST + '/question/reorder', questions, {withCredentials: true, timeout: 10000}
+    ).then(response => {
+      dispatch(saveBrickSuccess(response.data));
+      return response.data;
+    }).catch(error => {
+      dispatch(saveBrickFailure(error.message))
+      return null;
+    });
+  }
+}
+
+
+const saveQuestion = (question: any) => {
+  return function (dispatch: Dispatch) {
+    return axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/question/${question.brickQuestionId}`, question, { withCredentials: true, timeout: 10000 }
+    ).then(response => {
+      const savedQuestion = response.data as Question;
+      dispatch(saveQuestionSuccess(savedQuestion));
+      return savedQuestion;
+    }).catch(error => {
+      dispatch(saveQuestionFailure(error.message));
+      return null;
+    })
+  }
+}
+
+const createQuestionSuccess = (question: Question) => ({
+  type: types.CREATE_QUESTION_SUCCESS,
+  payload: question,
+});
+
+const createQuestionFailure = (errorMessage: string) => ({
+  type: types.CREATE_QUESTION_FAILURE,
+  error: errorMessage,
+});
+
+const createQuestion = (brickId: number, question: any) => {
+  return function (dispatch: Dispatch) {
+    return axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/question/new/${brickId}`, question, { withCredentials: true, timeout: 10000 }
+    ).then(response => {
+      const savedQuestion = response.data as Question;
+      dispatch(createQuestionSuccess(savedQuestion));
+      return savedQuestion;
+    }).catch(error => {
+      dispatch(createQuestionFailure(error.message));
+      return null;
+    })
   }
 }
 
@@ -165,6 +239,6 @@ const sendToPublisherConfirmed = () => {
 
 export default {
   fetchBrick, fetchPublicBrick, forgetBrick,
-  createBrick, saveBrick,
+  createBrick, saveBrick, createQuestion, saveQuestion, saveBrickQuestions,
   assignEditor, sendToPublisher, sendToPublisherConfirmed
 }

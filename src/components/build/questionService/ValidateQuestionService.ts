@@ -1,6 +1,7 @@
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, Hint, HintStatus
 } from 'model/question';
+import { stripHtml } from './ConvertService';
 import uniqueValidator from './UniqueValidator';
 
 const getUniqueComponent = (components: any[]) => {
@@ -24,7 +25,7 @@ const validateComponentValues = (components: any[]) => {
     || c.type === QuestionComponentTypeEnum.Sound
   });
 
-  let invalid = comps.find(c => !c.value);
+  let invalid = comps.find(c => !stripHtml(c.value));
   if (invalid) {
     return false;
   }
@@ -34,7 +35,7 @@ const validateComponentValues = (components: any[]) => {
 const validateEachHint = (list: any[], answersCount: number) => {
   let index = 0;
   for (let value of list) {
-    if (value === null || value === "") {
+    if (value === null || value === "" || stripHtml(value) === "") {
       return true;
     }
     index++;
@@ -50,7 +51,7 @@ export const validateHint = (hint: Hint, answersCount: number) => {
   if (hint.status === HintStatus.Each) {
     return validateEachHint(hint.list, answersCount);
   } else {
-    return !hint.value;
+    return !stripHtml(hint.value);
   }
 }
 
@@ -66,7 +67,7 @@ export const isHintEmpty = (hint: Hint) => {
 export function validateQuestion(question: Question) {
   const {type, hint, components} = question;
 
-  if (!question.firstComponent || !question.firstComponent.value) {
+  if (!question.firstComponent || !stripHtml(question.firstComponent.value)) {
     return false;
   }
 
@@ -76,11 +77,18 @@ export function validateQuestion(question: Question) {
   }
 
   const comp = getUniqueComponent(components);
+  if(!comp) {
+    return false;
+  }
 
   let answersCount = 1;
   if (comp.list) {
     answersCount = comp.list.length;
   }
+  if (type === QuestionTypeEnum.MissingWord && comp.choices) {
+    answersCount = comp.choices.length;
+  }
+
   let isHintInvalid = validateHint(hint, answersCount);
   if (isHintInvalid) {
     return false;
@@ -89,7 +97,7 @@ export function validateQuestion(question: Question) {
   if (type === QuestionTypeEnum.ShortAnswer || type === QuestionTypeEnum.VerticalShuffle
     || type === QuestionTypeEnum.HorizontalShuffle)
   {
-    return uniqueValidator.validateShortAnswer(comp);
+    return uniqueValidator.validateShortAnswerOrShuffle(comp);
   } else if (type === QuestionTypeEnum.ChooseOne) {
     return uniqueValidator.validateChooseOne(comp);
   } else if (type === QuestionTypeEnum.ChooseSeveral) {

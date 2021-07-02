@@ -1,17 +1,9 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .synthesis-page {
   @extend %arrow-top-bottom;
-  .ck-color-grid__tile {
-    $size: 1.25vw;
-    min-height: $size;
-    max-height: $size;
-    min-width: $size;
-    max-width: $size;
-    border-radius: 0.15vw !important;
-  }
   .top-scroll-area,
   .bottom-scroll-area {
     justify-content: flex-start;
@@ -33,9 +25,12 @@
       max-width: $synthesis-box-width;
       min-width: $synthesis-box-width;
       padding-left: 2vw;
-      .ck-editor {
+      .ql-toolbar {
+        height: 5vh;
+      }
+      .ql-container {
         width: 100% !important;
-        .ck-content {
+        .ql-editor {
           font-size: 1.35vw !important;
           p {
             font-size: 1.35vw;
@@ -104,7 +99,7 @@
       font-size: 1.4vw;
       font-family: $font-family-black;
     }
-    
+
     .synthesis-comments-panel:not(.hidden) {
       $comment-width: calc(100% - #{$synthesis-box-width});
       flex-basis: 250px;

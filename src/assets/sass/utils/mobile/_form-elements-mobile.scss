@@ -1,0 +1,191 @@
+textarea,
+input {
+  box-sizing: content-box !important;
+  &.style2 {
+    font-size: 1.8vw;
+    margin-bottom: 2.5vh;
+    padding-left: 1vw;
+    background: var(--solitude-light);
+    border-radius: 0.5vw;
+    border: none;
+    color: var(--theme-dark-blue);
+    box-shadow: $base-shadow;
+    @include placeholder {
+      color: var(--theme-dark-blue);
+    }
+    &[type="password"] {
+      @include placeholder {
+        > div {
+          font-size: 4vw;
+          line-height: 6.685vh;
+          height: 6.685vh;
+          padding-bottom: 1vh;
+        }
+        // font-size: 2vw;
+      }
+    }
+
+    &.invalid {
+      @include placeholder {
+        color: var(--white) !important;
+      }
+      background: var(--theme-orange);
+    }
+  }
+}
+.input-group {
+  @extend %displayFlex;
+  margin-left: -0.5vw;
+  margin-right: -0.5vw;
+  @include phone_and_tabletP {
+    flex-direction: column;
+  }
+  > div,
+  > input {
+    flex: 1;
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+  }
+}
+
+.input-block {
+  @extend %displayFlex;
+  @extend %posRelative;
+  margin-bottom: 1.5vh;
+  width: 100%;
+  input {
+    @extend %width100;
+    margin: 0;
+    border: none;
+    letter-spacing: 0.3vw;
+    border-radius: 1.7vh;
+    padding: 1.8vh 1vw !important;
+    @include phone_and_tabletP {
+      font-size: 5.5vw;
+    }
+    @include tabletP {
+      font-size: 1.5vw;
+    }
+  }
+  input[type="email"]::placeholder,
+  input[type="password"]::placeholder {
+    color: rgb(141, 154, 180);
+  }
+  .hide-password-icon-container {
+    @extend %flexCenter;
+    position: absolute;
+    right: 1.3vw;
+    top: 0;
+    padding: 0.5vw 1vw;
+    height: 100%;
+    .hide-password-icon {
+      height: 37%;
+      opacity: 0.7;
+      color: var(--theme-orange);
+      z-index: 5;
+    }
+  }
+}
+
+.secret-input {
+  margin-bottom: 1vh;
+  opacity: 0;
+}
+/* Material UI Overwrite */
+
+.MuiAutocomplete-popper {
+  z-index: 999999 !important;
+  .MuiAutocomplete-option {
+    color: var(--theme-dark-blue);
+    font-size: 1.6vw;
+  }
+  * {
+    font-family: $font-family-regular !important;
+    @include placeholder {
+      font-family: $font-family-regular !important;
+    }
+  }
+}
+
+.MuiAutocomplete-root,
+.MuiTextField-root.dialog-input {
+  width: 100%;
+  margin: 0 !important;
+  margin-bottom: 3vh !important;
+  label {
+    display: none !important;
+  }
+  .MuiInput-formControl {
+    margin: 0 !important;
+    line-height: 2.1;
+    background: var(--solitude-light);
+    border-radius: 0.5vw;
+    border: 0 !important;
+    color: var(--theme-dark-blue);
+    box-shadow: $base-shadow;
+    padding: 1vw !important;
+    @include placeholder {
+      color: var(--theme-dark-blue);
+    }
+    @include phone_and_tabletP {
+      font-size: 5.5vw !important;
+    }
+    @include tabletP {
+      font-size: 1.5vw !important;
+    }
+    input {
+      font-family: $font-family-regular !important;
+    }
+    &:before {
+      border: 0 !important;
+    }
+  }
+}
+
+.MuiButton-label,
+.MuiTypography-body1,
+.MuiTypography-body2 {
+  font-family: $font-family-regular !important;
+  font-weight: normal !important;
+}
+
+.MuiListItemText-root.bold {
+  .MuiTypography-body1 {
+    font-family: $font-family-bold !important;
+  }
+}
+
+.MuiSwitch-switchBase {
+  padding: 0 !important;
+  border-radius: 50% !important;
+  transform: translateX(0.2vw) !important;
+  &.Mui-checked {
+    transform: translateX(1.3vw) !important;
+  }
+  .MuiSwitch-thumb {
+    width: 0.7vw !important;
+    height: 0.7vw !important;
+    margin: 0.2vw 0 !important;
+  }
+}
+
+.left-ckeckbox {
+  @extend %checkboxValidation;
+}
+
+.unique-component.invalid-answer {
+  .left-ckeckbox {
+    &.checkbox-invalid {
+      color: var(--gray) !important;
+      svg {
+        color: var(--gray) !important;
+      }
+    }
+    &.Mui-checked {
+      color: var(--theme-green) !important;
+      svg {
+        color: var(--theme-green) !important;
+      }
+    }
+  }
+}

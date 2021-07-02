@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 
 import './ManageClassrooms.scss';
 import '../style.scss';
 
 import { User } from "model/user";
 import { MUser, TeachActiveTab } from "../model";
-import { deleteClassroom, getStudents, updateClassroom } from 'services/axios/classroom';
+import { deleteClassroom, getClassInvitations, getStudents, resendInvitation, updateClassroom } from 'services/axios/classroom';
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import {
@@ -30,6 +31,7 @@ import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/Studen
 import NameAndSubjectForm from "../components/NameAndSubjectForm";
 import { Subject } from "model/brick";
 import ClassroomFilterItem from "./components/ClassroomFilterItem";
+import { socket } from "socket/socket";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -78,6 +80,9 @@ interface UsersListState {
   inviteOpen: boolean;
   numStudentsInvited: number;
 
+  isPending: boolean;
+  pendingUsers: MUser[];
+
   pageStudentsSelected: boolean;
 }
 
@@ -85,7 +90,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   constructor(props: UsersListProps) {
     super(props);
 
-    let pageSize = 14;
+    const pageSize = 14;
 
     this.state = {
       isLoaded: false,
@@ -119,10 +124,51 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       inviteOpen: false,
       numStudentsInvited: 0,
 
+      isPending: false,
+      pendingUsers: [],
+
       pageStudentsSelected: false
     };
 
-    this.loadData();
+    this.loadInitData();
+  }
+
+  componentDidMount() {
+    socket.on("invitation_accepted", () => {
+      this.loadData();
+      console.log("inv update")
+    });
+  }
+
+  componentWillUnmount() {
+    socket.off("invitation_accepted");
+  }
+
+  async loadInitData() {
+    let activeClassroom = null;
+    await this.getStudents();
+    const classrooms = await this.getClassrooms();
+    const values = queryString.parse(this.props.history.location.search);
+    if (values.classroomId) {
+      activeClassroom = classrooms.find(c => c.id === parseInt(values.classroomId as string));
+      if (!activeClassroom) {
+        activeClassroom = null;
+      } else {
+        activeClassroom.isActive = true;
+      }
+    }
+    this.setState({ isLoaded: true, activeClassroom });
+    await this.getInvitations();
+  }
+
+  async getInvitations() {
+    const pendingUsers = await getClassInvitations();
+    if (pendingUsers) {
+      for (const u of pendingUsers) {
+        u.hasInvitation = true;
+      }
+      this.setState({pendingUsers});
+    }
   }
 
   async loadData() {
@@ -157,12 +203,15 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     if (classrooms) {
       this.prepareClassrooms(classrooms);
       classrooms = classrooms.filter(c => c.subjectId);
+      classrooms = classrooms.sort((a: any, b: any) => b.students.length - a.students.length);
       this.setState({
         classrooms,
         activeClassroom: this.state.activeClassroom ? classrooms.find(c => c.id === this.state.activeClassroom!.id) ?? null : null
       });
+      return classrooms;
     } else {
       console.log('geting classrooms failed');
+      return [];
     }
   }
 
@@ -285,7 +334,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   setActiveClassroom(activeClassroom: ClassroomApi) {
     this.unselectAllStudents();
     activeClassroom.isActive = true;
-    this.setState({ activeClassroom, page: 0, pageStudentsSelected: false, pageSize: this.state.classPageSize, selectedUsers: [], isSearching: false });
+    this.setState({ activeClassroom, page: 0, isPending: false, pageStudentsSelected: false, pageSize: this.state.classPageSize, selectedUsers: [], isSearching: false });
   }
 
   async deleteClass() {
@@ -326,7 +375,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   unselectClasses() {
     this.unselectionClasses();
     this.setState({
-      activeClassroom: null, pageStudentsSelected: false, pageSize: this.state.viewAllPageSize, page: 0, isSearching: false
+      activeClassroom: null, isPending: false, pageStudentsSelected: false,
+      pageSize: this.state.viewAllPageSize, page: 0, isSearching: false
     });
   }
 
@@ -347,8 +397,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderViewAllFilter() {
-    let className = "index-box hover-light item-box2";
-    if (!this.state.activeClassroom) {
+    let className = "m-view-all index-box hover-light item-box2";
+    if (!this.state.activeClassroom && !this.state.isPending) {
       className += " active";
     }
 
@@ -357,10 +407,30 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         View All
         <div className="right-index right-index2">
           {this.state.users.length}
-          <SpriteIcon name="users" className="active" />
+          <SpriteIcon name="users-custom" className="active" />
           <div className="classrooms-box">
             {this.state.classrooms.length}
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderPendingFilter() {
+    let className = "m-view-all index-box hover-light item-box2";
+    if (this.state.isPending) {
+      className += " active";
+    }
+
+    return (
+      <div className={className} onClick={() => {
+        this.unselectClasses();
+        this.setState({isPending: true});
+      }}>
+        Pending
+        <div className="right-index right-index2">
+          {this.state.pendingUsers.length}
+          <SpriteIcon name="users-custom" className="active" />
         </div>
       </div>
     );
@@ -375,31 +445,40 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       return <EmptyFilter />;
     }
 
+    const {classrooms} = this.state;
+
     return (
-      <div className="sort-box">
-        <div className="filter-container sort-by-box">
-          <div style={{ display: 'flex' }}>
-            <div className="class-header" style={{ width: '50%' }}>
-              CLASSES
+      <div className="flex-height-box">
+        <div className="sort-box">
+          <div className="filter-container sort-by-box">
+            <div style={{ display: 'flex' }}>
+              {classrooms.length > 1
+                ? <div className="class-header" style={{ width: '50%' }}>{classrooms.length} CLASSES</div>
+                : <div className="class-header" style={{ width: '50%' }}>{classrooms.length} CLASS</div>
+              }
             </div>
           </div>
-        </div>
-        <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
-          + Create Class
-        </div>
-        <div className="subject-indexes-box filter-container manage-classrooms-filter">
+          <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
+            <SpriteIcon name="plus-circle" /> Create Class
+          </div>
           {this.renderViewAllFilter()}
-          {this.state.classrooms.map((c, i) =>
-            <ClassroomFilterItem
-              classroom={c}
-              key={i}
-              activeClassroom={this.state.activeClassroom}
-              setActiveClassroom={this.setActiveClassroom.bind(this)}
-              onDeleteClass={this.onDeleteClass.bind(this)}
-              onDrop={this.onDrop.bind(this)}
-            />
-          )}
+          {this.renderPendingFilter()}
         </div>
+        <div className="sort-box subject-scrollable">
+          <div className="subject-indexes-box filter-container manage-classrooms-filter">
+            {this.state.classrooms.map((c, i) =>
+              <ClassroomFilterItem
+                classroom={c}
+                key={i}
+                activeClassroom={this.state.activeClassroom}
+                setActiveClassroom={this.setActiveClassroom.bind(this)}
+                onDeleteClass={this.onDeleteClass.bind(this)}
+                onDrop={this.onDrop.bind(this)}
+              />
+            )}
+          </div>
+        </div>
+        <div className="sidebar-footer" />
       </div>
     );
   };
@@ -481,6 +560,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
   }
 
+  async resendInvitation(email: string) {
+    if(this.state.activeClassroom) {
+      await resendInvitation(this.state.activeClassroom, email);
+      this.invitationSuccess(1);
+    }
+  }
+
   renderPagination(visibleUsers: MUser[], users: MUser[]) {
     return (
       <UsersPagination
@@ -513,6 +599,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           <NameAndSubjectForm
             isStudents={true}
             inviteHidden={inviteHidden}
+            assignHidden={true}
             moveToAssignemts={() => this.props.history.push('/teach/assigned')}
             classroom={this.state.activeClassroom}
             onChange={this.updateClassroom.bind(this)}
@@ -590,6 +677,31 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     const visibleUsers = this.getUsersByPage(users);
 
+    if (this.state.isPending) {
+      const visibleUsers = this.getUsersByPage(this.state.pendingUsers);
+
+      return (
+        <div className="tab-content">
+          <StudentTable
+            isPending={true}
+            history={this.props.history}
+            users={visibleUsers}
+            isAdmin={this.state.isAdmin}
+            selectedUsers={this.state.pendingUsers}
+            sortBy={this.state.sortBy}
+            isAscending={this.state.isAscending}
+            pageStudentsSelected={this.state.pageStudentsSelected}
+            sort={this.sortByLastName.bind(this)}
+            toggleUser={this.toggleUser.bind(this)}
+            unassign={this.unassigningStudent.bind(this)}
+            togglePageStudents={this.togglePageStudents.bind(this)}
+            resendInvitation={this.resendInvitation.bind(this)}
+          />
+          {this.renderPagination(visibleUsers, users)}
+        </div>
+      );
+    }
+
     return (
       <div className="tab-content">
         {activeClassroom && this.renderTopRow()}
@@ -606,6 +718,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           toggleUser={this.toggleUser.bind(this)}
           unassign={this.unassigningStudent.bind(this)}
           togglePageStudents={this.togglePageStudents.bind(this)}
+          resendInvitation={this.resendInvitation.bind(this)}
         />
         {this.renderPagination(visibleUsers, users)}
       </div>
@@ -621,14 +734,14 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       <div className="main-listing user-list-page manage-classrooms-page manage-classrooms-checkboxes">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
-          placeholder="Search by Name, Email or Subject"
+          placeholder="Search by Brick Title, Student Name, or Subject"
           user={this.props.user}
           history={history}
           search={() => this.search()}
           searching={v => this.searching(v)}
         />
         <Grid container direction="row" className="sorted-row">
-          <Grid container item xs={3} className="sort-and-filter-container">
+          <Grid container item xs={3} className="sort-and-filter-container manage-class-filter">
             {this.renderSortAndFilterBox()}
           </Grid>
           <Grid item xs={9} className="brick-row-container">

@@ -1,17 +1,68 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .horizontal-shuffle-build {
   @extend %textCenter;
+  .horizontal-sound {
+    width: 100%;
+    flex-grow: 0;
+    height: 100%;
+    border-radius: 0.6vw;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    background: var(--solitude-light);
+    .time-text {
+      display: none;
+    }
+    .input-container input {
+      width: 2vw;
+    }
+    .volume-container-main input {
+      width: 1.5vw;
+    }
+    .custom-audio-controls {
+      margin: 0 !important;
+    }
+  }
   .horizontal-shuffle-box {
     position: relative;
     width: 100%;
     margin: 0;
-    .document-editor {
-      .ck-editor {
-        .ck-content {
-          padding-left: 1vw;
+    .quill-document-editor {
+      .quill {
+        height: 100%;
+        .ql-container {
+          .ql-editor {
+            padding-top: 1vw;
+            padding-left: 0.5vw;
+            padding-right: 3vw;
+            &.ql-blank::before {
+              text-align: left;
+            }
+          }
+        }
+      }
+    }
+    &.horizontal-string {
+      .sound-record-button {
+        position: absolute;
+        cursor: pointer;
+        right: 1vw;
+        top: 0;
+        height: 100%;
+        @extend %flexCenter;
+        svg {
+          @extend %transitionAll300;
+          height: 100%;
+          width: 2vw;
+          color: var(--dark-gray);
+        }
+        &:hover {
+          .svg {
+            color: var(--theme-orange);
+          }
         }
       }
     }

@@ -79,6 +79,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       <div className={className}>
         <NameAndSubjectForm
           classroom={classroom}
+          inviteHidden={true}
           isArchive={this.props.isArchive}
           onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
           onAssigned={() => this.props.reloadClass(classroom.id)}
@@ -103,7 +104,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
                 isArchive={this.props.isArchive}
                 expand={this.props.expand.bind(this)}
                 key={i} classroom={c.classroom} assignment={c.assignment}
-                archive={() => {}}
+                archive={() => this.props.reloadClass(c.classroom.id)}
                 onRemind={this.props.onRemind}
               />
             </div>
@@ -115,7 +116,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   }
 
   isArchived(assignment: Assignment) {
-    return assignment.studentStatus && assignment.studentStatus.length > 0 && assignment.studentStatus[0].status == 3;
+    return assignment.studentStatus && assignment.studentStatus.length > 0 && assignment.studentStatus[0].status === 3;
   }
 
   renderContent() {

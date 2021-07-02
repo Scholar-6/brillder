@@ -2,7 +2,6 @@ import React from 'react';
 import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 
 import './PairMatch.scss';
 import CompComponent from '../Comp';
@@ -11,8 +10,9 @@ import {QuestionValueType} from 'components/build/buildQuestions/questionTypes/t
 import {Answer} from 'components/build/buildQuestions/questionTypes/pairMatchBuild/types';
 import { PairMatchProps, PairMatchState, DragAndDropStatus, PairMatchAnswer, PairMatchComponent } from './interface';
 import MathInHtml from '../../baseComponents/MathInHtml';
-import { Hint, HintStatus } from 'model/question';
-import { fileUrl } from 'components/services/uploadFile';
+import PairMatchOption from './PairMatchOption';
+import PairMatchImageContent from './PairMatchImageContent';
+import { isPhone } from 'services/phone';
 
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
@@ -68,10 +68,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
 
   getState(entry: number): number {
     if (this.props.attempt?.answer[entry]) {
-      if (
-        this.props.attempt.answer[entry].value.toLowerCase().replace(/ /g, '') ===
-        this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')
-      ) {
+      if (this.props.attempt.answer[entry].index === this.props.component.list[entry].index) {
         return 1;
       } else { return -1; }
     } else { return 0; }
@@ -95,25 +92,14 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return attempt;
   }
 
-  renderOptionContent(answer: Answer) {
-    if (answer.optionType && answer.optionType === QuestionValueType.Image) {
-      return (
-        <div className="image-container">
-          <img alt="" src={fileUrl(answer.optionFile)} width="100%" />
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
-        </div>
-      );
-    }
-    return <MathInHtml value={answer.option} />;
-  }
-
   renderAnswerContent(answer: Answer) {
     if (answer.answerType && answer.answerType === QuestionValueType.Image) {
       return (
-        <div className="image-container">
-          <img alt="" src={fileUrl(answer.valueFile)} width="100%"/>
-          {answer.imageCaption && <div>{answer.imageCaption}</div>}
-        </div>
+        <PairMatchImageContent
+          fileName={answer.valueFile}
+          imageCaption={answer.imageCaption}
+          imageSource={answer.imageSource}
+        />
       );
     } else {
       return (
@@ -125,18 +111,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         </div>
       );
     }
-  }
-
-  renderEachHint(hint: Hint, i: number) {
-    if (hint.status === HintStatus.Each) {
-      let value = hint.list[i];
-      return (
-        <div className="question-hint">
-          <MathInHtml value={value} />
-        </div>
-      );
-    }
-    return '';
   }
 
   renderAnswer(answer: any, i: number) {
@@ -171,42 +145,41 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
           <div style={{width: '100%'}}>
             {this.renderAnswerContent(answer)}
-            {this.props.isPreview ?
-              this.renderEachHint(this.props.question.hint, i)
-              : this.props.isReview &&
-              this.renderEachHint(this.props.question.hint, answer.index)
-            }
           </div>
         </div>
       </div>
     );
   }
 
-  renderOption(item: any, i: number) {
-    let className = "pair-match-play-option";
-    if (item.optionType === QuestionValueType.Image || item.answerType === QuestionValueType.Image) {
-      className += " pair-match-image-choice";
-    }
-    if (item.optionType === QuestionValueType.Image) {
-      className += " image-choice";
-    }
-    return (
-      <ListItem key={i} className={className}>
-        <div className="option-container">
-          {this.renderOptionContent(item as any)}
-        </div>
-      </ListItem>
-    );
+  checkImages() {
+    return !!this.props.component.list.find((a:any) => a.valueFile || a.optionFile);
   }
 
   render() {
+    const haveImage = this.checkImages();
     return (
       <div className="question-unique-play pair-match-play">
-        <p><span className="help-text">Drag to rearrange.</span></p>
+        <p>
+          <span className="help-text">
+            Drag to rearrange. {
+              haveImage && (isPhone() ? 'Double tap images to zoom.' : 'Hover over images to zoom.')
+            }
+          </span>
+        </p>
         <Grid container justify="center">
           <List style={{padding: 0}} className="answers-list">
           {
-            this.props.component.list.map((item:any, i) => this.renderOption(item, i))
+            this.props.component.list.map((item:any, i) =>
+              <PairMatchOption
+                state={this.getState(i)}
+                item={item}
+                key={i}
+                isPreview={this.props.isPreview}
+                hint={this.props.question.hint}
+                isReview={this.props.isReview}
+                index={i}
+              />
+            )
           }
           </List>
           {

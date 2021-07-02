@@ -11,11 +11,9 @@
       width: 100%;
       top: 0;
     }
-  }
-  .subjects-list {
-    max-height: calc(88vh - 16.2vw);
-    overflow-y: auto;
-    padding-bottom: calc(2.3vw + 30px);
+    &.published {
+      padding-top: 0;
+    }
   }
   .index-box.hover-light:hover {
     background: var(--light-blue-alpha3);

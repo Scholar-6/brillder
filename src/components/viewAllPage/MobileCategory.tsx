@@ -20,6 +20,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
 import { getPublicBricks, searchPublicBricks } from "services/axios/brick";
 import BrickCircle from "components/baseComponents/BrickCircle";
+import routes from "components/play/routes";
 
 
 const MobileTheme = React.lazy(() => import('./themes/ViewAllPageMobileTheme'));
@@ -61,8 +62,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     const values = queryString.parse(props.location.search);
     const searchString = values.searchString as string || '';
-    if (!values.isViewAll && !values.subjectId && !values.searchString && !this.props.isSearching) {
-      this.props.history.push(map.AllSubjects);
+    if (!values.isViewAll && !values.subjectId && !values.searchString && !this.props.isSearching && !values.subjectGroup ) {
+      //this.props.history.push(map.SubjectCategories);
     }
 
     let isViewAll = false;
@@ -118,7 +119,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   moveToPlay(brickId: number) {
-    this.props.history.push(`/play/brick/${brickId}/intro`);
+    this.props.history.push(routes.phonePrep(brickId));
   }
 
   move(brickId: number) {
@@ -138,7 +139,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   handleClick(id: number) {
     const { finalBricks } = this.state;
-    const brick = finalBricks.find(b => b.id == id);
+    const brick = finalBricks.find(b => b.id === id);
     if (brick) {
       const isExpanded = brick.expanded;
       finalBricks.forEach(brick => brick.expanded = false);

@@ -5,29 +5,32 @@ import { ReduxCombinedState } from "redux/reducers";
 import './AssignmentsPage.scss';
 import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import PlayPage from './components/play/PlayPage';
+import AssignmentPage from './components/play/AssignmentPage';
 import { isMobile } from "react-device-detect";
+import { isPhone } from "services/phone";
 
-interface BackToWorkState {
+interface AssignmentState {
   searchString: string;
   isSearching: boolean;
   dropdownShown: boolean;
   notificationsShown: boolean;
 }
 
-export interface BackToWorkProps {
+export interface AssignmentProps {
   user: User;
+  match: any;
   history: any;
   location: any;
   forgetBrick(): void;
 }
 
 const MobileTheme = React.lazy(() => import('./themes/AssignmentsMobilePage'));
+const TabletTheme = React.lazy(() => import('./themes/AssignmentsTabletPage'));
 const DesktopTheme = React.lazy(() => import('./themes/AssignmentsDesktopPage'));
 
 
-class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
-  constructor(props: BackToWorkProps) {
+class BackToWorkPage extends Component<AssignmentProps, AssignmentState> {
+  constructor(props: AssignmentProps) {
     super(props);
 
     this.state = {
@@ -58,7 +61,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   render() {
     return (
       <React.Suspense fallback={<></>}>
-        {isMobile ? <MobileTheme /> : <DesktopTheme />}
+        {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
         <div className="main-listing student-assignments-page">
           <PageHeadWithMenu
             page={PageEnum.BackToWork}
@@ -68,7 +71,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
           />
-          <PlayPage history={this.props.history} />
+          <AssignmentPage history={this.props.history} match={this.props.match} />
         </div>
       </React.Suspense>
     );

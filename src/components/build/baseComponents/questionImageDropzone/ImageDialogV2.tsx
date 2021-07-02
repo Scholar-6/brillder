@@ -1,50 +1,75 @@
 import React, { useEffect } from "react";
-import Checkbox from "@material-ui/core/Checkbox";
 
+import "./ImageDialogV2.scss";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 import DropImage from "../../buildQuestions/components/Image/DropImage";
-import { ImageComponentData } from "../../buildQuestions/components/Image/model";
+import { fileUrl } from "components/services/uploadFile";
+import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
 
 interface DialogProps {
+  isOption?: boolean; // only pair match
   open: boolean;
   initFile: File | null;
-  initData: ImageComponentData;
-  upload(file: File, source: string, caption: string, permision: boolean): void;
-  updateData(source: string, caption: string, permision: boolean): void;
-  setDialog(open: boolean): void;
+  initData: any;
+  fileName: string;
+  removeInitFile(): void;
+  upload(file: File, source: string, caption: string, permision: boolean | 1): void;
+  updateData(source: string, caption: string, permision: boolean | 1): void;
+  close(): void;
 }
 
-const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, upload, updateData, setDialog }) => {
-  const [source, setSource] = React.useState(initData.imageSource || '');
-  const [caption, setCaption] = React.useState(initData.imageCaption || '');
-  const [permision, setPermision] = React.useState(initData.imagePermision ? true : false);
+const ImageDialogV2: React.FC<DialogProps> = ({
+  isOption,
+  open,
+  initFile,
+  initData,
+  fileName,
+  removeInitFile,
+  upload,
+  updateData,
+  close,
+}) => {
+  let initSource = initData.imageSource;
+  if (isOption) {
+    initSource = initData.imageOptionSource;
+  }
+  let initCaption = initData.imageCaption;
+  if (isOption) {
+    initCaption = initData.imageOptionCaption;
+  }
+  console.log(isOption, initData.imageOptionSource, initData.imageSource);
+  const [source, setSource] = React.useState(initSource || "");
+  const [caption, setCaption] = React.useState(initCaption || "");
+  const [permision, setPermision] = React.useState(initData.imagePermision ? true : false as boolean | 1);
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
-  const [removed, setRemoved] = React.useState(null as boolean | null);
+  const [removed, setRemoved] = React.useState(file || fileName ? false : true);
 
   useEffect(() => {
     if (!file) {
       if (initFile) {
         setFile(initFile);
         setCroped(initFile);
+        setRemoved(false);
       }
     }
   }, [initFile, initData.value, file]);
 
   let canUpload = false;
-  if (permision && source && !removed) {
+  if ((permision) && source && !removed) {
     canUpload = true;
   }
 
-  let className = "add-image-button"
+  let className = "add-image-button";
   if (!removed) {
-    className += " remove-image"
+    className += " remove-image";
   }
 
-  const handleClick= () => {
+  const handleClick = () => {
     if (!removed) {
+      removeInitFile();
       setFile(null);
       setCroped(null);
       setRemoved(true);
@@ -62,22 +87,41 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, upload
         }
       };
     }
-  }
+  };
 
   return (
-    <BaseDialogWrapper open={open} className="image-dialog-container" close={() => setDialog(false)} submit={() => {}}>
-      <div className="dialog-header image-dialog image-dialog-answer">
-        <div className={`cropping ${removed ? 'empty' : ''}`}>
-          <div className="switch-image">
+    <BaseDialogWrapper
+      open={open}
+      className="image-dialog-container image-dialog-v2"
+      close={() => {}}
+      submit={() => {}}
+    >
+      <div className="close-button svgOnHover" onClick={close}>
+        <SpriteIcon name="cancel" className="w100 h100 active" />
+      </div>
+      <div className="dialog-header image-dialog">
+        <div className={`cropping ${removed ? "empty" : ""}`}>
+          <div className="centered">
+            {removed ? (
+              <SpriteIcon name="image" className="icon-image" />
+            ) : file ? (
+              <DropImage
+                initFileName={initData.value}
+                locked={false}
+                file={file}
+                setFile={setCroped}
+              />
+            ) : (
+              <img alt="" src={fileUrl(fileName)} />
+            )}
+          </div>
+          <div className="i-image-footer">
+            <div className="file-name">
+              {file ? file.name : fileName}
+            </div>
             <div className={"svgOnHover " + className} onClick={handleClick}>
               <SpriteIcon name="plus" className="svg-plus active text-white" />
             </div>
-          </div>
-          <div className="centered">
-            {removed
-              ? <SpriteIcon name="image" className="icon-image" />
-              : <DropImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
-            }
           </div>
         </div>
         <div className="bold">
@@ -86,15 +130,15 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, upload
         </div>
         <input
           value={source}
-          className={validationRequired && !source ? 'invalid' : ''}
+          className={validationRequired && !source ? "invalid" : ""}
           onChange={(e) => setSource(e.target.value)}
           placeholder="Add link to source or name of owner..."
         />
-        <div onClick={() => setPermision(!permision)}>
-          <Checkbox checked={permision} className={validationRequired ? 'required' : ''} />
-          I have permision to distribute this image
-          <span className="text-theme-orange">*</span>
-        </div>
+        <CopyrightCheckboxes
+          validationRequired={validationRequired}
+          permision={permision}
+          setPermision={setPermision}
+        />
         <input
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
@@ -103,7 +147,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, upload
       </div>
       <div className="centered last-button">
         <div
-          className={`upload-button ${canUpload ? 'active' : 'disabled'}`}
+          className={`upload-button ${canUpload ? "active" : "disabled"}`}
           onClick={() => {
             if (cropedFile && canUpload) {
               upload(cropedFile, source, caption, permision);
@@ -114,11 +158,13 @@ const ImageDialogV2: React.FC<DialogProps> = ({ open, initFile, initData, upload
             }
           }}
         >
+          <div className="background" />
           <SpriteIcon name="upload" />
+          <div className="css-custom-tooltip">Upload</div>
         </div>
       </div>
     </BaseDialogWrapper>
   );
-}
+};
 
 export default ImageDialogV2;

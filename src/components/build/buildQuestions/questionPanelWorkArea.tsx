@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Grid, Select, FormControl } from '@material-ui/core';
 import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -24,6 +24,7 @@ import UndoRedoService from 'components/services/UndoRedoService';
 import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoButton from '../baseComponents/UndoButton';
 import RedoButton from '../baseComponents/redoButton';
+import StatusCircle from '../baseComponents/statusCircle/StatusCircle';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -44,10 +45,10 @@ export interface QuestionProps {
   isAuthor: boolean;
   initSuggestionExpanded: boolean;
   undoRedoService: UndoRedoService;
-  saveBrick(): void;
+  saveQuestion(question: Question): void;
   setQuestion(index: number, question: Question): void;
-  updateFirstComponent(component: TextComponentObj): void;
-  updateComponents(components: any[]): void;
+  updateFirstComponent(component: TextComponentObj): Question | undefined;
+  updateComponents(components: any[]): Question | undefined;
   setQuestionType(type: QuestionTypeEnum): void;
   nextOrNewQuestion(): void;
   getQuestionIndex(question: Question): number;
@@ -69,21 +70,22 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     { id: 2, type: QuestionComponentTypeEnum.Quote },
     { id: 3, type: QuestionComponentTypeEnum.Image },
     { id: 4, type: QuestionComponentTypeEnum.Sound },
-    { id: 4, type: QuestionComponentTypeEnum.Graph }
+    { id: 5, type: QuestionComponentTypeEnum.Graph }
   ]);
   const [isCommingSoonOpen, setCommingSoon] = React.useState(false);
   const [commentsShown, setCommentsShown] = React.useState(props.initSuggestionExpanded);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const { type } = question;
 
-  const setQuestionHint = (hintState: HintState) => {
-    if (locked) { return; }
+  const setQuestionHint = (hintState: HintState): Question => {
+    if (locked) { return question; }
     const index = getQuestionIndex(question);
     const updatedQuestion = Object.assign({}, question) as Question;
     updatedQuestion.hint.value = hintState.value;
     updatedQuestion.hint.list = hintState.list;
     updatedQuestion.hint.status = hintState.status;
     props.setQuestion(index, updatedQuestion);
+    return updatedQuestion;
   }
 
   let typeArray: string[] = Object.keys(QuestionTypeObj);
@@ -95,23 +97,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   }
 
   //#region Scroll
-  const [canScroll, setScroll] = React.useState(false);
-
-  useEffect(() => {
-    const {current} = workarea;
-    if (current) {
-      if (current.scrollHeight > current.clientHeight) {
-        if (!canScroll) {
-          setScroll(true);
-        }
-      } else {
-        if (canScroll) {
-          setScroll(false);
-        }
-      }
-    }
-  }, [canScroll, workarea, setScroll]);
-  
   const scrollUp = () => {
     if (workarea.current) {
       workarea.current.scrollBy(0, -100);
@@ -128,13 +113,13 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
 
   return (
     <MuiThemeProvider>
-      <div className={showHelpArrow ? "build-question-page unselectable" : "build-question-page unselectable active"} style={{ width: '100%', height: '94%' }}>
+      <div key={question?.id} className={showHelpArrow ? "build-question-page unselectable" : "build-question-page unselectable active"} style={{ width: '100%', height: '94%' }}>
         {showHelpArrow && <div className="help-arrow-text">Drag</div>}
         {showHelpArrow && <img alt="arrow" className="help-arrow" src="/images/investigation-arrow.png" />}
         <div className="top-scroll-area">
           <div className="top-button-container">
             <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
-              <SpriteIcon name="arrow-up" className={`active text-theme-orange ${!canScroll && 'disabled'}`} />
+              <SpriteIcon name="arrow-up" className="active text-theme-orange" />
             </button>
           </div>
         </div>
@@ -142,6 +127,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
           <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
             <div className="left-sidebar">
               <ReactSortable
+                key={question.brickQuestionId}
                 list={componentTypes}
                 group={{ name: "cloning-group-name", pull: "clone" }}
                 setList={setComponentType} sort={false}
@@ -184,17 +170,18 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               </ReactSortable>
             </div>
           </Grid>
-          <Grid container item xs={5} sm={6} md={6} className="question-components-list" ref={workarea}>
+          <Grid container item xs={5} sm={6} md={6} className="question-components-list">
             <QuestionComponents
               questionIndex={index}
               locked={locked}
+              scrollRef={workarea}
               editOnly={!props.canEdit}
               brickId={brickId}
               history={history}
               question={question}
               validationRequired={validationRequired}
               componentFocus={props.componentFocus}
-              saveBrick={props.saveBrick}
+              saveQuestion={props.saveQuestion}
               updateFirstComponent={props.updateFirstComponent}
               updateComponents={props.updateComponents}
               setQuestionHint={setQuestionHint}
@@ -251,6 +238,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   </Grid>
                 </Grid>
                 <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+                <StatusCircle status={props.currentBrick.status} isCore={props.currentBrick.isCore} />
               </div>
             }
             <Grid className={`question-comments-panel ${!commentsShown && 'hidden'}`} item container direction="row" justify="flex-start" xs>
@@ -267,7 +255,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
         <div className="bottom-scroll-area">
           <div className="bottom-button-container">
             <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
-              <SpriteIcon name="arrow-down" className={`active text-theme-orange ${!canScroll && 'disabled'}`} />
+              <SpriteIcon name="arrow-down" className="active text-theme-orange" />
             </button>
           </div>
         </div>

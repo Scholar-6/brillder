@@ -132,7 +132,7 @@ class ExpandedAssignment extends Component<
 
   renderBookIcon(studentId: number) {
     const { history, assignment } = this.props;
-    const moveToPostPlay = () => history.push(map.postPlay(assignment.brick.id, studentId));
+    const moveToPostPlay = () => history.push(map.postPlay(assignment.brick.id, studentId) + '?fromTeach=true');
     return (
       <div className="round b-green centered">
         <SpriteIcon name="book-open" className="active book-open-icon" onClick={moveToPostPlay} />
@@ -142,10 +142,9 @@ class ExpandedAssignment extends Component<
 
   renderQuestionAttemptIcon(
     studentResult: AssignmentStudent | undefined,
-    studentStatus: StudentStatus | undefined,
     questionNumber: number
   ) {
-    if (studentResult && studentStatus) {
+    if (studentResult) {
       try {
         const attempt = studentResult.attempts[0].answers[questionNumber];
         const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
@@ -193,7 +192,7 @@ class ExpandedAssignment extends Component<
             (a, i) =>
               <td key={i} className="icon-container">
                 <div className="centered">
-                  {this.renderQuestionAttemptIcon(studentResult, studentStatus, i)}
+                  {this.renderQuestionAttemptIcon(studentResult, i)}
                 </div>
               </td>
           )}
@@ -262,10 +261,18 @@ class ExpandedAssignment extends Component<
           />
         </div>
         <div className="assignments-table">
-          <table cellSpacing="0" cellPadding="0">
-            {this.renderTableHead()}
-            <tbody>{students.map(this.renderStudent.bind(this))}</tbody>
-          </table>
+          {students.length > 0 ? (
+            <table cellSpacing="0" cellPadding="0">
+              {this.renderTableHead()}
+              <tbody>{students.map(this.renderStudent.bind(this))}</tbody>
+            </table>
+          ) : (
+            <div className="assignment-tab-content-text">
+              <p>Once students start joining your class, they will be shown here.</p>
+              <p>When they have completed the assignment, you will be able to see how they have done on the brick as a whole and on each individual question.</p>
+              <p>You will also be able to send them reminders to complete the assignment at any time.</p>
+            </div>
+          )}
         </div>
       </div>
     );

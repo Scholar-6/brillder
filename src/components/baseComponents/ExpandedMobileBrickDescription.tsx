@@ -5,7 +5,8 @@ import { Brick } from "model/brick";
 import './ExpandedMobileBrickDescription.scss';
 import SpriteIcon from "./SpriteIcon";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
-import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/KeywordsPlay";
+import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/components/KeywordsPlay";
+import BrickTitle from "./BrickTitle";
 
 
 interface ExpandedDescriptionProps {
@@ -42,7 +43,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
         <div className="brick-description">
           <div>
           <div className="link-description">
-            <span>{brick.title}</span>
+            <BrickTitle title={brick.title} />
           </div>
           <div className="link-info">
             <KeyWordsPreview keywords={brick.keywords} />

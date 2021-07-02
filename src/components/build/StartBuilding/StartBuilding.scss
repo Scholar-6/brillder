@@ -1,0 +1,60 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.start-building {
+  display: flex;
+  align-items: center;
+  color: var(--theme-dark-blue);
+  height: 100vh;
+  width: 100vw;
+
+  > div {
+    width: 100vw;
+  }
+
+  h1 {
+    text-align: center;
+    font-family: $font-family-black;
+    font-size: 3vw;
+  }
+  p {
+    font-size: 1.5vw;
+    text-align: center;
+  }
+  .icon-container {
+    margin-top: 7vh;
+    margin-bottom: 5vh;
+    display: flex;
+    width: 100vw;
+    color: var(--theme-orange);
+    justify-content: center;
+    svg {
+      height: 28vh;
+      stroke-width: 1;
+    }
+  }
+  .button-container {
+    margin-top: 6vh;
+    display: flex;
+    justify-content: center;
+    button {
+      width: 20vw;
+      margin-left: 0.8vw;
+      margin-right: 0.8vw;
+      letter-spacing: 0;
+      font-size: 2.4vw;
+      border-radius: 1vw;
+
+      &.blue {
+        color: var(--white);
+        background: var(--theme-light-blue);
+      }
+
+      &:hover {
+        color: var(--white);
+        background: var(--theme-orange);
+      }
+    }
+  }
+}

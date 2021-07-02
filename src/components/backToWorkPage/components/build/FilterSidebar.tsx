@@ -7,20 +7,25 @@ import { Brick, BrickStatus } from "model/brick";
 import { SortBy, Filters, ThreeColumns } from '../../model';
 import { clearStatusFilters } from '../../service';
 import EmptyFilterSidebar from "../EmptyFilter";
-import CustomFilterBox from "components/library/components/CustomFilterBox";
 import { SubjectItem } from "../personalBuild/model";
+import { User } from "model/user";
+import { checkBuilder, isAorP } from "components/services/brickService";
 
 
 enum FilterFields {
   Draft = 'draft',
   Build = 'build',
   Review = 'review',
-  Publish = 'publish'
+  Publish = 'publish',
+  Level1 = 'level1',
+  Level2 = 'level2',
+  Level3 = 'level3',
+  Level4 = 'level4'
 }
 
 interface FilterSidebarProps {
   history: any;
-  userId: number;
+  user: User;
   finalBricks: Brick[];
   threeColumns: ThreeColumns;
   filters: Filters;
@@ -117,7 +122,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
   renderInbox = (draft: number, build: number, review: number) => {
     return (
-      <div className="sort-box">
+        <div>
         <div className="filter-container sort-by-box">
           <div className="sort-header">INBOX</div>
         </div>
@@ -164,17 +169,9 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
   renderSubjectsBox = (viewAll: number) => {
     return (
-      <div className="sort-box">
-        <CustomFilterBox
-          label="Subjects"
-          isClearFilter={this.state.isSubjectsClear}
-          setHeight={subjectsHeight => this.setState({subjectsHeight})}
-          clear={() => {}}
-        />
         <AnimateHeight
           duration={500}
           height={this.state.subjectsHeight}
-          style={{ width: "100%" }}
         >
           <div className="filter-container subjects-list indexes-box">
             {this.renderViewAll(viewAll)}
@@ -189,9 +186,64 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             )}
           </div>
         </AnimateHeight>
-      </div>
     );
   };
+
+  renderPublishedTopPart() {
+    let canSee = false;
+    if (canSee) {
+      return (
+        <div>
+          test
+        </div>
+      )
+    }
+    return (
+      <div style={{height: "10vw"}} />
+    );
+  }
+
+  renderPublishFilter() {
+    const canSee = isAorP(this.props.user.roles) || checkBuilder(this.props.user);
+    if (canSee) {
+      return (
+        <div className="level-filter">
+          <div className="filter-header">
+            Levels
+          </div>
+          <div className="filter-container subject-indexes-box first">
+            <div className="index-box color2">
+              <FormControlLabel
+                checked={this.props.filters.level1}
+                control={<Radio onClick={() => this.toggleFilter(FilterFields.Level1)} className={"filter-radio custom-color"} />}
+                label="Level I" />
+            </div>
+            <div className="index-box color2">
+              <FormControlLabel
+                checked={this.props.filters.level2}
+                control={<Radio onClick={() => this.toggleFilter(FilterFields.Level2)} className={"filter-radio custom-color"} />}
+                label="Level II" />
+            </div>
+            <div className="index-box color2">
+              <FormControlLabel
+                checked={this.props.filters.level3}
+                control={<Radio onClick={e => this.toggleFilter(FilterFields.Level3)} className={"filter-radio custom-color"} />}
+                label="Level III" />
+            </div>
+            <div className="index-box color2">
+              <FormControlLabel
+                checked={this.props.filters.level4}
+                control={<Radio onClick={e => this.toggleFilter(FilterFields.Level4)} className={"filter-radio custom-color"} />}
+                label="Level IV" />
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div style={{height: "10vw"}} />
+    );
+  }
 
   render() {
     if (this.props.isEmpty) {
@@ -227,8 +279,23 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
     return (
       <Grid container item xs={3} className="sort-and-filter-container build-filter">
-        {!this.props.filters.publish && this.renderInbox(draft, build, publication)}
-        {this.renderSubjectsBox(viewAll)}
+        <div className="flex-height-box">
+          <div className="sort-box">
+            <div>
+              {!this.props.filters.publish
+                ? this.renderInbox(draft, build, publication)
+                : this.renderPublishFilter()
+              }
+              <div className="filter-header">
+                <span>Subjects</span>
+              </div>
+            </div>
+          </div>
+          <div className="sort-box subject-scrollable">
+            {this.renderSubjectsBox(viewAll)}
+          </div>
+        </div>
+        <div className="sidebar-footer" />
       </Grid>
     );
   }

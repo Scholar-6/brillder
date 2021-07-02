@@ -19,7 +19,7 @@ interface NavigationProps {
   tutorialStep: TutorialStep;
   isTutorialSkipped: boolean;
   isValid: boolean;
-  moveToReview(): void;
+  moveToPreview(): void;
 
   // other buttons
   isPublisher: boolean;
@@ -105,21 +105,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
       publishDisabled = true;
     }
 
-    if (this.props.isAdmin) {
-      return (
-        <BuildPublishButton
-          disabled={publishDisabled}
-          brick={this.props.brick}
-          history={this.props.history}
-          onFinish={() => {
-            this.setState({brickStatus: BrickStatus.Publish});
-            this.props.history.push(map.BackToWorkBuildTab);
-          }}
-        />
-      );
-    }
-
-    if (this.props.isPublisher) {
+    if (this.props.isPublisher || this.props.isAdmin) {
       if (!publishDisabled) {
         publishDisabled = brickStatus === BrickStatus.Draft || brickStatus === BrickStatus.Build;
       }
@@ -131,7 +117,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
           history={this.props.history}
           onFinish={() => {
             this.setState({brickStatus: BrickStatus.Publish});
-            this.props.history.push(map.BackToWorkBuildTab);
+            this.props.history.push(map.playCover(this.props.brick.id));
           }}
         />
       );
@@ -147,7 +133,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
           tutorialStep={this.props.tutorialStep}
           isTutorialSkipped={this.props.isTutorialSkipped}
           isValid={this.props.isValid}
-          onClick={this.props.moveToReview}
+          onClick={this.props.moveToPreview}
         />
         <SaveDialog
           open={this.state.saveDialogOpen}
@@ -157,7 +143,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         <div className="build-navigation-buttons">
           {(this.props.isEditor || this.props.isAdmin) && this.renderReturnToAuthorButton()}
           {(this.props.isPublisher || this.props.isAuthor) && this.renderReturnToEditorButton()}
-          {(this.props.isEditor || this.props.isAdmin) && this.renderSendToPublisherButton()}
+          {(this.props.isEditor || this.props.isAdmin || this.props.isPublisher) && this.renderSendToPublisherButton()}
           {this.props.isPublisher && this.renderPublisherButtons()}
         </div>
       </div>

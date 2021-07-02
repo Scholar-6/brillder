@@ -1,15 +1,15 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .categorise-build {
   @extend %textCenter;
   > div {
     margin-bottom: 0.4vh;
   }
-  > .document-editor {
-    .ck-editor {
-      .ck-content {
+  > .quill-document-editor {
+    .ql-container {
+      .ql-editor {
         padding: 1vw;
         text-align: center !important;
         overflow: hidden;
@@ -26,10 +26,10 @@
     > div {
       margin-bottom: 0.2vw;
     }
-    > .document-editor {
+    > .quill-document-editor {
       position: relative;
-      .ck-editor {
-        .ck-content {
+      .ql-container {
+        .ql-editor {
           padding: 1vw !important;
         }
       }
@@ -37,47 +37,61 @@
   }
   .sort-image {
     position: relative;
+    background: var(--solitude-light);
+    .question-image-drop  {
+      padding-top: 0.5vh;
+      padding-bottom: 0.5vh;
+      top: 0;
+      position: relative;
+    }
     input {
       padding-top: 9.5vh;
-    }
-    .document-editor {
-      .ck-editor {
-        .ck-content {
-          padding: 9vh 1vw 1vw 1vw;
-        }
-      }
     }
   }
   .categorise-answer {
     position: relative;
-    &:first-child {
-      .document-editor {
-        .ck-editor {
-          .ck-content {
-            border-bottom-left-radius: 0 !important;
-            border-bottom-right-radius: 0 !important;
-          }
+    .question-image-drop {
+      left: unset;
+      display: flex;
+      align-items: center;
+      top: 0;
+      right: 6vw;
+      width: 4vw;
+      height: 100%;
+      position: absolute;
+    }
+    .sound-record-button {
+      position: absolute;
+      cursor: pointer;
+      right: 3.5vw;
+      top: 0;
+      height: 100%;
+      @extend %flexCenter;
+      svg {
+        @extend %transitionAll300;
+        height: 100%;
+        width: 2vw;
+        color: var(--dark-gray);
+      }
+      &:hover {
+        .svg {
+          color: var(--theme-orange);
         }
       }
     }
-    &:not(:first-child):not(:last-child) {
-      .document-editor {
-        .ck-editor {
-          .ck-content {
-            border-radius: 0 !important;
-          }
-        }
+    .quill-document-editor {
+      .ql-editor {
+        padding-right: 10vw;
+        padding-left: 2vw;
+      }
+      .ql-editor.ql-blank::before {
+        left: 2vw;
       }
     }
-    &:last-child {
-      .document-editor {
-        .ck-editor {
-          .ck-content {
-            border-top-left-radius: 0 !important;
-            border-top-right-radius: 0 !important;
-          }
-        }
-      }
-    }
+  }
+  .categorise-sound {
+    margin-bottom: 0.4vh;
+    border-radius: 0.8vw;
+    background: var(--solitude-light);
   }
 }

@@ -2,26 +2,25 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './prep.scss';
-import { ProposalStep, PlayButtonStatus, BriefRoutePart } from "../../model";
+import { ProposalStep, BriefRoutePart } from "../../model";
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import YoutubeAndMathQuote from 'components/play/baseComponents/YoutubeAndMathQuote';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { BrickLengthEnum } from "model/brick";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 
 interface PrepProps {
   parentPrep: string;
   canEdit: boolean;
   baseUrl: string;
+  updated: string;
   brickLength: BrickLengthEnum;
-  playStatus: PlayButtonStatus;
   savePrep(prep: string): void;
   saveBrick(prep: string): void;
-  saveAndPreview(): void;
 }
 
 const PrepPreviewComponent: React.FC<any> = ({ data }) => {
@@ -66,8 +65,6 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
       <Navigation
         step={ProposalStep.Prep}
         baseUrl={props.baseUrl}
-        playStatus={props.playStatus}
-        saveAndPreview={props.saveAndPreview}
         onMove={() => savePrep(parentPrep)}
       />
       <Grid container direction="row" alignItems="flex-start">
@@ -76,18 +73,18 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             <img className="size2" alt="titles" src="/images/new-brick/prep.png" />
           </div>
           <h1>Add engaging and relevant <br /> preparatory material.</h1>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!props.canEdit}
             data={parentPrep}
-            placeholder="Enter Instructions, Links to Videos and Webpages Here…"
-            mediaEmbed={true}
-            link={true}
+            showToolbar={true}
+            allowMediaEmbed={true}
+            allowLinks={true}
+            allowTables={true}
+            imageDialog={true}
+            placeholder="Add instructions, links to videos, webpages, and resources"
             toolbar={[
-              'bold', 'italic', 'fontColor', 'latex',
-              'bulletedList', 'numberedList', 'uploadImageCustom'
+              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'blockQuote', 'image', 'table'
             ]}
-            blockQuote={true}
-            onBlur={() => { }}
             onChange={savePrep}
           />
           {isVisible() &&
@@ -105,7 +102,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
           />
           <h2 className="pagination-text">4 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={PrepPreviewComponent} data={parentPrep} />
+        <ProposalPhonePreview Component={PrepPreviewComponent} data={parentPrep} updated={props.updated} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

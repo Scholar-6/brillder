@@ -1,10 +1,10 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import {QuestionValueType} from '../../types';
-import {Answer} from '../types';
+import { QuestionValueType } from '../../types';
+import { Answer } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import QuillEditorContainer from "components/baseComponents/quill/QuillEditorContainer";
 
 
 export interface PairOptionProps {
@@ -18,7 +18,7 @@ export interface PairOptionProps {
 }
 
 const PairOptionComponent: React.FC<PairOptionProps> = ({
-  locked, editOnly, index, answer, validationRequired, save, update
+  locked, index, answer, validationRequired, save, update
 }) => {
   const removeImage = () => {
     if (locked) { return; }
@@ -45,10 +45,11 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     answer.optionFile = "";
     answer.optionType = QuestionValueType.String;
     update();
+    save();
   }
 
   const setImage = (fileName: string) => {
-    if (locked) {return;}
+    if (locked) { return; }
     answer.option = "";
     answer.optionFile = fileName;
     answer.optionType = QuestionValueType.Image;
@@ -76,18 +77,20 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
   return (
     <Grid container item xs={6}>
       <div className={customClass}>
-        <DocumentWirisCKEditor
-          disabled={locked}
-          editOnly={editOnly}
-          data={answer.option}
-          isValid={isValid}
-          toolbar={['latex']}
-          placeholder={"Enter Option " + (index + 1) + "..."}
-          onBlur={() => save()}
-          onChange={value => optionChanged(answer, value)}
-        />
+        {answer.optionType !== QuestionValueType.Image &&
+          <QuillEditorContainer
+            locked={locked}
+            object={answer}
+            fieldName="option"
+            validationRequired={validationRequired}
+            toolbar={['latex']}
+            isValid={isValid}
+            placeholder={"Enter Option " + (index + 1) + "..."}
+            onChange={value => optionChanged(answer, value)}
+          />}
         <QuestionImageDropZone
           answer={answer as any}
+          isOption={true}
           type={answer.optionType || QuestionValueType.None}
           fileName={answer.optionFile}
           locked={locked}

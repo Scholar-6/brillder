@@ -1,7 +1,7 @@
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType, UserRole, RolePreference } from 'model/user';
 
-function formatTwoLastDigits(twoLastDigits: number) {
+export function formatTwoLastDigits(twoLastDigits: number) {
   var formatedTwoLastDigits = "";
   if (twoLastDigits < 10) {
     formatedTwoLastDigits = "0" + twoLastDigits;
@@ -73,6 +73,14 @@ export function getDateString(inputDateString: string) {
   return `${date}.${month}.${year}`;
 }
 
+export function getAttemptDateString(inputDateString: string) {
+  const dateObj = new Date(inputDateString);
+  const year = dateObj.getFullYear();
+  const month = getMonth(dateObj);
+  const date = getDate(dateObj);
+  return `${date}/${month}/${year}`;
+}
+
 export function checkTeacherOrAdmin(user: User) {
   if (user.rolePreference?.roleId === RolePreference.Teacher) {
     return true;
@@ -116,8 +124,16 @@ export function checkTeacher(user: User) {
   return user.rolePreference?.roleId === RolePreference.Teacher;
 }
 
+export function checkBuilder(user: User) {
+  return user.rolePreference?.roleId === RolePreference.Builder;
+}
+
 export function checkAdmin(roles: UserRole[]) {
   return roles.some(role => role.roleId === UserType.Admin);
+}
+
+export function isAorP(roles: UserRole[]) {
+  return roles.some(role => role.roleId === UserType.Publisher || role.roleId === UserType.Admin);
 }
 
 export function canEditBrick(brick: Brick, user: User) {
@@ -127,7 +143,7 @@ export function canEditBrick(brick: Brick, user: User) {
     case BrickStatus.Draft:
       return brick.author?.id === user.id || isAdmin;
     case BrickStatus.Build:
-      return brick.editors?.findIndex(e => e.id === user.id) !== -1 || isAdmin;
+      return isPublisher;
     case BrickStatus.Review:
       return isPublisher;
     case BrickStatus.Publish:

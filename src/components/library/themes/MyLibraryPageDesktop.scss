@@ -3,6 +3,12 @@
 @import 'src/assets/sass/partials/extensions';
 
 .my-library {
+  .custom-tooltip.subject-tooltip .brick-inline {
+    p, span {
+      color: var(--white) !important;
+    }
+  }
+
   .subject-title {
     font-size: 2.5vw !important;
     letter-spacing: 0.5vw !important;
@@ -49,12 +55,16 @@
           border-radius: $base-radius;
           .progress-value {
             border-radius: $base-radius;
+            .rotated-text {
+              color: var(--white);
+            }
           }
         }
         .length-20 {
           width: $base-width;
           .rotated .rotated-text {
             height: $base-width;
+            line-height: 1.5;
           }
           .progress-value {
             width: $base-width;
@@ -65,6 +75,7 @@
           width: $width;
           .rotated .rotated-text {
             height: $width;
+            line-height: 3.5;
           }
           .progress-value {
             width: $width
@@ -75,6 +86,7 @@
           width: $width;
           .rotated .rotated-text {
             height: $width;
+            line-height: 7;
           }
           .progress-value {
             width: $width;
@@ -99,10 +111,10 @@ $level-size: 6vh;
         white-space: nowrap;
         text-overflow: ellipsis;
         position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        overflow: hidden;
         text-transform: uppercase;
+        font-family: $font-family-bold;
+        color: #C8CACC;
         width: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh - 8vh - 3vh);
         p {
           color: #C8CACC;
@@ -270,7 +282,7 @@ $level-size: 6vh;
         width: 100%;
       }
       .level {
-        background: var(--tab-gray);
+        background: var(--white);
         width: 100%;
         margin-top: 0.5vh;
         margin-bottom: 0.5vh;

@@ -10,6 +10,10 @@
 
   &.center {
     justify-content: center;
+    .il-image-container {
+      display: flex;
+      justify-content: center;
+    }
   }
 }
 .image-play {
@@ -21,6 +25,11 @@
   .image-play {
     height: auto !important;
   }
+}
+
+.image-source {
+  width: 100%;
+  text-align: center;
 }
 
 .image-caption {

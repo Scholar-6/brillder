@@ -64,7 +64,7 @@ class WordHighlighting extends CompComponent<
   renderWordPreview(word: PlayWord, index: number) {
     // don`t show spaces
     if (word.notSelectable && !word.isBreakLine) {
-      return <span />;
+      return <span key={index} />;
     }
   
     return (
@@ -75,6 +75,10 @@ class WordHighlighting extends CompComponent<
   }
 
   renderWord(word: PlayWord, index: number) {
+    if (word.isPunctuation) {
+      return <span key={index}>{word.text}</span>
+    }
+
     if (this.props.isPreview) {
       return this.renderWordPreview(word, index);
     }

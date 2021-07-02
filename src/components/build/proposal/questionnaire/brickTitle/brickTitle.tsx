@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Grid, Input, Hidden } from "@material-ui/core";
+import { Helmet } from "react-helmet";
+import { Grid, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
-import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "../../model";
+import { ProposalStep, OpenQuestionRoutePart } from "../../model";
 import { AcademicLevel, Brick, KeyWord, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { enterPressed } from "components/services/key";
 
 import NextButton from '../../components/nextButton';
@@ -18,10 +19,12 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import a from 'indefinite';
 import map from "components/map";
 import { User } from "model/user";
-import AddSubjectDialog from "./AddSubjectDialog";
-import KeyWordsComponent from "./KeyWords";
-import DifficultySelect from "./DifficultySelect";
-import KeyWordsPlay from "./KeywordsPlay";
+import AddSubjectDialog from "./components/AddSubjectDialog";
+import KeyWordsComponent from "./components/KeyWords";
+import DifficultySelect from "./components/DifficultySelect";
+import KeyWordsPlay from "./components/KeywordsPlay";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
 
 enum RefName {
   subTitleRef = 'subTitleRef',
@@ -34,12 +37,10 @@ interface BrickTitleProps {
   baseUrl: string;
   parentState: Brick;
   canEdit: boolean;
-  playStatus: PlayButtonStatus;
   subjects: Subject[];
   saveTitles(data: any): void;
   setKeywords(keywords: KeyWord[]): void;
   setAcademicLevel(level: AcademicLevel): void;
-  saveAndPreview(): void;
 }
 
 interface BrickTitleState {
@@ -83,7 +84,7 @@ const BrickTitlePreviewComponent: React.FC<PreviewProps> = (props) => {
       </Grid>
       <div className="brick-preview-container">
         <div className={"brick-title uppercase " + (title ? 'topic-filled' : '')}>
-          {title ? title : 'BRICK TITLE'}
+          {title ? <div dangerouslySetInnerHTML={{ __html: title }} /> : 'BRICK TITLE'}
         </div>
         <div className="brick-topics">
           {keywords && 
@@ -116,6 +117,11 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
     this.props.saveTitles({ ...this.props.parentState, [value]: title });
   };
 
+  onTitleChange(value: string) {
+    const title = value.substr(0, 49);
+    this.props.saveTitles({ ...this.props.parentState, title });
+  }
+
   moveToRef(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, refName: RefName) {
     if (enterPressed(e)) {
       let ref = this.state[refName];
@@ -146,9 +152,6 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
 
   render() {
     const { parentState, canEdit, baseUrl, saveTitles } = this.props;
-    if (parentState.title) {
-      setBrillderTitle(parentState.title);
-    }
 
     let subjectName = '';
     try {
@@ -160,11 +163,12 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
 
     return (
       <div className="tutorial-page brick-title-page">
+        <Helmet>
+          <title>{getBrillderTitle(parentState.title)}</title>
+        </Helmet>
         <Navigation
           baseUrl={baseUrl}
           step={ProposalStep.BrickTitle}
-          playStatus={this.props.playStatus}
-          saveAndPreview={this.props.saveAndPreview}
           onMove={() => saveTitles(parentState)}
         />
         <Grid container direction="row">
@@ -179,19 +183,78 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <form>
               <Grid item className="input-container">
                 <div className="audience-inputs">
-                  <Input
+                  <QuillEditor
+                    data={parentState.title}
+                    onChange={title => this.onTitleChange(title)}
+                    placeholder="Proposed Title"
+                    tabIndex={-1}
                     disabled={!canEdit}
-                    value={parentState.title}
-                    onKeyUp={e => this.moveToRef(e, RefName.subTitleRef)}
-                    onChange={e => this.onChange(e, "title")}
-                    placeholder="Enter Proposed Title Here..."
+                    showToolbar={true}
+                    toolbar={[
+                      "bold",
+                      "italic",
+                      "fontColor",
+                      "superscript",
+                      "subscript",
+                      "strikethrough",
+                      "latex",
+                      "bulletedList",
+                      "numberedList",
+                      "blockQuote",
+                      "image",
+                    ]}
+                    enabledToolbarOptions={['italic']}
                   />
+                  <div className="absolute-title-help">
+                    <HoverHelp>
+                      Be punchy and succinct. This ought to be written in Camel or Sentence Case, and give a reasonable indication of the content of the brick. If you would like to use a more playful title, remember to add relevant keywords in the section below, so that your brick is more likely to appear to interested learners.
+                    </HoverHelp>
+                  </div>
                 </div>
                 <div className="audience-inputs">
                   <KeyWordsComponent disabled={!canEdit} keyWords={parentState.keywords} onChange={this.props.setKeywords.bind(this)} />
+                  <div className="absolute-keyword-help">
+                    <HoverHelp>
+                      Keywords are best thought of as likely search terms, and are ultimately curated by Publishers for each subject. For multi-word keywords, separate words with a hyphen, eg. ‘19th-Century’.
+                    </HoverHelp>
+                  </div>
                 </div>
                 <div className="audience-inputs">
                   <DifficultySelect disabled={!canEdit} level={parentState.academicLevel} onChange={this.props.setAcademicLevel.bind(this)} />
+                  <div className="absolute-difficult-help">
+                    <HoverHelp>
+                    <div className="flex-content">
+                    <div>Brillder focusses on universal concepts and topics, not specific exam courses.</div>
+                    <br />
+                    <div>LEVELS:</div>
+                    <div className="container">
+                      <div className="white-circle">I</div>
+                      <div className="l-text">
+                        <div>Foundation</div>
+                        <div className="regular">For 15-16 yr-olds, equivalent to GCSE / IB Middle Years / High School Diploma</div>
+                      </div>
+                    </div>
+                    <br />
+                    <div className="container">
+                      <div className="white-circle">II</div>
+                      <div className="and-sign">&</div>
+                      <div className="white-circle">III</div>
+                      <div className="l-text smaller">
+                        <div>Core</div>
+                        <div className="regular">For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
+                      </div>
+                    </div>
+                    <br />
+                    <div className="container">
+                      <div className="white-circle">IV</div>
+                      <div className="l-text">
+                        <div>Extension</div>
+                        <div className="regular">College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>
+                      </div>
+                    </div>
+                  </div>
+                    </HoverHelp>
+                  </div>
                 </div>
               </Grid>
             </form>
@@ -200,7 +263,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                 ?
                 <div className="centered">
                   <PrevButton
-                    to={map.ProposalSubject}
+                    to={baseUrl + "/subject"}
                     isActive={true}
                     onHover={() => { }}
                     onOut={() => { }}
@@ -226,7 +289,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
               </div>
             </div>
           </Grid>
-          <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
+          <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} updated={parentState.updated} />
           <Hidden only={['xs', 'sm']}>
             <div className="red-right-block"></div>
           </Hidden>

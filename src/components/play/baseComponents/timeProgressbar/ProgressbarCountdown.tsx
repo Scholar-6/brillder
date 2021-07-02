@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { Moment } from 'moment';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import './ProgressbarCountdown.scss';
+import { formatTwoLastDigits } from 'components/services/brickService';
 let moment = require('moment');
 
 
 interface CounterProps {
+  minutes?: number;
   duration: number;
   endTime: Moment;
   onEnd(): void;
@@ -16,6 +18,9 @@ interface CounterState {
   isCounting: boolean;
   timerInterval: number;
   isDeadlineSoon: boolean;
+
+  minutesDown: number;
+  secondsDown: number;
 }
 
 class ProgressbarCountdown extends Component<CounterProps, CounterState> {
@@ -26,7 +31,10 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
       value: 0,
       isCounting: false,
       timerInterval: this.setTimer(),
-      isDeadlineSoon: false
+      isDeadlineSoon: false,
+
+      minutesDown: props.minutes ? props.minutes : 0,
+      secondsDown: 0,
     }
   }
 
@@ -35,8 +43,12 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
   }
 
   setValue(difference: number) {
-    let value = ((this.props.duration - difference) / this.props.duration) * 100;
-    this.setState({ value, isCounting: true });
+    const timeLeft = this.props.duration - difference;
+    const secondsLeft = timeLeft / 1000;
+    const minuteSeconds = Math.floor(secondsLeft % 60);
+    const minutesLeft = Math.floor(secondsLeft / 60);
+    const value = (timeLeft / this.props.duration) * 100;
+    this.setState({ value, minutesDown: minutesLeft, secondsDown: minuteSeconds, isCounting: true });
   }
 
   setTimer() {
@@ -58,6 +70,14 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
     let className = 'timer-progressbar';
     if (this.state.isDeadlineSoon) {
       className += ' deadline-soon';
+    }
+    if (this.props.minutes) {
+      return (
+        <div className="united-timeprogress">
+          <LinearProgress className={className} variant="determinate" value={this.state.value} />
+          <div className="minutes-footer fixed">{this.state.minutesDown}:{formatTwoLastDigits(this.state.secondsDown)}/{this.props.minutes}:00</div>
+        </div>
+      );
     }
     return <LinearProgress className={className} variant="determinate" value={this.state.value} />;
   }

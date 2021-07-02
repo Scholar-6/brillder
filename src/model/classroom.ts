@@ -22,6 +22,7 @@ export interface Assignment {
   assignedDate: string;
 
   student?: User;
+  isArchived: boolean;
 
   studentStatus: StudentStatus[];
   byStatus: any;
@@ -64,4 +65,5 @@ export interface TeachClassroom extends Classroom {
   subjectId: number;
   subject: Subject;
   isClass?: boolean;
+  studentsInvitations: any[];
 }

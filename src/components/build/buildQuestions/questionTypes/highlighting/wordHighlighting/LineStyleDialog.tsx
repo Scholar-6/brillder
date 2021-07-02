@@ -1,6 +1,5 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
-import { FormControlLabel, Radio } from "@material-ui/core";
 
 interface SubjectDialogProps {
   isOpen: boolean;
@@ -15,16 +14,12 @@ const LineStyleDialog: React.FC<SubjectDialogProps> = ({ isOpen, value = false, 
         <div>Will this be a poem, or text where line breaks matter?</div>
       </div>
       <div className="dialog-footer">
-        <FormControlLabel
-          checked={value === true}
-          control={<Radio onClick={() => submit(true)} className={"filter-radio custom-color"} />}
-          label="Yes"
-        />
-        <FormControlLabel
-          checked={value === false}
-          control={<Radio onClick={() => submit(false)} className={"filter-radio custom-color"} />}
-          label="No"
-        />
+        <button className="btn btn-md bg-theme-orange yes-button" onClick={() => submit(true)}>
+          <span>Yes</span>
+        </button>
+        <button className="btn btn-md bg-gray no-button" onClick={() => submit(false)}>
+          <span>No</span>
+        </button>
       </div>
     </Dialog>
   );

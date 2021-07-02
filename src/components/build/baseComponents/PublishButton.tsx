@@ -3,9 +3,9 @@ import React from "react";
 import { publishBrick } from "services/axios/brick";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import SendToPublisherDialog from "./dialogs/SendToPublisherDialog";
 import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSuccessDialog";
 import { Brick } from "model/brick";
+import SendToPublisherDialog from "./dialogs/SendToPublisherDialog";
 
 export interface ButtonProps {
   disabled: boolean;
@@ -48,9 +48,10 @@ const PublishButton: React.FC<ButtonProps> = props => {
       </div>
       <SendToPublisherDialog
         isOpen={state === PublishStatus.Publishing}
+        isPublishing={true}
         close={() => setState(PublishStatus.None)}
         submit={async () => {
-          let success = await publishBrick(brick.id);
+          const success = await publishBrick(brick.id);
           if (success) {
             setState(PublishStatus.Published)
           }

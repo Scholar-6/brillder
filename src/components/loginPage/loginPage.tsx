@@ -6,7 +6,7 @@ import { History } from "history";
 import "./loginPage.scss";
 import actions from "redux/actions/auth";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
-import MobileLoginPage from "./MobileLogin";
+import MobileLoginPage from "./phone/MobileLogin";
 import map from "components/map";
 import LoginDesktopPage from "./desktop/LoginDesktopPage";
 import { isPhone } from "services/phone";

@@ -16,17 +16,19 @@ interface StudentTableProps {
   history: any;
   users: MUser[];
   selectedUsers: MUser[];
-  isClassroom: boolean;
+  isClassroom?: boolean;
   isAdmin: boolean;
 
   sortBy: UserSortBy;
   isAscending: boolean;
   pageStudentsSelected: boolean;
+  isPending?: boolean;
 
   toggleUser(userId: number): void;
   sort(sortBy: UserSortBy): void;
   unassign(student: MUser): void;
   togglePageStudents(): void;
+  resendInvitation(email: string): void;
 }
 
 const StudentTable: React.FC<StudentTableProps> = props => {
@@ -111,7 +113,12 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                 </div>}
             </div>
             <div className="classroom-names">
-              <ClassroomNames studyClassrooms={user.studyClassrooms} hasInvitation={user.hasInvitation} />
+              <ClassroomNames
+                isPending={props.isPending}
+                studyClassrooms={user.studyClassrooms}
+                hasInvitation={user.hasInvitation}
+                resendInvitation={() => props.resendInvitation(user.email)}
+              />
             </div>
             <div className="selected-column">
               <div className="action-buttons">

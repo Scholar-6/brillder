@@ -5,6 +5,7 @@ import { LibraryAssignmentBrick } from "model/assignment";
 import map from "components/map";
 import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademyDifficulty } from "../base/AcademyDifficulty";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -27,15 +28,15 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
   }
   const minHeight = 5;
   let height = 0;
-  if (assignment.lastAttemptScore && assignment.maxScore) {
-    const heightInt = (assignment.lastAttemptScore / assignment.maxScore * 100);
+  if (assignment.bestAttemptScore && assignment.maxScore) {
+    const heightInt = (assignment.bestAttemptScore / assignment.maxScore * 100);
     if (heightInt < minHeight) {
       height = minHeight;
     } else {
       height = heightInt;
     }
   }
-  if (assignment.lastAttemptScore === 0) {
+  if (assignment.bestAttemptScore === 0) {
     height = minHeight;
   }
 
@@ -57,10 +58,10 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
       }} style={{ background: color }}>
         {hovered && <div className="custom-tooltip subject-tooltip">
           <div className="bold">{subject.name}</div>
-          <div>{brick.title}</div>
+          <div><BrickTitle title={brick.title} /></div>
         </div>}
         <div className="progress-value default-value" onMouseEnter={() => setHover(true)} />
-        <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%' }}>
+        <div className="progress-value" onMouseEnter={() => setHover(true)} style={{ background: color, height: height + '%', maxHeight: '100%' }}>
           {height > 40 && assignment.brick.academicLevel >= AcademicLevel.First && <AcademyDifficulty a={assignment.brick.academicLevel} className="smaller" />}
         </div>
       </div>

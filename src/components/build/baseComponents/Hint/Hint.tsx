@@ -6,12 +6,13 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import Tooltip from '@material-ui/core/Tooltip';
 import sprite from "assets/img/icons-sprite.svg";
 import './Hint.scss';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import { QuestionTypeEnum } from 'model/question';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 
-const HtmlTooltip = withStyles((theme: any) => ({
+const HtmlTooltip = withStyles(() => ({
   tooltip: {
     backgroundColor: '#193366',
     padding: '1.5vh 1vw',
@@ -73,12 +74,13 @@ const HintComponent: React.FC<HintProps> = ({
   }
 
   const [state, setState] = React.useState(initState);
+  const [listLength, setListLength] = React.useState(props.count ?? 0);
 
   React.useEffect(() => {
-    if(props.value) {
+    if (props.value) {
       setState({ ...state, value: props.value });
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [props.value])
 
   if (state.index !== index) {
@@ -93,6 +95,7 @@ const HintComponent: React.FC<HintProps> = ({
     if (locked) { return; }
     setState({ ...state, value });
     onChange({ ...state, value });
+    save();
   }
 
   const onHintListChanged = (value: string, index: number) => {
@@ -100,6 +103,7 @@ const HintComponent: React.FC<HintProps> = ({
     let { list } = state;
     list[index] = value;
     onChange({ ...state, list });
+    save();
   }
 
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
@@ -113,23 +117,22 @@ const HintComponent: React.FC<HintProps> = ({
     if (state.status === HintStatus.All) {
       return (
         <div className="hint-container">
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={locked}
-            editOnly={editOnly}
             data={state.value}
+            placeholder="Global Hint"
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'insertTable', 'uploadImageCustom'
+              'latex', 'insertTable', 'uploadImageCustom', 'image'
             ]}
-            placeholder="Enter Hint..."
-            validationRequired={validationRequired}
-            onBlur={() => save()}
+            imageDialog={true}
+            validate={validationRequired}
+            isValid={!!stripHtml(state.value)}
             onChange={onHintChanged}
           />
         </div>
       );
     }
-    const answerHints: any[] = [];
 
     if (!props.count) {
       return <PageLoader content="...Preparing hints..." />;
@@ -147,30 +150,53 @@ const HintComponent: React.FC<HintProps> = ({
       }
     }
 
-    for (let i = 0; i < props.count; i++) {
-      answerHints.push(
-        <div className="hint-container" key={i}>
-          <DocumentWirisCKEditor
-            disabled={locked}
-            editOnly={editOnly}
-            data={state.list[i]}
-            toolbar={[
-              'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'imageUploadCustom'
-            ]}
-            placeholder="Enter Hint"
-            validationRequired={validationRequired}
-            onBlur={() => save()}
-            onChange={(v: any) => { onHintListChanged(v, i) }}
-          />
-        </div>
-      );
+    if(props.count !== listLength) {
+      setListLength(props.count);
     }
-    return answerHints;
+
+    return Array.from(Array(props.count)).map((_, i) => (
+      <div className="hint-container" key={`${listLength}-${i}`}>
+        <QuillEditor
+          disabled={locked}
+          data={state.list[i]}
+          placeholder={`Answer ${i + 1} Hint`}
+          toolbar={[
+            'bold', 'italic', 'fontColor', 'superscript', 'subscript',
+            'latex', 'imageUploadCustom', 'image'
+          ]}
+          imageDialog={true}
+          validate={validationRequired}
+          isValid={!!stripHtml(state.list[i])}
+          onChange={(v: any) => { onHintListChanged(v, i) }}
+        />
+      </div>
+    ));
+  }
+
+  const renderNormalToggle = () => {
+    return (
+      <ToggleButtonGroup className="hint-toggle-group" value={state.status} exclusive onChange={handleStatusChange}>
+        <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.Each}>
+          Each Answer
+        </ToggleButton>
+        <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.All}>
+          All Answers
+        </ToggleButton>
+      </ToggleButtonGroup>
+    );
   }
 
   const renderToggleButton = () => {
-    const {list} = props.component;
+    const { list } = props.component;
+
+    if (props.questionType === QuestionTypeEnum.Sort) {
+      return renderNormalToggle();
+    }
+
+    if (props.questionType === QuestionTypeEnum.MissingWord && props.component.choices.length > 1) {
+      return renderNormalToggle();
+    }
+
     if (
       !list || list.length <= 1 ||
       props.questionType === QuestionTypeEnum.WordHighlighting ||
@@ -184,16 +210,7 @@ const HintComponent: React.FC<HintProps> = ({
         </ToggleButtonGroup>
       );
     }
-    return (
-      <ToggleButtonGroup className="hint-toggle-group" value={state.status} exclusive onChange={handleStatusChange}>
-        <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.Each}>
-          Each Answer
-        </ToggleButton>
-        <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.All}>
-          All Answers
-        </ToggleButton>
-      </ToggleButtonGroup>
-    );
+    return renderNormalToggle();
   }
 
   return (
@@ -214,7 +231,7 @@ const HintComponent: React.FC<HintProps> = ({
                 <React.Fragment>
                   <div>Hints written here are introduced to</div>
                   <div>the student in the Review phase.</div>
-                  <div style={{marginTop: '1.2vw'}}>
+                  <div style={{ marginTop: '1.2vw' }}>
                     Good hints usher the student closer to the correct answer,
                     or the correct strategy, without giving it away.
                   </div>

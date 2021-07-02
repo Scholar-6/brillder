@@ -49,6 +49,23 @@
       margin-bottom: 9vh;
       width: 100%;
       margin: 1vw 0;
+      svg {
+        cursor: pointer;
+        width: 2.8vw;
+        position: absolute;
+        top: calc(3vh - 0.3vw);
+        font-size: 1.8vw;
+        font-family: $font-family-regular;
+        padding: 0vw 1vw;
+        border-radius: 0.7vw;
+        right: -6vw;
+        border: none;
+        outline: none;
+        color: var(--theme-orange);
+        &:hover {
+          color: var(--white);
+        }
+      }
       button {
         position: absolute;
         top: calc(3vh - 0.3vw);
@@ -125,6 +142,9 @@
       .MuiInputBase-root.MuiInput-root.invalid {
         background: var(--theme-orange);
       }
+      .back-to-type {
+        height: calc(9vh + 1.8vw);
+      }
     }
 
     .submit-button {
@@ -146,10 +166,6 @@
         background: var(--theme-orange);
         font-family: $font-family-bold;
         transition: all 300ms ease-out !important;
-        &:hover {
-          background: var(--white);
-          color: var(--theme-orange);
-        }
         &.invalid {
           color: var(--theme-light-blue);
         }

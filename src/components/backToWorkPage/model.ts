@@ -32,6 +32,12 @@ export interface Filters {
   publish: boolean;
 
   isCore: boolean;
+
+  // publish page
+  level1: boolean;
+  level2: boolean;
+  level3: boolean;
+  level4: boolean;
 }
 
 export interface PlayFilters {

@@ -23,8 +23,8 @@ Run the project locally (Windows and Linux) and connect to the dev-api:
         REACT_APP_BUILD_AUTO_SAVE_DELAY=500  
         REACT_APP_DESMOS_API_KEY=dcb31709b452b1cf9dc26972add0fda6  
         HOST=local-brillder.brillder.com  
-        PORT=3000
-        PUBLIC_URL=/play/dashboard/all-subjects  
+        PORT=3000  
+        HTTPS=true  
 * `npm install`  
 * `npm start`  
 * Go to http://local-brillder.scholar6.org:3000  

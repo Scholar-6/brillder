@@ -27,7 +27,6 @@ const mark = (component: SortComponent, attempt: ComponentAttempt<any>) => {
             if(assignedCategoryIndex === findCategoryIndex(key)) {
                 attempt.marks += markIncrement;
             } else {
-                attempt.marks += 0.25;
                 attempt.correct = false;
             }
         }

@@ -6,13 +6,16 @@ import 'react-circular-progressbar/dist/styles.css';
 import './ProvisionalScore.scss';
 import { Brick } from 'model/brick';
 import { PlayStatus } from '../model';
-import { getPlayPath, getAssignQueryString } from '../service';
+import { getPlayPath } from '../service';
 
 import ReviewStepper from '../review/ReviewStepper';
-import Clock from '../baseComponents/Clock';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { rightKeyPressed } from 'components/services/key';
 import { isPhone } from 'services/phone';
+import routes from '../routes';
+import previewRoutes from 'components/playPreview/routes';
+import BrickTitle from 'components/baseComponents/BrickTitle';
+import { User } from 'model/user';
 
 interface ProvisionalScoreState {
   value: number;
@@ -23,12 +26,15 @@ interface ProvisionalScoreState {
 }
 
 interface ProvisionalScoreProps {
+  user?: User;
   history: any;
   location: any;
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
   attempts: any[];
+  moveNext?(): void;
+  moveToPrep?(): void;
 }
 
 class ProvisionalScore extends React.Component<ProvisionalScoreProps, ProvisionalScoreState> {
@@ -102,18 +108,42 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
             </Grid>
           </div>
         </Grid>
+        <div className="p-help-text">
+          Now read the author's synthesis to deepen your understanding of the topic.
+        </div>
       </div>
     );
   }
 
   moveToIntro() {
-    let link = getPlayPath(this.props.isPlayPreview, this.props.brick.id);
-    this.props.history.push(`${link}/intro${getAssignQueryString(this.props.location)}`);
+    const brickId = this.props.brick.id;
+    let link = '';
+    if (isPhone()) {
+      link = routes.phonePrep(brickId);
+    } else {
+      if (this.props.isPlayPreview) {
+        link = previewRoutes.previewNewPrep(brickId);
+      } else {
+        link = routes.playNewPrep(brickId);
+      }
+    }
+    this.props.history.push(link);
+    this.props.moveToPrep?.();
   }
 
   moveToSynthesis() {
-    let link = getPlayPath(this.props.isPlayPreview, this.props.brick.id);
-    this.props.history.push(`${link}/synthesis${getAssignQueryString(this.props.location)}`);
+    let link = '';
+    if (isPhone()) {
+      link = getPlayPath(this.props.isPlayPreview, this.props.brick.id) + routes.PlaySynthesisLastPrefix;
+    } else {
+      if (this.props.isPlayPreview) {
+        link = getPlayPath(this.props.isPlayPreview, this.props.brick.id) + routes.PlaySynthesisLastPrefix;
+      } else {
+        link = routes.playPreSynthesis(this.props.brick.id);
+      }
+    }
+    this.props.history.push(link);
+    this.props.moveNext?.();
   }
 
   renderFooter() {
@@ -154,6 +184,8 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
   render() {
     const { status, brick, attempts } = this.props;
 
+    console.log('status proposal ', status)
+
     if (status === PlayStatus.Live) {
       this.moveToIntro();
     }
@@ -162,18 +194,27 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
       <div className="brick-row-container provisional-container">
         <Hidden only={['xs']}>
           <div className="brick-container play-preview-panel provisional-score-page">
+            <div className="fixed-upper-b-title"><BrickTitle title={brick.title} /></div>
             <Grid container direction="row">
               <Grid item xs={8}>
                 <div className="introduction-page">
                   <h1 className="title">Provisional Score</h1>
                   {this.renderProgressBar()}
                 </div>
+                <div className="new-layout-footer" style={{ display: 'none' }}>
+                  <div className="time-container" />
+                  <div className="minutes-footer" />
+                  <div className="footer-space" />
+                  <div className="new-navigation-buttons">
+                    <div className="n-btn next" onClick={this.moveToSynthesis.bind(this)}>
+                      Next
+                      <SpriteIcon name="arrow-right" />
+                    </div>
+                  </div>
+                </div>
               </Grid>
               <Grid item xs={4}>
                 <div className="introduction-info">
-                  <div className="intro-header">
-                    <Clock brickLength={brick.brickLength} />
-                  </div>
                   <div className="intro-text-row f-align-self-start m-t-5">
                     <ReviewStepper
                       questions={brick.questions}
@@ -181,7 +222,6 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
                       handleStep={() => { }}
                     />
                   </div>
-                  {this.renderFooter()}
                 </div>
               </Grid>
             </Grid>
@@ -198,7 +238,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
               </div>
               <div className="introduction-content">
                 {this.renderProgressBar()}
-                {isPhone() ? this.renderPhoneButton() : this.renderFooter()}
+                {isPhone() && this.renderPhoneButton()}
               </div>
             </div>
           </div>

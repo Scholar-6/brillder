@@ -5,7 +5,8 @@
 .navigation-container {
   position: fixed;
   top: 1.2vh;
-  right: 0;
+  right: unset;
+  left: 7.5vw;
   width: 44.9vw;
 
   .navigation-left {

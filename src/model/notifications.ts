@@ -2,6 +2,7 @@ import { Brick } from "./brick";
 import { Question } from "./question";
 
 export interface Sender {
+  id: number;
   email: string;
   firstName: string;
   lastName: string;

@@ -14,6 +14,8 @@ import { User } from 'model/user';
 import { isMobile } from 'react-device-detect';
 import SpriteIcon from '../SpriteIcon';
 import DesktopVersionDialogV2 from 'components/build/baseComponents/dialogs/DesktopVersionDialogV2';
+import { isPhone } from 'services/phone';
+import routes from 'components/play/routes';
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -62,33 +64,44 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
       }
 
       if (notification.brick && notification.brick.id) {
-        const {brick} = notification;
-        if (notification.type === NotificationType.NewCommentOnBrick) {
+        const {type, brick} = notification;
+        if (type === NotificationType.NewCommentOnBrick) {
           if (notification.question && notification.question.id >= 1) {
             history.push(map.investigationQuestionSuggestions(brick.id, notification.question.id));
           } else {
             history.push(map.investigationSynthesisSuggestions(brick.id))
           }
-        } else if (notification.type === NotificationType.InvitedToPlayBrick) {
-          history.push(map.playIntro(brick.id));
-        } else if (notification.type === NotificationType.BrickAttemptSaved) {
+        } else if (type === NotificationType.InvitedToPlayBrick) {
+          if (isPhone()) {
+            history.push(map.playIntro(brick.id));
+          } else {
+            history.push(routes.playCover(brick.id));
+          }
+        } else if (type === NotificationType.BrickAttemptSaved) {
           if (isMobile) {
             setNeedDesktopOpen(true);
           } else {
-            history.push(map.postPlay(brick.id, props.user.id));
+            history.push(map.postPlay(brick.id, notification.sender.id));
           }
-        } else if (notification.type === NotificationType.ReturnedToEditor) {
+        } else if (type === NotificationType.ReturnedToEditor) {
           history.push(map.InvestigationBuild(brick.id));
-        } else if (notification.type === NotificationType.AssignedToEdit) {
+        } else if (type === NotificationType.AssignedToEdit) {
           props.forgetBrick();
-          await props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
-        } else if (notification.type === NotificationType.ReturnedToAuthor) {
+          await props.fetchBrick(brick.id);
+          history.push(map.Proposal(brick.id));
+        } else if (type === NotificationType.ReturnedToAuthor) {
           props.forgetBrick();
-          await props.fetchBrick(notification.brick.id);
-          history.push(map.ProposalReview);
-        } else if (notification.type === NotificationType.RemindedToPlayBrick) {
-          history.push(map.playIntro(notification.brick.id));
+          await props.fetchBrick(brick.id);
+          history.push(map.Proposal(brick.id));
+        } else if (
+          type === NotificationType.RemindedToPlayBrick ||
+          type === NotificationType.StudentAssignedBrick
+        ) {
+          if (isPhone()) {
+            history.push(map.playIntro(brick.id));
+          } else {
+            history.push(routes.playCover(brick.id));
+          }
         }
       }
     }
@@ -153,8 +166,8 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           </div>
           <div className="content-box" onClick={() => move(notification)}>
             <div className="notification-detail">
-              <p className="notif-title">{notification.title}</p>
-              <p className="notif-desc">{notification.text}</p>
+              <p className="notif-title" dangerouslySetInnerHTML={{__html: notification.title}} />
+              <p className="notif-desc" dangerouslySetInnerHTML={{__html: notification.text}} />
             </div>
             <div className="actions">
               <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={(e) => {

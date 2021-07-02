@@ -7,10 +7,10 @@ import { Brick } from "model/brick";
 import { PlayStatus } from "../model";
 import { BrickAttempt } from "../model";
 import EndingStepper from "./EndingStepper";
-import Clock from "../baseComponents/Clock";
-import { getPlayPath, getAssignQueryString } from "../service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isPhone } from "services/phone";
+import BrickTitle from "components/baseComponents/BrickTitle";
+import routes from "../routes";
 
 interface EndingState {
   oldScore: number;
@@ -101,12 +101,12 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     }, 100);
     this.setState({ interval });
 
-    document.addEventListener("keydown", this.state.handleMove, false);
+    //document.addEventListener("keydown", this.state.handleMove, false);
   }
 
   componentWillUnmount() {
     clearInterval(this.state.interval);
-    document.removeEventListener("keydown", this.state.handleMove, false);
+    //document.removeEventListener("keydown", this.state.handleMove, false);
   }
 
   handleMove() {
@@ -172,6 +172,9 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
             </div>
           </Grid>
         </Grid>
+        <div className="p-help-text">
+          This is an average of your provisional score and your review score.
+        </div>
       </div>
     );
   }
@@ -215,23 +218,39 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   }
 
   render() {
-    const playPath = getPlayPath(false, this.props.brick.id);
+    const brickId = this.props.brick.id;
 
     if (this.props.status === PlayStatus.Live) {
-      this.props.history.push(
-        `${playPath}/intro${getAssignQueryString(this.props.location)}`
-      );
+      if (isPhone()) {
+        this.props.history.push(routes.phonePrep(brickId));
+      } else {
+        this.props.history.push(routes.playNewPrep(brickId));
+      }
     }
 
     return (
       <div className="brick-row-container ending-container">
         <Hidden only={["xs"]}>
           <div className="brick-container play-preview-panel ending-page">
+            <div className="fixed-upper-b-title">
+              <BrickTitle title={this.props.brick.title} />
+            </div>
             <Grid container direction="row">
               <Grid item xs={8}>
                 <div className="introduction-page">
                   <h1 className="title">Final Score</h1>
                   {this.renderProgressBars()}
+                </div>
+                <div className="new-layout-footer" style={{ display: 'none' }}>
+                  <div className="time-container" />
+                  <div className="minutes-footer" />
+                  <div className="footer-space" />
+                  <div className="new-navigation-buttons">
+                    <div className="n-btn next" onClick={this.props.move}>
+                      Next
+                      <SpriteIcon name="arrow-right" />
+                    </div>
+                  </div>
                 </div>
               </Grid>
               <Grid item xs={4}>
@@ -240,12 +259,10 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     <div>
                       Range: {this.state.minPScore}%-{this.state.maxPScore}%
                     </div>
-                    <Clock brickLength={this.props.brick.brickLength} />
                   </div>
                   <div className="intro-text-row f-align-self-start m-t-5">
                     {this.renderStepper()}
                   </div>
-                  {this.renderFooter()}
                 </div>
               </Grid>
             </Grid>

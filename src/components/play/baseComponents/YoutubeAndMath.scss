@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .youtube-video-session {
   img {
@@ -11,11 +11,20 @@
       @include phone_and_tabletP {
         width: 100%;
       }
+      max-width: 100%;
     }
   }
   blockquote {
     border-left: 0.3vw solid var(--tab-gray);
     padding-left: 1.3vw;
-    margin-bottom: 0.7vw;
+    padding-bottom: 0.7vw;
+    &.no-break {
+      white-space: nowrap;
+    }
+  }
+
+  p,
+  span {
+    background: inherit !important;
   }
 }

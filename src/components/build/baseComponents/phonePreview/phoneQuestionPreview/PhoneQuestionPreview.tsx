@@ -14,16 +14,13 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 export interface PhonePreviewProps {
   question: Question;
   focusIndex: number;
-  getQuestionIndex(question: Question): number;
-
   // navigation
   nextQuestion(): void;
   prevQuestion(): void;
 }
 
-const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex, ...props }) => {
-  const questionIndex = getQuestionIndex(question);
-  const canGoBack = questionIndex > 0 ? true : false;
+const PhonePreview: React.FC<PhonePreviewProps> = ({ question, ...props }) => {
+  const canGoBack = true;
 
   const [questionPreview] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
 
@@ -120,6 +117,9 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, getQuestionIndex,
   }
   
   const renderInnerComponent = () => {
+    if (!question || !question.type) {
+      return <EmptyQP1 />;
+    }
     if (!question.firstComponent?.value && isHintEmpty(question.hint) && areComponentsEmpty()) {
       return <EmptyQP1 />;
     }

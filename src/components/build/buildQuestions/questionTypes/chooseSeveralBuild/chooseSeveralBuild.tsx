@@ -5,7 +5,7 @@ import './chooseSeveralBuild.scss';
 import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 import {ChooseOneAnswer} from '../chooseOneBuild/types';
 import validator from '../../../questionService/UniqueValidator';
-import { showSameAnswerPopup } from '../service/questionBuild';
+import { generateId, showSameAnswerPopup } from '../service/questionBuild';
 
 export interface ChooseSeveralData {
   list: ChooseOneAnswer[];
@@ -19,18 +19,19 @@ export interface ChooseSeveralBuildProps {
   save(): void;
   updateComponent(component:any):void;
   openSameAnswerDialog(): void;
+  removeHintAt(index: number): void;
 }
 
 export const getDefaultChooseSeveralAnswer = () => {
-  const newAnswer = () => ({value: "", checked: false, valueFile: '' });
+  const newAnswer = () => ({ id: generateId(), value: "", checked: false, valueFile: '' });
 
   return { list: [newAnswer(), newAnswer(), newAnswer()] };
 }
 
 const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog, removeHintAt
 }) => {
-  const newAnswer = () => ({value: "", checked: false, valueFile: '' });
+  const newAnswer = () => ({ id: generateId(), value: "", checked: false, valueFile: '' });
 
   if (!data.list) {
     data.list = getDefaultChooseSeveralAnswer().list;
@@ -44,7 +45,11 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   useEffect(() => { setState(data) }, [data]);
 
   const update = () => {
-    setState(Object.assign({}, state));
+    const newState = Object.assign({}, state);
+    newState.list.forEach(answer => {
+      if(!answer.id) answer.id = generateId();
+    });
+    setState(newState);
     updateComponent(state);
   }
 
@@ -66,6 +71,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   const removeFromList = (index: number) => {
     if (locked) { return; }
     state.list.splice(index, 1);
+    removeHintAt(index);
     update();
     save();
   }

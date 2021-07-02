@@ -1,7 +1,6 @@
 @import 'src/assets/sass/partials/variables';
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
-@import 'src/assets/sass/component/authpages';
 
 .login-desktop-page ~ .beta-text {
   z-index: 13;
@@ -11,6 +10,7 @@
   display: flex;
   flex-direction: row;
   background: var(--theme-dark-blue);
+  width: 100vw;
   height: 100%;
 
   .left-part-join {
@@ -267,10 +267,8 @@
     }
     .block {
       display: inline-block;
-      width: 8vw;
       width: 20%;
       height: 7.3vh;
-      margin: 0.4vw;
       margin: 0.7%;
       border-radius: 0.6vw;
       background: #12326a;
@@ -281,6 +279,7 @@
     top: 0;
     height: 100%;
     width: 55vw;
+    z-index: 14;
     .glasses {
       position: absolute;
       top: 12vh;
@@ -358,7 +357,6 @@
     width: 20vw !important;
     padding: 2.3vh 1vw !important;
     background: var(--theme-dark-blue);
-    margin-bottom: 1vh;
   }
   button {
     border: none;
@@ -376,6 +374,26 @@
     &:hover {
       color: var(--theme-orange);
       background: var(--white);
+    }
+  }
+}
+
+// reset link
+.login-desktop-page .reset-link-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -1.5vh;
+
+  .reset-password-link {
+    transition: all 300ms ease-out;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    cursor: pointer;
+    text-align: right;
+    color: var(--white);
+    font-size: 1vw;
+    &:hover {
+      color: var(--theme-orange);
     }
   }
 }

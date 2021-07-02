@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .build-question-page {
   $left-sidebar-width: 27.5%;
@@ -40,9 +40,9 @@
     transform: rotate(2deg);
   }
 
-  .ck-placeholder:before {
+  .ql-blank:before {
     color: #aaa;
-    font-family: $font-family-bold;
+    font-family: $font-family-bold !important;
   }
 
   ::placeholder {
@@ -181,12 +181,24 @@
       max-width: $question-build-width;
       min-width: $question-build-width;
       max-height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
-      border: 0.13vw solid var(--tab-gray);
-      background-color: var(--white);
-      border-radius: 0.6vw;
-      padding: 0.2vw 0.2vw 0 0.2vw;
+      position: relative;
+      transform: translateZ(0);
+      background: var(--tab-gray);
+      border-radius: $editor-radius;
+
+      .questions {
+        top: calc(1.9vw + 2vh);
+        margin-left: 0.2vw;
+        display: block;
+        width: calc(100% - 0.4vw);
+        padding-left: 0.2vw;
+        padding-right: 0.2vw;
+        background: white;
+        height: calc(100% - 1.9vw - 2vh - 0.3vw) !important;
+        overflow: auto;
+        border-radius: 0.4vw;
+        overflow-x: hidden;
+      }
     }
 
     .parent-left-sidebar {
@@ -317,6 +329,10 @@
 
         .line {
           cursor: pointer;
+          border-radius: 0.24vw;
+          margin-top: 0.15vw;
+          margin-bottom: 0.15vw;
+          min-height: 1.5vw;
 
           &.active {
             background: var(--theme-green);
@@ -426,11 +442,12 @@
 
 // question placeholder style
 .questions .drop-box {
-  .question-build-text-editor.first .ck-placeholder:before,
-  .unique-component .ck-placeholder:before,
-  .hint-container .ck-placeholder:before {
-    color: #ACACAC;
+  .question-build-text-editor.first .ql-blank:before,
+  .unique-component .ql-blank:before,
+  .hint-container .ql-blank:before {
+    color: #acacac;
     font-family: $font-family-bold;
+    font-style: normal !important;
   }
 }
 
@@ -445,6 +462,7 @@
     margin-top: 1vw;
     width: 100%;
     display: flex;
+    display: none;
     justify-content: center;
     > div {
       margin-left: 2.6vw;

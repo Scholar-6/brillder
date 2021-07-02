@@ -2,8 +2,9 @@
 import React from 'react'
 
 import './Text.scss'
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import { TextComponentObj } from './interface';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 
 export interface TextComponentProps {
@@ -23,6 +24,7 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
     let comp = Object.assign({}, data);
     comp.value = htmlString;
     props.updateComponent(comp);
+    props.save();
   }
 
   // refresh wiris component after question changed
@@ -39,19 +41,21 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
 
   return (
     <div className="question-build-text-editor first">
-      <DocumentWirisCKEditor
+      <div className="text-label-container">
+        Question Text
+      </div>
+      <QuillEditor
         disabled={locked}
-        editOnly={editOnly}
         data={data.value}
-        colorsExpanded={true}
-        placeholder="Enter Question Text Here..."
+        allowTables={true}
+        validate={props.validationRequired}
+        isValid={!!stripHtml(data.value)}
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-          'latex', 'insertTable', 'bulletedList', 'numberedList'
+          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'table',
+          'uploadImageCustom', 'image'
         ]}
-        blockQuote={true}
-        validationRequired={props.validationRequired}
-        onBlur={() => props.save()}
+        imageDialog={true}
         onChange={onChange}
       />
     </div>

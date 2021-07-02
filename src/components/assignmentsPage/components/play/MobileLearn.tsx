@@ -11,6 +11,8 @@ import PageHeadWithMenu, {
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
+import { setAssignmentId } from "localStorage/playAssignmentId";
+import routes from "components/play/routes";
 
 interface Props {
   history: any;
@@ -35,7 +37,8 @@ class MobileLearn extends Component<Props> {
   }
 
   moveToPlay(a: AssignmentBrick) {
-    this.props.history.push(`/play/brick/${a.brick.id}/intro?assignmentId=${a.id}`);
+    setAssignmentId(a.id);
+    this.props.history.push(routes.phonePrep(a.brick.id));
   }
 
   renderExpandedBrick(a: AssignmentBrick) {

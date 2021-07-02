@@ -15,9 +15,7 @@
     padding-top: $page-head-height;
   }
   .MuiInputBase-root {
-    background: white !important;
     box-shadow: none !important;
-    border-radius: 0.5vw !important;
     padding: 1vw !important;
 
     input {
@@ -44,8 +42,20 @@
 
   .MuiAutocomplete-root {
     width: 100% !important;
+    min-height: 30vh !important;
     max-height: 30vh !important;
+    background: var(--white) !important;
+    border-radius: 0.5vw !important;
     overflow-y: scroll;
+
+    .MuiFormControl-root {
+      min-height: 30vh !important;
+      .MuiInputBase-root  {
+        fieldset {
+          border: none !important;
+        }
+      }
+    }
   }
   .dialog-footer {
     padding-top: 1vh;

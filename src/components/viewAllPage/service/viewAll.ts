@@ -1,5 +1,6 @@
 import queryString from 'query-string';
 import { Brick, BrickStatus, Subject, SubjectItem } from "model/brick";
+import { User } from 'model/user';
 
 export const getCheckedSubjectIds = (subjects: Subject[]) => {
   const filterSubjects = [];
@@ -75,6 +76,17 @@ export const sortAndCheckSubjects = (subjects: Subject[], values: queryString.Pa
       }
     }
   });
+  if (values.subjectIds) {
+    const subjectIds = values.subjectIds as string;
+    const idsArray = subjectIds.split(',');
+    subjects.forEach(s => {
+      for (const id of idsArray) {
+        if (s.id === parseInt(id)) {
+          s.checked = true;
+        }
+      }
+    });
+  }
 }
 
 export const prepareYourBricks = (currentBricks: Brick[]) => {
@@ -100,6 +112,34 @@ export const countSubjectBricks = (subjects: any[], bricks: Brick[]) => {
           s.publicCount += 1;
         } else {
           s.personalCount += 1;
+        }
+      }
+    }
+  }
+}
+
+const countPersonalBrick = (s: any, b: Brick, user: User, isAdmin: boolean) => {
+  if (isAdmin) {
+    s.personalCount += 1;
+  } else {
+    if (b.author.id === user.id) {
+      s.personalCount += 1;
+    }
+  }
+}
+
+export const countSubjectBricksV2 = (subjects: any[], bricks: Brick[], user: User, isAdmin: boolean) => {
+  subjects.forEach((s: any) => {
+    s.publicCount = 0;
+    s.personalCount = 0;
+  });
+  for (let b of bricks) {
+    for (let s of subjects) {
+      if (s.id === b.subjectId) {
+        if (b.isCore) {
+          s.publicCount += 1;
+        } else {
+          countPersonalBrick(s, b, user, isAdmin);
         }
       }
     }
@@ -185,4 +225,17 @@ export const prepareUserSubjects = (subjects: SubjectItem[], userSubjects: Subje
   }
   subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
   return getCheckedSubjectIds(subjects);
+}
+
+export const onlyPrepareUserSubjects = (subjects: SubjectItem[], userSubjects: Subject[]) => {
+  const ss = [];
+  for (let subject of userSubjects) {
+    for (let s of subjects) {
+      if (s.id === subject.id) {
+        ss.push(s);
+      }
+    }
+  }
+  subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
+  return ss;
 }

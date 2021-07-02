@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .react-recording {
   @extend %themeRadius;
@@ -51,6 +51,22 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     margin-left: -1px;
+  }
+
+  .text-label-container {
+    width: 100%;
+    text-align: center;
+    border-top-left-radius: $editor-radius;
+    border-top-right-radius: $editor-radius;
+    background: var(--tab-gray);
+
+    color: var(--theme-dark-blue);
+    font-size: 1.3vw;
+    font-family: $font-family-bold;
+  }
+  background: var(--solitude-light) !important;
+  .dropzone {
+    background: inherit !important;
   }
 
   .disabled {

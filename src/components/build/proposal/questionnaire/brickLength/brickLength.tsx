@@ -3,7 +3,7 @@ import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
 import './brickLength.scss';
-import { ProposalStep, PlayButtonStatus, OpenQuestionRoutePart } from "components/build/proposal/model";
+import { ProposalStep, OpenQuestionRoutePart } from "components/build/proposal/model";
 import { BrickLengthEnum } from 'model/brick';
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
@@ -55,10 +55,9 @@ interface BrickLengthProps {
   baseUrl: string;
   length: BrickLengthEnum;
   canEdit: boolean;
-  playStatus: PlayButtonStatus;
+  updated: any;
   saveLength(value: BrickLengthEnum): any;
   saveBrick(data: any): void;
-  saveAndPreview(): void;
 }
 
 const BrickLength: React.FC<BrickLengthProps> = (
@@ -74,8 +73,6 @@ const BrickLength: React.FC<BrickLengthProps> = (
       <Navigation
         baseUrl={props.baseUrl}
         step={ProposalStep.BrickLength}
-        playStatus={props.playStatus}
-        saveAndPreview={props.saveAndPreview}
         onMove={() => { }}
       />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
@@ -88,7 +85,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
                 className={"brick-length-image brick-length-20-image " + ((length === BrickLengthEnum.S20min) ? "active" : "")}
                 onClick={() => setBrickLength(BrickLengthEnum.S20min)}
               />
-              <Grid container direction="row" justify="center" className="bottom-time-description">
+              <Grid container direction="row" justify="center" className="bottom-time-description global-base-font">
                 20
               </Grid>
             </Grid>
@@ -97,7 +94,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
                 className={"brick-length-image brick-length-40-image " + ((length === BrickLengthEnum.S40min) ? "active" : "")}
                 onClick={() => setBrickLength(BrickLengthEnum.S40min)}
               />
-              <Grid container direction="row" justify="center" className="bottom-time-description">
+              <Grid container direction="row" justify="center" className="bottom-time-description global-base-font">
                 40
               </Grid>
             </Grid>
@@ -106,7 +103,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
                 className={"brick-length-image brick-length-60-image " + ((length === BrickLengthEnum.S60min) ? "active" : "")}
                 onClick={() => setBrickLength(BrickLengthEnum.S60min)}
               />
-              <Grid container direction="row" justify="center" className="bottom-time-description">
+              <Grid container direction="row" justify="center" className="bottom-time-description global-base-font">
                 60
               </Grid>
             </Grid>
@@ -120,7 +117,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
             baseUrl={props.baseUrl}
           />
         </Grid>
-        <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} />
+        <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} updated={props.updated} />
         <Hidden only={['xs','sm']}>
           <div className="red-right-block"></div>
         </Hidden>

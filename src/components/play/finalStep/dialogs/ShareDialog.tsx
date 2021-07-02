@@ -7,6 +7,7 @@ import SpriteHoverIcon from 'components/baseComponents/SpriteHoverIcon';
 
 interface ShareProps {
   isOpen: boolean;
+  isPrivatePreview?: boolean;
   link(): void;
   invite(): void;
   close(): void;
@@ -33,17 +34,11 @@ const ShareDialog: React.FC<ShareProps> = props => {
           <SpriteHoverIcon name="link" onClick={props.link} onHover={() => setLinkHover(true)} onBlur={() => setLinkHover(false)} />
           {linkHovered && <div className="custom-tooltip copy-tooltip">Copy Link</div>}
         </div>
-        <div >
+        {!props.isPrivatePreview &&
+        <div>
           <SpriteHoverIcon name="user-plus" onClick={props.invite} onBlur={() => setInviteHover(false)} onHover={() => setInviteHover(true)} />
           {inviteHovered && <div className="custom-tooltip invite-tooltip">Invite an existing user</div>}
-        </div>
-        {/*
-        <SpriteIcon name="email-feather" className="active" />
-        <SpriteIcon name="whatsapp" className="active" />
-        <SpriteIcon name="facebook" className="active" />
-        <SpriteIcon name="instagram" className="active" />
-        <SpriteIcon name="twitter" className="active" />
-        */}
+        </div>}
       </div>
     </Dialog>
   );

@@ -1,0 +1,32 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.phone-subject-category {
+  height: calc(100% - 74px);
+  overflow: scroll;
+  padding-top: 2vh;
+
+  .title-lines {
+    font-family: $font-family-bold;
+    color: var(--theme-dark-blue);
+    margin-left: 10vw;
+    font-size: 7.5vw;
+  }
+
+  .subject-category {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    img {
+      max-width: 80vw;
+      height: 20vh;
+    }
+
+    .cat-name {
+      font-family: $font-family-bold;
+      color: var(--theme-dark-blue);
+      text-align: center;
+      font-size: 6vw;
+    }
+  }
+}

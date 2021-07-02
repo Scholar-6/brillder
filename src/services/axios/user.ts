@@ -1,4 +1,4 @@
-import {get, put, post} from './index';
+import {get, put, post, postRes} from './index';
 
 import { RolePreference, User } from 'model/user';
 import { UpdateUserStatus } from 'components/userProfilePage/model';
@@ -94,13 +94,15 @@ export interface CreateByEmailRes {
  */
 export const createUserByEmail = async(email: string) => {
   try {
-    const data = await post<CreateByEmailRes>('/auth/createUser/', { email });
-    // return null when errors to make same logic work
-    if (data && data.errors) {
+    const res = await postRes('/auth/createUser/', { email });
+    if (res.data && res.data.errors) {
       return null;
     }
-    return data;
+    return res.data as CreateByEmailRes;
   } catch (e) {
+    if (e && e.response && e.response.status === 400) {
+      return 400;
+    }
     return null;
   }
 }
@@ -111,6 +113,21 @@ export const createUserByEmail = async(email: string) => {
 export const acceptTerms = async(termsAndConditionsAcceptedVersion: string) => {
   try {
     const data = await post<string>('/user/termsAndConditions', { termsAndConditionsAcceptedVersion });
+    if (data === "OK") {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * Assign new subject to current user
+ */
+export const addSubject = async(subjectId: number) => {
+  try {
+    const data = await put<string>('/user/addSubject/' + subjectId, {});
     if (data === "OK") {
       return true;
     }

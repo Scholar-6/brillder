@@ -6,19 +6,18 @@ import './brief.scss';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
-import { ProposalStep, PlayButtonStatus, BrickLengthRoutePart } from "../../model";
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
+import { ProposalStep, BrickLengthRoutePart } from "../../model";
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 
 interface BriefProps {
   baseUrl: string;
   parentBrief: string;
-  playStatus: PlayButtonStatus;
   canEdit: boolean;
+  updated: string;
   saveBrief(brief: string): void;
-  saveAndPreview(): void;
 }
 
 const BriefPreviewComponent: React.FC<any> = ({ data }) => {
@@ -38,8 +37,6 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
       <Navigation
         baseUrl={props.baseUrl}
         step={ProposalStep.Brief}
-        playStatus={props.playStatus}
-        saveAndPreview={props.saveAndPreview}
         onMove={() => saveBrief(parentBrief)}
       />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
@@ -48,15 +45,16 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
             <SpriteIcon name="crosshair" />
           </div>
           <h1>Outline the purpose of this brick.</h1>
-          <DocumentWirisCKEditor
+          <QuillEditor
             disabled={!canEdit}
             data={parentBrief}
-            link={true}
-            placeholder="Enter Brief Here..."
+            showToolbar={true}
+            allowLinks={true}
+            allowTables={true}
+            placeholder="Enter Brief Here"
             toolbar={[
-              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList'
+              'bold', 'italic', 'fontColor', 'latex', 'bulletedList', 'numberedList', 'table'
             ]}
-            onBlur={() => { }}
             onChange={saveBrief}
           />
           <NavigationButtons
@@ -69,7 +67,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
           />
           <h2 className="pagination-text m-0">3 of 4</h2>
         </Grid>
-        <ProposalPhonePreview Component={BriefPreviewComponent} data={parentBrief} />
+        <ProposalPhonePreview Component={BriefPreviewComponent} data={parentBrief} updated={props.updated} />
         <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>

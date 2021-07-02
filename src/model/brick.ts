@@ -25,6 +25,8 @@ export interface Author {
   id: number;
   lastName: string;
   tutorialPassed: boolean;
+  profileImage: string;
+  bio: string;
   type: UserType;
 }
 
@@ -32,12 +34,30 @@ export interface Editor extends UserBase {
   username: string;
 }
 
+export enum SubjectGroup {
+  None = 0,
+  Arts,
+  Languages,
+  HumanitiesAndSocialSciences,
+  GeneralTopical,
+  Science,
+  MathsAndComputing,
+  SchoolClient,
+  Corporate
+}
+
+export const SubjectGroupNames = [
+  '', 'Arts', 'Languages', 'Humanities & Social Sciences', 'General & Topical',
+  'Science', 'Maths and Computing', 'School Client', 'Corporate'
+]
+
 export interface Subject {
   id: number;
   name: string;
   color: string;
   publishedBricksCount: number;
   userCount: number;
+  group: SubjectGroup;
   checked?: boolean;
 
   // view all page
@@ -100,6 +120,13 @@ export interface Brick {
   isCore?: boolean;
   hasNotifications?: boolean;
   academicLevel: AcademicLevel;
+
+  // cover page
+  coverImage: string;
+  coverImageCaption: string;
+  coverImageSource: string;
+  sponsorUrl: string;
+  sponsorLogo: string;
 
   assignments?: Assignment[];
 

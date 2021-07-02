@@ -7,10 +7,13 @@ import brickActions from "redux/actions/brickActions";
 import userActions from "../../redux/actions/user";
 import { isAuthenticated, Brick } from "model/brick";
 import { User } from "model/user";
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
+import routes from "components/playPreview/routes";
+import { Helmet } from "react-helmet";
+import LoginRedirect from "components/baseComponents/LoginRedirect";
 
 interface PreviewRouteProps {
   exact?: any;
@@ -30,8 +33,6 @@ const PlayPreviewRoute: React.FC<PreviewRouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  setBrillderTitle();
-
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!rest.user) {
       rest.getUser();
@@ -50,7 +51,10 @@ const PlayPreviewRoute: React.FC<PreviewRouteProps> = ({
       }
     }
 
-    return (
+    return <>
+      <Helmet>
+        <title>{getBrillderTitle()}</title>
+      </Helmet>
       <Route
         {...rest}
         render={(props) => {
@@ -64,19 +68,19 @@ const PlayPreviewRoute: React.FC<PreviewRouteProps> = ({
           // by default move to intro
           let splited = props.location.pathname.split('/');
           if (splited.length === 4) {
-            props.history.push(`/play-preview/brick/${brickId}/intro`);
+            props.history.push(routes.previewNewPrep(brickId));
             return <PageLoader content="...Getting Brick..." />;
           }
 
           return <Component {...props} />;
         }}
       />
-    );
+    </>;
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized();
     return <PageLoader content="...Checking rights..." />;
   } else {
-    return <Redirect to={map.Login} />;
+    return <LoginRedirect />;
   }
 };
 

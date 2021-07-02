@@ -1,7 +1,10 @@
+import { BrickLengthEnum } from 'model/brick';
 import React from 'react';
+import { stripHtml } from '../questionService/ConvertService';
 import './WordsCount.scss';
 
 interface CountProps {
+  brickLength: BrickLengthEnum;
   value: string;
 }
 
@@ -24,10 +27,18 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
   }
 
   getTimeText(count: number) {
-    const minutes = Math.floor(count / 150);
-    let seconds = count % 150;
-    seconds =  Math.round((seconds / 150) * 6) * 10;
+    const constant = 150;
+    let minutes = Math.floor(count / constant);
+    let seconds = count % constant;
+    console.log(minutes, seconds);
+    seconds =  Math.round((seconds / constant) * 6) * 10;
     let res = '';
+
+    if (seconds === 60) {
+      minutes += 1;
+      seconds = 0;
+    }
+
     if (minutes > 0) {
       if (minutes === 1) {
         res += `${minutes} min `;
@@ -35,6 +46,7 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
         res += `${minutes} mins `;
       }
     }
+
     res += `${seconds} secs`;
     return res;
   }
@@ -45,7 +57,7 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
     }
 
     //eslint-disable-next-line
-    let res = value.replace(/\&nbsp;/g, '');
+    let res = stripHtml(value).replace(/\&nbsp;/g, '');
     res = res.replace("   ", "");
     res = res.replace("  ", " ");
     let count = res.split(" ").length;
@@ -64,10 +76,31 @@ class CountSynthesis extends React.Component<CountProps, CountState> {
   }
 
   render() {
+    let min = 600;
+    let max = 800;
+    let mins = 4;
+
+    if (this.props.brickLength === BrickLengthEnum.S40min) {
+      mins = 8;
+      min = 1200;
+      max = 1600;
+    } else if (this.props.brickLength === BrickLengthEnum.S60min) {
+      mins = 12;
+      min = 1800;
+      max = 2000;
+    }
+    let overflow = false;
+    if (this.state.count > min) {
+      overflow = true;
+    }
     return (
       <div className="synthesis-words-count">
-        <div>Words: {this.state.count}</div>
-        <div>Est. Reading Time: {this.state.timeText}</div>
+        <div className="bold bigger">Words</div>
+        <div><span className={`bold + ${overflow ? 'text-orange' : ''}`}>Current</span> | Recommended</div>
+        <div><span className={`bold + ${overflow ? 'text-orange' : ''}`}>{this.state.count}</span> | {min}-{max}</div>
+        <div className="bold bigger">Reading Time</div>
+        <div><span className={`bold + ${overflow ? 'text-orange' : ''}`}>Current</span> | Recommended</div>
+        <div><span className={`bold + ${overflow ? 'text-orange' : ''}`}>{this.state.timeText}</span> | {mins} mins</div>
       </div>
     );
   }

@@ -1,11 +1,31 @@
 import { BrickLengthEnum } from "model/brick";
 
+export const getPrepareTime = (brickLength: BrickLengthEnum) => {
+  let timeMinutes = 5;
+  if (brickLength === BrickLengthEnum.S40min) {
+    timeMinutes = 10;
+  } else if (brickLength === BrickLengthEnum.S60min) {
+    timeMinutes = 15;
+  }
+  return timeMinutes;
+}
+
 export const getReviewTime = (brickLength: BrickLengthEnum) => {
   let timeMinutes = 3;
   if (brickLength === BrickLengthEnum.S40min) {
     timeMinutes = 6;
   } else if (brickLength === BrickLengthEnum.S60min) {
     timeMinutes = 9;
+  }
+  return timeMinutes;
+}
+
+export const getLiveTime = (brickLength: BrickLengthEnum) => {
+  let timeMinutes = 8;
+  if (brickLength === BrickLengthEnum.S40min) {
+    timeMinutes = 16;
+  } else if (brickLength === BrickLengthEnum.S60min) {
+    timeMinutes = 24;
   }
   return timeMinutes;
 }

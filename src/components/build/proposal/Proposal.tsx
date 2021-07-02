@@ -2,7 +2,9 @@ import React from "react";
 import { Route } from "react-router-dom";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { connect } from "react-redux";
-import { History } from "history";
+import { History, Location } from "history";
+import queryString from 'query-string';
+
 
 import "./Proposal.scss";
 import actions from "redux/actions/brickActions";
@@ -15,16 +17,14 @@ import BrickLength from "./questionnaire/brickLength/brickLength";
 import Brief from "./questionnaire/brief/brief";
 import Prep from "./questionnaire/prep/prep";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
-import ProposalReview from "./questionnaire/proposalReview/ProposalReview";
 import { Brick, Author } from "model/brick";
 import { User } from "model/user";
 import CloseProposalDialog from "components/build/baseComponents/dialogs/CloseProposalDialog";
 import VersionLabel from "components/baseComponents/VersionLabel";
-import { setBrillderTitle } from "components/services/titleService";
+import { getBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
-import { BrickFieldNames, BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PlayButtonStatus, PrepRoutePart, ProposalReviewPart, TitleRoutePart } from "./model";
-import { validateQuestion } from "components/build/questionService/ValidateQuestionService";
+import { BrickFieldNames, BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, SubjectRoutePart, TitleRoutePart } from "./model";
 import {
   parseQuestion,
   ApiQuestion,
@@ -35,11 +35,13 @@ import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
 import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
+import { buildQuesitonType } from "../routes";
+import { Helmet } from "react-helmet";
 
 interface ProposalProps {
   history: History;
   match: any;
-  location: any;
+  location: Location;
 
   //redux
   brick: Brick;
@@ -52,6 +54,7 @@ interface ProposalProps {
 interface ProposalState {
   brick: Brick;
   saving: boolean;
+  hasSaveError: boolean;
   saved: boolean;
   subjects: Subject[];
   isDialogOpen: boolean;
@@ -62,15 +65,20 @@ interface ProposalState {
 class Proposal extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
-    let subjectId = 0;
+    let subjectId = undefined;
     const { user, brick } = props;
     const { subjects } = user;
     if (subjects.length === 1) {
       subjectId = subjects[0].id;
     }
+
+    const values = queryString.parse(props.location.search);
+    const isCore = this.getCore(values);
+
     let initBrick = {
       subjectId,
-      brickLength: BrickLengthEnum.None,
+      brickLength: BrickLengthEnum.S20min,
+      isCore,
       topic: "",
       subTopic: "",
       alternativeTopics: "",
@@ -104,6 +112,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.state = {
       brick: initBrick,
       saved: false,
+      hasSaveError: false,
       saving: false,
       isDialogOpen: false,
       moving: false,
@@ -122,16 +131,25 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     document.removeEventListener("keydown", this.state.handleKey, false);
   }
 
+  getCore(values: queryString.ParsedQuery<string>) {
+    if (values.isCore === 'false') {
+      return false;
+    } else if (values.isCore === 'true') {
+      return true;
+    }
+    return false;
+  }
+
   async handleKey(e: any) {
     if (e.target.tagName === "INPUT") { return; }
-    if (e.target.classList.contains("ck-content")) { return; }
+    if (e.target.classList.contains("ql-editor")) { return; }
 
     const {history} = this.props;
     const {pathname} = this.props.location;
     const baseUrl = this.getBaseUrl();
 
     if (rightKeyPressed(e)) {
-      if (pathname === map.ProposalSubject) {
+      if (pathname.slice(-SubjectRoutePart.length) === SubjectRoutePart) {
         if (this.state.brick.subjectId) {
           history.push(baseUrl + TitleRoutePart);
         }
@@ -171,18 +189,24 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   async saveBrick(tempBrick: Brick) {
-    if (this.state.saving === true) { return; }
-    this.setState({saving: true});
-    const { brick } = this.props;
-    if (tempBrick.id) {
-      await this.props.saveBrick(tempBrick);
-    } else if (brick && brick.id) {
-      tempBrick.id = brick.id;
-      await this.props.saveBrick(tempBrick);
-    } else {
-      await this.props.createBrick(tempBrick);
+    let newBrick = null;
+    try {
+      if (this.state.saving === true) { return; }
+      this.setState({saving: true});
+      const { brick } = this.props;
+      if (tempBrick.id) {
+        newBrick = await this.props.saveBrick(tempBrick);
+      } else if (brick && brick.id) {
+        tempBrick.id = brick.id;
+        newBrick = await this.props.saveBrick(tempBrick);
+      } else {
+        newBrick = await this.props.createBrick(tempBrick);
+      }
+      this.setState({saving: false});
+    } catch (e) {
+      this.setState({hasSaveError: true});
     }
-    this.setState({saving: false});
+    return newBrick;
   }
 
   openDialog = () => this.setState({ isDialogOpen: true });
@@ -239,10 +263,11 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.saveBrick(brick);
   };
 
-  setPrepAndSave = (prep: string) => {
+  setPrepAndSave = async (prep: string) => {
     const brick = { ...this.state.brick, prep } as Brick;
     this.saveLocalBrick(brick);
-    this.saveBrick(brick);
+    const newBrick = await this.saveBrick(brick);
+    this.props.history.push(buildQuesitonType(brick.id));
   };
 
   saveAndMove = async () => {
@@ -252,27 +277,38 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.setState({ saved: true, saving: false });
   };
 
-  async saveAndPreview(playStatus: PlayButtonStatus) {
-    if (this.state.brick.id && playStatus === PlayButtonStatus.Valid) {
-      await this.props.saveBrick(this.state.brick);
-      this.props.history.push(map.playPreviewIntro(this.state.brick.id));
-    }
-  }
-
   getBaseUrl() {
     const {brickId} = this.props.match.params;
     if (brickId) {
-      return '/build/brick/' + brickId;
+      return map.ProposalBase(brickId);
     }
-    return map.ProposalBase;
+    return map.NewBrick;
   }
 
   render() {
+    const {brickId} = this.props.match.params;
+
+    if(!brickId) {
+      const callback = async () => {
+        if (this.state.brick.subjectId) {
+          const newBrick = await this.saveBrick(this.state.brick);
+          if(newBrick) {
+            const values = queryString.parse(this.props.location.search);
+            const isCore = this.getCore(values);
+            if (this.state.brick.subjectId) {
+              history.push(map.ProposalTitle(newBrick.id) + '?isCore=' + isCore);
+            } else {
+              history.push(map.ProposalSubject(newBrick.id) + '?isCore=' + isCore);
+            }
+          }
+        }
+      }
+      callback();
+    }
+
     const baseUrl = this.getBaseUrl();
     const { history } = this.props;
     const canEdit = canEditBrick(this.state.brick, this.props.user);
-
-    setBrillderTitle();
 
     if (this.state.saved && this.state.moving === false) {
       this.setState({moving: true});
@@ -293,33 +329,28 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const localBrick = this.state.brick;
     const { user } = this.props;
 
-    let playStatus = PlayButtonStatus.Hidden;
     const { brick } = this.props;
     if (brick && brick.questions && brick.questions.length > 0) {
-      playStatus = PlayButtonStatus.Valid;
       const parsedQuestions: Question[] = [];
       for (const question of brick.questions) {
         try {
           parseQuestion(question as ApiQuestion, parsedQuestions);
         } catch (e) { }
       }
-      parsedQuestions.forEach((q) => {
-        let isQuestionValid = validateQuestion(q as any);
-        if (!isQuestionValid) {
-          playStatus = PlayButtonStatus.Invalid;
-        }
-      });
     }
 
     return (
       <MuiThemeProvider>
         <div>
+          <Helmet>
+            <title>{getBrillderTitle()}</title>
+          </Helmet>
           <HomeButton onClick={() => this.openDialog()} />
           <div
             style={{ width: "100%", height: "100%" }}
             className="proposal-router"
           >
-            <Route path={[map.ProposalSubject, map.ProposalBase + '/subject']}>
+            <Route path={[baseUrl + '/subject']}>
               <SubjectPage
                 location={history.location}
                 baseUrl={baseUrl}
@@ -331,79 +362,57 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveData={this.setCoreAndSubject}
               />
             </Route>
-            <Route path={[map.ProposalTitle, map.ProposalBase + '/brick-title']}>
+            <Route path={[baseUrl + '/brick-title']}>
               <BrickTitle
                 user={user}
                 history={history}
                 baseUrl={baseUrl}
-                playStatus={playStatus}
                 parentState={localBrick}
                 canEdit={canEdit}
                 subjects={this.state.subjects}
                 saveTitles={this.setTitles}
                 setKeywords={this.setKeywords}
                 setAcademicLevel={this.setAcademicLevel}
-                saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={[map.ProposalLength, map.ProposalBase + '/length']}>
+            <Route path={[baseUrl + '/length']}>
               <BrickLength
+                updated={brick ? brick.updated : localBrick.updated}
                 baseUrl={baseUrl}
-                playStatus={playStatus}
                 length={localBrick.brickLength}
                 canEdit={canEdit}
                 saveLength={this.setLength}
                 saveBrick={this.setLength}
-                saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={[map.ProposalOpenQuestion, map.ProposalBase + '/open-question']}>
+            <Route path={[baseUrl + '/open-question']}>
               <OpenQuestion
+                updated={localBrick.updated}
                 baseUrl={baseUrl}
-                playStatus={playStatus}
                 history={history}
                 selectedQuestion={localBrick.openQuestion}
                 canEdit={canEdit}
                 saveOpenQuestion={this.setOpenQuestion}
-                saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={[map.ProposalBrief, map.ProposalBase + '/brief']}>
+            <Route path={[baseUrl + '/brief']}>
               <Brief
                 baseUrl={baseUrl}
-                playStatus={playStatus}
                 parentBrief={localBrick.brief}
+                updated={localBrick.updated}
                 canEdit={canEdit}
                 saveBrief={this.setBrief}
-                saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
-            <Route path={[map.ProposalPrep, map.ProposalBase + '/prep']}>
+            <Route path={[baseUrl + '/prep']}>
               <Prep
-                playStatus={playStatus}
+                updated={localBrick.updated}
                 parentPrep={localBrick.prep}
                 canEdit={canEdit}
                 baseUrl={baseUrl}
                 savePrep={this.setPrep}
                 brickLength={localBrick.brickLength}
                 saveBrick={this.setPrepAndSave}
-                saveAndPreview={() => this.saveAndPreview(playStatus)}
-              />
-            </Route>
-            
-            <Route path={[map.ProposalReview, map.ProposalBase + '/plan']}>
-              <ProposalReview
-                playStatus={playStatus}
-                brick={localBrick}
-                baseUrl={baseUrl}
-                history={history}
-                canEdit={canEdit}
-                user={user}
-                setBrickField={this.setBrickField}
-                setKeywords={this.setKeywords}
-                setAcademicLevel={this.setAcademicLevel}
-                saveBrick={this.saveAndMove}
-                saveAndPreview={() => this.saveAndPreview(playStatus)}
               />
             </Route>
             <VersionLabel />

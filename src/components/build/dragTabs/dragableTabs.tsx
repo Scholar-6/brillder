@@ -14,6 +14,8 @@ import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
 import { User } from "model/user";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
+import routes, {moveToPlan, moveToSynthesis} from "../routes";
+import PlanTab from "./PlanTab";
 
 interface Question {
   id: number;
@@ -23,17 +25,20 @@ interface Question {
 
 interface DragTabsProps {
   history: any;
+  brickId: number;
+  questionId: number;
   questions: Question[];
   user: User;
   comments: Comment[] | null;
   synthesis: string;
   isSynthesisPage: boolean;
+  isPlanValid: boolean;
   validationRequired: boolean;
   tutorialStep: TutorialStep;
   tutorialSkipped: boolean;
+  currentQuestionIndex: number;
   openSkipTutorial(): void;
   createNewQuestion(): void;
-  moveToSynthesis(): void;
   setQuestions(questions: any): void;
   selectQuestion(e: any): void;
   moveToLastQuestion(): void;
@@ -65,31 +70,33 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     if (e.target.tagName === "INPUT") { return; }
     if (e.target.tagName === "TEXTAREA") { return; }
     if (e.target.classList.contains("ck-content")) { return; }
+    if (e.target.classList.contains("ql-editor")) { return; }
+
+    const {pathname} = this.props.history.location;
 
     if (leftKeyPressed(e)) {
-      if (this.props.history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
-        let keyIndex = this.props.questions.length;
-        this.props.selectQuestion(keyIndex - 1)
+      if (pathname.slice(-routes.BuildSynthesisLastPrefix.length).toLowerCase() === routes.BuildSynthesisLastPrefix) {
+        this.props.selectQuestion(this.props.questions.length - 1);
       } else {
-        let keyIndex = this.props.questions.findIndex(q => q.active === true);
+        const keyIndex = this.props.questions.findIndex(q => q.id === this.props.questionId);
 
         if (keyIndex > 0) {
           this.props.selectQuestion(keyIndex - 1)
+        } else {
+          moveToPlan(this.props.history, this.props.brickId)
         }
       }
     } else if (rightKeyPressed(e)) {
-      let isSynthesisPage = false;
-      if (this.props.history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
-        isSynthesisPage = true;
-      }
-      
-      if (!isSynthesisPage) {
-        let keyIndex = this.props.questions.findIndex(q => q.active === true);
+      if (pathname.slice(-routes.BuildPlanLastPrefix.length) === routes.BuildPlanLastPrefix) {
+        this.props.selectQuestion(0);
+      } else if (pathname.slice(-routes.BuildSynthesisLastPrefix.length).toLowerCase() === routes.BuildSynthesisLastPrefix) {
+      } else {
+        const keyIndex = this.props.questions.findIndex(q => q.id === this.props.questionId);
   
         if (keyIndex < this.props.questions.length - 1) { 
           this.props.selectQuestion(keyIndex + 1);
         } else {
-          this.props.moveToSynthesis();
+          moveToSynthesis(this.props.history, this.props.brickId);
         }
       }
     }
@@ -100,6 +107,11 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     let isSynthesisPresent = true;
     const { props } = this;
     const { questions, isSynthesisPage, synthesis } = props;
+    
+    let isPlanPage = false;
+    if (this.props.history.location.pathname.slice(-5) === routes.BuildPlanLastPrefix) {
+      isPlanPage = true;
+    }
 
     const getHasSynthesisReplied = () => {
       const replies = props.comments
@@ -154,7 +166,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     ) => {
       let titleClassNames = "drag-tile-container";
       let cols = 2;
-      if (question.active) {
+      if (index === this.props.currentQuestionIndex) {
         titleClassNames += " active";
         cols = 3;
       }
@@ -165,7 +177,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       }
 
       let width = (100 * 2) / (comlumns - 2);
-      if (question.active) {
+      if (index === this.props.currentQuestionIndex) {
         width = (100 * 3) / (comlumns - 2);
       }
 
@@ -187,8 +199,9 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
         >
           <DragTab
             index={index}
+            deleteHidden={questions.length === 1}
             questionId={question.id}
-            active={question.active}
+            active={index === this.props.currentQuestionIndex}
             isValid={isValid}
             getHasReplied={getHasReplied}
             selectQuestion={props.selectQuestion}
@@ -198,10 +211,13 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       );
     };
 
-    let columns = questions.length * 2 + 3;
+    let columns = questions.length * 2 + 4;
 
-    if (isSynthesisPage) {
-      columns = questions.length * 2 + 2;
+    if (questions.length === 0) {
+      columns = 2 + 1.582 + 1.5555;
+      if (isPlanPage) {
+        columns = 1.58 + 1.5555 + 1.5555;
+      }
     }
 
     const setQuestions = (newQuestions: Question[], d: any) => {
@@ -225,7 +241,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
         <GridListTile
           onClick={() => {
             if (props.tutorialSkipped) {
-              props.moveToSynthesis();
+              moveToSynthesis(this.props.history, this.props.brickId);
             } else {
               props.openSkipTutorial();
             }
@@ -252,7 +268,6 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "space-around",
-          overflow: "hidden",
         }}
       >
         <GridList
@@ -262,10 +277,15 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             width: "100%",
             flexWrap: "nowrap",
             margin: "0 !important",
-            overflow: "hidden",
             transform: "translateZ(0)",
           }}
         >
+          <GridListTile
+            className={`drag-tile-container plan-tab ${isPlanPage ? 'active' : ''}`}
+            cols={isPlanPage ? 1.5555 : 2}
+          >
+            <PlanTab brickId={this.props.brickId} isValid={!props.validationRequired || props.isPlanValid} tutorialStep={props.tutorialStep} isActive={isPlanPage} history={this.props.history} />
+          </GridListTile>
           <ReactSortable
             list={questions}
             className="drag-container"

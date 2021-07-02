@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Snackbar, Hidden } from "@material-ui/core";
+import { Grid, Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
@@ -7,15 +7,13 @@ import axios from "axios";
 import "./loginPage.scss";
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
-import LoginLogo from './components/LoginLogo';
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import WrongLoginDialog from "./components/WrongLoginDialog";
-import DesktopLoginForm from "./desktop/DesktopLoginForm";
-import MobileEmailLogin from './MobileEmailLogin';
-import TermsLink from "components/baseComponents/TermsLink";
+import MobileEmailLogin from './phone/MobileEmailLogin';
 import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
 import { trackSignUp } from "services/matomo";
 import { isPhone } from "services/phone";
+import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -42,6 +40,9 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
   const [isLoginWrong, setLoginWrong] = React.useState(false);
 
+  const [emptyEmail, setEmptyEmail] = useState(false);
+  const [emailSended, setEmailSended] = useState(false);
+  
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
       return true;
@@ -125,7 +126,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
   };
 
   if (!isPhone()) {
-    return <EmailLoginDesktopPage history={props.history} match={props.match} />
+    return <EmailLoginDesktopPage history={props.history} match={props.match} />;
   }
 
   return (
@@ -136,41 +137,12 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       justify="center"
       alignItems="center"
     >
-      <Hidden only={["xs"]}>
-        <div className="choose-login-desktop">
-          <Grid container direction="row" className="first-row">
-            <div className="first-col"></div>
-            <div className="second-col"></div>
-            <div className="third-col"></div>
-          </Grid>
-          <Grid container direction="row" className="second-row">
-            <div className="first-col">
-              <LoginLogo />
-            </div>
-            <div className="second-col">
-              <DesktopLoginForm
-                email={email}
-                setEmail={setEmail}
-                password={password}
-                setPassword={setPassword}
-                passwordHidden={passwordHidden}
-                setHidden={setHidden}
-                handleSubmit={handleLoginSubmit}
-                register={() => register(email, password)}
-              />
-            </div>
-          </Grid>
-          <Grid container direction="row" className="third-row">
-            <div className="first-col"></div>
-            <TermsLink history={props.history}/>
-            <div className="third-col"></div>
-          </Grid>
-        </div>
-      </Hidden>
       <MobileEmailLogin
         history={props.history}
         email={email}
         setEmail={setEmail}
+        setEmailSended={setEmailSended}
+        setEmptyEmail={setEmptyEmail}
         password={password}
         setPassword={setPassword}
         passwordHidden={passwordHidden}
@@ -190,6 +162,14 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
         action={<React.Fragment></React.Fragment>}
       />
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
+      <TextDialog
+        isOpen={emailSended} close={() => setEmailSended(false)}
+        label="Now check your email for a password reset link."
+      />
+      <TextDialog
+        isOpen={emptyEmail} close={() => setEmptyEmail(false)}
+        label="You need to enter an email before clicking this."
+      />
     </Grid>
   );
 };

@@ -17,6 +17,8 @@ import { getPublishedBricks } from 'services/axios/brick';
 import map from 'components/map';
 import { useHistory } from 'react-router';
 import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
+import BrickTitle from '../BrickTitle';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 interface AssignPersonOrClassProps {
   classroomId: number;
@@ -34,14 +36,14 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [brick, setBrick] = React.useState(null as any);
   /*eslint-disable-next-line*/
   const [deadlineDate, setDeadline] = React.useState(null as null | Date);
-  const [haveDeadline, toggleDeadline] = React.useState(null as boolean | null);
+  const [haveDeadline, toggleDeadline] = React.useState(false);
 
   const history = useHistory();
 
   const loadBricks = async () => {
     const bricks = await getPublishedBricks();
     if (bricks) {
-      setBricks(bricks.filter(b => b.isCore == true));
+      setBricks(bricks.filter(b => b.isCore === true));
     }
   }
 
@@ -86,7 +88,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
           onChange={(e: any, v: any) => setBrick(v)}
           noOptionsText="Sorry, try typing something else"
           className="subject-autocomplete"
-          getOptionLabel={(option: any) => option.title}
+          getOptionLabel={(option: any) => stripHtml(option.title)}
           renderOption={(brick: Brick) => (
             <React.Fragment>
               <MenuItem>
@@ -99,7 +101,9 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
                     />
                   </SvgIcon>
                 </ListItemIcon>
-                <ListItemText>{brick.title}</ListItemText>
+                <ListItemText>
+                  <BrickTitle title={brick.title} />
+                </ListItemText>
               </MenuItem>
             </React.Fragment>
           )}

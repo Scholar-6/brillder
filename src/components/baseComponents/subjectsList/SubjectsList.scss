@@ -13,7 +13,7 @@
     padding-top: 0.5vh;
     padding-left: 1.2vw;
     padding-right: 1.2vw;
-
+  
     &:hover {
       background: var(--light-blue-alpha3);
     }
@@ -24,17 +24,28 @@
       .MuiFormControlLabel-root .MuiTypography-root {
         color: var(--theme-dark-blue) !important;
       }
-
       &:hover {
         opacity: 0.9;
       }
     }
   }
-}
+  .create-subject-button {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    padding-top: 0.4vh;
+    padding-bottom: 0.4vh;
 
-.subjects-filter-v3 {
-  height: calc(100vh - 5.834vw - 2vw - 2.4vw - 6.5vw - 2vw - 1.8vw) !important;
-  padding-bottom: 6vh !important;
+    svg {
+      margin-left: 1vw;
+      margin-right: 0.4vw;
+      height: 1.6vw;
+      width: 1.6vw;
+    }
+    &:hover {
+      background: var(--light-blue-alpha3);
+    }
+  }
 }
 
 .subject-border {
@@ -56,5 +67,11 @@
     width: 0.85vw;
     height: 0.85vw;
     border-radius: 50%;
+  }
+}
+
+.subjects-filter {
+  .MuiFormControlLabel-root .MuiTypography-root {
+    color: var(--white) !important;
   }
 }

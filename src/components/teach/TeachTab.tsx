@@ -1,4 +1,3 @@
-import SuccessDialog from "components/baseComponents/dialogs/SuccessDialog";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import map from "components/map";
 import React from "react";
@@ -15,7 +14,6 @@ const TeachTab: React.FC<TabProps> = ({ history, activeTab, assignmentsEnabled }
   const isActive = (t1: TeachActiveTab, t2: TeachActiveTab) => t1 === t2 ? 'active' : 'no-active';
   
   const [errorOpen, setErrorOpen] = React.useState(false);
-  const [remindersOpen, setRemindersOpen] = React.useState(false);
 
   const goToAssignments = React.useCallback(() => {
     if (assignmentsEnabled) {

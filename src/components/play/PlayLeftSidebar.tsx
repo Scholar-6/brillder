@@ -13,7 +13,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
 import { Brick } from "model/brick";
 import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
-import map from "components/map";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
 import axios from "axios";
 import ShareDialog from "./finalStep/dialogs/ShareDialog";
@@ -26,7 +25,9 @@ import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
+import routes, { playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
 
+declare var Brillder: any;
 
 interface SidebarProps {
   history: any;
@@ -110,14 +111,14 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   renderToggleButton() {
     if (this.props.sidebarRolledUp) {
-      if (this.isLive() || this.isProvisional() || this.isSynthesis() || this.isEnding()) {
-        return <div />
+      if (this.isCover()) {
+        return (
+          <div className="maximize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
+            <SpriteIcon name="maximize" className="active" />
+          </div>
+        );
       }
-      return (
-        <div className="minimize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
-          <SpriteIcon name="maximize" className="active" />
-        </div>
-      );
+      return <div />
     }
     return (
       <div className="maximize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
@@ -134,6 +135,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   moveToBuild() {
+    console.log('move to build')
     if (this.props.moveToBuild) {
       this.props.moveToBuild();
     }
@@ -152,7 +154,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     if (this.state.isAdapting) {
       return;
     }
-    this.setState({isAdapting: true});
+    this.setState({ isAdapting: true });
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/adapt/${this.props.brick.id}`,
       {},
@@ -166,7 +168,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     } else {
       console.log('can`t copy');
     }
-    this.setState({isAdapting: false})
+    this.setState({ isAdapting: false })
   }
 
   onAdaptDialog() {
@@ -177,6 +179,14 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return this.props.history.location.pathname.slice(-5) === '/live';
   }
 
+  isCover() {
+    return this.props.history.location.pathname.slice(-6) === '/cover';
+  }
+
+  isPreInvesigation() {
+    return this.props.history.location.pathname.search(PlayPreInvestigationLastPrefix) >= 0;
+  }
+
   isProvisional() {
     return this.props.history.location.pathname.slice(-17) === '/provisionalScore';
   }
@@ -185,18 +195,26 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return this.props.history.location.pathname.slice(-10) === '/synthesis';
   }
 
+  isPrep() {
+    return this.props.history.location.pathname.slice(-routes.PlayNewPrepLastPrefix.length) === routes.PlayNewPrepLastPrefix;
+  }
+
   isEnding() {
     return this.props.history.location.pathname.slice(-7) === '/ending';
   }
 
   renderPrepButton() {
-    const isLive = this.isLive();
+    const isLive = this.isLive() || this.isPreInvesigation();
     if (isLive && this.props.sidebarRolledUp) {
       return (
         <div>
-          <div className="prep-button" onClick={() => this.props.history.push(map.playIntro(this.props.brick.id))}>
+          <div className="prep-button" onClick={() => this.props.history.push(playNewPrep(this.props.brick.id))}>
             <SpriteIcon name="file-text" />
             <div>Prep</div>
+            <div className="absolute-circle">
+              <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg" />
+              <div className="prep-help-text">Click here to go back to Prep tasks</div>
+            </div>
           </div>
           {<div className="grey-line"><div /></div>}
         </div>
@@ -236,23 +254,31 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         return <div></div>;
       }
     }
+
+    const {sidebarRolledUp} = this.props;
+    const haveBriefCircles = this.props.history.location.pathname.slice(-routes.PlayBriefLastPrefix.length) === routes.PlayBriefLastPrefix;
+
     return (
       <div className="sidebar-button">
-        <HighlightTextButton
+        {(Brillder.testing.highlighter && (this.isPrep() || this.isSynthesis())) && <HighlightTextButton
           mode={this.props.mode}
-          sidebarRolledUp={this.props.sidebarRolledUp}
+          sidebarRolledUp={sidebarRolledUp}
+          haveCircle={haveBriefCircles}
           setHighlightMode={this.setHighlightMode.bind(this)}
-        />
+        />}
         {this.renderPrepButton()}
-        <ShareButton sidebarRolledUp={this.props.sidebarRolledUp} share={this.share.bind(this)} />
+        <ShareButton haveCircle={haveBriefCircles} sidebarRolledUp={sidebarRolledUp} share={this.share.bind(this)} />
         <AssignButton
-          sidebarRolledUp={this.props.sidebarRolledUp}
+          sidebarRolledUp={sidebarRolledUp}
           user={this.props.user}
+          haveCircle={haveBriefCircles}
+          history={this.props.history}
           openAssignDialog={this.openAssignDialog.bind(this)}
         />
         <AdaptButton
           user={this.props.user}
-          sidebarRolledUp={this.props.sidebarRolledUp}
+          haveCircle={haveBriefCircles}
+          sidebarRolledUp={sidebarRolledUp}
           onClick={this.onAdaptDialog.bind(this)}
         />
       </div>
@@ -275,7 +301,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       isAuthor = brick.author.id === this.props.user.id;
     } catch { }
 
-    const link = `/play/brick/${brick.id}/intro`;
+    const link = routes.playCover(brick.id);
 
     return (
       <div>
@@ -288,6 +314,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {canSee &&
           <AssignPersonOrClassDialog
             isOpen={this.state.isAssigningOpen}
+            history={this.props.history}
             success={(items: any[], failedItems: any[]) => {
               if (items.length > 0) {
                 this.setState({ isAssigningOpen: false, selectedItems: items, failedItems, isAssignedSuccessOpen: true });
@@ -333,7 +360,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         />
         <InviteDialog
           canEdit={true} brick={brick} isOpen={this.state.inviteOpen} hideAccess={true} isAuthor={isAuthor}
-          submit={name => this.setState({ inviteResult: { isOpen: true, name, accessGranted: false } })}
+          submit={name => {
+            this.setState({ inviteResult: { isOpen: true, name, accessGranted: false } })
+          }}
           close={() => this.setState({ inviteOpen: false })}
         />
         <InvitationSuccessDialog
