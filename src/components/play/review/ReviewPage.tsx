@@ -365,7 +365,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
               <div className="time-container">
                 <TimeProgressbar
                   onEnd={onEnd}
-                  endTime={null}
+                  endTime={props.endTime}
                   brickLength={brick.brickLength}
                   setEndTime={(a) => {
                     console.log("set end 3");
