@@ -1,11 +1,11 @@
 import React from "react";
 
 import { Question } from "model/question";
-import { ComponentAttempt } from "../model";
+import { ComponentAttempt } from "../../model";
 
-import FailedStep from '../baseComponents/step/FailedStep';
-import SuccessStep from '../baseComponents/step/SuccessStep';
-import AmberStep from '../baseComponents/step/AmberStep';
+import FailedStep from '../../baseComponents/step/FailedStep';
+import SuccessStep from '../../baseComponents/step/SuccessStep';
+import AmberStep from '../../baseComponents/step/AmberStep';
 
 interface ReviewStepperProps {
   attempts: ComponentAttempt<any>[];
