@@ -33,6 +33,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
     const attempt = attempts[questionIndex];
     questionIndex++;
     let index = questionIndex;
+    let isActive = false;
 
     let className = "step";
 
@@ -42,6 +43,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
       activeStep + 1 === questionIndex
     ) {
       className += " current";
+      isActive = true;
     }
 
     // render step for invalid question
@@ -78,6 +80,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
           <div className="underline">
             <div />
           </div>
+          {isActive && <div className="fixed-stepper-triangle" />}
         </div>
       </div>
     );
