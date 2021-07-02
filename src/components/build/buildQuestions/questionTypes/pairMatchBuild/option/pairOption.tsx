@@ -53,7 +53,9 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
   const setImage = (fileName: string) => {
     if (locked) { return; }
     answer.option = "";
-    answer.optionFile = fileName;
+    if (fileName) {
+      answer.optionFile = fileName;
+    }
     answer.optionType = QuestionValueType.Image;
     update();
     save();
@@ -63,7 +65,9 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     if (locked) { return; }
     answer.value = '';
     answer.valueFile = '';
-    answer.optionSoundFile = soundFile;
+    if (soundFile) {
+      answer.optionSoundFile = soundFile;
+    }
     answer.optionSoundCaption = caption;
     answer.optionType = QuestionValueType.Sound;
     update();
