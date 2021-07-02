@@ -24,7 +24,6 @@ interface AllSubjectsProps {
   history: any;
 
   user: User;
-  defaultSubject?: number;
   getUser(): Promise<void>;
 }
 
@@ -61,7 +60,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     if (subjects) {
       subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
       subjects = subjects.map(s => {
-        const checked = this.props.user.subjects.findIndex(s2 => s2.id === s.id) > -1 || (this.props.user.subjects.length <= 1 && s.id === this.props.defaultSubject);
+        const checked = this.props.user.subjects.findIndex(s2 => s2.id === s.id) > -1;
         return { ...s, checked: checked };
       });
       this.setState({ ...this.state, subjects });
@@ -97,7 +96,6 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
       lastName: user.lastName,
       subjects
     } as any;
-
 
     const saved = await updateUser(userToSave);
 
@@ -171,11 +169,10 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
 }
 
 
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user, defaultSubject: state.auth.defaultSubject });
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
 const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
 });
-
 
 export default connect(mapState, mapDispatch)(SelectSubjectPage);
