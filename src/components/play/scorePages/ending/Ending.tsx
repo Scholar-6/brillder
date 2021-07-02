@@ -189,7 +189,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       <EndingStepper
         questions={this.props.brick.questions}
         attempts={this.props.brickAttempt.answers}
-        handleStep={() => { }}
+        handleStep={() => {}}
       />
     );
   }
@@ -274,19 +274,33 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
               </div>
             </div>
             <div className="attempted-numbers">
-              <div>
-                <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
-                {numberOfFailed}
+              <div className={numberOfFailed === 0 ? "text-tab-gray" : ""}>
+                <SpriteIcon
+                  name="cancel-custom"
+                  className={
+                    numberOfFailed === 0 ? "text-tab-gray" : "text-orange"
+                  }
+                />
+                : {numberOfFailed}
               </div>
-              <div>
-                <SpriteIcon name="check-icon" className="text-yellow" />:{" "}
-                {numberOfyellow}
-              </div>
-              <div>
+              <div className={numberOfyellow === 0 ? "text-tab-gray" : ""}>
                 <SpriteIcon
                   name="check-icon"
-                  className="text-theme-green"
-                />: {numberOfcorrect}</div>
+                  className={
+                    numberOfyellow === 0 ? "text-tab-gray" : "text-yellow"
+                  }
+                />
+                : {numberOfyellow}
+              </div>
+              <div className={numberOfcorrect === 0 ? "text-tab-gray" : ""}>
+                <SpriteIcon
+                  name="check-icon"
+                  className={
+                    numberOfcorrect === 0 ? "text-tab-gray" : "text-theme-green"
+                  }
+                />
+                : {numberOfcorrect}
+              </div>
             </div>
             <div className="attempted-text">
               Attempted: {attempted} | {answers.length}

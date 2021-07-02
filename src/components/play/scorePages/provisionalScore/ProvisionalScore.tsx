@@ -172,7 +172,7 @@ class ProvisionalScore extends React.Component<
                 <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
                 {attempts.length - numberOfcorrect}
               </div>
-              <div>
+              <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
                 <SpriteIcon
                   name="check-icon"
                   className={numberOfcorrect >= 1 ? "text-theme-green" : "text-tab-gray"}

@@ -12,6 +12,9 @@ $height: 20vw;
 $play-footer-height: $mobile-menu-height;
 $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 .play-preview-pages {
+  figcaption {
+    font-size: 4vw;
+  }
   .ge-phone-title {
     margin-top: 1vh;
     display: flex;
@@ -38,7 +41,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     font-family: $font-family-regular-italic;
   }
   .fixed-upper-b-title {
-    height: 7%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,7 +56,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     }
   }
   .play-pre-prep-page {
-    height: 93% !important;
+    height: calc(100% - 4vh - 5vw) !important;
     .icon-container {
       height: 55%;
       display: flex;
@@ -117,7 +119,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     text-align: center;
     .introduction-page {
       position: relative;
-      height: 93%;
+      height: calc(100% - 4vh - 7.5vw) !important;
     }
     .ss-phone-before-title {
       height: 13%;
@@ -1013,8 +1015,10 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             width: 100%;
             display: flex;
             color: var(--white);
+            font-family: $font-family-bold;
             p,
             span {
+              font-family: $font-family-bold;
               font-size: 5vw !important;
               width: 100%;
               text-align: center;
@@ -1793,7 +1797,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 .mobile-synthesis-page {
   .fixed-upper-b-title {
     font-size: 6vw;
-    min-height: 10vw;
   }
 }
 
@@ -1805,7 +1808,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   .sorted-row
   .brick-row-container
   .brick-container.play-pre-prep-page {
-  height: 93% !important;
+  height: calc(100% - 4vh - 5vw) !important;
 }
 
 .play-preview-pages
@@ -1838,13 +1841,14 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   position: absolute;
   padding-left: 1.5vw !important;
   padding-right: 1.5vw !important;
+  top: 12vw;
   height: 17.2vw !important;
   left: 0;
   background: transparent !important;
   .fixed-stepper-triangle {
     position: absolute;
     z-index: 100;
-    top: 14.3vw !important;
+    top: 12.3vw !important;
     margin-left: 2.1vw;
     width: 0;
     height: 0;
