@@ -2,7 +2,7 @@ import Quill from "quill";
 import Delta from "quill-delta";
 import { Quill as GlobalQuill } from "react-quill";
 
-export const YOUTUBE_REGEXP = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-_]*)(&(amp;)?[\w\?=]*)?/g;
+export const YOUTUBE_REGEXP = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-_]*)(&(amp;)?[\w?=]*)?/g;
 const EMBED_REGEXP = /https:\/\/www.youtube.com\/embed\/([\w\-_]*)/;
 
 const BlockEmbed = GlobalQuill.import("blots/block/embed");
