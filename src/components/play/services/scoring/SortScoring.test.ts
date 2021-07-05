@@ -6,15 +6,15 @@ import mark from './SortScoring';
 const mockComponent: SortComponent = {
     type: 127,
     categories: [
-        { name: "A", height: "Height", answers: [
-            { answerType: QuestionValueType.String, value: "A", valueFile: "" },
+        { name: "0", height: "Height", answers: [
+            { answerType: QuestionValueType.String, value: "0_0", valueFile: "" },
         ] },
-        { name: "B", height: "Height", answers: [
-            { answerType: QuestionValueType.String, value: "B", valueFile: "" },
+        { name: "1", height: "Height", answers: [
+            { answerType: QuestionValueType.String, value: "1_0", valueFile: "" },
         ] },
-        { name: "C", height: "Height", answers: [
-            { answerType: QuestionValueType.String, value: "C", valueFile: "" },
-            { answerType: QuestionValueType.String, value: "D", valueFile: "" },
+        { name: "2", height: "Height", answers: [
+            { answerType: QuestionValueType.String, value: "2_0", valueFile: "" },
+            { answerType: QuestionValueType.String, value: "2_1", valueFile: "" },
         ] },
     ]
 } as SortComponent;
@@ -25,8 +25,8 @@ describe("sort scoring", () => {
         // arrange
         const mockAttempt = {
             answer: {
-                "0_0": 0,
-                "1_0": 1,
+                "0": 0,
+                "1": 1,
                 "2_0": 2,
                 "2_1": 2,
             }
@@ -45,9 +45,9 @@ describe("sort scoring", () => {
         const mockAttempt = {
             answer: {
                 "2_1": 1,
-                "1_4": 2,
+                "0": 2,
                 "2_2": 1,
-                "2_3": 0
+                "1": 0
             }
         } as ComponentAttempt<any>;
 
@@ -63,10 +63,10 @@ describe("sort scoring", () => {
     it("should mark a blank answer with 0", () => {
         const mockAttempt = {
             answer: {
-                "A": 3,
-                "B": 3,
-                "C": 3,
-                "D": 3
+                "0": 3,
+                "1": 3,
+                "2_0": 3,
+                "2_1": 3
             }
         } as ComponentAttempt<any>;
 
@@ -82,10 +82,10 @@ describe("sort scoring", () => {
     it("should mark an attempted answer with 1 for each correctly placed", () => {
         const mockAttempt = {
             answer: {
-                "0.0": 0,
-                "1.0": 1,
-                "0.1": 3,
-                "1.1": 3
+                "0": 0,
+                "1": 1,
+                "2_0": 1,
+                "2_1": 3
             }
         } as ComponentAttempt<any>;
 
