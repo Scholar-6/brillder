@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './MobileUsernamePage.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { User, UserType } from 'model/user';
+import { User } from 'model/user';
 import LabelTyping from 'components/baseComponents/LabelTyping';
 import map from 'components/map';
 
@@ -16,9 +16,6 @@ interface UsernamePageProps {
 const MobileUsernamePage: React.FC<UsernamePageProps> = props => {
   const { user } = props;
   const { username } = user;
-
-  const [labelFinished, setLabelFinished] = React.useState(false);
-  const [secondFinished, setSecondFinished] = React.useState(false);
 
   const move = () => props.history.push(map.SelectSubjectPage);
 

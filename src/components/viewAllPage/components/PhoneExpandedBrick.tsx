@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Brick, BrickLengthEnum } from "model/brick";
+import { Brick } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import routes from "components/play/routes";
 
