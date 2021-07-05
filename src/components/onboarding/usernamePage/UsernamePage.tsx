@@ -40,7 +40,6 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
 
   const [animationStep, setStep] = React.useState(AnimationStep.PageLoaded);
   const [submited, setSubmited] = React.useState(null as boolean | null);
-  const [username, setUsername] = React.useState('');
   const [firstName, setFirstName] = React.useState({ value: user.firstName ? user.firstName : '', valid: null } as InputState);
   const [lastName, setLastName] = React.useState({ value: user.lastName ? user.lastName : '', valid: null } as InputState);
 
@@ -78,9 +77,8 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     setSubmited(false);
 
     if (saved) {
-      const updatedUser = await props.getUser();
+      await props.getUser();
       setSubmited(true);
-      setUsername(updatedUser.username);
       if (!(isIPad13 || isTablet) && isMobile) {
         props.history.push(map.MobileUsername);
         return;
@@ -116,14 +114,12 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
       return <div />
     }
     return <SpriteIcon name="edit-outline" className="back-to-type" onClick={() => {
-      setUsername('');
       setSubmited(null);
     }} />
   }
 
   const clear = () => {
     setSubmited(null);
-    setUsername('');
   }
 
   return (
