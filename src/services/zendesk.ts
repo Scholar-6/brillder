@@ -178,8 +178,8 @@ function setZendeskMode(iframe: any, location: any) {
     return;
   }
   // #1332 small mode only in viewAll and manageUsers pages
-  // let isBigMode = true;
-  // let isIgnorePage = false;
+  let isBigMode = true;
+  let isIgnorePage = false;
   if (isViewAllPage(pathname) || isManageUsersPage(pathname) || isProfilePage(pathname)) {
     isBigMode = false;
   }
