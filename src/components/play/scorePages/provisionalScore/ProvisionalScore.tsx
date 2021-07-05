@@ -114,7 +114,7 @@ class ProvisionalScore extends React.Component<
   moveToSynthesis() {
     let link = "";
     if (this.props.isPlayPreview) {
-      link = previewRoutes.previewPreSynthesis(this.props.brick.id);
+      link = previewRoutes.previewSynthesis(this.props.brick.id);
     } else {
       link = routes.playPreSynthesis(this.props.brick.id);
     }
