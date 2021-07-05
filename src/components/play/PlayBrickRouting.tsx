@@ -97,6 +97,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   let initLiveEndTime:any = null;
   let initReviewEndTime:any = null;
   let initAttemptId:any = null;
+  let initAttemptMongoId:any = null;
   let initPrepEndTime:any = undefined;
 
   const cashAttemptString = GetCashedPlayAttempt();
@@ -118,6 +119,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       initLiveEndTime = cashAttempt.liveEndTime ? moment(cashAttempt.liveEndTime) : null;
       initReviewEndTime = cashAttempt.reviewEndTime ? moment(cashAttempt.reviewEndTime) : null;
       initAttemptId = cashAttempt.attemptId;
+      initAttemptMongoId = cashAttempt.attemptMongoId;
       initStatus = parseInt(cashAttempt.status);
       if (cashAttempt.prepEndTime) {
         initPrepEndTime = moment(cashAttempt.prepEndTime);
@@ -153,6 +155,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [liveEndTime, setLiveEndTime] = React.useState(initLiveEndTime);
   const [reviewEndTime, setReviewEndTime] = React.useState(initReviewEndTime);
   const [attemptId, setAttemptId] = React.useState<string>(initAttemptId);
+  const [attemptMongoId, setAttemptMongoId] = React.useState<string>(initAttemptMongoId);
 
 
   const [unauthorizedOpen, setUnauthorized] = React.useState(false);
@@ -187,6 +190,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       attempts,
       reviewAttempts,
       attemptId,
+      attemptMongoId,
       prepEndTime,
       reviewEndTime,
       liveEndTime,
@@ -262,7 +266,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       if (!props.user.hasPlayedBrick && props.isAuthenticated === isAuthenticated.True) {
         await props.getUser();
       }
-      setAttemptId(response.data);
+      setAttemptId(response.data.elasticId);
+      setAttemptMongoId(response.data.mongoId);
     }).catch(() => {
       setFailed(true);
     });
@@ -272,7 +277,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if(!attemptId) {
       return createBrickAttempt(brickAttempt);
     }
-
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
@@ -280,6 +284,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (assignmentId) {
       brickAttempt.assignmentId = assignmentId;
     }
+    brickAttempt.mongoId = attemptMongoId;
     return axios.put(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
       { id: attemptId, userId: props.user.id, body: brickAttempt },
@@ -289,7 +294,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       if (!props.user.hasPlayedBrick && props.isAuthenticated === isAuthenticated.True) {
         await props.getUser();
       }
-      setAttemptId(response.data);
+      setAttemptId(response.data.elasticId);
+      setAttemptMongoId(response.data.mongoId);
     }).catch(() => {
       setFailed(true);
     });
