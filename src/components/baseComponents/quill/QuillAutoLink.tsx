@@ -105,19 +105,23 @@ export default class AutoLink {
                       continue;
                     }
                     const split = str.split(match);
-                    const beforeLink = split.shift();
+                    const beforeLink = split.shift() ?? "";
                     ops.push({ insert: beforeLink });
+                    ops.push({ insert: "\n" });
                     ops.push({ insert: { "link-embed": { url: match, title: "Loading...", description: "", image: "" } } });
+                    ops.push({ insert: "\n" });
                     str = split.join(match);
 
                     getLinkMetadata(match).then((linkMetadata) => {
                       if(!selection) return;
-                      const [embed, offset] = quill.getLeaf(selection.index + str.length);
+                      const [embed] = quill.getLeaf(selection.index + beforeLink.length + 1);
+                      console.log(selection.index, beforeLink.length, embed);
                       embed.replaceWith("link-embed", { ...linkMetadata });
                     });
                 }
                 ops.push({ insert: str });
                 delta.ops = ops;
+                console.log(ops);
             }
             return delta;
         });

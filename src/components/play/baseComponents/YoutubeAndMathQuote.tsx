@@ -37,7 +37,6 @@ class YoutubeAndMathInHtmlQuote extends Component<MathHtmlProps> {
       <div className="youtube-video-session">
         {
           arr.map((el:any, i:number) => {
-            console.log(el);
             let res = isMathJax(el);
             const latex = isLatex(el);
             if (res) {
@@ -49,7 +48,6 @@ class YoutubeAndMathInHtmlQuote extends Component<MathHtmlProps> {
             if (res) {
               return <YoutubeLink key={i} value={el} />;
             }
-            console.log(el);
             return <div key={i} dangerouslySetInnerHTML={{ __html: el}} />
           })
         }
