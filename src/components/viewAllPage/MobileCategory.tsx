@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import queryString from "query-string";
 import "swiper/swiper.scss";
 
-import { Brick, Subject } from "model/brick";
+import { Brick, Subject, SubjectGroup, SubjectGroupNames } from "model/brick";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
@@ -21,12 +21,14 @@ import { getPublicBricks, searchPublicBricks } from "services/axios/brick";
 import routes from "components/play/routes";
 import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import { getSubjects } from "services/axios/subject";
+import map from "components/map";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
 enum Tab {
   MySubjects,
   AllSubjects,
+  SubjectCategory
 }
 
 interface SubjectWithBricks extends Subject {
@@ -61,9 +63,11 @@ interface BricksListState {
   isViewAll: boolean;
   mySubjects: SubjectWithBricks[];
   subjects: SubjectWithBricks[];
+  categorySubjects: SubjectWithBricks[];
   subjectId: number;
   shown: boolean;
   activeTab: Tab;
+  subjectGroup: SubjectGroup | null;
 }
 
 class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
@@ -82,16 +86,32 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       //this.props.history.push(map.SubjectCategories);
     }
 
+    if (!this.props.user) {
+      if (!values.subjectGroup) {
+        this.props.history.push(map.SubjectCategories);
+      }
+    }
+
     let isViewAll = false;
     if (values.isViewAll) {
       isViewAll = true;
+    }
+
+    let subjectGroup = null;
+    if (values.subjectGroup) {
+      subjectGroup = parseInt(values.subjectGroup as string) as SubjectGroup;
     }
 
     let subjectId = -1;
     if (values.subjectId) {
       try {
         subjectId = parseInt(values.subjectId as string);
-      } catch {}
+      } catch { }
+    }
+
+    let initTab = Tab.MySubjects;
+    if (!this.props.user) {
+      initTab = Tab.SubjectCategory;
     }
 
     this.state = {
@@ -102,12 +122,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       isViewAll,
       mySubjects: [],
       subjects: [],
+      categorySubjects: [],
       subjectId,
-      activeTab: Tab.MySubjects,
+      activeTab: initTab,
+      subjectGroup,
       shown: false,
     };
 
-    this.loadData();
+    this.loadData(subjectGroup);
   }
 
   addBrickBySubject(subjects: SubjectWithBricks[], brick: Brick) {
@@ -117,15 +139,24 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  async loadData() {
+  async loadData(subjectGroup: SubjectGroup | null) {
     const bricks = await getPublicBricks();
     const subjects = (await getSubjects()) as SubjectWithBricks[] | null;
     if (bricks && subjects) {
       let finalBricks = bricks;
       let mySubjects: SubjectWithBricks[] = [];
+      let categorySubjects: SubjectWithBricks[] = [];
 
-      for (let ss of this.props.user.subjects) {
-        mySubjects.push({ ...ss, bricks: [] });
+      if (this.props.user) {
+        for (let ss of this.props.user.subjects) {
+          mySubjects.push({ ...ss, bricks: [] });
+        }
+      } else {
+        for (let s of subjects) {
+          if (s.group === subjectGroup) {
+            categorySubjects.push(s);
+          }
+        }
       }
 
       for (let s of subjects) {
@@ -139,6 +170,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       for (let brick of bricks) {
         this.addBrickBySubject(subjects, brick);
         this.addBrickBySubject(mySubjects, brick);
+        this.addBrickBySubject(categorySubjects, brick);
       }
       this.setState({
         ...this.state,
@@ -147,6 +179,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         mySubjects,
         shown: true,
         finalBricks,
+        categorySubjects
       });
     } else {
       this.props.requestFailed("Can`t get bricks");
@@ -351,6 +384,10 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       subjects = this.state.subjects;
     }
 
+    if (!this.props.user) {
+      subjects = this.state.categorySubjects;
+    }
+
     const expandedBrick = this.state.finalBricks.find(
       (b) => b.expanded === true
     );
@@ -376,25 +413,31 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           <div className="mobile-scroll-bricks phone-top-bricks16x9">
             {this.renderMobileBricks(expandedBrick)}
           </div>
-          <div className="ss-tabs-container">
-            <div
-              className={`ss-tab-1 ${
-                this.state.activeTab === Tab.MySubjects ? "active" : ""
-              }`}
-              onClick={this.setMySubjectsTab.bind(this)}
-            >
-              <SpriteIcon name="user-custom" />
-              My Subjects
+          {this.props.user ?
+            <div className="ss-tabs-container">
+              <div
+                className={`ss-tab-1 ${this.state.activeTab === Tab.MySubjects ? "active" : ""
+                  }`}
+                onClick={this.setMySubjectsTab.bind(this)}
+              >
+                <SpriteIcon name="user-custom" />
+                My Subjects
+              </div>
+              <div
+                className={`ss-tab-2 ${this.state.activeTab === Tab.AllSubjects ? "active" : ""
+                  }`}
+                onClick={this.setAllSubjectsTab.bind(this)}
+              >
+                All Subjects
+              </div>
             </div>
-            <div
-              className={`ss-tab-2 ${
-                this.state.activeTab === Tab.AllSubjects ? "active" : ""
-              }`}
-              onClick={this.setAllSubjectsTab.bind(this)}
-            >
-              All Subjects
+            :
+            <div className="ss-tabs-container">
+              <div className="ss-tab-1 active">
+                {this.state.subjectGroup ? SubjectGroupNames[this.state.subjectGroup] : 'Subject Category'}
+              </div>
             </div>
-          </div>
+          }
           <div className="va-bricks-container">{this.renderSubjects(subjects)}</div>
         </div>
       </React.Suspense>
