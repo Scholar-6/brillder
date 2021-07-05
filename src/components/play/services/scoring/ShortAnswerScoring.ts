@@ -13,7 +13,7 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
         const correctAnswer = stripHtml(answer.value);
         if(correctAnswer.toLowerCase().length<4){
             //2 marks for each of the first 3 symbols
-            attempt.maxMarks += 2*correctAnswer.toLowerCase().length;
+            attempt.maxMarks += 2 * correctAnswer.toLowerCase().length;
         }
         else{
             //2 marks for each of the first 3 symbols and 1 for each after
@@ -60,7 +60,6 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
             attempt.correct = false;
         } 
     });
-
     return attempt;
 }
 
