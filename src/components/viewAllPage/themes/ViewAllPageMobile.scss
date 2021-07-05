@@ -458,6 +458,27 @@
     height: calc(100% - 56.5vw - 6vh - 74px);
     width: 100vw;
     background: var(--white);
+    padding-top: 2vh;
+    .va-level-container {
+      display: flex;
+      .va-round-level {
+        border-radius: 50%;
+        margin: 1vw;
+        width: 9vw;
+        height: 9vw;
+        border: 0.8vw solid var(--tab-gray);
+        background: var(--white);
+        color: var(--tab-gray);
+        display: flex;
+        font-size: 5.5vw;
+        align-items: center;
+        justify-content: center;
+        &.active {
+          background: var(--tab-gray);
+          color: var(--white);
+        }
+      }
+    }
     .bricks-scroll-row {
       overflow-x: scroll;
     }
