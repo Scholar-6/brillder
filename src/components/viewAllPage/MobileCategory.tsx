@@ -408,7 +408,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               {s.bricks.length > 0
                 ? this.renderBricks(s.bricks)
                 : this.renderEmptySubject()}
-              {expandedBrick && <PhoneExpandedBrick brick={expandedBrick} />}
+              {expandedBrick && <PhoneExpandedBrick brick={expandedBrick} history={this.props.history} />}
             </div>
           );
         })}
@@ -428,6 +428,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       brickGroups.push(bricks.filter(b => b.academicLevel === AcademicLevel.Fourth));
 
       brickGroups = brickGroups.filter(b => b.length > 0);
+
+      const expandedBrick = bricks.find(b => b.expanded);
 
       return (
         <div>
@@ -453,6 +455,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             </div>}
             {this.renderBricks(bs)}
           </div>)}
+          {expandedBrick && <PhoneExpandedBrick brick={expandedBrick} history={this.props.history} />}
         </div>
       );
     }
