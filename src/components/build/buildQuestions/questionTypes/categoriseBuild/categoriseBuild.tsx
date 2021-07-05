@@ -124,7 +124,9 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     const setImage = (fileName: string) => {
       if (locked) { return; }
       answer.value = "";
-      answer.valueFile = fileName;
+      if (fileName) {
+        answer.valueFile = fileName;
+      }
       answer.answerType = QuestionValueType.Image;
       update();
       save();

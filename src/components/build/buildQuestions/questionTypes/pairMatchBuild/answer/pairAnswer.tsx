@@ -86,7 +86,9 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     if (locked) { return; }
     answer.value = "";
     answer.valueSoundFile = "";
-    answer.valueFile = fileName;
+    if (fileName) {
+      answer.valueFile = fileName;
+    }
     answer.answerType = 2;
     update();
     save();
