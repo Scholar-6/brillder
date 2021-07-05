@@ -17,12 +17,12 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
 import { User } from 'model/user';
 
-import Introduction from 'components/play/introduction/Introduction';
+import Introduction from 'components/play/newPrep/PhonePrep';
 import Live from 'components/play/live/Live';
-import ProvisionalScore from 'components/play/provisionalScore/ProvisionalScore';
+import ProvisionalScore from 'components/play/scorePages/provisionalScore/ProvisionalScore';
 import Synthesis from 'components/play/synthesis/Synthesis';
 import Review from 'components/play/review/ReviewPage';
-import Ending from 'components/play/ending/Ending'
+import Ending from 'components/play/scorePages/ending/Ending'
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
