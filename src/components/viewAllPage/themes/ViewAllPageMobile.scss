@@ -1,27 +1,34 @@
 @import "src/assets/sass/partials/variables";
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
+
 .dashboard-page {
   overflow: hidden;
   font-family: $font-family-regular;
+
   &.expanded {
     .mobile-scroll-bricks {
       height: 39.5vh;
     }
   }
+
   .sorted-row {
     border-top-left-radius: 12vw;
+
     .sort-and-filter-container {
       margin-top: 0.5vh;
+
       .view-all-sort-box {
         padding-top: 0 !important;
         padding-bottom: 0 !important;
         @extend %flexToXCenter;
       }
+
       .subjects-toggle {
         width: 100%;
         display: flex;
         flex-direction: row;
+
         .toggle-button {
           cursor: pointer;
           display: flex;
@@ -38,58 +45,72 @@
           padding-bottom: 0.25vh;
           color: #8a8d90;
           background: var(--tab-gray);
+
           &.active {
             color: var(--theme-dark-blue);
             background: var(--white);
           }
+
           &:nth-child(odd) {
             margin-right: 0.4%;
           }
+
           &:nth-child(even) {
             margin-left: 0.4%;
           }
         }
+
         .my-subjects {
           display: flex;
           flex-direction: row;
+
           div {
             display: flex;
             flex-direction: column;
+
             &.icon-container {
               margin-left: 1.3vw;
               margin-right: 0.7vw;
               width: 20%;
             }
+
             &.text-container {
               @extend %flexCenter;
             }
+
             svg {
               height: 1.7vw;
               width: 1.7vw;
             }
           }
         }
+
         .all-subjects {
           @extend %flexCenter;
         }
       }
+
       .scroll-buttons {
         @extend %flexCenter;
         background: var(--white);
         height: 2vw;
+
         svg {
           cursor: pointer;
           width: 1.7vw;
           height: 1.7vw;
           color: var(--theme-orange);
+
           &.disabled {
             color: var(--tab-gray);
           }
         }
       }
     }
+
     .brick-row-container {
       background-color: var(--white);
+
       .subjects-column {
         display: flex;
         margin-left: 2vw;
@@ -98,12 +119,14 @@
         overflow: auto;
         margin: 5vh 0 7vh 0;
         height: calc(100vh - 12vh);
+
         .subject-item {
           transition: all 300ms ease-out;
           cursor: pointer;
           position: relative;
           background: var(--white) !important;
           color: var(--theme-dark-blue) !important;
+
           @include phone_and_tabletL {
             padding-left: 10vw;
             width: 100%;
@@ -111,24 +134,29 @@
             margin: 0;
             border-bottom: 1px solid var(--tab-gray);
           }
+
           .round-circle-container {
             left: 3vw;
             position: absolute;
             height: 100%;
             @extend %flexCenter;
+
             .round-circle {
               border-radius: 50%;
               width: 5vw;
               height: 5vw;
             }
+
             &.icon {
               color: var(--theme-orange);
+
               svg {
                 width: 5vw;
                 height: 5vw;
               }
             }
           }
+
           .subject-name {
             @include phone_and_tabletL {
               padding: 1vh 0;
@@ -137,6 +165,7 @@
           }
         }
       }
+
       .bricks-list-container {
         &.bricks-contaoner-mobile {
           .bricks-list {
@@ -152,6 +181,7 @@
       }
     }
   }
+
   .desktop-no-bricks {
     .no-found-help-text {
       color: var(--theme-dark-blue);
@@ -161,56 +191,68 @@
       margin-bottom: 1.9vh;
     }
   }
+
   .view-all-toggle {
     position: absolute;
   }
+
   .bricks-no-found {
     text-align: center;
     width: 100%;
     font-size: 9vw;
     color: var(--theme-dark-blue);
   }
+
   .main-title {
     @extend %transitionAll300;
     max-width: 55vw;
     white-space: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
+
     &.subject-title {
       letter-spacing: 0.4vw;
       margin-top: 1.2vw;
       font-size: 2.9vw;
     }
   }
+
   .no-found {
     margin-left: 0.9vw;
     margin-bottom: 0 !important;
   }
+
   .found {
     margin-left: 0.9vw;
   }
+
   .create-button,
   .recomend-button {
     color: var(--theme-dark-blue);
     font-size: 1.5vw;
     font-family: $font-family-bold;
     @extend %flexCenter;
+
     svg {
       color: var(--theme-orange);
       width: 4vw;
     }
   }
+
   .create-button {
     cursor: pointer;
     margin-left: 12vw;
+
     svg {
       @extend %transitionAll300;
       margin-top: calc(#{$bricks-height / 90});
       max-height: calc(#{$bricks-height / 12});
     }
   }
+
   .recomend-button {
     margin-left: 10vw;
+
     svg {
       stroke-width: 2;
       margin-top: calc(#{$bricks-height / 90});
@@ -224,6 +266,7 @@
     height: calc(5vw + 2.6vh);
     margin-bottom: 0 !important;
   }
+
   .bricks-list-container {
     height: calc(100vh - 39.5vh - 6vw - 5vw - 74px);
     overflow-y: scroll;
@@ -234,8 +277,10 @@
 .main-listing.dashboard-page .mobile-scroll-bricks {
   .swiper-container {
     height: 100% !important;
+
     .swiper-slide {
       width: 100vw !important;
+
       .week-brick {
         color: var(--white);
         text-align: center;
@@ -246,32 +291,40 @@
         font-family: $font-family-bold;
       }
     }
+
     .brick-circle-container {
       margin-bottom: 2vh;
+
       .round-button {
         width: 25vw !important;
         height: 25vw !important;
       }
     }
+
     .label-circle-text {
       font-size: 10vw !important;
     }
+
     .short-description {
       background: none !important;
       padding: 4vh 8vw 0 8vw;
       height: 100% !important;
       width: 100vw !important;
+
       .centered-brick-description {
         display: flex;
         align-items: flex-start;
         justify-content: center;
       }
+
       .short-brick-info {
         max-width: 57vw;
         min-width: 43vw;
+
         .link-info {
           font-size: 4vw !important;
         }
+
         .link-description {
           font-size: 4vw !important;
         }
@@ -283,18 +336,23 @@
 // bricks list (bottom)
 .main-listing.dashboard-page .bricks-list-container {
   padding-top: 0 !important;
+
   &.no-bottom-padding {
     padding-bottom: 0 !important;
   }
+
   .brick-container {
     margin-bottom: 0 !important;
     padding: 0 !important;
+
     .short-description {
       padding: 0 4vw !important;
+
       .short-brick-info {
         max-width: 78vw !important;
         padding-top: 1.5vw;
         padding-bottom: 1.5vw;
+
         .key-words-play {
           max-width: 78vw;
           display: block;
@@ -303,13 +361,16 @@
           text-overflow: ellipsis;
         }
       }
+
       .label-circle-text {
         font-size: 6vw !important;
       }
     }
+
     // expanded
     .short-description.mobile-expanded {
       background: var(--tab-gray) !important;
+
       .play-button-link {
         svg {
           color: var(--theme-dark-blue) !important;
@@ -317,16 +378,19 @@
       }
     }
   }
+
   .short-description.subject {
     font-size: 5vw !important;
     padding-top: 1vh !important;
     padding-bottom: 1vh !important;
     border-top: 1px solid var(--tab-gray);
     border-bottom: 1px solid var(--tab-gray);
+
     .left-brick-circle {
       width: 5vw !important;
       height: 5vw !important;
     }
+
     span {
       margin-left: 5vw;
     }
@@ -345,8 +409,10 @@
 // all subjects page height
 .dashboard-all-subjects {
   height: calc(100% - 74px) !important;
+
   .brick-row-container {
     height: 100%;
+
     .subjects-column {
       margin: 0 !important;
       height: 100% !important;
@@ -358,6 +424,7 @@
   .mobile-scroll-bricks.phone-top-bricks16x9 {
     $height: 56.5vw;
     height: $height;
+
     .week-brick {
       color: var(--white);
       text-align: center;
@@ -368,10 +435,12 @@
       font-family: $font-family-bold;
       z-index: 16;
     }
+
     .swiper-container .swiper-slide .phone-top-brick-16x9 {
       position: relative;
       height: $height;
       padding: 0 !important;
+
       .p-blue-background {
         position: absolute;
         height: 100%;
@@ -379,19 +448,23 @@
         opacity: 0.5;
         background: var(--theme-dark-blue);
       }
+
       .p-cover-image {
         width: 100%;
       }
+
       .left-brick-circle {
         top: 3vw;
         right: 3vw;
         position: absolute;
+
         .round-button {
           $size: 14vw;
           width: $size !important;
           height: $size !important;
         }
       }
+
       .bottom-description-color,
       .bottom-description {
         position: absolute;
@@ -399,11 +472,13 @@
         height: 12vw;
         width: 100%;
       }
+
       .bottom-description-color {
         opacity: 0.8;
         background: var(--tab-gray);
         z-index: 10;
       }
+
       .bottom-description {
         color: var(--theme-dark-blue);
         font-family: $font-family-bold;
@@ -414,10 +489,12 @@
       }
     }
   }
+
   .ss-tabs-container {
     background: rgba(0, 28, 88, 0.22);
     $radius: 2vw;
     display: flex;
+
     .ss-tab-1,
     .ss-tab-2 {
       height: 6vh;
@@ -429,15 +506,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
+
       &.active {
         color: var(--theme-dark-blue);
         background: var(--white);
       }
     }
+
     .ss-tab-1 {
       margin-right: 1vw;
       border-top-right-radius: $radius;
       $img-size: 7vw;
+
       svg {
         width: $img-size;
         height: $img-size;
@@ -445,11 +525,13 @@
         margin-right: 2vw;
       }
     }
+
     .ss-tab-2 {
       margin-left: 1vw;
       border-top-left-radius: $radius;
     }
   }
+
   .va-bricks-container {
     overflow-y: scroll;
     padding-bottom: 2vh;
@@ -459,9 +541,12 @@
     width: 100vw;
     background: var(--white);
     padding-top: 2vh;
+
     .va-level-container {
       display: flex;
-      .va-round-level, .va-level-count {
+
+      .va-round-level,
+      .va-level-count {
         border-radius: 50%;
         margin: 1vw;
         width: 9vw;
@@ -473,11 +558,13 @@
         font-size: 5.5vw;
         align-items: center;
         justify-content: center;
+
         &.active {
           background: var(--tab-gray);
           color: var(--white);
         }
       }
+
       .va-difficult-help {
         svg {
           margin-left: 1vw;
@@ -488,11 +575,14 @@
       }
 
       &.smaller {
-        .va-round-level, .va-level-count {
+
+        .va-round-level,
+        .va-level-count {
           width: 8vw;
           height: 8vw;
           font-size: 4.9vw;
         }
+
         .va-round-level {
           margin-left: 2vw;
           color: var(--white);
@@ -500,12 +590,15 @@
         }
       }
     }
+
     .bricks-scroll-row {
       overflow-x: scroll;
     }
+
     .bricks-flex-row {
       display: flex;
     }
+
     .gg-subject-name {
       font-size: 6.5vw;
       line-height: 1;
@@ -529,6 +622,7 @@
         background: var(--theme-orange);
         width: 8vw;
         height: 8vw;
+
         svg {
           padding-top: 0.5vw;
           width: 7vw;
@@ -544,6 +638,7 @@
         }
       }
     }
+
     .phone-top-brick-16x9 {
       border-radius: 3.5vw;
       overflow: hidden;
@@ -552,13 +647,16 @@
       width: 58vw;
       height: 33vw;
       padding: 0 !important;
+
       .p-cover-image {
         width: 100%;
       }
+
       .left-brick-circle {
         top: 2vw;
         right: 2vw;
         position: absolute;
+
         .round-button {
           border-radius: 50%;
           $size: 8vw;
@@ -566,6 +664,7 @@
           height: $size !important;
         }
       }
+
       .bottom-description-color,
       .bottom-description {
         position: absolute;
@@ -573,11 +672,13 @@
         height: 9vw;
         width: 100%;
       }
+
       .bottom-description-color {
         opacity: 0.8;
         background: var(--tab-gray);
         z-index: 10;
       }
+
       .bottom-description {
         color: var(--theme-dark-blue);
         font-family: $font-family-bold;
@@ -586,6 +687,7 @@
         align-items: center;
         justify-content: center;
         z-index: 13;
+
         .brick-inline {
           padding-left: 1vw;
           padding-right: 1vw;
@@ -595,12 +697,14 @@
         }
       }
     }
+
     .va-s-subject-bricks {
       .va-level-container {
         padding-bottom: 1vh;
         padding-top: 1vh;
       }
     }
+
     .va-phone-expanded-brick {
       width: 92vw;
       margin-top: 1.5vh;
@@ -608,15 +712,18 @@
       padding: 3vw 3.5vw;
       color: var(--theme-dark-blue);
       background: var(--tab-gray);
+
       .va-title-container {
         font-family: $font-family-bold;
         position: relative;
+
         .va-title {
           overflow: hidden;
           width: calc(100% - 13vw);
           text-overflow: ellipsis;
           white-space: nowrap;
           font-size: 4.5vw;
+
           p {
             overflow: hidden;
             width: 100%;
@@ -625,6 +732,7 @@
           }
         }
       }
+
       .va-clock-container {
         display: flex;
         align-items: center;
@@ -634,19 +742,27 @@
         line-height: 1;
         font-family: $font-family-regular;
         font-size: 5vw;
+
         svg {
           width: 5.5vw;
           height: 5.5vw;
           margin-right: 1vw;
         }
       }
+
       .va-brief {
         margin-top: 2vw;
-        font-size: 4vw;
+        font-size: 4.14vw;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+        overflow: hidden;
       }
+
       .va-footer {
         height: 12vw;
         position: relative;
+
         .va-right-play {
           margin-top: 2.5vw;
           position: absolute;
@@ -660,6 +776,7 @@
       }
     }
   }
+
   .subject-no-bricks {
     border-radius: 4vw;
     display: flex;
