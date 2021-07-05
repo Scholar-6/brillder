@@ -114,7 +114,7 @@ class ExpandedAssignment extends Component<
 
     return (
       <div className="circle" style={{ background: color }}>
-        {Math.round(studentStatus.avgScore)}
+        {Math.round(studentStatus.bestScore)}
       </div>
     );
   }
