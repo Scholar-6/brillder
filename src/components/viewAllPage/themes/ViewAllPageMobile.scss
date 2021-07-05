@@ -478,6 +478,14 @@
           color: var(--white);
         }
       }
+      .va-difficult-help {
+        svg {
+          margin-left: 1vw;
+          margin-top: 0.6vw;
+          width: 10vw;
+          height: 10vw;
+        }
+      }
     }
     .bricks-scroll-row {
       overflow-x: scroll;
