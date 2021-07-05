@@ -22,32 +22,16 @@ const MobileUsernamePage: React.FC<UsernamePageProps> = props => {
 
   const move = () => props.history.push(map.SelectSubjectPage);
 
-  const renderUsername = () => {
-    return (
-      <div>
-        <LabelTyping
-          value="Your username will be"
-          className="username-help-label" start={true} onFinish={() => setLabelFinished(true)} />
-        <LabelTyping value={username} className="username" start={labelFinished} onFinish={() => setSecondFinished(true)} />
-        {user.rolePreference?.roleId === UserType.Builder &&
-          <div>
-            <p className="username-fade-text animation-300" style={{ opacity: secondFinished ? "1" : '0' }}>Use it to connect with people to create and assign bricks</p>
-          </div>}
-      </div>
-    );
-  }
-
   return (
     <div className="mobile-username-page">
       <div className={username ? 'username-container' : 'only-icon-container'}>
         <div className="icon-container">
           <SpriteIcon name="user" />
         </div>
-        {username && renderUsername()}
-        {secondFinished && <div className="submit-button" onClick={move}>
+        <div className="submit-button" onClick={move}>
           <div><LabelTyping start={true} value="Get Started!" /></div>
           <SpriteIcon name="arrow-right" />
-        </div>}
+        </div>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import userActions from "redux/actions/user";
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { updateUser } from 'services/axios/user';
-import { User, UserType } from 'model/user';
+import { User } from 'model/user';
 import LabelTyping from 'components/baseComponents/LabelTyping';
 import map from 'components/map';
 import { isPhone } from 'services/phone';
@@ -40,8 +40,6 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
 
   const [animationStep, setStep] = React.useState(AnimationStep.PageLoaded);
   const [submited, setSubmited] = React.useState(null as boolean | null);
-  const [labelFinished, setLabelFinished] = React.useState(false);
-  const [secondFinished, setSecondFinished] = React.useState(false);
   const [username, setUsername] = React.useState('');
   const [firstName, setFirstName] = React.useState({ value: user.firstName ? user.firstName : '', valid: null } as InputState);
   const [lastName, setLastName] = React.useState({ value: user.lastName ? user.lastName : '', valid: null } as InputState);
@@ -107,24 +105,8 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     return (
       <div className="submit-button" >
         <button type="button" onClick={submit} className={lastName.value && firstName.value ? 'valid' : 'invalid'}>
-          Generate!
+          Save
         </button>
-      </div>
-    );
-  }
-
-  const renderUsername = () => {
-    return (
-      <div>
-        <LabelTyping
-          value="Your username will be"
-          className="username-help-label" start={true} onFinish={() => setLabelFinished(true)} />
-        <LabelTyping value={username} className="username" start={labelFinished} onFinish={() => setSecondFinished(true)} />
-        {user.rolePreference?.roleId === UserType.Builder &&
-          <div>
-            <p className="username-help-label smaller" style={{ opacity: secondFinished ? '1' : '0' }}>Use it to connect with people to create and assign bricks</p>
-          </div>
-        }
       </div>
     );
   }
@@ -142,8 +124,6 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
   const clear = () => {
     setSubmited(null);
     setUsername('');
-    setLabelFinished(false);
-    setSecondFinished(false);
   }
 
   return (
@@ -153,7 +133,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
         <form>
           <div>
             <h1>
-              <LabelTyping start={true} value="Get your username" onFinish={() => setStep(AnimationStep.TitleFinished)} />
+              <LabelTyping start={true} value="Please enter your full name" onFinish={() => setStep(AnimationStep.TitleFinished)} />
             </h1>
             <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
               <Input
@@ -191,12 +171,11 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
                 <div className="volume volume2"></div>
                 <div className="volume volume3"></div>
                 <div className="sleep"></div>
-                <div className={username ? 'username-screen screen' : 'screen'}>
-                  <div className={username ? 'username-container' : 'only-icon-container'}>
+                <div className="screen">
+                  <div className="only-icon-container">
                     <div className="icon-container">
                       <SpriteIcon name="user" />
                     </div>
-                    {username && renderUsername()}
                   </div>
                 </div>
               </div>
