@@ -461,7 +461,7 @@
     padding-top: 2vh;
     .va-level-container {
       display: flex;
-      .va-round-level {
+      .va-round-level, .va-level-count {
         border-radius: 50%;
         margin: 1vw;
         width: 9vw;
@@ -486,6 +486,19 @@
           height: 10vw;
         }
       }
+
+      &.smaller {
+        .va-round-level, .va-level-count {
+          width: 8vw;
+          height: 8vw;
+          font-size: 4.9vw;
+        }
+        .va-round-level {
+          margin-left: 2vw;
+          color: var(--white);
+          background: var(--tab-gray);
+        }
+      }
     }
     .bricks-scroll-row {
       overflow-x: scroll;
@@ -495,11 +508,41 @@
     }
     .gg-subject-name {
       font-size: 6.5vw;
+      line-height: 1;
       padding-left: 1vw;
       padding-top: 2vh;
       padding-bottom: 2vh;
       font-family: $font-family-bold;
       color: var(--theme-dark-blue);
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .va-expand {
+        position: absolute;
+        top: calc(2vh + 1vw);
+        right: 6vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--theme-orange);
+        width: 8vw;
+        height: 8vw;
+        svg {
+          padding-top: 0.5vw;
+          width: 7vw;
+          height: 7vw;
+          color: var(--white);
+        }
+
+        &.va-hide {
+          svg {
+            padding-top: 0;
+            padding-bottom: 0.5vw;
+          }
+        }
+      }
     }
     .phone-top-brick-16x9 {
       border-radius: 3.5vw;
@@ -550,6 +593,12 @@
           text-overflow: ellipsis;
           white-space: nowrap;
         }
+      }
+    }
+    .va-s-subject-bricks {
+      .va-level-container {
+        padding-bottom: 1vh;
+        padding-top: 1vh;
       }
     }
   }
