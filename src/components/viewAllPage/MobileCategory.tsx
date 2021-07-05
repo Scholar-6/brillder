@@ -23,6 +23,8 @@ import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
 import MobileHelp from "components/baseComponents/hoverHelp/MobileHelp";
+import LevelHelpContent from "components/baseComponents/hoverHelp/LevelHelpContent";
+import { buildStyles } from "react-circular-progressbar";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -69,6 +71,7 @@ interface BricksListState {
   shown: boolean;
   activeTab: Tab;
   subjectGroup: SubjectGroup | null;
+  expandedSubject: SubjectWithBricks | null;
   filterLevels: AcademicLevel[];
 }
 
@@ -119,6 +122,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     this.state = {
       bricks: [],
       finalBricks: [],
+      expandedSubject: null,
       searchString: searchString,
       isSearching: this.props.isSearching ? this.props.isSearching : false,
       isViewAll,
@@ -293,7 +297,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       filterLevels.push(level);
     }
     if (this.props.user) {
-      const {subjects, mySubjects} = this.state;
+      const { subjects, mySubjects } = this.state;
       this.clearBricks(subjects);
       this.clearBricks(mySubjects);
       for (let brick of this.state.bricks) {
@@ -303,7 +307,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         }
       }
     } else {
-      const {categorySubjects} = this.state;
+      const { categorySubjects } = this.state;
       this.clearBricks(categorySubjects);
       for (let brick of this.state.bricks) {
         if (this.isLevelVisible(brick, levels)) {
@@ -311,7 +315,15 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         }
       }
     }
-    this.setState({filterLevels: levels});
+    this.setState({ filterLevels: levels });
+  }
+
+  expandSubject(s: SubjectWithBricks) {
+    this.setState({ expandedSubject: s });
+  }
+
+  hideSubject() {
+    this.setState({ expandedSubject: null });
   }
 
   renderExpandedBrick(brick: Brick) {
@@ -383,14 +395,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  renderBricks(s: any) {
+  renderBricks(bricks: Brick[]) {
     return (
       <div className="bricks-scroll-row">
         <div
           className="bricks-flex-row"
-          style={{ width: s.bricks.length * 60 + 2 + "vw" }}
+          style={{ width: bricks.length * 60 + 2 + "vw" }}
         >
-          {s.bricks.map((b: any, i: number) => {
+          {bricks.map((b: any, i: number) => {
             const color = getBrickColor(b as Brick);
             return (
               <PhoneTopBrick16x9
@@ -411,14 +423,63 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       <div>
         {ss.map((s, n) => (
           <div key={n}>
-            <div className="gg-subject-name">{s.name}</div>
+            <div className="gg-subject-name">
+              {s.name}
+              {s.bricks.length > 0 &&
+                <div className="va-expand" onClick={() => this.expandSubject(s)}>
+                  <SpriteIcon name="arrow-down" />
+                </div>}
+            </div>
             {s.bricks.length > 0
-              ? this.renderBricks(s)
+              ? this.renderBricks(s.bricks)
               : this.renderEmptySubject()}
           </div>
         ))}
       </div>
     );
+  }
+
+  renderExpandedSubject() {
+    const { expandedSubject } = this.state;
+
+    if (expandedSubject) {
+      const { bricks } = expandedSubject;
+      var brickGroups = [];
+      brickGroups.push(bricks.filter(b => b.academicLevel === AcademicLevel.First));
+      brickGroups.push(bricks.filter(b => b.academicLevel === AcademicLevel.Second));
+      brickGroups.push(bricks.filter(b => b.academicLevel === AcademicLevel.Third));
+      brickGroups.push(bricks.filter(b => b.academicLevel === AcademicLevel.Fourth));
+
+      brickGroups = brickGroups.filter(b => b.length > 0);
+
+      return (
+        <div>
+          <div className="gg-subject-name">
+            {expandedSubject.name}
+            <div className="va-level-container smaller">
+              {this.renderAcademicLevel(brickGroups[0][0].academicLevel)}
+              <div className="va-level-count">
+                {brickGroups[0].length}
+              </div>
+            </div>
+            {expandedSubject.bricks.length > 0 &&
+              <div className="va-expand va-hide" onClick={this.hideSubject.bind(this)}>
+                <SpriteIcon name="arrow-up" />
+              </div>}
+          </div>
+          {brickGroups.map((bs, i) => <div className="va-s-subject-bricks" key={i}>
+            {i > 0 && <div className="va-level-container smaller">
+              {this.renderAcademicLevel(bs[0].academicLevel)}
+              <div className="va-level-count">
+                {bs.length}
+              </div>
+            </div>}
+            {this.renderBricks(bs)}
+          </div>)}
+        </div>
+      );
+    }
+    return <div />;
   }
 
   renderAcademicLevel(level: AcademicLevel) {
@@ -499,52 +560,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               {this.renderAcademicLevel(AcademicLevel.Fourth)}
               <div className="va-difficult-help">
                 <MobileHelp>
-                  <div className="flex-content">
-                    <div>
-                      Brillder focusses on universal concepts and topics, not
-                      specific exam courses.
-                    </div>
-                    <br />
-                    <div>LEVELS:</div>
-                    <div className="container">
-                      <div className="white-circle">I</div>
-                      <div className="l-text">
-                        <div>Foundation</div>
-                        <div className="regular">
-                          For 15-16 yr-olds, equivalent to GCSE / IB Middle
-                          Years / High School Diploma
-                        </div>
-                      </div>
-                    </div>
-                    <br />
-                    <div className="container">
-                      <div className="white-circle">II</div>
-                      <div className="and-sign">&</div>
-                      <div className="white-circle">III</div>
-                      <div className="l-text smaller">
-                        <div>Core</div>
-                        <div className="regular">
-                          For 17-18 yr-olds, equivalent to A-level / IB / High
-                          School Honors
-                        </div>
-                      </div>
-                    </div>
-                    <br />
-                    <div className="container">
-                      <div className="white-circle">IV</div>
-                      <div className="l-text">
-                        <div>Extension</div>
-                        <div className="regular">
-                          College / Undergraduate level, to challenge Oxbridge
-                          (UK) or Advanced Placement (US) students
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <LevelHelpContent />
                 </MobileHelp>
               </div>
             </div>
-            {this.renderSubjects(subjects)}
+            {this.state.expandedSubject ? this.renderExpandedSubject() : this.renderSubjects(subjects)}
           </div>
         </div>
       </React.Suspense>
