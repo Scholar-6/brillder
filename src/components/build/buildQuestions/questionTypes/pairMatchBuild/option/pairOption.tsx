@@ -97,10 +97,10 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     soundCaption: answer.optionSoundCaption
   } as ChooseOneAnswer;
 
-  const imageAnswer = {
-    answerType: answer.optionType,
-    imageCaption: answer.imageCaption
-  }
+  // const imageAnswer = {
+  //   answerType: answer.optionType,
+  //   imageCaption: answer.imageCaption
+  // }
 
   if (answer.optionType === QuestionValueType.Sound) {
     return (
