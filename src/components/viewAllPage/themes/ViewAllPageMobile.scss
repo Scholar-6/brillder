@@ -601,6 +601,64 @@
         padding-top: 1vh;
       }
     }
+    .va-phone-expanded-brick {
+      width: 92vw;
+      margin-top: 1.5vh;
+      border-radius: 3vw;
+      padding: 3vw 3.5vw;
+      color: var(--theme-dark-blue);
+      background: var(--tab-gray);
+      .va-title-container {
+        font-family: $font-family-bold;
+        position: relative;
+        .va-title {
+          overflow: hidden;
+          width: calc(100% - 13vw);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 4.5vw;
+          p {
+            overflow: hidden;
+            width: 100%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+      .va-clock-container {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        right: 1vw;
+        line-height: 1;
+        font-family: $font-family-regular;
+        font-size: 5vw;
+        svg {
+          width: 5.5vw;
+          height: 5.5vw;
+          margin-right: 1vw;
+        }
+      }
+      .va-brief {
+        margin-top: 2vw;
+        font-size: 4vw;
+      }
+      .va-footer {
+        height: 12vw;
+        position: relative;
+        .va-right-play {
+          margin-top: 2.5vw;
+          position: absolute;
+          right: 2vw;
+          padding: 0 4vw;
+          border-radius: 1.2vw;
+          font-size: 6.5vw;
+          color: var(--white);
+          background: var(--theme-orange);
+        }
+      }
+    }
   }
   .subject-no-bricks {
     border-radius: 4vw;
