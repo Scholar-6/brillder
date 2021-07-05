@@ -14,7 +14,6 @@ import brickActions from "redux/actions/brickActions";
 import actions from "redux/actions/requestFailed";
 import { getAssignmentIcon } from "components/services/brickService";
 
-import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
 import { getPublicBricks, searchPublicBricks } from "services/axios/brick";
@@ -24,7 +23,8 @@ import { getSubjects } from "services/axios/subject";
 import map from "components/map";
 import MobileHelp from "components/baseComponents/hoverHelp/MobileHelp";
 import LevelHelpContent from "components/baseComponents/hoverHelp/LevelHelpContent";
-import { buildStyles } from "react-circular-progressbar";
+import { isPhone } from "services/phone";
+import PhoneExpandedBrick from "./components/PhoneExpandedBrick";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -203,7 +203,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   move(brickId: number) {
-    if (document.body.requestFullscreen) {
+    if (isPhone() && document.body.requestFullscreen) {
       document.body.requestFullscreen().then(() => {
         this.moveToPlay(brickId);
       });
@@ -212,20 +212,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  hideBricks() {
-    const { finalBricks } = this.state;
-    finalBricks.forEach((brick) => (brick.expanded = false));
-  }
-
   handleClick(id: number) {
-    const { finalBricks } = this.state;
-    const brick = finalBricks.find((b) => b.id === id);
-    if (brick) {
-      const isExpanded = brick.expanded;
-      finalBricks.forEach((brick) => (brick.expanded = false));
-      brick.expanded = !isExpanded;
-      this.setState({ ...this.state });
-    }
   }
 
   searching(searchString: string) {
@@ -261,11 +248,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     } else {
       this.props.requestFailed("Can`t get bricks");
     }
-  }
-
-  hide() {
-    this.state.bricks.map((b) => (b.expanded = false));
-    this.setState({ ...this.state });
   }
 
   setMySubjectsTab() {
@@ -326,25 +308,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     this.setState({ expandedSubject: null });
   }
 
-  renderExpandedBrick(brick: Brick) {
-    let color = getBrickColor(brick);
-
-    return (
-      <ExpandedMobileBrick
-        brick={brick}
-        color={color}
-        move={(brickId) => this.move(brickId)}
-        hide={this.hide.bind(this)}
-      />
-    );
-  }
-
-  renderMobileBricks(expandedBrick: Brick | undefined) {
+  renderMobileBricks() {
     if (this.state.finalBricks.length === 0) {
       return <div className="bricks-no-found bold">Sorry, no bricks found</div>;
-    }
-    if (expandedBrick) {
-      return this.renderExpandedBrick(expandedBrick);
     }
 
     const sorted = this.state.finalBricks.sort(
@@ -410,6 +376,13 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 brick={b}
                 index={i}
                 color={color}
+                onClick={() => {
+                  for (let bb of this.state.bricks) {
+                    bb.expanded = false;
+                  }
+                  b.expanded = true;
+                  this.setState({});
+                }}
               />
             );
           })}
@@ -418,23 +391,27 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  renderSubjects(ss: SubjectWithBricks[]) {
+  renderSubjects(subjects: SubjectWithBricks[]) {
     return (
       <div>
-        {ss.map((s, n) => (
-          <div key={n}>
-            <div className="gg-subject-name">
-              {s.name}
-              {s.bricks.length > 0 &&
-                <div className="va-expand" onClick={() => this.expandSubject(s)}>
-                  <SpriteIcon name="arrow-down" />
-                </div>}
+        {subjects.map((s, n) => {
+          const expandedBrick = s.bricks.find(b => b.expanded);
+          return (
+            <div key={n}>
+              <div className="gg-subject-name">
+                {s.name}
+                {s.bricks.length > 0 &&
+                  <div className="va-expand" onClick={() => this.expandSubject(s)}>
+                    <SpriteIcon name="arrow-down" />
+                  </div>}
+              </div>
+              {s.bricks.length > 0
+                ? this.renderBricks(s.bricks)
+                : this.renderEmptySubject()}
+              {expandedBrick && <PhoneExpandedBrick brick={expandedBrick} />}
             </div>
-            {s.bricks.length > 0
-              ? this.renderBricks(s.bricks)
-              : this.renderEmptySubject()}
-          </div>
-        ))}
+          );
+        })}
       </div>
     );
   }
@@ -502,20 +479,10 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       subjects = this.state.categorySubjects;
     }
 
-    const expandedBrick = this.state.finalBricks.find(
-      (b) => b.expanded === true
-    );
-
-    let pageClass =
-      "main-listing dashboard-page mobile-category phone-view-all";
-    if (expandedBrick) {
-      pageClass += " expanded";
-    }
-
     return (
       <React.Suspense fallback={<></>}>
         <MobileTheme />
-        <div className={pageClass}>
+        <div className="main-listing dashboard-page mobile-category phone-view-all">
           <PageHeadWithMenu
             page={PageEnum.ViewAll}
             user={this.props.user}
@@ -525,21 +492,19 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             searching={(v: string) => this.searching(v)}
           />
           <div className="mobile-scroll-bricks phone-top-bricks16x9">
-            {this.renderMobileBricks(expandedBrick)}
+            {this.renderMobileBricks()}
           </div>
           {this.props.user ?
             <div className="ss-tabs-container">
               <div
-                className={`ss-tab-1 ${this.state.activeTab === Tab.MySubjects ? "active" : ""
-                  }`}
+                className={`ss-tab-1 ${this.state.activeTab === Tab.MySubjects ? "active" : ""}`}
                 onClick={this.setMySubjectsTab.bind(this)}
               >
                 <SpriteIcon name="user-custom" />
                 My Subjects
               </div>
               <div
-                className={`ss-tab-2 ${this.state.activeTab === Tab.AllSubjects ? "active" : ""
-                  }`}
+                className={`ss-tab-2 ${this.state.activeTab === Tab.AllSubjects ? "active" : ""}`}
                 onClick={this.setAllSubjectsTab.bind(this)}
               >
                 All Subjects
