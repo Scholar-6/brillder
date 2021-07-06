@@ -7,6 +7,7 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademyDifficulty } from "../base/AcademyDifficulty";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -123,8 +124,16 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
                 brick={brick}
               />
             )}
+          {height < 50 && renderRotatedTitle("white", 100)}
+          {height < 50 &&
+            <div className="pr-lock-container" style={{ background: color }}>
+              <div>
+                <SpriteIcon name="lock" />
+              </div>
+              <div>{Math.round(height)}%</div>
+            </div>}
         </div>
-        {height >= 50 ? (
+        {height >= 50 &&
           <div
             className="progress-value"
             onMouseEnter={() => setHover(true)}
@@ -138,9 +147,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
               />
             )}
           </div>
-        ) : (
-          <div></div>
-        )}
+        }
       </div>
     </div>
   );
