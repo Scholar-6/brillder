@@ -524,6 +524,21 @@
         stroke-width: 2.5;
         margin-right: 2vw;
       }
+      
+      &.full {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        position: relative;
+
+        svg {
+          $size: 10vw;
+          position: absolute;
+          left: 0;
+          width: $size;
+          height: $size;
+        }
+      }
     }
 
     .ss-tab-2 {

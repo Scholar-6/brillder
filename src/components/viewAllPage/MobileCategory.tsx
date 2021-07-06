@@ -457,7 +457,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             </div>
             :
             <div className="ss-tabs-container">
-              <div className="ss-tab-1 active">
+              <div className="ss-tab-1 full active">
+                <SpriteIcon name="arrow-left" onClick={() => this.props.history.push(map.SubjectCategories)} />
                 {this.state.subjectGroup ? SubjectGroupNames[this.state.subjectGroup] : 'Subject Category'}
               </div>
             </div>
