@@ -50,20 +50,6 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
     };
   }
 
-  moveToPlay(brickId: number) {
-    this.props.history.push(routes.phonePrep(brickId));
-  }
-
-  move(brickId: number) {
-    if (document.body.requestFullscreen) {
-      document.body.requestFullscreen().then(() => {
-        this.moveToPlay(brickId);
-      });
-    } else {
-      this.moveToPlay(brickId);
-    }
-  }
-
   async search(searchString: string) {
     const bricks = await searchPublicBricks(searchString);
     if (bricks) {

@@ -532,66 +532,69 @@
     }
   }
 
-  .va-bricks-container {
-    overflow-y: scroll;
-    padding-bottom: 2vh;
-    padding-left: 4vw;
-    margin-top: -0.2vw;
-    height: calc(100% - 56.5vw - 6vh - 74px);
-    width: 100vw;
+  .va-level-container {
     background: var(--white);
-    padding-top: 2vh;
+    padding: 1vh 0;
+    border-bottom: 0.3vh solid var(--tab-gray);
+    padding-left: 4vw;
+    display: flex;
 
-    .va-level-container {
+    .va-round-level,
+    .va-level-count {
+      border-radius: 50%;
+      margin: 1vw;
+      width: 9vw;
+      height: 9vw;
+      border: 0.8vw solid var(--tab-gray);
+      background: var(--white);
+      color: var(--tab-gray);
       display: flex;
+      font-size: 5.5vw;
+      align-items: center;
+      justify-content: center;
 
-      .va-round-level,
-      .va-level-count {
-        border-radius: 50%;
-        margin: 1vw;
-        width: 9vw;
-        height: 9vw;
-        border: 0.8vw solid var(--tab-gray);
-        background: var(--white);
-        color: var(--tab-gray);
-        display: flex;
-        font-size: 5.5vw;
-        align-items: center;
-        justify-content: center;
-
-        &.active {
-          background: var(--tab-gray);
-          color: var(--white);
-        }
-      }
-
-      .va-difficult-help {
-        svg {
-          margin-left: 1vw;
-          margin-top: 0.6vw;
-          width: 10vw;
-          height: 10vw;
-        }
-      }
-
-      &.smaller {
-
-        .va-round-level,
-        .va-level-count {
-          width: 8vw;
-          height: 8vw;
-          font-size: 4.9vw;
-        }
-
-        .va-round-level {
-          margin-left: 2vw;
-          color: var(--white);
-          background: var(--tab-gray);
-        }
+      &.active {
+        background: var(--tab-gray);
+        color: var(--white);
       }
     }
 
+    .va-difficult-help {
+      svg {
+        margin-left: 1vw;
+        margin-top: 0.6vw;
+        width: 10vw;
+        height: 10vw;
+      }
+    }
+
+    &.smaller {
+
+      .va-round-level,
+      .va-level-count {
+        width: 8vw;
+        height: 8vw;
+        font-size: 4.9vw;
+      }
+
+      .va-round-level {
+        margin-left: 2vw;
+        color: var(--white);
+        background: var(--tab-gray);
+      }
+    }
+  }
+
+  .va-bricks-container {
+    overflow-y: scroll;
+    padding-bottom: 2vh;
+    margin-top: -0.2vw;
+    height: calc(100% - 56.5vw - 6vh - 2vh - 11vw - 74px);
+    width: 100vw;
+    background: var(--white);
+
     .bricks-scroll-row {
+      padding-left: 4vw;
       overflow-x: scroll;
     }
 
@@ -602,7 +605,7 @@
     .gg-subject-name {
       font-size: 6.5vw;
       line-height: 1;
-      padding-left: 1vw;
+      padding-left: 5vw;
       padding-top: 2vh;
       padding-bottom: 2vh;
       font-family: $font-family-bold;
@@ -707,12 +710,13 @@
   }
 
   .subject-no-bricks {
+    margin-left: 4vw;
     border-radius: 4vw;
     display: flex;
     justify-content: center;
     font-size: 4.5vw;
     padding: 1.9vh 0;
-    width: 50vw;
+    width: 58vw;
     background: var(--tab-gray);
     color: var(--theme-dark-blue);
     font-family: $font-family-regular-italic;
