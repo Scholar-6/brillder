@@ -3,29 +3,19 @@ import './AcademyDifficulty.scss';
 import { AcademicLevel, Brick } from "model/brick";
 import { User } from "model/user";
 
-interface LibrarySubjectsProps {
+interface Props {
   a: AcademicLevel;
   brick?: Brick;
   className?: string;
 }
 
-export const AcademyDifficulty: React.FC<LibrarySubjectsProps> = ({a, brick, className}) => {
+export const AcademyDifficulty: React.FC<Props> = ({a, brick, className}) => {
   let resClassName = "academic-lines ";
   if (className) {
     resClassName += className;
   }
 
   const getInitials = (user: User) => user.firstName.slice(0, 1) + user.lastName.slice(0, 1);
-
-  const renderAuthor = () => {
-    if (brick) {
-      return getInitials(brick.author as any);
-      //if (brick.adaptedFrom) {
-        //return getInitials(brick.adaptedFrom.author);
-      //}
-    }
-    return '';
-  }
 
   const renderLines = () => {
     const levels = [];
@@ -45,7 +35,7 @@ export const AcademyDifficulty: React.FC<LibrarySubjectsProps> = ({a, brick, cla
       <div className="end-lines">
         {brick && brick.author && <div className="lib-author">
           <div className="lib-circle">
-            {renderAuthor()}
+            {getInitials(brick.author as any)}
           </div>
         </div>}
         <div>
