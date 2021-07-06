@@ -16,15 +16,15 @@ import { getAssignmentIcon } from "components/services/brickService";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
-import { getPublicBricks, searchPublicBricks } from "services/axios/brick";
+import { getPublicBricks } from "services/axios/brick";
 import routes from "components/play/routes";
 import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
 import MobileHelp from "components/baseComponents/hoverHelp/MobileHelp";
 import LevelHelpContent from "components/baseComponents/hoverHelp/LevelHelpContent";
-import { isPhone } from "services/phone";
 import PhoneExpandedBrick from "./components/PhoneExpandedBrick";
+import PhoneSearchPage from "./PhoneSearchPage";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -59,17 +59,17 @@ interface BricksListProps {
 }
 
 interface BricksListState {
+  expandedBrick: Brick | null;
   bricks: Array<Brick>;
-  searchString: string;
   isSearching: boolean;
   finalBricks: Brick[];
   isViewAll: boolean;
   mySubjects: SubjectWithBricks[];
   subjects: SubjectWithBricks[];
   categorySubjects: SubjectWithBricks[];
-  subjectId: number;
   shown: boolean;
   activeTab: Tab;
+  isSearchingPage: boolean;
   subjectGroup: SubjectGroup | null;
   expandedSubject: SubjectWithBricks | null;
   filterLevels: AcademicLevel[];
@@ -80,11 +80,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     super(props);
 
     const values = queryString.parse(props.location.search);
-    const searchString = (values.searchString as string) || "";
     if (
       !values.isViewAll &&
-      !values.subjectId &&
-      !values.searchString &&
       !this.props.isSearching &&
       !values.subjectGroup
     ) {
@@ -107,33 +104,27 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       subjectGroup = parseInt(values.subjectGroup as string) as SubjectGroup;
     }
 
-    let subjectId = -1;
-    if (values.subjectId) {
-      try {
-        subjectId = parseInt(values.subjectId as string);
-      } catch { }
-    }
-
     let initTab = Tab.MySubjects;
     if (!this.props.user) {
       initTab = Tab.SubjectCategory;
     }
 
     this.state = {
+      expandedBrick: null,
       bricks: [],
       finalBricks: [],
       expandedSubject: null,
-      searchString: searchString,
       isSearching: this.props.isSearching ? this.props.isSearching : false,
       isViewAll,
       mySubjects: [],
       subjects: [],
       categorySubjects: [],
-      subjectId,
       filterLevels: [],
       activeTab: initTab,
       subjectGroup,
       shown: false,
+
+      isSearchingPage: false,
     };
 
     this.loadData(subjectGroup);
@@ -150,9 +141,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     const bricks = await getPublicBricks();
     const subjects = (await getSubjects()) as SubjectWithBricks[] | null;
     if (bricks && subjects) {
-      let finalBricks = bricks;
-      let mySubjects: SubjectWithBricks[] = [];
-      let categorySubjects: SubjectWithBricks[] = [];
+      const mySubjects: SubjectWithBricks[] = [];
+      const categorySubjects: SubjectWithBricks[] = [];
 
       if (this.props.user) {
         for (let ss of this.props.user.subjects) {
@@ -168,11 +158,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
       this.clearBricks(subjects);
 
-      if (this.state.subjectId > 0) {
-        finalBricks = bricks.filter(
-          (b) => b.subjectId === this.state.subjectId
-        );
-      }
       for (let brick of bricks) {
         this.addBrickBySubject(subjects, brick);
         this.addBrickBySubject(mySubjects, brick);
@@ -181,10 +166,10 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       this.setState({
         ...this.state,
         bricks,
+        finalBricks: bricks,
         subjects,
         mySubjects,
         shown: true,
-        finalBricks,
         categorySubjects
       });
     } else {
@@ -203,7 +188,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   move(brickId: number) {
-    if (isPhone() && document.body.requestFullscreen) {
+    if (document.body.requestFullscreen) {
       document.body.requestFullscreen().then(() => {
         this.moveToPlay(brickId);
       });
@@ -212,43 +197,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  handleClick(id: number) {
-  }
-
-  searching(searchString: string) {
-    if (searchString.length === 0) {
-      this.setState({
-        ...this.state,
-        searchString,
-        finalBricks: this.state.bricks,
-        isSearching: false,
-      });
-    } else {
-      this.setState({ ...this.state, searchString });
-    }
-  }
-
-  async search() {
-    const { searchString } = this.state;
-    const bricks = await searchPublicBricks(searchString);
-    if (bricks) {
-      const { subjects } = this.state;
-      this.clearBricks(subjects);
-      for (let brick of bricks) {
-        const subject = subjects.find((s) => s.id === brick.subjectId);
-        if (subject) {
-          subject.bricks.push(brick);
-        }
-      }
-      this.setState({
-        ...this.state,
-        finalBricks: bricks,
-        isSearching: true,
-      });
-    } else {
-      this.props.requestFailed("Can`t get bricks");
-    }
-  }
+  handleClick(id: number) { }
 
   setMySubjectsTab() {
     if (this.state.activeTab !== Tab.MySubjects) {
@@ -269,15 +218,19 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     return true;
   }
 
+  toggleElement(arr: any[], value: any) {
+    const found = arr.find((l) => l === value);
+    if (found) {
+      arr = arr.filter((l) => l !== value);
+    } else {
+      arr.push(value);
+    }
+    return arr;
+  }
+
   filterByLevel(level: AcademicLevel) {
     const { filterLevels } = this.state;
-    let levels = filterLevels;
-    const found = filterLevels.find((l) => l === level);
-    if (found) {
-      levels = filterLevels.filter((l) => l !== level);
-    } else {
-      filterLevels.push(level);
-    }
+    const levels = this.toggleElement(filterLevels, level);
     if (this.props.user) {
       const { subjects, mySubjects } = this.state;
       this.clearBricks(subjects);
@@ -377,11 +330,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 index={i}
                 color={color}
                 onClick={() => {
-                  for (let bb of this.state.bricks) {
-                    bb.expanded = false;
-                  }
-                  b.expanded = true;
-                  this.setState({});
+                  this.setState({expandedBrick: b});
                 }}
               />
             );
@@ -408,7 +357,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               {s.bricks.length > 0
                 ? this.renderBricks(s.bricks)
                 : this.renderEmptySubject()}
-              {expandedBrick && <PhoneExpandedBrick brick={expandedBrick} history={this.props.history} />}
+              {expandedBrick && <PhoneExpandedBrick brick={expandedBrick} history={this.props.history} hide={() => this.setState({expandedBrick: null})} />}
             </div>
           );
         })}
@@ -428,8 +377,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       brickGroups.push(bricks.filter(b => b.academicLevel === AcademicLevel.Fourth));
 
       brickGroups = brickGroups.filter(b => b.length > 0);
-
-      const expandedBrick = bricks.find(b => b.expanded);
 
       return (
         <div>
@@ -455,7 +402,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             </div>}
             {this.renderBricks(bs)}
           </div>)}
-          {expandedBrick && <PhoneExpandedBrick brick={expandedBrick} history={this.props.history} />}
         </div>
       );
     }
@@ -482,6 +428,15 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       subjects = this.state.categorySubjects;
     }
 
+    if (this.state.isSearchingPage) {
+      return (
+        <React.Suspense fallback={<></>}>
+          <MobileTheme />
+          <PhoneSearchPage {...this.props} subjects={this.state.subjects as Subject[]} moveBack={() => this.setState({isSearchingPage: false})} />
+        </React.Suspense>
+      );
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         <MobileTheme />
@@ -489,10 +444,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           <PageHeadWithMenu
             page={PageEnum.ViewAll}
             user={this.props.user}
-            placeholder={"Search Ongoing Projects & Published Bricks…"}
+            toggleSearch={() => this.setState({ isSearchingPage: true })}
+            placeholder="Search Ongoing Projects & Published Bricks…"
             history={this.props.history}
-            search={() => this.search()}
-            searching={(v: string) => this.searching(v)}
+            search={() => {}}
+            searching={() => {}}
           />
           <div className="mobile-scroll-bricks phone-top-bricks16x9">
             {this.renderMobileBricks()}
@@ -533,6 +489,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               </div>
             </div>
             {this.state.expandedSubject ? this.renderExpandedSubject() : this.renderSubjects(subjects)}
+            {this.state.expandedBrick && <PhoneExpandedBrick brick={this.state.expandedBrick} history={this.props.history} hide={() => this.setState({expandedBrick: null})} />}
           </div>
         </div>
       </React.Suspense>

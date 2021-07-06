@@ -39,6 +39,8 @@ interface Props {
   showDropdown(): void;
   showNotifications(event: any): void;
 
+  toggleSearch?(value: boolean): void;
+
   // redux
   notifications: Notification[];
   isAuthenticated: isAuthenticated;
@@ -69,7 +71,11 @@ class PageHeader extends Component<Props, State> {
     }
   }
 
+
   toggleSearch() {
+    if (this.props.toggleSearch) {
+      this.props.toggleSearch(!this.state.searchVisible);
+    }
     this.setState(prevState => ({
       searchVisible: !prevState.searchVisible
     }));

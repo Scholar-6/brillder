@@ -7,11 +7,13 @@ import routes from "components/play/routes";
 interface BrickBlockProps {
   brick: Brick;
   history: any;
+  hide(): void;
 }
 
-const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history }) => {
+const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, hide }) => {
   return (
-    <div className="va-phone-expanded-brick">
+    <div className="va-phone-background" onClick={hide}>
+    <div className="va-phone-expanded-brick" onClick={e => e.stopPropagation()}>
       <div className="va-title-container">
         <div className='va-title' dangerouslySetInnerHTML={{__html: brick.title}} />
         <div className="va-clock-container">
@@ -25,6 +27,7 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history }) => {
           history.push(routes.playCover(brick.id));
         }}>Play Now</button>
       </div>
+    </div>
     </div>
   );
 }
