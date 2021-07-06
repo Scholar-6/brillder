@@ -108,9 +108,15 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
       >
         {renderTeacher(null)}
         {!height && renderRotatedTitle("left-align", 100)}
-        {hovered && (
+        {hovered && height >= 50 && (
           <div className="custom-tooltip subject-tooltip">
             <BrickTitle title={brick.title} />
+          </div>
+        )}
+
+        {hovered && height < 50 && (
+          <div className="custom-tooltip subject-tooltip b-yellow text-theme-dark-blue">
+            <BrickTitle title="To add a book to your shelf, score more than 50% on this brick" />
           </div>
         )}
         <div
