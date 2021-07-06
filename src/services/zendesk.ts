@@ -59,6 +59,9 @@ const initZendeskPopupStyling = () => {
           -ms-user-select: none;
           user-select: none;
         }
+      button[data-garden-id="buttons.icon_button"] {
+        content: url("/zendesk/close-image.svg");
+      }
     `;
     const head = innerWidgetDoc.head || innerWidgetDoc.getElementsByTagName('head')[0];
     const style = document.createElement('style');
@@ -185,13 +188,14 @@ function setZendeskMode(iframe: any, location: any) {
     isIgnorePage = true;
   }
 
+  /*
   try {
     if (isBigMode && !isIgnorePage) {
-      //maximizeZendeskButton(iframe);
+      maximizeZendeskButton(iframe);
     } else if (!isIgnorePage) {
-      //minimizeZendeskButton(iframe);
+      minimizeZendeskButton(iframe);
     }
-  } catch { }
+  } catch { }*/
 }
 
 /**

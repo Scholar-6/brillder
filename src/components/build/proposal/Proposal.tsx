@@ -266,7 +266,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   setPrepAndSave = async (prep: string) => {
     const brick = { ...this.state.brick, prep } as Brick;
     this.saveLocalBrick(brick);
-    const newBrick = await this.saveBrick(brick);
+    await this.saveBrick(brick);
     this.props.history.push(buildQuesitonType(brick.id));
   };
 

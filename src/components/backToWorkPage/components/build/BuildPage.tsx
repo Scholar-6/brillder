@@ -324,7 +324,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   };
 
   switchPublish() {
-    const { filters} = this.state;
+    const { filters, buildCheckedSubjectId } = this.state;
 
     filters.level1 = true;
     filters.level2 = true;
@@ -337,6 +337,13 @@ class BuildPage extends Component<BuildProps, BuildState> {
       let bricks = filterByStatus(this.state.rawBricks, BrickStatus.Publish);
       bricks = bricks.filter(b => b.isCore === true);
       const subjects = this.getBrickSubjects(this.state.rawBricks);
+      if (buildCheckedSubjectId >= 0) {
+        // if subject checked. subject should exist
+        const subject = subjects.find(s => s.id === buildCheckedSubjectId);
+        if (subject) {
+          bricks = bricks.filter(b => b.subjectId === buildCheckedSubjectId);
+        }
+      }
       this.setState({ ...this.state, filters, subjects, sortedIndex: 0, finalBricks: bricks });
     } else {
       removeAllFilters(filters);

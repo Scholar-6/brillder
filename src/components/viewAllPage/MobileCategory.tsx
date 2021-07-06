@@ -345,7 +345,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   render() {
-    let expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
+    const expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
 
     let pageClass = 'main-listing dashboard-page mobile-category';
     if (expandedBrick) {

@@ -16,6 +16,7 @@ export const PlayPreSynthesisLastPrefix = '/pre-synthesis';
 export const PlaySynthesisLastPrefix = '/synthesis';
 export const PlayPreReviewLastPrefix = '/pre-review';
 export const PlayReviewLastPrefix = '/review';
+export const PlayFinalStepLastPrefix = '/finalStep';
 
 export const coverRoute = basePlayRoute + PlayCoverLastPrefix;
 export const sectionsRoute = basePlayRoute + PlaySectionsLastPrefix;
@@ -40,6 +41,7 @@ export const playPreSynthesis = (brickId: number) => realPlay(brickId) + PlayPre
 export const playSynthesis = (brickId: number) => realPlay(brickId) + PlaySynthesisLastPrefix;
 export const playPreReview = (brickId: number) => realPlay(brickId) + PlayPreReviewLastPrefix;
 export const playReview = (brickId: number) => realPlay(brickId) + PlayReviewLastPrefix;
+export const playFinalStep = (brickId: number) => realPlay(brickId) + PlayFinalStepLastPrefix;
 
 // phone pages
 export const PlayPhonePrepLastPrefix = '/intro';
@@ -97,6 +99,7 @@ export default {
   playSynthesis,
   playPreReview,
   playReview,
+  playFinalStep,
 
   playAssignment,
 

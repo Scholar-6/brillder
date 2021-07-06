@@ -28,9 +28,6 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, State> {
     };
   }
 
-  componentDidUpdate() {
-  }
-
   countPages() {
     this.props.subjectAssignments.forEach(s => {
 

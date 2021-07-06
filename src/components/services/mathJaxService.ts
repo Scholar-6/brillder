@@ -1,19 +1,9 @@
-const splitByTags = (value: string) => {
-  // youtube preparations
-  let res = value.replace(/<\/p>/gi, (s: string) => {
-    return s + '\n';
-  });
-  // #2086 youtube preparations
-  res = res.replace(/<\/iframe>/gi, (s: string) => {
-    return s + '\n';
-  });
-
-  return res.match(/<(.+)>.*?<\/(.+)>/g) || [];
-}
-
 export function parseDataToArray(value: string): Array<string> {
   try {
-    return splitByTags(value);
+    // return splitByTags(value);
+    const el = document.createElement("div");
+    el.insertAdjacentHTML("beforeend", value);
+    return Array.from(el.children).map(e => e.outerHTML);
   } catch {
     return [];
   }
