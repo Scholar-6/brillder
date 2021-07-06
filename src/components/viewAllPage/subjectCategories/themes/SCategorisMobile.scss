@@ -17,6 +17,7 @@
   .subject-category {
     margin-top: 5vh;
     margin-bottom: 5vh;
+    color: var(--theme-dark-blue);
     img {
       max-width: 80vw;
       height: 20vh;
@@ -24,9 +25,11 @@
 
     .cat-name {
       font-family: $font-family-bold;
-      color: var(--theme-dark-blue);
       text-align: center;
       font-size: 6vw;
+    }
+    &.disabled {
+      color: var(--tab-gray);
     }
   }
 }
