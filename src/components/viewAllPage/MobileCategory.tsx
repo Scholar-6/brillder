@@ -183,20 +183,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  moveToPlay(brickId: number) {
-    this.props.history.push(routes.phonePrep(brickId));
-  }
-
-  move(brickId: number) {
-    if (document.body.requestFullscreen) {
-      document.body.requestFullscreen().then(() => {
-        this.moveToPlay(brickId);
-      });
-    } else {
-      this.moveToPlay(brickId);
-    }
-  }
-
   handleClick(id: number) { }
 
   setMySubjectsTab() {
@@ -476,8 +462,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               </div>
             </div>
           }
-          <div className="va-bricks-container">
-            <div className="va-level-container">
+          <div className="va-level-container">
               {this.renderAcademicLevel(AcademicLevel.First)}
               {this.renderAcademicLevel(AcademicLevel.Second)}
               {this.renderAcademicLevel(AcademicLevel.Third)}
@@ -488,6 +473,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 </MobileHelp>
               </div>
             </div>
+          <div className="va-bricks-container">
             {this.state.expandedSubject ? this.renderExpandedSubject() : this.renderSubjects(subjects)}
             {this.state.expandedBrick && <PhoneExpandedBrick brick={this.state.expandedBrick} history={this.props.history} hide={() => this.setState({expandedBrick: null})} />}
           </div>

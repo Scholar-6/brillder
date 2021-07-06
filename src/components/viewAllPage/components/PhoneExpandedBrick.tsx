@@ -24,7 +24,7 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, hide })
       <div className="va-brief" dangerouslySetInnerHTML={{__html: brick.brief}} />
       <div className="va-footer">
         <button className="btn va-right-play" onClick={() => {
-          history.push(routes.playCover(brick.id));
+          history.push(routes.playBrief(brick.id));
         }}>Play Now</button>
       </div>
     </div>
