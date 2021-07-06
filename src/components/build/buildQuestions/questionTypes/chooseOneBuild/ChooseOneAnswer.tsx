@@ -38,7 +38,9 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     if (locked) { return; }
     answer.value = "";
     answer.soundFile = "";
-    answer.valueFile = fileName;
+    if (fileName) {
+      answer.valueFile = fileName;
+    }
     answer.answerType = QuestionValueType.Image;
     update();
     save();

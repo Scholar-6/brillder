@@ -69,7 +69,9 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     const setImage = (fileName: string) => {
       if (locked) { return; }
       answer.value = "";
-      answer.valueFile = fileName;
+      if (fileName) {
+        answer.valueFile = fileName;
+      }
       answer.answerType = QuestionValueType.Image;
       update();
       save();

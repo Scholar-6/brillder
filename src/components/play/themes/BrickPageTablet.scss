@@ -1764,6 +1764,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
 }
 
 .pre-investigation {
+  color: var(--theme-dark-blue);
   .fixed-helpers-container {
     position: fixed;
     left: 6vw;
