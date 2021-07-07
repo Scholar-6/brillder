@@ -24,7 +24,10 @@ const NotificationItem: React.FC<Props> = ({
 }) => {
   const renderElement = () => {
     return (
-      <li key={notification.id} onClick={() => move(notification)}>
+      <li key={notification.id} onClick={() => {
+        console.log('click');
+        move(notification)
+      }}>
         <div
           className={
             "left-brick-circle svgOnHover " +
@@ -106,6 +109,9 @@ const NotificationItem: React.FC<Props> = ({
         </div>
         <div className="content-box">
           <div className="notification-detail">
+            <p className="notification-time">
+              {moment(notification.timestamp).fromNow()}
+            </p>
             <p
               className="notif-title"
               dangerouslySetInnerHTML={{ __html: notification.title }}
@@ -115,6 +121,9 @@ const NotificationItem: React.FC<Props> = ({
               dangerouslySetInnerHTML={{ __html: notification.text }}
             />
           </div>
+          {isPhone() && <SpriteIcon name="arrow-down" onClick={e => {
+            e.stopPropagation();
+          }} className="np-expand-button" />}
           {!isPhone() &&
           <div className="actions">
             <div className="notification-time">

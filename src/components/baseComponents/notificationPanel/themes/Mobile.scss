@@ -50,6 +50,16 @@
       li {
         height: 20vw;
         border-bottom: 0.3vw solid var(--theme-dark-blue);
+
+        .np-expand-button {
+          position: absolute;
+          top: 1vw;
+          right: 3vw;
+          color: var(--dark-gray);
+          $size: 6vw;
+          width: $size;
+          height: $size;
+        }
       }
 
       .notification-detail {
@@ -60,7 +70,14 @@
 
         .notif-desc,
         .notif-title {
+          line-height: 1.2;
           font-size: 4.5vw !important;
+        }
+
+        .notification-time {
+          line-height: 1.2;
+          font-size: 3.5vw !important;
+          color: var(--white);
         }
       }
 
