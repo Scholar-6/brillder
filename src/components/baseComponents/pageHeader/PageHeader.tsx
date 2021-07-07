@@ -132,6 +132,7 @@ class PageHeader extends Component<Props, State> {
                     this.props.page !== PageEnum.Book && this.renderSearch()
                   }}>
                     <SpriteIcon name="search" className="w100 h100 active text-theme-orange" />
+                    <div className="gh-phone-background" />
                   </div>
                 }
                 {!this.props.isAuthenticated &&

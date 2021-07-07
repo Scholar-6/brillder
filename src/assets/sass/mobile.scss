@@ -632,3 +632,26 @@
     }
   }
 }
+
+.open-search {
+  background: var(--white) !important;
+  border-radius: 50% !important;
+  position: relative;
+  svg {
+    stroke-width: 1.5;
+    width: 70% !important;
+    height: 70% !important;
+    color: var(--theme-dark-blue) !important;
+    position: absolute;
+    z-index: 27;
+  }
+  .gh-phone-background {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 26;
+    width: 118%;
+    height: 118%;
+    opacity: 0.5;
+    background: var(--white);
+  }
+}
