@@ -3,10 +3,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { Popover, IconButton, SvgIcon } from "@material-ui/core";
 import { ReduxCombinedState } from "redux/reducers";
-import {
-  Notification,
-  NotificationType,
-} from "model/notifications";
+import { Notification, NotificationType } from "model/notifications";
 import "./NotificationPanel.scss";
 
 import map from "components/map";
@@ -204,6 +201,7 @@ class NotificationPanel extends Component<
   }
 
   render() {
+    const { notifications } = this.props;
     return (
       <React.Suspense fallback={<></>}>
         {isPhone() && <MobileTheme />}
@@ -226,11 +224,15 @@ class NotificationPanel extends Component<
             horizontal: "right",
           }}
         >
-          <div className="notification-content">
-            {isPhone() && (
+          <div
+            className={`notification-content ${
+              notifications && notifications.length === 0 ? "empty" : ""
+            }`}
+          >
+            {isPhone() && notifications && notifications.length > 0 && (
               <div className="notification-top">
                 <div>
-                  <div>{this.props.notifications?.length} Notifications</div>
+                  <div>{notifications?.length} Notifications</div>
                   <div className="n-secondary">
                     Swipe right to clear
                     <SpriteIcon name="flaticon-swipe" />
@@ -240,9 +242,8 @@ class NotificationPanel extends Component<
             )}
             <ul className="notification-list" ref={this.state.scrollArea}>
               {/* eslint-disable-next-line */}
-              {this.props.notifications &&
-              this.props.notifications.length != 0 ? (
-                this.props.notifications.map((notification, i) => (
+              {notifications && notifications.length != 0 ? (
+                notifications.map((notification, i) => (
                   <NotificationItem
                     key={notification.id}
                     notification={notification}
@@ -261,7 +262,7 @@ class NotificationPanel extends Component<
               )}
             </ul>
             {/* eslint-disable-next-line */}
-            {this.props.notifications && this.props.notifications.length != 0 && (
+            {notifications && notifications.length != 0 && (
               <div className="clear-notification">
                 <div className="scroll-buttons">
                   <SpriteIcon

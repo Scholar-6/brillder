@@ -191,6 +191,15 @@ class MainNotificationPanel extends Component<
   }
 
   markAllAsRead() {
+    /* mocking 
+    const {notifications} = this.props;
+    if (notifications) {
+      //notifications.length = 0;
+      notifications.splice(0,notifications.length)
+      console.log(notifications);
+      this.setState({needDesktopOpen: false});
+    }
+    */
     axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/notifications/unread/markAsRead`,
       {},
