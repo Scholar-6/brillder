@@ -190,6 +190,14 @@
             position: absolute;
             bottom: 0;
             border-radius: 1vw;
+
+            .lib-circle {
+              width: 5.5vw;
+              height: 5.5vw;
+              font-size: 3.3vw;
+              max-height: 6vh;
+              max-width: 6vh;
+            }
           }
 
           .subject-tooltip {

@@ -73,6 +73,7 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         {assignment.brick.academicLevel >= AcademicLevel.First && (
           <AcademyDifficulty
             a={assignment.brick.academicLevel}
+            brick={brick}
             className="smaller"
           />
         )}
