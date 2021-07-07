@@ -33,6 +33,7 @@ import PhoneExpandedBrick from "./components/PhoneExpandedBrick";
 import PhoneSearchPage from "./PhoneSearchPage";
 import { isLevelVisible, toggleElement } from "./service/viewAll";
 import { showZendesk } from "services/zendesk";
+import routes from "components/play/routes";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -184,7 +185,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  handleClick(id: number) {}
+  handleClick(brickId: number) {
+    this.props.history.push(routes.playCover(brickId));
+  }
 
   setMySubjectsTab() {
     if (this.state.activeTab !== Tab.MySubjects) {
