@@ -22,12 +22,15 @@ const NotificationItem: React.FC<Props> = ({
   markAsRead,
   move,
 }) => {
+  const [expanded, setExpanded] = React.useState(false);
+
   const renderElement = () => {
     return (
-      <li key={notification.id} onClick={() => {
-        console.log('click');
-        move(notification)
-      }}>
+      <li
+        className={expanded ? "expanded" : ""}
+        key={notification.id}
+        onClick={() => move(notification)}
+      >
         <div
           className={
             "left-brick-circle svgOnHover " +
@@ -121,25 +124,33 @@ const NotificationItem: React.FC<Props> = ({
               dangerouslySetInnerHTML={{ __html: notification.text }}
             />
           </div>
-          {isPhone() && <SpriteIcon name="arrow-down" onClick={e => {
-            e.stopPropagation();
-          }} className="np-expand-button" />}
-          {!isPhone() &&
-          <div className="actions">
-            <div className="notification-time">
-              {moment(notification.timestamp).fromNow()}
-            </div>
-            <button
-              aria-label="clear"
-              className="btn btn-transparent delete-notification svgOnHover"
+          {isPhone() && (
+            <SpriteIcon
+              name={expanded ? "arrow-up" : "arrow-down"}
               onClick={(e) => {
-                markAsRead(notification.id);
+                setExpanded(!expanded);
                 e.stopPropagation();
               }}
-            >
-              <SpriteIcon name="cancel" className="w80 h80 active" />
-            </button>
-          </div>}
+              className="np-expand-button"
+            />
+          )}
+          {!isPhone() && (
+            <div className="actions">
+              <div className="notification-time">
+                {moment(notification.timestamp).fromNow()}
+              </div>
+              <button
+                aria-label="clear"
+                className="btn btn-transparent delete-notification svgOnHover"
+                onClick={(e) => {
+                  markAsRead(notification.id);
+                  e.stopPropagation();
+                }}
+              >
+                <SpriteIcon name="cancel" className="w80 h80 active" />
+              </button>
+            </div>
+          )}
         </div>
       </li>
     );
@@ -147,7 +158,11 @@ const NotificationItem: React.FC<Props> = ({
 
   if (isPhone()) {
     return (
-      <Swiper key={notification.id} slidesPerView={1} onReachEnd={() => markAsRead(notification.id)}>
+      <Swiper
+        key={notification.id}
+        slidesPerView={1}
+        onReachEnd={() => markAsRead(notification.id)}
+      >
         <SwiperSlide>{renderElement()}</SwiperSlide>
         <SwiperSlide></SwiperSlide>
       </Swiper>
