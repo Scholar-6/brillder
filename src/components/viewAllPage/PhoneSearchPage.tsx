@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import queryString from "query-string";
 
-import { AcademicLevel, AcademicLevelLabels, Brick, BrickLengthEnum, Subject } from "model/brick";
+import {
+  AcademicLevel,
+  AcademicLevelLabels,
+  Brick,
+  BrickLengthEnum,
+  Subject,
+} from "model/brick";
 import { User } from "model/user";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
 import { searchPublicBricks } from "services/axios/brick";
-import routes from "components/play/routes";
 import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import PhoneExpandedBrick from "./components/PhoneExpandedBrick";
 import { hideZendesk } from "services/zendesk";
-
 
 interface BricksListProps {
   user: User;
@@ -29,6 +33,8 @@ interface BricksListState {
   finalBricks: Brick[];
   filterLevels: AcademicLevel[];
   filterLength: BrickLengthEnum[];
+  isLoading: boolean;
+  isEmpty: boolean;
 }
 
 class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
@@ -46,22 +52,30 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
       finalBricks: [],
       searchString: searchString,
       filterLevels: [],
-      filterLength: []
+      filterLength: [],
+      isLoading: false,
+      isEmpty: false,
     };
   }
 
   async search(searchString: string) {
+    this.setState({ isLoading: true });
+    let isEmpty = false;
     const bricks = await searchPublicBricks(searchString);
     if (bricks) {
-      this.setState({ bricks, finalBricks: bricks });
+      if (bricks.length == 0) {
+        isEmpty = true;
+      }
+      this.setState({ bricks, finalBricks: bricks, isEmpty });
     } else {
       this.props.requestFailed("Can`t get search bricks");
     }
+    this.setState({ isLoading: false });
   }
 
   isLevelVisible(brick: Brick, levels: AcademicLevel[]) {
     if (levels.length > 0) {
-      return !!levels.find(l => l === brick.academicLevel);
+      return !!levels.find((l) => l === brick.academicLevel);
     }
     return true;
   }
@@ -84,26 +98,79 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
 
   filterByLength(length: BrickLengthEnum) {
     const { filterLength } = this.state;
-    const lengths = this.toggleElement(filterLength, length)
+    const lengths = this.toggleElement(filterLength, length);
     this.setState({ filterLength: lengths });
   }
 
   renderAcademicLevel(level: AcademicLevel) {
-    const isActive = !!this.state.filterLevels.find(l => l === level);
+    const isActive = !!this.state.filterLevels.find((l) => l === level);
     return (
-      <div className={`va-round-level ${isActive ? 'active' : ''}`} onClick={() => this.filterByLevel(level)}>
+      <div
+        className={`va-round-level ${isActive ? "active" : ""}`}
+        onClick={() => this.filterByLevel(level)}
+      >
         {AcademicLevelLabels[level]}
       </div>
     );
   }
 
   renderBrickLengthBox(length: number) {
-    const isActive = !!this.state.filterLength.find(l => l === length);
+    const isActive = !!this.state.filterLength.find((l) => l === length);
     return (
-      <div className={`va-round-level ${isActive ? 'active' : ''}`} onClick={() => this.filterByLength(length)}>
+      <div
+        className={`va-round-level ${isActive ? "active" : ""}`}
+        onClick={() => this.filterByLength(length)}
+      >
         {length}
       </div>
-    )
+    );
+  }
+
+  renderContent() {
+    if (this.state.searchString === "") {
+      return (
+        <div className="ba-content empty">
+          <div>
+            <p>Start typing</p>
+            <p>to see results</p>
+          </div>
+        </div>
+      );
+    }
+    if (this.state.isEmpty === true) {
+      return (
+        <div className="ba-content empty">
+          <div>
+            <p>Sorry, no bricks found</p>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="ba-content full">
+        {this.state.finalBricks.map((b, i) => {
+          const color = getBrickColor(b as Brick);
+          return (
+            <PhoneTopBrick16x9
+              circleIcon=""
+              brick={b}
+              index={i}
+              color={color}
+              onClick={() => {
+                this.setState({ expandedBrick: b });
+              }}
+            />
+          );
+        })}
+        {this.state.expandedBrick && (
+          <PhoneExpandedBrick
+            brick={this.state.expandedBrick}
+            history={this.props.history}
+            hide={() => this.setState({ expandedBrick: null })}
+          />
+        )}
+      </div>
+    );
   }
 
   render() {
@@ -115,10 +182,19 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
         </div>
         <div className="ba-search-input-container">
           <SpriteIcon name="search" />
-          <input value={this.state.searchString} onChange={e => {
-            this.setState({ searchString: e.target.value });
-            this.search(e.target.value);
-          }} placeholder="Search for Subjects, Topics, Titles and more..." />
+          <input
+            value={this.state.searchString}
+            onChange={(e) => {
+              this.setState({ searchString: e.target.value });
+              this.search(e.target.value);
+            }}
+            placeholder="Search for Subjects, Topics, Titles and more..."
+          />
+          {this.state.isLoading && (
+            <div className="loader-container spinning">
+              <SpriteIcon name="f-loader" />
+            </div>
+          )}
         </div>
         <div className="ba-filters">
           <div className="ba-filter-box">
@@ -139,31 +215,7 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
             <div className="ba-label">Length</div>
           </div>
         </div>
-        {this.state.searchString === ''
-          ? <div className="ba-content empty">
-            <div>
-              <p>Start typing</p>
-              <p>to see results</p>
-            </div>
-          </div>
-          : <div className="ba-content full">
-            {this.state.finalBricks.map((b, i) => {
-               const color = getBrickColor(b as Brick);
-               return (
-                 <PhoneTopBrick16x9
-                   circleIcon=""
-                   brick={b}
-                   index={i}
-                   color={color}
-                   onClick={() => {
-                     this.setState({expandedBrick: b});
-                   }}
-                 />
-               );
-            })}
-            {this.state.expandedBrick && <PhoneExpandedBrick brick={this.state.expandedBrick} history={this.props.history} hide={() => this.setState({expandedBrick: null})} />}
-          </div>
-        }
+        {this.renderContent()}
       </div>
     );
   }
