@@ -58,20 +58,6 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
 
   className += " default";
 
-  const renderTeacher = (user: any) => {
-    if (user) {
-      return (
-        <div className="teacher-initials">
-          <div>
-            {user.firstName[0]}
-            {user.lastName[0]}
-          </div>
-        </div>
-      );
-    }
-    return <div></div>;
-  };
-
   const renderRotatedTitle = (name: string, height: number) => {
     let className = "rotated-container " + name;
     let width = "calc(80.4vh - 13.034vw)";
@@ -106,8 +92,6 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
         }}
         style={{ background: color }}
       >
-        {renderTeacher(null)}
-        {!height && renderRotatedTitle("left-align", 100)}
         {hovered && height >= 50 && (
           <div className="custom-tooltip subject-tooltip">
             <BrickTitle title={brick.title} />

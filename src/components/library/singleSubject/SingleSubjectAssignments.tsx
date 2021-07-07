@@ -75,7 +75,7 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
   getPages(assignments: LibraryAssignmentBrick[]) {
     const totalWidth = 68.6;
     const baseMargin = 0.32;
-    const baseAssignmentWidth = 1.5;
+    const baseAssignmentWidth = 2;
 
     let pages = [];
 
