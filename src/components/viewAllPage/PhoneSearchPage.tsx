@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import queryString from "query-string";
 
 import {
@@ -40,7 +40,12 @@ interface BricksListState {
   filterLength: BrickLengthEnum[];
   isLoading: boolean;
   isEmpty: boolean;
+  inputRef: React.RefObject<any>;
 }
+
+const SearchInput = React.forwardRef((props, ref: any) => (
+  <input ref={ref} {...props} type="email" className="AppEmailInput" />
+));
 
 class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
@@ -56,6 +61,7 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
       bricks: [],
       finalBricks: [],
       searchString: searchString,
+      inputRef: React.createRef<any>(),
       filterLevels: [],
       filterLength: [],
       isLoading: false,
@@ -71,7 +77,11 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
       if (bricks.length === 0) {
         isEmpty = true;
       }
-      const finalBricks = this.filter(bricks, this.state.filterLevels, this.state.filterLength);
+      const finalBricks = this.filter(
+        bricks,
+        this.state.filterLevels,
+        this.state.filterLength
+      );
       this.setState({ bricks, finalBricks, isEmpty });
     } else {
       this.props.requestFailed("Can`t get search bricks");
@@ -138,18 +148,17 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
   }
 
   hideKeyboard() {
-    /*
-    const element = document.createElement('input');
-    document.body.appendChild(element);
-    element.focus();
-    element.setAttribute('readonly', 'readonly'); // Force keyboard to hide on input field.
-    element.setAttribute('disabled', 'true'); // Force keyboard to hide on textarea field.
-    setTimeout(function() {
-        element.blur();  //actually close the keyboard
+    const { current } = this.state.inputRef;
+    if (current) {
+      current.setAttribute("readonly", "readonly"); // Force keyboard to hide on input field.
+      current.setAttribute("disabled", "true"); // Force keyboard to hide on textarea field.
+      setTimeout(function () {
+        current.blur(); //actually close the keyboard
         // Remove readonly attribute after keyboard is hidden.
-        element.removeAttribute('readonly');
-        element.removeAttribute('disabled');
-    }, 100);*/
+        current.removeAttribute("readonly");
+        current.removeAttribute("disabled");
+      }, 100);
+    }
   }
 
   renderContent() {
@@ -183,11 +192,12 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
       );
     }
     return (
-      <div className="ba-content full" onScroll={this.hideKeyboard}>
+      <div className="ba-content full" onScroll={this.hideKeyboard.bind(this)}>
         {this.state.finalBricks.map((b, i) => {
           const color = getBrickColor(b as Brick);
           return (
             <PhoneTopBrick16x9
+              key={i}
               circleIcon=""
               brick={b}
               index={i}
@@ -219,6 +229,7 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
         <div className="ba-search-input-container">
           <SpriteIcon name="search" />
           <input
+            ref={this.state.inputRef}
             value={this.state.searchString}
             onChange={(e) => {
               this.setState({ searchString: e.target.value });
