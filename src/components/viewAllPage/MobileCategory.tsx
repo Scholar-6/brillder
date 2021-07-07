@@ -7,7 +7,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import queryString from "query-string";
 import "swiper/swiper.scss";
 
-import { AcademicLevel, AcademicLevelLabels, Brick, Subject, SubjectGroup, SubjectGroupNames } from "model/brick";
+import {
+  AcademicLevel,
+  AcademicLevelLabels,
+  Brick,
+  Subject,
+  SubjectGroup,
+  SubjectGroupNames,
+} from "model/brick";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
@@ -32,7 +39,7 @@ const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 enum Tab {
   MySubjects,
   AllSubjects,
-  SubjectCategory
+  SubjectCategory,
 }
 
 interface SubjectWithBricks extends Subject {
@@ -164,7 +171,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         subjects,
         mySubjects,
         shown: true,
-        categorySubjects
+        categorySubjects,
       });
     } else {
       this.props.requestFailed("Can`t get bricks");
@@ -177,7 +184,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  handleClick(id: number) { }
+  handleClick(id: number) {}
 
   setMySubjectsTab() {
     if (this.state.activeTab !== Tab.MySubjects) {
@@ -293,7 +300,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 index={i}
                 color={color}
                 onClick={() => {
-                  this.setState({expandedBrick: b});
+                  this.setState({ expandedBrick: b });
                 }}
               />
             );
@@ -307,20 +314,30 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     return (
       <div>
         {subjects.map((s, n) => {
-          const expandedBrick = s.bricks.find(b => b.expanded);
+          const expandedBrick = s.bricks.find((b) => b.expanded);
           return (
             <div key={n}>
               <div className="gg-subject-name">
                 {s.name}
-                {s.bricks.length > 0 &&
-                  <div className="va-expand" onClick={() => this.expandSubject(s)}>
+                {s.bricks.length > 0 && (
+                  <div
+                    className="va-expand"
+                    onClick={() => this.expandSubject(s)}
+                  >
                     <SpriteIcon name="arrow-down" />
-                  </div>}
+                  </div>
+                )}
               </div>
               {s.bricks.length > 0
                 ? this.renderBricks(s.bricks)
                 : this.renderEmptySubject()}
-              {expandedBrick && <PhoneExpandedBrick brick={expandedBrick} history={this.props.history} hide={() => this.setState({expandedBrick: null})} />}
+              {expandedBrick && expandedBrick.title && (
+                <PhoneExpandedBrick
+                  brick={expandedBrick}
+                  history={this.props.history}
+                  hide={() => this.setState({ expandedBrick: null })}
+                />
+              )}
             </div>
           );
         })}
@@ -334,12 +351,20 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (expandedSubject) {
       const { bricks } = expandedSubject;
       var brickGroups = [];
-      brickGroups.push(bricks.filter(b => b.academicLevel === AcademicLevel.First));
-      brickGroups.push(bricks.filter(b => b.academicLevel === AcademicLevel.Second));
-      brickGroups.push(bricks.filter(b => b.academicLevel === AcademicLevel.Third));
-      brickGroups.push(bricks.filter(b => b.academicLevel === AcademicLevel.Fourth));
+      brickGroups.push(
+        bricks.filter((b) => b.academicLevel === AcademicLevel.First)
+      );
+      brickGroups.push(
+        bricks.filter((b) => b.academicLevel === AcademicLevel.Second)
+      );
+      brickGroups.push(
+        bricks.filter((b) => b.academicLevel === AcademicLevel.Third)
+      );
+      brickGroups.push(
+        bricks.filter((b) => b.academicLevel === AcademicLevel.Fourth)
+      );
 
-      brickGroups = brickGroups.filter(b => b.length > 0);
+      brickGroups = brickGroups.filter((b) => b.length > 0);
 
       return (
         <div>
@@ -347,24 +372,28 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             {expandedSubject.name}
             <div className="va-level-container smaller">
               {this.renderAcademicLevel(brickGroups[0][0].academicLevel)}
-              <div className="va-level-count">
-                {brickGroups[0].length}
-              </div>
+              <div className="va-level-count">{brickGroups[0].length}</div>
             </div>
-            {expandedSubject.bricks.length > 0 &&
-              <div className="va-expand va-hide" onClick={this.hideSubject.bind(this)}>
+            {expandedSubject.bricks.length > 0 && (
+              <div
+                className="va-expand va-hide"
+                onClick={this.hideSubject.bind(this)}
+              >
                 <SpriteIcon name="arrow-up" />
-              </div>}
-          </div>
-          {brickGroups.map((bs, i) => <div className="va-s-subject-bricks" key={i}>
-            {i > 0 && <div className="va-level-container smaller">
-              {this.renderAcademicLevel(bs[0].academicLevel)}
-              <div className="va-level-count">
-                {bs.length}
               </div>
-            </div>}
-            {this.renderBricks(bs)}
-          </div>)}
+            )}
+          </div>
+          {brickGroups.map((bs, i) => (
+            <div className="va-s-subject-bricks" key={i}>
+              {i > 0 && (
+                <div className="va-level-container smaller">
+                  {this.renderAcademicLevel(bs[0].academicLevel)}
+                  <div className="va-level-count">{bs.length}</div>
+                </div>
+              )}
+              {this.renderBricks(bs)}
+            </div>
+          ))}
         </div>
       );
     }
@@ -372,9 +401,12 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderAcademicLevel(level: AcademicLevel) {
-    const isActive = !!this.state.filterLevels.find(l => l === level);
+    const isActive = !!this.state.filterLevels.find((l) => l === level);
     return (
-      <div className={`va-round-level ${isActive ? 'active' : ''}`} onClick={() => this.filterByLevel(level)}>
+      <div
+        className={`va-round-level ${isActive ? "active" : ""}`}
+        onClick={() => this.filterByLevel(level)}
+      >
         {AcademicLevelLabels[level]}
       </div>
     );
@@ -395,10 +427,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       return (
         <React.Suspense fallback={<></>}>
           <MobileTheme />
-          <PhoneSearchPage {...this.props} subjects={this.state.subjects as Subject[]} moveBack={() => {
-            this.setState({isSearchingPage: false})
-            showZendesk();
-          }} />
+          <PhoneSearchPage
+            {...this.props}
+            subjects={this.state.subjects as Subject[]}
+            moveBack={() => {
+              this.setState({ isSearchingPage: false });
+              showZendesk();
+            }}
+          />
         </React.Suspense>
       );
     }
@@ -419,44 +455,61 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           <div className="mobile-scroll-bricks phone-top-bricks16x9">
             {this.renderMobileBricks()}
           </div>
-          {this.props.user ?
+          {this.props.user ? (
             <div className="ss-tabs-container">
               <div
-                className={`ss-tab-1 ${this.state.activeTab === Tab.MySubjects ? "active" : ""}`}
+                className={`ss-tab-1 ${
+                  this.state.activeTab === Tab.MySubjects ? "active" : ""
+                }`}
                 onClick={this.setMySubjectsTab.bind(this)}
               >
                 <SpriteIcon name="user-custom" />
                 My Subjects
               </div>
               <div
-                className={`ss-tab-2 ${this.state.activeTab === Tab.AllSubjects ? "active" : ""}`}
+                className={`ss-tab-2 ${
+                  this.state.activeTab === Tab.AllSubjects ? "active" : ""
+                }`}
                 onClick={this.setAllSubjectsTab.bind(this)}
               >
                 All Subjects
               </div>
             </div>
-            :
+          ) : (
             <div className="ss-tabs-container">
               <div className="ss-tab-1 full active">
-                <SpriteIcon name="arrow-left" onClick={() => this.props.history.push(map.SubjectCategories)} />
-                {this.state.subjectGroup ? SubjectGroupNames[this.state.subjectGroup] : 'Subject Category'}
+                <SpriteIcon
+                  name="arrow-left"
+                  onClick={() => this.props.history.push(map.SubjectCategories)}
+                />
+                {this.state.subjectGroup
+                  ? SubjectGroupNames[this.state.subjectGroup]
+                  : "Subject Category"}
               </div>
             </div>
-          }
+          )}
           <div className="va-level-container">
-              {this.renderAcademicLevel(AcademicLevel.First)}
-              {this.renderAcademicLevel(AcademicLevel.Second)}
-              {this.renderAcademicLevel(AcademicLevel.Third)}
-              {this.renderAcademicLevel(AcademicLevel.Fourth)}
-              <div className="va-difficult-help">
-                <MobileHelp>
-                  <LevelHelpContent />
-                </MobileHelp>
-              </div>
+            {this.renderAcademicLevel(AcademicLevel.First)}
+            {this.renderAcademicLevel(AcademicLevel.Second)}
+            {this.renderAcademicLevel(AcademicLevel.Third)}
+            {this.renderAcademicLevel(AcademicLevel.Fourth)}
+            <div className="va-difficult-help">
+              <MobileHelp>
+                <LevelHelpContent />
+              </MobileHelp>
             </div>
+          </div>
           <div className="va-bricks-container">
-            {this.state.expandedSubject ? this.renderExpandedSubject() : this.renderSubjects(subjects)}
-            {this.state.expandedBrick && <PhoneExpandedBrick brick={this.state.expandedBrick} history={this.props.history} hide={() => this.setState({expandedBrick: null})} />}
+            {this.state.expandedSubject
+              ? this.renderExpandedSubject()
+              : this.renderSubjects(subjects)}
+            {this.state.expandedBrick && (
+              <PhoneExpandedBrick
+                brick={this.state.expandedBrick}
+                history={this.props.history}
+                hide={() => this.setState({ expandedBrick: null })}
+              />
+            )}
           </div>
         </div>
       </React.Suspense>
