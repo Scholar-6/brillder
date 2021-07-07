@@ -885,6 +885,27 @@
       height: 14vw;
       background: var(--tab-gray);
     }
+
+    @keyframes spinning {
+      0% {
+        transform: rotateZ(0deg);
+      }
+      100% {
+        transform: rotateZ(360deg);
+      }
+    }
+
+    .spinning {
+      svg {
+        animation: spinning 2.5s infinite linear;
+      }
+    }
+
+    .loader-container {
+      position: absolute;
+      top: 0.2vw;
+      right: 14vw;
+    }
   }
 
   .ba-filters {
