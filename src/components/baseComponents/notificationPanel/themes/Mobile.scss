@@ -13,6 +13,14 @@
     $clear-size: 13vw;
     height: calc(100% - #{$top-size} - #{$clear-size});
     max-height: 100% !important;
+
+    transition: all 300ms ease-out;
+
+    &.empty {
+      position: absolute;
+      bottom: 0;
+      height: 10% !important;
+    }
     .notification-top {
       height: $top-size;
       border-bottom: 0.3vw solid var(--theme-dark-blue);
@@ -50,6 +58,10 @@
       li {
         height: 20vw;
         border-bottom: 0.3vw solid var(--theme-dark-blue);
+
+        &.no-hover {
+          border: none;
+        }
 
         .np-expand-button {
           position: absolute;
