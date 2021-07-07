@@ -25,6 +25,7 @@ import LevelHelpContent from "components/baseComponents/hoverHelp/LevelHelpConte
 import PhoneExpandedBrick from "./components/PhoneExpandedBrick";
 import PhoneSearchPage from "./PhoneSearchPage";
 import { isLevelVisible, toggleElement } from "./service/viewAll";
+import { showZendesk } from "services/zendesk";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -394,7 +395,10 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       return (
         <React.Suspense fallback={<></>}>
           <MobileTheme />
-          <PhoneSearchPage {...this.props} subjects={this.state.subjects as Subject[]} moveBack={() => this.setState({isSearchingPage: false})} />
+          <PhoneSearchPage {...this.props} subjects={this.state.subjects as Subject[]} moveBack={() => {
+            this.setState({isSearchingPage: false})
+            showZendesk();
+          }} />
         </React.Suspense>
       );
     }
