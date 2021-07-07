@@ -36,62 +36,6 @@ interface Props {
 
 
 class PhoneTopBrick16x9 extends Component<Props> {
-  renderIcon() {
-    const { circleIcon, iconColor } = this.props;
-    let svgClass = 'svg active ';
-    if (iconColor) {
-      svgClass += iconColor;
-    } else {
-      svgClass += 'text-white';
-    }
-    if (circleIcon) {
-      return (
-        <div className="round-button-icon">
-          <SpriteIcon name={circleIcon} className={svgClass} />
-        </div>
-      );
-    }
-    return "";
-  }
-
-  // mobile only
-  renderPlayButton() {
-    return (
-      <div className="play-button-link svgOnHover" onClick={() => this.props.move ? this.props.move() : {}}>
-        <SpriteIcon name="play-thin" className="w100 h100 svg-default text-gray" />
-        <SpriteIcon name="play-thick" className="w100 h100 colored text-gray" />
-      </div>
-    )
-  }
-
-  renderDeleteButton(brick: Brick) {
-    const { user } = this.props;
-    let isAdmin = false;
-    if (user) {
-      isAdmin = user.roles.some(role => role.roleId === UserType.Admin);
-    }
-    if (user) {
-      // check if user can delete the brick
-      if (!canDelete(user.id, isAdmin, brick)) { return; }
-      return (
-        <div className="hover-delete-icon">
-          <button
-            className="btn btn-transparent svgOnHover bin-button"
-            onClick={e => {
-              e.stopPropagation();
-              if (this.props.handleDeleteOpen) {
-                this.props.handleDeleteOpen(brick.id);
-              }
-            }}
-          >
-            <SpriteIcon name="trash-outline" className="w100 h100 active" />
-          </button>
-        </div>
-      );
-    }
-    return <div />
-  }
-
   render() {
     const { color, brick, isMobile, isExpanded, index } = this.props;
     let className = "short-description phone-top-brick-16x9";
@@ -129,7 +73,6 @@ class PhoneTopBrick16x9 extends Component<Props> {
         <div className="bottom-description">
           <BrickTitle title={brick.title} />
         </div>
-        {/*isExpanded ? this.renderPlayButton() : ""*/}
       </div>
     );
   }

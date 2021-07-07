@@ -295,6 +295,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             const color = getBrickColor(b as Brick);
             return (
               <PhoneTopBrick16x9
+                key={i}
                 circleIcon=""
                 brick={b}
                 index={i}
