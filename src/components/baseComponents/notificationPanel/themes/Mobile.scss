@@ -69,7 +69,7 @@
         height: $circle-size;
       }
       .content-box {
-        width: calc(100% - #{$circle-size} - 2vw);
+        width: calc(100vw - #{$circle-size} - 6vw);
       }
     }
     .clear-notification {

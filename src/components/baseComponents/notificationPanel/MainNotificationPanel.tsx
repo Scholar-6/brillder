@@ -245,7 +245,7 @@ class MainNotificationPanel extends Component<
             this.props.notifications.length !== 0 ? (
               this.props.notifications.map((notification, i) => (
                 <NotificationItem
-                  key={i}
+                  key={notification.id}
                   notification={notification}
                   move={this.move.bind(this)}
                   markAsRead={this.markAsRead.bind(this)}
