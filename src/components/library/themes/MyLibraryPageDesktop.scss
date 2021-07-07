@@ -59,6 +59,11 @@
               font-size: 1.05vw;
               color: var(--white);
             }
+            .text-dark-gray {
+              .rotated-text {
+                color: var(--dark-gray);
+              }
+            }
           }
           .default-value.progress-value .rotated-text {
             padding-left: 5.5vw;

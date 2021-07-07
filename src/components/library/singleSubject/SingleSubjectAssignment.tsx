@@ -107,15 +107,16 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
           className="progress-value default-value"
           onMouseEnter={() => setHover(true)}
         >
-          {height < 50 &&
+          {height < 50 && height > 0 &&
             assignment.brick.academicLevel >= AcademicLevel.First && (
               <AcademyDifficulty
                 a={assignment.brick.academicLevel}
                 brick={brick}
               />
             )}
-          {height < 50 && renderRotatedTitle("white", 100)}
-          {height < 50 &&
+          {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
+          {height < 50 && height > 0 && renderRotatedTitle("white", 100)}
+          {height < 50 && height > 0 &&
             <div className="pr-lock-container" style={{ background: color }}>
               <div>
                 <SpriteIcon name="lock" />
