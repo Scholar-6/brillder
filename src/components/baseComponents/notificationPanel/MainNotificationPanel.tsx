@@ -1,25 +1,30 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { connect } from 'react-redux';
-import { IconButton, SvgIcon } from '@material-ui/core';
-import { ReduxCombinedState } from 'redux/reducers';
+import React, { Component } from "react";
+import axios from "axios";
+import { connect } from "react-redux";
+import { IconButton, SvgIcon } from "@material-ui/core";
+import { ReduxCombinedState } from "redux/reducers";
 import sprite from "assets/img/icons-sprite.svg";
-import { Notification, notificationTypeColors, NotificationType } from 'model/notifications';
-import moment from 'moment';
+import {
+  Notification,
+  notificationTypeColors,
+  NotificationType,
+} from "model/notifications";
+import moment from "moment";
 
-import map from 'components/map';
-import actions from 'redux/actions/brickActions';
-import { isMobile } from 'react-device-detect';
-import { checkTeacherEditorOrAdmin } from 'components/services/brickService';
-import { User } from 'model/user';
-import SpriteIcon from '../SpriteIcon';
-import DesktopVersionDialogV2 from 'components/build/baseComponents/dialogs/DesktopVersionDialogV2';
-import { isPhone } from 'services/phone';
-import routes from 'components/play/routes';
+import map from "components/map";
+import actions from "redux/actions/brickActions";
+import { isMobile } from "react-device-detect";
+import { checkTeacherEditorOrAdmin } from "components/services/brickService";
+import { User } from "model/user";
+import SpriteIcon from "../SpriteIcon";
+import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/DesktopVersionDialogV2";
+import { isPhone } from "services/phone";
+import routes from "components/play/routes";
+import { Brick } from "model/brick";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-  notifications: state.notifications.notifications
+  notifications: state.notifications.notifications,
 });
 
 const mapDispatch = (dispatch: any) => ({
@@ -48,32 +53,54 @@ interface MainNotificationsState {
   canScroll: boolean;
 }
 
-class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNotificationsState> {
+class MainNotificationPanel extends Component<
+  MainNotificationPanelProps,
+  MainNotificationsState
+> {
   constructor(props: MainNotificationPanelProps) {
     super(props);
     this.state = {
       scrollArea: React.createRef(),
       needDesktopOpen: false,
-      canScroll: false
+      canScroll: false,
+    };
+  }
+
+  async moveToProposal(brick: Brick) {
+    if (isPhone()) {
+      this.setState({ needDesktopOpen: true });
+    } else {
+      this.props.forgetBrick();
+      await this.props.fetchBrick(brick.id);
+      this.props.history.push(map.Proposal(brick.id));
     }
   }
 
   async move(notification: Notification) {
     const { history } = this.props;
     if (history) {
-      if (notification.type === NotificationType.BrickPublished) {
-        history.push(map.ViewAllPage);
-      } else if (notification.type === NotificationType.BrickSubmittedForReview) {
+      if (notification.type === NotificationType.BrickSubmittedForReview) {
         history.push(map.BackToWorkPage);
       }
 
       if (notification.brick && notification.brick.id) {
-        const {type, brick} = notification;
-        if (type === NotificationType.NewCommentOnBrick) {
-          if (notification.question && notification.question.id >= 1) {
-            history.push(map.investigationQuestionSuggestions(brick.id, notification.question.id));
+        const { type, brick } = notification;
+        if (notification.type === NotificationType.BrickPublished) {
+          history.push(routes.playCover(brick.id));
+        } else if (type === NotificationType.NewCommentOnBrick) {
+          if (isPhone()) {
+            this.setState({ needDesktopOpen: true });
           } else {
-            history.push(map.investigationSynthesisSuggestions(brick.id))
+            if (notification.question && notification.question.id >= 1) {
+              history.push(
+                map.investigationQuestionSuggestions(
+                  brick.id,
+                  notification.question.id
+                )
+              );
+            } else {
+              history.push(map.investigationSynthesisSuggestions(brick.id));
+            }
           }
         } else if (type === NotificationType.InvitedToPlayBrick) {
           if (isPhone()) {
@@ -83,20 +110,20 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
           }
         } else if (type === NotificationType.BrickAttemptSaved) {
           if (isMobile) {
-            this.setState({needDesktopOpen: true});
+            this.setState({ needDesktopOpen: true });
           } else {
             history.push(map.postPlay(brick.id, notification.sender.id));
           }
         } else if (type === NotificationType.ReturnedToEditor) {
-          history.push(map.InvestigationBuild(brick.id));
+          if (isPhone()) {
+            this.setState({ needDesktopOpen: true });
+          } else {
+            history.push(map.InvestigationBuild(brick.id));
+          }
         } else if (type === NotificationType.AssignedToEdit) {
-          this.props.forgetBrick();
-          await this.props.fetchBrick(brick.id);
-          history.push(map.Proposal(brick.id));
+          this.moveToProposal(brick);
         } else if (type === NotificationType.ReturnedToAuthor) {
-          this.props.forgetBrick();
-          await this.props.fetchBrick(brick.id);
-          history.push(map.Proposal(brick.id));
+          this.moveToProposal(brick);
         } else if (
           type === NotificationType.RemindedToPlayBrick ||
           type === NotificationType.StudentAssignedBrick
@@ -112,38 +139,42 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
   }
 
   checkScroll() {
-    const {canScroll} = this.state;
-    const {current} = this.state.scrollArea;
+    const { canScroll } = this.state;
+    const { current } = this.state.scrollArea;
     if (current) {
       if (current.scrollHeight > current.clientHeight) {
         if (!canScroll) {
-          this.setState({canScroll: true});
+          this.setState({ canScroll: true });
         }
       } else {
         if (canScroll) {
-          this.setState({canScroll: false});
+          this.setState({ canScroll: false });
         }
       }
     }
   }
 
   componentDidMount() {
-    setTimeout(() => { this.checkScroll(); }, 200);
+    setTimeout(() => {
+      this.checkScroll();
+    }, 200);
   }
 
   componentDidUpdate() {
-    setTimeout(() => { this.checkScroll(); }, 200);
+    setTimeout(() => {
+      this.checkScroll();
+    }, 200);
   }
 
   scrollUp() {
-    const {current} = this.state.scrollArea;
+    const { current } = this.state.scrollArea;
     if (current) {
       current.scrollBy(0, -window.screen.height / 30);
     }
   }
 
   scrollDown() {
-    const {current} = this.state.scrollArea;
+    const { current } = this.state.scrollArea;
     if (current) {
       current.scrollBy(0, window.screen.height / 30);
     }
@@ -166,15 +197,23 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
   }
 
   renderQuotes() {
-    if (isMobile) { return ""; }
+    if (isMobile) {
+      return "";
+    }
     let canSee = checkTeacherEditorOrAdmin(this.props.user);
     if (canSee) {
       return (
-        <em>“Nothing strengthens authority so much as silence”<br />- Leonardo da Vinci</em>
+        <em>
+          “Nothing strengthens authority so much as silence”
+          <br />- Leonardo da Vinci
+        </em>
       );
     }
     return (
-      <em>“Why then the world's mine oyster...”<br />- Shakespeare</em>
+      <em>
+        “Why then the world's mine oyster...”
+        <br />- Shakespeare
+      </em>
     );
   }
 
@@ -186,115 +225,183 @@ class MainNotificationPanel extends Component<MainNotificationPanelProps, MainNo
 
     let className = "main-notification-box";
     if (this.props.shown) {
-      className += ' active';
+      className += " active";
     } else {
-      className += ' hidden';
+      className += " hidden";
     }
     if (haveNotification) {
-      className += ' notifications';
+      className += " notifications";
     } else {
-      className += ' no-notifications';
+      className += " no-notifications";
     }
 
     return (
       <div className={className}>
         <div className="notification-content">
-            <ul className="notification-list" ref={this.state.scrollArea}>
-              {(this.props.notifications && this.props.notifications.length !== 0) ? this.props.notifications.map((notification) => (
-                <li key={notification.id} onClick={() => this.move(notification)}>
-                  <div className={"left-brick-circle svgOnHover " + notificationTypeColors[notification.type]}>
-                    {notification.type === NotificationType.BrickSubmittedForReview &&
-                      <SpriteIcon name="send" className="w60 h60 active text-theme-dark-blue send-icon-center" />
+          <ul className="notification-list" ref={this.state.scrollArea}>
+            {this.props.notifications &&
+            this.props.notifications.length !== 0 ? (
+              this.props.notifications.map((notification) => (
+                <li
+                  key={notification.id}
+                  onClick={() => this.move(notification)}
+                >
+                  <div
+                    className={
+                      "left-brick-circle svgOnHover " +
+                      notificationTypeColors[notification.type]
                     }
-                    {notification.type === NotificationType.AssignedToEdit &&
-                      <SpriteIcon name="edit-outline" className="w60 h60 active text-theme-dark-blue" />
-                    }
-                    {notification.type === NotificationType.BrickPublished &&
-                      <SpriteIcon name="award" className="w60 h60 active text-theme-dark-blue stroke-2" />
-                    }
-                    {notification.type === NotificationType.NewCommentOnBrick &&
-                      <SpriteIcon name="message-square-thick" className="w60 h60 active text-theme-dark-blue" />
-                    }
-                    {notification.type === NotificationType.InvitedToPlayBrick &&
-                      <svg className="svg w60 h60 active text-theme-dark-blue" style={{marginLeft: '0.2vw'}}>
+                  >
+                    {notification.type ===
+                      NotificationType.BrickSubmittedForReview && (
+                      <SpriteIcon
+                        name="send"
+                        className="w60 h60 active text-theme-dark-blue send-icon-center"
+                      />
+                    )}
+                    {notification.type === NotificationType.AssignedToEdit && (
+                      <SpriteIcon
+                        name="edit-outline"
+                        className="w60 h60 active text-theme-dark-blue"
+                      />
+                    )}
+                    {notification.type === NotificationType.BrickPublished && (
+                      <SpriteIcon
+                        name="award"
+                        className="w60 h60 active text-theme-dark-blue stroke-2"
+                      />
+                    )}
+                    {notification.type ===
+                      NotificationType.NewCommentOnBrick && (
+                      <SpriteIcon
+                        name="message-square-thick"
+                        className="w60 h60 active text-theme-dark-blue"
+                      />
+                    )}
+                    {notification.type ===
+                      NotificationType.InvitedToPlayBrick && (
+                      <svg
+                        className="svg w60 h60 active text-theme-dark-blue"
+                        style={{ marginLeft: "0.2vw" }}
+                      >
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#play-thick"} />
                       </svg>
-                    }
-                    {notification.type === NotificationType.BrickAttemptSaved &&
-                      <svg className="svg w60 h60 active text-theme-dark-blue stroke-2" style={{marginRight: '0vw'}}>
+                    )}
+                    {notification.type ===
+                      NotificationType.BrickAttemptSaved && (
+                      <svg
+                        className="svg w60 h60 active text-theme-dark-blue stroke-2"
+                        style={{ marginRight: "0vw" }}
+                      >
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#book-open"} />
                       </svg>
-                    }
-                    {notification.type === NotificationType.ReturnedToAuthor &&
-                      <svg className="svg w60 h60 active text-theme-dark-blue stroke-2" style={{marginRight: '0vw'}}>
+                    )}
+                    {notification.type ===
+                      NotificationType.ReturnedToAuthor && (
+                      <svg
+                        className="svg w60 h60 active text-theme-dark-blue stroke-2"
+                        style={{ marginRight: "0vw" }}
+                      >
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#repeat"} />
                       </svg>
-                    }
-                    {notification.type === NotificationType.ReturnedToEditor &&
-                      <svg className="svg w60 h60 active text-theme-dark-blue stroke-2" style={{marginRight: '0vw'}}>
+                    )}
+                    {notification.type ===
+                      NotificationType.ReturnedToEditor && (
+                      <svg
+                        className="svg w60 h60 active text-theme-dark-blue stroke-2"
+                        style={{ marginRight: "0vw" }}
+                      >
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#repeat"} />
                       </svg>
-                    }
-                    {notification.type === NotificationType.StudentAssignedBrick &&
-                      <SpriteIcon name="file-plus" className="w60 h60 active text-theme-dark-blue" />
-                    }
-                    {notification.type === NotificationType.RemindedToPlayBrick &&
-                      <SpriteIcon name="reminder" className="w60 h60 active text-theme-dark-blue stroke-2" />
-                    }
+                    )}
+                    {notification.type ===
+                      NotificationType.StudentAssignedBrick && (
+                      <SpriteIcon
+                        name="file-plus"
+                        className="w60 h60 active text-theme-dark-blue"
+                      />
+                    )}
+                    {notification.type ===
+                      NotificationType.RemindedToPlayBrick && (
+                      <SpriteIcon
+                        name="reminder"
+                        className="w60 h60 active text-theme-dark-blue stroke-2"
+                      />
+                    )}
                   </div>
                   <div className="content-box">
                     <div className="notification-detail">
-                      <p className="notif-title" dangerouslySetInnerHTML={{__html: notification.title}} />
-                      <p className="notif-desc" dangerouslySetInnerHTML={{__html: notification.text}} />
+                      <p
+                        className="notif-title"
+                        dangerouslySetInnerHTML={{ __html: notification.title }}
+                      />
+                      <p
+                        className="notif-desc"
+                        dangerouslySetInnerHTML={{ __html: notification.text }}
+                      />
                     </div>
                     <div className="actions">
-                      <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>
-                      <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={(e) => {
-                        this.markAsRead(notification.id);
-                        e.stopPropagation();
-                      }}>
+                      <div className="notification-time">
+                        {moment(notification.timestamp).fromNow()}
+                      </div>
+                      <button
+                        aria-label="clear"
+                        className="btn btn-transparent delete-notification svgOnHover"
+                        onClick={(e) => {
+                          this.markAsRead(notification.id);
+                          e.stopPropagation();
+                        }}
+                      >
                         <SpriteIcon name="cancel" className="w80 h80 active" />
                       </button>
                     </div>
                   </div>
                 </li>
-              )) :
-                (
-                  <li className="no-hover">
-                    <div className="notification-detail-single">
-                      You have no new notifications
-                      <br />
-                      {this.renderQuotes()}
-                    </div>
-                  </li>
-                )
-              }
-            </ul>
-          {(this.props.notifications && this.props.notifications.length !== 0) &&
+              ))
+            ) : (
+              <li className="no-hover">
+                <div className="notification-detail-single">
+                  You have no new notifications
+                  <br />
+                  {this.renderQuotes()}
+                </div>
+              </li>
+            )}
+          </ul>
+          {this.props.notifications && this.props.notifications.length !== 0 && (
             <div className="clear-notification">
               <div className="scroll-buttons">
-                <SpriteIcon name="arrow-up" onClick={this.scrollUp.bind(this)} />
-                <SpriteIcon name="arrow-down" onClick={this.scrollDown.bind(this)} />
+                <SpriteIcon
+                  name="arrow-up"
+                  onClick={this.scrollUp.bind(this)}
+                />
+                <SpriteIcon
+                  name="arrow-down"
+                  onClick={this.scrollDown.bind(this)}
+                />
               </div>
-              <div className="clear-all-button" onClick={() => this.markAllAsRead()}>
-              <div className="bold clickable">Clear All</div>
-              <IconButton aria-label="clear-all">
-                <SvgIcon>
-                  <SpriteIcon name="circle-cancel" className="text-white" />
-                </SvgIcon>
-              </IconButton>
+              <div
+                className="clear-all-button"
+                onClick={() => this.markAllAsRead()}
+              >
+                <div className="bold clickable">Clear All</div>
+                <IconButton aria-label="clear-all">
+                  <SvgIcon>
+                    <SpriteIcon name="circle-cancel" className="text-white" />
+                  </SvgIcon>
+                </IconButton>
               </div>
             </div>
-          }
+          )}
         </div>
         <DesktopVersionDialogV2
           isOpen={this.state.needDesktopOpen}
           secondaryLabel="Brick summaries have not yet been optimised for mobile devices."
-          onClick={() => this.setState({needDesktopOpen: false})}
+          onClick={() => this.setState({ needDesktopOpen: false })}
         />
       </div>
     );
