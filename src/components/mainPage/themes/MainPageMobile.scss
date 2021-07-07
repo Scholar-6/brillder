@@ -156,13 +156,13 @@
       }
     }
     &.notification-expanded {
-      height: auto;
+      height: 64px;
     }
   }
   .main-page-menu {
     position: absolute;
     width: 42vw;
-    height: 60px;
+    height: 64px;
     bottom: 0;
     border-bottom-left-radius: 0;
     border-top-left-radius: 6vw;

@@ -72,9 +72,7 @@ class NotificationPanel extends Component<
   async move(notification: Notification) {
     const { history } = this.props;
     if (history) {
-      if (notification.type === NotificationType.BrickPublished) {
-        history.push(map.ViewAllPage);
-      } else if (
+      if (
         notification.type === NotificationType.BrickSubmittedForReview
       ) {
         history.push(map.BackToWorkPage);
@@ -82,7 +80,9 @@ class NotificationPanel extends Component<
 
       if (notification.brick && notification.brick.id) {
         const { type, brick } = notification;
-        if (type === NotificationType.NewCommentOnBrick) {
+        if (notification.type === NotificationType.BrickPublished) {
+          history.push(routes.playCover(brick.id));
+        } else if (type === NotificationType.NewCommentOnBrick) {
           if (notification.question && notification.question.id >= 1) {
             history.push(
               map.investigationQuestionSuggestions(
