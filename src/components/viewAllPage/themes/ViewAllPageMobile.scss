@@ -560,6 +560,7 @@
       margin: 1vw;
       width: 9vw;
       height: 9vw;
+      font-family: $font-family-bold;
       border: 0.8vw solid var(--tab-gray);
       background: var(--white);
       color: var(--tab-gray);
@@ -584,12 +585,14 @@
     }
 
     &.smaller {
+      border: none;
 
       .va-round-level,
       .va-level-count {
         width: 8vw;
         height: 8vw;
         font-size: 4.9vw;
+        font-family: $font-family-bold;
       }
 
       .va-round-level {
@@ -937,6 +940,7 @@
           font-size: 5.5vw;
           align-items: center;
           justify-content: center;
+          font-family: $font-family-bold;
 
           &.active {
             background: var(--tab-gray);

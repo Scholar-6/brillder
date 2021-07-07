@@ -17,7 +17,6 @@ import { getAssignmentIcon } from "components/services/brickService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
 import { getPublicBricks } from "services/axios/brick";
-import routes from "components/play/routes";
 import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
@@ -25,6 +24,7 @@ import MobileHelp from "components/baseComponents/hoverHelp/MobileHelp";
 import LevelHelpContent from "components/baseComponents/hoverHelp/LevelHelpContent";
 import PhoneExpandedBrick from "./components/PhoneExpandedBrick";
 import PhoneSearchPage from "./PhoneSearchPage";
+import { isLevelVisible, toggleElement } from "./service/viewAll";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -190,32 +190,15 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  isLevelVisible(brick: Brick, levels: AcademicLevel[]) {
-    if (levels.length > 0) {
-      return !!levels.find(l => l === brick.academicLevel);
-    }
-    return true;
-  }
-
-  toggleElement(arr: any[], value: any) {
-    const found = arr.find((l) => l === value);
-    if (found) {
-      arr = arr.filter((l) => l !== value);
-    } else {
-      arr.push(value);
-    }
-    return arr;
-  }
-
   filterByLevel(level: AcademicLevel) {
     const { filterLevels } = this.state;
-    const levels = this.toggleElement(filterLevels, level);
+    const levels = toggleElement(filterLevels, level);
     if (this.props.user) {
       const { subjects, mySubjects } = this.state;
       this.clearBricks(subjects);
       this.clearBricks(mySubjects);
       for (let brick of this.state.bricks) {
-        if (this.isLevelVisible(brick, levels)) {
+        if (isLevelVisible(brick, levels)) {
           this.addBrickBySubject(subjects, brick);
           this.addBrickBySubject(mySubjects, brick);
         }
@@ -224,7 +207,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       const { categorySubjects } = this.state;
       this.clearBricks(categorySubjects);
       for (let brick of this.state.bricks) {
-        if (this.isLevelVisible(brick, levels)) {
+        if (isLevelVisible(brick, levels)) {
           this.addBrickBySubject(categorySubjects, brick);
         }
       }
