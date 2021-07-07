@@ -198,7 +198,7 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
             />
           );
         })}
-        {this.state.expandedBrick && (
+        {this.state.expandedBrick && this.state.expandedBrick.title && (
           <PhoneExpandedBrick
             brick={this.state.expandedBrick}
             history={this.props.history}
