@@ -612,3 +612,23 @@
 .bold-important {
     font-family: $font-family-bold !important;
 }
+
+
+
+.user-profile-page .subject-autocomplete {
+  font-size: 4.5vw;
+  .MuiChip-label {
+    font-size: 4.5vw;
+  }
+}
+.MuiAutocomplete-option {
+  font-size: 4.5vw;
+}
+
+.profile-saved-dialog {
+  .dialog-footer {
+    span {
+      font-size: 5.5vw !important;
+    }
+  }
+}

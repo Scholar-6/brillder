@@ -450,7 +450,7 @@
       }
 
       .p-cover-image {
-        width: 111%;
+        width: 115%;
       }
 
       .left-brick-circle {
@@ -634,7 +634,7 @@
 
       .va-expand {
         position: absolute;
-        top: calc(2vh + 1vw);
+        top: calc(2vh - 0.7vw);
         right: 6vw;
         display: flex;
         align-items: center;
@@ -670,7 +670,7 @@
       padding: 0 !important;
 
       .p-cover-image {
-        width: 111%;
+        width: 115%;
       }
 
       .left-brick-circle {
@@ -731,10 +731,11 @@
     margin-left: 4vw;
     border-radius: 4vw;
     display: flex;
+    align-items: center;
     justify-content: center;
     font-size: 4.5vw;
-    padding: 1.9vh 0;
     width: 58vw;
+    height: 33vw;
     background: var(--tab-gray);
     color: var(--theme-dark-blue);
     font-family: $font-family-regular-italic;
@@ -986,7 +987,7 @@
         padding: 0 !important;
 
         .p-cover-image {
-          width: 111%;
+          width: 115%;
         }
 
         .left-brick-circle {
