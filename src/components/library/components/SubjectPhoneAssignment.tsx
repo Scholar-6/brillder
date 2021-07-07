@@ -6,6 +6,7 @@ import map from "components/map";
 import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademyDifficulty } from "../base/AcademyDifficulty";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -100,6 +101,14 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
               a={assignment.brick.academicLevel}
               className="smaller"
             />
+          )}
+          {height < 50 && height > 0 && (
+            <div className="pr-lock-container" style={{ background: color }}>
+              <div>
+                <SpriteIcon name="lock" />
+              </div>
+              <div>{Math.round(height)}%</div>
+            </div>
           )}
         </div>
         {height >= 50 && renderProgressValue()}

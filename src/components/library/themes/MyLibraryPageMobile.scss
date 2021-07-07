@@ -21,6 +21,9 @@
 
     .progress-value {
       position: relative;
+      .rotated-text {
+        color: var(--white);
+      }
     }
     .rotated-container {
       bottom: 0;
@@ -127,7 +130,34 @@
               height: 100%;
 
               .white .rotated-text {
+                padding-left: 14.5vw;
+              }
+
+              .text-dark-gray .rotated-text {
+                color: var(--dark-gray);
+              }
+
+              .pr-lock-container {
+                position: absolute;
+                border-radius: 1vw;
+                border-top-right-radius: 4vw;
+                border-top-left-radius: 4vw;
+                height: 13vw;
+                width: 100%;
+                bottom: 0;
+                font-family: $font-family-bold;
                 color: var(--white);
+                > div {
+                  display: flex;
+                  justify-content: center;
+                }
+                svg {
+                  padding-top: 1vw;
+                  $size: 5vw;
+                  stroke-width: 1.5;
+                  width: $size;
+                  height: $size;
+                }
               }
             }
 
