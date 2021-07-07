@@ -774,8 +774,8 @@
     border-top-left-radius: 3vw;
     border-top-right-radius: 3vw;
     padding: 3vw 3.5vw;
-    color: var(--theme-dark-blue);
-    background: var(--tab-gray);
+    color: var(--white);
+    background: var(--theme-light-blue);
 
 
     .va-title-container {
@@ -837,7 +837,7 @@
         border-radius: 1.8vw;
         font-size: 5.5vw;
         color: var(--white);
-        background: var(--theme-light-blue);
+        background: var(--theme-orange);
       }
     }
   }
