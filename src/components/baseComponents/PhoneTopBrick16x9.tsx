@@ -3,10 +3,8 @@ import React, { Component } from "react";
 import './ShortBrickDescription.scss';
 import { AcademicLevel, AcademicLevelLabels, Brick } from "model/brick";
 
-import SpriteIcon from "./SpriteIcon";
-import { User, UserType } from "model/user";
+import { User } from "model/user";
 import BrickCircle from "./BrickCircle";
-import { canDelete } from "components/services/brickService";
 import BrickTitle from "./BrickTitle";
 import { fileUrl } from "components/services/uploadFile";
 

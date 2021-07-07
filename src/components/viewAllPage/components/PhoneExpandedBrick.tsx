@@ -3,6 +3,7 @@ import React from "react";
 import { Brick } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import routes from "components/play/routes";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -21,7 +22,7 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, hide })
           {brick.brickLength}
         </div>
       </div>
-      <div className="va-brief" dangerouslySetInnerHTML={{__html: brick.brief}} />
+      <div className="va-brief" dangerouslySetInnerHTML={{__html: stripHtml(brick.brief)}} />
       <div className="va-footer">
         <button className="btn va-right-play" onClick={() => {
           history.push(routes.playBrief(brick.id));
