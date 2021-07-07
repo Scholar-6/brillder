@@ -16,6 +16,11 @@ import { searchPublicBricks } from "services/axios/brick";
 import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import PhoneExpandedBrick from "./components/PhoneExpandedBrick";
 import { hideZendesk } from "services/zendesk";
+import {
+  isLevelVisible,
+  isLengthVisible,
+  toggleElement,
+} from "./service/viewAll";
 
 interface BricksListProps {
   user: User;
@@ -66,40 +71,46 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
       if (bricks.length == 0) {
         isEmpty = true;
       }
-      this.setState({ bricks, finalBricks: bricks, isEmpty });
+      const finalBricks = this.filter(bricks, this.state.filterLevels, this.state.filterLength);
+      this.setState({ bricks, finalBricks, isEmpty });
     } else {
       this.props.requestFailed("Can`t get search bricks");
     }
     this.setState({ isLoading: false });
   }
 
-  isLevelVisible(brick: Brick, levels: AcademicLevel[]) {
-    if (levels.length > 0) {
-      return !!levels.find((l) => l === brick.academicLevel);
+  filter(bricks: Brick[], levels: AcademicLevel[], lengths: BrickLengthEnum[]) {
+    const finalBricks = [];
+    for (let b of bricks) {
+      if (isLevelVisible(b, levels)) {
+        if (isLengthVisible(b, lengths)) {
+          finalBricks.push(b);
+        }
+      }
     }
-    return true;
-  }
-
-  toggleElement(arr: any[], value: any) {
-    const found = arr.find((l) => l === value);
-    if (found) {
-      arr = arr.filter((l) => l !== value);
-    } else {
-      arr.push(value);
-    }
-    return arr;
+    return finalBricks;
   }
 
   filterByLevel(level: AcademicLevel) {
     const { filterLevels } = this.state;
-    const levels = this.toggleElement(filterLevels, level);
-    this.setState({ filterLevels: levels });
+    const levels = toggleElement(filterLevels, level);
+    const finalBricks = this.filter(
+      this.state.bricks,
+      levels,
+      this.state.filterLength
+    );
+    this.setState({ filterLevels: levels, finalBricks });
   }
 
   filterByLength(length: BrickLengthEnum) {
     const { filterLength } = this.state;
-    const lengths = this.toggleElement(filterLength, length);
-    this.setState({ filterLength: lengths });
+    const lengths = toggleElement(filterLength, length);
+    const finalBricks = this.filter(
+      this.state.bricks,
+      this.state.filterLevels,
+      lengths
+    );
+    this.setState({ filterLength: lengths, finalBricks });
   }
 
   renderAcademicLevel(level: AcademicLevel) {
@@ -142,6 +153,16 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
         <div className="ba-content empty">
           <div>
             <p>Sorry, no bricks found</p>
+          </div>
+        </div>
+      );
+    }
+    if (this.state.isLoading === false && this.state.finalBricks.length === 0) {
+      return (
+        <div className="ba-content empty">
+          <div>
+            <p>There are some bricks.</p>
+            <p>Try to unselect all filters</p>
           </div>
         </div>
       );
