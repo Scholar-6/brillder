@@ -752,7 +752,7 @@
     width: 100vw;
   }
 
-  @keyframes grow {
+  @keyframes gew-grow {
     from {
       height: 0%;
     }
@@ -765,11 +765,12 @@
   }
 
   .va-phone-expanded-brick {
-    animation: grow 0.4s forwards;
+    animation: gew-grow 0.4s forwards;
     position: fixed;
     bottom: 74px;
     z-index: 23;
     left: 4vw;
+    min-width: 92%;
     width: 92vw;
     margin-top: 1.5vh;
     border-top-left-radius: 3vw;

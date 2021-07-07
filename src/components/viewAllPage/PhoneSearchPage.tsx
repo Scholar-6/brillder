@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import queryString from "query-string";
 
 import {
@@ -42,10 +42,6 @@ interface BricksListState {
   isEmpty: boolean;
   inputRef: React.RefObject<any>;
 }
-
-const SearchInput = React.forwardRef((props, ref: any) => (
-  <input ref={ref} {...props} type="email" className="AppEmailInput" />
-));
 
 class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
