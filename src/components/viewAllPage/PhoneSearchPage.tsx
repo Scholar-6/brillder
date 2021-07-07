@@ -137,6 +137,21 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  hideKeyboard() {
+    /*
+    const element = document.createElement('input');
+    document.body.appendChild(element);
+    element.focus();
+    element.setAttribute('readonly', 'readonly'); // Force keyboard to hide on input field.
+    element.setAttribute('disabled', 'true'); // Force keyboard to hide on textarea field.
+    setTimeout(function() {
+        element.blur();  //actually close the keyboard
+        // Remove readonly attribute after keyboard is hidden.
+        element.removeAttribute('readonly');
+        element.removeAttribute('disabled');
+    }, 100);*/
+  }
+
   renderContent() {
     if (this.state.searchString === "") {
       return (
@@ -168,7 +183,7 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
       );
     }
     return (
-      <div className="ba-content full">
+      <div className="ba-content full" onScroll={this.hideKeyboard}>
         {this.state.finalBricks.map((b, i) => {
           const color = getBrickColor(b as Brick);
           return (
