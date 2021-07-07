@@ -68,7 +68,7 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
     let isEmpty = false;
     const bricks = await searchPublicBricks(searchString);
     if (bricks) {
-      if (bricks.length == 0) {
+      if (bricks.length === 0) {
         isEmpty = true;
       }
       const finalBricks = this.filter(bricks, this.state.filterLevels, this.state.filterLength);
