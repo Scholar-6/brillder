@@ -3,13 +3,10 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { Popover, IconButton, SvgIcon } from "@material-ui/core";
 import { ReduxCombinedState } from "redux/reducers";
-import sprite from "assets/img/icons-sprite.svg";
 import {
   Notification,
-  notificationTypeColors,
   NotificationType,
 } from "model/notifications";
-import moment from "moment";
 import "./NotificationPanel.scss";
 
 import map from "components/map";
@@ -21,7 +18,7 @@ import SpriteIcon from "../SpriteIcon";
 import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/DesktopVersionDialogV2";
 import { isPhone } from "services/phone";
 import routes from "components/play/routes";
-import notifications from "redux/actions/notifications";
+import NotificationItem from "./NotificationItem";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -72,9 +69,7 @@ class NotificationPanel extends Component<
   async move(notification: Notification) {
     const { history } = this.props;
     if (history) {
-      if (
-        notification.type === NotificationType.BrickSubmittedForReview
-      ) {
+      if (notification.type === NotificationType.BrickSubmittedForReview) {
         history.push(map.BackToWorkPage);
       }
 
@@ -247,136 +242,13 @@ class NotificationPanel extends Component<
               {/* eslint-disable-next-line */}
               {this.props.notifications &&
               this.props.notifications.length != 0 ? (
-                this.props.notifications.map((notification) => (
-                  <li
-                    key={notification.id}
-                    onClick={() => this.move(notification)}
-                  >
-                    <div
-                      className={
-                        "left-brick-circle svgOnHover " +
-                        notificationTypeColors[notification.type]
-                      }
-                    >
-                      {notification.type ===
-                        NotificationType.BrickSubmittedForReview && (
-                        <SpriteIcon
-                          name="send"
-                          className="w60 h60 active text-theme-dark-blue send-icon-center"
-                        />
-                      )}
-                      {notification.type ===
-                        NotificationType.AssignedToEdit && (
-                        <SpriteIcon
-                          name="edit-outline"
-                          className="w60 h60 active text-theme-dark-blue"
-                        />
-                      )}
-                      {notification.type ===
-                        NotificationType.BrickPublished && (
-                        <SpriteIcon
-                          name="award"
-                          className="w60 h60 active text-theme-dark-blue stroke-2"
-                        />
-                      )}
-                      {notification.type ===
-                        NotificationType.NewCommentOnBrick && (
-                        <SpriteIcon
-                          name="message-square-thick"
-                          className="w60 h60 active text-theme-dark-blue"
-                        />
-                      )}
-                      {notification.type ===
-                        NotificationType.InvitedToPlayBrick && (
-                        <svg
-                          className="svg w60 h60 active text-theme-dark-blue"
-                          style={{ marginLeft: "0.2vw" }}
-                        >
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#play-thick"} />
-                        </svg>
-                      )}
-                      {notification.type ===
-                        NotificationType.BrickAttemptSaved && (
-                        <svg
-                          className="svg w60 h60 active text-theme-dark-blue stroke-2"
-                          style={{ marginRight: "0vw" }}
-                        >
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#book-open"} />
-                        </svg>
-                      )}
-                      {notification.type ===
-                        NotificationType.ReturnedToAuthor && (
-                        <svg
-                          className="svg w60 h60 active text-theme-dark-blue stroke-2"
-                          style={{ marginRight: "0vw" }}
-                        >
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#repeat"} />
-                        </svg>
-                      )}
-                      {notification.type ===
-                        NotificationType.ReturnedToEditor && (
-                        <svg
-                          className="svg w60 h60 active text-theme-dark-blue stroke-2"
-                          style={{ marginRight: "0vw" }}
-                        >
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#repeat"} />
-                        </svg>
-                      )}
-                      {notification.type ===
-                        NotificationType.StudentAssignedBrick && (
-                        <SpriteIcon
-                          name="file-plus"
-                          className="w60 h60 active text-theme-dark-blue"
-                        />
-                      )}
-                      {notification.type ===
-                        NotificationType.RemindedToPlayBrick && (
-                        <SpriteIcon
-                          name="reminder"
-                          className="w60 h60 active text-theme-dark-blue stroke-2"
-                        />
-                      )}
-                    </div>
-                    <div className="content-box">
-                      <div className="notification-detail">
-                        <p
-                          className="notif-title"
-                          dangerouslySetInnerHTML={{
-                            __html: notification.title,
-                          }}
-                        />
-                        <p
-                          className="notif-desc"
-                          dangerouslySetInnerHTML={{
-                            __html: notification.text,
-                          }}
-                        />
-                      </div>
-                      {!isPhone() &&
-                      <div className="actions">
-                        <div className="notification-time">
-                          {moment(notification.timestamp).fromNow()}
-                        </div>
-                        <button
-                          aria-label="clear"
-                          className="btn btn-transparent delete-notification svgOnHover"
-                          onClick={(e) => {
-                            this.markAsRead(notification.id);
-                            e.stopPropagation();
-                          }}
-                        >
-                          <SpriteIcon
-                            name="cancel"
-                            className="w80 h80 active"
-                          />
-                        </button>
-                      </div>}
-                    </div>
-                  </li>
+                this.props.notifications.map((notification, i) => (
+                  <NotificationItem
+                    key={i}
+                    notification={notification}
+                    move={this.move.bind(this)}
+                    markAsRead={this.markAsRead.bind(this)}
+                  />
                 ))
               ) : (
                 <li className="no-hover">
