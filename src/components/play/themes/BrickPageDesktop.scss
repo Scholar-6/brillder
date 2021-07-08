@@ -600,7 +600,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             top: 0;
             width: 100%;
             height: calc(100vh - #{$home-button-size} - #{$sorted-row-margin-top});
-            // overflow: hidden;
             .question-title {
               position: relative;
               font-family: $font-family-black;
