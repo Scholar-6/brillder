@@ -41,7 +41,7 @@ describe("line highlighting scoring (1 answer from 2 options)", () => {
         expect(result.correct).toStrictEqual(false);
     });
 
-    it("if both selected, should mark as incorrect with 1 mark1", () => {
+    it("if both selected, should mark as incorrect with 1 mark", () => {
         // arrange
         const mockAttempt = {
             answer: [0, 1]
