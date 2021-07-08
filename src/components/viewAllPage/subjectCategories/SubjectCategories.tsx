@@ -133,7 +133,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
             </div>
           </div>
-          <TextDialog className="bold-important" isOpen={this.state.invalidSubject} label="Hold tight, this subject category is comming soon." close={() => this.setState({invalidSubject: false})} />
+          <TextDialog className="bold-important" isOpen={this.state.invalidSubject} label="Hold tight, this subject category is coming soon." close={() => this.setState({invalidSubject: false})} />
         </React.Suspense>
       );
     }
@@ -213,7 +213,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
             </div>
           </Grid>
         </Grid>
-        <TextDialog className="bold-important" isOpen={this.state.invalidSubject} label="Hold tight, this subject category is comming soon." close={() => this.setState({invalidSubject: false})} />
+        <TextDialog className="bold-important" isOpen={this.state.invalidSubject} label="Hold tight, this subject category is coming soon." close={() => this.setState({invalidSubject: false})} />
       </React.Suspense>
     );
   }

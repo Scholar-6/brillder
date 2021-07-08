@@ -231,6 +231,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     } else {
       indexClassName += " wrong";
     }
+
     return (
       <TabPanel
         key={index}
@@ -242,7 +243,13 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
           <div className="question-index">{index + 1}</div>
         </div>
         <div className="question-live-play review-content">
-          <div className="question-title">{renderReviewTitle(attempt)}</div>
+          <div className="question-title">
+            {renderReviewTitle(attempt)}
+            <div className="marks-container">
+              <div>Marks</div>
+              <div>{attempt.marks}/{attempt.maxMarks}</div>
+            </div>
+          </div>
           {renderQuestion(question, index)}
         </div>
       </TabPanel>
