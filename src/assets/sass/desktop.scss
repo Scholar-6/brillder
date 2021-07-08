@@ -198,6 +198,17 @@
       margin-bottom: 0 !important;
     }
     .MuiFormControl-root {
+      .MuiOutlinedInput-root {
+        display: flex !important;
+        align-items: flex-start;
+        height: 8.3vw;
+
+        input {
+          padding-left: 0.3vw;
+          padding-top: 0.1vw;
+          padding-bottom: 0.1vw;
+        }
+      }
       max-height: 8.3vw !important;
       overflow-y: auto;
       margin-bottom: 0 !important;

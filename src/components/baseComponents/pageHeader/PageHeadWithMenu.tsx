@@ -32,6 +32,7 @@ interface HeaderMenuProps {
   isMobileHidden?: boolean;
   search(): void;
   searching(v: string): void;
+  toggleSearch?(v:boolean): void;
 }
 
 interface HeaderMenuState {
@@ -103,6 +104,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           history={this.props.history}
           search={() => this.props.search()}
           searching={(v: string) => this.props.searching(v)}
+          toggleSearch={this.props.toggleSearch?.bind(this)}
           showDropdown={() => this.showDropdown()}
           showNotifications={() => this.showNotifications()}
         />

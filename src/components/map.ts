@@ -1,3 +1,5 @@
+import { RolePreference, User } from "model/user";
+
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
 export const ResetPassword = '/resetPassword';
@@ -8,7 +10,13 @@ export const buildBase = (brickId: number) => `${Build}/brick/` + brickId;
 
 export const NewBrick = `${Build}/new-brick`;
 export const ProposalBase = (brickId: number) => `${Build}/brick/${brickId}`;
+
 export const BackToWorkPage = '/back-to-work';
+export const BackToWorkPersonal = BackToWorkPage + '?isCore=false';
+export const BackToWorkPublic = BackToWorkPage + '?isCore=true';
+export const backToWorkUserBased = (user: User) => 
+  `${BackToWorkPage}?isCore=${user.rolePreference?.roleId === RolePreference.Builder ? 'true' : 'false'}`
+
 export const AssignmentsPage = '/assignments';
 export const AssignmentsClassPage = AssignmentsPage + '/:classId';
 export const MyLibrary = '/my-library';
@@ -23,11 +31,6 @@ export const MobileUsername = Onboarding + '/mobile-username';
 export const SelectSubjectPage = Onboarding + '/select-subjects';
 export const UserPreference = Onboarding + '/user-preference';
 export const UserProfile = Onboarding + '/profile-page';
-
-
-export const BackToWorkTeachTab = BackToWorkPage + '/teach';
-export const BackToWorkBuildTab = BackToWorkPage + '/build';
-export const BackToWorkLearnTab = BackToWorkPage + '/learn';
 
 export const TeachAssignedTab = '/teach/assigned';
 export const TeachAssignedArchiveTab = TeachAssignedTab + '/archive';
@@ -155,11 +158,12 @@ export default {
   ProposalTitleLink,
 
   BackToWorkPage,
+  BackToWorkPublic,
+  BackToWorkPersonal,
+  backToWorkUserBased,
+
   AssignmentsPage,
   AssignmentsClassPage,
-  BackToWorkTeachTab,
-  BackToWorkBuildTab,
-  BackToWorkLearnTab,
 
   TeachAssignedTab,
   TeachAssignedArchiveTab,

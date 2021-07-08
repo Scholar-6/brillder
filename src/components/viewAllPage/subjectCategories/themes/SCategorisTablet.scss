@@ -63,3 +63,14 @@
     }
   }
 }
+
+// new tablet fixes
+.dashboard-all-subjects {
+  position: absolute !important;
+  top: calc(#{$home-button-size} + 2vw) !important;
+  height: calc(100% - #{$home-button-size} - 2vw) !important;
+}
+
+html body #root .browser-type-container .sorted-row.dashboard-all-subjects .brick-row-container .row {
+  height: 46% !important;
+}
