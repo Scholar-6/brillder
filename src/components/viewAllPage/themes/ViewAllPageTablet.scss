@@ -7,8 +7,38 @@
   background: var(--theme-dark-blue);
   height: 100%;
   width: 100%;
-  font-family: $font-family-regular;
+  .create-subject-button {
+    font-size: 1.05vw;
+    font-family: $font-family-light;
+  }
+  .level-filter-box {
+    position: relative;
+    .MuiTypography-root {
+      font-family: $font-family-light !important;
+      font-size: 1.05vw;
+    }
+    .absolute-difficult-help {
+      width: 4vw !important;
+      position: absolute;
+      right: 0;
+      top: calc(1.3vh + 0.7vw);
+      .white-circle {
+        color: var(--theme-dark-blue);
+        background: var(--white);
+      }
+      .hover-content {
+        background: var(--theme-dark-blue);
+        color: var(--white);
+        right: 0;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      }
+      .l-text.smaller {
+        width: calc(100% - 4vw);
+      }
+    }
+  }
   .sorted-row {
+    border-top-left-radius: 8vw;
     .sort-and-filter-container {
       margin-top: 0.5vh;
       .view-all-sort-box {
@@ -98,8 +128,8 @@
           left: 1.27vw;
           color: var(--theme-dark-blue);
           svg {
-            width: 1.4vw;
-            height: 1.4vw;
+            width: 1.25vw;
+            height: 1.25vw;
             color: var(--theme-dark-blue);
           }
           .MuiFormControlLabel-label {
@@ -123,83 +153,56 @@
         margin-left: 2vw;
         margin-right: 2vw;
         flex-direction: column;
-        @include phone_and_tabletL {
-          overflow: auto;
-          margin: 5vh 0;
-          height: calc(100% - 10vh);
-        }
-        @include tabletP {
-          justify-content: center;
-          height: 100%;
-        }
+        justify-content: center;
+        height: 100%;
         .subject-row {
           width: 100%;
-          @include phone_and_tabletL {
-            display: flex;
-            flex-direction: column;
-          }
-          @include tabletL {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            &:nth-child(even) {
-              width: calc(100% - 8vw);
-              margin: 0 4vw;
-            }
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &:nth-child(even) {
+            width: calc(100% - 8vw);
+            margin: 0 4vw;
           }
           .subject-item {
             transition: all 300ms ease-out;
             cursor: pointer;
             position: relative;
-            background: var(--white) !important;
-            color: var(--theme-dark-blue) !important;
-            @include phone_and_tabletL {
-              padding-left: 10vw;
-              width: 100%;
-              font-size: 5vw;
-              margin: 0;
-              border-bottom: 1px solid var(--tab-gray);
+            background: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 16vw;
+            font-size: 1.3vw;
+            border-radius: 0.8vw;
+            &:nth-child(even) {
+              // width: calc(100% - 8vw);
+              // margin: 0 4vw;
+              margin: 0.3vw 0.6vw;
             }
-            @include tabletL {
-              text-align: center;
-              width: 16vw;
-              font-size: 1.3vw;
-              margin: 0.8vh 0.5%;
-              border-radius: 0.8vw;
+            .subject-name {
+              padding: 2vh 0;
+              color: var(--theme-dark-blue);
             }
             .round-circle-container {
               left: 0.8vw;
               position: absolute;
               height: 100%;
               @extend %flexCenter;
-
               .round-circle {
                 border-radius: 50%;
-                @include phone_and_tabletL {
-                  width: 5vw;
-                  height: 5vw;
-                }
                 @include tabletL {
                   width: 1.2vw;
                   height: 1.2vw;
                 }
               }
-
               &.icon {
                 color: var(--theme-orange);
-
                 svg {
                   width: 2.5vw;
                   height: 2.5vw;
                 }
-              }
-            }
-            .subject-name {
-              @include phone_and_tabletL {
-                padding: 1vh 0;
-              }
-              @include tabletL {
-                padding: 2vh 0;
               }
             }
           }
@@ -214,90 +217,152 @@
         margin-left: 1.7vw;
         margin-bottom: 1.9vh;
       }
+      .subjects-column {
+        justify-content: flex-start;
+        align-items: flex-start !important;
+      }
+    }
+    .sort-box.subject-scrollable {
+      .subject-list-v2 {
+        .subjects-indexes-box {
+          font-family: $font-family-light;
+          font-size: 1.05vw;
+        }
+      }
     }
   }
-
   .view-all-toggle {
     position: absolute;
   }
-
   .main-title {
     @extend %transitionAll300;
     max-width: 55vw;
+    font-size: 3vw !important;
+    line-height: 0;
+    min-height: 10  vh;
     white-space: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
-
     &.subject-title {
       letter-spacing: 0.4vw;
       margin-top: 1.2vw;
       font-size: 2.9vw;
     }
   }
-
+  .bricks-pagination {
+    position: absolute;
+    bottom: 0;
+  }
   .no-found {
     margin-left: 0.9vw;
     margin-bottom: 0 !important;
   }
-
   .found {
     margin-left: 0.9vw;
   }
-
   .create-button,
   .recomend-button {
     color: var(--theme-dark-blue);
     font-size: 1.5vw;
     font-family: $font-family-bold;
     @extend %flexCenter;
-
     svg {
       color: var(--theme-orange);
       width: 4vw;
     }
   }
-
   .create-button {
     cursor: pointer;
-    margin-left: 12vw;
-
+    margin-left: 14.4vw;
     svg {
       @extend %transitionAll300;
       margin-top: calc(#{$bricks-height / 90});
       max-height: calc(#{$bricks-height / 12});
     }
   }
-
   .recomend-button {
     margin-left: 10vw;
-
     svg {
       stroke-width: 2;
       margin-top: calc(#{$bricks-height / 90});
       max-height: calc(#{$bricks-height / 15});
     }
   }
-
   .unauthorized-sidebar {
     margin-top: 18vh;
     margin-left: 7%;
     width: 86%;
-
-    .title {
-      font-size: 2.1vw;
-      font-family: $font-family-bold;
-    }
+    font-family: $font-family-regular;
+    font-size: 1.9vw;
 
     .text {
-      font-size: 1.05vw;
-    }
-
-    .m-t-3 {
-      margin-top: 3vh;
-    }
-
-    .f-1-9vw {
-      font-size: 1.9vw;
+      font-size: 1.5vw;
     }
   }
+  // #2776 zoom brick on hover
+  .brick-container {
+    display: flex;
+    align-items: center;
+    justify-content: center !important;
+    .absolute-container {
+      width: 100%;
+      height: 4.8vw;
+      transition: all 300ms ease-out;
+    }
+  }
+}
+
+.mobile-category {
+  .brick-row-title {
+    height: calc(5vw + 2.6vh);
+    margin-bottom: 0 !important;
+  }
+  .bricks-list-container {
+    height: calc(100vh - 46vh - 5vw - 2.6vh);
+    overflow-y: scroll;
+  }
+}
+
+
+.level-filter-box {
+  padding-top: 1.3vh;
+  padding-bottom: 1.8vh;
+  padding-left: 1.2vw;
+  font-size: 1.05vw;
+  .MuiButtonBase-root {
+    padding: 0;
+    padding-top: 0.81vh;
+    padding-bottom: 0.8vh;
+  }
+  .MuiFormControlLabel-root {
+    margin: 0;
+  }
+  .MuiButtonBase-root {
+    margin-right: 0.5vw;
+  }
+  svg {
+    height: 1.25vw;
+    width: 1.25vw;
+    color: var(--white) !important;
+  }
+}
+
+.sorted-row .sort-and-filter-container .sort-box .filter-header.subject-category-name {
+  color: gray;
+  background: var(--white);
+  text-align: center;
+  text-transform: none;
+  span {
+    letter-spacing: 0;
+    width: 100%;
+    text-align: inherit;
+  }
+}
+
+.dashboard-page .sorted-row .brick-row-container {
+  padding-top: 0 !important;
+}
+
+html body #root .browser-type-container .dashboard-page .sorted-row {
+  position: absolute;
 }

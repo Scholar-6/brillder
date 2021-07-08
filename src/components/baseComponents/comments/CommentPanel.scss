@@ -266,11 +266,17 @@ $margin-left: 21%;
 
 .question-comments-panel {
   height: 100%;
+  top: 0;
   overflow: hidden;
   position: absolute;
-  transition: margin 0.7s ease-out;
+  transition: all 0.7s ease-out;
+  right: 0;
   &.hidden {
-    margin-right: -16vw;
+    right: -16vw;
+  }
+
+  .right-column {
+    position: relative;
   }
 
   .comments-panel {

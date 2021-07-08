@@ -47,7 +47,7 @@
       padding-right: $base-side-margin;
       > div {
         height: 100%;
-        $base-width: 1.5vw;
+        $base-width: 2vw;
         .assignment {
           margin-left: $base-side-margin;
           margin-right: $base-side-margin;
@@ -59,13 +59,21 @@
               font-size: 1.05vw;
               color: var(--white);
             }
+            .text-dark-gray {
+              .rotated-text {
+                color: var(--dark-gray);
+              }
+            }
+          }
+          .default-value.progress-value .rotated-text {
+            padding-left: 5.5vw;
           }
         }
         .length-20 {
           width: $base-width;
           .rotated .rotated-text {
             height: $base-width;
-            line-height: 1.5;
+            line-height: 2;
           }
           .progress-value {
             width: $base-width;
@@ -76,7 +84,7 @@
           width: $width;
           .rotated .rotated-text {
             height: $width;
-            line-height: 3;
+            line-height: 3.9;
           }
           .progress-value {
             width: $width
@@ -87,7 +95,7 @@
           width: $width;
           .rotated .rotated-text {
             height: $width;
-            line-height: 7;
+            line-height: 7.5;
           }
           .progress-value {
             width: $width;

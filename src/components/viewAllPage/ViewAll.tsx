@@ -188,8 +188,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isAllCategory = true;
     }
 
-    console.log(isAllSubjects);
-
     this.state = {
       yourBricks: [],
       bricks: [],

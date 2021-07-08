@@ -51,7 +51,10 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
     const {brick} = this.props;
     const {brickStatus} = this.state;
     let disabled = brickStatus === BrickStatus.Draft;
-    return <ReturnToAuthorButton disabled={disabled} history={this.props.history} brick={brick} />;
+    return <ReturnToAuthorButton
+      disabled={disabled} history={this.props.history} brick={brick}
+      user={this.props.user}
+    />;
   }
 
   renderReturnToEditorButton() {
@@ -92,7 +95,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         brick={brick}
         onFinish={() => {
           this.setState({brickStatus: BrickStatus.Review});
-          this.props.history.push(map.BackToWorkBuildTab);
+          this.props.history.push(map.backToWorkUserBased(this.props.user));
         }}
       />
     );
