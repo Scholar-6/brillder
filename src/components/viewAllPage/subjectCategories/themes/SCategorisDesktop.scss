@@ -52,5 +52,14 @@
     .zoom-item:hover {
       transform: scale(1.2);
     }
+    .subject-category {
+      color: var(--theme-dark-blue);
+    }
+    .subject-category.disabled {
+      color: var(--dark-gray);
+      .zoom-item:hover {
+        transform: unset;
+      }
+    }
   }
 }

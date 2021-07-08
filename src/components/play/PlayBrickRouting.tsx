@@ -457,15 +457,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const renderHead = () => {
-    let isMobileHidden = false;
-    const live = location.pathname.search("/live");
-    const score = location.pathname.search("/provisionalScore");
-    const synthesis = location.pathname.search("/synthesis");
-    const review = location.pathname.search("/review");
-    const ending = location.pathname.search("/ending");
-    if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0) {
-      isMobileHidden = true;
-    }
     let link = map.MainPage;
     if (!props.user) {
       link = map.ViewAllPage;
@@ -478,7 +469,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
     return (
       <PageHeadWithMenu
-        isMobileHidden={isMobileHidden}
         page={PageEnum.Play}
         user={props.user}
         link={link}

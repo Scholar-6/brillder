@@ -32,6 +32,8 @@ export interface Notification {
   timestamp: Date;
   brick?: Brick;
   question?: Question;
+
+  expanded?: boolean // only for phones
 }
 
 export const notificationTypeColors = {

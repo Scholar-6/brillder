@@ -33,7 +33,6 @@ import PersonalBuild from "../personalBuild/PersonalBuild";
 import map from "components/map";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { SubjectItem } from "../personalBuild/model";
-import { isTeacherPreference } from "components/services/preferenceService";
 import { isPhone } from "services/phone";
 import PublishedBricks from "./PublishedBricks";
 
@@ -598,11 +597,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   render() {
     const {history} = this.props;
     if (isPhone()) {
-      if (isTeacherPreference(this.props.user)) {
-        history.push(map.BackToWorkTeachTab);
-      } else {
-        history.push(map.BackToWorkLearnTab);
-      }
+      history.push(map.backToWorkUserBased(this.props.user));
       return <PageLoader content="" />;
     }
     let searchString = '';

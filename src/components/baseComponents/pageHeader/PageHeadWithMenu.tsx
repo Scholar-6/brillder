@@ -8,6 +8,7 @@ import NotificationPanel from "components/baseComponents/notificationPanel/Notif
 import NotificationPopup from "components/baseComponents/notificationPopup/NotificationPopup";
 
 import MenuDropdown from './MenuDropdown';
+import { isPhone } from "services/phone";
 
 export enum PageEnum {
   None,
@@ -29,9 +30,9 @@ interface HeaderMenuProps {
   user: User;
   placeholder?: string;
   page: PageEnum;
-  isMobileHidden?: boolean;
   search(): void;
   searching(v: string): void;
+  toggleSearch?(v:boolean): void;
 }
 
 interface HeaderMenuState {
@@ -103,6 +104,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           history={this.props.history}
           search={() => this.props.search()}
           searching={(v: string) => this.props.searching(v)}
+          toggleSearch={this.props.toggleSearch?.bind(this)}
           showDropdown={() => this.showDropdown()}
           showNotifications={() => this.showNotifications()}
         />
@@ -122,7 +124,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           handleClose={() => this.hideNotifications()}
           anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
         />}
-        {this.props.user &&
+        {this.props.user && !isPhone() &&
         <NotificationPopup
           history={this.props.history}
           anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}

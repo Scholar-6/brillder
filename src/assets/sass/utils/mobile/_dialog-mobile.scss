@@ -1,9 +1,9 @@
 .MuiPopover-root {
-  z-index: 1000000 !important;
+  z-index: 10000 !important;
 }
 
 .dialog-box {
-  z-index: 999999 !important;
+  z-index: 7000 !important;
   .MuiDialog-container {
     padding: 0 !important;
     .MuiDialog-paperScrollPaper {

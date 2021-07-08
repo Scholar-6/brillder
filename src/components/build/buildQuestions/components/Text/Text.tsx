@@ -40,8 +40,10 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, d
         allowTables={true}
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'table',
+          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'table', 
+          'uploadImageCustom', 'image'
         ]}
+        imageDialog={true}
         onChange={onChange}
       />
     </div>
