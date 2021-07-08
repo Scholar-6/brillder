@@ -46,7 +46,11 @@ class ExpandedAssignment extends Component<
 
     let questionCount = 0;
     if (props.stats.byStudent[0]) {
-      questionCount = props.stats.byStudent[0].attempts[0].answers.length;
+      try {
+        questionCount = props.stats.byStudent[0].attempts[0].answers.length;
+      } catch {
+        console.log('can`t get number of questions');
+      }
     }
 
     this.state = {
@@ -104,24 +108,26 @@ class ExpandedAssignment extends Component<
     this.setState({ students, sortBy });
   }
 
-  renderAvgScore(studentStatus: StudentStatus) {
-    let subjectId = this.props.assignment.brick.subjectId;
+  renderBestScore(studentStatus: StudentStatus) {
+    const subjectId = this.props.assignment.brick.subjectId;
     let color = getSubjectColor(this.props.subjects, subjectId);
 
     if (!color) {
       color = "#B0B0AD";
     }
 
+    const score = studentStatus.bestScore || studentStatus.avgScore || 0;
+
     return (
       <div className="circle" style={{ background: color }}>
-        {Math.round(studentStatus.bestScore)}
+        {Math.round(score)}
       </div>
     );
   }
 
   renderStatus(studentStatus: StudentStatus | undefined) {
     if (studentStatus) {
-      return this.renderAvgScore(studentStatus);
+      return this.renderBestScore(studentStatus);
     }
     return <SpriteIcon name="reminder" className="active reminder-icon" />;
   }
@@ -130,9 +136,13 @@ class ExpandedAssignment extends Component<
     return <SpriteIcon name="message-square" className="active comment-icon" />;
   }
 
-  renderBookIcon(studentId: number) {
+  renderBookIcon(studentStatus: StudentStatus, studentId: number) {
     const { history, assignment } = this.props;
-    const moveToPostPlay = () => history.push(map.postPlay(assignment.brick.id, studentId) + '?fromTeach=true');
+    const moveToPostPlay = () => {
+      if (studentStatus.bestScore !== undefined) {
+        history.push(map.postPlay(assignment.brick.id, studentId) + '?fromTeach=true');
+      }
+    }
     return (
       <div className="round b-green centered">
         <SpriteIcon name="book-open" className="active book-open-icon" onClick={moveToPostPlay} />
@@ -183,7 +193,7 @@ class ExpandedAssignment extends Component<
             <div>{this.renderStatus(studentStatus)}</div>
           </td>
           <td className="student-book">
-            {studentStatus && <div className="centered">{this.renderBookIcon(student.id)}</div>}
+            {studentStatus && <div className="centered">{this.renderBookIcon(studentStatus, student.id)}</div>}
           </td>
           <td className={`assigned-student-name`}>
             {student.firstName} {student.lastName}

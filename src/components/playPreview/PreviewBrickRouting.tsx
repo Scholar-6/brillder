@@ -206,17 +206,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const renderHead = () => {
-    let isMobileHidden = false;
     const live = location.pathname.search(playRoutes.PlayLiveLastPrefix);
-    const score = location.pathname.search("/provisionalScore");
-    const synthesis = location.pathname.search(playRoutes.PlaySynthesisLastPrefix);
-    const review = location.pathname.search(playRoutes.PlayReviewLastPrefix);
-    const ending = location.pathname.search("/ending");
-    const publish = location.pathname.search("/publish");
-    const finish = location.pathname.search("/finish");
-    if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0 || publish > 0 || finish > 0) {
-      isMobileHidden = true;
-    }
     if (live && !sidebarRolledUp) {
       toggleSideBar(true);
     }
@@ -229,7 +219,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
     return (
       <PageHeadWithMenu
-        isMobileHidden={isMobileHidden}
         page={PageEnum.Play}
         user={props.user}
         history={history}
