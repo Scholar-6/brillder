@@ -112,9 +112,10 @@ const NotificationItem: React.FC<Props> = ({
         </div>
         <div className="content-box">
           <div className="notification-detail">
+            {isPhone() &&
             <p className="notification-time">
               {moment(notification.timestamp).fromNow()}
-            </p>
+            </p>}
             <p
               className="notif-title"
               dangerouslySetInnerHTML={{ __html: notification.title }}
