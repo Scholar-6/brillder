@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Grid } from "@material-ui/core";
 import 'swiper/swiper.scss';
@@ -46,6 +47,8 @@ interface MainPageProps {
 interface MainPageState {
   swiper: any;
   notificationExpanded: boolean;
+
+  isNewStudent: boolean;
   isStudent: boolean;
   isBuilder: boolean;
 
@@ -73,6 +76,13 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     const isStudent = rolePreference?.roleId === RolePreference.Student;
     const isBuilder = rolePreference?.roleId === RolePreference.Builder;
 
+    // onboarding users logic
+    let isNewStudent = false;
+    const values = queryString.parse(this.props.history.location.search);
+    if (values.newStudent) {
+      isNewStudent = true;
+    }
+
     this.state = {
       swiper: null,
       notificationExpanded: false,
@@ -80,6 +90,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isBackToWorkOpen: false,
       isTryBuildOpen: false,
       isSwiping: false,
+      isNewStudent,
 
       isStudent,
       isBuilder,

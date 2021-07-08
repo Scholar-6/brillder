@@ -102,7 +102,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     if (saved) {
       await this.props.getUser();
       if (isStudentPreference(user)) {
-        this.props.history.push(map.MainPage);
+        this.props.history.push(map.MainPage + '?newStudent=true');
       } else if (isTeacherPreference(user)) {
         this.props.history.push(map.MainPage + '?' + map.NewTeachQuery);
       } else {
