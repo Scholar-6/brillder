@@ -174,7 +174,7 @@ const mockComponent4 = {
 
 describe("line highlighting scoring (3 answers from 4 options)", () => {
 
-    it("should mark a correct answer with 7 marks on 3 correct words", () => {
+    it("should mark a correct answer with 7 marks", () => {
         // arrange
         const mockAttempt4 = {
             answer: [0, 1, 2]
