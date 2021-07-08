@@ -33,7 +33,6 @@ import PersonalBuild from "../personalBuild/PersonalBuild";
 import map from "components/map";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { SubjectItem } from "../personalBuild/model";
-import { isTeacherPreference } from "components/services/preferenceService";
 import { isPhone } from "services/phone";
 import PublishedBricks from "./PublishedBricks";
 
