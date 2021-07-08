@@ -44,7 +44,6 @@
 
     @include phone_and_tabletP {
       width: 100vw;
-      border-radius: 2.5vw 0 0 0;
     }
     @include tabletP {
       border-radius: 0 0 0 2.5vw;
