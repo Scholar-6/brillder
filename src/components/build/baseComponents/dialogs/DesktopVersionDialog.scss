@@ -1,4 +1,5 @@
-.desktop-version-dialog {
+.dialog-box.desktop-version-dialog {
+  z-index: 11000 !important;
   .MuiTypography-root.MuiListItemText-primary {
     font-size: 7.3vw;
   }

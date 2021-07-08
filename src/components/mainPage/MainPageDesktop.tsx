@@ -174,7 +174,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         if (disabled) {
           return;
         }
-        this.props.history.push(map.BackToWorkPage);
+        this.props.history.push(map.backToWorkUserBased(this.props.user));
       }}>
         <button className="btn btn-transparent zoom-item svgOnHover">
           <SpriteIcon name="trowel-home" className={isActive ? 'active text-theme-orange' : 'text-theme-light-blue'} />
@@ -318,7 +318,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         if (!isActive) {
           this.setState({ isTryBuildOpen: true });
         } else {
-          this.props.history.push(map.BackToWorkPage);
+          this.props.history.push(map.backToWorkUserBased(this.props.user));
         }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
@@ -370,7 +370,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   onIntroChanged(e: any) {
     if (e !== 0) {
-      this.props.history.push(map.SubjectCategories + '?' + map.NewTeachQuery);
+      this.props.history.push(map.ViewAllPage);
       this.setState({stepsEnabled: false});
     }
   }
