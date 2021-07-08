@@ -92,7 +92,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         brick={brick}
         onFinish={() => {
           this.setState({brickStatus: BrickStatus.Review});
-          this.props.history.push(map.BackToWorkBuildTab);
+          this.props.history.push(map.BackToWorkPage);
         }}
       />
     );
