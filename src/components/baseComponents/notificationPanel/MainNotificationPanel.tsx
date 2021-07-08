@@ -81,7 +81,7 @@ class MainNotificationPanel extends Component<
         if (isPhone()) {
           this.setState({ needDesktopOpen: true });
         } else {
-          history.push(map.BackToWorkPage);
+          history.push(map.backToWorkUserBased(this.props.user));
         }
       }
 

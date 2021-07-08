@@ -8,11 +8,13 @@ import { returnToAuthor } from "services/axios/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ReturnToAuthorDialog from "./dialogs/ReturnToAuthorDialog";
 import ReturnAuthorSuccessDialog from "components/play/finalStep/dialogs/ReturnAuthorSuccessDialog";
+import { User } from "model/user";
 
 export interface ButtonProps {
   disabled: boolean;
   brick: Brick;
   history: any;
+  user: User;
 }
 
 const ReturnToAuthorButton: React.FC<ButtonProps> = props => {
@@ -54,7 +56,7 @@ const ReturnToAuthorButton: React.FC<ButtonProps> = props => {
         author={props.brick.author}
         close={() => {
           setSuccess(false);
-          props.history.push(map.BackToWorkPage);
+          props.history.push(map.backToWorkUserBased(props.user));
         }}
       />
     </div>
