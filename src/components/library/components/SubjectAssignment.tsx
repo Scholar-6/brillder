@@ -83,7 +83,7 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
             />
           )}
         </div>
-        {height >= 50 ? (
+        {height >= 50 &&
           <div
             className="progress-value"
             onMouseEnter={() => setHover(true)}
@@ -100,9 +100,7 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
               />
             )}
           </div>
-        ) : (
-          <div></div>
-        )}
+        }
       </div>
     </div>
   );
