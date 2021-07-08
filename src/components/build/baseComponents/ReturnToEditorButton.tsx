@@ -8,6 +8,8 @@ import { Brick } from "model/brick";
 import ReturnToEditorDialog from "./dialogs/ReturnToEditorDialog";
 import map from "components/map";
 import ReturnEditorsSuccessDialog from "components/play/finalStep/dialogs/ReturnEditorsSuccessDialog";
+import { ReduxCombinedState } from "redux/reducers";
+import { User } from "model/user";
 
 export interface ButtonProps {
   disabled: boolean;
@@ -15,6 +17,7 @@ export interface ButtonProps {
   brick: Brick;
 
   // redux
+  user: User;
   returnToEditors(brick: Brick): Promise<void>;
 }
 
@@ -53,15 +56,19 @@ const ReturnToEditorButton: React.FC<ButtonProps> = props => {
         editors={props.brick.editors}
         close={() => {
           setSuccess(false);
-          props.history.push(map.BackToWorkPage);
+          props.history.push(map.backToWorkUserBased(props.user));
         }}
       />
     </div>
   );
 };
 
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+});
+
 const mapDispatch = (dispatch: any) => ({
   returnToEditors: (brick: Brick) => dispatch(brickActions.assignEditor(brick)),
 });
 
-export default connect(null, mapDispatch)(ReturnToEditorButton);
+export default connect(mapState, mapDispatch)(ReturnToEditorButton);

@@ -82,7 +82,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const link = routes.previewNewPrep(brick.id);
 
   if (!isAuthor && !isCurrentEditor && !isPublisher && !isAdmin) {
-    return <Redirect to={map.BackToWorkPage} />;
+    return <Redirect to={map.backToWorkUserBased(user)} />;
   }
 
   const publish = async (brickId: number) => {
@@ -302,7 +302,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
             <div className="introduction-info">
               <div className="intro-text-row"></div>
             </div>
-            <ExitButton onClick={() => history.push(map.BackToWorkPage)} />
+            <ExitButton onClick={() => history.push(map.backToWorkUserBased(user))} />
           </div>
         </div>
       </Hidden>
@@ -335,7 +335,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         author={brick.author}
         close={() => {
           setEditorsReturn(false)
-          history.push(map.BackToWorkPage);
+          history.push(map.backToWorkUserBased(user));
         }}
       />
       <ReturnEditorsSuccessDialog
@@ -343,7 +343,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         editors={brick.editors}
         close={() => {
           setEditorsReturn(false)
-          history.push(map.BackToWorkPage);
+          history.push(map.backToWorkUserBased(user));
         }}
       />
       <PublishSuccessDialog
