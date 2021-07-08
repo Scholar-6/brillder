@@ -111,11 +111,7 @@ class NotificationPanel extends Component<
           type === NotificationType.RemindedToPlayBrick ||
           type === NotificationType.StudentAssignedBrick
         ) {
-          if (isPhone()) {
-            history.push(map.playIntro(brick.id));
-          } else {
-            history.push(routes.playCover(brick.id));
-          }
+          history.push(routes.playCover(brick.id));
         }
       }
     }
