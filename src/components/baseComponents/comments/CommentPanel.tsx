@@ -25,6 +25,7 @@ interface CommentPanelProps {
   currentQuestionId?: number;
   currentLocation: CommentLocation;
   haveBackButton?: boolean;
+  isHidden?: boolean;
   setCommentsShown?(value: boolean): void;
   onHeaderClick?(): void;
 
@@ -206,6 +207,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
       </Grid>
       <Grid item>
         <NewCommentPanel
+          isHidden={props.isHidden}
           currentQuestionId={props.currentQuestionId}
           currentBrick={props.currentBrick}
           createComment={createCommentAndScroll}

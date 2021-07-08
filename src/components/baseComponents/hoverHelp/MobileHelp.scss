@@ -1,0 +1,68 @@
+.va-hover-area.custom {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  svg {
+    width: 2.5vw;
+    height: 2.5vw;
+  }
+
+  .va-background {
+    position: fixed;
+    z-index: 100;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    height: 100vh;
+  }
+
+  .va-container {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    display: flex;
+
+    $round-size: 6vw;
+
+    .container {
+      display: flex;
+    }
+
+    .white-circle {
+      display: inline;
+      background: var(--white);
+      width: $round-size;
+      height: $round-size;
+      border-radius: 50%;
+      color: var(--theme-dark-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .and-sign {
+      margin-left: 0.1vw;
+      margin-right: 0.2vw;
+      height: $round-size;
+    }
+
+    .l-text {
+      margin-left: 0.3vw;
+      width: calc(100% - 23vw);
+    }
+  }
+
+  .va-hover-content {
+    width: 80vw;
+    font-size: 4.5vw;
+    z-index: 100000;
+    display: block;
+    position: absolute;
+    left: 10vw;
+    bottom: calc(17.5vw + 30px);
+    color: var(--white);
+    border-radius: 3vw;
+    padding: 1.4vw 2vw;
+    background: var(--theme-light-blue);
+  }
+}

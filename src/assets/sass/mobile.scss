@@ -493,6 +493,7 @@
 }
 
 // zendesk
+.dashboard-page ~ .beta-text,
 .user-preference-page.terms-page-container~.beta-text,
 .thank-you-page~.beta-text,
 .s-user-preference-page~.beta-text,
@@ -610,4 +611,67 @@
 
 .bold-important {
     font-family: $font-family-bold !important;
+}
+
+
+
+.user-profile-page .subject-autocomplete {
+  font-size: 4.5vw;
+  .MuiChip-label {
+    font-size: 4.5vw;
+  }
+}
+.MuiAutocomplete-option {
+  font-size: 4.5vw;
+}
+
+.profile-saved-dialog {
+  .dialog-footer {
+    span {
+      font-size: 5.5vw !important;
+    }
+  }
+}
+
+.open-search {
+  background: var(--white) !important;
+  border-radius: 50% !important;
+  position: relative;
+  svg {
+    stroke-width: 1.5;
+    width: 70% !important;
+    height: 70% !important;
+    color: var(--theme-dark-blue) !important;
+    position: absolute;
+    z-index: 27;
+  }
+  .gh-phone-background {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 26;
+    width: 118%;
+    height: 118%;
+    opacity: 0.5;
+    background: var(--white);
+  }
+}
+
+.image-play-container {
+  width: 100%;
+  .image-play {
+    width: auto !important;
+  }
+}
+
+.introjs-tooltipReferenceLayer * {
+    font-size: 5vw !important;
+    
+}
+
+.introjs-tooltipReferenceLayer .introjs-tooltipbuttons a {
+  border-radius: 1.5vw;
+
+  &:hover {
+      background: var(--theme-green);
+  }
 }

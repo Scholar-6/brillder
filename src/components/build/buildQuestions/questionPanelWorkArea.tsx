@@ -188,7 +188,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               setQuestionHint={setQuestionHint}
             />
           </Grid>
-          <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
+          <div className="right-sidebar">
             {!commentsShown &&
               <div className="comments-sidebar-default">
                 <div className="reundo-button-container">
@@ -244,6 +244,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             }
             <Grid className={`question-comments-panel ${!commentsShown && 'hidden'}`} item container direction="row" justify="flex-start" xs>
               <CommentPanel
+                isHidden={!commentsShown}
                 currentLocation={CommentLocation.Question}
                 currentBrick={props.currentBrick}
                 setCommentsShown={setCommentsShown}
@@ -251,7 +252,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 currentQuestionId={question.id}
               />
             </Grid>
-          </Grid>
+          </div>
         </Grid>
         <div className="bottom-scroll-area">
           <div className="bottom-button-container">

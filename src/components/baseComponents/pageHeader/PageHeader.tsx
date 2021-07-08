@@ -39,6 +39,8 @@ interface Props {
   showDropdown(): void;
   showNotifications(event: any): void;
 
+  toggleSearch?(value: boolean): void;
+
   // redux
   notifications: Notification[];
   isAuthenticated: isAuthenticated;
@@ -69,7 +71,11 @@ class PageHeader extends Component<Props, State> {
     }
   }
 
+
   toggleSearch() {
+    if (this.props.toggleSearch) {
+      this.props.toggleSearch(!this.state.searchVisible);
+    }
     this.setState(prevState => ({
       searchVisible: !prevState.searchVisible
     }));
@@ -126,6 +132,7 @@ class PageHeader extends Component<Props, State> {
                     this.props.page !== PageEnum.Book && this.renderSearch()
                   }}>
                     <SpriteIcon name="search" className="w100 h100 active text-theme-orange" />
+                    <div className="gh-phone-background" />
                   </div>
                 }
                 {!this.props.isAuthenticated &&
