@@ -64,7 +64,6 @@ class BuildRoute extends React.Component<BuildRouteProps> {
       }
 
       const { component: Component } = props;
-
       return <Route {...props} render={(props) => <Component {...props} />} />;
     } else if (props.isAuthenticated === isAuthenticated.None) {
       props.isAuthorized();
