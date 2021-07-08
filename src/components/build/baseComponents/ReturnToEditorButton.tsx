@@ -53,7 +53,7 @@ const ReturnToEditorButton: React.FC<ButtonProps> = props => {
         editors={props.brick.editors}
         close={() => {
           setSuccess(false);
-          props.history.push(map.BackToWorkBuildTab);
+          props.history.push(map.BackToWorkPage);
         }}
       />
     </div>

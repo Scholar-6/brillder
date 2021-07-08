@@ -54,7 +54,7 @@ const ReturnToAuthorButton: React.FC<ButtonProps> = props => {
         author={props.brick.author}
         close={() => {
           setSuccess(false);
-          props.history.push(map.BackToWorkBuildTab);
+          props.history.push(map.BackToWorkPage);
         }}
       />
     </div>

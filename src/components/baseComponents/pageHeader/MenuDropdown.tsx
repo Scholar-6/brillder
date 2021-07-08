@@ -152,7 +152,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     if (isIPad13 || isTablet) { return <div/>; }
     if (page !== PageEnum.BackToWork && page !== PageEnum.MainPage) {
       return (
-        <MenuItem className="menu-item" onClick={() => move("/back-to-work", 'Back To Work')}>
+        <MenuItem className="menu-item" onClick={() => move(map.BackToWorkPage, 'Back To Work')}>
           <span className="menu-text">Back To Work</span>
           <div className="btn btn-transparent svgOnHover">
             <SpriteIcon name="student-back-to-work" className="active text-white" />
