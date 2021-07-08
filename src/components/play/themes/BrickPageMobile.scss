@@ -26,12 +26,17 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     background: var(--theme-light-blue);
     color: var(--white);
     font-family: $font-family-bold;
+    padding-left: 3vw;
+    padding-right: 3vw;
     padding-top: 2vh;
     padding-bottom: 2vh;
     span,
     p {
       font-size: 5vw !important;
       color: var(--white) !important;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
   .play-pre-prep-page {
@@ -1867,22 +1872,21 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
 @keyframes floating-few {
   0% {
-    bottom: 1vh;
+    bottom: 2vh;
   }
   50% {
-    bottom: 0.5vh;
+    bottom: 1vh;
   }
   100% {
-    bottom: 1vh;
+    bottom: 2vh;
   }
 }
 
 .play-preview-pages .fe-arrow-container {
-  width: calc(100% - 20vw);
+  width: calc(100% - 20.5vw);
   display: flex;
   justify-content: center;
   position: absolute;
-  bottom: 0;
   animation: floating-few 1.6s infinite;
   svg {
     transform: rotate(180deg);

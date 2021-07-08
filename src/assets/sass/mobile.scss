@@ -690,3 +690,7 @@
         font-size: 8vw !important;
     }
 }
+
+.brick-row-container.live-container .MuiLinearProgress-colorPrimary {
+    background: var(--theme-dark-blue);
+}

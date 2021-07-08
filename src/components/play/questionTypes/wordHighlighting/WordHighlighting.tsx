@@ -110,7 +110,7 @@ class WordHighlighting extends CompComponent<
 
     // don`t show spaces
     if (word.notSelectable && !word.isBreakLine) {
-      return <span />;
+      return <span key={index} />;
     }
 
     if (this.props.isDefaultBook) {
