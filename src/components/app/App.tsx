@@ -170,7 +170,7 @@ const App: React.FC<AppProps> = props => {
     [],
   );
 
-  setupZendesk(location, zendeskCreated, setZendesk);
+  setupZendesk(zendeskCreated, setZendesk);
 
   axios.interceptors.response.use(function (response) {
     return response;

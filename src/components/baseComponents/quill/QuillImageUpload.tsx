@@ -63,7 +63,7 @@ export class CustomImageBlot extends Embed {
 
         const imageNode = document.createElement("img");
         imageNode.className = "image-play";
-        imageNode.setAttribute('style', `height: ${value.imageHeight}vh`);
+        imageNode.setAttribute('style', `max-height: ${value.imageHeight}vh`);
         imageNode.setAttribute('src', value.url);
         imageContainer2.appendChild(imageNode);
 
