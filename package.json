@@ -35,6 +35,7 @@
     "@vx/stats": "0.0.198",
     "axios": ">=0.21.1",
     "caniuse-lite": "^1.0.30001187",
+    "desmos": "^1.5.4",
     "dot-prop": "^4.2.1",
     "dotenv": "^8.2.0",
     "html-to-react": "^1.4.5",
