@@ -675,3 +675,18 @@
       background: var(--theme-green);
   }
 }
+
+.introjs-tooltip {
+    border-radius: 4vw;
+}
+
+.introjs-arrow {
+    display: none !important;
+}
+.introjs-tooltip-header {
+    padding: 0 !important;
+    .introjs-skipbutton {
+        color: var(--theme-dark-blue);
+        font-size: 8vw !important;
+    }
+}
