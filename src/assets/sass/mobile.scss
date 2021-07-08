@@ -655,3 +655,10 @@
     background: var(--white);
   }
 }
+
+.image-play-container {
+  width: 100%;
+  .image-play {
+    width: auto !important;
+  }
+}
