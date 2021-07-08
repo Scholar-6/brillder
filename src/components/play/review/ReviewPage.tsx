@@ -232,8 +232,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       indexClassName += " wrong";
     }
 
-    console.log(JSON.stringify(attempt));
-
     return (
       <TabPanel
         key={index}
