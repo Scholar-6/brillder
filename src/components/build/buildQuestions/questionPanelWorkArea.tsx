@@ -68,7 +68,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   const [componentTypes, setComponentType] = React.useState([
     { id: 1, type: QuestionComponentTypeEnum.Text },
     { id: 2, type: QuestionComponentTypeEnum.Quote },
-    { id: 3, type: QuestionComponentTypeEnum.Image },
+    //{ id: 3, type: QuestionComponentTypeEnum.Image },
     { id: 4, type: QuestionComponentTypeEnum.Sound },
     { id: 5, type: QuestionComponentTypeEnum.Graph }
   ]);
@@ -147,13 +147,13 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   hoverMarginTop="-1.5vw"
                   value={QuestionComponentTypeEnum.Quote}
                 />
-                {
+                {/*
                 <DragBox
                   locked={locked}
                   name="jpg"
                   label="IMAGE"
                   value={QuestionComponentTypeEnum.Image}
-                />}
+                />*/}
                 <DragBox
                   locked={locked}
                   isImage={true} src="/images/soundicon.png"
