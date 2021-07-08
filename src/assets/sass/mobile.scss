@@ -662,3 +662,16 @@
     width: auto !important;
   }
 }
+
+.introjs-tooltipReferenceLayer * {
+    font-size: 5vw !important;
+    
+}
+
+.introjs-tooltipReferenceLayer .introjs-tooltipbuttons a {
+  border-radius: 1.5vw;
+
+  &:hover {
+      background: var(--theme-green);
+  }
+}
