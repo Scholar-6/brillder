@@ -147,13 +147,13 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   hoverMarginTop="-1.5vw"
                   value={QuestionComponentTypeEnum.Quote}
                 />
-                {/* 
+                {
                 <DragBox
                   locked={locked}
                   name="jpg"
                   label="IMAGE"
                   value={QuestionComponentTypeEnum.Image}
-                />*/}
+                />}
                 <DragBox
                   locked={locked}
                   isImage={true} src="/images/soundicon.png"
