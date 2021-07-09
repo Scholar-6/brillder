@@ -743,15 +743,6 @@
 }
 
 .dashboard-page {
-  .va-phone-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 21;
-    height: 100vh;
-    width: 100vw;
-  }
-
   @keyframes gew-grow {
     from {
       height: 0%;
