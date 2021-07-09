@@ -23,6 +23,8 @@
       position: relative;
       .rotated-text {
         color: var(--white);
+        text-transform: capitalize !important;
+        font-family: $font-family-bold !important;
       }
     }
     .rotated-container {
