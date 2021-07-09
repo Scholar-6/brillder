@@ -304,7 +304,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 index={i}
                 color={color}
                 onClick={() => {
-                  this.setState({ expandedBrick: b });
+                  if (this.state.expandedBrick === b) {
+                    this.setState({expandedBrick: null});
+                  } else {
+                    this.setState({ expandedBrick: b });
+                  }
                 }}
               />
             );
