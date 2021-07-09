@@ -15,39 +15,19 @@ interface LibrarySubjectsProps {
   history: any;
 }
 
-interface State {
-  page: number;
-}
-
-class LibrarySubjects extends Component<LibrarySubjectsProps, State> {
-  constructor(props: LibrarySubjectsProps) {
-    super(props);
-
-    this.state = {
-      page: 0
-    };
-  }
-
-  countPages() {
-    this.props.subjectAssignments.forEach(s => {
-
-    });
-  }
-
-  renderSubjectAssignments(item: SubjectAssignments, key: number) {
+const LibrarySubjects: React.FC<LibrarySubjectsProps> = (props) => {
+  const renderSubject = (item: SubjectAssignments, key: number) => {
     const width = getSubjectWidth(item);
-    return <div key={key} className="libary-container-1" style={{width: width + 'vw', display: 'inline-flex'}}>
-      <LibrarySubject userId={this.props.userId} subjectAssignment={item} history={this.props.history} />
+    return <div key={key} className="libary-container-1" style={{ width: width + 'vw', display: 'inline-flex' }}>
+      <LibrarySubject userId={props.userId} subjectAssignment={item} history={props.history} />
     </div>
   }
 
-  render() {
-    return (
-      <div className="my-library-list">
-        {this.props.subjectAssignments.map(this.renderSubjectAssignments.bind(this))}
-      </div>
-    );
-  }
+  return (
+    <div className="my-library-list">
+      {props.subjectAssignments.map(renderSubject)}
+    </div>
+  );
 }
 
 export default LibrarySubjects;
