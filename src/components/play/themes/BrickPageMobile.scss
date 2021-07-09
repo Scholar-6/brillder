@@ -134,10 +134,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       border-radius: 3.4vw;
       width: 80vw;
       background: var(--tab-gray);
-      &.orange {
-        color: var(--white);
-        background: var(--theme-orange);
-      }
     }
     .ss-phone-between-button {
       height: 2%;
@@ -1897,4 +1893,47 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
 .play-preview-pages .sorted-row .brick-row-container.play-brief-page {
   height: calc(100% - 17.5vw) !important;
+}
+
+.play-preview-pages {
+  .s-fade1, .s-fade2, .s-fade3, .animate-v1 {
+    opacity: 0;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    animation-name: fadein;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+  }
+  .s-fade1 {
+    animation-delay: 0s;
+  }
+  .animate-v1 {
+    animation-delay: 0.5s;
+  }
+  .s-fade3 {
+    animation-delay: 1s;
+  }
+  .like-button {
+    @keyframes greyToOrange {
+      0% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+        color: var(--theme-dark-blue);
+        background: var(--tab-gray);
+      }
+      100% {
+        opacity: 1;
+        color: var(--white);
+        background: var(--theme-orange);
+      }
+    }
+    &.orange {
+      opacity: 0;
+      animation: greyToOrange 2s 0.5s forwards !important;
+    }
+  }
 }
