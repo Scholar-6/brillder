@@ -262,9 +262,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   renderMobilePage() {
     const { user } = this.props;
 
-    const firstButton = () => {
+    const firstButton = (index: number) => {
       return (
-        <SwiperSlide>
+        <SwiperSlide key={index}>
           <MobileButtonWrap>
             <FirstButton
               user={user}
@@ -278,26 +278,26 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
     const renderStudentButtons = () => {
       const buttons = [];
-      buttons.push(firstButton());
-      buttons.push(<SwiperSlide>{this.renderAssignmentsButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide>{this.renderLibraryButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide>{this.renderCreateButton()}</SwiperSlide>);
+      buttons.push(firstButton(1));
+      buttons.push(<SwiperSlide key={2}>{this.renderAssignmentsButton()}</SwiperSlide>);
+      buttons.push(<SwiperSlide key={3}>{this.renderLibraryButton()}</SwiperSlide>);
+      buttons.push(<SwiperSlide key={4}>{this.renderCreateButton()}</SwiperSlide>);
       return buttons;
     };
 
     const renderBuildButtons = () => {
       const buttons = [];
-      buttons.push(firstButton());
-      buttons.push(<SwiperSlide>{this.renderCreateButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide>{this.renderAssignmentsButton()}</SwiperSlide>);
+      buttons.push(firstButton(1));
+      buttons.push(<SwiperSlide key={2}>{this.renderCreateButton()}</SwiperSlide>);
+      buttons.push(<SwiperSlide key={3}>{this.renderAssignmentsButton()}</SwiperSlide>);
       return buttons;
     };
 
     const renderTeachButtons = () => {
       const buttons = [];
-      buttons.push(firstButton());
+      buttons.push(firstButton(1));
       buttons.push(
-        <SwiperSlide>
+        <SwiperSlide key={2}>
           <TeachButton
             history={this.props.history}
             disabled={true}
@@ -312,8 +312,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           />
         </SwiperSlide>
       );
-      buttons.push(<SwiperSlide>{this.renderCreateButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide>{this.renderAssignmentsButton()}</SwiperSlide>);
+      buttons.push(<SwiperSlide key={3}>{this.renderCreateButton()}</SwiperSlide>);
+      buttons.push(<SwiperSlide key={4}>{this.renderAssignmentsButton()}</SwiperSlide>);
       return buttons;
     };
 
