@@ -131,7 +131,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
   render() {
     return (
       <div>
-        <HomeButton onClick={() => this.setState({saveDialogOpen: true})} />
+        <HomeButton history={this.props.history} onClick={() => this.setState({saveDialogOpen: true})} />
         <PlayButton
           tutorialStep={this.props.tutorialStep}
           isTutorialSkipped={this.props.isTutorialSkipped}

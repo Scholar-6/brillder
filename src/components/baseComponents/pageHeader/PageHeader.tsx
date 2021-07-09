@@ -111,7 +111,7 @@ class PageHeader extends Component<Props, State> {
                   <SpriteIcon name="help-thin" className="svg-default" />
                 </div>
               }
-              {!searchVisible && <HomeButton link={link} />}
+              {!searchVisible && <HomeButton history={this.props.history} link={link} />}
               <div className={searchVisible ? "search-container active animated slideInRight" : "search-container"}>
                 {this.props.page !== PageEnum.Book &&
                 <div className={searchVisible ? 'search-area active' : 'search-area'}>
@@ -158,7 +158,7 @@ class PageHeader extends Component<Props, State> {
             </div>
           </Hidden>
           <Hidden only={['xs']} >
-            <HomeButton link={link} />
+            <HomeButton link={link} history={this.props.history} />
             <div className="logout-container">
               <div className="search-container">
                 <div className="header-btn search-button svgOnHover" onClick={() => this.props.search()}>

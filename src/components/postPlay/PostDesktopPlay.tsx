@@ -356,7 +356,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
           <Helmet>
             <title>{getBrillderTitle(brick.title)}</title>
           </Helmet>
-          <HomeButton onClick={() => this.props.history.push('/')} />
+          <HomeButton history={this.props.history} onClick={() => this.props.history.push('/')} />
             {/*
           <div className="book-navigator">
             <div className="prep-tab" onClick={this.moveToTitles.bind(this)}>
