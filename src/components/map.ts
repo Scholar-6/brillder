@@ -1,4 +1,5 @@
 import { RolePreference, User } from "model/user";
+import { isAorP } from "./services/brickService";
 
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
@@ -15,7 +16,7 @@ export const BackToWorkPage = '/back-to-work';
 export const BackToWorkPersonal = BackToWorkPage + '?isCore=false';
 export const BackToWorkPublic = BackToWorkPage + '?isCore=true';
 export const backToWorkUserBased = (user: User) => 
-  `${BackToWorkPage}?isCore=${user.rolePreference?.roleId === RolePreference.Builder ? 'true' : 'false'}`
+  `${BackToWorkPage}?isCore=${user.rolePreference?.roleId === RolePreference.Builder || isAorP(user.roles) ? 'true' : 'false'}`
 
 export const AssignmentsPage = '/assignments';
 export const AssignmentsClassPage = AssignmentsPage + '/:classId';
