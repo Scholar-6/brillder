@@ -203,6 +203,22 @@
     color: var(--theme-dark-blue);
   }
 
+  .f-top-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: var(--theme-dark-blue);
+    .page-loader {
+      position: relative;
+      left: unset;
+      top: unset;
+      transform: unset;
+      height: 100%;
+      background: inherit !important;
+    }
+  }
+
   .main-title {
     @extend %transitionAll300;
     max-width: 55vw;
