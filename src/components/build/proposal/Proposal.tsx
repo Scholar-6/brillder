@@ -345,7 +345,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
           <Helmet>
             <title>{getBrillderTitle()}</title>
           </Helmet>
-          <HomeButton onClick={() => this.openDialog()} />
+          <HomeButton history={this.props.history} onClick={() => this.openDialog()} />
           <div
             style={{ width: "100%", height: "100%" }}
             className="proposal-router"
