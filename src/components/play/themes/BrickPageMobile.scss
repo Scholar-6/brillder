@@ -1936,3 +1936,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     }
   }
 }
+.play-preview-pages blockquote {
+  font-size: 4.5vw;
+}
