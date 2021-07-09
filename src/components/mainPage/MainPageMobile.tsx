@@ -246,7 +246,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             disabled={this.state.isSwiping}
           />
         </MobileButtonWrap>
-        {this.renderLibraryButton()}
+        {this.renderAssignmentsButton()}
         <Steps
           enabled={this.state.isNewStudent}
           steps={this.state.steps}
