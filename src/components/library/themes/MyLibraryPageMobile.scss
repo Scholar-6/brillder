@@ -23,7 +23,7 @@
       position: relative;
       .rotated-text {
         color: var(--white);
-        text-transform: capitalize !important;
+        text-transform: uppercase !important;
         font-family: $font-family-bold !important;
       }
     }
