@@ -152,7 +152,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .footer {
       font-family: $font-family-regular-italic;
       padding: 0 3vw;
-      font-size: 4.5vw;
+      font-size: $mbase-font-size;
       .underline-border {
         font-size: 6vw;
         font-family: $font-family-bold-italic;
@@ -198,7 +198,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .synthesis-content,
     .introduction-content {
       li {
-        font-size: 4.5vw !important;
+        font-size: $mbase-font-size !important;
       }
     }
   }
@@ -243,7 +243,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
           display: flex !important;
           flex-flow: column;
           p {
-            font-size: 4.5vw;
+            font-size: $mbase-font-size;
           }
           h1,
           p,
@@ -411,7 +411,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
                   transition: all 300ms;
                   margin: 0;
                   width: 100%;
-                  font-size: 4.5vw !important;
+                  font-size: $mbase-font-size !important;
                   text-align: left !important;
                   white-space: nowrap;
                   overflow: hidden;
@@ -641,7 +641,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               }
               .marks-container {
                 position: absolute;
-                font-size: 4.5vw;
+                font-size: $mbase-font-size;
                 top: 1vw;
                 right: 2vw;
                 text-align: center;
@@ -676,7 +676,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
           .MuiListItemText-root,
           .MuiButton-label {
             p {
-              font-size: 4.5vw;
+              font-size: $mbase-font-size;
             }
           }
           table {
@@ -709,7 +709,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               }
             }
             li {
-              font-size: 4.5vw;
+              font-size: $mbase-font-size;
             }
           }
           .MuiBox-root {
@@ -729,7 +729,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             padding: 0;
             overflow-y: hidden;
             .sort-category {
-              font-size: 4.5vw !important;
+              font-size: $mbase-font-size !important;
             }
             .question-index-container {
               display: none;
@@ -813,7 +813,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               width: 100%;
               height: auto;
               li {
-                font-size: 4.5vw;
+                font-size: $mbase-font-size;
               }
               blockquote {
                 padding-left: 3vw;
@@ -893,7 +893,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
           }
           .editors-row {
             margin-top: 1vh;
-            font-size: 4.5vw;
+            font-size: $mbase-font-size;
             font-family: $font-family-bold;
             display: flex;
             justify-content: center;
@@ -1191,7 +1191,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     color: var(--theme-dark-blue);
     font-family: $font-family-regular;
     margin: 0 0 1vh 0;
-    font-size: 6vw;
     overflow-y: auto;
     &.prep-box {
       margin-bottom: 21vh;
@@ -1292,7 +1291,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 }
 
 .open-question {
-  font-size: 4.5vw;
+  font-size: $mbase-font-size;
   color: var(--theme-dark-blue);
 }
 
@@ -1500,7 +1499,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     }
   }
   .italic {
-    font-size: 4.5vw;
+    font-size: $mbase-font-size;
   }
 }
 
