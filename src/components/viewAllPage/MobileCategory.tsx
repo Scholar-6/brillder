@@ -34,6 +34,7 @@ import PhoneSearchPage from "./PhoneSearchPage";
 import { isLevelVisible, toggleElement } from "./service/viewAll";
 import { showZendesk } from "services/zendesk";
 import routes from "components/play/routes";
+import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -78,6 +79,7 @@ interface BricksListState {
   categorySubjects: SubjectWithBricks[];
   shown: boolean;
   activeTab: Tab;
+  isLoading: boolean;
   isSearchingPage: boolean;
   subjectGroup: SubjectGroup | null;
   expandedSubject: SubjectWithBricks | null;
@@ -114,6 +116,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     this.state = {
       expandedBrick: null,
       bricks: [],
+      isLoading: true,
       finalBricks: [],
       expandedSubject: null,
       isSearching: this.props.isSearching ? this.props.isSearching : false,
@@ -172,6 +175,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         subjects,
         mySubjects,
         shown: true,
+        isLoading: false,
         categorySubjects,
       });
     } else {
@@ -235,6 +239,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderMobileBricks() {
+    if (this.state.isLoading) {
+      return <div className="f-top-loader">
+        <PageLoaderBlue content="" />
+      </div>
+    }
     if (this.state.finalBricks.length === 0) {
       return <div className="bricks-no-found bold">Sorry, no bricks found</div>;
     }
@@ -305,7 +314,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 color={color}
                 onClick={() => {
                   if (this.state.expandedBrick === b) {
-                    this.setState({expandedBrick: null});
+                    this.setState({ expandedBrick: null });
                   } else {
                     this.setState({ expandedBrick: b });
                   }
@@ -457,8 +466,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             toggleSearch={() => this.setState({ isSearchingPage: true })}
             placeholder="Search Ongoing Projects & Published Bricks…"
             history={this.props.history}
-            search={() => {}}
-            searching={() => {}}
+            search={() => { }}
+            searching={() => { }}
           />
           <div className="mobile-scroll-bricks phone-top-bricks16x9">
             {this.renderMobileBricks()}
@@ -466,18 +475,16 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           {this.props.user ? (
             <div className="ss-tabs-container">
               <div
-                className={`ss-tab-1 ${
-                  this.state.activeTab === Tab.MySubjects ? "active" : ""
-                }`}
+                className={`ss-tab-1 ${this.state.activeTab === Tab.MySubjects ? "active" : ""
+                  }`}
                 onClick={this.setMySubjectsTab.bind(this)}
               >
                 <SpriteIcon name="user-custom" />
                 My Subjects
               </div>
               <div
-                className={`ss-tab-2 ${
-                  this.state.activeTab === Tab.AllSubjects ? "active" : ""
-                }`}
+                className={`ss-tab-2 ${this.state.activeTab === Tab.AllSubjects ? "active" : ""
+                  }`}
                 onClick={this.setAllSubjectsTab.bind(this)}
               >
                 All Subjects
