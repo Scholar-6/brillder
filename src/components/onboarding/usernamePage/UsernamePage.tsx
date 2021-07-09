@@ -59,12 +59,12 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
   }
 
   const submit = async () => {
-    let valid = validate();
+    const valid = validate();
     if (!valid) {
       return;
     }
 
-    let userToSave = {
+    const userToSave = {
       id: user.id,
       roles: user.roles.map(r => r.roleId),
       email: user.email,
@@ -74,39 +74,12 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
 
     const saved = await updateUser(userToSave);
 
-    setSubmited(false);
-
     if (saved) {
       await props.getUser();
-      setSubmited(true);
-      if (!(isIPad13 || isTablet) && isMobile) {
-        props.history.push(map.MobileUsername);
-        return;
-      }
+      props.history.push(map.SelectSubjectPage);
     } else {
       //this.props.requestFailed("Can`t save user profile");
     }
-  }
-
-  const move = () => props.history.push(map.SelectSubjectPage);
-
-  const renderGetStartedButton = () => {
-    return (
-      <div className="submit-button arrow-button" onClick={move}>
-        <div><LabelTyping start={true} value="Get Started!" /></div>
-        <SpriteIcon name="arrow-right" className={lastName.value && firstName.value ? 'valid' : 'invalid'} />
-      </div>
-    );
-  }
-
-  const renderGenerateButton = () => {
-    return (
-      <div className="submit-button" >
-        <button type="button" onClick={submit} className={lastName.value && firstName.value ? 'valid' : 'invalid'}>
-          Save
-        </button>
-      </div>
-    );
   }
 
   const renderEditButton = () => {
@@ -154,7 +127,11 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
               {renderEditButton()}
             </div>
             <div className={animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}>
-              {submited === null ? renderGenerateButton() : renderGetStartedButton()}
+              <div className="submit-button" >
+                <button type="button" onClick={submit} className={lastName.value && firstName.value ? 'valid' : 'invalid'}>
+                  Save
+                </button>
+              </div>
             </div>
           </div>
         </form>
