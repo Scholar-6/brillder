@@ -33,12 +33,12 @@
 
   @include phone_and_tabletP {
     .missing-word-choice {
-      font-size: 4.5vw !important;
+      font-size: $mbase-font-size !important;
     }
 
     .MuiInputBase-input {
       padding: 2vw 4vw !important;
-      font-size: 4.5vw !important;
+      font-size: $mbase-font-size !important;
     }
 
     .MuiSvgIcon-root {
