@@ -6,7 +6,7 @@ import { prepareVisibleAssignments } from '../../service';
 import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
 import { AssignmentBrickStatus, AssignmentBrick } from "model/assignment";
 
-import BrickBlock from "components/baseComponents/BrickBlock";
+import BrickBlock16x9 from "components/viewAllPage/components/BrickBlock16x9";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 
@@ -47,7 +47,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
     if (item.isInvitation) {
       circleIcon="users";
     }
-    return <BrickBlock
+    return <BrickBlock16x9
       brick={item.brick}
       index={item.index}
       row={item.row}
@@ -73,7 +73,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       circleIcon="users";
     }
 
-    return <BrickBlock
+    return <BrickBlock16x9
       brick={item.brick}
       index={item.key}
       row={item.row}
@@ -106,10 +106,6 @@ class AssignedBricks extends Component<AssignedBricksProps> {
     return data.map(item => this.renderBrick(item));
   }
 
-  renderAssignedBricks() {
-    return this.renderSortedBricks();
-  }
-
   renderEmptyPage() {
     return (
       <div className="tab-content-centered">
@@ -131,7 +127,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       <div className="bricks-list-container">
         {this.props.assignments.length > 0 ?
           <div className="bricks-list">
-            { this.renderAssignedBricks() }
+            { this.renderSortedBricks() }
           </div>
           : this.renderEmptyPage()
         }

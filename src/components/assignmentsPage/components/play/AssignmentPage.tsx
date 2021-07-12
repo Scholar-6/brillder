@@ -84,7 +84,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
       filterExpanded: true,
       isClearFilter: false,
       sortedIndex: 0,
-      pageSize: 18,
+      pageSize: 6,
 
       isLoaded: false,
 
