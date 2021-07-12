@@ -159,24 +159,6 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     this.setState({ ...this.state, isLoaded: true, classrooms, rawAssignments: assignments, finalAssignments: assignments, threeColumns, sortedIndex: 0 });
   }
 
-  onThreeColumnsMouseHover(index: number, status: AssignmentBrickStatus) {
-    const key = Math.floor(index / 3);
-    const name = service.getPlayThreeColumnName(status);
-    const {threeColumns} = this.state;
-
-    let assignment = service.getPlayThreeColumnBrick(threeColumns, name, key);
-    if (assignment && assignment.brick.expanded) return;
-  
-    hideAssignments(this.state.rawAssignments);
-    service.expandPlayThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
-    this.setState({ ...this.state });
-  }
-
-  onThreeColumnsMouseLeave() {
-    hideAssignments(this.state.rawAssignments);
-    this.setState({ ...this.state });
-  }
-
   playFilterUpdated(filters: PlayFilters) {
     const { checked, submitted, completed } = filters;
     let finalAssignments = this.state.rawAssignments;
@@ -203,20 +185,6 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
       });
     }
     this.setState({ filters, finalAssignments, sortedIndex: 0 });
-  }
-
-  onMouseHover(index: number) {
-    hideAssignments(this.state.rawAssignments);
-    const assignment = this.state.finalAssignments[index];
-    if (assignment) {
-      assignment.brick.expanded = true;
-    }
-    this.setState({ ...this.state });
-  }
-
-  onMouseLeave() {
-    hideAssignments(this.state.rawAssignments);
-    this.setState({ ...this.state });
   }
 
   //#region Pagination
@@ -333,10 +301,6 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
                 threeColumns={this.state.threeColumns}
                 history={this.props.history}
                 handleDeleteOpen={() => {}}
-                onMouseHover={this.onMouseHover.bind(this)}
-                onMouseLeave={this.onMouseLeave.bind(this)}
-                onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
-                onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
               />
               {this.renderPagination()}
             </div>
