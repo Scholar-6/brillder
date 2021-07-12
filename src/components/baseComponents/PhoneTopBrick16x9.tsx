@@ -52,8 +52,7 @@ class PhoneTopBrick16x9 extends Component<Props> {
     );
   }
   render() {
-    const { color, brick, deadline } = this.props;
-    let className = "phone-top-brick-16x9";
+    const { color, brick } = this.props;
 
     let label = '';
     if (brick.academicLevel >= AcademicLevel.First) {
@@ -61,7 +60,7 @@ class PhoneTopBrick16x9 extends Component<Props> {
     }
 
     return (
-      <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
+      <div className="phone-top-brick-16x9" onClick={() => this.props.onClick ? this.props.onClick() : {}}>
         {this.renderDeadline()}
         {color
           && (
