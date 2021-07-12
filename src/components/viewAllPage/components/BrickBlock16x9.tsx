@@ -3,7 +3,7 @@ import Grow from "@material-ui/core/Grow";
 import queryString from 'query-string';
 
 import './BrickBlock.scss';
-import { Brick } from "model/brick";
+import { AcademicLevelLabels, Brick } from "model/brick";
 import { User } from "model/user";
 
 import { playCover } from "components/play/routes";
@@ -12,6 +12,7 @@ import map from "components/map";
 import buildRoutes from 'components/build/routes';
 import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { getDate, getMonth, getYear } from "components/services/brickService";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -29,15 +30,18 @@ interface BrickBlockProps {
 
   searchString: string;
 
+  deadline?: string;
+
   handleDeleteOpen(brickId: number): void;
-  handleMouseHover(e: any): void;
-  handleMouseLeave(e: any): void;
 }
 
 const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0, ...props }) => {
   let color = "";
   if (!brick.subject) {
     color = "#B0B0AD";
+    if (props.color) {
+      color = props.color;
+    }
   } else {
     color = brick.subject.color;
   }
@@ -62,18 +66,27 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     }
   }
 
-  const romanNumerals = () => {
-    switch(brick.academicLevel) {
-      case 1: return 'I';
-      case 2: return 'II';
-      case 3: return 'III';
-      case 4: return 'IV';
-      default: return '';
-    }
-  }
-
   if (!brick.id) {
     return <div className="main-brick-container"></div>;
+  }
+
+  const renderDeadline = () => {
+    const { deadline } = props;
+    if (!deadline) {
+      return '';
+    }
+    const date = new Date(deadline);
+    let now = Date.now();
+    let passesDeadline = false;
+    if (date.getTime() < now) {
+      passesDeadline = true;
+    }
+    return (<div className="fwe1-16x9-deadline">
+      <div>
+        <div className={passesDeadline ? 'orange' : 'yellow'}>{getDate(date)}.{getMonth(date)}.{getYear(date)}</div>
+      </div>
+    </div>
+    );
   }
 
   return (
@@ -84,9 +97,10 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       timeout={index * 150}
     >
       <a href={window.location.origin + map.playCover(brick.id)} className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
-        <div className="publish-brick-container" onMouseLeave={props.handleMouseLeave}>
+        <div className="publish-brick-container">
+          {renderDeadline()}
           <div className="level">
-            <div style={{background: color}}>{romanNumerals()}</div>
+            <div style={{background: color}}>{AcademicLevelLabels[brick.academicLevel]}</div>
           </div>
           {brick.coverImage ?
             <div className="scroll-block">

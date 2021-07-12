@@ -23,27 +23,12 @@ interface AssignedBricksProps {
   history: any;
 
   handleDeleteOpen(brickId: number): void;
-  onMouseHover(key: number): void;
-  onMouseLeave(key: number): void;
-  onThreeColumnsMouseHover(brickId: number, status: AssignmentBrickStatus): void;
-  onThreeColumnsMouseLeave(brickId: number, status: AssignmentBrickStatus): void;
 }
 
 class AssignedBricks extends Component<AssignedBricksProps> {
-  getColor(item: AssignmentBrickData) {
-    if (item.status === AssignmentBrickStatus.ToBeCompleted) {
-      return 'color1';
-    } else if (item.status === AssignmentBrickStatus.SubmitedToTeacher) {
-      return 'color3';
-    } else if (item.status === AssignmentBrickStatus.CheckedByTeacher) {
-      return 'color4';
-    }
-    return '';
-  }
-
   renderBrick(item: AssignmentBrickData) {
-    const color = this.getColor(item);
     let circleIcon = '';
+    console.log(565)
     if (item.isInvitation) {
       circleIcon="users";
     }
@@ -57,48 +42,12 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       isAssignment={true}
       assignmentId={item.assignmentId}
       history={this.props.history}
-      color={color}
+      color="#9B33FF"
       circleIcon={circleIcon}
+      deadline={item.deadline}
       searchString=""
       handleDeleteOpen={this.props.handleDeleteOpen}
-      handleMouseHover={() => this.props.onMouseHover(item.key)}
-      handleMouseLeave={() => this.props.onMouseLeave(item.key)}
     />
-  }
-
-  renderGroupedBrick(item: AssignmentBrickData) {
-    const color = this.getColor(item);
-    let circleIcon = '';
-    if (item.isInvitation) {
-      circleIcon="users";
-    }
-
-    return <BrickBlock16x9
-      brick={item.brick}
-      index={item.key}
-      row={item.row}
-      key={item.key}
-      user={this.props.user}
-      shown={this.props.shown}
-      color={color}
-      circleIcon={circleIcon}
-      isAssignment={true}
-      assignmentId={item.assignmentId}
-      history={this.props.history}
-      searchString=""
-      handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
-      handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, item.status)}
-      handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, item.status)}
-    />
-  }
-
-  renderGroupedBricks = (data: AssignmentBrickData[]) => {
-    return data.map(item => this.renderGroupedBrick(item));
-  }
-
-  renderAssignedGroupedBricks() {
-    const data = prepareVisibleThreeColumnAssignments(this.props.pageSize, this.props.sortedIndex, this.props.threeColumns);
-    return this.renderGroupedBricks(data);
   }
 
   renderSortedBricks() {
