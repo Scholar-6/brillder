@@ -270,7 +270,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     value={this.state.currentScore}
                   />
                 </Grid>
-                <div className="score-data">{3}%</div>
+                <div className="score-data">{this.state.currentScore}%</div>
               </div>
             </div>
             <div className="attempted-numbers">
