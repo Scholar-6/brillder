@@ -383,7 +383,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             </MobileHelp>
           </div>
         </div>
-        <div className="va-bricks-container">
+        <div className={`va-bricks-container ${this.state.activeTab === Tab.Completed ? 'completed' : ''}`}>
           {expandedClassroom
             ? this.renderExpandedClass(expandedClassroom)
             : this.state.classrooms.map(this.renderClassroom.bind(this))

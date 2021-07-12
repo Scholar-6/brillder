@@ -476,6 +476,18 @@
         }
       }
     }
+
+    &.completed {
+      .va-class-count {
+        border: 0.8vw solid var(--theme-green);
+      }
+      .fwe1-16x9-deadline {
+        .yellow, .orange {
+          color: var(--white);
+          background: var(--theme-green);
+        }
+      }
+    }
   }
 
   .subject-no-bricks {
