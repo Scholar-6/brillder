@@ -228,7 +228,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
           <SwiperSlide key={i} onClick={() => { }}>
             {i === 0 && <div className="week-brick">Latest assignmnet</div>}
             <PhoneTopBrick16x9
-              circleIcon={''}
+              circleIcon={'file-plus'}
               brick={a.brick}
               index={i}
               color="#9B33FF"
