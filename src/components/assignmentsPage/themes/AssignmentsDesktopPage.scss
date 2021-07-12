@@ -3,6 +3,9 @@
 @import "src/assets/sass/partials/extensions";
 
 .student-assignments-page {
+  .bricks-list-container {
+    margin-top: 2vw;
+  }
   .index-box:hover {
     background: var(--light-blue-alpha3) !important;
   }
