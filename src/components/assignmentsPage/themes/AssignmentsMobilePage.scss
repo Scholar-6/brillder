@@ -34,10 +34,12 @@
   .bricks-list-container {
     height: calc(100vh - 39.5vh - 6vw - 5vw - 74px) !important;
     padding-top: 0 !important;
+
     .main-brick-container .brick-container {
       padding-left: 0 !important;
       padding-right: 0 !important;
       margin-bottom: 0 !important;
+
       .short-description {
         padding-left: 4vw;
         padding-right: 4vw;
@@ -45,8 +47,10 @@
         padding-top: 1.5vw;
         min-height: calc(7vh + 3vw) !important;
       }
+
       .short-description.mobile-expanded {
         background: var(--tab-gray);
+
         .label-circle-text {
           font-size: 5.5vw !important;
         }
@@ -59,6 +63,7 @@
   .MuiGrid-root.sorted-row.MuiGrid-container {
     height: auto !important;
   }
+
   .bricks-list-container {
     .short-brick-info {
       width: 80vw !important;
@@ -155,6 +160,11 @@
       align-items: center;
       justify-content: center;
 
+
+      .svg {
+        margin-left: 1vw;
+      }
+
       &.active {
         color: var(--theme-dark-blue);
         background: var(--white);
@@ -167,31 +177,28 @@
       $img-size: 7vw;
 
       svg {
+        stroke-width: 3;
         width: $img-size;
         height: $img-size;
-        stroke-width: 2.5;
         margin-right: 2vw;
-      }
-      
-      &.full {
-        width: 100%;
-        margin: 0;
-        border-radius: 0;
-        position: relative;
-
-        svg {
-          $size: 10vw;
-          position: absolute;
-          left: 0;
-          width: $size;
-          height: $size;
-        }
+        $size: 6vw;
+        height: $size;
+        width: $size;
+        color: var(--theme-orange);
       }
     }
 
     .ss-tab-2 {
       margin-left: 1vw;
       border-top-left-radius: $radius;
+
+      svg {
+        stroke-width: 3;
+        $size: 6vw;
+        height: $size;
+        width: $size;
+        color: var(--theme-green);
+      }
     }
   }
 
@@ -280,9 +287,23 @@
       display: flex;
       align-items: center;
 
+      .va-class-count {
+        border-radius: 50%;
+        margin-left: 2vw;
+        width: 9vw;
+        height: 9vw;
+        font-family: $font-family-bold;
+        border: 0.8vw solid var(--theme-orange);
+        background: var(--white);
+        display: flex;
+        font-size: 5.5vw;
+        align-items: center;
+        justify-content: center;
+      }
+
       .va-expand {
         position: absolute;
-        top: calc(2vh - 0.7vw);
+        top: calc(2vh + 0.6vw);
         right: 6vw;
         display: flex;
         align-items: center;
@@ -371,6 +392,11 @@
       .va-level-container {
         padding-bottom: 1vh;
         padding-top: 1vh;
+      }
+    }
+    .bricks-scroll-vertical {
+      .phone-top-brick-16x9 {
+        
       }
     }
   }

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { ReduxCombinedState } from "redux/reducers";
-import { AssignmentBrick } from "model/assignment";
+import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 import actions from 'redux/actions/requestFailed';
 import { getAssignedBricks } from "services/axios/brick";
 import { checkAdmin, checkTeacher } from "components/services/brickService";
@@ -12,10 +12,20 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PhoneExpandedBrick from "components/viewAllPage/components/PhoneExpandedBrick";
+import MobileHelp from "components/baseComponents/hoverHelp/MobileHelp";
+import LevelHelpContent from "components/baseComponents/hoverHelp/LevelHelpContent";
+import { AcademicLevel, AcademicLevelLabels } from "model/brick";
+import { isLevelVisible, toggleElement } from "components/viewAllPage/service/viewAll";
 
 enum Tab {
   Assignemnts,
   Completed,
+}
+
+interface ClassroomView {
+  id: number;
+  name: string;
+  assignments: AssignmentBrick[];
 }
 
 interface PlayProps {
@@ -29,11 +39,14 @@ interface PlayProps {
 
 interface PlayState {
   activeTab: any;
-  expandedClassroom: any;
+  tab1Count: number;
+  tab2Count: number;
+  expandedClassroom: ClassroomView | null;
   expandedAssignment: AssignmentBrick | null;
   finalAssignments: AssignmentBrick[];
   rawAssignments: AssignmentBrick[];
-  classrooms: any[];
+  classrooms: ClassroomView[];
+  filterLevels: AcademicLevel[];
   isAdmin: boolean;
   isTeach: boolean;
   isLoaded: boolean;
@@ -47,12 +60,15 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     const isAdmin = checkAdmin(this.props.user.roles);
 
     this.state = {
+      tab1Count: 0,
+      tab2Count: 0,
       activeTab: Tab.Assignemnts,
       expandedAssignment: null,
       expandedClassroom: null,
       finalAssignments: [],
       rawAssignments: [],
       classrooms: [],
+      filterLevels: [],
       isLoaded: false,
       isAdmin, isTeach,
     }
@@ -81,11 +97,32 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     return classrooms;
   }
 
+  countTab1(assignments: AssignmentBrick[]) {
+    let count = 0;
+    for (let assignment of assignments) {
+      if (assignment.status === AssignmentBrickStatus.ToBeCompleted) {
+        count += 1;
+      }
+    }
+    return count;
+  }
+
+  countTab2(assignments: AssignmentBrick[]) {
+    let count = 0;
+    for (let assignment of assignments) {
+      if (assignment.status !== AssignmentBrickStatus.ToBeCompleted) {
+        count += 1;
+      }
+    }
+    return count;
+  }
+
   async getAssignments() {
     const assignments = await getAssignedBricks();
     if (assignments) {
       const classrooms = this.getClassrooms(assignments);
-      this.setState({ ...this.state, isLoaded: true, rawAssignments: assignments, finalAssignments: assignments, classrooms });
+      this.filter([], Tab.Assignemnts, assignments, classrooms);
+      this.setState({ ...this.state, tab1Count: this.countTab1(assignments), tab2Count: this.countTab2(assignments), isLoaded: true, rawAssignments: assignments, finalAssignments: assignments, classrooms });
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
       this.setState({ isLoaded: true })
@@ -124,10 +161,51 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     }
   }
 
-  renderTab(label: string, tab: Tab, className: string) {
+  clearAssignments(classrooms: ClassroomView[]) {
+    for (let classroom of classrooms) {
+      classroom.assignments = [];
+    }
+  }
+
+  addBrickByClass(classrooms: ClassroomView[], assignment: AssignmentBrick) {
+    const classrrom = classrooms.find(c => c.id === assignment.classroom?.id);
+    if (classrrom) {
+      classrrom.assignments.push(assignment);
+    }
+  }
+
+  isStatusVisible(a: AssignmentBrick, tab: Tab) {
+    if (tab === Tab.Assignemnts) {
+      return a.status === AssignmentBrickStatus.ToBeCompleted;
+    } else {
+      return a.status === AssignmentBrickStatus.CheckedByTeacher || a.status === AssignmentBrickStatus.SubmitedToTeacher;
+    }
+  }
+
+  filter(levels: AcademicLevel[], activeTab: Tab, assignments: AssignmentBrick[], classrooms: ClassroomView[]) {
+    this.clearAssignments(classrooms);
+    for (let assignment of assignments) {
+      if (isLevelVisible(assignment.brick, levels)) {
+        if (this.isStatusVisible(assignment, activeTab)) {
+          this.addBrickByClass(classrooms, assignment);
+        }
+      }
+    }
+  }
+
+  filterByLevel(level: AcademicLevel) {
+    const { filterLevels } = this.state;
+    const levels = toggleElement(filterLevels, level);
+    this.filter(levels, this.state.activeTab, this.state.rawAssignments, this.state.classrooms);
+    this.setState({ filterLevels: levels });
+  }
+
+  renderTab(label: string, icon: string, tab: Tab, className: string) {
     const onClick = () => {
       if (this.state.activeTab !== tab) {
-        this.setState({ activeTab: tab });
+        this.clearAssignments(this.state.classrooms);
+        this.filter(this.state.filterLevels, tab, this.state.rawAssignments, this.state.classrooms);
+        this.setState({ activeTab: tab, expandedClassroom: null, expandedAssignment: null });
       }
     }
     return (
@@ -136,6 +214,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
         onClick={onClick}
       >
         {label}
+        <SpriteIcon name={icon} />
       </div>
     );
   }
@@ -152,7 +231,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
               circleIcon={''}
               brick={a.brick}
               index={i}
-              color={a.brick?.subject?.color}
+              color="#9B33FF"
             />
           </SwiperSlide>
         )}
@@ -162,50 +241,96 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
 
   renderAssignments(assignments: any[]) {
     return (
+      assignments.map((a, i) =>
+        <PhoneTopBrick16x9
+          circleIcon={''}
+          brick={a.brick}
+          index={i}
+          color="#9B33FF"
+          onClick={() => {
+            if (this.state.expandedAssignment === a) {
+              this.setState({ expandedAssignment: null });
+            } else {
+              this.setState({ expandedAssignment: a });
+            }
+          }}
+        />
+      )
+    );
+  }
+
+  renderHorizontalAssignments(assignments: AssignmentBrick[]) {
+    return (
       <div className="bricks-scroll-row">
         <div className="bricks-flex-row" style={{ width: assignments.length * 60 + 2 + "vw" }}>
-          {assignments.map((a, i) =>
-            <PhoneTopBrick16x9
-              circleIcon={''}
-              brick={a.brick}
-              index={i}
-              color={a.brick?.subject?.color}
-              onClick={() => {
-                if (this.state.expandedAssignment === a) {
-                  this.setState({ expandedAssignment: null });
-                } else {
-                  this.setState({ expandedAssignment: a });
-                }
-              }}
-            />)}
+          {this.renderAssignments(assignments)}
+        </div>
+      </div>
+    )
+  }
+
+  renderEmptyClass() {
+    return (
+      <div className="subject-no-bricks">
+        <div>
+          <p>Sorry, no bricks found.</p>
+          <p>Try adjusting the filters or</p>
+          <p>selecting another subject.</p>
         </div>
       </div>
     );
   }
 
-  renderClassroom(classroom: any, i: number) {
-    const { expandedClassroom } = this.state;
-    if (expandedClassroom) {
-      return (
-        <div>
-          <div className="gg-subject-name">
-            {expandedClassroom.name}
-            {expandedClassroom.bricks.length > 0 && (
-              <div
-                className="va-expand va-hide"
-                onClick={this.hideClass.bind(this)}
-              >
-                <SpriteIcon name="arrow-up" />
-              </div>
-            )}
-          </div>
+  renderExpandClassAssignments(assignments: AssignmentBrick[]) {
+    return (
+      <div className="bricks-scroll-vertical">
+        {assignments.map((a, i) =>
+          <PhoneTopBrick16x9
+            circleIcon={''}
+            brick={a.brick}
+            index={i}
+            color="#9B33FF"
+            onClick={() => {
+              if (this.state.expandedAssignment === a) {
+                this.setState({ expandedAssignment: null });
+              } else {
+                this.setState({ expandedAssignment: a });
+              }
+            }}
+          />
+        )}
+      </div>
+    )
+  }
+
+  renderExpandedClass(classroom: ClassroomView) {
+    return (
+      <div>
+        <div className="gg-subject-name">
+          {classroom.name} {classroom.assignments.length > 0 && <div className="va-class-count">{classroom.assignments.length}</div>}
+          {classroom.assignments.length > 0 && (
+            <div
+              className="va-expand va-hide"
+              onClick={this.hideClass.bind(this)}
+            >
+              <SpriteIcon name="arrow-up" />
+            </div>
+          )}
         </div>
-      )
-    }
+        <div className="va-s-subject-bricks">
+          {classroom.assignments.length > 0
+            ? this.renderExpandClassAssignments(classroom.assignments)
+            : this.renderEmptyClass()}
+        </div>
+      </div>
+    )
+  }
+
+  renderClassroom(classroom: ClassroomView, i: number) {
     return (
       <div key={i}>
         <div className="gg-subject-name">
-          {classroom.name}
+          {classroom.name} {classroom.assignments.length > 0 && <div className="va-class-count">{classroom.assignments.length}</div>}
           {classroom.assignments.length > 0 && (
             <div
               className="va-expand"
@@ -215,13 +340,27 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             </div>
           )}
         </div>
-        {this.renderAssignments(classroom.assignments)}
+        {classroom.assignments.length > 0
+          ? this.renderHorizontalAssignments(classroom.assignments)
+          : this.renderEmptyClass()}
+      </div>
+    );
+  }
+
+  renderAcademicLevel(level: AcademicLevel) {
+    const isActive = !!this.state.filterLevels.find((l) => l === level);
+    return (
+      <div
+        className={`va-round-level ${isActive ? "active" : ""}`}
+        onClick={() => this.filterByLevel(level)}
+      >
+        {AcademicLevelLabels[level]}
       </div>
     );
   }
 
   render() {
-    const { expandedAssignment } = this.state;
+    const { expandedAssignment, expandedClassroom } = this.state;
     return (
       <div className="main-listing dashboard-page mobile-category learn-mobile-tab student-mobile-assignments-page">
         <PageHeadWithMenu
@@ -233,11 +372,25 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
           {this.renderMobileBricks()}
         </div>
         <div className="ss-tabs-container">
-          {this.renderTab('Assignments', Tab.Assignemnts, 'ss-tab-1')}
-          {this.renderTab('Completed', Tab.Completed, 'ss-tab-2')}
+          {this.renderTab(this.state.tab1Count + ' Assignments', 'f-activity', Tab.Assignemnts, 'ss-tab-1')}
+          {this.renderTab(this.state.tab2Count + ' Completed', 'f-check-clircle', Tab.Completed, 'ss-tab-2')}
+        </div>
+        <div className="va-level-container">
+          {this.renderAcademicLevel(AcademicLevel.First)}
+          {this.renderAcademicLevel(AcademicLevel.Second)}
+          {this.renderAcademicLevel(AcademicLevel.Third)}
+          {this.renderAcademicLevel(AcademicLevel.Fourth)}
+          <div className="va-difficult-help">
+            <MobileHelp>
+              <LevelHelpContent />
+            </MobileHelp>
+          </div>
         </div>
         <div className="va-bricks-container">
-          {this.state.classrooms.map(this.renderClassroom.bind(this))}
+          {expandedClassroom
+            ? this.renderExpandedClass(expandedClassroom)
+            : this.state.classrooms.map(this.renderClassroom.bind(this))
+          }
         </div>
         {expandedAssignment && expandedAssignment.brick && (
           <PhoneExpandedBrick
