@@ -283,7 +283,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
 
   renderExpandClassAssignments(assignments: AssignmentBrick[]) {
     return (
-      <div className="bricks-scroll-vertical">
+      <div className="ba-content full">
         {assignments.map((a, i) =>
           <PhoneTopBrick16x9
             circleIcon={''}
@@ -317,11 +317,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             </div>
           )}
         </div>
-        <div className="va-s-subject-bricks">
-          {classroom.assignments.length > 0
-            ? this.renderExpandClassAssignments(classroom.assignments)
-            : this.renderEmptyClass()}
-        </div>
+        {this.renderExpandClassAssignments(classroom.assignments)}
       </div>
     )
   }
