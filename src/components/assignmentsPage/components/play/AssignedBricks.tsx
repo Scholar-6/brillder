@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 
 import { User } from "model/user";
-import { ThreeAssignmentColumns, AssignmentBrickData, PlayFilters } from '../../model';
+import { AssignmentBrickData, PlayFilters } from '../../model';
 import { prepareVisibleAssignments } from '../../service';
-import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
-import { AssignmentBrickStatus, AssignmentBrick } from "model/assignment";
+import { AssignmentBrick } from "model/assignment";
 
 import BrickBlock16x9 from "components/viewAllPage/components/BrickBlock16x9";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -19,16 +18,12 @@ interface AssignedBricksProps {
   sortedIndex: number;
   filters: PlayFilters;
   assignments: AssignmentBrick[];
-  threeColumns: ThreeAssignmentColumns;
   history: any;
-
-  handleDeleteOpen(brickId: number): void;
 }
 
 class AssignedBricks extends Component<AssignedBricksProps> {
   renderBrick(item: AssignmentBrickData) {
     let circleIcon = '';
-    console.log(565)
     if (item.isInvitation) {
       circleIcon="users";
     }
@@ -46,7 +41,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       circleIcon={circleIcon}
       deadline={item.deadline}
       searchString=""
-      handleDeleteOpen={this.props.handleDeleteOpen}
+      handleDeleteOpen={() => {}}
     />
   }
 

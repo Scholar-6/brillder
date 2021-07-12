@@ -24,7 +24,6 @@ import {
   getAssignmentIcon,
 } from "components/services/brickService";
 import {
-  getCurrentUserBricks,
   getPublicBricks,
   getPublishedBricks,
   searchBricks,
