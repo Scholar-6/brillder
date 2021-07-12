@@ -35,14 +35,11 @@ interface Props {
 
 class PhoneTopBrick16x9 extends Component<Props> {
   render() {
-    const { color, brick, isMobile, isExpanded, index } = this.props;
+    const { color, brick, isMobile, isExpanded } = this.props;
     let className = "phone-top-brick-16x9";
 
     if (isMobile && isExpanded) {
       className += " mobile-expanded";
-    }
-    if (index !== undefined && index >= 0) {
-      className += " mobile-short-" + index;
     }
 
     let label = '';

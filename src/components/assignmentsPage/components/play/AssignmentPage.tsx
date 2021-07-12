@@ -17,9 +17,7 @@ import AssignedBricks from "./AssignedBricks";
 import PlayFilterSidebar from "./PlayFilterSidebar";
 import BackPagePagination from "../BackPagePagination";
 import BackPagePaginationV2 from "../BackPagePaginationV2";
-import MobileLearn from "./MobileLearn";
 import map from "components/map";
-import { isPhone } from "services/phone";
 
 
 interface PlayProps {
