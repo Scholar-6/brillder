@@ -212,7 +212,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
 
     if (!isMobile && sidebarRolledUp) {
-      return <HomeButton link={map.MainPage} />;
+      return <HomeButton history={history} link={map.MainPage} />;
     }
     if (isMobile && headerHidden) {
       return <div></div>;

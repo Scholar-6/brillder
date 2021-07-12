@@ -37,7 +37,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
   const [state, setState] = React.useState({
     prepExpanded: true,
     isStopped: false,
-    briefExpanded: true,
+    briefExpanded: false,
     duration: null,
   } as IntroductionState);
 

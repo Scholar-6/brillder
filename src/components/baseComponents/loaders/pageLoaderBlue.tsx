@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import './pageLoader.scss';
-import LoaderLogo from 'assets/img/dot-loader.svg';
+import LoaderLogo from 'assets/img/dot-loader-blue.svg';
 
-class PageLoader extends Component<pageLoaderProps> {
+class PageLoaderBlue extends Component<pageLoaderProps> {
   render() {
     return (
       <div className="page-loader">
@@ -15,4 +15,4 @@ class PageLoader extends Component<pageLoaderProps> {
 interface pageLoaderProps {
   content: string;
 }
-export default PageLoader;
+export default PageLoaderBlue;

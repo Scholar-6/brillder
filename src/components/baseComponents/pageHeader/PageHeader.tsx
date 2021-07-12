@@ -14,6 +14,7 @@ import { isAuthenticated } from 'model/assignment';
 import map from 'components/map';
 import UnauthorizedMenu from 'components/app/unauthorized/UnauthorizedMenu';
 import { PageEnum } from './PageHeadWithMenu';
+import { isPhone } from 'services/phone';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -24,7 +25,7 @@ const mapState = (state: ReduxCombinedState) => ({
 const mapDispatch = (dispatch: any) => ({
   getNotifications: () => dispatch(notificationActions.getNotifications())
 });
- 
+
 const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
 
 
@@ -32,7 +33,7 @@ interface Props {
   searchPlaceholder: string;
   link?: string;
   page: PageEnum;
-  
+
   history: any;
   search(): void;
   searching(value: string): void;
@@ -87,7 +88,36 @@ class PageHeader extends Component<Props, State> {
   }
 
   hideDropdown() {
-    this.setState({dropdownShown: false});
+    this.setState({ dropdownShown: false });
+  }
+
+  renderMiddleButton() {
+    if (this.props.page === PageEnum.Book && isPhone()) {
+      return (
+        <div
+          className="btn btn-transparent m-footer-book-icon svgOnHover"
+          onClick={() => this.props.history.push(map.MyLibrary)}
+        >
+          <SpriteIcon name="book-open" className="w100 h100 active text-theme-orange" />
+          <div className="gh-phone-background" />
+        </div>
+      )
+    }
+    if (this.state.searchVisible) {
+      return (
+        <div className="btn btn-transparent close-search svgOnHover" onClick={() => this.toggleSearch()}>
+          <SpriteIcon name="arrow-right" className="w100 h100 text-tab-gray" />
+        </div>
+      );
+    }
+    return (
+      <div className="btn btn-transparent open-search svgOnHover" onClick={() => {
+        this.props.page !== PageEnum.Book && this.renderSearch()
+      }}>
+        <SpriteIcon name="search" className="w100 h100 active text-theme-orange" />
+        <div className="gh-phone-background" />
+      </div>
+    );
   }
 
   render() {
@@ -111,32 +141,21 @@ class PageHeader extends Component<Props, State> {
                   <SpriteIcon name="help-thin" className="svg-default" />
                 </div>
               }
-              {!searchVisible && <HomeButton link={link} />}
+              {!searchVisible && <HomeButton history={this.props.history} link={link} />}
               <div className={searchVisible ? "search-container active animated slideInRight" : "search-container"}>
                 {this.props.page !== PageEnum.Book &&
-                <div className={searchVisible ? 'search-area active' : 'search-area'}>
-                  <input
-                    className="search-input"
-                    onKeyUp={(e) => this.keySearch(e)}
-                    onChange={(e) => this.props.searching(e.target.value)}
-                    placeholder={this.props.searchPlaceholder}
-                  />
-                </div>
-                }
-                {searchVisible ?
-                  <div className="btn btn-transparent close-search svgOnHover" onClick={() => this.toggleSearch()}>
-                    <SpriteIcon name="arrow-right" className="w100 h100 text-tab-gray" />
-                  </div>
-                  :
-                  <div className="btn btn-transparent open-search svgOnHover" onClick={() => {
-                    this.props.page !== PageEnum.Book && this.renderSearch()
-                  }}>
-                    <SpriteIcon name="search" className="w100 h100 active text-theme-orange" />
-                    <div className="gh-phone-background" />
+                  <div className={searchVisible ? 'search-area active' : 'search-area'}>
+                    <input
+                      className="search-input"
+                      onKeyUp={(e) => this.keySearch(e)}
+                      onChange={(e) => this.props.searching(e.target.value)}
+                      placeholder={this.props.searchPlaceholder}
+                    />
                   </div>
                 }
+                {this.renderMiddleButton()}
                 {!this.props.isAuthenticated &&
-                  <div className="btn btn-transparent tracking-button" onClick={() => this.setState({dropdownShown: true})}>
+                  <div className="btn btn-transparent tracking-button" onClick={() => this.setState({ dropdownShown: true })}>
                     <SpriteIcon name="settings" className="w80 h80 text-theme-orange" />
                   </div>
                 }
@@ -158,7 +177,7 @@ class PageHeader extends Component<Props, State> {
             </div>
           </Hidden>
           <Hidden only={['xs']} >
-            <HomeButton link={link} />
+            <HomeButton link={link} history={this.props.history} />
             <div className="logout-container">
               <div className="search-container">
                 <div className="header-btn search-button svgOnHover" onClick={() => this.props.search()}>

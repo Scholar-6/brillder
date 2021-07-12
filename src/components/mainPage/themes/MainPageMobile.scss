@@ -235,6 +235,7 @@
         }
 
         .view-item-container {
+          padding-top: 100px;
           .svg {
             width: 230px;
             height: 100px;
@@ -277,6 +278,9 @@
   .eye-glass-frame {
     width: 70vw;
     height: 34vw;
+  }
+  .back-item-container {
+    width: 70vw;
   }
 }
 

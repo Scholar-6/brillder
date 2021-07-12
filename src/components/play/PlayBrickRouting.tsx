@@ -462,7 +462,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       link = map.ViewAllPage;
     }
     if (!isPhone() && sidebarRolledUp) {
-      return <HomeButton link={link} />;
+      return <HomeButton history={history} link={link} />;
     }
     if (headerHidden) {
       return <div></div>;

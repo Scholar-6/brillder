@@ -42,15 +42,15 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
         <div className="ss-phone-before-title" />
         <div className="title s-fade1">Time for some questions.</div>
         <div className="ss-phone-after-title" />
-        <div className="like-button">Preparation</div>
+        <div className="like-button animate-v1">Preparation</div>
         <div className="ss-phone-between-button" />
         <div className="like-button orange" onClick={() => setMoving(true)}>
           Investigation
         </div>
         <div className="ss-phone-between-button" />
-        <div className="like-button">Synthesis</div>
+        <div className="like-button animate-v1">Synthesis</div>
         <div className="ss-phone-between-button" />
-        <div className="like-button">Review</div>
+        <div className="like-button animate-v1">Review</div>
         <div className="ss-phone-after-buttons" />
         <div className="footer s-fade3">
           You have<span className="underline-border"> {minutes} minutes </span>

@@ -76,13 +76,13 @@
         p {
           font-size: 1.25vw !important;
           @include phone_and_tabletP {
-            font-size: 4.5vw !important;
+            font-size: $mbase-font-size !important;
           }
         }
         .MuiListItemText-root {
           font-size: 1.25vw !important;
           @include phone_and_tabletP {
-            font-size: 4.5vw !important;
+            font-size: $mbase-font-size !important;
           }
         }
         img {

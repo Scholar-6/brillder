@@ -24,7 +24,6 @@ import {
   getAssignmentIcon,
 } from "components/services/brickService";
 import {
-  getCurrentUserBricks,
   getPublicBricks,
   getPublishedBricks,
   searchBricks,
@@ -40,7 +39,7 @@ import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/Delet
 import ViewAllFilter, { SortBy } from "./components/ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
-import BrickBlock from "./components/BrickBlock16x9";
+import BrickBlock16x9 from "./components/BrickBlock16x9";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 import map from "components/map";
@@ -60,11 +59,8 @@ import {
   prepareVisibleBricks,
   toggleSubject,
   renderTitle,
-  hideBricks,
-  expandBrick,
   sortAllBricks,
   countSubjectBricks,
-  prepareYourBricks,
   sortAndCheckSubjects,
   filterSearchBricks,
   getCheckedSubjectIds,
@@ -93,7 +89,6 @@ interface ViewAllProps {
 }
 
 interface ViewAllState {
-  yourBricks: Array<Brick>;
   bricks: Array<Brick>;
   searchBricks: Array<Brick>;
   searchString: string;
@@ -189,7 +184,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     this.state = {
-      yourBricks: [],
       bricks: [],
       sortBy: SortBy.Date,
       subjects: [],
@@ -352,13 +346,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async loadBricks(values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
-      const currentBricks = await getCurrentUserBricks();
-      if (currentBricks) {
-        let yourBricks = prepareYourBricks(currentBricks);
-        this.setState({ ...this.state, yourBricks });
-      } else {
-        this.setState({ ...this.state, failedRequest: true });
-      }
       const bricks = await getPublishedBricks();
       if (bricks) {
         let bs = sortAllBricks(bricks);
@@ -749,56 +736,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
-  hideBricks() {
-    const { finalBricks, yourBricks } = this.state;
-    hideBricks(finalBricks);
-    hideBricks(yourBricks);
-  }
-
-  yourBricksMouseHover(index: number) {
-    let { yourBricks } = this.state;
-    this.hideBricks();
-    expandBrick(yourBricks, index);
-    this.setState({ ...this.state });
-  }
-
-  yourBricksMouseLeave() {
-    this.hideBricks();
-    this.setState({ ...this.state });
-  }
-
-  handleMouseHover(index: number) {
-    let { finalBricks } = this.state;
-    if (finalBricks[index] && finalBricks[index].expanded) return;
-
-    this.hideBricks();
-    expandBrick(finalBricks, index);
-    this.setState({ ...this.state });
-  }
-
-  handleMobileClick(index: number) {
-    let { finalBricks } = this.state;
-    if (finalBricks[index].expanded === true) {
-      this.hideBricks();
-      this.setState({ ...this.state });
-      return;
-    }
-    this.hideBricks();
-    expandBrick(finalBricks, index);
-    this.setState({ ...this.state });
-  }
-
-  handleYourMobileClick(brick: Brick) {
-    this.hideBricks();
-    brick.expanded = true;
-    this.setState({ ...this.state });
-  }
-
-  handleMouseLeave() {
-    this.hideBricks();
-    this.setState({ ...this.state });
-  }
-
   handleDeleteOpen(deleteBrickId: number) {
     this.setState({ ...this.state, deleteDialogOpen: true, deleteBrickId });
   }
@@ -867,7 +804,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     setTimeout(() => {
       try {
         if (bricks) {
-          this.hideBricks();
           const finalBricks = this.filter(
             bricks,
             this.state.isAllSubjects,
@@ -918,7 +854,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       }
 
       return (
-        <BrickBlock
+        <BrickBlock16x9
           brick={item.brick}
           index={item.index}
           row={item.row + 1}
@@ -929,8 +865,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           history={this.props.history}
           circleIcon={circleIcon}
           handleDeleteOpen={(brickId) => this.handleDeleteOpen(brickId)}
-          handleMouseHover={() => this.handleMouseHover(item.key)}
-          handleMouseLeave={() => this.handleMouseLeave()}
           isPlay={true}
         />
       );
@@ -1210,23 +1144,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
 
-    let expandedBrick = undefined;
-    let pageClass = "main-listing dashboard-page";
-    if (isMobile) {
-      expandedBrick = this.state.yourBricks.find((b) => b.expanded === true);
-      if (!expandedBrick) {
-        expandedBrick = this.state.finalBricks.find((b) => b.expanded === true);
-      }
-      if (expandedBrick) {
-        pageClass += " expanded";
-      }
-    }
-
     if (isPhone()) {
       return (
         <React.Suspense fallback={<></>}>
           <MobileTheme />
-          <div className={pageClass}>
+          <div className="main-listing dashboard-page">
             <Switch>
               <Route exec path={map.AllSubjects}>
                 <PageHeadWithMenu
@@ -1303,7 +1225,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return (
       <React.Suspense fallback={<></>}>
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
-        <div className={pageClass}>
+        <div className="main-listing dashboard-page">
           <div>
             <PageHeadWithMenu
               page={PageEnum.ViewAll}

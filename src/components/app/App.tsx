@@ -53,7 +53,6 @@ import PlayPreviewRoute from './PlayPreviewRoute';
 import EmailLoginPage from 'components/loginPage/EmailLoginPage';
 import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSubjectPage';
 import PublicTerms from 'components/terms/PublicTerms';
-import MobileUsernamePage from 'components/onboarding/mobileUsernamePage/MobileUsernamePage';
 import RotateIPadInstruction from 'components/baseComponents/rotateInstruction/RotateIPadInstruction';
 import { isPhone } from 'services/phone';
 import { setupMatomo } from 'services/matomo';
@@ -276,7 +275,6 @@ const App: React.FC<AppProps> = props => {
         <AllUsersRoute path={map.ThankYouPage} component={ThankYouPage} isPreferencePage={true} />
         <AllUsersRoute path={map.UserPreference} component={UserPreferencePage} isPreferencePage={true} />
         <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
-        <AllUsersRoute path={map.MobileUsername} component={MobileUsernamePage} />
         <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
 
         <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />

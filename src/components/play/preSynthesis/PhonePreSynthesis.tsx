@@ -36,13 +36,13 @@ const PhonePreSynthesisPage: React.FC<Props> = ({ brick, ...props }) => {
           Deepen your understanding.
         </div>
         <div className="ss-phone-after-title" />
-        <div className="like-button">Preparation</div>
+        <div className="like-button animate-v1">Preparation</div>
         <div className="ss-phone-between-button" />
-        <div className="like-button">Investigation</div>
+        <div className="like-button animate-v1">Investigation</div>
         <div className="ss-phone-between-button" />
         <div className="like-button orange" onClick={() => setMoving(true)}>Synthesis</div>
         <div className="ss-phone-between-button" />
-        <div className="like-button">Review</div>
+        <div className="like-button animate-v1">Review</div>
         <div className="ss-phone-after-buttons" />
         <div className="footer s-fade3">
           Spend about<span className="underline-border"> {minutes} minutes </span>on this stage before reviewing your answers to improve your score.

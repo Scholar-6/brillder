@@ -428,7 +428,7 @@
         }
       }
       &.bricks-container-mobile {
-        overflow: hidden;
+        overflow: visible;
 
         @include phone_and_tabletP {
           overflow-y: auto;

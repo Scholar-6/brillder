@@ -205,7 +205,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         return (
           <div className="ge-phone-title">
             <div className="ge-phone-circle b-green">
-              <SpriteIcon name="check" />
+              <SpriteIcon name="check-icon" />
             </div>
             <div>{text}</div>
           </div>
