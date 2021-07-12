@@ -8,6 +8,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import AssignmentPage from './components/play/AssignmentPage';
 import { isMobile } from "react-device-detect";
 import { isPhone } from "services/phone";
+import AssignmentMobilePage from "./components/play/AssignmentMobilePage";
 
 interface AssignmentState {
   searchString: string;
@@ -29,7 +30,7 @@ const TabletTheme = React.lazy(() => import('./themes/AssignmentsTabletPage'));
 const DesktopTheme = React.lazy(() => import('./themes/AssignmentsDesktopPage'));
 
 
-class BackToWorkPage extends Component<AssignmentProps, AssignmentState> {
+class AssignmentsPage extends Component<AssignmentProps, AssignmentState> {
   constructor(props: AssignmentProps) {
     super(props);
 
@@ -71,7 +72,10 @@ class BackToWorkPage extends Component<AssignmentProps, AssignmentState> {
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
           />
-          <AssignmentPage history={this.props.history} match={this.props.match} />
+          {isPhone()
+            ? <AssignmentMobilePage history={this.props.history} match={this.props.match} />
+            : <AssignmentPage history={this.props.history} match={this.props.match} />
+          }
         </div>
       </React.Suspense>
     );
@@ -80,4 +84,4 @@ class BackToWorkPage extends Component<AssignmentProps, AssignmentState> {
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
-export default connect(mapState)(BackToWorkPage);
+export default connect(mapState)(AssignmentsPage);

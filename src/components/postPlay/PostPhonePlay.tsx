@@ -127,10 +127,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.props.history.push('/home');
   }
 
-  moveToTitles() {
-    this.setState({ bookState: BookState.Titles });
-  }
-
   moveToAttempts() {
     this.setState({ bookState: BookState.Attempts });
   }
@@ -147,14 +143,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       this.state.swiper.slideTo(1, 200);
     }
     this.setState({ bookState: BookState.QuestionPage, bookHovered: true });
-  }
-
-  moveToQuestions() {
-    this.setState({ bookState: BookState.QuestionPage, questionIndex: 0 });
-  }
-
-  moveBackToQuestions() {
-    this.setState({ bookState: BookState.QuestionPage });
   }
 
   moveToIntroduction() {

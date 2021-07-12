@@ -31,6 +31,7 @@ export interface AssignmentBrickData {
   key: number;
   index: number;
   row: number;
+  deadline: string;
   assignmentId: number;
   status: AssignmentBrickStatus;
   isInvitation: boolean;

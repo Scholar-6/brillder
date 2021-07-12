@@ -19,10 +19,16 @@
       color: var(--white);
     }
 
+    .rotated-text {
+      font-size: 3.5vw;
+    }
+
     .progress-value {
       position: relative;
       .rotated-text {
         color: var(--white);
+        text-transform: uppercase !important;
+        font-family: $font-family-bold !important;
       }
     }
     .rotated-container {
@@ -69,7 +75,7 @@
       height: 100%;
       padding: 0 2vw;
       margin: 0 2vw;
-      font-size: 4.5vw;
+      font-size: $mbase-font-size;
       overflow-y: scroll;
 
       .libary-container-1 {

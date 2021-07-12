@@ -7,6 +7,7 @@ import { User } from "model/user";
 import BrickCircle from "./BrickCircle";
 import BrickTitle from "./BrickTitle";
 import { fileUrl } from "components/services/uploadFile";
+import { getDate, getMonth, getYear } from "components/services/brickService";
 
 interface Props {
   brick: Brick;
@@ -18,15 +19,13 @@ interface Props {
 
   circleClass?: string;
 
-  // mobile
-  isMobile?: boolean;
-  isExpanded?: boolean;
-
   // only for play tab in back to work
   color?: string;
 
   // only for some pages
   isInvited?: boolean;
+
+  deadline?: string;
 
   onClick?(): void;
   move?(): void;
@@ -34,16 +33,26 @@ interface Props {
 
 
 class PhoneTopBrick16x9 extends Component<Props> {
+  renderDeadline() {
+    const { deadline } = this.props;
+    if (!deadline) {
+      return '';
+    }
+    const date = new Date(deadline);
+    let now = Date.now();
+    let passesDeadline = false;
+    if (date.getTime() < now) {
+      passesDeadline = true;
+    }
+    return (<div className="fwe1-16x9-deadline">
+      <div>
+        <div className={passesDeadline ? 'orange' : 'yellow'}>{getDate(date)}.{getMonth(date)}.{getYear(date)}</div>
+      </div>
+    </div>
+    );
+  }
   render() {
-    const { color, brick, isMobile, isExpanded, index } = this.props;
-    let className = "short-description phone-top-brick-16x9";
-
-    if (isMobile && isExpanded) {
-      className += " mobile-expanded";
-    }
-    if (index !== undefined && index >= 0) {
-      className += " mobile-short-" + index;
-    }
+    const { color, brick } = this.props;
 
     let label = '';
     if (brick.academicLevel >= AcademicLevel.First) {
@@ -51,7 +60,8 @@ class PhoneTopBrick16x9 extends Component<Props> {
     }
 
     return (
-      <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
+      <div className="phone-top-brick-16x9" onClick={() => this.props.onClick ? this.props.onClick() : {}}>
+        {this.renderDeadline()}
         {color
           && (
             <BrickCircle

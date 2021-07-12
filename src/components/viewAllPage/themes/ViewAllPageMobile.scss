@@ -203,6 +203,22 @@
     color: var(--theme-dark-blue);
   }
 
+  .f-top-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: var(--theme-dark-blue);
+    .page-loader {
+      position: relative;
+      left: unset;
+      top: unset;
+      transform: unset;
+      height: 100%;
+      background: inherit !important;
+    }
+  }
+
   .main-title {
     @extend %transitionAll300;
     max-width: 55vw;
@@ -459,6 +475,7 @@
         position: absolute;
 
         .round-button {
+          border-radius: 50%;
           $size: 14vw;
           width: $size !important;
           height: $size !important;
@@ -733,7 +750,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4.5vw;
+    font-size: $mbase-font-size;
     width: 58vw;
     height: 33vw;
     background: var(--tab-gray);
@@ -743,15 +760,6 @@
 }
 
 .dashboard-page {
-  .va-phone-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 21;
-    height: 100vh;
-    width: 100vw;
-  }
-
   @keyframes gew-grow {
     from {
       height: 0%;
@@ -789,7 +797,7 @@
         width: calc(100% - 13vw);
         text-overflow: ellipsis;
         white-space: nowrap;
-        font-size: 4.5vw;
+        font-size: $mbase-font-size;
 
         p {
           overflow: hidden;
@@ -848,7 +856,7 @@
 
 .dashboard-page .mobile-search-page {
   height: 100%;
-  font-size: 4.5vw;
+  font-size: $mbase-font-size;
   color: var(--theme-dark-blue);
   background: var(--white);
 
@@ -1022,7 +1030,7 @@
           color: var(--theme-dark-blue);
           font-family: $font-family-bold;
           display: flex;
-          font-size: 4.5vw;
+          font-size: $mbase-font-size;
           align-items: center;
           justify-content: center;
           z-index: 13;

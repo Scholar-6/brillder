@@ -119,16 +119,8 @@ class PhoneBrickTop16x9 extends Component<Props> {
   }
 
   render() {
-    const { color, brick, isMobile, isExpanded, searchString, index } =
-      this.props;
+    const { color, brick, isExpanded, searchString } = this.props;
     let className = "short-description";
-
-    if (isMobile && isExpanded) {
-      className += " mobile-expanded";
-    }
-    if (index !== undefined && index >= 0) {
-      className += " mobile-short-" + index;
-    }
 
     let label = "";
     if (brick.academicLevel >= AcademicLevel.First) {

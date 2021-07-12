@@ -10,6 +10,8 @@
 @import './utils/mobile/buttons-mobile';
 @import './utils/mobile/form-elements-mobile';
 @import './utils/mobile/dropdowns-mobile';
+
+
 #launcher {
     left: 0 !important;
     margin: 2.5vw !important;
@@ -177,7 +179,7 @@
             padding-bottom: 1vh;
         }
         .ql-blank::before {
-            font-size: 4.5vw;
+            font-size: $mbase-font-size;
         }
     }
     .question-hint-global {
@@ -232,7 +234,7 @@
 }
 
 .introduction-page li {
-    font-size: 4.5vw;
+    font-size: $mbase-font-size;
 }
 
 // sort play fixes
@@ -259,16 +261,16 @@
 .play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .question-live-play .quill-document-editor {
     input,
     textarea {
-        font-size: 4.5vw !important;
+        font-size: $mbase-font-size !important;
     }
     .ql-blank::before {
-        font-size: 4.5vw !important;
+        font-size: $mbase-font-size !important;
     }
     p {
-        font-size: 4.5vw !important;
+        font-size: $mbase-font-size !important;
     }
     input:focus {
-        font-size: 4.5vw !important;
+        font-size: $mbase-font-size !important;
     }
 }
 
@@ -547,7 +549,7 @@
                 }
                 .MuiListItemText-primary {
                     text-align: left;
-                    font-size: 4.5vw !important;
+                    font-size: $mbase-font-size !important;
                 }
             }
             .MuiListItemIcon-root {
@@ -563,12 +565,12 @@
             border-top-right-radius: $radius;
             border-bottom-right-radius: $radius;
             width: 20vw !important;
-            font-size: 4.5vw;
+            font-size: $mbase-font-size;
         }
     }
     .r-regular-center {
         margin: 1.5vh 0 2vh 0 !important;
-        font-size: 4.5vw;
+        font-size: $mbase-font-size;
     }
     .r-class-inputs {
         display: flex;
@@ -577,7 +579,7 @@
             padding-left: 2vw !important;
             border-top-left-radius: $radius !important;
             border-bottom-left-radius: $radius !important;
-            font-size: 4.5vw !important;
+            font-size: $mbase-font-size !important;
             width: 60vw !important;
         }
         div {
@@ -585,7 +587,7 @@
             border-bottom-right-radius: $radius;
             background: var(--tab-gray);
             color: var(--theme-dark-blue);
-            font-size: 4.5vw !important;
+            font-size: $mbase-font-size !important;
             width: 23vw !important;
             display: flex;
             align-items: center;
@@ -616,13 +618,13 @@
 
 
 .user-profile-page .subject-autocomplete {
-  font-size: 4.5vw;
+  font-size: $mbase-font-size;
   .MuiChip-label {
-    font-size: 4.5vw;
+    font-size: $mbase-font-size;
   }
 }
 .MuiAutocomplete-option {
-  font-size: 4.5vw;
+  font-size: $mbase-font-size;
 }
 
 .profile-saved-dialog {
@@ -654,6 +656,12 @@
     opacity: 0.5;
     background: var(--white);
   }
+}
+
+.m-footer-book-icon {
+    margin-left: 4vw !important;
+    stroke-width: 2;
+    
 }
 
 .image-play-container {
