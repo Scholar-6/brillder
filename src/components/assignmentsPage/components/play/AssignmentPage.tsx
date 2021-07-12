@@ -307,32 +307,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     this.setState({activeClassroomId: classroomId, finalAssignments: assignments, threeColumns, filters, sortedIndex: 0});
   }
 
-  //#region mobile functions
-  handleMobileClick(index: number) {
-    let { finalAssignments } = this.state;
-    if (finalAssignments[index].brick.expanded === true) {
-      finalAssignments[index].brick.expanded = false;
-      this.setState({ ...this.state });
-      return;
-    }
-    finalAssignments.forEach(a => a.brick.expanded = false);
-    finalAssignments[index].brick.expanded = true;
-    this.setState({ ...this.state });
-  }
-
   render() {
-    if (isPhone()) {
-      return (
-        <MobileLearn
-          shown={true}
-          assignments={this.state.finalAssignments}
-          user={this.props.user}
-          history={this.props.history}
-          onCoreSwitch={() => {}}
-          handleClick={this.handleMobileClick.bind(this)}
-        />
-      );
-    }
     return (
       <Grid container direction="row" className="sorted-row">
         <PlayFilterSidebar
