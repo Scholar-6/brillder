@@ -13,14 +13,15 @@ import ShortBrickDescription from "components/baseComponents/ShortBrickDescripti
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import { setAssignmentId } from "localStorage/playAssignmentId";
 import routes from "components/play/routes";
+import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 
 interface Props {
   history: any;
   assignments: AssignmentBrick[];
+  classrooms: any[];
   shown: boolean;
   user: User;
 
-  onCoreSwitch(): void;
   handleClick(i: number): void;
 }
 
@@ -50,15 +51,12 @@ class MobileLearn extends Component<Props> {
         circleClass={color}
         color={color}
         move={() => this.moveToPlay(a)}
-        hide={() => {}}
+        hide={() => { }}
       />
     );
   }
 
-  renderMobileBricks(expandedBrick: AssignmentBrick | undefined) {
-    if (expandedBrick) {
-      return this.renderExpandedBrick(expandedBrick);
-    }
+  renderMobileBricks() {
     const assignments = this.props.assignments.sort((a, b) => new Date(a.brick.updated).getTime() - new Date(b.brick.updated).getTime());
     let bricksList = [];
     for (let i = 0; i < assignments.length; i++) {
@@ -67,22 +65,21 @@ class MobileLearn extends Component<Props> {
         const color = this.getColor(assignments[i]);
         const circleIcon = getAssignmentIcon(brick);
         bricksList.push(
-          <ShortBrickDescription
+          <PhoneTopBrick16x9
             circleIcon={circleIcon}
-            circleClass={color}
-            searchString=""
-            brick={brick} index={i}
+            brick={brick}
+            index={i}
             color={color}
-            move={() => this.moveToPlay(assignments[i])}
           />
         );
       }
     }
 
     return (
-      <Swiper slidesPerView={2}>
-        {bricksList.map((b, i) => 
-          <SwiperSlide key={i} onClick={() => this.props.handleClick(i)} style={{ width: '50vw' }}>
+      <Swiper slidesPerView={1}>
+        {bricksList.map((b, i) =>
+          <SwiperSlide key={i} onClick={() => this.props.handleClick(i)}>
+            {i === 0 && <div className="week-brick">Latest assignmnet</div>}
             {b}
           </SwiperSlide>
         )}
@@ -98,7 +95,7 @@ class MobileLearn extends Component<Props> {
     if (a.brick.expanded) {
       className += " brick-hover";
     }
-    
+
     return (
       <Grow
         in={this.props.shown}
@@ -135,42 +132,35 @@ class MobileLearn extends Component<Props> {
     return bricksList;
   };
 
+  renderClassroom(classroom: any, i: number) {
+    return (
+      <div key={i}>
+        <div className="gg-subject-name">
+          {classroom.name}
+        </div>
+      </div>
+    );
+  }
 
   render() {
-    const assignments = this.props.assignments.sort((a, b) => a.status - b.status);
-    const {history} = this.props;
-    const expandedBrick = assignments.find(a => a.brick.expanded === true);
-
-    let pageClass = "main-listing dashboard-page mobile-category learn-mobile-tab student-mobile-assignments-page";
-    if (expandedBrick) {
-      pageClass += " expanded"
-    }
-
     return (
-      <div className={pageClass}>
+      <div className="main-listing dashboard-page mobile-category learn-mobile-tab student-mobile-assignments-page">
         <PageHeadWithMenu
           page={PageEnum.ViewAll}
           user={this.props.user}
-          placeholder={"Search Ongoing Projects & Published Bricks…"}
-          history={history}
-          search={() => {}}
-          searching={(v: string) => {}}
+          history={this.props.history}
         />
-        <div className="mobile-scroll-bricks">
-          {this.renderMobileBricks(expandedBrick)}
+        <div className="mobile-scroll-bricks phone-top-bricks16x9">
+          {this.renderMobileBricks()}
         </div>
-        <Grid container direction="row" className="sorted-row">
-          <Grid item xs={9} className="brick-row-container">
-            <div className="brick-row-title">
-              <button className="btn btn-transparent svgOnHover" style={{width: '100vw'}}>
-                <span style={{textTransform: 'uppercase'}}>Assignments</span>
-              </button>
-            </div>
-            <div className="bricks-list-container">
-              {this.renderSortedBricks(assignments)}
-            </div>
-          </Grid>
-        </Grid>
+        <div className="brick-row-title">
+          <button className="btn btn-transparent svgOnHover" style={{ width: '100vw' }}>
+            <span style={{ textTransform: 'uppercase' }}>Assignments</span>
+          </button>
+        </div>
+        <div className="va-bricks-container">
+          {this.props.classrooms.map(this.renderClassroom.bind(this))}
+        </div>
       </div>
     );
   }

@@ -30,8 +30,8 @@ interface HeaderMenuProps {
   user: User;
   placeholder?: string;
   page: PageEnum;
-  search(): void;
-  searching(v: string): void;
+  search?(): void;
+  searching?(v: string): void;
   toggleSearch?(v:boolean): void;
 }
 
@@ -102,8 +102,8 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           link={this.props.link}
           page={this.props.page}
           history={this.props.history}
-          search={() => this.props.search()}
-          searching={(v: string) => this.props.searching(v)}
+          search={() => this.props.search && this.props.search()}
+          searching={(v: string) => this.props.searching && this.props.searching(v)}
           toggleSearch={this.props.toggleSearch?.bind(this)}
           showDropdown={() => this.showDropdown()}
           showNotifications={() => this.showNotifications()}

@@ -475,6 +475,7 @@
         position: absolute;
 
         .round-button {
+          border-radius: 50%;
           $size: 14vw;
           width: $size !important;
           height: $size !important;
