@@ -247,6 +247,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
           brick={a.brick}
           index={i}
           color="#9B33FF"
+          deadline={a.deadline}
           onClick={() => {
             if (this.state.expandedAssignment === a) {
               this.setState({ expandedAssignment: null });
