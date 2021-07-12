@@ -178,7 +178,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     if (tab === Tab.Assignemnts) {
       return a.status === AssignmentBrickStatus.ToBeCompleted;
     } else {
-      return a.status === AssignmentBrickStatus.CheckedByTeacher || a.status === AssignmentBrickStatus.SubmitedToTeacher;
+      return a.status !== AssignmentBrickStatus.ToBeCompleted;
     }
   }
 
@@ -226,9 +226,9 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
       <Swiper slidesPerView={1}>
         {assignments.map((a, i) =>
           <SwiperSlide key={i} onClick={() => { }}>
-            {i === 0 && <div className="week-brick">Latest assignmnet</div>}
+            {i === 0 && <div className="week-brick">Latest assignment</div>}
             <PhoneTopBrick16x9
-              circleIcon={'file-plus'}
+              circleIcon='file-plus'
               brick={a.brick}
               index={i}
               color="#9B33FF"
