@@ -40,7 +40,7 @@ import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/Delet
 import ViewAllFilter, { SortBy } from "./components/ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
-import BrickBlock from "./components/BrickBlock16x9";
+import BrickBlock16x9 from "./components/BrickBlock16x9";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 import map from "components/map";
@@ -918,7 +918,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       }
 
       return (
-        <BrickBlock
+        <BrickBlock16x9
           brick={item.brick}
           index={item.index}
           row={item.row + 1}
