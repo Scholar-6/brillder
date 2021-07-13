@@ -3,11 +3,8 @@ import './LibraryButton.scss';
 
 interface ButtonProps {
   history: any;
-  isMobile?: boolean;
   isActive: boolean;
-  isSwiping: boolean;
   onClick(): void;
-  onMobileClick(): void;
 }
 
 const LibraryButton: React.FC<ButtonProps> = props => {

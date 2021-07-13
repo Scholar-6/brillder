@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { connect } from 'react-redux';
@@ -17,6 +17,8 @@ import FullScreenButton from "./fullScreenButton/FullScreen";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import PlaySkipDialog from "../dialogs/PlaySkipDialog";
 import { isPhone } from "services/phone";
+import { getAssignedBricks, getLibraryBricks } from "services/axios/brick";
+import LockedDialog from "../dialogs/LockedDialog";
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(actions.forgetBrick())
@@ -37,11 +39,33 @@ interface MenuDropdownProps {
 const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const { page } = props;
   const {hasPlayedBrick} = props.user;
+  
+  const [assignedCount, setAssignedCount] = React.useState(0);
+  const [noAassignmentsOpen, setNoAssignments] = React.useState(false);
+
+  const [libraryCount, setLibraryCount] = React.useState(0);
+  const [noBooksOpen, setNoBooks] = React.useState(false);
+
   const [playSkip, setPlaySkip] = React.useState({
     isOpen: false,
     label: '',
     link: ''
   });
+
+  const prepare = async () => {
+    const bricks = await getAssignedBricks();
+    if (bricks && bricks.length > 0) {
+      setAssignedCount(bricks.length);
+    }
+    const lbricks = await getLibraryBricks();
+    if (lbricks && lbricks.length > 0) {
+      setLibraryCount(lbricks.length);
+    }
+  }
+
+  useEffect(() => {
+    prepare();
+  }, []);
 
   let isStudent = false;
   if (props.user.rolePreference?.roleId === UserType.Student) {
@@ -166,10 +190,16 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     if (!isMobile) { return <div/>; }
     if (page !== PageEnum.BackToWork && page !== PageEnum.MainPage) {
       return (
-        <MenuItem className="menu-item" onClick={() => move(map.AssignmentsPage, 'Assignments')}>
-          <span className="menu-text">Assignments</span>
+        <MenuItem className="menu-item" onClick={() => {
+          if (assignedCount > 0) {
+            move(map.AssignmentsPage, 'My Assignments')
+          } else {
+            setNoAssignments(true);
+          }
+        }}>
+          <span className={`menu-text ${assignedCount === 0 ? 'text-theme-dark-blue' : ''}`}>My Assignments</span>
           <div className="btn btn-transparent svgOnHover">
-            <SpriteIcon name="student-back-to-work" className="active text-white" />
+            <SpriteIcon name="student-back-to-work" className={`active ${assignedCount > 0 ? 'text-white' : 'text-theme-dark-blue'}`} />
           </div>
         </MenuItem>
       );
@@ -206,10 +236,16 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const renderMyLibraryItem = () => {
     if (page !== PageEnum.MainPage && page !== PageEnum.MyLibrary) {
       return (
-        <MenuItem className="view-profile menu-item" onClick={() => move("/my-library", 'My Library')}>
-          <span className="menu-text">My Library</span>
+        <MenuItem className="view-profile menu-item" onClick={() => {
+          if (libraryCount > 0) {
+            move("/my-library", 'My Library')
+          } else {
+            setNoBooks(true);
+          }
+        }}>
+          <span className={`menu-text ${libraryCount > 0 ? '' : 'text-theme-dark-blue'}`}>My Library</span>
           <div className="btn btn-transparent svgOnHover">
-            <SpriteIcon name="book-open" className="active text-white stroke-2" />
+            <SpriteIcon name="book-open" className={`active stroke-2 ${libraryCount > 0 ? 'text-white' : 'text-theme-dark-blue'}`} />
           </div>
         </MenuItem>
       );
@@ -248,6 +284,14 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         }}
         close={() => setPlaySkip({ isOpen: false, link: '', label: '' })}
       />
+      <LockedDialog
+          label="To unlock this, a brick needs to have been assigned to you"
+          isOpen={noAassignmentsOpen}
+          close={() => setNoAssignments(false)} />
+      <LockedDialog
+          label="Play a brick to unlock this feature"
+          isOpen={noBooksOpen}
+          close={() => setNoBooks(false)} />
     </Menu>
   );
 };
