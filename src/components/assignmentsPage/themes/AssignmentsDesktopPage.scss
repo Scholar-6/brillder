@@ -12,4 +12,39 @@
   .index-box.active:hover {
     background: var(--theme-orange) !important;
   }
+  .brick-row-container {
+    background: inherit;
+  }
+  .er-tab-container {
+    display: flex;
+    .er-tab {
+      height: 6.6vh;
+      width: 45%;
+      transition: all 300ms ease-out;
+      background: var(--tab-gray);
+      display: flex;
+      align-items: center;
+      font-size: 4.5vh;
+      font-family: $font-family-black;
+      text-transform: uppercase;
+      letter-spacing: 0.5vw;
+      color: var(--theme-dark-blue);
+
+      &.first {
+        margin-right: 0.2vw;
+      }
+
+      &.second {
+        margin-left: 0.2vw;
+      }
+
+      &.active {
+        background: var(--white);
+      }
+
+      &.no-active:hover {
+        background: var(--off-white);
+      }
+    }
+  }
 }
