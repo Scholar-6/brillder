@@ -38,7 +38,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         userAnswers = component.choices ? component.choices : [];
       }
     }
-    this.state = { status, userAnswers };
+    let canDrag = true;
+    if (this.props.attempt?.correct) {
+      canDrag = false;
+    }
+    this.state = { status, userAnswers, canDrag };
   }
 
   UNSAFE_componentWillUpdate(props: PairMatchProps) {
@@ -190,7 +194,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
             }
           </List>
           {
-            this.props.isBookPreview || this.props.isPreview ?
+            this.props.isBookPreview || this.props.isPreview || !this.state.canDrag ?
               <div className="answers-list">
                 {this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))}
               </div>
