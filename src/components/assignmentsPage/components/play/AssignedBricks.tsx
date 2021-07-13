@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { User } from "model/user";
-import { AssignmentBrickData, PlayFilters } from '../../model';
+import { AssignmentBrickData } from '../../model';
 import { prepareVisibleAssignments } from '../../service';
 import { AssignmentBrick } from "model/assignment";
 
@@ -18,7 +18,6 @@ interface AssignedBricksProps {
   subjects: Subject[];
   pageSize: number;
   sortedIndex: number;
-  filters: PlayFilters;
   assignments: AssignmentBrick[];
   history: any;
 }
