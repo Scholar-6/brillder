@@ -139,7 +139,12 @@ s {
     padding: 0 1rem;
   }
   .embed-description {
-    padding: 0 1rem 0.5rem 1rem;
+    padding: 0 1rem;
+  }
+  .embed-url {
+    text-decoration: underline;
+    color: var(--blue);
+    padding: 0.5rem 1rem;
   }
 }
 
