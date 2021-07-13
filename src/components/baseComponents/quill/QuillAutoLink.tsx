@@ -41,6 +41,11 @@ export class LinkEmbedBlot extends Embed {
       node.appendChild(description);
     }
 
+    const url = document.createElement("div");
+    url.classList.add("embed-url");
+    url.textContent = value.url;
+    node.appendChild(url);
+
     return node;
   }
 
