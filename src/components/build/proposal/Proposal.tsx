@@ -340,6 +340,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             <Route path={[baseUrl + '/brick-title']}>
               <BrickTitle
                 user={user}
+                brickId={brickId}
                 history={history}
                 baseUrl={baseUrl}
                 parentState={localBrick}
