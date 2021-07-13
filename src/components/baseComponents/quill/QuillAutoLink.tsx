@@ -61,7 +61,7 @@ export class LinkEmbedBlot extends Embed {
 GlobalQuill.register(LinkEmbedBlot);
 
 const getLinkMetadata = async (url: string) => {
-  return (await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/og?url=${url}`, { withCredentials: true })).data;
+  return (await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/og?url=${encodeURIComponent(url)}`, { withCredentials: true })).data;
 }
 
 export default class AutoLink {
