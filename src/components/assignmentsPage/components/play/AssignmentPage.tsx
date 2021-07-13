@@ -169,21 +169,19 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
   //#endregion
 
   setActiveClassroom(classroomId: number) {
-    let assignments = this.state.rawAssignments;
     if (classroomId > 0) {
-      assignments = this.filter(this.state.rawAssignments, this.state.activeTab, classroomId);
       this.props.history.push(map.AssignmentsPage + '/' + classroomId);
     } else {
       this.props.history.push(map.AssignmentsPage);
     }
-
+    const assignments = this.filter(this.state.rawAssignments, this.state.activeTab, classroomId);
     this.setState({ activeClassroomId: classroomId, finalAssignments: assignments, sortedIndex: 0 });
   }
 
   setTab(tab: Tab) {
     if (tab !== this.state.activeTab) {
       const finalAssignments = this.filter(this.state.rawAssignments, tab, this.state.activeClassroomId);
-      this.setState({ finalAssignments, activeTab: tab });
+      this.setState({ finalAssignments, sortedIndex: 0, activeTab: tab });
     }
   }
 
