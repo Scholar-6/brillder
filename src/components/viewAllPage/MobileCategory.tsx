@@ -264,7 +264,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             <PhoneTopBrick16x9
               circleIcon={circleIcon}
               brick={brick}
-              index={i}
               color={color}
             />
           ),
@@ -310,7 +309,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 key={i}
                 circleIcon=""
                 brick={b}
-                index={i}
                 color={color}
                 onClick={() => {
                   if (this.state.expandedBrick === b) {
