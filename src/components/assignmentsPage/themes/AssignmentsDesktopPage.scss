@@ -4,12 +4,112 @@
 
 .student-assignments-page {
   .bricks-list-container {
-    margin-top: 2vw;
+    padding-top: 2vw;
   }
   .index-box:hover {
     background: var(--light-blue-alpha3) !important;
   }
   .index-box.active:hover {
     background: var(--theme-orange) !important;
+  }
+  .brick-row-container {
+    background: inherit;
+  }
+  .er-tab-container {
+    display: flex;
+    .er-tab {
+      cursor: pointer;
+      height: 6.6vh;
+      border-top-left-radius: 0.5vw;
+      border-top-right-radius: 0.5vw;
+      padding-left: 1.5vw;
+      width: 50%;
+      transition: all 150ms ease-out;
+      background: var(--tab-gray);
+      display: flex;
+      align-items: center;
+      font-size: 4.5vh;
+      font-family: $font-family-black;
+      text-transform: uppercase;
+      letter-spacing: 0.5vw;
+      color: var(--theme-dark-blue);
+
+      svg {
+        stroke-width: 2;
+        width: 5.5vh;
+        height: 5.5vh;
+      }
+
+      &.first {
+        margin-right: 0.2vw;
+        svg {
+          color: var(--theme-orange);
+        }
+      }
+
+      &.second {
+        margin-left: 0.2vw;
+        svg {
+          color: var(--theme-green);
+        }
+      }
+
+      &.active {
+        background: var(--white);
+      }
+
+      &.no-active {
+        span {
+          opacity: 0.2;
+        }
+      }
+
+      &.no-active:hover {
+        background: var(--off-white);
+      }
+    }
+  }
+  .tab-content {
+    height: calc(100vh - #{$home-button-size} - 2vw - 6.6vh);
+    background: var(--white);
+  }
+  .fwe1-16x9-deadline {
+    position: absolute;
+    top: -3vw;
+    left: -3vw;
+    width: 9vw;
+    height: 9vw;
+    font-size: 0.9vw;
+
+    > div {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(-45deg);
+      > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 1.2vw;
+        width: 100%;
+        font-family: $font-family-bold;
+        white-space: nowrap;
+      }
+      > div.yellow {
+        color: var(--theme-dark-blue);
+        background: var(--theme-yellow);
+      }
+      > div.orange {
+        color: var(--white);
+        background: var(--theme-orange);
+      }
+      >div.smaller-blue {
+        font-size: 0.5vw;
+        color: var(--white);
+        background: var(--theme-dark-blue);
+      }
+    }
   }
 }

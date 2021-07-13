@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import { ReduxCombinedState } from "redux/reducers";
-import { PlayFilters } from '../../model';
 import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 import actions from 'redux/actions/requestFailed';
 import { getAssignedBricks } from "services/axios/brick";
@@ -17,7 +16,13 @@ import BackPagePagination from "../BackPagePagination";
 import map from "components/map";
 import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
+
+export enum Tab {
+  Assignments,
+  Completed
+}
 
 interface PlayProps {
   history: any;
@@ -29,8 +34,8 @@ interface PlayProps {
 }
 
 interface PlayState {
-  filters: PlayFilters;
   subjects: Subject[];
+  activeTab: Tab,
   finalAssignments: AssignmentBrick[];
   rawAssignments: AssignmentBrick[];
   activeClassroomId: number;
@@ -58,30 +63,25 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
       classrooms: [],
       activeClassroomId,
 
+      activeTab: Tab.Assignments,
+
       sortedIndex: 0,
       pageSize: 6,
 
       subjects: [],
 
       isLoaded: false,
-
-      filters: {
-        viewAll: false,
-        completed: false,
-        submitted: false,
-        checked: false
-      },
       handleKey: this.handleKey.bind(this)
     }
 
-    this.getAssignments();
+    this.getAssignments(activeClassroomId);
   }
 
-  async getAssignments() {
+  async getAssignments(classroomId: number) {
     const assignments = await getAssignedBricks();
     const subjects = await getSubjects();
     if (assignments && subjects) {
-      this.setAssignments(assignments, subjects);
+      this.setAssignments(assignments, subjects, classroomId);
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
       this.setState({ isLoaded: true })
@@ -115,8 +115,8 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     }
   }
 
-  setAssignments(assignments: AssignmentBrick[], subjects: Subject[]) {
-    let classrooms: any[] = [];
+  setAssignments(assignments: AssignmentBrick[], subjects: Subject[], classroomId: number) {
+    const classrooms: any[] = [];
     for (let assignment of assignments) {
       if (assignment.classroom) {
         const found = classrooms.find(c => c.id === assignment.classroom.id);
@@ -126,36 +126,30 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
       }
     }
 
+    const finalAssignments = this.filter(assignments, Tab.Assignments, classroomId);
     this.countClassroomAssignments(classrooms, assignments);
-    this.setState({ ...this.state, subjects, isLoaded: true, classrooms, rawAssignments: assignments, finalAssignments: assignments, sortedIndex: 0 });
+    this.setState({ ...this.state, subjects, isLoaded: true, classrooms, rawAssignments: assignments, finalAssignments, sortedIndex: 0 });
   }
 
-  playFilterUpdated(filters: PlayFilters) {
-    const { checked, submitted, completed } = filters;
-    let finalAssignments = this.state.rawAssignments;
-
-    if (!checked && !submitted && !completed) {
-    } else {
-      finalAssignments = this.state.rawAssignments.filter(a => {
-        if (checked) {
-          if (a.status === AssignmentBrickStatus.CheckedByTeacher) {
-            return true;
-          }
-        }
-        if (submitted) {
-          if (a.status === AssignmentBrickStatus.SubmitedToTeacher) {
-            return true;
-          }
-        }
-        if (completed) {
-          if (a.status === AssignmentBrickStatus.ToBeCompleted) {
-            return true;
-          }
-        }
-        return false;
-      });
+  filter(assignments: AssignmentBrick[], activeTab: Tab, classroomId: number) {
+    let asins = assignments;
+    if (classroomId > 0) {
+      asins = assignments.filter(s => s.classroom?.id === classroomId);
     }
-    this.setState({ filters, finalAssignments, sortedIndex: 0 });
+
+    const res = [];
+    for (let assignment of asins) {
+      if (activeTab === Tab.Assignments) {
+        if (assignment.status === AssignmentBrickStatus.ToBeCompleted) {
+          res.push(assignment);
+        }
+      } else {
+        if (assignment.status !== AssignmentBrickStatus.ToBeCompleted) {
+          res.push(assignment);
+        }
+      }
+    }
+    return res;
   }
 
   //#region Pagination
@@ -175,45 +169,56 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
   //#endregion
 
   setActiveClassroom(classroomId: number) {
-    let { filters } = this.state;
-    let assignments = this.state.rawAssignments;
     if (classroomId > 0) {
-      assignments = this.state.rawAssignments.filter(s => s.classroom?.id === classroomId);
-      filters.submitted = false;
-      filters.completed = false;
-      filters.checked = false;
       this.props.history.push(map.AssignmentsPage + '/' + classroomId);
     } else {
-      filters.viewAll = true;
       this.props.history.push(map.AssignmentsPage);
     }
+    const assignments = this.filter(this.state.rawAssignments, this.state.activeTab, classroomId);
+    this.setState({ activeClassroomId: classroomId, finalAssignments: assignments, sortedIndex: 0 });
+  }
 
-    this.setState({ activeClassroomId: classroomId, finalAssignments: assignments, filters, sortedIndex: 0 });
+  setTab(tab: Tab) {
+    if (tab !== this.state.activeTab) {
+      const finalAssignments = this.filter(this.state.rawAssignments, tab, this.state.activeClassroomId);
+      this.setState({ finalAssignments, sortedIndex: 0, activeTab: tab });
+    }
+  }
+
+  renderTabs() {
+    const {activeTab} = this.state;
+    return (
+      <div className="er-tab-container">
+        <div className={`er-tab first ${activeTab === Tab.Assignments ? 'active' : 'no-active'}`} onClick={() => this.setTab(Tab.Assignments)}>
+          <span>Assignments</span>
+          <SpriteIcon name="f-activity" />
+        </div>
+        <div className={`er-tab second ${activeTab === Tab.Completed ? 'active' : 'no-active'}`} onClick={() => this.setTab(Tab.Completed)}>
+          <span>Completed</span>
+          <SpriteIcon name="f-check-clircle" />
+        </div>
+      </div>
+    );
   }
 
   render() {
     return (
       <Grid container direction="row" className="sorted-row">
         <PlayFilterSidebar
-          filters={this.state.filters}
+          activeTab={this.state.activeTab}
           activeClassroomId={this.state.activeClassroomId}
           assignmentsLength={this.state.rawAssignments.length}
-          assignments={this.state.finalAssignments}
           setActiveClassroom={this.setActiveClassroom.bind(this)}
           classrooms={this.state.classrooms}
-          filterChanged={this.playFilterUpdated.bind(this)}
         />
         <Grid item xs={9} className="brick-row-container">
-          <div className="brick-row-title main-title uppercase">
-            Assignments
-          </div>
+          {this.renderTabs()}
           {this.state.isLoaded &&
             <div className="tab-content learn-tab-desktop">
               <AssignedBricks
                 user={this.props.user}
                 shown={true}
                 subjects={this.state.subjects}
-                filters={this.state.filters}
                 pageSize={this.state.pageSize}
                 sortedIndex={this.state.sortedIndex}
                 assignments={this.state.finalAssignments}

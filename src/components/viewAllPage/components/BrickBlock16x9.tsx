@@ -71,19 +71,26 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
   }
 
   const renderDeadline = () => {
+    if (!props.isAssignment) { return '' }
+    let className= '';
+    let res = 'NO DEADLINE';
     const { deadline } = props;
-    if (!deadline) {
-      return '';
+    if (deadline) {
+      const date = new Date(deadline);
+      let now = Date.now();
+      if (date.getTime() < now) {
+        className = 'orange';
+      } else {
+        className = 'yellow';
+      }
+      res = `$getDate(date)}.${getMonth(date)}.${getYear(date)}`;
+    } else {
+      className="smaller-blue";
     }
-    const date = new Date(deadline);
-    let now = Date.now();
-    let passesDeadline = false;
-    if (date.getTime() < now) {
-      passesDeadline = true;
-    }
+
     return (<div className="fwe1-16x9-deadline">
       <div>
-        <div className={passesDeadline ? 'orange' : 'yellow'}>{getDate(date)}.{getMonth(date)}.{getYear(date)}</div>
+        <div className={className}>{res}</div>
       </div>
     </div>
     );
