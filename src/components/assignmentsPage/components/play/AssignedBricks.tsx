@@ -10,10 +10,12 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 
 import "./AssignedBricks.scss";
+import { Subject } from "model/brick";
 
 interface AssignedBricksProps {
   user: User;
   shown: boolean;
+  subjects: Subject[];
   pageSize: number;
   sortedIndex: number;
   filters: PlayFilters;
@@ -24,6 +26,7 @@ interface AssignedBricksProps {
 class AssignedBricks extends Component<AssignedBricksProps> {
   renderBrick(item: AssignmentBrickData) {
     let circleIcon = '';
+    const color = this.props.subjects.find(s => s.id === item.brick.subjectId)?.color;
     if (item.isInvitation) {
       circleIcon="users";
     }
@@ -37,7 +40,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       isAssignment={true}
       assignmentId={item.assignmentId}
       history={this.props.history}
-      color="#9B33FF"
+      color={color}
       circleIcon={circleIcon}
       deadline={item.deadline}
       searchString=""
