@@ -83,7 +83,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       } else {
         className = 'yellow';
       }
-      res = `$getDate(date)}.${getMonth(date)}.${getYear(date)}`;
+      res = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
     } else {
       className="smaller-blue";
     }

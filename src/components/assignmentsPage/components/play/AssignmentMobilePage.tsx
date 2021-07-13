@@ -210,7 +210,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
   }
 
   onIconClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>, a: AssignmentBrick) {
-    if (this.state.activeTab == Tab.Completed) {
+    if (this.state.activeTab === Tab.Completed) {
       e.stopPropagation();
       this.props.history.push(map.postPlay(a.brick.id, this.props.user.id));
     }
