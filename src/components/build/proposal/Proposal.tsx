@@ -44,7 +44,6 @@ interface ProposalProps {
   location: Location;
 
   //redux
-  brick: Brick;
   user: User;
   saveBrick(brick: Brick): Promise<Brick | null>;
   createBrick(brick: Brick): Promise<Brick | null>;
@@ -66,7 +65,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
     let subjectId = undefined;
-    const { user, brick } = props;
+    const { user } = props;
     const { subjects } = user;
     if (subjects.length === 1) {
       subjectId = subjects[0].id;
@@ -97,12 +96,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     let localBrick = getLocalBrick();
     if (localBrick) {
       initBrick = localBrick;
-    }
-
-    // if brick is fetched then set this brick and save in local storage
-    if (brick) {
-      initBrick = brick;
-      setLocalBrick(brick);
     }
 
     if (initBrick.id) {
@@ -193,11 +186,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     try {
       if (this.state.saving === true) { return; }
       this.setState({saving: true});
-      const { brick } = this.props;
       if (tempBrick.id) {
-        newBrick = await this.props.saveBrick(tempBrick);
-      } else if (brick && brick.id) {
-        tempBrick.id = brick.id;
         newBrick = await this.props.saveBrick(tempBrick);
       } else {
         newBrick = await this.props.createBrick(tempBrick);
@@ -313,11 +302,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     if (this.state.saved && this.state.moving === false) {
       this.setState({moving: true});
 
-      if (this.props.brick) {
-        history.push(
-          `/build/brick/${this.props.brick.id}/investigation/question`
-        );
-      } else if (this.state.brick.id) {
+      if (this.state.brick.id) {
         history.push(
           `/build/brick/${this.state.brick.id}/investigation/question`
         );
@@ -328,16 +313,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
 
     const localBrick = this.state.brick;
     const { user } = this.props;
-
-    const { brick } = this.props;
-    if (brick && brick.questions && brick.questions.length > 0) {
-      const parsedQuestions: Question[] = [];
-      for (const question of brick.questions) {
-        try {
-          parseQuestion(question as ApiQuestion, parsedQuestions);
-        } catch (e) { }
-      }
-    }
 
     return (
       <MuiThemeProvider>
@@ -377,7 +352,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             </Route>
             <Route path={[baseUrl + '/length']}>
               <BrickLength
-                updated={brick ? brick.updated : localBrick.updated}
+                updated={localBrick.updated}
                 baseUrl={baseUrl}
                 length={localBrick.brickLength}
                 canEdit={canEdit}

@@ -11,7 +11,7 @@ export function parseDataToArray(value: string): Array<string> {
 
 export function parseSynthesisDataToArray(value: string): Array<string> {
   try {
-    return value.match(/<(.+)>.*?<\/(.+)>/g) || [];
+    return parseDataToArray(value);
   } catch {
     return [];
   }

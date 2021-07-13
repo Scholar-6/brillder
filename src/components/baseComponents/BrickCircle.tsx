@@ -10,7 +10,7 @@ interface BrickCircleProps {
   iconColor?: string;
   canHover?: boolean;
 
-  onClick(): void;
+  onClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
 }
 
 class BrickCircle extends Component<BrickCircleProps> {
@@ -47,7 +47,7 @@ class BrickCircle extends Component<BrickCircleProps> {
     }
 
     return (
-      <div className={className}>
+      <div className={className} onClick={this.props.onClick?.bind(this)}>
         <div className="round-button" style={{ background: `${color}` }}>
           {this.renderIcon()}
         </div>

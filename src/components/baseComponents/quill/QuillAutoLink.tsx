@@ -41,6 +41,11 @@ export class LinkEmbedBlot extends Embed {
       node.appendChild(description);
     }
 
+    const url = document.createElement("div");
+    url.classList.add("embed-url");
+    url.textContent = value.url;
+    node.appendChild(url);
+
     return node;
   }
 
@@ -56,7 +61,7 @@ export class LinkEmbedBlot extends Embed {
 GlobalQuill.register(LinkEmbedBlot);
 
 const getLinkMetadata = async (url: string) => {
-  return (await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/og?url=${url}`, { withCredentials: true })).data;
+  return (await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/og?url=${encodeURIComponent(url)}`, { withCredentials: true })).data;
 }
 
 export default class AutoLink {

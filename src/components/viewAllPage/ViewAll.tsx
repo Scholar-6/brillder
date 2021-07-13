@@ -910,6 +910,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async moveToCreateOne() {
+    await this.props.forgetBrick();
+    clearProposal();
     const filterSubjects = getCheckedSubjects(this.state.subjects);
     if (filterSubjects.length === 1) {
       const subjectId = filterSubjects[0].id;
@@ -919,7 +921,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           for (let s of subjects) {
             if (s.id === subjectId) {
               clearProposal();
-              await this.props.forgetBrick();
               this.props.history.push(
                 map.ProposalSubjectLink + "?selectedSubject=" + subjectId
               );
