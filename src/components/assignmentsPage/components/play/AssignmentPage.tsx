@@ -204,8 +204,9 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
           filterChanged={this.playFilterUpdated.bind(this)}
         />
         <Grid item xs={9} className="brick-row-container">
-          <div className="brick-row-title main-title uppercase">
-            Assignments
+          <div className="er-tab-container">
+            <div className="er-tab first active">Assignments</div>
+            <div className="er-tab second no-active">Completed</div>
           </div>
           {this.state.isLoaded &&
             <div className="tab-content learn-tab-desktop">
