@@ -619,6 +619,11 @@
         color: var(--white);
         background: var(--theme-orange);
       }
+      > div.smaller-blue {
+        font-size: 1.8vw;
+        color: var(--white);
+        background: var(--theme-dark-blue);
+      }
     }
   }
 }

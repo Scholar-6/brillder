@@ -256,6 +256,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
               <PhoneTopBrick16x9
                 circleIcon='file-plus'
                 brick={a.brick}
+                isAssignment={true}
                 color={color}
               />
             </SwiperSlide>
@@ -277,6 +278,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             key={i}
             brick={a.brick}
             color={color}
+            isAssignment={true}
             deadline={a.deadline}
             onIconClick={e => this.onIconClick(e, a)}
             onClick={() => {
@@ -326,6 +328,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
               circleIcon={circleIcon}
               brick={a.brick}
               color={color}
+              isAssignment={true}
               onIconClick={e => this.onIconClick(e, a)}
               onClick={() => {
                 if (this.state.expandedAssignment === a) {
