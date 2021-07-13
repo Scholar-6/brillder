@@ -15,6 +15,8 @@ import AssignedBricks from "./AssignedBricks";
 import PlayFilterSidebar from "./PlayFilterSidebar";
 import BackPagePagination from "../BackPagePagination";
 import map from "components/map";
+import { Subject } from "model/brick";
+import { getSubjects } from "services/axios/subject";
 
 
 interface PlayProps {
@@ -28,6 +30,7 @@ interface PlayProps {
 
 interface PlayState {
   filters: PlayFilters;
+  subjects: Subject[];
   finalAssignments: AssignmentBrick[];
   rawAssignments: AssignmentBrick[];
   activeClassroomId: number;
@@ -58,6 +61,8 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
       sortedIndex: 0,
       pageSize: 6,
 
+      subjects: [],
+
       isLoaded: false,
 
       filters: {
@@ -74,8 +79,9 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
 
   async getAssignments() {
     const assignments = await getAssignedBricks();
-    if (assignments) {
-      this.setAssignments(assignments);
+    const subjects = await getSubjects();
+    if (assignments && subjects) {
+      this.setAssignments(assignments, subjects);
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
       this.setState({ isLoaded: true })
@@ -109,7 +115,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     }
   }
 
-  setAssignments(assignments: AssignmentBrick[]) {
+  setAssignments(assignments: AssignmentBrick[], subjects: Subject[]) {
     let classrooms: any[] = [];
     for (let assignment of assignments) {
       if (assignment.classroom) {
@@ -121,7 +127,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     }
 
     this.countClassroomAssignments(classrooms, assignments);
-    this.setState({ ...this.state, isLoaded: true, classrooms, rawAssignments: assignments, finalAssignments: assignments, sortedIndex: 0 });
+    this.setState({ ...this.state, subjects, isLoaded: true, classrooms, rawAssignments: assignments, finalAssignments: assignments, sortedIndex: 0 });
   }
 
   playFilterUpdated(filters: PlayFilters) {
@@ -206,6 +212,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
               <AssignedBricks
                 user={this.props.user}
                 shown={true}
+                subjects={this.state.subjects}
                 filters={this.state.filters}
                 pageSize={this.state.pageSize}
                 sortedIndex={this.state.sortedIndex}
