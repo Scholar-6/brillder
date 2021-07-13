@@ -196,7 +196,6 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
               key={i}
               circleIcon=""
               brick={b}
-              index={i}
               color={color}
               onClick={() => {
                 this.setState({ expandedBrick: b });

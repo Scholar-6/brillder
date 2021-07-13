@@ -17,6 +17,7 @@ import LevelHelpContent from "components/baseComponents/hoverHelp/LevelHelpConte
 import { AcademicLevel, AcademicLevelLabels, Subject } from "model/brick";
 import { isLevelVisible, toggleElement } from "components/viewAllPage/service/viewAll";
 import { getSubjects } from "services/axios/subject";
+import map from "components/map";
 
 enum Tab {
   Assignemnts,
@@ -204,6 +205,25 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     this.setState({ filterLevels: levels });
   }
 
+  getColor(a: AssignmentBrick) {
+    return this.state.subjects.find(s => s.id === a.brick.subjectId)?.color;
+  }
+
+  onIconClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>, a: AssignmentBrick) {
+    if (this.state.activeTab == Tab.Completed) {
+      e.stopPropagation();
+      this.props.history.push(map.postPlay(a.brick.id, this.props.user.id));
+    }
+  }
+
+  getIcon() {
+    let circleIcon = '';
+    if (this.state.activeTab === Tab.Completed) {
+      circleIcon = 'book-open';
+    }
+    return circleIcon;
+  }
+
   renderTab(label: string, icon: string, tab: Tab, className: string) {
     const onClick = () => {
       if (this.state.activeTab !== tab) {
@@ -223,10 +243,6 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     );
   }
 
-  getColor(a: AssignmentBrick) {
-    return this.state.subjects.find(s => s.id === a.brick.subjectId)?.color;
-  }
-
   renderMobileBricks() {
     const assignments = this.state.finalAssignments.sort((a, b) => new Date(a.brick.updated).getTime() - new Date(b.brick.updated).getTime());
 
@@ -240,7 +256,6 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
               <PhoneTopBrick16x9
                 circleIcon='file-plus'
                 brick={a.brick}
-                index={i}
                 color={color}
               />
             </SwiperSlide>
@@ -255,13 +270,15 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     return (
       assignments.map((a, i) => {
         const color = this.getColor(a);
+        const circleIcon = this.getIcon();
         return (
           <PhoneTopBrick16x9
-            circleIcon={''}
+            circleIcon={circleIcon}
+            key={i}
             brick={a.brick}
-            index={i}
             color={color}
             deadline={a.deadline}
+            onIconClick={e => this.onIconClick(e, a)}
             onClick={() => {
               if (this.state.expandedAssignment === a) {
                 this.setState({ expandedAssignment: null });
@@ -303,12 +320,13 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
       <div className="ba-content full">
         {assignments.map((a, i) => {
           const color = this.getColor(a);
+          const circleIcon = this.getIcon();
           return (
             <PhoneTopBrick16x9
-              circleIcon={''}
+              circleIcon={circleIcon}
               brick={a.brick}
-              index={i}
               color={color}
+              onIconClick={e => this.onIconClick(e, a)}
               onClick={() => {
                 if (this.state.expandedAssignment === a) {
                   this.setState({ expandedAssignment: null });
