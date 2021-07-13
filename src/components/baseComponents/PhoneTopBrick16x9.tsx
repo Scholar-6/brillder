@@ -11,7 +11,6 @@ import { getDate, getMonth, getYear } from "components/services/brickService";
 
 interface Props {
   brick: Brick;
-  index?: number;
   circleIcon?: string;
   iconColor?: string;
   user?: User;
@@ -28,7 +27,7 @@ interface Props {
   deadline?: string;
 
   onClick?(): void;
-  move?(): void;
+  onIconClick?(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
 }
 
 
@@ -71,7 +70,7 @@ class PhoneTopBrick16x9 extends Component<Props> {
               iconColor={this.props.iconColor}
               canHover={true}
               label={label}
-              onClick={() => this.props.move ? this.props.move() : {}}
+              onClick={e => this.props.onIconClick?.(e)}
             />
           )
         }
