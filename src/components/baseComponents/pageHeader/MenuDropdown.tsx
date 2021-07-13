@@ -13,10 +13,10 @@ import { clearProposal } from 'localStorage/proposal';
 import map, { ProposalSubjectLink } from "components/map";
 import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
 import SpriteIcon from "../SpriteIcon";
-import { Hidden } from "@material-ui/core";
 import FullScreenButton from "./fullScreenButton/FullScreen";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import PlaySkipDialog from "../dialogs/PlaySkipDialog";
+import { isPhone } from "services/phone";
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(actions.forgetBrick())
@@ -149,11 +149,25 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   };
 
   const renderBackToWorkItem = () => {
-    if (isIPad13 || isTablet) { return <div/>; }
+    if (isMobile || isIPad13 || isTablet) { return <div/>; }
     if (page !== PageEnum.BackToWork && page !== PageEnum.MainPage) {
       return (
         <MenuItem className="menu-item" onClick={() => move(map.backToWorkUserBased(props.user), 'Back To Work')}>
           <span className="menu-text">Back To Work</span>
+          <div className="btn btn-transparent svgOnHover">
+            <SpriteIcon name="student-back-to-work" className="active text-white" />
+          </div>
+        </MenuItem>
+      );
+    }
+  };
+
+  const renderAssignmentsItem = () => {
+    if (!isMobile) { return <div/>; }
+    if (page !== PageEnum.BackToWork && page !== PageEnum.MainPage) {
+      return (
+        <MenuItem className="menu-item" onClick={() => move(map.AssignmentsPage, 'Assignments')}>
+          <span className="menu-text">Assignments</span>
           <div className="btn btn-transparent svgOnHover">
             <SpriteIcon name="student-back-to-work" className="active text-white" />
           </div>
@@ -209,16 +223,12 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       onClose={props.hideDropdown}
     >
       {renderViewAllItem()}
-      <Hidden only={['xs']}>
-        {renderStartBuildItem()}
-      </Hidden>
-      {renderBackToWorkItem()}
+      {!isMobile && renderStartBuildItem()}
+      {isPhone() ? renderAssignmentsItem() : renderBackToWorkItem()}
       {renderManageUsersItem()}
       {renderManageClassesItem()}
       {renderMyLibraryItem()}
-      <Hidden only={['sm', 'md', 'lg', 'xl']}>
-        <FullScreenButton />
-      </Hidden>
+      {isPhone() && <FullScreenButton />}
       {renderProfileItem()}
       <MenuItem className="menu-item" onClick={props.onLogout}>
         <span className="menu-text">Logout</span>
