@@ -25,6 +25,7 @@ interface Props {
   isInvited?: boolean;
 
   deadline?: string;
+  isAssignment?: boolean;
 
   onClick?(): void;
   onIconClick?(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
@@ -34,18 +35,26 @@ interface Props {
 class PhoneTopBrick16x9 extends Component<Props> {
   renderDeadline() {
     const { deadline } = this.props;
-    if (!deadline) {
+    if (!this.props.isAssignment) {
       return '';
     }
-    const date = new Date(deadline);
-    let now = Date.now();
-    let passesDeadline = false;
-    if (date.getTime() < now) {
-      passesDeadline = true;
+    let res = 'NO DEADLINE';
+    let className = '';
+    if (deadline) {
+      const date = new Date(deadline);
+      const now = Date.now();
+      if (date.getTime() < now) {
+        className = 'orange';
+      } else {
+        className = 'yellow';
+      }
+      res = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
+    } else {
+      className = 'smaller-blue';
     }
     return (<div className="fwe1-16x9-deadline">
       <div>
-        <div className={passesDeadline ? 'orange' : 'yellow'}>{getDate(date)}.{getMonth(date)}.{getYear(date)}</div>
+        <div className={className}>{res}</div>
       </div>
     </div>
     );

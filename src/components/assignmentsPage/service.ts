@@ -1,18 +1,5 @@
-import { Brick } from 'model/brick';
 import { AssignmentBrickData } from './model';
 import { AssignmentBrick } from "model/assignment";
-
-export const checkPrivateBrick = (b: Brick) => {
-  return !b.isCore;
-}
-
-export const filterByPrivate = (bricks: Brick[]) => {
-  return bricks.filter(b => checkPrivateBrick(b));
-}
-
-export const checkCoreBrick = (b: Brick) => {
-  return b.isCore === true;
-}
 
 export const prepareVisibleAssignments = (sortedIndex: number, pageSize: number, assignments: AssignmentBrick[]) => {
   let data: AssignmentBrickData[] = [];
@@ -22,7 +9,7 @@ export const prepareVisibleAssignments = (sortedIndex: number, pageSize: number,
     if (assignment) {
       let row = Math.floor(count / 3);
       data.push({
-        brick: assignment.brick, key: i, index: count, assignmentId: assignment.id, status: assignment.status, row
+        brick: assignment.brick, key: i, index: count, assignmentId: assignment.id, status: assignment.status, row, deadline: assignment.deadline
       } as AssignmentBrickData);
       count++;
     }

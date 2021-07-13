@@ -73,4 +73,43 @@
     height: calc(100vh - #{$home-button-size} - 2vw - 6.6vh);
     background: var(--white);
   }
+  .fwe1-16x9-deadline {
+    position: absolute;
+    top: -3vw;
+    left: -3vw;
+    width: 9vw;
+    height: 9vw;
+    font-size: 0.9vw;
+
+    > div {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(-45deg);
+      > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 1.2vw;
+        width: 100%;
+        font-family: $font-family-bold;
+        white-space: nowrap;
+      }
+      > div.yellow {
+        color: var(--theme-dark-blue);
+        background: var(--theme-yellow);
+      }
+      > div.orange {
+        color: var(--white);
+        background: var(--theme-orange);
+      }
+      >div.smaller-blue {
+        font-size: 0.5vw;
+        color: var(--white);
+        background: var(--theme-dark-blue);
+      }
+    }
+  }
 }

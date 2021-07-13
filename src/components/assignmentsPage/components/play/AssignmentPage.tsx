@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import { ReduxCombinedState } from "redux/reducers";
-import { PlayFilters } from '../../model';
 import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 import actions from 'redux/actions/requestFailed';
 import { getAssignedBricks } from "services/axios/brick";
