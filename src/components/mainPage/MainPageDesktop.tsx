@@ -197,7 +197,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     const isActive = this.state.backWorkActive;
     const disabledColor = 'text-theme-dark-blue';
     return (
-      <div className="back-item-container student-back-work" onClick={() => {
+      <div className="back-item-container second-button student-back-work" onClick={() => {
         if (isActive) {
           this.props.history.push(map.AssignmentsPage);
         } else {
@@ -205,7 +205,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : disabledColor}`}>
-          <BlocksIcon />
+          <BlocksIcon disabled={!isActive} />
           <span className={`item-description flex-number ${isActive ? '' : 'disabled'}`}>
             My Assignments {this.state.assignedCount > 0 &&
             <div className="m-red-circle">
