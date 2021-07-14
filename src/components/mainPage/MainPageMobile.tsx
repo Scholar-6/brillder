@@ -174,7 +174,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         }}
       >
         <button className="btn btn-transparent zoom-item">
-          <BlocksIcon disabled={true} />
+          <BlocksIcon disabled={this.state.assignedCount === 0} />
           <span className="item-description flex-number">
             {this.props.user.rolePreference?.roleId === UserType.Teacher
               ? "Shared with Me"
