@@ -125,8 +125,9 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     const assignments = await getAssignedBricks();
     const subjects = await getSubjects();
     if (assignments && subjects) {
-      const classrooms = this.getClassrooms(assignments);
+      let classrooms = this.getClassrooms(assignments);
       this.filter([], Tab.Assignemnts, assignments, classrooms);
+      classrooms = this.sortClassrooms(classrooms);
       this.setState({ ...this.state, subjects, tab1Count: this.countTab1(assignments), tab2Count: this.countTab2(assignments), isLoaded: true, rawAssignments: assignments, finalAssignments: assignments, classrooms });
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
@@ -134,16 +135,8 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     }
   }
 
-  handleMobileClick(index: number) {
-    let { finalAssignments } = this.state;
-    if (finalAssignments[index].brick.expanded === true) {
-      finalAssignments[index].brick.expanded = false;
-      this.setState({ ...this.state });
-      return;
-    }
-    finalAssignments.forEach(a => a.brick.expanded = false);
-    finalAssignments[index].brick.expanded = true;
-    this.setState({ ...this.state });
+  sortClassrooms(classrooms: ClassroomView[]) {
+    return classrooms.sort(c1 => c1.assignments.find(a => a.deadline) ? -1 : 1);
   }
 
   sortAssignments(assignments: AssignmentBrick[]) {
@@ -161,8 +154,6 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
       return 1;
     });
   }
-
-
 
   expandClass(c: any) {
     c.assignments = this.sortAssignments(c.assignments);
@@ -224,7 +215,8 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     const { filterLevels } = this.state;
     const levels = toggleElement(filterLevels, level);
     this.filter(levels, this.state.activeTab, this.state.rawAssignments, this.state.classrooms);
-    this.setState({ filterLevels: levels });
+    const classrooms = this.sortClassrooms(this.state.classrooms);
+    this.setState({ filterLevels: levels, classrooms });
   }
 
   getColor(a: AssignmentBrick) {
@@ -251,7 +243,8 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
       if (this.state.activeTab !== tab) {
         this.clearAssignments(this.state.classrooms);
         this.filter(this.state.filterLevels, tab, this.state.rawAssignments, this.state.classrooms);
-        this.setState({ activeTab: tab, expandedClassroom: null, expandedAssignment: null });
+        const classrooms = this.sortClassrooms(this.state.classrooms);
+        this.setState({ activeTab: tab, expandedClassroom: null, expandedAssignment: null, classrooms });
       }
     }
     return (
