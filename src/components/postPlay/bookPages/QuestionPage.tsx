@@ -69,13 +69,12 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
 
   const renderMarks = () => {
     if (answers && answers[i]) {
-      console.log(answers[i])
-    return (
-      <div className="marks-container">
-        <div>Marks</div>
-        <div>{answers[i].marks}/{answers[i].maxMarks}</div>
-      </div>
-    )
+      return (
+        <div className="marks-container">
+          <div>Marks</div>
+          <div>{answers[i].marks}/{answers[i].maxMarks}</div>
+        </div>
+      )
     }
   }
 
