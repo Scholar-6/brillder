@@ -83,6 +83,11 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       synthesis: "",
     } as Brick;
 
+    if (props.match.params.brickId) {
+      initBrick.id = props.match.params.brickId;
+    }
+
+
     if (user) {
       initBrick.author = (user as any) as Author;
     }
@@ -251,7 +256,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const brick = { ...this.state.brick, prep } as Brick;
     this.saveLocalBrick(brick);
     await this.saveBrick(brick);
-    this.props.history.push(buildQuesitonType(brick.id));
+    this.props.history.push(buildQuesitonType(this.state.brick.id));
   };
 
   saveAndMove = async () => {
@@ -270,7 +275,11 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   render() {
-    const {brickId} = this.props.match.params;
+    let brickId = this.props.match.params.brickId as any;
+
+    if (brickId) {
+      brickId = parseInt(brickId);
+    }
 
     if(!brickId) {
       const callback = async () => {
@@ -288,6 +297,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
         }
       }
       callback();
+    } else if (!this.state.brick.id) {
+      this.state.brick.id = parseInt(brickId);
     }
 
     const baseUrl = this.getBaseUrl();
