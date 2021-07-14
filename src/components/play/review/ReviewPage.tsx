@@ -200,27 +200,24 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     if (attempt.correct) {
       text = "Correct!";
     }
-    if (isPhone()) {
-      if (attempt.correct) {
-        return (
-          <div className="ge-phone-title">
-            <div className="ge-phone-circle b-green">
-              <SpriteIcon name="check-icon" />
-            </div>
-            <div>{text}</div>
-          </div>
-        );
-      }
+    if (attempt.correct) {
       return (
         <div className="ge-phone-title">
-          <div className="ge-phone-circle b-red">
-            <SpriteIcon name="cancel-custom" />
+          <div className="ge-phone-circle b-green">
+            <SpriteIcon name="check-icon" />
           </div>
           <div>{text}</div>
         </div>
       );
     }
-    return text;
+    return (
+      <div className="ge-phone-title">
+        <div className="ge-phone-circle b-red">
+          <SpriteIcon name="cancel-custom" />
+        </div>
+        <div>{text}</div>
+      </div>
+    );
   };
 
   const renderQuestionContainer = (question: Question, index: number) => {
