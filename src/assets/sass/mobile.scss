@@ -703,3 +703,11 @@
 .brick-row-container.live-container .MuiLinearProgress-colorPrimary {
     background: var(--theme-dark-blue);
 }
+
+.question-hint-global {
+    .ged-phone-circle {
+        $size: 5vw;
+        width: 5vw;
+        height: 5vw;
+    }
+}

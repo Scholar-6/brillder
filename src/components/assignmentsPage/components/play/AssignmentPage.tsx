@@ -77,10 +77,25 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     this.getAssignments(activeClassroomId);
   }
 
+  sortAssignments(a: AssignmentBrick, b: AssignmentBrick) {
+    if (a.deadline) {
+      if (a.deadline && b.deadline) {
+        if (new Date(a.deadline).getTime() < new Date(b.deadline).getTime()) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+      return -1;
+    }
+    return 1;
+  }
+
   async getAssignments(classroomId: number) {
-    const assignments = await getAssignedBricks();
+    let assignments = await getAssignedBricks();
     const subjects = await getSubjects();
     if (assignments && subjects) {
+      assignments = assignments.sort(this.sortAssignments);
       this.setAssignments(assignments, subjects, classroomId);
     } else {
       this.props.requestFailed('Can`t get bricks for current user');

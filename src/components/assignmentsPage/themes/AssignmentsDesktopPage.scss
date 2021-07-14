@@ -29,15 +29,14 @@
       display: flex;
       align-items: center;
       font-size: 4.5vh;
-      font-family: $font-family-black;
-      text-transform: uppercase;
-      letter-spacing: 0.5vw;
+      font-family: $font-family-bold;
       color: var(--theme-dark-blue);
 
       svg {
-        stroke-width: 2;
-        width: 5.5vh;
-        height: 5.5vh;
+        margin-left: 1vw;
+        stroke-width: 2.4;
+        width: 4.6vh;
+        height: 4.6vh;
       }
 
       &.first {
