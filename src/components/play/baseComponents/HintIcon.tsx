@@ -15,11 +15,6 @@ const HintIcon: React.FC<ReviewHintProps> = ({ correct }) => {
         </div>
       );
     }
-    return (
-      <div className="ged-phone-circle b-red">
-        <SpriteIcon name="cancel-custom" />
-      </div>
-    );
   }
 
   return (
