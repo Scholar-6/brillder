@@ -40,7 +40,7 @@ interface AssignmentBrickProps {
 class ExpandedAssignment extends Component<
   AssignmentBrickProps,
   AssignemntExpandedState
-  > {
+> {
   constructor(props: AssignmentBrickProps) {
     super(props);
 
@@ -170,6 +170,9 @@ class ExpandedAssignment extends Component<
           return <SpriteIcon name="check-icon" className="text-theme-green" />;
         }
 
+        if (attempt.marks > 0 && attempt.maxMarks > 0) {
+          return <span className="bold text-theme-dark-blue">{attempt.marks}/{attempt.maxMarks}</span>;
+        }
         return <SpriteIcon name="cancel" className="text-theme-orange smaller stroke-2" />;
       } catch {
         console.log('can`t parse attempt');
@@ -198,13 +201,12 @@ class ExpandedAssignment extends Component<
           <td className={`assigned-student-name`}>
             {student.firstName} {student.lastName}
           </td>
-          {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
-            (a, i) =>
-              <td key={i} className="icon-container">
-                <div className="centered">
-                  {this.renderQuestionAttemptIcon(studentResult, i)}
-                </div>
-              </td>
+          {Array.from(new Array(this.state.questionCount), (x, i) => i).map((a, i) =>
+            <td key={i} className="icon-container">
+              <div className="centered">
+                {this.renderQuestionAttemptIcon(studentResult, i)}
+              </div>
+            </td>
           )}
           <td>
             {studentStatus && <div className="centered">{this.renderCommentIcon()}</div>}
@@ -266,7 +268,7 @@ class ExpandedAssignment extends Component<
             minimize={this.props.minimize}
             classroom={classroom}
             assignment={assignment}
-            archive={() => {}}
+            archive={() => { }}
             onRemind={this.props.onRemind}
           />
         </div>

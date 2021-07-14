@@ -23,7 +23,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
 }) => {
   let parsedAnswers = null;
 
-  let answers:any[] = [];
+  let answers: any[] = [];
   if (mode) {
     answers = activeAttempt.answers;
   } else if (mode === false) {
@@ -32,7 +32,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
 
   try {
     parsedAnswers = JSON.parse(JSON.parse(answers[i].answer));
-  } catch {}
+  } catch { }
 
   let attempt = Object.assign({}, activeAttempt) as any;
   attempt.answer = parsedAnswers;
@@ -67,6 +67,18 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
     }
   }
 
+  const renderMarks = () => {
+    if (answers && answers[i]) {
+      console.log(answers[i])
+    return (
+      <div className="marks-container">
+        <div>Marks</div>
+        <div>{answers[i].marks}/{answers[i].maxMarks}</div>
+      </div>
+    )
+    }
+  }
+
   return (
     <div
       className={`page3 ${i === 0 ? 'first' : ''}`}
@@ -79,10 +91,13 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
             <div>{i + 1}</div>
           </div>
           <div className="question-scrollable">
-            <h2 className="desktop">{renderTitle()}</h2>
+            <div className="question-title">
+              {renderTitle()}
+              {renderMarks()}
+            </div>
             {mode === undefined
               ? <QuestionPlay question={question} isPhonePreview={true} isDefaultBook={true} answers={[]} />
-              : 
+              :
               <QuestionPlay
                 question={question}
                 attempt={attempt}
