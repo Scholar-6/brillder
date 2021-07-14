@@ -13,6 +13,7 @@ import { stripHtml } from "components/build/questionService/ConvertService";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
 import { getValidationClassName } from "../service";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import { HintStatus } from "model/question";
 
 export type ShortAnswerAnswer = string[];
 
@@ -95,11 +96,17 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     if (this.props.isBookPreview) {
       return <MathInHtml value={value} />;
     }
+
+    let placeholder = 'Type your answer here';
+    if (this.state.userAnswers.length > 1) {
+      placeholder = 'Type Answer ' + (index + 1);
+    }
+
     return <QuillEditor
       disabled={false}
       showToolbar={true}
       data={value}
-      placeholder={`Answer ${index + 1}`}
+      placeholder={placeholder}
       toolbar={['superscript', 'subscript']}
       onChange={v => this.setUserAnswer(v, index)}
     />
@@ -116,9 +123,17 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     if (this.props.isBookPreview) {
       className += getValidationClassName(isCorrect);
     } else {
-      if (isCorrect) {
-        className += ' correct';
+      if (this.props.isReview) {
+        if (isCorrect) {
+          className += ' correct';
+        } else {
+          className += ' wrong';
+        }
       }
+    }
+
+    if (this.props.question.hint.status === HintStatus.Each) {
+      className += ' each';
     }
 
     return (
