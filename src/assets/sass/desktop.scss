@@ -503,3 +503,60 @@
 .bold-important {
   font-family: $font-family-bold !important;
 }
+.question-hint-global, .question-hint {
+  padding: 0.3vw 0.65vw;
+  font-size: 1.4vw;
+  background: #ff9d00;
+  > div {
+    display: inline;
+    width: 100%;
+    height: 100%;
+    text-align: left !important;
+
+    > div {
+      text-align: left !important;
+      display: inline;
+      p {
+        display: inline;
+        text-align: left !important;
+      }
+    }
+
+    .hint-icon-block {
+      display: inline-block;
+      .ged-phone-circle {
+        $size: 1.3vw;
+        width: $size;
+        height: $size;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 0.4vw;
+        svg {
+          color: var(--theme-yellow);
+          width: 80%;
+          height: 80%;
+          stroke-width: 2.5;
+        }
+      }
+    }
+  }
+  &.correct {
+    background: var(--off-white);
+  }
+  &.correct > div .hint-icon-block .ged-phone-circle svg {
+    margin-top: 0.1vw;
+    color: var(--white);
+  }
+}
+.phone-question-preview {
+  .question-hint-global, .question-hint {
+    font-size: 1vw;
+    .hint-icon-block .ged-phone-circle {
+      $size: 1vw;
+      width: $size;
+      height: $size;
+    }
+  }
+}
