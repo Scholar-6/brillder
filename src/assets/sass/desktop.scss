@@ -494,8 +494,19 @@
     min-height: 4vw;
     width: calc(100% - 6vw);
     .ql-editor {
+      text-align: center;
       border-top-left-radius: 0.6vw !important;
       border-bottom-left-radius: 0.6vw !important;
+    }
+  }
+
+  .each {
+    .quill-document-editor {
+      border-bottom-left-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      .ql-editor {
+        border-bottom-left-radius: 0 !important;
+      }
     }
   }
 }
