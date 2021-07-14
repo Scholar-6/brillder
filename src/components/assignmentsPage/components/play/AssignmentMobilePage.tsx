@@ -81,7 +81,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
   }
 
   getClassrooms(assignments: AssignmentBrick[]) {
-    let classrooms: any[] = [];
+    let classrooms: ClassroomView[] = [];
     for (let assignment of assignments) {
       if (assignment.classroom) {
         const found = classrooms.find(c => c.id === assignment.classroom.id);
@@ -146,7 +146,26 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     this.setState({ ...this.state });
   }
 
+  sortAssignments(assignments: AssignmentBrick[]) {
+    return assignments.sort((a, b) => {
+      if (a.deadline) {
+        if (a.deadline && b.deadline) {
+          if (new Date(a.deadline).getTime() < new Date(b.deadline).getTime()) {
+            return -1;
+          } else {
+            return 0;
+          }
+        }
+        return -1;
+      }
+      return 1;
+    });
+  }
+
+
+
   expandClass(c: any) {
+    c.assignments = this.sortAssignments(c.assignments);
     this.setState({ expandedClassroom: c })
   }
 
@@ -195,6 +214,9 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
           this.addBrickByClass(classrooms, assignment);
         }
       }
+    }
+    for (let c of classrooms) {
+      c.assignments = this.sortAssignments(c.assignments);
     }
   }
 
@@ -256,6 +278,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
               <PhoneTopBrick16x9
                 circleIcon='file-plus'
                 brick={a.brick}
+                deadline={a.deadline}
                 isAssignment={true}
                 color={color}
               />
@@ -328,6 +351,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
               circleIcon={circleIcon}
               brick={a.brick}
               color={color}
+              deadline={a.deadline}
               isAssignment={true}
               onIconClick={e => this.onIconClick(e, a)}
               onClick={() => {
@@ -365,11 +389,12 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
   }
 
   renderClassroom(classroom: ClassroomView, i: number) {
+    const { assignments } = classroom;
     return (
       <div key={i}>
         <div className="gg-subject-name">
-          {classroom.name} {classroom.assignments.length > 0 && <div className="va-class-count">{classroom.assignments.length}</div>}
-          {classroom.assignments.length > 0 && (
+          {classroom.name} {assignments.length > 0 && <div className="va-class-count">{assignments.length}</div>}
+          {assignments.length > 0 && (
             <div
               className="va-expand"
               onClick={() => this.expandClass(classroom)}
@@ -378,8 +403,8 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             </div>
           )}
         </div>
-        {classroom.assignments.length > 0
-          ? this.renderHorizontalAssignments(classroom.assignments)
+        {assignments.length > 0
+          ? this.renderHorizontalAssignments(assignments)
           : this.renderEmptyClass()}
       </div>
     );
@@ -399,6 +424,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
 
   render() {
     const { expandedAssignment, expandedClassroom } = this.state;
+    const classrooms = this.state.classrooms;
     return (
       <div className="main-listing dashboard-page mobile-category learn-mobile-tab student-mobile-assignments-page">
         <PageHeadWithMenu
@@ -427,7 +453,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
         <div className={`va-bricks-container ${this.state.activeTab === Tab.Completed ? 'completed' : ''}`}>
           {expandedClassroom
             ? this.renderExpandedClass(expandedClassroom)
-            : this.state.classrooms.map(this.renderClassroom.bind(this))
+            : classrooms.map(this.renderClassroom.bind(this))
           }
         </div>
         {expandedAssignment && expandedAssignment.brick && (
