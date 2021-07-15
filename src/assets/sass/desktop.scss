@@ -652,11 +652,9 @@
 }
 
 .play-preview-pages {
-  .real-live-page,
+  .real-live-page .react-swipeable-view-container,
   .synthesis-page,
-  .review-page {
-    .question-live-play {
-    }
+  .review-page .react-swipeable-view-container {
     ::-webkit-scrollbar {
       width: 10px;
       display: block !important;

@@ -298,6 +298,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       }
       callback();
     } else if (!this.state.brick.id) {
+      /* eslint-disable-next-line */
       this.state.brick.id = parseInt(brickId);
     }
 
