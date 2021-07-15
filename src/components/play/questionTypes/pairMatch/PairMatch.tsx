@@ -138,8 +138,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         let state = this.getState(answer.index);
         if (state === 1) {
           className += " correct";
-        } else {
-          className += " wrong";
         }
       }
     }
