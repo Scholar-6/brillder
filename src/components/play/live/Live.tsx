@@ -20,7 +20,6 @@ import LiveStepper from "./components/LiveStepper";
 import TabPanel from "../baseComponents/QuestionTabPanel";
 import ShuffleAnswerDialog from "components/baseComponents/failedRequestDialog/ShuffleAnswerDialog";
 import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers";
-import PulsingCircleNumber from "./components/PulsingCircleNumber";
 import LiveActionFooter from "./components/LiveActionFooter";
 //import MobileNextButton from "./components/MobileNextButton";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
@@ -295,11 +294,6 @@ const LivePage: React.FC<LivePageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-        <PulsingCircleNumber
-          isPulsing={true}
-          edited={question.edited}
-          number={index + 1}
-        />
         <div className="question-live-play review-content">
           {renderQuestion(question, index)}
         </div>

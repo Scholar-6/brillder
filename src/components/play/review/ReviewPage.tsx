@@ -196,9 +196,12 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   };
 
   const renderReviewTitle = (attempt: any) => {
-    let text = "Not quite - try again!";
+    let text = "Incorrect - try again!";
     if (attempt.correct) {
       text = "Correct!";
+    }
+    if (attempt.marks > 0) {
+      text = "Not quite - try again!";
     }
     if (attempt.correct) {
       return (
@@ -221,14 +224,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   };
 
   const renderQuestionContainer = (question: Question, index: number) => {
-    let indexClassName = "question-index-container";
     const attempt = attempts[index];
-    if (attempt && attempt.correct) {
-      indexClassName += " correct";
-    } else {
-      indexClassName += " wrong";
-    }
-
     return (
       <TabPanel
         key={index}
@@ -236,9 +232,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-        <div className={indexClassName}>
-          <div className="question-index">{index + 1}</div>
-        </div>
         <div className="question-live-play review-content">
           <div className="question-title">
             {renderReviewTitle(attempt)}
