@@ -106,7 +106,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
 
   renderEachHint(index: number) {
     const {attempt} = this.props;
-    if (attempt && attempt.answer) {
+    if (attempt && attempt.answer && attempt.answer[index]) {
       let isCorrect = false;
       let choice = this.props.component.choices[index];
       let attemptedAnswer = attempt.answer[index].value;
