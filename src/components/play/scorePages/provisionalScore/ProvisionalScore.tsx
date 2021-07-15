@@ -128,17 +128,26 @@ class ProvisionalScore extends React.Component<
       this.moveToIntro();
     }
 
-    if (isPhone()) {
-      let attempted = 0;
-      let numberOfcorrect = 0;
-      for (let attempt of attempts) {
-        if (attempt.attempted === true) {
-          attempted += 1;
-        }
-        if (attempt.correct === true) {
-          numberOfcorrect += 1;
-        }
+    let attempted = 0;
+
+    let numberOfcorrect = 0;
+    let numberOfNotZero = 0;
+    let numberOfFailed = 0;
+
+    for (let attempt of attempts) {
+      if (attempt.attempted === true) {
+        attempted += 1;
       }
+      if (attempt.correct === true) {
+        numberOfcorrect += 1;
+      } else if (attempt.marks > 0) {
+        numberOfNotZero += 1;
+      } else {
+        numberOfFailed += 1;
+      }
+    }
+
+    if (isPhone()) {
       return (
         <div className="phone-provisional-score">
           <div
@@ -169,7 +178,11 @@ class ProvisionalScore extends React.Component<
             <div className="attempted-numbers">
               <div>
                 <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
-                {attempts.length - numberOfcorrect}
+                {numberOfFailed}
+              </div>
+              <div>
+                <SpriteIcon name="cancel-custom" className="text-yellow" />:{" "}
+                {numberOfNotZero}
               </div>
               <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
                 <SpriteIcon
@@ -221,17 +234,34 @@ class ProvisionalScore extends React.Component<
                           <div className="score-precentage">
                             {this.state.value}%
                           </div>
-                          <div className="score-number">
-                            {this.state.score}/{this.state.maxScore}
-                          </div>
                         </div>
                       </Grid>
                     </div>
                   </Grid>
-                  <div className="p-help-text">
-                    Now read the author's synthesis to deepen your understanding
-                    of the topic.
+                  <div className="attempted-numbers">
+                    <div>
+                      <SpriteIcon name="cancel-custom" className="text-orange" />: {numberOfFailed}
+                    </div>
+                    <div>
+                      <SpriteIcon name="cancel-custom" className="text-yellow" />: {numberOfNotZero}
+                    </div>
+                    <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
+                      <SpriteIcon
+                        name="check-icon"
+                        className={numberOfcorrect >= 1 ? "text-theme-green" : "text-tab-gray"}
+                      />: {numberOfcorrect}
+                    </div>
                   </div>
+                  <div className="attempted-text">
+                    <span className="bold">Attempted:</span> {attempted} / {attempts.length}
+                    <span className="bold"> Marks:</span> {this.state.score} / {this.state.maxScore}
+                  </div>
+                  {this.props.liveDuration && (
+                    <div className="duration">
+                      <SpriteIcon name="clock" />
+                      <div>{prepareDuration(this.props.liveDuration)}</div>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="new-layout-footer" style={{ display: "none" }}>
@@ -243,7 +273,7 @@ class ProvisionalScore extends React.Component<
                     className="n-btn next"
                     onClick={this.moveToSynthesis.bind(this)}
                   >
-                    Next
+                    Read Synthesis
                     <SpriteIcon name="arrow-right" />
                   </div>
                 </div>

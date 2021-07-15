@@ -822,10 +822,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               text-transform: capitalize;
             }
           }
-          .question-live-play {
-            @include tabletP {
-              overflow: hidden;
-            }
+          .stepper .step svg {
+            stroke-width: 3 !important;
+            margin-left: 0.3vw;
           }
         }
         &.final-step-page {
@@ -2229,5 +2228,46 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
   .step.almost-failed svg {
     color: var(--theme-yellow) !important;
+  }
+}
+
+.play-preview-pages .provisional-score-page {
+  .attempted-numbers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3vh;
+    font-family: $font-family-bold;
+    > div {
+      margin-left: 1vh;
+      margin-right: 1vh;
+      display: flex;
+      align-items: center;
+    }
+    svg {
+      $size: 3vh;
+      height: $size;
+      width: $size;
+      stroke-width: 4;
+    }
+  }
+  .attempted-text {
+    text-align: center;
+    font-size: 2.5vh;
+  }
+  .duration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5vh;
+    svg {
+      stroke-width: 2.5;
+      $size: 3vh;
+      width: $size;
+      height: $size;
+    }
+    div {
+      margin-left: 1vh;
+    }
   }
 }
