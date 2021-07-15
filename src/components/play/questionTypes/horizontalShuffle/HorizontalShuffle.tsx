@@ -21,6 +21,7 @@ enum DragAndDropStatus {
 
 interface HorizontalShuffleChoice {
   value: string;
+  index: number;
 }
 
 export interface HorizontalShuffleComponent {
