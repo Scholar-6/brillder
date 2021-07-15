@@ -215,7 +215,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     }
     return (
       <div className="ge-phone-title">
-        <div className="ge-phone-circle b-red">
+        <div className={`ge-phone-circle ${attempt.marks > 0 ? 'b-yellow' : 'b-red'}`}>
           <SpriteIcon name="cancel-custom" />
         </div>
         <div>{text}</div>
