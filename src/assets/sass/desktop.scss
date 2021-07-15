@@ -677,5 +677,13 @@
       background: #555;
       display: block !important;
     }
+    .question-live-play {
+      ::-webkit-scrollbar,
+      ::-webkit-scrollbar-track,
+      ::-webkit-scrollbar-thumb,
+      ::-webkit-scrollbar-thumb:hover {
+        display: none !important;
+      }
+    }
   }
 }
