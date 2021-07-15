@@ -4,14 +4,16 @@ import { ShortAnswerData } from 'components/build/buildQuestions/questionTypes/s
 import { ShortAnswerAnswer } from 'components/play/questionTypes/shortAnswer/ShortAnswer';
 import { ComponentAttempt } from 'components/play/model';
 
+jest.mock("desmos", );
+
 const mockComponent: ShortAnswerData = {
-    list: [{ value: "test" }]
+    list: [{ value: "test"}]
 };
 
 describe("short answer scoring", () => {
 
     it("should mark a correct answer with 6 marks", () => {
-        /* 11/4/2020
+        //11/4/2020
         // arrange
         const mockAttempt: ComponentAttempt<ShortAnswerAnswer> = {
             answer: ["test"]
@@ -24,7 +26,7 @@ describe("short answer scoring", () => {
         expect(result.marks).toStrictEqual(6);
         expect(result.maxMarks).toStrictEqual(6);
         expect(result.correct).toStrictEqual(true);
-        */
+        
     });
 
     /* 11/4/2020
