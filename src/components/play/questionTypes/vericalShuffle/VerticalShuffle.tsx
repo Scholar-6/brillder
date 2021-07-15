@@ -216,8 +216,8 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
             </div>
             {this.renderData(answer)}
           </Grid>
-          {this.renderEachHint(i, answer, isCorrect)}
         </div>
+        {this.renderEachHint(i, answer, isCorrect)}
       </div>
     );
   }
