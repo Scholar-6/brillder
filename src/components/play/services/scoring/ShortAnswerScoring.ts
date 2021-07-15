@@ -2,7 +2,6 @@ import { ShortAnswerData } from "components/build/buildQuestions/questionTypes/s
 import { ShortAnswerAnswer } from "components/play/questionTypes/shortAnswer/ShortAnswer";
 import { stripHtmlExceptSubAndSup as stripHtml } from "components/build/questionService/ConvertService";
 import { ComponentAttempt } from "components/play/model";
-import { endianness } from "os";
 
 const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerAnswer>) => {
     attempt.maxMarks = 0;
