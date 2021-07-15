@@ -229,9 +229,6 @@ h3 {
       width: calc(100% - 0.6vw);
     }
   }
-  .question-hint {
-    margin-bottom: 0;
-  }
   p {
     text-align: center !important;
   }
@@ -250,32 +247,9 @@ h3 {
   }
   &.correct {
     background: var(--theme-green) !important;
-    .question-hint {
-      padding: 0;
-      margin: 0;
-      width: 100%;
-      background: var(--off-white) !important;
-    }
   }
   &.wrong {
     background: var(--theme-orange);
-  }
-}
-.short-answer-input.correct {
-  $border-radius: 1vw;
-
-  .question-hint {
-    padding-left: 1vw;
-    border-bottom-left-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
-  }
-  @include phone_and_tabletP {
-    $border-radius: 2vw;
-
-    .question-hint {
-      border-bottom-left-radius: $border-radius;
-      border-bottom-right-radius: $border-radius;
-    }
   }
 }
 

@@ -18,7 +18,6 @@ import { LibraryAssignmentBrick } from "model/assignment";
 import LibraryFilter from "./components/LibraryFilter";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { getStudentClassrooms } from "services/axios/classroom";
 import { TeachClassroom } from "model/classroom";
@@ -38,9 +37,6 @@ interface BricksListState {
   finalAssignments: LibraryAssignmentBrick[];
   rawAssignments: LibraryAssignmentBrick[];
   subjectAssignments: SubjectAssignments[];
-
-  searchString: string;
-  isSearching: boolean;
 
   sortBy: SortBy;
   subjects: any[];
@@ -81,8 +77,6 @@ class Library extends Component<BricksListProps, BricksListState> {
       subjects: [],
       sortedIndex: 0,
       dropdownShown: false,
-      searchString: '',
-      isSearching: false,
       pageSize: 15,
       isLoading: true,
 
@@ -229,7 +223,7 @@ class Library extends Component<BricksListProps, BricksListState> {
     this.props.history.push(routes.playNewPrep(brickId));
   }
 
-  handleSortChange = (e: any) => { };
+  handleSortChange = (e: any) => {};
 
   getCheckedSubjectIds(subjects: SubjectAItem[]) {
     const filterSubjects = [];
@@ -310,9 +304,6 @@ class Library extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  searching(v: string) { }
-  async search() { }
-
   showDropdown() { this.setState({ ...this.state, dropdownShown: true }) }
   hideDropdown() { this.setState({ ...this.state, dropdownShown: false }) }
 
@@ -388,10 +379,10 @@ class Library extends Component<BricksListProps, BricksListState> {
           <PageHeadWithMenu
             page={PageEnum.MyLibrary}
             user={this.props.user}
-            placeholder={"Search Ongoing Projects & Published Bricks…"}
+            placeholder="  "
             history={this.props.history}
-            search={() => this.search()}
-            searching={(v) => this.searching(v)}
+            search={() => {}}
+            searching={() => {}}
           />
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">

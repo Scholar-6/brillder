@@ -47,7 +47,7 @@
       padding-right: $base-side-margin;
       > div {
         height: 100%;
-        $base-width: 1.5vw;
+        $base-width: 2vw;
         .assignment {
           margin-left: $base-side-margin;
           margin-right: $base-side-margin;
@@ -56,15 +56,24 @@
           .progress-value {
             border-radius: $base-radius;
             .rotated-text {
+              font-size: 1.05vw;
               color: var(--white);
             }
+            .text-dark-gray {
+              .rotated-text {
+                color: var(--dark-gray);
+              }
+            }
+          }
+          .default-value.progress-value .rotated-text {
+            padding-left: 5.5vw;
           }
         }
         .length-20 {
           width: $base-width;
           .rotated .rotated-text {
             height: $base-width;
-            line-height: 1.5;
+            line-height: 2;
           }
           .progress-value {
             width: $base-width;
@@ -75,7 +84,7 @@
           width: $width;
           .rotated .rotated-text {
             height: $width;
-            line-height: 3.5;
+            line-height: 3.9;
           }
           .progress-value {
             width: $width
@@ -86,7 +95,7 @@
           width: $width;
           .rotated .rotated-text {
             height: $width;
-            line-height: 7;
+            line-height: 7.5;
           }
           .progress-value {
             width: $width;
@@ -169,6 +178,29 @@ $level-size: 6vh;
       color: var(--theme-dark-blue);
     }
   }
+  .pr-lock-container {
+    position: absolute;
+    width: 100%;
+    border-top-left-radius: 1.5vw;
+    border-top-right-radius: 1.5vw;
+    border-bottom-left-radius: 0.35vw;
+    border-bottom-right-radius: 0.35vw;
+    height: 5vw;
+    bottom: 0;
+    font-family: $font-family-bold;
+    color: var(--white);
+    > div {
+      display: flex;
+      justify-content: center;
+    }
+    svg {
+      margin-top: 0.8vw;
+      margin-bottom: 0.4vw;
+      height: 1.5vw;
+      width: 1.5vw;
+      stroke-width: 2;
+    }
+  }
 }
 
 .progress-value {
@@ -188,9 +220,8 @@ $level-size: 6vh;
 .my-library-list {
   height: 100%;
   padding-top: 2%;
-  margin-left: 1.5vw;
+  padding-left: 1.5vw;
   margin-right: 2vw;
-  overflow: scroll;
   .libary-container-1 {
     height: calc(100% / 3);
     margin-left: 0.5vw;
@@ -267,6 +298,7 @@ $level-size: 6vh;
     margin-top: calc((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 2.5vh) / 4);
     text-align: center;
     transform: translate(-25%, 0); 
+    width: 16vw;
     z-index: 1000;
   }
 }
@@ -300,7 +332,7 @@ $level-size: 6vh;
         height: 3vh;
       }
       .level {
-        background: var(--tab-gray);
+        background: var(--white);
         width: 100%;
         margin-top: 0.3vh;
         margin-bottom: 0.3vh;

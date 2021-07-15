@@ -33,6 +33,7 @@ enum RefName {
 
 interface BrickTitleProps {
   user: User;
+  brickId: number;
   history: any;
   baseUrl: string;
   parentState: Brick;
@@ -139,7 +140,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
         </div>
         <div className="icon-container" onClick={() => {
           if (this.props.user.subjects.length > 1) {
-            this.props.history.push(map.ProposalSubjectLink);
+            this.props.history.push(map.ProposalSubject(this.props.brickId));
           } else {
             this.setState({subjectSelectOpen: true});
           }

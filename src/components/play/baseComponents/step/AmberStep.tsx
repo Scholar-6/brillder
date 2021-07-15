@@ -10,11 +10,13 @@ interface StepProps {
 const SuccessStep: React.FC<StepProps> = ({ index, handleStep }) => {
   return (
     <div className="step" onClick={() => handleStep(index - 1)}>
-      <span className="blue">{index}</span>
-      <svg className="svg active">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#ok"} style={{color: '#ffb55f'}} />
-      </svg>
+      <div>
+        <span className="blue">{index}</span>
+        <svg className="svg active">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#ok"} style={{ color: "#ffb55f" }} />
+        </svg>
+      </div>
     </div>
   );
 };

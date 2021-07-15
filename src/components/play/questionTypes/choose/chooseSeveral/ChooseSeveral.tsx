@@ -8,6 +8,7 @@ import { ComponentAttempt } from 'components/play/model';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneAnswer } from 'components/build/buildQuestions/questionTypes/chooseOneBuild/types';
 import { ActiveItem } from '../chooseOne/ChooseOne';
+import { ChooseSeveralChoice } from 'components/interfaces/chooseSeveral';
 
 import MathInHtml from '../../../baseComponents/MathInHtml';
 import CompComponent from '../../Comp';
@@ -16,7 +17,10 @@ import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
 import ZoomHelpText from '../../components/ZoomHelpText';
 
 export type ChooseSeveralAnswer = ActiveItem[];
-
+export interface ChooseSeveralComponent {
+  type: number;
+  list: ChooseSeveralChoice[];
+}
 interface ChooseSeveralProps extends CompQuestionProps {
   component: any;
   attempt: ComponentAttempt<ChooseSeveralAnswer>;
@@ -49,7 +53,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     if (this.props.isBookPreview) {
       if (this.props.answers !== prevProp.answers) {
         const activeItems = this.getActiveItems(this.props);
-        this.setState({activeItems});
+        this.setState({ activeItems });
       }
     }
   }
@@ -60,7 +64,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     if (found >= 0) {
       activeItems.splice(found, 1);
     } else {
-      activeItems.push({realIndex, shuffleIndex: index});
+      activeItems.push({ realIndex, shuffleIndex: index });
     }
     if (activeItems.length >= 2 && this.props.onAttempted) {
       this.props.onAttempted();
@@ -73,13 +77,15 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   }
 
   checkBookChoice(choice: ChooseOneAnswer, index: number) {
-    const { answer } = this.props.attempt;
-    const found = answer.find(a => a.shuffleIndex === index);
-    if (found) {
-      if (choice.checked) {
-        return true;
-      } else {
-        return false;
+    if (this.props.attempt) {
+      const { answer } = this.props.attempt;
+      const found = answer.find(a => a.shuffleIndex === index);
+      if (found) {
+        if (choice.checked) {
+          return true;
+        } else {
+          return false;
+        }
       }
     }
     return null;
@@ -109,7 +115,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
       />;
     } else if (answer.answerType === QuestionValueType.Sound && answer.soundFile) {
       return (
-        <div style={{width: '100%'}}>
+        <div style={{ width: '100%' }}>
           <Audio src={answer.soundFile} />
           <div>{answer.soundCaption ? answer.soundCaption : 'Click to select'}</div>
         </div>
@@ -206,7 +212,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   }
 
   checkImages() {
-    return !!this.props.component.list.find((a:any) => a.valueFile);
+    return !!this.props.component.list.find((a: any) => a.valueFile);
   }
 
   render() {

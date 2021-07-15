@@ -230,9 +230,6 @@ h3 {
   .question-hint {
     margin-bottom: 0;
   }
-  p {
-    text-align: center !important;
-  }
 }
 
 .horizontal-shuffle-answer,
@@ -249,7 +246,6 @@ h3 {
   &.correct {
     background: var(--theme-green) !important;
     .question-hint {
-      padding: 0;
       margin: 0;
       width: 100%;
       background: var(--off-white) !important;
@@ -264,20 +260,14 @@ h3 {
 }
 
 .short-answer-input.correct {
-  $border-radius: 1vw;
-
   .question-hint {
-    padding-left: 1vw;
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
   }
-  @include phone_and_tabletP {
-    $border-radius: 2vw;
-
-    .question-hint {
-      border-bottom-left-radius: $border-radius;
-      border-bottom-right-radius: $border-radius;
-    }
+  $border-radius: 2vw;
+  .question-hint {
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
   }
 }
 

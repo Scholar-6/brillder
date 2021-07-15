@@ -22,17 +22,15 @@ import CoverPlay from "./components/coverAuthorRow/CoverPlay";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/UnauthorizedUserDialogV2";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
-import { createUserByEmail } from "services/axios/user";
-import { trackSignUp } from "services/matomo";
+import { CreateByEmailRes, createUserByEmail } from "services/axios/user";
 
 
-interface IntroductionProps {
+interface Props {
   user: User;
   brick: Brick;
   location: any;
   history: any;
-  setUserToken(token: string): any;
-  setUser(user: User): void;
+  setUser(data: CreateByEmailRes): void;
   moveNext(): void;
 }
 
@@ -40,7 +38,7 @@ const MobileTheme = React.lazy(() => import('./themes/CoverMobileTheme'));
 const TabletTheme = React.lazy(() => import('./themes/CoverTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/CoverDesktopTheme'));
 
-const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
+const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [bioOpen, setBio] = React.useState(false);
 
   const [unauthorizedOpenV2, setUnauthorizedV2] = React.useState(false);
@@ -63,13 +61,6 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     setInvalidEmail(true);
   }
 
-  const setUser = (data: any) => {
-    const { user, token } = data;
-    props.setUser(user);
-    props.setUserToken(token);
-    trackSignUp();
-  }
-
   const createInactiveAccountV2 = async (email: string) => {
     if (!props.user) {
       // create a new account for an unauthorized user.
@@ -77,7 +68,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       if (data === 400 || !data) {
         validate(data);
       } else {
-        setUser(data);
+        props.setUser(data);
         setUnauthorizedV2(false);
         startBrick();
       }
@@ -270,9 +261,16 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </div>
           </div>
           <div className="introduction-info">
-            <CoverPlay onClick={startBrick} />
+            <CoverPlay onClick={() => props.user ? startBrick() : setUnauthorizedV2(true)} />
           </div>
         </div>
+        <UnauthorizedUserDialogV2
+          history={props.history}
+          isOpen={unauthorizedOpenV2}
+          emailInvalid={emailInvalid}
+          login={(email) => createInactiveAccountV2(email)}
+          notyet={() => startBrick()}
+        />
       </React.Suspense>
     );
   }
@@ -348,7 +346,7 @@ const CoverPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </Grid>
             <Grid item sm={4} xs={12}>
               <div className="introduction-info">
-                <CoverPlay onClick={startBrick} />
+                <CoverPlay onClick={() => props.user ? startBrick() : setUnauthorizedV2(true)} />
               </div>
             </Grid>
           </Grid>
