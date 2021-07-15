@@ -689,3 +689,8 @@
     }
   }
 }
+
+.horizontal-shuffle-answer.correct,
+.vertical-shuffle-choice.correct {
+  background: var(--theme-green-alpha5) !important;
+}
