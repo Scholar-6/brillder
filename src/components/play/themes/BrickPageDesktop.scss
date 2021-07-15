@@ -558,41 +558,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             padding-left: 7vw;
             white-space: nowrap;
           }
-          .question-index-container {
-            margin: 1vw 1.5vw 2vw 0;
-            padding: 0.5vw;
-            width: 3.3vw;
-            height: 3.3vw;
-            @extend %radCircle;
-            &.correct {
-              .question-index {
-                background: var(--theme-green);
-              }
-            }
-            &.wrong {
-              .question-index {
-                background: var(--theme-orange);
-              }
-            }
-            &.attempted {
-              background: var(--highlight-blue);
-              .question-index {
-                background: var(--blue);
-              }
-            }
-            .question-index {
-              padding: 0;
-              background: var(--tab-gray);
-              border-radius: 100vw;
-              font-family: $font-family-black;
-              color: var(--theme-dark-blue);
-              @extend %textCenter;
-              line-height: 1.25;
-              font-size: 2vw;
-              width: 2.3vw;
-              height: 2.3vw;
-            }
-          }
           .question-live-play {
             overflow-y: auto;
             padding-bottom: 2vw;
@@ -844,13 +809,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             padding-left: 1vw;
             .sort-category {
               font-size: $base-font-size !important;
-            }
-            .question-index-container ~ h1 {
-              text-align: center;
-              padding: 0;
-              justify-content: center;
-              font-size: 3vw;
-              margin: 0;
             }
           }
           .fotter-text {
@@ -1199,10 +1157,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         margin-right: 8vw;
         margin-left: 7vw;
         border-radius: 2vw !important;
-
-        .question-index-container {
-          display: none;
-        }
 
         .swipe-view {
           width: $width !important;
