@@ -543,7 +543,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const submitInvalidBrick = () => {
     saveBrick();
-    history.push(map.BackToWorkPage);
+    history.push(map.backToWorkUserBased(props.user));
   }
 
   const moveToRedTab = () => {

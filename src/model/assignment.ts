@@ -17,6 +17,7 @@ export interface AssignmentBrick {
   assignedDate: string;
   status: AssignmentBrickStatus;
   brick: Brick;
+  deadline: string;
   expanded?: boolean;
   expandFinished?: boolean;
   isInvitation: boolean;

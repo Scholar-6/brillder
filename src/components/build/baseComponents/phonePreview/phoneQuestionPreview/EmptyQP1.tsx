@@ -28,14 +28,6 @@ const EmptyQP1: React.FC<any> = () => {
           Quote
         </Grid>
       </Grid>
-      <Grid container className="qp1-row third">
-        <Grid item xs={6} className="icon">
-          jpg.
-        </Grid>
-        <Grid item xs={6} className="text">
-          Image
-        </Grid>
-      </Grid>
       <Grid container className="qp1-row forth">
         <Grid item xs={6} className="icon">
           <img alt="" className="sound-image" src="/images/soundicon-dark-blue.png" />

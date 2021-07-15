@@ -4,8 +4,8 @@ import { ReactSortable } from 'react-sortablejs';
 
 import './HorizontalShuffle.scss';
 import CompComponent from '../Comp';
-import {CompQuestionProps} from '../types';
-import {ComponentAttempt} from 'components/play/model';
+import { CompQuestionProps } from '../types';
+import { ComponentAttempt } from 'components/play/model';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
@@ -58,7 +58,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   componentDidUpdate(prevProp: VerticalShuffleProps) {
     if (this.props.isBookPreview) {
       if (this.props.answers !== prevProp.answers) {
-        this.setState({userAnswers: this.props.answers as any});
+        this.setState({ userAnswers: this.props.answers as any });
       }
     }
   }
@@ -67,7 +67,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     if (!this.props.isPreview) { return; }
     if (props.component && props.component.list) {
       if (this.state.userAnswers !== props.component.list) {
-        this.setState({userAnswers: props.component.list});
+        this.setState({ userAnswers: props.component.list });
       }
     }
   }
@@ -111,7 +111,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   renderData(answer: any) {
     if (answer.answerType === QuestionValueType.Sound) {
       return (
-        <div style={{width: '100%'}}>
+        <div style={{ width: '100%' }}>
           <Audio src={answer.soundFile} />
           <div>{answer.soundCaption}</div>
         </div>
@@ -135,26 +135,26 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
 
     return (
       <Card className={className} key={i}>
-          <div style={{display: "block"}} className="answer">
-            {this.renderData(answer)}
-          </div>
-          <div style={{display: "block"}}>
-            {this.props.isPreview ?
-              <ReviewEachHint
-                isPhonePreview={this.props.isPreview}
-                isReview={this.props.isReview}
-                index={i}
-                isCorrect={isCorrect}
-                hint={this.props.question.hint}
-              /> : this.props.isReview &&
-              <ReviewEachHint
-                isPhonePreview={this.props.isPreview}
-                isReview={this.props.isReview}
-                index={answer.index}
-                isCorrect={isCorrect}
-                hint={this.props.question.hint}
-              />
-            }
+        <div style={{ display: "block" }} className="answer">
+          {this.renderData(answer)}
+        </div>
+        <div style={{ display: "block" }}>
+          {this.props.isPreview ?
+            <ReviewEachHint
+              isPhonePreview={this.props.isPreview}
+              isReview={this.props.isReview}
+              index={i}
+              isCorrect={isCorrect}
+              hint={this.props.question.hint}
+            /> : this.props.isReview &&
+            <ReviewEachHint
+              isPhonePreview={this.props.isPreview}
+              isReview={this.props.isReview}
+              index={answer.index}
+              isCorrect={isCorrect}
+              hint={this.props.question.hint}
+            />
+          }
         </div>
       </Card>
     );
@@ -165,21 +165,27 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   }
 
   render() {
+    const correct = this.props.attempt?.correct;
     return (
       <div className="question-unique-play horizontal-shuffle-play">
         <p><span className="help-text">Drag to rearrange.</span></p>
         {this.props.isBookPreview ? (
           <div>{this.renderAnswers()}</div>
         ) : (
-          <ReactSortable
-            list={this.state.userAnswers}
-            animation={150}
-            direction="horizontal"
-            setList={(choices) => this.setUserAnswers(choices)}
-          >
-            {this.renderAnswers()}
-          </ReactSortable>
-        ) }
+          correct === true
+            ? <div>
+              {this.renderAnswers()}
+            </div>
+            :
+            <ReactSortable
+              list={this.state.userAnswers}
+              animation={150}
+              direction="horizontal"
+              setList={(choices) => this.setUserAnswers(choices)}
+            >
+              {this.renderAnswers()}
+            </ReactSortable>
+        )}
         {this.renderGlobalHint()}
       </div>
     );

@@ -58,6 +58,7 @@ export interface ClassroomInvitation {
 export interface StudentStatus {
   studentId: number;
   status: number;
+  bestScore: number;
 }
 
 export interface TeachClassroom extends Classroom {

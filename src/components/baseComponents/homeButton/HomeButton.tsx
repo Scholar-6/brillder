@@ -7,17 +7,18 @@ import SpriteIcon from '../SpriteIcon';
 
 export interface HomeButtonProps {
   link?: string;
+  history: any;
   onClick?(): void;
 }
 
 const HomeButtonComponent: React.FC<HomeButtonProps> = (props) => {
   return (
-    <Route render={({ history }) => {
+    <Route render={() => {
       const onClick = () => {
         if (props.onClick) {
           props.onClick();
         } else if (props.link) {
-          history.push(props.link);
+          props.history.push(props.link);
         }
       }
       return (

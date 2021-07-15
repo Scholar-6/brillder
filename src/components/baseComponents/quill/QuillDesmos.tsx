@@ -121,7 +121,7 @@ export default class DesmosModule {
         const leaf = GlobalQuill.find(leafNode);
         if(leaf instanceof DesmosBlot) {
             const oldData = DesmosBlot.value(leaf.domNode);
-            const newLeaf = leaf.replaceWith("desmos", { ...oldData, ...value });
+            leaf.replaceWith("desmos", { ...oldData, ...value });
         }
     }
 }

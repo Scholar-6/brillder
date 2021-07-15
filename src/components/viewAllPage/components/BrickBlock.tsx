@@ -3,7 +3,7 @@ import Grow from "@material-ui/core/Grow";
 import queryString from 'query-string';
 
 import './BrickBlock.scss';
-import { Brick } from "model/brick";
+import { AcademicLevelLabels, Brick } from "model/brick";
 import { User } from "model/user";
 
 import { playCover } from "components/play/routes";
@@ -62,16 +62,6 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     }
   }
 
-  const romanNumerals = () => {
-    switch(brick.academicLevel) {
-      case 1: return 'I';
-      case 2: return 'II';
-      case 3: return 'III';
-      case 4: return 'IV';
-      default: return '';
-    }
-  }
-
   if (!brick.id) {
     return <div className="main-brick-container"></div>;
   }
@@ -86,7 +76,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       <a href={window.location.origin + map.playCover(brick.id)} className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
         <div className="publish-brick-container" onMouseLeave={props.handleMouseLeave}>
           <div className="level">
-            <div style={{background: color}}>{romanNumerals()}</div>
+            <div style={{background: color}}>{AcademicLevelLabels[brick.academicLevel]}</div>
           </div>
           {brick.coverImage ?
             <div className="scroll-block">
