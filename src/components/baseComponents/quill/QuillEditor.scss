@@ -132,7 +132,9 @@ s {
   text-decoration: none !important;
   img {
     width: 100%;
+    height: 40vh;
     object-fit: cover;
+    object-position: top;
   }
   .embed-title {
     font-family: $font-family-bold;
