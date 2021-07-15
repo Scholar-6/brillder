@@ -211,10 +211,12 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     setLocalBrick(brick);
   }
 
-  setCore = (isCore: boolean) =>
-    this.saveLocalBrick({ ...this.state.brick, isCore });
-  setSubject = (subjectId: number) =>
+  setSubject = (subjectId: number) => {
     this.saveLocalBrick({ ...this.state.brick, subject: undefined, subjectId });
+  }
+
+  setCore = (isCore: boolean) =>
+    this.saveLocalBrick({ ...this.state.brick, isCore });  
   setCoreAndSubject = (subjectId: number, isCore: boolean) => 
     this.saveLocalBrick({ ...this.state.brick, subjectId, isCore });
   setTitles = (titles: any) =>
@@ -259,6 +261,21 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.props.history.push(buildQuesitonType(this.state.brick.id));
   };
 
+  createBrick = async () => {
+    console.log('create brick')
+    if (this.state.brick.subjectId) {
+      const newBrick = await this.saveBrick(this.state.brick);
+      if(newBrick) {
+        const {isCore} = this.state.brick;
+        if (this.state.brick.subjectId) {
+          this.props.history.push(map.ProposalTitle(newBrick.id) + '?isCore=' + isCore);
+        } else {
+          this.props.history.push(map.ProposalSubject(newBrick.id) + '?isCore=' + isCore);
+        }
+      }
+    }
+  }
+
   saveAndMove = async () => {
     if (this.state.saving === true) { return; }
     this.setState({ saving: true });
@@ -281,23 +298,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       brickId = parseInt(brickId);
     }
 
-    if(!brickId) {
-      const callback = async () => {
-        if (this.state.brick.subjectId) {
-          const newBrick = await this.saveBrick(this.state.brick);
-          if(newBrick) {
-            const values = queryString.parse(this.props.location.search);
-            const isCore = this.getCore(values);
-            if (this.state.brick.subjectId) {
-              history.push(map.ProposalTitle(newBrick.id) + '?isCore=' + isCore);
-            } else {
-              history.push(map.ProposalSubject(newBrick.id) + '?isCore=' + isCore);
-            }
-          }
-        }
-      }
-      callback();
-    } else if (!this.state.brick.id) {
+    if (brickId && !this.state.brick.id) {
       /* eslint-disable-next-line */
       this.state.brick.id = parseInt(brickId);
     }
@@ -339,9 +340,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 subjects={user.subjects}
                 subjectId={this.state.brick.subjectId ? this.state.brick.subjectId : ""}
                 history={history}
-                saveCore={this.setCore}
                 saveSubject={this.setSubject}
-                saveData={this.setCoreAndSubject}
               />
             </Route>
             <Route path={[baseUrl + '/brick-title']}>
@@ -356,6 +355,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveTitles={this.setTitles}
                 setKeywords={this.setKeywords}
                 setAcademicLevel={this.setAcademicLevel}
+                createBrick={this.createBrick}
               />
             </Route>
             <Route path={[baseUrl + '/length']}>

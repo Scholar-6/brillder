@@ -39,6 +39,7 @@ interface BrickTitleProps {
   parentState: Brick;
   canEdit: boolean;
   subjects: Subject[];
+  createBrick(): void;
   saveTitles(data: any): void;
   setKeywords(keywords: KeyWord[]): void;
   setAcademicLevel(level: AcademicLevel): void;
@@ -109,6 +110,9 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
       subjectSelectOpen: false,
       subTitleRef: React.createRef<HTMLDivElement>(),
       altTitleRef: React.createRef<HTMLDivElement>(),
+    }
+    if (!props.brickId) {
+      props.createBrick();
     }
   }
 
