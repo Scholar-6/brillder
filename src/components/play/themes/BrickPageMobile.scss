@@ -747,10 +747,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             height: 100% !important;
             .question-live-play {
               height: 100% !important;
-              .p-help-text {
-                position: fixed;
-                bottom: calc(#{$mobile-menu-height} + 3vw);
-              }
             }
           }
         }

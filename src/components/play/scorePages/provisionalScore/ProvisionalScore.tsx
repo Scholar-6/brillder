@@ -15,6 +15,7 @@ import previewRoutes from "components/playPreview/routes";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { User } from "model/user";
 import { prepareDuration } from "../service";
+import AttemptedText from "../components/AttemptedText";
 
 interface ProvisionalScoreState {
   value: number;
@@ -191,9 +192,12 @@ class ProvisionalScore extends React.Component<
                 />: {numberOfcorrect}
               </div>
             </div>
-            <div className="attempted-text">
-              Attempted: {attempted} | {attempts.length}
-            </div>
+            <AttemptedText
+              attempted={attempted}
+              attemptsCount={attempts.length}
+              score={this.state.score}
+              maxScore={this.state.maxScore}
+            />
             {this.props.liveDuration && (
               <div className="duration">
                 <SpriteIcon name="clock" />
@@ -252,10 +256,12 @@ class ProvisionalScore extends React.Component<
                       />: {numberOfcorrect}
                     </div>
                   </div>
-                  <div className="attempted-text">
-                    <span className="bold">Attempted:</span> {attempted} / {attempts.length}
-                    <span className="bold"> Marks:</span> {this.state.score} / {this.state.maxScore}
-                  </div>
+                  <AttemptedText
+                    attempted={attempted}
+                    attemptsCount={attempts.length}
+                    score={this.state.score}
+                    maxScore={this.state.maxScore}
+                  />
                   {this.props.liveDuration && (
                     <div className="duration">
                       <SpriteIcon name="clock" />
@@ -265,9 +271,8 @@ class ProvisionalScore extends React.Component<
                 </div>
               </div>
               <div className="new-layout-footer" style={{ display: "none" }}>
-                <div className="time-container" />
-                <div className="minutes-footer" />
-                <div className="footer-space" />
+                <div className="title-column">Learn more about this topic by reading an academic summary by the author.</div>
+                <img alt="" className="footer-arrow" src="/images/play-arrows/BriefArrow.svg"></img>
                 <div className="new-navigation-buttons">
                   <div
                     className="n-btn next"

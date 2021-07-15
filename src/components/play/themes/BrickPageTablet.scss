@@ -980,12 +980,6 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
                 line-height: 1;
                 font-size: 14vh;
               }
-              .score-number {
-                font-family: $font-family-bold;
-                color: var(--theme-dark-blue);
-                line-height: 1;
-                font-size: 4vh;
-              }
             }
           }
         }
@@ -1768,11 +1762,6 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
 .play-preview-pages .sorted-row.sorted-row-expanded .ending-container {
   .introduction-page .question-live-play {
     margin-top: calc(5vw + 8vh) !important;
-    .p-help-text {
-      margin-top: 2vh;
-      font-size: 1.5vw;
-      text-align: center;
-    }
   }
   .new-layout-footer {
     z-index: 100;
