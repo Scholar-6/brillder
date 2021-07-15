@@ -1071,6 +1071,12 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               background: var(--theme-green);
             }
           }
+          &.almost-failed {
+            span {
+              color: var(--tab-gray);
+              background: var(--theme-yellow);
+            }
+          }
           &.failed {
             span {
               color: var(--tab-gray);
@@ -1649,6 +1655,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
 .phone-provisional-score {
   height: calc(100% - 17.5vw);
+
   .header {
     background: var(--theme-light-blue);
     .stepper {
@@ -1672,6 +1679,15 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             height: 6vw;
             stroke-width: 4;
           }
+        }
+        &.success svg {
+          color: var(--theme-green);
+        }
+        &.failed svg {
+          color: var(--theme-orange);
+        }
+        &.almost-failed svg {
+          color: var(--theme-yellow);
         }
       }
     }
