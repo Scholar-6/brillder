@@ -146,6 +146,19 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     this.setState({ ...this.state, subjects, isLoaded: true, classrooms, rawAssignments: assignments, finalAssignments, sortedIndex: 0 });
   }
 
+  isVisibled(tab: Tab, a: AssignmentBrick) {
+    if (tab === Tab.Assignments) {
+      if (a.status === AssignmentBrickStatus.ToBeCompleted) {
+        return true;
+      }
+    } else {
+      if (a.status !== AssignmentBrickStatus.ToBeCompleted) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   filter(assignments: AssignmentBrick[], activeTab: Tab, classroomId: number) {
     let asins = assignments;
     if (classroomId > 0) {
@@ -153,15 +166,9 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     }
 
     const res = [];
-    for (let assignment of asins) {
-      if (activeTab === Tab.Assignments) {
-        if (assignment.status === AssignmentBrickStatus.ToBeCompleted) {
-          res.push(assignment);
-        }
-      } else {
-        if (assignment.status !== AssignmentBrickStatus.ToBeCompleted) {
-          res.push(assignment);
-        }
+    for (let a of asins) {
+      if (this.isVisibled(activeTab, a)) {
+        res.push(a);
       }
     }
     return res;
@@ -200,6 +207,16 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     }
   }
 
+  getViewAllCount() {
+    let allCount = 0;
+    for (let a of this.state.rawAssignments) {
+      if (this.isVisibled(this.state.activeTab, a)) {
+        allCount += 1;
+      }
+    }
+    return allCount;
+  }
+
   renderTabs() {
     const {activeTab} = this.state;
     return (
@@ -217,12 +234,13 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
   }
 
   render() {
+    const allCount = this.getViewAllCount();
     return (
       <Grid container direction="row" className="sorted-row">
         <PlayFilterSidebar
           activeTab={this.state.activeTab}
           activeClassroomId={this.state.activeClassroomId}
-          assignmentsLength={this.state.rawAssignments.length}
+          assignmentsLength={allCount}
           setActiveClassroom={this.setActiveClassroom.bind(this)}
           classrooms={this.state.classrooms}
         />
