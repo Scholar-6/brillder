@@ -62,6 +62,8 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
 
     if (attempt.correct) {
       className += " success";
+    } else if (attempt.marks > 0) {
+      className += " almost-failed";
     } else {
       className += " failed";
     }
@@ -73,9 +75,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
           <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
           <SpriteIcon
             name={attempt.correct ? "ok" : "cancel-custom"}
-            className={`svg active ${
-              attempt.correct ? "text-theme-green" : "text-theme-orange"
-            }`}
+            className="svg active"
           />
           <div className="underline">
             <div />

@@ -1393,6 +1393,15 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 opacity: 0.5;
               }
             }
+            &.almost-failed {
+              span {
+                color: var(--tab-gray);
+                background: var(--theme-yellow);
+              }
+              &:hover {
+                opacity: 0.5;
+              }
+            }
             &.current {
               span {
                 color: var(--white);
@@ -2242,5 +2251,29 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   > div {
     display: flex;
     justify-content: center;
+  }
+}
+
+.play-preview-pages .stepper {
+  font-size: 2vw;
+  svg {
+    $size: 1.5vw;
+    width: $size;
+    width: $size;
+  }
+  .step > div > span{
+    color: var(--theme-dark-blue);
+  }
+
+  .step.success svg {
+    color: var(--theme-green) !important;
+  }
+ 
+  .step.failed svg {
+    color: var(--theme-orange) !important;
+  }
+
+  .step.almost-failed svg {
+    color: var(--theme-yellow) !important;
   }
 }

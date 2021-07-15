@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-import "./ProvisionalScore.scss";
 import { Brick } from "model/brick";
 import { PlayStatus } from "../../model";
 
