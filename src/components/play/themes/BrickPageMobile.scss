@@ -1654,11 +1654,17 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       font-size: 10.5vw;
       line-height: 0;
       margin-top: 5vh;
-      margin-bottom: 7vh;
+      margin-bottom: 4vh;
       font-family: $font-family-black;
       text-align: center;
       color: var(--theme-dark-blue);
     }
+    .hr-sub-title {
+      text-align: center;
+      font-size: 4.5vw;
+      padding-bottom: 1vh;
+    }
+
     .pr-progress-center {
       margin-top: 2.5vh;
       display: flex;
