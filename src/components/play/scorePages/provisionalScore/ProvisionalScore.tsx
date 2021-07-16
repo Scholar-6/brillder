@@ -165,6 +165,9 @@ class ProvisionalScore extends React.Component<
           </div>
           <div className="content">
             <div className="title">Provisional Score</div>
+            {this.state.score < this.state.maxScore &&
+              <div className="hr-sub-title">You can improve this when reviewing your answers</div>
+            }
             <div className="pr-progress-center">
               <div className="pr-progress-container">
                 <CircularProgressbar
