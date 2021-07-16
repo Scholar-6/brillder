@@ -26,7 +26,6 @@ import {
 import {
   getPublicBricks,
   getPublishedBricks,
-  searchBricks,
   searchPublicBricks,
 } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
@@ -785,7 +784,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async search() {
     const { searchString } = this.state;
     this.setState({ shown: false });
-    let bricks: Brick[] | null = [];
+    const bricks = await searchPublicBricks(searchString);
     const { pathname } = this.props.location;
     if (
       pathname.slice(pathname.length - 13, pathname.length) === "/all-subjects"
@@ -794,11 +793,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       this.props.history.push(
         map.ViewAllPage + "?searchString=" + searchString
       );
-    }
-    if (this.props.user) {
-      bricks = await searchBricks(searchString);
-    } else {
-      bricks = await searchPublicBricks(searchString);
     }
 
     setTimeout(() => {

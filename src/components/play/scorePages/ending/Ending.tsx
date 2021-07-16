@@ -13,6 +13,7 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import routes from "../../routes";
 import moment from "moment";
 import { prepareDuration } from "../service";
+import AttemptedText from "../components/AttemptedText";
 
 interface EndingState {
   oldScore: number;
@@ -118,78 +119,12 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     clearInterval(this.state.interval);
   }
 
-  renderProgressBars() {
-    const { score, maxScore } = this.props.brickAttempt;
-    return (
-      <div className="question-live-play">
-        <Grid
-          container
-          justify="center"
-          alignContent="center"
-          className="circle-progress-container"
-        >
-          <CircularProgressbar
-            className="circle-progress-first"
-            strokeWidth={4}
-            counterClockwise={true}
-            value={this.state.liveScore}
-          />
-          <Grid
-            container
-            justify="center"
-            alignContent="center"
-            className="score-circle"
-          >
-            <CircularProgressbar
-              className="circle-progress-second"
-              counterClockwise={true}
-              strokeWidth={4}
-              value={this.state.reviewScore}
-            />
-          </Grid>
-          <Grid
-            container
-            justify="center"
-            alignContent="center"
-            className="score-circle"
-          >
-            <CircularProgressbar
-              className="circle-progress-third"
-              counterClockwise={true}
-              strokeWidth={4}
-              value={this.state.currentScore}
-            />
-          </Grid>
-          <Grid
-            container
-            justify="center"
-            alignContent="center"
-            className="score-circle"
-          >
-            <div>
-              <div className="score-precentage">{this.state.currentScore}%</div>
-              <div className="score-number">
-                {this.state.oldScore}/{maxScore}
-              </div>
-              <div className="score-number">
-                {score}/{maxScore}
-              </div>
-            </div>
-          </Grid>
-        </Grid>
-        <div className="p-help-text">
-          This is an average of your provisional score and your review score.
-        </div>
-      </div>
-    );
-  }
-
   renderStepper() {
     return (
       <EndingStepper
         questions={this.props.brick.questions}
         attempts={this.props.brickAttempt.answers}
-        handleStep={() => {}}
+        handleStep={() => { }}
       />
     );
   }
@@ -205,28 +140,30 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       }
     }
 
-    if (isPhone()) {
-      const { answers, liveAnswers } = this.props.brickAttempt;
-      let attempted = 0;
-      let numberOfFailed = 0;
-      let numberOfyellow = 0;
-      let numberOfcorrect = 0;
-      for (let i = 0; i < answers.length; i++) {
-        const answer = answers[i];
-        const liveAnswer = liveAnswers?.[i] || null;
-        if (answer.attempted || liveAnswer?.attempted) {
-          attempted += 1;
-        }
-        if (answer.correct && liveAnswer?.correct) {
-          numberOfcorrect += 1;
-        } else if (answer.correct) {
-          numberOfyellow += 1;
-        } else if (liveAnswer?.correct) {
-          numberOfyellow += 1;
-        } else {
-          numberOfFailed += 1;
-        }
+    const { answers, liveAnswers } = this.props.brickAttempt;
+
+    let attempted = 0;
+    let numberOfFailed = 0;
+    let numberOfyellow = 0;
+    let numberOfcorrect = 0;
+    for (let i = 0; i < answers.length; i++) {
+      const answer = answers[i];
+      const liveAnswer = liveAnswers?.[i] || null;
+      if (answer.attempted || liveAnswer?.attempted) {
+        attempted += 1;
       }
+      if (answer.correct && liveAnswer?.correct) {
+        numberOfcorrect += 1;
+      } else if (answer.correct) {
+        numberOfyellow += 1;
+      } else if (liveAnswer?.correct) {
+        numberOfyellow += 1;
+      } else {
+        numberOfFailed += 1;
+      }
+    }
+
+    if (isPhone()) {
       return (
         <div className="phone-provisional-score">
           <div
@@ -302,9 +239,12 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                 : {numberOfcorrect}
               </div>
             </div>
-            <div className="attempted-text">
-              Attempted: {attempted} | {answers.length}
-            </div>
+            <AttemptedText
+              attempted={attempted}
+              attemptsCount={answers.length}
+              score={this.props.brickAttempt.score}
+              maxScore={this.props.brickAttempt.maxScore}
+            />
             {this.props.liveDuration && (
               <div className="duration">
                 <SpriteIcon name="clock" />
@@ -331,7 +271,74 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
             <Grid item xs={8}>
               <div className="introduction-page">
                 <h1 className="title">Final Score</h1>
-                {this.renderProgressBars()}
+                <div className="question-live-play">
+                  <Grid
+                    container
+                    justify="center"
+                    alignContent="center"
+                    className="circle-progress-container"
+                  >
+                    <CircularProgressbar
+                      className="circle-progress-first"
+                      strokeWidth={4}
+                      counterClockwise={true}
+                      value={this.state.liveScore}
+                    />
+                    <Grid
+                      container
+                      justify="center"
+                      alignContent="center"
+                      className="score-circle"
+                    >
+                      <CircularProgressbar
+                        className="circle-progress-second"
+                        counterClockwise={true}
+                        strokeWidth={4}
+                        value={this.state.reviewScore}
+                      />
+                    </Grid>
+                    <Grid
+                      container
+                      justify="center"
+                      alignContent="center"
+                      className="score-circle"
+                    >
+                      <CircularProgressbar
+                        className="circle-progress-third"
+                        counterClockwise={true}
+                        strokeWidth={4}
+                        value={this.state.currentScore}
+                      />
+                    </Grid>
+                    <Grid
+                      container
+                      justify="center"
+                      alignContent="center"
+                      className="score-circle"
+                    >
+                      <div>
+                        <div className="score-precentage">{this.state.currentScore}%</div>
+                      </div>
+                    </Grid>
+                  </Grid>
+                  <AttemptedText
+                    attempted={attempted}
+                    attemptsCount={answers.length}
+                    score={this.props.brickAttempt.score}
+                    maxScore={this.props.brickAttempt.maxScore}
+                  />
+                  {this.props.liveDuration && (
+                    <div className="duration">
+                      <SpriteIcon name="clock" />
+                      <div>{prepareDuration(this.props.liveDuration)}</div>
+                    </div>
+                  )}
+                  {this.props.reviewDuration && (
+                    <div className="review-duration">
+                      + {prepareDuration(this.props.reviewDuration)} Review
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="new-layout-footer" style={{ display: "none" }}>
                 <div className="time-container" />

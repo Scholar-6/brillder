@@ -21,9 +21,6 @@ export interface ThreeAssignmentColumns {
 
 export interface PlayFilters {
   viewAll: boolean;
-  completed: boolean;
-  submitted: boolean;
-  checked: boolean;
 }
 
 export interface AssignmentBrickData {

@@ -6,6 +6,7 @@ import { ComponentAttempt } from "../../model";
 import FailedStep from '../../baseComponents/step/FailedStep';
 import SuccessStep from '../../baseComponents/step/SuccessStep';
 import AmberStep from '../../baseComponents/step/AmberStep';
+import AlmostFailedStep from "components/play/baseComponents/step/AlmostFailedStep";
 
 interface ReviewStepperProps {
   attempts: ComponentAttempt<any>[];
@@ -31,6 +32,9 @@ const EndingStepper: React.FC<ReviewStepperProps> = ({
         return <SuccessStep key={index} index={index} handleStep={() => { }} />
       }
       return <AmberStep key={index} index={index} handleStep={() => { }} />
+    }
+    if (attempt && attempt.marks > 0) {
+      return <AlmostFailedStep key={index} index={index} handleStep={() => { }} />;
     }
     return <FailedStep key={index} index={index} handleStep={() => { }} />;
   };

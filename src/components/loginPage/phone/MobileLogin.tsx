@@ -32,6 +32,7 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
       animationFinished: false
     };
   }
+
   componentDidMount() {
     setTimeout(() => {
       this.props.setLoginState(LoginState.ChooseLogin)

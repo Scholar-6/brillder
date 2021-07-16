@@ -149,18 +149,12 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderLibraryButton() {
+    const isActive = this.props.user.hasPlayedBrick;
     return (
       <LibraryButton
-        isActive={true}
+        isActive={isActive}
         history={this.props.history}
-        isSwiping={this.state.isSwiping}
         onClick={() => this.setState({ isMyLibraryOpen: true })}
-        onMobileClick={() => {
-          this.setState({
-            isDesktopOpen: true,
-            secondaryLabel: "Your Library has" + this.state.secondPart,
-          });
-        }}
       />
     );
   }
@@ -171,17 +165,21 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         className="back-item-container"
         onClick={() => {
           if (!this.state.isSwiping) {
-            this.props.history.push(map.AssignmentsPage);
+            if (this.state.assignedCount > 0) {
+              this.props.history.push(map.AssignmentsPage);
+            } else {
+              this.setState({isBackToWorkOpen: true});
+            }
           }
         }}
       >
-        <button className="btn btn-transparent text-theme-orange zoom-item">
-          <BlocksIcon />
+        <button className="btn btn-transparent zoom-item">
+          <BlocksIcon disabled={this.state.assignedCount === 0} />
           <span className="item-description flex-number">
             {this.props.user.rolePreference?.roleId === UserType.Teacher
               ? "Shared with Me"
               : "My Assignments"}
-            {this.state.assignedCount && (
+            {this.state.assignedCount > 0 && (
               <div className="m-red-circle">
                 <DynamicFont content={this.state.assignedCount.toString()} />
               </div>
