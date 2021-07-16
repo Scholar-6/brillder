@@ -215,6 +215,10 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .count-introduction-page {
       height: calc(100% - 4vh - 7.5vw) !important;
     }
+
+    .s-fade2 {
+      animation-delay: 0.5s;
+    }
     
     .ss-phone-before-title {
       height: 9%;
