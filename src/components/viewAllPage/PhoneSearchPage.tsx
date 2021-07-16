@@ -21,6 +21,7 @@ import {
   isLengthVisible,
   toggleElement,
 } from "./service/viewAll";
+import { hideKeyboard } from "components/services/key";
 
 interface BricksListProps {
   user: User;
@@ -32,6 +33,8 @@ interface BricksListProps {
 }
 
 interface BricksListState {
+  typingTimeout: number;
+
   expandedBrick: Brick | null;
   bricks: Array<Brick>;
   searchString: string;
@@ -53,6 +56,8 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
     hideZendesk();
 
     this.state = {
+      typingTimeout: -1,
+
       expandedBrick: null,
       bricks: [],
       finalBricks: [],
@@ -67,22 +72,29 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
 
   async search(searchString: string) {
     this.setState({ isLoading: true });
-    let isEmpty = false;
-    const bricks = await searchPublicBricks(searchString);
-    if (bricks) {
-      if (bricks.length === 0) {
-        isEmpty = true;
-      }
-      const finalBricks = this.filter(
-        bricks,
-        this.state.filterLevels,
-        this.state.filterLength
-      );
-      this.setState({ bricks, finalBricks, isEmpty });
-    } else {
-      this.props.requestFailed("Can`t get search bricks");
+    if (this.state.typingTimeout) {
+      clearTimeout(this.state.typingTimeout);
     }
-    this.setState({ isLoading: false });
+    const typingTimeout = setTimeout(async () => {
+      let isEmpty = false;
+      const bricks = await searchPublicBricks(searchString);
+      if (bricks) {
+        if (bricks.length === 0) {
+          isEmpty = true;
+        }
+        const finalBricks = this.filter(
+          bricks,
+          this.state.filterLevels,
+          this.state.filterLength
+        );
+        this.setState({ bricks, finalBricks, isEmpty, isLoading: false });
+      } else {
+        this.props.requestFailed("Can`t get search bricks");
+        this.setState({isLoading: false});
+      }
+    }, 1000);
+    this.setState({typingTimeout})
+    //this.setState({ isLoading: false });
   }
 
   filter(bricks: Brick[], levels: AcademicLevel[], lengths: BrickLengthEnum[]) {
@@ -145,16 +157,7 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
 
   hideKeyboard() {
     const { current } = this.state.inputRef;
-    if (current) {
-      current.setAttribute("readonly", "readonly"); // Force keyboard to hide on input field.
-      current.setAttribute("disabled", "true"); // Force keyboard to hide on textarea field.
-      setTimeout(function () {
-        current.blur(); //actually close the keyboard
-        // Remove readonly attribute after keyboard is hidden.
-        current.removeAttribute("readonly");
-        current.removeAttribute("disabled");
-      }, 100);
-    }
+    hideKeyboard(current);
   }
 
   renderContent() {
