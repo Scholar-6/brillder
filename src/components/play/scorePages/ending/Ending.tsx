@@ -140,7 +140,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       }
     }
 
-    const { answers, liveAnswers, score, maxScore } = this.props.brickAttempt;
+    const { answers, liveAnswers } = this.props.brickAttempt;
 
     let attempted = 0;
     let numberOfFailed = 0;
