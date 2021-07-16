@@ -65,6 +65,7 @@ import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import PhonePlaySimpleFooter from "./phoneComponents/PhonePlaySimpleFooter";
 import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
 import { getLiveTime, getReviewTime } from "./services/playTimes";
+import PhoneTimeSynthesisPage from "./preSynthesis/PhoneTimeSynthesis";
 
 
 function shuffle(a: any[]) {
@@ -583,10 +584,19 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <Route exact path={routes.preSynthesisRoute}>
           {isPhone()
             ? <PhonePreSynthesisPage brick={brick} moveNext={() => {
+              history.push(routes.playTimeSynthesis(brick.id))}} /> 
+            : <PreSynthesis brick={brick} history={history} />
+          }
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={() => history.push(routes.playTimeSynthesis(brick.id))} />}
+        </Route>
+
+        <Route exact path={routes.timeSynthesisRoute}>
+          {isPhone()
+            ? <PhoneTimeSynthesisPage brick={brick} moveNext={() => {
               history.push(routes.playSynthesis(brick.id))}} /> 
             : <PreSynthesis brick={brick} history={history} />
           }
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={() => history.push(routes.playSynthesis(brick.id))} />}
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Synthesis" next={() => history.push(routes.playSynthesis(brick.id))} />}
         </Route>
 
         <Route exac path={routes.synthesisRoute}>

@@ -818,6 +818,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         &.provisional-score-page,
         &.ending-page {
           .introduction-page {
+            h1, .hr-sub-title {
+              opacity: 0;
+              animation: fadein 1s forwards;
+            }
             h1 {
               padding: 0;
               text-transform: capitalize;
@@ -833,6 +837,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               margin-top: calc(4vw + 11vh) !important;
             }
             .circle-progress-container {
+              opacity: 0;
+              animation: fadein 1s 0.5s forwards;
               $height: calc(50vh);
               height: $height !important;
               .circle-progress {
@@ -2242,6 +2248,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
 .play-preview-pages .provisional-score-page,
 .play-preview-pages .ending-page {
+  .attempted-numbers, .attempted-text, .duration, .review-duration {
+    opacity: 0;
+    animation: fadein 1s 1s forwards;
+  }
   .attempted-numbers {
     display: flex;
     align-items: center;

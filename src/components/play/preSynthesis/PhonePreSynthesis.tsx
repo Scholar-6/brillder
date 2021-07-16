@@ -11,8 +11,6 @@ interface Props {
 }
 
 const PhonePreSynthesisPage: React.FC<Props> = ({ brick, moveNext }) => {
-  const minutes = getSynthesisTime(brick.brickLength);
-
   return (
     <div className="pre-investigation pre-synthesis">
       <div className="fixed-upper-b-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
