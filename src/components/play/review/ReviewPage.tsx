@@ -199,8 +199,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     let text = "Incorrect - try again!";
     if (attempt.correct) {
       text = "Correct!";
-    }
-    if (attempt.marks > 0) {
+    } else if (attempt.marks > 0) {
       text = "Not quite - try again!";
     }
     if (attempt.correct) {
