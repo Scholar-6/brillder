@@ -819,12 +819,115 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         &.ending-page {
           .introduction-page {
             h1 {
+              padding: 0;
               text-transform: capitalize;
+            }
+            .hr-sub-title {
+              position: absolute;
+              width: 100%;
+              text-align: center;
+              top: calc(4vw + 4.5vh);
+              font-size: 3vh;
+            }
+            .question-live-play {
+              margin-top: calc(4vw + 11vh) !important;
+            }
+            .circle-progress-container {
+              $height: calc(50vh);
+              height: $height !important;
+              .circle-progress {
+                height: $height !important;
+              }
+              .score-data {
+                height: $height !important;
+                > div {
+                  height: $height !important;
+                }
+              }
+            }
+            .circle-progress-container {
+              position: relative;
+              width: 100%;
+              height: $introduction-desktop-height;
+              margin-bottom: 2vh;
+              .circle-progress-first {
+                height: 50vh;
+                width: 50vh;
+                .CircularProgressbar-path {
+                  stroke: #ffb55f !important;
+                }
+              }
+              .circle-progress-second {
+                height: 46vh;
+                width: 46vh;
+                .CircularProgressbar-path {
+                  stroke: #317fe0 !important;
+                }
+              }
+              .circle-progress-third {
+                height: 42.5vh;
+                width: 42.5vh;
+                .CircularProgressbar-path {
+                  stroke: #38c36d !important;
+                }
+              }
+              .circle-progress {
+                height: 50vh;
+                width: 50vh;
+                .CircularProgressbar-path {
+                  stroke: #ffb55f !important;
+                }
+                svg {
+                  overflow: overlay;
+    
+                  circle {
+                    stroke-width: 4.5 !important;
+                  }
+                }
+              }
+              .score-circle {
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: inherit;
+                position: absolute;
+              }
+              .score-data {
+                position: absolute;
+                height: $introduction-desktop-height;
+                width: 50vh;
+                top: 0;
+                color: var(--theme-dark-blue);
+                @extend %textCenter;
+                > div {
+                  height: $introduction-desktop-height;
+                  .score-precentage {
+                    font-family: $font-family-black;
+                    color: var(--theme-dark-blue);
+                    line-height: 1;
+                    font-size: 14vh;
+                  }
+                }
+              }
             }
           }
           .stepper .step svg {
             stroke-width: 3 !important;
             margin-left: 0.3vw;
+          }
+        }
+        &.provisional-score-page .introduction-page .circle-progress-container {
+          margin-bottom: 2vh;
+          $height: 45vh;
+          height: $height !important;
+          .circle-progress {
+            height: $height !important;
+          }
+          .score-data {
+            height: $height !important;
+            > div {
+              height: $height !important;
+            }
           }
         }
         &.final-step-page {
@@ -1055,70 +1158,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
           }
         }
-        .circle-progress-container {
-          position: relative;
-          width: 100%;
-          height: $introduction-desktop-height;
-          .circle-progress-first {
-            height: 50vh;
-            width: 50vh;
-            .CircularProgressbar-path {
-              stroke: #ffb55f !important;
-            }
-          }
-          .circle-progress-second {
-            height: 46vh;
-            width: 46vh;
-            .CircularProgressbar-path {
-              stroke: #317fe0 !important;
-            }
-          }
-          .circle-progress-third {
-            height: 42.5vh;
-            width: 42.5vh;
-            .CircularProgressbar-path {
-              stroke: #38c36d !important;
-            }
-          }
-          .circle-progress {
-            height: 50vh;
-            width: 50vh;
-            .CircularProgressbar-path {
-              stroke: #ffb55f !important;
-            }
-            svg {
-              overflow: overlay;
-
-              circle {
-                stroke-width: 4.5 !important;
-              }
-            }
-          }
-          .score-circle {
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: inherit;
-            position: absolute;
-          }
-          .score-data {
-            position: absolute;
-            height: $introduction-desktop-height;
-            width: 50vh;
-            top: 0;
-            color: var(--theme-dark-blue);
-            @extend %textCenter;
-            > div {
-              height: $introduction-desktop-height;
-              .score-precentage {
-                font-family: $font-family-black;
-                color: var(--theme-dark-blue);
-                line-height: 1;
-                font-size: 14vh;
-              }
-            }
-          }
-        }
+        
         .MuiCircularProgress-colorPrimary {
           color: #0076b4 !important;
         }
@@ -1405,23 +1445,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           }
           .scroll-next-button {
             right: 0;
-          }
-        }
-      }
-      // only provisional score and final score
-      .provisional-container,
-      .ending-container {
-        .circle-progress-container {
-          $height: calc(50vh);
-          height: $height !important;
-          .circle-progress {
-            height: $height !important;
-          }
-          .score-data {
-            height: $height !important;
-            > div {
-              height: $height !important;
-            }
           }
         }
       }
@@ -2017,9 +2040,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 // provisional score and final score
 .play-preview-pages .sorted-row.sorted-row-expanded .provisional-container,
 .play-preview-pages .sorted-row.sorted-row-expanded .ending-container {
-  .introduction-page .question-live-play {
-    margin-top: calc(5vw + 8vh) !important;
-  }
   .new-layout-footer {
     z-index: 100;
   }
