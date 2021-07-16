@@ -242,6 +242,7 @@ h3 {
 .pair-match-play-choice,
 .pair-match-image-choice,
 .choose-choice {
+  background: var(--theme-solitude-gray);
   &.active {
     background: var(--highlight-blue) !important;
   }
