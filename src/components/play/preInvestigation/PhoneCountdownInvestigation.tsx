@@ -37,7 +37,7 @@ const CountInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
         </svg>
         <div className="ss-after-glasses" />
         <div className="last-text s-fade3">
-          <div>Don`t worry if you are unable to</div>
+          <div>Don’t worry if you are unable to</div>
           <div>answer everything in time - you can</div>
           <div>have another after reading the</div>
           <div>Synthesis of this brick.</div>
