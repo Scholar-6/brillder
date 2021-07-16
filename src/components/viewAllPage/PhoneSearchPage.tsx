@@ -71,6 +71,9 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
   }
 
   async search(searchString: string) {
+    if (searchString && searchString.length < 3) {
+      return '';
+    }
     this.setState({ isLoading: true });
     if (this.state.typingTimeout) {
       clearTimeout(this.state.typingTimeout);
