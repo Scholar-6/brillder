@@ -657,8 +657,11 @@
     .question-hint {
       background: var(--solitude-light) !important;
     }
-    &.wrong .question-hint {
-      background: var(--theme-yellow) !important;
+    &.wrong {
+      background: var(--theme-orange) !important;
+      .question-hint {
+        background: var(--theme-yellow) !important;
+      }
     }
   }
 }
