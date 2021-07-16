@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 
 import { ClassroomApi } from "components/teach/service";
-import { Tab } from "./AssignmentPage";
+import { Tab } from "./service";
 
 interface FilterSidebarProps {
   assignmentsLength: number;
