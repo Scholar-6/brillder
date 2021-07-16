@@ -758,3 +758,9 @@
   .vertical-shuffle-choice.correct {
     background: var(--theme-green-alpha5) !important;
   }
+
+  .play-preview-pages .time-container {
+    .MuiLinearProgress-colorPrimary {
+        background: var(--theme-dark-blue) !important;
+    }
+}
