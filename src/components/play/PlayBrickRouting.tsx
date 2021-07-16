@@ -54,6 +54,7 @@ import PrePrep from "./prePrep/PrePrep";
 import NewPrep from "./newPrep/NewPrep";
 import PhonePreInvestigationPage from "./preInvestigation/PhonePreInvestigation";
 import PreInvestigationPage from "./preInvestigation/PreInvestigation";
+import PhoneCountInvestigationPage from './preInvestigation/PhoneCountdownInvestigation';
 import PhonePreSynthesisPage from "./preSynthesis/PhonePreSynthesis";
 import PreSynthesis from "./preSynthesis/PreSynthesis";
 import PreReview from "./preReview/PreReview";
@@ -514,10 +515,18 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route exact path={routes.preInvestigationRoute}>
           {isPhone()
-            ? <PhonePreInvestigationPage user={props.user} brick={brick} moveNext={moveToLive} />
+            ? <PhonePreInvestigationPage brick={brick} moveNext={() => history.push(routes.playCountInvesigation(brick.id))} />
             : <PreInvestigationPage user={props.user} brick={brick} moveNext={moveToLive} />
           }
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Start Timer" next={() => history.push(routes.playInvestigation(brick.id))} />}
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={() => history.push(routes.playCountInvesigation(brick.id))} />}
+        </Route>
+
+        <Route exact path={routes.countInvestigationRoute}>
+        {isPhone()
+            ? <PhoneCountInvestigationPage brick={brick} moveNext={() => history.push(routes.playInvestigation(brick.id))} />
+            : <PreInvestigationPage user={props.user} brick={brick} moveNext={moveToLive} />
+          }
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={() => history.push(routes.playInvestigation(brick.id))} />}
         </Route>
 
         <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
