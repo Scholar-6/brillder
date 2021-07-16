@@ -291,6 +291,55 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       font-size: 7vw;
     }
   }
+  .time-synthesis {
+    color: var(--theme-dark-blue);
+    height: calc(100% - 17.5vw - 26px) !important;
+    .introduction-page {
+      height: calc(100% - 4vh - 7.5vw) !important;
+
+      .ss-phone-before-brain {
+        height: 12%;
+      }
+
+      .brain-container {
+        display: flex;
+        justify-content: center;
+        height: 31%;
+        svg {
+          height: 100%;
+        }
+      }
+      .ss-phone-before-title {
+        height: 8%;
+      }
+      .title {
+        height: 10%;
+        line-height: 0;
+        font-size: 8vw;
+        font-family: $font-family-bold;
+        div {
+          height: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      .ss-phone-after-title {
+        height: 8%;
+      }
+      .last-text {
+        height: 10%;
+        font-size: 5vw;
+        line-height: 0;
+        div {
+          height: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
   .f-fixed-arrow-button {
     height: 64px;
     position: fixed;
