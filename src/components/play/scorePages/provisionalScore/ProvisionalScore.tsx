@@ -219,6 +219,9 @@ class ProvisionalScore extends React.Component<
             <Grid item xs={8}>
               <div className="introduction-page">
                 <h1 className="title">Provisional Score</h1>
+                {this.state.score < this.state.maxScore &&
+                  <div className="hr-sub-title">You can improve this when reviewing your answers</div>
+                }
                 <div className="question-live-play">
                   <Grid
                     container
