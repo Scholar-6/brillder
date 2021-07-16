@@ -527,7 +527,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             ? <PhoneCountInvestigationPage brick={brick} moveNext={() => history.push(routes.playInvestigation(brick.id))} />
             : <PreInvestigationPage user={props.user} brick={brick} moveNext={moveToLive} />
           }
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={() => history.push(routes.playInvestigation(brick.id))} />}
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Start Timer" next={() => history.push(routes.playInvestigation(brick.id))} />}
         </Route>
 
         <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
