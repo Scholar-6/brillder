@@ -87,7 +87,7 @@ class NotificationPanel extends Component<
           }
         } else if (type === NotificationType.InvitedToPlayBrick) {
           if (isPhone()) {
-            history.push(map.playIntro(brick.id));
+            history.push(routes.playNewPrep(brick.id));
           } else {
             history.push(routes.playCover(brick.id));
           }

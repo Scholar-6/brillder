@@ -8,18 +8,15 @@ import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import { getReviewTime } from "../services/playTimes";
-import routes from "../routes";
 import SecondsCountDown from "../baseComponents/SecondsCountDown";
 
 interface Props {
   brick: Brick;
-  history: any;
+  moveNext(): void;
 }
 
 const PreReview: React.FC<Props> = ({ brick, ...props }) => {
   const [isMoving, setMoving] = React.useState(false);
-  
-  const moveNext = () => props.history.push(routes.playReview(brick.id));
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -36,7 +33,37 @@ const PreReview: React.FC<Props> = ({ brick, ...props }) => {
   });
 
   if (isPhone()) {
-    return <div />;
+    return (
+      <div className="pre-investigation pre-review">
+        <div
+          className="fixed-upper-b-title"
+          dangerouslySetInnerHTML={{ __html: brick.title }}
+        />
+        <div className="introduction-page">
+          <div className="ss-phone-before-title" />
+          <div className="dd-question-container">
+            <SpriteIcon name="f-trending-up" className="smaller" />
+            <SpriteIcon name="f-trending-up" className="bigger" />
+          </div>
+          <div className="title s-fade1">
+            <div>Improve your score.</div>
+          </div>
+          <div className="ss-phone-after-title" />
+          <div className="like-button animate-v1">Preparation</div>
+          <div className="ss-phone-between-button" />
+          <div className="like-button orange">Investigation</div>
+          <div className="ss-phone-between-button" />
+          <div className="like-button animate-v1">Synthesis</div>
+          <div className="ss-phone-between-button" />
+          <div className="like-button orange" onClick={props.moveNext}>Review</div>
+          <div className="new-layout-footer">
+            <div className="time-container">
+              <DummyProgressbarCountdown value={50} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (isMoving) {
@@ -45,7 +72,7 @@ const PreReview: React.FC<Props> = ({ brick, ...props }) => {
         <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
         <div className="brick-container play-preview-panel live-page after-cover-page">
           <div className="introduction-page">
-            <SecondsCountDown onEnd={moveNext} />
+            <SecondsCountDown onEnd={props.moveNext} />
           </div>
         </div>
       </div>
@@ -84,7 +111,7 @@ const PreReview: React.FC<Props> = ({ brick, ...props }) => {
             </div>
             <div className="minutes-footer">
               {minutes}:00
-              </div>
+            </div>
             <div className="footer-space" />
             <div className="new-navigation-buttons">
               <div className="n-btn next" onClick={() => setMoving(true)}>

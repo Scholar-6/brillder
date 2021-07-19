@@ -6,7 +6,7 @@ import './BrickBlock.scss';
 import { AcademicLevelLabels, Brick } from "model/brick";
 import { User } from "model/user";
 
-import { playCover } from "components/play/routes";
+import routes, { playCover } from "components/play/routes";
 import { setAssignmentId } from "localStorage/playAssignmentId";
 import map from "components/map";
 import buildRoutes from 'components/build/routes';
@@ -73,7 +73,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       style={{ transformOrigin: "0 0 0" }}
       timeout={index * 150}
     >
-      <a href={window.location.origin + map.playCover(brick.id)} className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
+      <a href={window.location.origin + routes.playCover(brick.id)} className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
         <div className="publish-brick-container" onMouseLeave={props.handleMouseLeave}>
           <div className="level">
             <div style={{background: color}}>{AcademicLevelLabels[brick.academicLevel]}</div>
