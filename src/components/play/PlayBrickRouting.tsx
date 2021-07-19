@@ -65,8 +65,9 @@ import PhonePlaySimpleFooter from "./phoneComponents/PhonePlaySimpleFooter";
 import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
 import { getLiveTime, getReviewTime } from "./services/playTimes";
 import PhoneTimeSynthesisPage from "./preSynthesis/PhoneTimeSynthesis";
-import CountdownReview from "./preReview/CountdownReview";
+import PhoneCountdownReview from "./preReview/PhoneCountdownReview";
 import CountdownInvestigationPage from "./preInvestigation/CountdownInvestigation";
+import CountdownReview from "./preReview/CountdownReview";
 
 
 function shuffle(a: any[]) {
@@ -608,7 +609,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
 
         <Route exact path={routes.timeReviewRoute}>
-          <CountdownReview brick={brick} moveNext={moveToReview} />
+          {isPhone()
+            ? <PhoneCountdownReview brick={brick} moveNext={moveToReview} />
+            : <CountdownReview brick={brick} moveNext={moveToReview} />
+          }
           {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Start Timer" next={moveToReview} />}
         </Route>
 
