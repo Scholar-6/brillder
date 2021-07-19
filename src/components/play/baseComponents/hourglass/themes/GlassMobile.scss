@@ -1,0 +1,29 @@
+.gg-hourglass {
+  $time: 10s; // including 1 flip
+
+  margin-left: -6vmin;
+  margin-top: 0;
+  padding: 0 1vmin;
+  $height: 17vh;
+  $width: 16vh;
+
+  .top,
+  .bottom {
+    background-color: #def;
+    box-shadow: 0 0 1vmin 1vmin #bcd inset;
+    height: $height;
+    overflow: hidden;
+    position: relative;
+    width: $width;
+  }
+
+  .top:before {
+    height: $height;
+    width: $width;
+  }
+
+  .bottom:before {
+    height: $height;
+    width: $width;
+  }
+}
