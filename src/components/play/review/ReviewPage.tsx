@@ -231,7 +231,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-        <div className="question-live-play review-content">
+        <div className="question-live-play dd-live-container review-content">
           <div className="question-title">
             {renderReviewTitle(attempt)}
             <div className="marks-container">
@@ -242,71 +242,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
           {renderQuestion(question, index)}
         </div>
       </TabPanel>
-    );
-  };
-
-  const renderPrevButton = () => {
-    if (activeStep === 0) {
-      return "";
-    }
-    return (
-      <button className="play-preview svgOnHover play-white" onClick={prev}>
-        <SpriteIcon
-          name="arrow-left"
-          className="w80 h80 svg-default m-l-02 text-gray"
-        />
-        <SpriteIcon
-          name="arrow-left"
-          className="svg w80 h80 colored m-l-02 text-white"
-        />
-      </button>
-    );
-  };
-
-  const renderCenterText = () => {
-    if (questions.length - 1 > activeStep) {
-      return (
-        <div className="direction-info text-center">
-          <h2>Next</h2>
-          <span>
-            Don’t panic, you can
-            <br />
-            always come back
-          </span>
-        </div>
-      );
-    }
-    return (
-      <div className="direction-info">
-        <h2 className="text-center">Submit</h2>
-        <span>How do you think it went?</span>
-      </div>
-    );
-  };
-
-  const renderNextButton = () => {
-    if (questions.length - 1 > activeStep) {
-      return (
-        <button
-          type="button"
-          className="play-preview svgOnHover play-green"
-          onClick={next}
-        >
-          <SpriteIcon
-            name="arrow-right"
-            className="svg w80 h80 active m-l-02"
-          />
-        </button>
-      );
-    }
-    return (
-      <button
-        type="button"
-        className="play-preview svgOnHover play-green"
-        onClick={() => setSubmitAnswers(true)}
-      >
-        <SpriteIcon name="check-icon-thin" className="svg w80 h80 active" />
-      </button>
     );
   };
 
@@ -354,7 +289,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 />
               </div>
             </div>
-            <div className="introduction-info"></div>
             <div className="introduction-content" ref={questionScrollRef}>
               {questions.map(renderQuestionContainer)}
               {renderPhoneButtons()}
@@ -391,67 +325,51 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       <div className="brick-container play-preview-panel review-page">
         <div className="introduction-page">
           <Grid container direction="row">
-            <Grid item sm={8} xs={12}>
-              <SwipeableViews
-                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-                index={activeStep}
-                className="swipe-view"
-                onChangeIndex={handleStep}
-              >
-                {questions.map(renderQuestionContainer)}
-              </SwipeableViews>
-              <div className="new-layout-footer" style={{ display: "none" }}>
-                <div className="time-container">
-                  <TimeProgressbar
-                    onEnd={onEnd}
-                    minutes={minutes}
-                    endTime={props.endTime}
-                    brickLength={brick.brickLength}
-                    setEndTime={(a) => {
-                      console.log("set end 6");
-                      props.setEndTime(a);
-                    }}
-                  />
+            <div className="introduction-info">
+              <div className="intro-text-row">
+                <ReviewStepper
+                  questions={questions}
+                  attempts={attempts}
+                  activeStep={activeStep}
+                  handleStep={handleStep}
+                />
+              </div>
+            </div>
+            {questions.map(renderQuestionContainer)}
+            <div className="new-layout-footer" style={{ display: "none" }}>
+              <div className="time-container">
+                <TimeProgressbar
+                  onEnd={onEnd}
+                  minutes={minutes}
+                  endTime={props.endTime}
+                  brickLength={brick.brickLength}
+                  setEndTime={(a) => {
+                    console.log("set end 6");
+                    props.setEndTime(a);
+                  }}
+                />
+              </div>
+              <div className="footer-space" />
+              <div className="new-navigation-buttons">
+                <div className="n-btn back" onClick={prev}>
+                  <SpriteIcon name="arrow-left" />
+                  Back
                 </div>
-                <div className="footer-space" />
-                <div className="new-navigation-buttons">
-                  <div className="n-btn back" onClick={prev}>
-                    <SpriteIcon name="arrow-left" />
-                    Back
-                  </div>
-                  <div
-                    className="n-btn next"
-                    onClick={() => {
-                      if (questions.length - 1 > activeStep) {
-                        next();
-                      } else {
-                        setSubmitAnswers(true);
-                      }
-                    }}
-                  >
-                    Next
-                    <SpriteIcon name="arrow-right" />
-                  </div>
+                <div
+                  className="n-btn next"
+                  onClick={() => {
+                    if (questions.length - 1 > activeStep) {
+                      next();
+                    } else {
+                      setSubmitAnswers(true);
+                    }
+                  }}
+                >
+                  Next
+                  <SpriteIcon name="arrow-right" />
                 </div>
               </div>
-            </Grid>
-            <Grid item sm={4} xs={12}>
-              <div className="introduction-info">
-                <div className="intro-text-row f-align-self-start m-t-5">
-                  <ReviewStepper
-                    questions={questions}
-                    attempts={attempts}
-                    activeStep={activeStep}
-                    handleStep={handleStep}
-                  />
-                </div>
-                <div className="action-footer">
-                  <div>{renderPrevButton()}</div>
-                  {renderCenterText()}
-                  <div>{renderNextButton()}</div>
-                </div>
-              </div>
-            </Grid>
+            </div>
           </Grid>
           <SubmitAnswersDialog
             isOpen={isSubmitOpen}
