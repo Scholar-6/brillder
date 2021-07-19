@@ -12,6 +12,7 @@ import SendToPublisherButton from "./SendToPublisherButton";
 import ReturnToEditorButton from "./ReturnToEditorButton";
 import BuildPublishButton from "./PublishButton";
 import { User } from "model/user";
+import routes from "components/play/routes";
 
 
 interface NavigationProps {
@@ -120,7 +121,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
           history={this.props.history}
           onFinish={() => {
             this.setState({brickStatus: BrickStatus.Publish});
-            this.props.history.push(map.playCover(this.props.brick.id));
+            this.props.history.push(routes.playCover(this.props.brick.id));
           }}
         />
       );

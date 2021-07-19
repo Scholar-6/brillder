@@ -97,8 +97,6 @@ export const ProposalTitleLink = `${NewBrick}/brick-title`;
 
 // play preview
 export const PlayPreviewBase = '/play-preview/brick';
-export const PlayIntroLastPrefix = '/intro';
-export const PlayCoverLastPrefix = '/cover';
 
 export const playPreview = (brickId: number) => {
   return  PlayPreviewBase + '/' + brickId;
@@ -109,13 +107,6 @@ export const PlayBase = '/play/brick';
 
 export const realPlay = (brickId: number) => {
   return  PlayBase + '/' + brickId;
-}
-
-export const playIntro = (brickId: number) => {
-  return realPlay(brickId) + PlayIntroLastPrefix;
-}
-export const playCover = (brickId: number) => {
-  return realPlay(brickId) + PlayCoverLastPrefix;
 }
 
 // post play
@@ -184,6 +175,4 @@ export default {
   investigationBuildQuestion,
   investigationBuildQuestionType,
   investigationQuestionSuggestions,
-  playIntro,
-  playCover,
 }

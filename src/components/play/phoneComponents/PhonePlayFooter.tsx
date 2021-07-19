@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import { isAuthenticated } from 'model/brick';
 import { PlayMode } from '../model';
-import map from 'components/map';
 import { Brick } from 'model/brick';
 import { User } from 'model/user';
 import actions from "redux/actions/brickActions";
@@ -213,7 +212,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="logo" className="text-theme-orange" onClick={() => setExit(true)} />
         {(isIntro() || isPrep() || isFinalScore() || isSynthesis())
           ? <SpriteIcon name="" />
-          : <SpriteIcon name="file-text" className="ff-prep-icon" onClick={() => history.push(map.playIntro(brick.id) + '?prepExtanded=true&resume=true')} />}
+          : <SpriteIcon name="file-text" className="ff-prep-icon" onClick={() => history.push(routes.playNewPrep(brick.id) + '?prepExtanded=true&resume=true')} />}
         <SpriteIcon name="" className="ff-smaller" />
         <SpriteIcon name="f-more-vertical" onClick={() => setMenu(!menuOpen)} />
         <SpriteIcon name="" className="ff-smaller" />

@@ -344,6 +344,32 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       }
     }
   }
+  .pre-review .introduction-page  {
+    .ss-phone-before-title {
+      height: 4%;
+    }
+    .dd-question-container {
+      height: 21%;
+      svg {
+        position: absolute;
+        stroke-width: 2.2;
+      }
+      .smaller {
+        color: var(--tab-gray);
+        $size: 7vh;
+        left: calc(50% - 4vh - #{$size / 2});
+        width: $size;
+        height: $size;
+      }
+      .bigger {
+        top: 0;
+        $size: 15vh;
+        left: calc(50% - #{$size / 2});
+        width: $size;
+        height: $size;
+      }
+    }
+  }
   .f-fixed-arrow-button {
     height: 64px;
     position: fixed;
