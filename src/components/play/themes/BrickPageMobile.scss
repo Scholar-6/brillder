@@ -99,7 +99,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   }
   .pre-investigation {
     color: var(--theme-dark-blue);
-    height: calc(100% - 17.5vw - 26px) !important;
+    height: calc(100% - 17.5vw) !important;
     text-align: center;
     .introduction-page {
       position: relative;
@@ -111,10 +111,58 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .fe-arrow-container {
       width: 100vw !important;
     }
+    .dd-question-container {
+      height: 15%;
+      position: relative;
+      width: 100%;
+      font-family: $font-family-black;
+      font-size: 9.5vh;
+      line-height: 0;
+      @keyframes floating2 {
+        0% {
+          top: 4.2vh;
+        }
+        50% {
+          top: 5vh;
+        }
+        100% {
+          top: 4.2vh;
+        }
+      }
+      @keyframes floating1 {
+        0% {
+          top: 0;
+        }
+        50% {
+          top: 0.8vh;
+        }
+        100% {
+          top: 0;
+        }
+      }
+      .dd-first, .dd-second, .dd-third {
+        position: absolute;
+      }
+      .dd-second {
+        font-size: 12vh;
+        top: 0;
+        animation: floating1 1.2s infinite;
+        left: calc(50% - 2.6vh);
+      }
+      .dd-first, .dd-third {
+        animation: floating2 1.2s infinite;
+        color: var(--tab-gray);
+      }
+
+      .dd-first {
+        left: calc(50% - 7vh);
+      }
+      .dd-third {
+        left: calc(50% + 2.5vh);
+      }
+    }
     .title {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      position: relative;
       font-size: 8.3vw;
       line-height: 0;
       height: 0;
@@ -157,6 +205,138 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         font-size: 6vw;
         font-family: $font-family-bold-italic;
         color: var(--theme-orange);
+      }
+    }
+  }
+  .count-investigation {
+    color: var(--theme-dark-blue);
+    height: calc(100% - 17.5vw) !important;
+    text-align: center;
+    .count-introduction-page {
+      height: calc(100% - 4vh - 7.5vw) !important;
+    }
+    
+    .ss-phone-before-title {
+      height: 9%;
+    }
+    .title {
+      height: 10%;
+      line-height: 0;
+      font-size: 6vw;
+      font-family: $font-family-bold;
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50%;
+        .text-orange {
+          margin-left: 1.2vw;
+          margin-right: 1.2vw;
+        }
+      }
+    }
+    .ss-phone-after-title {
+      height: 7%;
+    }
+    .hourglass {
+      height: 30%;
+    }
+    .ss-after-glasses {
+      height: 7%;
+    }
+    .last-text {
+      line-height: 0;
+      height: 20%;
+      font-family: $font-family-bold;
+      font-size: 6vw;
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 25%;
+      }
+    }
+  }
+  .pre-synthesis {
+    height: calc(100% - 17.5vw - 26px) !important;
+    .ss-phone-before-brain {
+      height: 7%;
+    }
+    @keyframes floating323 {
+      0% {
+        margin-top: 0;
+        margin-bottom: 1vh;
+      }
+      50% {
+        margin-top: 1vh;
+        margin-bottom: 0vh;
+      }
+      100% {
+        margin-top: 0;
+        margin-bottom: 1vh;
+      }
+    }
+    .ss-brain-container {
+      height: 17%;
+    }
+    .ss-brain {
+      height: 100%;
+      color: var(--theme-orange);
+      animation: floating323 1.5s ease-out infinite;
+    }
+    .ss-phone-before-title {
+      height: 7%;
+    }
+    .title {
+      font-size: 7vw;
+    }
+  }
+  .time-synthesis {
+    color: var(--theme-dark-blue);
+    height: calc(100% - 17.5vw - 26px) !important;
+    .introduction-page {
+      height: calc(100% - 4vh - 7.5vw) !important;
+
+      .ss-phone-before-brain {
+        height: 12%;
+      }
+
+      .brain-container {
+        display: flex;
+        justify-content: center;
+        height: 31%;
+        svg {
+          height: 100%;
+        }
+      }
+      .ss-phone-before-title {
+        height: 8%;
+      }
+      .title {
+        height: 10%;
+        line-height: 0;
+        font-size: 8vw;
+        font-family: $font-family-bold;
+        div {
+          height: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      .ss-phone-after-title {
+        height: 8%;
+      }
+      .last-text {
+        height: 10%;
+        font-size: 5vw;
+        line-height: 0;
+        div {
+          height: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       }
     }
   }
@@ -574,44 +754,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               margin-right: 10px;
             }
           }
-          .question-index-container {
-            margin: 1vw 1.5vw 2vw 0;
-            padding: 0.5vw;
-            width: 3.3vw;
-            height: 3.3vw;
-            @extend %radCircle;
-            display: none;
-            &.correct {
-              .question-index {
-                background: var(--theme-green);
-              }
-            }
-            &.wrong {
-              .question-index {
-                background: var(--theme-orange);
-              }
-            }
-            &.attempted {
-              background: var(--highlight-blue);
-              .question-index {
-                background: var(--blue);
-              }
-            }
-            .question-index {
-              padding: 0;
-              background: var(--tab-gray);
-              border-radius: 100vw;
-              font-family: $font-family-black;
-              color: var(--theme-dark-blue);
-              @extend %textCenter;
-              width: 6vw;
-              height: 6vw;
-              font-size: inherit;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            }
-          }
           .question-live-play {
             overflow-y: auto;
             width: 100%;
@@ -731,9 +873,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             .sort-category {
               font-size: $mbase-font-size !important;
             }
-            .question-index-container {
-              display: none;
-            }
             .MuiTypography-root {
               height: 100% !important;
               .MuiBox-root {
@@ -788,10 +927,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             height: 100% !important;
             .question-live-play {
               height: 100% !important;
-              .p-help-text {
-                position: fixed;
-                bottom: calc(#{$mobile-menu-height} + 3vw);
-              }
             }
           }
         }
@@ -1069,6 +1204,12 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             span {
               color: var(--tab-gray);
               background: var(--theme-green);
+            }
+          }
+          &.almost-failed {
+            span {
+              color: var(--tab-gray);
+              background: var(--theme-yellow);
             }
           }
           &.failed {
@@ -1649,6 +1790,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
 .phone-provisional-score {
   height: calc(100% - 17.5vw);
+
   .header {
     background: var(--theme-light-blue);
     .stepper {
@@ -1673,22 +1815,42 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             stroke-width: 4;
           }
         }
+        &.success svg {
+          color: var(--theme-green);
+        }
+        &.failed svg {
+          color: var(--theme-orange);
+        }
+        &.almost-failed svg {
+          color: var(--theme-yellow);
+        }
       }
     }
   }
   .content {
     height: auto;
     color: var(--theme-dark-blue);
+    .title, .hr-sub-title {
+      animation: fadein 1s forwards;
+    }
     .title {
       font-size: 10.5vw;
       line-height: 0;
       margin-top: 5vh;
-      margin-bottom: 7vh;
+      margin-bottom: 4vh;
       font-family: $font-family-black;
       text-align: center;
       color: var(--theme-dark-blue);
     }
+    .hr-sub-title {
+      text-align: center;
+      font-size: 4.5vw;
+      padding-bottom: 1vh;
+    }
+
     .pr-progress-center {
+      opacity: 0;
+      animation: fadein 1s 0.5s forwards;
       margin-top: 2.5vh;
       display: flex;
       width: 100vw;
@@ -1751,6 +1913,10 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
           font-family: $font-family-bold;
         }
       }
+    }
+    .attempted-numbers, .attempted-text, .duration, .review-duration {
+      opacity: 0;
+      animation: fadein 1s 1s forwards;
     }
     .attempted-numbers {
       display: flex;

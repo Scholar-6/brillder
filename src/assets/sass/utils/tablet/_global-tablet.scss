@@ -261,20 +261,11 @@ h3 {
   }
 }
 .short-answer-input.correct {
-  $border-radius: 1vw;
+  $border-radius: 2vw;
 
   .question-hint {
-    padding-left: 1vw;
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
-  }
-  @include phone_and_tabletP {
-    $border-radius: 2vw;
-
-    .question-hint {
-      border-bottom-left-radius: $border-radius;
-      border-bottom-right-radius: $border-radius;
-    }
   }
 }
 

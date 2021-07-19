@@ -18,7 +18,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
 }) => {
   let parsedAnswers = null;
 
-  let answers:any[] = [];
+  let answers: any[] = [];
   if (mode) {
     answers = activeAttempt.answers;
   } else if (mode === false) {
@@ -27,22 +27,50 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
 
   try {
     parsedAnswers = JSON.parse(JSON.parse(answers[i].answer));
-  } catch {}
+  } catch { }
 
   let attempt = Object.assign({}, activeAttempt) as any;
   attempt.answer = parsedAnswers;
+
+  const renderTitle = () => {
+    if (mode === undefined) {
+      return "Investigation";
+    } else if (mode === true) {
+      if (activeAttempt.answers[i].correct) {
+        return "Correct!"
+      }
+      return "Not quite - try again!";
+    } else if (mode === false) {
+      if (activeAttempt.liveAnswers[i].correct) {
+        return "Correct!"
+      }
+      return "Not quite - try again!";
+    }
+  }
+
+  const renderMarks = () => {
+    if (answers && answers[i]) {
+      return (
+        <div className="marks-container">
+          <div>Marks</div>
+          <div>{answers[i].marks}/{answers[i].maxMarks}</div>
+        </div>
+      )
+    }
+  }
 
   return (
     <div className="page3" onClick={prevQuestion}>
       <div className="flipped-page question-page">
         <div style={{ display: "flex" }}>
-          <div className="question-number desktop">
-            <div>{i + 1}</div>
-          </div>
           <div className="question-scrollable">
+            <div className="question-title">
+              {renderTitle()}
+              {renderMarks()}
+            </div>
             {mode === undefined
               ? <QuestionPlay question={question} isPhonePreview={true} isDefaultBook={true} isBookPreview={true} answers={[]} />
-              : 
+              :
               <QuestionPlay
                 question={question}
                 attempt={attempt}

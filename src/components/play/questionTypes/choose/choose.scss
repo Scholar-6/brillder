@@ -36,6 +36,9 @@
       }
     }
   }
+  .choose-choice.correct {
+    background: var(--theme-green-alpha5) !important;
+  }
 }
 
 // build. question. phone preview

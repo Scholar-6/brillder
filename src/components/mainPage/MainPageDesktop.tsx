@@ -29,7 +29,6 @@ import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/Desk
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import LibraryButton from "./components/LibraryButton";
 import BlocksIcon from "./components/BlocksIcon";
-import { isPhone } from "services/phone";
 import ReportsAlertDialog from "components/baseComponents/dialogs/ReportsAlertDialog";
 import { isIPad13, isTablet } from "react-device-detect";
 
@@ -188,14 +187,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     const isActive = this.props.user.hasPlayedBrick;
     return (
       <LibraryButton
-        isActive={isActive} history={this.props.history} isSwiping={false}
+        isActive={isActive} history={this.props.history}
         onClick={() => this.setState({ isMyLibraryOpen: true })}
-        onMobileClick={() => {
-          this.setState({
-            isDesktopOpen: true,
-            secondaryLabel: 'Your Library has' + this.state.secondPart
-          });
-        }}
       />
     );
   }
@@ -204,7 +197,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     const isActive = this.state.backWorkActive;
     const disabledColor = 'text-theme-dark-blue';
     return (
-      <div className="back-item-container student-back-work" onClick={() => {
+      <div className="back-item-container second-button student-back-work" onClick={() => {
         if (isActive) {
           this.props.history.push(map.AssignmentsPage);
         } else {
@@ -212,7 +205,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : disabledColor}`}>
-          <BlocksIcon />
+          <BlocksIcon disabled={!isActive} />
           <span className={`item-description flex-number ${isActive ? '' : 'disabled'}`}>
             My Assignments {this.state.assignedCount > 0 &&
             <div className="m-red-circle">
@@ -282,14 +275,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   renderReportsButton(isActive: boolean) {
     return (
       <div className="back-item-container student-back-work" onClick={() => {
-        if (isPhone()) {
-          this.setState({
-            isDesktopOpen: true,
-            secondaryLabel: 'Reports have ' + this.state.secondPart
-          });
-        } else {
-          this.setState({ isReportLocked: true });
-        }
+        this.setState({ isReportLocked: true });
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : 'text-theme-light-blue'}`}>
           <SpriteIcon name="book-open" />

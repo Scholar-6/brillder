@@ -25,14 +25,9 @@ import { getBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames, BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, SubjectRoutePart, TitleRoutePart } from "./model";
-import {
-  parseQuestion,
-  ApiQuestion,
-} from "components/build/questionService/QuestionService";
 import map from "components/map";
 
 import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
-import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { buildQuesitonType } from "../routes";
@@ -87,6 +82,11 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       prep: "",
       synthesis: "",
     } as Brick;
+
+    if (props.match.params.brickId) {
+      initBrick.id = props.match.params.brickId;
+    }
+
 
     if (user) {
       initBrick.author = (user as any) as Author;
@@ -211,10 +211,12 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     setLocalBrick(brick);
   }
 
-  setCore = (isCore: boolean) =>
-    this.saveLocalBrick({ ...this.state.brick, isCore });
-  setSubject = (subjectId: number) =>
+  setSubject = (subjectId: number) => {
     this.saveLocalBrick({ ...this.state.brick, subject: undefined, subjectId });
+  }
+
+  setCore = (isCore: boolean) =>
+    this.saveLocalBrick({ ...this.state.brick, isCore });  
   setCoreAndSubject = (subjectId: number, isCore: boolean) => 
     this.saveLocalBrick({ ...this.state.brick, subjectId, isCore });
   setTitles = (titles: any) =>
@@ -256,8 +258,23 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const brick = { ...this.state.brick, prep } as Brick;
     this.saveLocalBrick(brick);
     await this.saveBrick(brick);
-    this.props.history.push(buildQuesitonType(brick.id));
+    this.props.history.push(buildQuesitonType(this.state.brick.id));
   };
+
+  createBrick = async () => {
+    console.log('create brick')
+    if (this.state.brick.subjectId) {
+      const newBrick = await this.saveBrick(this.state.brick);
+      if(newBrick) {
+        const {isCore} = this.state.brick;
+        if (this.state.brick.subjectId) {
+          this.props.history.push(map.ProposalTitle(newBrick.id) + '?isCore=' + isCore);
+        } else {
+          this.props.history.push(map.ProposalSubject(newBrick.id) + '?isCore=' + isCore);
+        }
+      }
+    }
+  }
 
   saveAndMove = async () => {
     if (this.state.saving === true) { return; }
@@ -275,24 +292,15 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   render() {
-    const {brickId} = this.props.match.params;
+    let brickId = this.props.match.params.brickId as any;
 
-    if(!brickId) {
-      const callback = async () => {
-        if (this.state.brick.subjectId) {
-          const newBrick = await this.saveBrick(this.state.brick);
-          if(newBrick) {
-            const values = queryString.parse(this.props.location.search);
-            const isCore = this.getCore(values);
-            if (this.state.brick.subjectId) {
-              history.push(map.ProposalTitle(newBrick.id) + '?isCore=' + isCore);
-            } else {
-              history.push(map.ProposalSubject(newBrick.id) + '?isCore=' + isCore);
-            }
-          }
-        }
-      }
-      callback();
+    if (brickId) {
+      brickId = parseInt(brickId);
+    }
+
+    if (brickId && !this.state.brick.id) {
+      /* eslint-disable-next-line */
+      this.state.brick.id = parseInt(brickId);
     }
 
     const baseUrl = this.getBaseUrl();
@@ -332,14 +340,13 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 subjects={user.subjects}
                 subjectId={this.state.brick.subjectId ? this.state.brick.subjectId : ""}
                 history={history}
-                saveCore={this.setCore}
                 saveSubject={this.setSubject}
-                saveData={this.setCoreAndSubject}
               />
             </Route>
             <Route path={[baseUrl + '/brick-title']}>
               <BrickTitle
                 user={user}
+                brickId={brickId}
                 history={history}
                 baseUrl={baseUrl}
                 parentState={localBrick}
@@ -348,6 +355,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
                 saveTitles={this.setTitles}
                 setKeywords={this.setKeywords}
                 setAcademicLevel={this.setAcademicLevel}
+                createBrick={this.createBrick}
               />
             </Route>
             <Route path={[baseUrl + '/length']}>

@@ -1,4 +1,5 @@
 import React from "react";
+import { isMobile } from "react-device-detect";
 
 import './BlocksIcon.scss';
 
@@ -10,8 +11,13 @@ interface FirstButtonProps {
 const BlocksIcon: React.FC<FirstButtonProps> = props => {
   const [hovered, setHover] = React.useState(false);
   let className = 'blocks-icon svg';
-  if (hovered) {
-    className += ' hovered';
+  if (props.disabled) {
+    className += ' disabled';
+  }
+  if (!isMobile) {
+    if (hovered) {
+      className += ' hovered';
+    }
   }
   return (
     <div className={className} onMouseEnter={() => {

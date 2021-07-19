@@ -38,7 +38,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         userAnswers = component.choices ? component.choices : [];
       }
     }
-    this.state = { status, userAnswers };
+    let canDrag = true;
+    if (this.props.attempt?.correct) {
+      canDrag = false;
+    }
+    this.state = { status, userAnswers, canDrag };
   }
 
   UNSAFE_componentWillUpdate(props: PairMatchProps) {
@@ -68,11 +72,15 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   getAnswer(): any[] { return this.state.userAnswers; }
 
   getState(entry: number): number {
-    if (this.props.attempt?.answer[entry]) {
-      if (this.props.attempt.answer[entry].index === this.props.component.list[entry].index) {
-        return 1;
-      } else { return -1; }
-    } else { return 0; }
+    try {
+      if (this.props.attempt?.answer[entry]) {
+        if (this.props.attempt.answer[entry].index === this.props.component.list[entry].index) {
+          return 1;
+        } else { return -1; }
+      } else { return 0; }
+    } catch {
+      return 0;
+    }
   }
 
   getBookState(entry: number): number {
@@ -130,8 +138,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         let state = this.getState(answer.index);
         if (state === 1) {
           className += " correct";
-        } else {
-          className += " wrong";
         }
       }
     }
@@ -190,7 +196,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
             }
           </List>
           {
-            this.props.isBookPreview || this.props.isPreview ?
+            this.props.isBookPreview || this.props.isPreview || !this.state.canDrag ?
               <div className="answers-list">
                 {this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))}
               </div>

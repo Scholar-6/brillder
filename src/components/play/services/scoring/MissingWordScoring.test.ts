@@ -48,7 +48,7 @@ describe("missing word scoring", () => {
         expect(result.correct).toStrictEqual(true);
     });
 
-    it("should mark an incorrect answer with 0.5n marks", () => {
+    it("should mark an all incorrect answer with 0 marks", () => {
         // arrange
         const mockAttempt = {
             answer: [
@@ -62,7 +62,26 @@ describe("missing word scoring", () => {
         const result = mark(mockComponent, mockAttempt);
 
         // assert
-        expect(result.marks).toStrictEqual(1.5);
+        expect(result.marks).toStrictEqual(0);
+        expect(result.maxMarks).toStrictEqual(6);
+        expect(result.correct).toStrictEqual(false);
+    });
+
+    it("should mark 1 out of 3 correct answer as incorrect with 2 marks", () => {
+        // arrange
+        const mockAttempt = {
+            answer: [
+                { value: 0 },
+                { value: 2 },
+                { value: 0 },
+            ]
+        } as ComponentAttempt<any>;
+
+        // act
+        const result = mark(mockComponent, mockAttempt);
+
+        // assert
+        expect(result.marks).toStrictEqual(2);
         expect(result.maxMarks).toStrictEqual(6);
         expect(result.correct).toStrictEqual(false);
     });

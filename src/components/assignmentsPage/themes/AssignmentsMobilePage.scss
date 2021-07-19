@@ -89,6 +89,7 @@
     }
 
     .swiper-container .swiper-slide .phone-top-brick-16x9 {
+      overflow: hidden;
       position: relative;
       height: $height;
       padding: 0 !important;
@@ -618,6 +619,11 @@
       > div.orange {
         color: var(--white);
         background: var(--theme-orange);
+      }
+      > div.smaller-blue {
+        font-size: 1.8vw;
+        color: var(--white);
+        background: var(--theme-dark-blue);
       }
     }
   }
