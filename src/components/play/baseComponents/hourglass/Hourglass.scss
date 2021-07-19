@@ -3,16 +3,17 @@
   $time:10s; // including 1 flip
 
   animation:flip $time ease-in-out infinite;
-  border-bottom:solid 1vmin #630;
-  border-top:solid 1vmin #630;
   padding:0 1vmin;
   .top, .bottom {
-    background-color:#def;
-    box-shadow:0 0 1vmin 1vmin #bcd inset;
+    background-color:var(--white);
+    box-shadow:0 0 1vmin 1vmin var(--tab-gray) inset;
     overflow:hidden;
     position:relative;
   }
   $sand-color: #FF9800;
+  .background-icon {
+    position: absolute;
+  }
   .top {
     border-radius:0 0 50% 50%;    
     &:before {
