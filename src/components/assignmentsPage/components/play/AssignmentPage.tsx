@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import { ReduxCombinedState } from "redux/reducers";
-import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
+import { AssignmentBrick } from "model/assignment";
 import actions from 'redux/actions/requestFailed';
 import { getAssignedBricks } from "services/axios/brick";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
@@ -17,12 +17,8 @@ import map from "components/map";
 import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { countClassAssignments, countClassroomAssignments, filter, getAssignmentsTabCount, getCompletedTabCount, isVisibled, sortAssignments, Tab } from "./service";
 
-
-export enum Tab {
-  Assignments,
-  Completed
-}
 
 interface PlayProps {
   history: any;
@@ -34,6 +30,8 @@ interface PlayProps {
 }
 
 interface PlayState {
+  assignmentsTabCount: number;
+  completedTabCount: number;
   subjects: Subject[];
   activeTab: Tab,
   finalAssignments: AssignmentBrick[];
@@ -50,7 +48,6 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
   constructor(props: PlayProps) {
     super(props);
 
-
     let activeClassroomId = -1;
     const { classId } = props.match.params;
     if (classId && classId > 0) {
@@ -58,18 +55,16 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     }
 
     this.state = {
+      assignmentsTabCount: 0,
+      completedTabCount: 0,
+      subjects: [],
       finalAssignments: [],
       rawAssignments: [],
       classrooms: [],
       activeClassroomId,
-
       activeTab: Tab.Assignments,
-
       sortedIndex: 0,
       pageSize: 6,
-
-      subjects: [],
-
       isLoaded: false,
       handleKey: this.handleKey.bind(this)
     }
@@ -77,25 +72,11 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     this.getAssignments(activeClassroomId);
   }
 
-  sortAssignments(a: AssignmentBrick, b: AssignmentBrick) {
-    if (a.deadline) {
-      if (a.deadline && b.deadline) {
-        if (new Date(a.deadline).getTime() < new Date(b.deadline).getTime()) {
-          return -1;
-        } else {
-          return 0;
-        }
-      }
-      return -1;
-    }
-    return 1;
-  }
-
   async getAssignments(classroomId: number) {
     let assignments = await getAssignedBricks();
     const subjects = await getSubjects();
     if (assignments && subjects) {
-      assignments = assignments.sort(this.sortAssignments);
+      assignments = assignments.sort(sortAssignments);
       this.setAssignments(assignments, subjects, classroomId);
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
@@ -119,16 +100,6 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     }
   }
 
-  countClassroomAssignments(classrooms: any[], assignments: AssignmentBrick[]) {
-    for (let c of classrooms) {
-      c.assignmentsCount = 0;
-      for (let a of assignments) {
-        if (a.classroom && a.classroom.id === c.id) {
-          c.assignmentsCount += 1;
-        }
-      }
-    }
-  }
 
   setAssignments(assignments: AssignmentBrick[], subjects: Subject[], classroomId: number) {
     const classrooms: any[] = [];
@@ -141,37 +112,11 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
       }
     }
 
-    const finalAssignments = this.filter(assignments, Tab.Assignments, classroomId);
-    this.countClassroomAssignments(classrooms, assignments);
-    this.setState({ ...this.state, subjects, isLoaded: true, classrooms, rawAssignments: assignments, finalAssignments, sortedIndex: 0 });
-  }
-
-  isVisibled(tab: Tab, a: AssignmentBrick) {
-    if (tab === Tab.Assignments) {
-      if (a.status === AssignmentBrickStatus.ToBeCompleted) {
-        return true;
-      }
-    } else {
-      if (a.status !== AssignmentBrickStatus.ToBeCompleted) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  filter(assignments: AssignmentBrick[], activeTab: Tab, classroomId: number) {
-    let asins = assignments;
-    if (classroomId > 0) {
-      asins = assignments.filter(s => s.classroom?.id === classroomId);
-    }
-
-    const res = [];
-    for (let a of asins) {
-      if (this.isVisibled(activeTab, a)) {
-        res.push(a);
-      }
-    }
-    return res;
+    const finalAssignments = filter(assignments, Tab.Assignments, classroomId);
+    countClassroomAssignments(Tab.Assignments, classrooms, assignments);
+    const assignmentsTabCount = getAssignmentsTabCount(assignments);
+    const completedTabCount = getCompletedTabCount(assignments);
+    this.setState({ ...this.state, subjects, isLoaded: true, classrooms, assignmentsTabCount, completedTabCount, rawAssignments: assignments, finalAssignments, sortedIndex: 0 });
   }
 
   //#region Pagination
@@ -191,18 +136,36 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
   //#endregion
 
   setActiveClassroom(classroomId: number) {
+    const {rawAssignments} = this.state;
     if (classroomId > 0) {
       this.props.history.push(map.AssignmentsPage + '/' + classroomId);
     } else {
       this.props.history.push(map.AssignmentsPage);
     }
-    const assignments = this.filter(this.state.rawAssignments, this.state.activeTab, classroomId);
-    this.setState({ activeClassroomId: classroomId, finalAssignments: assignments, sortedIndex: 0 });
+    const assignments = filter(rawAssignments, this.state.activeTab, classroomId);
+
+    let assignmentsTabCount = 0;
+    let completedTabCount = 0; 
+
+    if (classroomId > 0) {
+      let assignments = [];
+      for (let a of rawAssignments) {
+        if (a.classroom?.id === classroomId) {
+          assignments.push(a);
+        }
+      }
+      ({ assignmentsTabCount, completedTabCount } = countClassAssignments(classroomId, rawAssignments))
+    } else {
+      assignmentsTabCount = getAssignmentsTabCount(rawAssignments);
+      completedTabCount = getCompletedTabCount(rawAssignments);
+    }
+    this.setState({ activeClassroomId: classroomId, assignmentsTabCount, completedTabCount, finalAssignments: assignments, sortedIndex: 0 });
   }
 
   setTab(tab: Tab) {
     if (tab !== this.state.activeTab) {
-      const finalAssignments = this.filter(this.state.rawAssignments, tab, this.state.activeClassroomId);
+      const finalAssignments = filter(this.state.rawAssignments, tab, this.state.activeClassroomId);
+      countClassroomAssignments(tab, this.state.classrooms, this.state.rawAssignments);
       this.setState({ finalAssignments, sortedIndex: 0, activeTab: tab });
     }
   }
@@ -210,7 +173,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
   getViewAllCount() {
     let allCount = 0;
     for (let a of this.state.rawAssignments) {
-      if (this.isVisibled(this.state.activeTab, a)) {
+      if (isVisibled(this.state.activeTab, a)) {
         allCount += 1;
       }
     }
@@ -222,11 +185,11 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     return (
       <div className="er-tab-container">
         <div className={`er-tab first ${activeTab === Tab.Assignments ? 'active' : 'no-active'}`} onClick={() => this.setTab(Tab.Assignments)}>
-          <span>Assignments</span>
+          <span>{this.state.assignmentsTabCount} Assignments</span>
           <SpriteIcon name="f-activity" />
         </div>
         <div className={`er-tab second ${activeTab === Tab.Completed ? 'active' : 'no-active'}`} onClick={() => this.setTab(Tab.Completed)}>
-          <span>Completed</span>
+          <span>{this.state.completedTabCount} Completed</span>
           <SpriteIcon name="f-check-clircle" />
         </div>
       </div>

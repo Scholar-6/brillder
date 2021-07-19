@@ -140,7 +140,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       }
     }
 
-    const { answers, liveAnswers } = this.props.brickAttempt;
+    const { answers, liveAnswers, score, maxScore } = this.props.brickAttempt;
 
     let attempted = 0;
     let numberOfFailed = 0;
@@ -271,6 +271,9 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
             <Grid item xs={8}>
               <div className="introduction-page">
                 <h1 className="title">Final Score</h1>
+                {score < maxScore &&
+                  <div className="hr-sub-title">This is an average of your provisional score and your review score</div>
+                }
                 <div className="question-live-play">
                   <Grid
                     container
@@ -324,8 +327,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                   <AttemptedText
                     attempted={attempted}
                     attemptsCount={answers.length}
-                    score={this.props.brickAttempt.score}
-                    maxScore={this.props.brickAttempt.maxScore}
+                    score={score}
+                    maxScore={maxScore}
                   />
                   {this.props.liveDuration && (
                     <div className="duration">
