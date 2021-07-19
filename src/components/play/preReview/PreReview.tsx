@@ -8,20 +8,17 @@ import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import { getReviewTime } from "../services/playTimes";
-import SecondsCountDown from "../baseComponents/SecondsCountDown";
 
 interface Props {
   brick: Brick;
   moveNext(): void;
 }
 
-const PreReview: React.FC<Props> = ({ brick, ...props }) => {
-  const [isMoving, setMoving] = React.useState(false);
-
+const PreReview: React.FC<Props> = ({ brick, moveNext }) => {
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
-        setMoving(true);
+        moveNext();
       }
     }
 
@@ -55,24 +52,11 @@ const PreReview: React.FC<Props> = ({ brick, ...props }) => {
           <div className="ss-phone-between-button" />
           <div className="like-button animate-v1">Synthesis</div>
           <div className="ss-phone-between-button" />
-          <div className="like-button orange" onClick={props.moveNext}>Review</div>
+          <div className="like-button orange" onClick={moveNext}>Review</div>
           <div className="new-layout-footer">
             <div className="time-container">
               <DummyProgressbarCountdown value={50} />
             </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (isMoving) {
-    return (
-      <div className="brick-row-container live-container">
-        <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
-        <div className="brick-container play-preview-panel live-page after-cover-page">
-          <div className="introduction-page">
-            <SecondsCountDown onEnd={props.moveNext} />
           </div>
         </div>
       </div>
@@ -98,7 +82,7 @@ const PreReview: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="like-button">Investigation</div><div className="like-button">Synthesis</div>
               </div>
               <div className="x-center">
-                <div className="like-button orange" onClick={() => setMoving(true)}>Review</div>
+                <div className="like-button orange" onClick={moveNext}>Review</div>
               </div>
             </div>
             <div className="footer s-fade3">
@@ -114,7 +98,7 @@ const PreReview: React.FC<Props> = ({ brick, ...props }) => {
             </div>
             <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={() => setMoving(true)}>
+              <div className="n-btn next" onClick={moveNext}>
                 Start Review
                 <SpriteIcon name="arrow-right" />
               </div>
