@@ -704,6 +704,45 @@
   }
 }
 
+.play-preview-pages {
+  .real-live-page .play-question-container,
+  .review-page .play-question-container {
+    $size: 0.3vw;
+    ::-webkit-scrollbar {
+      width: $size * 2;
+      display: block !important;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      border-radius: $size;
+      background: var(--theme-light-blue);
+      display: block !important;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      border-radius: $size;
+      background: var(--tab-gray);
+      display: block !important;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--off-white);
+      display: block !important;
+    }
+    .question-live-play {
+      ::-webkit-scrollbar,
+      ::-webkit-scrollbar-track,
+      ::-webkit-scrollbar-thumb,
+      ::-webkit-scrollbar-thumb:hover {
+        display: none !important;
+      }
+    }
+  }
+}
+
 .horizontal-shuffle-answer.correct,
 .vertical-shuffle-choice.correct {
   background: var(--theme-green-alpha5) !important;
