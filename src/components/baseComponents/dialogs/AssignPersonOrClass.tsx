@@ -34,7 +34,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const [value] = React.useState("");
   const [existingClass, setExistingClass] = React.useState(null as any);
   const [isCreating, setCreating] = React.useState(false);
-  const [deadlineDate, setDeadline] = React.useState(null as null | Date);
+  const [deadlineDate, setDeadline] = React.useState(new Date());
   const [classes, setClasses] = React.useState<Classroom[]>([]);
   const [haveDeadline, toggleDeadline] = React.useState(false);
   const [newClassName, setNewClassName] = React.useState('');
@@ -263,7 +263,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           control={<Radio onClick={() => toggleDeadline(true)} />}
           label="Set date"
         />
-        {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
+        {haveDeadline && <TimeDropdowns date={deadlineDate} onChange={setDeadline} />}
       </div>
     </div>
   );
