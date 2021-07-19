@@ -7,10 +7,18 @@
   $height: 17vh;
   $width: 16vh;
 
+  border-bottom:solid 1vmin var(--theme);
+  border-top:solid 1vmin var(--theme-orange);
+
+  .background-icon {
+    $border: 4vh;
+    top: -$border;
+    left: -0.6vh;
+    height: calc(#{$height * 2} + #{$border * 2});
+  }
+
   .top,
   .bottom {
-    background-color: #def;
-    box-shadow: 0 0 1vmin 1vmin #bcd inset;
     height: $height;
     overflow: hidden;
     position: relative;
