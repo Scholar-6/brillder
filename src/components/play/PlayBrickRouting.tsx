@@ -46,7 +46,7 @@ import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
 import { CreateByEmailRes, createUserByEmail } from "services/axios/user";
-import routes, { playBrief, PlayCoverLastPrefix, playNewPrep, playPreInvesigation, playPrePrep, playSections } from "./routes";
+import routes, { playBrief, playCountInvesigation, PlayCoverLastPrefix, playNewPrep, playPreInvesigation, playPrePrep, playSections } from "./routes";
 import { isPhone } from "services/phone";
 import Brief from "./brief/Brief";
 import PrePrep from "./prePrep/PrePrep";
@@ -66,6 +66,7 @@ import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
 import { getLiveTime, getReviewTime } from "./services/playTimes";
 import PhoneTimeSynthesisPage from "./preSynthesis/PhoneTimeSynthesis";
 import CountdownReview from "./preReview/CountdownReview";
+import CountdownInvestigationPage from "./preInvestigation/CountdownInvestigation";
 
 
 function shuffle(a: any[]) {
@@ -375,6 +376,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const moveToNewPrep = () => history.push(playNewPrep(brick.id));
   const moveToIntro = () => history.push(playBrief(brick.id));
   const moveToPreInvestigation = () => history.push(playPreInvesigation(brick.id));
+  const moveToTimeInvestigation = () => history.push(playCountInvesigation(brick.id));
   const moveToTimeSynthesis = () => history.push(routes.playTimeSynthesis(brick.id));
   const moveToSynthesis = () => history.push(routes.playSynthesis(brick.id));
   const moveToPreReview = () => history.push(routes.playPreReview(brick.id));
@@ -514,16 +516,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route exact path={routes.preInvestigationRoute}>
           {isPhone()
-            ? <PhonePreInvestigationPage brick={brick} moveNext={() => history.push(routes.playCountInvesigation(brick.id))} />
-            : <PreInvestigationPage user={props.user} brick={brick} moveNext={moveToLive} />
+            ? <PhonePreInvestigationPage brick={brick} moveNext={moveToTimeInvestigation} />
+            : <PreInvestigationPage brick={brick} moveNext={moveToTimeInvestigation} />
           }
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={() => history.push(routes.playCountInvesigation(brick.id))} />}
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={moveToTimeInvestigation} />}
         </Route>
 
         <Route exact path={routes.countInvestigationRoute}>
           {isPhone()
             ? <PhoneCountInvestigationPage brick={brick} moveNext={() => history.push(routes.playInvestigation(brick.id))} />
-            : <PreInvestigationPage user={props.user} brick={brick} moveNext={moveToLive} />
+            : <CountdownInvestigationPage brick={brick} moveNext={moveToLive} />
           }
           {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Start Timer" next={() => history.push(routes.playInvestigation(brick.id))} />}
         </Route>
