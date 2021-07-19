@@ -20,10 +20,7 @@ import LiveStepper from "./components/LiveStepper";
 import TabPanel from "../baseComponents/QuestionTabPanel";
 import ShuffleAnswerDialog from "components/baseComponents/failedRequestDialog/ShuffleAnswerDialog";
 import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers";
-import LiveActionFooter from "./components/LiveActionFooter";
-//import MobileNextButton from "./components/MobileNextButton";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
-//import MobilePrevButton from "./components/MobilePrevButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
@@ -420,6 +417,11 @@ const LivePage: React.FC<LivePageProps> = ({
       <div className="brick-container play-preview-panel live-page real-live-page">
         <div className="introduction-page">
           <Grid container direction="row">
+            <div className="introduction-info">
+              <div className="intro-text-row">
+                {renderStepper()}
+              </div>
+            </div>
             <Grid item xs={8}>
               <SwipeableViews
                 axis={theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -462,20 +464,6 @@ const LivePage: React.FC<LivePageProps> = ({
                     <SpriteIcon name="arrow-right" />
                   </div>
                 </div>
-              </div>
-            </Grid>
-            <Grid item xs={4}>
-              <div className="introduction-info">
-                <div className="intro-text-row f-align-self-start m-t-5">
-                  {renderStepper()}
-                </div>
-                <LiveActionFooter
-                  questions={questions}
-                  activeStep={activeStep}
-                  prev={prev}
-                  next={next}
-                  setSubmitAnswers={setSubmitAnswers}
-                />
               </div>
             </Grid>
           </Grid>
