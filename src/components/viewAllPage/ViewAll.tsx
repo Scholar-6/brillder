@@ -77,6 +77,7 @@ import { playCover } from "components/play/routes";
 import { isPhone } from "services/phone";
 import AddSubjectDialog from "components/baseComponents/dialogs/AddSubjectDialog";
 import { addSubject } from "services/axios/user";
+import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 
 interface ViewAllProps {
   user: User;
@@ -121,6 +122,7 @@ interface ViewAllState {
   isAdmin: boolean;
   isCore: boolean;
   shown: boolean;
+  isSearchBLoading: boolean;
   isAllSubjects: boolean;
   isViewAll: boolean;
 
@@ -211,6 +213,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isAdmin,
       isCore: true,
       shown: false,
+      isSearchBLoading: false,
       isAllSubjects,
       isViewAll,
       handleKey: this.handleKey.bind(this),
@@ -783,7 +786,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async search() {
     const { searchString } = this.state;
-    this.setState({ shown: false });
+    this.setState({ shown: false, isSearchBLoading: true });
     const bricks = await searchPublicBricks(searchString);
     const { pathname } = this.props.location;
     if (
@@ -809,17 +812,19 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             finalBricks,
             shown: true,
             isLoading: false,
+            isSearchBLoading: false,
             isSearching: true,
           });
         } else {
           this.setState({
             ...this.state,
             isLoading: false,
+            isSearchBLoading: false,
             failedRequest: true,
           });
         }
       } catch {
-        this.setState({ isLoading: false, failedRequest: true });
+        this.setState({ isLoading: false, isSearchBLoading: false, failedRequest: true });
       }
     }, 1400);
   }
@@ -1027,6 +1032,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         ref={this.state.bricksRef}
       >
         {this.renderFirstRow(bricks)}
+        {this.state.isSearchBLoading && <div className="ffef-loader-container"> <PageLoaderBlue content="" /></div>}
         <div className="bricks-list">{this.renderSortedBricks(bricks)}</div>
       </div>
     );
