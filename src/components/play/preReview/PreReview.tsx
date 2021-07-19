@@ -48,7 +48,7 @@ const PreReview: React.FC<Props> = ({ brick, moveNext }) => {
           <div className="ss-phone-after-title" />
           <div className="like-button animate-v1">Preparation</div>
           <div className="ss-phone-between-button" />
-          <div className="like-button orange">Investigation</div>
+          <div className="like-button">Investigation</div>
           <div className="ss-phone-between-button" />
           <div className="like-button animate-v1">Synthesis</div>
           <div className="ss-phone-between-button" />
