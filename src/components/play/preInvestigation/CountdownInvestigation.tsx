@@ -36,7 +36,7 @@ const CountdownInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
         <div className="introduction-page">
           <div className="after-cover-main-content count-down-content">
             <div className="title s-fade1">
-              You have <span className="text-orange">8 minutes</span> to have a first crack at the questions.
+              You have <span className="text-orange">{minutes} minutes</span> to have a first crack at the questions.
             </div>
             <div className="flex-center">
               <svg className="hourglass s-fade2" viewBox="0 0 162 351.999">
