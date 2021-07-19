@@ -558,41 +558,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             padding-left: 7vw;
             white-space: nowrap;
           }
-          .question-index-container {
-            margin: 1vw 1.5vw 2vw 0;
-            padding: 0.5vw;
-            width: 3.3vw;
-            height: 3.3vw;
-            @extend %radCircle;
-            &.correct {
-              .question-index {
-                background: var(--theme-green);
-              }
-            }
-            &.wrong {
-              .question-index {
-                background: var(--theme-orange);
-              }
-            }
-            &.attempted {
-              background: var(--highlight-blue);
-              .question-index {
-                background: var(--blue);
-              }
-            }
-            .question-index {
-              padding: 0;
-              background: var(--tab-gray);
-              border-radius: 100vw;
-              font-family: $font-family-black;
-              color: var(--theme-dark-blue);
-              @extend %textCenter;
-              line-height: 1.25;
-              font-size: 2vw;
-              width: 2.3vw;
-              height: 2.3vw;
-            }
-          }
           .question-live-play {
             overflow-y: auto;
             padding-bottom: 2vw;
@@ -605,6 +570,28 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               font-family: $font-family-black;
               color: var(--theme-dark-blue);
               font-size: 2.5vw;
+              .ge-phone-title {
+                margin-top: 1vh;
+                display: flex;
+                align-items: center;
+                font-size: 2.5vw;
+                .ge-phone-circle {
+                  margin-right: 1vw;
+                  $size: 3vw;
+                  width: $size;
+                  height: $size;
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  svg {
+                    color: var(--white);
+                    width: 62%;
+                    height: 62%;
+                    stroke-width: 4;
+                  }
+                }
+              }
               .marks-container {
                 position: absolute;
                 font-size: 1.2vw;
@@ -823,13 +810,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             .sort-category {
               font-size: $base-font-size !important;
             }
-            .question-index-container ~ h1 {
-              text-align: center;
-              padding: 0;
-              justify-content: center;
-              font-size: 3vw;
-              margin: 0;
-            }
           }
           .fotter-text {
             margin-top: 3vw;
@@ -838,13 +818,121 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         &.provisional-score-page,
         &.ending-page {
           .introduction-page {
+            h1, .hr-sub-title {
+              opacity: 0;
+              animation: fadein 1s forwards;
+            }
             h1 {
+              padding: 0;
               text-transform: capitalize;
             }
+            .hr-sub-title {
+              position: absolute;
+              width: 100%;
+              text-align: center;
+              top: calc(4vw + 4.5vh);
+              font-size: 3vh;
+            }
+            .question-live-play {
+              margin-top: calc(4vw + 11vh) !important;
+            }
+            .circle-progress-container {
+              opacity: 0;
+              animation: fadein 1s 0.5s forwards;
+              $height: calc(50vh);
+              height: $height !important;
+              .circle-progress {
+                height: $height !important;
+              }
+              .score-data {
+                height: $height !important;
+                > div {
+                  height: $height !important;
+                }
+              }
+            }
+            .circle-progress-container {
+              position: relative;
+              width: 100%;
+              height: $introduction-desktop-height;
+              margin-bottom: 2vh;
+              .circle-progress-first {
+                height: 50vh;
+                width: 50vh;
+                .CircularProgressbar-path {
+                  stroke: #ffb55f !important;
+                }
+              }
+              .circle-progress-second {
+                height: 46vh;
+                width: 46vh;
+                .CircularProgressbar-path {
+                  stroke: #317fe0 !important;
+                }
+              }
+              .circle-progress-third {
+                height: 42.5vh;
+                width: 42.5vh;
+                .CircularProgressbar-path {
+                  stroke: #38c36d !important;
+                }
+              }
+              .circle-progress {
+                height: 50vh;
+                width: 50vh;
+                .CircularProgressbar-path {
+                  stroke: #ffb55f !important;
+                }
+                svg {
+                  overflow: overlay;
+    
+                  circle {
+                    stroke-width: 4.5 !important;
+                  }
+                }
+              }
+              .score-circle {
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: inherit;
+                position: absolute;
+              }
+              .score-data {
+                position: absolute;
+                height: $introduction-desktop-height;
+                width: 50vh;
+                top: 0;
+                color: var(--theme-dark-blue);
+                @extend %textCenter;
+                > div {
+                  height: $introduction-desktop-height;
+                  .score-precentage {
+                    font-family: $font-family-black;
+                    color: var(--theme-dark-blue);
+                    line-height: 1;
+                    font-size: 14vh;
+                  }
+                }
+              }
+            }
           }
-          .question-live-play {
-            @include tabletP {
-              overflow: hidden;
+          .stepper .step svg {
+            stroke-width: 3 !important;
+            margin-left: 0.3vw;
+          }
+        }
+        &.provisional-score-page .introduction-page .circle-progress-container {
+          margin-bottom: 2vh;
+          $height: 45vh;
+          height: $height !important;
+          .circle-progress {
+            height: $height !important;
+          }
+          .score-data {
+            height: $height !important;
+            > div {
+              height: $height !important;
             }
           }
         }
@@ -1076,76 +1164,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
           }
         }
-        .circle-progress-container {
-          position: relative;
-          width: 100%;
-          height: $introduction-desktop-height;
-          .circle-progress-first {
-            height: 50vh;
-            width: 50vh;
-            .CircularProgressbar-path {
-              stroke: #ffb55f !important;
-            }
-          }
-          .circle-progress-second {
-            height: 46vh;
-            width: 46vh;
-            .CircularProgressbar-path {
-              stroke: #317fe0 !important;
-            }
-          }
-          .circle-progress-third {
-            height: 42.5vh;
-            width: 42.5vh;
-            .CircularProgressbar-path {
-              stroke: #38c36d !important;
-            }
-          }
-          .circle-progress {
-            height: 50vh;
-            width: 50vh;
-            .CircularProgressbar-path {
-              stroke: #ffb55f !important;
-            }
-            svg {
-              overflow: overlay;
-
-              circle {
-                stroke-width: 4.5 !important;
-              }
-            }
-          }
-          .score-circle {
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: inherit;
-            position: absolute;
-          }
-          .score-data {
-            position: absolute;
-            height: $introduction-desktop-height;
-            width: 50vh;
-            top: 0;
-            color: var(--theme-dark-blue);
-            @extend %textCenter;
-            > div {
-              height: $introduction-desktop-height;
-              .score-precentage {
-                font-family: $font-family-black;
-                color: var(--theme-dark-blue);
-                line-height: 1;
-                font-size: 14vh;
-              }
-              .score-number {
-                font-family: $font-family-bold;
-                color: var(--theme-dark-blue);
-                line-height: 1;
-                font-size: 4vh;
-              }
-            }
-          }
-        }
+        
         .MuiCircularProgress-colorPrimary {
           color: #0076b4 !important;
         }
@@ -1177,10 +1196,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         margin-right: 8vw;
         margin-left: 7vw;
         border-radius: 2vw !important;
-
-        .question-index-container {
-          display: none;
-        }
 
         .swipe-view {
           width: $width !important;
@@ -1371,6 +1386,15 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 opacity: 0.5;
               }
             }
+            &.almost-failed {
+              span {
+                color: var(--tab-gray);
+                background: var(--theme-yellow);
+              }
+              &:hover {
+                opacity: 0.5;
+              }
+            }
             &.current {
               span {
                 color: var(--white);
@@ -1427,23 +1451,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           }
           .scroll-next-button {
             right: 0;
-          }
-        }
-      }
-      // only provisional score and final score
-      .provisional-container,
-      .ending-container {
-        .circle-progress-container {
-          $height: calc(50vh);
-          height: $height !important;
-          .circle-progress {
-            height: $height !important;
-          }
-          .score-data {
-            height: $height !important;
-            > div {
-              height: $height !important;
-            }
           }
         }
       }
@@ -2039,14 +2046,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 // provisional score and final score
 .play-preview-pages .sorted-row.sorted-row-expanded .provisional-container,
 .play-preview-pages .sorted-row.sorted-row-expanded .ending-container {
-  .introduction-page .question-live-play {
-    margin-top: calc(5vw + 8vh) !important;
-    .p-help-text {
-      margin-top: 2vh;
-      font-size: 1.5vw;
-      text-align: center;
-    }
-  }
   .new-layout-footer {
     z-index: 100;
   }
@@ -2220,5 +2219,103 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   > div {
     display: flex;
     justify-content: center;
+  }
+}
+
+.play-preview-pages .stepper {
+  font-size: 2vw;
+  svg {
+    $size: 1.5vw;
+    width: $size;
+    width: $size;
+  }
+  .step > div > span{
+    color: var(--theme-dark-blue);
+  }
+
+  .step.success svg {
+    color: var(--theme-green) !important;
+  }
+ 
+  .step.failed svg {
+    color: var(--theme-orange) !important;
+  }
+
+  .step.almost-failed svg {
+    color: var(--theme-yellow) !important;
+  }
+}
+
+.play-preview-pages .provisional-score-page,
+.play-preview-pages .ending-page {
+  .attempted-numbers, .attempted-text, .duration, .review-duration {
+    opacity: 0;
+    animation: fadein 1s 1s forwards;
+  }
+  .attempted-numbers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3vh;
+    font-family: $font-family-bold;
+    > div {
+      margin-left: 1vh;
+      margin-right: 1vh;
+      display: flex;
+      align-items: center;
+    }
+    svg {
+      $size: 3vh;
+      height: $size;
+      width: $size;
+      stroke-width: 4;
+    }
+  }
+  .attempted-text {
+    text-align: center;
+    font-size: 2.5vh;
+  }
+  .duration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5vh;
+    svg {
+      stroke-width: 2.5;
+      $size: 3vh;
+      width: $size;
+      height: $size;
+    }
+    div {
+      margin-left: 1vh;
+    }
+  }
+  .review-duration {
+    margin-left: 5vh;
+    text-align: center;
+    font-size: 1.8vh;
+  }
+}
+
+.provisional-score-page {
+ 
+  .new-layout-footer {
+    .title-column {
+    width: 58vw !important;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1vw;
+    font-size: 1.55vw !important;
+    font-family: $font-family-bold;
+    }
+    .footer-arrow {
+      width: 4vw;
+    }
+    .new-navigation-buttons {
+      width: 25vw !important;
+      .next {
+        margin-left: 0 !important;
+      }
+    }
   }
 }

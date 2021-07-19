@@ -112,7 +112,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     let everyoneFinished = true;
     if (this.props.classroom) {
       let { length } = this.props.classroom.students;
-      if (length !== studentStatus.length) {
+      if (length !== studentStatus.filter(({ status }) => status === 2).length) {
         everyoneFinished = false;
       }
     } else {

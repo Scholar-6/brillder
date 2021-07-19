@@ -24,6 +24,10 @@
     border-top-left-radius: 0.5vw;
     border-bottom-left-radius: 0.5vw;
 
+    &.correct {
+      background: var(--theme-green-alpha5) !important;
+    }
+
     .image-source {
       display: none;
     }
@@ -36,9 +40,6 @@
       width: 100%;
       overflow: scroll;
 
-      p {
-        text-align: center !important;
-      }
       img {
         @include tabletP {
           width: auto !important;
@@ -117,6 +118,9 @@
 
     img {
       width: 100%;
+    }
+    &.correct {
+      background: var(--theme-green-alpha5) !important;
     }
   }
 

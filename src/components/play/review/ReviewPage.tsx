@@ -196,42 +196,34 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   };
 
   const renderReviewTitle = (attempt: any) => {
-    let text = "Not quite - try again!";
+    let text = "Incorrect - try again!";
     if (attempt.correct) {
       text = "Correct!";
+    } else if (attempt.marks > 0) {
+      text = "Not quite - try again!";
     }
-    if (isPhone()) {
-      if (attempt.correct) {
-        return (
-          <div className="ge-phone-title">
-            <div className="ge-phone-circle b-green">
-              <SpriteIcon name="check-icon" />
-            </div>
-            <div>{text}</div>
-          </div>
-        );
-      }
+    if (attempt.correct) {
       return (
         <div className="ge-phone-title">
-          <div className="ge-phone-circle b-red">
-            <SpriteIcon name="cancel-custom" />
+          <div className="ge-phone-circle b-green">
+            <SpriteIcon name="check-icon" />
           </div>
           <div>{text}</div>
         </div>
       );
     }
-    return text;
+    return (
+      <div className="ge-phone-title">
+        <div className={`ge-phone-circle ${attempt.marks > 0 ? 'b-yellow' : 'b-red'}`}>
+          <SpriteIcon name="cancel-custom" />
+        </div>
+        <div>{text}</div>
+      </div>
+    );
   };
 
   const renderQuestionContainer = (question: Question, index: number) => {
-    let indexClassName = "question-index-container";
     const attempt = attempts[index];
-    if (attempt && attempt.correct) {
-      indexClassName += " correct";
-    } else {
-      indexClassName += " wrong";
-    }
-
     return (
       <TabPanel
         key={index}
@@ -239,9 +231,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-        <div className={indexClassName}>
-          <div className="question-index">{index + 1}</div>
-        </div>
         <div className="question-live-play review-content">
           <div className="question-title">
             {renderReviewTitle(attempt)}
@@ -424,9 +413,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                     }}
                   />
                 </div>
-                <div className="footer-space">
-                  <span className="scroll-text">Scroll down</span>
-                </div>
+                <div className="footer-space" />
                 <div className="new-navigation-buttons">
                   <div className="n-btn back" onClick={prev}>
                     <SpriteIcon name="arrow-left" />

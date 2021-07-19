@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-import "./ProvisionalScore.scss";
 import { Brick } from "model/brick";
 import { PlayStatus } from "../../model";
 
@@ -16,6 +15,7 @@ import previewRoutes from "components/playPreview/routes";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { User } from "model/user";
 import { prepareDuration } from "../service";
+import AttemptedText from "../components/AttemptedText";
 
 interface ProvisionalScoreState {
   value: number;
@@ -129,17 +129,26 @@ class ProvisionalScore extends React.Component<
       this.moveToIntro();
     }
 
-    if (isPhone()) {
-      let attempted = 0;
-      let numberOfcorrect = 0;
-      for (let attempt of attempts) {
-        if (attempt.attempted === true) {
-          attempted += 1;
-        }
-        if (attempt.correct === true) {
-          numberOfcorrect += 1;
-        }
+    let attempted = 0;
+
+    let numberOfcorrect = 0;
+    let numberOfNotZero = 0;
+    let numberOfFailed = 0;
+
+    for (let attempt of attempts) {
+      if (attempt.attempted === true) {
+        attempted += 1;
       }
+      if (attempt.correct === true) {
+        numberOfcorrect += 1;
+      } else if (attempt.marks > 0) {
+        numberOfNotZero += 1;
+      } else {
+        numberOfFailed += 1;
+      }
+    }
+
+    if (isPhone()) {
       return (
         <div className="phone-provisional-score">
           <div
@@ -156,6 +165,9 @@ class ProvisionalScore extends React.Component<
           </div>
           <div className="content">
             <div className="title">Provisional Score</div>
+            {this.state.score < this.state.maxScore &&
+              <div className="hr-sub-title">You can improve this when reviewing your answers</div>
+            }
             <div className="pr-progress-center">
               <div className="pr-progress-container">
                 <CircularProgressbar
@@ -170,7 +182,11 @@ class ProvisionalScore extends React.Component<
             <div className="attempted-numbers">
               <div>
                 <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
-                {attempts.length - numberOfcorrect}
+                {numberOfFailed}
+              </div>
+              <div>
+                <SpriteIcon name="cancel-custom" className="text-yellow" />:{" "}
+                {numberOfNotZero}
               </div>
               <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
                 <SpriteIcon
@@ -179,9 +195,12 @@ class ProvisionalScore extends React.Component<
                 />: {numberOfcorrect}
               </div>
             </div>
-            <div className="attempted-text">
-              Attempted: {attempted} | {attempts.length}
-            </div>
+            <AttemptedText
+              attempted={attempted}
+              attemptsCount={attempts.length}
+              score={this.state.score}
+              maxScore={this.state.maxScore}
+            />
             {this.props.liveDuration && (
               <div className="duration">
                 <SpriteIcon name="clock" />
@@ -203,6 +222,9 @@ class ProvisionalScore extends React.Component<
             <Grid item xs={8}>
               <div className="introduction-page">
                 <h1 className="title">Provisional Score</h1>
+                {this.state.score < this.state.maxScore &&
+                  <div className="hr-sub-title">You can improve this when reviewing your answers</div>
+                }
                 <div className="question-live-play">
                   <Grid
                     container
@@ -222,29 +244,47 @@ class ProvisionalScore extends React.Component<
                           <div className="score-precentage">
                             {this.state.value}%
                           </div>
-                          <div className="score-number">
-                            {this.state.score}/{this.state.maxScore}
-                          </div>
                         </div>
                       </Grid>
                     </div>
                   </Grid>
-                  <div className="p-help-text">
-                    Now read the author's synthesis to deepen your understanding
-                    of the topic.
+                  <div className="attempted-numbers">
+                    <div>
+                      <SpriteIcon name="cancel-custom" className="text-orange" />: {numberOfFailed}
+                    </div>
+                    <div>
+                      <SpriteIcon name="cancel-custom" className="text-yellow" />: {numberOfNotZero}
+                    </div>
+                    <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
+                      <SpriteIcon
+                        name="check-icon"
+                        className={numberOfcorrect >= 1 ? "text-theme-green" : "text-tab-gray"}
+                      />: {numberOfcorrect}
+                    </div>
                   </div>
+                  <AttemptedText
+                    attempted={attempted}
+                    attemptsCount={attempts.length}
+                    score={this.state.score}
+                    maxScore={this.state.maxScore}
+                  />
+                  {this.props.liveDuration && (
+                    <div className="duration">
+                      <SpriteIcon name="clock" />
+                      <div>{prepareDuration(this.props.liveDuration)}</div>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="new-layout-footer" style={{ display: "none" }}>
-                <div className="time-container" />
-                <div className="minutes-footer" />
-                <div className="footer-space" />
+                <div className="title-column">Learn more about this topic by reading an academic summary by the author.</div>
+                <img alt="" className="footer-arrow" src="/images/play-arrows/BriefArrow.svg"></img>
                 <div className="new-navigation-buttons">
                   <div
                     className="n-btn next"
                     onClick={this.moveToSynthesis.bind(this)}
                   >
-                    Next
+                    Read Synthesis
                     <SpriteIcon name="arrow-right" />
                   </div>
                 </div>

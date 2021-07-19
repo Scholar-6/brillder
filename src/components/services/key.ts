@@ -29,3 +29,16 @@ export const spaceKeyPressed = (e: React.KeyboardEvent<HTMLInputElement | HTMLTe
   return checkKeyCode(e, 32);
 }
 
+// mobile
+export const hideKeyboard = (current: any) => {
+  if (current) {
+    current.setAttribute("readonly", "readonly"); // Force keyboard to hide on input field.
+    current.setAttribute("disabled", "true"); // Force keyboard to hide on textarea field.
+    setTimeout(function () {
+      current.blur(); //actually close the keyboard
+      // Remove readonly attribute after keyboard is hidden.
+      current.removeAttribute("readonly");
+      current.removeAttribute("disabled");
+    }, 100);
+  }
+}

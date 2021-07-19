@@ -4,24 +4,7 @@
 
 .ending-page {
   h1 {
-    @include tabletP {
-      margin: 4vh 0;
-      padding-left: 0 !important;
-      display: block !important;
-      text-align: center !important;
-    }
-  }
-  .introduction-page {
-    .intro-text-row {
-      .stepper {
-        .step {
-          color: var(--theme-dark-blue) !important;
-          .svg {
-            @extend %removePosition;
-          }
-        }
-      }
-    }
+    padding-left: 0 !important;
   }
 
   .begin-row {
@@ -49,48 +32,11 @@
     overflow: hidden;
   }
 
-  .score-number {
-    font-family: $font-family-bold;
-    color: var(--theme-dark-blue);
-    font-size: 4vh;
-    line-height: 1;
-    @extend %textCenter;
-  }
-
   .intro-header {
     font-size: 1.7vw !important;
   }
 
   .blue {
     color: var(--theme-dark-blue);
-  }
-  &.mobile-ending-page {
-    height: calc(100vh - 6vh) !important;
-    position: relative;
-    overflow-y: inherit !important;
-    .question-live-play {
-      margin-top: 0 !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      width: 100% !important;
-    }
-    .circle-progress-third {
-      height: 80vw !important;
-      width: 80vw !important;
-    }
-    .circle-progress-second {
-      height: 85vw !important;
-      width: 85vw !important;
-    }
-    .circle-progress-first {
-      height: 90vw !important;
-      width: 90vw !important;
-    }
-
-    .introduction-page {
-      .intro-header {
-        display: none !important;
-      }
-    }
   }
 }

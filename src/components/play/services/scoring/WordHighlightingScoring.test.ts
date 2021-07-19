@@ -16,7 +16,7 @@ const mockComponent = {
 
 describe("line highlighting scoring", () => {
 
-    it("should mark a correct answer with 7 marks", () => {
+    it("should mark a correct answer with 7 marks on three answers", () => {
         // arrange
         const mockAttempt = {
             answer: [1, 3, 5]

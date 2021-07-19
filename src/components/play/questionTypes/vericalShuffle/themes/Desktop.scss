@@ -8,8 +8,6 @@
   }
 }
 .vertical-shuffle-choice {
-  display: flex;
-
   @keyframes spinning-v2 {
     0% {
       transform: rotateZ(0deg);
@@ -57,6 +55,9 @@
         color: #8CBAF5;
         animation: spinning-v2 2s infinite linear;
       }
+    }
+    .question-hint {
+      width: calc(88vw) !important;
     }
   }
 }

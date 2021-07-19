@@ -33,11 +33,13 @@ enum RefName {
 
 interface BrickTitleProps {
   user: User;
+  brickId: number;
   history: any;
   baseUrl: string;
   parentState: Brick;
   canEdit: boolean;
   subjects: Subject[];
+  createBrick(): void;
   saveTitles(data: any): void;
   setKeywords(keywords: KeyWord[]): void;
   setAcademicLevel(level: AcademicLevel): void;
@@ -109,6 +111,9 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
       subTitleRef: React.createRef<HTMLDivElement>(),
       altTitleRef: React.createRef<HTMLDivElement>(),
     }
+    if (!props.brickId) {
+      props.createBrick();
+    }
   }
 
   onChange(event: React.ChangeEvent<{ value: string }>, value: string) {
@@ -139,7 +144,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
         </div>
         <div className="icon-container" onClick={() => {
           if (this.props.user.subjects.length > 1) {
-            this.props.history.push(map.ProposalSubjectLink);
+            this.props.history.push(map.ProposalSubject(this.props.brickId));
           } else {
             this.setState({subjectSelectOpen: true});
           }
