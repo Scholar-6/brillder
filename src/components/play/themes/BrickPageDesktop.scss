@@ -1776,7 +1776,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         font-family: $font-family-bold;
         font-size: 4vh !important;
       }
-      .hourglass {
+      .hourglass-container {
         height: 30vh;
       }
     }
