@@ -652,6 +652,20 @@
   border-radius: 0.6vw;
 }
 
+.choose-one-live, .choose-several-live {
+  .choose-choice {
+    .question-hint {
+      background: var(--solitude-light) !important;
+    }
+    &.wrong {
+      background: var(--theme-orange) !important;
+      .question-hint {
+        background: var(--theme-yellow) !important;
+      }
+    }
+  }
+}
+
 .play-preview-pages {
   .play-brief-page,
   .real-live-page .react-swipeable-view-container,
