@@ -1205,7 +1205,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           height: calc(100vh - 4vw) !important;
           padding-left: 0 !important;
           .question-live-play {
-            margin-top: $header-height !important;
             height: calc(100vh - 4vw - #{$header-height} - #{$foter-height}) !important;
           }
         }
@@ -2311,6 +2310,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 .provisional-score-page {
+ 
   .new-layout-footer {
     .title-column {
     width: 58vw !important;
@@ -2330,4 +2330,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       }
     }
   }
+}
+
+.introduction-content {
+  height: 50vh;
+  width: 80vw !important;
 }

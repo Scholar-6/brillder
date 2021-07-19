@@ -291,7 +291,7 @@ const LivePage: React.FC<LivePageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-        <div className="question-live-play review-content">
+        <div className="question-live-play dd-live-container review-content">
           {renderQuestion(question, index)}
         </div>
       </TabPanel>
