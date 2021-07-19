@@ -1767,6 +1767,19 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       font-size: 6vh !important;
       font-family: $font-family-bold;
     }
+    &.count-down-content {
+      .title {
+        font-size: 4vh !important;
+      }
+      .footer {
+        margin-top: 9vh;
+        font-family: $font-family-bold;
+        font-size: 4vh !important;
+      }
+      .hourglass {
+        height: 30vh;
+      }
+    }
     .like-buttons-container {
       margin-bottom: 10vh;
       .x-center {
