@@ -230,7 +230,7 @@ class NotificationPanel extends Component<
                 <div>
                   <div>{notifications?.length} Notifications</div>
                   <div className="n-secondary">
-                    Swipe right to clear
+                    Swipe to clear
                     <SpriteIcon name="flaticon-swipe" />
                   </div>
                 </div>
