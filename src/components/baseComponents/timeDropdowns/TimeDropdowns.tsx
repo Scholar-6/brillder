@@ -4,6 +4,7 @@ import Select from '@material-ui/core/Select';
 import './TimeDropdowns.scss';
 
 interface Props {
+  date: Date;
   onChange(date: Date): void;
 }
 
@@ -11,14 +12,10 @@ interface State {
   days: number[];
   months: number[];
   years: number[];
-
-  year: number;
-  month: number;
-  day: number;
 }
 
-class TimeDropdowns extends React.Component<any, State> {
-  constructor(props: any) {
+class TimeDropdowns extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     let start = 2021;
@@ -40,12 +37,7 @@ class TimeDropdowns extends React.Component<any, State> {
       days,
       months,
       years,
-      year: start,
-      month: 1,
-      day: 1
     }
-
-    props.onChange(new Date(1, 1, start));
   }
 
   getDays(month: number, year: number) {
@@ -57,25 +49,28 @@ class TimeDropdowns extends React.Component<any, State> {
     return days;
   }
 
-  onChange(year: number, month: number, day: number) {
-    this.props.onChange(new Date(year, month - 1, day));
+  onChange({ year, month, day }: { year?: number, month?: number, day?: number }) {
+    const newDate = new Date(this.props.date);
+    if(year) newDate.setFullYear(year);
+    if(month) newDate.setMonth(month);
+    if(day) newDate.setDate(day);
+    this.props.onChange(newDate);
   }
 
   setDay(newDay: number) {
-    this.setState({day: newDay});
-    this.onChange(this.state.year, this.state.month, newDay);
+    this.onChange({ day: newDay });
   }
 
   setMonth(newMonth: number) {
-    const days = this.getDays(newMonth, this.state.year);
-    this.setState({days, month: newMonth});
-    this.onChange(this.state.year, newMonth, this.state.day);
+    const days = this.getDays(newMonth, this.props.date.getFullYear());
+    this.setState({ days });
+    this.onChange({ month: newMonth });
   }
 
   setYear(newYear: number) {
-    const days = this.getDays(this.state.month, newYear);
-    this.setState({days, year: newYear});
-    this.onChange(newYear, this.state.month, this.state.day);
+    const days = this.getDays(this.props.date.getMonth(), newYear);
+    this.setState({ days });
+    this.onChange({ year: newYear });
   }
 
   renderSelect(value: number, choices: number[], setChoice: Function, className: string) {
@@ -92,11 +87,12 @@ class TimeDropdowns extends React.Component<any, State> {
   }
 
   render() {
+    console.log("rendering,", this.props);
     return (
       <div className="inline">
-        {this.renderSelect(this.state.day, this.state.days, (newDay: number) => this.setDay(newDay), 'first')}
-        {this.renderSelect(this.state.month, this.state.months, (newMonth: number) => this.setMonth(newMonth), 'second')}
-        {this.renderSelect(this.state.year, this.state.years, (newYear: number) => this.setYear(newYear), 'last')}
+        {this.renderSelect(this.props.date.getDate(), this.state.days, (newDay: number) => this.setDay(newDay), 'first')}
+        {this.renderSelect(this.props.date.getMonth(), this.state.months, (newMonth: number) => this.setMonth(newMonth), 'second')}
+        {this.renderSelect(this.props.date.getFullYear(), this.state.years, (newYear: number) => this.setYear(newYear), 'last')}
       </div>
     );
   }
