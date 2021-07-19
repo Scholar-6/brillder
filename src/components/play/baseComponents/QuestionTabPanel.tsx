@@ -17,6 +17,7 @@ const QuestionTabPanel: React.FC<TabPanelProps> = (props) => {
     <Typography
       component="div"
       role="tabpanel"
+      className="play-question-container"
       hidden={value !== index}
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}

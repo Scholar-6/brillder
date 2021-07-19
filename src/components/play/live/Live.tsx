@@ -383,11 +383,11 @@ const LivePage: React.FC<LivePageProps> = ({
         <div className="brick-container play-preview-panel live-page real-live-page">
           <div className="introduction-page">
             <div className="intro-text-row">
-                <div className="phone-stepper-head">
-                  <BrickTitle title={brick.title} />
-                </div>
-                {renderStepper()}
+              <div className="phone-stepper-head">
+                <BrickTitle title={brick.title} />
               </div>
+              {renderStepper()}
+            </div>
             <div className="introduction-content" ref={questionScrollRef}>
               {questions.map(renderQuestionContainer)}
               {renderMobileButtons()}
@@ -422,50 +422,40 @@ const LivePage: React.FC<LivePageProps> = ({
                 {renderStepper()}
               </div>
             </div>
-            <Grid item xs={8}>
-              <SwipeableViews
-                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-                index={activeStep}
-                className="swipe-view"
-                style={{ width: "100%" }}
-                onChangeIndex={handleStep}
-              >
-                {questions.map(renderQuestionContainer)}
-              </SwipeableViews>
-              <div className="new-layout-footer" style={{ display: "none" }}>
-                <div className="time-container">
-                  <TimeProgressbar
-                    isLive={true}
-                    onEnd={onEnd}
-                    minutes={minutes}
-                    endTime={props.endTime}
-                    brickLength={brick.brickLength}
-                    setEndTime={props.setEndTime}
-                  />
+            {renderQuestionContainer(questions[activeStep], activeStep)}
+            <div className="new-layout-footer" style={{ display: "none" }}>
+              <div className="time-container">
+                <TimeProgressbar
+                  isLive={true}
+                  onEnd={onEnd}
+                  minutes={minutes}
+                  endTime={props.endTime}
+                  brickLength={brick.brickLength}
+                  setEndTime={props.setEndTime}
+                />
+              </div>
+              <div className="footer-space">
+              </div>
+              <div className="new-navigation-buttons">
+                <div className="n-btn back" onClick={prev}>
+                  <SpriteIcon name="arrow-left" />
+                  Back
                 </div>
-                <div className="footer-space">
-                </div>
-                <div className="new-navigation-buttons">
-                  <div className="n-btn back" onClick={prev}>
-                    <SpriteIcon name="arrow-left" />
-                    Back
-                  </div>
-                  <div
-                    className="n-btn next"
-                    onClick={() => {
-                      if (questions.length - 1 > activeStep) {
-                        next();
-                      } else {
-                        setSubmitAnswers(true);
-                      }
-                    }}
-                  >
-                    Next
-                    <SpriteIcon name="arrow-right" />
-                  </div>
+                <div
+                  className="n-btn next"
+                  onClick={() => {
+                    if (questions.length - 1 > activeStep) {
+                      next();
+                    } else {
+                      setSubmitAnswers(true);
+                    }
+                  }}
+                >
+                  Next
+                  <SpriteIcon name="arrow-right" />
                 </div>
               </div>
-            </Grid>
+            </div>
           </Grid>
         </div>
       </div>
