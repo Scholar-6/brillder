@@ -1205,7 +1205,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           height: calc(100vh - 4vw) !important;
           padding-left: 0 !important;
           .question-live-play {
-            margin-top: $header-height !important;
             height: calc(100vh - 4vw - #{$header-height} - #{$foter-height}) !important;
           }
         }
@@ -1457,9 +1456,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       // only synthesis score
       .synthesis-container {
         .synthesis-content {
+          position: fixed;
+          top: 0;
+          margin-top: 6vw !important;
           height: calc(100vh - 8vw - 4vw) !important;
-          padding: 8vh 7vw 6vw 7vw;
-          width: 100%;
+          padding: 8vh 9.3vw 6vw 7vw;
+          width: 80vw;
         }
       }
     }
@@ -2311,6 +2313,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 .provisional-score-page {
+ 
   .new-layout-footer {
     .title-column {
     width: 58vw !important;
