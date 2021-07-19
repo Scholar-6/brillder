@@ -633,7 +633,6 @@
 }
 
 .phone-question-preview {
-
   .question-hint-global,
   .question-hint {
     font-size: 1vw;
@@ -666,45 +665,38 @@
   }
 }
 
-.play-preview-pages {
-  .play-brief-page,
-  .real-live-page .play-question-container,
-  .synthesis-page,
-  .review-page .play-question-container {
-    ::-webkit-scrollbar {
-      width: 10px;
-      display: block !important;
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      display: block !important;
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-      background: #888;
-      display: block !important;
-    }
-
-    /* Handle on hover */
+.play-preview-pages .play-brief-page {
+  ::-webkit-scrollbar {
+    width: 10px;
+    display: block !important;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    display: block !important;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    display: block !important;
+  }
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    display: block !important;
+  }
+  .question-live-play {
+    ::-webkit-scrollbar,
+    ::-webkit-scrollbar-track,
+    ::-webkit-scrollbar-thumb,
     ::-webkit-scrollbar-thumb:hover {
-      background: #555;
-      display: block !important;
-    }
-    .question-live-play {
-      ::-webkit-scrollbar,
-      ::-webkit-scrollbar-track,
-      ::-webkit-scrollbar-thumb,
-      ::-webkit-scrollbar-thumb:hover {
-        display: none !important;
-      }
+      display: none !important;
     }
   }
 }
 
 .play-preview-pages {
+  .synthesis-page .introduction-page,
   .real-live-page .play-question-container,
   .review-page .play-question-container {
     $size: 0.3vw;
@@ -732,6 +724,7 @@
       background: var(--off-white);
       display: block !important;
     }
+    .synthesis-content,
     .question-live-play {
       ::-webkit-scrollbar,
       ::-webkit-scrollbar-track,
@@ -754,5 +747,5 @@
   margin-top: calc(2vw + 4vw) !important;
   position: fixed !important;
   width: 80vw !important;
-  padding-right: 9vw !important;
+  padding-right: 9.3vw !important;
 }
