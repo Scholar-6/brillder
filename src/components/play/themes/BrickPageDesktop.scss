@@ -1456,9 +1456,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       // only synthesis score
       .synthesis-container {
         .synthesis-content {
+          position: fixed;
+          top: 0;
+          margin-top: 6vw !important;
           height: calc(100vh - 8vw - 4vw) !important;
-          padding: 8vh 7vw 6vw 7vw;
-          width: 100%;
+          padding: 8vh 9.3vw 6vw 7vw;
+          width: 80vw;
         }
       }
     }
