@@ -7,11 +7,15 @@ import { isPhone } from 'services/phone';
 const MobileTheme = React.lazy(() => import("./themes/GlassMobileTheme"));
 const DesktopTheme = React.lazy(() => import("./themes/GlassDesktopTheme"));
 
-const Hourglass: React.FC<any> = (props) => {
+interface Props {
+  isRed?: boolean;
+}
+
+const Hourglass: React.FC<Props> = (props) => {
   return (
     <React.Suspense fallback={<></>}>
       {isPhone() ? <MobileTheme /> : <DesktopTheme />}
-      <div className="gg-hourglass">
+      <div className={`gg-hourglass ${props.isRed ? 'sand-red' : ''}`}>
         <svg className="background-icon" viewBox="0 0 162 351.999">
           <g transform="translate(-0.459 -0.234)">
             <path

@@ -922,6 +922,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             margin-left: 0.3vw;
           }
         }
+        &.provisional-score-page .introduction-page .question-live-play {
+          margin-top: calc(6vw + 11vh) !important;
+        }
         &.provisional-score-page .introduction-page .circle-progress-container {
           margin-bottom: 2vh;
           $height: 45vh;
@@ -1334,7 +1337,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         }
         .introduction-info .stepper {
           width: 100%;
-          margin-top: 0.7vw;
+          margin-top: 0.3vw;
           height: calc(#{$step-height} + 0.7vw) !important;
           padding: 0 !important;
           overflow-x: auto;

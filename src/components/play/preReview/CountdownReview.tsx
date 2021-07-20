@@ -5,7 +5,7 @@ import { Brick } from "model/brick";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { getLiveTime } from "../services/playTimes";
+import { getReviewTime } from "../services/playTimes";
 import Hourglass from "../baseComponents/hourglass/Hourglass";
 
 interface Props {
@@ -28,7 +28,7 @@ const CountdownInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
     };
   });
 
-  const minutes = getLiveTime(brick.brickLength);
+  const minutes = getReviewTime(brick.brickLength);
 
   return (
     <div className="brick-row-container live-container">
@@ -40,7 +40,7 @@ const CountdownInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
               You have <span className="text-orange">{minutes} minutes</span> to review your answers and improve your score.
             </div>
             <div className="flex-center">
-              <Hourglass />
+              <Hourglass isRed={true} />
             </div>
             <div className="footer s-fade3">
               <div>Your final score will be an average of your provisional and review scores.</div>

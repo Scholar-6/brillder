@@ -6,11 +6,11 @@
   padding:0 1vmin;
   .top, .bottom {
     background-color:var(--white);
-    box-shadow:0 0 1vmin 1vmin var(--tab-gray) inset;
     overflow:hidden;
     position:relative;
   }
   $sand-color: #FF9800;
+  
   .background-icon {
     position: absolute;
   }
@@ -65,6 +65,14 @@
       position:absolute;
       top:0;
       width:10%;
+    }
+  }
+  &.sand-red {
+    .top:before,
+    .top:after,
+    .bottom:before,
+    .bottom:after {
+      background-color: var(--theme-orange);
     }
   }
 }

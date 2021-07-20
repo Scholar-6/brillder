@@ -4,8 +4,8 @@
   margin-left: -6vmin;
   margin-top: 0;
   padding: 0 1vmin;
-  $height: 17vh;
-  $width: 16vh;
+  $height: 14vh;
+  $width: 14vh;
 
   border-bottom:solid 1vmin var(--theme);
   border-top:solid 1vmin var(--theme-orange);
@@ -13,7 +13,7 @@
   .background-icon {
     $border: 4vh;
     top: -$border;
-    left: -0.6vh;
+    left: -0.25vh;
     height: calc(#{$height * 2} + #{$border * 2});
   }
 

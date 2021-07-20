@@ -31,11 +31,6 @@ const PhonePreSynthesisPage: React.FC<Props> = ({ brick, moveNext }) => {
         <div className="ss-phone-between-button" />
         <div className="like-button animate-v1">Review</div>
         <div className="ss-phone-after-buttons" />
-        <div className="new-layout-footer">
-          <div className="time-container">
-            <DummyProgressbarCountdown value={50} />
-          </div>
-        </div>
       </div>
     </div>
   );

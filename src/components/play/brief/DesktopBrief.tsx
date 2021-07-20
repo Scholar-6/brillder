@@ -84,16 +84,16 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
                 {renderBriefTitle()}
                 {renderBriefExpandText()}
               </div>
-              <div className="new-layout-footer" style={{ display: 'none' }}>
-                <div className="title-column">
-                  Now you’re ready for preparatory tasks
-                </div>
-                <img alt="" className="footer-arrow" src="/images/play-arrows/BriefArrow.svg" />
-                <div className="new-navigation-buttons">
-                  <div className="n-btn next" onClick={props.moveNext}>
-                    Next
-                    <SpriteIcon name="arrow-right" />
-                  </div>
+            </div>
+            <div className="new-layout-footer" style={{ display: 'none' }}>
+              <div className="title-column">
+                Now you’re ready for preparatory tasks
+              </div>
+              <img alt="" className="footer-arrow" src="/images/play-arrows/BriefArrow.svg" />
+              <div className="new-navigation-buttons">
+                <div className="n-btn next" onClick={props.moveNext}>
+                  Next
+                  <SpriteIcon name="arrow-right" />
                 </div>
               </div>
             </div>

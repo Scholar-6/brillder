@@ -39,7 +39,7 @@ const CountdownInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
             <div className="title s-fade1">
               You have <span className="text-orange">{minutes} minutes</span> to have a first crack at the questions.
             </div>
-            <div className="flex-center hourglass-container">
+            <div className="flex-center hourglass-container s-fade2">
               <Hourglass />
             </div>
             <div className="footer s-fade3">
