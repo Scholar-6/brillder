@@ -695,7 +695,21 @@
   }
 }
 
+.play-preview-pages .play-brief-page .introduction-page {
+  position: fixed !important; 
+  top: 2vw;
+  width: 80vw;
+  .scrollable {
+    height: calc(100vh - 8vw) !important;
+  }
+  .new-layout-footer {
+    border-bottom-left-radius: 2vw;
+    border-bottom-right-radius: 2vw;
+  }
+}
+
 .play-preview-pages {
+  .play-brief-page,
   .synthesis-page .introduction-page,
   .real-live-page .play-question-container,
   .review-page .play-question-container {
@@ -724,13 +738,23 @@
       background: var(--off-white);
       display: block !important;
     }
+    .scrollable,
     .synthesis-content,
     .question-live-play {
+      overflow-x:hidden;
       ::-webkit-scrollbar,
       ::-webkit-scrollbar-track,
       ::-webkit-scrollbar-thumb,
       ::-webkit-scrollbar-thumb:hover {
         display: none !important;
+      }
+    }
+    .question-live-play {
+      > div {
+        padding-left: 7vw;
+        padding-right: 7vw;
+        width: 100%;
+        overflow-x: auto;
       }
     }
   }
@@ -747,5 +771,10 @@
   margin-top: calc(2vw + 4vw) !important;
   position: fixed !important;
   width: 80vw !important;
-  padding-right: 9.3vw !important;
+  padding-right: 2.3vw !important;
+  padding-left: 0 !important;
+  > div {
+    padding-left: 7vw !important;
+    padding-right: 7vw !important;
+  }
 }
