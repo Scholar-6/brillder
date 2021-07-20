@@ -1843,11 +1843,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 // brief and new-prep pages
-.play-preview-pages .sorted-row .brick-row-container .brick-container.play-brief-page {
+.play-preview-pages .sorted-row .brick-row-container .brick-container.play-brief-page{
   .introduction-page {
     padding-top: 0 !important;
     .open-question {
-      padding: 0 7vw !important;
       > div {
         $font-size: 2vw;
         font-size: $font-size !important;
@@ -1857,7 +1856,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       }
     }
     .introduction-content {
-      padding: 0 7vw !important;
       .brief-title {
         .italic {
           color: var(--theme-dark-blue);
@@ -1867,9 +1865,15 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
   }
   .scrollable {
-    padding: 4vh 0 !important;
-    height: calc(100vh - 15vh) !important;
+    width: 100% !important;
+    overflow-x: hidden;
     overflow-y: scroll;
+    > div {
+      width: calc(100% - 2.3vw) !important;
+      overflow-x: auto;
+      padding-left: 7vw;
+      padding-right: 7vw;
+    }
   }
 
   .new-layout-footer {
