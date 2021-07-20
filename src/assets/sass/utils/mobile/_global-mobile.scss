@@ -200,22 +200,15 @@ h3 {
 .choose-choice {
   cursor: pointer;
   display: block;
+  margin-top: 2.5vw;
+  margin-bottom: 2.5vw;
   line-height: 1.75;
   color: var(--theme-dark-blue) !important;
   @extend %textCenter;
   text-transform: none !important;
   width: 100%;
-  border-radius: 0.6vw !important;
   background-color: var(--tab-gray) !important;
   opacity: 1;
-  @include phone_and_tabletP {
-    padding: 1vw 1.5vw !important;
-    margin-bottom: 1.2vh;
-  }
-  @include tabletP {
-    margin: 0 0 0.5vw 0 !important;
-    padding: 0 !important;
-  }
   .MuiGrid-root {
     margin: 0 !important;
   }
@@ -227,11 +220,18 @@ h3 {
       width: calc(100% - 0.6vw);
     }
   }
+}
+
+.vertical-shuffle-choice,
+.choose-choice,
+.horizontal-shuffle-answer {
+  border-radius: 2.5vw !important;
+
   .question-hint {
+    border-radius: 0;
+    border-bottom-left-radius: 2.5vw;
+    border-bottom-right-radius: 2.5vw;
     margin-bottom: 0;
-  }
-  p {
-    text-align: center !important;
   }
 }
 
@@ -249,7 +249,6 @@ h3 {
   &.correct {
     background: var(--theme-green) !important;
     .question-hint {
-      padding: 0;
       margin: 0;
       width: 100%;
       background: var(--off-white) !important;
@@ -264,20 +263,14 @@ h3 {
 }
 
 .short-answer-input.correct {
-  $border-radius: 1vw;
-
   .question-hint {
-    padding-left: 1vw;
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
   }
-  @include phone_and_tabletP {
-    $border-radius: 2vw;
-
-    .question-hint {
-      border-bottom-left-radius: $border-radius;
-      border-bottom-right-radius: $border-radius;
-    }
+  $border-radius: 2vw;
+  .question-hint {
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
   }
 }
 
@@ -396,9 +389,11 @@ h3 {
   text-transform: unset !important;
 }
 
-.MuiInputBase-input::placeholder {
-}
-
 .inline {
   display: inline;
+}
+
+.missing-word-choice .question-hint {
+  margin-top: 1.5vw;
+  margin-bottom: 1.5vw;
 }

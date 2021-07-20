@@ -57,15 +57,15 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
   const move = async (notification: Notification) => {
     const { history } = props;
     if (history) {
-      if (notification.type === NotificationType.BrickPublished) {
-        history.push(map.ViewAllPage);
-      } else if (notification.type === NotificationType.BrickSubmittedForReview) {
-        history.push(map.BackToWorkPage);
+      if (notification.type === NotificationType.BrickSubmittedForReview) {
+        history.push(map.backToWorkUserBased(props.user));
       }
 
       if (notification.brick && notification.brick.id) {
         const {type, brick} = notification;
-        if (type === NotificationType.NewCommentOnBrick) {
+        if (notification.type === NotificationType.BrickPublished) {
+          history.push(routes.playCover(brick.id));
+        } else if (type === NotificationType.NewCommentOnBrick) {
           if (notification.question && notification.question.id >= 1) {
             history.push(map.investigationQuestionSuggestions(brick.id, notification.question.id));
           } else {
@@ -73,7 +73,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           }
         } else if (type === NotificationType.InvitedToPlayBrick) {
           if (isPhone()) {
-            history.push(map.playIntro(brick.id));
+            history.push(routes.playNewPrep(brick.id));
           } else {
             history.push(routes.playCover(brick.id));
           }
@@ -98,7 +98,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           type === NotificationType.StudentAssignedBrick
         ) {
           if (isPhone()) {
-            history.push(map.playIntro(brick.id));
+            history.push(routes.playNewPrep(brick.id));
           } else {
             history.push(routes.playCover(brick.id));
           }

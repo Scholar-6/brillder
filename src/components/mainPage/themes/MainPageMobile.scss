@@ -156,13 +156,13 @@
       }
     }
     &.notification-expanded {
-      height: auto;
+      height: 64px;
     }
   }
   .main-page-menu {
     position: absolute;
     width: 42vw;
-    height: 60px;
+    height: 64px;
     bottom: 0;
     border-bottom-left-radius: 0;
     border-top-left-radius: 6vw;
@@ -235,6 +235,7 @@
         }
 
         .view-item-container {
+          padding-top: 100px;
           .svg {
             width: 230px;
             height: 100px;
@@ -266,4 +267,39 @@
 
 .mainPageMobile ~ .beta-text {
   display: none;
+}
+
+
+// only case for new students
+.mobile-main-page.new-student {
+  > div {
+    height: 37%;
+  }
+  .eye-glass-frame {
+    width: 70vw;
+    height: 34vw;
+  }
+  .back-item-container {
+    width: 70vw;
+  }
+  .blocks-icon {
+    width: 100% !important;
+  }
+  .zendesk-position {
+    position: fixed;
+    bottom: 2.5vw;
+    left: 2.5vw;
+    height: 12.5vw;
+    width: 12.5vw;
+  }
+}
+
+.ggf-new-student-popup {
+  p {
+    $fontss: 5.3vw;
+    font-size: $fontss !important;
+    span {
+      font-size: $fontss !important;
+    }
+  }
 }

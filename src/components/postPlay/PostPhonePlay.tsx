@@ -127,10 +127,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.props.history.push('/home');
   }
 
-  moveToTitles() {
-    this.setState({ bookState: BookState.Titles });
-  }
-
   moveToAttempts() {
     this.setState({ bookState: BookState.Attempts });
   }
@@ -147,14 +143,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       this.state.swiper.slideTo(1, 200);
     }
     this.setState({ bookState: BookState.QuestionPage, bookHovered: true });
-  }
-
-  moveToQuestions() {
-    this.setState({ bookState: BookState.QuestionPage, questionIndex: 0 });
-  }
-
-  moveBackToQuestions() {
-    this.setState({ bookState: BookState.QuestionPage });
   }
 
   moveToIntroduction() {
@@ -244,7 +232,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
               <div className="prep-tab" onClick={this.moveToPrep.bind(this)}>
                 <SpriteIcon name="file-text" />
               </div>
-              {questions.map((q, i) => <div className="question-tab" onClick={() => this.moveToQuestion(i)}>
+              {questions.map((q, i) => <div className="question-tab" key={i} onClick={() => this.moveToQuestion(i)}>
                 {i + 1} {this.state.attempts[0].answers[i].correct ? <SpriteIcon name="ok" className="text-theme-green" /> : <SpriteIcon name="cancel-custom" className="text-orange" />}
               </div>)}
             </div>}

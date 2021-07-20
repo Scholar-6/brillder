@@ -417,7 +417,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderPendingFilter() {
-    let className = "m-view-all index-box hover-light item-box2";
+    let className = "m-view-all index-box yellow item-box2";
     if (this.state.isPending) {
       className += " active";
     }
@@ -560,9 +560,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
   }
 
-  async resendInvitation(email: string) {
-    if(this.state.activeClassroom) {
-      await resendInvitation(this.state.activeClassroom, email);
+  async resendInvitation(email: string, classroom?: ClassroomApi) {
+    if(this.state.activeClassroom || classroom) {
+      await resendInvitation((this.state.activeClassroom ?? classroom)!, email);
       this.invitationSuccess(1);
     }
   }
@@ -774,11 +774,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             close={(numInvited) => this.invitationSuccess(numInvited)}
             classroom={activeClassroom}
           />
-          <StudentInviteSuccessDialog
-            numStudentsInvited={this.state.numStudentsInvited}
-            close={() => this.setState({ numStudentsInvited: 0 })}
-          />
         </div>}
+        <StudentInviteSuccessDialog
+          numStudentsInvited={this.state.numStudentsInvited}
+          close={() => this.setState({ numStudentsInvited: 0 })}
+        />
         <ValidationFailedDialog
           isOpen={this.state.cantCreate}
           header="You don`t have permisions to create new user"

@@ -4,7 +4,6 @@ import { Brick } from "model/brick";
 
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
-import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import { getSynthesisTime } from "../services/playTimes";
@@ -31,10 +30,6 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
       document.removeEventListener("keydown", handleMove, false);
     };
   });
-
-  if (isPhone()) {
-    return <div />;
-  }
 
   const minutes = getSynthesisTime(brick.brickLength);
 

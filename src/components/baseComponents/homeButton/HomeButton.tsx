@@ -3,24 +3,28 @@ import { Route } from 'react-router-dom'
 
 import './HomeButton.scss';
 import SpriteIcon from '../SpriteIcon';
+import { isMobile } from 'react-device-detect';
 
-
+const DesktopTheme = React.lazy(() => import("./themes/HomeButtonDesktopTheme"));
 export interface HomeButtonProps {
   link?: string;
+  history: any;
   onClick?(): void;
 }
 
 const HomeButtonComponent: React.FC<HomeButtonProps> = (props) => {
   return (
-    <Route render={({ history }) => {
+    <Route render={() => {
       const onClick = () => {
         if (props.onClick) {
           props.onClick();
         } else if (props.link) {
-          history.push(props.link);
+          props.history.push(props.link);
         }
       }
       return (
+        <React.Suspense fallback={<></>}>
+        {!isMobile && <DesktopTheme />}
         <div className="home-button-container">
           <button type="button" className="btn btn-transparent svgOnHover home-button" onClick={() => onClick()}>
             <SpriteIcon name="logo" className="w100 h100 active text-theme-orange" />
@@ -50,6 +54,7 @@ const HomeButtonComponent: React.FC<HomeButtonProps> = (props) => {
             </div>
           </button>
         </div>
+        </React.Suspense>
       )
     }} />
   );

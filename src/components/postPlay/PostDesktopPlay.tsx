@@ -356,7 +356,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
           <Helmet>
             <title>{getBrillderTitle(brick.title)}</title>
           </Helmet>
-          <HomeButton onClick={() => this.props.history.push('/')} />
+          <HomeButton history={this.props.history} onClick={() => this.props.history.push('/')} />
             {/*
           <div className="book-navigator">
             <div className="prep-tab" onClick={this.moveToTitles.bind(this)}>
@@ -392,23 +392,6 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                   <IntroPrepPage brick={brick} color={color} onClick={this.moveToQuestions.bind(this)} />
                   <div className="page3-empty" onClick={this.moveToTitles.bind(this)}>
                     <div className="flipped-page">
-                      <div className="green-button-container1">
-                        <div className="green-button-container2">
-                          <div className="green-button-container3"
-                            onMouseEnter={() => this.setState({ playHovered: true })}
-                            onMouseLeave={() => this.setState({ playHovered: false })}
-                            onClick={() =>
-                              this.props.history.push(
-                                routes.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
-                              )
-                            }
-                          >
-                            <div className={`custom-hover-container ${this.state.playHovered ? 'hovered' : ''}`}></div>
-                            <PlayGreenButton onClick={() => { }} />
-                          </div>
-                        </div>
-                        <div className="play-text">Play Again</div>
-                      </div>
                     </div>
                   </div>
                   {renderBookMark()}

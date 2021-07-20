@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .phone-my-library {
-  $base-brick-width: 5vw;
+  $base-brick-width: 8vw;
 
   .ml-content {
     height: calc(100% - 64px);
@@ -19,8 +19,17 @@
       color: var(--white);
     }
 
+    .rotated-text {
+      font-size: 3.5vw;
+    }
+
     .progress-value {
       position: relative;
+      .rotated-text {
+        color: var(--white);
+        text-transform: uppercase !important;
+        font-family: $font-family-bold !important;
+      }
     }
     .rotated-container {
       bottom: 0;
@@ -30,16 +39,22 @@
       .rotated {
         transform: rotate(270deg);
         .rotated-text {
-          padding-bottom: 3vh;
-          padding-top: 3vh;
+          padding-left: 3vh;
+          padding-right: 3vh;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
       }
     }
+    .length-20 .rotated-container .rotated {
+      margin-bottom: 1vw;
+    }
     .length-40 .rotated-container .rotated {
-      margin-bottom: 2.6vw;
+      margin-bottom: 5vw;
+    }
+    .length-60 .rotated-container .rotated {
+      margin-bottom: 13vw;
     }
   }
 
@@ -60,6 +75,7 @@
       height: 100%;
       padding: 0 2vw;
       margin: 0 2vw;
+      font-size: $mbase-font-size;
       overflow-y: scroll;
 
       .libary-container-1 {
@@ -91,6 +107,7 @@
             display: flex;
             flex-direction: row;
             overflow: hidden;
+            overflow-x: auto !important;
           }
         }
 
@@ -117,6 +134,37 @@
 
             .default-value {
               height: 100%;
+
+              .white .rotated-text {
+                padding-left: 14.5vw;
+              }
+
+              .text-dark-gray .rotated-text {
+                color: var(--dark-gray);
+              }
+
+              .pr-lock-container {
+                position: absolute;
+                border-radius: 1vw;
+                border-top-right-radius: 4vw;
+                border-top-left-radius: 4vw;
+                height: 13vw;
+                width: 100%;
+                bottom: 0;
+                font-family: $font-family-bold;
+                color: var(--white);
+                > div {
+                  display: flex;
+                  justify-content: center;
+                }
+                svg {
+                  padding-top: 1vw;
+                  $size: 5vw;
+                  stroke-width: 1.5;
+                  width: $size;
+                  height: $size;
+                }
+              }
             }
 
             &.length-20 {
@@ -148,6 +196,14 @@
             position: absolute;
             bottom: 0;
             border-radius: 1vw;
+
+            .lib-circle {
+              width: 5.5vw;
+              height: 5.5vw;
+              font-size: 3.3vw;
+              max-height: 6vh;
+              max-width: 6vh;
+            }
           }
 
           .subject-tooltip {
@@ -170,75 +226,6 @@
   .classroom-filter-custom {
     height: 25vh;
     overflow-y: scroll;
-  }
-
-  .one-subject {
-    padding-top: 3vh;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    padding-bottom: 12vh;
-    height: 100%;
-
-    .libary-container {
-      background: var(--white);
-      border-radius: 0.7vw;
-      height: 100%;
-      $base-side-margin: 0.32vw;
-
-      >div {
-        height: 100%;
-        $base-width: 5vw;
-
-        .assignment {
-          margin-left: $base-side-margin;
-          margin-right: $base-side-margin;
-          $base-radius: 0.35vw;
-          border-radius: $base-radius;
-
-          .progress-value {
-            border-radius: $base-radius;
-          }
-        }
-
-        .length-20 {
-          width: $base-width;
-
-          .rotated .rotated-text {
-            height: $base-width;
-          }
-
-          .progress-value {
-            width: $base-width;
-          }
-        }
-
-        .length-40 {
-          $width: calc(#{$base-width} * 2);
-          width: $width;
-
-          .rotated .rotated-text {
-            height: $width;
-          }
-
-          .progress-value {
-            width: $width;
-          }
-        }
-
-        .length-60 {
-          $width: calc(#{$base-width} * 4);
-          width: $width;
-
-          .rotated .rotated-text {
-            height: $width;
-          }
-
-          .progress-value {
-            width: $width;
-          }
-        }
-      }
-    }
   }
 }
 

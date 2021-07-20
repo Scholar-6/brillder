@@ -16,9 +16,7 @@ interface SubjectProps {
   location: any;
   subjectId: any;
   subjects: any[];
-  saveCore(isCore: boolean): void;
   saveSubject(subjectId: number): void;
-  saveData(subjectId: number, isCore: boolean): void;
 }
 
 const FrenchComponent: React.FC = () => {
@@ -210,7 +208,7 @@ const DefaultComponent: React.FC = () => {
 }
 
 const SubjectPage: React.FC<SubjectProps> = ({
-  history, subjectId, subjects, baseUrl, location, saveData, saveCore, saveSubject
+  history, subjectId, subjects, baseUrl, location, saveSubject
 }) => {
   const getSubjectName = (subjectId: number) => {
     if (subjectId) {
@@ -226,7 +224,6 @@ const SubjectPage: React.FC<SubjectProps> = ({
 
   const [subject, setSubject] = React.useState(subjectId);
   const [subjectName, setSubjectName] = React.useState(initSubjectName);
-  const [isCoreSet, setCoreStatus] = React.useState(false);
 
   const onSubjectChange = (event: any) => {
     const subjectId = parseInt(event.target.value) as number;
@@ -238,28 +235,8 @@ const SubjectPage: React.FC<SubjectProps> = ({
 
   const values = queryString.parse(location.search);
 
-  const getCore = (values: queryString.ParsedQuery<string>) => {
-    if (values.isCore === 'false') {
-      return false;
-    } else if (values.isCore === 'true') {
-      return true;
-    }
-    return false;
-  }
-
-  if (!isCoreSet && values.isCore) {
-    let isCore = getCore(values);
-    saveCore(isCore);
-    setCoreStatus(true);
-  }
-
   if (subjects.length === 1) {
-    let subjectId = subjects[0].id;
-    if (values.isCore) {
-      saveData(subjectId, getCore(values));
-    } else {
-      saveSubject(subjectId);
-    }
+    saveSubject(subjects[0].id);
     return <Redirect to={map.ProposalTitleLink} />
   }
 

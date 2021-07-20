@@ -7,9 +7,9 @@ import { ComponentAttempt } from 'components/play/model';
 const mockComponent: ChooseOneComponent = {
     type: 127,
     list: [
-        { value: "A", valueFile: "", checked: false, index: 0, answerType: QuestionValueType.String },
-        { value: "B", valueFile: "", checked: true, index: 1,  answerType: QuestionValueType.String },
-        { value: "C", valueFile: "", checked: false, index: 2, answerType: QuestionValueType.String }
+        { value: "A", valueFile: "", checked: false, index: 0, answerType: QuestionValueType.String, soundFile: "", soundCaption: ""},
+        { value: "B", valueFile: "", checked: true, index: 1,  answerType: QuestionValueType.String, soundFile: "", soundCaption: ""},
+        { value: "C", valueFile: "", checked: false, index: 2, answerType: QuestionValueType.String, soundFile: "", soundCaption: ""}
     ],
 }
 

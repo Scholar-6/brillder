@@ -35,7 +35,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [bricks, setBricks] = React.useState([] as any[]);
   const [brick, setBrick] = React.useState(null as any);
   /*eslint-disable-next-line*/
-  const [deadlineDate, setDeadline] = React.useState(null as null | Date);
+  const [deadlineDate, setDeadline] = React.useState(new Date());
   const [haveDeadline, toggleDeadline] = React.useState(false);
 
   const history = useHistory();
@@ -130,7 +130,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
                 control={<Radio onClick={() => toggleDeadline(true)} />}
                 label="Set date"
               />
-              {haveDeadline && <TimeDropdowns onChange={setDeadline} />}
+              {haveDeadline && <TimeDropdowns date={deadlineDate} onChange={setDeadline} />}
             </div>
           </div> :
           <div>

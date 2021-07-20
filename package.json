@@ -1,6 +1,6 @@
 {
   "name": "brillder",
-  "version": "10.10.0",
+  "version": "10.17.0",
   "private": false,
   "dependencies": {
     "@datadog/datadog-ci": "^0.11.11",
@@ -35,6 +35,7 @@
     "@vx/stats": "0.0.198",
     "axios": ">=0.21.1",
     "caniuse-lite": "^1.0.30001187",
+    "desmos": "^1.5.4",
     "dot-prop": "^4.2.1",
     "dotenv": "^8.2.0",
     "html-to-react": "^1.4.5",
@@ -92,7 +93,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start --scripts-version react-scripts",
-    "build": "node generateSitemap.js && react-app-rewired build --scripts-version react-scripts && npm run test-junit",
+    "build": "node generateSitemap.js && react-app-rewired build --scripts-version react-scripts",
     "test": "react-app-rewired test --scripts-version react-scripts",
     "test-junit": "react-app-rewired test --scripts-version react-scripts --testResultsProcessor \"jest-junit\" --watchAll false",
     "e2e": "react-app-rewired test --scripts-version react-scripts --roots test --testMatch \"<rootDir>/test/**/*.{spec,test}.{js,ts}\" --env node",

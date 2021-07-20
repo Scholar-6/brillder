@@ -37,7 +37,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
   const [state, setState] = React.useState({
     prepExpanded: true,
     isStopped: false,
-    briefExpanded: true,
+    briefExpanded: false,
     duration: null,
   } as IntroductionState);
 
@@ -150,31 +150,31 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="brick-row-container live-container">
-      <div className="fixed-upper-b-title">
-        <BrickTitle title={brick.title} />
-      </div>
+      <div className="fixed-upper-b-title"><BrickTitle title={brick.title} /></div>
       <div className="brick-container play-preview-panel live-page play-brief-page new-prep-page">
         <div className="introduction-page">
           <div className="scrollable">
-            <div className="open-question">
-              <MathInHtml value={brick.openQuestion} />
+            <div>
+              <div className="open-question">
+                <MathInHtml value={brick.openQuestion} />
+              </div>
+              <div className="introduction-content">
+                {renderBriefTitle()}
+                {renderBriefExpandText()}
+                {renderPrepTitle()}
+                {renderPrepExpandText()}
+              </div>
             </div>
-            <div className="introduction-content">
-              {renderBriefTitle()}
-              {renderBriefExpandText()}
-              {renderPrepTitle()}
-              {renderPrepExpandText()}
-            </div>
-          </div>
-          <div className="new-layout-footer" style={{ display: 'none' }}>
-            <div className="time-container">
-              <TimeProgressbarV2 isIntro={true} setEndTime={() => {}} minutes={minutes} onEnd={() => { }} brickLength={brick.brickLength} />
-            </div>
-            <div className="footer-space"><span className="scroll-text">Scroll down</span></div>
-            <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={props.moveNext}>
-                Investigation
-                <SpriteIcon name="arrow-right" />
+            <div className="new-layout-footer" style={{ display: 'none' }}>
+              <div className="time-container">
+                <TimeProgressbarV2 isIntro={true} setEndTime={() => { }} minutes={minutes} onEnd={() => { }} brickLength={brick.brickLength} />
+              </div>
+              <div className="footer-space" />
+              <div className="new-navigation-buttons">
+                <div className="n-btn next" onClick={props.moveNext}>
+                  Investigation
+                  <SpriteIcon name="arrow-right" />
+                </div>
               </div>
             </div>
           </div>
