@@ -30,6 +30,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ReturnEditorsSuccessDialog from "components/play/finalStep/dialogs/ReturnEditorsSuccessDialog";
 import ReturnAuthorSuccessDialog from "components/play/finalStep/dialogs/ReturnAuthorSuccessDialog";
 import SelfPublishColumn from "./SelfPublishColumn";
+import playRoutes from '../../play/routes';
 import routes from "../routes";
 
 enum PublishStatus {
@@ -350,7 +351,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         isOpen={publishSuccess === PublishStatus.Popup}
         close={() => {
           setPublishSuccess(PublishStatus.Published);
-          history.push(map.playCover(brick.id));
+          history.push(playRoutes.playCover(brick.id));
         }}
       />
       <SendPublisherSuccessDialog isOpen={sendedToPublisher && publisherConfirmed === false} close={() => props.sendToPublisherConfirmed()} />

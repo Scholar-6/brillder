@@ -147,6 +147,7 @@
       }
     }
     .brick-row-container {
+      width: calc(100vw - 23vw - 2.4vw) !important;
       .subjects-column {
         display: flex;
         align-items: center;

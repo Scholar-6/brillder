@@ -8,7 +8,7 @@ import actions from "redux/actions/auth";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import MobileLoginPage from "./phone/MobileLogin";
 import map from "components/map";
-import LoginDesktopPage from "./desktop/LoginDesktopPage";
+import LoginDesktopPage from "./desktop/loginDesktopPage/LoginDesktopPage";
 import { isPhone } from "services/phone";
 
 const mapDispatch = (dispatch: any) => ({

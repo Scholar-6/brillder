@@ -1,0 +1,32 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.login-desktop-page {
+  .left-part {
+    .email-button:hover {
+      background: var(--theme-dark-blue);
+    }
+
+    .text-box .signin-button:hover svg {
+      margin-left: 12vw;
+    }
+
+    .join-button:hover svg {
+      margin-left: 1vw;
+    }
+  }
+
+  .button-box form button:hover {
+    color: var(--theme-orange);
+    background: var(--white);
+  }
+
+  .reset-link-container .reset-password-link:hover {
+    color: var(--theme-orange);
+  }
+
+  .right-part .container svg {
+    transform: perspective(70vw) rotateY(-25deg);
+  }
+}

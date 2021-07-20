@@ -633,7 +633,6 @@
 }
 
 .phone-question-preview {
-
   .question-hint-global,
   .question-hint {
     font-size: 1vw;
@@ -666,33 +665,66 @@
   }
 }
 
+.play-preview-pages .play-brief-page {
+  ::-webkit-scrollbar {
+    width: 10px;
+    display: block !important;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    display: block !important;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    display: block !important;
+  }
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    display: block !important;
+  }
+  .question-live-play {
+    ::-webkit-scrollbar,
+    ::-webkit-scrollbar-track,
+    ::-webkit-scrollbar-thumb,
+    ::-webkit-scrollbar-thumb:hover {
+      display: none !important;
+    }
+  }
+}
+
 .play-preview-pages {
-  .play-brief-page,
-  .real-live-page .react-swipeable-view-container,
-  .synthesis-page,
-  .review-page .react-swipeable-view-container {
+  .synthesis-page .introduction-page,
+  .real-live-page .play-question-container,
+  .review-page .play-question-container {
+    $size: 0.3vw;
     ::-webkit-scrollbar {
-      width: 10px;
+      width: $size * 2;
       display: block !important;
     }
 
     /* Track */
     ::-webkit-scrollbar-track {
-      background: #f1f1f1;
+      border-radius: $size;
+      background: var(--theme-light-blue);
       display: block !important;
     }
 
     /* Handle */
     ::-webkit-scrollbar-thumb {
-      background: #888;
+      border-radius: $size;
+      background: var(--tab-gray);
       display: block !important;
     }
 
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
-      background: #555;
+      background: var(--off-white);
       display: block !important;
     }
+    .synthesis-content,
     .question-live-play {
       ::-webkit-scrollbar,
       ::-webkit-scrollbar-track,
@@ -707,4 +739,13 @@
 .horizontal-shuffle-answer.correct,
 .vertical-shuffle-choice.correct {
   background: var(--theme-green-alpha5) !important;
+}
+
+.play-preview-pages .introduction-page .dd-live-container.question-live-play {
+  z-index: 10;
+  top: 0;
+  margin-top: calc(2vw + 4vw) !important;
+  position: fixed !important;
+  width: 80vw !important;
+  padding-right: 9.3vw !important;
 }

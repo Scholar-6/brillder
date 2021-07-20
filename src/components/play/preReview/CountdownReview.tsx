@@ -5,15 +5,15 @@ import { Brick } from "model/brick";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import { getLiveTime } from "../services/playTimes";
+import Hourglass from "../baseComponents/hourglass/Hourglass";
 
 interface Props {
   brick: Brick;
   moveNext(): void;
 }
 
-const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
+const CountdownInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
@@ -35,34 +35,25 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
       <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       <div className="brick-container play-preview-panel live-page after-cover-page pre-investigation animate-fade">
         <div className="introduction-page">
-          <div className="after-cover-main-content">
+          <div className="after-cover-main-content count-down-content">
             <div className="title s-fade1">
-              Time for some questions.
+              You have <span className="text-orange">{minutes} minutes</span> to review your answers and improve your score.
             </div>
-            <div className="like-buttons-container s-fade2">
-              <div className="x-center">
-                <div className="like-button">Preparation</div>
-              </div>
-              <div className="x-center">
-                <div className="like-button orange" onClick={moveNext}>Investigation</div><div className="like-button">Synthesis</div>
-              </div>
-              <div className="x-center">
-                <div className="like-button">Review</div>
-              </div>
+            <div className="flex-center">
+              <Hourglass />
             </div>
             <div className="footer s-fade3">
-              You have<span className="underline-border"> {minutes} minutes </span>to complete the investigation. Once time is up, you will get a provisional score.
+              <div>Your final score will be an average of your provisional and review scores.</div>
+              <div>You can replay this brick as many times as you like after this.</div>
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
-            <div className="time-container">
-              <DummyProgressbarCountdown value={100} deadline={true} />
-            </div>
-            <div className="minutes">{minutes}:00</div>
+            <div className="time-container" />
+            <div className="minutes" />
             <div className="footer-space" />
             <div className="new-navigation-buttons">
               <div className="n-btn next" onClick={moveNext}>
-                Play Brick
+                Start Timer
                 <SpriteIcon name="arrow-right" />
               </div>
             </div>
@@ -73,4 +64,4 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
   );
 };
 
-export default PreInvestigationPage;
+export default CountdownInvestigationPage;

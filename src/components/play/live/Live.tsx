@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Grid } from "@material-ui/core";
-import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
@@ -20,10 +19,7 @@ import LiveStepper from "./components/LiveStepper";
 import TabPanel from "../baseComponents/QuestionTabPanel";
 import ShuffleAnswerDialog from "components/baseComponents/failedRequestDialog/ShuffleAnswerDialog";
 import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers";
-import LiveActionFooter from "./components/LiveActionFooter";
-//import MobileNextButton from "./components/MobileNextButton";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
-//import MobilePrevButton from "./components/MobilePrevButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
@@ -294,7 +290,7 @@ const LivePage: React.FC<LivePageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-        <div className="question-live-play review-content">
+        <div className="question-live-play dd-live-container review-content">
           {renderQuestion(question, index)}
         </div>
       </TabPanel>
@@ -386,11 +382,11 @@ const LivePage: React.FC<LivePageProps> = ({
         <div className="brick-container play-preview-panel live-page real-live-page">
           <div className="introduction-page">
             <div className="intro-text-row">
-                <div className="phone-stepper-head">
-                  <BrickTitle title={brick.title} />
-                </div>
-                {renderStepper()}
+              <div className="phone-stepper-head">
+                <BrickTitle title={brick.title} />
               </div>
+              {renderStepper()}
+            </div>
             <div className="introduction-content" ref={questionScrollRef}>
               {questions.map(renderQuestionContainer)}
               {renderMobileButtons()}
@@ -420,64 +416,45 @@ const LivePage: React.FC<LivePageProps> = ({
       <div className="brick-container play-preview-panel live-page real-live-page">
         <div className="introduction-page">
           <Grid container direction="row">
-            <Grid item xs={8}>
-              <SwipeableViews
-                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-                index={activeStep}
-                className="swipe-view"
-                style={{ width: "100%" }}
-                onChangeIndex={handleStep}
-              >
-                {questions.map(renderQuestionContainer)}
-              </SwipeableViews>
-              <div className="new-layout-footer" style={{ display: "none" }}>
-                <div className="time-container">
-                  <TimeProgressbar
-                    isLive={true}
-                    onEnd={onEnd}
-                    minutes={minutes}
-                    endTime={props.endTime}
-                    brickLength={brick.brickLength}
-                    setEndTime={props.setEndTime}
-                  />
-                </div>
-                <div className="footer-space">
-                </div>
-                <div className="new-navigation-buttons">
-                  <div className="n-btn back" onClick={prev}>
-                    <SpriteIcon name="arrow-left" />
-                    Back
-                  </div>
-                  <div
-                    className="n-btn next"
-                    onClick={() => {
-                      if (questions.length - 1 > activeStep) {
-                        next();
-                      } else {
-                        setSubmitAnswers(true);
-                      }
-                    }}
-                  >
-                    Next
-                    <SpriteIcon name="arrow-right" />
-                  </div>
-                </div>
+            <div className="introduction-info">
+              <div className="intro-text-row">
+                {renderStepper()}
               </div>
-            </Grid>
-            <Grid item xs={4}>
-              <div className="introduction-info">
-                <div className="intro-text-row f-align-self-start m-t-5">
-                  {renderStepper()}
-                </div>
-                <LiveActionFooter
-                  questions={questions}
-                  activeStep={activeStep}
-                  prev={prev}
-                  next={next}
-                  setSubmitAnswers={setSubmitAnswers}
+            </div>
+            {renderQuestionContainer(questions[activeStep], activeStep)}
+            <div className="new-layout-footer" style={{ display: "none" }}>
+              <div className="time-container">
+                <TimeProgressbar
+                  isLive={true}
+                  onEnd={onEnd}
+                  minutes={minutes}
+                  endTime={props.endTime}
+                  brickLength={brick.brickLength}
+                  setEndTime={props.setEndTime}
                 />
               </div>
-            </Grid>
+              <div className="footer-space">
+              </div>
+              <div className="new-navigation-buttons">
+                <div className="n-btn back" onClick={prev}>
+                  <SpriteIcon name="arrow-left" />
+                  Back
+                </div>
+                <div
+                  className="n-btn next"
+                  onClick={() => {
+                    if (questions.length - 1 > activeStep) {
+                      next();
+                    } else {
+                      setSubmitAnswers(true);
+                    }
+                  }}
+                >
+                  Next
+                  <SpriteIcon name="arrow-right" />
+                </div>
+              </div>
+            </div>
           </Grid>
         </div>
       </div>

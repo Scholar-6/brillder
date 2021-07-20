@@ -114,10 +114,6 @@
       span {
         color: var(--white);
       }
-
-      &:hover {
-        background: var(--theme-dark-blue);
-      }
     }
     $button-width: 20vw;
 
@@ -172,11 +168,6 @@
           height: 2vw;
           margin-left: 13vw;
         }
-        &:hover {
-          svg {
-            margin-left: 12vw;
-          }
-        }
       }
 
       .join-button {
@@ -192,11 +183,6 @@
           transition: all 300ms ease-out;
           width: 2vw;
           height: 2vw;
-        }
-        &:hover {
-          svg {
-            margin-left: 1vw;
-          }
         }
       }
     }
@@ -229,7 +215,6 @@
     }
     svg {
       margin-bottom: 2vh;
-      transform: perspective(70vw) rotateY(-25deg);
       height: 72vh;
       font-family: $font-family-black;
     }
@@ -370,11 +355,6 @@
     padding: 2.3vh 1vw !important;
     border-radius: 1.7vh;
     transition: all 300ms ease-out;
-
-    &:hover {
-      color: var(--theme-orange);
-      background: var(--white);
-    }
   }
 }
 

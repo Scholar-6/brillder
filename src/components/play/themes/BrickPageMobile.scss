@@ -215,6 +215,10 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .count-introduction-page {
       height: calc(100% - 4vh - 7.5vw) !important;
     }
+
+    .s-fade2 {
+      animation-delay: 0.5s;
+    }
     
     .ss-phone-before-title {
       height: 9%;
@@ -337,6 +341,32 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
           align-items: center;
           justify-content: center;
         }
+      }
+    }
+  }
+  .pre-review .introduction-page  {
+    .ss-phone-before-title {
+      height: 4%;
+    }
+    .dd-question-container {
+      height: 21%;
+      svg {
+        position: absolute;
+        stroke-width: 2.2;
+      }
+      .smaller {
+        color: var(--tab-gray);
+        $size: 7vh;
+        left: calc(50% - 4vh - #{$size / 2});
+        width: $size;
+        height: $size;
+      }
+      .bigger {
+        top: 0;
+        $size: 15vh;
+        left: calc(50% - #{$size / 2});
+        width: $size;
+        height: $size;
       }
     }
   }
