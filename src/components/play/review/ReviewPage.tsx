@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Grid } from "@material-ui/core";
-import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
 import update from "immutability-helper";
 import { Moment } from "moment";
