@@ -2,10 +2,8 @@ import Quill from "quill";
 import Delta from "quill-delta";
 import { Quill as GlobalQuill } from "react-quill";
 
-/*eslint-disable-next-line*/
-const YOUTUBE_REGEXP = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?[\w\?=]*)?/g;
-/*eslint-disable-next-line*/
-const EMBED_REGEXP = /https:\/\/www.youtube.com\/embed\/([\w\-\_]*)/;
+export const YOUTUBE_REGEXP = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-_]*)(&(amp;)?[\w?=]*)?/g;
+const EMBED_REGEXP = /https:\/\/www.youtube.com\/embed\/([\w\-_]*)/;
 
 const BlockEmbed = GlobalQuill.import("blots/block/embed");
 class YoutubeEmbed extends BlockEmbed {
@@ -30,8 +28,8 @@ YoutubeEmbed.className = 'youtube-video';
 YoutubeEmbed.tagName = 'iframe';
 GlobalQuill.register(YoutubeEmbed, true);
 
-const TED_REGEXP = /http(?:s?):\/\/www.ted.com\/talks\/([\w\-\_?&=]*)/g;
-const TED_EMBED_REGEXP = /https:\/\/embed.ted.com\/talks\/([\w\-\_]*)/;
+export const TED_REGEXP = /http(?:s?):\/\/www.ted.com\/talks\/([\w\-_?&=]*)/g;
+const TED_EMBED_REGEXP = /https:\/\/embed.ted.com\/talks\/([\w\-_]*)/;
 class TedEmbed extends BlockEmbed {
     static create(value: string) {
         let node = super.create();
@@ -54,7 +52,7 @@ TedEmbed.className = 'ted-video';
 TedEmbed.tagName = 'iframe';
 GlobalQuill.register(TedEmbed, true);
 
-const VIMEO_REGEXP = /http(?:s?):\/\/vimeo.com\/([\d]*)/g;
+export const VIMEO_REGEXP = /http(?:s?):\/\/vimeo.com\/([\d]*)/g;
 const VIMEO_EMBED_REGEXP = /http(?:s?):\/\/player.vimeo.com\/video\/([\d]*)/;
 class VimeoEmbed extends BlockEmbed {
     static create(value: string) {

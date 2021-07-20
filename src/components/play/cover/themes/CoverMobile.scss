@@ -12,7 +12,7 @@
 
   .q-brick-title {
     overflow: auto !important;
-    font-size: 6vw !important;
+    font-size: 7vw !important;
     white-space: inherit !important;
     text-overflow: initial !important;
   }
@@ -47,13 +47,12 @@
   .brick-title {
     padding-right: 2vw;
     margin-top: 3vh;
-    font-size: 7vw;
     @extend %ellipsis;
-    text-transform: uppercase;
     font-family: $font-family-black;
   }
 
   .author-row {
+    margin-bottom: 1vh;
     padding-right: 2vw;
     font-size: 6vw;
     @extend %ellipsis;
@@ -66,6 +65,11 @@
     margin-top: 2vh;
     font-size: 5vw;
     @extend %ellipsis;
+  }
+
+  .cover-image-placeholder {
+    margin-top: 3vh;
+    font-size: 5vw !important;
   }
 
   .hover-area {

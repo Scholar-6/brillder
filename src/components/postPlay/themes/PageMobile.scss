@@ -120,6 +120,10 @@
     .swiper-container {
       height: 100%;
     }
+
+    blockquote {
+      font-size: 4.5vw;
+    }
   }
 
   .home-button-container button .return-arrow {
@@ -492,7 +496,6 @@
       height: 100%;
     }
 
-
     .front {
       width: 30.1vw;
       height: 100%;
@@ -762,7 +765,6 @@
         z-index: 10;
         background: #efefef;
       }
-
     }
   }
 
@@ -781,7 +783,6 @@
     }
   }
 }
-
 
 .last-question-cover {
   @extend %flexCenter;
@@ -850,11 +851,48 @@
   overflow-y: scroll;
 }
 
-
 // questions content
 .post-play-page .mobile-attempts.question {
   $footer-height: 6vh;
   $header-height: calc(35vw + 1vh);
+
+  .question-title {
+    position: relative;
+    font-family: $font-family-black;
+    color: var(--theme-dark-blue);
+    font-size: 7.5vw;
+    margin-bottom: 2vw;
+    .ge-phone-title {
+      margin-top: 1vh;
+      display: flex;
+      align-items: center;
+      font-size: 1.7vw;
+      .ge-phone-circle {
+        margin-right: 1vw;
+        $size: 1.4vw;
+        width: $size;
+        height: $size;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg {
+          color: var(--white);
+          width: 62%;
+          height: 62%;
+          stroke-width: 4;
+        }
+      }
+    }
+    .marks-container {
+      position: absolute;
+      font-size: 4vw;
+      top: 1vw;
+      right: 2vw;
+      text-align: center;
+      line-height: 1.3;
+    }
+  }
 
   .header {
     display: block;
@@ -864,6 +902,7 @@
 
   .header-absolute {
     display: block;
+
     p {
       padding-left: 1.5vw;
       text-align: center;
@@ -930,6 +969,7 @@
           width: 8vw;
           stroke-width: 3;
         }
+
         .ew-cancel {
           stroke-width: 4;
         }
@@ -964,7 +1004,7 @@
     background: var(--white);
     overflow-y: auto;
     height: calc(100% - #{$header-height} - #{$footer-height});
-    font-size: 4.5vw !important;
+    font-size: $mbase-font-size !important;
 
     .desktop {
       display: none;
@@ -1002,6 +1042,13 @@
         .line {
           font-size: inherit !important;
         }
+        .word {
+          border-radius: 1.5vw;
+          padding-left: 0.3vw;
+          padding-right: 0.3vw;
+          margin-left: 0.3vw;
+          margin-right: 0.3vw;
+        }
       }
 
       .pair-match-play-option,
@@ -1017,16 +1064,19 @@
 
       &.vertical-shuffle-play {
         .vertical-content {
-          font-size: 4.5vw !important;
+          font-size: $mbase-font-size !important;
+
           p {
-            font-size: 4.5vw !important;
+            font-size: $mbase-font-size !important;
           }
         }
       }
+
       .question-hint-global {
-        font-size: 4.5vw !important;
+        font-size: $mbase-font-size !important;
+
         p {
-          font-size: 4.5vw !important;
+          font-size: $mbase-font-size !important;
         }
       }
     }

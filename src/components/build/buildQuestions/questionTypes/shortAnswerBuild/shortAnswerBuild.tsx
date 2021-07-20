@@ -87,7 +87,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
           validate={props.validationRequired}
           isValid={!!stripHtml(answer.value)}
           data={answer.value}
-          toolbar={["superscript", "subscript"]}
+          toolbar={[]}
           onChange={(value) => changed(answer, value)}
         />
       </div>
@@ -118,7 +118,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
           <React.Fragment>
             <div>
               <span className="exclamation-mark">!</span>
-              Great minds don't think exactly alike: the learner may know the
+              Great minds don’t think exactly alike: the learner may know the
               right answer but use slightly different language, so there is a
               limit of three words for short answers.
             </div>

@@ -84,15 +84,6 @@ class WordHighlighting extends CompComponent<
     }
     
     let className = "word";
-
-    if (this.props.isDefaultBook) {
-      return (
-        <span key={index} className={className}>
-          {word.text}
-          {word.isBreakLine ? <br/> : ""}
-        </span>
-      );
-    }
     
     if (word.selected) {
       className += " active";
@@ -119,7 +110,16 @@ class WordHighlighting extends CompComponent<
 
     // don`t show spaces
     if (word.notSelectable && !word.isBreakLine) {
-      return <span />;
+      return <span key={index} />;
+    }
+
+    if (this.props.isDefaultBook) {
+      return (
+        <span key={index} className={className}>
+          {word.text}
+          {word.isBreakLine ? <br/> : ""}
+        </span>
+      );
     }
 
     return (

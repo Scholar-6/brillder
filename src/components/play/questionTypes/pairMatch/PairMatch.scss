@@ -24,6 +24,10 @@
     border-top-left-radius: 0.5vw;
     border-bottom-left-radius: 0.5vw;
 
+    &.correct {
+      background: var(--theme-green-alpha5) !important;
+    }
+
     .image-source {
       display: none;
     }
@@ -36,9 +40,6 @@
       width: 100%;
       overflow: scroll;
 
-      p {
-        text-align: center !important;
-      }
       img {
         @include tabletP {
           width: auto !important;
@@ -76,13 +77,13 @@
         p {
           font-size: 1.25vw !important;
           @include phone_and_tabletP {
-            font-size: 4.5vw !important;
+            font-size: $mbase-font-size !important;
           }
         }
         .MuiListItemText-root {
           font-size: 1.25vw !important;
           @include phone_and_tabletP {
-            font-size: 4.5vw !important;
+            font-size: $mbase-font-size !important;
           }
         }
         img {
@@ -117,6 +118,9 @@
 
     img {
       width: 100%;
+    }
+    &.correct {
+      background: var(--theme-green-alpha5) !important;
     }
   }
 

@@ -1,3 +1,6 @@
+import { RolePreference, User } from "model/user";
+import { isAorP } from "./services/brickService";
+
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
 export const ResetPassword = '/resetPassword';
@@ -8,7 +11,13 @@ export const buildBase = (brickId: number) => `${Build}/brick/` + brickId;
 
 export const NewBrick = `${Build}/new-brick`;
 export const ProposalBase = (brickId: number) => `${Build}/brick/${brickId}`;
+
 export const BackToWorkPage = '/back-to-work';
+export const BackToWorkPersonal = BackToWorkPage + '?isCore=false';
+export const BackToWorkPublic = BackToWorkPage + '?isCore=true';
+export const backToWorkUserBased = (user: User) => 
+  `${BackToWorkPage}?isCore=${user.rolePreference?.roleId === RolePreference.Builder || isAorP(user.roles) ? 'true' : 'false'}`
+
 export const AssignmentsPage = '/assignments';
 export const AssignmentsClassPage = AssignmentsPage + '/:classId';
 export const MyLibrary = '/my-library';
@@ -19,15 +28,9 @@ export const TermsPage = '/terms';
 export const TermsSignUp = Onboarding + '/terms';
 export const ThankYouPage = Onboarding + '/thank-you';
 export const SetUsername = Onboarding + '/set-username';
-export const MobileUsername = Onboarding + '/mobile-username';
 export const SelectSubjectPage = Onboarding + '/select-subjects';
 export const UserPreference = Onboarding + '/user-preference';
 export const UserProfile = Onboarding + '/profile-page';
-
-
-export const BackToWorkTeachTab = BackToWorkPage + '/teach';
-export const BackToWorkBuildTab = BackToWorkPage + '/build';
-export const BackToWorkLearnTab = BackToWorkPage + '/learn';
 
 export const TeachAssignedTab = '/teach/assigned';
 export const TeachAssignedArchiveTab = TeachAssignedTab + '/archive';
@@ -94,8 +97,6 @@ export const ProposalTitleLink = `${NewBrick}/brick-title`;
 
 // play preview
 export const PlayPreviewBase = '/play-preview/brick';
-export const PlayIntroLastPrefix = '/intro';
-export const PlayCoverLastPrefix = '/cover';
 
 export const playPreview = (brickId: number) => {
   return  PlayPreviewBase + '/' + brickId;
@@ -106,13 +107,6 @@ export const PlayBase = '/play/brick';
 
 export const realPlay = (brickId: number) => {
   return  PlayBase + '/' + brickId;
-}
-
-export const playIntro = (brickId: number) => {
-  return realPlay(brickId) + PlayIntroLastPrefix;
-}
-export const playCover = (brickId: number) => {
-  return realPlay(brickId) + PlayCoverLastPrefix;
 }
 
 // post play
@@ -136,7 +130,6 @@ export default {
   TermsSignUp,
   ThankYouPage,
   SetUsername,
-  MobileUsername,
   SelectSubjectPage,
   UserPreference,
 
@@ -155,11 +148,12 @@ export default {
   ProposalTitleLink,
 
   BackToWorkPage,
+  BackToWorkPublic,
+  BackToWorkPersonal,
+  backToWorkUserBased,
+
   AssignmentsPage,
   AssignmentsClassPage,
-  BackToWorkTeachTab,
-  BackToWorkBuildTab,
-  BackToWorkLearnTab,
 
   TeachAssignedTab,
   TeachAssignedArchiveTab,
@@ -181,6 +175,4 @@ export default {
   investigationBuildQuestion,
   investigationBuildQuestionType,
   investigationQuestionSuggestions,
-  playIntro,
-  playCover,
 }

@@ -9,6 +9,14 @@
   $book-height: 60vh;
   $real-book-height: 64vh;
 
+  .word {
+    padding-left: 0.05vw;
+    padding-right: 0.05vw;
+    margin-left: 0.05vw;
+    margin-right: 0.05vw;
+    border-radius: 0.2vw;
+  }
+
   h2 {
     font-family: $font-family-bold;
     font-size: 1.7vw;
@@ -53,6 +61,44 @@
         height: 1.3vw;
         stroke-width:3;
       }
+    }
+  }
+
+  .question-title {
+    position: relative;
+    font-family: $font-family-black;
+    color: var(--theme-dark-blue);
+    font-size: 1.7vw;
+    margin-bottom: 0.5vw;
+    .ge-phone-title {
+      margin-top: 1vh;
+      display: flex;
+      align-items: center;
+      font-size: 1.7vw;
+      .ge-phone-circle {
+        margin-right: 1vw;
+        $size: 1.4vw;
+        width: $size;
+        height: $size;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg {
+          color: var(--white);
+          width: 62%;
+          height: 62%;
+          stroke-width: 4;
+        }
+      }
+    }
+    .marks-container {
+      position: absolute;
+      font-size: 0.8vw;
+      top: 0.3vw;
+      right: 2vw;
+      text-align: center;
+      line-height: 1.3;
     }
   }
 

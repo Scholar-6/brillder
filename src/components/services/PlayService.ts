@@ -1,6 +1,7 @@
 import { Question, QuestionTypeEnum } from 'model/question';
 import { ComponentAttempt } from 'components/play/model';
 import {getUniqueComponent} from 'components/build/questionService/QuestionService';
+import { mark } from 'components/play/services/scoring';
 
 /* Used by Play brick routing to initialise the answer value for each 
    answer type */
@@ -10,7 +11,8 @@ export function prefillAttempts(questions: Question[]) {
   let initAttempts:ComponentAttempt<any>[] = [];
   
   questions.forEach(question => {
-    let initAttempt = { correct: false, marks: 0, maxMarks: 5 } as ComponentAttempt<any>;
+    let initAttempt = { correct: false, questionId: question.id, marks: 0, maxMarks: 5 } as ComponentAttempt<any>;
+    const uniq = getUniqueComponent(question);
     
     if (question.type === QuestionTypeEnum.ChooseOne) {
       initAttempt.answer = { shuffleIndex: -1, realIndex: -1 };
@@ -25,13 +27,11 @@ export function prefillAttempts(questions: Question[]) {
       (question.type === QuestionTypeEnum.HorizontalShuffle ||
       question.type === QuestionTypeEnum.VerticalShuffle ) 
     { 
-      const uniq = getUniqueComponent(question);
       initAttempt.answer = Object.assign([], uniq.list); 
     } 
     
     else if (question.type === QuestionTypeEnum.PairMatch) 
     { 
-      const uniq = getUniqueComponent(question);
       initAttempt.answer = Object.assign([], uniq.choices);
     } 
     
@@ -47,7 +47,13 @@ export function prefillAttempts(questions: Question[]) {
       }
       initAttempt.answer = choices;
     }
-    
+
+    try {
+      initAttempt.maxMarks = mark(question.type, uniq, {...initAttempt}).maxMarks;
+    } catch {
+      console.log('can`t get max score questionId: ', question.id);
+    }
+
     initAttempts.push(initAttempt);
   });
   return initAttempts;

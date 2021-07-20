@@ -30,6 +30,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ReturnEditorsSuccessDialog from "components/play/finalStep/dialogs/ReturnEditorsSuccessDialog";
 import ReturnAuthorSuccessDialog from "components/play/finalStep/dialogs/ReturnAuthorSuccessDialog";
 import SelfPublishColumn from "./SelfPublishColumn";
+import playRoutes from '../../play/routes';
 import routes from "../routes";
 
 enum PublishStatus {
@@ -82,7 +83,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const link = routes.previewNewPrep(brick.id);
 
   if (!isAuthor && !isCurrentEditor && !isPublisher && !isAdmin) {
-    return <Redirect to={map.BackToWorkBuildTab} />;
+    return <Redirect to={map.backToWorkUserBased(user)} />;
   }
 
   const publish = async (brickId: number) => {
@@ -167,7 +168,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         size={3}
         onClick={async () => {
           await props.sendToPublisher(brick.id);
-          history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`);
+          history.push(`${map.BackToWorkPage}?isCore=${brick.isCore}`);
         }}
       />
     );
@@ -290,7 +291,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 <div className="intro-text-row">
                 </div>
                 <ExitButton onClick={() =>
-                  history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`)} />
+                  history.push(`${map.BackToWorkPage}?isCore=${brick.isCore}`)} />
               </div>
             </Grid>
           </Grid>
@@ -302,7 +303,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
             <div className="introduction-info">
               <div className="intro-text-row"></div>
             </div>
-            <ExitButton onClick={() => history.push(map.BackToWorkPage)} />
+            <ExitButton onClick={() => history.push(map.backToWorkUserBased(user))} />
           </div>
         </div>
       </Hidden>
@@ -335,7 +336,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         author={brick.author}
         close={() => {
           setEditorsReturn(false)
-          history.push(map.BackToWorkBuildTab);
+          history.push(map.backToWorkUserBased(user));
         }}
       />
       <ReturnEditorsSuccessDialog
@@ -343,14 +344,14 @@ const FinalStep: React.FC<FinalStepProps> = ({
         editors={brick.editors}
         close={() => {
           setEditorsReturn(false)
-          history.push(map.BackToWorkBuildTab);
+          history.push(map.backToWorkUserBased(user));
         }}
       />
       <PublishSuccessDialog
         isOpen={publishSuccess === PublishStatus.Popup}
         close={() => {
           setPublishSuccess(PublishStatus.Published);
-          history.push(map.playCover(brick.id));
+          history.push(playRoutes.playCover(brick.id));
         }}
       />
       <SendPublisherSuccessDialog isOpen={sendedToPublisher && publisherConfirmed === false} close={() => props.sendToPublisherConfirmed()} />

@@ -5,14 +5,15 @@ import List from '@material-ui/core/List';
 
 import './PairMatch.scss';
 import CompComponent from '../Comp';
-import {ComponentAttempt} from 'components/play/model';
-import {QuestionValueType} from 'components/build/buildQuestions/questionTypes/types';
-import {Answer} from 'components/build/buildQuestions/questionTypes/pairMatchBuild/types';
+import { ComponentAttempt } from 'components/play/model';
+import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
+import { Answer } from 'components/build/buildQuestions/questionTypes/pairMatchBuild/types';
 import { PairMatchProps, PairMatchState, DragAndDropStatus, PairMatchAnswer, PairMatchComponent } from './interface';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import PairMatchOption from './PairMatchOption';
 import PairMatchImageContent from './PairMatchImageContent';
 import { isPhone } from 'services/phone';
+import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
@@ -21,7 +22,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     let status = DragAndDropStatus.None;
     let userAnswers = [];
 
-    const {component} = props;
+    const { component } = props;
 
     if (props.isPreview === true) {
       userAnswers = component.list ? component.list : [];
@@ -34,21 +35,25 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
           userAnswers = this.props.answers as any;
         }
       } else {
-        userAnswers =  component.choices ? component.choices : [];
+        userAnswers = component.choices ? component.choices : [];
       }
     }
-    this.state ={ status, userAnswers };
+    let canDrag = true;
+    if (this.props.attempt?.correct) {
+      canDrag = false;
+    }
+    this.state = { status, userAnswers, canDrag };
   }
 
   UNSAFE_componentWillUpdate(props: PairMatchProps) {
     if (props.isPreview === true && props.component) {
       if (this.state.userAnswers !== props.component.list) {
-        this.setState({userAnswers: props.component.list});
+        this.setState({ userAnswers: props.component.list });
       }
     }
     if (props.isBookPreview === true) {
       if (this.state.userAnswers !== props.answers as any) {
-        this.setState({userAnswers: this.props.answers as any});
+        this.setState({ userAnswers: this.props.answers as any });
       }
     }
   }
@@ -67,11 +72,15 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   getAnswer(): any[] { return this.state.userAnswers; }
 
   getState(entry: number): number {
-    if (this.props.attempt?.answer[entry]) {
-      if (this.props.attempt.answer[entry].index === this.props.component.list[entry].index) {
-        return 1;
-      } else { return -1; }
-    } else { return 0; }
+    try {
+      if (this.props.attempt?.answer[entry]) {
+        if (this.props.attempt.answer[entry].index === this.props.component.list[entry].index) {
+          return 1;
+        } else { return -1; }
+      } else { return 0; }
+    } catch {
+      return 0;
+    }
   }
 
   getBookState(entry: number): number {
@@ -101,16 +110,22 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
           imageSource={answer.imageSource}
         />
       );
-    } else {
+    } else if (answer.answerType && answer.answerType === QuestionValueType.Sound) {
       return (
-        <div
-          className="MuiListItemText-root"
-          style={{width: '100%', textAlign: 'center'}}
-        >
-          <MathInHtml value={answer.value} />
+        <div style={{ width: '100%' }}>
+          <Audio src={answer.valueSoundFile} />
+          <div>{answer.valueSoundCaption ? answer.valueSoundCaption : 'Click to select'}</div>
         </div>
       );
     }
+    return (
+      <div
+        className="MuiListItemText-root"
+        style={{ width: '100%', textAlign: 'center' }}
+      >
+        <MathInHtml value={answer.value} />
+      </div>
+    );
   }
 
   renderAnswer(answer: any, i: number) {
@@ -123,8 +138,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         let state = this.getState(answer.index);
         if (state === 1) {
           className += " correct";
-        } else {
-          className += " wrong";
         }
       }
     }
@@ -142,8 +155,8 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     }
     return (
       <div key={i} className={className}>
-        <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
-          <div style={{width: '100%'}}>
+        <div className="MuiListItem-root" style={{ height: '100%', textAlign: 'center' }}>
+          <div style={{ width: '100%' }}>
             {this.renderAnswerContent(answer)}
           </div>
         </div>
@@ -152,7 +165,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   }
 
   checkImages() {
-    return !!this.props.component.list.find((a:any) => a.valueFile || a.optionFile);
+    return !!this.props.component.list.find((a: any) => a.valueFile || a.optionFile);
   }
 
   render() {
@@ -167,38 +180,38 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
           </span>
         </p>
         <Grid container justify="center">
-          <List style={{padding: 0}} className="answers-list">
-          {
-            this.props.component.list.map((item:any, i) =>
-              <PairMatchOption
-                state={this.getState(i)}
-                item={item}
-                key={i}
-                isPreview={this.props.isPreview}
-                hint={this.props.question.hint}
-                isReview={this.props.isReview}
-                index={i}
-              />
-            )
-          }
+          <List style={{ padding: 0 }} className="answers-list">
+            {
+              this.props.component.list.map((item: any, i) =>
+                <PairMatchOption
+                  state={this.getState(i)}
+                  item={item}
+                  key={i}
+                  isPreview={this.props.isPreview}
+                  hint={this.props.question.hint}
+                  isReview={this.props.isReview}
+                  index={i}
+                />
+              )
+            }
           </List>
           {
-            this.props.isBookPreview || this.props.isPreview ? 
-            <div className="answers-list">
-              {this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))}
-            </div>
-            :
-            <ReactSortable
-              list={this.state.userAnswers}
-              animation={150}
-              group={{ name: "cloning-group-name" }}
-              className="answers-list"
-              setList={(choices) => this.setUserAnswers(choices)}
-            >
-              {
-                this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))
-              }
-            </ReactSortable>
+            this.props.isBookPreview || this.props.isPreview || !this.state.canDrag ?
+              <div className="answers-list">
+                {this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))}
+              </div>
+              :
+              <ReactSortable
+                list={this.state.userAnswers}
+                animation={150}
+                group={{ name: "cloning-group-name" }}
+                className="answers-list"
+                setList={(choices) => this.setUserAnswers(choices)}
+              >
+                {
+                  this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))
+                }
+              </ReactSortable>
           }
         </Grid>
         {this.renderGlobalHint()}
