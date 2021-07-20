@@ -2,7 +2,7 @@ import React from "react";
 import Grow from "@material-ui/core/Grow";
 import queryString from 'query-string';
 
-import './BrickBlock.scss';
+import './BrickBlock16x9.scss';
 import { AcademicLevelLabels, Brick } from "model/brick";
 import { User } from "model/user";
 
