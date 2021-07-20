@@ -875,6 +875,9 @@ $space-between-boxes: 0.1vw;
           border-top-right-radius: $border;
           border-top-left-radius: $border;
         }
+        .ql-editor::before {
+          font-size: 1vw !important;
+        }
       }
     }
   }
